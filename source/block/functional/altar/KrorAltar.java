@@ -9,6 +9,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
@@ -16,7 +17,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.scheduling.async.KrorSpawnTask;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -38,14 +39,14 @@ public class KrorAltar extends BossAltarBlock {
 		if (player instanceof ServerPlayerEntity) {
 			new KrorSpawnTask((ServerPlayerEntity)player, blockPos.above()).schedule(1, TimeUnit.SECONDS);
 
-			PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).sendThrottledChatMessage(AoAEntities.Mobs.KROR.get().getDescriptionId() + ".start");
+			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent(AoAEntities.Mobs.KROR.get().getDescriptionId() + ".start"));
 		}
 	}
 
 	@Override
 	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
 		if (player.level.getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayerEntity) {
-			PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).sendThrottledChatMessage("message.feedback.krorAltar.chargingTable");
+			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.krorAltar.chargingTable"));
 
 			return false;
 		}

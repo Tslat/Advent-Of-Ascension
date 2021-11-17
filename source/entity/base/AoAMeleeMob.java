@@ -14,6 +14,7 @@ import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectUtils;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.DamageSource;
@@ -21,32 +22,41 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.*;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorldReader;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAEntityData;
-import net.tslat.aoa3.entity.minion.AoAMinion;
+import net.tslat.aoa3.entity.ai.animation.Animatable;
+import net.tslat.aoa3.entity.ai.mob.AnimatableMeleeAttackGoal;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public abstract class AoAMeleeMob extends MonsterEntity {
+public abstract class AoAMeleeMob extends MonsterEntity implements Animatable {
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
 	protected boolean isSlipperyMovement = false;
 
+	private final AnimationFactory animationFactory = new AnimationFactory(this);
+
 	protected AoAMeleeMob(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
+
+		addAnimationState("ATTACK");
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new SwimGoal(this));
-		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, false));
+		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<AoAMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
 		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
 		goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
 	}
 
 	@Nullable
@@ -70,6 +80,14 @@ public abstract class AoAMeleeMob extends MonsterEntity {
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return null;
+	}
+
+	protected int getAttackSwingDuration() {
+		return 6;
+	}
+
+	protected int getPreAttackTime() {
+		return 0;
 	}
 
 	@Nullable
@@ -279,5 +297,26 @@ public abstract class AoAMeleeMob extends MonsterEntity {
 		}
 
 		calculateEntityAnimation(this, this instanceof IFlyingAnimal);
+	}
+
+	@Override
+	public int getCurrentSwingDuration() {
+		int time = getAttackSwingDuration();
+
+		if (EffectUtils.hasDigSpeed(this))
+			time -= 1 + EffectUtils.getDigSpeedAmplification(this);
+
+		if (hasEffect(Effects.DIG_SLOWDOWN))
+			time += (1 + getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) * 2;
+
+		return time;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.animationFactory;
 	}
 }

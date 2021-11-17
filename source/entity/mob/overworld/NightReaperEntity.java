@@ -6,10 +6,12 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -20,7 +22,7 @@ public class NightReaperEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 2.1875f;
+		return 1.375f;
 	}
 
 	@Nullable
@@ -47,5 +49,21 @@ public class NightReaperEntity extends AoAMeleeMob {
 	@Override
 	public CreatureAttribute getMobType() {
 		return CreatureAttribute.UNDEAD;
+	}
+
+	@Override
+	protected int getAttackSwingDuration() {
+		return 23;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 8;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
 	}
 }

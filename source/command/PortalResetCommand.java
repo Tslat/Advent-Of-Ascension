@@ -11,7 +11,7 @@ import net.minecraft.command.Commands;
 import net.minecraft.command.arguments.EntityArgument;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class PortalResetCommand implements Command<CommandSource> {
 	private static final PortalResetCommand CMD = new PortalResetCommand();

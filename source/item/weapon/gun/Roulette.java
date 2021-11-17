@@ -16,4 +16,9 @@ public class Roulette extends BaseGun {
 	public SoundEvent getFiringSound() {
 		return AoASounds.ITEM_ROULETTE_FIRE.get();
 	}
+
+	@Override
+	public boolean isFullAutomatic() {
+		return false;
+	}
 }

@@ -4,6 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvent;
@@ -14,9 +15,8 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.TangleFallEntity;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.*;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class TangleStaff extends BaseStaff<BlockPos> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.WIND_RUNE.get(), 2);
 		runes.put(AoAItems.POISON_RUNE.get(), 2);
 		runes.put(AoAItems.STORM_RUNE.get(), 1);
@@ -72,7 +72,7 @@ public class TangleStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public float getDmg() {
-		return 9;
+		return 18;
 	}
 
 	@Override

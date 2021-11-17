@@ -749,7 +749,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> BLOCK_INFUSION_TABLE_CONVERT = registerSound("infusion_table_convert", "block.infusion_table.convert");
 	public static final RegistryObject<SoundEvent> BLOCK_PETAL_CRAFTING_STATION_USE = registerSound("petal_crafting_station_use", "block.petal_crafting_station.use");
 	public static final RegistryObject<SoundEvent> BLOCK_RUNE_RANDOMIZER_USE = registerSound("rune_randomizer_use", "block.rune_randomizer.use");
-	public static final RegistryObject<SoundEvent> BLOCK_RUNE_SHRINE_USE = registerSound("rune_shrine_use", "block.rune_shrine.use");
 	public static final RegistryObject<SoundEvent> BLOCK_TEA_SINK_FILL = registerSound("tea_sink_fill", "block.tea_sink.fill");
 	public static final RegistryObject<SoundEvent> BLOCK_TEA_SINK_USE = registerSound("tea_sink_use", "block.tea_sink.use");
 
@@ -793,7 +792,7 @@ public final class AoASounds {
 	}
 
 	private static SoundEvent createSoundEvent(String soundPath) {
-		if (HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.CHRISTMAS && soundPath.endsWith(".fire"))
+		if (HolidayUtil.isChristmas() && soundPath.endsWith(".fire"))
 			soundPath = "misc.jingle_bells";
 
 		return new SoundEvent(new ResourceLocation("aoa3", soundPath));

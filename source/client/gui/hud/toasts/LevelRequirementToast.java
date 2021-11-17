@@ -6,34 +6,30 @@ import net.minecraft.client.gui.toasts.IToast;
 import net.minecraft.client.gui.toasts.ToastGui;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
 import net.tslat.aoa3.util.StringUtil;
-import net.tslat.aoa3.util.constant.Skills;
-
-import net.minecraft.client.gui.toasts.IToast.Visibility;
 
 public class LevelRequirementToast implements IToast {
 	private static final ResourceLocation skillsTextures = new ResourceLocation("aoa3", "textures/gui/maingui/skills.png");
 
-	private final Skills skill;
+	private final AoASkill skill;
 	private int iconUvX = 0;
 	private int iconUvY = 0;
 	private final int levelRequired;
 	private final String title;
 	private final String subtitle;
 
-	public LevelRequirementToast(Skills relevantSkill, int levelRequirement) {
+	public LevelRequirementToast(AoASkill relevantSkill, int levelRequirement) {
 		this.skill = relevantSkill;
 		this.levelRequired = levelRequirement;
 		this.title = LocaleUtil.getLocaleString("gui.aoatoast.levelReq.title", TextFormatting.DARK_RED);
 		this.subtitle = LocaleUtil.getLocaleString("gui.aoatoast.levelReq.subtitle", StringUtil.toSentenceCase(relevantSkill.toString()), String.valueOf(levelRequirement));
-
-		applyIconUvs(relevantSkill);
 	}
 
-	public Skills getSkill() {
+	public AoASkill getSkill() {
 		return skill;
 	}
 
@@ -52,70 +48,5 @@ public class LevelRequirementToast implements IToast {
 		toastGui.getMinecraft().font.draw(matrix, subtitle, 30, 18, NumberUtil.RGB(255, 255, 255));
 
 		return delta >= 3000 ? Visibility.HIDE : Visibility.SHOW;
-	}
-
-	private void applyIconUvs(Skills skill) {
-		switch (skill) {
-			case ALCHEMY:
-				iconUvX = 0;
-				iconUvY = 0;
-				break;
-			case ANIMA:
-				iconUvX = 50;
-				iconUvY = 0;
-				break;
-			case AUGURY:
-				iconUvX = 100;
-				iconUvY = 0;
-				break;
-			case BUTCHERY:
-				iconUvX = 150;
-				iconUvY = 0;
-				break;
-			case CREATION:
-				iconUvX = 200;
-				iconUvY = 0;
-				break;
-			case ENGINEERING:
-				iconUvX = 250;
-				iconUvY = 0;
-				break;
-			case EXPEDITION:
-				iconUvX = 300;
-				iconUvY = 0;
-				break;
-			case EXTRACTION:
-				iconUvX = 350;
-				iconUvY = 0;
-				break;
-			case FORAGING:
-				iconUvX = 400;
-				iconUvY = 0;
-				break;
-			case HAULING:
-				iconUvX = 0;
-				iconUvY = 100;
-				break;
-			case HUNTER:
-				iconUvX = 50;
-				iconUvY = 100;
-				break;
-			case INFUSION:
-				iconUvX = 100;
-				iconUvY = 100;
-				break;
-			case INNERVATION:
-				iconUvX = 150;
-				iconUvY = 100;
-				break;
-			case LOGGING:
-				iconUvX = 200;
-				iconUvY = 100;
-				break;
-			case RUNATION:
-				iconUvX = 250;
-				iconUvY = 100;
-				break;
-		}
 	}
 }

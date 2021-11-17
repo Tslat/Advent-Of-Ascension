@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.weapon.staff;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
@@ -12,7 +13,6 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.UltimatumShotEntity;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.scheduling.sync.UltimatumStaffTask;
 import net.tslat.aoa3.util.EntityUtil;
@@ -34,7 +34,7 @@ public class UltimatumStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.LIFE_RUNE.get(), 5);
 		runes.put(AoAItems.POWER_RUNE.get(), 3);
 		runes.put(AoAItems.DISTORTION_RUNE.get(), 8);

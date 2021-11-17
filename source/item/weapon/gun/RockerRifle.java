@@ -26,7 +26,7 @@ public class RockerRifle extends BaseGun {
 
 	@Override
 	public float getRecoilForShot(ItemStack stack, LivingEntity shooter) {
-		return shooter.isShiftKeyDown() ? 0 : super.getRecoilForShot(stack, shooter);
+		return shooter.isShiftKeyDown() ? 0.25f : super.getRecoilForShot(stack, shooter);
 	}
 
 	@Override

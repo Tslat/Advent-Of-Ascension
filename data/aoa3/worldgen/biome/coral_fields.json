@@ -38,17 +38,10 @@
     "aoa3:dracyon_fountain",
     "aoa3:amphibiyte_cove",
     "aoa3:aquatic_castle",
-    "aoa3:drowned_lotto_stand",
-    "aoa3:water_rune_shrine"
+    "aoa3:drowned_lotto_stand"
   ],
   "spawners": {
     "monster": [
-      {
-        "type": "aoa3:neptuno",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
       {
         "type": "aoa3:angler",
         "weight": 20,
@@ -66,6 +59,12 @@
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
+      },
+      {
+        "type": "aoa3:neptuno",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
       }
     ],
     "creature": [],
@@ -79,12 +78,6 @@
       }
     ],
     "water_ambient": [
-      {
-        "type": "minecraft:cod",
-        "weight": 13,
-        "minCount": 1,
-        "maxCount": 4
-      },
       {
         "type": "aoa3:coratee",
         "weight": 7,
@@ -102,6 +95,12 @@
         "weight": 10,
         "minCount": 3,
         "maxCount": 7
+      },
+      {
+        "type": "minecraft:cod",
+        "weight": 13,
+        "minCount": 1,
+        "maxCount": 4
       }
     ],
     "misc": []

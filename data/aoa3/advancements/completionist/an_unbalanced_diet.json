@@ -58,14 +58,6 @@
         }
       }
     },
-    "consume_cooked_limefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_limefish"
-        }
-      }
-    },
     "consume_lunacrike": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -82,27 +74,11 @@
         }
       }
     },
-    "consume_cooked_candlefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_candlefish"
-        }
-      }
-    },
     "consume_eye_candy": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:eye_candy"
-        }
-      }
-    },
-    "consume_cooked_pearl_stripefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_pearl_stripefish"
         }
       }
     },
@@ -114,27 +90,11 @@
         }
       }
     },
-    "consume_cooked_golden_gullfish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_golden_gullfish"
-        }
-      }
-    },
     "consume_raw_charger_shank": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:raw_charger_shank"
-        }
-      }
-    },
-    "consume_cooked_turquoise_stripefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_turquoise_stripefish"
         }
       }
     },
@@ -154,27 +114,11 @@
         }
       }
     },
-    "consume_cooked_dark_hatchetfish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_dark_hatchetfish"
-        }
-      }
-    },
     "consume_yeti_fingernails": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:yeti_fingernails"
-        }
-      }
-    },
-    "consume_cooked_sailback": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_sailback"
         }
       }
     },
@@ -207,14 +151,6 @@
       "conditions": {
         "item": {
           "item": "aoa3:raw_dark_hatchetfish"
-        }
-      }
-    },
-    "consume_cooked_crimson_skipper": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_crimson_skipper"
         }
       }
     },
@@ -266,27 +202,11 @@
         }
       }
     },
-    "consume_cooked_fingerfish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_fingerfish"
-        }
-      }
-    },
     "consume_halycon_milk": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:halycon_milk"
-        }
-      }
-    },
-    "consume_cooked_rocketfish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_rocketfish"
         }
       }
     },
@@ -402,22 +322,6 @@
         }
       }
     },
-    "consume_cooked_violet_skipper": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_violet_skipper"
-        }
-      }
-    },
-    "consume_cooked_razorfish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_razorfish"
-        }
-      }
-    },
     "consume_floracle_sticks": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -431,14 +335,6 @@
       "conditions": {
         "item": {
           "item": "aoa3:fiery_chops"
-        }
-      }
-    },
-    "consume_cooked_ironback": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_ironback"
         }
       }
     },
@@ -495,14 +391,6 @@
       "conditions": {
         "item": {
           "item": "aoa3:nature_melon_slice"
-        }
-      }
-    },
-    "consume_cooked_crimson_stripefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:cooked_crimson_stripefish"
         }
       }
     },
@@ -564,34 +452,19 @@
       "consume_raw_turquoise_stripefish"
     ],
     [
-      "consume_cooked_limefish"
-    ],
-    [
       "consume_lunacrike"
     ],
     [
       "consume_sour_gummy"
     ],
     [
-      "consume_cooked_candlefish"
-    ],
-    [
       "consume_eye_candy"
-    ],
-    [
-      "consume_cooked_pearl_stripefish"
     ],
     [
       "consume_raw_crimson_stripefish"
     ],
     [
-      "consume_cooked_golden_gullfish"
-    ],
-    [
       "consume_raw_charger_shank"
-    ],
-    [
-      "consume_cooked_turquoise_stripefish"
     ],
     [
       "consume_fungal_tea"
@@ -600,13 +473,7 @@
       "consume_natural_tea"
     ],
     [
-      "consume_cooked_dark_hatchetfish"
-    ],
-    [
       "consume_yeti_fingernails"
-    ],
-    [
-      "consume_cooked_sailback"
     ],
     [
       "consume_raw_furlion_chop"
@@ -619,9 +486,6 @@
     ],
     [
       "consume_raw_dark_hatchetfish"
-    ],
-    [
-      "consume_cooked_crimson_skipper"
     ],
     [
       "consume_raw_rainbowfish"
@@ -642,13 +506,7 @@
       "consume_rosidons"
     ],
     [
-      "consume_cooked_fingerfish"
-    ],
-    [
       "consume_halycon_milk"
-    ],
-    [
-      "consume_cooked_rocketfish"
     ],
     [
       "consume_raw_rocketfish"
@@ -693,19 +551,10 @@
       "consume_trilliad_leaves"
     ],
     [
-      "consume_cooked_violet_skipper"
-    ],
-    [
-      "consume_cooked_razorfish"
-    ],
-    [
       "consume_floracle_sticks"
     ],
     [
       "consume_fiery_chops"
-    ],
-    [
-      "consume_cooked_ironback"
     ],
     [
       "consume_gingerbread_cookie"
@@ -727,9 +576,6 @@
     ],
     [
       "consume_nature_melon_slice"
-    ],
-    [
-      "consume_cooked_crimson_stripefish"
     ],
     [
       "consume_cooked_rainbowfish"

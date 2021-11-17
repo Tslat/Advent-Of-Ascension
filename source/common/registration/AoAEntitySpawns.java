@@ -255,8 +255,8 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.LURKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.STALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.Animals.RADIANT_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "dustopian_marsh")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true)).specialSpawner(PixonSpawner::addSpawn);
-        new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "dustopian_marsh")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
+        new SpawnEntry(AoAEntities.Animals.RADIANT_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "dustopian_forest")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true)).specialSpawner(PixonSpawner::addSpawn);
+        new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "dustopian_forest")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
     }
 
     public static void setGardenciaSpawnPlacements() {

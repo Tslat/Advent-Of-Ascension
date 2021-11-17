@@ -18,7 +18,6 @@ import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.projectile.HardProjectile;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.item.weapon.thrown.SliceStar;
 
 @OnlyIn(
 		value = Dist.CLIENT,
@@ -52,7 +51,7 @@ public class SliceStarEntity extends BaseBullet implements HardProjectile, IRend
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		target.hurt(DamageSource.thrown(this, null), SliceStar.dmg);
+		target.hurt(DamageSource.thrown(this, null), (float)AoAWeapons.SLICE_STAR.get().getDamage());
 	}
 
 	@Override

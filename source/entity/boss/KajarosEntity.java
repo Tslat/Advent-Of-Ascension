@@ -63,6 +63,18 @@ public class KajarosEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
+	}
+
+	@Override
 	public void die(DamageSource cause) {
 		super.die(cause);
 
@@ -87,13 +99,6 @@ public class KajarosEntity extends AoAMeleeMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

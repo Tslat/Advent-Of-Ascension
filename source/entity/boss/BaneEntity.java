@@ -25,7 +25,7 @@ import net.tslat.aoa3.entity.mob.misc.BigBaneCloneEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PotionUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -87,6 +87,11 @@ public class BaneEntity extends AoAMeleeMob {
 			summons.add(bigClone);
 			level.addFreshEntity(bigClone);
 		}
+
+		float healthPercent = getHealth() / getMaxHealth();
+
+		if (healthPercent != bossInfo.getPercent())
+			bossInfo.setPercent(healthPercent);
 	}
 
 	@Override
@@ -130,13 +135,6 @@ public class BaneEntity extends AoAMeleeMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

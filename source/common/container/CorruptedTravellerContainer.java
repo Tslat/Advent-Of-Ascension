@@ -2,13 +2,18 @@ package net.tslat.aoa3.common.container;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.inventory.container.Container;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.npc.trader.CorruptedTravellerEntity;
+import net.tslat.aoa3.integration.IntegrationManager;
+import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
+import net.tslat.aoa3.util.AdvancementUtil;
 
 public class CorruptedTravellerContainer extends Container {
 	private final Inventory input;
@@ -64,8 +69,19 @@ public class CorruptedTravellerContainer extends Container {
 	private void handleFoodInput() {
 		if (!handledFood) {
 			ItemStack stack = slots.get(0).container.getItem(0);
+			ItemStack bookStack;
 
-			if (!stack.isEmpty() && stack.getItem().getFoodProperties() != null && player.inventory.add(new ItemStack(AoAItems.WORN_BOOK.get())))
+			if (IntegrationManager.isPatchouliActive()) {
+				bookStack = PatchouliIntegration.getBook(AdventOfAscension.id("worn_book")).copy();
+
+				if (player instanceof ServerPlayerEntity)
+					AdvancementUtil.completeAdvancement((ServerPlayerEntity)player, AdventOfAscension.id("overworld/the_journey_begins"), "obtain_worn_book");
+			}
+			else {
+				bookStack = new ItemStack(AoAItems.WORN_BOOK.get());
+			}
+
+			if (!stack.isEmpty() && stack.getItem().getFoodProperties() != null && player.inventory.add(bookStack))
 				stack.shrink(1);
 
 			handledFood = true;

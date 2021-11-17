@@ -1,0 +1,12 @@
+{
+  "xp_modifier": 1.0,
+  "abilities": [
+    {
+      "id": "aoa3:dummy_ability",
+      "unique_id": "1795110087",
+      "description": "skills.aoa3.hauling.abilities.trawlerHelm.description",
+      "display_name": "skills.aoa3.hauling.abilities.trawlerHelm.name",
+      "level_req": 100
+    }
+  ]
+}

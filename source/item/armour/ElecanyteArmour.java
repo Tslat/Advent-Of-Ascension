@@ -7,11 +7,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -30,7 +30,7 @@ public class ElecanyteArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (slots != null && !DamageUtil.isEnvironmentalDamage(event.getSource()))
-			plData.stats().regenResource(Resources.ENERGY, event.getAmount() * 2.5f * slots.size());
+			plData.getResource(AoAResources.SPIRIT.get()).addValue(event.getAmount() * 2.5f * slots.size());
 	}
 
 	@Override

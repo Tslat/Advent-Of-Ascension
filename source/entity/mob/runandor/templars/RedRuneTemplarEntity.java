@@ -2,9 +2,9 @@ package net.tslat.aoa3.entity.mob.runandor.templars;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.item.misc.RuneItem;
 
 public class RedRuneTemplarEntity extends RuneTemplarEntity {
 	public RedRuneTemplarEntity(EntityType<? extends CreatureEntity> entityType, World world) {
@@ -17,7 +17,7 @@ public class RedRuneTemplarEntity extends RuneTemplarEntity {
 	}
 
 	@Override
-	protected RuneItem getActivationRune() {
+	protected Item getActivationRune() {
 		return AoAItems.FIRE_RUNE.get();
 	}
 }

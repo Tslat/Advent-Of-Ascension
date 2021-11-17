@@ -48,10 +48,10 @@ public class CreepupleEntity extends AoACreeponiaCreeper {
     protected void explode() {
         if (!level.isClientSide) {
             for (int i = 0; i < 3; i++) {
-                WorldUtil.createExplosion(this, level, getX() + (random.nextDouble() * 3) - 1, getY() + (random.nextDouble() * 3) - 1, getZ() + (random.nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+                WorldUtil.createExplosion(this, level, getX() + (random.nextDouble() * 3) - 1, getY() + (random.nextDouble() * 3) - 1, getZ() + (random.nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
             }
 
-            level.explode(this, getX(), getY(), getZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+            level.explode(this, getX(), getY(), getZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
             remove();
             spawnLingeringCloud();
         }

@@ -10,7 +10,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.ShadowlordEntity;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.concurrent.TimeUnit;
 

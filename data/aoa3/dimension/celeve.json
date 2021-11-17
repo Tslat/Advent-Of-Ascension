@@ -25,11 +25,6 @@
             "spacing": 32,
             "separation": 10,
             "salt": 1815266944
-          },
-          "aoa3:compass_rune_shrine": {
-            "spacing": 16,
-            "separation": 8,
-            "salt": 939521092
           }
         }
       },

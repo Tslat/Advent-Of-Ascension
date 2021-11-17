@@ -1,16 +1,14 @@
 package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -21,8 +19,8 @@ public class CreepoidGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, LivingEntity attacker, Entity target, float dmgDealt) {
-		if (EntityUtil.getAttackCooldown(attacker) > 0.85f) {
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+		if (attackCooldown > 0.85f) {
 			double offset = target.getBbWidth() / 1.99d;
 			double offsetX = MathHelper.clamp(attacker.getX() - target.getX(), -offset, offset);
 			double offsetY = MathHelper.clamp(attacker.getY() + attacker.getEyeHeight() - target.getY(), -0.1, target.getBbHeight() + 0.1);

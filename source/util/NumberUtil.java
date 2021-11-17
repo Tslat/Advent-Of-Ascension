@@ -2,7 +2,7 @@ package net.tslat.aoa3.util;
 
 import java.text.DecimalFormat;
 
-public abstract class NumberUtil {
+public final class NumberUtil {
 	public static int RGB(int red, int green, int blue) {
 		return red << 16 | green << 8 | blue;
 	}
@@ -34,7 +34,7 @@ public abstract class NumberUtil {
 		}
 
 		if (strictDigitCount && value >= 10)
-			value = (int)value;
+			value = (int)Math.floor(value);
 
 		return new DecimalFormat(strictDigitCount ? "#.#" : "#.##").format(value) + suffix;
 	}

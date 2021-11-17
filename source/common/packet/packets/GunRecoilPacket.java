@@ -2,7 +2,7 @@ package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.tslat.aoa3.util.ClientOperations;
+import net.tslat.aoa3.client.ClientOperations;
 
 import java.util.function.Supplier;
 

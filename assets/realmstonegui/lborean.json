@@ -1,0 +1,9 @@
+{
+  "id": "lborean",
+  "gui_x": 227,
+  "gui_y": 695,
+  "parents": [
+    "gardencia",
+    "candyland"
+  ]
+}

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -35,7 +35,7 @@ public class SubterraneanArmour extends AdventArmour {
 	@Override
 	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null)
-			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF);
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, ATTACK_SPEED_DEBUFF, false);
 	}
 
 	@Override

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "aoa3:block/orange_coral",
+    "all": "aoa3:block/orange_coral"
+  }
+}

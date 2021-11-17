@@ -1,6 +1,0 @@
-Hunter (Skill)
-
-While Hauling is about taking a break and relaxing with a nice fishing rod, Hunter is the exact opposite - it's about stabbing stuff in the face. Or anywhere else.
-When wandering, you may notice some creatures are more dangerous or prevent you from attacking them. These creatures are called Hunter creatures.
-Hunter creatures give Hunter xp when killed, but they can only be attacked if you have the required Hunter level to do so.
-Hunter creatures tend to give decent rewards, and the higher level ones especially tend to give unique loot.

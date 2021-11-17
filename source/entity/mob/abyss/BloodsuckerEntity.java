@@ -3,20 +3,14 @@ package net.tslat.aoa3.entity.mob.abyss;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.constant.Deities;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -55,27 +49,5 @@ public class BloodsuckerEntity extends AoAMeleeMob {
 	protected void onAttack(Entity target) {
 		EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 80).level(3));
 		heal((float)getAttribute(Attributes.ATTACK_DAMAGE).getValue() * 2f);
-	}
-
-	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
-
-		if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
-			Entity source = cause.getEntity();
-			ServerPlayerEntity killer = null;
-
-			if (source != null) {
-				if (source instanceof ServerPlayerEntity) {
-					killer = (ServerPlayerEntity)source;
-				}
-				else if (source instanceof TameableEntity && ((TameableEntity)source).getOwner() instanceof ServerPlayerEntity) {
-					killer = (ServerPlayerEntity)((TameableEntity)source).getOwner();
-				}
-			}
-
-			if (killer != null)
-				PlayerUtil.addTributeToPlayer(killer, Deities.EREBON, 8);
-		}
 	}
 }

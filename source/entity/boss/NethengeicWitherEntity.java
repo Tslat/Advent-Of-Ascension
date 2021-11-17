@@ -32,11 +32,9 @@ import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoARangedAttacker;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.NethengeicWitherShotEntity;
 import net.tslat.aoa3.util.*;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -75,9 +73,8 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
 		goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<LivingEntity>(this, LivingEntity.class, true));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<LivingEntity>(this, LivingEntity.class, true));
 	}
 
 	@Override

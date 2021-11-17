@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "aoa3:raw_rocketfish"
-  },
-  "result": "aoa3:cooked_rocketfish",
-  "experience": 3.0,
-  "cookingtime": 100
-}

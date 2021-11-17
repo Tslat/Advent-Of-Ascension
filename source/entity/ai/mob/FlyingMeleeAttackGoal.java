@@ -1,27 +1,32 @@
 package net.tslat.aoa3.entity.ai.mob;
 
-import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.util.Hand;
+import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
+
+import java.util.EnumSet;
 
 public class FlyingMeleeAttackGoal extends Goal {
-	private final FlyingEntity taskOwner;
-	private final float chargingSpeed;
+	private final AoAFlyingMeleeMob taskOwner;
+	private final float speedModifier;
+	private final boolean retainTarget;
+
 	private int attackCooldown = 0;
 	private Path path;
 	private int delayTicks;
 	private double targetX;
 	private double targetY;
 	private double targetZ;
-	private boolean retainTarget;
 
-	public FlyingMeleeAttackGoal(FlyingEntity creature, float speed, boolean longMemory) {
+	public FlyingMeleeAttackGoal(AoAFlyingMeleeMob creature, float speed, boolean longMemory) {
 		this.taskOwner = creature;
-		this.chargingSpeed = speed;
+		this.speedModifier = speed;
 		this.retainTarget = longMemory;
+
+		setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
 	}
 
 	@Override
@@ -56,7 +61,7 @@ public class FlyingMeleeAttackGoal extends Goal {
 
 	@Override
 	public void start() {
-		this.taskOwner.getNavigation().moveTo(this.path, this.chargingSpeed);
+		this.taskOwner.getNavigation().moveTo(this.path, this.speedModifier);
 		this.delayTicks = 0;
 	}
 
@@ -101,11 +106,11 @@ public class FlyingMeleeAttackGoal extends Goal {
 				this.delayTicks += 5;
 			}
 
-			if (!this.taskOwner.getNavigation().moveTo(target, this.chargingSpeed)) {
+			if (!this.taskOwner.getNavigation().moveTo(target, this.speedModifier)) {
 				this.delayTicks += 15;
 			}
 			else {
-				this.taskOwner.getMoveControl().setWantedPosition(this.targetX, this.targetY, this.targetZ, this.chargingSpeed);
+				this.taskOwner.getMoveControl().setWantedPosition(this.targetX, this.targetY, this.targetZ, this.speedModifier);
 			}
 
 		}

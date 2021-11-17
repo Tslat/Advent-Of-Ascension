@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "filled=false": {
+      "model": "aoa3:block/extraction_device"
+    },
+    "filled=true": {
+      "model": "aoa3:block/extraction_device_filled"
+    }
+  }
+}

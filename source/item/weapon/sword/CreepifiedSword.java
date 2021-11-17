@@ -8,12 +8,10 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.minion.FriendlyCreeperEntity;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -26,12 +24,12 @@ public class CreepifiedSword extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (!attacker.level.isClientSide && RandomUtil.oneInNChance(10) && (!(attacker instanceof PlayerEntity) || attackCooldown > 0.75f)) {
-			final FriendlyCreeperEntity creeper = new FriendlyCreeperEntity(AoAEntities.Minions.FRIENDLY_CREEPER.get(), target.level);
+			/*final FriendlyCreeperEntity creeper = new FriendlyCreeperEntity(AoAEntities.Minions.FRIENDLY_CREEPER.get(), target.level);
 
 			creeper.moveTo(target.getX(), target.getY(), target.getZ(), random.nextFloat() * 360.0f, 0.0f);
 			creeper.setTarget(target);
 			creeper.setOwnerUUID(attacker.getUUID());
-			target.level.addFreshEntity(creeper);
+			target.level.addFreshEntity(creeper);*/ // TODO
 		}
 	}
 

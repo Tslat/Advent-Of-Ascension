@@ -16,4 +16,9 @@ public class HuntersRifle extends BaseGun {
 	public SoundEvent getFiringSound() {
 		return AoASounds.ITEM_SNIPER_FIRE.get();
 	}
+
+	@Override
+	public boolean isFullAutomatic() {
+		return false;
+	}
 }

@@ -6,38 +6,17 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateContainer;
-import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.item.armour.AdventArmour;
-import net.tslat.aoa3.item.tool.misc.InfusionBowl;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.constant.Deities;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
-import net.tslat.aoa3.util.skill.ExtractionUtil;
 
-import java.util.List;
 import java.util.Random;
 
 public class ExtractionDevice extends Block {
@@ -69,7 +48,7 @@ public class ExtractionDevice extends Block {
 
 	@Override
 	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (state.getValue(FILLED) && player.getItemInHand(hand).getItem() instanceof InfusionBowl) {
+		/*if (state.getValue(FILLED) && player.getItemInHand(hand).getItem() instanceof InfusionBowl) {
 			if (player instanceof ServerPlayerEntity) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 				ItemStack heldStack = player.getItemInHand(hand);
@@ -116,7 +95,7 @@ public class ExtractionDevice extends Block {
 			}
 
 			return ActionResultType.PASS;
-		}
+		}*/ // TODO
 
 		return ActionResultType.FAIL;
 	}

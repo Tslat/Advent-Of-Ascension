@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "aoa3:block/eye_bulb_crop_stage1"
+  }
+}

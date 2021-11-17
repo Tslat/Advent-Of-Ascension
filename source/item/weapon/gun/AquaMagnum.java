@@ -16,4 +16,9 @@ public class AquaMagnum extends BaseGun {
 	public SoundEvent getFiringSound() {
 		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
 	}
+
+	@Override
+	public boolean isFullAutomatic() {
+		return false;
+	}
 }

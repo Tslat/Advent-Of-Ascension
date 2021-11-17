@@ -76,31 +76,38 @@ public class MirageEntity extends AoARangedMob {
 	public void tick() {
 		super.tick();
 		
-		if (!level.isClientSide && random.nextInt(80) == 0) {
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MIRAGE_TELEPORT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
-			
-			if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
-				switch (random.nextInt(4)) {
-					case 0:
-						moveTo(167, 24, 8, random.nextFloat() * 360, 0);
-						break;
-					case 1:
-						moveTo(168, 24, -2, random.nextFloat() * 360, 0);
-						break;
-					case 2:
-						moveTo(177, 24, 8, random.nextFloat() * 360, 0);
-						break;
-					case 3:
-						moveTo(177, 24, -2, random.nextFloat() * 360, 0);
-						break;
+		if (!level.isClientSide) {
+			if (random.nextInt(80) == 0) {
+				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MIRAGE_TELEPORT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+
+				if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
+					switch (random.nextInt(4)) {
+						case 0:
+							moveTo(167, 24, 8, random.nextFloat() * 360, 0);
+							break;
+						case 1:
+							moveTo(168, 24, -2, random.nextFloat() * 360, 0);
+							break;
+						case 2:
+							moveTo(177, 24, 8, random.nextFloat() * 360, 0);
+							break;
+						case 3:
+							moveTo(177, 24, -2, random.nextFloat() * 360, 0);
+							break;
+					}
+				}
+				else {
+					int x = (int)(random.nextBoolean() ? getX() + 5 : getX() - 5);
+					int z = (int)(random.nextBoolean() ? getZ() + 5 : getZ() - 5);
+
+					moveTo(x, level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getY(), z)).getY(), z, random.nextFloat() * 360, 0);
 				}
 			}
-			else {
-				int x = (int)(random.nextBoolean() ? getX() + 5 : getX() - 5);
-				int z = (int)(random.nextBoolean() ? getZ() + 5 : getZ() - 5);
 
-				moveTo(x, level.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, new BlockPos(x, getY(), z)).getY(), z, random.nextFloat() * 360, 0);
-			}
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
 		}
 	}
 
@@ -122,13 +129,6 @@ public class MirageEntity extends AoARangedMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

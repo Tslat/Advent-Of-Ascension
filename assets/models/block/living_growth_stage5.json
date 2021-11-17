@@ -1,0 +1,8 @@
+{
+  "parent": "aoa3:block/living_growth",
+  "ambientocclusion": false,
+  "textures": {
+    "texture": "aoa3:block/living_growth_stage5",
+    "particle": "aoa3:block/living_growth_stage5"
+  }
+}

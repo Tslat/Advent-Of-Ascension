@@ -17,11 +17,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityHandles;
 import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityProvider;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -55,11 +55,11 @@ public class EnergisticPickaxe extends BasePickaxe {
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 		if (!world.isClientSide) {
 			PersistentStackCapabilityHandles cap = getCapability(player.getItemInHand(hand));
-			PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
-			float storeAmount = MathHelper.clamp(2000f - cap.getValue(), 0, Math.min(20, plData.stats().getResourceValue(Resources.ENERGY)));
+			AoAResource.Instance spirit = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).getResource(AoAResources.SPIRIT.get());
+			float storeAmount = MathHelper.clamp(2000f - cap.getValue(), 0, Math.min(20, spirit.getCurrentValue()));
 
 			cap.setValue(cap.getValue() + storeAmount);
-			plData.stats().consumeResource(Resources.ENERGY, storeAmount, true);
+			spirit.consume(storeAmount, true);
 
 			return ActionResult.success(player.getItemInHand(hand));
 		}

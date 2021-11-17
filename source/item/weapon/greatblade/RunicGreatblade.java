@@ -1,15 +1,13 @@
 package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -20,14 +18,14 @@ public class RunicGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public boolean hitEntity(ItemStack stack, Entity target, LivingEntity attacker, float dmg) {
-		boolean ready = target.invulnerableTime <= 0;
-		boolean successful = super.hitEntity(stack, target, attacker, (float)getAttackDamage() - 4);
+	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+		return super.getDamageForAttack(target, attacker, swordStack, baseDamage * 0.15f);
+	}
 
-		if (!target.level.isClientSide && ready)
-			DamageUtil.dealMagicDamage(null, attacker, target, 4 * EntityUtil.getAttackCooldown(attacker), false);
-
-		return successful;
+	@Override
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+		if (!target.level.isClientSide)
+			DamageUtil.dealMagicDamage(null, attacker, target, getDamage() * 0.85f, false);
 	}
 
 	@Override

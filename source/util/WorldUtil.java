@@ -7,8 +7,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.CachedBlockInfo;
 import net.minecraft.util.Hand;
 import net.minecraft.util.RegistryKey;
@@ -18,11 +18,10 @@ import net.minecraft.world.*;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.common.util.Constants;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAGameRules;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -31,42 +30,42 @@ import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public abstract class WorldUtil {
+public final class WorldUtil {
 	public static boolean checkGameRule(World world, GameRules.RuleKey<GameRules.BooleanValue> gameRule) {
 		return world.getGameRules().getBoolean(gameRule);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, World world, BlockPos pos, float strength) {
-		return createExplosion(exploder, world, pos.getX(), pos.getY(), pos.getZ(), strength, checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+		return createExplosion(exploder, world, pos.getX(), pos.getY(), pos.getZ(), strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nonnull Entity exploder, World world, float strength) {
-		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, AoAGameRules.checkStrongerMobGriefing(world, exploder) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, World world, @Nonnull Entity explodingEntity, float strength) {
 		boolean doGriefing;
 
 		if (exploder instanceof PlayerEntity) {
-			doGriefing = checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS);
+			doGriefing = AoAGameRules.checkDestructiveWeaponPhysics(world);
 		}
 		else {
-			if (exploder instanceof LivingEntity || explodingEntity instanceof LivingEntity) {
-				doGriefing = checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING);
-			}
-			else {
-				doGriefing = checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS);
-			}
-
 			if (exploder == null)
 				exploder = explodingEntity;
+
+			if (exploder instanceof LivingEntity || explodingEntity instanceof LivingEntity) {
+				doGriefing = AoAGameRules.checkStrongerMobGriefing(world, exploder);
+			}
+			else {
+				doGriefing = AoAGameRules.checkDestructiveWeaponPhysics(world);
+			}
 		}
 
 		return createExplosion(exploder, world, explodingEntity.getX(), explodingEntity.getY(), explodingEntity.getZ(), strength, doGriefing ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, World world, double posX, double posY, double posZ, float strength) {
-		return createExplosion(exploder, world, posX, posY, posZ, strength, checkGameRule(world, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+		return createExplosion(exploder, world, posX, posY, posZ, strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, World world, double posX, double posY, double posZ, float strength, Explosion.Mode explosionType) {
@@ -111,64 +110,65 @@ public abstract class WorldUtil {
 		world.addFreshEntity(lightning);
 	}
 
-	public static boolean harvestAdditionalBlock(World world, PlayerEntity pl, BlockPos breakPos, boolean damageTool) {
+	public static boolean harvestAdditionalBlock(World world, PlayerEntity pl, BlockPos breakPos) {
 		BlockState blockState = world.getBlockState(breakPos);
 		Block block = blockState.getBlock();
 
-		if (block.isAir(blockState, world, breakPos))
+		if (block.isAir(blockState, world, breakPos) || !world.mayInteract(pl, breakPos))
 			return false;
 
-		if (!world.isClientSide) {
+		if (!world.isClientSide()) {
 			ServerPlayerEntity player = (ServerPlayerEntity)pl;
-			GameType gameType = player.gameMode.getGameModeForPlayer();
-			int exp = ForgeHooks.onBlockBreakEvent(world, gameType, player, breakPos);
+			GameType gameMode = player.gameMode.getGameModeForPlayer();
+			int blockXp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameMode, player, breakPos);
 
-			if (exp == -1)
+			if (blockXp == -1)
 				return false;
 
-			if ((block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock) && !pl.canUseGameMasterBlocks()) {
-				world.sendBlockUpdated(breakPos, blockState, blockState, 3);
+			TileEntity tileEntity = world.getBlockEntity(breakPos);
+
+			if (!pl.canUseGameMasterBlocks() && (block instanceof CommandBlockBlock || block instanceof StructureBlock || block instanceof JigsawBlock)) {
+				world.sendBlockUpdated(breakPos, blockState, blockState, Constants.BlockFlags.DEFAULT);
 
 				return false;
 			}
-			else if (pl.getMainHandItem().onBlockStartBreak(breakPos, pl) || pl.blockActionRestricted(world, breakPos, gameType)) {
+
+			if (pl.getMainHandItem().onBlockStartBreak(breakPos, pl) || pl.blockActionRestricted(world, breakPos, gameMode))
 				return false;
+
+
+			if (pl.isCreative()) {
+				boolean removed = blockState.removedByPlayer(world, breakPos, player, false, world.getFluidState(breakPos));
+
+				if (removed)
+					blockState.getBlock().destroy(world, breakPos, blockState);
 			}
 			else {
-				if (pl.isCreative()) {
-					if (blockState.removedByPlayer(world, breakPos, player, false, world.getFluidState(breakPos)))
-						block.destroy(world, breakPos, blockState);
+				ItemStack toolStack = pl.getMainHandItem();
+				ItemStack toolStackCopy = toolStack.copy();
+				boolean canHarvest = blockState.canHarvestBlock(world, breakPos, pl);
+
+				if (toolStack.isEmpty() && !toolStackCopy.isEmpty())
+					net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(pl, toolStackCopy, Hand.MAIN_HAND);
+
+				boolean removedBlock = blockState.removedByPlayer(world, breakPos, player, false, world.getFluidState(breakPos));
+
+				if (removedBlock) {
+					blockState.getBlock().destroy(world, breakPos, blockState);
+
+					if (canHarvest)
+						block.playerDestroy(world, pl, breakPos, blockState, tileEntity, toolStackCopy);
+
+					if (blockXp > 0)
+						blockState.getBlock().popExperience((ServerWorld)world, breakPos, blockXp);
 				}
-				else {
-					ItemStack heldStack = pl.getMainHandItem();
-					ItemStack clonedStack = heldStack.copy();
-
-					boolean canHarvest = blockState.canHarvestBlock(world, breakPos, pl);
-
-					if (damageTool && blockState.getDestroySpeed(world, breakPos) != 0)
-						heldStack.hurtAndBreak(1, pl, (harvester) -> harvester.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
-
-					if (heldStack.isEmpty() && !clonedStack.isEmpty())
-						ForgeEventFactory.onPlayerDestroyItem(pl, clonedStack, Hand.MAIN_HAND);
-
-					boolean removed = blockState.removedByPlayer(world, breakPos, player, canHarvest, world.getFluidState(breakPos));
-
-					if (removed) {
-						block.destroy(world, breakPos, blockState);
-
-						if (canHarvest)
-							block.playerDestroy(world, pl, breakPos, blockState, world.getBlockEntity(breakPos), clonedStack);
-
-						if (exp > 0)
-							blockState.getBlock().popExperience((ServerWorld)world, breakPos, exp);
-					}
-				}
-
-				return true;
 			}
-		}
 
-		return true;
+			return true;
+		}
+		else {
+			return ClientOperations.harvestAdditionalBlock(breakPos);
+		}
 	}
 
 	public static float getAmbientTemperature(World world, BlockPos pos) {
@@ -244,12 +244,6 @@ public abstract class WorldUtil {
 		return 0;
 	}
 
-	public static void toAir(World world, BlockPos... positions) {
-		for (BlockPos pos : positions) {
-			world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
-		}
-	}
-
 	public static boolean canPlaceBlock(IWorld world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
 		if (!(world instanceof World))
 			return true;
@@ -283,7 +277,7 @@ public abstract class WorldUtil {
 		return true;
 	}
 
-	public static boolean canBreakBlock(IWorld world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
+	public static boolean canModifyBlock(IWorld world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
 		if (!(world instanceof World))
 			return true;
 
@@ -313,10 +307,6 @@ public abstract class WorldUtil {
 		}
 
 		return true;
-	}
-
-	public static boolean canModifyBlock(IWorld world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
-		return canBreakBlock(world, pos, entity, stack);
 	}
 
 	public static void operateOnMultipleBlocksInRange(World world, BlockPos center, int radius, Predicate<BlockState> test, Consumer<BlockPos> operation) {

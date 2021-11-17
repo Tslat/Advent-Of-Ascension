@@ -28,7 +28,7 @@ import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.BloodballEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -117,6 +117,11 @@ public class KingBambambamEntity extends AoARangedMob {
 				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_LITTLE_BAM_SPAWN.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 				summons.add(littleBam);
 			}
+
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
 		}
 	}
 
@@ -149,13 +154,6 @@ public class KingBambambamEntity extends AoARangedMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

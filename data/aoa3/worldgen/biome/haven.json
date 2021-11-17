@@ -35,7 +35,6 @@
   ],
   "starts": [
     "aoa3:floating_lotto_fountain",
-    "aoa3:strike_rune_shrine",
     "aoa3:guardian_tower"
   ],
   "spawners": {
@@ -48,16 +47,16 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:rainicorn",
+        "weight": 3,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:halycon",
         "weight": 3,
         "minCount": 1,
         "maxCount": 3
-      },
-      {
-        "type": "aoa3:eeo",
-        "weight": 3,
-        "minCount": 0,
-        "maxCount": 1
       },
       {
         "type": "aoa3:voliant",
@@ -66,16 +65,16 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:rainicorn",
-        "weight": 3,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:dawnlight",
         "weight": 5,
         "minCount": 1,
         "maxCount": 3
+      },
+      {
+        "type": "aoa3:eeo",
+        "weight": 3,
+        "minCount": 0,
+        "maxCount": 1
       }
     ],
     "ambient": [],

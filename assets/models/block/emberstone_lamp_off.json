@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "aoa3:block/emberstone_lamp_off"
+  }
+}

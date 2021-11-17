@@ -1,6 +1,0 @@
-Mineria (Habilidad)
-
-Cava, mina, cava, mina. ¿Divertido, no?
-La habilidad de Mineria te permite encontrar tesoros mientras minas piedra ordinaria. Es decir que mientras vas minando encontraras jugosos tesoros dentro de los bloques. Por cada vez que encuentres tesoros, aumentara tu XP.
-
-Mientras mayor sea tu nivel de Mineria, mejor y mas frecuente seran los tesoros que encuentres!

@@ -10,30 +10,26 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
 import net.tslat.aoa3.util.StringUtil;
-import net.tslat.aoa3.util.constant.Resources;
-
-import net.minecraft.client.gui.toasts.IToast.Visibility;
+import net.tslat.aoa3.player.resource.AoAResource;
 
 public class ResourceRequirementToast implements IToast {
 	private static final ResourceLocation resourcesTextures = new ResourceLocation("aoa3", "textures/gui/maingui/resources.png");
 
-	private final Resources resource;
+	private final AoAResource resource;
 	private int iconUvX = 0;
 	private int iconUvY = 0;
 	private final float resourceAmount;
 	private final String title;
 	private final String subtitle;
 
-	public ResourceRequirementToast(Resources relevantResource, float resourceRequirement) {
+	public ResourceRequirementToast(AoAResource relevantResource, float resourceRequirement) { // TODO
 		this.resource = relevantResource;
 		this.resourceAmount = resourceRequirement;
 		this.title = LocaleUtil.getLocaleString("gui.aoatoast.resourceReq.title", TextFormatting.DARK_RED);
 		this.subtitle = LocaleUtil.getLocaleString("gui.aoatoast.resourceReq.subtitle", StringUtil.toSentenceCase(relevantResource.toString()), NumberUtil.roundToNthDecimalPlace(resourceRequirement, 2));
-
-		applyIconUvs(relevantResource);
 	}
 
-	public Resources getResource() {
+	public AoAResource getResource() {
 		return resource;
 	}
 
@@ -52,26 +48,5 @@ public class ResourceRequirementToast implements IToast {
 		toastGui.getMinecraft().font.draw(matrix, subtitle, 30, 18, NumberUtil.RGB(255, 255, 255));
 
 		return delta >= 3000 ? Visibility.HIDE : Visibility.SHOW;
-	}
-
-	private void applyIconUvs(Resources skill) {
-		switch (skill) {
-			case CREATION:
-				iconUvX = 0;
-				iconUvY = 340;
-				break;
-			case ENERGY:
-				iconUvX = 0;
-				iconUvY = 140;
-				break;
-			case RAGE:
-				iconUvX = 0;
-				iconUvY = 50;
-				break;
-			case SOUL:
-				iconUvX = 0;
-				iconUvY = 440;
-				break;
-		}
 	}
 }

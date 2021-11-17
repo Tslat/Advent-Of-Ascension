@@ -1,0 +1,7 @@
+{
+  "parent": "aoa3:block/bejewelled_banner_mounted",
+  "textures": {
+    "texture": "aoa3:block/bejewelled_nether_banner",
+    "particle": "aoa3:block/bejewelled_nether_banner"
+  }
+}

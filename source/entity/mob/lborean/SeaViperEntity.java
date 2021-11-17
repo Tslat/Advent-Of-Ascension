@@ -9,22 +9,16 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
 public class SeaViperEntity extends AoAWaterMeleeMob {
-	private static final AnimationBuilder BITE_ANIMATION = new AnimationBuilder().addAnimation("sea_viper.bite", false);
-	private static final AnimationBuilder SWIM_ANIMATION = new AnimationBuilder().addAnimation("sea_viper.swim", true);
-
 	public SeaViperEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -58,28 +52,18 @@ public class SeaViperEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
-	public int getCurrentSwingDuration() {
+	protected int getAttackSwingDuration() {
 		return 20;
 	}
 
 	@Override
+	protected int getPreAttackTime() {
+		return 15;
+	}
+
+	@Override
 	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<SeaViperEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<SeaViperEntity>() {
-			@Override
-			public PlayState test(AnimationEvent<SeaViperEntity> event) {
-				if (swinging) {
-					event.getController().setAnimation(BITE_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-				else if (event.isMoving()) {
-					event.getController().setAnimation(SWIM_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-
-				return PlayState.STOP;
-			}
-		}));
+		animationData.addAnimationController(AoAAnimations.genericSwimController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
 	}
 }

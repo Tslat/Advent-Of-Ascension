@@ -9,18 +9,20 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.common.registration.AoALootOperations;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.player.resource.AoAResource;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.Set;
 
 public class PlayerHasResource implements ILootCondition {
-	private final Resources resource;
+	private final AoAResource resource;
 	private final float amount;
 	private final boolean consume;
 
-	public PlayerHasResource(Resources resource, float amount, boolean consume) {
+	public PlayerHasResource(AoAResource resource, float amount, boolean consume) {
 		this.resource = resource;
 		this.amount = amount;
 		this.consume = consume;
@@ -44,12 +46,12 @@ public class PlayerHasResource implements ILootCondition {
 			entity = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);
 
 		if (entity instanceof ServerPlayerEntity)
-			return consume ? PlayerUtil.consumeResource((ServerPlayerEntity)entity, resource, amount, false) : PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).stats().getResourceValue(resource) >= amount;
+			return consume ? PlayerUtil.consumeResource((ServerPlayerEntity)entity, resource, amount, false) : PlayerUtil.getResourceValue((ServerPlayerEntity)entity, resource) >= amount;
 
 		return false;
 	}
 
-	public Resources getResource() {
+	public AoAResource getResource() {
 		return this.resource;
 	}
 
@@ -60,14 +62,14 @@ public class PlayerHasResource implements ILootCondition {
 	public static class Serializer implements ILootSerializer<PlayerHasResource> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasResource playerHasResource, JsonSerializationContext jsonSerializationContext) {
-			json.addProperty("resource", playerHasResource.resource.toString().toLowerCase());
+			json.addProperty("resource", playerHasResource.resource.getRegistryName().toString());
 			json.addProperty("amount", playerHasResource.amount);
 			json.addProperty("consume", playerHasResource.consume);
 		}
 
 		@Override
 		public PlayerHasResource deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
-			return new PlayerHasResource(Resources.valueOf(JSONUtils.getAsString(json, "resource").toUpperCase()), JSONUtils.getAsFloat(json, "amount"), JSONUtils.isValidNode(json, "consume") && JSONUtils.getAsBoolean(json, "consume"));
+			return new PlayerHasResource(AoAResources.getResource(new ResourceLocation(JSONUtils.getAsString(json, "resource"))), JSONUtils.getAsFloat(json, "amount"), JSONUtils.isValidNode(json, "consume") && JSONUtils.getAsBoolean(json, "consume"));
 		}
 	}
 }

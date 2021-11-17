@@ -27,7 +27,7 @@ public final class AoAEnchantments {
 	public static final EnchantmentType GREATBLADE = EnchantmentType.create("GREATBLADE", item -> item instanceof BaseGreatblade);
 	public static final EnchantmentType SHOTGUN = EnchantmentType.create("SHOTGUN", item -> item instanceof BaseShotgun);
 	public static final EnchantmentType MAUL = EnchantmentType.create("MAUL", item -> item instanceof BaseMaul);
-	public static final EnchantmentType MELEE_WEAPON = EnchantmentType.create("MELEE_WEAPON", item -> item instanceof SwordItem || item instanceof BaseGreatblade || item instanceof BaseMaul);
+	public static final EnchantmentType MELEE_WEAPON = EnchantmentType.create("MELEE_WEAPON", item -> item instanceof SwordItem || item instanceof BaseMaul);
 	public static final EnchantmentType STAFF = EnchantmentType.create("STAFF", item -> item instanceof BaseStaff);
 	public static final EnchantmentType AMMO_CONSUMING = EnchantmentType.create("AMMO_CONSUMING", item -> item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff);
 	public static final EnchantmentType BULLET_FIRING = EnchantmentType.create("BULLET_FIRING", item -> item instanceof BaseGun && !(item instanceof BaseCannon));
@@ -38,7 +38,6 @@ public final class AoAEnchantments {
 	public static final RegistryObject<Enchantment> ARCHMAGE = registerEnchantment("archmage", ArchmageEnchantment::new);
 	public static final RegistryObject<Enchantment> BRACE = registerEnchantment("brace", BraceEnchantment::new);
 	public static final RegistryObject<Enchantment> CONTROL = registerEnchantment("control", ControlEnchantment::new);
-	public static final RegistryObject<Enchantment> CRUSH = registerEnchantment("crush", CrushEnchantment::new);
 	public static final RegistryObject<Enchantment> FORM = registerEnchantment("form", FormEnchantment::new);
 	public static final RegistryObject<Enchantment> GREED = registerEnchantment("greed", GreedEnchantment::new);
 	public static final RegistryObject<Enchantment> INTERVENTION = registerEnchantment("intervention", InterventionEnchantment::new);

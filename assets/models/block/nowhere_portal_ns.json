@@ -1,0 +1,7 @@
+{
+  "parent": "aoa3:block/portal_ns",
+  "textures": {
+    "texture": "aoa3:block/nowhere_portal",
+    "particle": "aoa3:block/nowhere_portal"
+  }
+}

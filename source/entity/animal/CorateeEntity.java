@@ -19,27 +19,17 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.entity.base.AoAAnimal;
-import net.tslat.aoa3.entity.mob.lborean.AnglerEntity;
 import net.tslat.aoa3.util.EntityUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public class CorateeEntity extends AoAAnimal implements IAnimatable {
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
-	private static final AnimationBuilder IDLE_ANIMATION = new AnimationBuilder().addAnimation("coratee.idle", true);
-	private static final AnimationBuilder SWIM_ANIMATION = new AnimationBuilder().addAnimation("coratee.swim", true);
-
+public class CorateeEntity extends AoAAnimal {
 	public CorateeEntity(EntityType<? extends AnimalEntity> entityType, World world) {
 		super(entityType, world);
 
@@ -165,25 +155,6 @@ public class CorateeEntity extends AoAAnimal implements IAnimatable {
 
 	@Override
 	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<CorateeEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<CorateeEntity>() {
-			@Override
-			public PlayState test(AnimationEvent<CorateeEntity> event) {
-				if (event.isMoving()) {
-					event.getController().setAnimation(SWIM_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-				else {
-					event.getController().setAnimation(IDLE_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-			}
-		}));
-	}
-
-	@Override
-	public AnimationFactory getFactory() {
-		return animationFactory;
+		animationData.addAnimationController(AoAAnimations.genericSwimIdleController(this));
 	}
 }

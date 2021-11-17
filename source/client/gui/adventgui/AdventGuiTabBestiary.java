@@ -12,7 +12,11 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.merchant.IMerchant;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.AmbientEntity;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.network.play.client.CClientStatusPacket;
 import net.minecraft.stats.Stat;
 import net.minecraft.stats.StatisticsManager;
@@ -27,8 +31,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -36,12 +38,11 @@ import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.data.client.BestiaryManager;
+import net.tslat.aoa3.data.client.BestiaryReloadListener;
 import net.tslat.aoa3.entity.base.*;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
-import net.tslat.aoa3.util.skill.HunterUtil;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -54,9 +55,8 @@ import java.util.function.Function;
 
 import static net.minecraft.entity.CreatureAttribute.*;
 
-@OnlyIn(Dist.CLIENT)
 public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
-	private static final ResourceLocation iconsTextures = new ResourceLocation("aoa3", "textures/gui/maingui/icons.png");
+	private static final ResourceLocation iconsTextures = new ResourceLocation("aoa3", "textures/gui/adventgui/icons.png");
 
 	private static final HashMap<String, Function<Entity, Tuple>> registeredEntryHandlers = new HashMap<String, Function<Entity, Tuple>>(1);
 
@@ -96,7 +96,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 			statsMap = ObfuscationReflectionHelper.getPrivateValue(StatisticsManager.class, stats, "field_150875_a");
 
 		if (scrollMenu == null)
-			scrollMenu = new BestiaryMenu(minecraft, AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 764, AdventMainGui.scale);
+			scrollMenu = new BestiaryMenu(minecraft, AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 764, AdventMainGui.SCALE);
 
 		searchField = new TextFieldWidget(font, AdventMainGui.scaledTabRootX + 20, AdventMainGui.scaledTabRootY, (int)((width - 40) / 2d), 15, new StringTextComponent(""));
 
@@ -108,8 +108,8 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
-		this.adjustedMouseX = (int)(mouseX * AdventMainGui.scaleInverse);
-		this.adjustedMouseY = (int)(mouseY * AdventMainGui.scaleInverse);
+		this.adjustedMouseX = (int)(mouseX * (1 / AdventMainGui.SCALE));
+		this.adjustedMouseY = (int)(mouseY * (1 / AdventMainGui.SCALE));
 
 		scrollMenu.render(matrixStack, adjustedMouseX, adjustedMouseY, partialTicks);
 	}
@@ -124,13 +124,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int mouseButton) {
-		if (scrollMenu != null) {
-			scrollMenu.handleMouseClick(adjustedMouseX, adjustedMouseY, mouseButton);
-
-			return true;
-		}
-
-		return false;
+		return scrollMenu != null && scrollMenu.handleMouseClick(adjustedMouseX, adjustedMouseY, mouseButton);
 	}
 
 	@Override
@@ -339,48 +333,49 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				String type;
 				String attribute = "";
 
-				if (!openEntryInstance.canChangeDimensions()) {
-					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.boss");
-				}
-				else if (openEntryInstance instanceof AoAMeleeMob) {
-					if (openEntryInstance instanceof AoARangedAttacker) {
-						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.hybrid");
+				if (openEntryInstance instanceof LivingEntity && openEntryInstance instanceof IMob) {
+					if (!openEntryInstance.canChangeDimensions()) {
+						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.boss");
+					}
+					else if (openEntryInstance instanceof FlyingEntity) {
+						if (((LivingEntity)openEntryInstance).getAttribute(Attributes.ATTACK_DAMAGE) != null) {
+							type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.flyingMelee");
+						}
+						else {
+							type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.flyingRanged");
+						}
+					}
+					else if (openEntryInstance instanceof AoAWaterRangedMob) {
+						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.swimmingRanged");
+					}
+					else if (openEntryInstance instanceof AoAWaterMeleeMob || ((LivingEntity)openEntryInstance).getMobType() == WATER) {
+						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.swimmingMelee");
 					}
 					else {
-						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.melee");
+						if (((LivingEntity)openEntryInstance).getAttribute(Attributes.ATTACK_DAMAGE) != null) {
+							if (openEntryInstance instanceof IRangedAttackMob) {
+								type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.hybrid");
+							}
+							else {
+								type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.melee");
+							}
+						}
+						else {
+							type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.ranged");
+						}
 					}
 				}
-				else if (openEntryInstance instanceof AoARangedMob) {
-					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.ranged");
-				}
-				else if (openEntryInstance instanceof AoAFlyingMeleeMob) {
-					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.flyingMelee");
-				}
-				else if (openEntryInstance instanceof AoAFlyingRangedMob) {
-					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.flyingRanged");
-				}
-				else if (openEntryInstance instanceof AoAWaterMeleeMob) {
-					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.swimmingMelee");
+				else if (openEntryInstance instanceof IMerchant) {
+					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.trader");
 				}
 				else if (openEntryInstance instanceof AnimalEntity) {
 					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.animal");
 				}
-				else if (openEntryInstance instanceof AoAAmbientNPC) {
+				else if (openEntryInstance instanceof AmbientEntity || openEntryInstance instanceof WaterMobEntity) {
 					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.ambient");
 				}
-				else if (openEntryInstance instanceof AoATrader) {
-					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.trader");
-				}
 				else {
-					if (entityModId.equals(AdventOfAscension.MOD_ID)) {
-						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.other");
-					}
-					else if (openEntryInstance instanceof IRangedAttackMob) {
-						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.ranged");
-					}
-					else {
-						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.melee");
-					}
+					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.other");
 				}
 
 				if (livingInstance != null) {
@@ -402,10 +397,10 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 
 				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type") + TextFormatting.RESET + " " + type);
 
-				if (livingInstance != null && HunterUtil.isHunterCreature(livingInstance)) {
+				/*if (livingInstance != null && HunterUtil.isHunterCreature(livingInstance)) {
 					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.hunterReq") + TextFormatting.RESET + " " + HunterUtil.getHunterLevel((LivingEntity)openEntryInstance));
 					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.hunterXp") + TextFormatting.RESET + " " + HunterUtil.getHunterXp((LivingEntity)openEntryInstance));
-				}
+				}*/ // TODO
 
 				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.attribute") + TextFormatting.RESET + " " + attribute);
 				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.size") + TextFormatting.RESET + " " + ((int)(openEntryInstance.getBbWidth() * 1000)) / 1000f + "x" + ((int)(openEntryInstance.getBbHeight() * 1000)) / 1000f);
@@ -437,7 +432,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.speed") + TextFormatting.RESET + " " + (int)(livingInstance.getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 1000) / 1000f);
 				}
 
-				String bestiaryInfo = BestiaryManager.BESTIARY.get(registryName);
+				String bestiaryInfo = BestiaryReloadListener.BESTIARY.get(registryName);
 
 				if (bestiaryInfo != null)
 					openEntryInfoLines = font.split(new StringTextComponent(bestiaryInfo), (int)(734 / 1.5f));
@@ -494,7 +489,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 	}
 
 	private class BestiaryMenu extends ScrollablePane {
-		public BestiaryMenu(Minecraft mc, int top, int left, int viewHeight, int viewWidth, float... renderingScale) {
+		public BestiaryMenu(Minecraft mc, int top, int left, int viewHeight, int viewWidth, float renderingScale) {
 			super(minecraft, top, left, viewHeight, viewWidth, renderingScale);
 		}
 

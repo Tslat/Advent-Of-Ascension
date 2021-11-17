@@ -19,7 +19,7 @@ import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityProv
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;

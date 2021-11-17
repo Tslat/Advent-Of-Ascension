@@ -1,0 +1,5 @@
+{
+  "recharge_delay": 60,
+  "regen_per_tick": 0.32,
+  "max_value": 200.0
+}

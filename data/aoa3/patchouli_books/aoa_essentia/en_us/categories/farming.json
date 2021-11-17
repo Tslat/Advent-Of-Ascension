@@ -1,0 +1,6 @@
+{
+  "name": "Farming",
+  "description": "$(thing)Farming$() is a skill for those who like the simple joys of growing crops and other growable plants.$(br2)Increases in levels of $(thing)Farming$() will give bonuses and improvements to all areas of farming - from planting to harvest.",
+  "icon": "aoa3:textures/gui/aoaskill/farming.png",
+  "parent": "aoa3:skills"
+}

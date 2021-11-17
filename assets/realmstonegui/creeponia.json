@@ -1,0 +1,8 @@
+{
+  "id": "creeponia",
+  "gui_x": 827,
+  "gui_y": 495,
+  "parents": [
+    "overworld"
+  ]
+}

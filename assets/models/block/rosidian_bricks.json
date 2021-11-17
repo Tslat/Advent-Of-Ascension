@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "aoa3:block/rosidian_bricks",
+    "all": "aoa3:block/rosidian_bricks"
+  }
+}

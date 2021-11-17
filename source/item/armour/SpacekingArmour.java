@@ -8,13 +8,11 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.minion.OrblingEntity;
+import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -36,11 +34,11 @@ public class SpacekingArmour extends AdventArmour {
 			PlayerEntity pl = plData.player();
 
 			if (!pl.level.isClientSide && pl.getHealth() > 0 && RandomUtil.oneInNChance(3)) {
-				OrblingEntity orbling = new OrblingEntity(AoAEntities.Minions.ORBLING.get(), pl.level);
+				/*OrblingEntity orbling = new OrblingEntity(AoAEntities.Minions.ORBLING.get(), pl.level);
 
 				orbling.setPos(pl.getX(), pl.getY() + 1.5, pl.getZ());
 				orbling.tame(pl);
-				pl.level.addFreshEntity(orbling);
+				pl.level.addFreshEntity(orbling);*/ // TODO
 			}
 		}
 	}

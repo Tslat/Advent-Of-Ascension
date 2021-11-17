@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "aoa3:block/natural_limonite_ivory"
+  }
+}

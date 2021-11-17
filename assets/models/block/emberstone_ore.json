@@ -1,0 +1,8 @@
+{
+  "parent": "aoa3:block/overlay_cube",
+  "textures": {
+    "texture": "minecraft:block/netherrack",
+    "particle": "minecraft:block/netherrack",
+    "overlay": "aoa3:block/emberstone_ore"
+  }
+}

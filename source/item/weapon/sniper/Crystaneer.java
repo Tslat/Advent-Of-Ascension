@@ -5,10 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Crystaneer extends BaseSniper {
+	private static final ResourceLocation CRYSTAL_SCOPE_TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/crystal.png");
+
 	private static final ArrayList<ItemStack> gemDrops = new ArrayList<ItemStack>(5);
 	private static boolean populated = false;
 
@@ -34,8 +37,8 @@ public class Crystaneer extends BaseSniper {
 	}
 
 	@Override
-	public ScopeOverlayRenderer.Type getScopeType() {
-		return ScopeOverlayRenderer.Type.CRYSTAL;
+	public ResourceLocation getScopeTexture(ItemStack stack) {
+		return CRYSTAL_SCOPE_TEXTURE;
 	}
 
 	@Override

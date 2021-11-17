@@ -1,0 +1,8 @@
+{
+  "id": "barathos",
+  "gui_x": 627,
+  "gui_y": 895,
+  "parents": [
+    "overworld"
+  ]
+}

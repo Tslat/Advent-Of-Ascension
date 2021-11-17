@@ -26,6 +26,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.common.util.Constants;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.block.WaterloggableBlock;
 import net.tslat.aoa3.block.tileentity.TrophyTileEntity;
@@ -76,7 +77,7 @@ public class TrophyBlock extends WaterloggableBlock {
 			if (tag.contains("BlockEntityTag")) {
 				CompoundNBT dataTag = tag.getCompound("BlockEntityTag");
 
-				if (dataTag.contains("EntityID", 8)) {
+				if (dataTag.contains("EntityID", Constants.NBT.TAG_STRING)) {
 					TileEntity tile = world.getBlockEntity(pos);
 
 					if (tile instanceof TrophyTileEntity)

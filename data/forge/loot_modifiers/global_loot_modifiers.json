@@ -1,15 +1,13 @@
 {
   "replace": false,
   "entries": [
-    "aoa3:loot_modifying_items",
-    "aoa3:foraging",
-    "aoa3:logging",
     "aoa3:haven",
-    "aoa3:guardian_biogenic_armour",
+    "aoa3:player_event_listeners",
     "aoa3:elder_guardian_biogenic_armour",
+    "aoa3:loot_modifying_items",
     "aoa3:overworld_chest_loot",
     "aoa3:additional_generic_chest_loot",
-    "aoa3:dispenser_loot",
-    "aoa3:hauling"
+    "aoa3:guardian_biogenic_armour",
+    "aoa3:dispenser_loot"
   ]
 }

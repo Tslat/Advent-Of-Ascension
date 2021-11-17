@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "aoa3:block/pressed_creep_stone",
+    "all": "aoa3:block/pressed_creep_stone"
+  }
+}

@@ -11,7 +11,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 
 import java.util.ArrayList;
 
-public abstract class PotionUtil {
+public final class PotionUtil {
 	public static final int MAX_POTION_DURATION = 9999999;
 	public static final int AMBIENT_POTION_DURATION = -1;
 

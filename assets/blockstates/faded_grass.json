@@ -1,0 +1,24 @@
+{
+  "variants": {
+    "snowy=false": [
+      {
+        "model": "aoa3:block/faded_grass"
+      },
+      {
+        "model": "aoa3:block/faded_grass",
+        "y": 90
+      },
+      {
+        "model": "aoa3:block/faded_grass",
+        "y": 180
+      },
+      {
+        "model": "aoa3:block/faded_grass",
+        "y": 270
+      }
+    ],
+    "snowy=true": {
+      "model": "aoa3:block/faded_grass"
+    }
+  }
+}

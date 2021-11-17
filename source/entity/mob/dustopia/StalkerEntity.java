@@ -7,9 +7,11 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -55,7 +57,7 @@ public class StalkerEntity extends AoAMeleeMob {
             setDeltaMovement(0, getDeltaMovement().y(), 0);
 
             if (getTarget().distanceToSqr(this) <= 2 * 2)
-                AoAPackets.messagePlayer((ServerPlayerEntity)getTarget(), new ScreenOverlayPacket(ScreenOverlayPacket.Type.STATIC, 30));
+                AoAPackets.messagePlayer((ServerPlayerEntity)getTarget(), new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/static.png"), 30));
 
         }
     }

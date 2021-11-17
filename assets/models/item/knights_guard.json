@@ -1,0 +1,14 @@
+{
+  "parent": "aoa3:item/greatblade",
+  "textures": {
+    "layer0": "aoa3:item/knights_guard"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "minecraft:blocking": 1.0
+      },
+      "model": "aoa3:item/knights_guard_blocking"
+    }
+  ]
+}

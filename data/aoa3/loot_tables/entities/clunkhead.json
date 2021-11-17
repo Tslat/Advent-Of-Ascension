@@ -190,21 +190,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:fragmented_anima_stone"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 14,
           "functions": [
             {

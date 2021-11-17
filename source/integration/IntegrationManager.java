@@ -5,11 +5,15 @@ import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.integration.immersiveengineering.ImmersiveEngineeringIntegration;
 import net.tslat.aoa3.integration.jer.JERIntegration;
+import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
+import net.tslat.aoa3.integration.tinkersconstruct.TinkersConstructIntegration;
 
 public class IntegrationManager {
 	static boolean jeiActive = false;
 	static boolean jerActive = false;
 	static boolean immersiveEngineeringActive = false;
+	static boolean patchouliActive = false;
+	static boolean tinkersConstructActive = false;
 
 	public static boolean isJEIActive() {
 		return jeiActive;
@@ -23,6 +27,14 @@ public class IntegrationManager {
 		return immersiveEngineeringActive;
 	}
 
+	public static boolean isPatchouliActive() {
+		return patchouliActive;
+	}
+
+	public static boolean isTinkersConstructActive() {
+		return tinkersConstructActive;
+	}
+
 	public static void preInit() {
 		Logging.logStatusMessage("Checking for third-party integrations");
 
@@ -34,6 +46,12 @@ public class IntegrationManager {
 
 		if (isModPresent("immersiveengineering") && AoAConfig.INTEGRATIONS.immersiveEngineeringEnabled.get())
 			immersiveEngineeringPreInit();
+
+		if (isModPresent("patchouli") && AoAConfig.INTEGRATIONS.patchouliEnabled.get())
+			patchouliPreInit();
+
+		if (isModPresent("tconstruct") && AoAConfig.INTEGRATIONS.tinkersConstructEnabled.get())
+			tinkersConstructPreInit();
 	}
 
 	public static void init() {
@@ -60,6 +78,20 @@ public class IntegrationManager {
 		Logging.logStatusMessage("Found Immersive Engineering, integrating");
 
 		immersiveEngineeringActive = true;
+	}
+
+	private static void patchouliPreInit() {
+		Logging.logStatusMessage("Found Patchouli, Integrating");
+
+		patchouliActive = true;
+		PatchouliIntegration.preInit();
+	}
+
+	private static void tinkersConstructPreInit() {
+		Logging.logStatusMessage("Found Tinkers Construct, Integrating");
+
+		tinkersConstructActive = true;
+		TinkersConstructIntegration.preInit();
 	}
 
 	public static boolean isModPresent(String modId) {

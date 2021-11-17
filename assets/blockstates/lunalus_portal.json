@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "aoa3:block/lunalus_portal_ns"
+    },
+    "axis=z": {
+      "model": "aoa3:block/lunalus_portal_ew"
+    }
+  }
+}

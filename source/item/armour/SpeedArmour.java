@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,21 +36,21 @@ public class SpeedArmour extends AdventArmour {
 	@Override
 	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null) {
-			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, SET_BONUS);
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, SET_BONUS, false);
 		}
 		else {
 			switch (slot) {
 				case FEET:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, BOOTS_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, BOOTS_BONUS, false);
 					break;
 				case LEGS:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, LEGS_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, LEGS_BONUS, false);
 					break;
 				case CHEST:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, CHESTPLATE_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, CHESTPLATE_BONUS, false);
 					break;
 				case HEAD:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, HELMET_BONUS);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MOVEMENT_SPEED, HELMET_BONUS, false);
 					break;
 				default:
 					break;

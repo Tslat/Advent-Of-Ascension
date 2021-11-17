@@ -1,7 +1,6 @@
 package net.tslat.aoa3.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.CreatureAttribute;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,11 +20,6 @@ public class SeverEnchantment extends Enchantment {
 
 	public int getMaxLevel() {
 		return 5;
-	}
-
-	@Override
-	public float getDamageBonus(int level, CreatureAttribute creatureType) {
-		return Math.max(0, level * 1.5f);
 	}
 
 	@Override

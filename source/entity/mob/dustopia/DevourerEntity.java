@@ -7,8 +7,10 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -49,6 +51,6 @@ public class DevourerEntity extends AoAMeleeMob {
 		heal(40);
 
 		if (target instanceof ServerPlayerEntity)
-			AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(ScreenOverlayPacket.Type.BLOODY, 50));
+			AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/bloody.png"), 50));
 	}
 }

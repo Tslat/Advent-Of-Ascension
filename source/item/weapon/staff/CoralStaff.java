@@ -4,6 +4,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
@@ -14,7 +15,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.scheduling.async.CoralStaffTask;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -37,7 +37,7 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.WATER_RUNE.get(), 2);
 		runes.put(AoAItems.KINETIC_RUNE.get(), 8);
 	}

@@ -6,10 +6,12 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -47,5 +49,21 @@ public class MuckopedeEntity extends AoAMeleeMob {
 	@Override
 	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
+	}
+
+	@Override
+	protected int getAttackSwingDuration() {
+		return 12;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 6;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkRunIdleController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
 	}
 }

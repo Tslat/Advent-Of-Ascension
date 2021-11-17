@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "aoa3:block/iropole",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "aoa3:block/iropole"
+    },
+    "axis=z": {
+      "model": "aoa3:block/iropole",
+      "x": 90
+    }
+  }
+}

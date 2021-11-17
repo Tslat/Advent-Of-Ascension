@@ -11,7 +11,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.skill.HunterUtil;
 
 public class HidingFungiEntity extends AoAMeleeMob {
 	public HidingFungiEntity(EntityType<? extends MonsterEntity> entityType, World world) {
@@ -35,7 +34,7 @@ public class HidingFungiEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onHit(DamageSource source, float amount) {
-		if (!level.isClientSide && HunterUtil.canAttackTarget(this, source.getEntity(), true)) {
+		if (!level.isClientSide) {
 			LivingFungiEntity livingFungi = new LivingFungiEntity(AoAEntities.Mobs.LIVING_FUNGI.get(), level);
 
 			livingFungi.moveTo(getX(), getY(), getZ(), yRot, xRot);

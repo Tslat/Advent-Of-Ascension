@@ -24,11 +24,10 @@ import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.minion.HiveSoldierEntity;
 import net.tslat.aoa3.entity.mob.misc.HiveWorkerEntity;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -137,10 +136,17 @@ public class HiveKingEntity extends AoAMeleeMob {
 			return;
 		}
 
-		if (!level.isClientSide && random.nextInt(500) == 0) {
-			HiveWorkerEntity worker = new HiveWorkerEntity(this);
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
 
-			level.addFreshEntity(worker);
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+
+			if (random.nextInt(500) == 0) {
+				HiveWorkerEntity worker = new HiveWorkerEntity(this);
+
+				level.addFreshEntity(worker);
+			}
 		}
 	}
 
@@ -180,7 +186,7 @@ public class HiveKingEntity extends AoAMeleeMob {
 			if (killer != null) {
 				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.HIVE_KING.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 
-				if (killer instanceof ServerPlayerEntity && cause.getDirectEntity() instanceof HiveSoldierEntity)
+				if (killer instanceof ServerPlayerEntity) // TODO
 					AdvancementUtil.completeAdvancement((ServerPlayerEntity)killer, new ResourceLocation(AdventOfAscension.MOD_ID, "barathos/daddy_issues"), "hive_king_hive_staff_kill");
 			}
 		}
@@ -204,13 +210,6 @@ public class HiveKingEntity extends AoAMeleeMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

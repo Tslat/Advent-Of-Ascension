@@ -64,6 +64,18 @@ public class FlashEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
+	}
+
+	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (!level.isClientSide && DamageUtil.isMeleeDamage(source)) {
 			if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
@@ -131,13 +143,6 @@ public class FlashEntity extends AoAMeleeMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

@@ -3,15 +3,12 @@ package net.tslat.aoa3.item.weapon.gun;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.minion.RosidEntity;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -34,13 +31,13 @@ public class FlowersFury extends BaseGun {
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (EntityUtil.isHostileMob(target) && RandomUtil.oneInNChance(20)) {
-			RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), shooter.level);
+			/*RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), shooter.level);
 
 			if (shooter instanceof PlayerEntity)
 				rosid.tame((PlayerEntity)shooter);
 
 			rosid.setPos(target.getX(), target.getY(), target.getZ());
-			shooter.level.addFreshEntity(rosid);
+			shooter.level.addFreshEntity(rosid);*/ // TODO
 		}
 	}
 

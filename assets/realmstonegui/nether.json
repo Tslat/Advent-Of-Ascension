@@ -1,0 +1,8 @@
+{
+  "id": "nether",
+  "gui_x": 1027,
+  "gui_y": 695,
+  "parents": [
+    "overworld"
+  ]
+}

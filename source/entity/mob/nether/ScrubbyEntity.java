@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.mob.HopAtTargetGoal;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 
 import javax.annotation.Nullable;
 
@@ -35,9 +34,8 @@ public class ScrubbyEntity extends AoAMeleeMob {
 		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
 		goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
 	}
 
 	@Nullable

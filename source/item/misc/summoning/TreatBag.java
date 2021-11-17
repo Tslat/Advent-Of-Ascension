@@ -6,8 +6,10 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
@@ -16,14 +18,14 @@ import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.boss.CottonCandorEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class TreatBag extends Item {
 	public TreatBag() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).food(new Food.Builder().alwaysEat().build()));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.UNCOMMON).food(new Food.Builder().alwaysEat().build()));
 	}
 
 	@Override
@@ -37,11 +39,11 @@ public class TreatBag extends Item {
 			ServerPlayerEntity pl = (ServerPlayerEntity)eater;
 
 			if (world.getDifficulty() == Difficulty.PEACEFUL) {
-				PlayerUtil.notifyPlayer(pl, "message.feedback.spawnBoss.difficultyFail", TextFormatting.RED);
+				PlayerUtil.notifyPlayer(pl, new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail").withStyle(TextFormatting.RED));
 			}
 			else {
 				if (!WorldUtil.isWorld(world, AoADimensions.CANDYLAND.key)) {
-					PlayerUtil.notifyPlayer(pl, AoAEntities.Mobs.COTTON_CANDOR.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
+					PlayerUtil.notifyPlayer(pl, new TranslationTextComponent(AoAEntities.Mobs.COTTON_CANDOR.get().getDescriptionId() + ".wrongDimension").withStyle(TextFormatting.RED));
 				}
 				else {
 					CottonCandorEntity cottonCandor = new CottonCandorEntity(AoAEntities.Mobs.COTTON_CANDOR.get(), world);

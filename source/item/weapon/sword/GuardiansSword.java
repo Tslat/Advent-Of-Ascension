@@ -25,7 +25,7 @@ import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityProv
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -63,6 +63,26 @@ public class GuardiansSword extends BaseSword {
 		return false;
 	}
 
+	@Nullable
+	@Override
+	public CompoundNBT getShareTag(ItemStack stack) {
+		CompoundNBT tag = super.getShareTag(stack);
+
+		if (tag == null)
+			tag = new CompoundNBT();
+
+		tag.putFloat("AdventMiscStackCapability", PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue());
+
+		return tag;
+	}
+
+	@Override
+	public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+		if (nbt != null && nbt.contains("AdventMiscStackCapability"))
+			PersistentStackCapabilityProvider.getOrDefault(stack, null).setValue(nbt.getFloat("AdventMiscStackCapability"));
+
+		super.readShareTag(stack, nbt);
+	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {

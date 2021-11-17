@@ -17,11 +17,13 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.DistExecutor;
 import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -29,7 +31,6 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.mob.precasia.PrimitiveCarrotopEntity;
 import net.tslat.aoa3.util.*;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -74,7 +75,7 @@ public class BlankRealmstone extends Item {
 			if (player instanceof ServerPlayerEntity && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3));
+				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
 			}
 
 			return ActionResultType.SUCCESS;

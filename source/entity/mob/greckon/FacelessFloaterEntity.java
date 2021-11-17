@@ -7,8 +7,10 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -47,6 +49,6 @@ public class FacelessFloaterEntity extends AoAMeleeMob {
     @Override
     protected void onAttack(Entity target) {
         if (target instanceof ServerPlayerEntity)
-            AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(ScreenOverlayPacket.Type.PURPLE_FOG, 300));
+            AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/purple_fog.png"), 300));
     }
 }

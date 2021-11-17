@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "aoa3:raw_crimson_skipper"
-  },
-  "result": "aoa3:cooked_crimson_skipper",
-  "experience": 3.0,
-  "cookingtime": 200
-}

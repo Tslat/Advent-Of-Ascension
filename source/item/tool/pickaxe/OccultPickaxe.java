@@ -1,5 +1,7 @@
 package net.tslat.aoa3.item.tool.pickaxe;
 
+import com.mojang.datafixers.util.Pair;
+import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -12,13 +14,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.entity.misc.OccultBlockEntity;
-import net.tslat.aoa3.util.ClientOperations;
+import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class OccultPickaxe extends BasePickaxe {
@@ -30,17 +33,21 @@ public class OccultPickaxe extends BasePickaxe {
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 		if (world.isClientSide()) {
+			ArrayList<Pair<BlockPos, BlockState>> blocks = new ArrayList<Pair<BlockPos, BlockState>>();
+
 			for (int i = (int)(player.getX() - 4.0); i < (int)(player.getX() + 4.0); ++i) {
 				for (int j = (int)(player.getY() - 4.0); j < (int)(player.getY() + 4.0); ++j) {
 					for (int k = (int)(player.getZ() - 4.0); k < (int)(player.getZ() + 4.0); ++k) {
-						if (world.getBlockState(new BlockPos(i, j, k)).is(Tags.Blocks.ORES)) {
-							OccultBlockEntity entity = new OccultBlockEntity(world, new BlockPos(i, j, k));
+						BlockPos pos = new BlockPos(i, j, k);
+						BlockState state = world.getBlockState(pos);
 
-							ClientOperations.spawnClientOnlyEntity(entity);
-						}
+						if (state.is(Tags.Blocks.ORES))
+							blocks.add(Pair.of(pos, state));
 					}
 				}
 			}
+
+			ClientOperations.addOccultBlocks(GlobalEvents.tick + 150, blocks);
 		}
 
 		ActionResult<ItemStack> result = super.use(world, player, hand);

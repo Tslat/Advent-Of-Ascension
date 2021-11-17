@@ -5,22 +5,15 @@ import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
 public class NeptunoEntity extends AoAWaterMeleeMob {
-	private static final AnimationBuilder IDLE_ANIMATION = new AnimationBuilder().addAnimation("neptuno.idle", true);
-	private static final AnimationBuilder SWIM_ANIMATION = new AnimationBuilder().addAnimation("neptuno.swim", true);
-	private static final AnimationBuilder ATTACK_ANIMATION = new AnimationBuilder().addAnimation("neptuno.attack", false);
-
 	public NeptunoEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -55,26 +48,18 @@ public class NeptunoEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
+	protected int getAttackSwingDuration() {
+		return 13;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 7;
+	}
+
+	@Override
 	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<NeptunoEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<NeptunoEntity>() {
-			@Override
-			public PlayState test(AnimationEvent<NeptunoEntity> event) {
-				if (swinging) {
-					event.getController().setAnimation(ATTACK_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-				else if (event.isMoving()) {
-					event.getController().setAnimation(SWIM_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-				else {
-					event.getController().setAnimation(IDLE_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-			}
-		}));
+		animationData.addAnimationController(AoAAnimations.genericSwimIdleController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
 	}
 }

@@ -1,31 +1,24 @@
 package net.tslat.aoa3.entity.mob.gardencia;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.constant.Deities;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -59,7 +52,7 @@ public class FlowerfaceEntity extends AoAMeleeMob {
     protected void onInsideBlock(BlockState state) {
         if (state.getBlock() == AoABlocks.CANDIED_WATER.get()) {
             if (!candiedWater) {
-                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF);
+                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF, false);
                 setHealth(getHealth() * 1.5f);
 
                 candiedWater = true;
@@ -101,23 +94,6 @@ public class FlowerfaceEntity extends AoAMeleeMob {
         super.die(cause);
 
         if (!level.isClientSide) {
-            if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
-                Entity source = cause.getEntity();
-                PlayerEntity killer = null;
-
-                if (source != null) {
-                    if (source instanceof PlayerEntity) {
-                        killer = (PlayerEntity)source;
-                    }
-                    else if (source instanceof TameableEntity && ((TameableEntity)source).getOwner() instanceof PlayerEntity) {
-                        killer = (PlayerEntity)((TameableEntity)source).getOwner();
-                    }
-                }
-
-                if (killer instanceof ServerPlayerEntity)
-                    PlayerUtil.addTributeToPlayer((ServerPlayerEntity)killer, Deities.SELYAN, 8);
-            }
-
             if (candiedWater && cause.getEntity() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
                 ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
         }

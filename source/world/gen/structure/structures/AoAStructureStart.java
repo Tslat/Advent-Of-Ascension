@@ -17,6 +17,7 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.StructureStart;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.tslat.aoa3.world.gen.structure.JigsawAssembler;
 
 import java.util.List;
 import java.util.Random;
@@ -49,17 +50,17 @@ public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<
 
 	@Override
 	public void generatePieces(DynamicRegistries dynamicRegistry, ChunkGenerator chunkGenerator, TemplateManager templateManager, int chunkX, int chunkZ, Biome biome, T config) {
-		BlockPos.Mutable chunkCenter = new BlockPos.Mutable((chunkX << 4) + 7, 0, (chunkZ << 4) + 7);
+		BlockPos.Mutable chunkCenter = new BlockPos.Mutable((chunkX << 4), 0, (chunkZ << 4));
 
 		if (checkAndAdjustGeneration(chunkGenerator, chunkCenter, biome, config))
-			generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface());
+			generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface(), config);
 	}
 
 	protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, T config) {
 		return chunkGenerator.getFirstFreeHeight(chunkCenter.getX(), chunkCenter.getZ(), Heightmap.Type.WORLD_SURFACE_WG) > 0;
 	}
 
-	protected void generateStructurePieces(DynamicRegistries registries, int maxDepth, ChunkGenerator chunkGenerator, TemplateManager templateManager, BlockPos chunkCenter, Random rand, boolean bool1, boolean generateOnSurface) {
+	protected void generateStructurePieces(DynamicRegistries registries, int maxDepth, ChunkGenerator chunkGenerator, TemplateManager templateManager, BlockPos chunkCenter, Random rand, boolean bool1, boolean generateOnSurface, T structureConfig) {
 		Structure.bootstrap();
 
 		VillageConfig config = new VillageConfig(() -> registries.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY).get(getFeature().getTemplatePoolPath()), maxDepth);
@@ -82,7 +83,7 @@ public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<
 		pieces.add(villagePiece);
 
 		if (config.maxDepth() > 0)
-			JigsawManager.addPieces(registries, villagePiece, config.maxDepth(), factory, chunkGenerator, templateManager, pieces, rand);
+			JigsawAssembler.preGenPieces(registries, villagePiece, config.maxDepth(), factory, chunkGenerator, templateManager, pieces, rand);
 
 		calculateBoundingBox();
 		doPostPlacementOperations(maxDepth, chunkGenerator, chunkCenter, rand);

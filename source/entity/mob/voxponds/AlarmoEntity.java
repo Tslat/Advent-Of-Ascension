@@ -20,7 +20,6 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AlarmoEntity extends AoAMeleeMob {
-
     public AlarmoEntity(EntityType<? extends MonsterEntity> entityType, World world) {
         super(entityType, world);
     }

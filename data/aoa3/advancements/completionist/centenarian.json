@@ -1,0 +1,33 @@
+{
+  "parent": "aoa3:completionist/actually_half_way_there",
+  "display": {
+    "icon": {
+      "item": "aoa3:giant_skill_crystal"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.completionist.centenarian.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.centenarian.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": false,
+    "hidden": false
+  },
+  "criteria": {
+    "level_100": {
+      "trigger": "aoa3:level_up",
+      "conditions": {
+        "level": 100
+      }
+    }
+  },
+  "requirements": [
+    [
+      "level_100"
+    ]
+  ]
+}

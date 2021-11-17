@@ -14,7 +14,10 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.*;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.Direction;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -25,7 +28,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAEntityData;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
 
@@ -47,9 +49,8 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
 		goalSelector.addGoal(8, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
 	}
 
 	@Nullable

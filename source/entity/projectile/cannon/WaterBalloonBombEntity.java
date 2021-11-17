@@ -45,8 +45,8 @@ public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile
 		Entity shooter = getOwner();
 		WorldUtil.createExplosion(shooter, level, this, 1.5f);
 
-		if (!level.isClientSide && WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && level.isEmptyBlock(blockPosition()) && !level.dimensionType().ultraWarm()) {
-			if (!WorldUtil.canModifyBlock(level, blockPosition(), shooter instanceof PlayerEntity ? shooter : null, null))
+		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition()) && !level.dimensionType().ultraWarm()) {
+			if (!WorldUtil.canPlaceBlock(level, blockPosition(), shooter instanceof PlayerEntity ? shooter : null, null))
 				return;
 
 			int i = 1;

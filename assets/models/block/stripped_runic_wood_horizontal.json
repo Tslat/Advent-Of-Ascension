@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "side": "aoa3:block/stripped_runic_log",
+    "end": "aoa3:block/stripped_runic_log"
+  }
+}

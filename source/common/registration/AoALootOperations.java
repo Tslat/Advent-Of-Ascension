@@ -31,7 +31,6 @@ public final class AoALootOperations {
 		public static final LootConditionType HOLDING_ITEM = register("holding_item", new HoldingItem.Serializer());
 		public static final LootConditionType PLAYER_HAS_LEVEL = register("player_has_level", new PlayerHasLevel.Serializer());
 		public static final LootConditionType PLAYER_HAS_RESOURCE = register("player_has_resource", new PlayerHasResource.Serializer());
-		public static final LootConditionType PLAYER_HAS_TRIBUTE = register("player_has_tribute", new PlayerHasTribute.Serializer());
 
 		private static LootConditionType register(String id, ILootSerializer<? extends ILootCondition> serializer) {
 			return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(AdventOfAscension.MOD_ID, id), new LootConditionType(serializer));

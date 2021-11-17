@@ -10,9 +10,9 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -30,7 +30,7 @@ public class EyeCandy extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entityLiving) {
 		if (entityLiving instanceof ServerPlayerEntity)
-			PlayerUtil.addResourceToPlayer((ServerPlayerEntity)entityLiving, Resources.ENERGY, 10);
+			PlayerUtil.addResourceToPlayer((ServerPlayerEntity)entityLiving, AoAResources.SPIRIT.get(), 10);
 
 		return super.finishUsingItem(stack, worldIn, entityLiving);
 	}

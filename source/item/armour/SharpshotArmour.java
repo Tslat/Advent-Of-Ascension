@@ -13,7 +13,7 @@ import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;

@@ -1,0 +1,8 @@
+{
+  "parent": "aoa3:block/overlay_cube",
+  "textures": {
+    "texture": "aoa3:block/weightless_stone",
+    "particle": "aoa3:block/weightless_stone",
+    "overlay": "aoa3:block/crystallite_ore"
+  }
+}

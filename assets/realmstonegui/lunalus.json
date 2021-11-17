@@ -1,0 +1,9 @@
+{
+  "id": "lunalus",
+  "gui_x": 1327,
+  "gui_y": 1195,
+  "parents": [
+    "celeve",
+    "haven"
+  ]
+}

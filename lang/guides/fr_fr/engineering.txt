@@ -1,3 +1,0 @@
-Ingénieurie (compétence)
-
-L'ingénieurie n'est pas encore implémentée dans AoA.

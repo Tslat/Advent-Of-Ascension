@@ -19,7 +19,7 @@ import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -33,11 +33,6 @@ public class NecroArmour extends AdventArmour {
 	@Override
 	public AdventArmour.Type setType() {
 		return AdventArmour.Type.NECRO;
-	}
-
-	@Override
-	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
-		super.onEffectTick(plData, slots);
 	}
 
 	@Override
@@ -67,7 +62,7 @@ public class NecroArmour extends AdventArmour {
 				ItemStack stack = inv.getItem(inventoryIndex);
 
 				if (!stack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.VANISHING_CURSE, stack) == 0) {
-					plData.storeInterventionItem(stack);
+					plData.storeItems(stack);
 					inv.setItem(inventoryIndex, ItemStack.EMPTY);
 					count--;
 				}

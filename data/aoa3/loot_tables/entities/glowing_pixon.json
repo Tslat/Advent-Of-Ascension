@@ -11,7 +11,7 @@
           "functions": [
             {
               "function": "aoa3:grant_skill_xp",
-              "skill": "infusion",
+              "skill": "aoa3:imbuing",
               "xp": 200.0
             }
           ],
@@ -22,7 +22,7 @@
           "functions": [
             {
               "function": "aoa3:grant_skill_xp",
-              "skill": "infusion",
+              "skill": "aoa3:imbuing",
               "xp": 300.0
             }
           ],

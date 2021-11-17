@@ -1,0 +1,12 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "aoa3:block/inverted_lelyetian_grass"
+      },
+      {
+        "model": "aoa3:block/inverted_lelyetian_grass"
+      }
+    ]
+  }
+}

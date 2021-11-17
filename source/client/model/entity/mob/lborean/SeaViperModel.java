@@ -11,17 +11,17 @@ public class SeaViperModel extends AnimatedGeoModel<SeaViperEntity> {
 	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/mobs/lborean/sea_viper.animation.json");
 
 	@Override
-	public ResourceLocation getModelLocation(SeaViperEntity anglerEntity) {
+	public ResourceLocation getModelLocation(SeaViperEntity seaViper) {
 		return MODEL;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(SeaViperEntity anglerEntity) {
+	public ResourceLocation getTextureLocation(SeaViperEntity seaViper) {
 		return TEXTURE;
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(SeaViperEntity anglerEntity) {
+	public ResourceLocation getAnimationFileLocation(SeaViperEntity seaViper) {
 		return ANIMATIONS;
 	}
 }

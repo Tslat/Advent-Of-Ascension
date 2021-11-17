@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "side": "aoa3:block/runic_stone",
+    "bottom": "aoa3:block/runic_stone",
+    "top": "aoa3:block/runic_stone"
+  }
+}

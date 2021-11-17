@@ -34,7 +34,7 @@ public class AboveSurfaceStructure extends AoAStructureBase<IntRangeConfig> {
 				final BlockPos.Mutable chunkCenter = new BlockPos.Mutable(x, y + config.getValue(random), z);
 
 				if (checkAndAdjustGeneration(chunkGenerator, chunkCenter, biome, config))
-					generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface());
+					generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface(), config);
 			}
 		};
 	}

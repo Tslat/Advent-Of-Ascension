@@ -10,6 +10,7 @@ import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -17,8 +18,8 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -54,7 +55,7 @@ public class ReturnCrystal extends Item {
 	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
 		if (entity instanceof ServerPlayerEntity) {
 			if (!WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, "message.feedback.item.returnCrystal.wrongDim");
+				PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, new TranslationTextComponent("message.feedback.item.returnCrystal.wrongDim"));
 
 				return stack;
 			}
@@ -64,7 +65,6 @@ public class ReturnCrystal extends Item {
 			if (!((ServerPlayerEntity)entity).isCreative())
 				stack.shrink(1);
 
-			plData.stats().resetAllTribute();
 			ItemUtil.clearInventoryOfItems((ServerPlayerEntity)entity, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 			entity.teleportTo(0, 212, 0);
 		}

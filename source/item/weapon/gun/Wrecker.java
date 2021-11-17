@@ -28,9 +28,9 @@ public class Wrecker extends BaseGun {
 	@Override
 	public float getRecoilForShot(ItemStack stack, LivingEntity shooter) {
 		if (shooter instanceof PlayerEntity)
-			return ((PlayerEntity)shooter).getFoodData().getFoodLevel() / 20f * recoil;
+			return ((PlayerEntity)shooter).getFoodData().getFoodLevel() / 20f * super.getRecoilForShot(stack, shooter);
 
-		return recoil;
+		return super.getRecoilForShot(stack, shooter);
 	}
 
 	@Override

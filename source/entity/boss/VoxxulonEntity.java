@@ -27,7 +27,7 @@ import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.VoxxulonMeteorEntity;
 import net.tslat.aoa3.util.*;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -88,6 +88,13 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 			if (pl != null && !pl.isCreative())
 				level.addFreshEntity(new VoxxulonMeteorEntity(this, pl, BaseMobProjectile.Type.MAGIC));
 		}
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
 	}
 
 	@Override
@@ -135,13 +142,6 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

@@ -7,21 +7,14 @@ import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class AnglerEntity extends AoAWaterMeleeMob implements IAnimatable {
-	private static final AnimationBuilder BITE_ANIMATION = new AnimationBuilder().addAnimation("angler.bite", false);
-	private static final AnimationBuilder SWIM_ANIMATION = new AnimationBuilder().addAnimation("angler.swim", true);
-
+public class AnglerEntity extends AoAWaterMeleeMob {
 	public AnglerEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -49,29 +42,11 @@ public class AnglerEntity extends AoAWaterMeleeMob implements IAnimatable {
 		return AoASounds.ENTITY_ANGLER_HURT.get();
 	}
 
-	@Override
-	public int getCurrentSwingDuration() {
-		return 20;
-	}
+	// TODO Combine open mouth & bite attack, do timings
 
 	@Override
 	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<AnglerEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<AnglerEntity>() {
-			@Override
-			public PlayState test(AnimationEvent<AnglerEntity> event) {
-				if (swinging) {
-					event.getController().setAnimation(BITE_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-				else if (event.isMoving()) {
-					event.getController().setAnimation(SWIM_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-
-				return PlayState.STOP;
-			}
-		}));
+		animationData.addAnimationController(AoAAnimations.genericSwimController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
 	}
 }

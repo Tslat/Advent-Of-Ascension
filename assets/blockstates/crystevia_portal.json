@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "aoa3:block/crystevia_portal_ns"
+    },
+    "axis=z": {
+      "model": "aoa3:block/crystevia_portal_ew"
+    }
+  }
+}

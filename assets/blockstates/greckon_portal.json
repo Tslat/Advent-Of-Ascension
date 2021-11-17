@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "aoa3:block/greckon_portal_ns"
+    },
+    "axis=z": {
+      "model": "aoa3:block/greckon_portal_ew"
+    }
+  }
+}

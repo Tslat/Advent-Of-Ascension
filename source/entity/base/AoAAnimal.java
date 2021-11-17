@@ -20,10 +20,15 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.tslat.aoa3.entity.ai.animation.Animatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAAnimal extends AnimalEntity {
+public abstract class AoAAnimal extends AnimalEntity implements Animatable {
+	private final AnimationFactory animationFactory = new AnimationFactory(this);
+
 	public AoAAnimal(EntityType<? extends AnimalEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -99,5 +104,13 @@ public abstract class AoAAnimal extends AnimalEntity {
 	@Override
 	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity partner) {
 		return null;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.animationFactory;
 	}
 }

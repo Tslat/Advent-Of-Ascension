@@ -7,8 +7,10 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +21,7 @@ public class ArcbeastEntity extends AoAMeleeMob {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return 1f;
+        return 0.9375f;
     }
 
     @Nullable
@@ -40,4 +42,19 @@ public class ArcbeastEntity extends AoAMeleeMob {
         return AoASounds.ENTITY_ARCBEAST_HURT.get();
     }
 
+    @Override
+    protected int getAttackSwingDuration() {
+        return 11;
+    }
+
+    @Override
+    protected int getPreAttackTime() {
+        return 7;
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+    }
 }

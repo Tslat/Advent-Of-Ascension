@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/carpet",
+  "textures": {
+    "wool": "aoa3:block/borean_carpet",
+    "particle": "aoa3:block/borean_carpet"
+  }
+}

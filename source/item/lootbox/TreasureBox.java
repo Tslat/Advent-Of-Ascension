@@ -16,9 +16,6 @@ import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.LootUtil;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerUtil;
-import net.tslat.aoa3.util.skill.HaulingUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -35,9 +32,7 @@ public class TreasureBox extends Item {
 		if (player instanceof ServerPlayerEntity) {
 			ServerPlayerEntity pl = (ServerPlayerEntity)player;
 
-			for (int i = 0; i < HaulingUtil.getTreasureBoxRolls(PlayerUtil.getAdventPlayer(pl).stats().getLevel(Skills.HAULING)); i++) {
-				ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerWorld)pl.level, new ResourceLocation(AdventOfAscension.MOD_ID, "items/treasure_box"), LootUtil.getGiftContext((ServerWorld)pl.level, pl.position(), pl)));
-			}
+			ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerWorld)pl.level, new ResourceLocation(AdventOfAscension.MOD_ID, "items/treasure_box"), LootUtil.getGiftContext((ServerWorld)pl.level, pl.position(), pl)));
 
 			if (!pl.isCreative())
 				heldStack.shrink(1);

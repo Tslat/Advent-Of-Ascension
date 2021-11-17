@@ -12,6 +12,6 @@ public class TidalWaveRenderer extends ParticleProjectileRenderer<TidalWaveEntit
 
 	@Override
 	protected void addParticles(TidalWaveEntity entity, float partialTicks) {
-		entity.level.addParticle(ParticleTypes.BUBBLE, entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level.addAlwaysVisibleParticle(ParticleTypes.BUBBLE, entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 }

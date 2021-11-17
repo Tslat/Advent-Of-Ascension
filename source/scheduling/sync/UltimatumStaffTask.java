@@ -99,10 +99,10 @@ public class UltimatumStaffTask implements Runnable {
 	}
 
 	private void resetStates() {
-		if (target.getHealth() > 0)
+		if ( target != null && target.getHealth() > 0)
 			EntityUtil.removePotions(target, Effects.BLINDNESS, Effects.DAMAGE_RESISTANCE, Effects.WEAKNESS, Effects.MOVEMENT_SLOWDOWN, Effects.LEVITATION, Effects.NIGHT_VISION);
 
-		if (shooter.getHealth() > 0)
+		if (shooter != null && shooter.getHealth() > 0)
 			EntityUtil.removePotions(shooter, Effects.BLINDNESS, Effects.DAMAGE_RESISTANCE, Effects.WEAKNESS, Effects.MOVEMENT_SLOWDOWN, Effects.LEVITATION, Effects.NIGHT_VISION);
 	}
 }

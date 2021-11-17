@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=north,filled=false": {
+      "model": "aoa3:block/tea_sink"
+    },
+    "facing=south,filled=false": {
+      "model": "aoa3:block/tea_sink",
+      "y": 180
+    },
+    "facing=west,filled=false": {
+      "model": "aoa3:block/tea_sink",
+      "y": 270
+    },
+    "facing=east,filled=false": {
+      "model": "aoa3:block/tea_sink",
+      "y": 90
+    },
+    "facing=north,filled=true": {
+      "model": "aoa3:block/tea_sink_filled"
+    },
+    "facing=south,filled=true": {
+      "model": "aoa3:block/tea_sink_filled",
+      "y": 180
+    },
+    "facing=west,filled=true": {
+      "model": "aoa3:block/tea_sink_filled",
+      "y": 270
+    },
+    "facing=east,filled=true": {
+      "model": "aoa3:block/tea_sink_filled",
+      "y": 90
+    }
+  }
+}

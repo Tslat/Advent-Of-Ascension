@@ -9,25 +9,26 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.EffectUtils;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.tslat.aoa3.entity.ai.animation.Animatable;
+import net.tslat.aoa3.entity.ai.mob.AnimatableMeleeAttackGoal;
 import net.tslat.aoa3.entity.ai.mob.FlyingLookRandomlyGoal;
-import net.tslat.aoa3.entity.ai.mob.FlyingMeleeAttackGoal;
 import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingFlightMovementController;
-import net.tslat.aoa3.entity.minion.AoAMinion;
-import net.tslat.aoa3.util.player.PlayerUtil;
-import software.bernie.geckolib3.core.IAnimatable;
+import net.tslat.aoa3.util.PlayerUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob, IAnimatable {
+public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob, Animatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 	protected boolean isSlipperyMovement = false;
 
@@ -35,15 +36,15 @@ public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob, IA
 		super(entityType, world);
 
 		moveControl = new RoamingFlightMovementController(this);
+		addAnimationState("ATTACK");
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
-		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
-		goalSelector.addGoal(3, new FlyingMeleeAttackGoal(this, 0.6f, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> entity instanceof AoAMinion && ((AoAMinion)entity).isTame()));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<AoAFlyingMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		goalSelector.addGoal(3, new FlyingLookRandomlyGoal(this));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
 	}
 
 	@Nullable
@@ -75,9 +76,23 @@ public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob, IA
 		return null;
 	}
 
+	protected int getAttackSwingDuration() {
+		return 6;
+	}
+
+	protected int getPreAttackTime() {
+		return 0;
+	}
+
 	protected void onAttack(Entity target) {}
 
 	protected void onHit(DamageSource source, float amount) {}
+
+	@Override
+	public void aiStep() {
+		this.updateSwingTime();
+		super.aiStep();
+	}
 
 	@Override
 	public boolean doHurtTarget(Entity target) {
@@ -118,6 +133,19 @@ public abstract class AoAFlyingMeleeMob extends FlyingEntity implements IMob, IA
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {}
+
+	@Override
+	public int getCurrentSwingDuration() {
+		int time = getAttackSwingDuration();
+
+		if (EffectUtils.hasDigSpeed(this))
+			time -= 1 + EffectUtils.getDigSpeedAmplification(this);
+
+		if (hasEffect(Effects.DIG_SLOWDOWN))
+			time += (1 + getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) * 2;
+
+		return time;
+	}
 
 	@Override
 	public void registerControllers(AnimationData animationData) {}

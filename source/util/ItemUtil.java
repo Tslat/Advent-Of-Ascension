@@ -18,18 +18,15 @@ import net.minecraft.tags.ITag;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
-import net.tslat.aoa3.item.SkillItem;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.item.armour.AdventArmour;
-import net.tslat.aoa3.item.misc.RuneItem;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Supplier;
 
-public abstract class ItemUtil {
+public final class ItemUtil {
 	public static IItemTier customItemTier(int durability, float efficiency, float attackDamage, int harvestLevel, int enchantability, @Nullable Supplier<Item> repairMaterial) {
 		final Supplier<Item> repairItem = repairMaterial;
 
@@ -158,18 +155,6 @@ public abstract class ItemUtil {
 
 	public static boolean isHoldingItem(LivingEntity entity, Item item) {
 		return entity.getMainHandItem().getItem() == item || entity.getOffhandItem().getItem() == item;
-	}
-
-	public static boolean hasLevelForItem(Item item, PlayerDataManager plData) {
-		if (item == null)
-			return false;
-
-		if (!PlayerUtil.shouldPlayerBeAffected(plData.player()) || !(item instanceof SkillItem))
-			return true;
-
-		SkillItem skillItem = (SkillItem)item;
-
-		return skillItem.getLevelReq() <= plData.stats().getLevel(skillItem.getSkill());
 	}
 
 	public static ItemStack removeEnchantment(ItemStack stack, Enchantment ench) {
@@ -443,7 +428,7 @@ public abstract class ItemUtil {
 		}
 	}
 
-	public static boolean findAndConsumeRunes(HashMap<RuneItem, Integer> runeMap, ServerPlayerEntity player, boolean allowBuffs, @Nonnull ItemStack heldItem) {
+	public static boolean findAndConsumeRunes(HashMap<Item, Integer> runeMap, ServerPlayerEntity player, boolean allowBuffs, @Nonnull ItemStack heldItem) {
 		if (player.isCreative())
 			return true;
 
@@ -451,9 +436,9 @@ public abstract class ItemUtil {
 		int archmage = allowBuffs ? EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.ARCHMAGE.get(), heldItem) : 0;
 		boolean nightmareArmour = allowBuffs && armour == AdventArmour.Type.NIGHTMARE;
 		boolean greed = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), heldItem) > 0;
-		HashMap<RuneItem, Integer> requiredRunes = new HashMap<RuneItem, Integer>();
+		HashMap<Item, Integer> requiredRunes = new HashMap<Item, Integer>();
 
-		for (Map.Entry<RuneItem, Integer> runeEntry : runeMap.entrySet()) {
+		for (Map.Entry<Item, Integer> runeEntry : runeMap.entrySet()) {
 			if (!allowBuffs || (archmage == 0  && !nightmareArmour && !greed)) {
 				requiredRunes.putAll(runeMap);
 				break;
@@ -480,13 +465,13 @@ public abstract class ItemUtil {
 			return true;
 
 		HashSet<Integer> runeSlots = new HashSet<Integer>();
-		HashMap<RuneItem, Integer> runeCounter = new HashMap<RuneItem, Integer>(requiredRunes);
+		HashMap<Item, Integer> runeCounter = new HashMap<Item, Integer>(requiredRunes);
 
 		ItemStack mainHandStack = player.getItemInHand(Hand.OFF_HAND);
 		ItemStack offHandStack = player.getItemInHand(Hand.MAIN_HAND);
 
-		if (mainHandStack.getItem() instanceof RuneItem) {
-			RuneItem type = (RuneItem)mainHandStack.getItem();
+		if (mainHandStack.getItem().is(AoATags.Items.ADVENT_RUNE)) {
+			Item type = mainHandStack.getItem();
 
 			if (runeCounter.containsKey(type)) {
 				int amount = runeCounter.get(type);
@@ -503,8 +488,8 @@ public abstract class ItemUtil {
 			}
 		}
 
-		if (!runeCounter.isEmpty() && offHandStack.getItem() instanceof RuneItem) {
-			RuneItem type = (RuneItem)offHandStack.getItem();
+		if (!runeCounter.isEmpty() && offHandStack.getItem().is(AoATags.Items.ADVENT_RUNE)) {
+			Item type = offHandStack.getItem();
 
 			if (runeCounter.containsKey(type)) {
 				int amount = runeCounter.get(type);
@@ -525,8 +510,8 @@ public abstract class ItemUtil {
 			for (int i = 0; i < player.inventory.getContainerSize(); i++) {
 				ItemStack stack = player.inventory.getItem(i);
 
-				if (stack.getItem() instanceof RuneItem) {
-					RuneItem type = (RuneItem)stack.getItem();
+				if (stack.getItem().is(AoATags.Items.ADVENT_RUNE)) {
+					Item type = stack.getItem();
 
 					if (runeCounter.containsKey(type)) {
 						int amount = runeCounter.get(type);
@@ -551,7 +536,7 @@ public abstract class ItemUtil {
 		if (runeCounter.isEmpty()) {
 			if (runeSlots.contains(-1)) {
 				ItemStack rune = player.getItemInHand(Hand.MAIN_HAND);
-				RuneItem type = (RuneItem)rune.getItem();
+				Item type = rune.getItem();
 				int amount = requiredRunes.get(type);
 				int remaining = amount - rune.getCount();
 
@@ -569,7 +554,7 @@ public abstract class ItemUtil {
 
 			if (runeSlots.contains(-2)) {
 				ItemStack rune = player.getItemInHand(Hand.OFF_HAND);
-				RuneItem type = (RuneItem)rune.getItem();
+				Item type = rune.getItem();
 				int amount = requiredRunes.get(type);
 				int remaining = amount - rune.getCount();
 
@@ -587,7 +572,7 @@ public abstract class ItemUtil {
 
 			for (int slotId : runeSlots) {
 				ItemStack rune = player.inventory.getItem(slotId);
-				RuneItem type = (RuneItem)rune.getItem();
+				Item type = rune.getItem();
 				int amount = requiredRunes.get(type);
 				int remaining = amount - rune.getCount();
 

@@ -4,9 +4,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Tuple;
-import net.minecraft.util.registry.Registry;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -25,11 +23,6 @@ public final class AoARecipes {
 	public static final Tuple<IRecipeType<TrophyRecipe>, RegistryObject<IRecipeSerializer<TrophyRecipe>>> TROPHY = registerRecipeType("trophy", TrophyRecipe.Factory::new);
 
 	private static <T extends IRecipe<I>, I extends IInventory> Tuple<IRecipeType<T>, RegistryObject<IRecipeSerializer<T>>> registerRecipeType(String id, Supplier<IRecipeSerializer<T>> serializer) {
-		return new Tuple<IRecipeType<T>, RegistryObject<IRecipeSerializer<T>>>(Registry.register(Registry.RECIPE_TYPE, new ResourceLocation(AdventOfAscension.MOD_ID, id), new IRecipeType<T>() {
-			@Override
-			public String toString() {
-				return id;
-			}
-		}), RECIPES.register(id, serializer));
+		return new Tuple<IRecipeType<T>, RegistryObject<IRecipeSerializer<T>>>(IRecipeType.register(AdventOfAscension.MOD_ID + ":" + id), RECIPES.register(id, serializer));
 	}
 }

@@ -19,9 +19,8 @@ import net.tslat.aoa3.entity.ai.mob.FlyingLookRandomlyGoal;
 import net.tslat.aoa3.entity.ai.mob.FlyingMeleeAttackGoal;
 import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.entity.base.AoAFlyingMeleeMob;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -37,8 +36,7 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
 		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
 		goalSelector.addGoal(3, new FlyingMeleeAttackGoal(this, 0.6f, false));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> this.isAggressive() && entity instanceof AoAMinion && ((AoAMinion)entity).isTame()));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> this.isAggressive() && pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> this.isAggressive() && pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
 	}
 
 	@Override
@@ -67,6 +65,18 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 	@Override
 	public boolean canChangeDimensions() {
 		return false;
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
 	}
 
 	@Override
@@ -116,13 +126,6 @@ public class VisualentEntity extends AoAFlyingMeleeMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

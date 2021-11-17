@@ -34,7 +34,7 @@ public class OccultAxe extends BaseAxe {
 			ItemStack toolStack = entity.getItemInHand(Hand.MAIN_HAND);
 
 			while (world.getBlockState(breakPos = breakPos.above()).getBlock() == originBlock && !toolStack.isEmpty()) {
-				WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos, true);
+				WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos);
 			}
 		}
 

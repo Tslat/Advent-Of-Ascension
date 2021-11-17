@@ -8,23 +8,26 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class HeadHunter extends BaseSniper {
+	private static final ResourceLocation DOTTED_SCOPE_TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/dotted.png");
+
 	public HeadHunter(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
@@ -36,8 +39,8 @@ public class HeadHunter extends BaseSniper {
 	}
 
 	@Override
-	public ScopeOverlayRenderer.Type getScopeType() {
-		return ScopeOverlayRenderer.Type.DOTTED;
+	public ResourceLocation getScopeTexture(ItemStack stack) {
+		return DOTTED_SCOPE_TEXTURE;
 	}
 
 	@Override

@@ -11,9 +11,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -27,7 +29,7 @@ public class ChomperEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
-		return 1.25f;
+		return 0.75f;
 	}
 
 	@Override
@@ -41,7 +43,7 @@ public class ChomperEntity extends AoAMeleeMob {
 			EntityUtil.removeAttributeModifier(this, Attributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
 		}
 		else {
-			EntityUtil.applyAttributeModifierSafely(this, Attributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF);
+			EntityUtil.applyAttributeModifierSafely(this, Attributes.MOVEMENT_SPEED, BLOODTHIRSTY_BUFF, false);
 		}
 
 		super.setTarget(target);
@@ -70,4 +72,19 @@ public class ChomperEntity extends AoAMeleeMob {
 			((LivingEntity)target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 20, 2, true, true));
 	}
 
+	@Override
+	protected int getAttackSwingDuration() {
+		return 12;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 6;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkRunIdleController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+	}
 }

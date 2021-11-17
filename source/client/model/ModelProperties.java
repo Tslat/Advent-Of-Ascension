@@ -45,7 +45,9 @@ public final class ModelProperties {
 				(BaseBow)AoAWeapons.VOID_BOW.get(),
 				(BaseBow)AoAWeapons.WEAKEN_BOW.get(),
 				(BaseBow)AoAWeapons.WITHER_BOW.get()
-		);registerCrossbows(
+		);
+
+		registerCrossbows(
 				(BaseCrossbow)AoAWeapons.CORAL_CROSSBOW.get(),
 				(BaseCrossbow)AoAWeapons.LUNAR_CROSSBOW.get(),
 				(BaseCrossbow)AoAWeapons.MECHA_CROSSBOW.get(),
@@ -57,21 +59,10 @@ public final class ModelProperties {
 				(BaseCrossbow)AoAWeapons.VIRAL_CROSSBOW.get()
 		);
 
-		registerItemProperty(AoAItems.EXP_FLASK.get(), "filled", (stack, world, entity) -> {
-			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
-
-			return cap.getValue() <= 0 ? 0 : 1;
-		});
-
-		registerItemProperty(AoAWeapons.PARALYZER.get(), "firing", (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
-		registerItemProperty(AoAWeapons.PARALYZER.get(), "firing_tick_modulo", (stack, world, entity) -> {
-			if (entity == null || stack != entity.getUseItem())
-				return 0;
-
-			return entity.getUseItemRemainingTicks() % 3;
-		});
-
-		registerItemProperty(AoAWeapons.KNIGHTS_GUARD.get(), "blocking", (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
+		registerExpFlask();
+		registerParalyzer();
+		registerKnightsGuard();
+		registerGuardiansSword();
 	}
 
 	private static void registerBows(BaseBow... bows) {
@@ -102,5 +93,35 @@ public final class ModelProperties {
 
 	private static void registerItemProperty(Item item, String propertyName, IItemPropertyGetter propertyProvider) {
 		ItemModelsProperties.register(item, new ResourceLocation(propertyName), propertyProvider);
+	}
+
+	private static void registerExpFlask() {
+		registerItemProperty(AoAItems.EXP_FLASK.get(), "filled", (stack, world, entity) -> {
+			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
+
+			return cap.getValue() <= 0 ? 0 : 1;
+		});
+	}
+
+	private static void registerParalyzer() {
+		registerItemProperty(AoAWeapons.PARALYZER.get(), "firing", (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
+		registerItemProperty(AoAWeapons.PARALYZER.get(), "firing_tick_modulo", (stack, world, entity) -> {
+			if (entity == null || stack != entity.getUseItem())
+				return 0;
+
+			return entity.getUseItemRemainingTicks() % 3;
+		});
+	}
+
+	private static void registerKnightsGuard() {
+		registerItemProperty(AoAWeapons.KNIGHTS_GUARD.get(), "blocking", (stack, world, entity) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0);
+	}
+
+	private static void registerGuardiansSword() {
+		registerItemProperty(AoAWeapons.GUARDIANS_SWORD.get(), "charged", (stack, world, entity) -> {
+			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
+
+			return cap.getValue() <= 0 ? 0 : 1;
+		});
 	}
 }

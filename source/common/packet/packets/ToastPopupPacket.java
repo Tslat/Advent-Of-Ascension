@@ -1,11 +1,13 @@
 package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.tslat.aoa3.util.ClientOperations;
-import net.tslat.aoa3.util.constant.Deities;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.client.ClientOperations;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.player.resource.AoAResource;
+import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.function.Supplier;
 
@@ -14,22 +16,16 @@ public class ToastPopupPacket implements AoAPacket {
 	private final Object subject;
 	private final Object value;
 
-	public ToastPopupPacket(final Skills skill, final int levelReq) {
+	public ToastPopupPacket(final AoASkill skill, final int levelReq) {
 		this.type = ToastPopupType.SKILL_REQUIREMENT;
 		this.value = levelReq;
-		this.subject = skill;
+		this.subject = skill.getRegistryName();
 	}
 
-	public ToastPopupPacket(final Resources resource, final float amount) {
+	public ToastPopupPacket(final AoAResource resource, final float amount) {
 		this.type = ToastPopupType.RESOURCE_REQUIREMENT;
 		this.value = amount;
-		this.subject = resource;
-	}
-
-	public ToastPopupPacket(final Deities deity, final int tributeAmount) {
-		this.type = ToastPopupType.TRIBUTE_REQUIREMENT;
-		this.subject = deity;
-		this.value = tributeAmount;
+		this.subject = resource.getRegistryName();
 	}
 
 	@Override
@@ -38,7 +34,6 @@ public class ToastPopupPacket implements AoAPacket {
 
 		switch (type) {
 			case SKILL_REQUIREMENT:
-			case TRIBUTE_REQUIREMENT:
 				buffer.writeUtf(subject.toString());
 				buffer.writeInt((Integer)value);
 				break;
@@ -54,11 +49,9 @@ public class ToastPopupPacket implements AoAPacket {
 
 		switch (type) {
 			case SKILL_REQUIREMENT:
-				return new ToastPopupPacket(Skills.valueOf(buffer.readUtf(32767)), buffer.readInt());
+				return new ToastPopupPacket(AoASkills.getSkill(new ResourceLocation(buffer.readUtf(32767))), buffer.readInt());
 			case RESOURCE_REQUIREMENT:
-				return new ToastPopupPacket(Resources.valueOf(buffer.readUtf(32767)), buffer.readFloat());
-			case TRIBUTE_REQUIREMENT:
-				return new ToastPopupPacket(Deities.valueOf(buffer.readUtf(32767)), buffer.readInt());
+				return new ToastPopupPacket(AoAResources.getResource(new ResourceLocation(buffer.readUtf(32767))), buffer.readFloat());
 		}
 
 		return null;
@@ -72,7 +65,6 @@ public class ToastPopupPacket implements AoAPacket {
 
 	public enum ToastPopupType {
 		SKILL_REQUIREMENT,
-		RESOURCE_REQUIREMENT,
-		TRIBUTE_REQUIREMENT
+		RESOURCE_REQUIREMENT
 	}
 }

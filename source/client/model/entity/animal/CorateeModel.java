@@ -15,17 +15,17 @@ public class CorateeModel extends AnimatedGeoModel<CorateeEntity> {
 	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/animals/lborean/coratee.animation.json");
 
 	@Override
-	public ResourceLocation getModelLocation(CorateeEntity anglerEntity) {
+	public ResourceLocation getModelLocation(CorateeEntity coratee) {
 		return MODEL;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(CorateeEntity anglerEntity) {
+	public ResourceLocation getTextureLocation(CorateeEntity coratee) {
 		return TEXTURE;
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(CorateeEntity anglerEntity) {
+	public ResourceLocation getAnimationFileLocation(CorateeEntity coratee) {
 		return ANIMATIONS;
 	}
 

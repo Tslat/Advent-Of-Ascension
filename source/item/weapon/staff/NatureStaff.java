@@ -4,6 +4,7 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.BoneMealItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.SoundEvent;
@@ -12,7 +13,6 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -48,7 +48,7 @@ public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.LIFE_RUNE.get(), 4);
 		runes.put(AoAItems.ENERGY_RUNE.get(), 2);
 	}

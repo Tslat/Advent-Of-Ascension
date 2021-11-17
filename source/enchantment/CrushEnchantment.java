@@ -1,6 +1,8 @@
 package net.tslat.aoa3.enchantment;
 
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -30,5 +32,10 @@ public class CrushEnchantment extends Enchantment {
 	@Override
 	public int getMaxCost(int enchantmentLevel) {
 		return getMinCost(enchantmentLevel) + 20;
+	}
+
+	@Override
+	public void doPostAttack(LivingEntity user, Entity target, int level) {
+		super.doPostAttack(user, target, level);
 	}
 }

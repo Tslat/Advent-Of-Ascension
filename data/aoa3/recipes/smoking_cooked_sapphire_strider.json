@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "aoa3:raw_sapphire_strider"
-  },
-  "result": "aoa3:cooked_sapphire_strider",
-  "experience": 3.0,
-  "cookingtime": 100
-}

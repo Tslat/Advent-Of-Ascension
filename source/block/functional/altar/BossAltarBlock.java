@@ -17,7 +17,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -40,7 +40,7 @@ public abstract class BossAltarBlock extends Block {
 		if (player instanceof ServerPlayerEntity) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.spawnBoss.difficultyFail");
+					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail"));
 					return ActionResultType.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {

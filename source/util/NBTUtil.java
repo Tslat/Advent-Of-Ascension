@@ -6,7 +6,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class NBTUtil {
+public final class NBTUtil {
 	public static class NBTBuilder<T extends INBT> {
 		private final T tag;
 		private HashMap<String, NBTBuilder<?>> childTags;

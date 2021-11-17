@@ -105,6 +105,11 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 					level.addFreshEntity(projectile);
 				}
 			}
+
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
 		}
 	}
 
@@ -143,13 +148,6 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

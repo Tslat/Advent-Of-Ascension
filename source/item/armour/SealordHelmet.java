@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -38,7 +38,7 @@ public class SealordHelmet extends AdventArmour {
 		PlayerEntity player = plData.player();
 
 		if (player.isEyeInFluid(FluidTags.WATER)) {
-			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, SEALORD_ATTACK_BUFF);
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, SEALORD_ATTACK_BUFF, false);
 		}
 		else {
 			EntityUtil.removeAttributeModifier(plData.player(), Attributes.ATTACK_SPEED, SEALORD_ATTACK_BUFF);

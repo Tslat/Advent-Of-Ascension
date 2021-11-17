@@ -12,6 +12,8 @@ import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
@@ -37,19 +39,51 @@ public abstract class BaseThrownWeapon extends BaseGun {
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target != null && dmg > 0.0f)
-			DamageUtil.dealRangedDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier);
-	}
-
-	@Override
-	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		return null;
-	}
-
-	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;
+	}
+
+	@Override
+	public boolean isFullAutomatic() {
+		return false;
+	}
+
+	@Override
+	public Item getAmmoItem() {
+		return this;
+	}
+
+	@Override
+	public float getRecoilForShot(ItemStack stack, LivingEntity shooter) {
+		return 0;
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return SoundEvents.SPLASH_POTION_THROW;
+	}
+
+	@Override
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (target != null && dmg > 0.0f && DamageUtil.dealRangedDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier))
+			doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
+	}
+
+	@Override
+	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack weaponStack, Hand hand) {
+		if (weaponStack.isEmpty())
+			return null;
+
+		if (!shooter.level.isClientSide() && shooter instanceof PlayerEntity && !((PlayerEntity)shooter).isCreative())
+			weaponStack.shrink(1);
+
+		return createProjectileEntity(shooter, weaponStack, hand);
+	}
+
+	@Override
+	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, Hand hand) {
+		doFiringSound(shooter, bullet, stack, hand);
 	}
 
 	@Override

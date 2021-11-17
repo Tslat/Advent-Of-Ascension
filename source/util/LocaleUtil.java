@@ -1,8 +1,8 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.text.ITextComponent;
@@ -11,13 +11,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
-import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.util.constant.Skills;
+import net.tslat.aoa3.player.ClientPlayerDataManager;
+import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nullable;
 
-public abstract class LocaleUtil {
+public final class LocaleUtil {
 	public static ITextComponent getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, ITextComponent... args) {
 		return getFormattedItemDescriptionText("item." + item.getRegistryName().getNamespace() + "." + item.getRegistryName().getPath() + ".desc." + descNumber, type, args);
 	}
@@ -69,14 +68,11 @@ public abstract class LocaleUtil {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static ITextComponent getFormattedLevelRestrictedDescriptionText(Skills skill, int levelReq) {
-		if (!AoAConfig.COMMON.skillsEnabled.get())
-			return new StringTextComponent("");
+	public static ITextComponent getFormattedLevelRestrictedDescriptionText(AoASkill skill, int levelReq) {
+		ClientPlayerEntity player = Minecraft.getInstance().player;
+		boolean meetsReq = (player != null && player.isCreative()) || ClientPlayerDataManager.getSkill(skill).hasLevel(levelReq);
 
-		PlayerEntity player = Minecraft.getInstance().player;
-		boolean meetsReq = (player != null && player.isCreative()) || AdventGuiTabPlayer.getSkillLevel(skill) >= levelReq;
-
-		return getLocaleMessage("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, new StringTextComponent(Integer.toString(levelReq)), new TranslationTextComponent("skills." + skill.toString().toLowerCase() + ".name"));
+		return getLocaleMessage("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, new StringTextComponent(Integer.toString(levelReq)), skill.getName());
 	}
 
 	public enum ItemDescriptionType {
@@ -120,32 +116,6 @@ public abstract class LocaleUtil {
 		public static final String RUNANDOR = "dimension.aoa3.runandor";
 		public static final String SHYRELANDS = "dimension.aoa3.shyrelands";
 		public static final String VOX_PONDS = "dimension.aoa3.vox_ponds";
-
-		public static final String ALCHEMY = "skills.alchemy.name";
-		public static final String ANIMA = "skills.anima.name";
-		public static final String AUGURY = "skills.augury.name";
-		public static final String BUTCHERY = "skills.butchery.name";
-		public static final String CREATION = "skills.creation.name";
-		public static final String ENGINEERING = "skills.engineering.name";
-		public static final String EXPEDITION = "skills.expedition.name";
-		public static final String EXTRACTION = "skills.extraction.name";
-		public static final String FORAGING = "skills.foraging.name";
-		public static final String HAULING = "skills.hauling.name";
-		public static final String HUNTER = "skills.hunter.name";
-		public static final String INFUSION = "skills.infusion.name";
-		public static final String INNERVATION = "skills.innervation.name";
-		public static final String LOGGING = "skills.logging.name";
-		public static final String RUNATION = "skills.runation.name";
-
-		public static final String RAGE_RESOURCE = "resources.rage.name";
-		public static final String ENERGY_RESOURCE = "resources.energy.name";
-		public static final String CREATION_RESOURCE = "resources.creation.name";
-		public static final String SOUL_RESOURCE = "resources.soul.name";
-
-		public static final String EREBON = "deities.erebon.name";
-		public static final String SELYAN = "deities.selyan.name";
-		public static final String LUXON = "deities.luxon.name";
-		public static final String PLUTON = "deities.pluton.name";
 
 		public static final String BURNS_TARGETS = "items.description.damage.fire";
 		public static final String SLOWS_TARGETS = "items.description.damage.slow";

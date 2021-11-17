@@ -94,6 +94,8 @@ public class UndeadHeraldEntity extends AoATrader {
 				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  4), new ItemStack(AoABlocks.UTOPIAN_BANNER.get()), 9, 20, 0.05f);
 			case IROMINE:
 				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  4), new ItemStack(AoABlocks.MECHA_BANNER.get()), 9, 20, 0.05f);
+			case LBOREAN:
+				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  4), new ItemStack(AoABlocks.BOREIC_BANNER.get()), 9, 20, 0.05f);
 			case LELYETIA:
 				return new MerchantOffer(new ItemStack(AoAItems.SILVER_COIN.get(),  4), new ItemStack(AoABlocks.LELYETIAN_BANNER.get()), 9, 20, 0.05f);
 			case LUNALUS:

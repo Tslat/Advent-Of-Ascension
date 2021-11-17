@@ -56,6 +56,18 @@ public class ProshieldEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
+	}
+
+	@Override
 	protected void onHit(DamageSource source, float amount) {
 		if (DamageUtil.isMeleeDamage(source))
 			source.getDirectEntity().hurt(DamageSource.mobAttack(this), amount / 2);
@@ -79,13 +91,6 @@ public class ProshieldEntity extends AoAMeleeMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

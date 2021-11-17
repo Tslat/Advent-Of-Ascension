@@ -8,7 +8,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class LunalusEvents {
 	public static void doPlayerTick(PlayerEntity pl) {

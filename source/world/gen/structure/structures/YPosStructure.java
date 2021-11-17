@@ -3,9 +3,14 @@ package net.tslat.aoa3.world.gen.structure.structures;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.GenerationStage;
+import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.world.gen.feature.features.config.IntRangeConfig;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class YPosStructure extends AoAStructureBase<IntRangeConfig> {
 	public YPosStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {

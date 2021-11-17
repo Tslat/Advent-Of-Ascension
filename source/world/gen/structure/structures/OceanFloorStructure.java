@@ -30,7 +30,7 @@ public class OceanFloorStructure extends AoAStructureBase<NoFeatureConfig> {
 				final BlockPos.Mutable chunkCenter = new BlockPos.Mutable(x, chunkGenerator.getFirstFreeHeight(x, z, Heightmap.Type.OCEAN_FLOOR_WG) + 1, z);
 
 				if (checkAndAdjustGeneration(chunkGenerator, chunkCenter, biome, config))
-					generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface());
+					generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface(), config);
 			}
 		};
 	}

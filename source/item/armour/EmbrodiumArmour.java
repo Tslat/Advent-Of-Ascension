@@ -7,11 +7,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -30,14 +30,14 @@ public class EmbrodiumArmour extends AdventArmour {
 	@Override
 	public void onEffectTick(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
 		if (slots == null) {
-			plData.stats().regenResource(Resources.ENERGY, 0.08f);
+			plData.getResource(AoAResources.SPIRIT.get()).addValue(0.08f);
 		}
 		else {
 			PlayerEntity pl = plData.player();
 			float temp = WorldUtil.getAmbientTemperature(pl.level, pl.blockPosition());
 
 			if (temp > 0.8f)
-				plData.stats().regenResource(Resources.ENERGY, 0.08f * slots.size() * Math.min(1f, (temp / 2f)));
+				plData.getResource(AoAResources.SPIRIT.get()).addValue(0.08f * slots.size() * Math.min(1f, (temp / 2f)));
 		}
 	}
 

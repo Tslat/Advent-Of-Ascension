@@ -3,7 +3,9 @@ package net.tslat.aoa3.entity.projectile.cannon;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
@@ -51,6 +53,9 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 		WorldUtil.createExplosion(getOwner(), level, this, 1.5f);
 
 		if (!level.isClientSide && getAge() < 10 && shooter instanceof PlayerEntity && count < 5) {
+			if (gun != null)
+				gun.doRecoil((ServerPlayerEntity)shooter, new ItemStack(gun), hand);
+
 			level.addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
 			level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}
@@ -61,6 +66,9 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 		super.tick();
 
 		if (!level.isClientSide && count < 5 && getAge() == 10 && shooter instanceof PlayerEntity) {
+			if (gun != null)
+				gun.doRecoil((ServerPlayerEntity)shooter, new ItemStack(gun), hand);
+
 			level.addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
 			level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 		}

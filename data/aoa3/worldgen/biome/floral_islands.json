@@ -36,7 +36,6 @@
     []
   ],
   "starts": [
-    "aoa3:kinetic_rune_shrine",
     "aoa3:garden_castle",
     "aoa3:lotto_sky_flower",
     "aoa3:daysee_flower",
@@ -52,19 +51,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:archvine",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:broccohead",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:squasher",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -76,13 +63,25 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:corny",
+        "type": "aoa3:squasher",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:archvine",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "aoa3:carrotop",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:corny",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

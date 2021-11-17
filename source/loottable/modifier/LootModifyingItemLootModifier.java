@@ -56,7 +56,11 @@ public class LootModifyingItemLootModifier extends LootModifier {
 
 		@Override
 		public JsonObject write(LootModifyingItemLootModifier instance) {
-			return makeConditions(instance.conditions);
+			JsonObject json = makeConditions(instance.conditions);
+
+			json.addProperty("type", getRegistryName().toString());
+
+			return json;
 		}
 	}
 }

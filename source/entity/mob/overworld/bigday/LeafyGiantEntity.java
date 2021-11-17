@@ -11,8 +11,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -23,7 +25,7 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 5.7f;
+		return 3f;
 	}
 
 	@Override
@@ -48,6 +50,16 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	protected int getAttackSwingDuration() {
+		return 11;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 6;
+	}
+
+	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
 			double resist = 1;
@@ -60,5 +72,11 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 			target.push(getDeltaMovement().x() * 10.5f * resist, 0.5 * resist, getDeltaMovement().z() * 10.5 * resist);
 			target.hurtMarked = true;
 		}
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));
 	}
 }

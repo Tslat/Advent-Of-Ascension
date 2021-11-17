@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "aoa3:raw_fingerfish"
-  },
-  "result": "aoa3:cooked_fingerfish",
-  "experience": 3.0,
-  "cookingtime": 200
-}

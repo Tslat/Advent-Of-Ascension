@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "aoa3:block/coral_bricks",
+    "bottom": "aoa3:block/coral_bricks",
+    "top": "aoa3:block/coral_bricks"
+  }
+}

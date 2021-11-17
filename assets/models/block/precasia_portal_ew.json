@@ -1,0 +1,7 @@
+{
+  "parent": "aoa3:block/portal_ew",
+  "textures": {
+    "texture": "aoa3:block/precasia_portal",
+    "particle": "aoa3:block/precasia_portal"
+  }
+}

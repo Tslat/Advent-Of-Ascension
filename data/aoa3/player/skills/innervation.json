@@ -1,0 +1,106 @@
+{
+  "xp_modifier": 1.0,
+  "abilities": [
+    {
+      "id": "aoa3:scaling_attribute_modification",
+      "unique_id": "381750865",
+      "per_level_value": 0.3,
+      "base_value": 0.0,
+      "attribute": "minecraft:generic.max_health",
+      "operation": 0.0,
+      "level_req": 1
+    },
+    {
+      "id": "aoa3:one_shot_damage_limiter",
+      "unique_id": "-437214191",
+      "min_activation_health": 0.0,
+      "health_restore_amount": 1.0,
+      "level_req": 10
+    },
+    {
+      "id": "aoa3:potion_duration_reducer",
+      "unique_id": "-1015989968",
+      "match_effects": [
+        "minecraft:slowness",
+        "minecraft:mining_fatigue",
+        "minecraft:weakness",
+        "minecraft:blindness",
+        "minecraft:nausea"
+      ],
+      "modifier": 0.5,
+      "level_req": 19
+    },
+    {
+      "id": "aoa3:passive_attribute_modification",
+      "unique_id": "675946667",
+      "amount": 10.0,
+      "attribute": "minecraft:generic.max_health",
+      "operation": 0.0,
+      "level_req": 25
+    },
+    {
+      "id": "aoa3:bow_damage_increase",
+      "unique_id": "-591168779",
+      "require_full_charge": true,
+      "modifier": 1.2,
+      "level_req": 36
+    },
+    {
+      "id": "aoa3:innervation_mob_lure",
+      "unique_id": "-1783363252",
+      "lured_damage_modifier": 0.0,
+      "per_tick_energy_drain": 0.6,
+      "level_req": 44
+    },
+    {
+      "id": "aoa3:passive_attribute_modification",
+      "unique_id": "675945396",
+      "amount": 10.0,
+      "attribute": "minecraft:generic.max_health",
+      "operation": 0.0,
+      "level_req": 50
+    },
+    {
+      "id": "aoa3:innervation_dodge",
+      "unique_id": "-1148022055",
+      "energy_cost": 30.0,
+      "level_req": 59
+    },
+    {
+      "id": "aoa3:vulcane_damage_increase",
+      "unique_id": "-1590910758",
+      "modifier": 1.5,
+      "min_rage": 0.0,
+      "level_req": 65
+    },
+    {
+      "id": "aoa3:double_drops_chance",
+      "unique_id": "-690063113",
+      "base_chance": 0.1,
+      "per_level_mod": 0.00147,
+      "level_req": 77
+    },
+    {
+      "id": "aoa3:passive_attribute_modification",
+      "unique_id": "675944559",
+      "amount": 10.0,
+      "attribute": "minecraft:generic.max_health",
+      "operation": 0.0,
+      "level_req": 85
+    },
+    {
+      "id": "aoa3:stun_strike",
+      "unique_id": "-1782268962",
+      "energy_cost": 30.0,
+      "stun_duration": 40,
+      "level_req": 91
+    },
+    {
+      "id": "aoa3:dummy_ability",
+      "unique_id": "182741604",
+      "description": "skills.aoa3.innervation.abilities.warriorHelm.description",
+      "display_name": "skills.aoa3.innervation.abilities.warriorHelm.name",
+      "level_req": 100
+    }
+  ]
+}

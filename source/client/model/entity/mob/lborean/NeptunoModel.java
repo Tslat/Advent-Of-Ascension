@@ -11,17 +11,17 @@ public class NeptunoModel extends AnimatedGeoModel<NeptunoEntity> {
 	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/mobs/lborean/neptuno.animation.json");
 
 	@Override
-	public ResourceLocation getModelLocation(NeptunoEntity anglerEntity) {
+	public ResourceLocation getModelLocation(NeptunoEntity neptuno) {
 		return MODEL;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(NeptunoEntity anglerEntity) {
+	public ResourceLocation getTextureLocation(NeptunoEntity neptuno) {
 		return TEXTURE;
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(NeptunoEntity anglerEntity) {
+	public ResourceLocation getAnimationFileLocation(NeptunoEntity neptuno) {
 		return ANIMATIONS;
 	}
 }

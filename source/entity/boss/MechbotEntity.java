@@ -28,7 +28,7 @@ import net.tslat.aoa3.entity.projectile.mob.MechShotEntity;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -143,6 +143,11 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 
 			if (killer != null)
 				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.MECHBOT.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
 		}
 	}
 
@@ -180,13 +185,6 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

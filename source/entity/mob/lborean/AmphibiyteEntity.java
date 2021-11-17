@@ -9,7 +9,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
-import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -48,7 +47,4 @@ public class AmphibiyteEntity extends AoAWaterMeleeMob {
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return AoASounds.ENTITY_AMPHIBIYTE_HURT.get();
 	}
-
-	@Override
-	public void registerControllers(AnimationData animationData) {}
 }

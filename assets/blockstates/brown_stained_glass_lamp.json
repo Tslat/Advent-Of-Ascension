@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "aoa3:block/brown_stained_glass_lamp_off"
+    },
+    "lit=true": {
+      "model": "aoa3:block/brown_stained_glass_lamp"
+    }
+  }
+}

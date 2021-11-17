@@ -11,10 +11,12 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -27,7 +29,7 @@ public class IceGiantEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-		return 5.7f;
+		return 2.65625f;
 	}
 
 	@Override
@@ -52,6 +54,16 @@ public class IceGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	protected int getAttackSwingDuration() {
+		return 11;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 6;
+	}
+
+	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
 			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 50).isAmbient());
@@ -66,5 +78,11 @@ public class IceGiantEntity extends AoAMeleeMob {
 			target.push(motion.x() * 21 * resist, 1.6 * resist, motion.z() * 21 * resist);
 			target.hurtMarked = true;
 		}
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));
 	}
 }

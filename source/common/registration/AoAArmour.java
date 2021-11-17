@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.item.armour.*;
 import org.apache.logging.log4j.Level;
 
@@ -24,42 +25,28 @@ public final class AoAArmour {
 	public static final RegistryObject<Item> NIGHT_VISION_GOGGLES = registerArmour("night_vision_goggles", NightVisionGoggles::new);
 	
 	public static final ArmourSet ALACRITY_ARMOUR = registerArmourSet("alacrity", AlacrityArmour.class);
-	public static final ArmourSet ALCHEMY_ARMOUR = registerArmourSet("alchemy", AlchemyArmour.class);
 	public static final ArmourSet AMETHIND_ARMOUR = registerArmourSet("amethind", AmethindArmour.class);
-	public static final ArmourSet ANIMA_ARMOUR = registerArmourSet("anima", AnimaArmour.class);
 	public static final ArmourSet ARCHAIC_ARMOUR = registerArmourSet("archaic", ArchaicArmour.class);
-	public static final ArmourSet AUGURY_ARMOUR = registerArmourSet("augury", AuguryArmour.class);
 	public static final ArmourSet BARON_ARMOUR = registerArmourSet("baron", BaronArmour.class);
 	public static final ArmourSet BATTLEBORN_ARMOUR = registerArmourSet("battleborn", BattlebornArmour.class);
 	public static final ArmourSet BIOGENIC_ARMOUR = registerArmourSet("biogenic", BiogenicArmour.class);
 	public static final ArmourSet BOREIC_ARMOUR = registerArmourSet("boreic", BoreicArmour.class);
-	public static final ArmourSet BUTCHERY_ARMOUR = registerArmourSet("butchery", ButcheryArmour.class);
 	public static final ArmourSet CANDY_ARMOUR = registerArmourSet("candy", CandyArmour.class);
 	public static final ArmourSet COMMANDER_ARMOUR = registerArmourSet("commander", CommanderArmour.class);
-	public static final ArmourSet CREATION_ARMOUR = registerArmourSet("creation", CreationArmour.class);
 	public static final ArmourSet CRYSTALLIS_ARMOUR = registerArmourSet("crystallis", CrystallisArmour.class);
 	public static final ArmourSet ELECANYTE_ARMOUR = registerArmourSet("elecanyte", ElecanyteArmour.class);
 	public static final ArmourSet EMBRODIUM_ARMOUR = registerArmourSet("embrodium", EmbrodiumArmour.class);
-	public static final ArmourSet ENGINEERING_ARMOUR = registerArmourSet("engineering", EngineeringArmour.class);
 	public static final ArmourSet EXOPLATE_ARMOUR = registerArmourSet("exoplate", ExoplateArmour.class);
-	public static final ArmourSet EXPEDITION_ARMOUR = registerArmourSet("expedition", ExpeditionArmour.class);
 	public static final ArmourSet EXPLOSIVE_ARMOUR = registerArmourSet("explosive", ExplosiveArmour.class);
-	public static final ArmourSet EXTRACTION_ARMOUR = registerArmourSet("extraction", ExtractionArmour.class);
-	public static final ArmourSet FORAGING_ARMOUR = registerArmourSet("foraging", ForagingArmour.class);
 	public static final ArmourSet FUNGAL_ARMOUR = registerArmourSet("fungal", FungalArmour.class);
 	public static final ArmourSet GHASTLY_ARMOUR = registerArmourSet("ghastly", GhastlyArmour.class);
 	public static final ArmourSet GHOULISH_ARMOUR = registerArmourSet("ghoulish", GhoulishArmour.class);
-	public static final ArmourSet HAULING_ARMOUR = registerArmourSet("hauling", HaulingArmour.class);
 	public static final ArmourSet HAZMAT_ARMOUR = registerArmourSet("hazmat", HazmatArmour.class);
-	public static final ArmourSet HUNTER_ARMOUR = registerArmourSet("hunter", HunterArmour.class);
 	public static final ArmourSet HYDRANGIC_ARMOUR = registerArmourSet("hydrangic", HydrangicArmour.class);
 	public static final ArmourSet HYDROPLATE_ARMOUR = registerArmourSet("hydroplate", HydroplateArmour.class);
 	public static final ArmourSet ICE_ARMOUR = registerArmourSet("ice", IceArmour.class);
 	public static final ArmourSet INFERNAL_ARMOUR = registerArmourSet("infernal", InfernalArmour.class);
-	public static final ArmourSet INFUSION_ARMOUR = registerArmourSet("infusion", InfusionArmour.class);
-	public static final ArmourSet INNERVATION_ARMOUR = registerArmourSet("innervation", InnervationArmour.class);
 	public static final ArmourSet KNIGHT_ARMOUR = registerArmourSet("knight", KnightArmour.class);
-	public static final ArmourSet LOGGING_ARMOUR = registerArmourSet("logging", LoggingArmour.class);
 	public static final ArmourSet LUNAR_ARMOUR = registerArmourSet("lunar", LunarArmour.class);
 	public static final ArmourSet LYNDAMYTE_ARMOUR = registerArmourSet("lyndamyte", LyndamyteArmour.class);
 	public static final ArmourSet LYONIC_ARMOUR = registerArmourSet("lyonic", LyonicArmour.class);
@@ -75,7 +62,6 @@ public final class AoAArmour {
 	public static final ArmourSet PURITY_ARMOUR = registerArmourSet("purity", PurityArmour.class);
 	public static final ArmourSet ROCKBONE_ARMOUR = registerArmourSet("rockbone", RockboneArmour.class);
 	public static final ArmourSet ROSIDIAN_ARMOUR = registerArmourSet("rosidian", RosidianArmour.class);
-	public static final ArmourSet RUNATION_ARMOUR = registerArmourSet("runation", RunationArmour.class);
 	public static final ArmourSet RUNIC_ARMOUR = registerArmourSet("runic", RunicArmour.class);
 	public static final ArmourSet SHARPSHOT_ARMOUR = registerArmourSet("sharpshot", SharpshotArmour.class);
 	public static final ArmourSet SKELETAL_ARMOUR = registerArmourSet("skeletal", SkeletalArmour.class);
@@ -88,7 +74,10 @@ public final class AoAArmour {
 	public static final ArmourSet WITHER_ARMOUR = registerArmourSet("wither", WitherArmour.class);
 	public static final ArmourSet ZARGONITE_ARMOUR = registerArmourSet("zargonite", ZargoniteArmour.class);
 
-	private static RegistryObject<Item> registerArmour(String registryName, Supplier<Item> item) {
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_DEXTROUS = registerArmour("helm_of_the_dextrous", () -> new SkillHelmet(AoASkills.DEXTERITY));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_DRYAD = registerArmour("helm_of_the_dryad", () -> new SkillHelmet(AoASkills.FARMING));
+
+	private static <T extends Item> RegistryObject<T> registerArmour(String registryName, Supplier<T> item) {
 		return ARMOUR.register(registryName, item);
 	}
 	

@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "level=0": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=1": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=2": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=3": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=4": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=5": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=6": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=7": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=8": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=9": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=10": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=11": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=12": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=13": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=14": {
+      "model": "aoa3:block/structure_light"
+    },
+    "level=15": {
+      "model": "aoa3:block/structure_light"
+    }
+  }
+}

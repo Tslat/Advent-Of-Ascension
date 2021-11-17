@@ -10,12 +10,13 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -40,16 +41,16 @@ public class SkillCrystal extends Item {
 
 		if (player instanceof ServerPlayerEntity) {
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
-			Skills skill = PlayerUtil.getLowestSkillWithLimit(plData, lowerLimit);
+			AoASkill skill = PlayerUtil.getLowestSkillWithLimit(plData, lowerLimit);
 
 			if (skill != null) {
-				plData.stats().addXp(skill, PlayerUtil.getXpRequiredForNextLevel(plData.stats().getLevel(skill)) / denominator, false, true);
+				plData.getSkill(skill).adjustXp(PlayerUtil.getXpRequiredForNextLevel(plData.getSkill(skill).getLevel(false)) / denominator, false, true);
 
 				if (!player.isCreative())
 					heldStack.shrink(1);
 			}
 			else {
-				plData.sendThrottledChatMessage("message.feedback.item.skillCrystal.levelFail",  Integer.toString(lowerLimit));
+				PlayerUtil.notifyPlayer(plData.player(), new TranslationTextComponent("message.feedback.item.skillCrystal.levelFail", Integer.toString(lowerLimit)));
 			}
 		}
 

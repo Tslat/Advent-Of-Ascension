@@ -1,0 +1,12 @@
+{
+  "name": "item.aoa3.worn_book",
+  "landing_text": "item.aoa3.worn_book.landing",
+  "filler_texture": "patchouli:textures/gui/aoa_filler.png",
+  "model": "aoa3:worn_book",
+  "show_progress": false,
+  "version": "0",
+  "subtitle": "Corrupted Traveller",
+  "macros": {
+    "$(aoa)": "$(4)AoA$()"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:item/screamer_bow",
+  "textures": {
+    "layer0": "aoa3:item/screamer_bow_pulling_2"
+  }
+}

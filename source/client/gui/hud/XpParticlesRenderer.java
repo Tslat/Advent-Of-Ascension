@@ -4,22 +4,22 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
+import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
+import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.player.ClientPlayerDataManager;
+import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.HolidayUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.RenderUtil;
-import net.tslat.aoa3.util.constant.Skills;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -27,32 +27,29 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
 public class XpParticlesRenderer {
-	private static final ConcurrentHashMap<Skills, CopyOnWriteArrayList<XPParticle>> particlesMap = new ConcurrentHashMap<Skills, CopyOnWriteArrayList<XPParticle>>(15);
-	private static final ResourceLocation skillsTextures = new ResourceLocation("aoa3", "textures/gui/maingui/skills.png");
+	private static final ConcurrentHashMap<AoASkill, CopyOnWriteArrayList<XPParticle>> particlesMap = new ConcurrentHashMap<AoASkill, CopyOnWriteArrayList<XPParticle>>(15);
 
 	private static long lastPacketReceivedTime = 0;
 	private static XPParticle lastParticleReceived = null;
-	private static Skills lastParticleSkill = null;
+	private static AoASkill lastParticleSkill = null;
 
-	public static void addXpParticle(Skills skill, float xp, boolean isLevelUp) {
+	public static void addXpParticle(AoASkill skill, float xp, boolean isLevelUp) {
 		if (!particlesMap.containsKey(skill))
 			particlesMap.put(skill, new CopyOnWriteArrayList<XPParticle>());
 
-		if (lastParticleSkill == skill && System.currentTimeMillis() <= lastPacketReceivedTime + 10) {
-			if (lastParticleReceived != null) {
-				lastParticleReceived.modifyXp(xp, isLevelUp);
+		if (lastParticleSkill == skill && lastParticleReceived != null && System.currentTimeMillis() <= lastPacketReceivedTime + 10) {
+			lastParticleReceived.modifyXp(xp, isLevelUp);
 
-				if (lastParticleReceived.levelUp) {
-					CopyOnWriteArrayList<XPParticle> array = particlesMap.get(skill);
+			if (lastParticleReceived.levelUp) {
+				CopyOnWriteArrayList<XPParticle> array = particlesMap.get(skill);
 
-					if (array.size() > 0)
-						array.remove(array.size() - 1);
+				if (array.size() > 0)
+					array.remove(array.size() - 1);
 
-					array.add(0, lastParticleReceived);
-				}
-
-				return;
+				array.add(0, lastParticleReceived);
 			}
+
+			return;
 		}
 
 		XPParticle particle;
@@ -65,160 +62,110 @@ public class XpParticlesRenderer {
 		}
 
 		lastParticleReceived = particle;
-		lastPacketReceivedTime = System.currentTimeMillis();
 		lastParticleSkill = skill;
+		lastPacketReceivedTime = System.currentTimeMillis();
+	}
+
+	private static void purgeExpiredEntries() {
+		if (!AoAConfig.CLIENT.showXpParticles.get()) {
+			particlesMap.clear();
+
+			return;
+		}
+
+		Iterator<Map.Entry<AoASkill, CopyOnWriteArrayList<XPParticle>>> particleEntries = particlesMap.entrySet().iterator();
+		long currentTime = System.currentTimeMillis();
+		long expiryTime = currentTime - 1800;
+
+		while (particleEntries.hasNext()) {
+			Map.Entry<AoASkill, CopyOnWriteArrayList<XPParticle>> entry = particleEntries.next();
+
+			entry.getValue().removeIf(particle -> particle.creationTime <= expiryTime);
+
+			if (entry.getValue().isEmpty())
+				particleEntries.remove();
+		}
 	}
 
 	@SubscribeEvent
-	public static void onRenderTick(final TickEvent.RenderTickEvent ev) {
-		if (ev.phase != TickEvent.Phase.END || particlesMap.isEmpty())
+	public static void onRenderTick(final RenderGameOverlayEvent.Post ev) {
+		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || particlesMap.isEmpty())
 			return;
 
+		purgeExpiredEntries();
+
+		if (particlesMap.isEmpty())
+			return;
+
+		long currentTime = System.currentTimeMillis();
 		Minecraft mc = Minecraft.getInstance();
 		MainWindow window = mc.getWindow();
+		float scrollHeight = window.getGuiScaledHeight() / 3f;
+		int windowWidth = window.getGuiScaledWidth();
+		MatrixStack matrix = ev.getMatrixStack();
+		int maxHeight = 0;
+		int cumulativeXOffset = 0;
+		int x = 0;
+		int y = 0;
 
-		if (AoAConfig.CLIENT.showXpParticles.get()) {
-			if (mc.screen == null && !mc.options.hideGui) {
-				RenderSystem.disableDepthTest();
-				RenderSystem.enableAlphaTest();
-				MatrixStack matrix = new MatrixStack();
-				long currentTime = System.currentTimeMillis();
-				Iterator<Map.Entry<Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
-				int skillCount = particlesMap.size();
-				int scrollHeight = (int)(window.getGuiScaledHeight() / 3f);
-				int skillNum = 0;
-				float rowBasedScale = (int)(1 + ((skillCount - 1) / 5f));
-				float renderSize = 25 / (1 + (rowBasedScale - 1) * 0.5f);
-				final float skillIconsX = (window.getGuiScaledWidth() - (renderSize * (1 + ((Math.min(skillCount, 5) - 1) * 0.5f)))) / 2f;
-				final float skillIconsY = 2;
+		matrix.pushPose();
+		matrix.translate(windowWidth / 2f, 1, 0);
 
-				while (mapIterator.hasNext()) {
-					Map.Entry<Skills, CopyOnWriteArrayList<XPParticle>> particleEntry = mapIterator.next();
-					Skills skill = particleEntry.getKey();
-					CopyOnWriteArrayList<XPParticle> particleArray = particleEntry.getValue();
+		if (particlesMap.size() > 2)
+			matrix.translate(Math.min(particlesMap.size(), 5) / 2f * 12f + 12, 0, 0);
 
-					if (particleArray.isEmpty()) {
-						mapIterator.remove();
+		RenderSystem.disableDepthTest();
+		RenderSystem.enableAlphaTest();
 
-						continue;
-					}
+		for (Map.Entry<AoASkill, CopyOnWriteArrayList<XPParticle>> entry : particlesMap.entrySet()) {
+			AoASkill.Instance skill = ClientPlayerDataManager.getSkill(entry.getKey());
+			CopyOnWriteArrayList<XPParticle> particles = entry.getValue();
+			AoASkillRenderer skillRenderer = AoAGuiElementRenderers.getSkillRenderer(skill.type());
+			int renderWidth = skillRenderer.hudRenderWidth(skill);
+			int renderHeight = skillRenderer.hudRenderHeight(skill);
 
-					boolean isLevelUp = particleArray.get(0).levelUp;
-					ArrayList<XPParticle> removalList = null;
+			matrix.pushPose();
+			matrix.translate(x, y, 0);
+			matrix.pushPose();
+			matrix.translate(renderWidth / 2d, 0, 0);
 
-					for (XPParticle particle : particleArray) {
-						float particleLifespan = 1 - ((currentTime - particle.creationTime) / 1500f);
+			for (XPParticle particle : particles) {
+				float lifespan = 1 - (currentTime - particle.creationTime) / 1500f;
 
-						if (particleLifespan >= 0.1)
-							RenderUtil.drawCenteredScaledString(matrix, mc.font, particle.xpString, (int)(window.getGuiScaledWidth() / 2d), (int)(scrollHeight * particleLifespan), 0.5f, NumberUtil.RGB(255, 255, 255) | (int)MathHelper.clamp(255 * particleLifespan, 1, 255) << 24, RenderUtil.StringRenderType.NORMAL);
-
-						if (particle.creationTime <= currentTime - 1800) {
-							if (removalList == null)
-								removalList = new ArrayList<XPParticle>();
-
-							removalList.add(particle);
-						}
-					}
-
-					int skillUvX = 0;
-					int skillUvY = isLevelUp ? 50 : 0;
-
-					switch (skill) {
-						case ALCHEMY:
-							break;
-						case ANIMA:
-							skillUvX = 50;
-							break;
-						case AUGURY:
-							skillUvX = 100;
-							break;
-						case BUTCHERY:
-							skillUvX = 150;
-							break;
-						case CREATION:
-							skillUvX = 200;
-							break;
-						case ENGINEERING:
-							skillUvX = 250;
-							break;
-						case EXPEDITION:
-							skillUvX = 300;
-							break;
-						case EXTRACTION:
-							skillUvX = 350;
-							break;
-						case FORAGING:
-							skillUvX = 400;
-							break;
-						case HAULING:
-							skillUvY += 100;
-							break;
-						case HUNTER:
-							skillUvX = 50;
-							skillUvY += 100;
-							break;
-						case INFUSION:
-							skillUvX = 100;
-							skillUvY += 100;
-							break;
-						case INNERVATION:
-							skillUvX = 150;
-							skillUvY += 100;
-							break;
-						case LOGGING:
-							skillUvX = 200;
-							skillUvY += 100;
-							break;
-						case RUNATION:
-							skillUvX = 250;
-							skillUvY += 100;
-							break;
-					}
-
-					float newX = skillIconsX + (skillNum % 5 * renderSize * 0.5f);
-					float newY = skillIconsY + (skillNum / 5 * renderSize * 0.5f);
-
-					mc.getTextureManager().bind(skillsTextures);
-					RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-					RenderUtil.renderScaledCustomSizedTexture(matrix, newX, newY, skillUvX, skillUvY, 50, 50, renderSize, renderSize, 450, 240);
-					RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-
-					if (isLevelUp) {
-						String lvl = String.valueOf(AdventGuiTabPlayer.getSkillLevel(skill));
-						float stringScale = Math.min(1.4f, 16.8f / (float)mc.font.width(lvl)) / rowBasedScale;
-
-						RenderUtil.drawCenteredScaledString(matrix, mc.font, lvl, (int)(newX + (renderSize + 2) / 2f), (int)((newY + renderSize / 2f) - mc.font.lineHeight / 3f * stringScale), stringScale, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-					}
-
-					if (removalList != null)
-						particleArray.removeAll(removalList);
-
-					if (particleArray.isEmpty())
-						mapIterator.remove();
-
-					skillNum++;
-				}
-
-				RenderSystem.enableDepthTest();
-				RenderSystem.disableAlphaTest();
-			}
-			else if (!particlesMap.isEmpty()) {
-				Iterator<Map.Entry<Skills, CopyOnWriteArrayList<XPParticle>>> mapIterator = particlesMap.entrySet().iterator();
-				long cutoffTime = System.currentTimeMillis() - 1800;
-
-				while (mapIterator.hasNext()) {
-					CopyOnWriteArrayList<XPParticle> particleArray = mapIterator.next().getValue();
-
-					particleArray.removeIf(particle -> particle.creationTime <= cutoffTime);
-
-					if (particleArray.isEmpty())
-						mapIterator.remove();
+				if (lifespan >= 0.1f) {
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, particle.xpString, 0, scrollHeight * lifespan, 0.5f, NumberUtil.RGB(255, 255, 255) | (int)MathHelper.clamp(255 * lifespan, 1, 255) << 24, RenderUtil.StringRenderType.NORMAL);
 				}
 			}
+
+			matrix.popPose();
+			skillRenderer.renderInHud(matrix, skill, ev.getPartialTicks(), AoASkillRenderer.ProgressRenderType.Ring, false);
+
+			if (particles.get(0).levelUp) {
+				String level = String.valueOf(skill.getLevel(true));
+				float stringWidth = mc.font.width(level);
+				float scale = Math.min(1 / (stringWidth / (float)(renderWidth - 7)), 1 / (mc.font.lineHeight / (float)(renderHeight - 7)));
+
+				matrix.translate(renderWidth / 2d, renderHeight / 2d, 0);
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, level, scale * 0.5f, -mc.font.lineHeight * scale / 2.5f, scale, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			}
+
+			cumulativeXOffset += renderWidth;
+			x -= renderWidth;
+			maxHeight = Math.max(maxHeight, renderHeight);
+
+			if (cumulativeXOffset >= 100) {
+				y += maxHeight;
+				x = 0;
+				maxHeight = 0;
+				cumulativeXOffset = 0;
+			}
+
+			matrix.popPose();
 		}
-		else if (!particlesMap.isEmpty())  {
-			particlesMap.clear();
-		}
+
+		RenderSystem.enableDepthTest();
+		RenderSystem.disableAlphaTest();
+		matrix.popPose();
 	}
 
 	static class XPParticle {
@@ -231,13 +178,13 @@ public class XpParticlesRenderer {
 		XPParticle(float xp, boolean isLevelUp) {
 			this.levelUp = isLevelUp;
 			this.xp = xp;
-			this.xpString = HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.APRIL_FOOLS ? getAprilFoolsXpString() : "+" + NumberUtil.floorAndAppendSuffix(xp, false);
+			this.xpString = HolidayUtil.isAprilFools() ? getAprilFoolsXpString() : "+" + NumberUtil.floorAndAppendSuffix(xp, false);
 		}
 
 		protected void modifyXp(float additionalXp, boolean isLevelUp) {
 			this.levelUp = levelUp || isLevelUp;
 			this.xp = xp + additionalXp;
-			this.xpString = HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.APRIL_FOOLS ? getAprilFoolsXpString() : "+" + NumberUtil.floorAndAppendSuffix(xp, false);
+			this.xpString = HolidayUtil.isAprilFools() ? getAprilFoolsXpString() : "+" + NumberUtil.floorAndAppendSuffix(xp, false);
 		}
 	}
 
@@ -253,7 +200,11 @@ public class XpParticlesRenderer {
 				"5xp maybe?",
 				"⌈(⌈1*50^1.3⌉/8+800)/46*37⌉+6xp",
 				"?",
-				"Where am I?"
+				"Where am I?",
+				"Weeeeeee!",
+				"Going up!",
+				"I'm sad",
+				"Goodbye!"
 		);
 	}
 }

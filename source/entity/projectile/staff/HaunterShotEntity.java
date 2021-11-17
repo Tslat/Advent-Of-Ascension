@@ -30,6 +30,6 @@ public class HaunterShotEntity extends BaseEnergyShot {
 		super.tick();
 
 		if (!level.isClientSide && getAge() % 4 == 0)
-			WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
+			WorldUtil.createExplosion(getOwner(), level, this, 2.2f);
 	}
 }

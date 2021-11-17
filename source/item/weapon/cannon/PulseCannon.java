@@ -1,35 +1,23 @@
 package net.tslat.aoa3.item.weapon.cannon;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.entity.projectile.cannon.CannonballEntity;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class PulseCannon extends BaseCannon {
-	double dmg;
-	int firingDelay;
-
 	public PulseCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
-		this.dmg = dmg;
-		this.firingDelay = firingDelayTicks;
 	}
 
 	@Nullable
@@ -39,16 +27,12 @@ public class PulseCannon extends BaseCannon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
-			for (LivingEntity entity : player.level.getEntitiesOfClass(LivingEntity.class, player.getBoundingBox().inflate(2.5d), EntityUtil.Predicates.HOSTILE_MOB)) {
-				EntityUtil.pushEntityAway(player, entity, 0.75f);
-			}
+	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, Hand hand) {
+		super.doFiringEffects(shooter, bullet, stack, hand);
 
-			return new CannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+		for (LivingEntity entity : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2.5d), EntityUtil.Predicates.HOSTILE_MOB)) {
+			EntityUtil.pushEntityAway(shooter, entity, 0.75f);
 		}
-
-		return null;
 	}
 
 	@Override

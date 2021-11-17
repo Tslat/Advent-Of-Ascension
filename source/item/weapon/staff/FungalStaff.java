@@ -6,6 +6,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.MushroomBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +15,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -35,7 +35,7 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.DISTORTION_RUNE.get(), 5);
 		runes.put(AoAItems.LIFE_RUNE.get(), 2);
 	}

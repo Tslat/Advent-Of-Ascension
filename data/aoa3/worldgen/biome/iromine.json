@@ -41,7 +41,6 @@
     []
   ],
   "starts": [
-    "aoa3:energy_rune_shrine",
     "aoa3:iro_passage",
     "aoa3:professors_lab",
     "aoa3:iro_pillar",
@@ -52,14 +51,14 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:polytom",
-        "weight": 20,
+        "type": "aoa3:mechachron",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:mechachron",
-        "weight": 1,
+        "type": "aoa3:voltron",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -70,7 +69,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:voltron",
+        "type": "aoa3:polytom",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

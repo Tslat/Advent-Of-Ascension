@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.EffectType;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -31,8 +32,8 @@ public class PurityRifle extends BaseGun {
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (!shooter.getActiveEffects().isEmpty()) {
 			for (EffectInstance effect : shooter.getActiveEffects()) {
-				if (!effect.getEffect().isBeneficial())
-					bulletDmgMultiplier *= 1.2f;
+				if (effect.getEffect().getCategory() == EffectType.HARMFUL)
+					bulletDmgMultiplier *= 1.1f;
 			}
 		}
 

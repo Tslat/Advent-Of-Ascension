@@ -30,6 +30,7 @@ import net.tslat.aoa3.integration.jei.recipe.upgradekit.UpgradeKitRecipeCategory
 import net.tslat.aoa3.integration.jei.recipe.upgradekit.UpgradeKitRecipeTransferInfo;
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeTransferInfo;
+import net.tslat.aoa3.mixin.common.invoker.AccessibleRecipeManager;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -103,7 +104,7 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private Collection<IRecipe<DivineStationContainer.DivineStationInventory>> compileUpgradeKitRecipes(RecipeManager recipeManager) {
-		return recipeManager.byType(AoARecipes.UPGRADE_KIT.getA()).values();
+		return ((AccessibleRecipeManager)recipeManager).getRecipesForType(AoARecipes.UPGRADE_KIT.getA()).values();
 	}
 
 	private ArrayList<WhitewashingRecipe> compileWhitewashingRecipes(RecipeManager recipeManager) {
@@ -135,7 +136,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
+		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : ((AccessibleRecipeManager)recipeManager).getRecipesForType(AoARecipes.INFUSION.getA()).values()) {
 			if (recipe instanceof InfusionRecipe) {
 				if (((InfusionRecipe)recipe).isEnchanting())
 					imbuingRecipes.add((InfusionRecipe)recipe);
@@ -148,7 +149,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
+		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : ((AccessibleRecipeManager)recipeManager).getRecipesForType(AoARecipes.INFUSION.getA()).values()) {
 			if (recipe instanceof InfusionRecipe) {
 				if (!((InfusionRecipe)recipe).isEnchanting())
 					infusionRecipes.add((InfusionRecipe)recipe);

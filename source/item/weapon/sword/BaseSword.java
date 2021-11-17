@@ -1,6 +1,7 @@
 package net.tslat.aoa3.item.weapon.sword;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -15,15 +16,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.Lazy;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 
+@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
 public class BaseSword extends SwordItem {
-	private final Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
+	private final Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> attributeModifiers;
 
 	protected final float dmg;
 	protected final double speed;
@@ -37,8 +47,7 @@ public class BaseSword extends SwordItem {
 		this.dmg = itemStats.getAttackDamageBonus();
 		this.speed = itemStats.getSpeed();
 
-		attributeModifiers.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamage(), AttributeModifier.Operation.ADDITION));
-		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION));
+		attributeModifiers = buildDefaultAttributes();
 	}
 
 	@Override
@@ -48,6 +57,28 @@ public class BaseSword extends SwordItem {
 
 	public double getAttackSpeed() {
 		return speed;
+	}
+
+	protected Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> buildDefaultAttributes() {
+		return Lazy.of(() -> ImmutableSetMultimap.of(
+				Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamage(), AttributeModifier.Operation.ADDITION),
+				Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION)));
+	}
+
+	@SubscribeEvent
+	public static void onPlayerHit(final LivingHurtEvent ev) {
+		Entity attacker = ev.getSource().getEntity();
+
+		if (DamageUtil.isMeleeDamage(ev.getSource()) && attacker instanceof LivingEntity) {
+			ItemStack weapon = ((LivingEntity)attacker).getItemInHand(Hand.MAIN_HAND);
+
+			if (weapon.getItem() instanceof BaseSword)
+				ev.setAmount((float)((BaseSword)weapon.getItem()).getDamageForAttack(ev.getEntityLiving(), (LivingEntity)attacker, weapon, ev.getAmount()));
+		}
+	}
+
+	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+		return baseDamage;
 	}
 
 	@Override
@@ -74,12 +105,18 @@ public class BaseSword extends SwordItem {
 
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		Multimap<Attribute, AttributeModifier> multimap = super.getDefaultAttributeModifiers(slot);
+		if (slot == EquipmentSlotType.MAINHAND) {
+			Multimap<Attribute, AttributeModifier> newMap = HashMultimap.create();
+			ImmutableSetMultimap<Attribute, AttributeModifier> attributes = attributeModifiers.get();
 
-		if (slot == EquipmentSlotType.MAINHAND)
-			return attributeModifiers;
+			for (Map.Entry<Attribute, AttributeModifier> entry : attributes.entries()) {
+				newMap.put(entry.getKey(), entry.getValue());
+			}
 
-		return multimap;
+			return newMap;
+		}
+
+		return super.getDefaultAttributeModifiers(slot);
 	}
 }
 

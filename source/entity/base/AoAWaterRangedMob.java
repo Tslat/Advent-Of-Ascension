@@ -24,10 +24,10 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAEntityData;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingSwimmingMovementController;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
@@ -46,9 +46,8 @@ public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRange
 		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 20, 40, 32));
 		goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6));
 		goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1, 30));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
 	}
 
 	@Override
@@ -189,6 +188,9 @@ public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRange
 	protected boolean shouldDespawnInPeaceful() {
 		return true;
 	}
+
+	@Override
+	public void registerControllers(AnimationData data) {}
 
 	@Override
 	public AnimationFactory getFactory() {

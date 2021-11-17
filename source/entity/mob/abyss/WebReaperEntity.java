@@ -65,9 +65,9 @@ public class WebReaperEntity extends AoARangedMob {
 	@Nullable
 	@Override
 	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
-		EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, STAGE_HEALTH_MOD);
-		EntityUtil.applyAttributeModifierSafely(this, Attributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD);
-		EntityUtil.applyAttributeModifierSafely(this, AoAAttributes.RANGED_ATTACK_DAMAGE.get(), STAGE_DAMAGE_MOD);
+		EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, STAGE_HEALTH_MOD, false);
+		EntityUtil.applyAttributeModifierSafely(this, Attributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD, false);
+		EntityUtil.applyAttributeModifierSafely(this, AoAAttributes.RANGED_ATTACK_DAMAGE.get(), STAGE_DAMAGE_MOD, false);
 
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
@@ -163,9 +163,9 @@ public class WebReaperEntity extends AoARangedMob {
 		stageMod = 1 + (stage - 1) / 7.5f;
 
 		if (!level.isClientSide) {
-			EntityUtil.reapplyAttributeModifier(this, Attributes.MAX_HEALTH, STAGE_HEALTH_MOD);
-			EntityUtil.reapplyAttributeModifier(this, Attributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD);
-			EntityUtil.reapplyAttributeModifier(this, AoAAttributes.RANGED_ATTACK_DAMAGE.get(), STAGE_DAMAGE_MOD);
+			EntityUtil.reapplyAttributeModifier(this, Attributes.MAX_HEALTH, STAGE_HEALTH_MOD, false);
+			EntityUtil.reapplyAttributeModifier(this, Attributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD, false);
+			EntityUtil.reapplyAttributeModifier(this, AoAAttributes.RANGED_ATTACK_DAMAGE.get(), STAGE_DAMAGE_MOD, false);
 		}
 
 		refreshDimensions();

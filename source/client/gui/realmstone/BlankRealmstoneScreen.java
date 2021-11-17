@@ -16,7 +16,7 @@ import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.data.client.RealmstoneInsertsManager;
+import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -49,7 +49,7 @@ public class BlankRealmstoneScreen extends Screen {
 		super(LocaleUtil.getLocaleMessage("gui.aoa3.realmstone.title"));
 		scale = 0.5f;
 
-		worldInserts.putAll(RealmstoneInsertsManager.INSERTS);
+		worldInserts.putAll(RealmstoneInsertsReloadListener.INSERTS);
 	}
 
 	@Override

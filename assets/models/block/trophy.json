@@ -1,0 +1,240 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "texture": "aoa3:block/trophy",
+    "particle": "aoa3:block/trophy"
+  },
+  "elements": [
+    {
+      "from": [
+        4,
+        0,
+        4
+      ],
+      "to": [
+        12,
+        2,
+        12
+      ],
+      "rotation": {
+        "origin": [
+          12,
+          8,
+          12
+        ],
+        "axis": "y",
+        "angle": 0.0
+      },
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            12.0,
+            11.0,
+            8.0,
+            15.0
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            8.0,
+            15.0,
+            4.0,
+            11.0
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            4.0,
+            15.0,
+            8.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            12.0,
+            15.0,
+            16.0,
+            16.0
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            8.0,
+            15.0,
+            12.0,
+            16.0
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            15.0,
+            4.0,
+            16.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        5,
+        2,
+        5
+      ],
+      "to": [
+        11,
+        9,
+        11
+      ],
+      "rotation": {
+        "origin": [
+          12,
+          10,
+          12
+        ],
+        "axis": "y",
+        "angle": 0.0
+      },
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            9.0,
+            4.5,
+            6.0,
+            7.5
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            6.0,
+            7.5,
+            3.0,
+            4.5
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            3.0,
+            7.5,
+            6.0,
+            11.0
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            9.0,
+            7.5,
+            12.0,
+            11.0
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            6.0,
+            7.5,
+            9.0,
+            11.0
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            7.5,
+            3.0,
+            11.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        4.5,
+        9,
+        4.5
+      ],
+      "to": [
+        11.5,
+        11,
+        11.5
+      ],
+      "rotation": {
+        "origin": [
+          12.5,
+          17,
+          12.5
+        ],
+        "axis": "y",
+        "angle": 0.0
+      },
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            10.5,
+            0.0,
+            7.0,
+            3.5
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            7.0,
+            3.5,
+            3.5,
+            0.0
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            3.5,
+            3.5,
+            7.0,
+            4.5
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            10.5,
+            3.5,
+            14.0,
+            4.5
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            7.0,
+            3.5,
+            10.5,
+            4.5
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            3.5,
+            3.5,
+            4.5
+          ]
+        }
+      }
+    }
+  ]
+}

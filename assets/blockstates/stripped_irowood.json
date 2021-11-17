@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "aoa3:block/stripped_irowood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "aoa3:block/stripped_irowood"
+    },
+    "axis=z": {
+      "model": "aoa3:block/stripped_irowood_horizontal",
+      "x": 90
+    }
+  }
+}

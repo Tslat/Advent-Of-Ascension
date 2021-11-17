@@ -11,7 +11,6 @@ import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.entity.projectile.HardProjectile;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.util.WorldUtil;
 
 public class RockFragmentEntity extends BaseBullet implements HardProjectile {
 	public RockFragmentEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
@@ -32,7 +31,7 @@ public class RockFragmentEntity extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		if (!level.isClientSide && WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && level.isEmptyBlock(blockPosition())) {
+		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition())) {
 			int i = 1;
 
 			while (level.getBlockState(blockPosition().below(i)).getMaterial().isReplaceable() && blockPosition().getY() - i >= 0) {

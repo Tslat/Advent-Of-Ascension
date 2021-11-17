@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -46,16 +46,16 @@ public class KnightArmour extends AdventArmour {
 		if (slot != null) {
 			switch (slot) {
 				case FEET:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_BOOTS_BUFF, false);
 					break;
 				case LEGS:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_LEGS_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_LEGS_BUFF, false);
 					break;
 				case CHEST:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_CHESTPLATE_BUFF, false);
 					break;
 				case HEAD:
-					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_HELMET_BUFF);
+					EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.MAX_HEALTH, KNIGHT_HELMET_BUFF, false);
 					break;
 			}
 		}

@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:item/skeletal_crossbow",
+  "textures": {
+    "layer0": "aoa3:item/skeletal_crossbow_pulling_1"
+  }
+}

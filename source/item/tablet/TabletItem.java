@@ -9,20 +9,14 @@ import net.minecraft.item.ItemUseContext;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabPlayer;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.tablet.SoulTabletEntity;
-import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -64,7 +58,7 @@ public abstract class TabletItem extends Item {
 			ServerPlayerEntity player = (ServerPlayerEntity)context.getPlayer();
 			PlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
-			if (player.isCreative() || plData.stats().getLevel(Skills.ANIMA) >= animaLevelReq) {
+			/*if (player.isCreative() || plData.stats().getLevel(Skills.ANIMA) >= animaLevelReq) {
 				float soulCost = initialSoulCost * (1 - ((plData.stats().getLevel(Skills.ANIMA) - 1) / 200f)) * (PlayerUtil.isWearingFullSet(player, AdventArmour.Type.ANIMA) ? 0.5f : 1f);
 				SoulTabletEntity tabletEntity = getTabletEntity(world, player);
 				VoxelShape blockBoundingBox = targetBlockState.getCollisionShape(world, pos);
@@ -72,7 +66,7 @@ public abstract class TabletItem extends Item {
 				tabletEntity.absMoveTo(context.getClickLocation().x(), pos.getY() + (blockBoundingBox.isEmpty() ? 0 : blockBoundingBox.max(Direction.Axis.Y)), context.getClickLocation().z(), player.yRot, 0);
 
 				if (world.isUnobstructed(tabletEntity, VoxelShapes.create(tabletEntity.getBoundingBox()))) {
-					if (plData.stats().consumeResource(Resources.SOUL, soulCost, false)) {
+					if (plData.stats().consumeResource(AoAResource.SOUL, soulCost, false)) {
 						world.addFreshEntity(tabletEntity);
 
 						if (!player.isCreative())
@@ -84,7 +78,7 @@ public abstract class TabletItem extends Item {
 			}
 			else {
 				PlayerUtil.notifyPlayerOfInsufficientLevel(player, Skills.ANIMA, animaLevelReq);
-			}
+			}*/ // TODO
 		}
 
 		return ActionResultType.PASS;
@@ -94,8 +88,8 @@ public abstract class TabletItem extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.ANIMA, animaLevelReq));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f))))));
+		//tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.ANIMA, animaLevelReq));
+		//tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f))))));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f))));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(effectRadius))));
 	}

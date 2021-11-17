@@ -5,6 +5,7 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -17,9 +18,8 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.MoonlightFallEntity;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -37,7 +37,7 @@ public class MoonlightStaff extends BaseStaff<BlockPos> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.COMPASS_RUNE.get(), 1);
 		runes.put(AoAItems.LUNAR_RUNE.get(), 2);
 		runes.put(AoAItems.KINETIC_RUNE.get(), 2);

@@ -44,7 +44,6 @@
   "starts": [
     "aoa3:gorb_village",
     "aoa3:mushroom_spider_cave",
-    "aoa3:poison_rune_shrine",
     "aoa3:mystic_lotto_shroom",
     "aoa3:runic_portal_hollow",
     "aoa3:runic_arena",
@@ -53,19 +52,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:fungback",
-        "weight": 15,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:fungat",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:fungik",
+        "type": "aoa3:fungback",
         "weight": 15,
         "minCount": 1,
         "maxCount": 1
@@ -73,6 +66,12 @@
       {
         "type": "aoa3:fungung",
         "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fungik",
+        "weight": 15,
         "minCount": 1,
         "maxCount": 1
       }

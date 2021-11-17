@@ -14,7 +14,7 @@ import net.minecraft.world.server.ServerWorld;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public abstract class LootUtil {
+public final class LootUtil {
 	public static LootTable getTable(ServerWorld world, ResourceLocation table) {
 		return world.getServer().getLootTables().get(table);
 	}

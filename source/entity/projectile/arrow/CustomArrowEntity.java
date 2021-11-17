@@ -25,6 +25,7 @@ import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.item.weapon.crossbow.BaseCrossbow;
+import net.tslat.aoa3.mixin.common.invoker.AccessibleArrowEntity;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -84,7 +85,7 @@ public class CustomArrowEntity extends ArrowEntity {
 
 			arrow.potion = baseArrowEntity.potion;
 			arrow.effects = baseArrowEntity.effects;
-			arrow.setFixedColor(baseArrowEntity.getColor());
+			((AccessibleArrowEntity)arrow).setSpecificColour(baseArrowEntity.getColor());
 		}
 
 		arrow.bow = bow;
@@ -108,7 +109,7 @@ public class CustomArrowEntity extends ArrowEntity {
 
 			arrow.potion = baseArrowEntity.potion;
 			arrow.effects = baseArrowEntity.effects;
-			arrow.setFixedColor(baseArrowEntity.getColor());
+			((AccessibleArrowEntity)arrow).setSpecificColour(baseArrowEntity.getColor());
 		}
 
 		arrow.crossbow = crossbow;

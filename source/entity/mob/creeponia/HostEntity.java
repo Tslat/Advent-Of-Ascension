@@ -13,7 +13,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
@@ -28,9 +27,8 @@ public class HostEntity extends AoAMeleeMob {
 		goalSelector.addGoal(1, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 8f));
 		goalSelector.addGoal(3, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
 	}
 
 	@Override

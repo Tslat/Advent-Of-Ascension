@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:charged_rune"
+    },
+    "B": {
+      "item": "minecraft:rotten_flesh"
+    }
+  },
+  "result": {
+    "item": "aoa3:wither_rune",
+    "count": 16
+  }
+}

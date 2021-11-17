@@ -9,6 +9,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.EffectUtils;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
@@ -19,20 +21,24 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAAttributes;
+import net.tslat.aoa3.entity.ai.animation.Animatable;
 import net.tslat.aoa3.entity.ai.mob.FlyingLookRandomlyGoal;
 import net.tslat.aoa3.entity.ai.mob.FlyingRangedAttackGoal;
 import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingFlightMovementController;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, IRangedAttackMob, AoARangedAttacker {
+public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, IRangedAttackMob, AoARangedAttacker, Animatable {
 	protected boolean isSlipperyMovement = false;
+
+	private final AnimationFactory animationFactory = new AnimationFactory(this);
 
 	protected AoAFlyingRangedMob(EntityType<? extends FlyingEntity> entityType, World world) {
 		super(entityType, world);
@@ -44,9 +50,8 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
 		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
-		goalSelector.addGoal(3, new FlyingRangedAttackGoal(this, 40, 80));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> entity instanceof AoAMinion && ((AoAMinion)entity).isTame()));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+		goalSelector.addGoal(3, new FlyingRangedAttackGoal(this, Math.max(getAttackSwingDuration() + 1, 40), 80));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
 	}
 
 	@Nullable
@@ -77,10 +82,24 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 		return null;
 	}
 
+	public int getAttackSwingDuration() {
+		return 6;
+	}
+
+	public int getPreAttackTime() {
+		return 0;
+	}
+
 	@Nullable
 	protected abstract SoundEvent getShootSound();
 
 	protected void onHit(DamageSource source, float amount) {}
+
+	@Override
+	public void aiStep() {
+		this.updateSwingTime();
+		super.aiStep();
+	}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
@@ -158,4 +177,25 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {}
+
+	@Override
+	public int getCurrentSwingDuration() {
+		int time = getAttackSwingDuration();
+
+		if (EffectUtils.hasDigSpeed(this))
+			time -= 1 + EffectUtils.getDigSpeedAmplification(this);
+
+		if (hasEffect(Effects.DIG_SLOWDOWN))
+			time += (1 + getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) * 2;
+
+		return time;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.animationFactory;
+	}
 }

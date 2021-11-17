@@ -4,9 +4,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.item.tablet.TabletItem;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class EnergyTabletEntity extends SoulTabletEntity {
 	public EnergyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world) {
@@ -20,7 +20,7 @@ public class EnergyTabletEntity extends SoulTabletEntity {
 	@Override
 	protected void doTickEffect() {
 		for (ServerPlayerEntity pl : getTargetsWithinRadius(ServerPlayerEntity.class, player -> player != null && player.isAlive())) {
-			PlayerUtil.addResourceToPlayer(pl, Resources.ENERGY, 10f);
+			PlayerUtil.addResourceToPlayer(pl, AoAResources.SPIRIT.get(), 10f); // TODO
 		}
 	}
 

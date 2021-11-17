@@ -5,7 +5,6 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.item.TNTEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WaterMobEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -18,7 +17,6 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.entity.animal.*;
 import net.tslat.aoa3.entity.base.AoATrader;
 import net.tslat.aoa3.entity.boss.*;
-import net.tslat.aoa3.entity.minion.*;
 import net.tslat.aoa3.entity.misc.*;
 import net.tslat.aoa3.entity.misc.pixon.*;
 import net.tslat.aoa3.entity.mob.abyss.*;
@@ -85,7 +83,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> APPARITION = registerMob("apparition", ApparitionEntity::new, 0.5f, 1.5625f, 7040112, 526344);
 		public static final RegistryObject<EntityType<MonsterEntity>> ARC_FLOWER = registerMob("arc_flower", ArcFlowerEntity::new, 0.6875f, 0.9375f, 5418751, 15073024);
 		public static final RegistryObject<EntityType<MonsterEntity>> ARC_WIZARD = registerMob("arc_wizard", ArcWizardEntity::new, 0.6f, 2.3f, 15269714, 4915148);
-		public static final RegistryObject<EntityType<MonsterEntity>> ARCBEAST = registerMob("arcbeast", ArcbeastEntity::new, 0.75f, 1.375f, 13886315, 14869466);
+		public static final RegistryObject<EntityType<MonsterEntity>> ARCBEAST = registerMob("arcbeast", ArcbeastEntity::new, 0.8125f, 1.3125f, 13886315, 14869466);
 		public static final RegistryObject<EntityType<MonsterEntity>> ARCHVINE = registerMob("archvine", ArchvineEntity::new, 1.5f, 1.4375f, 15616, 1835776);
 		public static final RegistryObject<EntityType<MonsterEntity>> ARCWORM = registerMob("arcworm", ArcwormEntity::new, 0.7f, 1.0f, 16768256, 9109501);
 		public static final RegistryObject<EntityType<MonsterEntity>> ARIEL = registerMob("ariel", ArielEntity::new, 0.7f, 2.375f, 6809323, 13959166);
@@ -106,11 +104,11 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> BOBO = registerMob("bobo", BoboEntity::new, 0.6f, 2.125f, 1782866, 2249377);
 		public static final RegistryObject<EntityType<MonsterEntity>> BOMB_CARRIER = registerMob("bomb_carrier", BombCarrierEntity::new, 0.6f, 1.5f, 11382918, 2037510);
 		public static final RegistryObject<EntityType<AoACreeponiaCreeper>> BONE_CREEPER = registerMob("bone_creeper", BoneCreeperEntity::new, 0.5f, 1.625f, 10922149, 2915064);
-		public static final RegistryObject<EntityType<MonsterEntity>> BONEBACK = registerMob("boneback", BonebackEntity::new, 0.5625f, 1f, 6182726, 3052700);
+		public static final RegistryObject<EntityType<MonsterEntity>> BONEBACK = registerMob("boneback", BonebackEntity::new, 0.8125f, 1f, 6182726, 3052700);
 		public static final RegistryObject<EntityType<MonsterEntity>> BOUNCER = registerMob("bouncer", BouncerEntity::new, 0.5f, 1.4375f, 5537210, 13685462);
 		public static final RegistryObject<EntityType<MonsterEntity>> BROCCOHEAD = registerMob("broccohead", BroccoheadEntity::new, 0.5625f, 2.3625f, 2511901, 5668175);
-		public static final RegistryObject<EntityType<MonsterEntity>> BUGEYE = registerMob("bugeye", BugeyeEntity::new, 0.95f, 1.125f, 992269, 7243115);
-		public static final RegistryObject<EntityType<MonsterEntity>> BUSH_BABY = registerMob("bush_baby", BushBabyEntity::new, 0.85f, 0.9f, 7243115, 5721387);
+		public static final RegistryObject<EntityType<MonsterEntity>> BUGEYE = registerMob("bugeye", BugeyeEntity::new, 1f, 1.25f, 992269, 7243115);
+		public static final RegistryObject<EntityType<MonsterEntity>> BUSH_BABY = registerMob("bush_baby", BushBabyEntity::new, 0.85f, 0.9375f, 7243115, 5721387);
 		public static final RegistryObject<EntityType<MonsterEntity>> CANDY_CORNY = registerMob("candy_corny", CandyCornyEntity::new, 0.625f, 2f, 13932049, 15459377);
 		public static final RegistryObject<EntityType<MonsterEntity>> CANE_BUG = registerMob("cane_bug", CaneBugEntity::new, 1f, 1.5f, 4352288, 16119280);
 		public static final RegistryObject<EntityType<MonsterEntity>> CARROTOP = registerMob("carrotop", CarrotopEntity::new, 0.5625f, 2.375f, 16747528, 4914952);
@@ -122,7 +120,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> CHERRY_BLASTER = registerMob("cherry_blaster", CherryBlasterEntity::new, 0.875f, 1.0625f, 14032414, 5400890);
 		public static final RegistryObject<EntityType<MonsterEntity>> CHIMERA = registerMob("chimera", ChimeraEntity::new, 1f, 1.375f, 14736043, 4206102);
 		public static final RegistryObject<EntityType<MonsterEntity>> CHOCKO = registerMob("chocko", ChockoEntity::new, 0.6f, 2.0f, 8004884, 3346956);
-		public static final RegistryObject<EntityType<MonsterEntity>> CHOMPER = registerMob("chomper", ChomperEntity::new, 0.8f, 1.375f, 4479279, 2043409);
+		public static final RegistryObject<EntityType<MonsterEntity>> CHOMPER = registerMob("chomper", ChomperEntity::new, 0.8f, 0.875f, 4479279, 2043409);
 		public static final RegistryObject<EntityType<MonsterEntity>> CLUNKHEAD = registerMob("clunkhead", ClunkheadEntity::new, 1f, 2.0625f, 1393533, 6322068);
 		public static final RegistryObject<EntityType<FlyingEntity>> CONSTRUCT_OF_FLIGHT = registerMob("construct_of_flight", ConstructOfFlightEntity::new, 0.7f, 0.84375f, 5033917, 1382167);
 		public static final RegistryObject<EntityType<MonsterEntity>> CONSTRUCT_OF_MIND = registerMob("construct_of_mind", ConstructOfMindEntity::new, 2f, 2f, 1711130, 4298362);
@@ -215,7 +213,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> HORNDRON = registerMob("horndron", HorndronEntity::new, 1.7f, 2.2f, 3482377, 11377022);
 		public static final RegistryObject<EntityType<MonsterEntity>> HOST = registerMob("host", HostEntity::new, 2.1875f, 2.0625f, 4629316, 11321260);
 		public static final RegistryObject<EntityType<MonsterEntity>> HUNTER = registerMob("hunter", HunterEntity::new, 1.3f, 1.3f, 3152742, 4007949);
-		public static final RegistryObject<EntityType<MonsterEntity>> ICE_GIANT = registerMob("ice_giant", IceGiantEntity::new, 1.125f, 6.5f, 9149372, 7045549);
+		public static final RegistryObject<EntityType<MonsterEntity>> ICE_GIANT = registerMob("ice_giant", IceGiantEntity::new, 1.25f, 3.59375f, 9149372, 7045549);
 		public static final RegistryObject<EntityType<MonsterEntity>> INFERNAL = registerMob("infernal", InfernalEntity::new, true, 1.125f, 1.875f, 7151133, 14848287);
 		public static final RegistryObject<EntityType<MonsterEntity>> INMATE_X = registerMob("inmate_x", InmateXEntity::new, 0.6f, 2f, 14165970, 15138567);
 		public static final RegistryObject<EntityType<MonsterEntity>> INMATE_Y = registerMob("inmate_y", InmateYEntity::new, 0.75f, 1.75f, 792825, 10513678);
@@ -233,7 +231,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> KOKO = registerMob("koko", KokoEntity::new, 0.6f, 2.0f, 16189444, 15569811);
 		public static final RegistryObject<EntityType<MonsterEntity>> KRANKY = registerMob("kranky", KrankyEntity::new, 0.6f, 2.3f, 325397, 15569811);
 		public static final RegistryObject<EntityType<MonsterEntity>> KROR = registerMob("kror", KrorEntity::new, 1.75f, 3.75f, 8488834, 13620176);
-		public static final RegistryObject<EntityType<MonsterEntity>> LEAFY_GIANT = registerMob("leafy_giant", LeafyGiantEntity::new, 1.125f, 6.5f, 149780, 3153154);
+		public static final RegistryObject<EntityType<MonsterEntity>> LEAFY_GIANT = registerMob("leafy_giant", LeafyGiantEntity::new, 1.25f, 3.75f, 149780, 3153154);
 		public static final RegistryObject<EntityType<MonsterEntity>> LELYETIAN_CASTER = registerMob("lelyetian_caster", LelyetianCasterEntity::new, 0.6f, 2.375f, 12330277, 14413608);
 		public static final RegistryObject<EntityType<MonsterEntity>> LELYETIAN_WARRIOR = registerMob("lelyetian_warrior", LelyetianWarriorEntity::new, 0.6f, 2.375f, 12330277, 13489046);
 		public static final RegistryObject<EntityType<MonsterEntity>> LIGHTWALKER = registerMob("lightwalker", LightwalkerEntity::new, 1.0f, 1.5625f, 7765779, 2895137);
@@ -255,14 +253,14 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> MISKEL = registerMob("miskel", MiskelEntity::new, 0.7f, 2.375f, 10197910, 7021604);
 		public static final RegistryObject<EntityType<FlyingEntity>> MODULO = registerMob("modulo", ModuloEntity::new, 1.0f, 1.2f, 5282713, 9060540);
 		public static final RegistryObject<EntityType<MonsterEntity>> MOTHER_VOID_WALKER = registerMob("mother_void_walker", MotherVoidWalkerEntity::new, 1.0f, 1.62f, 591882, 3946559);
-		public static final RegistryObject<EntityType<MonsterEntity>> MUCKOPEDE = registerMob("muckopede", MuckopedeEntity::new, 1.3f, 0.85f, 9338466, 6709851);
+		public static final RegistryObject<EntityType<MonsterEntity>> MUCKOPEDE = registerMob("muckopede", MuckopedeEntity::new, 1.0625f, 0.75f, 9338466, 6709851);
 		public static final RegistryObject<EntityType<WaterMobEntity>> MUNCHER = registerMob("muncher", MuncherEntity::new, 1.0f, 0.5625f, 660405, 10430127);
 		public static final RegistryObject<EntityType<MonsterEntity>> MUSHROOM_SPIDER = registerMob("mushroom_spider", MushroomSpiderEntity::new, 1.4f, 0.8125f, 1739049, 12827332);
 		public static final RegistryObject<EntityType<WaterMobEntity>> NEPTUNO = registerMob("neptuno", NeptunoEntity::new, 0.85f, 2.875f, 533611, 1582407);
 		public static final RegistryObject<EntityType<MonsterEntity>> NETHENGEIC_BEAST = registerMob("nethengeic_beast", NethengeicBeastEntity::new, true, 1.0f, 1.125f, 3343364, 13834007);
 		public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, true, 1.3f, 3.28125f, 5506309, 11385897);
-		public static final RegistryObject<EntityType<MonsterEntity>> NIGHT_REAPER = registerMob("night_reaper", NightReaperEntity::new, 0.9f, 2.4f, 1117453, 11975851);
-		public static final RegistryObject<EntityType<FlyingEntity>> NIGHTFLY = registerMob("nightfly", NightflyEntity::new, 1.0f, 1.0f, 1315859, 12566398);
+		public static final RegistryObject<EntityType<MonsterEntity>> NIGHT_REAPER = registerMob("night_reaper", NightReaperEntity::new, 0.6875f, 1.8125f, 1117453, 11975851);
+		public static final RegistryObject<EntityType<FlyingEntity>> NIGHTFLY = registerMob("nightfly", NightflyEntity::new, 0.8125f, 0.8125f, 1315859, 12566398);
 		public static final RegistryObject<EntityType<MonsterEntity>> NIGHTMARE_SPIDER = registerMob("nightmare_spider", NightmareSpiderEntity::new, 1.4f, 0.8125f, 1574189, 5180318);
 		public static final RegistryObject<EntityType<FlyingEntity>> NIGHTWING = registerMob("nightwing", NightwingEntity::new, 0.75f, 0.9375f, 4012325, 6298909);
 		public static final RegistryObject<EntityType<MonsterEntity>> NIPPER = registerMob("nipper", NipperEntity::new, 0.4375f, 0.4f, 12566447, 15395527);
@@ -298,7 +296,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> RUNICORN = registerMob("runicorn", RunicornEntity::new, 0.6875f, 2f, 5411475, 4804431);
 		public static final RegistryObject<EntityType<MonsterEntity>> RUNICORN_RIDER = registerMob("runicorn_rider", RunicornRiderEntity::new, 0.7f, 2.5625f, 5411475, 539296);
 		public static final RegistryObject<EntityType<MonsterEntity>> SABRETOOTH = registerMob("sabretooth", SabretoothEntity::new, 1.125f, 1.59375f, 13403404, 1446670);
-		public static final RegistryObject<EntityType<MonsterEntity>> SAND_GIANT = registerMob("sand_giant", SandGiantEntity::new, 1.125f, 6.5f, 12695722, 16246218);
+		public static final RegistryObject<EntityType<MonsterEntity>> SAND_GIANT = registerMob("sand_giant", SandGiantEntity::new, 1.5f, 3.46875f, 12695722, 16246218);
 		public static final RegistryObject<EntityType<MonsterEntity>> SAND_GOLEM = registerMob("sand_golem", SandGolemEntity::new, 0.75f, 1.8125f, 2827290, 8352867);
 		public static final RegistryObject<EntityType<MonsterEntity>> SASQUATCH = registerMob("sasquatch", SasquatchEntity::new, 0.6f, 2.0625f, 13546898, 5656129);
 		public static final RegistryObject<EntityType<MonsterEntity>> SCRUBBY = registerMob("scrubby", ScrubbyEntity::new, 0.6875f, 1.125f, 14364720, 12027161);
@@ -339,14 +337,14 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> STIMULO = registerMob("stimulo", StimuloEntity::new, 0.6f, 1.875f, 653303, 14808864);
 		public static final RegistryObject<EntityType<MonsterEntity>> STIMULOSUS = registerMob("stimulosus", StimulosusEntity::new, 0.6f, 1.875f, 653303, 13953058);
 		public static final RegistryObject<EntityType<MonsterEntity>> STITCHES = registerMob("stitches", StitchesEntity::new, 0.6f, 2.0f, 14498831, 10187624);
-		public static final RegistryObject<EntityType<MonsterEntity>> STONE_GIANT = registerMob("stone_giant", StoneGiantEntity::new, 1.125f, 6.5f, 10181528, 10185496);
+		public static final RegistryObject<EntityType<MonsterEntity>> STONE_GIANT = registerMob("stone_giant", StoneGiantEntity::new, 1.3125f, 5.0625f, 10181528, 10185496);
 		public static final RegistryObject<EntityType<MonsterEntity>> STRONG_SKELE_HOPPER = registerMob("strong_skele_hopper", StrongSkeleHopperEntity::new, 0.8f, 1.2f, 15724008, 13552580);
 		public static final RegistryObject<EntityType<MonsterEntity>> STRONG_SKELE_PIG = registerMob("strong_skele_pig", StrongSkelePigEntity::new, 0.7f, 1.125f, 15724008, 9671312);
 		public static final RegistryObject<EntityType<MonsterEntity>> STRONG_SKELEMAN = registerMob("strong_skeleman", StrongSkelemanEntity::new, 0.8f, 1.75f, 15724008, 16248798);
 		public static final RegistryObject<EntityType<MonsterEntity>> SUGARFACE = registerMob("sugarface", SugarfaceEntity::new, 0.5625f, 2.125f, 11963839, 15787762);
 		public static final RegistryObject<EntityType<MonsterEntity>> SUNNY = registerMob("sunny", SunnyEntity::new, 0.75f, 2.375f, 653073, 13750551);
 		public static final RegistryObject<EntityType<MonsterEntity>> SWAMP_CHARGER = registerMob("swamp_charger", SwampChargerEntity::new, 0.625f, 1.5f, 1785115, 3626551);
-		public static final RegistryObject<EntityType<MonsterEntity>> SYSKER = registerMob("sysker", SyskerEntity::new, 0.6f, 1.40625f, 14941189, 653789);
+		public static final RegistryObject<EntityType<MonsterEntity>> SYSKER = registerMob("sysker", SyskerEntity::new, 0.6f, 1.5f, 14941189, 653789);
 		public static final RegistryObject<EntityType<MonsterEntity>> TERRADON = registerMob("terradon", TerradonEntity::new, 1.25f, 1.875f, 6704409, 12235168);
 		public static final RegistryObject<EntityType<MonsterEntity>> TERRESTRIAL = registerMob("terrestrial", TerrestrialEntity::new, 1.2f, 2.357f, 5636940, 15666901);
 		public static final RegistryObject<EntityType<FlyingEntity>> THARAFLY = registerMob("tharafly", TharaflyEntity::new, 0.75f, 1.0f, 4470043, 13748410);
@@ -374,7 +372,7 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<MonsterEntity>> VOXXULON = registerMob("voxxulon", VoxxulonEntity::new, 2f, 2.375f, 2568993, 5954330);
 		public static final RegistryObject<EntityType<MonsterEntity>> WEB_REAPER = registerMob("web_reaper", WebReaperEntity::new, 0.75f, 3.5625f, 2494474, 1446932);
 		public static final RegistryObject<EntityType<AoACreeponiaCreeper>> WINGED_CREEPER = registerMob("winged_creeper", WingedCreeperEntity::new, 0.6f, 1.625f, 484870, 6585443);
-		public static final RegistryObject<EntityType<MonsterEntity>> WOOD_GIANT = registerMob("wood_giant", WoodGiantEntity::new, 1.125f, 6.5f, 2957061, 731907);
+		public static final RegistryObject<EntityType<MonsterEntity>> WOOD_GIANT = registerMob("wood_giant", WoodGiantEntity::new, 1.5f, 3.375f, 2957061, 731907);
 		public static final RegistryObject<EntityType<MonsterEntity>> XXEUS = registerMob("xxeus", XxeusEntity::new, 1f, 3.125f, 9206543, 1432509);
 		public static final RegistryObject<EntityType<MonsterEntity>> YELLOW_FLOWER = registerMob("yellow_flower", YellowFlowerEntity::new, 0.7f, 2.3125f, 1168939, 14283790);
 		public static final RegistryObject<EntityType<MonsterEntity>> YELLOW_GUARDIAN = registerMob("yellow_guardian", YellowGuardianEntity::new, 1.5f, 2.625f, 7105891, 14347529);
@@ -590,14 +588,10 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<SoulTabletEntity>> STRENGTH_TABLET = registerMiscEntity("strength_tablet", StrengthTabletEntity::new, 0.6f, 0.09375f);
 		public static final RegistryObject<EntityType<SoulTabletEntity>> UNTIRING_TABLET = registerMiscEntity("untiring_tablet", UntiringTabletEntity::new, 0.6f, 0.09375f);
 		public static final RegistryObject<EntityType<SoulTabletEntity>> VITALITY_TABLET = registerMiscEntity("vitality_tablet", VitalityTabletEntity::new, 0.6f, 0.09375f);
-		
-		public static final RegistryObject<EntityType<AnimaStoneEntity>> ANIMA_STONE = registerMiscEntity("anima_stone", AnimaStoneEntity::new, true, 0.3f, 0.45f);
-		public static final RegistryObject<EntityType<BloodlustEntity>> BLOODLUST = registerMiscEntity("bloodlust", BloodlustEntity::new, true, 0.5f, 0.5f);
+
 		public static final RegistryObject<EntityType<GyrocopterEntity>> GYROCOPTER = registerMiscEntity("gyrocopter", GyrocopterEntity::new, 1.375f, 1.625f);
-		public static final RegistryObject<EntityType<HeartStoneEntity>> HEART_STONE = registerMiscEntity("heart_stone", HeartStoneEntity::new, true, 0.3f, 0.45f);
 		public static final RegistryObject<EntityType<ItemEntity>> BOSS_ITEM = registerMiscEntity("boss_item", BossItemEntity::new, 0.25f, 0.25f);
 		public static final RegistryObject<EntityType<LottoTotemEntity>> LOTTO_TOTEM = registerMiscEntity("lotto_totem", LottoTotemEntity::new, true, 0.75f, 0.95f);
-		public static final RegistryObject<EntityType<OccultBlockEntity>> OCCULT_BLOCK = registerMiscEntity("occult_block", OccultBlockEntity::new, true, 0.99f, 0.99f);
 		public static final RegistryObject<EntityType<TNTEntity>> FAKE_TNT = registerMiscEntity("fake_tnt", FakeTntEntity::new, 1f, 1f);
 		public static final RegistryObject<EntityType<BaronBombEntity>> BARON_BOMB = registerMiscEntity("baron_bomb", BaronBombEntity::new, 1f, 0.8125f);
 
@@ -620,60 +614,6 @@ public final class AoAEntities {
 			SharedConstants.CHECK_DATA_FIXER_SCHEMA = dataFixers;
 
 			return MISC.register(registryName, () -> entityType);
-		}
-	}
-
-	public static class Minions {
-		public static final DeferredRegister<EntityType<?>> MINIONS = DeferredRegister.create(ForgeRegistries.ENTITIES, AdventOfAscension.MOD_ID);
-
-		public static final RegistryObject<EntityType<TameableEntity>> ALLURICORN = registerMinion("alluricorn", AlluricornEntity::new, 1.1f, 2.0f, 14737517, 8684555);
-		public static final RegistryObject<EntityType<TameableEntity>> BLISSARD = registerMinion("blissard", BlissardEntity::new, 0.6f, 1, 6662606, 15462900);
-		public static final RegistryObject<EntityType<TameableEntity>> COMPEER = registerMinion("compeer", CompeerEntity::new, 0.65625f, 1.1875f, 1250582, 13424605);
-		public static final RegistryObject<EntityType<TameableEntity>> CONSTRUCT_OF_SERVILITY = registerMinion("construct_of_servility", ConstructOfServilityEntity::new, 0.75f, 1.75f, 278281, 2371621);
-		public static final RegistryObject<EntityType<TameableEntity>> CORBY = registerMinion("corby", CorbyEntity::new, 0.8f, 1.0625f, 630253, 14486998);
-		public static final RegistryObject<EntityType<TameableEntity>> CRAGGY = registerMinion("craggy", CraggyEntity::new, 0.9f, 0.9375f, 15013009, 15563787);
-		public static final RegistryObject<EntityType<TameableEntity>> DRAGGY = registerMinion("draggy", DraggyEntity::new, 0.9f, 0.9375f, 11605487, 14663917);
-		public static final RegistryObject<EntityType<TameableEntity>> ENDER_CARRIER = registerMinion("ender_carrier", EnderCarrierEntity::new, 1.1f, 1.375f, 1447445, 8393957);
-		public static final RegistryObject<EntityType<TameableEntity>> FRIENDLY_CREEPER = registerMinion("friendly_creeper", FriendlyCreeperEntity::new, 0.6f, 1.7f, 894731, 0);
-		public static final RegistryObject<EntityType<TameableEntity>> GNAWER = registerMinion("gnawer", GnawerEntity::new, 0.625f, 2.5f, 3160086, 3882796);
-		public static final RegistryObject<EntityType<TameableEntity>> GOOFER = registerMinion("goofer", GooferEntity::new, 1.25f, 1.375f, 15996691, 15053232);
-		public static final RegistryObject<EntityType<TameableEntity>> HEALING_GOLEM = registerMinion("healing_golem", HealingGolemEntity::new, 1.25f, 2.125f, 5328976, 15665931);
-		public static final RegistryObject<EntityType<TameableEntity>> HELLQUIN = registerMinion("hellquin", HellquinEntity::new, 0.5f, 1.25f, 1315603, 15337737);
-		public static final RegistryObject<EntityType<TameableEntity>> HIVE_SOLDIER = registerMinion("hive_soldier", HiveSoldierEntity::new, 0.5625f, 1.75f, 12350388, 15259109);
-		public static final RegistryObject<EntityType<TameableEntity>> HORNTAIL = registerMinion("horntail", HorntailEntity::new, 0.75f, 1.875f, 15063708, 15720333);
-		public static final RegistryObject<EntityType<TameableEntity>> MECHA_CYCLOPS = registerMinion("mecha_cyclops", MechaCyclopsEntity::new, 0.5f, 2.25f, 11710995, 2500128);
-		public static final RegistryObject<EntityType<TameableEntity>> MECHA_SKELLOX = registerMinion("mecha_skellox", MechaSkelloxEntity::new, 0.8f, 2.375f, 2500128, 11710995);
-		public static final RegistryObject<EntityType<TameableEntity>> ORBLING = registerMinion("orbling", OrblingEntity::new, 1.0f, 1.0f, 16189423, 15582443);
-		public static final RegistryObject<EntityType<TameableEntity>> PENGUIN = registerMinion("penguin", PenguinEntity::new, 0.5f, 1.25f, 857102, 16248822);
-		public static final RegistryObject<EntityType<TameableEntity>> PLATEOSAUR = registerMinion("plateosaur", PlateosaurEntity::new, 1.0f, 1.25f, 5077436, 6649230);
-		public static final RegistryObject<EntityType<TameableEntity>> RAMMERHORN = registerMinion("rammerhorn", RammerhornEntity::new, 0.95f, 1.0625f, 12281066, 4143128);
-		public static final RegistryObject<EntityType<TameableEntity>> ROSID = registerMinion("rosid", RosidEntity::new, 0.5f, 0.875f, 14161122, 519461);
-		public static final RegistryObject<EntityType<TameableEntity>> SHADDY = registerMinion("shaddy", ShaddyEntity::new, 0.9f, 0.9375f, 5987931, 14610398);
-		public static final RegistryObject<EntityType<TameableEntity>> SHADOW_STALKER = registerMinion("shadow_stalker", ShadowStalkerEntity::new, 1.125f, 1.59375f, 2171681, 14807777);
-		public static final RegistryObject<EntityType<TameableEntity>> SPIKEBACK = registerMinion("spikeback", SpikebackEntity::new, 1.0f, 1.0f, 2958082, 13881282);
-		public static final RegistryObject<EntityType<TameableEntity>> SPRAGGY = registerMinion("spraggy", SpraggyEntity::new, 0.9f, 0.9375f, 5817443, 12509378);
-		public static final RegistryObject<EntityType<TameableEntity>> WAGGY = registerMinion("waggy", WaggyEntity::new, 0.9f, 0.9375f, 6396660, 340855);
-
-
-		private static <T extends Entity> RegistryObject<EntityType<T>> registerMinion(String registryName, EntityType.IFactory<T> factory, float width, float height, int primaryEggColour, int secondaryEggColour) {
-			return registerMinion(registryName, factory, false, width, height, primaryEggColour, secondaryEggColour);
-		}
-
-		private static <T extends Entity> RegistryObject<EntityType<T>> registerMinion(String registryName, EntityType.IFactory<T> factory, boolean fireImmune, float width, float height, int primaryEggColour, int secondaryEggColour) {
-			EntityType.Builder<T> typeBuilder = EntityType.Builder.of(factory, EntityClassification.CREATURE).sized(width, height);
-
-			if (fireImmune)
-				typeBuilder.fireImmune();
-
-			boolean dataFixers = SharedConstants.CHECK_DATA_FIXER_SCHEMA;
-			SharedConstants.CHECK_DATA_FIXER_SCHEMA = false;
-			EntityType<T> entityType = typeBuilder.build(registryName);
-			SharedConstants.CHECK_DATA_FIXER_SCHEMA = dataFixers;
-
-			if (primaryEggColour != -1)
-				SPAWN_EGGS.register(registryName + "_spawn_egg", () -> new SpawnEggItem(entityType, primaryEggColour, secondaryEggColour, new Item.Properties().tab(ItemGroup.TAB_MISC)));
-
-			return MINIONS.register(registryName, () -> entityType);
 		}
 	}
 

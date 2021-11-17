@@ -1,0 +1,4685 @@
+{
+  "player.tribute.success": {
+    "sounds": [
+      "aoa3:player/tribute/success"
+    ]
+  },
+  "player.skills.loot": {
+    "subtitle": "subtitles.player.skills.loot",
+    "sounds": [
+      "aoa3:player/skills/loot"
+    ]
+  },
+  "player.skills.level_100": {
+    "subtitle": "subtitles.player.skills.level_100",
+    "sounds": [
+      "aoa3:player/skills/level_100"
+    ]
+  },
+  "player.skills.level_up": {
+    "subtitle": "subtitles.player.skills.level_up",
+    "sounds": [
+      "aoa3:player/skills/level_up"
+    ]
+  },
+  "entity.airhead.ambient": {
+    "subtitle": "subtitles.entity.airhead.ambient",
+    "sounds": [
+      "aoa3:entity/airhead/ambient"
+    ]
+  },
+  "entity.airhead.death": {
+    "subtitle": "subtitles.entity.airhead.death",
+    "sounds": [
+      "aoa3:entity/airhead/death"
+    ]
+  },
+  "entity.airhead.hurt": {
+    "subtitle": "subtitles.entity.airhead.hurt",
+    "sounds": [
+      "aoa3:entity/airhead/hurt"
+    ]
+  },
+  "entity.alarmo.ambient": {
+    "subtitle": "subtitles.entity.alarmo.ambient",
+    "sounds": [
+      "aoa3:entity/alarmo/ambient"
+    ]
+  },
+  "entity.alarmo.death": {
+    "subtitle": "subtitles.entity.alarmo.death",
+    "sounds": [
+      "aoa3:entity/alarmo/death"
+    ]
+  },
+  "entity.alarmo.hurt": {
+    "subtitle": "subtitles.entity.alarmo.hurt",
+    "sounds": [
+      "aoa3:entity/alarmo/hurt"
+    ]
+  },
+  "entity.amphibior.ambient": {
+    "subtitle": "subtitles.entity.amphibior.ambient",
+    "sounds": [
+      "aoa3:entity/amphibior/ambient"
+    ]
+  },
+  "entity.amphibior.death": {
+    "subtitle": "subtitles.entity.amphibior.death",
+    "sounds": [
+      "aoa3:entity/amphibior/death"
+    ]
+  },
+  "entity.amphibior.hurt": {
+    "subtitle": "subtitles.entity.amphibior.hurt",
+    "sounds": [
+      "aoa3:entity/amphibior/hurt"
+    ]
+  },
+  "entity.amphibiyte.ambient": {
+    "subtitle": "subtitles.entity.amphibiyte.ambient",
+    "sounds": [
+      "aoa3:entity/amphibiyte/ambient1",
+      "aoa3:entity/amphibiyte/ambient2",
+      "aoa3:entity/amphibiyte/ambient3",
+      "aoa3:entity/amphibiyte/ambient4",
+      "aoa3:entity/amphibiyte/ambient5",
+      "aoa3:entity/amphibiyte/ambient6"
+    ]
+  },
+  "entity.amphibiyte.death": {
+    "subtitle": "subtitles.entity.amphibiyte.death",
+    "sounds": [
+      "aoa3:entity/amphibiyte/death1",
+      "aoa3:entity/amphibiyte/death2"
+    ]
+  },
+  "entity.amphibiyte.hurt": {
+    "subtitle": "subtitles.entity.amphibiyte.hurt",
+    "sounds": [
+      "aoa3:entity/amphibiyte/hurt1",
+      "aoa3:entity/amphibiyte/hurt2",
+      "aoa3:entity/amphibiyte/hurt3",
+      "aoa3:entity/amphibiyte/hurt4"
+    ]
+  },
+  "entity.anemia.ambient": {
+    "subtitle": "subtitles.entity.anemia.ambient",
+    "sounds": [
+      "aoa3:entity/anemia/ambient"
+    ]
+  },
+  "entity.anemia.death": {
+    "subtitle": "subtitles.entity.anemia.death",
+    "sounds": [
+      "aoa3:entity/anemia/death"
+    ]
+  },
+  "entity.anemia.hurt": {
+    "subtitle": "subtitles.entity.anemia.hurt",
+    "sounds": [
+      "aoa3:entity/anemia/hurt"
+    ]
+  },
+  "entity.angelica.ambient": {
+    "subtitle": "subtitles.entity.angelica.ambient",
+    "sounds": [
+      "aoa3:entity/angelica/ambient"
+    ]
+  },
+  "entity.angelica.death": {
+    "subtitle": "subtitles.entity.angelica.death",
+    "sounds": [
+      "aoa3:entity/angelica/death"
+    ]
+  },
+  "entity.angelica.hurt": {
+    "subtitle": "subtitles.entity.angelica.hurt",
+    "sounds": [
+      "aoa3:entity/angelica/hurt"
+    ]
+  },
+  "entity.angler.ambient": {
+    "subtitle": "subtitles.entity.angler.ambient",
+    "sounds": [
+      "aoa3:entity/angler/ambient"
+    ]
+  },
+  "entity.angler.death": {
+    "subtitle": "subtitles.entity.angler.death",
+    "sounds": [
+      "aoa3:entity/angler/death"
+    ]
+  },
+  "entity.angler.hurt": {
+    "subtitle": "subtitles.entity.angler.hurt",
+    "sounds": [
+      "aoa3:entity/angler/hurt"
+    ]
+  },
+  "entity.apparition.ambient": {
+    "subtitle": "subtitles.entity.apparition.ambient",
+    "sounds": [
+      "aoa3:entity/apparition/ambient"
+    ]
+  },
+  "entity.apparition.death": {
+    "subtitle": "subtitles.entity.apparition.death",
+    "sounds": [
+      "aoa3:entity/apparition/death"
+    ]
+  },
+  "entity.apparition.hurt": {
+    "subtitle": "subtitles.entity.apparition.hurt",
+    "sounds": [
+      "aoa3:entity/apparition/hurt"
+    ]
+  },
+  "entity.arcbeast.ambient": {
+    "subtitle": "subtitles.entity.arcbeast.ambient",
+    "sounds": [
+      "aoa3:entity/arcbeast/ambient"
+    ]
+  },
+  "entity.arcbeast.death": {
+    "subtitle": "subtitles.entity.arcbeast.death",
+    "sounds": [
+      "aoa3:entity/arcbeast/death"
+    ]
+  },
+  "entity.arcbeast.hurt": {
+    "subtitle": "subtitles.entity.arcbeast.hurt",
+    "sounds": [
+      "aoa3:entity/arcbeast/hurt"
+    ]
+  },
+  "entity.archvine.ambient": {
+    "subtitle": "subtitles.entity.archvine.ambient",
+    "sounds": [
+      "aoa3:entity/archvine/ambient"
+    ]
+  },
+  "entity.archvine.death": {
+    "subtitle": "subtitles.entity.archvine.death",
+    "sounds": [
+      "aoa3:entity/archvine/death"
+    ]
+  },
+  "entity.archvine.hurt": {
+    "subtitle": "subtitles.entity.archvine.hurt",
+    "sounds": [
+      "aoa3:entity/archvine/hurt"
+    ]
+  },
+  "entity.arcworm.ambient": {
+    "subtitle": "subtitles.entity.arcworm.ambient",
+    "sounds": [
+      "aoa3:entity/arcworm/ambient"
+    ]
+  },
+  "entity.arcworm.death": {
+    "subtitle": "subtitles.entity.arcworm.death",
+    "sounds": [
+      "aoa3:entity/arcworm/death"
+    ]
+  },
+  "entity.arcworm.hurt": {
+    "subtitle": "subtitles.entity.arcworm.hurt",
+    "sounds": [
+      "aoa3:entity/arcworm/hurt"
+    ]
+  },
+  "entity.arc_wizard.ambient": {
+    "subtitle": "subtitles.entity.arc_wizard.ambient",
+    "sounds": [
+      "aoa3:entity/arc_wizard/ambient"
+    ]
+  },
+  "entity.arc_wizard.death": {
+    "subtitle": "subtitles.entity.arc_wizard.death",
+    "sounds": [
+      "aoa3:entity/arc_wizard/death"
+    ]
+  },
+  "entity.arc_wizard.hurt": {
+    "subtitle": "subtitles.entity.arc_wizard.hurt",
+    "sounds": [
+      "aoa3:entity/arc_wizard/hurt"
+    ]
+  },
+  "entity.ariel.ambient": {
+    "subtitle": "subtitles.entity.ariel.ambient",
+    "sounds": [
+      "aoa3:entity/ariel/ambient"
+    ]
+  },
+  "entity.ariel.death": {
+    "subtitle": "subtitles.entity.ariel.death",
+    "sounds": [
+      "aoa3:entity/ariel/death"
+    ]
+  },
+  "entity.ariel.hurt": {
+    "subtitle": "subtitles.entity.ariel.hurt",
+    "sounds": [
+      "aoa3:entity/ariel/hurt"
+    ]
+  },
+  "entity.arkback.ambient": {
+    "subtitle": "subtitles.entity.arkback.ambient",
+    "sounds": [
+      "aoa3:entity/arkback/ambient"
+    ]
+  },
+  "entity.arkback.death": {
+    "subtitle": "subtitles.entity.arkback.death",
+    "sounds": [
+      "aoa3:entity/arkback/death"
+    ]
+  },
+  "entity.arkback.hurt": {
+    "subtitle": "subtitles.entity.arkback.hurt",
+    "sounds": [
+      "aoa3:entity/arkback/hurt"
+    ]
+  },
+  "entity.arkzyne.ambient": {
+    "subtitle": "subtitles.entity.arkzyne.ambient",
+    "sounds": [
+      "aoa3:entity/arkzyne/ambient"
+    ]
+  },
+  "entity.arkzyne.death": {
+    "subtitle": "subtitles.entity.arkzyne.death",
+    "sounds": [
+      "aoa3:entity/arkzyne/death"
+    ]
+  },
+  "entity.arkzyne.hurt": {
+    "subtitle": "subtitles.entity.arkzyne.hurt",
+    "sounds": [
+      "aoa3:entity/arkzyne/hurt"
+    ]
+  },
+  "entity.axiolight.ambient": {
+    "subtitle": "subtitles.entity.axiolight.ambient",
+    "sounds": [
+      "aoa3:entity/axiolight/ambient"
+    ]
+  },
+  "entity.axiolight.death": {
+    "subtitle": "subtitles.entity.axiolight.death",
+    "sounds": [
+      "aoa3:entity/axiolight/death"
+    ]
+  },
+  "entity.axiolight.hurt": {
+    "subtitle": "subtitles.entity.axiolight.hurt",
+    "sounds": [
+      "aoa3:entity/axiolight/hurt"
+    ]
+  },
+  "entity.bane.ambient": {
+    "subtitle": "subtitles.entity.bane.ambient",
+    "sounds": [
+      "aoa3:entity/bane/ambient"
+    ]
+  },
+  "entity.bane.death": {
+    "subtitle": "subtitles.entity.bane.death",
+    "sounds": [
+      "aoa3:entity/bane/death"
+    ]
+  },
+  "entity.banshee.ambient": {
+    "subtitle": "subtitles.entity.banshee.ambient",
+    "sounds": [
+      "aoa3:entity/banshee/ambient"
+    ]
+  },
+  "entity.banshee.death": {
+    "subtitle": "subtitles.entity.banshee.death",
+    "sounds": [
+      "aoa3:entity/banshee/death"
+    ]
+  },
+  "entity.banshee.hurt": {
+    "subtitle": "subtitles.entity.banshee.hurt",
+    "sounds": [
+      "aoa3:entity/banshee/hurt"
+    ]
+  },
+  "entity.basilisk.ambient": {
+    "subtitle": "subtitles.entity.basilisk.ambient",
+    "sounds": [
+      "aoa3:entity/basilisk/ambient"
+    ]
+  },
+  "entity.basilisk.death": {
+    "subtitle": "subtitles.entity.basilisk.death",
+    "sounds": [
+      "aoa3:entity/basilisk/death"
+    ]
+  },
+  "entity.basilisk.hurt": {
+    "subtitle": "subtitles.entity.basilisk.hurt",
+    "sounds": [
+      "aoa3:entity/basilisk/hurt"
+    ]
+  },
+  "entity.bloodsucker.ambient": {
+    "subtitle": "subtitles.entity.bloodsucker.ambient",
+    "sounds": [
+      "aoa3:entity/bloodsucker/ambient"
+    ]
+  },
+  "entity.bloodsucker.death": {
+    "subtitle": "subtitles.entity.bloodsucker.death",
+    "sounds": [
+      "aoa3:entity/bloodsucker/death"
+    ]
+  },
+  "entity.bloodsucker.hurt": {
+    "subtitle": "subtitles.entity.bloodsucker.hurt",
+    "sounds": [
+      "aoa3:entity/bloodsucker/hurt"
+    ]
+  },
+  "entity.bomb_carrier.ambient": {
+    "subtitle": "subtitles.entity.bomb_carrier.ambient",
+    "sounds": [
+      "aoa3:entity/bomb_carrier/ambient"
+    ]
+  },
+  "entity.bomb_carrier.hurt": {
+    "subtitle": "subtitles.entity.bomb_carrier.hurt",
+    "sounds": [
+      "aoa3:entity/bomb_carrier/hurt"
+    ]
+  },
+  "entity.boneback.ambient": {
+    "subtitle": "subtitles.entity.boneback.ambient",
+    "sounds": [
+      "aoa3:entity/boneback/ambient"
+    ]
+  },
+  "entity.boneback.death": {
+    "subtitle": "subtitles.entity.boneback.death",
+    "sounds": [
+      "aoa3:entity/boneback/death"
+    ]
+  },
+  "entity.boneback.hurt": {
+    "subtitle": "subtitles.entity.boneback.hurt",
+    "sounds": [
+      "aoa3:entity/boneback/hurt"
+    ]
+  },
+  "entity.bouncer.ambient": {
+    "subtitle": "subtitles.entity.bouncer.ambient",
+    "sounds": [
+      "aoa3:entity/bouncer/ambient"
+    ]
+  },
+  "entity.bouncer.death": {
+    "subtitle": "subtitles.entity.bouncer.death",
+    "sounds": [
+      "aoa3:entity/bouncer/death"
+    ]
+  },
+  "entity.bouncer.hurt": {
+    "subtitle": "subtitles.entity.bouncer.hurt",
+    "sounds": [
+      "aoa3:entity/bouncer/hurt"
+    ]
+  },
+  "entity.bugeye.ambient": {
+    "subtitle": "subtitles.entity.bugeye.ambient",
+    "sounds": [
+      "aoa3:entity/bugeye/ambient"
+    ]
+  },
+  "entity.bugeye.death": {
+    "subtitle": "subtitles.entity.bugeye.death",
+    "sounds": [
+      "aoa3:entity/bugeye/death"
+    ]
+  },
+  "entity.bugeye.hurt": {
+    "subtitle": "subtitles.entity.bugeye.hurt",
+    "sounds": [
+      "aoa3:entity/bugeye/hurt"
+    ]
+  },
+  "entity.bush_baby.ambient": {
+    "subtitle": "subtitles.entity.bush_baby.ambient",
+    "sounds": [
+      "aoa3:entity/bush_baby/ambient"
+    ]
+  },
+  "entity.bush_baby.death": {
+    "subtitle": "subtitles.entity.bush_baby.death",
+    "sounds": [
+      "aoa3:entity/bush_baby/death"
+    ]
+  },
+  "entity.bush_baby.hurt": {
+    "subtitle": "subtitles.entity.bush_baby.hurt",
+    "sounds": [
+      "aoa3:entity/bush_baby/hurt"
+    ]
+  },
+  "entity.carrotop.ambient": {
+    "subtitle": "subtitles.entity.carrotop.ambient",
+    "sounds": [
+      "aoa3:entity/carrotop/ambient"
+    ]
+  },
+  "entity.carrotop.death": {
+    "subtitle": "subtitles.entity.carrotop.death",
+    "sounds": [
+      "aoa3:entity/carrotop/death"
+    ]
+  },
+  "entity.carrotop.hurt": {
+    "subtitle": "subtitles.entity.carrotop.hurt",
+    "sounds": [
+      "aoa3:entity/carrotop/hurt"
+    ]
+  },
+  "entity.cave_bug.ambient": {
+    "subtitle": "subtitles.entity.cave_bug.ambient",
+    "sounds": [
+      "aoa3:entity/cave_bug/ambient"
+    ]
+  },
+  "entity.cave_bug.death": {
+    "subtitle": "subtitles.entity.cave_bug.death",
+    "sounds": [
+      "aoa3:entity/cave_bug/death"
+    ]
+  },
+  "entity.cave_bug.hurt": {
+    "subtitle": "subtitles.entity.cave_bug.hurt",
+    "sounds": [
+      "aoa3:entity/cave_bug/hurt"
+    ]
+  },
+  "entity.cave_creep.ambient": {
+    "subtitle": "subtitles.entity.cave_creep.ambient",
+    "sounds": [
+      "aoa3:entity/cave_creep/ambient"
+    ]
+  },
+  "entity.cave_creep.death": {
+    "subtitle": "subtitles.entity.cave_creep.death",
+    "sounds": [
+      "aoa3:entity/cave_creep/death"
+    ]
+  },
+  "entity.cave_creep.hurt": {
+    "subtitle": "subtitles.entity.cave_creep.hurt",
+    "sounds": [
+      "aoa3:entity/cave_creep/hurt"
+    ]
+  },
+  "entity.celeve_clown.ambient": {
+    "subtitle": "subtitles.entity.celeve_clown.ambient",
+    "sounds": [
+      "aoa3:entity/celeve_clown/ambient1",
+      "aoa3:entity/celeve_clown/ambient2",
+      "aoa3:entity/celeve_clown/ambient3",
+      "aoa3:entity/celeve_clown/ambient4",
+      "aoa3:entity/celeve_clown/ambient5",
+      "aoa3:entity/celeve_clown/ambient6"
+    ]
+  },
+  "entity.celeve_clown.death": {
+    "subtitle": "subtitles.entity.celeve_clown.death",
+    "sounds": [
+      "aoa3:entity/celeve_clown/death"
+    ]
+  },
+  "entity.celeve_clown.hurt": {
+    "subtitle": "subtitles.entity.celeve_clown.hurt",
+    "sounds": [
+      "aoa3:entity/celeve_clown/hurt"
+    ]
+  },
+  "entity.charger.ambient": {
+    "subtitle": "subtitles.entity.charger.ambient",
+    "sounds": [
+      "aoa3:entity/charger/ambient"
+    ]
+  },
+  "entity.charger.death": {
+    "subtitle": "subtitles.entity.charger.death",
+    "sounds": [
+      "aoa3:entity/charger/death"
+    ]
+  },
+  "entity.charger.hurt": {
+    "subtitle": "subtitles.entity.charger.hurt",
+    "sounds": [
+      "aoa3:entity/charger/hurt"
+    ]
+  },
+  "entity.chimera.ambient": {
+    "subtitle": "subtitles.entity.chimera.ambient",
+    "sounds": [
+      "aoa3:entity/chimera/ambient"
+    ]
+  },
+  "entity.chimera.death": {
+    "subtitle": "subtitles.entity.chimera.death",
+    "sounds": [
+      "aoa3:entity/chimera/death"
+    ]
+  },
+  "entity.chimera.hurt": {
+    "subtitle": "subtitles.entity.chimera.hurt",
+    "sounds": [
+      "aoa3:entity/chimera/hurt"
+    ]
+  },
+  "entity.chomper.ambient": {
+    "subtitle": "subtitles.entity.chomper.ambient",
+    "sounds": [
+      "aoa3:entity/chomper/ambient"
+    ]
+  },
+  "entity.chomper.hurt": {
+    "subtitle": "subtitles.entity.chomper.hurt",
+    "sounds": [
+      "aoa3:entity/chomper/hurt"
+    ]
+  },
+  "entity.clunkhead.death": {
+    "subtitle": "subtitles.entity.clunkhead.death",
+    "sounds": [
+      "aoa3:entity/clunkhead/death"
+    ]
+  },
+  "entity.compeer.ambient": {
+    "subtitle": "subtitles.entity.compeer.ambient",
+    "sounds": [
+      "aoa3:entity/compeer/ambient"
+    ]
+  },
+  "entity.compeer.death": {
+    "subtitle": "subtitles.entity.compeer.death",
+    "sounds": [
+      "aoa3:entity/compeer/death"
+    ]
+  },
+  "entity.compeer.hurt": {
+    "subtitle": "subtitles.entity.compeer.hurt",
+    "sounds": [
+      "aoa3:entity/compeer/hurt"
+    ]
+  },
+  "entity.corallus.ambient": {
+    "subtitle": "subtitles.entity.corallus.ambient",
+    "sounds": [
+      "aoa3:entity/corallus/ambient"
+    ]
+  },
+  "entity.corallus.death": {
+    "subtitle": "subtitles.entity.corallus.death",
+    "sounds": [
+      "aoa3:entity/corallus/death"
+    ]
+  },
+  "entity.corallus.hurt": {
+    "subtitle": "subtitles.entity.corallus.hurt",
+    "sounds": [
+      "aoa3:entity/corallus/hurt"
+    ]
+  },
+  "entity.coralon.ambient": {
+    "subtitle": "subtitles.entity.coralon.ambient",
+    "sounds": [
+      "aoa3:entity/coralon/ambient"
+    ]
+  },
+  "entity.coralon.death": {
+    "subtitle": "subtitles.entity.coralon.death",
+    "sounds": [
+      "aoa3:entity/coralon/death"
+    ]
+  },
+  "entity.coralon.hurt": {
+    "subtitle": "subtitles.entity.coralon.hurt",
+    "sounds": [
+      "aoa3:entity/coralon/hurt"
+    ]
+  },
+  "entity.coratee.ambient": {
+    "subtitle": "subtitles.entity.coratee.ambient",
+    "sounds": [
+      "aoa3:entity/coratee/ambient"
+    ]
+  },
+  "entity.coratee.death": {
+    "subtitle": "subtitles.entity.coratee.death",
+    "sounds": [
+      "aoa3:entity/coratee/death"
+    ]
+  },
+  "entity.coratee.hurt": {
+    "subtitle": "subtitles.entity.coratee.hurt",
+    "sounds": [
+      "aoa3:entity/coratee/hurt"
+    ]
+  },
+  "entity.cotton_candor.ambient": {
+    "subtitle": "subtitles.entity.cotton_candor.ambient",
+    "sounds": [
+      "aoa3:entity/cotton_candor/ambient"
+    ]
+  },
+  "entity.cotton_candor.death": {
+    "subtitle": "subtitles.entity.cotton_candor.death",
+    "sounds": [
+      "aoa3:entity/cotton_candor/death"
+    ]
+  },
+  "entity.cotton_candor.hurt": {
+    "subtitle": "subtitles.entity.cotton_candor.hurt",
+    "sounds": [
+      "aoa3:entity/cotton_candor/hurt"
+    ]
+  },
+  "entity.craexxeus.ambient": {
+    "subtitle": "subtitles.entity.craexxeus.ambient",
+    "sounds": [
+      "aoa3:entity/craexxeus/ambient1",
+      "aoa3:entity/craexxeus/ambient2",
+      "aoa3:entity/craexxeus/ambient3"
+    ]
+  },
+  "entity.craexxeus.death": {
+    "subtitle": "subtitles.entity.craexxeus.death",
+    "sounds": [
+      "aoa3:entity/craexxeus/death"
+    ]
+  },
+  "entity.craexxeus.hurt": {
+    "subtitle": "subtitles.entity.craexxeus.hurt",
+    "sounds": [
+      "aoa3:entity/craexxeus/hurt"
+    ]
+  },
+  "entity.creepird.ambient": {
+    "subtitle": "subtitles.entity.creepird.ambient",
+    "sounds": [
+      "aoa3:entity/creepird/ambient"
+    ]
+  },
+  "entity.creepird.death": {
+    "subtitle": "subtitles.entity.creepird.death",
+    "sounds": [
+      "aoa3:entity/creepird/death"
+    ]
+  },
+  "entity.creepird.hurt": {
+    "subtitle": "subtitles.entity.creepird.hurt",
+    "sounds": [
+      "aoa3:entity/creepird/hurt"
+    ]
+  },
+  "entity.creepoid.ambient": {
+    "subtitle": "subtitles.entity.creepoid.ambient",
+    "sounds": [
+      "aoa3:entity/creepoid/ambient"
+    ]
+  },
+  "entity.creepoid.death": {
+    "subtitle": "subtitles.entity.creepoid.death",
+    "sounds": [
+      "aoa3:entity/creepoid/death"
+    ]
+  },
+  "entity.creepoid.hurt": {
+    "subtitle": "subtitles.entity.creepoid.hurt",
+    "sounds": [
+      "aoa3:entity/creepoid/hurt"
+    ]
+  },
+  "entity.crusilisk.ambient": {
+    "subtitle": "subtitles.entity.crusilisk.ambient",
+    "sounds": [
+      "aoa3:entity/crusilisk/ambient"
+    ]
+  },
+  "entity.crusilisk.death": {
+    "subtitle": "subtitles.entity.crusilisk.death",
+    "sounds": [
+      "aoa3:entity/crusilisk/death"
+    ]
+  },
+  "entity.crusilisk.hurt": {
+    "subtitle": "subtitles.entity.crusilisk.hurt",
+    "sounds": [
+      "aoa3:entity/crusilisk/hurt"
+    ]
+  },
+  "entity.cryptid.ambient": {
+    "subtitle": "subtitles.entity.cryptid.ambient",
+    "sounds": [
+      "aoa3:entity/cryptid/ambient"
+    ]
+  },
+  "entity.cryptid.death": {
+    "subtitle": "subtitles.entity.cryptid.death",
+    "sounds": [
+      "aoa3:entity/cryptid/death"
+    ]
+  },
+  "entity.cryptid.hurt": {
+    "subtitle": "subtitles.entity.cryptid.hurt",
+    "sounds": [
+      "aoa3:entity/cryptid/hurt"
+    ]
+  },
+  "entity.crystal_construct.ambient": {
+    "subtitle": "subtitles.entity.crystal_construct.ambient",
+    "sounds": [
+      "aoa3:entity/crystal_construct/ambient1",
+      "aoa3:entity/crystal_construct/ambient2",
+      "aoa3:entity/crystal_construct/ambient3",
+      "aoa3:entity/crystal_construct/ambient4",
+      "aoa3:entity/crystal_construct/ambient5",
+      "aoa3:entity/crystal_construct/ambient6"
+    ]
+  },
+  "entity.crystal_construct.death": {
+    "subtitle": "subtitles.entity.crystal_construct.death",
+    "sounds": [
+      "aoa3:entity/crystal_construct/death"
+    ]
+  },
+  "entity.crystal_construct.hurt": {
+    "subtitle": "subtitles.entity.crystal_construct.hurt",
+    "sounds": [
+      "aoa3:entity/crystal_construct/hurt"
+    ]
+  },
+  "entity.cyclops.ambient": {
+    "subtitle": "subtitles.entity.cyclops.ambient",
+    "sounds": [
+      "aoa3:entity/cyclops/ambient"
+    ]
+  },
+  "entity.cyclops.death": {
+    "subtitle": "subtitles.entity.cyclops.death",
+    "sounds": [
+      "aoa3:entity/cyclops/death"
+    ]
+  },
+  "entity.cyclops.hurt": {
+    "subtitle": "subtitles.entity.cyclops.hurt",
+    "sounds": [
+      "aoa3:entity/cyclops/hurt"
+    ]
+  },
+  "entity.dawnlight.ambient": {
+    "subtitle": "subtitles.entity.dawnlight.ambient",
+    "sounds": [
+      "aoa3:entity/dawnlight/ambient"
+    ]
+  },
+  "entity.dawnlight.death": {
+    "subtitle": "subtitles.entity.dawnlight.death",
+    "sounds": [
+      "aoa3:entity/dawnlight/death"
+    ]
+  },
+  "entity.dawnlight.hurt": {
+    "subtitle": "subtitles.entity.dawnlight.hurt",
+    "sounds": [
+      "aoa3:entity/dawnlight/hurt"
+    ]
+  },
+  "entity.deinotherium.ambient": {
+    "subtitle": "subtitles.entity.deinotherium.ambient",
+    "sounds": [
+      "aoa3:entity/deinotherium/ambient"
+    ]
+  },
+  "entity.deinotherium.death": {
+    "subtitle": "subtitles.entity.deinotherium.death",
+    "sounds": [
+      "aoa3:entity/deinotherium/death"
+    ]
+  },
+  "entity.deinotherium.hurt": {
+    "subtitle": "subtitles.entity.deinotherium.hurt",
+    "sounds": [
+      "aoa3:entity/deinotherium/hurt"
+    ]
+  },
+  "entity.destructor.ambient": {
+    "subtitle": "subtitles.entity.destructor.ambient",
+    "sounds": [
+      "aoa3:entity/destructor/ambient"
+    ]
+  },
+  "entity.destructor.death": {
+    "subtitle": "subtitles.entity.destructor.death",
+    "sounds": [
+      "aoa3:entity/destructor/death"
+    ]
+  },
+  "entity.destructor.hurt": {
+    "subtitle": "subtitles.entity.destructor.hurt",
+    "sounds": [
+      "aoa3:entity/destructor/hurt"
+    ]
+  },
+  "entity.devourer.ambient": {
+    "subtitle": "subtitles.entity.devourer.ambient",
+    "sounds": [
+      "aoa3:entity/devourer/ambient"
+    ]
+  },
+  "entity.devourer.death": {
+    "subtitle": "subtitles.entity.devourer.death",
+    "sounds": [
+      "aoa3:entity/devourer/death"
+    ]
+  },
+  "entity.devourer.hurt": {
+    "subtitle": "subtitles.entity.devourer.hurt",
+    "sounds": [
+      "aoa3:entity/devourer/hurt"
+    ]
+  },
+  "entity.diocus.ambient": {
+    "subtitle": "subtitles.entity.diocus.ambient",
+    "sounds": [
+      "aoa3:entity/diocus/ambient"
+    ]
+  },
+  "entity.diocus.death": {
+    "subtitle": "subtitles.entity.diocus.death",
+    "sounds": [
+      "aoa3:entity/diocus/death"
+    ]
+  },
+  "entity.diocus.hurt": {
+    "subtitle": "subtitles.entity.diocus.hurt",
+    "sounds": [
+      "aoa3:entity/diocus/hurt"
+    ]
+  },
+  "entity.distorter.ambient": {
+    "subtitle": "subtitles.entity.distorter.ambient",
+    "sounds": [
+      "aoa3:entity/distorter/ambient"
+    ]
+  },
+  "entity.distorter.death": {
+    "subtitle": "subtitles.entity.distorter.death",
+    "sounds": [
+      "aoa3:entity/distorter/death"
+    ]
+  },
+  "entity.distorter.hurt": {
+    "subtitle": "subtitles.entity.distorter.hurt",
+    "sounds": [
+      "aoa3:entity/distorter/hurt"
+    ]
+  },
+  "entity.doubler.ambient": {
+    "subtitle": "subtitles.entity.doubler.ambient",
+    "sounds": [
+      "aoa3:entity/doubler/ambient"
+    ]
+  },
+  "entity.doubler.death": {
+    "subtitle": "subtitles.entity.doubler.death",
+    "sounds": [
+      "aoa3:entity/doubler/death"
+    ]
+  },
+  "entity.doubler.hurt": {
+    "subtitle": "subtitles.entity.doubler.hurt",
+    "sounds": [
+      "aoa3:entity/doubler/hurt"
+    ]
+  },
+  "entity.dracyon.ambient": {
+    "subtitle": "subtitles.entity.dracyon.ambient",
+    "sounds": [
+      "aoa3:entity/dracyon/ambient"
+    ]
+  },
+  "entity.dracyon.death": {
+    "subtitle": "subtitles.entity.dracyon.death",
+    "sounds": [
+      "aoa3:entity/dracyon/death"
+    ]
+  },
+  "entity.draggy.ambient": {
+    "subtitle": "subtitles.entity.draggy.ambient",
+    "sounds": [
+      "aoa3:entity/draggy/ambient"
+    ]
+  },
+  "entity.draggy.death": {
+    "subtitle": "subtitles.entity.draggy.death",
+    "sounds": [
+      "aoa3:entity/draggy/death"
+    ]
+  },
+  "entity.draggy.hurt": {
+    "subtitle": "subtitles.entity.draggy.hurt",
+    "sounds": [
+      "aoa3:entity/draggy/hurt"
+    ]
+  },
+  "entity.dusteiva.ambient": {
+    "subtitle": "subtitles.entity.dusteiva.ambient",
+    "sounds": [
+      "aoa3:entity/dusteiva/ambient"
+    ]
+  },
+  "entity.dusteiva.death": {
+    "subtitle": "subtitles.entity.dusteiva.death",
+    "sounds": [
+      "aoa3:entity/dusteiva/death"
+    ]
+  },
+  "entity.dusteiva.hurt": {
+    "subtitle": "subtitles.entity.dusteiva.hurt",
+    "sounds": [
+      "aoa3:entity/dusteiva/hurt"
+    ]
+  },
+  "entity.duston.hurt": {
+    "subtitle": "subtitles.entity.duston.hurt",
+    "sounds": [
+      "aoa3:entity/duston/hurt"
+    ]
+  },
+  "entity.dust_strider.ambient": {
+    "subtitle": "subtitles.entity.dust_strider.ambient",
+    "sounds": [
+      "aoa3:entity/dust_strider/ambient"
+    ]
+  },
+  "entity.dust_strider.death": {
+    "subtitle": "subtitles.entity.dust_strider.death",
+    "sounds": [
+      "aoa3:entity/dust_strider/death"
+    ]
+  },
+  "entity.dust_strider.hurt": {
+    "subtitle": "subtitles.entity.dust_strider.hurt",
+    "sounds": [
+      "aoa3:entity/dust_strider/hurt"
+    ]
+  },
+  "entity.dyrehorn.ambient": {
+    "subtitle": "subtitles.entity.dyrehorn.ambient",
+    "sounds": [
+      "aoa3:entity/dyrehorn/ambient"
+    ]
+  },
+  "entity.dyrehorn.death": {
+    "subtitle": "subtitles.entity.dyrehorn.death",
+    "sounds": [
+      "aoa3:entity/dyrehorn/death"
+    ]
+  },
+  "entity.dyrehorn.hurt": {
+    "subtitle": "subtitles.entity.dyrehorn.hurt",
+    "sounds": [
+      "aoa3:entity/dyrehorn/hurt"
+    ]
+  },
+  "entity.echodar.ambient": {
+    "subtitle": "subtitles.entity.echodar.ambient",
+    "sounds": [
+      "aoa3:entity/echodar/ambient"
+    ]
+  },
+  "entity.echodar.death": {
+    "subtitle": "subtitles.entity.echodar.death",
+    "sounds": [
+      "aoa3:entity/echodar/death"
+    ]
+  },
+  "entity.echodar.hurt": {
+    "subtitle": "subtitles.entity.echodar.hurt",
+    "sounds": [
+      "aoa3:entity/echodar/hurt"
+    ]
+  },
+  "entity.elkanyne.ambient": {
+    "subtitle": "subtitles.entity.elkanyne.ambient",
+    "sounds": [
+      "aoa3:entity/elkanyne/ambient"
+    ]
+  },
+  "entity.elkanyne.death": {
+    "subtitle": "subtitles.entity.elkanyne.death",
+    "sounds": [
+      "aoa3:entity/elkanyne/death"
+    ]
+  },
+  "entity.elkanyne.hurt": {
+    "subtitle": "subtitles.entity.elkanyne.hurt",
+    "sounds": [
+      "aoa3:entity/elkanyne/hurt"
+    ]
+  },
+  "entity.elusive.ambient": {
+    "subtitle": "subtitles.entity.elusive.ambient",
+    "sounds": [
+      "aoa3:entity/elusive/ambient1",
+      "aoa3:entity/elusive/ambient2",
+      "aoa3:entity/elusive/ambient3"
+    ]
+  },
+  "entity.elusive.death": {
+    "subtitle": "subtitles.entity.elusive.death",
+    "sounds": [
+      "aoa3:entity/elusive/death"
+    ]
+  },
+  "entity.elusive.hurt": {
+    "subtitle": "subtitles.entity.elusive.hurt",
+    "sounds": [
+      "aoa3:entity/elusive/hurt"
+    ]
+  },
+  "entity.embrake.ambient": {
+    "subtitle": "subtitles.entity.embrake.ambient",
+    "sounds": [
+      "aoa3:entity/embrake/ambient"
+    ]
+  },
+  "entity.embrake.death": {
+    "subtitle": "subtitles.entity.embrake.death",
+    "sounds": [
+      "aoa3:entity/embrake/death"
+    ]
+  },
+  "entity.embrake.hurt": {
+    "subtitle": "subtitles.entity.embrake.hurt",
+    "sounds": [
+      "aoa3:entity/embrake/hurt"
+    ]
+  },
+  "entity.emperor_beast.ambient": {
+    "subtitle": "subtitles.entity.emperor_beast.ambient",
+    "sounds": [
+      "aoa3:entity/emperor_beast/ambient"
+    ]
+  },
+  "entity.emperor_beast.death": {
+    "subtitle": "subtitles.entity.emperor_beast.death",
+    "sounds": [
+      "aoa3:entity/emperor_beast/death"
+    ]
+  },
+  "entity.emperor_beast.hurt": {
+    "subtitle": "subtitles.entity.emperor_beast.hurt",
+    "sounds": [
+      "aoa3:entity/emperor_beast/hurt"
+    ]
+  },
+  "entity.enforcer.ambient": {
+    "subtitle": "subtitles.entity.enforcer.ambient",
+    "sounds": [
+      "aoa3:entity/enforcer/ambient"
+    ]
+  },
+  "entity.enforcer.death": {
+    "subtitle": "subtitles.entity.enforcer.death",
+    "sounds": [
+      "aoa3:entity/enforcer/death"
+    ]
+  },
+  "entity.enforcer.hurt": {
+    "subtitle": "subtitles.entity.enforcer.hurt",
+    "sounds": [
+      "aoa3:entity/enforcer/hurt"
+    ]
+  },
+  "entity.everbeast.ambient": {
+    "subtitle": "subtitles.entity.everbeast.ambient",
+    "sounds": [
+      "aoa3:entity/everbeast/ambient"
+    ]
+  },
+  "entity.everbeast.hurt": {
+    "subtitle": "subtitles.entity.everbeast.hurt",
+    "sounds": [
+      "aoa3:entity/everbeast/hurt"
+    ]
+  },
+  "entity.exohead.ambient": {
+    "subtitle": "subtitles.entity.exohead.ambient",
+    "sounds": [
+      "aoa3:entity/exohead/ambient"
+    ]
+  },
+  "entity.exohead.death": {
+    "subtitle": "subtitles.entity.exohead.death",
+    "sounds": [
+      "aoa3:entity/exohead/death"
+    ]
+  },
+  "entity.exohead.hurt": {
+    "subtitle": "subtitles.entity.exohead.hurt",
+    "sounds": [
+      "aoa3:entity/exohead/hurt"
+    ]
+  },
+  "entity.explodot.ambient": {
+    "subtitle": "subtitles.entity.explodot.ambient",
+    "sounds": [
+      "aoa3:entity/explodot/ambient"
+    ]
+  },
+  "entity.explodot.death": {
+    "subtitle": "subtitles.entity.explodot.death",
+    "sounds": [
+      "aoa3:entity/explodot/death"
+    ]
+  },
+  "entity.explodot.hurt": {
+    "subtitle": "subtitles.entity.explodot.hurt",
+    "sounds": [
+      "aoa3:entity/explodot/hurt"
+    ]
+  },
+  "entity.fenix.ambient": {
+    "subtitle": "subtitles.entity.fenix.ambient",
+    "sounds": [
+      "aoa3:entity/fenix/ambient"
+    ]
+  },
+  "entity.fenix.death": {
+    "subtitle": "subtitles.entity.fenix.death",
+    "sounds": [
+      "aoa3:entity/fenix/death"
+    ]
+  },
+  "entity.fenix.hurt": {
+    "subtitle": "subtitles.entity.fenix.hurt",
+    "sounds": [
+      "aoa3:entity/fenix/hurt"
+    ]
+  },
+  "entity.fiend.ambient": {
+    "subtitle": "subtitles.entity.fiend.ambient",
+    "sounds": [
+      "aoa3:entity/fiend/ambient"
+    ]
+  },
+  "entity.fiend.death": {
+    "subtitle": "subtitles.entity.fiend.death",
+    "sounds": [
+      "aoa3:entity/fiend/death"
+    ]
+  },
+  "entity.fiend.hurt": {
+    "subtitle": "subtitles.entity.fiend.hurt",
+    "sounds": [
+      "aoa3:entity/fiend/hurt"
+    ]
+  },
+  "entity.fishix.ambient": {
+    "subtitle": "subtitles.entity.fishix.ambient",
+    "sounds": [
+      "aoa3:entity/fishix/ambient"
+    ]
+  },
+  "entity.fishix.death": {
+    "subtitle": "subtitles.entity.fishix.death",
+    "sounds": [
+      "aoa3:entity/fishix/death"
+    ]
+  },
+  "entity.fishix.hurt": {
+    "subtitle": "subtitles.entity.fishix.hurt",
+    "sounds": [
+      "aoa3:entity/fishix/hurt"
+    ]
+  },
+  "entity.flamewalker.ambient": {
+    "subtitle": "subtitles.entity.flamewalker.ambient",
+    "sounds": [
+      "aoa3:entity/flamewalker/ambient"
+    ]
+  },
+  "entity.flamewalker.death": {
+    "subtitle": "subtitles.entity.flamewalker.death",
+    "sounds": [
+      "aoa3:entity/flamewalker/death"
+    ]
+  },
+  "entity.flamewalker.hurt": {
+    "subtitle": "subtitles.entity.flamewalker.hurt",
+    "sounds": [
+      "aoa3:entity/flamewalker/hurt"
+    ]
+  },
+  "entity.flesh_eater.ambient": {
+    "subtitle": "subtitles.entity.flesh_eater.ambient",
+    "sounds": [
+      "aoa3:entity/flesh_eater/ambient"
+    ]
+  },
+  "entity.flesh_eater.death": {
+    "subtitle": "subtitles.entity.flesh_eater.death",
+    "sounds": [
+      "aoa3:entity/flesh_eater/death"
+    ]
+  },
+  "entity.flesh_eater.hurt": {
+    "subtitle": "subtitles.entity.flesh_eater.hurt",
+    "sounds": [
+      "aoa3:entity/flesh_eater/hurt"
+    ]
+  },
+  "entity.flye.ambient": {
+    "subtitle": "subtitles.entity.flye.ambient",
+    "sounds": [
+      "aoa3:entity/flye/ambient"
+    ]
+  },
+  "entity.flye.death": {
+    "subtitle": "subtitles.entity.flye.death",
+    "sounds": [
+      "aoa3:entity/flye/death"
+    ]
+  },
+  "entity.flye.hurt": {
+    "subtitle": "subtitles.entity.flye.hurt",
+    "sounds": [
+      "aoa3:entity/flye/hurt"
+    ]
+  },
+  "entity.fungi.ambient": {
+    "subtitle": "subtitles.entity.fungi.ambient",
+    "sounds": [
+      "aoa3:entity/fungi/ambient"
+    ]
+  },
+  "entity.fungi.death": {
+    "subtitle": "subtitles.entity.fungi.death",
+    "sounds": [
+      "aoa3:entity/fungi/death"
+    ]
+  },
+  "entity.fungi.hurt": {
+    "subtitle": "subtitles.entity.fungi.hurt",
+    "sounds": [
+      "aoa3:entity/fungi/hurt"
+    ]
+  },
+  "entity.furlion.ambient": {
+    "subtitle": "subtitles.entity.furlion.ambient",
+    "sounds": [
+      "aoa3:entity/furlion/ambient"
+    ]
+  },
+  "entity.furlion.death": {
+    "subtitle": "subtitles.entity.furlion.death",
+    "sounds": [
+      "aoa3:entity/furlion/death"
+    ]
+  },
+  "entity.furlion.hurt": {
+    "subtitle": "subtitles.entity.furlion.hurt",
+    "sounds": [
+      "aoa3:entity/furlion/hurt"
+    ]
+  },
+  "entity.gadgetoid.ambient": {
+    "subtitle": "subtitles.entity.gadgetoid.ambient",
+    "sounds": [
+      "aoa3:entity/gadgetoid/ambient"
+    ]
+  },
+  "entity.gadgetoid.death": {
+    "subtitle": "subtitles.entity.gadgetoid.death",
+    "sounds": [
+      "aoa3:entity/gadgetoid/death"
+    ]
+  },
+  "entity.gadgetoid.hurt": {
+    "subtitle": "subtitles.entity.gadgetoid.hurt",
+    "sounds": [
+      "aoa3:entity/gadgetoid/hurt"
+    ]
+  },
+  "entity.ghost.ambient": {
+    "subtitle": "subtitles.entity.ghost.ambient",
+    "sounds": [
+      "aoa3:entity/ghost/ambient"
+    ]
+  },
+  "entity.ghost.death": {
+    "subtitle": "subtitles.entity.ghost.death",
+    "sounds": [
+      "aoa3:entity/ghost/death"
+    ]
+  },
+  "entity.ghost.hurt": {
+    "subtitle": "subtitles.entity.ghost.hurt",
+    "sounds": [
+      "aoa3:entity/ghost/hurt"
+    ]
+  },
+  "entity.giant.death": {
+    "subtitle": "subtitles.entity.giant.death",
+    "sounds": [
+      "aoa3:entity/giant/death"
+    ]
+  },
+  "entity.giant.hurt": {
+    "subtitle": "subtitles.entity.giant.hurt",
+    "sounds": [
+      "aoa3:entity/giant/hurt"
+    ]
+  },
+  "entity.giant_snail.ambient": {
+    "subtitle": "subtitles.entity.giant_snail.ambient",
+    "sounds": [
+      "aoa3:entity/giant_snail/ambient"
+    ]
+  },
+  "entity.giant_snail.death": {
+    "subtitle": "subtitles.entity.giant_snail.death",
+    "sounds": [
+      "aoa3:entity/giant_snail/death"
+    ]
+  },
+  "entity.giant_snail.hurt": {
+    "subtitle": "subtitles.entity.giant_snail.hurt",
+    "sounds": [
+      "aoa3:entity/giant_snail/hurt"
+    ]
+  },
+  "entity.goalby.ambient": {
+    "subtitle": "subtitles.entity.goalby.ambient",
+    "sounds": [
+      "aoa3:entity/goalby/ambient"
+    ]
+  },
+  "entity.goalby.death": {
+    "subtitle": "subtitles.entity.goalby.death",
+    "sounds": [
+      "aoa3:entity/goalby/death"
+    ]
+  },
+  "entity.goalby.hurt": {
+    "subtitle": "subtitles.entity.goalby.hurt",
+    "sounds": [
+      "aoa3:entity/goalby/hurt"
+    ]
+  },
+  "entity.goblin.ambient": {
+    "subtitle": "subtitles.entity.goblin.ambient",
+    "sounds": [
+      "aoa3:entity/goblin/ambient"
+    ]
+  },
+  "entity.goblin.death": {
+    "subtitle": "subtitles.entity.goblin.death",
+    "sounds": [
+      "aoa3:entity/goblin/death"
+    ]
+  },
+  "entity.goblin.hurt": {
+    "subtitle": "subtitles.entity.goblin.hurt",
+    "sounds": [
+      "aoa3:entity/goblin/hurt"
+    ]
+  },
+  "entity.graw.ambient": {
+    "subtitle": "subtitles.entity.graw.ambient",
+    "sounds": [
+      "aoa3:entity/graw/ambient"
+    ]
+  },
+  "entity.graw.death": {
+    "subtitle": "subtitles.entity.graw.death",
+    "sounds": [
+      "aoa3:entity/graw/death"
+    ]
+  },
+  "entity.graw.hurt": {
+    "subtitle": "subtitles.entity.graw.hurt",
+    "sounds": [
+      "aoa3:entity/graw/hurt"
+    ]
+  },
+  "entity.grillface.ambient": {
+    "subtitle": "subtitles.entity.grillface.ambient",
+    "sounds": [
+      "aoa3:entity/grillface/ambient"
+    ]
+  },
+  "entity.grillface.death": {
+    "subtitle": "subtitles.entity.grillface.death",
+    "sounds": [
+      "aoa3:entity/grillface/death"
+    ]
+  },
+  "entity.grillface.hurt": {
+    "subtitle": "subtitles.entity.grillface.hurt",
+    "sounds": [
+      "aoa3:entity/grillface/hurt"
+    ]
+  },
+  "entity.grobbler.ambient": {
+    "subtitle": "subtitles.entity.grobbler.ambient",
+    "sounds": [
+      "aoa3:entity/grobbler/ambient"
+    ]
+  },
+  "entity.grobbler.death": {
+    "subtitle": "subtitles.entity.grobbler.death",
+    "sounds": [
+      "aoa3:entity/grobbler/death"
+    ]
+  },
+  "entity.grobbler.hurt": {
+    "subtitle": "subtitles.entity.grobbler.hurt",
+    "sounds": [
+      "aoa3:entity/grobbler/hurt"
+    ]
+  },
+  "entity.guardian.death": {
+    "subtitle": "subtitles.entity.guardian.death",
+    "sounds": [
+      "aoa3:entity/guardian/death"
+    ]
+  },
+  "entity.guardian.hurt": {
+    "subtitle": "subtitles.entity.guardian.hurt",
+    "sounds": [
+      "aoa3:entity/guardian/hurt"
+    ]
+  },
+  "entity.gyro.ambient": {
+    "subtitle": "subtitles.entity.gyro.ambient",
+    "sounds": [
+      "aoa3:entity/gyro/ambient"
+    ]
+  },
+  "entity.gyro.death": {
+    "subtitle": "subtitles.entity.gyro.death",
+    "sounds": [
+      "aoa3:entity/gyro/death"
+    ]
+  },
+  "entity.gyro.hurt": {
+    "subtitle": "subtitles.entity.gyro.hurt",
+    "sounds": [
+      "aoa3:entity/gyro/hurt"
+    ]
+  },
+  "entity.hag.ambient": {
+    "subtitle": "subtitles.entity.hag.ambient",
+    "sounds": [
+      "aoa3:entity/hag/ambient"
+    ]
+  },
+  "entity.hag.death": {
+    "subtitle": "subtitles.entity.hag.death",
+    "sounds": [
+      "aoa3:entity/hag/death"
+    ]
+  },
+  "entity.hag.hurt": {
+    "subtitle": "subtitles.entity.hag.hurt",
+    "sounds": [
+      "aoa3:entity/hag/hurt"
+    ]
+  },
+  "entity.hive_king.ambient": {
+    "subtitle": "subtitles.entity.hive_king.ambient",
+    "sounds": [
+      "aoa3:entity/hive_king/ambient"
+    ]
+  },
+  "entity.hive_king.death": {
+    "subtitle": "subtitles.entity.hive_king.death",
+    "sounds": [
+      "aoa3:entity/hive_king/death"
+    ]
+  },
+  "entity.horndron.ambient": {
+    "subtitle": "subtitles.entity.horndron.ambient",
+    "sounds": [
+      "aoa3:entity/horndron/ambient"
+    ]
+  },
+  "entity.horndron.death": {
+    "subtitle": "subtitles.entity.horndron.death",
+    "sounds": [
+      "aoa3:entity/horndron/death"
+    ]
+  },
+  "entity.horndron.hurt": {
+    "subtitle": "subtitles.entity.horndron.hurt",
+    "sounds": [
+      "aoa3:entity/horndron/hurt"
+    ]
+  },
+  "entity.host.ambient": {
+    "subtitle": "subtitles.entity.host.ambient",
+    "sounds": [
+      "aoa3:entity/host/ambient"
+    ]
+  },
+  "entity.host.death": {
+    "subtitle": "subtitles.entity.host.death",
+    "sounds": [
+      "aoa3:entity/host/death"
+    ]
+  },
+  "entity.hunter.ambient": {
+    "subtitle": "subtitles.entity.hunter.ambient",
+    "sounds": [
+      "aoa3:entity/hunter/ambient"
+    ]
+  },
+  "entity.hunter.death": {
+    "subtitle": "subtitles.entity.hunter.death",
+    "sounds": [
+      "aoa3:entity/hunter/death"
+    ]
+  },
+  "entity.hunter.hurt": {
+    "subtitle": "subtitles.entity.hunter.hurt",
+    "sounds": [
+      "aoa3:entity/hunter/hurt"
+    ]
+  },
+  "entity.immortal.ambient": {
+    "subtitle": "subtitles.entity.immortal.ambient",
+    "sounds": [
+      "aoa3:entity/immortal/ambient1",
+      "aoa3:entity/immortal/ambient2",
+      "aoa3:entity/immortal/ambient3"
+    ]
+  },
+  "entity.immortal.death": {
+    "subtitle": "subtitles.entity.immortal.death",
+    "sounds": [
+      "aoa3:entity/immortal/death"
+    ]
+  },
+  "entity.infernal.ambient": {
+    "subtitle": "subtitles.entity.infernal.ambient",
+    "sounds": [
+      "aoa3:entity/infernal/ambient"
+    ]
+  },
+  "entity.infernal.hurt": {
+    "subtitle": "subtitles.entity.infernal.hurt",
+    "sounds": [
+      "aoa3:entity/infernal/hurt"
+    ]
+  },
+  "entity.iosaur.ambient": {
+    "subtitle": "subtitles.entity.iosaur.ambient",
+    "sounds": [
+      "aoa3:entity/iosaur/ambient"
+    ]
+  },
+  "entity.iosaur.death": {
+    "subtitle": "subtitles.entity.iosaur.death",
+    "sounds": [
+      "aoa3:entity/iosaur/death"
+    ]
+  },
+  "entity.iosaur.hurt": {
+    "subtitle": "subtitles.entity.iosaur.hurt",
+    "sounds": [
+      "aoa3:entity/iosaur/hurt"
+    ]
+  },
+  "entity.jawe.ambient": {
+    "subtitle": "subtitles.entity.jawe.ambient",
+    "sounds": [
+      "aoa3:entity/jawe/ambient"
+    ]
+  },
+  "entity.jawe.death": {
+    "subtitle": "subtitles.entity.jawe.death",
+    "sounds": [
+      "aoa3:entity/jawe/death"
+    ]
+  },
+  "entity.jawe.hurt": {
+    "subtitle": "subtitles.entity.jawe.hurt",
+    "sounds": [
+      "aoa3:entity/jawe/hurt"
+    ]
+  },
+  "entity.jumbo.ambient": {
+    "subtitle": "subtitles.entity.jumbo.ambient",
+    "sounds": [
+      "aoa3:entity/jumbo/ambient"
+    ]
+  },
+  "entity.kaiyu.ambient": {
+    "subtitle": "subtitles.entity.kaiyu.ambient",
+    "sounds": [
+      "aoa3:entity/kaiyu/ambient"
+    ]
+  },
+  "entity.kaiyu.death": {
+    "subtitle": "subtitles.entity.kaiyu.death",
+    "sounds": [
+      "aoa3:entity/kaiyu/death"
+    ]
+  },
+  "entity.kaiyu.hurt": {
+    "subtitle": "subtitles.entity.kaiyu.hurt",
+    "sounds": [
+      "aoa3:entity/kaiyu/hurt"
+    ]
+  },
+  "entity.keeler.ambient": {
+    "subtitle": "subtitles.entity.keeler.ambient",
+    "sounds": [
+      "aoa3:entity/keeler/ambient"
+    ]
+  },
+  "entity.keeler.death": {
+    "subtitle": "subtitles.entity.keeler.death",
+    "sounds": [
+      "aoa3:entity/keeler/death"
+    ]
+  },
+  "entity.keeler.hurt": {
+    "subtitle": "subtitles.entity.keeler.hurt",
+    "sounds": [
+      "aoa3:entity/keeler/hurt"
+    ]
+  },
+  "entity.king_bambambam.ambient": {
+    "subtitle": "subtitles.entity.king_bambambam.ambient",
+    "sounds": [
+      "aoa3:entity/king_bambambam/ambient1",
+      "aoa3:entity/king_bambambam/ambient2"
+    ]
+  },
+  "entity.king_bambambam.death": {
+    "subtitle": "subtitles.entity.king_bambambam.death",
+    "sounds": [
+      "aoa3:entity/king_bambambam/death"
+    ]
+  },
+  "entity.king_bambambam.hurt": {
+    "subtitle": "subtitles.entity.king_bambambam.hurt",
+    "sounds": [
+      "aoa3:entity/king_bambambam/hurt"
+    ]
+  },
+  "entity.king_shroomus.death": {
+    "subtitle": "subtitles.entity.king_shroomus.death",
+    "sounds": [
+      "aoa3:entity/king_shroomus/death"
+    ]
+  },
+  "entity.kror.ambient": {
+    "subtitle": "subtitles.entity.kror.ambient",
+    "sounds": [
+      "aoa3:entity/kror/ambient"
+    ]
+  },
+  "entity.kror.death": {
+    "subtitle": "subtitles.entity.kror.death",
+    "sounds": [
+      "aoa3:entity/kror/death"
+    ]
+  },
+  "entity.lelyetian.ambient": {
+    "subtitle": "subtitles.entity.lelyetian.ambient",
+    "sounds": [
+      "aoa3:entity/lelyetian/ambient"
+    ]
+  },
+  "entity.lelyetian.death": {
+    "subtitle": "subtitles.entity.lelyetian.death",
+    "sounds": [
+      "aoa3:entity/lelyetian/death"
+    ]
+  },
+  "entity.lelyetian.hurt": {
+    "subtitle": "subtitles.entity.lelyetian.hurt",
+    "sounds": [
+      "aoa3:entity/lelyetian/hurt"
+    ]
+  },
+  "entity.lollypopper.death": {
+    "subtitle": "subtitles.entity.lollypopper.death",
+    "sounds": [
+      "aoa3:entity/lollypopper/death"
+    ]
+  },
+  "entity.lost_soul.ambient": {
+    "subtitle": "subtitles.entity.lost_soul.ambient",
+    "sounds": [
+      "aoa3:entity/lost_soul/ambient"
+    ]
+  },
+  "entity.lost_soul.death": {
+    "subtitle": "subtitles.entity.lost_soul.death",
+    "sounds": [
+      "aoa3:entity/lost_soul/death"
+    ]
+  },
+  "entity.lost_soul.hurt": {
+    "subtitle": "subtitles.entity.lost_soul.hurt",
+    "sounds": [
+      "aoa3:entity/lost_soul/hurt"
+    ]
+  },
+  "entity.lunarcher.ambient": {
+    "subtitle": "subtitles.entity.lunarcher.ambient",
+    "sounds": [
+      "aoa3:entity/lunarcher/ambient"
+    ]
+  },
+  "entity.lunarcher.death": {
+    "subtitle": "subtitles.entity.lunarcher.death",
+    "sounds": [
+      "aoa3:entity/lunarcher/death"
+    ]
+  },
+  "entity.lunarcher.hurt": {
+    "subtitle": "subtitles.entity.lunarcher.hurt",
+    "sounds": [
+      "aoa3:entity/lunarcher/hurt"
+    ]
+  },
+  "entity.lurker.ambient": {
+    "subtitle": "subtitles.entity.lurker.ambient",
+    "sounds": [
+      "aoa3:entity/lurker/ambient"
+    ]
+  },
+  "entity.lurker.death": {
+    "subtitle": "subtitles.entity.lurker.death",
+    "sounds": [
+      "aoa3:entity/lurker/death"
+    ]
+  },
+  "entity.lurker.hurt": {
+    "subtitle": "subtitles.entity.lurker.hurt",
+    "sounds": [
+      "aoa3:entity/lurker/hurt"
+    ]
+  },
+  "entity.luxocron.ambient": {
+    "subtitle": "subtitles.entity.luxocron.ambient",
+    "sounds": [
+      "aoa3:entity/luxocron/ambient"
+    ]
+  },
+  "entity.luxocron.death": {
+    "subtitle": "subtitles.entity.luxocron.death",
+    "sounds": [
+      "aoa3:entity/luxocron/death"
+    ]
+  },
+  "entity.luxocron.hurt": {
+    "subtitle": "subtitles.entity.luxocron.hurt",
+    "sounds": [
+      "aoa3:entity/luxocron/hurt"
+    ]
+  },
+  "entity.mechachron.ambient": {
+    "subtitle": "subtitles.entity.mechachron.ambient",
+    "sounds": [
+      "aoa3:entity/mechachron/ambient"
+    ]
+  },
+  "entity.mechachron.death": {
+    "subtitle": "subtitles.entity.mechachron.death",
+    "sounds": [
+      "aoa3:entity/mechachron/death"
+    ]
+  },
+  "entity.mechachron.hurt": {
+    "subtitle": "subtitles.entity.mechachron.hurt",
+    "sounds": [
+      "aoa3:entity/mechachron/hurt"
+    ]
+  },
+  "entity.mechyon.ambient": {
+    "subtitle": "subtitles.entity.mechyon.ambient",
+    "sounds": [
+      "aoa3:entity/mechyon/ambient"
+    ]
+  },
+  "entity.mechyon.death": {
+    "subtitle": "subtitles.entity.mechyon.death",
+    "sounds": [
+      "aoa3:entity/mechyon/death"
+    ]
+  },
+  "entity.mechyon.hurt": {
+    "subtitle": "subtitles.entity.mechyon.hurt",
+    "sounds": [
+      "aoa3:entity/mechyon/hurt"
+    ]
+  },
+  "entity.meganeuropsis.ambient": {
+    "subtitle": "subtitles.entity.meganeuropsis.ambient",
+    "sounds": [
+      "aoa3:entity/meganeuropsis/ambient1",
+      "aoa3:entity/meganeuropsis/ambient2"
+    ]
+  },
+  "entity.meganeuropsis.death": {
+    "subtitle": "subtitles.entity.meganeuropsis.death",
+    "sounds": [
+      "aoa3:entity/meganeuropsis/death"
+    ]
+  },
+  "entity.meganeuropsis.hurt": {
+    "subtitle": "subtitles.entity.meganeuropsis.hurt",
+    "sounds": [
+      "aoa3:entity/meganeuropsis/hurt1",
+      "aoa3:entity/meganeuropsis/hurt2",
+      "aoa3:entity/meganeuropsis/hurt3"
+    ]
+  },
+  "entity.merkyre.ambient": {
+    "subtitle": "subtitles.entity.merkyre.ambient",
+    "sounds": [
+      "aoa3:entity/merkyre/ambient"
+    ]
+  },
+  "entity.merkyre.death": {
+    "subtitle": "subtitles.entity.merkyre.death",
+    "sounds": [
+      "aoa3:entity/merkyre/death"
+    ]
+  },
+  "entity.merkyre.hurt": {
+    "subtitle": "subtitles.entity.merkyre.hurt",
+    "sounds": [
+      "aoa3:entity/merkyre/hurt"
+    ]
+  },
+  "entity.mermage.ambient": {
+    "subtitle": "subtitles.entity.mermage.ambient",
+    "sounds": [
+      "aoa3:entity/mermage/ambient"
+    ]
+  },
+  "entity.mermage.death": {
+    "subtitle": "subtitles.entity.mermage.death",
+    "sounds": [
+      "aoa3:entity/mermage/death"
+    ]
+  },
+  "entity.mermage.hurt": {
+    "subtitle": "subtitles.entity.mermage.hurt",
+    "sounds": [
+      "aoa3:entity/mermage/hurt"
+    ]
+  },
+  "entity.modulo.ambient": {
+    "subtitle": "subtitles.entity.modulo.ambient",
+    "sounds": [
+      "aoa3:entity/modulo/ambient"
+    ]
+  },
+  "entity.modulo.death": {
+    "subtitle": "subtitles.entity.modulo.death",
+    "sounds": [
+      "aoa3:entity/modulo/death"
+    ]
+  },
+  "entity.modulo.hurt": {
+    "subtitle": "subtitles.entity.modulo.hurt",
+    "sounds": [
+      "aoa3:entity/modulo/hurt"
+    ]
+  },
+  "entity.mother_void_walker.ambient": {
+    "subtitle": "subtitles.entity.mother_void_walker.ambient",
+    "sounds": [
+      "aoa3:entity/mother_void_walker/ambient"
+    ]
+  },
+  "entity.mother_void_walker.death": {
+    "subtitle": "subtitles.entity.mother_void_walker.death",
+    "sounds": [
+      "aoa3:entity/mother_void_walker/death"
+    ]
+  },
+  "entity.mother_void_walker.hurt": {
+    "subtitle": "subtitles.entity.mother_void_walker.hurt",
+    "sounds": [
+      "aoa3:entity/mother_void_walker/hurt"
+    ]
+  },
+  "entity.muckopede.ambient": {
+    "subtitle": "subtitles.entity.muckopede.ambient",
+    "sounds": [
+      "aoa3:entity/muckopede/ambient"
+    ]
+  },
+  "entity.muckopede.hurt": {
+    "subtitle": "subtitles.entity.muckopede.hurt",
+    "sounds": [
+      "aoa3:entity/muckopede/hurt"
+    ]
+  },
+  "entity.muncher.ambient": {
+    "subtitle": "subtitles.entity.muncher.ambient",
+    "sounds": [
+      "aoa3:entity/muncher/ambient"
+    ]
+  },
+  "entity.muncher.death": {
+    "subtitle": "subtitles.entity.muncher.death",
+    "sounds": [
+      "aoa3:entity/muncher/death"
+    ]
+  },
+  "entity.muncher.hurt": {
+    "subtitle": "subtitles.entity.muncher.hurt",
+    "sounds": [
+      "aoa3:entity/muncher/hurt"
+    ]
+  },
+  "entity.neptuno.ambient": {
+    "subtitle": "subtitles.entity.neptuno.ambient",
+    "sounds": [
+      "aoa3:entity/neptuno/ambient"
+    ]
+  },
+  "entity.neptuno.death": {
+    "subtitle": "subtitles.entity.neptuno.death",
+    "sounds": [
+      "aoa3:entity/neptuno/death"
+    ]
+  },
+  "entity.neptuno.hurt": {
+    "subtitle": "subtitles.entity.neptuno.hurt",
+    "sounds": [
+      "aoa3:entity/neptuno/hurt"
+    ]
+  },
+  "entity.nethengeic_beast.ambient": {
+    "subtitle": "subtitles.entity.nethengeic_beast.ambient",
+    "sounds": [
+      "aoa3:entity/nethengeic_beast/ambient"
+    ]
+  },
+  "entity.nethengeic_beast.death": {
+    "subtitle": "subtitles.entity.nethengeic_beast.death",
+    "sounds": [
+      "aoa3:entity/nethengeic_beast/death"
+    ]
+  },
+  "entity.nethengeic_beast.hurt": {
+    "subtitle": "subtitles.entity.nethengeic_beast.hurt",
+    "sounds": [
+      "aoa3:entity/nethengeic_beast/hurt"
+    ]
+  },
+  "entity.nethengeic_wither.ambient": {
+    "subtitle": "subtitles.entity.nethengeic_wither.ambient",
+    "sounds": [
+      "aoa3:entity/nethengeic_wither/ambient1",
+      "aoa3:entity/nethengeic_wither/ambient2",
+      "aoa3:entity/nethengeic_wither/ambient3"
+    ]
+  },
+  "entity.nethengeic_wither.death": {
+    "subtitle": "subtitles.entity.nethengeic_wither.death",
+    "sounds": [
+      "aoa3:entity/nethengeic_wither/death"
+    ]
+  },
+  "entity.nethengeic_wither.hurt": {
+    "subtitle": "subtitles.entity.nethengeic_wither.hurt",
+    "sounds": [
+      "aoa3:entity/nethengeic_wither/hurt"
+    ]
+  },
+  "entity.nightfly.ambient": {
+    "subtitle": "subtitles.entity.nightfly.ambient",
+    "sounds": [
+      "aoa3:entity/nightfly/ambient"
+    ]
+  },
+  "entity.nightfly.death": {
+    "subtitle": "subtitles.entity.nightfly.death",
+    "sounds": [
+      "aoa3:entity/nightfly/death"
+    ]
+  },
+  "entity.nightfly.hurt": {
+    "subtitle": "subtitles.entity.nightfly.hurt",
+    "sounds": [
+      "aoa3:entity/nightfly/hurt"
+    ]
+  },
+  "entity.nightmare_spider.ambient": {
+    "subtitle": "subtitles.entity.nightmare_spider.ambient",
+    "sounds": [
+      "aoa3:entity/nightmare_spider/ambient"
+    ]
+  },
+  "entity.nightmare_spider.death": {
+    "subtitle": "subtitles.entity.nightmare_spider.death",
+    "sounds": [
+      "aoa3:entity/nightmare_spider/death"
+    ]
+  },
+  "entity.nightmare_spider.hurt": {
+    "subtitle": "subtitles.entity.nightmare_spider.hurt",
+    "sounds": [
+      "aoa3:entity/nightmare_spider/hurt"
+    ]
+  },
+  "entity.nightwing.ambient": {
+    "subtitle": "subtitles.entity.nightwing.ambient",
+    "sounds": [
+      "aoa3:entity/nightwing/ambient"
+    ]
+  },
+  "entity.nightwing.death": {
+    "subtitle": "subtitles.entity.nightwing.death",
+    "sounds": [
+      "aoa3:entity/nightwing/death"
+    ]
+  },
+  "entity.nightwing.hurt": {
+    "subtitle": "subtitles.entity.nightwing.hurt",
+    "sounds": [
+      "aoa3:entity/nightwing/hurt"
+    ]
+  },
+  "entity.night_watcher.ambient": {
+    "subtitle": "subtitles.entity.night_watcher.ambient",
+    "sounds": [
+      "aoa3:entity/night_watcher/ambient"
+    ]
+  },
+  "entity.night_watcher.hurt": {
+    "subtitle": "subtitles.entity.night_watcher.hurt",
+    "sounds": [
+      "aoa3:entity/night_watcher/hurt"
+    ]
+  },
+  "entity.nipper.ambient": {
+    "subtitle": "subtitles.entity.nipper.ambient",
+    "sounds": [
+      "aoa3:entity/nipper/ambient"
+    ]
+  },
+  "entity.nipper.death": {
+    "subtitle": "subtitles.entity.nipper.death",
+    "sounds": [
+      "aoa3:entity/nipper/death"
+    ]
+  },
+  "entity.nipper.hurt": {
+    "subtitle": "subtitles.entity.nipper.hurt",
+    "sounds": [
+      "aoa3:entity/nipper/hurt"
+    ]
+  },
+  "entity.nospike.ambient": {
+    "subtitle": "subtitles.entity.nospike.ambient",
+    "sounds": [
+      "aoa3:entity/nospike/ambient"
+    ]
+  },
+  "entity.nospike.death": {
+    "subtitle": "subtitles.entity.nospike.death",
+    "sounds": [
+      "aoa3:entity/nospike/death"
+    ]
+  },
+  "entity.nospike.hurt": {
+    "subtitle": "subtitles.entity.nospike.hurt",
+    "sounds": [
+      "aoa3:entity/nospike/hurt"
+    ]
+  },
+  "entity.occulent.ambient": {
+    "subtitle": "subtitles.entity.occulent.ambient",
+    "sounds": [
+      "aoa3:entity/occulent/ambient"
+    ]
+  },
+  "entity.occulent.death": {
+    "subtitle": "subtitles.entity.occulent.death",
+    "sounds": [
+      "aoa3:entity/occulent/death"
+    ]
+  },
+  "entity.occulent.hurt": {
+    "subtitle": "subtitles.entity.occulent.hurt",
+    "sounds": [
+      "aoa3:entity/occulent/hurt"
+    ]
+  },
+  "entity.omnilight.ambient": {
+    "subtitle": "subtitles.entity.omnilight.ambient",
+    "sounds": [
+      "aoa3:entity/omnilight/ambient"
+    ]
+  },
+  "entity.omnilight.death": {
+    "subtitle": "subtitles.entity.omnilight.death",
+    "sounds": [
+      "aoa3:entity/omnilight/death"
+    ]
+  },
+  "entity.omnilight.hurt": {
+    "subtitle": "subtitles.entity.omnilight.hurt",
+    "sounds": [
+      "aoa3:entity/omnilight/hurt"
+    ]
+  },
+  "entity.parasect.ambient": {
+    "subtitle": "subtitles.entity.parasect.ambient",
+    "sounds": [
+      "aoa3:entity/parasect/ambient"
+    ]
+  },
+  "entity.parasect.death": {
+    "subtitle": "subtitles.entity.parasect.death",
+    "sounds": [
+      "aoa3:entity/parasect/death"
+    ]
+  },
+  "entity.parasect.hurt": {
+    "subtitle": "subtitles.entity.parasect.hurt",
+    "sounds": [
+      "aoa3:entity/parasect/hurt"
+    ]
+  },
+  "entity.paravite.ambient": {
+    "subtitle": "subtitles.entity.paravite.ambient",
+    "sounds": [
+      "aoa3:entity/paravite/ambient"
+    ]
+  },
+  "entity.paravite.death": {
+    "subtitle": "subtitles.entity.paravite.death",
+    "sounds": [
+      "aoa3:entity/paravite/death"
+    ]
+  },
+  "entity.paravite.hurt": {
+    "subtitle": "subtitles.entity.paravite.hurt",
+    "sounds": [
+      "aoa3:entity/paravite/hurt"
+    ]
+  },
+  "entity.penguin.ambient": {
+    "subtitle": "subtitles.entity.penguin.ambient",
+    "sounds": [
+      "aoa3:entity/penguin/ambient"
+    ]
+  },
+  "entity.penguin.death": {
+    "subtitle": "subtitles.entity.penguin.death",
+    "sounds": [
+      "aoa3:entity/penguin/death"
+    ]
+  },
+  "entity.penguin.hurt": {
+    "subtitle": "subtitles.entity.penguin.hurt",
+    "sounds": [
+      "aoa3:entity/penguin/hurt"
+    ]
+  },
+  "entity.pincher.ambient": {
+    "subtitle": "subtitles.entity.pincher.ambient",
+    "sounds": [
+      "aoa3:entity/pincher/ambient"
+    ]
+  },
+  "entity.pincher.death": {
+    "subtitle": "subtitles.entity.pincher.death",
+    "sounds": [
+      "aoa3:entity/pincher/death"
+    ]
+  },
+  "entity.pincher.hurt": {
+    "subtitle": "subtitles.entity.pincher.hurt",
+    "sounds": [
+      "aoa3:entity/pincher/hurt"
+    ]
+  },
+  "entity.pixon.ambient": {
+    "subtitle": "subtitles.entity.pixon.ambient",
+    "sounds": [
+      "aoa3:entity/pixon/ambient1",
+      "aoa3:entity/pixon/ambient2",
+      "aoa3:entity/pixon/ambient3",
+      "aoa3:entity/pixon/ambient4"
+    ]
+  },
+  "entity.pod_plant.ambient": {
+    "subtitle": "subtitles.entity.pod_plant.ambient",
+    "sounds": [
+      "aoa3:entity/pod_plant/ambient"
+    ]
+  },
+  "entity.pod_plant.death": {
+    "subtitle": "subtitles.entity.pod_plant.death",
+    "sounds": [
+      "aoa3:entity/pod_plant/death"
+    ]
+  },
+  "entity.pod_plant.hurt": {
+    "subtitle": "subtitles.entity.pod_plant.hurt",
+    "sounds": [
+      "aoa3:entity/pod_plant/hurt"
+    ]
+  },
+  "entity.polytom.ambient": {
+    "subtitle": "subtitles.entity.polytom.ambient",
+    "sounds": [
+      "aoa3:entity/polytom/ambient"
+    ]
+  },
+  "entity.polytom.death": {
+    "subtitle": "subtitles.entity.polytom.death",
+    "sounds": [
+      "aoa3:entity/polytom/death"
+    ]
+  },
+  "entity.polytom.hurt": {
+    "subtitle": "subtitles.entity.polytom.hurt",
+    "sounds": [
+      "aoa3:entity/polytom/hurt"
+    ]
+  },
+  "entity.primordial.ambient": {
+    "subtitle": "subtitles.entity.primordial.ambient",
+    "sounds": [
+      "aoa3:entity/primordial/ambient"
+    ]
+  },
+  "entity.primordial.death": {
+    "subtitle": "subtitles.entity.primordial.death",
+    "sounds": [
+      "aoa3:entity/primordial/death"
+    ]
+  },
+  "entity.rainicorn.ambient": {
+    "subtitle": "subtitles.entity.rainicorn.ambient",
+    "sounds": [
+      "aoa3:entity/rainicorn/ambient"
+    ]
+  },
+  "entity.rainicorn.death": {
+    "subtitle": "subtitles.entity.rainicorn.death",
+    "sounds": [
+      "aoa3:entity/rainicorn/death"
+    ]
+  },
+  "entity.rainicorn.hurt": {
+    "subtitle": "subtitles.entity.rainicorn.hurt",
+    "sounds": [
+      "aoa3:entity/rainicorn/hurt"
+    ]
+  },
+  "entity.ramradon.ambient": {
+    "subtitle": "subtitles.entity.ramradon.ambient",
+    "sounds": [
+      "aoa3:entity/ramradon/ambient"
+    ]
+  },
+  "entity.ramradon.death": {
+    "subtitle": "subtitles.entity.ramradon.death",
+    "sounds": [
+      "aoa3:entity/ramradon/death"
+    ]
+  },
+  "entity.ramradon.hurt": {
+    "subtitle": "subtitles.entity.ramradon.hurt",
+    "sounds": [
+      "aoa3:entity/ramradon/hurt"
+    ]
+  },
+  "entity.rawbone.ambient": {
+    "subtitle": "subtitles.entity.rawbone.ambient",
+    "sounds": [
+      "aoa3:entity/rawbone/ambient"
+    ]
+  },
+  "entity.rawbone.death": {
+    "subtitle": "subtitles.entity.rawbone.death",
+    "sounds": [
+      "aoa3:entity/rawbone/death"
+    ]
+  },
+  "entity.rawbone.hurt": {
+    "subtitle": "subtitles.entity.rawbone.hurt",
+    "sounds": [
+      "aoa3:entity/rawbone/hurt"
+    ]
+  },
+  "entity.reaper.ambient": {
+    "subtitle": "subtitles.entity.reaper.ambient",
+    "sounds": [
+      "aoa3:entity/reaper/ambient"
+    ]
+  },
+  "entity.reaper.death": {
+    "subtitle": "subtitles.entity.reaper.death",
+    "sounds": [
+      "aoa3:entity/reaper/death"
+    ]
+  },
+  "entity.reaper.hurt": {
+    "subtitle": "subtitles.entity.reaper.hurt",
+    "sounds": [
+      "aoa3:entity/reaper/hurt"
+    ]
+  },
+  "entity.refluct.ambient": {
+    "subtitle": "subtitles.entity.refluct.ambient",
+    "sounds": [
+      "aoa3:entity/refluct/ambient"
+    ]
+  },
+  "entity.refluct.death": {
+    "subtitle": "subtitles.entity.refluct.death",
+    "sounds": [
+      "aoa3:entity/refluct/death"
+    ]
+  },
+  "entity.refluct.hurt": {
+    "subtitle": "subtitles.entity.refluct.hurt",
+    "sounds": [
+      "aoa3:entity/refluct/hurt"
+    ]
+  },
+  "entity.rockbiter.ambient": {
+    "subtitle": "subtitles.entity.rockbiter.ambient",
+    "sounds": [
+      "aoa3:entity/rockbiter/ambient"
+    ]
+  },
+  "entity.rockbiter.death": {
+    "subtitle": "subtitles.entity.rockbiter.death",
+    "sounds": [
+      "aoa3:entity/rockbiter/death"
+    ]
+  },
+  "entity.rockbiter.hurt": {
+    "subtitle": "subtitles.entity.rockbiter.hurt",
+    "sounds": [
+      "aoa3:entity/rockbiter/hurt"
+    ]
+  },
+  "entity.rock_rider.death": {
+    "subtitle": "subtitles.entity.rock_rider.death",
+    "sounds": [
+      "aoa3:entity/rock_rider/death"
+    ]
+  },
+  "entity.rock_rider.hurt": {
+    "subtitle": "subtitles.entity.rock_rider.hurt",
+    "sounds": [
+      "aoa3:entity/rock_rider/hurt"
+    ]
+  },
+  "entity.runic_golem.hurt": {
+    "subtitle": "subtitles.entity.runic_golem.hurt",
+    "sounds": [
+      "aoa3:entity/runic_golem/hurt"
+    ]
+  },
+  "entity.sabretooth.ambient": {
+    "subtitle": "subtitles.entity.sabretooth.ambient",
+    "sounds": [
+      "aoa3:entity/sabretooth/ambient"
+    ]
+  },
+  "entity.sabretooth.death": {
+    "subtitle": "subtitles.entity.sabretooth.death",
+    "sounds": [
+      "aoa3:entity/sabretooth/death"
+    ]
+  },
+  "entity.sabretooth.hurt": {
+    "subtitle": "subtitles.entity.sabretooth.hurt",
+    "sounds": [
+      "aoa3:entity/sabretooth/hurt"
+    ]
+  },
+  "entity.sasquatch.ambient": {
+    "subtitle": "subtitles.entity.sasquatch.ambient",
+    "sounds": [
+      "aoa3:entity/sasquatch/ambient"
+    ]
+  },
+  "entity.scrubby.ambient": {
+    "subtitle": "subtitles.entity.scrubby.ambient",
+    "sounds": [
+      "aoa3:entity/scrubby/ambient"
+    ]
+  },
+  "entity.scrubby.hurt": {
+    "subtitle": "subtitles.entity.scrubby.hurt",
+    "sounds": [
+      "aoa3:entity/scrubby/hurt"
+    ]
+  },
+  "entity.sea_viper.ambient": {
+    "subtitle": "subtitles.entity.sea_viper.ambient",
+    "sounds": [
+      "aoa3:entity/sea_viper/ambient"
+    ]
+  },
+  "entity.sea_viper.death": {
+    "subtitle": "subtitles.entity.sea_viper.death",
+    "sounds": [
+      "aoa3:entity/sea_viper/death"
+    ]
+  },
+  "entity.sea_viper.hurt": {
+    "subtitle": "subtitles.entity.sea_viper.hurt",
+    "sounds": [
+      "aoa3:entity/sea_viper/hurt"
+    ]
+  },
+  "entity.shade.ambient": {
+    "subtitle": "subtitles.entity.shade.ambient",
+    "sounds": [
+      "aoa3:entity/shade/ambient"
+    ]
+  },
+  "entity.shade.death": {
+    "subtitle": "subtitles.entity.shade.death",
+    "sounds": [
+      "aoa3:entity/shade/death"
+    ]
+  },
+  "entity.shade.hurt": {
+    "subtitle": "subtitles.entity.shade.hurt",
+    "sounds": [
+      "aoa3:entity/shade/hurt"
+    ]
+  },
+  "entity.shadowlord.ambient": {
+    "subtitle": "subtitles.entity.shadowlord.ambient",
+    "sounds": [
+      "aoa3:entity/shadowlord/ambient"
+    ]
+  },
+  "entity.shadowlord.death": {
+    "subtitle": "subtitles.entity.shadowlord.death",
+    "sounds": [
+      "aoa3:entity/shadowlord/death"
+    ]
+  },
+  "entity.shadowlord.hurt": {
+    "subtitle": "subtitles.entity.shadowlord.hurt",
+    "sounds": [
+      "aoa3:entity/shadowlord/hurt"
+    ]
+  },
+  "entity.shadow.ambient": {
+    "subtitle": "subtitles.entity.shadow.ambient",
+    "sounds": [
+      "aoa3:entity/shadow/ambient"
+    ]
+  },
+  "entity.shadow.hurt": {
+    "subtitle": "subtitles.entity.shadow.hurt",
+    "sounds": [
+      "aoa3:entity/shadow/hurt"
+    ]
+  },
+  "entity.shifter.ambient": {
+    "subtitle": "subtitles.entity.shifter.ambient",
+    "sounds": [
+      "aoa3:entity/shifter/ambient"
+    ]
+  },
+  "entity.shifter.death": {
+    "subtitle": "subtitles.entity.shifter.death",
+    "sounds": [
+      "aoa3:entity/shifter/death"
+    ]
+  },
+  "entity.shifter.hurt": {
+    "subtitle": "subtitles.entity.shifter.hurt",
+    "sounds": [
+      "aoa3:entity/shifter/hurt"
+    ]
+  },
+  "entity.shik.death": {
+    "subtitle": "subtitles.entity.shik.death",
+    "sounds": [
+      "aoa3:entity/shik/death"
+    ]
+  },
+  "entity.shik.hurt": {
+    "subtitle": "subtitles.entity.shik.hurt",
+    "sounds": [
+      "aoa3:entity/shik/hurt1",
+      "aoa3:entity/shik/hurt2"
+    ]
+  },
+  "entity.skeletal_cowman.ambient": {
+    "subtitle": "subtitles.entity.skeletal_cowman.ambient",
+    "sounds": [
+      "aoa3:entity/skeletal_cowman/ambient"
+    ]
+  },
+  "entity.skeletal_cowman.hurt": {
+    "subtitle": "subtitles.entity.skeletal_cowman.hurt",
+    "sounds": [
+      "aoa3:entity/skeletal_cowman/hurt"
+    ]
+  },
+  "entity.skeletron.ambient": {
+    "subtitle": "subtitles.entity.skeletron.ambient",
+    "sounds": [
+      "aoa3:entity/skeletron/ambient"
+    ]
+  },
+  "entity.skeletron.death": {
+    "subtitle": "subtitles.entity.skeletron.death",
+    "sounds": [
+      "aoa3:entity/skeletron/death"
+    ]
+  },
+  "entity.skeletron.hurt": {
+    "subtitle": "subtitles.entity.skeletron.hurt",
+    "sounds": [
+      "aoa3:entity/skeletron/hurt"
+    ]
+  },
+  "entity.skull_creature.ambient": {
+    "subtitle": "subtitles.entity.skull_creature.ambient",
+    "sounds": [
+      "aoa3:entity/skull_creature/ambient"
+    ]
+  },
+  "entity.skull_creature.death": {
+    "subtitle": "subtitles.entity.skull_creature.death",
+    "sounds": [
+      "aoa3:entity/skull_creature/death"
+    ]
+  },
+  "entity.skull_creature.hurt": {
+    "subtitle": "subtitles.entity.skull_creature.hurt",
+    "sounds": [
+      "aoa3:entity/skull_creature/hurt"
+    ]
+  },
+  "entity.slimer.ambient": {
+    "subtitle": "subtitles.entity.slimer.ambient",
+    "sounds": [
+      "aoa3:entity/slimer/ambient"
+    ]
+  },
+  "entity.slimer.death": {
+    "subtitle": "subtitles.entity.slimer.death",
+    "sounds": [
+      "aoa3:entity/slimer/death"
+    ]
+  },
+  "entity.slimer.hurt": {
+    "subtitle": "subtitles.entity.slimer.hurt",
+    "sounds": [
+      "aoa3:entity/slimer/hurt"
+    ]
+  },
+  "entity.smash.ambient": {
+    "subtitle": "subtitles.entity.smash.ambient",
+    "sounds": [
+      "aoa3:entity/smash/ambient1",
+      "aoa3:entity/smash/ambient2",
+      "aoa3:entity/smash/ambient3"
+    ]
+  },
+  "entity.smash.death": {
+    "subtitle": "subtitles.entity.smash.death",
+    "sounds": [
+      "aoa3:entity/smash/death"
+    ]
+  },
+  "entity.smash.hurt": {
+    "subtitle": "subtitles.entity.smash.hurt",
+    "sounds": [
+      "aoa3:entity/smash/hurt"
+    ]
+  },
+  "entity.soulscorne.ambient": {
+    "subtitle": "subtitles.entity.soulscorne.ambient",
+    "sounds": [
+      "aoa3:entity/soulscorne/ambient"
+    ]
+  },
+  "entity.soulscorne.death": {
+    "subtitle": "subtitles.entity.soulscorne.death",
+    "sounds": [
+      "aoa3:entity/soulscorne/death"
+    ]
+  },
+  "entity.soulscorne.hurt": {
+    "subtitle": "subtitles.entity.soulscorne.hurt",
+    "sounds": [
+      "aoa3:entity/soulscorne/hurt"
+    ]
+  },
+  "entity.soulvyre.ambient": {
+    "subtitle": "subtitles.entity.soulvyre.ambient",
+    "sounds": [
+      "aoa3:entity/soulvyre/ambient"
+    ]
+  },
+  "entity.soulvyre.death": {
+    "subtitle": "subtitles.entity.soulvyre.death",
+    "sounds": [
+      "aoa3:entity/soulvyre/death"
+    ]
+  },
+  "entity.soulvyre.hurt": {
+    "subtitle": "subtitles.entity.soulvyre.hurt",
+    "sounds": [
+      "aoa3:entity/soulvyre/hurt"
+    ]
+  },
+  "entity.spectral_wizard.ambient": {
+    "subtitle": "subtitles.entity.spectral_wizard.ambient",
+    "sounds": [
+      "aoa3:entity/spectral_wizard/ambient"
+    ]
+  },
+  "entity.spectral_wizard.death": {
+    "subtitle": "subtitles.entity.spectral_wizard.death",
+    "sounds": [
+      "aoa3:entity/spectral_wizard/death"
+    ]
+  },
+  "entity.spectral_wizard.hurt": {
+    "subtitle": "subtitles.entity.spectral_wizard.hurt",
+    "sounds": [
+      "aoa3:entity/spectral_wizard/hurt"
+    ]
+  },
+  "entity.sphinx.ambient": {
+    "subtitle": "subtitles.entity.sphinx.ambient",
+    "sounds": [
+      "aoa3:entity/sphinx/ambient"
+    ]
+  },
+  "entity.sphinx.death": {
+    "subtitle": "subtitles.entity.sphinx.death",
+    "sounds": [
+      "aoa3:entity/sphinx/death"
+    ]
+  },
+  "entity.sphinx.hurt": {
+    "subtitle": "subtitles.entity.sphinx.hurt",
+    "sounds": [
+      "aoa3:entity/sphinx/hurt"
+    ]
+  },
+  "entity.spinoledon.ambient": {
+    "subtitle": "subtitles.entity.spinoledon.ambient",
+    "sounds": [
+      "aoa3:entity/spinoledon/ambient"
+    ]
+  },
+  "entity.spinoledon.death": {
+    "subtitle": "subtitles.entity.spinoledon.death",
+    "sounds": [
+      "aoa3:entity/spinoledon/death"
+    ]
+  },
+  "entity.spinoledon.hurt": {
+    "subtitle": "subtitles.entity.spinoledon.hurt",
+    "sounds": [
+      "aoa3:entity/spinoledon/hurt"
+    ]
+  },
+  "entity.spirit_guardian.ambient": {
+    "subtitle": "subtitles.entity.spirit_guardian.ambient",
+    "sounds": [
+      "aoa3:entity/spirit_guardian/ambient"
+    ]
+  },
+  "entity.spirit_guardian.death": {
+    "subtitle": "subtitles.entity.spirit_guardian.death",
+    "sounds": [
+      "aoa3:entity/spirit_guardian/death"
+    ]
+  },
+  "entity.squiggler.ambient": {
+    "subtitle": "subtitles.entity.squiggler.ambient",
+    "sounds": [
+      "aoa3:entity/squiggler/ambient"
+    ]
+  },
+  "entity.squiggler.death": {
+    "subtitle": "subtitles.entity.squiggler.death",
+    "sounds": [
+      "aoa3:entity/squiggler/death"
+    ]
+  },
+  "entity.squiggler.hurt": {
+    "subtitle": "subtitles.entity.squiggler.hurt",
+    "sounds": [
+      "aoa3:entity/squiggler/hurt"
+    ]
+  },
+  "entity.stalker.ambient": {
+    "subtitle": "subtitles.entity.stalker.ambient",
+    "sounds": [
+      "aoa3:entity/stalker/ambient"
+    ]
+  },
+  "entity.stalker.death": {
+    "subtitle": "subtitles.entity.stalker.death",
+    "sounds": [
+      "aoa3:entity/stalker/death"
+    ]
+  },
+  "entity.stalker.hurt": {
+    "subtitle": "subtitles.entity.stalker.hurt",
+    "sounds": [
+      "aoa3:entity/stalker/hurt"
+    ]
+  },
+  "entity.stimulosus.ambient": {
+    "subtitle": "subtitles.entity.stimulosus.ambient",
+    "sounds": [
+      "aoa3:entity/stimulosus/ambient"
+    ]
+  },
+  "entity.stimulo.ambient": {
+    "subtitle": "subtitles.entity.stimulo.ambient",
+    "sounds": [
+      "aoa3:entity/stimulo/ambient"
+    ]
+  },
+  "entity.stimulo.death": {
+    "subtitle": "subtitles.entity.stimulo.death",
+    "sounds": [
+      "aoa3:entity/stimulo/death"
+    ]
+  },
+  "entity.stimulo.hurt": {
+    "subtitle": "subtitles.entity.stimulo.hurt",
+    "sounds": [
+      "aoa3:entity/stimulo/hurt"
+    ]
+  },
+  "entity.sugarface.ambient": {
+    "subtitle": "subtitles.entity.sugarface.ambient",
+    "sounds": [
+      "aoa3:entity/sugarface/ambient"
+    ]
+  },
+  "entity.sugarface.death": {
+    "subtitle": "subtitles.entity.sugarface.death",
+    "sounds": [
+      "aoa3:entity/sugarface/death"
+    ]
+  },
+  "entity.sugarface.hurt": {
+    "subtitle": "subtitles.entity.sugarface.hurt",
+    "sounds": [
+      "aoa3:entity/sugarface/hurt"
+    ]
+  },
+  "entity.sysker.ambient": {
+    "subtitle": "subtitles.entity.sysker.ambient",
+    "sounds": [
+      "aoa3:entity/sysker/ambient"
+    ]
+  },
+  "entity.sysker.death": {
+    "subtitle": "subtitles.entity.sysker.death",
+    "sounds": [
+      "aoa3:entity/sysker/death"
+    ]
+  },
+  "entity.sysker.hurt": {
+    "subtitle": "subtitles.entity.sysker.hurt",
+    "sounds": [
+      "aoa3:entity/sysker/hurt"
+    ]
+  },
+  "entity.terradon.ambient": {
+    "subtitle": "subtitles.entity.terradon.ambient",
+    "sounds": [
+      "aoa3:entity/terradon/ambient"
+    ]
+  },
+  "entity.terradon.death": {
+    "subtitle": "subtitles.entity.terradon.death",
+    "sounds": [
+      "aoa3:entity/terradon/death"
+    ]
+  },
+  "entity.terradon.hurt": {
+    "subtitle": "subtitles.entity.terradon.hurt",
+    "sounds": [
+      "aoa3:entity/terradon/hurt"
+    ]
+  },
+  "entity.terrestrial.ambient": {
+    "subtitle": "subtitles.entity.terrestrial.ambient",
+    "sounds": [
+      "aoa3:entity/terrestrial/ambient"
+    ]
+  },
+  "entity.terrestrial.death": {
+    "subtitle": "subtitles.entity.terrestrial.death",
+    "sounds": [
+      "aoa3:entity/terrestrial/death"
+    ]
+  },
+  "entity.terrestrial.hurt": {
+    "subtitle": "subtitles.entity.terrestrial.hurt",
+    "sounds": [
+      "aoa3:entity/terrestrial/hurt"
+    ]
+  },
+  "entity.tharafly.ambient": {
+    "subtitle": "subtitles.entity.tharafly.ambient",
+    "sounds": [
+      "aoa3:entity/tharafly/ambient"
+    ]
+  },
+  "entity.tharafly.death": {
+    "subtitle": "subtitles.entity.tharafly.death",
+    "sounds": [
+      "aoa3:entity/tharafly/death"
+    ]
+  },
+  "entity.tharafly.hurt": {
+    "subtitle": "subtitles.entity.tharafly.hurt",
+    "sounds": [
+      "aoa3:entity/tharafly/hurt"
+    ]
+  },
+  "entity.tortione.ambient": {
+    "subtitle": "subtitles.entity.tortione.ambient",
+    "sounds": [
+      "aoa3:entity/tortione/ambient"
+    ]
+  },
+  "entity.tortione.death": {
+    "subtitle": "subtitles.entity.tortione.death",
+    "sounds": [
+      "aoa3:entity/tortione/death"
+    ]
+  },
+  "entity.tortione.hurt": {
+    "subtitle": "subtitles.entity.tortione.hurt",
+    "sounds": [
+      "aoa3:entity/tortione/hurt"
+    ]
+  },
+  "entity.toxxulous.ambient": {
+    "subtitle": "subtitles.entity.toxxulous.ambient",
+    "sounds": [
+      "aoa3:entity/toxxulous/ambient"
+    ]
+  },
+  "entity.toxxulous.death": {
+    "subtitle": "subtitles.entity.toxxulous.death",
+    "sounds": [
+      "aoa3:entity/toxxulous/death"
+    ]
+  },
+  "entity.toxxulous.hurt": {
+    "subtitle": "subtitles.entity.toxxulous.hurt",
+    "sounds": [
+      "aoa3:entity/toxxulous/hurt"
+    ]
+  },
+  "entity.tracker.ambient": {
+    "subtitle": "subtitles.entity.tracker.ambient",
+    "sounds": [
+      "aoa3:entity/tracker/ambient"
+    ]
+  },
+  "entity.tracker.death": {
+    "subtitle": "subtitles.entity.tracker.death",
+    "sounds": [
+      "aoa3:entity/tracker/death"
+    ]
+  },
+  "entity.tracker.hurt": {
+    "subtitle": "subtitles.entity.tracker.hurt",
+    "sounds": [
+      "aoa3:entity/tracker/hurt"
+    ]
+  },
+  "entity.tree_spirit.ambient": {
+    "subtitle": "subtitles.entity.tree_spirit.ambient",
+    "sounds": [
+      "aoa3:entity/tree_spirit/ambient"
+    ]
+  },
+  "entity.tree_spirit.death": {
+    "subtitle": "subtitles.entity.tree_spirit.death",
+    "sounds": [
+      "aoa3:entity/tree_spirit/death"
+    ]
+  },
+  "entity.tree_spirit.hurt": {
+    "subtitle": "subtitles.entity.tree_spirit.hurt",
+    "sounds": [
+      "aoa3:entity/tree_spirit/hurt"
+    ]
+  },
+  "entity.trickster.ambient": {
+    "subtitle": "subtitles.entity.trickster.ambient",
+    "sounds": [
+      "aoa3:entity/trickster/ambient"
+    ]
+  },
+  "entity.trickster.hurt": {
+    "subtitle": "subtitles.entity.trickster.hurt",
+    "sounds": [
+      "aoa3:entity/trickster/hurt"
+    ]
+  },
+  "entity.trotter.ambient": {
+    "subtitle": "subtitles.entity.trotter.ambient",
+    "sounds": [
+      "aoa3:entity/trotter/ambient"
+    ]
+  },
+  "entity.trotter.death": {
+    "subtitle": "subtitles.entity.trotter.death",
+    "sounds": [
+      "aoa3:entity/trotter/death"
+    ]
+  },
+  "entity.trotter.hurt": {
+    "subtitle": "subtitles.entity.trotter.hurt",
+    "sounds": [
+      "aoa3:entity/trotter/hurt"
+    ]
+  },
+  "entity.tyrosaur.ambient": {
+    "subtitle": "subtitles.entity.tyrosaur.ambient",
+    "sounds": [
+      "aoa3:entity/tyrosaur/ambient"
+    ]
+  },
+  "entity.tyrosaur.death": {
+    "subtitle": "subtitles.entity.tyrosaur.death",
+    "sounds": [
+      "aoa3:entity/tyrosaur/death"
+    ]
+  },
+  "entity.tyrosaur.hurt": {
+    "subtitle": "subtitles.entity.tyrosaur.hurt",
+    "sounds": [
+      "aoa3:entity/tyrosaur/hurt"
+    ]
+  },
+  "entity.urka.ambient": {
+    "subtitle": "subtitles.entity.urka.ambient",
+    "sounds": [
+      "aoa3:entity/urka/ambient"
+    ]
+  },
+  "entity.urka.death": {
+    "subtitle": "subtitles.entity.urka.death",
+    "sounds": [
+      "aoa3:entity/urka/death"
+    ]
+  },
+  "entity.urka.hurt": {
+    "subtitle": "subtitles.entity.urka.hurt",
+    "sounds": [
+      "aoa3:entity/urka/hurt"
+    ]
+  },
+  "entity.valkyrie.ambient": {
+    "subtitle": "subtitles.entity.valkyrie.ambient",
+    "sounds": [
+      "aoa3:entity/valkyrie/ambient"
+    ]
+  },
+  "entity.valkyrie.death": {
+    "subtitle": "subtitles.entity.valkyrie.death",
+    "sounds": [
+      "aoa3:entity/valkyrie/death"
+    ]
+  },
+  "entity.valkyrie.hurt": {
+    "subtitle": "subtitles.entity.valkyrie.hurt",
+    "sounds": [
+      "aoa3:entity/valkyrie/hurt"
+    ]
+  },
+  "entity.visular.ambient": {
+    "subtitle": "subtitles.entity.visular.ambient",
+    "sounds": [
+      "aoa3:entity/visular/ambient"
+    ]
+  },
+  "entity.visular.death": {
+    "subtitle": "subtitles.entity.visular.death",
+    "sounds": [
+      "aoa3:entity/visular/death"
+    ]
+  },
+  "entity.visular.hurt": {
+    "subtitle": "subtitles.entity.visular.hurt",
+    "sounds": [
+      "aoa3:entity/visular/hurt"
+    ]
+  },
+  "entity.visulon.ambient": {
+    "subtitle": "subtitles.entity.visulon.ambient",
+    "sounds": [
+      "aoa3:entity/visulon/ambient"
+    ]
+  },
+  "entity.void_walker.ambient": {
+    "subtitle": "subtitles.entity.void_walker.ambient",
+    "sounds": [
+      "aoa3:entity/void_walker/ambient"
+    ]
+  },
+  "entity.void_walker.death": {
+    "subtitle": "subtitles.entity.void_walker.death",
+    "sounds": [
+      "aoa3:entity/void_walker/death"
+    ]
+  },
+  "entity.void_walker.hurt": {
+    "subtitle": "subtitles.entity.void_walker.hurt",
+    "sounds": [
+      "aoa3:entity/void_walker/hurt"
+    ]
+  },
+  "entity.voliant.ambient": {
+    "subtitle": "subtitles.entity.voliant.ambient",
+    "sounds": [
+      "aoa3:entity/voliant/ambient"
+    ]
+  },
+  "entity.voliant.death": {
+    "subtitle": "subtitles.entity.voliant.death",
+    "sounds": [
+      "aoa3:entity/voliant/death"
+    ]
+  },
+  "entity.voliant.hurt": {
+    "subtitle": "subtitles.entity.voliant.hurt",
+    "sounds": [
+      "aoa3:entity/voliant/hurt"
+    ]
+  },
+  "entity.voltron.ambient": {
+    "subtitle": "subtitles.entity.voltron.ambient",
+    "sounds": [
+      "aoa3:entity/voltron/ambient"
+    ]
+  },
+  "entity.voltron.death": {
+    "subtitle": "subtitles.entity.voltron.death",
+    "sounds": [
+      "aoa3:entity/voltron/death"
+    ]
+  },
+  "entity.voltron.hurt": {
+    "subtitle": "subtitles.entity.voltron.hurt",
+    "sounds": [
+      "aoa3:entity/voltron/hurt"
+    ]
+  },
+  "entity.voxxulon.ambient": {
+    "subtitle": "subtitles.entity.voxxulon.ambient",
+    "sounds": [
+      "aoa3:entity/voxxulon/ambient"
+    ]
+  },
+  "entity.voxxulon.death": {
+    "subtitle": "subtitles.entity.voxxulon.death",
+    "sounds": [
+      "aoa3:entity/voxxulon/death"
+    ]
+  },
+  "entity.voxxulon.hurt": {
+    "subtitle": "subtitles.entity.voxxulon.hurt",
+    "sounds": [
+      "aoa3:entity/voxxulon/hurt"
+    ]
+  },
+  "entity.web_reaper.ambient": {
+    "subtitle": "subtitles.entity.web_reaper.ambient",
+    "sounds": [
+      "aoa3:entity/web_reaper/ambient"
+    ]
+  },
+  "entity.web_reaper.death": {
+    "subtitle": "subtitles.entity.web_reaper.death",
+    "sounds": [
+      "aoa3:entity/web_reaper/death"
+    ]
+  },
+  "entity.web_reaper.hurt": {
+    "subtitle": "subtitles.entity.web_reaper.hurt",
+    "sounds": [
+      "aoa3:entity/web_reaper/hurt"
+    ]
+  },
+  "entity.xxeus.ambient": {
+    "subtitle": "subtitles.entity.xxeus.ambient",
+    "sounds": [
+      "aoa3:entity/xxeus/ambient"
+    ]
+  },
+  "entity.xxeus.death": {
+    "subtitle": "subtitles.entity.xxeus.death",
+    "sounds": [
+      "aoa3:entity/xxeus/death"
+    ]
+  },
+  "entity.xxeus.hurt": {
+    "subtitle": "subtitles.entity.xxeus.hurt",
+    "sounds": [
+      "aoa3:entity/xxeus/hurt"
+    ]
+  },
+  "entity.yeti.ambient": {
+    "subtitle": "subtitles.entity.yeti.ambient",
+    "sounds": [
+      "aoa3:entity/yeti/ambient"
+    ]
+  },
+  "entity.yeti.death": {
+    "subtitle": "subtitles.entity.yeti.death",
+    "sounds": [
+      "aoa3:entity/yeti/death"
+    ]
+  },
+  "entity.yeti.hurt": {
+    "subtitle": "subtitles.entity.yeti.hurt",
+    "sounds": [
+      "aoa3:entity/yeti/hurt"
+    ]
+  },
+  "entity.zarg.ambient": {
+    "subtitle": "subtitles.entity.zarg.ambient",
+    "sounds": [
+      "aoa3:entity/zarg/ambient"
+    ]
+  },
+  "entity.zarg.death": {
+    "subtitle": "subtitles.entity.zarg.death",
+    "sounds": [
+      "aoa3:entity/zarg/death"
+    ]
+  },
+  "entity.zarg.hurt": {
+    "subtitle": "subtitles.entity.zarg.hurt",
+    "sounds": [
+      "aoa3:entity/zarg/hurt"
+    ]
+  },
+  "entity.zhinx.ambient": {
+    "subtitle": "subtitles.entity.zhinx.ambient",
+    "sounds": [
+      "aoa3:entity/zhinx/ambient"
+    ]
+  },
+  "entity.zhinx.death": {
+    "subtitle": "subtitles.entity.zhinx.death",
+    "sounds": [
+      "aoa3:entity/zhinx/death"
+    ]
+  },
+  "entity.zhinx.hurt": {
+    "subtitle": "subtitles.entity.zhinx.hurt",
+    "sounds": [
+      "aoa3:entity/zhinx/hurt"
+    ]
+  },
+  "entity.zorp.ambient": {
+    "subtitle": "subtitles.entity.zorp.ambient",
+    "sounds": [
+      "aoa3:entity/zorp/ambient"
+    ]
+  },
+  "entity.zorp.death": {
+    "subtitle": "subtitles.entity.zorp.death",
+    "sounds": [
+      "aoa3:entity/zorp/death"
+    ]
+  },
+  "entity.zorp.hurt": {
+    "subtitle": "subtitles.entity.zorp.hurt",
+    "sounds": [
+      "aoa3:entity/zorp/hurt"
+    ]
+  },
+  "entity.candy_snail.step": {
+    "subtitle": "subtitles.entity.candy_snail.step",
+    "sounds": [
+      "aoa3:entity/candy_snail/step"
+    ]
+  },
+  "entity.emperor_beast.step": {
+    "subtitle": "subtitles.entity.emperor_beast.step",
+    "sounds": [
+      "aoa3:entity/emperor_beast/step"
+    ]
+  },
+  "entity.generic.dino_step": {
+    "subtitle": "subtitles.entity.generic.dino_step",
+    "sounds": [
+      "aoa3:entity/generic/dino_step"
+    ]
+  },
+  "entity.generic.heavy_step": {
+    "subtitle": "subtitles.entity.generic.heavy_step",
+    "sounds": [
+      "aoa3:entity/generic/heavy_step"
+    ]
+  },
+  "entity.generic.snail_step": {
+    "subtitle": "subtitles.entity.generic.snail_step",
+    "sounds": [
+      "aoa3:entity/generic/snail_step"
+    ]
+  },
+  "entity.generic.very_heavy_step": {
+    "subtitle": "subtitles.entity.generic.very_heavy_step",
+    "sounds": [
+      "aoa3:entity/generic/very_heavy_step"
+    ]
+  },
+  "entity.golem.step": {
+    "subtitle": "subtitles.entity.golem.step",
+    "sounds": [
+      "aoa3:entity/golem/step"
+    ]
+  },
+  "entity.tyrosaur.step": {
+    "subtitle": "subtitles.entity.tyrosaur.step",
+    "sounds": [
+      "aoa3:entity/tyrosaur/step"
+    ]
+  },
+  "entity.generic.candy_hurt": {
+    "subtitle": "subtitles.entity.generic.candy_hurt",
+    "sounds": [
+      "aoa3:entity/generic/candy_hurt"
+    ]
+  },
+  "entity.generic.plant_hurt": {
+    "subtitle": "subtitles.entity.generic.plant_hurt",
+    "sounds": [
+      "aoa3:entity/generic/plant_hurt"
+    ]
+  },
+  "entity.arc_wizard.shoot": {
+    "subtitle": "subtitles.entity.arc_wizard.shoot",
+    "sounds": [
+      "aoa3:entity/arc_wizard/shoot"
+    ]
+  },
+  "entity.baroness.shoot": {
+    "subtitle": "subtitles.entity.baroness.shoot",
+    "sounds": [
+      "aoa3:entity/baroness/shoot"
+    ]
+  },
+  "entity.baumba.shoot": {
+    "subtitle": "subtitles.entity.baumba.shoot",
+    "sounds": [
+      "aoa3:entity/baumba/shoot"
+    ]
+  },
+  "entity.centinel.shoot": {
+    "subtitle": "subtitles.entity.centinel.shoot",
+    "sounds": [
+      "aoa3:entity/centinel/shoot"
+    ]
+  },
+  "entity.cherry_blaster.shoot": {
+    "subtitle": "subtitles.entity.cherry_blaster.shoot",
+    "sounds": [
+      "aoa3:entity/cherry_blaster/shoot"
+    ]
+  },
+  "entity.clunkhead.shoot": {
+    "subtitle": "subtitles.entity.clunkhead.shoot",
+    "sounds": [
+      "aoa3:entity/clunkhead/shoot"
+    ]
+  },
+  "entity.cotton_candor.shoot": {
+    "subtitle": "subtitles.entity.cotton_candor.shoot",
+    "sounds": [
+      "aoa3:entity/cotton_candor/shoot"
+    ]
+  },
+  "entity.craexxeus.nuke": {
+    "subtitle": "subtitles.entity.craexxeus.nuke",
+    "sounds": [
+      "aoa3:entity/craexxeus/nuke"
+    ]
+  },
+  "entity.craexxeus.shoot": {
+    "subtitle": "subtitles.entity.craexxeus.shoot",
+    "sounds": [
+      "aoa3:entity/craexxeus/shoot"
+    ]
+  },
+  "entity.fungik.shoot": {
+    "subtitle": "subtitles.entity.fungik.shoot",
+    "sounds": [
+      "aoa3:entity/fungik/shoot"
+    ]
+  },
+  "entity.guardian.shoot": {
+    "subtitle": "subtitles.entity.guardian.shoot",
+    "sounds": [
+      "aoa3:entity/guardian/shoot"
+    ]
+  },
+  "entity.hag.shoot": {
+    "subtitle": "subtitles.entity.hag.shoot",
+    "sounds": [
+      "aoa3:entity/hag/shoot"
+    ]
+  },
+  "entity.happy.shoot": {
+    "subtitle": "subtitles.entity.happy.shoot",
+    "sounds": [
+      "aoa3:entity/happy/shoot"
+    ]
+  },
+  "entity.kaiyu.shoot": {
+    "subtitle": "subtitles.entity.kaiyu.shoot",
+    "sounds": [
+      "aoa3:entity/kaiyu/shoot"
+    ]
+  },
+  "entity.magical_creeper.shoot": {
+    "subtitle": "subtitles.entity.magical_creeper.shoot",
+    "sounds": [
+      "aoa3:entity/magical_creeper/shoot"
+    ]
+  },
+  "entity.mechbot.shoot": {
+    "subtitle": "subtitles.entity.mechbot.shoot",
+    "sounds": [
+      "aoa3:entity/mechbot/shoot"
+    ]
+  },
+  "entity.mermage.shoot": {
+    "subtitle": "subtitles.entity.mermage.shoot",
+    "sounds": [
+      "aoa3:entity/mermage/shoot"
+    ]
+  },
+  "entity.mirage.shoot": {
+    "subtitle": "subtitles.entity.mirage.shoot",
+    "sounds": [
+      "aoa3:entity/mirage/shoot"
+    ]
+  },
+  "entity.skeleman.shoot": {
+    "subtitle": "subtitles.entity.skeleman.shoot",
+    "sounds": [
+      "aoa3:entity/skeleman/shoot"
+    ]
+  },
+  "entity.spirit_protector.shoot": {
+    "subtitle": "subtitles.entity.spirit_protector.shoot",
+    "sounds": [
+      "aoa3:entity/spirit_protector/shoot"
+    ]
+  },
+  "entity.undead_troll.shoot": {
+    "subtitle": "subtitles.entity.undead_troll.shoot",
+    "sounds": [
+      "aoa3:entity/undead_troll/shoot1",
+      "aoa3:entity/undead_troll/shoot2"
+    ]
+  },
+  "entity.vine_wizard.shoot": {
+    "subtitle": "subtitles.entity.vine_wizard.shoot",
+    "sounds": [
+      "aoa3:entity/vine_wizard/shoot"
+    ]
+  },
+  "entity.web_reaper.shoot": {
+    "subtitle": "subtitles.entity.web_reaper.shoot",
+    "sounds": [
+      "aoa3:entity/web_reaper/shoot"
+    ]
+  },
+  "entity.wizard.shoot": {
+    "subtitle": "subtitles.entity.wizard.shoot",
+    "sounds": [
+      "aoa3:entity/wizard/shoot"
+    ]
+  },
+  "entity.living_fungi.spawn": {
+    "subtitle": "subtitles.entity.living_fungi.spawn",
+    "sounds": [
+      "aoa3:entity/living_fungi/spawn"
+    ]
+  },
+  "entity.baumba.jump": {
+    "subtitle": "subtitles.entity.baumba.jump",
+    "sounds": [
+      "aoa3:entity/baumba/jump"
+    ]
+  },
+  "entity.corallus.taunt": {
+    "subtitle": "subtitles.entity.corallus.taunt",
+    "sounds": [
+      "aoa3:entity/corallus/taunt"
+    ]
+  },
+  "entity.craexxeus.charge": {
+    "subtitle": "subtitles.entity.craexxeus.charge",
+    "sounds": [
+      "aoa3:entity/craexxeus/charge"
+    ]
+  },
+  "entity.creeperlock.teleport": {
+    "subtitle": "subtitles.entity.creeperlock.teleport",
+    "sounds": [
+      "aoa3:entity/creeperlock/teleport"
+    ]
+  },
+  "entity.grillface.scare": {
+    "subtitle": "subtitles.entity.grillface.scare",
+    "sounds": [
+      "aoa3:entity/grillface/scare"
+    ]
+  },
+  "entity.host.summon": {
+    "subtitle": "subtitles.entity.host.summon",
+    "sounds": [
+      "aoa3:entity/host/summon"
+    ]
+  },
+  "entity.keeler.revive": {
+    "subtitle": "subtitles.entity.keeler.revive",
+    "sounds": [
+      "aoa3:entity/keeler/revive"
+    ]
+  },
+  "entity.king_shroomus.heal": {
+    "subtitle": "subtitles.entity.king_shroomus.heal",
+    "sounds": [
+      "aoa3:entity/king_shroomus/heal"
+    ]
+  },
+  "entity.little_bam.spawn": {
+    "subtitle": "subtitles.entity.little_bam.spawn",
+    "sounds": [
+      "aoa3:entity/little_bam/spawn"
+    ]
+  },
+  "entity.mechbot.jump": {
+    "subtitle": "subtitles.entity.mechbot.jump",
+    "sounds": [
+      "aoa3:entity/mechbot/jump"
+    ]
+  },
+  "entity.mirage.teleport": {
+    "subtitle": "subtitles.entity.mirage.teleport",
+    "sounds": [
+      "aoa3:entity/mirage/teleport"
+    ]
+  },
+  "entity.pixon.harvest": {
+    "subtitle": "subtitles.entity.pixon.harvest",
+    "sounds": [
+      "aoa3:entity/pixon/harvest"
+    ]
+  },
+  "entity.rock_rider.switch": {
+    "subtitle": "subtitles.entity.rock_rider.switch",
+    "sounds": [
+      "aoa3:entity/rock_rider/switch"
+    ]
+  },
+  "entity.runic_golem.charge": {
+    "subtitle": "subtitles.entity.runic_golem.charge",
+    "sounds": [
+      "aoa3:entity/runic_golem/charge"
+    ]
+  },
+  "entity.trickster.hide": {
+    "subtitle": "subtitles.entity.trickster.hide",
+    "sounds": [
+      "aoa3:entity/trickster/hide"
+    ]
+  },
+  "entity.tyrosaur.charge": {
+    "subtitle": "subtitles.entity.tyrosaur.charge",
+    "sounds": [
+      "aoa3:entity/tyrosaur/charge"
+    ]
+  },
+  "entity.tyrosaur.ready_stomp": {
+    "subtitle": "subtitles.entity.tyrosaur.ready_stomp",
+    "sounds": [
+      "aoa3:entity/tyrosaur/ready_stomp"
+    ]
+  },
+  "entity.tyrosaur.stomp": {
+    "subtitle": "subtitles.entity.tyrosaur.stomp",
+    "sounds": [
+      "aoa3:entity/tyrosaur/stomp"
+    ]
+  },
+  "entity.xxeus.dash": {
+    "subtitle": "subtitles.entity.xxeus.dash",
+    "sounds": [
+      "aoa3:entity/xxeus/dash"
+    ]
+  },
+  "entity.baron_bomb.prime": {
+    "subtitle": "subtitles.entity.baron_bomb.prime",
+    "sounds": [
+      "aoa3:entity/baron_bomb/prime"
+    ]
+  },
+  "entity.baron_bomb.spawn": {
+    "subtitle": "subtitles.entity.baron_bomb.spawn",
+    "sounds": [
+      "aoa3:entity/baron_bomb/spawn"
+    ]
+  },
+  "entity.bloodlust.collect": {
+    "subtitle": "subtitles.entity.bloodlust.collect",
+    "sounds": [
+      "aoa3:entity/bloodlust/collect"
+    ]
+  },
+  "entity.bubble_shot.pop": {
+    "subtitle": "subtitles.entity.bubble_shot.pop",
+    "sounds": [
+      "aoa3:entity/bubble_shot/pop"
+    ]
+  },
+  "entity.goo_ball.impact": {
+    "subtitle": "subtitles.entity.goo_ball.impact",
+    "sounds": [
+      "aoa3:entity/goo_ball/impact"
+    ]
+  },
+  "entity.heart_stone.collect": {
+    "subtitle": "subtitles.entity.heart_stone.collect",
+    "sounds": [
+      "aoa3:entity/heart_stone/collect"
+    ]
+  },
+  "entity.heart_stone.spawn": {
+    "subtitle": "subtitles.entity.heart_stone.spawn",
+    "sounds": [
+      "aoa3:entity/heart_stone/spawn"
+    ]
+  },
+  "entity.hellfire.impact": {
+    "subtitle": "subtitles.entity.hellfire.impact",
+    "sounds": [
+      "aoa3:entity/hellfire/impact"
+    ]
+  },
+  "misc.lotto.win": {
+    "subtitle": "subtitles.misc.lotto.win",
+    "sounds": [
+      "aoa3:misc/lotto/win"
+    ]
+  },
+  "misc.jingle_bells": {
+    "subtitle": "subtitles.misc.jingle_bells",
+    "sounds": [
+      "aoa3:misc/jingle_bells"
+    ]
+  },
+  "item.abominator.fire": {
+    "subtitle": "subtitles.item.abominator.fire",
+    "sounds": [
+      "aoa3:item/abominator/fire"
+    ]
+  },
+  "item.artifact.fire": {
+    "subtitle": "subtitles.item.artifact.fire",
+    "sounds": [
+      "aoa3:item/artifact/fire"
+    ]
+  },
+  "item.atlantic_staff.cast": {
+    "subtitle": "subtitles.item.atlantic_staff.cast",
+    "sounds": [
+      "aoa3:item/atlantic_staff/cast"
+    ]
+  },
+  "item.atomizer.fire": {
+    "subtitle": "subtitles.item.atomizer.fire",
+    "sounds": [
+      "aoa3:item/atomizer/fire"
+    ]
+  },
+  "item.ball_cannon.fire": {
+    "subtitle": "subtitles.item.ball_cannon.fire",
+    "sounds": [
+      "aoa3:item/ball_cannon/fire"
+    ]
+  },
+  "item.big_blast.fire": {
+    "subtitle": "subtitles.item.big_blast.fire",
+    "sounds": [
+      "aoa3:item/big_blast/fire"
+    ]
+  },
+  "item.blowpipe.fire": {
+    "subtitle": "subtitles.item.blowpipe.fire",
+    "sounds": [
+      "aoa3:item/blowpipe/fire"
+    ]
+  },
+  "item.bone_horn.call": {
+    "subtitle": "subtitles.item.bone_horn.call",
+    "sounds": [
+      "aoa3:item/bone_horn/call"
+    ]
+  },
+  "item.boom_cannon.fire": {
+    "subtitle": "subtitles.item.boom_cannon.fire",
+    "sounds": [
+      "aoa3:item/boom_cannon/fire"
+    ]
+  },
+  "item.bubble_gun.fire": {
+    "subtitle": "subtitles.item.bubble_gun.fire",
+    "sounds": [
+      "aoa3:item/bubble_gun/fire"
+    ]
+  },
+  "item.candy_staff.cast": {
+    "subtitle": "subtitles.item.candy_staff.cast",
+    "sounds": [
+      "aoa3:item/candy_staff/cast"
+    ]
+  },
+  "item.carrot_cannon.fire": {
+    "subtitle": "subtitles.item.carrot_cannon.fire",
+    "sounds": [
+      "aoa3:item/carrot_cannon/fire"
+    ]
+  },
+  "item.celestial_staff.cast": {
+    "subtitle": "subtitles.item.celestial_staff.cast",
+    "sounds": [
+      "aoa3:item/celestial_staff/cast"
+    ]
+  },
+  "item.chaingun.fire": {
+    "subtitle": "subtitles.item.chaingun.fire",
+    "sounds": [
+      "aoa3:item/chaingun/fire"
+    ]
+  },
+  "item.chainsaw.use": {
+    "subtitle": "subtitles.item.chainsaw.use",
+    "sounds": [
+      "aoa3:item/chainsaw/use"
+    ]
+  },
+  "item.chugger.fire": {
+    "subtitle": "subtitles.item.chugger.fire",
+    "sounds": [
+      "aoa3:item/chugger/fire"
+    ]
+  },
+  "item.clowner.fire": {
+    "subtitle": "subtitles.item.clowner.fire",
+    "sounds": [
+      "aoa3:item/clowner/fire"
+    ]
+  },
+  "item.colour_cannon.fire": {
+    "subtitle": "subtitles.item.colour_cannon.fire",
+    "sounds": [
+      "aoa3:item/colour_cannon/fire"
+    ]
+  },
+  "item.concussion_staff.cast": {
+    "subtitle": "subtitles.item.concussion_staff.cast",
+    "sounds": [
+      "aoa3:item/concussion_staff/cast"
+    ]
+  },
+  "item.confetti_cannon.fire": {
+    "subtitle": "subtitles.item.confetti_cannon.fire",
+    "sounds": [
+      "aoa3:item/confetti_cannon/fire"
+    ]
+  },
+  "item.coral_staff.cast": {
+    "subtitle": "subtitles.item.coral_staff.cast",
+    "sounds": [
+      "aoa3:item/coral_staff/cast"
+    ]
+  },
+  "item.creation_slab.use": {
+    "subtitle": "subtitles.item.creation_slab.use",
+    "sounds": [
+      "aoa3:item/creation_slab/use"
+    ]
+  },
+  "item.crystevia_staff.cast": {
+    "subtitle": "subtitles.item.crystevia_staff.cast",
+    "sounds": [
+      "aoa3:item/crystevia_staff/cast"
+    ]
+  },
+  "item.dark_gun.fire": {
+    "subtitle": "subtitles.item.dark_gun.fire",
+    "sounds": [
+      "aoa3:item/dark_gun/fire"
+    ]
+  },
+  "item.discharge_gun.fire": {
+    "subtitle": "subtitles.item.discharge_gun.fire",
+    "sounds": [
+      "aoa3:item/discharge_gun/fire"
+    ]
+  },
+  "item.doom_gun.fire": {
+    "subtitle": "subtitles.item.doom_gun.fire",
+    "sounds": [
+      "aoa3:item/doom_gun/fire"
+    ]
+  },
+  "item.drain_gun.fire": {
+    "subtitle": "subtitles.item.drain_gun.fire",
+    "sounds": [
+      "aoa3:item/drain_gun/fire"
+    ]
+  },
+  "item.ember_staff.cast": {
+    "subtitle": "subtitles.item.ember_staff.cast",
+    "sounds": [
+      "aoa3:item/ember_staff/cast"
+    ]
+  },
+  "item.energy_cannon.fire": {
+    "subtitle": "subtitles.item.energy_cannon.fire",
+    "sounds": [
+      "aoa3:item/energy_cannon/fire"
+    ]
+  },
+  "item.ever_staff.cast": {
+    "subtitle": "subtitles.item.ever_staff.cast",
+    "sounds": [
+      "aoa3:item/ever_staff/cast"
+    ]
+  },
+  "item.fast_rifle.fire": {
+    "subtitle": "subtitles.item.fast_rifle.fire",
+    "sounds": [
+      "aoa3:item/fast_rifle/fire"
+    ]
+  },
+  "item.firefly_staff.cast": {
+    "subtitle": "subtitles.item.firefly_staff.cast",
+    "sounds": [
+      "aoa3:item/firefly_staff/cast"
+    ]
+  },
+  "item.flinger.fire": {
+    "subtitle": "subtitles.item.flinger.fire",
+    "sounds": [
+      "aoa3:item/flinger/fire"
+    ]
+  },
+  "item.fungal_staff.cast": {
+    "subtitle": "subtitles.item.fungal_staff.cast",
+    "sounds": [
+      "aoa3:item/fungal_staff/cast"
+    ]
+  },
+  "item.gas_gun.fire": {
+    "subtitle": "subtitles.item.gas_gun.fire",
+    "sounds": [
+      "aoa3:item/gas_gun/fire"
+    ]
+  },
+  "item.gauge_rifle.fire": {
+    "subtitle": "subtitles.item.gauge_rifle.fire",
+    "sounds": [
+      "aoa3:item/gauge_rifle/fire"
+    ]
+  },
+  "item.golem_gun.fire": {
+    "subtitle": "subtitles.item.golem_gun.fire",
+    "sounds": [
+      "aoa3:item/golem_gun/fire"
+    ]
+  },
+  "item.gravity_blaster.fire": {
+    "subtitle": "subtitles.item.gravity_blaster.fire",
+    "sounds": [
+      "aoa3:item/gravity_blaster/fire"
+    ]
+  },
+  "item.heat_wave.fire": {
+    "subtitle": "subtitles.item.heat_wave.fire",
+    "sounds": [
+      "aoa3:item/heat_wave/fire"
+    ]
+  },
+  "item.high_cannon.fire": {
+    "subtitle": "subtitles.item.high_cannon.fire",
+    "sounds": [
+      "aoa3:item/high_cannon/fire"
+    ]
+  },
+  "item.illusion_revolver.fire": {
+    "subtitle": "subtitles.item.illusion_revolver.fire",
+    "sounds": [
+      "aoa3:item/illusion_revolver/fire"
+    ]
+  },
+  "item.illusion_smg.fire": {
+    "subtitle": "subtitles.item.illusion_smg.fire",
+    "sounds": [
+      "aoa3:item/illusion_smg/fire"
+    ]
+  },
+  "item.ion_blaster.fire": {
+    "subtitle": "subtitles.item.ion_blaster.fire",
+    "sounds": [
+      "aoa3:item/ion_blaster/fire"
+    ]
+  },
+  "item.jack_rocker.fire": {
+    "subtitle": "subtitles.item.jack_rocker.fire",
+    "sounds": [
+      "aoa3:item/jack_rocker/fire"
+    ]
+  },
+  "item.joker_staff.cast": {
+    "subtitle": "subtitles.item.joker_staff.cast",
+    "sounds": [
+      "aoa3:item/joker_staff/cast"
+    ]
+  },
+  "item.kaiyu_staff.cast": {
+    "subtitle": "subtitles.item.kaiyu_staff.cast",
+    "sounds": [
+      "aoa3:item/kaiyu_staff/cast"
+    ]
+  },
+  "item.lightshine_staff.cast": {
+    "subtitle": "subtitles.item.lightshine_staff.cast",
+    "sounds": [
+      "aoa3:item/lightshine_staff/cast"
+    ]
+  },
+  "item.light_cannon.fire": {
+    "subtitle": "subtitles.item.light_cannon.fire",
+    "sounds": [
+      "aoa3:item/light_cannon/fire"
+    ]
+  },
+  "item.lower_cannon.fire": {
+    "subtitle": "subtitles.item.lower_cannon.fire",
+    "sounds": [
+      "aoa3:item/lower_cannon/fire"
+    ]
+  },
+  "item.lunar_staff.cast": {
+    "subtitle": "subtitles.item.lunar_staff.cast",
+    "sounds": [
+      "aoa3:item/lunar_staff/cast"
+    ]
+  },
+  "item.magic_gun.fire": {
+    "subtitle": "subtitles.item.magic_gun.fire",
+    "sounds": [
+      "aoa3:item/magic_gun/fire"
+    ]
+  },
+  "item.mecha_cannon.fire": {
+    "subtitle": "subtitles.item.mecha_cannon.fire",
+    "sounds": [
+      "aoa3:item/mecha_cannon/fire"
+    ]
+  },
+  "item.meteor_staff.cast": {
+    "subtitle": "subtitles.item.meteor_staff.cast",
+    "sounds": [
+      "aoa3:item/meteor_staff/cast"
+    ]
+  },
+  "item.mind_blaster.fire": {
+    "subtitle": "subtitles.item.mind_blaster.fire",
+    "sounds": [
+      "aoa3:item/mind_blaster/fire"
+    ]
+  },
+  "item.minigun.fire": {
+    "subtitle": "subtitles.item.minigun.fire",
+    "sounds": [
+      "aoa3:item/minigun/fire"
+    ]
+  },
+  "item.mini_pistol.fire": {
+    "subtitle": "subtitles.item.mini_pistol.fire",
+    "sounds": [
+      "aoa3:item/mini_pistol/fire"
+    ]
+  },
+  "item.missile_maker.fire": {
+    "subtitle": "subtitles.item.missile_maker.fire",
+    "sounds": [
+      "aoa3:item/missile_maker/fire"
+    ]
+  },
+  "item.monster.fire": {
+    "subtitle": "subtitles.item.monster.fire",
+    "sounds": [
+      "aoa3:item/monster/fire"
+    ]
+  },
+  "item.moonlight_staff.cast": {
+    "subtitle": "subtitles.item.moonlight_staff.cast",
+    "sounds": [
+      "aoa3:item/moonlight_staff/cast"
+    ]
+  },
+  "item.moon_shiner.fire": {
+    "subtitle": "subtitles.item.moon_shiner.fire",
+    "sounds": [
+      "aoa3:item/moon_shiner/fire"
+    ]
+  },
+  "item.nature_staff.cast": {
+    "subtitle": "subtitles.item.nature_staff.cast",
+    "sounds": [
+      "aoa3:item/nature_staff/cast"
+    ]
+  },
+  "item.nightmare_staff.cast": {
+    "subtitle": "subtitles.item.nightmare_staff.cast",
+    "sounds": [
+      "aoa3:item/nightmare_staff/cast"
+    ]
+  },
+  "item.noxious_staff.cast": {
+    "subtitle": "subtitles.item.noxious_staff.cast",
+    "sounds": [
+      "aoa3:item/noxious_staff/cast"
+    ]
+  },
+  "item.paralyzer.fire": {
+    "subtitle": "subtitles.item.paralyzer.fire",
+    "sounds": [
+      "aoa3:item/paralyzer/fire"
+    ]
+  },
+  "item.party_popper.fire": {
+    "subtitle": "subtitles.item.party_popper.fire",
+    "sounds": [
+      "aoa3:item/party_popper/fire"
+    ]
+  },
+  "item.phantom_staff.cast": {
+    "subtitle": "subtitles.item.phantom_staff.cast",
+    "sounds": [
+      "aoa3:item/phantom_staff/cast"
+    ]
+  },
+  "item.ray_gun.fire": {
+    "subtitle": "subtitles.item.ray_gun.fire",
+    "sounds": [
+      "aoa3:item/ray_gun/fire"
+    ]
+  },
+  "item.reefer.fire": {
+    "subtitle": "subtitles.item.reefer.fire",
+    "sounds": [
+      "aoa3:item/reefer/fire"
+    ]
+  },
+  "item.reef_staff.cast": {
+    "subtitle": "subtitles.item.reef_staff.cast",
+    "sounds": [
+      "aoa3:item/reef_staff/cast"
+    ]
+  },
+  "item.rejuvenation_staff.cast": {
+    "subtitle": "subtitles.item.rejuvenation_staff.cast",
+    "sounds": [
+      "aoa3:item/rejuvenation_staff/cast"
+    ]
+  },
+  "item.revolution.fire": {
+    "subtitle": "subtitles.item.revolution.fire",
+    "sounds": [
+      "aoa3:item/revolution/fire"
+    ]
+  },
+  "item.revolver.fire": {
+    "subtitle": "subtitles.item.revolver.fire",
+    "sounds": [
+      "aoa3:item/revolver/fire"
+    ]
+  },
+  "item.roulette.fire": {
+    "subtitle": "subtitles.item.roulette.fire",
+    "sounds": [
+      "aoa3:item/roulette/fire"
+    ]
+  },
+  "item.rpg.fire": {
+    "subtitle": "subtitles.item.rpg.fire",
+    "sounds": [
+      "aoa3:item/rpg/fire"
+    ]
+  },
+  "item.runic_staff.cast": {
+    "subtitle": "subtitles.item.runic_staff.cast",
+    "sounds": [
+      "aoa3:item/runic_staff/cast"
+    ]
+  },
+  "item.shadow_blaster.fire": {
+    "subtitle": "subtitles.item.shadow_blaster.fire",
+    "sounds": [
+      "aoa3:item/shadow_blaster/fire"
+    ]
+  },
+  "item.shadow_staff.cast": {
+    "subtitle": "subtitles.item.shadow_staff.cast",
+    "sounds": [
+      "aoa3:item/shadow_staff/cast"
+    ]
+  },
+  "item.shotgun.fire": {
+    "subtitle": "subtitles.item.shotgun.fire",
+    "sounds": [
+      "aoa3:item/shotgun/fire"
+    ]
+  },
+  "item.show_staff.cast": {
+    "subtitle": "subtitles.item.show_staff.cast",
+    "sounds": [
+      "aoa3:item/show_staff/cast"
+    ]
+  },
+  "item.shyre_staff.cast": {
+    "subtitle": "subtitles.item.shyre_staff.cast",
+    "sounds": [
+      "aoa3:item/shyre_staff/cast"
+    ]
+  },
+  "item.sky_staff.cast": {
+    "subtitle": "subtitles.item.sky_staff.cast",
+    "sounds": [
+      "aoa3:item/sky_staff/cast"
+    ]
+  },
+  "item.slugger.fire": {
+    "subtitle": "subtitles.item.slugger.fire",
+    "sounds": [
+      "aoa3:item/slugger/fire"
+    ]
+  },
+  "item.sniper.fire": {
+    "subtitle": "subtitles.item.sniper.fire",
+    "sounds": [
+      "aoa3:item/sniper/fire"
+    ]
+  },
+  "item.soul_spark.fire": {
+    "subtitle": "subtitles.item.soul_spark.fire",
+    "sounds": [
+      "aoa3:item/soul_spark/fire"
+    ]
+  },
+  "item.space_gun.fire": {
+    "subtitle": "subtitles.item.space_gun.fire",
+    "sounds": [
+      "aoa3:item/space_gun/fire"
+    ]
+  },
+  "item.space_revolver.fire": {
+    "subtitle": "subtitles.item.space_revolver.fire",
+    "sounds": [
+      "aoa3:item/space_revolver/fire"
+    ]
+  },
+  "item.spirit_shower.fire": {
+    "subtitle": "subtitles.item.spirit_shower.fire",
+    "sounds": [
+      "aoa3:item/spirit_shower/fire"
+    ]
+  },
+  "item.sprayer.fire": {
+    "subtitle": "subtitles.item.sprayer.fire",
+    "sounds": [
+      "aoa3:item/sprayer/fire"
+    ]
+  },
+  "item.squad_gun.fire": {
+    "subtitle": "subtitles.item.squad_gun.fire",
+    "sounds": [
+      "aoa3:item/squad_gun/fire"
+    ]
+  },
+  "item.staff.cast": {
+    "subtitle": "subtitles.item.staff.cast",
+    "sounds": [
+      "aoa3:item/staff/cast"
+    ]
+  },
+  "item.stampede.fire": {
+    "subtitle": "subtitles.item.stampede.fire",
+    "sounds": [
+      "aoa3:item/stampede/fire"
+    ]
+  },
+  "item.sun_staff.cast": {
+    "subtitle": "subtitles.item.sun_staff.cast",
+    "sounds": [
+      "aoa3:item/sun_staff/cast"
+    ]
+  },
+  "item.surge_staff.cast": {
+    "subtitle": "subtitles.item.surge_staff.cast",
+    "sounds": [
+      "aoa3:item/surge_staff/cast"
+    ]
+  },
+  "item.swarmotron.fire": {
+    "subtitle": "subtitles.item.swarmotron.fire",
+    "sounds": [
+      "aoa3:item/swarmotron/fire"
+    ]
+  },
+  "item.tangle_staff.cast": {
+    "subtitle": "subtitles.item.tangle_staff.cast",
+    "sounds": [
+      "aoa3:item/tangle_staff/cast"
+    ]
+  },
+  "item.ultimatum_staff.cast": {
+    "subtitle": "subtitles.item.ultimatum_staff.cast",
+    "sounds": [
+      "aoa3:item/ultimatum_staff/cast"
+    ]
+  },
+  "item.upper_cannon.fire": {
+    "subtitle": "subtitles.item.upper_cannon.fire",
+    "sounds": [
+      "aoa3:item/upper_cannon/fire"
+    ]
+  },
+  "item.vulcane.use": {
+    "subtitle": "subtitles.item.vulcane.use",
+    "sounds": [
+      "aoa3:item/vulcane/use"
+    ]
+  },
+  "item.web_staff.cast": {
+    "subtitle": "subtitles.item.web_staff.cast",
+    "sounds": [
+      "aoa3:item/web_staff/cast"
+    ]
+  },
+  "item.whimsy_winder.fire": {
+    "subtitle": "subtitles.item.whimsy_winder.fire",
+    "sounds": [
+      "aoa3:item/whimsy_winder/fire"
+    ]
+  },
+  "item.withers_wrath.fire": {
+    "subtitle": "subtitles.item.withers_wrath.fire",
+    "sounds": [
+      "aoa3:item/withers_wrath/fire"
+    ]
+  },
+  "item.wither_cannon.fire": {
+    "subtitle": "subtitles.item.wither_cannon.fire",
+    "sounds": [
+      "aoa3:item/wither_cannon/fire"
+    ]
+  },
+  "item.wood_rifle.fire": {
+    "subtitle": "subtitles.item.wood_rifle.fire",
+    "sounds": [
+      "aoa3:item/wood_rifle/fire"
+    ]
+  },
+  "portal.abyss.activate": {
+    "subtitle": "subtitles.portal.abyss.activate",
+    "sounds": [
+      "aoa3:portal/abyss/activate"
+    ]
+  },
+  "portal.barren.activate": {
+    "subtitle": "subtitles.portal.barren.activate",
+    "sounds": [
+      "aoa3:portal/barren/activate"
+    ]
+  },
+  "portal.candyland.activate": {
+    "subtitle": "subtitles.portal.candyland.activate",
+    "sounds": [
+      "aoa3:portal/candyland/activate"
+    ]
+  },
+  "portal.celeve.activate": {
+    "subtitle": "subtitles.portal.celeve.activate",
+    "sounds": [
+      "aoa3:portal/celeve/activate"
+    ]
+  },
+  "portal.creeponia.activate": {
+    "subtitle": "subtitles.portal.creeponia.activate",
+    "sounds": [
+      "aoa3:portal/creeponia/activate"
+    ]
+  },
+  "portal.crystevia.activate": {
+    "subtitle": "subtitles.portal.crystevia.activate",
+    "sounds": [
+      "aoa3:portal/crystevia/activate"
+    ]
+  },
+  "portal.dark.activate": {
+    "subtitle": "subtitles.portal.dark.activate",
+    "sounds": [
+      "aoa3:portal/dark/activate"
+    ]
+  },
+  "portal.iromine.activate": {
+    "subtitle": "subtitles.portal.iromine.activate",
+    "sounds": [
+      "aoa3:portal/iromine/activate"
+    ]
+  },
+  "portal.light.activate": {
+    "subtitle": "subtitles.portal.light.activate",
+    "sounds": [
+      "aoa3:portal/light/activate"
+    ]
+  },
+  "portal.natural.activate": {
+    "subtitle": "subtitles.portal.natural.activate",
+    "sounds": [
+      "aoa3:portal/natural/activate"
+    ]
+  },
+  "portal.nowhere.activate": {
+    "subtitle": "subtitles.portal.nowhere.activate",
+    "sounds": [
+      "aoa3:portal/nowhere/activate"
+    ]
+  },
+  "portal.shyrelands.activate": {
+    "subtitle": "subtitles.portal.shyrelands.activate",
+    "sounds": [
+      "aoa3:portal/shyrelands/activate"
+    ]
+  },
+  "block.creation_forge.sacrifice": {
+    "subtitle": "subtitles.block.creation_forge.sacrifice",
+    "sounds": [
+      "aoa3:block/creation_forge/sacrifice"
+    ]
+  },
+  "block.crystal_creator.convert": {
+    "subtitle": "subtitles.block.crystal_creator.convert",
+    "sounds": [
+      "aoa3:block/crystal_creator/convert"
+    ]
+  },
+  "block.declogging_table.use": {
+    "subtitle": "subtitles.block.declogging_table.use",
+    "sounds": [
+      "aoa3:block/declogging_table/use"
+    ]
+  },
+  "block.extraction_device.use": {
+    "subtitle": "subtitles.block.extraction_device.use",
+    "sounds": [
+      "aoa3:block/extraction_device/use"
+    ]
+  },
+  "block.haunting_table.use": {
+    "subtitle": "subtitles.block.haunting_table.use",
+    "sounds": [
+      "aoa3:block/haunting_table/use"
+    ]
+  },
+  "block.infusion_table.convert": {
+    "subtitle": "subtitles.block.infusion_table.convert",
+    "sounds": [
+      "aoa3:block/infusion_table/convert"
+    ]
+  },
+  "block.petal_crafting_station.use": {
+    "subtitle": "subtitles.block.petal_crafting_station.use",
+    "sounds": [
+      "aoa3:block/petal_crafting_station/use"
+    ]
+  },
+  "block.rune_randomizer.use": {
+    "subtitle": "subtitles.block.rune_randomizer.use",
+    "sounds": [
+      "aoa3:block/rune_randomizer/use"
+    ]
+  },
+  "block.tea_sink.fill": {
+    "subtitle": "subtitles.block.tea_sink.fill",
+    "sounds": [
+      "aoa3:block/tea_sink/fill"
+    ]
+  },
+  "block.tea_sink.use": {
+    "subtitle": "subtitles.block.tea_sink.use",
+    "sounds": [
+      "aoa3:block/tea_sink/use"
+    ]
+  },
+  "item.music_disc.caverns": {
+    "subtitle": "subtitles.item.music_disc.caverns",
+    "sounds": [
+      {
+        "name": "aoa3:item/music_disc/caverns",
+        "stream": true
+      }
+    ]
+  },
+  "item.music_disc.outlaw": {
+    "subtitle": "subtitles.item.music_disc.outlaw",
+    "sounds": [
+      {
+        "name": "aoa3:item/music_disc/outlaw",
+        "stream": true
+      }
+    ]
+  },
+  "entity.bane.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/bane/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.baroness.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/baroness/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.blue_guardian.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/guardian/blue_guardian_music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.clunkhead.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/clunkhead/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.corallus.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/corallus/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.cotton_candor.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/cotton_candor/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.craexxeus.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/craexxeus/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.creep.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/creep/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.crystocore.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/crystocore/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.dracyon.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/dracyon/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.elusive.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/elusive/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.graw.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/graw/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.green_guardian.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/guardian/green_guardian_music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.gyro.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/gyro/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.hive_king.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/hive_king/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.king_bambambam.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/king_bambambam/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.king_shroomus.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/king_shroomus/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.kror.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/kror/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.mechbot.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/mechbot/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.nethengeic_wither.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/nethengeic_wither/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.primordial.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/primordial/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.red_guardian.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/guardian/red_guardian_music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.rock_rider.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/rock_rider/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.shadowlord.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/shadowlord/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.skeletron.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/skeletron/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.smash.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/smash/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.tyrosaur.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/tyrosaur/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.vinocorne.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/vinocorne/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.visualent.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/visualent/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.voxxulon.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/voxxulon/music",
+        "stream": true
+      }
+    ]
+  },
+  "entity.yellow_guardian.music": {
+    "sounds": [
+      {
+        "name": "aoa3:entity/guardian/yellow_guardian_music",
+        "stream": true
+      }
+    ]
+  }
+}

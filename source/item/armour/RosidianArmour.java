@@ -1,19 +1,16 @@
 package net.tslat.aoa3.item.armour;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.minion.RosidEntity;
+import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -33,23 +30,23 @@ public class RosidianArmour extends AdventArmour {
 	public void onPostAttackReceived(PlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingDamageEvent event) {
 		if (!DamageUtil.isEnvironmentalDamage(event.getSource()) && !DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
 			if (slots == null) {
-				if (event.getAmount() >= 4)
-					spawnRosid(plData.player());
+				//if (event.getAmount() >= 4)
+				//	spawnRosid(plData.player());
 			}
 			else {
-				if (random.nextFloat() < 0.04 * slots.size())
-					spawnRosid(plData.player());
+				//if (random.nextFloat() < 0.04 * slots.size())
+				//	spawnRosid(plData.player());
 			}
 		}
 	}
 
-	private void spawnRosid(PlayerEntity pl) {
+	/*private void spawnRosid(PlayerEntity pl) {
 		RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), pl.level);
 
 		rosid.tame(pl);
 		rosid.setPos(pl.getX(), pl.getY(), pl.getZ());
 		pl.level.addFreshEntity(rosid);
-	}
+	}*/ // TODO
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {

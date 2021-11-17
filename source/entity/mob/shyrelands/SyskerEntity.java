@@ -7,8 +7,10 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +21,7 @@ public class SyskerEntity extends AoAMeleeMob {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return 1.15625f;
+        return 1.25f;
     }
 
     @Nullable
@@ -40,4 +42,9 @@ public class SyskerEntity extends AoAMeleeMob {
         return AoASounds.ENTITY_SYSKER_HURT.get();
     }
 
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SPIN));
+    }
 }

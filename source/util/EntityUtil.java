@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
@@ -13,23 +14,22 @@ import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.CombatEntry;
+import net.minecraft.util.CombatTracker;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.util.FakePlayer;
-import net.tslat.aoa3.util.player.PlayerUtil;
-import net.tslat.aoa3.util.skill.HunterUtil;
+import net.tslat.aoa3.mixin.common.invoker.AccessibleLivingEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.Predicate;
 
-public abstract class EntityUtil {
+public final class EntityUtil {
 	public static final AttributeModifier SPRINTING_SPEED_BOOST = new AttributeModifier(UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D"), "Sprinting speed boost", 0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL);
 	public static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
 
@@ -80,9 +80,6 @@ public abstract class EntityUtil {
 	}
 
 	public static boolean isImmuneToSpecialAttacks(Entity target, LivingEntity attacker) {
-		if (target instanceof LivingEntity && !HunterUtil.canAttackTarget((LivingEntity)target, attacker, false))
-			return true;
-
 		return target instanceof PlayerEntity || target instanceof WitherEntity || target instanceof EnderDragonEntity || !target.canChangeDimensions() || target.isInvulnerable() || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
 	}
 
@@ -97,29 +94,37 @@ public abstract class EntityUtil {
 		return entity instanceof LivingEntity && (entity instanceof FlyingEntity || entity instanceof IFlyingAnimal);
 	}
 
-	public static void reapplyAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+	public static void reapplyAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier, boolean permanentModifier) {
 		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null) {
 			if (instance.getModifier(modifier.getId()) != null)
 				instance.removeModifier(modifier.getId());
 
-			instance.addTransientModifier(modifier);
+			if (permanentModifier) {
+				instance.addPermanentModifier(modifier);
+			}
+			else {
+				instance.addTransientModifier(modifier);
+			}
 		}
 	}
 
-	public static void applyAttributeModifierSafely(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
+	public static void applyAttributeModifierSafely(LivingEntity entity, Attribute attribute, AttributeModifier modifier, boolean permanentModifier) {
 		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
 
-		if (instance != null && !instance.hasModifier(modifier))
-			instance.addTransientModifier(modifier);
+		if (instance != null && !instance.hasModifier(modifier)) {
+			if (permanentModifier) {
+				instance.addPermanentModifier(modifier);
+			}
+			else {
+				instance.addTransientModifier(modifier);
+			}
+		}
 	}
 
 	public static void removeAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier) {
-		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
-
-		if (instance != null && instance.hasModifier(modifier))
-			instance.removeModifier(modifier);
+		removeAttributeModifier(entity, attribute, modifier.getId());
 	}
 
 	public static void removeAttributeModifier(LivingEntity entity, Attribute attribute, UUID modifierId) {
@@ -131,6 +136,12 @@ public abstract class EntityUtil {
 			if (modifier != null)
 				instance.removeModifier(modifier);
 		}
+	}
+
+	public static double safelyGetAttributeValue(LivingEntity entity, Attribute attribute) {
+		AttributeModifierManager attributes = entity.getAttributes();
+
+		return attributes.hasAttribute(attribute) ? attributes.getValue(attribute) : 0;
 	}
 
 	public static void pushEntityAway(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
@@ -251,5 +262,31 @@ public abstract class EntityUtil {
 			default:
 				return Direction.NORTH;
 		}
+	}
+
+	public static double getEntityJumpVelocity(LivingEntity entity) {
+		float jumpVelocity = ((AccessibleLivingEntity)entity).getJumpVelocity();
+
+		if (entity.hasEffect(Effects.JUMP))
+			jumpVelocity += 0.1f * entity.getEffect(Effects.JUMP).getAmplifier() + 1;
+
+		return jumpVelocity;
+	}
+
+	@Nonnull
+	public static Set<Entity> getAttackersForMob(LivingEntity entity, @Nullable Predicate<Entity> filter) {
+		CombatTracker tracker = entity.getCombatTracker();
+
+		if (tracker.entries.isEmpty() || !tracker.inCombat)
+			return Collections.emptySet();
+
+		HashSet<Entity> killers = new HashSet<Entity>(tracker.entries.size());
+
+		for (CombatEntry entry : tracker.entries) {
+			if (entry.isCombatRelated() && (filter == null || filter.test(entry.getSource().getEntity())))
+				killers.add(entry.getSource().getEntity());
+		}
+
+		return killers;
 	}
 }

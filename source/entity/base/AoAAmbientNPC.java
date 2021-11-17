@@ -16,13 +16,14 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -115,7 +116,7 @@ public abstract class AoAAmbientNPC extends CreatureEntity implements INPC {
 				String msg = getInteractMessage(heldStack);
 
 				if (msg != null)
-					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, msg, TextFormatting.GRAY);
+					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent(msg).withStyle(TextFormatting.GRAY));
 			}
 		}
 

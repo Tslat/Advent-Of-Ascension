@@ -1,20 +1,15 @@
 package net.tslat.aoa3.item.weapon.cannon;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.cannon.GoldenCannonballEntity;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -32,15 +27,20 @@ public class GolderBomber extends BaseCannon {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CANNONBALL.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack))) {
-			if (!player.level.isClientSide)
-				player.level.addFreshEntity(new GoldenCannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0.325f, 0));
+	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, Hand hand) {
+		return new GoldenCannonballEntity(shooter, this, hand, 120, 0, 0, 0, 0);
+	}
 
-			return new GoldenCannonballEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0, 0, 0, 0);
+	@Override
+	protected boolean fireGun(LivingEntity shooter, ItemStack stack, Hand hand) {
+		if (super.fireGun(shooter, stack, hand)) {
+			if (!shooter.level.isClientSide)
+				shooter.level.addFreshEntity(new GoldenCannonballEntity(shooter, this, hand, 120, 0, 0, 0.325f, 0));
+
+			return true;
 		}
 
-		return null;
+		return false;
 	}
 
 	@Override

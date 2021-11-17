@@ -1,9 +1,0 @@
-Anima (compétence)
-
-L'anima est une compétence basée autour de la nature.
-
-Tu peux monter ta compétence d'anima en collectant des herbes et des fleurs, en brisant des feuilles, et en récupérant des récoltes matures. Quand tu fais ceçi, il y a une petite chance qu'une pierre d'anima bleue apparaisse. Ramasse cette pierre pour gagner un peu d'exp d'anima, et parfois une pierre d'anima fragmentée.
-De plus, tu peux améliorer ton anima en activant des pierres d'anima fragmentées. Les pierres d'anima fragmentées peuvent être obtenues de certains PNJs, ou en recompense d'autres activités. Utilisées sur un bloc d'herbe, elles encouragent les plantes et les fleurs à proximité à pousser, et offrent un peu d'exp d'anima.
-
-Ces pierres d'anima fragmentées sont utilisées pour fabriquer de puissantes tablettes, outils efficaces peu importe la situation. Placez-en une au sol, et tant qu'il vous restera du pouvoir des âmes, elle restera activée, offrant un boost puissant dans la zone autour d'elle.
-Plus ton niveau d'anima est élevé, plus tu auras accès à de bonnes tablettes!

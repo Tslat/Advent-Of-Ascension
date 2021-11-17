@@ -5,10 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
-import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.EntityUtil;
@@ -19,6 +20,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class SludgeSniper extends BaseSniper {
+	private static final ResourceLocation DOTTED_SCOPE_TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/dotted.png");
+
 	public SludgeSniper(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
@@ -30,8 +33,8 @@ public class SludgeSniper extends BaseSniper {
 	}
 
 	@Override
-	public ScopeOverlayRenderer.Type getScopeType() {
-		return ScopeOverlayRenderer.Type.DOTTED;
+	public ResourceLocation getScopeTexture(ItemStack stack) {
+		return DOTTED_SCOPE_TEXTURE;
 	}
 
 	@Override

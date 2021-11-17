@@ -15,7 +15,7 @@ import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -34,7 +34,7 @@ public class RosidianSword extends BaseSword {
 			float motionY = (float)(player.getY() - target.getY()) * 0.1f;
 			float motionZ = (float)(player.getZ() - target.getZ()) * 0.1f;
 
-			player.level.addParticle(ParticleTypes.END_ROD, true, target.getX() + random.nextGaussian() * 0.2, target.getY() + target.getBbHeight() / 2f, target.getZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
+			player.level.addParticle(ParticleTypes.END_ROD, target.getX() + random.nextGaussian() * 0.2, target.getY() + target.getBbHeight() / 2f, target.getZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
 
 			for (LivingEntity swipeTarget : player.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
 				if (swipeTarget != target && swipeTarget != player && !player.isAlliedTo(swipeTarget) && player.distanceToSqr(swipeTarget) < 9) {

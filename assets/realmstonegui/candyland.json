@@ -1,0 +1,8 @@
+{
+  "id": "candyland",
+  "gui_x": 427,
+  "gui_y": 595,
+  "parents": [
+    "precasia"
+  ]
+}

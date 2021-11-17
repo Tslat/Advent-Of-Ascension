@@ -21,7 +21,6 @@ import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.projectile.HardProjectile;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.item.weapon.thrown.GooBall;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
 
@@ -57,7 +56,7 @@ public class GooBallEntity extends BaseBullet implements HardProjectile, IRender
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		target.hurt(DamageSource.thrown(this, null), GooBall.dmg);
+		target.hurt(DamageSource.thrown(this, null), (float)AoAWeapons.GOO_BALL.get().getDamage());
 
 		if (target instanceof LivingEntity)
 			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 60).level(2));

@@ -14,14 +14,14 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.entity.projectile.blaster.SoulSparkEntity;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -47,21 +47,15 @@ public class SoulSpark extends BaseBlaster {
 		if (!EntityUtil.isImmuneToSpecialAttacks(target, shooter)) {
 			if (shooter instanceof ServerPlayerEntity && !((ServerPlayerEntity)shooter).isCreative()) {
 				ServerPlayerEntity player = (ServerPlayerEntity)shooter;
-				PlayerDataManager.PlayerStats stats = PlayerUtil.getAdventPlayer(player).stats();
+				AoAResource.Instance spirit = PlayerUtil.getResource(player, AoAResources.SPIRIT.get());
 
-				if (stats.getResourceValue(Resources.ENERGY) < 200) {
-					PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.ENERGY, 200);
-
-					return false;
-				}
-
-				if (stats.getResourceValue(Resources.SOUL) < 50) {
-					PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.SOUL, 50);
+				if (!spirit.hasAmount(200)) {
+					PlayerUtil.notifyPlayerOfInsufficientResources(player, AoAResources.SPIRIT.get(), 200);
 
 					return false;
 				}
-				stats.consumeResource(Resources.ENERGY, 200, false);
-				stats.consumeResource(Resources.SOUL, 50, false);
+
+				spirit.consume(200, false);
 
 				Hand hand = player.getUsedItemHand();
 				ItemStack stack =  player.getItemInHand(hand);
@@ -104,8 +98,7 @@ public class SoulSpark extends BaseBlaster {
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SPEC_IMMUNE, LocaleUtil.ItemDescriptionType.HARMFUL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, new StringTextComponent("200"), LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ENERGY_RESOURCE)));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, new StringTextComponent("50"), LocaleUtil.getLocaleMessage(LocaleUtil.Constants.SOUL_RESOURCE)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, new StringTextComponent("200"), AoAResources.SPIRIT.get().getName()));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.fire", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.slowing", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.effect", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));

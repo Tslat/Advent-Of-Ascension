@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:item/lunar_bow",
+  "textures": {
+    "layer0": "aoa3:item/lunar_bow_pulling_1"
+  }
+}

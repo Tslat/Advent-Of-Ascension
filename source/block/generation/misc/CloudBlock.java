@@ -30,6 +30,11 @@ public class CloudBlock extends Block {
 		return VoxelShapes.empty();
 	}
 
+	@Override
+	public VoxelShape getOcclusionShape(BlockState pState, IBlockReader pLevel, BlockPos pPos) {
+		return VoxelShapes.block();
+	}
+
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {

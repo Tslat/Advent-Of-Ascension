@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "side": "aoa3:block/shyre_planks",
+    "bottom": "aoa3:block/shyre_planks",
+    "top": "aoa3:block/shyre_planks"
+  }
+}

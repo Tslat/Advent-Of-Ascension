@@ -10,7 +10,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.ClientOperations;
+import net.tslat.aoa3.client.ClientOperations;
 
 import javax.annotation.Nullable;
 

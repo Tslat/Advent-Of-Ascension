@@ -52,7 +52,7 @@ public class CornyEntity extends AoAMeleeMob {
 	protected void onInsideBlock(BlockState state) {
         if (state.getBlock() == AoABlocks.CANDIED_WATER.get()) {
             if (!candiedWater) {
-                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF);
+                EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, CANDIED_WATER_BUFF, false);
                 setHealth(getHealth() * 1.5f);
 
                 candiedWater = true;

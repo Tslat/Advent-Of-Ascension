@@ -19,10 +19,10 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.item.tool.misc.InfusionBowl;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -82,11 +82,11 @@ public abstract class PixonEntity extends CreatureEntity {
         if (level.getGameTime() >= this.nextHarvestTick && bowlStack.getItem() instanceof InfusionBowl) {
             InfusionBowl bowl = ((InfusionBowl)bowlStack.getItem());
 
-            if (player.isCreative() || PlayerUtil.doesPlayerHaveLevel(player, Skills.INFUSION, getHarvestLevelReq() + bowl.getHarvestReqModifier())) {
+            if (player.isCreative() || PlayerUtil.doesPlayerHaveLevel(player, AoASkills.IMBUING.get(), getHarvestLevelReq() + bowl.getHarvestReqModifier())) {
                 return true;
             }
             else {
-                PlayerUtil.notifyPlayerOfInsufficientLevel(player, Skills.INFUSION, getHarvestLevelReq() + bowl.getHarvestReqModifier());
+                PlayerUtil.notifyPlayerOfInsufficientLevel(player, AoASkills.IMBUING.get(), getHarvestLevelReq() + bowl.getHarvestReqModifier());
             }
         }
 

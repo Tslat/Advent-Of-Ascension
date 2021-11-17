@@ -18,7 +18,6 @@ import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.projectile.HardProjectile;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.item.weapon.thrown.Vulkram;
 
 @OnlyIn(
 		value = Dist.CLIENT,
@@ -60,7 +59,7 @@ public class VulkramEntity extends BaseBullet implements HardProjectile, IRender
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		target.hurt(DamageSource.thrown(this, null), Vulkram.dmg);
+		target.hurt(DamageSource.thrown(this, null), (float)AoAWeapons.VULKRAM.get().getDamage());
 	}
 
 	@Override

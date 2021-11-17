@@ -9,7 +9,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -25,27 +25,27 @@ public class UtopianArmour extends AdventArmour {
 	}
 
 	@Override
-	public void addBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EquipmentSlotType slot) {
+	public void onEquip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null) {
-			plBuffs.addGlobalXpModifier(0.1f);
+			plData.getSkills().forEach(skill -> skill.applyXpModifier(0.1f));
 		}
 		else {
-			plBuffs.addGlobalXpModifier(0.05f);
+			plData.getSkills().forEach(skill -> skill.applyXpModifier(0.05f));
 		}
 	}
 
 	@Override
-	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EquipmentSlotType slot) {
+	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {
 		if (slot == null) {
-			plBuffs.removeGlobalXpModifier(0.1f);
+			plData.getSkills().forEach(skill -> skill.removeXpModifier(0.1f));
 		}
 		else {
-			plBuffs.removeGlobalXpModifier(0.05f);
+			plData.getSkills().forEach(skill -> skill.removeXpModifier(0.05f));
 		}
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag tooltipFlag) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.utopian_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

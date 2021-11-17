@@ -1,49 +1,42 @@
 package net.tslat.aoa3.item.weapon.maul;
 
 import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.UseAction;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.Direction;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeMod;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.util.Lazy;
+import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.item.LongReachItem;
-import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-public class BaseMaul extends Item implements LongReachItem {
-	private final Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
-	protected final AttributeModifier ATTACK_REACH_MODIFIER = new AttributeModifier(UUID.fromString("678cb085-1367-42c3-8437-d07ade6201d0"), "AoAMaulReach", getReach() - 3.5f, AttributeModifier.Operation.ADDITION);
+public class BaseMaul extends Item {
+	private final Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> attributeModifiers;
+	protected static final UUID KNOCKBACK_MODIFIER_UUID = UUID.fromString("f21dd55d-0e43-4e19-a683-1df45d51c60f");
 
 	protected final float baseDamage;
 	protected final double attackSpeed;
@@ -56,8 +49,7 @@ public class BaseMaul extends Item implements LongReachItem {
 		this.attackSpeed = attackSpeed;
 		this.knockback = knockback;
 
-		attributeModifiers.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackDamage(), AttributeModifier.Operation.ADDITION));
-		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION));
+		attributeModifiers = buildDefaultAttributes();
 	}
 
 	public float getAttackDamage() {
@@ -73,23 +65,25 @@ public class BaseMaul extends Item implements LongReachItem {
 	}
 
 	@Override
-	public float getReach() {
-		return 4F;
-	}
-
-	@Override
 	public UseAction getUseAnimation(ItemStack stack) {
 		return UseAction.BLOCK;
+	}
+
+	protected Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> buildDefaultAttributes() {
+		return Lazy.of(() -> ImmutableSetMultimap.of(
+				Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackDamage(), AttributeModifier.Operation.ADDITION),
+				Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION),
+				Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(1),
+				ForgeMod.REACH_DISTANCE.get(), new AttributeModifier(UUID.fromString("93bb7485-ce86-4e78-ab50-26f53d78ad9d"), "AoAGreatbladeReach", 0.5f, AttributeModifier.Operation.ADDITION)));
+	}
+
+	private AttributeModifier getKnockbackModifier(float attackStrengthMod) {
+		return new AttributeModifier(KNOCKBACK_MODIFIER_UUID, "AoAMaulKnockback", getBaseKnockback() * attackStrengthMod, AttributeModifier.Operation.ADDITION);
 	}
 
 	@Override
 	public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
 		return !player.isCreative();
-	}
-
-	@Override
-	public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
-		return false;
 	}
 
 	@Override
@@ -107,87 +101,56 @@ public class BaseMaul extends Item implements LongReachItem {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
+		float attackStr = player.getAttackStrengthScale(0.0f);
+
+		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(attackStr);
+		EntityUtil.reapplyAttributeModifier(player, Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(attackStr), false);
+
+		return false;
+	}
+
+	@Override
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		float cooldown = VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).getValue();
+
+		doMeleeEffect(stack, target, attacker, cooldown);
+		ItemUtil.damageItem(stack, attacker, Hand.MAIN_HAND);
+		EntityUtil.reapplyAttributeModifier(attacker, Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(1), false);
+
 		return true;
 	}
 
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return enchantment == Enchantments.MOB_LOOTING || super.canApplyAtEnchantingTable(stack, enchantment);
+		return enchantment == Enchantments.MOB_LOOTING || enchantment == Enchantments.KNOCKBACK || super.canApplyAtEnchantingTable(stack, enchantment);
 	}
 
-	@Override
-	public boolean hitEntity(ItemStack stack, Entity target, LivingEntity attacker, float dmg) {
-		if (dmg < 0)
-			dmg = getAttackDamage() + 1;
-
-		if (attacker instanceof PlayerEntity) {
-			if (target instanceof FireballEntity) {
-				target.hurt(DamageSource.playerAttack((PlayerEntity)attacker), dmg);
-			}
-			else {
-				EffectInstance str = attacker.getEffect(Effects.DAMAGE_BOOST);
-				EffectInstance weak = attacker.getEffect(Effects.WEAKNESS);
-				float targetHealth = 0;
-
-				if (target instanceof LivingEntity)
-					targetHealth = ((LivingEntity)target).getHealth();
-
-				if (str != null)
-					dmg += (str.getAmplifier() + 1) * 3;
-
-				if (weak != null)
-					dmg -= (weak.getAmplifier() + 1) * 4;
-
-				float cooldownMultiplier = ((PlayerEntity)attacker).getAttackStrengthScale(0f);
-				final float crushMod = 1 + 0.15f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CRUSH.get(), stack);
-				final float finalDmg = dmg * cooldownMultiplier + 0.1f;
-
-				if (target instanceof EnderDragonEntity ? ((EnderDragonEntity)target).getSubEntities()[0].hurt(DamageSource.playerAttack((PlayerEntity)attacker), finalDmg) : target.hurt(DamageSource.playerAttack((PlayerEntity)attacker), finalDmg)) {
-					if (target instanceof LivingEntity)
-						DamageUtil.doScaledKnockback((LivingEntity)target, attacker, (float)knockback * crushMod * cooldownMultiplier, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
-
-					if (attacker.level instanceof ServerWorld && target instanceof LivingEntity) {
-						int hearts = (int)((targetHealth - ((LivingEntity)target).getHealth()) / 2);
-
-						if (hearts > 0) {
-							((ServerWorld)attacker.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + (double)(target.getBbHeight() * 0.5F), target.getZ(), hearts, 0.1D, 0.0D, 0.1D, 0.2D);
-						}
-					}
-
-					ItemUtil.damageItem(stack, attacker, 1, EquipmentSlotType.MAINHAND);
-					doMeleeEffect(stack, (PlayerEntity)attacker, target, finalDmg, cooldownMultiplier);
-				}
-			}
-		}
-		else if (target instanceof LivingEntity) {
-			((LivingEntity)target).knockback((float)knockback, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
-		}
-
-		return false;
-	}
-
-	protected void doMeleeEffect(ItemStack stack, PlayerEntity attacker, Entity target, float finalDmg, float attackCooldown) {}
+	protected void doMeleeEffect(ItemStack stack, Entity target, LivingEntity attacker, float attackCooldown) {}
 
 	@Override
 	public int getEnchantmentValue() {
 		return 8;
 	}
 
+	@Nullable
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(slot, stack);
-
-		if (slot == EquipmentSlotType.MAINHAND) {
-			attributeModifiers.put(ForgeMod.REACH_DISTANCE.get(), ATTACK_REACH_MODIFIER);
-
-			return attributeModifiers;
-		}
-
-		return multimap;
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+		return new VolatileStackCapabilityProvider();
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.maul.knockback", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(Double.toString((int)(knockback * 700) / 100D))));
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+		if (slot == EquipmentSlotType.MAINHAND) {
+			Multimap<Attribute, AttributeModifier> newMap = HashMultimap.create();
+			ImmutableSetMultimap<Attribute, AttributeModifier> attributes = attributeModifiers.get();
+
+			for (Map.Entry<Attribute, AttributeModifier> entry : attributes.entries()) {
+				newMap.put(entry.getKey(), entry.getValue());
+			}
+
+			return newMap;
+		}
+
+		return super.getAttributeModifiers(slot, stack);
 	}
 }

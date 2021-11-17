@@ -8,7 +8,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
@@ -21,7 +20,6 @@ import net.tslat.aoa3.entity.projectile.HardProjectile;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
 import net.tslat.aoa3.item.weapon.thrown.BaseThrownWeapon;
-import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
@@ -171,7 +169,7 @@ public class BaseBullet extends ThrowableEntity implements HardProjectile {
 
 		bl.onProjectileHit(level, bl, rayTrace, this);
 
-		if (WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && WorldUtil.canBreakBlock(level, resultPos, getOwner(), weapon == null ? null : new ItemStack(weapon))) {
+		if (AoAGameRules.checkDestructiveWeaponPhysics(level)) {
 			float hardness = bl.getDestroySpeed(level, resultPos);
 
 			if (hardness >= 0 && hardness <= 0.3f) {

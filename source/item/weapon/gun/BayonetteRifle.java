@@ -30,6 +30,11 @@ public class BayonetteRifle extends BaseGun {
 	}
 
 	@Override
+	public boolean isFullAutomatic() {
+		return false;
+	}
+
+	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 

@@ -72,10 +72,10 @@ public class BaronBombEntity extends Entity {
 	public void playerTouch(PlayerEntity entity) {
 		if (!level.isClientSide && checkEntityCollision(entity)) {
 			if (ownerUUID == null) {
-				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 			}
 			else {
-				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
+				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2.3f);
 			}
 
 			remove();
@@ -91,10 +91,10 @@ public class BaronBombEntity extends Entity {
 	public void push(Entity entity) {
 		if (!level.isClientSide && checkEntityCollision(entity)) {
 			if (ownerPlayer != null) {
-				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
+				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2.3f);
 			}
 			else {
-				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 			}
 
 			remove();
@@ -108,10 +108,10 @@ public class BaronBombEntity extends Entity {
 
 			if (!source.isExplosion() && source.getEntity() != baroness && source.getEntity() != ownerPlayer) {
 				if (ownerPlayer != null) {
-					WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
+					WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2.3f);
 				}
 				else {
-					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, WorldUtil.checkGameRule(level, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
 				}
 			}
 
@@ -197,7 +197,7 @@ public class BaronBombEntity extends Entity {
 				updateOwner();
 
 				if (ownerPlayer != null) {
-					WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2f);
+					WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2.3f);
 				}
 				else {
 					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 4f);

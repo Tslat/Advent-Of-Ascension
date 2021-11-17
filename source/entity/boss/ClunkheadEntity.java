@@ -23,7 +23,7 @@ import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.CyanShotEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -66,16 +66,23 @@ public class ClunkheadEntity extends AoARangedMob {
 	public void tick() {
 		super.tick();
 
-		if (EntityUtil.getCurrentHealthPercent(this) < 0.5) {
-			stasisCountdown--;
+		if (!level.isClientSide()) {
+			if (EntityUtil.getCurrentHealthPercent(this) < 0.5) {
+				stasisCountdown--;
 
-			if (stasisCountdown < 100) {
-				heal(1);
-				setDeltaMovement(0, 0, 0);
+				if (stasisCountdown < 100) {
+					heal(1);
+					setDeltaMovement(0, 0, 0);
 
-				if (stasisCountdown == 0)
-					stasisCountdown = 500;
+					if (stasisCountdown == 0)
+						stasisCountdown = 500;
+				}
 			}
+
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
 		}
 	}
 
@@ -109,13 +116,6 @@ public class ClunkheadEntity extends AoARangedMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

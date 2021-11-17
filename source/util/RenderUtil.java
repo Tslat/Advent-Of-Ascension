@@ -3,6 +3,8 @@ package net.tslat.aoa3.util;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.*;
@@ -12,13 +14,15 @@ import net.minecraft.client.renderer.texture.AtlasTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.IReorderingProcessor;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.ITextProperties;
 import net.minecraft.util.text.StringTextComponent;
+import net.tslat.aoa3.config.AoAConfig;
 
-public abstract class RenderUtil {
+public final class RenderUtil {
 	public static void renderTexture(MatrixStack matrix, int x, int y, float u, float v, float width, float height) {
 		renderCustomSizedTexture(matrix, x, y, u, v, (int)width, (int)height, width, height);
 	}
@@ -40,6 +44,31 @@ public abstract class RenderUtil {
 		buffer.vertex(matrix, x, y, 0f).uv(u * widthRatio, v * heightRatio).endVertex();
 		buffer.end();
 		WorldVertexBufferUploader.end(buffer);
+	}
+
+	public static void renderFullscreenTexture() {
+		Minecraft mc = Minecraft.getInstance();
+		MainWindow window = mc.getWindow();
+
+		RenderSystem.disableDepthTest();
+		RenderSystem.depthMask(false);
+		RenderSystem.defaultBlendFunc();
+		RenderSystem.color4f(1, 1, 1, 1);
+		RenderSystem.disableAlphaTest();
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder buffer = tessellator.getBuilder();
+
+		buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		buffer.vertex(0, window.getGuiScaledHeight(), -90).uv(0, 1).endVertex();
+		buffer.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90).uv(1, 1).endVertex();
+		buffer.vertex(window.getGuiScaledWidth(), 0, -90).uv(1, 0).endVertex();
+		buffer.vertex(0, 0, -90).uv(0, 0).endVertex();
+		tessellator.end();
+		RenderSystem.depthMask(true);
+		RenderSystem.enableDepthTest();
+		RenderSystem.enableAlphaTest();
+		RenderSystem.color4f(1, 1, 1, 1);
 	}
 
 	public static void drawVerticalGradient(MatrixStack matrixStack, int x, int y, int z, int width, int height, int topColour, int bottomColour) {
@@ -101,7 +130,7 @@ public abstract class RenderUtil {
 		RenderSystem.popAttributes();
 	}
 
-	public static void drawCenteredScaledMessage(MatrixStack matrix, FontRenderer fontRenderer, ITextComponent msg, int x, int y, float scale, int colour, StringRenderType renderType) {
+	public static void drawCenteredScaledMessage(MatrixStack matrix, FontRenderer fontRenderer, ITextComponent msg, float x, float y, float scale, int colour, StringRenderType renderType) {
 		matrix.pushPose();
 		matrix.scale(scale, scale, scale);
 
@@ -126,11 +155,11 @@ public abstract class RenderUtil {
 		matrix.popPose();
 	}
 
-	public static void drawCenteredScaledString(MatrixStack matrix, FontRenderer fontRenderer, String msg, int x, int y, float scale, int colour, StringRenderType renderType) {
+	public static void drawCenteredScaledString(MatrixStack matrix, FontRenderer fontRenderer, String msg, float x, float y, float scale, int colour, StringRenderType renderType) {
 		drawCenteredScaledMessage(matrix, fontRenderer, new StringTextComponent(msg), x, y, scale, colour, renderType);
 	}
 
-	public static void drawScaledMessage(MatrixStack matrix, FontRenderer fontRenderer, ITextComponent msg, int x, int y, float scale, int colour, RenderUtil.StringRenderType renderType) {
+	public static void drawScaledMessage(MatrixStack matrix, FontRenderer fontRenderer, ITextComponent msg, float x, float y, float scale, int colour, RenderUtil.StringRenderType renderType) {
 		float realX = x / scale;
 		float realY = y / scale;
 
@@ -169,7 +198,7 @@ public abstract class RenderUtil {
 		RenderSystem.enableAlphaTest();
 	}
 
-	public static void drawWrappedMessage(MatrixStack matrix, FontRenderer fontRenderer, ITextProperties message, int x, int y, int maxLength, int color) {
+	public static void drawWrappedMessage(MatrixStack matrix, FontRenderer fontRenderer, ITextProperties message, float x, float y, int maxLength, int color) {
 		Matrix4f matrix4f = matrix.last().pose();
 
 		for (IReorderingProcessor processor : fontRenderer.split(message, maxLength)) {
@@ -215,6 +244,61 @@ public abstract class RenderUtil {
 		RenderSystem.disableAlphaTest();
 		RenderSystem.disableRescaleNormal();
 		matrix.popPose();
+	}
+
+	public static int getPotionGuiRenderOffset() {
+		Minecraft mc = Minecraft.getInstance();
+
+		if (mc.player == null || mc.player.getActiveEffects().isEmpty() || AoAConfig.CLIENT.disableHudPotionOffset.get())
+			return 0;
+
+		int effectRenderYOffset = 0;
+
+		for (EffectInstance effect : mc.player.getActiveEffects()) {
+			if (effect.getDuration() > 0 && effect.getEffect().shouldRenderHUD(effect) && effect.isVisible()) {
+				if (!effect.getEffect().isBeneficial()) {
+					effectRenderYOffset = 50;
+					break;
+				}
+				else {
+					effectRenderYOffset = 25;
+				}
+			}
+		}
+
+		return effectRenderYOffset;
+	}
+
+	public static void renderBlockOutline(IVertexBuilder buffer, float red, float green, float blue, float alpha) {
+		buffer.vertex(0, 1, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 1, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 1, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 1, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 1, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 1, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 1, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 1, 0).color(red, green, blue, alpha).endVertex();
+
+		buffer.vertex(1, 0, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 0, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 0, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 0, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 0, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 0, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 0, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 0, 0).color(red, green, blue, alpha).endVertex();
+
+		buffer.vertex(1, 0, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 1, 1).color(red, green, blue, alpha).endVertex();
+
+		buffer.vertex(1, 0, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(1, 1, 0).color(red, green, blue, alpha).endVertex();
+
+		buffer.vertex(0, 0, 1).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 1, 1).color(red, green, blue, alpha).endVertex();
+
+		buffer.vertex(0, 0, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(0, 1, 0).color(red, green, blue, alpha).endVertex();
 	}
 
 	public enum StringRenderType {

@@ -9,13 +9,14 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.entity.boss.CorallusEntity;
 import net.tslat.aoa3.entity.misc.BossItemEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class AmphibiyteLung extends BossSpawningItem {
 	public AmphibiyteLung() {
@@ -47,7 +48,7 @@ public class AmphibiyteLung extends BossSpawningItem {
 			return false;
 
 		if (!checkSpawnArea(world, new AxisAlignedBB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 3d, posZ + 0.5d))) {
-			PlayerUtil.notifyPlayer(player, "message.feedback.spawnBoss.noSpace");
+			PlayerUtil.notifyPlayer(player, new TranslationTextComponent("message.feedback.spawnBoss.noSpace"));
 
 			return false;
 		}

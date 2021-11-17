@@ -19,12 +19,11 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.ai.mob.FlyingRangedAttackGoal;
 import net.tslat.aoa3.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
-import net.tslat.aoa3.entity.minion.AoAMinion;
 import net.tslat.aoa3.entity.misc.GyrocopterEntity;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.BulletShotEntity;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -51,8 +50,7 @@ public class GyroEntity extends AoAFlyingRangedMob {
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
 		goalSelector.addGoal(2, new LookRandomlyGoal(this));
 		goalSelector.addGoal(3, new FlyingRangedAttackGoal(this, 10, 20));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, 10, true, true, entity -> entity instanceof AoAMinion && ((AoAMinion)entity).isTame()));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
 	}
 
 	@Nullable
@@ -90,6 +88,18 @@ public class GyroEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
+	}
+
+	@Override
 	public void die(DamageSource cause) {
 		super.die(cause);
 
@@ -119,13 +129,6 @@ public class GyroEntity extends AoAFlyingRangedMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

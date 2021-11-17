@@ -19,18 +19,15 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.misc.pixon.PixonEntity;
 import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.constant.Deities;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -95,9 +92,6 @@ public class InfusionBowl extends Item {
 
 			if (!harvestStacks.isEmpty())
 				ItemUtil.givePlayerMultipleItems(player, harvestStacks);
-
-			if (WorldUtil.isWorld(pixon.level, AoADimensions.OVERWORLD.key) && pixon.level.isDay())
-				plData.stats().addTribute(Deities.LUXON, 4 * harvestCount);
 
 			if (pixon.isAlive()) {
 				pixon.nextHarvestTick = pixon.level.getGameTime() + 8 + pixon.getRandom().nextInt(32);

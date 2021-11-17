@@ -2,7 +2,7 @@ package net.tslat.aoa3.capabilities.adventplayer;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 public class AdventPlayerCapability implements AdventPlayerCapabilityHandles {
 	private final PlayerDataManager playerDataManager;
@@ -22,7 +22,7 @@ public class AdventPlayerCapability implements AdventPlayerCapabilityHandles {
 
 	@Override
 	public CompoundNBT serializeNBT() {
-		return playerDataManager.saveToNBT();
+		return playerDataManager.saveToNBT(false);
 	}
 
 	@Override

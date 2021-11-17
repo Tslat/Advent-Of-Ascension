@@ -18,7 +18,6 @@ import net.tslat.aoa3.entity.ai.movehelper.UnderwaterWalkingMovementController;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -96,7 +95,4 @@ public class PincherEntity extends AoAWaterMeleeMob {
 	public CreatureAttribute getMobType() {
 		return CreatureAttribute.ARTHROPOD;
 	}
-
-	@Override
-	public void registerControllers(AnimationData animationData) {}
 }

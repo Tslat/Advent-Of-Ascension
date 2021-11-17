@@ -53,21 +53,6 @@
           "type": "minecraft:item",
           "weight": 10,
           "name": "aoa3:bubble_berry_seeds"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "aoa3:corby_slab"
         }
       ]
     },

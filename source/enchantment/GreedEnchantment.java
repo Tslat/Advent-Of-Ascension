@@ -19,15 +19,15 @@ public class GreedEnchantment extends Enchantment {
 		return true;
 	}
 
+	@Override
+	public boolean isTreasureOnly() {
+		return true;
+	}
+
 	public boolean canEnchant(ItemStack stack) {
 		Item item = stack.getItem();
 
 		return item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff;
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack) {
-		return super.canApplyAtEnchantingTable(stack);
 	}
 
 	@Override

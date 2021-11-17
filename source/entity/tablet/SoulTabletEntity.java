@@ -20,10 +20,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.item.tablet.TabletItem;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -164,8 +161,8 @@ public abstract class SoulTabletEntity extends Entity {
 	private boolean testSoulSupply() {
 		if (owner == null)
 			return false;
-
-		return PlayerUtil.consumeResource(owner, Resources.SOUL, getRelevantItem().getSoulDrain() * 5 * (PlayerUtil.isWearingFullSet(owner, AdventArmour.Type.ANIMA) ? 0.5f : 1f), false);
+		return true; // TODO
+		//return PlayerUtil.consumeResource(owner, AoAResource.SOUL, getRelevantItem().getSoulDrain() * 5 * (PlayerUtil.isWearingFullSet(owner, AdventArmour.Type.ANIMA) ? 0.5f : 1f), false);
 	}
 
 	public boolean isActive() {

@@ -3,7 +3,7 @@ package net.tslat.aoa3.util;
 import javax.annotation.Nonnull;
 import java.util.regex.Pattern;
 
-public abstract class StringUtil {
+public final class StringUtil {
 	private static final Pattern FORMATTING_CODE_PATTERN = Pattern.compile("(?i)\\u00A7[0-9A-FK-OR]");
 
 	public static String toTitleCase(@Nonnull String str) {

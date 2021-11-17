@@ -10,9 +10,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -46,7 +46,7 @@ public class SoulvyreEntity extends AoAMeleeMob {
 
     @Override
     protected void onAttack(Entity target) {
-        if (target instanceof ServerPlayerEntity && PlayerUtil.consumeResource((ServerPlayerEntity)target, Resources.SOUL, 10, true))
+        if (target instanceof ServerPlayerEntity && PlayerUtil.consumeResource((ServerPlayerEntity)target, AoAResources.SPIRIT.get(), 10, true))
             heal(10);
     }
 }

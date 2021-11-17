@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "aoa3:block/floracles_crop_stage5"
+  }
+}

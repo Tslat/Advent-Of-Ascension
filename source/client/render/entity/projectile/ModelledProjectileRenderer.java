@@ -35,7 +35,7 @@ public class ModelledProjectileRenderer<T extends Entity> extends EntityRenderer
 		float pitch = MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot);
 
 		model.prepareMobModel(entity, 0, 0, partialTicks);
-		model.setupAnim(entity, 0, 0, entity.tickCount, 0, pitch);
+		model.setupAnim(entity, 0, partialTicks, entity.tickCount, 0, pitch);
 		matrix.translate(0.0D, -1.3f, 0.0D);
 
 		boolean visible = !entity.isInvisible();

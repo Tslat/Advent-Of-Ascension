@@ -25,7 +25,7 @@ import net.tslat.aoa3.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -82,6 +82,18 @@ public class SkeletronEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
+	}
+
+	@Override
 	public void die(DamageSource cause) {
 		super.die(cause);
 
@@ -121,13 +133,6 @@ public class SkeletronEntity extends AoAMeleeMob {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

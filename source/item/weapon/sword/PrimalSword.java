@@ -15,7 +15,7 @@ import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityHandles;
 import net.tslat.aoa3.capabilities.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.ConcurrentModificationException;

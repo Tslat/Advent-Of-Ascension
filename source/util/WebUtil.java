@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-public abstract class WebUtil {
+public final class WebUtil {
 	private static boolean isUpdateAvailable = false;
 	private static String latestVersion = AdventOfAscension.VERSION;
 

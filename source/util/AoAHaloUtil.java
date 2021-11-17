@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Level;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public class AoAHaloUtil {
+public final class AoAHaloUtil {
 	private static final HashMap<UUID, PlayerHaloContainer> playerHalos = new HashMap<UUID, PlayerHaloContainer>();
 	private static final HashSet<UUID> renderCheckedPlayers = new HashSet<UUID>();
 

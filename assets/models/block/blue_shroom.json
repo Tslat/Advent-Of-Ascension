@@ -1,0 +1,7 @@
+{
+  "parent": "aoa3:block/shroom_block",
+  "textures": {
+    "texture": "aoa3:block/blue_shroom",
+    "particle": "aoa3:block/blue_shroom"
+  }
+}

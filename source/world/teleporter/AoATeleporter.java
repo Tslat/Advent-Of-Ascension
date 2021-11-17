@@ -16,11 +16,12 @@ import net.minecraftforge.common.util.ITeleporter;
 import net.tslat.aoa3.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.mixin.common.invoker.AccessibleServerPlayerEntity;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.world.teleporter.specific.NowhereTeleporter;
 
 import java.util.HashMap;
@@ -132,7 +133,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		toWorld.addDuringPortalTeleport(entity);
 		entity.moveTo(originPos.getX(), originPos.getY(), originPos.getZ());
 		fromWorld.getProfiler().pop();
-		entity.triggerDimensionChangeTriggers(fromWorld);
+		((AccessibleServerPlayerEntity)entity).triggerDimensionChangeListeners(fromWorld);
 
 		return entity;
 	}

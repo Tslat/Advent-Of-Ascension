@@ -8,8 +8,13 @@ public final class ServerConfig {
 	public final ForgeConfigSpec.BooleanValue easyCorruptedTravellers;
 	public final ForgeConfigSpec.BooleanValue allowNonPlayerPortalTravel;
 	public final ForgeConfigSpec.DoubleValue globalXpModifier;
-	public final ForgeConfigSpec.IntValue maxMinions;
 	public final ForgeConfigSpec.BooleanValue saveLootFromExplosions;
+
+	public final ForgeConfigSpec.BooleanValue skillsLeaderboardEnabled;
+	public final ForgeConfigSpec.IntValue maxLeaderboardThreads;
+	public final ForgeConfigSpec.BooleanValue dontCacheDatabase;
+	public final ForgeConfigSpec.ConfigValue<String> databaseUsername;
+	public final ForgeConfigSpec.ConfigValue<String> databasePassword;
 
 	protected ServerConfig(ForgeConfigSpec.Builder configBuilder) {
 		configBuilder.comment("AoA server-side configuration options").push("General Settings");
@@ -41,15 +46,38 @@ public final class ServerConfig {
 				.translation("config.aoa3.server.globalXpModifier")
 				.defineInRange("globalXpModifier", 1d, 0d, 1000d);
 
-		maxMinions = configBuilder
-				.comment("Configure the maximum amount of minions a player can have at a given time")
-				.translation("config.aoa3.server.maxMinions")
-				.defineInRange("maxMinions", 10, 1, 200);
-
 		saveLootFromExplosions = configBuilder
 				.comment("Set to false to stop AoA saving loot-drops from explosions.")
 				.translation("config.aoa3.server.saveLootFromExplosions")
 				.define("saveLootFromExplosions", true);
+
+		configBuilder.pop();
+		configBuilder.comment("AoA Leaderboard configuration options").push("Leaderboard Settings");
+
+		skillsLeaderboardEnabled = configBuilder
+				.comment("Set to false to disable the skills leaderboard entirely.", "NOTE: Disabling the leaderboard will prevent it from updating its data, and game data changes while the leaderboard is disabled will not be tracked if re-enabled.")
+				.translation("config.aoa3.server.skillsLeaderboardEnabled")
+				.define("skillsLeaderboardEnabled", true);
+
+		maxLeaderboardThreads = configBuilder
+				.comment("The amount of threads & connections to the skills database AoA will try to make. Less threads may produce a negligible memory usage improvement, and more threads may improve database performance on larger servers.", "You shouldn't need to change this unless you know what you're doing.")
+				.translation("config.aoa3.server.maxLeaderboardThreads")
+				.defineInRange("maxLeaderboardThreads", 4, 1, 100);
+
+		dontCacheDatabase = configBuilder
+				.comment("Set this to false to disable in-memory databases for leaderboards. This can save on RAM usage, but may reduce performance of the leaderboard's functionality and increase disk usage.")
+				.translation("config.aoa3.server.dontCacheDatabase")
+				.define("dontCacheDatabase", false);
+
+		databaseUsername = configBuilder
+				.comment("The username to use for leaderboard database connection. You shouldn't need to change this.")
+				.translation("config.aoa3.server.databaseUsername")
+				.define("databaseUsername", "User");
+
+		databasePassword = configBuilder
+				.comment("The password to use along with the databaseUsername for leaderboard database connection. You shouldn't need to change this.", "NOTE: If setting your own password, be aware this will be stored in easibly accessible plaintext. Use a throwaway password.")
+				.translation("config.aoa3.server.databasePassword")
+				.define("databasePassword", "Password");
 
 		configBuilder.pop();
 	}

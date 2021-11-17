@@ -13,7 +13,7 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -44,7 +44,7 @@ public class BattlebornArmour extends AdventArmour {
 
 			plData.equipment().setCooldown("battleborn", newAmount);
 			EntityUtil.removeAttributeModifier(plData.player(), Attributes.ATTACK_SPEED, BATTLEBORN_ARMOUR_BUFF);
-			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, buff(Math.min(0.65, newAmount / 240d)));
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, buff(Math.min(0.65, newAmount / 240d)), false);
 		}
 	}
 
@@ -57,7 +57,7 @@ public class BattlebornArmour extends AdventArmour {
 		}
 		else if (counter > 0 && plData.player().level.getGameTime() % 10 == 0) {
 			EntityUtil.removeAttributeModifier(plData.player(), Attributes.ATTACK_SPEED, BATTLEBORN_ARMOUR_BUFF);
-			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, buff(Math.min(0.65, counter / 240d)));
+			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, buff(Math.min(0.65, counter / 240d)), false);
 		}
 	}
 

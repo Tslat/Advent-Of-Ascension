@@ -9,6 +9,7 @@ import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.INameable;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraftforge.common.util.Constants;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoATileEntities;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -80,7 +81,7 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
 		super.handleUpdateTag(state, tag);
 
-		if (tag.contains("EntityID", 8)) {
+		if (tag.contains("EntityID", Constants.NBT.TAG_STRING)) {
 			entityId = tag.getString("EntityID");
 			isOriginal = tag.getBoolean("OriginalTrophy");
 		}

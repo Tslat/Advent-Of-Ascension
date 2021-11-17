@@ -3,7 +3,7 @@ package net.tslat.aoa3.event.dimension;
 import net.minecraft.entity.player.PlayerEntity;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class LelyetiaEvents {
 	public static void doPlayerTick(PlayerEntity pl) {

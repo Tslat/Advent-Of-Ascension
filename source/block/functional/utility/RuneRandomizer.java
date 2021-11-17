@@ -22,9 +22,8 @@ import net.tslat.aoa3.item.armour.AdventArmour;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LootUtil;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class RuneRandomizer extends Block {
 	public RuneRandomizer() {
@@ -39,11 +38,11 @@ public class RuneRandomizer extends Block {
 			if (player instanceof ServerPlayerEntity) {
 				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 
-				if (!player.isCreative() && plData.stats().getLevel(Skills.RUNATION) < 20) {
+				/*if (!player.isCreative() && plData.stats().getLevel(Skills.RUNATION) < 20) {
 					PlayerUtil.notifyPlayerOfInsufficientLevel(plData.player(), Skills.RUNATION, 20);
 
 					return ActionResultType.FAIL;
-				}
+				}*/ // TODO
 
 				if (!player.isCreative())
 					heldItem.shrink(1);
@@ -53,7 +52,7 @@ public class RuneRandomizer extends Block {
 				if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.RUNATION)
 					ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot((ServerWorld)world, new ResourceLocation(AdventOfAscension.MOD_ID, "misc/rune_randomizer"), LootUtil.getGiftContext((ServerWorld)world, BlockUtil.posToVec(pos), player)));
 
-				plData.stats().addXp(Skills.RUNATION, 5, false, false);
+				//plData.stats().addXp(Skills.RUNATION, 5, false, false);
 				player.level.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_RUNE_RANDOMIZER_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
 			}
 

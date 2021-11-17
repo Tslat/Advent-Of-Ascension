@@ -19,11 +19,6 @@
       },
       "structures": {
         "structures": {
-          "aoa3:kinetic_rune_shrine": {
-            "spacing": 16,
-            "separation": 8,
-            "salt": 197900490
-          },
           "aoa3:garden_castle": {
             "spacing": 32,
             "separation": 12,

@@ -176,10 +176,10 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 		Vector3d motion = getDeltaMovement();
 		Vector3d position = new Vector3d(getX() - motion.x() * 0.5f, getY() - motion.y() * 0.5f, getZ() - motion.z() * 0.5f);
 		Vector3d velocityAdjustedPosition = new Vector3d(getX() + motion.x(), getY() + motion.y(), getZ() + motion.z());
-		RayTraceResult raytraceresult = level.clip(new RayTraceContext(position, velocityAdjustedPosition, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, null));
+		RayTraceResult collisionTrace = level.clip(new RayTraceContext(position, velocityAdjustedPosition, RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.ANY, null));
 
-		if (raytraceresult.getType() != RayTraceResult.Type.MISS) {
-			velocityAdjustedPosition = new Vector3d(raytraceresult.getLocation().x, raytraceresult.getLocation().y, raytraceresult.getLocation().z);
+		if (collisionTrace.getType() != RayTraceResult.Type.MISS) {
+			velocityAdjustedPosition = new Vector3d(collisionTrace.getLocation().x, collisionTrace.getLocation().y, collisionTrace.getLocation().z);
 		}
 		else {
 			velocityAdjustedPosition = new Vector3d(getX() + motion.x(), getY() + motion.y(), getZ() + motion.z());
@@ -189,10 +189,10 @@ public abstract class BaseEnergyShot extends ThrowableEntity {
 		EntityRayTraceResult entityTrace = ProjectileHelper.getEntityHitResult(level, this, position, velocityAdjustedPosition, getBoundingBox().expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.5D), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter);
 
 		if (entityTrace != null)
-			raytraceresult = entityTrace;
+			collisionTrace = entityTrace;
 
-		if (raytraceresult.getType() != RayTraceResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, raytraceresult))
-			onHit(raytraceresult);
+		if (collisionTrace.getType() != RayTraceResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, collisionTrace))
+			onHit(collisionTrace);
 
 		xOld = getX();
 		yOld = getY();

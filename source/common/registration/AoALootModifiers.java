@@ -16,8 +16,7 @@ public class AoALootModifiers {
 	public static final RegistryObject<GlobalLootModifierSerializer<RollExtraTablesLootModifier>> ROLL_EXTRA_TABLES = registerSerializer("roll_extra_tables", RollExtraTablesLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<InjectOrReplaceLootModifier>> INJECT_OR_REPLACE = registerSerializer("inject_or_replace", InjectOrReplaceLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<LootModifyingItemLootModifier>> LOOT_MODIFYING_ITEM = registerSerializer("loot_modifying_items", LootModifyingItemLootModifier.Serializer::new);
-	public static final RegistryObject<GlobalLootModifierSerializer<ForagingLootModifier>> FORAGING = registerSerializer("foraging", ForagingLootModifier.Serializer::new);
-	public static final RegistryObject<GlobalLootModifierSerializer<LoggingLootModifier>> LOGGING = registerSerializer("logging", LoggingLootModifier.Serializer::new);
+	public static final RegistryObject<GlobalLootModifierSerializer<PlayerEventListenerLootModifier>> PLAYER_EVENT_LISTENER = registerSerializer("player_event_listener", PlayerEventListenerLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<HavenLootModifier>> HAVEN = registerSerializer("haven", HavenLootModifier.Serializer::new);
 
 	private static <T extends LootModifier> RegistryObject<GlobalLootModifierSerializer<T>> registerSerializer(String id, Supplier<GlobalLootModifierSerializer<T>> serializer) {

@@ -16,4 +16,9 @@ public class Stampede extends BaseGun {
 	public SoundEvent getFiringSound() {
 		return AoASounds.ITEM_STAMPEDE_FIRE.get();
 	}
+
+	@Override
+	public boolean isFullAutomatic() {
+		return false;
+	}
 }

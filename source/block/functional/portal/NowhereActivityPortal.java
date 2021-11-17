@@ -5,16 +5,23 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.util.PlayerUtil;
 
+import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.Random;
+import java.util.function.Consumer;
 
 public class NowhereActivityPortal extends PortalBlock {
 	private static final EnumProperty<Activity> ACTIVITY = EnumProperty.create("activity", Activity.class);
@@ -27,7 +34,7 @@ public class NowhereActivityPortal extends PortalBlock {
 
 	@Override
 	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (!world.isClientSide() && entity.getVehicle() == null && !entity.isVehicle() && entity instanceof PlayerEntity) {
+		if (entity.getVehicle() == null && !entity.isVehicle() && entity instanceof ServerPlayerEntity) {
 			if (entity.portalTime > 0) {
 				entity.portalTime = 30;
 
@@ -35,9 +42,11 @@ public class NowhereActivityPortal extends PortalBlock {
 			}
 
 			entity.portalTime = 100;
-			BlockPos teleportPos = state.getValue(ACTIVITY).teleportPos;
+			Activity activity = state.getValue(ACTIVITY);
+			BlockPos teleportPos = activity.teleportPos;
 
 			entity.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
+			activity.onUse((ServerPlayerEntity)entity);
 		}
 	}
 
@@ -94,21 +103,42 @@ public class NowhereActivityPortal extends PortalBlock {
 	}
 
 	public enum Activity implements IStringSerializable {
-		PARKOUR(0, 202, 0),
+		PARKOUR(0, 202, 0, pl -> {
+			PlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
+
+			for (NonNullList<ItemStack> inv : pl.inventory.compartments) {
+				plData.storeItems(inv);
+			}
+
+			pl.inventory.clearContent();
+		}),
 		BOSSES(0, 202, 0),
 		DUNGEON(0, 202, 0),
 		UTILITY(0, 202, 0),
-		RETURN(0, 202, 0);
+		RETURN(0, 202, 0, pl -> {
+			PlayerUtil.getAdventPlayer(pl).returnItemStorage();
+		});
 
 		private final BlockPos teleportPos;
+		private final Consumer<ServerPlayerEntity> useFunction;
+
+		Activity(int x, int y, int z, @Nullable Consumer<ServerPlayerEntity> useFunction) {
+			this.teleportPos = new BlockPos(x, y, z);
+			this.useFunction = useFunction;
+		}
 
 		Activity(int x, int y, int z) {
-			this.teleportPos = new BlockPos(x, y, z);
+			this(x, y, z, null);
 		}
 
 		@Override
 		public String getSerializedName() {
 			return toString().toLowerCase(Locale.ROOT);
+		}
+
+		public void onUse(ServerPlayerEntity pl) {
+			if (useFunction != null)
+				useFunction.accept(pl);
 		}
 	}
 }

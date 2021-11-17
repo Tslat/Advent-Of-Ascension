@@ -3,6 +3,7 @@ package net.tslat.aoa3.item.weapon.staff;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
@@ -11,7 +12,6 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.DestructionShotEntity;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -31,7 +31,7 @@ public class DestructionStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.POWER_RUNE.get(), 2);
 		runes.put(AoAItems.ENERGY_RUNE.get(), 2);
 	}
@@ -43,7 +43,7 @@ public class DestructionStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 2.6f);
+		WorldUtil.createExplosion(shooter, shot.level, shot, 2.8f);
 
 		return true;
 	}

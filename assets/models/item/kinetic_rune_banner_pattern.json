@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aoa3:item/kinetic_rune_banner_pattern"
+  }
+}

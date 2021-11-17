@@ -1,0 +1,76 @@
+{
+  "parent": "aoa3:item/knights_guard",
+  "display": {
+    "firstperson_righthand": {
+      "rotation": [
+        30,
+        326,
+        0
+      ],
+      "translation": [
+        -0.3,
+        -0.7,
+        0
+      ],
+      "scale": [
+        1.75,
+        1.75,
+        1.75
+      ]
+    },
+    "firstperson_lefthand": {
+      "rotation": [
+        30,
+        144,
+        0
+      ],
+      "translation": [
+        1.2,
+        -0.7,
+        0
+      ],
+      "scale": [
+        1.75,
+        1.75,
+        1.75
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        -65,
+        -90,
+        -125
+      ],
+      "translation": [
+        0,
+        15,
+        6
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        180,
+        90,
+        -125
+      ],
+      "translation": [
+        0,
+        15,
+        5
+      ],
+      "scale": [
+        2,
+        2,
+        2
+      ]
+    }
+  },
+  "textures": {
+    "layer0": "aoa3:item/knights_guard_blocking"
+  }
+}

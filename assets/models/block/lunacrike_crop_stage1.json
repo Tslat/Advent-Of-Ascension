@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "aoa3:block/lunacrike_crop_stage1"
+  }
+}

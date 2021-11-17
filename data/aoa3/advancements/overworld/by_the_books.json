@@ -13,7 +13,7 @@
       "translate": "advancements.aoa3.overworld.by_the_books.description"
     },
     "frame": "challenge",
-    "show_toast": true,
+    "show_toast": false,
     "announce_to_chat": false,
     "hidden": false
   },

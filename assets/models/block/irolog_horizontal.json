@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "side": "aoa3:block/irolog",
+    "end": "aoa3:block/irolog_top"
+  }
+}

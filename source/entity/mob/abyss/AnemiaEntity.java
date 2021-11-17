@@ -9,12 +9,12 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectile.mob.AnemiaBombEntity;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -60,7 +60,7 @@ public class AnemiaEntity extends AoAFlyingRangedMob {
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
 		if (target instanceof ServerPlayerEntity)
-			PlayerUtil.consumeResource((ServerPlayerEntity)target, Resources.ENERGY, 50f, true);
+			PlayerUtil.consumeResource((ServerPlayerEntity)target, AoAResources.SPIRIT.get(), 50f, true);
 
 		WorldUtil.createExplosion(this, level, projectile, 2.0f);
 	}

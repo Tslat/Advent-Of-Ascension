@@ -11,17 +11,17 @@ public class MuncherModel extends AnimatedGeoModel<MuncherEntity> {
 	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/mobs/lborean/muncher.animation.json");
 
 	@Override
-	public ResourceLocation getModelLocation(MuncherEntity anglerEntity) {
+	public ResourceLocation getModelLocation(MuncherEntity muncher) {
 		return MODEL;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(MuncherEntity anglerEntity) {
+	public ResourceLocation getTextureLocation(MuncherEntity muncher) {
 		return TEXTURE;
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(MuncherEntity anglerEntity) {
+	public ResourceLocation getAnimationFileLocation(MuncherEntity muncher) {
 		return ANIMATIONS;
 	}
 }

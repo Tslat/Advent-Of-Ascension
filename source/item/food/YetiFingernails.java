@@ -8,9 +8,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Rarity;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,7 +29,7 @@ public class YetiFingernails extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, World worldIn, LivingEntity entity) {
 		if (entity instanceof ServerPlayerEntity)
-			PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, "message.feedback.yetiFingernails.eat");
+			PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, new TranslationTextComponent("message.feedback.yetiFingernails.eat"));
 
 		return super.finishUsingItem(stack, worldIn, entity);
 	}

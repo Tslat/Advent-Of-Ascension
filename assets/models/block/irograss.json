@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "particle": "aoa3:block/irograss_side",
+    "side": "aoa3:block/irograss_side",
+    "bottom": "aoa3:block/irostone",
+    "top": "aoa3:block/irograss_top"
+  }
+}

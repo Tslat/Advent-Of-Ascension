@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "aoa3:item/vox_ponds_realmstone"
+  }
+}

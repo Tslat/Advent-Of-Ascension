@@ -6,18 +6,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.util.constant.Deities;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.resource.AoAResource;
+import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.PlayerUtil;
 import org.apache.logging.log4j.Level;
 import org.openzen.zencode.java.ZenCodeType;
 
 import javax.annotation.Nullable;
-import java.util.Locale;
 import java.util.UUID;
 
 @ZenCodeType.Name("mods.aoa3.PlayerData")
@@ -39,189 +40,131 @@ public class CTPlayerData {
 	}
 
 	@ZenCodeType.Method
-	public int getLevel(String skillName, @ZenCodeType.OptionalBoolean boolean ignoreLevelCap) {
+	public int getLevel(String skillId, @ZenCodeType.OptionalBoolean boolean ignoreLevelCap) {
 		if (!validatePlayerData())
 			return 0;
 
-		try {
-			Skills skill = Skills.valueOf(skillName);
+		AoASkill skill = AoASkills.getSkill(new ResourceLocation(skillId));
 
-			return ignoreLevelCap ? plData.stats().getLevelForDisplay(skill) : plData.stats().getLevel(skill);
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid skill name: " + skillName + " for CraftTweaker method.", ex);
+		if (skill == null) {
+			Logging.logMessage(Level.WARN, "Invalid skill name: " + skillId + " for CraftTweaker method.");
 
 			return -1;
 		}
+
+		return plData.getSkill(skill).getLevel(ignoreLevelCap);
 	}
 
 	@ZenCodeType.Method
-	public float getXp(String skillName) {
+	public float getXp(String skillId) {
 		if (!validatePlayerData())
 			return 0;
 
-		try {
-			Skills skill = Skills.valueOf(skillName);
+		AoASkill skill = AoASkills.getSkill(new ResourceLocation(skillId));
 
-			return plData.stats().getExp(skill);
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid skill name: " + skillName + " for CraftTweaker method.", ex);
+		if (skill == null) {
+			Logging.logMessage(Level.WARN, "Invalid skill name: " + skillId + " for CraftTweaker method.");
 
 			return -1;
 		}
+
+		return plData.getSkill(skill).getXp();
 	}
 
 	@ZenCodeType.Method
-	public void grantXp(String skillName, float xpAmount) {
+	public void grantXp(String skillId, float xpAmount) {
 		if (!validatePlayerData())
 			return;
 
-		try {
-			Skills skill = Skills.valueOf(skillName);
+		AoASkill skill = AoASkills.getSkill(new ResourceLocation(skillId));
 
-			plData.stats().addXp(skill, xpAmount, false, false);
+		if (skill == null) {
+			Logging.logMessage(Level.WARN, "Invalid skill name: " + skillId + " for CraftTweaker method.");
+
+			return;
 		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid skill name: " + skillName + " for CraftTweaker method.", ex);
-		}
+
+		plData.getSkill(skill).adjustXp(xpAmount, false, false);
 	}
 
 	@ZenCodeType.Method
-	public float getResourceValue(String resourceName) {
+	public float getResourceValue(String resourceId) {
 		if (!validatePlayerData())
 			return -1;
 
-		try {
-			Resources resource = Resources.valueOf(resourceName.toUpperCase(Locale.ROOT).replace(" ", "_"));
+		AoAResource resource = AoAResources.getResource(new ResourceLocation(resourceId));
 
-			return plData.stats().getResourceValue(resource);
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid resource name: " + resourceName + " for CraftTweaker method.", ex);
+		if (resource == null) {
+			Logging.logMessage(Level.ERROR, "Invalid resource name: " + resourceId + " for CraftTweaker method.");
 
 			return -1;
 		}
+
+		return plData.getResource(resource).getCurrentValue();
 	}
 
 	@ZenCodeType.Method
-	public void grantResource(String resourceName, float amount) {
+	public void grantResource(String resourceId, float amount) {
 		if (!validatePlayerData())
 			return;
 
-		try {
-			Resources resource = Resources.valueOf(resourceName.toUpperCase(Locale.ROOT).replace(" ", "_"));
+		AoAResource resource = AoAResources.getResource(new ResourceLocation(resourceId));
 
-			plData.stats().regenResource(resource, amount);
+		if (resource == null) {
+			Logging.logMessage(Level.ERROR, "Invalid resource name: " + resourceId + " for CraftTweaker method.");
+
+			return;
 		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid resource name: " + resourceName + " for CraftTweaker method.", ex);
-		}
+
+		plData.getResource(resource).addValue(amount);
 	}
 
 	@ZenCodeType.Method
-	public int getTribute(String deityName) {
-		if (!validatePlayerData())
-			return -1;
-
-		try {
-			Deities deity = Deities.valueOf(deityName.toUpperCase(Locale.ROOT).replace(" ", "_"));
-
-			return plData.stats().getTribute(deity);
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid deity name: " + deityName + " for CraftTweaker method.", ex);
-
-			return -1;
-		}
-	}
-
-	@ZenCodeType.Method
-	public boolean consumeResource(String resourceName, float amount, boolean forceConsume) {
+	public boolean consumeResource(String resourceId, float amount, boolean forceConsume) {
 		if (!validatePlayerData())
 			return false;
-		try {
-			Resources resource = Resources.valueOf(resourceName.toUpperCase(Locale.ROOT).replace(" ", "_"));
 
-			return plData.stats().consumeResource(resource, amount, forceConsume);
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid resource name: " + resourceName + " for CraftTweaker method.", ex);
+		AoAResource resource = AoAResources.getResource(new ResourceLocation(resourceId));
+
+		if (resource == null) {
+			Logging.logMessage(Level.ERROR, "Invalid resource name: " + resourceId + " for CraftTweaker method.");
 
 			return false;
 		}
+
+		return plData.getResource(resource).consume(amount, forceConsume);
 	}
 
 	@ZenCodeType.Method
-	public void grantTribute(String deityName, int amount) {
-		if (!validatePlayerData())
-			return;
-		try {
-			Deities deity = Deities.valueOf(deityName.toUpperCase(Locale.ROOT).replace(" ", "_"));
-
-			plData.stats().addTribute(deity, amount);
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid deity name: " + deityName + " for CraftTweaker method.", ex);
-		}
-	}
-
-	@ZenCodeType.Method
-	public void resetTributes() {
-		plData.stats().resetAllTribute();
-	}
-
-	@ZenCodeType.Method
-	public float getGlobalXpModifier() {
-		if (!validatePlayerData())
-			return -1;
-
-		return plData.buffs().getGlobalXpModifier();
-	}
-
-	@ZenCodeType.Method
-	public void addGlobalXpModifier(float amount) {
+	public void addSkillXpModifier(String skillId, float amount) {
 		if (!validatePlayerData())
 			return;
 
-		plData.buffs().addGlobalXpModifier(amount);
+		AoASkill skill = AoASkills.getSkill(new ResourceLocation(skillId));
+
+		if (skill == null) {
+			Logging.logMessage(Level.ERROR, "Invalid skill ID: " + skillId + " for CraftTweaker method.");
+
+			return;
+		}
+
+		plData.getSkill(skill).applyXpModifier(amount);
 	}
 
 	@ZenCodeType.Method
-	public void removeGlobalXpModifier(float amount) {
+	public void removeSkillXpModifier(String skillId, float amount) {
 		if (!validatePlayerData())
 			return;
 
-		plData.buffs().removeGlobalXpModifier(amount);
-	}
+		AoASkill skill = AoASkills.getSkill(new ResourceLocation(skillId));
 
-	@ZenCodeType.Method
-	public void addSkillXpModifier(String skillName, float amount) {
-		if (!validatePlayerData())
+		if (skill == null) {
+			Logging.logMessage(Level.ERROR, "Invalid skill ID: " + skillId + " for CraftTweaker method.");
+
 			return;
-		try {
-			Skills skill = Skills.valueOf(skillName.toUpperCase(Locale.ROOT).replace(" ", "_"));
-
-			plData.buffs().addXpModifier(skill, amount);
 		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid skill name: " + skillName + " for CraftTweaker method.", ex);
-		}
-	}
 
-	@ZenCodeType.Method
-	public void removeSkillXpModifier(String skillName, float amount) {
-		if (!validatePlayerData())
-			return;
-
-		try {
-			Skills skill = Skills.valueOf(skillName.toUpperCase(Locale.ROOT).replace(" ", "_"));
-
-			plData.buffs().removeXpModifier(skill, amount);
-		}
-		catch (IllegalArgumentException ex) {
-			Logging.logMessage(Level.ERROR, "Invalid skill name: " + skillName + " for CraftTweaker method.", ex);
-		}
+		plData.getSkill(skill).removeXpModifier(amount);
 	}
 
 	@ZenCodeType.Getter

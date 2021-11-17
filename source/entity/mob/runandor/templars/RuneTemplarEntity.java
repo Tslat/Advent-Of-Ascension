@@ -3,6 +3,7 @@ package net.tslat.aoa3.entity.mob.runandor.templars;
 import net.minecraft.entity.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootParameterSets;
 import net.minecraft.loot.LootTable;
@@ -17,7 +18,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LootUtil;
 
@@ -103,7 +103,7 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 
 	protected abstract RunicLifeformEntity getLifeForm();
 
-	protected abstract RuneItem getActivationRune();
+	protected abstract Item getActivationRune();
 
 	@Override
 	public void readAdditionalSaveData(CompoundNBT compound) {
@@ -118,13 +118,6 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override
@@ -168,30 +161,37 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide && !isDisabled()) {
-			setHealth(getHealth() - 0.25f);
+		if (!level.isClientSide) {
+			if (!isDisabled()) {
+				setHealth(getHealth() - 0.25f);
 
-			if (getHealth() < 1) {
-				doDrops();
-				changeState(true);
-				setHealth(getMaxHealth());
+				if (getHealth() < 1) {
+					doDrops();
+					changeState(true);
+					setHealth(getMaxHealth());
 
-				for (RunicLifeformEntity lifeforms : lifeforms) {
-					lifeforms.remove();
+					for (RunicLifeformEntity lifeforms : lifeforms) {
+						lifeforms.remove();
+					}
+				}
+				else if (random.nextInt(125) == 0) {
+					if (level.getEntitiesOfClass(RunicLifeformEntity.class, getBoundingBox().inflate(6, 3, 6)).size() <= 4) {
+						RunicLifeformEntity lifeform = getLifeForm();
+
+						int coordX = (int)getX() - 3 + random.nextInt(6);
+						int coordZ = (int)getZ() - 3 + random.nextInt(6);
+
+						lifeform.moveTo(coordX, getY(), coordZ, random.nextFloat() * 360, 0);
+						level.addFreshEntity(lifeform);
+						lifeforms.add(lifeform);
+					}
 				}
 			}
-			else if (random.nextInt(125) == 0) {
-				if (level.getEntitiesOfClass(RunicLifeformEntity.class, getBoundingBox().inflate(6, 3, 6)).size() <= 4) {
-					RunicLifeformEntity lifeform = getLifeForm();
 
-					int coordX = (int)getX() - 3 + random.nextInt(6);
-					int coordZ = (int)getZ() - 3 + random.nextInt(6);
+			float healthPercent = getHealth() / getMaxHealth();
 
-					lifeform.moveTo(coordX, getY(), coordZ, random.nextFloat() * 360, 0);
-					level.addFreshEntity(lifeform);
-					lifeforms.add(lifeform);
-				}
-			}
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
 		}
 	}
 

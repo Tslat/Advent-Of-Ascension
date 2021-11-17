@@ -1,10 +1,12 @@
 package net.tslat.aoa3.entity.mob.creeponia;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
+import net.minecraft.entity.AreaEffectCloudEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.TameableEntity;
@@ -20,19 +22,16 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.*;
+import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.config.AoAConfig;
+import net.minecraftforge.common.util.Constants;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.Random;
 
 public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	private static final DataParameter<Integer> STATE = EntityDataManager.defineId(AoACreeponiaCreeper.class, DataSerializers.INT);
@@ -315,10 +314,10 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 
 		entityData.set(POWERED, compound.getBoolean("powered"));
 
-		if (compound.contains("Fuse", 99))
+		if (compound.contains("Fuse", Constants.NBT.TAG_ANY_NUMERIC))
 			fuseTime = compound.getShort("Fuse");
 
-		if (compound.contains("ExplosionRadius", 99))
+		if (compound.contains("ExplosionRadius", Constants.NBT.TAG_ANY_NUMERIC))
 			explosionRadius = compound.getByte("ExplosionRadius");
 
 		if (compound.getBoolean("ignited"))

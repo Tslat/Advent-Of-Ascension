@@ -11,20 +11,22 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.IndirectEntityDamageSource;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.item.armour.AdventArmour;
-import net.tslat.aoa3.util.player.PlayerUtil;
-import net.tslat.aoa3.util.skill.HunterUtil;
 
 import javax.annotation.Nullable;
 
-public abstract class DamageUtil {
+public final class DamageUtil {
 	public static void doScaledKnockback(LivingEntity target, Entity attacker, float strength, double xRatio, double zRatio) {
 		if (target instanceof PlayerEntity && !PlayerUtil.shouldPlayerBeAffected((PlayerEntity)target))
 			return;
@@ -114,9 +116,6 @@ public abstract class DamageUtil {
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
-		if (target instanceof LivingEntity && !HunterUtil.canAttackTarget((LivingEntity)target, attacker, false))
-			return false;
-
 		target.invulnerableTime = 0;
 		return target.hurt(damageSource, dmg);
 	}
@@ -143,9 +142,6 @@ public abstract class DamageUtil {
 		if (!(target instanceof LivingEntity))
 			return false;
 
-		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
-			return false;
-
 		target.invulnerableTime = 0;
 		Vector3d targetMotion = target.getDeltaMovement();
 		boolean success = target.hurt(damageSource, dmg);
@@ -164,9 +160,6 @@ public abstract class DamageUtil {
 			damageSource.bypassArmor();
 			damageSource.bypassMagic();
 		}
-
-		if (target instanceof LivingEntity && !HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
-			return false;
 
 		target.invulnerableTime = 0;
 
@@ -203,9 +196,6 @@ public abstract class DamageUtil {
 		if (!(target instanceof LivingEntity))
 			return false;
 
-		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
-			return false;
-
 		target.invulnerableTime = 0;
 		return target.hurt(damageSource, dmg);
 	}
@@ -235,9 +225,6 @@ public abstract class DamageUtil {
 		if (!(target instanceof LivingEntity))
 			return false;
 
-		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
-			return false;
-
 		target.invulnerableTime = 0;
 		boolean success;
 
@@ -256,12 +243,17 @@ public abstract class DamageUtil {
 	}
 
 	public static boolean dealVulcaneDamage(LivingEntity target, PlayerEntity attacker, float dmg) {
-		DamageSource source = DamageSource.playerAttack(attacker).bypassMagic().bypassArmor();
+		DamageSource source = new EntityDamageSource("vulcane", attacker) {
+			@Override
+			public ITextComponent getLocalizedDeathMessage(LivingEntity entity) {
+				ItemStack itemstack = this.entity instanceof LivingEntity ? ((LivingEntity)this.entity).getMainHandItem() : ItemStack.EMPTY;
+				String prefix = "death.attack.player";
+
+				return !itemstack.isEmpty() && itemstack.hasCustomHoverName() ? new TranslationTextComponent(prefix + ".item", entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getDisplayName()) : new TranslationTextComponent(prefix, entity.getDisplayName(), this.entity.getDisplayName());
+			}
+		}.bypassMagic().bypassArmor();
 
 		if (target.isInvulnerableTo(source))
-			return false;
-
-		if (!HunterUtil.canAttackTarget(target, attacker, false))
 			return false;
 
 		target.invulnerableTime = 0;
@@ -278,9 +270,6 @@ public abstract class DamageUtil {
 			return target.hurt(source, dmg);
 
 		if (!(target instanceof LivingEntity))
-			return false;
-
-		if (!HunterUtil.canAttackTarget((LivingEntity)target, attacker, true))
 			return false;
 
 		target.invulnerableTime = 0;
@@ -314,6 +303,10 @@ public abstract class DamageUtil {
 
 	public static boolean isPhysicalDamage(DamageSource source, Entity target, float dmg) {
 		return !isPoisonDamage(source, target, dmg) && !source.isMagic() && !source.isExplosion() && source != DamageSource.WITHER && source != DamageSource.OUT_OF_WORLD && !source.isFire() && source != DamageSource.STARVE;
+	}
+
+	public static boolean isVulcaneDamage(DamageSource source) {
+		return source.getMsgId().equals("vulcane");
 	}
 
 	public static boolean isEnvironmentalDamage(DamageSource source) {

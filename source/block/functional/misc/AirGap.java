@@ -1,6 +1,7 @@
 package net.tslat.aoa3.block.functional.misc;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
@@ -25,12 +26,12 @@ public class AirGap extends Block {
 		super(new BlockUtil.CompactProperties(Material.BARRIER, MaterialColor.NONE).stats(BlockUtil.UNBREAKABLE_HARDNESS, 0f).isAir().noDrops().noOcclusion().noClip().get());
 	}
 	@Override
-	public VoxelShape getOcclusionShape(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public VoxelShape getOcclusionShape(BlockState state, IBlockReader world, BlockPos pos) {
 		return VoxelShapes.empty();
 	}
 
 	@Override
-	public void playerDestroy(World worldIn, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {}
+	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {}
 
 	@Override
 	public boolean canBeReplaced(BlockState state, BlockItemUseContext useContext) {
@@ -38,7 +39,7 @@ public class AirGap extends Block {
 	}
 
 	@Override
-	public boolean canBeReplaced(BlockState state, Fluid fluidIn) {
+	public boolean canBeReplaced(BlockState state, Fluid fluid) {
 		return true;
 	}
 
@@ -48,7 +49,17 @@ public class AirGap extends Block {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public BlockRenderType getRenderShape(BlockState pState) {
+		return BlockRenderType.INVISIBLE;
+	}
+
+	@Override
+	public boolean propagatesSkylightDown(BlockState pState, IBlockReader pReader, BlockPos pPos) {
+		return true;
+	}
+
+	@Override
+	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
 		return VoxelShapes.empty();
 	}
 }

@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AoAScheduler {
 	private static ScheduledExecutorService scheduler = null;
-	private static final HashSet<Runnable> scheduledTasks = new HashSet<Runnable>();
+	private static final HashSet<Runnable> requiredTasks = new HashSet<Runnable>();
 	private static final HashMultimap<Integer, Runnable> scheduledSynchTasks = HashMultimap.<Integer, Runnable>create();
 
 	public static void scheduleRequiredAsyncTask(Runnable run, int time, TimeUnit unit) {
@@ -19,7 +19,7 @@ public class AoAScheduler {
 			serverStartupTasks();
 
 		scheduler.schedule(run, time, unit);
-		scheduledTasks.add(run);
+		requiredTasks.add(run);
 	}
 
 	public static void scheduleSyncronisedTask(Runnable run, int ticks) {
@@ -35,7 +35,7 @@ public class AoAScheduler {
 
 	public static void serverStartupTasks() {
 		if (scheduler != null) {
-			for (Runnable task : scheduledTasks) {
+			for (Runnable task : requiredTasks) {
 				task.run();
 			}
 
@@ -46,7 +46,7 @@ public class AoAScheduler {
 	}
 
 	public static void serverShutdownTasks() {
-		for (Runnable task : scheduledTasks) {
+		for (Runnable task : requiredTasks) {
 			task.run();
 		}
 

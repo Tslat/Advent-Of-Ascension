@@ -16,10 +16,10 @@
       },
       "structures": {
         "structures": {
-          "aoa3:storm_rune_shrine": {
-            "spacing": 16,
-            "separation": 8,
-            "salt": 2083315575
+          "aoa3:haunted_dungeon": {
+            "spacing": 36,
+            "separation": 18,
+            "salt": 1374964057
           },
           "aoa3:haunted_lotto_rock": {
             "spacing": 24,

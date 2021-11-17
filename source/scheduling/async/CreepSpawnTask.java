@@ -3,7 +3,6 @@ package net.tslat.aoa3.scheduling.async;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.entity.boss.CreepEntity;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.WorldUtil;
@@ -50,7 +49,7 @@ public class CreepSpawnTask implements Runnable {
                 break;
         }
 
-        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, WorldUtil.checkGameRule(world, AoAGameRules.STRONGER_MOB_GRIEFING) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE);
+        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, Explosion.Mode.DESTROY);
 
         count++;
 

@@ -11,20 +11,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
 public class MuncherEntity extends AoAWaterMeleeMob {
-	private static final AnimationBuilder BITE_ANIMATION = new AnimationBuilder().addAnimation("muncher.snap", false);
-
 	public MuncherEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -82,18 +77,17 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
+	protected int getAttackSwingDuration() {
+		return 20;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 6;
+	}
+
+	@Override
 	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<MuncherEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<MuncherEntity>() {
-			@Override
-			public PlayState test(AnimationEvent<MuncherEntity> event) {
-				if (swinging) {
-					event.getController().setAnimation(BITE_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-
-				return PlayState.STOP;
-			}
-		}));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
 	}
 }

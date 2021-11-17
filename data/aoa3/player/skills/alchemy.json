@@ -1,0 +1,12 @@
+{
+  "xp_modifier": 1.0,
+  "abilities": [
+    {
+      "id": "aoa3:dummy_ability",
+      "unique_id": "-1010843020",
+      "description": "skills.aoa3.alchemy.abilities.alchemistHelm.description",
+      "display_name": "skills.aoa3.alchemy.abilities.alchemistHelm.name",
+      "level_req": 100
+    }
+  ]
+}

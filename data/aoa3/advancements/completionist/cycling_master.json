@@ -1,0 +1,33 @@
+{
+  "parent": "aoa3:completionist/the_cycle_begins",
+  "display": {
+    "icon": {
+      "item": "minecraft:dragon_egg"
+    },
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.cycling_master.title"
+    },
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.cycling_master.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": true
+  },
+  "criteria": {
+    "cycle_10": {
+      "trigger": "aoa3:cycle",
+      "conditions": {
+        "cycle": 10
+      }
+    }
+  },
+  "requirements": [
+    [
+      "cycle_10"
+    ]
+  ]
+}

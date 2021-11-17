@@ -4,6 +4,7 @@ import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.Rarity;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
@@ -20,7 +21,7 @@ public abstract class BossSpawningItem extends Item {
 	private final Supplier<SoundEvent> throwingSound;
 
 	public BossSpawningItem(@Nullable Supplier<SoundEvent> throwSound, @Nonnull IParticleData... timerParticles) {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.UNCOMMON));
 
 		this.timerParticles = timerParticles;
 		this.throwingSound = throwSound;

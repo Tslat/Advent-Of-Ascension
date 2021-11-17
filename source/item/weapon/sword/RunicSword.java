@@ -4,6 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
@@ -12,11 +13,11 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.item.misc.RuneItem;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -31,8 +32,8 @@ public class RunicSword extends BaseSword {
 		if (!attacker.level.isClientSide && attackCooldown > 0.75 && attacker instanceof PlayerEntity) {
 			ItemStack offhandStack = attacker.getOffhandItem();
 
-			if (offhandStack.getItem() instanceof RuneItem && offhandStack.getCount() >= 5) {
-				RuneItem rune = (RuneItem)offhandStack.getItem();
+			if (offhandStack.getItem().is(AoATags.Items.ADVENT_RUNE) && offhandStack.getCount() >= 5) {
+				Item rune = offhandStack.getItem();
 
 				if (rune == AoAItems.POISON_RUNE.get()) {
 					target.addEffect(new EffectInstance(Effects.POISON, 72, 1, false, true));

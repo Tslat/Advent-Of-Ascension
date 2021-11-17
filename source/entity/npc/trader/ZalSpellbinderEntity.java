@@ -21,8 +21,7 @@ public class ZalSpellbinderEntity extends AoATrader {
 					BuildableTrade.trade(AoAItems.LUNAR_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
 					BuildableTrade.trade(AoAItems.DISTORTION_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
 					BuildableTrade.trade(AoAItems.LIFE_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
-					BuildableTrade.trade(AoAItems.KINETIC_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
-					BuildableTrade.trade(AoABlocks.RUNE_SHRINE).cost(AoAItems.COPPER_COIN).xp(1).stock(64))
+					BuildableTrade.trade(AoAItems.KINETIC_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64))
 			.trades(2,
 					BuildableTrade.trade(AoATools.SOULSTONE_AXE).cost(AoAItems.GOLD_COIN, 10).xp(100).stock(3),
 					BuildableTrade.trade(AoATools.SOULSTONE_SHOVEL).cost(AoAItems.GOLD_COIN, 11).xp(100).stock(3),

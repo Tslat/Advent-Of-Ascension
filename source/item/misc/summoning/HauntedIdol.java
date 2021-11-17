@@ -8,6 +8,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAEntities;
@@ -16,7 +17,7 @@ import net.tslat.aoa3.entity.boss.BaneEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -38,13 +39,13 @@ public class HauntedIdol extends BossSpawningItem {
 	@Override
 	public boolean canSpawnHere(World world, ServerPlayerEntity player, double posX, double posY, double posZ) {
 		if (!WorldUtil.isWorld(world, AoADimensions.GRECKON.key)) {
-			PlayerUtil.notifyPlayer(player, AoAEntities.Mobs.BANE.get().getDescriptionId() + ".wrongDimension", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, new TranslationTextComponent(AoAEntities.Mobs.BANE.get().getDescriptionId() + ".wrongDimension").withStyle(TextFormatting.RED));
 
 			return false;
 		}
 
 		if (!world.noCollision(new AxisAlignedBB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 2.5d, posZ + 0.5d))) {
-			PlayerUtil.notifyPlayer(player, "message.feedback.spawnBoss.noSpace", TextFormatting.RED);
+			PlayerUtil.notifyPlayer(player, new TranslationTextComponent("message.feedback.spawnBoss.noSpace").withStyle(TextFormatting.RED));
 
 			return false;
 		}

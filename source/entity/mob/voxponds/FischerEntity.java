@@ -10,7 +10,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAWaterMeleeMob;
-import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -66,7 +65,4 @@ public class FischerEntity extends AoAWaterMeleeMob {
             setDeltaMovement(motionX, motionY, motionZ);
         }
     }
-
-    @Override
-    public void registerControllers(AnimationData animationData) {}
 }

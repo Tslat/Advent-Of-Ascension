@@ -8,12 +8,13 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
+import net.tslat.aoa3.common.registration.AoABlocks;
 
 public class Stranglewood extends LogBlock {
 	public static final VoxelShape BARK_AABB = VoxelShapes.create(new AxisAlignedBB(0.001D, 0.001D, 0.001D, 0.999D, 0.999D, 0.999D));
 
 	public Stranglewood() {
-		super(MaterialColor.COLOR_BROWN, MaterialColor.TERRACOTTA_BROWN);
+		super(MaterialColor.COLOR_BROWN, AoABlocks.STRIPPED_STRANGLEWOOD);
 	}
 
 	@Override

@@ -1,0 +1,85 @@
+{
+  "xp_modifier": 1.0,
+  "abilities": [
+    {
+      "id": "aoa3:scaling_attribute_modification",
+      "unique_id": "2146249787",
+      "per_level_value": 0.002,
+      "base_value": 0.0,
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": 1.0,
+      "level_req": 5
+    },
+    {
+      "id": "aoa3:scaling_fall_damage_reduction",
+      "unique_id": "-1326705534",
+      "base_reduction": 0.0,
+      "per_level_reduction": 0.0085,
+      "min_height": 0,
+      "max_height": 10,
+      "level_req": 15
+    },
+    {
+      "id": "aoa3:scaling_jump_boost",
+      "unique_id": "1224789918",
+      "per_level_boost": 0.004,
+      "base_boost": 0.25,
+      "level_req": 25
+    },
+    {
+      "id": "aoa3:passive_attribute_modification",
+      "unique_id": "-430357359",
+      "amount": 0.05,
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": 1.0,
+      "level_req": 40
+    },
+    {
+      "id": "aoa3:scaling_attribute_modification",
+      "unique_id": "759269809",
+      "per_level_value": 0.003,
+      "base_value": 0.0,
+      "attribute": "forge:swim_speed",
+      "operation": 1.0,
+      "level_req": 50
+    },
+    {
+      "id": "aoa3:scaling_fall_damage_reduction",
+      "unique_id": "1587469180",
+      "base_reduction": 0.0,
+      "per_level_reduction": 0.005,
+      "min_height": 11,
+      "max_height": 2147483647,
+      "level_req": 60
+    },
+    {
+      "id": "aoa3:scaling_jump_boost",
+      "unique_id": "-380213223",
+      "per_level_boost": 0.0,
+      "base_boost": 0.25,
+      "amplify_lateral_velocity": true,
+      "level_req": 70
+    },
+    {
+      "id": "aoa3:passive_attribute_modification",
+      "unique_id": "-430358103",
+      "amount": 0.05,
+      "attribute": "minecraft:generic.movement_speed",
+      "operation": 1.0,
+      "level_req": 80
+    },
+    {
+      "id": "aoa3:double_jump",
+      "unique_id": "1788206281",
+      "energy_consumption": 10.0,
+      "level_req": 90
+    },
+    {
+      "id": "aoa3:dummy_ability",
+      "unique_id": "-29901786",
+      "description": "skills.aoa3.dexterity.abilities.dextrousHelm.description",
+      "display_name": "skills.aoa3.dexterity.abilities.dextrousHelm.name",
+      "level_req": 100
+    }
+  ]
+}

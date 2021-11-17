@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:unpowered_rune"
+    },
+    "B": {
+      "item": "minecraft:tripwire_hook"
+    }
+  },
+  "result": {
+    "item": "aoa3:kinetic_rune",
+    "count": 8
+  }
+}

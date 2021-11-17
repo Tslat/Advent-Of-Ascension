@@ -13,15 +13,17 @@ import net.minecraft.loot.LootFunctionType;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.loot.conditions.ILootCondition;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.common.registration.AoALootOperations;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class GrantSkillXp extends LootFunction {
-	private final Skills skill;
+	private final AoASkill skill;
 	private final float xp;
 
-	protected GrantSkillXp(ILootCondition[] lootConditions, Skills skill, float xp) {
+	protected GrantSkillXp(ILootCondition[] lootConditions, AoASkill skill, float xp) {
 		super(lootConditions);
 
 		this.skill = skill;
@@ -41,12 +43,12 @@ public class GrantSkillXp extends LootFunction {
 			entity = context.getParamOrNull(LootParameters.THIS_ENTITY);
 
 		if (entity instanceof ServerPlayerEntity)
-			PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).stats().addXp(skill, xp, false, false);
+			PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).getSkill(skill).adjustXp(xp, false, false);
 
 		return stack;
 	}
 
-	public Skills getSkill() {
+	public AoASkill getSkill() {
 		return this.skill;
 	}
 
@@ -54,7 +56,7 @@ public class GrantSkillXp extends LootFunction {
 		return this.xp;
 	}
 
-	public static Builder<?> builder(Skills skill, float xp) {
+	public static Builder<?> builder(AoASkill skill, float xp) {
 		return simpleBuilder((conditions) -> new GrantSkillXp(conditions, skill, xp));
 	}
 
@@ -63,13 +65,13 @@ public class GrantSkillXp extends LootFunction {
 		public void serialize(JsonObject object, GrantSkillXp function, JsonSerializationContext context) {
 			super.serialize(object, function, context);
 
-			object.addProperty("skill", function.skill.toString().toLowerCase());
+			object.addProperty("skill", function.skill.getRegistryName().toString());
 			object.addProperty("xp", function.xp);
 		}
 
 		@Override
 		public GrantSkillXp deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditions) {
-			return new GrantSkillXp(conditions, Skills.valueOf(JSONUtils.getAsString(object, "skill").toUpperCase()), JSONUtils.getAsFloat(object, "xp"));
+			return new GrantSkillXp(conditions, AoASkills.getSkill(new ResourceLocation(JSONUtils.getAsString(object, "skill"))), JSONUtils.getAsFloat(object, "xp"));
 		}
 	}
 }

@@ -1,12 +1,9 @@
 package net.tslat.aoa3.client.gui.overlay;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.PointOfView;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.FOVUpdateEvent;
@@ -15,12 +12,11 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
-
-import java.util.Locale;
+import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.util.RenderUtil;
 
 @Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
 public class ScopeOverlayRenderer {
-	public static Type scope;
 	public static boolean isScoped = false;
 
 	@SubscribeEvent
@@ -43,46 +39,31 @@ public class ScopeOverlayRenderer {
 
 	@SubscribeEvent
 	public static void renderOverlay(final RenderGameOverlayEvent.Post event) {
-		if (!isScoped || event.isCanceled() || event.getType() != RenderGameOverlayEvent.ElementType.HELMET || Minecraft.getInstance().options.getCameraType() != PointOfView.FIRST_PERSON)
+		if (event.isCanceled() || event.getType() != RenderGameOverlayEvent.ElementType.HELMET || Minecraft.getInstance().options.getCameraType() != PointOfView.FIRST_PERSON)
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
-		MainWindow window = mc.getWindow();
+		ResourceLocation texture = null;
 
-		mc.getTextureManager().bind(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/" + scope.toString().toLowerCase(Locale.ENGLISH) + ".png"));
+		if (mc.player.isShiftKeyDown() && mc.player.onGround) {
+			ItemStack sniper = mc.player.getItemInHand(Hand.MAIN_HAND);
 
-		final Tessellator tess = Tessellator.getInstance();
-		final BufferBuilder buff = tess.getBuilder();
+			if (sniper.getItem() instanceof BaseSniper) {
+				isScoped = true;
+				texture = ((BaseSniper)sniper.getItem()).getScopeTexture(sniper);
+			}
+			else {
+				isScoped = false;
+			}
+		}
+		else {
+			isScoped = false;
+		}
 
-		RenderSystem.pushTextureAttributes();
-		RenderSystem.enableAlphaTest();
-		RenderSystem.enableBlend();
-		buff.begin(7, DefaultVertexFormats.POSITION_TEX);
-		buff.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(0.0f, 1.0f).normal(0.0F, 1.0F, 0.0F).endVertex();
-		buff.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(1.0f, 1.0f).normal(0.0F, 1.0F, 0.0F).endVertex();
-		buff.vertex(window.getGuiScaledWidth(), 0.0, -90.0D).uv(1.0f, 0.0f).normal(0.0F, 1.0F, 0.0F).endVertex();
-		buff.vertex(0.0D, 0.0D, -90.0D).uv(0.0f, 0.0f).normal(0.0F, 1.0F, 0.0F).endVertex();
-		tess.end();
-		RenderSystem.depthMask(true);
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		RenderSystem.disableAlphaTest();
-		RenderSystem.disableBlend();
-		RenderSystem.popAttributes();
-	}
+		if (!isScoped)
+			return;
 
-	public enum Type {
-		BASIC,
-		BOULDER,
-		CANDY,
-		CRYSTAL,
-		DIAMOND,
-		DISCHARGE,
-		DOTTED,
-		FLORO,
-		MARKER,
-		MONSTER,
-		MOON,
-		REDLIGHT,
-		SCRATCHES
+		mc.getTextureManager().bind(texture);
+		RenderUtil.renderFullscreenTexture();
 	}
 }

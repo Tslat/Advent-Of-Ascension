@@ -1,26 +1,26 @@
 package net.tslat.aoa3.item.weapon.gun;
 
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectile.gun.ShoeShotEntity;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.AdvancementUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -43,35 +43,34 @@ public class ShoeFlinger extends BaseGun {
 	}
 
 	@Override
-	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(Items.LEATHER_BOOTS), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
-			return new ShoeShotEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
-
-		return null;
+	public Item getAmmoItem() {
+		return Items.LEATHER_BOOTS;
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target != null) {
-			float shellMod = 1;
+	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, Hand hand) {
+		return new ShoeShotEntity(shooter, this, hand, 120, 0);
+	}
 
-			if (bullet.getHand() != null)
-				shellMod += 0.1 * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), shooter.getItemInHand(bullet.getHand()));
+	@Override
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+		if (target instanceof LivingEntity) {
+			LivingEntity livingTarget = (LivingEntity)target;
 
-			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier * shellMod) && target instanceof LivingEntity) {
-				DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 1.35f, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
+			DamageUtil.doScaledKnockback(livingTarget, shooter, 1.35f, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
 
-				if (shooter instanceof ServerPlayerEntity && ((LivingEntity)target).getHealth() == 0 && !target.canChangeDimensions())
-					AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/la_chancla"), "shoe_flinger_boss_kill");
-			}
+			if (shooter instanceof ServerPlayerEntity && livingTarget.getHealth() == 0 && !target.canChangeDimensions())
+				AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/la_chancla"), "shoe_flinger_boss_kill");
+
+			if (!livingTarget.hasItemInSlot(EquipmentSlotType.FEET))
+				livingTarget.setItemSlot(EquipmentSlotType.FEET, new ItemStack(Items.LEATHER_BOOTS));
 		}
 	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2))));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(20 / (float)firingDelay, 2))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, LocaleUtil.getLocaleMessage(Items.LEATHER_BOOTS.getDescriptionId())));
+
+		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

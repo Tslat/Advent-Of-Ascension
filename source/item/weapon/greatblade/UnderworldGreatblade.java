@@ -2,13 +2,13 @@ package net.tslat.aoa3.item.weapon.greatblade;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -19,8 +19,9 @@ public class UnderworldGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	protected double getDamageForAttack(ItemStack stack, Entity target, LivingEntity attacker, double baseDmg) {
-		return target instanceof LivingEntity && ((LivingEntity)target).getMobType() == CreatureAttribute.UNDEAD ? baseDmg + 5 : baseDmg;
+	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+		if (target.getMobType() == CreatureAttribute.UNDEAD)
+			DamageUtil.dealMeleeDamage(attacker, target, 5 * attackCooldown, false);
 	}
 
 	@Override

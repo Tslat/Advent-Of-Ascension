@@ -9,11 +9,11 @@ import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.entity.boss.KrorEntity;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +48,7 @@ public class KrorSpawnTask implements Runnable {
 			return;
 
 		if (chargedAmount < 200) {
-			if (PlayerUtil.consumeResource(player, Resources.ENERGY, 20, false)) {
+			if (PlayerUtil.consumeResource(player, AoAResources.SPIRIT.get(), 20, false)) {
 				chargedAmount += 20;
 
 				((ServerWorld)world).sendParticles(ParticleTypes.END_ROD, chargingTablePos.getX() + 0.5d, chargingTablePos.getY() + 0.9, chargingTablePos.getZ() + 0.5d, 1, 0, 0, 0, 0d);
@@ -57,7 +57,7 @@ public class KrorSpawnTask implements Runnable {
 				schedule(1, TimeUnit.SECONDS);
 			}
 			else {
-				PlayerUtil.notifyPlayerOfInsufficientResources(player, Resources.ENERGY, 20);
+				PlayerUtil.notifyPlayerOfInsufficientResources(player, AoAResources.SPIRIT.get(), 20);
 			}
 		}
 		else {

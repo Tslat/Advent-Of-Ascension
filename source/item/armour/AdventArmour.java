@@ -9,7 +9,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.*;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
+import net.tslat.aoa3.player.PlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -52,24 +52,6 @@ public abstract class AdventArmour extends ArmorItem {
 	 *             For example, if a player has the boots, legs, chestplate, and helmet equipped, then unequips the helmet, this event will be fired twice. Once with the head slot, once with a null slot for breaking the full set.
 	 */
 	public void onUnequip(PlayerDataManager plData, @Nullable EquipmentSlotType slot) {}
-
-	/**
-	 * Called immediately after equip, used to add buffs to the player safely.
-	 *
-	 * @param plBuffs the {@code PlayerBuffs} container for the player equipping the armour.
-	 * @param slot the {@code EquipmentSlotType} slot that the item was equipped into. A null slot in this context is used to indicate that the full set was equipped.<br>
-	 *             For example, if a player has the boots, legs, and chestplate of a set equipped, and equips the helmet, this event will be fired twice. Once with the head slot, once with a null slot for completing the set.
-	 */
-	public void addBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EquipmentSlotType slot) {}
-
-	/**
-	 * Called immediately after unequip, used to remove previously added buffs from the player safely. Make sure that all buffs added in addBuffs are removed here.
-	 *
-	 * @param plBuffs the {@code PlayerBuffs} container for the player unequipping the armour.
-	 * @param slot the {@code EquipmentSlotType} slot that the item was unequipped from. A null slot in this context is used to indicate that the full set status was broken.<br>
-	 *             For example, if a player has the boots, legs, chestplate, and helmet equipped, then unequips the helmet, this event will be fired twice. Once with the head slot, once with a null slot for breaking the full set.
-	 */
-	public void removeBuffs(PlayerDataManager.PlayerBuffs plBuffs, @Nullable EquipmentSlotType slot) {}
 
 	/**
 	 * Called each tick during the player's tick cycle for each piece equipped. A null slot indicates that the armour is being ticked for the set's effect.
@@ -239,9 +221,5 @@ public abstract class AdventArmour extends ArmorItem {
 		WEAKEN,
 		WITHER,
 		ZARGONITE;
-	}
-
-	public enum Overlay {
-		NIGHT_VISION_GOGGLES;
 	}
 }

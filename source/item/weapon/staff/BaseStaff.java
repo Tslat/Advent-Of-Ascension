@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.item.EnergyProjectileWeapon;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.item.weapon.blaster.BaseBlaster;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.ItemUtil;
@@ -31,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapon {
-	protected final HashMap<RuneItem, Integer> runes = new HashMap<RuneItem, Integer>(2);
+	protected final HashMap<Item, Integer> runes = new HashMap<Item, Integer>(2);
 
 	public BaseStaff(int durability) {
 		super(new Item.Properties().tab(AoAItemGroups.STAVES).durability(durability));
@@ -60,7 +59,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 			if (getCastingSound() != null)
 				world.playSound(null, player.getX(), player.getY(), player.getZ(), getCastingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
 
-			player.getCooldowns().addCooldown(this, 12);
+			player.getCooldowns().addCooldown(this, 24);
 			player.awardStat(Stats.ITEM_USED.get(this));
 			ItemUtil.damageItem(stack, player, hand);
 			cast(world, stack, player, preconditionResult);
@@ -69,7 +68,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 		return ActionResult.success(stack);
 	}
 
-	public boolean findAndConsumeRunes(HashMap<RuneItem, Integer> runes, ServerPlayerEntity player, boolean allowBuffs, ItemStack staff) {
+	public boolean findAndConsumeRunes(HashMap<Item, Integer> runes, ServerPlayerEntity player, boolean allowBuffs, ItemStack staff) {
 		return ItemUtil.findAndConsumeRunes(runes, player, allowBuffs, staff);
 	}
 
@@ -78,7 +77,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 		return (T)new Object();
 	}
 
-	public HashMap<RuneItem, Integer> getRunes() {
+	public HashMap<Item, Integer> getRunes() {
 		if (runes.isEmpty())
 			populateRunes(runes);
 
@@ -90,7 +89,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 		return null;
 	}
 
-	protected abstract void populateRunes(HashMap<RuneItem, Integer> runes);
+	protected abstract void populateRunes(HashMap<Item, Integer> runes);
 
 	public abstract void cast(World world, ItemStack staff, LivingEntity caster, T args);
 
@@ -126,7 +125,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.staff.runesRequired", LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST));
 
-		for (Map.Entry<RuneItem, Integer> runeEntry : getRunes().entrySet()) {
+		for (Map.Entry<Item, Integer> runeEntry : getRunes().entrySet()) {
 			tooltip.add(LocaleUtil.getLocaleMessage("items.description.staff.runesRequired.specific", TextFormatting.WHITE, LocaleUtil.numToComponent(runeEntry.getValue()), LocaleUtil.getLocaleMessage(runeEntry.getKey().getDescriptionId())));
 		}
 	}

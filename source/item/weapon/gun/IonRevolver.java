@@ -28,6 +28,11 @@ public class IonRevolver extends BaseGun {
 	}
 
 	@Override
+	public boolean isFullAutomatic() {
+		return false;
+	}
+
+	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
 		if (target instanceof LivingEntity)
 			DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 0.4f, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());

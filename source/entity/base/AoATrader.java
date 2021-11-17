@@ -31,6 +31,7 @@ import net.tslat.aoa3.common.registration.AoAProfessions;
 import net.tslat.aoa3.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.entity.ai.trader.TraderPlayerTradeGoal;
 import net.tslat.aoa3.entity.ai.trader.TraderRestockGoal;
+import net.tslat.aoa3.mixin.common.invoker.AccessibleVillagerEntity;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -157,7 +158,7 @@ public abstract class AoATrader extends VillagerEntity {
 		this.villagerXp += offer.getXp();
 		this.lastTradedPlayer = this.getTradingPlayer();
 
-		if (this.shouldIncreaseLevel()) {
+		if (((AccessibleVillagerEntity)this).hasXpForLevelUp()) {
 			this.updateMerchantTimer = 40;
 			this.increaseProfessionLevelOnUpdate = true;
 			xp += 5;
@@ -208,7 +209,7 @@ public abstract class AoATrader extends VillagerEntity {
 	@Override
 	public void die(DamageSource cause) {
 		if (cause.getEntity() != null)
-			tellWitnessesThatIWasMurdered(cause.getEntity());
+			((AccessibleVillagerEntity)this).alertWitnessesToMurder(cause.getEntity());
 
 		if (!ForgeHooks.onLivingDeath(this, cause)) {
 			if (!removed && !dead) {

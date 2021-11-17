@@ -15,11 +15,12 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class CrystalExtensionShrine extends Block {
 					}
 
 					if (count < 10) {
-						PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.crystalExtensionShrine.crystals");
+						PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.crystalExtensionShrine.crystals"));
 
 						return ActionResultType.PASS;
 					}

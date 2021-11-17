@@ -7,10 +7,12 @@ import net.minecraft.entity.Pose;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.OmnilightShotEntity;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -21,7 +23,7 @@ public class OmnilightEntity extends AoAFlyingRangedMob {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return sizeIn.height * 0.85f;
+        return 0.5f;
     }
 
     @Nullable
@@ -51,5 +53,21 @@ public class OmnilightEntity extends AoAFlyingRangedMob {
     @Override
     protected BaseMobProjectile getNewProjectileInstance() {
        return new OmnilightShotEntity(this, BaseMobProjectile.Type.MAGIC);
+    }
+
+    @Override
+    public int getAttackSwingDuration() {
+        return 25;
+    }
+
+    @Override
+    public int getPreAttackTime() {
+        return 13;
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericFlyController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SHOOT));
     }
 }

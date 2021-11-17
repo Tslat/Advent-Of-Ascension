@@ -11,17 +11,17 @@ public class VisularModel extends AnimatedGeoModel<VisularEntity> {
 	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/mobs/lunalus/visular.animation.json");
 
 	@Override
-	public ResourceLocation getModelLocation(VisularEntity anglerEntity) {
+	public ResourceLocation getModelLocation(VisularEntity visular) {
 		return MODEL;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(VisularEntity anglerEntity) {
+	public ResourceLocation getTextureLocation(VisularEntity visular) {
 		return TEXTURE;
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(VisularEntity anglerEntity) {
+	public ResourceLocation getAnimationFileLocation(VisularEntity visular) {
 		return ANIMATIONS;
 	}
 }

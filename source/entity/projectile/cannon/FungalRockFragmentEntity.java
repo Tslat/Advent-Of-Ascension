@@ -34,7 +34,7 @@ public class FungalRockFragmentEntity extends BaseBullet implements HardProjecti
 
 	@Override
 	public void doImpactEffect() {
-		if (!level.isClientSide && WorldUtil.checkGameRule(level, AoAGameRules.DESTRUCTIVE_WEAPON_PHYSICS) && level.isEmptyBlock(blockPosition())) {
+		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition())) {
 			int i = 1;
 
 			while (level.getBlockState(blockPosition().below(i)).getMaterial().isReplaceable() && blockPosition().getY() - i >= 0) {

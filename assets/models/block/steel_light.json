@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "particle": "aoa3:block/steel_light",
+    "all": "aoa3:block/steel_light"
+  }
+}

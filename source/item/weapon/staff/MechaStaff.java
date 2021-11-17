@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvent;
@@ -17,7 +18,6 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.LyonicShotEntity;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -41,7 +41,7 @@ public class MechaStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.WIND_RUNE.get(), 2);
 		runes.put(AoAItems.DISTORTION_RUNE.get(), 1);
 		runes.put(AoAItems.POWER_RUNE.get(), 1);
@@ -59,7 +59,7 @@ public class MechaStaff extends BaseStaff<Object> {
 			ModifiableAttributeInstance armour = entity.getAttribute(Attributes.ARMOR);
 
 			if (armour != null && armour.getValue() > 0 && !armour.hasModifier(DEBUFF)) {
-				EntityUtil.applyAttributeModifierSafely(entity, Attributes.ARMOR, DEBUFF);
+				EntityUtil.applyAttributeModifierSafely(entity, Attributes.ARMOR, DEBUFF, false);
 
 				if (!entity.level.isClientSide) {
 					AxisAlignedBB bounds = entity.getBoundingBox();

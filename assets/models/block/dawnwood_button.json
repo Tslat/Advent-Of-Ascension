@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "aoa3:block/dawnwood_planks"
+  }
+}

@@ -9,9 +9,7 @@ import net.minecraft.util.Util;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -21,14 +19,13 @@ import javax.annotation.Nullable;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-@OnlyIn(Dist.CLIENT)
 public class AdventGuiTabHelp extends Screen {
-	private int tipNumber = 0;
+	private int tipNumber;
 
 	protected AdventGuiTabHelp() {
 		super(new TranslationTextComponent("gui.aoa3.adventGui.help"));
 
-		tipNumber = RandomUtil.randomNumberUpTo(12);
+		tipNumber = RandomUtil.randomNumberUpTo(IntegrationManager.isPatchouliActive() ? 12 : 13);
 	}
 
 	@Override
@@ -131,38 +128,30 @@ public class AdventGuiTabHelp extends Screen {
 		}
 
 		private boolean isMouseInRegion(int mouseX, int mouseY, int buttonX, int buttonY) {
-			return mouseX >= (int)((AdventMainGui.scaledTabRootX + buttonX) * AdventMainGui.scale) && mouseX <= (int)((AdventMainGui.scaledTabRootX + buttonX + width) * AdventMainGui.scale) && mouseY >= (int)((AdventMainGui.scaledTabRootY + buttonY) * AdventMainGui.scale) && mouseY <= (int)((AdventMainGui.scaledTabRootY + buttonY + height) * AdventMainGui.scale);
+			return mouseX >= (int)((AdventMainGui.scaledTabRootX + buttonX) * AdventMainGui.SCALE) && mouseX <= (int)((AdventMainGui.scaledTabRootX + buttonX + width) * AdventMainGui.SCALE) && mouseY >= (int)((AdventMainGui.scaledTabRootY + buttonY) * AdventMainGui.SCALE) && mouseY <= (int)((AdventMainGui.scaledTabRootY + buttonY + height) * AdventMainGui.SCALE);
 		}
 	}
 
 	private static class ThemeButton extends Widget {
 		public ThemeButton(int x, int y, int width, int height) {
-			super(x, y, width, height, new StringTextComponent(AoAConfig.CLIENT.adventGuiTheme.get()));
+			super(x, y, width, height, new StringTextComponent(AdventMainGui.theme.getName()));
 		}
 
 		@Override
 		public void onClick(double mouseX, double mouseY) {
-			AdventMainGui.currentTextureIndex++;
-
-			if (AdventMainGui.currentTextureIndex == AdventMainGui.textures.size())
-				AdventMainGui.currentTextureIndex = 0;
-
 			AdventMainGui.changeTheme();
+			setMessage(new StringTextComponent(AdventMainGui.theme.getName()));
 		}
 
 		@Override
 		public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
-
-				mc.getTextureManager().bind(AdventMainGui.textures.get(AdventMainGui.currentTextureIndex).menuButtonTexture);
-				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-
 				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
+				width = (int)(10 + Minecraft.getInstance().font.width(getMessage()) * 1.5f);
 
-				setMessage(new StringTextComponent(AoAConfig.CLIENT.adventGuiTheme.get().replace("_", " ")));
-
-				width = (int)(Math.max(width - 10, 10 + mc.font.width(getMessage()) * 1.5f));
+				mc.getTextureManager().bind(AdventMainGui.theme.getMenuButtonTexture());
+				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 				RenderUtil.renderScaledCustomSizedTexture(matrix, AdventMainGui.scaledTabRootX + x, AdventMainGui.scaledTabRootY + y, 0, (getYImage(isHovered) == 2 ? 60 : 120), 180, 60, width, height, 180, 180);
 
@@ -188,7 +177,7 @@ public class AdventGuiTabHelp extends Screen {
 		}
 
 		private boolean isMouseInRegion(int mouseX, int mouseY, int buttonX, int buttonY) {
-			return mouseX >= (int)((AdventMainGui.scaledTabRootX + buttonX) * AdventMainGui.scale) && mouseX <= (int)((AdventMainGui.scaledTabRootX + buttonX + width) * AdventMainGui.scale) && mouseY >= (int)((AdventMainGui.scaledTabRootY + buttonY) * AdventMainGui.scale) && mouseY <= (int)((AdventMainGui.scaledTabRootY + buttonY + height) * AdventMainGui.scale);
+			return mouseX >= (int)((AdventMainGui.scaledTabRootX + buttonX) * AdventMainGui.SCALE) && mouseX <= (int)((AdventMainGui.scaledTabRootX + buttonX + width) * AdventMainGui.SCALE) && mouseY >= (int)((AdventMainGui.scaledTabRootY + buttonY) * AdventMainGui.SCALE) && mouseY <= (int)((AdventMainGui.scaledTabRootY + buttonY + height) * AdventMainGui.SCALE);
 		}
 	}
 }

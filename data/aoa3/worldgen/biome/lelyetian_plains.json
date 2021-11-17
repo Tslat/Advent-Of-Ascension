@@ -46,19 +46,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:lelyetian_warrior",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:lelyetian_caster",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:flye",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -72,6 +60,18 @@
       {
         "type": "aoa3:grobbler",
         "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:flye",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:lelyetian_warrior",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }

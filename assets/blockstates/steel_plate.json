@@ -1,0 +1,65 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "up": "false",
+        "down": "false",
+        "north": "false",
+        "south": "false",
+        "east": "false",
+        "west": "false"
+      },
+      "apply": {
+        "model": "aoa3:block/steel_plate"
+      }
+    },
+    {
+      "when": {
+        "up": "true"
+      },
+      "apply": {
+        "model": "aoa3:block/steel_plate_up"
+      }
+    },
+    {
+      "when": {
+        "down": "true"
+      },
+      "apply": {
+        "model": "aoa3:block/steel_plate_down"
+      }
+    },
+    {
+      "when": {
+        "north": "true"
+      },
+      "apply": {
+        "model": "aoa3:block/steel_plate_north"
+      }
+    },
+    {
+      "when": {
+        "south": "true"
+      },
+      "apply": {
+        "model": "aoa3:block/steel_plate_south"
+      }
+    },
+    {
+      "when": {
+        "east": "true"
+      },
+      "apply": {
+        "model": "aoa3:block/steel_plate_east"
+      }
+    },
+    {
+      "when": {
+        "west": "true"
+      },
+      "apply": {
+        "model": "aoa3:block/steel_plate_west"
+      }
+    }
+  ]
+}

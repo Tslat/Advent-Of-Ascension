@@ -23,7 +23,7 @@ public class ChargerModel extends EntityModel<MobEntity> {
 	private ModelRenderer leftleg;
 
 	public static ResourceLocation getChargerTexture(ChargerModel model, @Nullable ResourceLocation backupTexture) {
-		if (HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.HALLOWEEN) {
+		if (HolidayUtil.isHalloween()) {
 			if (model.isGhost) {
 				if (RandomUtil.fiftyFifty()) {
 					return new ResourceLocation("aoa3", "textures/entity/mobs/overworld/charger_ghost.png");
@@ -118,7 +118,7 @@ public class ChargerModel extends EntityModel<MobEntity> {
 	}
 
 	public ChargerModel() {
-		if (HolidayUtil.getCurrentHoliday() == HolidayUtil.Holiday.HALLOWEEN && RandomUtil.fiftyFifty()) {
+		if (HolidayUtil.isHalloween() && RandomUtil.fiftyFifty()) {
 			doGhostChargerModel();
 			isGhost = true;
 

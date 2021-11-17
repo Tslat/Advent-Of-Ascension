@@ -3,7 +3,6 @@ package net.tslat.aoa3.common.registration;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.dispenser.*;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.BoneMealItem;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -73,25 +72,6 @@ public final class AoADispensables {
 	}
 
 	private static void registerMiscDispensables() {
-		DispenserBlock.registerBehavior(AoAItems.FRAGMENTED_ANIMA_STONE.get(), new OptionalDispenseBehavior() {
-			@Override
-			protected ItemStack execute(IBlockSource source, ItemStack stack) {
-				setSuccess(true);
-
-				World world = source.getLevel();
-				BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-
-				if (BoneMealItem.growCrop(stack, world, pos)) {
-					if (!world.isClientSide)
-						world.levelEvent(2005, pos, 0);
-				}
-				else {
-					setSuccess(false);
-				}
-
-				return stack;
-			}
-		});
 	}
 
 	private static void registerFluidDispensables() {

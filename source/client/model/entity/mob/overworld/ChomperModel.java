@@ -1,207 +1,27 @@
 package net.tslat.aoa3.client.model.entity.mob.overworld;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.ResourceLocation;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.entity.mob.overworld.ChomperEntity;
+import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class ChomperModel extends EntityModel<MobEntity> {
-	private final ModelRenderer head;
-	private final ModelRenderer body;
-	private final ModelRenderer leg1;
-	private final ModelRenderer leg2;
-	private final ModelRenderer leg3p2;
-	private final ModelRenderer leg4p2;
-	private final ModelRenderer head2;
-	private final ModelRenderer head3;
-	private final ModelRenderer leg4;
-	private final ModelRenderer leg3;
-	private final ModelRenderer head4;
-	private final ModelRenderer head5;
-	private final ModelRenderer head6;
-	private final ModelRenderer head7;
-	private final ModelRenderer head8;
-	private final ModelRenderer head9;
-	private final ModelRenderer head10;
-	private final ModelRenderer head11;
-	private final ModelRenderer head12;
-	private final ModelRenderer head13;
-	private final ModelRenderer head14;
-	private final ModelRenderer head15;
-	private final ModelRenderer head17;
-	private final ModelRenderer head16;
+public class ChomperModel extends AnimatedGeoModel<ChomperEntity> {
+	private static final ResourceLocation MODEL = new ResourceLocation(AdventOfAscension.MOD_ID, "geo/entities/mobs/overworld/chomper.geo.json");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/entity/mobs/overworld/chomper.png");
+	private static final ResourceLocation ANIMATIONS = new ResourceLocation(AdventOfAscension.MOD_ID, "animations/entities/mobs/overworld/chomper.animation.json");
 
-	public ChomperModel() {
-		texWidth = 128;
-		texHeight = 32;
-		(head = new ModelRenderer(this, 10, 4)).addBox(3.0f, -1.0f, -6.0f, 1, 1, 1);
-		head.setPos(0.0f, 7.0f, -3.0f);
-		head.setTexSize(128, 32);
-		head.mirror = true;
-		setRotation(head, 0.0f, 0.0f, 0.0f);
-		(body = new ModelRenderer(this, 18, 4)).addBox(-6.0f, -10.0f, -7.0f, 12, 18, 10);
-		body.setPos(0.0f, 7.0f, 7.0f);
-		body.setTexSize(128, 32);
-		body.mirror = true;
-		setRotation(body, 1.396263f, 0.0f, 0.0f);
-		(leg1 = new ModelRenderer(this, 0, 16)).addBox(-3.0f, 0.0f, -2.0f, 4, 10, 4);
-		leg1.setPos(-4.0f, 14.0f, 12.0f);
-		leg1.setTexSize(128, 32);
-		leg1.mirror = true;
-		setRotation(leg1, 0.0f, 0.0f, 0.0f);
-		(leg2 = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -2.0f, 4, 10, 4);
-		leg2.setPos(4.0f, 14.0f, 12.0f);
-		leg2.setTexSize(128, 32);
-		leg2.mirror = true;
-		setRotation(leg2, 0.0f, 0.0f, 0.0f);
-		(leg3p2 = new ModelRenderer(this, 63, 20)).addBox(-4.0f, 6.0f, -4.0f, 6, 6, 6);
-		leg3p2.setPos(-4.0f, 12.0f, 0.0f);
-		leg3p2.setTexSize(128, 32);
-		leg3p2.mirror = true;
-		setRotation(leg3p2, 0.0f, 0.0f, 0.0f);
-		(leg4p2 = new ModelRenderer(this, 63, 20)).addBox(-2.0f, 6.0f, -4.0f, 6, 6, 6);
-		leg4p2.setPos(4.0f, 12.0f, 0.0f);
-		leg4p2.setTexSize(128, 32);
-		leg4p2.mirror = true;
-		setRotation(leg4p2, 0.0f, 0.0f, 0.0f);
-		(head2 = new ModelRenderer(this, 64, 0)).addBox(-4.0f, -4.0f, -4.0f, 8, 8, 4);
-		head2.setPos(0.0f, 7.0f, -3.0f);
-		head2.setTexSize(128, 32);
-		head2.mirror = true;
-		setRotation(head2, 0.0f, 0.0f, 0.0f);
-		(head3 = new ModelRenderer(this, 0, 0)).addBox(2.0f, -1.0f, -12.5f, 1, 10, 1);
-		head3.setPos(0.0f, 7.0f, -3.0f);
-		head3.setTexSize(128, 32);
-		head3.mirror = true;
-		setRotation(head3, 0.0f, 0.0f, 0.0f);
-		(leg4 = new ModelRenderer(this, 0, 16)).addBox(-1.0f, 0.0f, -3.0f, 4, 12, 4);
-		leg4.setPos(4.0f, 12.0f, 0.0f);
-		leg4.setTexSize(128, 32);
-		leg4.mirror = true;
-		setRotation(leg4, 0.0f, 0.0f, 0.0f);
-		(leg3 = new ModelRenderer(this, 0, 16)).addBox(-3.0f, 0.0f, -3.0f, 4, 12, 4);
-		leg3.setPos(-4.0f, 12.0f, 0.0f);
-		leg3.setTexSize(128, 32);
-		leg3.mirror = true;
-		setRotation(leg3, 0.0f, 0.0f, 0.0f);
-		(head4 = new ModelRenderer(this, 91, 11)).addBox(-4.0f, -4.0f, -13.0f, 8, 3, 9);
-		head4.setPos(0.0f, 7.0f, -3.0f);
-		head4.setTexSize(128, 32);
-		head4.mirror = true;
-		setRotation(head4, 0.0f, 0.0f, 0.0f);
-		(head5 = new ModelRenderer(this, 0, 0)).addBox(-3.0f, -1.0f, -12.5f, 1, 10, 1);
-		head5.setPos(0.0f, 7.0f, -3.0f);
-		head5.setTexSize(128, 32);
-		head5.mirror = true;
-		setRotation(head5, 0.0f, 0.0f, 0.0f);
-		(head6 = new ModelRenderer(this, 91, 0)).addBox(-4.0f, 1.0f, -11.0f, 8, 3, 7);
-		head6.setPos(0.0f, 7.0f, -3.0f);
-		head6.setTexSize(128, 32);
-		head6.mirror = true;
-		setRotation(head6, 0.0f, 0.0f, 0.0f);
-		(head7 = new ModelRenderer(this, 10, 4)).addBox(3.0f, -1.0f, -10.0f, 1, 1, 1);
-		head7.setPos(0.0f, 7.0f, -3.0f);
-		head7.setTexSize(128, 32);
-		head7.mirror = true;
-		setRotation(head7, 0.0f, 0.0f, 0.0f);
-		(head8 = new ModelRenderer(this, 10, 4)).addBox(3.0f, -1.0f, -8.0f, 1, 1, 1);
-		head8.setPos(0.0f, 7.0f, -3.0f);
-		head8.setTexSize(128, 32);
-		head8.mirror = true;
-		setRotation(head8, 0.0f, 0.0f, 0.0f);
-		(head9 = new ModelRenderer(this, 10, 4)).addBox(-4.0f, -1.0f, -6.0f, 1, 1, 1);
-		head9.setPos(0.0f, 7.0f, -3.0f);
-		head9.setTexSize(128, 32);
-		head9.mirror = true;
-		setRotation(head9, 0.0f, 0.0f, 0.0f);
-		(head10 = new ModelRenderer(this, 10, 4)).addBox(-4.0f, -1.0f, -10.0f, 1, 1, 1);
-		head10.setPos(0.0f, 7.0f, -3.0f);
-		head10.setTexSize(128, 32);
-		head10.mirror = true;
-		setRotation(head10, 0.0f, 0.0f, 0.0f);
-		(head11 = new ModelRenderer(this, 10, 4)).addBox(-4.0f, -1.0f, -8.0f, 1, 1, 1);
-		head11.setPos(0.0f, 7.0f, -3.0f);
-		head11.setTexSize(128, 32);
-		head11.mirror = true;
-		setRotation(head11, 0.0f, 0.0f, 0.0f);
-		(head12 = new ModelRenderer(this, 10, 4)).addBox(3.0f, 0.0f, -7.0f, 1, 1, 1);
-		head12.setPos(0.0f, 7.0f, -3.0f);
-		head12.setTexSize(128, 32);
-		head12.mirror = true;
-		setRotation(head12, 0.0f, 0.0f, 0.0f);
-		(head13 = new ModelRenderer(this, 10, 4)).addBox(-4.0f, 0.0f, -7.0f, 1, 1, 1);
-		head13.setPos(0.0f, 7.0f, -3.0f);
-		head13.setTexSize(128, 32);
-		head13.mirror = true;
-		setRotation(head13, 0.0f, 0.0f, 0.0f);
-		(head14 = new ModelRenderer(this, 10, 4)).addBox(-4.0f, 0.0f, -9.0f, 1, 1, 1);
-		head14.setPos(0.0f, 7.0f, -3.0f);
-		head14.setTexSize(128, 32);
-		head14.mirror = true;
-		setRotation(head14, 0.0f, 0.0f, 0.0f);
-		(head15 = new ModelRenderer(this, 10, 4)).addBox(-4.0f, 0.0f, -11.0f, 1, 1, 1);
-		head15.setPos(0.0f, 7.0f, -3.0f);
-		head15.setTexSize(128, 32);
-		head15.mirror = true;
-		setRotation(head15, 0.0f, 0.0f, 0.0f);
-		(head17 = new ModelRenderer(this, 10, 4)).addBox(3.0f, 0.0f, -11.0f, 1, 1, 1);
-		head17.setPos(0.0f, 7.0f, -3.0f);
-		head17.setTexSize(128, 32);
-		head17.mirror = true;
-		setRotation(head17, 0.0f, 0.0f, 0.0f);
-		(head16 = new ModelRenderer(this, 10, 4)).addBox(3.0f, 0.0f, -9.0f, 1, 1, 1);
-		head16.setPos(0.0f, 7.0f, -3.0f);
-		head16.setTexSize(128, 32);
-		head16.mirror = true;
-		setRotation(head16, 0.0f, 0.0f, 0.0f);
+	@Override
+	public ResourceLocation getModelLocation(ChomperEntity chomper) {
+		return MODEL;
 	}
 
 	@Override
-	public void setupAnim(MobEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-		leg1.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		leg1.yRot = 0.0f;
-		leg3.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		leg3.yRot = 0.0f;
-		leg3p2.xRot = MathHelper.cos(limbSwing * 0.6662f) * 1.4f * limbSwingAmount;
-		leg3p2.yRot = 0.0f;
-		leg2.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
-		leg4.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
-		leg4p2.xRot = MathHelper.cos(limbSwing * 0.6662f + 3.1415927f) * 1.4f * limbSwingAmount;
+	public ResourceLocation getTextureLocation(ChomperEntity chomper) {
+		return TEXTURE;
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int light, int overlay, float red, float green, float blue, float alpha) {
-		head.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		body.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		leg1.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		leg2.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		leg3p2.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		leg4p2.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head2.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head3.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		leg4.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		leg3.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head4.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head5.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head6.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head7.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head8.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head9.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head10.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head11.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head12.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head13.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head14.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head15.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head17.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-		head16.render(matrix, buffer, light, overlay, red, green, blue, alpha);
-	}
-
-	private void setRotation(final ModelRenderer model, final float x, final float y, final float z) {
-		model.xRot = x;
-		model.yRot = y;
-		model.zRot = z;
+	public ResourceLocation getAnimationFileLocation(ChomperEntity chomper) {
+		return ANIMATIONS;
 	}
 }

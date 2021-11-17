@@ -4,9 +4,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Rarity;
+import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tags.ITag;
@@ -31,7 +29,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
-public abstract class BlockUtil {
+public final class BlockUtil {
 	public static final float UNBREAKABLE_HARDNESS = -1f;
 	public static final float UNBREAKABLE_RESISTANCE = 999999999f;
 
@@ -240,6 +238,9 @@ public abstract class BlockUtil {
 			}
 			else if (material == Material.WOOL) {
 				return SoundType.WOOL;
+			}
+			else if (material == Material.METAL || material == Material.HEAVY_METAL) {
+				return SoundType.METAL;
 			}
 			else {
 				return SoundType.STONE;
@@ -479,7 +480,7 @@ public abstract class BlockUtil {
 			RegistryObject<FlowingFluidBlock> block = AoABlocks.BLOCKS.register(id.getPath(), blockFunction.apply(flowingFluid, AbstractBlock.Properties.of(material).noCollission().strength(100.0F).noDrops()));
 
 			if (!noBucket)
-				fluidProperties.bucket(AoAItems.ITEMS.register(id.getPath() + "_bucket", bucketFunction.apply(sourceFluid, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(16))));
+				fluidProperties.bucket(AoAItems.ITEMS.register(id.getPath() + "_bucket", bucketFunction.apply(sourceFluid, new Item.Properties().tab(ItemGroup.TAB_MISC).craftRemainder(Items.BUCKET).stacksTo(1))));
 
 			fluidProperties.block(block);
 			sourceFluid.update(AoABlocks.FLUIDS.register(id.getPath(), this.sourceFluid.apply(fluidProperties)));

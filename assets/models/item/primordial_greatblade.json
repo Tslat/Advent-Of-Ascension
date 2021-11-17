@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:item/greatblade",
+  "textures": {
+    "layer0": "aoa3:item/primordial_greatblade"
+  }
+}

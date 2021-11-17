@@ -10,6 +10,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
+import net.minecraft.potion.EffectUtils;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -19,30 +21,32 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntityData;
+import net.tslat.aoa3.entity.ai.animation.Animatable;
+import net.tslat.aoa3.entity.ai.mob.AnimatableMeleeAttackGoal;
 import net.tslat.aoa3.entity.ai.movehelper.RoamingSwimmingMovementController;
-import net.tslat.aoa3.entity.minion.AoAMinion;
-import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAWaterMeleeMob extends WaterMobEntity implements IMob, IAnimatable {
+public abstract class AoAWaterMeleeMob extends WaterMobEntity implements IMob, Animatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 
 	protected AoAWaterMeleeMob(EntityType<? extends WaterMobEntity> entityType, World world) {
 		super(entityType, world);
 
 		this.moveControl = new RoamingSwimmingMovementController(this);
+		addAnimationState("ATTACK");
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25f, false));
-		goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6));
-		goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1, 30));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<AoAMinion>(this, AoAMinion.class, true));
-		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<AoAWaterMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		goalSelector.addGoal(5, new RandomSwimmingGoal(this, 1, 30));
+		goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6));
+		goalSelector.addGoal(7, new LookRandomlyGoal(this));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
 	}
 
 	@Override
@@ -75,6 +79,14 @@ public abstract class AoAWaterMeleeMob extends WaterMobEntity implements IMob, I
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {}
+
+	protected int getAttackSwingDuration() {
+		return 6;
+	}
+
+	protected int getPreAttackTime() {
+		return 0;
+	}
 
 	@Override
 	public float getWalkTargetValue(BlockPos pos, IWorldReader world) {
@@ -134,7 +146,23 @@ public abstract class AoAWaterMeleeMob extends WaterMobEntity implements IMob, I
 	}
 
 	@Override
+	public int getCurrentSwingDuration() {
+		int time = getAttackSwingDuration();
+
+		if (EffectUtils.hasDigSpeed(this))
+			time -= 1 + EffectUtils.getDigSpeedAmplification(this);
+
+		if (hasEffect(Effects.DIG_SLOWDOWN))
+			time += (1 + getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) * 2;
+
+		return time;
+	}
+
+	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
 	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {}
 }

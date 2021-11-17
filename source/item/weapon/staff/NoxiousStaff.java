@@ -4,6 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -16,7 +17,6 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.entity.projectile.staff.NoxiousShotEntity;
-import net.tslat.aoa3.item.misc.RuneItem;
 import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
@@ -35,7 +35,7 @@ public class NoxiousStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	protected void populateRunes(HashMap<RuneItem, Integer> runes) {
+	protected void populateRunes(HashMap<Item, Integer> runes) {
 		runes.put(AoAItems.WIND_RUNE.get(), 2);
 		runes.put(AoAItems.POISON_RUNE.get(), 2);
 		runes.put(AoAItems.STORM_RUNE.get(), 2);
@@ -78,7 +78,7 @@ public class NoxiousStaff extends BaseStaff<Object> {
 
 	@Override
 	public float getDmg() {
-		return 3.5f;
+		return 7f;
 	}
 
 	@Override

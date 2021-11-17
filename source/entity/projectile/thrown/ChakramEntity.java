@@ -19,7 +19,6 @@ import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.entity.projectile.HardProjectile;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.item.weapon.thrown.Chakram;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PotionUtil;
 
@@ -55,7 +54,7 @@ public class ChakramEntity extends BaseBullet implements HardProjectile, IRender
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		target.hurt(DamageSource.thrown(this, null), Chakram.dmg);
+		target.hurt(DamageSource.thrown(this, null), (float)AoAWeapons.CHAKRAM.get().getDamage());
 
 		if (target instanceof LivingEntity)
 			EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.POISON, 60).level(2));

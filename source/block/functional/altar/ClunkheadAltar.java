@@ -10,6 +10,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
@@ -19,7 +20,7 @@ import net.tslat.aoa3.entity.boss.ClunkheadEntity;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class ClunkheadAltar extends BossAltarBlock {
 	public ClunkheadAltar() {
@@ -36,7 +37,7 @@ public class ClunkheadAltar extends BossAltarBlock {
 		if (player instanceof ServerPlayerEntity) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.spawnBoss.difficultyFail");
+					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail"));
 					return ActionResultType.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {

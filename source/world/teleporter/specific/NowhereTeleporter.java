@@ -9,8 +9,8 @@ import net.tslat.aoa3.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.world.teleporter.AoATeleporter;
 import net.tslat.aoa3.world.teleporter.PortalCoordinatesContainer;
 

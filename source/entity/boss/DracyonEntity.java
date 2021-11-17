@@ -7,16 +7,14 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
@@ -27,11 +25,7 @@ import net.tslat.aoa3.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.SpectralShotEntity;
 import net.tslat.aoa3.scheduling.async.DracyonCleanupTask;
-import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PotionUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.TimeUnit;
@@ -101,6 +95,11 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 				projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
 				level.addFreshEntity(projectile);
 			}
+
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
 		}
 	}
 
@@ -119,7 +118,7 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof ServerPlayerEntity)
-			AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(ScreenOverlayPacket.Type.SCRATCHES, 40));
+			AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/scratches.png"), 40));
 	}
 
 	@Override
@@ -149,13 +148,6 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
-	}
-
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
 	}
 
 	@Override

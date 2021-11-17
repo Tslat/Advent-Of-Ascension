@@ -18,33 +18,19 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerBossInfo;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.entity.mob.lborean.AnglerEntity;
-import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PotionUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import net.tslat.aoa3.util.*;
 import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public class KrorEntity extends AoAMeleeMob implements IAnimatable {
+public class KrorEntity extends AoAMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
-
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
-	private static final AnimationBuilder WALK_ANIMATION = new AnimationBuilder().addAnimation("kror.walk", true);
-	private static final AnimationBuilder SWING_ANIMATION = new AnimationBuilder().addAnimation("kror.swing", false);
 
 	public KrorEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
@@ -109,6 +95,13 @@ public class KrorEntity extends AoAMeleeMob implements IAnimatable {
 
 			level.playSound(null, blockPosition(), AoASounds.ENTITY_KROR_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
 		}
+
+		if (!level.isClientSide()) {
+			float healthPercent = getHealth() / getMaxHealth();
+
+			if (healthPercent != bossInfo.getPercent())
+				bossInfo.setPercent(healthPercent);
+		}
 	}
 
 	@Override
@@ -144,13 +137,6 @@ public class KrorEntity extends AoAMeleeMob implements IAnimatable {
 	}
 
 	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		bossInfo.setPercent(getHealth() / getMaxHealth());
-	}
-
-	@Override
 	public void startSeenByPlayer(ServerPlayerEntity player) {
 		super.startSeenByPlayer(player);
 
@@ -173,27 +159,7 @@ public class KrorEntity extends AoAMeleeMob implements IAnimatable {
 
 	@Override
 	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<KrorEntity>(this, "base_animations", 0, new AnimationController.IAnimationPredicate<KrorEntity>() {
-			@Override
-			public PlayState test(AnimationEvent<KrorEntity> event) {
-				if (swinging) {
-					event.getController().setAnimation(SWING_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-				else if (event.isMoving()) {
-					event.getController().setAnimation(WALK_ANIMATION);
-
-					return PlayState.CONTINUE;
-				}
-
-				return PlayState.STOP;
-			}
-		}));
-	}
-
-	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
+		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
 	}
 }

@@ -25,22 +25,17 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.item.armour.AdventArmour;
-import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.constant.AttackSpeed;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerDataManager;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.misc.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -122,7 +117,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 			if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.GHOULISH)
 				energyConsumption *= 0.7f;
 
-			if (plData.stats().getResourceValue(Resources.ENERGY) < energyConsumption)
+			if (!player.isCreative() && plData.getResource(AoAResources.SPIRIT.get()).getCurrentValue() < energyConsumption)
 				return ActionResult.fail(stack);
 
 			player.startUsingItem(hand);
@@ -142,7 +137,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 			if (plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.GHOULISH)
 				energyConsumption *= 0.7f;
 
-			if (plData.stats().getResourceValue(Resources.ENERGY) >= energyConsumption) {
+			if (((ServerPlayerEntity)player).isCreative() || plData.getResource(AoAResources.SPIRIT.get()).hasAmount(energyConsumption)) {
 				if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 					if (consumeEnergy(plData, stack, energyConsumption)) {
 						if (getFiringSound() != null)
@@ -162,7 +157,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 			}
 			else {
 				if (player.getUseItem() != ItemStack.EMPTY)
-					PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, Resources.ENERGY, energyConsumption);
+					PlayerUtil.notifyPlayerOfInsufficientResources((ServerPlayerEntity)player, AoAResources.SPIRIT.get(), energyConsumption);
 
 				player.releaseUsingItem();
 			}
@@ -177,7 +172,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	public abstract void fire(ItemStack blaster, LivingEntity shooter);
 
 	public boolean consumeEnergy(PlayerDataManager plData, ItemStack stack, float cost) {
-		return plData.stats().consumeResource(Resources.ENERGY, cost, false);
+		return plData.getResource(AoAResources.SPIRIT.get()).consume(cost, false);
 	}
 
 	@Override
@@ -233,6 +228,6 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 
 		float energyConsumption = (1 + (0.3f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), stack))) * getEnergyCost() * Math.max(0, (1 - 0.07f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.RECHARGE.get(), stack)));
 
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(energyConsumption, 2)), new TranslationTextComponent(LocaleUtil.Constants.ENERGY_RESOURCE)));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_RESOURCE, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(energyConsumption, 2)), AoAResources.SPIRIT.get().getName()));
 	}
 }

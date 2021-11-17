@@ -1,0 +1,82 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "north",
+        "type": "standing"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_freestand",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "type": "standing"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_freestand"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "type": "standing"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_freestand",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "type": "standing"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_freestand",
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "north",
+        "type": "mounted"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_mounted",
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "south",
+        "type": "mounted"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_mounted"
+      }
+    },
+    {
+      "when": {
+        "facing": "west",
+        "type": "mounted"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_mounted",
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "east",
+        "type": "mounted"
+      },
+      "apply": {
+        "model": "aoa3:block/bejewelled_haunted_banner_mounted",
+        "y": 270
+      }
+    }
+  ]
+}

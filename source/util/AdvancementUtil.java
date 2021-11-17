@@ -5,7 +5,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
-public abstract class AdvancementUtil {
+public final class AdvancementUtil {
 	public static Advancement getAdvancement(ResourceLocation id) {
 		return ServerLifecycleHooks.getCurrentServer().getAdvancements().getAdvancement(id);
 	}

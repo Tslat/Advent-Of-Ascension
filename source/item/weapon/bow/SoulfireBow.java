@@ -8,10 +8,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -25,7 +25,7 @@ public class SoulfireBow extends BaseBow {
 	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
 		CustomArrowEntity arrow = super.makeArrow(shooter, bowStack, ammoStack, velocity, consumeAmmo);
 
-		if (arrow != null && shooter instanceof ServerPlayerEntity && PlayerUtil.consumeResource((ServerPlayerEntity)shooter, Resources.SOUL, 50, false))
+		if (arrow != null && shooter instanceof ServerPlayerEntity && PlayerUtil.consumeResource((ServerPlayerEntity)shooter, AoAResources.SPIRIT.get(), 200, false))
 			arrow.setGlowing(true);
 
 		return arrow;

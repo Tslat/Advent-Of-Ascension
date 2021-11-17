@@ -1,12 +1,16 @@
 package net.tslat.aoa3.item.weapon.sniper;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;
 
 public class Mineral extends BaseSniper {
+	private static final ResourceLocation BOULDER_SCOPE_TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/boulder.png");
+
 	public Mineral(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
@@ -18,7 +22,7 @@ public class Mineral extends BaseSniper {
 	}
 
 	@Override
-	public ScopeOverlayRenderer.Type getScopeType() {
-		return ScopeOverlayRenderer.Type.BOULDER;
+	public ResourceLocation getScopeTexture(ItemStack stack) {
+		return BOULDER_SCOPE_TEXTURE;
 	}
 }

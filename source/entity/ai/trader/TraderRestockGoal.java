@@ -2,6 +2,7 @@ package net.tslat.aoa3.entity.ai.trader;
 
 import net.minecraft.entity.ai.goal.Goal;
 import net.tslat.aoa3.entity.base.AoATrader;
+import net.tslat.aoa3.mixin.common.invoker.AccessibleVillagerEntity;
 
 import java.util.EnumSet;
 
@@ -15,7 +16,7 @@ public class TraderRestockGoal extends Goal {
 	}
 
 	public boolean canUse() {
-		return this.trader.isAlive() && !this.trader.isTrading() && this.trader.canRestock() && this.trader.allowedToRestock() && !this.trader.level.hasNearbyAlivePlayer(this.trader.position().x(), this.trader.position().y(), this.trader.position().z(), 24);
+		return this.trader.isAlive() && !this.trader.isTrading() && this.trader.canRestock() && ((AccessibleVillagerEntity)this.trader).hasSpareRestocks() && !this.trader.level.hasNearbyAlivePlayer(this.trader.position().x(), this.trader.position().y(), this.trader.position().z(), 24);
 	}
 
 	@Override

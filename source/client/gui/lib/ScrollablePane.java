@@ -35,7 +35,7 @@ public abstract class ScrollablePane {
 	protected float distanceScrolled;
 	private float scrollFactor;
 
-	public ScrollablePane(Minecraft mc, int top, int left, int viewHeight, int viewWidth, float... renderingScale) {
+	public ScrollablePane(Minecraft mc, int top, int left, int viewHeight, int viewWidth, float renderingScale) {
 		this.mc = mc;
 		this.top = top;
 		this.left = left;
@@ -43,9 +43,7 @@ public abstract class ScrollablePane {
 		this.viewHeight = viewHeight;
 		this.bottom = top + viewHeight;
 		this.right = left + viewWidth;
-
-		if (renderingScale.length > 0)
-			currentRenderScale = renderingScale[0];
+		this.currentRenderScale = renderingScale;
 	}
 
 	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
@@ -54,7 +52,7 @@ public abstract class ScrollablePane {
 		int scrollBarWidth = 6;
 		mouseFocussed = isMouseHovering();
 		int paneHeight = getFullPaneHeight();
-		int paneViewDiff = paneHeight - viewHeight;
+		int paneViewDiff = Math.max(0, paneHeight - viewHeight);
 
 		if (paneViewDiff > 0)
 			scrollBarHeight = (int)MathHelper.clamp(((float)(viewHeight * viewHeight) / (float)paneHeight), 32, viewHeight);
@@ -62,7 +60,7 @@ public abstract class ScrollablePane {
 		if (isDragging) {
 			if (mouseYPosState == -1) {
 				if (mouseFocussed) {
-					if (mouseX >= right - scrollBarWidth && mouseX <= right) {
+					if (mouseX >= right - scrollBarWidth - 2 && mouseX <= right) {
 						scrollFactor = -1;
 						int scrollHeight = Math.max(paneHeight - viewHeight, 1);
 						scrollFactor /= (float)(viewHeight - scrollBarHeight) / (float)scrollHeight;
@@ -86,12 +84,12 @@ public abstract class ScrollablePane {
 			mouseYPosState = -1;
 		}
 
-		distanceScrolled = MathHelper.clamp(distanceScrolled, 0, paneHeight - viewHeight);
+		distanceScrolled = MathHelper.clamp(distanceScrolled, 0, paneViewDiff);
 		MainWindow mcWindow = mc.getWindow();
 		float windowWidthScale = currentRenderScale * (mcWindow.getScreenWidth() / (float)mcWindow.getGuiScaledWidth());
 		float windowHeightScale = currentRenderScale * (mcWindow.getScreenHeight() / (float)mcWindow.getGuiScaledHeight());
 
-		RenderSystem.enableScissor((int)((left - 1.5) * windowWidthScale), (int)((mcWindow.getScreenHeight() / windowHeightScale - bottom) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale));
+		RenderSystem.enableScissor((int)((left - 1.5) * windowWidthScale), (int)((mcWindow.getScreenHeight() / windowHeightScale - bottom - 2) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale + 2));
 		drawBackground(matrix);
 		GuiUtils.drawGradientRect(matrix.last().pose(), 0, left - 1, top - 1, right + 1, bottom + 1, 0xC0101010, 0xD0101010);
 		int newTop = top - Math.max(0, (int)distanceScrolled);
@@ -146,13 +144,13 @@ public abstract class ScrollablePane {
 	public boolean handleMouseClick(double mouseX, double mouseY, int button) {
 		isDragging = true;
 
-		return true;
+		return isMouseHovering();
 	}
 
 	public boolean handleMouseReleased(double mouseX, double mouseY, int button) {
 		isDragging = false;
 
-		return true;
+		return isMouseHovering();
 	}
 
 	public boolean handleMouseScroll(double mouseX, double mouseY, double scrollAmount) {
@@ -162,10 +160,10 @@ public abstract class ScrollablePane {
 		if (scrollAmount != 0)
 			distanceScrolled += -20 * scrollAmount;
 
-		return true;
+		return isMouseHovering();
 	}
 
-	private boolean isMouseHovering() {
+	protected boolean isMouseHovering() {
 		return mouseX >= left && mouseX <= right && mouseY >= top && mouseY <= bottom;
 	}
 

@@ -37,11 +37,11 @@ public class SunShotEntity extends BaseEnergyShot {
 
 		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB)) {
 			if (!e.isOnFire() && !e.fireImmune())
-				e.setSecondsOnFire(1);
+				e.setSecondsOnFire(2);
 		}
 
 		if (getAge() >= 260) {
-			WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
+			WorldUtil.createExplosion(getOwner(), level, this, 3.5f);
 			remove();
 		}
 	}

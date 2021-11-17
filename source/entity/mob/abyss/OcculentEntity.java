@@ -1,32 +1,27 @@
 package net.tslat.aoa3.entity.mob.abyss;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.Heightmap;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.ClientOperations;
 
 import javax.annotation.Nullable;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OcculentEntity extends AoAMeleeMob {
-	private OcculentEntity mirageHost = null;
+	public final CopyOnWriteArrayList<Pair<Integer, Vector3d>> clones = new CopyOnWriteArrayList<Pair<Integer, Vector3d>>();
 
 	public OcculentEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
-	}
-
-	public OcculentEntity(OcculentEntity mirageHost) {
-		this(AoAEntities.Mobs.OCCULENT.get(), mirageHost.level);
-
-		this.mirageHost = mirageHost;
 	}
 
 	@Override
@@ -51,38 +46,14 @@ public class OcculentEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (mirageHost != null) {
-			return false;
-		}
-		else {
-			return super.hurt(source, amount);
-		}
-	}
-
-	@Override
 	public void tick() {
 		super.tick();
 
-		if (true)
-			return;
+		if (level.isClientSide() && RandomUtil.oneInNChance(200)) {
+			double xPos = random.nextFloat() * 10 - 5;
+			double zPos = random.nextFloat() * 10 - 5;
 
-		if (level.isClientSide()) {
-			if (mirageHost != null) {
-				if (tickCount >= 600 || !mirageHost.isAlive()) {
-					remove();
-					teleportTo(0, 0, 0);
-				}
-			}
-			else if (RandomUtil.oneInNChance(200)) {
-				OcculentEntity occulent = new OcculentEntity(this);
-				double xPos = getX() + (int)(random.nextFloat() * 10 - 5);
-				double zPos = getZ() + (int)(random.nextFloat() * 10 - 5);
-				double yPos = level.getHeight(Heightmap.Type.WORLD_SURFACE, (int)xPos, (int)zPos);
-
-				occulent.setPos(xPos, yPos, zPos);
-				ClientOperations.spawnClientOnlyEntity(occulent);
-			}
+			clones.add(Pair.of(GlobalEvents.tick + 600, new Vector3d(xPos, 0, zPos)));
 		}
 	}
 }

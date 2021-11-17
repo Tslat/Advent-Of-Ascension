@@ -27,8 +27,8 @@ import net.tslat.aoa3.common.container.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
-import net.tslat.aoa3.util.constant.Skills;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -174,7 +174,7 @@ public class InfusionTableContainer extends Container {
 			if (recipeMatch.isPresent()) {
 				InfusionRecipe matchedRecipe = recipeMatch.get();
 
-				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)player, Skills.INFUSION, matchedRecipe.getInfusionReq()))) {
+				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)player, AoASkills.IMBUING.get(), matchedRecipe.getInfusionReq()))) {
 					craftResult.setRecipeUsed(matchedRecipe);
 
 					resultStack = matchedRecipe.assemble(inv);
@@ -187,7 +187,7 @@ public class InfusionTableContainer extends Container {
 	}
 
 	private void applyRecipeXp(ServerPlayerEntity player, float xp) {
-		PlayerUtil.giveXpToPlayer(player, Skills.INFUSION, xp);
+		PlayerUtil.giveXpToPlayer(player, AoASkills.IMBUING.get(), xp, false);
 	}
 
 	public static class InfusionInventory extends CraftingInventory {

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "side": "aoa3:block/stranglewood_planks",
+    "bottom": "aoa3:block/stranglewood_planks",
+    "top": "aoa3:block/stranglewood_planks"
+  }
+}

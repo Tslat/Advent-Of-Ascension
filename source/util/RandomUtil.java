@@ -8,7 +8,8 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Random;
 
-public abstract class RandomUtil {
+public final class RandomUtil {
+	private static final char[] ALPHANUMERIC_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
 	public static final EasyRandom RANDOM = new EasyRandom(new Random());
 
 	public static boolean fiftyFifty() {
@@ -65,6 +66,16 @@ public abstract class RandomUtil {
 
 	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world) {
 		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world);
+	}
+
+	public static String getRandomAlphaNumeric(int length) {
+		StringBuilder builder = new StringBuilder();
+
+		for (int i = 0; i < length; i++) {
+			builder.append(ALPHANUMERIC_CHARACTERS[RANDOM.randomNumberUpTo(ALPHANUMERIC_CHARACTERS.length)]);
+		}
+
+		return builder.toString();
 	}
 
 	public static final class EasyRandom {
@@ -151,6 +162,16 @@ public abstract class RandomUtil {
 				mutablePos.set(world.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, mutablePos));
 
 			return mutablePos.immutable();
+		}
+
+		public String getRandomAlphaNumeric(int length) {
+			StringBuilder builder = new StringBuilder();
+
+			for (int i = 0; i < length; i++) {
+				builder.append(getRandomSelection(ALPHANUMERIC_CHARACTERS));
+			}
+
+			return builder.toString();
 		}
 	}
 }

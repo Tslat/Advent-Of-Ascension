@@ -10,11 +10,11 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.entity.base.AoARangedMob;
 import net.tslat.aoa3.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.entity.projectile.mob.LelyetianShotEntity;
-import net.tslat.aoa3.util.constant.Resources;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
@@ -49,7 +49,7 @@ public class LelyetianCasterEntity extends AoARangedMob {
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
 		if (target instanceof ServerPlayerEntity)
-			PlayerUtil.getAdventPlayer((ServerPlayerEntity)target).stats().consumeResource(Resources.ENERGY, 50, true);
+			PlayerUtil.consumeResource((ServerPlayerEntity)target, AoAResources.SPIRIT.get(), 50, true);
 	}
 
 	@Nullable

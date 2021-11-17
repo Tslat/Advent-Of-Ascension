@@ -14,8 +14,6 @@ import net.minecraft.world.IWorld;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.AbstractBlock.Properties;
-
 public class WaterloggableBlock extends Block implements IWaterLoggable {
 	public WaterloggableBlock(Properties properties) {
 		super(properties);

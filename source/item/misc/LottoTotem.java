@@ -11,11 +11,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.misc.LottoTotemEntity;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -41,7 +42,7 @@ public class LottoTotem extends Item {
 
 		if (!world.isClientSide) {
 			if (!world.getEntitiesOfClass(LottoTotemEntity.class, new AxisAlignedBB(pos).inflate(4)).isEmpty()) {
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.lottoTotem.nearby", TextFormatting.RED);
+				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.lottoTotem.nearby").withStyle(TextFormatting.RED));
 
 				return ActionResultType.FAIL;
 			}
@@ -66,10 +67,10 @@ public class LottoTotem extends Item {
 					selectedWinner--;
 				}
 
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.lottoTotem.spawn", TextFormatting.GOLD);
+				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.lottoTotem.spawn").withStyle(TextFormatting.GOLD));
 			}
 			else {
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, "message.feedback.lottoTotem.noSpace", TextFormatting.RED);
+				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.lottoTotem.noSpace").withStyle(TextFormatting.RED));
 
 				return ActionResultType.FAIL;
 			}

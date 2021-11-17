@@ -1,11 +1,13 @@
 package net.tslat.aoa3.item.weapon.shotgun;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.entity.projectile.gun.LimoniteBulletEntity;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -20,13 +22,26 @@ public class PurityShotgun extends BaseShotgun {
 	}
 
 	@Override
-	public void fireShotgun(LivingEntity shooter, Hand hand, float spreadFactor, int pellets) {
+	protected boolean fireGun(LivingEntity shooter, ItemStack stack, Hand hand) {
+		BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);
+
+		if (bullet == null)
+			return false;
+
+		int pellets = getPelletCount();
+		float spreadFactor = 0.1f * pellets * (1 - 0.15f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.FORM.get(), stack));
 		boolean charged = RandomUtil.oneInNChance(5);
 
 		for (int i = 0; i < pellets; i++) {
 			BaseBullet pellet = new LimoniteBulletEntity(shooter, this, hand, 4, charged ? 1.5f : 1.0f, 0, (random.nextFloat() - 0.5f) * spreadFactor, (random.nextFloat() - 0.5f) * spreadFactor, (random.nextFloat() - 0.5f) * spreadFactor);
+
 			shooter.level.addFreshEntity(pellet);
 		}
+
+		if (!shooter.level.isClientSide())
+			doFiringEffects(shooter, bullet, stack, hand);
+
+		return true;
 	}
 
 	@Override

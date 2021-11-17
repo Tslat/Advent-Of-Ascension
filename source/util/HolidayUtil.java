@@ -3,7 +3,7 @@ package net.tslat.aoa3.util;
 import java.time.LocalDate;
 import java.time.Month;
 
-public abstract class HolidayUtil {
+public final class HolidayUtil {
 	public static Holiday getCurrentHoliday() {
 		LocalDate date = LocalDate.now();
 
@@ -17,6 +17,18 @@ public abstract class HolidayUtil {
 			return Holiday.HALLOWEEN;
 
 		return Holiday.NONE;
+	}
+
+	public static boolean isChristmas() {
+		return getCurrentHoliday() == Holiday.CHRISTMAS;
+	}
+
+	public static boolean isHalloween() {
+		return getCurrentHoliday() == Holiday.HALLOWEEN;
+	}
+
+	public static boolean isAprilFools() {
+		return getCurrentHoliday() == Holiday.APRIL_FOOLS;
 	}
 
 	public enum Holiday {

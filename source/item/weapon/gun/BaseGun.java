@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -16,11 +17,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.*;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.GunRecoilPacket;
@@ -49,30 +52,30 @@ public abstract class BaseGun extends Item {
 
 	protected final double dmg;
 	protected final int firingDelay;
-	protected final float recoil;
+	protected final float recoilMod;
 	protected double holsterMod;
 
-	public BaseGun(Item.Properties properties, final double dmg, final int fireDelayTicks, final float recoil) {
+	public BaseGun(Item.Properties properties, final double dmg, final int fireDelayTicks, final float recoilMod) {
 		super(properties);
 
 		this.dmg = dmg;
 		this.firingDelay = fireDelayTicks;
-		this.recoil = recoil;
+		this.recoilMod = recoilMod;
 		this.holsterMod = getDamage() == 0 ? 0.85 : this instanceof BaseThrownWeapon ? 0.5 : 0.8 + 0.17 * Math.min(((20 / (double)getFiringDelay()) * getDamage()) / 55, 0.85);
 
 		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MAINHAND, "AoAGunMainHand", -getHolsterSpeed(), AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}
 
-	public BaseGun(ItemGroup itemGroup, final double dmg, final int durability, final int fireDelayTicks, final float recoil) {
-		this(new Item.Properties().tab(itemGroup).durability(durability), dmg, fireDelayTicks, recoil);
+	public BaseGun(ItemGroup itemGroup, final double dmg, final int durability, final int fireDelayTicks, final float recoilMod) {
+		this(new Item.Properties().tab(itemGroup).durability(durability), dmg, fireDelayTicks, recoilMod);
 	}
 
 	public double getDamage() {
 		return dmg;
 	}
 
-	public float getRecoil() {
-		return recoil;
+	public float getRecoilModifier() {
+		return 0.35f;
 	}
 
 	public int getFiringDelay() {
@@ -88,8 +91,35 @@ public abstract class BaseGun extends Item {
 		return null;
 	}
 
+	protected float getFiringSoundPitchAdjust() {
+		return 1f;
+	}
+
 	public float getRecoilForShot(ItemStack stack, LivingEntity shooter) {
-		return getRecoil();
+		return (getDamage() == 0 ? 1 : (float)Math.pow(dmg, 1.4f)) * getRecoilModifier();
+	}
+
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 72000;
+	}
+
+	@Override
+	public int getEnchantmentValue() {
+		return 8;
+	}
+
+	public Item getAmmoItem() {
+		return AoAItems.LIMONITE_BULLET.get();
+	}
+
+	public Hand getGunHand(ItemStack stack) {
+		return EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.BRACE.get(), stack) > 0 ? Hand.OFF_HAND : Hand.MAIN_HAND;
+	}
+
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return slotChanged || oldStack.getItem() != newStack.getItem();
 	}
 
 	@Override
@@ -97,9 +127,8 @@ public abstract class BaseGun extends Item {
 		return false;
 	}
 
-	@Override
-	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
-		return slotChanged || oldStack.getItem() != newStack.getItem();
+	public boolean isFullAutomatic() {
+		return true;
 	}
 
 	@Override
@@ -112,6 +141,9 @@ public abstract class BaseGun extends Item {
 		if (player.isUsingItem() && player.isBlocking())
 			return ActionResult.pass(stack);
 
+		if (player.getAttackStrengthScale(0.0f) < 1)
+			return ActionResult.fail(stack);
+
 		if (hand == Hand.OFF_HAND && player.isShiftKeyDown()) {
 			Item mainItem = player.getItemInHand(Hand.MAIN_HAND).getItem();
 
@@ -119,39 +151,76 @@ public abstract class BaseGun extends Item {
 				return ActionResult.fail(stack);
 		}
 
-		if (player.getAttackStrengthScale(0.0f) < 1)
-			return ActionResult.fail(stack);
-
-		BaseBullet ammo = null;
-
-		if (!world.isClientSide)
-			ammo = findAndConsumeAmmo(player, stack, hand);
-
-		if (ammo != null) {
-			world.addFreshEntity(ammo);
-			player.awardStat(Stats.ITEM_USED.get(this));
-			player.getCooldowns().addCooldown(this, getFiringDelay());
-			ItemUtil.damageItem(stack, player, hand);
-
-			if (getFiringSound() != null)
-				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-
-			if (player instanceof ServerPlayerEntity) {
-				int control = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CONTROL.get(), stack);
-				float recoiling = getRecoilForShot(stack, player) * (1 - control * 0.15f);
-
-				AoAPackets.messagePlayer((ServerPlayerEntity)player, new GunRecoilPacket(hand == Hand.OFF_HAND ? recoiling * 2.5f : recoiling, getFiringDelay()));
-			}
-
-			if (player instanceof ServerPlayerEntity)
-				((ServerPlayerEntity)player).refreshContainer(player.inventoryMenu);
-		}
+		player.startUsingItem(hand);
 
 		return ActionResult.pass(stack);
 	}
 
-	public Hand getGunHand(ItemStack stack) {
-		return EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.BRACE.get(), stack) > 0 ? Hand.OFF_HAND : Hand.MAIN_HAND;
+	@Override
+	public void onUsingTick(ItemStack stack, LivingEntity shooter, int count) {
+		if (!isFullAutomatic() && count < getUseDuration(stack))
+			return;
+
+		ServerPlayerEntity player = shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity)shooter : null;
+		int nextFireDelay = getFiringDelay();
+
+		if (player == null || player.getCooldowns().getCooldownPercent(this, 0) == 0) {
+			Hand hand = getGunHand(stack);
+
+			if (fireGun(shooter, stack, hand)) {
+				ItemStack offhand;
+
+				if (hand == Hand.MAIN_HAND && EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.BRACE.get(), (offhand = shooter.getItemInHand(Hand.OFF_HAND))) > 0)
+					offhand.onUsingTick(shooter, count);
+
+				ItemUtil.damageItem(stack, shooter, 1, hand == Hand.OFF_HAND ? EquipmentSlotType.OFFHAND : EquipmentSlotType.MAINHAND);
+
+				if (player != null) {
+					player.awardStat(Stats.ITEM_USED.get(this));
+					player.getCooldowns().addCooldown(this, nextFireDelay);
+
+					doRecoil(player, stack, hand);
+				}
+			}
+			else {
+				shooter.releaseUsingItem();
+			}
+		}
+	}
+
+	protected boolean fireGun(LivingEntity shooter, ItemStack stack, Hand hand) {
+		BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);
+
+		if (bullet == null)
+			return false;
+
+		shooter.level.addFreshEntity(bullet);
+
+		if (!shooter.level.isClientSide())
+			doFiringEffects(shooter, bullet, stack, hand);
+
+		return true;
+	}
+
+	public void doRecoil(ServerPlayerEntity player, ItemStack stack, Hand hand) {
+		int control = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CONTROL.get(), stack);
+		float recoilAmount = getRecoilForShot(stack, player) * 2 * (1 - control * 0.15f);
+
+		AoAPackets.messagePlayer(player, new GunRecoilPacket(hand == Hand.OFF_HAND ? recoilAmount * 1.25f : recoilAmount, getFiringDelay()));
+	}
+
+	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, Hand hand) {
+		doFiringSound(shooter, bullet, stack, hand);
+
+		((ServerWorld)shooter.level).sendParticles(ParticleTypes.SMOKE, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+
+		if (dmg > 15) {
+			if (dmg > 20) {
+				((ServerWorld)shooter.level).sendParticles(ParticleTypes.FLAME, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+			}
+
+			((ServerWorld)shooter.level).sendParticles(ParticleTypes.POOF, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+		}
 	}
 
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
@@ -172,16 +241,21 @@ public abstract class BaseGun extends Item {
 
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {}
 
-	public BaseBullet findAndConsumeAmmo(PlayerEntity player, ItemStack gunStack, Hand hand) {
-		if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.LIMONITE_BULLET.get()), true, 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
-			return new LimoniteBulletEntity(player, (BaseGun)gunStack.getItem(), hand, 120, 0);
+	protected void doFiringSound(LivingEntity shooter, BaseBullet bullet, ItemStack stack, Hand hand) {
+		if (getFiringSound() != null)
+			shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, getFiringSoundPitchAdjust() + (float)random.nextGaussian() * 0.04f);
+	}
+
+	@Nullable
+	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack gunStack, Hand hand) {
+		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((PlayerEntity)shooter, new ItemStack(getAmmoItem()), !shooter.level.isClientSide(), 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+			return createProjectileEntity(shooter, gunStack, hand);
 
 		return null;
 	}
 
-	@Override
-	public int getEnchantmentValue() {
-		return 8;
+	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, Hand hand) {
+		return new LimoniteBulletEntity(shooter, this, hand, 120, 0);
 	}
 
 	@Nullable
@@ -208,6 +282,7 @@ public abstract class BaseGun extends Item {
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2))));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, new StringTextComponent(NumberUtil.roundToNthDecimalPlace(20 / (float)getFiringDelay(), 2))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, AoAItems.LIMONITE_BULLET.get().getDescription()));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, getAmmoItem().getDescription()));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(isFullAutomatic() ? "items.description.gun.fully_automatic" : "items.description.gun.semi_automatic", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

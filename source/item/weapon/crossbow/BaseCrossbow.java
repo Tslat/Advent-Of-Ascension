@@ -26,6 +26,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.Constants;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -167,8 +168,8 @@ public class BaseCrossbow extends CrossbowItem {
 		CompoundNBT tag = crossbow.getOrCreateTag();
 		ListNBT projectilesNbt;
 
-		if (tag.contains("ChargedProjectiles", 9)) {
-			projectilesNbt = tag.getList("ChargedProjectiles", 10);
+		if (tag.contains("ChargedProjectiles", Constants.NBT.TAG_LIST)) {
+			projectilesNbt = tag.getList("ChargedProjectiles", Constants.NBT.TAG_COMPOUND);
 		}
 		else {
 			projectilesNbt = new ListNBT();
@@ -280,8 +281,8 @@ public class BaseCrossbow extends CrossbowItem {
 		List<ItemStack> projectiles = Lists.newArrayList();
 		CompoundNBT tag = crossbowStack.getTag();
 
-		if (tag != null && tag.contains("ChargedProjectiles", 9)) {
-			ListNBT projectileNbt = tag.getList("ChargedProjectiles", 10);
+		if (tag != null && tag.contains("ChargedProjectiles", Constants.NBT.TAG_LIST)) {
+			ListNBT projectileNbt = tag.getList("ChargedProjectiles", Constants.NBT.TAG_COMPOUND);
 
 			for (int i = 0; i < projectileNbt.size(); ++i) {
 				projectiles.add(ItemStack.of(projectileNbt.getCompound(i)));
@@ -295,7 +296,7 @@ public class BaseCrossbow extends CrossbowItem {
 		CompoundNBT tag = crossbowStack.getTag();
 
 		if (tag != null) {
-			ListNBT projectilesNbt = tag.getList("ChargedProjectiles", 9);
+			ListNBT projectilesNbt = tag.getList("ChargedProjectiles", Constants.NBT.TAG_LIST);
 
 			projectilesNbt.clear();
 			tag.put("ChargedProjectiles", projectilesNbt);

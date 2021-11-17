@@ -1,12 +1,16 @@
 package net.tslat.aoa3.item.weapon.sniper;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
-import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;
 
 public class Floro500 extends BaseSniper {
+	private static final ResourceLocation FLORO_SCOPE_TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/floro.png");
+
 	public Floro500(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
@@ -18,7 +22,7 @@ public class Floro500 extends BaseSniper {
 	}
 
 	@Override
-	public ScopeOverlayRenderer.Type getScopeType() {
-		return ScopeOverlayRenderer.Type.FLORO;
+	public ResourceLocation getScopeTexture(ItemStack stack) {
+		return FLORO_SCOPE_TEXTURE;
 	}
 }

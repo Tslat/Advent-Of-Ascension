@@ -14,21 +14,25 @@ public class AoAPackets {
 
 	public static void registerPackets() {
 		int id = 0;
-		INSTANCE.registerMessage(id++, SkillDataPacket.class, SkillDataPacket::encode, SkillDataPacket::decode, SkillDataPacket::receiveMessage);
-		INSTANCE.registerMessage(id++, ResourceDataPacket.class, ResourceDataPacket::encode, ResourceDataPacket::decode, ResourceDataPacket::receiveMessage);
-		INSTANCE.registerMessage(id++, TributeDataPacket.class, TributeDataPacket::encode, TributeDataPacket::decode, TributeDataPacket::receiveMessage);
+
+		INSTANCE.registerMessage(id++, PlayerDataSyncPacket.class, PlayerDataSyncPacket::encode, PlayerDataSyncPacket::decode, PlayerDataSyncPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, PlayerDataUpdatePacket.class, PlayerDataUpdatePacket::encode, PlayerDataUpdatePacket::decode, PlayerDataUpdatePacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ToastPopupPacket.class, ToastPopupPacket::encode, ToastPopupPacket::decode, ToastPopupPacket::receiveMessage);
-		INSTANCE.registerMessage(id++, ExpeditionTogglePacket.class, ExpeditionTogglePacket::encode, ExpeditionTogglePacket::decode, ExpeditionTogglePacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ScreenOverlayPacket.class, ScreenOverlayPacket::encode, ScreenOverlayPacket::decode, ScreenOverlayPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, GunRecoilPacket.class, GunRecoilPacket::encode, GunRecoilPacket::decode, GunRecoilPacket::receiveMessage);
-		INSTANCE.registerMessage(id++, LongReachItemHitPacket.class, LongReachItemHitPacket::encode, LongReachItemHitPacket::decode, LongReachItemHitPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, XpGainPacket.class, XpGainPacket::encode, XpGainPacket::decode, XpGainPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, HaloChangePacket.class, HaloChangePacket::encode, HaloChangePacket::decode, HaloChangePacket::receiveMessage);
 		INSTANCE.registerMessage(id++, PlayerHaloDataPacket.class, PlayerHaloDataPacket::encode, PlayerHaloDataPacket::decode, PlayerHaloDataPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, GuiDataPacket.class, GuiDataPacket::encode, GuiDataPacket::decode, GuiDataPacket::receiveMessage);
-		INSTANCE.registerMessage(id++, CommonConfigSyncPacket.class, CommonConfigSyncPacket::encode, CommonConfigSyncPacket::decode, CommonConfigSyncPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, WikiSearchPacket.class, WikiSearchPacket::encode, WikiSearchPacket::decode, WikiSearchPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, MusicPacket.class, MusicPacket::encode, MusicPacket::decode, MusicPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, PatchouliBookSyncPacket.class, PatchouliBookSyncPacket::encode, PatchouliBookSyncPacket::decode, PatchouliBookSyncPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, PatchouliBookOpenPacket.class, PatchouliBookOpenPacket::encode, PatchouliBookOpenPacket::decode, PatchouliBookOpenPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, PatchouliGiveBookPacket.class, PatchouliGiveBookPacket::encode, PatchouliGiveBookPacket::decode, PatchouliGiveBookPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, UpdateClientMovementPacket.class, UpdateClientMovementPacket::encode, UpdateClientMovementPacket::decode, UpdateClientMovementPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, PlayerAbilityKeybindPacket.class, PlayerAbilityKeybindPacket::encode, PlayerAbilityKeybindPacket::decode, PlayerAbilityKeybindPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, AddSkillCyclePacket.class, AddSkillCyclePacket::encode, AddSkillCyclePacket::decode, AddSkillCyclePacket::receiveMessage);
+		INSTANCE.registerMessage(id++, ToggleAoAAbilityPacket.class, ToggleAoAAbilityPacket::encode, ToggleAoAAbilityPacket::decode, ToggleAoAAbilityPacket::receiveMessage);
 	}
 
 	public static void messagePlayer(ServerPlayerEntity player, AoAPacket packet) {

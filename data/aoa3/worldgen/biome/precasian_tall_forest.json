@@ -45,7 +45,6 @@
     "aoa3:skeletal_army_arena",
     "aoa3:kaiyu_temple",
     "aoa3:diocus_den",
-    "aoa3:life_rune_shrine",
     "aoa3:spinoledon_den",
     "aoa3:opteryx_nest",
     "aoa3:jungle_lotto_hut",
@@ -56,6 +55,12 @@
       {
         "type": "aoa3:giant_snail",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:terradon",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -72,20 +77,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:tortione",
-        "weight": 3,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:terradon",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:sabretooth",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tortione",
+        "weight": 3,
         "minCount": 1,
         "maxCount": 1
       }

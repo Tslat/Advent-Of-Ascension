@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.player.PlayerUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class VoxPondsEvents {
 	public static void doPlayerTick(PlayerEntity pl) {
