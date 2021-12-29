@@ -1,0 +1,69 @@
+Advent of Ascension 3 Changelog
+(+: Added; -: Removed; *: Modified)
+
+3.5-Beta-2:
+Items:
+* Fixed Soulstone tools not working properly. (Github issue #2388)
+- Removed Silvro Coin.
+* Changed Achelos Helmet's effect.
+* Changed Oceanus Helmet's effect.
+* Made all airtight armour provide environmental protection and oxygen.
+* Edited Hazmat Armour's description.
+* Edited Face Mask's description.
++ Made Oceanus Helmet craftable and removed it from Corallus' drop table.
++ Made Sealord Helmet craftable and removed it from Corallus' drop table.
+
+Blocks:
+* Fixed Glowshrooms reacting to Bonemeal. (Github issue #2369)
+* Fixed Saplings not being placeable on dimension grass. (Github issue #2395)
+- Removed the unbreakable variants of Archaic Blocks.
+- Removed Immortallis Progressor.
+- Removed Ghostly Banners.
+- Removed Ghoul Banners.
+- Removed Gingerbread Banners.
+- Removed Illusion Banners.
+- Removed Light Banners.
+- Removed Creepoid Banners.
+- Removed Sea Banners.
+- Removed Shiny Banners.
+- Removed Nethengeic Banners.
+- Removed Skeletal Banners.
+
+Entities:
+* Made Pincher & Muncher spawn on the floor. (Github suggestion #2368)
+* Moved Wood Giant to forests.
+* Made giants rarer.
+* Raised Hunter XP gained from killing giants. (Github suggestion #2365)
+* Fixed Web Reaper breaking its name translation when empowered.
+* Made some entity footsteps more consistent with vanilla. (Github issue #2389)
+* Fixed Hiding Fungi giving vanilla xp when killed. (Github issue #2418)
+
+Misc:
+* Fixed particles not rendering. (Github issue #2361)
+* Fixed Lelyetian Trees generating in the sky. (Github issue #2367)
+* Adjusted the amount of Hunter xp gained from killing mobs under level 15.
+* Fixed Crystevia tunnelling through Dimensional Fabric for water falls. (Github issue #2373)
+* Fixed Green Vox Tentacles generating above toxic lakes. (Github issue #2375)
+* Fixed Lunalus growing snow on top of blocks. (Github issue #2377)
+* Fixed big trees generating partially in midair. (Github issue #2378)
+* Fixed Silencer causing sound boosts after moving away from one. (Github issue #2387)
+* Fixed entities not spawning in the nether. (Github issue #2382)
++ Re-added compatibility with JER.
+* Fixed Crystevian crystals generating above the roof. (Github issue #2391)
+* Fixed dimensions turning vanilla grass and leaves black. (Github issue #2394)
+* Fixed some decorations being missing. (Github issue #2381)
+* Fixed Hauling not working. (Github issue #2403)
+* Fixed Professor's Lab not generating. (Github issue #2408)
+* Fixed Creeper HQ not generating properly. (Github issue #2360)
+- Removed Ancient Cavern.
+- Removed Immortallis.
++ Added Nowhere.
+* Fixed Water Rune Shrines not spawning.
+* More fixes to portal systems to attempt to prevent rooftop spawns.
+* Fixed the Frame Bench GUI for JEI rendering wrong. (Github issue #2430)
+* Fixed Clunkhead's arena causing Clunkhead to spawn outside. (Github issue #2435)
+* Fixed Baron Castle not generating properly. (Github issue #2434)
+* Fixed Primordial Shrine generating in the wrong directions. (Github issue #2415)
+
+Textures:
+* Swapped the textures for Shiny & Shyre Banners.
