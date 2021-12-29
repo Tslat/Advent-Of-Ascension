@@ -1,0 +1,40 @@
+Advent of Ascension 3 Changelog
+(+: Added; -: Removed; *: Modified)
+
+3.5-Beta-4:
+Blocks:
+- Removed Erebon Shrine.
+- Removed Luxon Shrine.
+- Removed Pluton Shrine.
+- Removed Selyan Shrine.
+
+Items:
+* Fixed Heat Wave not showing its firing rate. (Github issue #2476)
+* Added Distorting Artifact effects to Lunalus and Lelyetia.
+
+Entities:
+* Fixed Shik only spawning from Dense Stone when the player has silk touch.
+- Removed Portal Master.
+- Removed Coralon.
+- Removed Hydrolon.
+
+Advancements:
+* Fixed Breathless having the wrong icon.
+
+Locale:
+* Fixed a missing letter in the Shell description. (Github issue #2470)
+
+Structures:
+* Fixed the Professor in his structure always spawning with the wrong health. (Github issue #2475)
+* Fixed some structures generating at y=0.
+* Try again to fix Guardian Tower.
++ Re-added structures to Mysterium.
+
+Dimensions:
+- Removed the wind from Shyrelands.
+* Fixed Nowhere blocking the Jukebox's usage. (Github issue #2473)
+
+Misc:
+* Removed all AoA entity spawn entries for mushroom island biomes.
+* Added bastion treasure to the loot list for aoa loot. (Github suggestion #2484)
+* Added rarities to a number of AoA blocks and items. (Github suggestion #2479)
