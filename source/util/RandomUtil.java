@@ -1,12 +1,15 @@
 package net.tslat.aoa3.util;
 
+import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 public final class RandomUtil {
 	private static final char[] ALPHANUMERIC_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
@@ -21,6 +24,10 @@ public final class RandomUtil {
 	}
 
 	public static boolean percentChance(double percentChance) {
+		return RANDOM.percentChance(percentChance);
+	}
+
+	public static boolean percentChance(float percentChance) {
 		return RANDOM.percentChance(percentChance);
 	}
 
@@ -68,6 +75,10 @@ public final class RandomUtil {
 		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world);
 	}
 
+	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world, @Nullable Predicate<BlockState> statePredicate, int tries) {
+		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world, statePredicate, tries);
+	}
+
 	public static String getRandomAlphaNumeric(int length) {
 		StringBuilder builder = new StringBuilder();
 
@@ -80,6 +91,10 @@ public final class RandomUtil {
 
 	public static final class EasyRandom {
 		private final Random RANDOM;
+
+		public EasyRandom() {
+			this(new Random());
+		}
 
 		public EasyRandom(@Nonnull Random rand) {
 			this.RANDOM = rand;
@@ -101,6 +116,16 @@ public final class RandomUtil {
 		}
 
 		public boolean percentChance(double percentChance) {
+			if (percentChance <= 0)
+				return false;
+
+			if (percentChance >= 1)
+				return true;
+
+			return RANDOM.nextDouble() < percentChance;
+		}
+
+		public boolean percentChance(float percentChance) {
 			if (percentChance <= 0)
 				return false;
 
@@ -151,17 +176,27 @@ public final class RandomUtil {
 		}
 
 		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world) {
+			return getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world, null, 1);
+		}
+
+		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world, @Nullable Predicate<BlockState> statePredicate, int tries) {
 			BlockPos.Mutable mutablePos = centerPos.mutable();
-			int newX = (int)Math.floor(mutablePos.getX() + RANDOM.nextFloat() * xRadius * 2 - xRadius);
-			int newY = (int)Math.floor(mutablePos.getY() + RANDOM.nextFloat() * yRadius * 2 - yRadius);
-			int newZ = (int)Math.floor(mutablePos.getZ() + RANDOM.nextFloat() * zRadius * 2 - zRadius);
 
-			mutablePos.set(newX, newY, newZ);
+			for (int i = 0; i < tries; i++) {
+				int newX = (int)Math.floor(mutablePos.getX() + RANDOM.nextFloat() * xRadius * 2 - xRadius);
+				int newY = (int)Math.floor(mutablePos.getY() + RANDOM.nextFloat() * yRadius * 2 - yRadius);
+				int newZ = (int)Math.floor(mutablePos.getZ() + RANDOM.nextFloat() * zRadius * 2 - zRadius);
 
-			if (safeSurfacePlacement && world != null)
-				mutablePos.set(world.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, mutablePos));
+				mutablePos.set(newX, newY, newZ);
 
-			return mutablePos.immutable();
+				if (safeSurfacePlacement && world != null)
+					mutablePos.set(world.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, mutablePos));
+
+				if (statePredicate == null || statePredicate.test(world.getBlockState(mutablePos)))
+					return mutablePos.immutable();
+			}
+
+			return centerPos;
 		}
 
 		public String getRandomAlphaNumeric(int length) {

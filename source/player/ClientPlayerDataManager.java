@@ -2,11 +2,13 @@ package net.tslat.aoa3.player;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Constants;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.PlayerAbilityKeybindPacket;
@@ -23,26 +25,27 @@ import java.util.Comparator;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
-public final class ClientPlayerDataManager {
-	private static ClientPlayerEntity player;
+public final class ClientPlayerDataManager implements PlayerDataManager {
+	private ClientPlayerEntity player;
 
-	private static final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<AoASkill, AoASkill.Instance>(Comparator.comparing(AoASkill::getRegistryName));
-	private static final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<AoAResource, AoAResource.Instance>(Comparator.comparing(AoAResource::getRegistryName));
+	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<AoASkill, AoASkill.Instance>(Comparator.comparing(AoASkill::getRegistryName));
+	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<AoAResource, AoAResource.Instance>(Comparator.comparing(AoAResource::getRegistryName));
 
-	private static final ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>> keyListeners = new ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>>(1);
+	private final ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>> keyListeners = new ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>>(1);
 
-	private static boolean isLegitimate = true;
-	private static int totalLevel = 0;
+	private boolean isLegitimate = true;
+	private int totalLevel = 0;
 
-	public static void setPlayer(ClientPlayerEntity pl) {
-		player = pl;
+	public static ClientPlayerDataManager get() {
+		return ClientOperations.CLIENT_PLAYER_DATA;
 	}
 
-	public void dog() {
-
+	@Override
+	public void updatePlayerInstance(PlayerEntity pl) {
+		player = (ClientPlayerEntity)pl;
 	}
 
-	public static void reset() {
+	public void reset() {
 		player = null;
 		isLegitimate = true;
 		totalLevel = 0;
@@ -52,33 +55,44 @@ public final class ClientPlayerDataManager {
 		keyListeners.clear();
 	}
 
-	public static boolean isLegitimate() {
+	@Override
+	public ClientPlayerEntity player() {
+		return player;
+	}
+
+	@Override
+	public boolean isLegitimate() {
 		return isLegitimate;
 	}
 
-	public static int getTotalLevel() {
+	@Override
+	public int getTotalLevel() {
 		return totalLevel;
 	}
 
-	public static Collection<AoASkill.Instance> getSkills() {
+	@Override
+	public Collection<AoASkill.Instance> getSkills() {
 		return skills.values();
 	}
 
+	@Override
 	@Nonnull
-	public static AoASkill.Instance getSkill(AoASkill skill) {
+	public AoASkill.Instance getSkill(AoASkill skill) {
 		return skills.getOrDefault(skill, AoASkills.DEFAULT);
 	}
 
-	public static Collection<AoAResource.Instance> getResources() {
+	@Override
+	public Collection<AoAResource.Instance> getResources() {
 		return resources.values();
 	}
 
+	@Override
 	@Nonnull
-	public static AoAResource.Instance getResource(AoAResource resource) {
+	public AoAResource.Instance getResource(AoAResource resource) {
 		return resources.getOrDefault(resource, AoAResources.DEFAULT);
 	}
 
-	public static void handleKeyInput(int keycode) {
+	public void handleKeyInput(int keycode) {
 		if (Minecraft.getInstance().player == null || keyListeners.isEmpty() || !keyListeners.containsKey(keycode))
 			return;
 
@@ -94,7 +108,7 @@ public final class ClientPlayerDataManager {
 			AoAPackets.messageServer(new PlayerAbilityKeybindPacket(abilities));
 	}
 
-	private static void updateTotalLevel() {
+	private void updateTotalLevel() {
 		totalLevel = 0;
 
 		for (AoASkill.Instance skill : skills.values()) {
@@ -103,7 +117,8 @@ public final class ClientPlayerDataManager {
 		}
 	}
 
-	public static void loadFromNbt(CompoundNBT baseTag) {
+	@Override
+	public void loadFromNbt(CompoundNBT baseTag) {
 		isLegitimate = baseTag.getBoolean("legitimate");
 		int hash = baseTag.getInt("hash");
 
@@ -156,7 +171,7 @@ public final class ClientPlayerDataManager {
 		}
 	}
 
-	public static void updateData(CompoundNBT syncTag) {
+	public void updateData(CompoundNBT syncTag) {
 		if (syncTag.contains("skills")) {
 			CompoundNBT skillsData = syncTag.getCompound("skills");
 
@@ -191,7 +206,7 @@ public final class ClientPlayerDataManager {
 			isLegitimate = syncTag.getBoolean("legitimate");
 	}
 
-	private static void checkForKeyListeners(AoAPlayerEventListener listener) {
+	private void checkForKeyListeners(AoAPlayerEventListener listener) {
 		for (AoAPlayerEventListener.ListenerType type : listener.getListenerTypes()) {
 			if (type == AoAPlayerEventListener.ListenerType.KEY_INPUT) {
 				int keyCode = listener.getKeybind().getKey().getValue();

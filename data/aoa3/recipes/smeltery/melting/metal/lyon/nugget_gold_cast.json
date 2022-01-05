@@ -1,0 +1,20 @@
+{
+  "type": "tconstruct:casting_table",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/nugget"
+  },
+  "fluid": {
+    "tag": "forge:molten_lyon",
+    "amount": 16
+  },
+  "result": {
+    "tag": "forge:nuggets/lyon"
+  },
+  "cooling_time": 17
+}

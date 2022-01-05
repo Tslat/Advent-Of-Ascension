@@ -1,0 +1,17 @@
+{
+  "type": "tconstruct:entity_melting",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "entity": {
+    "type": "aoa3:king_charger"
+  },
+  "result": {
+    "fluid": "aoa3:molten_charger",
+    "amount": 144
+  },
+  "damage": 2
+}

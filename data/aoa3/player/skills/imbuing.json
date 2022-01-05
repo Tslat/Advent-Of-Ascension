@@ -1,12 +1,4 @@
 {
   "xp_modifier": 1.0,
-  "abilities": [
-    {
-      "id": "aoa3:dummy_ability",
-      "unique_id": "2077783627",
-      "description": "skills.aoa3.imbuing.abilities.ritualistHelm.description",
-      "display_name": "skills.aoa3.imbuing.abilities.ritualistHelm.name",
-      "level_req": 100
-    }
-  ]
+  "abilities": []
 }

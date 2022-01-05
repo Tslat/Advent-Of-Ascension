@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:ore_melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:ores/emberstone",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ores/emberstone"
+  },
+  "result": {
+    "fluid": "aoa3:molten_emberstone",
+    "amount": 144
+  },
+  "temperature": 800,
+  "time": 90
+}

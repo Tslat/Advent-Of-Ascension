@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:coins/varsium",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:coins/varsium"
+  },
+  "result": {
+    "fluid": "aoa3:molten_varsium",
+    "amount": 48
+  },
+  "temperature": 450,
+  "time": 32
+}

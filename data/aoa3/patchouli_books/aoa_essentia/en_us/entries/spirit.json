@@ -1,17 +1,24 @@
 {
   "name": "Spirit",
   "category": "aoa3:resources",
-  "icon": "aoa3:laser_blaster",
+  "icon": "aoa3:patchouli/images/icons/spirit_icon.png",
   "pages": [
     {
       "type": "patchouli:text",
       "anchor": "spirit",
-      "text": "$(thing)Spirit$() is a natural resource that represents the $(o)spiritual energy$() of the body.$(br)Your $(thing)spirit$() generates naturally over time, but will have a short delay after it is used before it will begin to regenerate.",
+      "text": "$(thing)Spirit$() is a natural resource that represents the $(o)spiritual energy$(/o) of the body.$(br)Your $(thing)spirit$() generates naturally over time, but will have a short delay after it is used before it will begin to regenerate.",
       "title": "Spirit"
     },
     {
       "type": "patchouli:text",
       "text": "$(thing)Spirit$() is used by $(l:aoa3:blasters#blasters)blasters$(/l) to fire shots, as well as a handful of other weapons.$(br)Some creatures will drain your $(thing)spirit$() on contact, so keep a close eye on your $(thing)spirit$() levels if you intend to use it."
+    },
+    {
+      "type": "patchouli:link",
+      "text": "Visit the official $(aoa) wiki page for more information.",
+      "title": "AoA Wiki",
+      "url": "https://adventofascension.fandom.com/wiki/Spirit",
+      "link_text": "Official Wiki"
     }
   ]
 }

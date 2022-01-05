@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:nuggets/varsium",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/varsium"
+  },
+  "result": {
+    "fluid": "aoa3:molten_varsium",
+    "amount": 16
+  },
+  "temperature": 450,
+  "time": 16
+}

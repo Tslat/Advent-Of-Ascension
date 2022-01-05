@@ -1,6 +1,7 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -20,13 +21,14 @@ import net.minecraft.world.biome.Biomes;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.object.entity.animal.ShinySquidEntity;
+import net.tslat.aoa3.object.entity.base.AbstractLavaFishEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -39,12 +41,15 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 import static net.minecraft.entity.EntitySpawnPlacementRegistry.PlacementType.*;
-import static net.minecraft.world.gen.Heightmap.Type.*;
+import static net.minecraft.world.gen.Heightmap.Type.MOTION_BLOCKING_NO_LEAVES;
+import static net.minecraft.world.gen.Heightmap.Type.OCEAN_FLOOR;
 
-@SuppressWarnings({"unchecked", "rawtypes"})
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
 public final class AoAEntitySpawns {
 	private static final ArrayList<SpawnEntry> SPAWN_ENTRIES = new ArrayList<SpawnEntry>();
+
+    public static void preInit() {
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, false, BiomeLoadingEvent.class, AoAEntitySpawns::onBiomeLoad);
+    }
 
     public static void registerEntitySpawns() {
         Logging.logStatusMessage("Registering entity spawns");
@@ -137,14 +142,37 @@ public final class AoAEntitySpawns {
 
         new SpawnEntry(AoAEntities.Mobs.DEAD_TREE.get(), 10).matchExactBiomes(new ResourceLocation("forest"), new ResourceLocation("wooded_hills")).placeMonster();
 
+        new SpawnEntry(AoAEntities.Animals.SHINY_SQUID.get(), 1).groupSize(0, 1).matchBiomes(BiomeDictionary.Type.OCEAN).place(IN_WATER, MOTION_BLOCKING_NO_LEAVES, ShinySquidEntity::checkShinySquidSpawnRules);
         new SpawnEntry(AoAEntities.Animals.GLISTENING_PIXON.get(), 30).groupSize(0, 4).matchBiomes(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST).ignoreBiomes(BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true)).specialSpawner(PixonSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.ASSASSIN.get(), 1).matchBiomes(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST).ignoreBiomes(BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY).placeNPC().specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.NATURALIST.get(), 1).matchBiomes(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST).ignoreBiomes(BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY).placeNPC().specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.REALMSHIFTER.get(), 1).matchBiomes(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST).ignoreBiomes(BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY).placeNPC().specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchBiomes(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST).ignoreBiomes(BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY).placeNPC().specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.LOTTOMAN.get(), 1).matchBiomes(BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.HILLS, BiomeDictionary.Type.FOREST).ignoreBiomes(BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.CONIFEROUS, BiomeDictionary.Type.SAVANNA, BiomeDictionary.Type.SANDY).placeNPC().specialSpawner(TraderSpawner::addSpawn);
-        new SpawnEntry(AoAEntities.NPCs.HAULING_MASTER.get(), 1).matchBiomes(BiomeDictionary.Type.BEACH, BiomeDictionary.Type.RIVER, BiomeDictionary.Type.SWAMP).placeNPC().specialSpawner(TraderSpawner::addSpawn);
 
+        setSpawnPlacement(AoAEntities.Animals.BLUE_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        //setSpawnPlacement(AoAEntities.Animals.CANDLEFISH.get(), IN_LAVA, MOTION_BLOCKING_NO_LEAVES, AbstractLavaFishEntity::checkFishSpawnRules);
+        setSpawnPlacement(AoAEntities.Animals.CHARRED_CHAR.get(), IN_LAVA, MOTION_BLOCKING_NO_LEAVES, AbstractLavaFishEntity::checkFishSpawnRules);
+        setSpawnPlacement(AoAEntities.Animals.CHOCAW.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        //setSpawnPlacement(AoAEntities.Animals.CRIMSON_SKIPPER.get(), IN_LAVA, MOTION_BLOCKING_NO_LEAVES, AbstractLavaFishEntity::checkFishSpawnRules);
+        setSpawnPlacement(AoAEntities.Animals.DARK_HATCHETFISH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.GREEN_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.HYDRONE.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        //setSpawnPlacement(AoAEntities.Animals.IRONBACK.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.JAMFISH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.PARAPIRANHA.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.PEARL_STRIPEFISH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.PURPLE_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.RAINBOWFISH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        //setSpawnPlacement(AoAEntities.Animals.RAZORFISH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.RED_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.REEFTOOTH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        //setSpawnPlacement(AoAEntities.Animals.ROCKETFISH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+       // setSpawnPlacement(AoAEntities.Animals.SAILBACK.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.SAPPHIRE_STRIDER.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.SKELECANTH.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.WHITE_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
+        setSpawnPlacement(AoAEntities.Animals.YELLOW_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
     }
 
     private static void setAbyssSpawnPlacements() {
@@ -156,7 +184,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.OCCULENT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.WEB_REAPER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.NPCs.BUTCHERY_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "abyssal_plains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "abyssal_plains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.Animals.SHINING_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "abyssal_plains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true)).specialSpawner(PixonSpawner::addSpawn);
     }
@@ -173,7 +200,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.SQUIGGLER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.THARAFLY.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.NPCs.CREATION_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "barren_grounds")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "barren_grounds")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
     }
 
@@ -200,7 +226,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.STITCHES.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.TIPSY.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.NPCs.INNERVATION_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "celevian_highlands")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "celevian_highlands")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
     }
 
@@ -241,7 +266,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.ROCK_CRAWLER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.ROCK_CRITTER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.NPCs.EXTRACTION_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "cavern_depths")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "cavern_depths")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
     }
 
@@ -280,7 +304,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.SUGARFACE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.VALKYRIE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.NPCs.INFUSION_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "greckon_mountains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "greckon_mountains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
     }
 
@@ -301,7 +324,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.POLYTOM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.VOLTRON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.NPCs.FORAGING_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "iromine")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.METALLOID.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "iromine")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "iromine")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
     }
@@ -338,7 +360,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.TRACKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
         new SpawnEntry(AoAEntities.Animals.GLARING_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetian_plains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, false)).specialSpawner(PixonSpawner::addSpawn);
-        new SpawnEntry(AoAEntities.NPCs.LOGGING_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetian_plains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetian_plains")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
     }
 
@@ -353,7 +374,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.FUNGUNG.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
         new SpawnEntry(AoAEntities.Animals.BLOOMING_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "fungal_caverns")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, true)).specialSpawner(PixonSpawner::addSpawn);
-        new SpawnEntry(AoAEntities.NPCs.RUNATION_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "fungal_caverns")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "fungal_caverns")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
     }
 
@@ -378,7 +398,6 @@ public final class AoAEntitySpawns {
 
         new SpawnEntry(AoAEntities.Animals.GLEAMING_PIXON.get(), 12).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "runic_cliffs")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.animalPredicate(AoATags.Blocks.GRASS, false)).specialSpawner(PixonSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "runic_cliffs")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
-        new SpawnEntry(AoAEntities.NPCs.ANIMA_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "runic_cliffs")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
     }
 
     public static void setShyrelandsSpawnPlacements() {
@@ -393,7 +412,6 @@ public final class AoAEntitySpawns {
         setSpawnPlacement(AoAEntities.Mobs.STIMULOSUS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
         setSpawnPlacement(AoAEntities.Mobs.SYSKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.MONSTER);
 
-        new SpawnEntry(AoAEntities.NPCs.EXPEDITION_MASTER.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "shyre_remnants")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "shyre_remnants")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(false)).specialSpawner(TraderSpawner::addSpawn);
     }
 
@@ -410,8 +428,7 @@ public final class AoAEntitySpawns {
         new SpawnEntry(AoAEntities.NPCs.UNDEAD_HERALD.get(), 1).matchExactBiomes(new ResourceLocation(AdventOfAscension.MOD_ID, "vox_wastes")).place(ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true)).specialSpawner(TraderSpawner::addSpawn);
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public static void onBiomeLoad(BiomeLoadingEvent ev) {
+    private static void onBiomeLoad(BiomeLoadingEvent ev) {
         if (ev.getName() == null)
             return;
 
@@ -668,5 +685,7 @@ public final class AoAEntitySpawns {
                 return spawnsInDarkness || world.getRawBrightness(pos, 0) >= 8;
             };
         }
+
+        private static final EntitySpawnPlacementRegistry.IPlacementPredicate<MobEntity> FISH = (EntityType<MobEntity> type, IServerWorld world, SpawnReason reason, BlockPos pos, Random rand) -> world.getBlockState(pos).is(Blocks.WATER) && world.getBlockState(pos.above()).is(Blocks.WATER);
     }
 }

@@ -1,0 +1,15 @@
+{
+  "type": "tconstruct:material_fluid",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "fluid": {
+    "tag": "forge:molten_rosite",
+    "amount": 144
+  },
+  "temperature": 400,
+  "output": "aoa3:rosite"
+}

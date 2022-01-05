@@ -8,19 +8,21 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.settings.PointOfView;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoATags;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
-public class ScreenOverlayRenderer {
+public final class ScreenOverlayRenderer {
 	private static final ConcurrentHashMap<ResourceLocation, Integer> overlays = new ConcurrentHashMap<ResourceLocation, Integer>();
+
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGameOverlayEvent.Post.class, ScreenOverlayRenderer::onOverlayRender);
+	}
 
 	public static void addOverlay(ResourceLocation overlay, int duration) {
 		overlays.put(overlay, duration);
@@ -36,7 +38,7 @@ public class ScreenOverlayRenderer {
 	}
 
 	private static void handleToxicWaste(RenderGameOverlayEvent.Post event) {
-		if (event.isCanceled() || Minecraft.getInstance().options.getCameraType() != PointOfView.FIRST_PERSON || event.getType() != RenderGameOverlayEvent.ElementType.ALL)
+		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
@@ -66,11 +68,13 @@ public class ScreenOverlayRenderer {
 		}
 	}
 
-	@SubscribeEvent
-	public static void renderOverlay(final RenderGameOverlayEvent.Post event) {
+	private static void onOverlayRender(final RenderGameOverlayEvent.Post event) {
+		if (Minecraft.getInstance().options.getCameraType() != PointOfView.FIRST_PERSON)
+			return;
+
 		handleToxicWaste(event);
 
-		if (event.isCanceled() || Minecraft.getInstance().options.getCameraType() != PointOfView.FIRST_PERSON || event.getType() != RenderGameOverlayEvent.ElementType.HELMET || overlays.isEmpty())
+		if (event.getType() != RenderGameOverlayEvent.ElementType.HELMET || overlays.isEmpty())
 			return;
 
 		Minecraft mc = Minecraft.getInstance();

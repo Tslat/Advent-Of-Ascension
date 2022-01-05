@@ -132,7 +132,7 @@ public final class RenderUtil {
 
 	public static void drawCenteredScaledMessage(MatrixStack matrix, FontRenderer fontRenderer, ITextComponent msg, float x, float y, float scale, int colour, StringRenderType renderType) {
 		matrix.pushPose();
-		matrix.scale(scale, scale, scale);
+		matrix.scale(scale, scale, 1);
 
 		float realX = (x - fontRenderer.width(msg) * scale / 2f) / scale;
 		float realY = y / scale;

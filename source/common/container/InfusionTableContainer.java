@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.hooks.BasicEventHooks;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.container.recipe.InfusionRecipe;
+import net.tslat.aoa3.object.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;

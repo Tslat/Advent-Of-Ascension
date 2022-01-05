@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:nuggets/ghastly",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/ghastly"
+  },
+  "result": {
+    "fluid": "aoa3:molten_ghastly",
+    "amount": 16
+  },
+  "temperature": 390,
+  "time": 15
+}

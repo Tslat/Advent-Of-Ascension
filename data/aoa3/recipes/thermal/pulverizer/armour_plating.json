@@ -1,6 +1,6 @@
 {
   "type": "thermal:pulverizer",
-  "input": {
+  "ingredient": {
     "item": "aoa3:armour_plating"
   },
   "result": {

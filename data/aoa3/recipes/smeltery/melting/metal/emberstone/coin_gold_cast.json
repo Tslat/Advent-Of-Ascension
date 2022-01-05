@@ -1,0 +1,23 @@
+{
+  "type": "tconstruct:casting_table",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:coins/emberstone",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/coin"
+  },
+  "fluid": {
+    "tag": "forge:molten_emberstone",
+    "amount": 48
+  },
+  "result": {
+    "tag": "forge:coins/emberstone"
+  },
+  "cooling_time": 35
+}

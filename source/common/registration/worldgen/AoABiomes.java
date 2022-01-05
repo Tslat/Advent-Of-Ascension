@@ -16,28 +16,27 @@ public final class AoABiomes {
 	}
 
 	public static void registerBiomeTypes() {
-		applyBiomeTypes("abyss", BiomeDictionary.Type.DEAD, BiomeDictionary.Type.COLD, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.SPOOKY);
-		applyBiomeTypes("abyssal_vents", BiomeDictionary.Type.DEAD, BiomeDictionary.Type.HOT, BiomeDictionary.Type.WASTELAND);
-		applyBiomeTypes("barathos", BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.DEAD, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.DRY);
-		applyBiomeTypes("candyland", BiomeDictionary.Type.MAGICAL);
-		applyBiomeTypes("celeve", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.VOID);
-		applyBiomeTypes("creeponia", BiomeDictionary.Type.FOREST, BiomeDictionary.Type.LUSH, BiomeDictionary.Type.MAGICAL);
-		applyBiomeTypes("crystevia", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.WET);
-		applyBiomeTypes("deeplands", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.SPARSE);
-		applyBiomeTypes("dustopia", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.FOREST);
-		applyBiomeTypes("gardencia", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.WET, BiomeDictionary.Type.HILLS);
-		applyBiomeTypes("greckon", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.MAGICAL);
+		applyBiomeTypes("abyssal_plains", BiomeDictionary.Type.DEAD, BiomeDictionary.Type.COLD, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.SPOOKY);
+		applyBiomeTypes("barren_grounds", BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.DEAD, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.DRY);
+		applyBiomeTypes("candy_hills", BiomeDictionary.Type.MAGICAL);
+		applyBiomeTypes("celevian_highlands", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.VOID);
+		applyBiomeTypes("creepoid_forest", BiomeDictionary.Type.FOREST, BiomeDictionary.Type.LUSH, BiomeDictionary.Type.MAGICAL);
+		applyBiomeTypes("crystevian_caverns", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.WET);
+		applyBiomeTypes("cavern_depths", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.SPARSE);
+		applyBiomeTypes("dustopian_forest", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.FOREST);
+		applyBiomeTypes("floral_islands", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.WET, BiomeDictionary.Type.HILLS);
+		applyBiomeTypes("greckon_mountains", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.MAGICAL);
 		applyBiomeTypes("haven", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.VOID);
 		applyBiomeTypes("iromine", BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE);
-		applyBiomeTypes("lborean", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.WET, BiomeDictionary.Type.WATER);
-		applyBiomeTypes("lelyetia", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HOT, BiomeDictionary.Type.VOID);
-		applyBiomeTypes("lunalus", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.VOID, BiomeDictionary.Type.SPARSE);
-		applyBiomeTypes("mysterium", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MUSHROOM);
+		applyBiomeTypes("coral_fields", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.WET, BiomeDictionary.Type.WATER);
+		applyBiomeTypes("lelyetian_plains", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HOT, BiomeDictionary.Type.VOID);
+		applyBiomeTypes("asteroid_belt", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.VOID, BiomeDictionary.Type.SPARSE);
+		applyBiomeTypes("fungal_caverns", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MUSHROOM);
 		applyBiomeTypes("nowhere", BiomeDictionary.Type.VOID);
-		applyBiomeTypes("precasia", BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SPARSE);
-		applyBiomeTypes("runandor", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.MOUNTAIN);
-		applyBiomeTypes("shyrelands", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HOT);
-		applyBiomeTypes("vox_ponds", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.WET, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.DEAD);
+		applyBiomeTypes("precasian_tall_forest", BiomeDictionary.Type.PLAINS, BiomeDictionary.Type.SPARSE);
+		applyBiomeTypes("runic_cliffs", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.MOUNTAIN);
+		applyBiomeTypes("shyre_remnants", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HOT);
+		applyBiomeTypes("vox_wastes", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.WET, BiomeDictionary.Type.SPARSE, BiomeDictionary.Type.DEAD);
 	}
 
 	private static void applyBiomeTypes(String biomeId, BiomeDictionary.Type... types) {

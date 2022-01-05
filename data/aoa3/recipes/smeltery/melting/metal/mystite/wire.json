@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:wires/mystite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:wires/mystite"
+  },
+  "result": {
+    "fluid": "aoa3:molten_mystite",
+    "amount": 72
+  },
+  "temperature": 430,
+  "time": 9
+}

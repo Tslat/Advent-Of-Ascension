@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:ingots/skeletal",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/skeletal"
+  },
+  "result": {
+    "fluid": "aoa3:molten_skeletal",
+    "amount": 144
+  },
+  "temperature": 360,
+  "time": 45
+}

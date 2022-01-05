@@ -10,7 +10,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.entity.boss.KrorEntity;
+import net.tslat.aoa3.object.entity.boss.KrorEntity;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;

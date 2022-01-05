@@ -4,11 +4,14 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
@@ -39,8 +42,8 @@ public class InnervationDodge extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		return new TranslationTextComponent(super.getDescription().getKey(), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
 	}
 
 	@Override
@@ -53,6 +56,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 		return AoAKeybinds.ABILITY_ACTION;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean shouldSendKeyPress() {
 		ClientPlayerEntity player = Minecraft.getInstance().player;
@@ -62,7 +66,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 		if (player.input.leftImpulse == 0 || player.input.hasForwardImpulse() || player.level.getGameTime() <= activationTime + 5 || player.abilities.flying)
 			return false;
 
-		if (ClientPlayerDataManager.getResource(AoAResources.ENERGY.get()).hasAmount(this.energyCost)) {
+		if (ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyCost)) {
 			Vector3d movement = player.getDeltaMovement();
 			double limit = player.isOnGround() ? 2.5d : 0.9d;
 			double velocityX = MathHelper.clamp(movement.x() + (MathHelper.cos(yRot * ((float)Math.PI / 180F)) * player.input.leftImpulse), -limit, limit);
@@ -80,9 +84,13 @@ public class InnervationDodge extends AoAAbility.Instance {
 
 	@Override
 	public void handleKeyInput() {
-		skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, false);
-		activatedActionKey(getPlayer());
-		skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 20), false, false);
+		ServerPlayerEntity player = getPlayer();
+
+		skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true);
+		activatedActionKey(player);
+
+		if (skill.canGainXp(true))
+			skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 20), false, false);
 	}
 
 	@Override

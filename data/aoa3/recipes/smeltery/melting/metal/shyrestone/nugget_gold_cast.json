@@ -1,0 +1,20 @@
+{
+  "type": "tconstruct:casting_table",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "cast": {
+    "tag": "tconstruct:casts/multi_use/nugget"
+  },
+  "fluid": {
+    "tag": "forge:molten_shyrestone",
+    "amount": 16
+  },
+  "result": {
+    "tag": "forge:nuggets/shyrestone"
+  },
+  "cooling_time": 15
+}

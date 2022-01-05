@@ -136,7 +136,6 @@ public final class WorldUtil {
 			if (pl.getMainHandItem().onBlockStartBreak(breakPos, pl) || pl.blockActionRestricted(world, breakPos, gameMode))
 				return false;
 
-
 			if (pl.isCreative()) {
 				boolean removed = blockState.removedByPlayer(world, breakPos, player, false, world.getFluidState(breakPos));
 
@@ -251,28 +250,25 @@ public final class WorldUtil {
 		World activeWorld = (World)world;
 		PlayerEntity relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
 
+		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE.key))
+			return relevantPlayer != null && relevantPlayer.isCreative();
+
 		if (relevantPlayer != null) {
 			if (!relevantPlayer.mayBuild())
 				return false;
 
-			if (relevantPlayer instanceof ServerPlayerEntity) {
-				GameType gameMode = ((ServerPlayerEntity)relevantPlayer).gameMode.getGameModeForPlayer();
+			GameType gameMode = PlayerUtil.getGameMode(relevantPlayer);
 
-				if (gameMode == GameType.SPECTATOR)
+			if (gameMode == GameType.SPECTATOR)
+				return false;
+
+			if (gameMode == GameType.ADVENTURE && stack != null) {
+				if (stack.isEmpty())
 					return false;
 
-				if (gameMode == GameType.ADVENTURE && stack != null) {
-					if (stack.isEmpty())
-						return false;
-
-					if (!stack.hasAdventureModePlaceTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false)))
-						return false;
-				}
+				return stack.hasAdventureModePlaceTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false));
 			}
 		}
-
-		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE.key))
-			return relevantPlayer != null && relevantPlayer.isCreative();
 
 		return true;
 	}
@@ -291,18 +287,16 @@ public final class WorldUtil {
 			if (!relevantPlayer.mayBuild())
 				return false;
 
-			if (relevantPlayer instanceof ServerPlayerEntity) {
-				GameType gameMode = ((ServerPlayerEntity)relevantPlayer).gameMode.getGameModeForPlayer();
+			GameType gameMode = PlayerUtil.getGameMode(relevantPlayer);
 
-				if (gameMode == GameType.SPECTATOR)
+			if (gameMode == GameType.SPECTATOR)
+				return false;
+
+			if (gameMode == GameType.ADVENTURE && stack != null) {
+				if (stack.isEmpty())
 					return false;
 
-				if (gameMode == GameType.ADVENTURE && stack != null) {
-					if (stack.isEmpty())
-						return false;
-
-					return stack.hasAdventureModeBreakTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false));
-				}
+				return stack.hasAdventureModeBreakTagForBlock((activeWorld).getTagManager(), new CachedBlockInfo(activeWorld, pos, false));
 			}
 		}
 

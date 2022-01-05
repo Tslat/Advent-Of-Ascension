@@ -22,7 +22,7 @@ import net.tslat.aoa3.common.registration.AoATags;
 import javax.annotation.Nullable;
 
 public class ImmersiveEngineeringIntegration {
-	public static void init() {
+	public static void postInit() {
 		ChemthrowerHandler.registerEffect(AoATags.Fluids.CANDIED_WATER, new ChemThrowerEffectCandiedWater());
 	}
 

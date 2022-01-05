@@ -2,6 +2,7 @@ package net.tslat.aoa3.common.registration;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraftforge.fml.DatagenModLoader;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -792,7 +793,7 @@ public final class AoASounds {
 	}
 
 	private static SoundEvent createSoundEvent(String soundPath) {
-		if (HolidayUtil.isChristmas() && soundPath.endsWith(".fire"))
+		if (HolidayUtil.isChristmas() && soundPath.endsWith(".fire") && !DatagenModLoader.isRunningDataGen())
 			soundPath = "misc.jingle_bells";
 
 		return new SoundEvent(new ResourceLocation("aoa3", soundPath));

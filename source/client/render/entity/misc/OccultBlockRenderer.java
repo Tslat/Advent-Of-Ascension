@@ -12,11 +12,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector4f;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.util.RenderUtil;
 import org.lwjgl.opengl.GL11;
@@ -27,16 +25,18 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static org.lwjgl.opengl.GL11.GL_LINES;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
-public class OccultBlockRenderer {
+public final class OccultBlockRenderer {
 	private static final ConcurrentHashMap<Integer, ArrayList<Pair<BlockPos, BlockState>>> occultBlockMap = new ConcurrentHashMap<Integer, ArrayList<Pair<BlockPos, BlockState>>>();
+
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderWorldLastEvent.class, OccultBlockRenderer::onWorldRender);
+	}
 
 	public static void addOccultBlocks(int renderUntil, ArrayList<Pair<BlockPos, BlockState>> blocks) {
 		occultBlockMap.put(renderUntil, blocks);
 	}
 
-	@SubscribeEvent
-	public static void worldRender(final RenderWorldLastEvent ev) {
+	private static void onWorldRender(final RenderWorldLastEvent ev) {
 		if (occultBlockMap.isEmpty())
 			return;
 

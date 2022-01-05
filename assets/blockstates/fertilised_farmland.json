@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "moisture=0,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland"
+    },
+    "moisture=1,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland"
+    },
+    "moisture=2,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland"
+    },
+    "moisture=3,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland"
+    },
+    "moisture=4,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland"
+    },
+    "moisture=5,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland"
+    },
+    "moisture=6,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland"
+    },
+    "moisture=7,well_fertilised=false": {
+      "model": "aoa3:block/fertilised_farmland_moist"
+    },
+    "moisture=0,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2"
+    },
+    "moisture=1,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2"
+    },
+    "moisture=2,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2"
+    },
+    "moisture=3,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2"
+    },
+    "moisture=4,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2"
+    },
+    "moisture=5,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2"
+    },
+    "moisture=6,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2"
+    },
+    "moisture=7,well_fertilised=true": {
+      "model": "aoa3:block/fertilised_farmland_2_moist"
+    }
+  }
+}

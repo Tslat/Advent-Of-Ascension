@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.network.play.server.SPlaySoundEffectPacket;
 import net.minecraft.util.Hand;
@@ -15,16 +16,19 @@ import net.minecraft.util.Util;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.GameType;
 import net.minecraft.world.World;
-import net.tslat.aoa3.capabilities.adventplayer.AdventPlayerCapability;
-import net.tslat.aoa3.capabilities.adventplayer.AdventPlayerCapabilityHandles;
-import net.tslat.aoa3.capabilities.adventplayer.AdventPlayerCapabilityProvider;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.object.capability.adventplayer.AdventPlayerCapability;
+import net.tslat.aoa3.object.capability.adventplayer.AdventPlayerCapabilityHandles;
+import net.tslat.aoa3.object.capability.adventplayer.AdventPlayerCapabilityProvider;
+import net.tslat.aoa3.object.item.armour.AdventArmour;
 import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -45,9 +49,22 @@ public final class PlayerUtil {
     }
 
     @Nonnull
-    public static PlayerDataManager getAdventPlayer(@Nonnull ServerPlayerEntity player) {
-        AdventPlayerCapabilityHandles cap = player.getCapability(AdventPlayerCapabilityProvider.INSTANCE, null).orElseGet(() -> new AdventPlayerCapability(player));
-        PlayerDataManager plData = cap.getPlayerData();
+    public static ServerPlayerDataManager getAdventPlayer(@Nonnull ServerPlayerEntity player) {
+        AdventPlayerCapabilityHandles cap = player.getCapability(AdventPlayerCapabilityProvider.INSTANCE, null).orElseGet(() -> new AdventPlayerCapability((ServerPlayerEntity)player));
+
+        return cap.getPlayerData();
+    }
+
+    @Nonnull
+    public static PlayerDataManager getAdventPlayer(@Nonnull PlayerEntity player) {
+        PlayerDataManager plData;
+
+        if (!player.level.isClientSide()) {
+            plData = getAdventPlayer((ServerPlayerEntity)player);
+        }
+        else {
+            plData = ClientOperations.CLIENT_PLAYER_DATA;
+        }
 
         if (plData.player() == null)
             plData.updatePlayerInstance(player);
@@ -56,17 +73,17 @@ public final class PlayerUtil {
     }
 
     @Nonnull
-    public static AoASkill.Instance getSkill(ServerPlayerEntity player, AoASkill skill) {
+    public static AoASkill.Instance getSkill(PlayerEntity player, AoASkill skill) {
         return getAdventPlayer(player).getSkill(skill);
     }
 
-    public static int getLevel(ServerPlayerEntity player, AoASkill skill) {
+    public static int getLevel(PlayerEntity player, AoASkill skill) {
         AoASkill.Instance instance = getSkill(player, skill);
 
         return instance == AoASkills.DEFAULT ? 0 : instance.getLevel(true);
     }
 
-    public static boolean doesPlayerHaveLevel(ServerPlayerEntity player, AoASkill skill, int level) {
+    public static boolean doesPlayerHaveLevel(PlayerEntity player, AoASkill skill, int level) {
         return getLevel(player, skill) >= level;
     }
 
@@ -78,11 +95,11 @@ public final class PlayerUtil {
     }
 
     @Nonnull
-    public static AoAResource.Instance getResource(ServerPlayerEntity player, AoAResource resource) {
+    public static AoAResource.Instance getResource(PlayerEntity player, AoAResource resource) {
         return getAdventPlayer(player).getResource(resource);
     }
 
-    public static float getResourceValue(ServerPlayerEntity player, AoAResource resource) {
+    public static float getResourceValue(PlayerEntity player, AoAResource resource) {
         AoAResource.Instance instance = getResource(player, resource);
 
         return instance == AoAResources.DEFAULT ? 0 : instance.getCurrentValue();
@@ -136,6 +153,10 @@ public final class PlayerUtil {
         }
 
         return baseXp * (timeIntervalTicks / 100f);
+    }
+
+    public static float getXpForFractionOfLevel(int currentLevel, float fraction) {
+        return getXpRequiredForNextLevel(currentLevel) * fraction;
     }
 
     @Nullable
@@ -247,10 +268,26 @@ public final class PlayerUtil {
                 return (PlayerEntity)owner;
         }
 
+        if (entity instanceof ProjectileEntity) {
+           Entity owner = ((ProjectileEntity)entity).getOwner();
+
+           if (owner instanceof PlayerEntity)
+               return (PlayerEntity)owner;
+        }
+
         return null;
     }
 
     public static EquipmentSlotType handToEquipmentSlotType(Hand hand) {
         return hand == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
+    }
+
+    public static GameType getGameMode(PlayerEntity player) {
+        if (player instanceof ServerPlayerEntity) {
+            return ((ServerPlayerEntity)player).gameMode.getGameModeForPlayer();
+        }
+        else {
+            return ClientOperations.getGameMode();
+        }
     }
 }

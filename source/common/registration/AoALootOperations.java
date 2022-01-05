@@ -9,9 +9,12 @@ import net.minecraft.loot.functions.ILootFunction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.loottable.condition.*;
-import net.tslat.aoa3.loottable.function.EnchantSpecific;
-import net.tslat.aoa3.loottable.function.GrantSkillXp;
+import net.tslat.aoa3.object.loottable.condition.BlockHasTag;
+import net.tslat.aoa3.object.loottable.condition.HoldingItem;
+import net.tslat.aoa3.object.loottable.condition.PlayerHasLevel;
+import net.tslat.aoa3.object.loottable.condition.PlayerHasResource;
+import net.tslat.aoa3.object.loottable.function.EnchantSpecific;
+import net.tslat.aoa3.object.loottable.function.GrantSkillXp;
 
 public final class AoALootOperations {
 	public static final class LootFunctions {
@@ -31,6 +34,7 @@ public final class AoALootOperations {
 		public static final LootConditionType HOLDING_ITEM = register("holding_item", new HoldingItem.Serializer());
 		public static final LootConditionType PLAYER_HAS_LEVEL = register("player_has_level", new PlayerHasLevel.Serializer());
 		public static final LootConditionType PLAYER_HAS_RESOURCE = register("player_has_resource", new PlayerHasResource.Serializer());
+		public static final LootConditionType HAS_BLOCK_TAG = register("has_block_tag", new BlockHasTag.Serializer());
 
 		private static LootConditionType register(String id, ILootSerializer<? extends ILootCondition> serializer) {
 			return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(AdventOfAscension.MOD_ID, id), new LootConditionType(serializer));

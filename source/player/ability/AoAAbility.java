@@ -41,7 +41,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 		protected AoASkill.Instance skill;
 		private final int levelReq;
 		private final String uniqueIdentifier;
-		private final TranslationTextComponent description;
+		private TranslationTextComponent description;
 
 		public boolean needsSync = true;
 		private ListenerState state;
@@ -52,7 +52,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			this.uniqueIdentifier = JSONUtils.getAsString(data, "unique_id");
 			this.levelReq = JSONUtils.getAsInt(data, "level_req");
 			this.state = ListenerState.fromId(JSONUtils.getAsString(data, "state", ListenerState.ACTIVE.getId()));
-			this.description = new TranslationTextComponent(JSONUtils.getAsString(data, "description", Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+			this.description = data.has("description") ? new TranslationTextComponent(JSONUtils.getAsString(data, "description")) : null;
 
 			checkDeactivation(true, false);
 		}
@@ -63,7 +63,11 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			this.uniqueIdentifier = data.getString("unique_identifier");
 			this.levelReq = data.getInt("level_req");
 			this.state = ListenerState.fromId(data.getString("state"));
-			this.description = new TranslationTextComponent(data.getString("description"));
+			this.description = data.contains("description") ? new TranslationTextComponent(data.getString("description")) : null;
+		}
+
+		protected void updateDescription(TranslationTextComponent defaultDescription) {
+			this.description = defaultDescription;
 		}
 
 		public AoAAbility type() {
@@ -75,6 +79,9 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 		}
 
 		public TranslationTextComponent getDescription() {
+			if (this.description == null)
+				updateDescription(new TranslationTextComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+
 			return this.description;
 		}
 
@@ -84,6 +91,10 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 
 		public int getLevelReq() {
 			return this.levelReq;
+		}
+
+		public AoASkill.Instance getSkill() {
+			return this.skill;
 		}
 
 		@Override
@@ -176,7 +187,9 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 				 data.putString("id", this.type().getRegistryName().toString());
 				 data.putString("unique_identifier", this.uniqueIdentifier);
 				 data.putInt("level_req", this.levelReq);
-				 data.putString("description", this.description.getKey());
+
+				 if (this.description != null)
+					 data.putString("description", this.description.getKey());
 			 }
 
 			 return data;

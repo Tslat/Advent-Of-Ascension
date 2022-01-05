@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:coins/rosite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:coins/rosite"
+  },
+  "result": {
+    "fluid": "aoa3:molten_rosite",
+    "amount": 48
+  },
+  "temperature": 400,
+  "time": 31
+}

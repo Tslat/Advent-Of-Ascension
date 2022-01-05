@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:razorfish"
+    }
+  ],
+  "result": {
+    "item": "aoa3:slice_star",
+    "count": 5
+  }
+}

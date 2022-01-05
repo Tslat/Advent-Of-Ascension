@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.boss.RockRiderModel;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.boss.RockRiderEntity;
+import net.tslat.aoa3.object.entity.boss.RockRiderEntity;
 
 import javax.annotation.Nullable;
 

@@ -4,10 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.FlyingEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.AttributeModifierManager;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.ai.attributes.*;
 import net.minecraft.entity.boss.WitherEntity;
 import net.minecraft.entity.boss.dragon.EnderDragonEntity;
 import net.minecraft.entity.monster.IMob;
@@ -15,14 +12,10 @@ import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.Effects;
-import net.minecraft.util.CombatEntry;
-import net.minecraft.util.CombatTracker;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.util.FakePlayer;
-import net.tslat.aoa3.mixin.common.invoker.AccessibleLivingEntity;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -54,6 +47,8 @@ public final class EntityUtil {
 
 	public static class Predicates {
 		public static final Predicate<LivingEntity> HOSTILE_MOB = entity -> entity instanceof IMob;
+		public static final Predicate<Entity> ATTACKABLE_ENTITY = entity -> entity.isAlive() && EntityPredicates.ATTACK_ALLOWED.test(entity);
+		public static final Predicate<Entity> SURVIVAL_PLAYER = entity -> entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative() && !entity.isSpectator();
 	}
 
 	public static void healEntity(LivingEntity entity, float amount) {
@@ -107,6 +102,9 @@ public final class EntityUtil {
 			else {
 				instance.addTransientModifier(modifier);
 			}
+
+			if (attribute == Attributes.MAX_HEALTH && entity.getHealth() > entity.getMaxHealth())
+				entity.setHealth(entity.getMaxHealth());
 		}
 	}
 
@@ -133,8 +131,12 @@ public final class EntityUtil {
 		if (instance != null) {
 			AttributeModifier modifier = instance.getModifier(modifierId);
 
-			if (modifier != null)
+			if (modifier != null) {
 				instance.removeModifier(modifier);
+
+				if (attribute == Attributes.MAX_HEALTH && entity.getHealth() > entity.getMaxHealth())
+					entity.setHealth(entity.getMaxHealth());
+			}
 		}
 	}
 
@@ -265,7 +267,7 @@ public final class EntityUtil {
 	}
 
 	public static double getEntityJumpVelocity(LivingEntity entity) {
-		float jumpVelocity = ((AccessibleLivingEntity)entity).getJumpVelocity();
+		float jumpVelocity = entity.getJumpPower();
 
 		if (entity.hasEffect(Effects.JUMP))
 			jumpVelocity += 0.1f * entity.getEffect(Effects.JUMP).getAmplifier() + 1;
@@ -288,5 +290,24 @@ public final class EntityUtil {
 		}
 
 		return killers;
+	}
+
+	public static Vector3d getDirectionForFacing(Entity entity) {
+		return new Vector3d(
+				-MathHelper.sin(entity.yRot * (float)Math.PI / 180f),
+				-MathHelper.sin(entity.xRot * (float)Math.PI / 180f),
+				MathHelper.cos(entity.yRot * (float)Math.PI / 180f)
+		);
+	}
+
+	public static Vector3d getVelocityVectorForFacing(Entity entity) {
+		return getVelocityVectorForFacing(entity, 1f);
+	}
+
+	public static Vector3d getVelocityVectorForFacing(Entity entity, float velocityMod) {
+		return new Vector3d(
+				-MathHelper.sin(entity.yRot * (float)Math.PI / 180f) * MathHelper.cos(entity.xRot * (float)Math.PI / 180.0F) * velocityMod,
+				-MathHelper.sin(entity.xRot * (float)Math.PI / 180f) * velocityMod,
+				MathHelper.cos(entity.yRot * (float)Math.PI / 180f) * MathHelper.cos(entity.xRot * (float)Math.PI / 180f) * velocityMod);
 	}
 }

@@ -25,6 +25,14 @@ public final class AoAAnimations {
 	public static final AnimationBuilder ATTACK_FLYING_BITE = new AnimationBuilder().addAnimation("attack.midair_bite", false);
 	public static final AnimationBuilder ATTACK_SHOOT = new AnimationBuilder().addAnimation("attack.shoot", false);
 
+	public static <T extends IAnimatable> AnimationController<T> genericIdleController(T entity) {
+		return new AnimationController<T>(entity, "movement", 0, event -> {
+			event.getController().setAnimation(IDLE);
+
+			return PlayState.CONTINUE;
+		});
+	}
+
 	public static <T extends IAnimatable> AnimationController<T> genericWalkController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {

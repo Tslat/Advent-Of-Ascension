@@ -2,11 +2,81 @@
   "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:dummy_ability",
-      "unique_id": "1795110087",
-      "description": "skills.aoa3.hauling.abilities.trawlerHelm.description",
-      "display_name": "skills.aoa3.hauling.abilities.trawlerHelm.name",
-      "level_req": 100
+      "id": "aoa3:fishing_xp_boost",
+      "unique_id": "1238147950",
+      "amount": 1.0,
+      "level_req": 8
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "1485830590",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 15,
+      "restricted_id": "aoa3:hauling_rod"
+    },
+    {
+      "id": "aoa3:fishing_trap_spawn",
+      "unique_id": "-1179305802",
+      "per_level_chance": -0.0035,
+      "base_chance": 0.05,
+      "level_req": 25
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "1276175481",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 31,
+      "restricted_id": "aoa3:fishing_cage"
+    },
+    {
+      "id": "aoa3:hauling_rod_pull_strength",
+      "unique_id": "1953461298",
+      "per_level_amount": 0.02,
+      "amount": 0.0,
+      "level_req": 45
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "-818450273",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 54,
+      "restricted_id": "aoa3:thermally_insulated_rod"
+    },
+    {
+      "id": "aoa3:hauling_rod_pull_damage",
+      "unique_id": "-1647232715",
+      "per_level_amount": 0.0,
+      "amount": 5.0,
+      "level_req": 63
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "-1363353400",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 69,
+      "restricted_id": "aoa3:light_rod"
+    },
+    {
+      "id": "aoa3:fishing_hostile_targeting_immunity",
+      "unique_id": "-392371162",
+      "level_req": 75
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "1539846777",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_trawler"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "type": "thermal:insolator",
-  "input": {
+  "ingredient": {
     "item": "aoa3:chilli_seeds"
   },
   "result": [

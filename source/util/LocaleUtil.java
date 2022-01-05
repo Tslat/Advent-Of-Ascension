@@ -11,6 +11,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -20,7 +21,6 @@ public final class LocaleUtil {
 	public static ITextComponent getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, ITextComponent... args) {
 		return getFormattedItemDescriptionText("item." + item.getRegistryName().getNamespace() + "." + item.getRegistryName().getPath() + ".desc." + descNumber, type, args);
 	}
-
 
 	public static ITextComponent getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, ITextComponent... args) {
 		return new TranslationTextComponent(langKey, (Object[])args).withStyle(type.format);
@@ -70,9 +70,43 @@ public final class LocaleUtil {
 	@OnlyIn(Dist.CLIENT)
 	public static ITextComponent getFormattedLevelRestrictedDescriptionText(AoASkill skill, int levelReq) {
 		ClientPlayerEntity player = Minecraft.getInstance().player;
-		boolean meetsReq = (player != null && player.isCreative()) || ClientPlayerDataManager.getSkill(skill).hasLevel(levelReq);
+		boolean meetsReq = (player != null && player.isCreative()) || ClientPlayerDataManager.get().getSkill(skill).hasLevel(levelReq);
 
 		return getLocaleMessage("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, new StringTextComponent(Integer.toString(levelReq)), skill.getName());
+	}
+
+	public static TranslationTextComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg) {
+		if (flat && scaling)
+			return percent ? getPercentFlatAndScalingAbilityValueDesc(flatArg, scalingArg) : getFlatAndScalingAbilityValueDesc(flatArg, scalingArg);
+
+		if (flat)
+			return percent ? getPercentFlatAbilityValueDesc(flatArg) : getFlatAbilityValueDesc(flatArg);
+
+		return percent ? getPercentScalingAbilityValueDesc(scalingArg) : getScalingAbilityValueDesc(scalingArg);
+	}
+
+	public static TranslationTextComponent getScalingAbilityValueDesc(Object... args) {
+		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling", args);
+	}
+
+	public static TranslationTextComponent getFlatAbilityValueDesc(Object... args) {
+		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat", args);
+	}
+
+	public static TranslationTextComponent getFlatAndScalingAbilityValueDesc(Object... args) {
+		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling", args);
+	}
+
+	public static TranslationTextComponent getPercentScalingAbilityValueDesc(Object... args) {
+		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling.percent", args);
+	}
+
+	public static TranslationTextComponent getPercentFlatAbilityValueDesc(Object... args) {
+		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat.percent", args);
+	}
+
+	public static TranslationTextComponent getPercentFlatAndScalingAbilityValueDesc(Object... args) {
+		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling.percent", args);
 	}
 
 	public enum ItemDescriptionType {
@@ -82,6 +116,7 @@ public final class LocaleUtil {
 		UNIQUE(TextFormatting.DARK_PURPLE),
 		SPECIAL(TextFormatting.GOLD),
 		ITEM_TYPE_INFO(TextFormatting.AQUA),
+		GENERAL_INFO(TextFormatting.GRAY),
 		ITEM_DAMAGE(TextFormatting.DARK_RED),
 		ITEM_AMMO_COST(TextFormatting.LIGHT_PURPLE);
 

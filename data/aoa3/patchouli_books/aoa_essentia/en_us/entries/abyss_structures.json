@@ -1,0 +1,56 @@
+{
+  "name": "Structures",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "As a weary traveller makes their way through the dark, foreboding plane, they should keep their eyes open for a few important landmarks.",
+      "title": "Structures"
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "shadowlord_platform",
+      "text": "The platform houses the altar to spawn the $(thing)Shadowlord$(). $(l:https://adventofascension.fandom.com/wiki/Shadowlord_Platform)Read More$(/l)",
+      "title": "Shadowlord Platform",
+      "images": [
+        "aoa3:patchouli/images/structures/shadowlord_platform.png"
+      ]
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "illusion_tree",
+      "text": "Towering over all else in the $(thing)Abyss$(), the altar for $(thing)Elusive$() can be found here. $(l:https://adventofascension.fandom.com/wiki/Illusion_Tree)Read More$(/l)",
+      "title": "Illusion Tree",
+      "images": [
+        "aoa3:patchouli/images/structures/illusion_tree.png"
+      ]
+    },
+    {
+      "type": "patchouli:image",
+      "text": "The only known home of the $(thing)Jawe$() $(l:https://adventofascension.fandom.com/wiki/Jawe Hut)Read More$(/l)",
+      "title": "Jawe Hut",
+      "images": [
+        "aoa3:patchouli/images/structures/jawe_hut.png"
+      ]
+    },
+    {
+      "type": "patchouli:image",
+      "text": "$(thing)Flesh Temples$() are guarded by a horrific creature - the $(thing)Flesh Eater$(). $(l:https://adventofascension.fandom.com/wiki/Flesh_Temple)Read More$(/l)",
+      "title": "Flesh Temple",
+      "images": [
+        "aoa3:patchouli/images/structures/flesh_temple.png"
+      ]
+    },
+    {
+      "type": "patchouli:image",
+      "text": "From just an opening in the abyssal surface, these grottos house $(thing)Eye Bulbs$(). $(l:https://adventofascension.fandom.com/wiki/Abyssal_Eye_Grotto)Read More$(/l)",
+      "title": "Abyssal Eye Grotto",
+      "images": [
+        "aoa3:patchouli/images/structures/abyssal_eye_grotto.png"
+      ]
+    }
+  ],
+  "advancement": "aoa3:abyss/root",
+  "sortnum": 3
+}

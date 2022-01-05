@@ -1,0 +1,11 @@
+{
+  "biomes": [
+    "aoa3:asteroid_belt"
+  ],
+  "entities": [
+    {
+      "weight": 200,
+      "item": "minecraft:stone"
+    }
+  ]
+}

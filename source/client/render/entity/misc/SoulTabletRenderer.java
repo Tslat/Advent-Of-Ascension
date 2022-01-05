@@ -13,7 +13,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
-import net.tslat.aoa3.entity.tablet.SoulTabletEntity;
+import net.tslat.aoa3.object.entity.tablet.SoulTabletEntity;
 
 import javax.annotation.Nullable;
 import java.util.Random;

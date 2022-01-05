@@ -9,9 +9,10 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.container.recipe.InfusionRecipe;
-import net.tslat.aoa3.common.container.recipe.TrophyRecipe;
-import net.tslat.aoa3.common.container.recipe.UpgradeKitRecipe;
+import net.tslat.aoa3.object.recipe.ToolInteractionRecipe;
+import net.tslat.aoa3.object.recipe.InfusionRecipe;
+import net.tslat.aoa3.object.recipe.TrophyRecipe;
+import net.tslat.aoa3.object.recipe.UpgradeKitRecipe;
 
 import java.util.function.Supplier;
 
@@ -21,6 +22,7 @@ public final class AoARecipes {
 	public static final Tuple<IRecipeType<UpgradeKitRecipe>, RegistryObject<IRecipeSerializer<UpgradeKitRecipe>>> UPGRADE_KIT = registerRecipeType("upgrade_kit", UpgradeKitRecipe.Factory::new);
 	public static final Tuple<IRecipeType<InfusionRecipe>, RegistryObject<IRecipeSerializer<InfusionRecipe>>> INFUSION = registerRecipeType("infusion", InfusionRecipe.Factory::new);
 	public static final Tuple<IRecipeType<TrophyRecipe>, RegistryObject<IRecipeSerializer<TrophyRecipe>>> TROPHY = registerRecipeType("trophy", TrophyRecipe.Factory::new);
+	public static final Tuple<IRecipeType<ToolInteractionRecipe>, RegistryObject<IRecipeSerializer<ToolInteractionRecipe>>> TOOL_INTERACTION = registerRecipeType("tool_interaction", ToolInteractionRecipe.Factory::new);
 
 	private static <T extends IRecipe<I>, I extends IInventory> Tuple<IRecipeType<T>, RegistryObject<IRecipeSerializer<T>>> registerRecipeType(String id, Supplier<IRecipeSerializer<T>> serializer) {
 		return new Tuple<IRecipeType<T>, RegistryObject<IRecipeSerializer<T>>>(IRecipeType.register(AdventOfAscension.MOD_ID + ":" + id), RECIPES.register(id, serializer));

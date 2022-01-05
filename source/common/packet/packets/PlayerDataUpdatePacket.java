@@ -24,7 +24,7 @@ public class PlayerDataUpdatePacket implements AoAPacket {
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		ClientPlayerDataManager.updateData(data);
+		ClientPlayerDataManager.get().updateData(data);
 
 		context.get().setPacketHandled(true);
 	}

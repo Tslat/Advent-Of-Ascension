@@ -11,12 +11,11 @@ import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.feature.*;
 import net.minecraft.world.gen.placement.*;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -35,8 +34,11 @@ import net.tslat.aoa3.world.gen.feature.placement.config.*;
 import java.util.Set;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
-public class AoAFeatures {
+public final class AoAFeatures {
+	public static void preInit() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, false, BiomeLoadingEvent.class, AoAFeatures::onBiomeLoad);
+	}
+
 	public static class Features {
 		public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, AdventOfAscension.MOD_ID);
 
@@ -165,8 +167,7 @@ public class AoAFeatures {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public static void onBiomeLoad(final BiomeLoadingEvent ev) {
+	private static void onBiomeLoad(final BiomeLoadingEvent ev) {
 		if (ev.getName() == null)
 			return;
 

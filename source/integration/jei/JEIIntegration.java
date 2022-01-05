@@ -2,19 +2,20 @@ package net.tslat.aoa3.integration.jei;
 
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
+import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.RecipeManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.container.DivineStationContainer;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
-import net.tslat.aoa3.common.container.recipe.FrameBenchRecipe;
-import net.tslat.aoa3.common.container.recipe.InfusionRecipe;
-import net.tslat.aoa3.common.container.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoARecipes;
@@ -26,20 +27,33 @@ import net.tslat.aoa3.integration.jei.recipe.imbuing.ImbuingRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.imbuing.ImbuingRecipeTransferInfo;
 import net.tslat.aoa3.integration.jei.recipe.infusion.InfusionRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.infusion.InfusionRecipeTransferInfo;
+import net.tslat.aoa3.integration.jei.recipe.toolinteraction.ToolInteractionRecipeExtension;
 import net.tslat.aoa3.integration.jei.recipe.upgradekit.UpgradeKitRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.upgradekit.UpgradeKitRecipeTransferInfo;
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeTransferInfo;
-import net.tslat.aoa3.mixin.common.invoker.AccessibleRecipeManager;
+import net.tslat.aoa3.integration.tinkersconstruct.TinkersFluids;
+import net.tslat.aoa3.object.recipe.FrameBenchRecipe;
+import net.tslat.aoa3.object.recipe.InfusionRecipe;
+import net.tslat.aoa3.object.recipe.ToolInteractionRecipe;
+import net.tslat.aoa3.object.recipe.WhitewashingRecipe;
+import net.tslat.aoa3.util.FluidUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.function.Function;
 
 @JeiPlugin
 public class JEIIntegration implements IModPlugin {
 	@Override
 	public ResourceLocation getPluginUid() {
 		return new ResourceLocation(AdventOfAscension.MOD_ID, "core");
+	}
+
+	@Override
+	public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
+		registration.getCraftingCategory().addCategoryExtension(ToolInteractionRecipe.class, ToolInteractionRecipeExtension::new);
 	}
 
 	@Override
@@ -104,7 +118,7 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private Collection<IRecipe<DivineStationContainer.DivineStationInventory>> compileUpgradeKitRecipes(RecipeManager recipeManager) {
-		return ((AccessibleRecipeManager)recipeManager).getRecipesForType(AoARecipes.UPGRADE_KIT.getA()).values();
+		return recipeManager.byType(AoARecipes.UPGRADE_KIT.getA()).values();
 	}
 
 	private ArrayList<WhitewashingRecipe> compileWhitewashingRecipes(RecipeManager recipeManager) {
@@ -136,7 +150,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : ((AccessibleRecipeManager)recipeManager).getRecipesForType(AoARecipes.INFUSION.getA()).values()) {
+		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
 			if (recipe instanceof InfusionRecipe) {
 				if (((InfusionRecipe)recipe).isEnchanting())
 					imbuingRecipes.add((InfusionRecipe)recipe);
@@ -149,7 +163,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : ((AccessibleRecipeManager)recipeManager).getRecipesForType(AoARecipes.INFUSION.getA()).values()) {
+		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
 			if (recipe instanceof InfusionRecipe) {
 				if (!((InfusionRecipe)recipe).isEnchanting())
 					infusionRecipes.add((InfusionRecipe)recipe);
@@ -157,5 +171,32 @@ public class JEIIntegration implements IModPlugin {
 		}
 
 		return infusionRecipes;
+	}
+
+	@Override
+	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
+		if (!IntegrationManager.isJEIActive())
+			return;
+
+		if (!IntegrationManager.isTinkersConstructActive()) {
+			Function<FluidUtil.RegisteredFluidHolder, FluidStack> fluidStackGen = holder -> new FluidStack(holder.getFluid().get(), FluidAttributes.BUCKET_VOLUME);
+
+			jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.FLUID, Arrays.asList(
+					fluidStackGen.apply(TinkersFluids.MOLTEN_BARONYTE),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_BLAZIUM),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_ELECANIUM),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_EMBERSTONE),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_GHASTLY),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_GHOULISH),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_LIMONITE),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_LUNAR),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_LYON),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_MYSTITE),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_ROSITE),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_SHYRESTONE),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_SKELETAL),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_VARSIUM),
+					fluidStackGen.apply(TinkersFluids.MOLTEN_CHARGER)));
+		}
 	}
 }

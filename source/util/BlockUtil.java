@@ -1,32 +1,23 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityType;
-import net.minecraft.item.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tags.ITag;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.WeightedSpawnerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fluids.FluidAttributes;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.RegistryObject;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.util.misc.MutableSupplier;
 
 import java.util.ArrayList;
-import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
 public final class BlockUtil {
@@ -248,36 +239,6 @@ public final class BlockUtil {
 		}
 	}
 
-	public static RegistryObject<FlowingFluidBlock> createFluidBlock(String id, Material material, int colour, int viscosity, int density, int temperature) {
-		return createFluidBlock(id, material, colour, viscosity, density, temperature, new ResourceLocation("block/water_still"), new ResourceLocation("block/water_flow"), new ResourceLocation("block/water_overlay"), (flowingFluidSupplier, blockProperties) -> () -> new FlowingFluidBlock(flowingFluidSupplier, blockProperties));
-	}
-
-	public static RegistryObject<FlowingFluidBlock> createFluidBlock(String id, Material material, int colour, int viscosity, int density, int temperature, BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, AbstractBlock.Properties, Supplier<FlowingFluidBlock>> blockCreationFunction) {
-		return createFluidBlock(id, material, colour, viscosity, density, temperature, new ResourceLocation("block/water_still"), new ResourceLocation("block/water_flow"), new ResourceLocation("block/water_overlay"), blockCreationFunction);
-	}
-
-	public static RegistryObject<FlowingFluidBlock> createFluidBlock(String id, Material material, int colour, int viscosity, int density, int temperature, ResourceLocation stillTexture, ResourceLocation flowingTexture, ResourceLocation overlay, BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, AbstractBlock.Properties, Supplier<FlowingFluidBlock>> blockCreationFunction) {
-		MutableSupplier<ForgeFlowingFluid.Source> sourceFluid = new MutableSupplier<ForgeFlowingFluid.Source>(null);
-		MutableSupplier<ForgeFlowingFluid.Flowing> flowingFluid = new MutableSupplier<ForgeFlowingFluid.Flowing>(null);
-		RegistryObject<FlowingFluidBlock> block = AoABlocks.BLOCKS.register(id, blockCreationFunction.apply(flowingFluid, AbstractBlock.Properties.of(material).noCollission().strength(100.0F).noDrops()));
-		ForgeFlowingFluid.Properties fluidProperties = new ForgeFlowingFluid.Properties(sourceFluid, flowingFluid,
-				FluidAttributes.builder(stillTexture, flowingTexture)
-						.overlay(overlay)
-						.translationKey("block." + AdventOfAscension.MOD_ID + "." + id)
-						.color(colour)
-						.temperature(temperature)
-						.viscosity(viscosity)
-						.density(density)
-		)
-		.bucket(AoAItems.ITEMS.register(id + "_bucket", () -> new BucketItem(sourceFluid, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(16))))
-		.block(block);
-
-		sourceFluid.update(AoABlocks.FLUIDS.register(id, () -> new ForgeFlowingFluid.Source(fluidProperties)));
-		flowingFluid.update(AoABlocks.FLUIDS.register(id + "_flowing", () -> new ForgeFlowingFluid.Flowing(fluidProperties)));
-
-		return block;
-	}
-
 	public static Vector3d posToVec(BlockPos pos) {
 		return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
 	}
@@ -291,203 +252,8 @@ public final class BlockUtil {
 		return false;
 	}
 
-	public static class FluidBuilder {
-		private final ResourceLocation id;
-
-		private Material material = Material.WATER;
-		private boolean isGas = false;
-		private boolean noBucket = false;
-
-		private int colour = 0xFFFFFFFF;
-		private int viscosity = 1000;
-		private int density = 1000;
-		private int temperature = 300;
-		private int lightLevel = 0;
-
-		private ResourceLocation stillTexture = new ResourceLocation("block/water_still");
-		private ResourceLocation flowingTexture = new ResourceLocation("block/water_flow");
-		private ResourceLocation submergedOverlayTexture = new ResourceLocation("block/water_overlay");
-
-		private String localeKey;
-		private SoundEvent bucketFillSound = null;
-		private SoundEvent bucketEmptySound = null;
-
-		private Rarity rarity = Rarity.COMMON;
-
-		private BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, AbstractBlock.Properties, Supplier<FlowingFluidBlock>> blockFunction = (fluidSupplier, fluidProperties) -> () -> new FlowingFluidBlock(fluidSupplier, fluidProperties);
-		private BiFunction<MutableSupplier<? extends ForgeFlowingFluid>, Item.Properties, Supplier<Item>> bucketFunction = (fluid, properties) -> () -> new BucketItem(fluid, properties);
-		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Flowing>> flowingFluid = properties -> () -> new ForgeFlowingFluid.Flowing(properties);
-		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Source>> sourceFluid = properties -> () -> new ForgeFlowingFluid.Source(properties);
-
-		public FluidBuilder(String id) {
-			this(new ResourceLocation(AdventOfAscension.MOD_ID, id));
-		}
-
-		public FluidBuilder(ResourceLocation id) {
-			this.id	= id;
-			this.localeKey = "block." + id.getNamespace() + "." + id.getPath();
-		}
-
-		public FluidBuilder stillTexture(ResourceLocation texture) {
-			this.stillTexture = texture;
-
-			return this;
-		}
-
-		public FluidBuilder flowingTexture(ResourceLocation texture) {
-			this.flowingTexture = texture;
-
-			return this;
-		}
-
-		public FluidBuilder submergedOverlay(ResourceLocation texture) {
-			this.submergedOverlayTexture = texture;
-
-			return this;
-		}
-
-		public FluidBuilder material(Material material) {
-			this.material = material;
-
-			return this;
-		}
-
-		public FluidBuilder isGas() {
-			this.isGas = true;
-
-			return this;
-		}
-
-		public FluidBuilder colour(int red, int green, int blue, int alpha) {
-			return colour(NumberUtil.alpha(NumberUtil.RGB(red, green, blue), alpha));
-		}
-
-		public FluidBuilder colour(int colour) {
-			this.colour = colour;
-
-			return this;
-		}
-
-		public FluidBuilder viscosity(int viscosity) {
-			this.viscosity = viscosity;
-
-			return this;
-		}
-
-		public FluidBuilder density(int density) {
-			this.density = density;
-
-			return this;
-		}
-
-		public FluidBuilder temperature(int temperature) {
-			this.temperature = temperature;
-
-			return this;
-		}
-
-		public FluidBuilder light(int lightLevel) {
-			this.lightLevel = lightLevel;
-
-			return this;
-		}
-
-		public FluidBuilder localeKey(String langKey) {
-			this.localeKey = langKey;
-
-			return this;
-		}
-
-		public FluidBuilder fillSound(SoundEvent sound) {
-			this.bucketFillSound = sound;
-
-			return this;
-		}
-
-		public FluidBuilder emptySound(SoundEvent sound) {
-			this.bucketEmptySound = sound;
-
-			return this;
-		}
-
-		public FluidBuilder sound(SoundEvent sound) {
-			fillSound(sound);
-			emptySound(sound);
-
-			return this;
-		}
-
-		public FluidBuilder rarity(Rarity rarity) {
-			this.rarity = rarity;
-
-			return this;
-		}
-
-		public FluidBuilder noBucket() {
-			this.noBucket = true;
-
-			return this;
-		}
-
-		public FluidBuilder blockFunction(BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, AbstractBlock.Properties, Supplier<FlowingFluidBlock>> function) {
-			this.blockFunction = function;
-
-			return this;
-		}
-
-		public FluidBuilder bucketFunction(BiFunction<MutableSupplier<? extends ForgeFlowingFluid>, Item.Properties, Supplier<Item>> function) {
-			this.bucketFunction = function;
-
-			return this;
-		}
-
-		public FluidBuilder sourceFluid(Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Source>> function) {
-			this.sourceFluid = function;
-
-			return this;
-		}
-
-		public FluidBuilder flowingFluid(Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Flowing>> function) {
-			this.flowingFluid = function;
-
-			return this;
-		}
-
-		public FluidAttributes.Builder toAttributes() {
-			FluidAttributes.Builder attributes = FluidAttributes.builder(stillTexture, flowingTexture);
-
-			attributes.overlay(submergedOverlayTexture);
-
-			if (isGas)
-				attributes.gaseous();
-
-			attributes.color(colour);
-			attributes.viscosity(viscosity);
-			attributes.density(density);
-			attributes.temperature(temperature);
-			attributes.luminosity(lightLevel);
-			attributes.translationKey(localeKey);
-			attributes.sound(bucketFillSound, bucketEmptySound);
-			attributes.rarity(rarity);
-
-			return attributes;
-		}
-
-		public RegistryObject<FlowingFluidBlock> register() {
-			MutableSupplier<ForgeFlowingFluid.Source> sourceFluid = new MutableSupplier<ForgeFlowingFluid.Source>(null);
-			MutableSupplier<ForgeFlowingFluid.Flowing> flowingFluid = new MutableSupplier<ForgeFlowingFluid.Flowing>(null);
-			ForgeFlowingFluid.Properties fluidProperties = new ForgeFlowingFluid.Properties(sourceFluid, flowingFluid, toAttributes());
-			RegistryObject<FlowingFluidBlock> block = AoABlocks.BLOCKS.register(id.getPath(), blockFunction.apply(flowingFluid, AbstractBlock.Properties.of(material).noCollission().strength(100.0F).noDrops()));
-
-			if (!noBucket)
-				fluidProperties.bucket(AoAItems.ITEMS.register(id.getPath() + "_bucket", bucketFunction.apply(sourceFluid, new Item.Properties().tab(ItemGroup.TAB_MISC).craftRemainder(Items.BUCKET).stacksTo(1))));
-
-			fluidProperties.block(block);
-			sourceFluid.update(AoABlocks.FLUIDS.register(id.getPath(), this.sourceFluid.apply(fluidProperties)));
-			flowingFluid.update(AoABlocks.FLUIDS.register(id.getPath() + "_flowing", this.flowingFluid.apply(fluidProperties)));
-
-			return block;
-		}
+	public static boolean isAirBlock(BlockState state) {
+		return state.getMaterial() == Material.AIR || state.getMaterial() == Material.STRUCTURAL_AIR;
 	}
 
 	public static class SpawnerBuilder {

@@ -1,0 +1,45 @@
+{
+  "entities": [
+    {
+      "weight": 200,
+      "entity": "aoa3:crimson_skipper"
+    },
+    {
+      "weight": 200,
+      "entity": "aoa3:crimson_stripefish"
+    },
+    {
+      "weight": 150,
+      "entity": "aoa3:charred_char"
+    },
+    {
+      "weight": 70,
+      "weight_mod": 1.0,
+      "entity": "aoa3:candlefish"
+    },
+    {
+      "weight": 50,
+      "item": "minecraft:obsidian"
+    },
+    {
+      "weight": 25,
+      "item": "minecraft:crying_obsidian"
+    },
+    {
+      "weight": 20,
+      "weight_mod": 2.0,
+      "item": "minecraft:diamond"
+    },
+    {
+      "weight": 10,
+      "weight_mod": 2.0,
+      "item": "minecraft:emerald"
+    },
+    {
+      "weight": 100,
+      "weight_mod": -2.0,
+      "item": "minecraft:coal"
+    },
+    "minecraft:lava_bucket"
+  ]
+}

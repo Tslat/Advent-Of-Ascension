@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:gears/lyon",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:gears/lyon"
+  },
+  "result": {
+    "fluid": "aoa3:molten_lyon",
+    "amount": 576
+  },
+  "temperature": 520,
+  "time": 101
+}

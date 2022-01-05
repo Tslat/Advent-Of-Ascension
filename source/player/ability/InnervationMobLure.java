@@ -44,8 +44,8 @@ public class InnervationMobLure extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		return new TranslationTextComponent(super.getDescription().getKey(), NumberUtil.roundToNthDecimalPlace(this.perTickDrain * 20, 2), NumberUtil.roundToNthDecimalPlace(this.luredDamageModifier * 100, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.perTickDrain * 20, 2), NumberUtil.roundToNthDecimalPlace(this.luredDamageModifier * 100, 2)));
 	}
 
 	@Override
@@ -99,7 +99,9 @@ public class InnervationMobLure extends AoAAbility.Instance {
 			ev.setAmount(ev.getAmount() * this.luredDamageModifier);
 
 			resetLureState();
-			skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 30), false, false);
+
+			if (skill.canGainXp(true))
+				skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 30), false, false);
 		}
 	}
 

@@ -6,14 +6,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
 public final class AoADimensions {
 	private static final HashBiMap<RegistryKey<World>, AoADimension> dimTypeMap = HashBiMap.create(25);
 

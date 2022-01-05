@@ -2,12 +2,12 @@ package net.tslat.aoa3.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
-import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
+import net.tslat.aoa3.object.block.functional.sapling.SaplingBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
-import net.tslat.aoa3.block.generation.plants.VinesBlock;
+import net.tslat.aoa3.object.block.generation.plants.VinesBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 
 import java.util.ArrayList;

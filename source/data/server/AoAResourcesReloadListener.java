@@ -10,7 +10,7 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import org.apache.logging.log4j.Level;
 
@@ -27,7 +27,7 @@ public class AoAResourcesReloadListener extends JsonReloadListener {
 		super(GSON, folder);
 	}
 
-	public static void populateResourceMap(PlayerDataManager plData, HashMap<AoAResource, AoAResource.Instance> resourceMap) {
+	public static void populateResourceMap(ServerPlayerDataManager plData, HashMap<AoAResource, AoAResource.Instance> resourceMap) {
 		resourceMap.clear();
 
 		for (Map.Entry<AoAResource, JsonObject> resource : RESOURCES.entrySet()) {

@@ -2,7 +2,7 @@ package net.tslat.aoa3.world.teleporter.specific;
 
 import net.minecraft.block.Block;
 import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.block.functional.portal.PortalBlock;
+import net.tslat.aoa3.object.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.world.teleporter.AoATeleporter;
 

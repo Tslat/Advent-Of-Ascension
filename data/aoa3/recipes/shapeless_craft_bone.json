@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:skelecanth"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bone",
+    "count": 3
+  }
+}

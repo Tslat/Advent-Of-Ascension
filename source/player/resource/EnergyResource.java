@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 import javax.annotation.Nonnull;
 
@@ -20,7 +20,7 @@ public class EnergyResource extends AoAResource.Instance {
 	private long currentDelay = 0;
 	private float value = 0;
 
-	public EnergyResource(PlayerDataManager plData, JsonObject jsonData) {
+	public EnergyResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.ENERGY.get(), plData);
 
 		this.maxValue = Math.max(0, JSONUtils.getAsFloat(jsonData, "max_value"));
@@ -53,7 +53,7 @@ public class EnergyResource extends AoAResource.Instance {
 
 	@Override
 	public boolean consume(float amount, boolean consumeIfInsufficient) {
-		boolean success = super.consume(amount, consumeIfInsufficient);
+		boolean success = super.consume(amount, true);
 
 		if (success && getCurrentValue() <= 0)
 			this.currentDelay += this.dischargeDelay;

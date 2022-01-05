@@ -1,6 +1,6 @@
 {
   "type": "thermal:refinery",
-  "fluid": {
+  "ingredient": {
     "fluid": "aoa3:candied_water",
     "amount": 200
   },

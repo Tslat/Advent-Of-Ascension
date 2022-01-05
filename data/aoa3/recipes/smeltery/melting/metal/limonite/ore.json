@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:ore_melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:ores/limonite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ores/limonite"
+  },
+  "result": {
+    "fluid": "aoa3:molten_limonite",
+    "amount": 144
+  },
+  "temperature": 350,
+  "time": 66
+}

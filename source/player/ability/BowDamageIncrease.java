@@ -37,10 +37,8 @@ public class BowDamageIncrease extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		String keySuffix = requireFullyCharged ? ".fullCharge" : "";
-
-		return new TranslationTextComponent(super.getDescription().getKey() + keySuffix, NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + (requireFullyCharged ? ".fullCharge" : ""), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2)));
 	}
 
 	@Override

@@ -11,7 +11,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "In general, $(thing)mauls$() are intended to be used a way to keep dangerous enemies at a distance, or quickly clearing away an enemy that has come too close.$(br2)While not offering the higher $(t:$(l)D$()amage $(l)P$()er $(l)S$()econd)DPS$(/t) of swords, Mauls do offer a significant knockback factor, which is best used for "
+      "text": "In general, $(thing)mauls$() are intended to be used a way to keep dangerous enemies at a distance, or quickly clearing away an enemy that has come too close.$(br2)While not offering the higher $(t:Damage Per Second)DPS$(/t) of swords, Mauls do offer a significant knockback factor, which is best used for larger individual mobs with strong attacks."
     },
     {
       "type": "patchouli:spotlight",

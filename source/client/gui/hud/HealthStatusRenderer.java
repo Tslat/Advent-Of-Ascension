@@ -7,27 +7,22 @@ import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.IngameGui;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Util;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.aoa3.util.*;
 
 import static net.minecraft.client.gui.AbstractGui.GUI_ICONS_LOCATION;
 import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.HEALTH;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
 public class HealthStatusRenderer {
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void renderHealth(RenderGameOverlayEvent.Pre ev) {
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, RenderGameOverlayEvent.Pre.class, HealthStatusRenderer::onHealthRender);
+	}
+
+	private static void onHealthRender(RenderGameOverlayEvent.Pre ev) {
 		if (ev.getType() == RenderGameOverlayEvent.ElementType.HEALTH && !ev.isCanceled() && AoAConfig.CLIENT.renderNumericalHealth.get()) {
 			Minecraft mc = Minecraft.getInstance();
 			ClientPlayerEntity player = mc.player;
@@ -39,19 +34,20 @@ public class HealthStatusRenderer {
 			int healthColour;
 
 			float currentHealth = player.getHealth();
+			float maxHealth = player.getMaxHealth();
 			float absorption = player.getAbsorptionAmount();
 
 			if (absorption > 0)
 				left -= 22;
 
 			if (mc.player.hasEffect(Effects.POISON)) {
-				healthColour = NumberUtil.RGB(117, 113, 0);
+				healthColour = ColourUtil.RGB(117, 113, 0);
 			}
 			else if (mc.player.hasEffect(Effects.WITHER)) {
-				healthColour = NumberUtil.RGB(28, 28, 28);
+				healthColour = ColourUtil.RGB(28, 28, 28);
 			}
 			else {
-				healthColour = NumberUtil.RGB(252, 20, 0);
+				healthColour = ColourUtil.RGB(252, 20, 0);
 			}
 
 			ev.setCanceled(true);
@@ -62,17 +58,17 @@ public class HealthStatusRenderer {
 			matrix.scale(0.9f, 0.9f, 1);
 
 			if (player.getHealth() > 0) {
-				renderHeart(matrix, mc, currentHealth, absorption, handleHealthState(player, mc.gui, currentHealth));
+				renderHeart(matrix, mc, currentHealth, maxHealth, absorption, handleHealthState(player, mc.gui, currentHealth));
 
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(player.getMaxHealth(), 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
 
 				if (absorption > 0) {
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, "-->", 68, 0, 1, NumberUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 88, 0, 1, NumberUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, "-->", 68, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 88, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
 				}
 			}
 			else {
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), 24, 0, 1, NumberUtil.RGB(132, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), 24, 0, 1, ColourUtil.RGB(132, 0, 0), RenderUtil.StringRenderType.OUTLINED);
 			}
 
 			matrix.popPose();
@@ -83,7 +79,7 @@ public class HealthStatusRenderer {
 		}
 	}
 
-	private static void renderHeart(MatrixStack matrix, Minecraft mc, float currentHealth, float absorb, boolean flashing) {
+	private static void renderHeart(MatrixStack matrix, Minecraft mc, float currentHealth, float maxHealth, float absorb, boolean flashing) {
 		int uvX = 16;
 		int uvY = 0;
 		int y = -1;
@@ -100,8 +96,8 @@ public class HealthStatusRenderer {
 		if (mc.level.getLevelData().isHardcore())
 			uvY = 45;
 
-		if (currentHealth <= 4)
-			y += RandomUtil.randomNumberUpTo(2);
+		if (currentHealth <= maxHealth * 0.2f && RandomUtil.fiftyFifty())
+			y += 1;
 
 		if (mc.gui.tickCount % 25 == 0 && mc.player.hasEffect(Effects.REGENERATION))
 			y -= 2;

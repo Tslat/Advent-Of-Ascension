@@ -3,18 +3,6 @@ package net.tslat.aoa3.util;
 import java.text.DecimalFormat;
 
 public final class NumberUtil {
-	public static int RGB(int red, int green, int blue) {
-		return red << 16 | green << 8 | blue;
-	}
-
-	public static int RGB(float red, float green, float blue) {
-		return (int)(red * 255f) << 16 | (int)(green * 255f) << 8 | (int)(blue * 255f);
-	}
-
-	public static int alpha(int colour, int alpha) {
-		return alpha << 24 | colour;
-	}
-
 	public static String floorAndAppendSuffix(float value, boolean strictDigitCount) {
 		String suffix = "";
 

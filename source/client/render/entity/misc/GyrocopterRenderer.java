@@ -12,10 +12,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.tslat.aoa3.client.model.entity.misc.GyrocopterModel;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.entity.misc.GyrocopterEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.object.entity.misc.GyrocopterEntity;
+import net.tslat.aoa3.util.ColourUtil;
 
 import javax.annotation.Nullable;
 
@@ -45,8 +45,8 @@ public class GyrocopterRenderer extends EntityRenderer<GyrocopterEntity> {
 		if (rendertype != null) {
 			IVertexBuilder ivertexbuilder = buffer.getBuffer(rendertype);
 
-			this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, NumberUtil.RGB(255, 255, 255), 1f, 1f, 1f, shade ? 0.15f : 1f);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 3, NumberUtil.RGB(0, 255, 255)), entity.getX(), entity.getY() + 0.3f, entity.getZ(), 0, 0, 0);
+			this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, ColourUtil.WHITE, 1f, 1f, 1f, shade ? 0.15f : 1f);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 3, ColourUtil.CYAN), entity.getX(), entity.getY() + 0.3f, entity.getZ(), 0, 0, 0);
 		}
 
 		matrix.popPose();

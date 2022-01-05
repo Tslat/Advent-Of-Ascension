@@ -10,10 +10,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.net.URI;
@@ -54,17 +51,17 @@ public class AdventGuiTabHelp extends Screen {
 	@Override
 	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
 		RenderUtil.drawVerticalGradient(matrix, AdventMainGui.scaledTabRootX + 35, AdventMainGui.scaledTabRootY + 55, 0, 570, 225, -1072689136, -804253680);
-		RenderUtil.drawCenteredScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.theme"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 10, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-		RenderUtil.drawCenteredScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.links"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 100, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.drawCenteredScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.theme"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 10, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.drawCenteredScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.links"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 100, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
-		RenderUtil.drawScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.title"), AdventMainGui.scaledTabRootX + 80, AdventMainGui.scaledTabRootY + 25, 2.5f, NumberUtil.RGB(239, 137, 119), RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.drawScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.title"), AdventMainGui.scaledTabRootX + 80, AdventMainGui.scaledTabRootY + 25, 2.5f, ColourUtil.RGB(239, 137, 119), RenderUtil.StringRenderType.OUTLINED);
 
 		matrix.pushPose();
 		matrix.scale(1.5625f, 1.5625f, 1.5625f);
-		RenderUtil.drawWrappedMessage(matrix, font, new StringTextComponent(LocaleUtil.getLocaleString("gui.aoa3.adventGui.help.description").replace("<br>", "\n")), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, NumberUtil.RGB(255, 255, 255));
+		RenderUtil.drawWrappedMessage(matrix, font, new StringTextComponent(LocaleUtil.getLocaleString("gui.aoa3.adventGui.help.description").replace("<br>", "\n")), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, ColourUtil.WHITE);
 		matrix.popPose();
 
-		RenderUtil.drawScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip", LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip." + tipNumber)), AdventMainGui.scaledTabRootX + 30, AdventMainGui.scaledTabRootY + 310, 1.8f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip", LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip." + tipNumber)), AdventMainGui.scaledTabRootX + 30, AdventMainGui.scaledTabRootY + 310, 1.8f, ColourUtil.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 
 		super.render(matrix, mouseX, mouseY, partialTicks);
 	}
@@ -113,10 +110,10 @@ public class AdventGuiTabHelp extends Screen {
 				RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
 
 				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
-				int stringColour = NumberUtil.RGB(239, 137, 119);
+				int stringColour = ColourUtil.RGB(239, 137, 119);
 
 				if (isHovered)
-					stringColour = NumberUtil.RGB(247, 239, 0);
+					stringColour = ColourUtil.RGB(247, 239, 0);
 
 				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), (int)(AdventMainGui.scaledTabRootX + x + width / 2f), AdventMainGui.scaledTabRootY + y, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
 			}

@@ -2,8 +2,8 @@
   "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:scaling_attribute_modification",
-      "unique_id": "381750865",
+      "id": "aoa3:attribute_modification",
+      "unique_id": "-2075581175",
       "per_level_value": 0.3,
       "base_value": 0.0,
       "attribute": "minecraft:generic.max_health",
@@ -31,9 +31,10 @@
       "level_req": 19
     },
     {
-      "id": "aoa3:passive_attribute_modification",
-      "unique_id": "675946667",
-      "amount": 10.0,
+      "id": "aoa3:attribute_modification",
+      "unique_id": "1968683172",
+      "per_level_value": 0.0,
+      "base_value": 10.0,
       "attribute": "minecraft:generic.max_health",
       "operation": 0.0,
       "level_req": 25
@@ -53,9 +54,10 @@
       "level_req": 44
     },
     {
-      "id": "aoa3:passive_attribute_modification",
-      "unique_id": "675945396",
-      "amount": 10.0,
+      "id": "aoa3:attribute_modification",
+      "unique_id": "1968681901",
+      "per_level_value": 0.0,
+      "base_value": 10.0,
       "attribute": "minecraft:generic.max_health",
       "operation": 0.0,
       "level_req": 50
@@ -81,9 +83,10 @@
       "level_req": 77
     },
     {
-      "id": "aoa3:passive_attribute_modification",
-      "unique_id": "675944559",
-      "amount": 10.0,
+      "id": "aoa3:attribute_modification",
+      "unique_id": "1968681064",
+      "per_level_value": 0.0,
+      "base_value": 10.0,
       "attribute": "minecraft:generic.max_health",
       "operation": 0.0,
       "level_req": 85
@@ -96,11 +99,13 @@
       "level_req": 91
     },
     {
-      "id": "aoa3:dummy_ability",
-      "unique_id": "182741604",
-      "description": "skills.aoa3.innervation.abilities.warriorHelm.description",
-      "display_name": "skills.aoa3.innervation.abilities.warriorHelm.name",
-      "level_req": 100
+      "id": "aoa3:level_restriction",
+      "unique_id": "619464118",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_warrior"
     }
   ]
 }

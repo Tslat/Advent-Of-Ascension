@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:molten_elecanium",
+    "#forge:molten_ghastly",
+    "#forge:molten_ghoulish",
+    "#forge:molten_lunar",
+    "#forge:molten_lyon",
+    "#forge:molten_mystite",
+    "#forge:molten_shyrestone"
+  ]
+}

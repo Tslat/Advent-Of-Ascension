@@ -1,0 +1,16 @@
+{
+  "for_traps": true,
+  "biomes": [
+    "aoa3:celevian_highlands"
+  ],
+  "entities": [
+    {
+      "weight": 200,
+      "entity": "aoa3:fake_tnt"
+    },
+    {
+      "weight": 150,
+      "entity": "aoa3:happy"
+    }
+  ]
+}

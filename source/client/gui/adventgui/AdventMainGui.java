@@ -98,7 +98,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 			RenderSystem.disableBlend();
 		}
 
-		RenderUtil.drawScaledMessage(matrix, font, new StringTextComponent("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, NumberUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawScaledMessage(matrix, font, new StringTextComponent("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 
 		if (WebUtil.isUpdateAvailable()) {
 			updateMessageTicker--;
@@ -109,7 +109,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 			if (updateMessageTicker > 0) {
 				ITextComponent msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", new StringTextComponent(WebUtil.getLatestVersion()));
 
-				RenderUtil.drawScaledMessage(matrix, font, msg, scaledRootX + 925 - font.width(msg), scaledRootY + 105, 1.25f, NumberUtil.RGB(229, 0, 0), RenderUtil.StringRenderType.DROP_SHADOW);
+				RenderUtil.drawScaledMessage(matrix, font, msg, scaledRootX + 925 - font.width(msg), scaledRootY + 105, 1.25f, ColourUtil.RGB(229, 0, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 			}
 		}
 
@@ -177,7 +177,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 				RenderUtil.renderScaledCustomSizedTexture(matrix, scaledRootX + x, scaledRootY + y, textureX, textureY, 180, 60, 180, 60, 180, 180);
 
-				int stringColour = NumberUtil.RGB(239, 137, 119);
+				int stringColour = ColourUtil.RGB(239, 137, 119);
 
 				if (getFGColor() != 0) {
 					stringColour = getFGColor();
@@ -186,7 +186,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 					stringColour = 10526880;
 				}
 				else if (this.isHovered || tabID == selectedTab) {
-					stringColour = NumberUtil.RGB(247, 239, 0);
+					stringColour = ColourUtil.RGB(247, 239, 0);
 				}
 
 				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), scaledRootX + x + 90, scaledRootY + y + 25, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);

@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "anchor": "vulcanes",
-      "text": "$(thing)Vulcanes$() are a unique type of weapon, that isn't used in the way a traditional weapon might be.$(br)Instead of using a $(thing)vulcane$() to outright attack an enemy, it feeds off the $(thing)anger$() that builds up as you take damage.$(br2)Once enough has been built up, use your $(thing)vulcane$() to deal pure, raw, $(l)retribution$().",
+      "text": "$(thing)Vulcanes$() are a unique type of weapon, that isn't used in the way a traditional weapon might be.$(br)Instead of using a $(thing)vulcane$() to outright attack an enemy, it feeds off the $(thing)anger$() that builds up as you take damage.$(br2)Once enough has been built up, use your $(thing)vulcane$() to deal pure, raw, $(l)retribution$(/l).",
       "title": "Vulcanes"
     },
     {

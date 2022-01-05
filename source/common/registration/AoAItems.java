@@ -1,22 +1,21 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.potion.Effects;
 import net.minecraft.tileentity.BannerPattern;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.event.GlobalEvents;
-import net.tslat.aoa3.item.food.*;
-import net.tslat.aoa3.item.lootbox.*;
-import net.tslat.aoa3.item.misc.*;
-import net.tslat.aoa3.item.misc.summoning.*;
-import net.tslat.aoa3.item.tablet.*;
-import net.tslat.aoa3.item.tool.misc.ExpFlask;
-import net.tslat.aoa3.item.tool.misc.InfusionBowl;
+import net.tslat.aoa3.object.item.food.*;
+import net.tslat.aoa3.object.item.lootbox.*;
+import net.tslat.aoa3.object.item.misc.*;
+import net.tslat.aoa3.object.item.misc.summoning.*;
+import net.tslat.aoa3.object.item.tablet.*;
 import net.tslat.aoa3.util.PotionUtil;
 
+import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public final class AoAItems {
@@ -71,6 +70,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> MYSTITE_NUGGET = registerItem("mystite_nugget", miscItem());
 	public static final RegistryObject<Item> ROSITE_NUGGET = registerItem("rosite_nugget", miscItem());
 	public static final RegistryObject<Item> SHYRESTONE_NUGGET = registerItem("shyrestone_nugget", miscItem());
+	public static final RegistryObject<Item> SKELETAL_NUGGET = registerItem("skeletal_nugget", miscItem());
 	public static final RegistryObject<Item> VARSIUM_NUGGET = registerItem("varsium_nugget", miscItem());
 
 	public static final RegistryObject<Item> UNPOWERED_RUNE = registerItem("unpowered_rune", () -> new RuneSource(1));
@@ -100,7 +100,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> SILVER_COIN = registerItem("silver_coin", miscItem());
 	public static final RegistryObject<Item> GOLD_COIN = registerItem("gold_coin", miscItem());
 	public static final RegistryObject<Item> LUNAVER_COIN = registerItem("lunaver_coin", miscItem());
-	public static final RegistryObject<Item> CONFETTI_PILE = registerItem("confetti_pile", miscItem(), 10);
+	public static final RegistryObject<Item> CONFETTI_PILE = registerItem("confetti_pile", miscFuelItem(10));
 	public static final RegistryObject<Item> CORAL_STONE = registerItem("coral_stone", miscItem());
 	public static final RegistryObject<Item> COSMIC_DUST = registerItem("cosmic_dust", miscItem());
 	public static final RegistryObject<Item> CUP = registerItem("cup", miscItem());
@@ -117,7 +117,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> YELLOW_DRUSE = registerItem("yellow_druse", miscItem());
 	public static final RegistryObject<Item> ENCHANTED_GUNPOWDER = registerItem("enchanted_gunpowder", miscItem());
 	public static final RegistryObject<Item> EYE_BULB = registerItem("eye_bulb", () -> new BlockNamedItem(AoABlocks.EYE_BULB_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).food(new Food.Builder().nutrition(2).saturationMod(0.4f).build())));
-	public static final RegistryObject<Item> FLAMMABLE_DUST = registerItem("flammable_dust", miscItem(), 100);
+	public static final RegistryObject<Item> FLAMMABLE_DUST = registerItem("flammable_dust", miscFuelItem(100));
 	public static final RegistryObject<Item> FLESHY_BONES = registerItem("fleshy_bones", () -> new ReservedItem("alien_orb"));
 	public static final RegistryObject<Item> FLOATING_STONE = registerItem("floating_stone", FloatingStone::new);
 	public static final RegistryObject<Item> BLUE_GEMSTONES = registerItem("blue_gemstones", miscItem());
@@ -129,7 +129,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> GHOSTLY_POWDER = registerItem("ghostly_powder", miscItem());
 	public static final RegistryObject<Item> GHOULASM = registerItem("ghoulasm", miscItem());
 	public static final RegistryObject<Item> GRAVITATOR = registerItem("gravitator", Gravitator::new);
-	public static final RegistryObject<Item> HARDENED_CONFETTI_BALL = registerItem("hardened_confetti_ball", miscItem(), 120);
+	public static final RegistryObject<Item> HARDENED_CONFETTI_BALL = registerItem("hardened_confetti_ball", miscFuelItem(120));
 	public static final RegistryObject<Item> HIVE_CHUNK = registerItem("hive_chunk", HiveChunk::new);
 	public static final RegistryObject<Item> ICE_CRYSTAL = registerItem("ice_crystal", miscItem());
 	public static final RegistryObject<Item> IMPURE_GOLD = registerItem("impure_gold", miscItem());
@@ -156,14 +156,14 @@ public final class AoAItems {
 	public static final RegistryObject<Item> OLD_BOOT = registerItem("old_boot", OldBoot::new);
 	public static final RegistryObject<Item> ORANGE_SPORES = registerItem("orange_spores", miscItem());
 	public static final RegistryObject<Item> ORBULON = registerItem("orbulon", miscItem());
-	public static final RegistryObject<Item> PADDED_CLOTH = registerItem("padded_cloth", miscItem(), 110);
+	public static final RegistryObject<Item> PADDED_CLOTH = registerItem("padded_cloth", miscFuelItem(110));
 	public static final RegistryObject<Item> PHANTASM = registerItem("phantasm", miscItem());
 	public static final RegistryObject<Item> POWER_CORE = registerItem("power_core", miscItem());
 	public static final RegistryObject<Item> PRIMED_GHOULASM = registerItem("primed_ghoulasm", miscItem());
 	public static final RegistryObject<Item> PRIMORDIAL_SKULL = registerItem("primordial_skull", miscItem());
 	public static final RegistryObject<Item> PURE_GOLD = registerItem("pure_gold", miscItem());
 	public static final RegistryObject<Item> PURE_RAIN_STONE = registerItem("pure_rain_stone", miscItem());
-	public static final RegistryObject<Item> REINFORCED_CLOTH = registerItem("reinforced_cloth", miscItem(), 90);
+	public static final RegistryObject<Item> REINFORCED_CLOTH = registerItem("reinforced_cloth", miscFuelItem(90));
 	public static final RegistryObject<Item> RETURN_CRYSTAL = registerItem("return_crystal", ReturnCrystal::new);
 	public static final RegistryObject<Item> ROCK_BONES = registerItem("rock_bones", () -> new ReservedItem("alien_orb"));
 	public static final RegistryObject<Item> ROSID_ROOT = registerItem("rosid_root", miscItem());
@@ -350,23 +350,34 @@ public final class AoAItems {
 	public static final RegistryObject<Item> TREASURE_BOX = registerItem("treasure_box", TreasureBox::new);
 	public static final RegistryObject<Item> WEAPONS_CASE = registerItem("weapons_case", WeaponsCase::new);
 
-	public static final RegistryObject<Item> RAW_CANDLEFISH = registerItem("raw_candlefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.2f).build())));
-	public static final RegistryObject<Item> RAW_CRIMSON_SKIPPER = registerItem("raw_crimson_skipper", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.15f).build())));
-	public static final RegistryObject<Item> RAW_CRIMSON_STRIPEFISH = registerItem("raw_crimson_stripefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.1f).build())));
-	public static final RegistryObject<Item> RAW_DARK_HATCHETFISH = registerItem("raw_dark_hatchetfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
-	public static final RegistryObject<Item> RAW_FINGERFISH = registerItem("raw_fingerfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0f).build())));
-	public static final RegistryObject<Item> RAW_GOLDEN_GULLFISH = registerItem("raw_golden_gullfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.1f).build())));
-	public static final RegistryObject<Item> RAW_IRONBACK = registerItem("raw_ironback", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(3).saturationMod(0.3f).build())));
-	public static final RegistryObject<Item> RAW_LIMEFISH = registerItem("raw_limefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.15f).build())));
-	public static final RegistryObject<Item> RAW_PEARL_STRIPEFISH = registerItem("raw_pearl_stripefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.05f).build())));
+	public static final RegistryObject<Item> BLUE_GEMTRAP = registerItem("blue_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> CANDLEFISH = registerItem("candlefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> CHARRED_CHAR = registerItem("charred_char", CharredChar::new);
+	public static final RegistryObject<Item> CHOCAW = registerItem("chocaw", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.65f).build())));
+	public static final RegistryObject<Item> CRIMSON_SKIPPER = registerItem("crimson_skipper", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> CRIMSON_STRIPEFISH = registerItem("crimson_stripefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> DARK_HATCHETFISH = registerItem("dark_hatchetfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> GREEN_GEMTRAP = registerItem("green_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> HYDRONE = registerItem("hydrone", miscItem());
+	public static final RegistryObject<Item> IRONBACK = registerItem("ironback", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> JAMFISH = registerItem("jamfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(5).saturationMod(0.5f).effect(() -> new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 600).build(), 1f).build())));
+	public static final RegistryObject<Item> PARAPIRANHA = registerItem("parapiranha", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> PEARL_STRIPEFISH = registerItem("pearl_stripefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> PURPLE_GEMTRAP = registerItem("purple_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> RAZORFISH = registerItem("razorfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> RED_GEMTRAP = registerItem("red_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> REEFTOOTH = registerItem("reeftooth", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> ROCKETFISH = registerItem("rocketfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> SAILBACK = registerItem("sailback", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> SAPPHIRE_STRIDER = registerItem("sapphire_strider", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> SKELECANTH = registerItem("skelecanth", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.1f).build())));
+	public static final RegistryObject<Item> WHITE_GEMTRAP = registerItem("white_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> YELLOW_GEMTRAP = registerItem("yellow_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> TURQUOISE_STRIPEFISH = registerItem("turquoise_stripefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+	public static final RegistryObject<Item> VIOLET_SKIPPER = registerItem("violet_skipper", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
+
 	public static final RegistryObject<Item> RAW_RAINBOWFISH = registerItem("raw_rainbowfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(3).saturationMod(0.85f).build())));
-	public static final RegistryObject<Item> RAW_RAZORFISH = registerItem("raw_razorfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(3).saturationMod(0.3f).build())));
-	public static final RegistryObject<Item> RAW_ROCKETFISH = registerItem("raw_rocketfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.15f).build())));
-	public static final RegistryObject<Item> RAW_SAILBACK = registerItem("raw_sailback", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.1f).build())));
-	public static final RegistryObject<Item> RAW_SAPPHIRE_STRIDER = registerItem("raw_sapphire_strider", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
-	public static final RegistryObject<Item> RAW_TURQUOISE_STRIPEFISH = registerItem("raw_turquoise_stripefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.15f).build())));
-	public static final RegistryObject<Item> RAW_VIOLET_SKIPPER = registerItem("raw_violet_skipper", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.2f).build())));
-	public static final RegistryObject<Item> COOKED_RAINBOWFISH = registerItem("cooked_rainbowfish", () -> new HealingFood(10.0f, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.85f).build())));
+	public static final RegistryObject<Item> COOKED_RAINBOWFISH = registerItem("cooked_rainbowfish", () -> new HealingFood(5.0f, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85f).effect(() -> new PotionUtil.EffectBuilder(Effects.LUCK, 600).build(), 1f).build())));
 
 	public static final RegistryObject<Item> BUBBLE_BERRIES = registerItem("bubble_berries", BubbleBerries::new);
 	public static final RegistryObject<Item> CANDY_CANE = registerItem("candy_cane", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.1f).build())));
@@ -407,10 +418,9 @@ public final class AoAItems {
 	public static final RegistryObject<Item> TEA = registerItem("tea", Tea::new);
 	public static final RegistryObject<Item> FUNGAL_TEA = registerItem("fungal_tea", FungalTea::new);
 	public static final RegistryObject<Item> NATURAL_TEA = registerItem("natural_tea", NaturalTea::new);
-
-	public static final RegistryObject<Item> STONE_BOWL = registerItem("stone_bowl", () -> new InfusionBowl(100, 1, 0));
-	public static final RegistryObject<Item> DIAMOND_BOWL = registerItem("diamond_bowl", () -> new InfusionBowl(750, 5, 10));
-	public static final RegistryObject<Item> EXP_FLASK = registerItem("exp_flask", ExpFlask::new);
+	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85F).build())));
+	public static final RegistryObject<Item> CHUM = registerItem("chum", ChumItem::new);
+	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 40).build(), 1f).build())));
 
 	public static final RegistryObject<Item> BUBBLE_BERRY_SEEDS = registerItem("bubble_berry_seeds", () -> new BlockNamedItem(AoABlocks.BUBBLE_BERRY_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> CHILLI_SEEDS = registerItem("chilli_seeds", () -> new BlockNamedItem(AoABlocks.CHILLI_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
@@ -425,7 +435,8 @@ public final class AoAItems {
 	public static final RegistryObject<Item> TEA_SEEDS = registerItem("tea_seeds", () -> new BlockNamedItem(AoABlocks.TEA_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> THORNY_PLANT_SEEDS = registerItem("thorny_plant_seeds", () -> new BlockNamedItem(AoABlocks.THORNY_PLANT_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> TRILLIAD_SEEDS = registerItem("trilliad_seeds", () -> new BlockNamedItem(AoABlocks.TRILLIAD_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	
+	public static final RegistryObject<Item> GREEN_MANURE_SEEDS = registerItem("green_manure_seeds", () -> new BlockNamedItem(AoABlocks.GREEN_MANURE.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
+
 	public static final RegistryObject<Item> MUSIC_DISC_OUTLAW = registerItem("music_disc_outlaw", () -> new MusicDiscItem(15, AoASounds.OUTLAW_MUSIC_DISC, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> MUSIC_DISC_CAVERNS = registerItem("music_disc_caverns", () -> new MusicDiscItem(15, AoASounds.CAVERNS_MUSIC_DISC, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
 
@@ -448,13 +459,16 @@ public final class AoAItems {
 		return ITEMS.register(registryId, item);
 	}
 
-	private static <T extends Item> RegistryObject<T> registerItem(String registryId, Supplier<T> item, int furnaceBurnTime) {
-		GlobalEvents.addFurnaceFuel(item, furnaceBurnTime);
-
-		return registerItem(registryId, item);
-	}
-
 	private static Supplier<Item> miscItem() {
 		return () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
+	}
+
+	private static Supplier<Item> miscFuelItem(int burnTime) {
+		return () -> new Item(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)) {
+			@Override
+			public int getBurnTime(ItemStack itemStack, @Nullable IRecipeType<?> recipeType) {
+				return burnTime;
+			}
+		};
 	}
 }

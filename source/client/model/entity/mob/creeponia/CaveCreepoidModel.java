@@ -1,12 +1,11 @@
 package net.tslat.aoa3.client.model.entity.mob.creeponia;
 
-import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.entity.mob.creeponia.AoACreeponiaCreeper;
+import net.tslat.aoa3.object.entity.mob.creeponia.AoACreeponiaCreeper;
 
 public class CaveCreepoidModel extends EntityModel<AoACreeponiaCreeper> {
 	private final ModelRenderer head;

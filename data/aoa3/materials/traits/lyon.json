@@ -1,0 +1,16 @@
+{
+  "default": [
+    {
+      "name": "tconstruct:magnetic",
+      "level": 1
+    }
+  ],
+  "perStat": {
+    "tconstruct:head": [
+      {
+        "name": "tconstruct:magnetic",
+        "level": 2
+      }
+    ]
+  }
+}

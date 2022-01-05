@@ -9,9 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.entity.base.AoARangedMob;
-
-import net.minecraft.client.renderer.entity.model.BipedModel.ArmPose;
+import net.tslat.aoa3.object.entity.base.AoARangedMob;
 
 public class ThinBipedShootingModel extends BipedModel<MobEntity> {
 	public ThinBipedShootingModel() {

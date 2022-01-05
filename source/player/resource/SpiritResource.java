@@ -6,7 +6,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.TickEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 import javax.annotation.Nonnull;
 
@@ -18,7 +18,7 @@ public class SpiritResource extends AoAResource.Instance {
 	private long lastUseTick = 0;
 	private float value = 0;
 
-	public SpiritResource(PlayerDataManager plData, JsonObject jsonData) {
+	public SpiritResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.SPIRIT.get(), plData);
 
 		this.maxValue = Math.max(0, JSONUtils.getAsFloat(jsonData, "max_value"));

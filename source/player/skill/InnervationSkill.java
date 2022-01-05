@@ -15,7 +15,7 @@ import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -26,7 +26,7 @@ public class InnervationSkill extends AoASkill.Instance {
 
 	private final Int2ObjectOpenHashMap<Pair<Long, Float>> attackTracker = new Int2ObjectOpenHashMap<Pair<Long, Float>>();
 
-	public InnervationSkill(PlayerDataManager plData, JsonObject jsonData) {
+	public InnervationSkill(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoASkills.INNERVATION.get(), plData, jsonData);
 	}
 
@@ -60,7 +60,8 @@ public class InnervationSkill extends AoASkill.Instance {
 		if (attackEntry != null)
 			attackTracker.remove(ev.getEntityLiving().getId());
 
-		adjustXp(getKillXpForEntity(target, damageDealt), false, false);
+		if (canGainXp(true))
+			adjustXp(getKillXpForEntity(target, damageDealt), false, false);
 
 		if (attackTracker.size() > 10)
 			purgeTracker(target.level.getGameTime());
@@ -79,7 +80,6 @@ public class InnervationSkill extends AoASkill.Instance {
 	}
 
 	protected float getKillXpForEntity(LivingEntity target, float damageDealt) {
-		System.out.println(damageDealt);
 		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), (int)((Math.min(target.getMaxHealth() * 1.5f, damageDealt) / 20f) * 20));
 		double armour = EntityUtil.safelyGetAttributeValue(target, Attributes.ARMOR);
 		double toughness = armour > 0 ? EntityUtil.safelyGetAttributeValue(target, Attributes.ARMOR_TOUGHNESS) : 0;

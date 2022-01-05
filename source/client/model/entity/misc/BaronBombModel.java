@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.tslat.aoa3.entity.misc.BaronBombEntity;
+import net.tslat.aoa3.object.entity.misc.BaronBombEntity;
 
 public class BaronBombModel extends EntityModel<BaronBombEntity> {
 	private final ModelRenderer r5;

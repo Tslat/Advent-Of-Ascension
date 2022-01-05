@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:coins/blazium",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:coins/blazium"
+  },
+  "result": {
+    "fluid": "aoa3:molten_blazium",
+    "amount": 48
+  },
+  "temperature": 780,
+  "time": 40
+}

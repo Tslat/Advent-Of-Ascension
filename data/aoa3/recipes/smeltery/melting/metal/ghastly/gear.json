@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:gears/ghastly",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:gears/ghastly"
+  },
+  "result": {
+    "fluid": "aoa3:molten_ghastly",
+    "amount": 576
+  },
+  "temperature": 390,
+  "time": 92
+}

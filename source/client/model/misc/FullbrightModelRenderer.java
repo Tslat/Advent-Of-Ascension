@@ -19,7 +19,7 @@ public class FullbrightModelRenderer extends ModelRenderer {
 	}
 
 	@Override
-	public void render(MatrixStack pPoseStack, IVertexBuilder pVertexConsumer, int pPackedLight, int pPackedOverlay, float pRed, float pGreen, float pBlue, float pAlpha) {
-		super.render(pPoseStack, pVertexConsumer, 15728880, pPackedOverlay, pRed, pGreen, pBlue, pAlpha);
+	public void render(MatrixStack matrixStack, IVertexBuilder vertexBuilder, int pPackedLight, int pPackedOverlay, float pRed, float pGreen, float pBlue, float pAlpha) {
+		super.render(matrixStack, vertexBuilder, 15728880, pPackedOverlay, pRed, pGreen, pBlue, pAlpha);
 	}
 }

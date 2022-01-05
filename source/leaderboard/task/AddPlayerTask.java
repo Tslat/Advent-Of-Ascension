@@ -2,7 +2,7 @@ package net.tslat.aoa3.leaderboard.task;
 
 import com.mojang.datafixers.util.Pair;
 import net.tslat.aoa3.leaderboard.LeaderboardTask;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.sql.Connection;
@@ -14,7 +14,7 @@ public class AddPlayerTask extends LeaderboardTask {
 	private final ArrayList<Pair<AoASkill, Integer>> skills = new ArrayList<Pair<AoASkill, Integer>>();
 	private int totalLevel = 0;
 
-	public AddPlayerTask(PlayerDataManager plData) {
+	public AddPlayerTask(ServerPlayerDataManager plData) {
 		this.uuid = plData.player().getUUID().toString();
 		this.name = plData.player().getName().getString();
 

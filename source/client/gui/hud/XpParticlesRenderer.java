@@ -5,33 +5,31 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.math.MathHelper;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.HolidayUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.aoa3.util.*;
 
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
-public class XpParticlesRenderer {
+public final class XpParticlesRenderer {
 	private static final ConcurrentHashMap<AoASkill, CopyOnWriteArrayList<XPParticle>> particlesMap = new ConcurrentHashMap<AoASkill, CopyOnWriteArrayList<XPParticle>>(15);
 
 	private static long lastPacketReceivedTime = 0;
 	private static XPParticle lastParticleReceived = null;
 	private static AoASkill lastParticleSkill = null;
+
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGameOverlayEvent.Post.class, XpParticlesRenderer::onRenderTick);
+	}
 
 	public static void addXpParticle(AoASkill skill, float xp, boolean isLevelUp) {
 		if (!particlesMap.containsKey(skill))
@@ -87,8 +85,7 @@ public class XpParticlesRenderer {
 		}
 	}
 
-	@SubscribeEvent
-	public static void onRenderTick(final RenderGameOverlayEvent.Post ev) {
+	private static void onRenderTick(final RenderGameOverlayEvent.Post ev) {
 		if (ev.getType() != RenderGameOverlayEvent.ElementType.ALL || particlesMap.isEmpty())
 			return;
 
@@ -118,7 +115,7 @@ public class XpParticlesRenderer {
 		RenderSystem.enableAlphaTest();
 
 		for (Map.Entry<AoASkill, CopyOnWriteArrayList<XPParticle>> entry : particlesMap.entrySet()) {
-			AoASkill.Instance skill = ClientPlayerDataManager.getSkill(entry.getKey());
+			AoASkill.Instance skill = ClientPlayerDataManager.get().getSkill(entry.getKey());
 			CopyOnWriteArrayList<XPParticle> particles = entry.getValue();
 			AoASkillRenderer skillRenderer = AoAGuiElementRenderers.getSkillRenderer(skill.type());
 			int renderWidth = skillRenderer.hudRenderWidth(skill);
@@ -133,7 +130,7 @@ public class XpParticlesRenderer {
 				float lifespan = 1 - (currentTime - particle.creationTime) / 1500f;
 
 				if (lifespan >= 0.1f) {
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, particle.xpString, 0, scrollHeight * lifespan, 0.5f, NumberUtil.RGB(255, 255, 255) | (int)MathHelper.clamp(255 * lifespan, 1, 255) << 24, RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, particle.xpString, 0, scrollHeight * lifespan, 0.5f, ColourUtil.RGBA(255, 255, 255, (int)MathHelper.clamp(255 * lifespan, 1, 255)), RenderUtil.StringRenderType.NORMAL);
 				}
 			}
 
@@ -146,7 +143,7 @@ public class XpParticlesRenderer {
 				float scale = Math.min(1 / (stringWidth / (float)(renderWidth - 7)), 1 / (mc.font.lineHeight / (float)(renderHeight - 7)));
 
 				matrix.translate(renderWidth / 2d, renderHeight / 2d, 0);
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, level, scale * 0.5f, -mc.font.lineHeight * scale / 2.5f, scale, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, level, scale * 0.5f, -mc.font.lineHeight * scale / 2.5f, scale, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			}
 
 			cumulativeXOffset += renderWidth;

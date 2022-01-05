@@ -1,0 +1,27 @@
+{
+  "biomes": [
+    "aoa3:barren_grounds"
+  ],
+  "entities": [
+    {
+      "weight": 120,
+      "weight_mod": 1.0,
+      "entity": "aoa3:skelecanth"
+    },
+    {
+      "weight": 200,
+      "weight_mod": -2.0,
+      "item": "minecraft:dead_bush"
+    },
+    {
+      "weight": 100,
+      "weight_mod": 1.0,
+      "item": "minecraft:bone_meal"
+    },
+    {
+      "weight": 80,
+      "weight_mod": 1.0,
+      "item": "minecraft:bone"
+    }
+  ]
+}

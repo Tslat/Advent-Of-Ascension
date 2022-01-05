@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.container.recipe.InfusionRecipe;
+import net.tslat.aoa3.object.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.util.LocaleUtil;

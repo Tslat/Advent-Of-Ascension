@@ -2,7 +2,7 @@ package net.tslat.aoa3.event.custom.events;
 
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 /**
@@ -15,13 +15,13 @@ import net.tslat.aoa3.player.skill.AoASkill;
  */
 @Cancelable
 public class PlayerChangeXpEvent extends PlayerEvent {
-	private float rawXpGain;
-	private float xpGain;
+	private final float rawXpGain;
+	private final float xpGain;
 	private float newXpGain;
 	private final AoASkill.Instance skill;
 	private final boolean isNaturalGain;
 
-	public PlayerChangeXpEvent(PlayerDataManager playerDataManager, AoASkill.Instance skill, float rawXpGain, float xpAfterModifiers, boolean isNaturalGainMethod) {
+	public PlayerChangeXpEvent(ServerPlayerDataManager playerDataManager, AoASkill.Instance skill, float rawXpGain, float xpAfterModifiers, boolean isNaturalGainMethod) {
 		super(playerDataManager.player());
 
 		this.rawXpGain = rawXpGain;

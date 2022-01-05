@@ -1,0 +1,15 @@
+{
+  "type": "tconstruct:material_fluid",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "fluid": {
+    "tag": "forge:molten_blazium",
+    "amount": 144
+  },
+  "temperature": 780,
+  "output": "aoa3:blazium"
+}

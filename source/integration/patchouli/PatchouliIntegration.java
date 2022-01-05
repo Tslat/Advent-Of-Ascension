@@ -2,28 +2,15 @@ package net.tslat.aoa3.integration.patchouli;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.GuiOpenEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import vazkii.patchouli.api.PatchouliAPI;
-import vazkii.patchouli.client.book.gui.GuiBook;
 import vazkii.patchouli.common.book.BookRegistry;
 
 public class PatchouliIntegration {
 	public static void preInit() {
-		MinecraftForge.EVENT_BUS.addListener(PatchouliIntegration::onBookOpen);
-	}
-
-	@SubscribeEvent
-	public static void onBookOpen(final GuiOpenEvent ev) {
-		if (ev.getGui() instanceof GuiBook) {
-			ResourceLocation bookId = ((GuiBook)ev.getGui()).book.id;
-
-			if (bookId.getNamespace().equals(AdventOfAscension.MOD_ID))
-				AdventGuiTabLore.bookOpened(bookId);
-		}
+		if (FMLEnvironment.dist == Dist.CLIENT)
+			PatchouliClientIntegration.init();
 	}
 
 	public static boolean isBookLoaded(ResourceLocation id) {

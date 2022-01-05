@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "aoa3:item/candied_water_bucket"
-  }
+  "parent": "forge:item/bucket_drip",
+  "loader": "forge:bucket",
+  "fluid": "aoa3:candied_water",
+  "applyFluidLuminosity": false
 }

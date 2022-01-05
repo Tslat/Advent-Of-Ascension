@@ -1,0 +1,52 @@
+{
+  "biomes": [
+    "aoa3:dustopian_forest"
+  ],
+  "entities": [
+    {
+      "weight": 10,
+      "weight_mod": 1.0,
+      "entity": "aoa3:rainbowfish"
+    },
+    {
+      "weight": 70,
+      "weight_mod": 1.0,
+      "entity": "aoa3:pearl_stripefish"
+    },
+    {
+      "weight": 200,
+      "weight_mod": -2.0,
+      "item": "minecraft:black_dye"
+    },
+    {
+      "weight": 200,
+      "weight_mod": -2.0,
+      "item": "minecraft:gray_dye"
+    },
+    {
+      "weight": 200,
+      "weight_mod": -2.0,
+      "item": "minecraft:light_gray_dye"
+    },
+    {
+      "weight": 60,
+      "weight_mod": 1.0,
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "weight": 100,
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "weight": 30,
+      "weight_mod": 1.0,
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "level": 50,
+      "weight_mod": 1.0,
+      "item": "aoa3:old_boot"
+    },
+    "minecraft:water_bucket"
+  ]
+}

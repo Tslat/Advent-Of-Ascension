@@ -24,7 +24,7 @@ public class PlayerDataSyncPacket implements AoAPacket {
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		ClientPlayerDataManager.loadFromNbt(data);
+		ClientPlayerDataManager.get().loadFromNbt(data);
 
 		context.get().setPacketHandled(true);
 	}

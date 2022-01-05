@@ -11,7 +11,7 @@ import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -23,10 +23,10 @@ import java.util.UUID;
 
 @ZenCodeType.Name("mods.aoa3.PlayerData")
 public class CTPlayerData {
-	private PlayerDataManager plData;
+	private ServerPlayerDataManager plData;
 	private final UUID backupPlayerUUID;
 
-	public CTPlayerData(PlayerDataManager plData) {
+	public CTPlayerData(ServerPlayerDataManager plData) {
 		this.plData = plData;
 		this.backupPlayerUUID = plData.player().getUUID();
 	}

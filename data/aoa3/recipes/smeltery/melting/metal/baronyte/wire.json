@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:wires/baronyte",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:wires/baronyte"
+  },
+  "result": {
+    "fluid": "aoa3:molten_baronyte",
+    "amount": 72
+  },
+  "temperature": 580,
+  "time": 11
+}

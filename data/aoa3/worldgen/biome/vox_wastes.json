@@ -54,26 +54,14 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:gadgetoid",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:destructor",
         "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:toxxulous",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:fischer",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:centinel",
-        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -84,7 +72,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:gadgetoid",
+        "type": "aoa3:toxxulous",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:centinel",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -93,6 +87,12 @@
         "type": "aoa3:slimer",
         "weight": 1,
         "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:fischer",
+        "weight": 1,
+        "minCount": 1,
         "maxCount": 1
       }
     ],

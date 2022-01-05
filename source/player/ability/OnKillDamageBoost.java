@@ -33,8 +33,8 @@ public class OnKillDamageBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		return new TranslationTextComponent(super.getDescription().getKey(), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(postKillDuration / 20f, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(postKillDuration / 20f, 2)));
 	}
 
 	@Override

@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:wires/skeletal",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:wires/skeletal"
+  },
+  "result": {
+    "fluid": "aoa3:molten_skeletal",
+    "amount": 72
+  },
+  "temperature": 360,
+  "time": 9
+}

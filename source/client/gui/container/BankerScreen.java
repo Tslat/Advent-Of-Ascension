@@ -17,7 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.tslat.aoa3.common.container.BankerContainer;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
 public class BankerScreen extends ContainerScreen<BankerContainer> {
@@ -65,7 +65,7 @@ public class BankerScreen extends ContainerScreen<BankerContainer> {
 
 		RenderUtil.renderCustomSizedTexture(matrix, 28 + titleWidth - 2, 4, 178, 15, 1, 12, 256, 256);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.font.draw(matrix, title, 30, 6, NumberUtil.RGB(255, 255, 255));
+		mc.font.draw(matrix, title, 30, 6, ColourUtil.WHITE);
 	}
 
 	private void renderCoinPlaceholders(MatrixStack matrix, int centerX, int centerY) {

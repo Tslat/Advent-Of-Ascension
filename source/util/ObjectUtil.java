@@ -1,5 +1,11 @@
 package net.tslat.aoa3.util;
 
+import com.google.gson.JsonObject;
+import com.mojang.serialization.JsonOps;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.NBTDynamicOps;
+
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.util.Collection;
@@ -25,5 +31,11 @@ public final class ObjectUtil {
 		}
 
 		return null;
+	}
+
+	public static JsonObject stackToJson(ItemStack stack) {
+		CompoundNBT nbt = stack.save(new CompoundNBT());
+
+		return NBTDynamicOps.INSTANCE.convertTo(JsonOps.INSTANCE, nbt).getAsJsonObject();
 	}
 }

@@ -9,13 +9,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.CriticalHitEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
+import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
 import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 
@@ -227,6 +226,15 @@ public interface AoAPlayerEventListener {
 	default void handleBlockPlacement(final BlockEvent.EntityPlaceEvent ev) {}
 
 	/**
+	 * This methods gets triggered when the player right clicks a block in the world.
+	 * Override to prevent interaction effects or trigger new ones.
+	 *
+	 * Will only trigger if {@link ListenerType#BLOCK_INTERACT} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 * @param ev {@link PlayerInteractEvent.RightClickBlock} event
+	 */
+	default void handleBlockInteraction(final PlayerInteractEvent.RightClickBlock ev) {}
+
+	/**
 	 * This method gets triggered when the player throws out an item from their inventory or hand.
 	 * Override to trigger effects for when a player throws out an item.
 	 *
@@ -289,6 +297,26 @@ public interface AoAPlayerEventListener {
 	default void handleItemSmelt(final PlayerEvent.ItemSmeltedEvent ev) {}
 
 	/**
+	 * This method gets triggered when the player fishes up an item.
+	 * Override to trigger effects or modify some values when a player has fished up an item via any applicable means. The resulting loot is not modifiable here.
+	 *
+	 * Will only trigger if {@link ListenerType#FISHED_ITEM} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
+	 * @param ev {@link ItemFishedEvent} event
+	 */
+	default void handleItemFished(final ItemFishedEvent ev, boolean isHauling) {}
+
+	/**
+	 * This method gets triggered when the player attempts to reel in a hooked entity with a hauling rod. Does not apply to reeling in fish from fishing.
+	 * Override to trigger effects or modify some values when a player has fished up an item via any applicable means. The resulting loot is not modifiable here.
+	 *
+	 * Will only trigger if {@link ListenerType#HAULING_ROD_PULL_ENTITY} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
+	 * @param ev {@link ItemFishedEvent} event
+	 */
+	default void handleHaulingRodPullEntity(final HaulingRodPullEntityEvent ev) {}
+
+	/**
 	 * This method gets triggered when the player has a potion effect applied to them. It is also triggered if an existing effect is upgraded or extended.
 	 * Override to trigger effects for when a player is afflicted with a potion effect of any kind.
 	 *
@@ -304,9 +332,9 @@ public interface AoAPlayerEventListener {
 	 *
 	 * Will only trigger if {@link ListenerType#ATTRIBUTE_MODIFIERS} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
-	 * @param plData {@link PlayerDataManager} player Advent data container
+	 * @param plData {@link ServerPlayerDataManager} player Advent data container
 	 */
-	default void applyAttributeModifiers(final PlayerDataManager plData) {}
+	default void applyAttributeModifiers(final ServerPlayerDataManager plData) {}
 
 	/**
 	 * This method gets triggered in most circumstances when a player's attribute modifiers should be removed. Usually this is when a listener is disabled or removed, or if the player no longer meets the requirements for the listener.
@@ -314,9 +342,9 @@ public interface AoAPlayerEventListener {
 	 *
 	 * Will only trigger if {@link ListenerType#ATTRIBUTE_MODIFIERS} is included in the retuned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
-	 * @param plData {@link PlayerDataManager} player Advent data container
+	 * @param plData {@link ServerPlayerDataManager} player Advent data container
 	 */
-	default void removeAttributeModifiers(final PlayerDataManager plData) {}
+	default void removeAttributeModifiers(final ServerPlayerDataManager plData) {}
 
 	/**
 	 * This method gets triggered when a player is about to critically strike a target. This is called before the damage is done, but after any other modifications have been made.
@@ -327,6 +355,16 @@ public interface AoAPlayerEventListener {
 	 * @param ev {@link CriticalHitEvent} event
 	 */
 	default void handleCriticalHit(final CriticalHitEvent ev) {}
+
+	/**
+	 * This method gets triggered when a player is being set as a target for an entity.
+	 * Override to trigger effects or cancel the targeting application if required. Note that you cannot cancel this targeting event, you must set the targeter's target to null manually to do so.
+	 *
+	 * Will only trigger if {@link ListenerType#ENTITY_TARGET} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
+	 * @param ev {@link LivingSetAttackTargetEvent} event
+	 */
+	default void handleEntityTarget(final LivingSetAttackTargetEvent ev) {}
 
 	/**
 	 * This method gets triggered when the player is about to be attacked by another entity.
@@ -435,6 +473,18 @@ public interface AoAPlayerEventListener {
 		AoAPackets.messagePlayer(player, new ScreenOverlayPacket(AdventOfAscension.id("textures/gui/overlay/misc/action_key_activation_vignette.png"), 10));
 	}
 
+	/**
+	 * This method gets triggered when an unknown source calls for a custom interaction for a given player.
+	 * All listeners that include {@link ListenerType#CUSTOM} in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes()} will receive this call, regardless of intention.
+	 * Prior to acting on any call, ensure you're receiving the correct interaction via comparing the {@param interactionType} parameter to the expected value.
+	 *
+	 * NOTE: This should only be used if no other event listeners are capable of supporting the interaction as this is the least efficient interaction handler.
+	 *
+	 * @param interactionType the "id" of the interaction. Use this to ensure you're interpreting the correct interaction prior to operating on any of the data.
+	 * @param data the untyped data provided by the calling function. This can be blind-casted to the correct format assuming you've checked the {@param interactionType} parameter
+	 */
+	default void handleCustomInteraction(String interactionType, Object data) {}
+
 	enum ListenerState {
 		ACTIVE("active"),
 		MANUALLY_DISABLED("disabled"),
@@ -479,16 +529,20 @@ public interface AoAPlayerEventListener {
 		BLOCK_BREAK_SPEED,
 		BLOCK_BREAK,
 		BLOCK_PLACE,
+		BLOCK_INTERACT,
 		ITEM_THROW,
 		LEVEL_CHANGE,
 		GAIN_SKILL_XP,
 		GAIN_VANILLA_XP,
 		ITEM_CRAFT,
 		ITEM_SMELT,
+		FISHED_ITEM,
+		HAULING_ROD_PULL_ENTITY,
 		POTION_APPLIED,
 		LOOT_MODIFICATION,
 		ATTRIBUTE_MODIFIERS,
 		CRITICAL_HIT,
+		ENTITY_TARGET,
 		INCOMING_ATTACK_BEFORE,
 		INCOMING_ATTACK_DURING,
 		INCOMING_ATTACK_AFTER,
@@ -496,6 +550,7 @@ public interface AoAPlayerEventListener {
 		OUTGOING_ATTACK_DURING,
 		OUTGOING_ATTACK_AFTER,
 		ENTITY_KILL,
-		KEY_INPUT
+		KEY_INPUT,
+		CUSTOM
 	}
 }

@@ -1,0 +1,18 @@
+{
+  "type": "tconstruct:material",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:storage_blocks/rosite"
+  },
+  "value": 9,
+  "needed": 1,
+  "material": "aoa3:rosite",
+  "leftover": {
+    "tag": "forge:ingots/rosite"
+  }
+}

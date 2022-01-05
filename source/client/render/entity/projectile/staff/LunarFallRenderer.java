@@ -5,10 +5,10 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.entity.projectile.staff.LunarFallEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.object.entity.projectile.staff.LunarFallEntity;
+import net.tslat.aoa3.util.ColourUtil;
 
 import javax.annotation.Nullable;
 
@@ -25,7 +25,7 @@ public class LunarFallRenderer extends EntityRenderer<LunarFallEntity> {
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 3; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 255, 255)), entity.getX(), entity.getY() + 0.25d, entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.WHITE), entity.getX(), entity.getY() + 0.25d, entity.getZ(), 0, 0, 0);
 		}
 	}
 

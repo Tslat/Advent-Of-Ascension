@@ -15,12 +15,12 @@ public class AoAAbilities {
 	private static IForgeRegistry<AoAAbility> REGISTRY = null;
 	public static final DeferredRegister<AoAAbility> ABILITIES = DeferredRegister.create(AoAAbility.class, AdventOfAscension.MOD_ID);
 
-	public static final RegistryObject<AoAAbility> PASSIVE_ATTRIBUTE_MODIFICATION = register("passive_attribute_modification", () -> new AoAAbility(PassiveAttributeModification::new, PassiveAttributeModification::new));
-	public static final RegistryObject<AoAAbility> SCALING_ATTRIBUTE_MODIFICATION = register("scaling_attribute_modification", () -> new AoAAbility(ScalingAttributeModification::new, ScalingAttributeModification::new));
+	public static final RegistryObject<AoAAbility> ATTRIBUTE_MODIFICATION = register("attribute_modification", () -> new AoAAbility(AttributeModification::new, AttributeModification::new));
 	public static final RegistryObject<AoAAbility> FLAT_XP_BOOST = register("flat_xp_boost", () -> new AoAAbility(FlatXpBoost::new, FlatXpBoost::new));
 	public static final RegistryObject<AoAAbility> DUMMY_ABILITY = register("dummy_ability", () -> new AoAAbility(DummyAbility::new, DummyAbility::new));
-	public static final RegistryObject<AoAAbility> SCALING_FALL_DAMAGE_REDUCTION = register("scaling_fall_damage_reduction", () -> new AoAAbility(ScalingFallDamageReduction::new, ScalingFallDamageReduction::new));
-	public static final RegistryObject<AoAAbility> SCALING_JUMP_BOOST = register("scaling_jump_boost", () -> new AoAAbility(ScalingJumpBoost::new, ScalingJumpBoost::new));
+	public static final RegistryObject<AoAAbility> LEVEL_RESTRICTION = register("level_restriction", () -> new AoAAbility(LevelRestriction::new, LevelRestriction::new));
+	public static final RegistryObject<AoAAbility> FALL_DAMAGE_REDUCTION = register("fall_damage_reduction", () -> new AoAAbility(FallDamageReduction::new, FallDamageReduction::new));
+	public static final RegistryObject<AoAAbility> JUMP_BOOST = register("jump_boost", () -> new AoAAbility(JumpBoost::new, JumpBoost::new));
 	public static final RegistryObject<AoAAbility> DOUBLE_JUMP = register("double_jump", () -> new AoAAbility(DoubleJump::new, DoubleJump::new));
 	public static final RegistryObject<AoAAbility> ONE_SHOT_DAMAGE_LIMITER = register("one_shot_damage_limiter", () -> new AoAAbility(OneShotDamageLimiter::new, OneShotDamageLimiter::new));
 	public static final RegistryObject<AoAAbility> POTION_DURATION_REDUCER = register("potion_duration_reducer", () -> new AoAAbility(PotionDurationReducer::new, PotionDurationReducer::new));
@@ -31,6 +31,13 @@ public class AoAAbilities {
 	public static final RegistryObject<AoAAbility> DOUBLE_DROPS_CHANCE = register("double_drops_chance", () -> new AoAAbility(DoubleDropsChance::new, DoubleDropsChance::new));
 	public static final RegistryObject<AoAAbility> INNERVATION_DODGE = register("innervation_dodge", () -> new AoAAbility(InnervationDodge::new, InnervationDodge::new));
 	public static final RegistryObject<AoAAbility> STUN_STRIKE = register("stun_strike", () -> new AoAAbility(StunStrike::new, StunStrike::new));
+	public static final RegistryObject<AoAAbility> FISHING_HOSTILE_TARGETING_IMMUNITY = register("fishing_hostile_targeting_immunity", () -> new AoAAbility(FishingHostileTargetingImmunity::new, FishingHostileTargetingImmunity::new));
+	public static final RegistryObject<AoAAbility> FISHING_XP_BOOST = register("fishing_xp_boost", () -> new AoAAbility(FishingXpBoost::new, FishingXpBoost::new));
+	public static final RegistryObject<AoAAbility> HAULING_ROD_PULL_STRENGTH = register("hauling_rod_pull_strength", () -> new AoAAbility(HaulingRodPullStrengthModifier::new, HaulingRodPullStrengthModifier::new));
+	public static final RegistryObject<AoAAbility> HAULING_ROD_PULL_DAMAGE = register("hauling_rod_pull_damage", () -> new AoAAbility(HaulingRodPullDamage::new, HaulingRodPullDamage::new));
+	public static final RegistryObject<AoAAbility> FISHING_TRAP_SPAWN = register("fishing_trap_spawn", () -> new AoAAbility(FishingTrapSpawn::new, FishingTrapSpawn::new));
+	public static final RegistryObject<AoAAbility> BLOCK_CONVERSION = register("block_conversion", () -> new AoAAbility(BlockConversion::new, BlockConversion::new));
+	public static final RegistryObject<AoAAbility> HOE_AREA_HARVEST = register("hoe_area_harvest", () -> new AoAAbility(HoeAreaHarvest::new, HoeAreaHarvest::new));
 
 	private static RegistryObject<AoAAbility> register(String id, Supplier<AoAAbility> ability) {
 		return ABILITIES.register(id, ability);

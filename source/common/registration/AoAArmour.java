@@ -8,7 +8,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.item.armour.*;
+import net.tslat.aoa3.object.item.armour.*;
 import org.apache.logging.log4j.Level;
 
 import java.lang.reflect.Constructor;
@@ -76,6 +76,8 @@ public final class AoAArmour {
 
 	public static final RegistryObject<SkillHelmet> HELM_OF_THE_DEXTROUS = registerArmour("helm_of_the_dextrous", () -> new SkillHelmet(AoASkills.DEXTERITY));
 	public static final RegistryObject<SkillHelmet> HELM_OF_THE_DRYAD = registerArmour("helm_of_the_dryad", () -> new SkillHelmet(AoASkills.FARMING));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_TRAWLER = registerArmour("helm_of_the_trawler", () -> new SkillHelmet(AoASkills.HAULING));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_WARRIOR = registerArmour("helm_of_the_warrior", () -> new SkillHelmet(AoASkills.INNERVATION));
 
 	private static <T extends Item> RegistryObject<T> registerArmour(String registryName, Supplier<T> item) {
 		return ARMOUR.register(registryName, item);

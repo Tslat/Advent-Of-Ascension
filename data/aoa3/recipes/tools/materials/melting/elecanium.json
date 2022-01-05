@@ -1,0 +1,15 @@
+{
+  "type": "tconstruct:material_melting",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "input": "aoa3:elecanium",
+  "temperature": 670,
+  "result": {
+    "fluid": "aoa3:molten_elecanium",
+    "amount": 144
+  }
+}

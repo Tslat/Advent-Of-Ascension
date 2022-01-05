@@ -67,20 +67,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 
 		for (Map.Entry<ResourceLocation, JsonElement> entry : jsonMap.entrySet()) {
 			ResourceLocation itemId = entry.getKey();
-			JsonObject json = entry.getValue().getAsJsonObject();
-			SkillReqHandler handler = new SkillReqHandler();
-
-			if (json.has("equip"))
-				handler.forEquipping(parseRequirements(json.get("equip")));
-
-			if (json.has("place_block"))
-				handler.forPlacingBlocks(parseRequirements(json.get("place_block")));
-
-			if (json.has("break_block"))
-				handler.forBreakingBlocks(parseRequirements(json.get("break_block")));
-
-			if (json.has("interact_with"))
-				handler.forInteracting(parseRequirements(json.get("interact_with")));
+			SkillReqHandler handler = parse(entry.getValue().getAsJsonObject());
 
 			if (handler.isValid()) {
 				REQUIREMENTS_MAP.put(itemId, handler);
@@ -91,7 +78,29 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 		}
 	}
 
-	private Predicate<PlayerDataManager> parseRequirements(JsonElement data) throws IllegalArgumentException, IllegalStateException, ResourceLocationException  {
+	public static void addRequirement(ResourceLocation id, SkillReqHandler handler) {
+		REQUIREMENTS_MAP.put(id, handler);
+	}
+
+	public static SkillReqHandler parse(JsonObject data) {
+		SkillReqHandler handler = new SkillReqHandler();
+
+		if (data.has("equip"))
+			handler.forEquipping(parseRequirements(data.get("equip")));
+
+		if (data.has("place_block"))
+			handler.forPlacingBlocks(parseRequirements(data.get("place_block")));
+
+		if (data.has("break_block"))
+			handler.forBreakingBlocks(parseRequirements(data.get("break_block")));
+
+		if (data.has("interact_with"))
+			handler.forInteracting(parseRequirements(data.get("interact_with")));
+
+		return handler;
+	}
+
+	private static Predicate<PlayerDataManager> parseRequirements(JsonElement data) throws IllegalArgumentException, IllegalStateException, ResourceLocationException  {
 		if (data.isJsonObject()) {
 			JsonObject skillObject = data.getAsJsonObject();
 
@@ -155,24 +164,40 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 			this.interactionPredicate = interactionPredicate;
 		}
 
+		public boolean handlingEquip() {
+			return equipPredicate != null;
+		}
+
+		public boolean handlingBlockPlacement() {
+			return blockPlacePredicate != null;
+		}
+
+		public boolean handlingBlockBreak() {
+			return blockBreakPredicate != null;
+		}
+
+		public boolean handlingInteraction() {
+			return interactionPredicate != null;
+		}
+
 		public boolean canEquip(PlayerDataManager plData) {
-			return equipPredicate != null && equipPredicate.test(plData);
+			return handlingEquip() && equipPredicate.test(plData);
 		}
 
 		public boolean canPlaceBlock(PlayerDataManager plData) {
-			return blockPlacePredicate != null && blockPlacePredicate.test(plData);
+			return handlingBlockPlacement() && blockPlacePredicate.test(plData);
 		}
 
 		public boolean canBreakBlock(PlayerDataManager plData) {
-			return blockBreakPredicate != null && blockBreakPredicate.test(plData);
+			return handlingBlockBreak() && blockBreakPredicate.test(plData);
 		}
 
 		public boolean canInteractWith(PlayerDataManager plData) {
-			return interactionPredicate != null && interactionPredicate.test(plData);
+			return handlingInteraction() && interactionPredicate.test(plData);
 		}
 
-		private boolean isValid() {
-			return equipPredicate != null || blockPlacePredicate != null || blockBreakPredicate != null || interactionPredicate != null;
+		public boolean isValid() {
+			return handlingEquip() || handlingBlockPlacement() || handlingBlockBreak() || handlingInteraction();
 		}
 	}
 }

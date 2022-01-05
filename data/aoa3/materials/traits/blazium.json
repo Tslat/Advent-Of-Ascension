@@ -1,0 +1,16 @@
+{
+  "default": [
+    {
+      "name": "aoa3:flaming_fury",
+      "level": 1
+    }
+  ],
+  "perStat": {
+    "tconstruct:head": [
+      {
+        "name": "aoa3:infernal_energy",
+        "level": 1
+      }
+    ]
+  }
+}

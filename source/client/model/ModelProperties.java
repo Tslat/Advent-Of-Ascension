@@ -1,13 +1,14 @@
 package net.tslat.aoa3.client.model;
 
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityHandles;
-import net.tslat.aoa3.capabilities.persistentstack.PersistentStackCapabilityProvider;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.object.capability.persistentstack.PersistentStackCapabilityHandles;
+import net.tslat.aoa3.object.capability.persistentstack.PersistentStackCapabilityProvider;
+import net.tslat.aoa3.common.registration.AoATools;
 import net.tslat.aoa3.common.registration.AoAWeapons;
-import net.tslat.aoa3.item.weapon.bow.BaseBow;
-import net.tslat.aoa3.item.weapon.crossbow.BaseCrossbow;
+import net.tslat.aoa3.object.item.weapon.bow.BaseBow;
+import net.tslat.aoa3.object.item.weapon.crossbow.BaseCrossbow;
 
 public final class ModelProperties {
 	public static void init() {
@@ -63,6 +64,7 @@ public final class ModelProperties {
 		registerParalyzer();
 		registerKnightsGuard();
 		registerGuardiansSword();
+		registerRods();
 	}
 
 	private static void registerBows(BaseBow... bows) {
@@ -96,7 +98,7 @@ public final class ModelProperties {
 	}
 
 	private static void registerExpFlask() {
-		registerItemProperty(AoAItems.EXP_FLASK.get(), "filled", (stack, world, entity) -> {
+		registerItemProperty(AoATools.EXP_FLASK.get(), "filled", (stack, world, entity) -> {
 			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
 			return cap.getValue() <= 0 ? 0 : 1;
@@ -123,5 +125,16 @@ public final class ModelProperties {
 
 			return cap.getValue() <= 0 ? 0 : 1;
 		});
+	}
+
+	private static void registerRods() {
+		IItemPropertyGetter predicateHandler = (stack, world, entity) -> {
+			if (entity == null)
+				return 0;
+
+			return (entity.getMainHandItem() == stack || entity.getOffhandItem() == stack && !(entity.getMainHandItem().getItem() instanceof FishingRodItem)) && entity instanceof PlayerEntity && ((PlayerEntity)entity).fishing != null ? 1 : 0;
+		};
+
+		registerItemProperty(AoATools.HAULING_ROD.get(), "cast", predicateHandler);
 	}
 }

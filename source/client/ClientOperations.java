@@ -4,40 +4,60 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ReadBookScreen;
+import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.resources.SimpleReloadableResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.GameType;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
+import net.tslat.aoa3.client.gui.hud.toasts.AbilityUnlockToast;
 import net.tslat.aoa3.client.gui.hud.toasts.LevelRequirementToast;
 import net.tslat.aoa3.client.gui.hud.toasts.ResourceRequirementToast;
 import net.tslat.aoa3.client.gui.realmstone.BlankRealmstoneScreen;
+import net.tslat.aoa3.client.particle.*;
 import net.tslat.aoa3.client.render.entity.misc.OccultBlockRenderer;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
 import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.data.client.*;
-import net.tslat.aoa3.entity.mob.greckon.SilencerEntity;
-import net.tslat.aoa3.item.misc.WornBook;
-import net.tslat.aoa3.mixin.common.invoker.AccessibleSoundEngine;
+import net.tslat.aoa3.data.client.AdventGuiThemeReloadListener;
+import net.tslat.aoa3.data.client.BestiaryReloadListener;
+import net.tslat.aoa3.data.client.MiscellaneousReloadListener;
+import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
+import net.tslat.aoa3.object.entity.mob.greckon.SilencerEntity;
+import net.tslat.aoa3.object.item.misc.WornBook;
+import net.tslat.aoa3.player.ClientPlayerDataManager;
+import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.StringUtil;
+import org.apache.logging.log4j.Level;
+import software.bernie.geckolib3.resource.ResourceListener;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public final class ClientOperations {
+	public static final ClientPlayerDataManager CLIENT_PLAYER_DATA = new ClientPlayerDataManager();
+
 	public static void displayWornBookGui() {
 		PlayerEntity player = Minecraft.getInstance().player;
 		ItemStack bookStack = player.getMainHandItem().getItem() == AoAItems.WORN_BOOK.get() ? player.getMainHandItem() : player.getOffhandItem();
@@ -63,6 +83,8 @@ public final class ClientOperations {
 		if (mc == null)
 			return;
 
+		ResourceListener.registerReloadListener();
+
 		SimpleReloadableResourceManager resourceManager = (SimpleReloadableResourceManager)mc.getResourceManager();
 
 		resourceManager.registerReloadListener(new BestiaryReloadListener());
@@ -71,22 +93,49 @@ public final class ClientOperations {
 		resourceManager.registerReloadListener(new AdventGuiThemeReloadListener());
 	}
 
+	public static void registerParticleFactories(ParticleFactoryRegisterEvent ev) {
+		final ParticleManager particleManager = Minecraft.getInstance().particleEngine;
+
+		particleManager.register(AoAParticleTypes.PORTAL_FLOATER.get(), PortalFloaterParticle.Factory::new);
+		particleManager.register(AoAParticleTypes.SPARKLER.get(), SparklerParticle.Factory::new);
+		particleManager.register(AoAParticleTypes.FLICKERING_SPARKLER.get(), FlickeringSparklerParticle.Factory::new);
+		particleManager.register(AoAParticleTypes.LINGERING_SPARKLER.get(), LingeringSparklerParticle.Factory::new);
+		particleManager.register(AoAParticleTypes.RAINBOW_SPARKLER.get(), RainbowSparklerParticle.Factory::new);
+		particleManager.register(AoAParticleTypes.SWIRLY.get(), SwirlyParticle.Factory::new);
+		particleManager.register(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), new FloatingItemFragmentParticle.Factory());
+	}
+
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {
 		switch (type) {
 			case SKILL_REQUIREMENT:
+				AoASkill skill = AoASkills.getSkill((ResourceLocation)subject);
+
 				if (AoAConfig.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast((AoASkill)subject, (Integer)value));
+					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast(skill, (Integer)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientLevels", TextFormatting.RED, LocaleUtil.numToComponent((Integer)value), new StringTextComponent(StringUtil.toSentenceCase(subject.toString()))), Util.NIL_UUID);
+					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientLevels", TextFormatting.RED, skill.getName(), LocaleUtil.numToComponent((Integer)value)), Util.NIL_UUID);
 				}
 				break;
 			case RESOURCE_REQUIREMENT:
+				AoAResource resource = AoAResources.getResource((ResourceLocation)subject);
+
 				if (AoAConfig.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast((AoAResource)subject, (Float)value));
+					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast(resource, (Float)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientResource", TextFormatting.RED, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((Float)value, 2)), new StringTextComponent(StringUtil.toSentenceCase(subject.toString()))), Util.NIL_UUID);
+					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientResource", TextFormatting.RED, resource.getName(), new StringTextComponent(NumberUtil.roundToNthDecimalPlace((Float)value, 2))), Util.NIL_UUID);
+				}
+				break;
+			case ABILITY_UNLOCK:
+				AoASkill skill2 = AoASkills.getSkill((ResourceLocation)subject);
+				AoAAbility ability = AoAAbilities.getAbility((ResourceLocation)value);
+
+				if (AoAConfig.CLIENT.useToasts.get()) {
+					Minecraft.getInstance().getToasts().addToast(new AbilityUnlockToast(skill2, ability));
+				}
+				else {
+					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.abilityUnlocked", TextFormatting.GREEN, skill2.getName(), ability.getName()), Util.NIL_UUID);
 				}
 				break;
 		}
@@ -96,7 +145,7 @@ public final class ClientOperations {
 		if (!SilencerEntity.isClientNearby) {
 			Minecraft mc = Minecraft.getInstance();
 
-			if (((AccessibleSoundEngine)mc.getSoundManager().soundEngine).getCategoryVolume(SoundCategory.MASTER) > 0) {
+			if (mc.getSoundManager().soundEngine.getVolume(SoundCategory.MASTER) > 0) {
 				if (silencer.distanceToSqr(mc.player) < 8 * 8) {
 					SilencerEntity.isClientNearby = true;
 					SilencerEntity.previousGain = mc.getSoundManager().soundEngine.listener.getGain();
@@ -139,5 +188,25 @@ public final class ClientOperations {
 			return false;
 
 		return Minecraft.getInstance().gameMode.destroyBlock(breakPos);
+	}
+
+	public static ITextComponent getPlayerName() {
+		return Minecraft.getInstance().player.getDisplayName();
+	}
+
+	public static void addParticle(IParticleData particle, double x, double y, double z, double velocityX, double velocityY, double velocityZ, int amount) {
+		ClientWorld level = Minecraft.getInstance().level;
+
+		for (int i = 0; i < amount; i++) {
+			try {
+				level.addParticle(particle, false, x, y, z, velocityX, velocityY, velocityZ);
+			} catch (Exception ex) {
+				Logging.logMessage(Level.WARN, "Unable to spawn particle " + particle, ex);
+			}
+		}
+	}
+
+	public static GameType getGameMode() {
+		return Minecraft.getInstance().gameMode.getPlayerMode();
 	}
 }

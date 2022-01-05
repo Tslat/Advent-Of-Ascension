@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:nuggets/limonite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/limonite"
+  },
+  "result": {
+    "fluid": "aoa3:molten_limonite",
+    "amount": 16
+  },
+  "temperature": 350,
+  "time": 15
+}

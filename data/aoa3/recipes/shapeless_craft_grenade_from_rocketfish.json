@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:rocketfish"
+    }
+  ],
+  "result": {
+    "item": "aoa3:grenade",
+    "count": 3
+  }
+}

@@ -17,6 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -102,7 +103,7 @@ public class BlankRealmstoneScreen extends Screen {
 		RenderHelper.turnOff();
 		minecraft.getTextureManager().bind(windowFrame);
 		RenderUtil.renderCustomSizedTexture(matrix, x, y, 0, 0, 256, 187, 256, 256);
-		minecraft.font.draw(matrix, title, x + 8, y + 6, NumberUtil.RGB(181, 181, 181));
+		minecraft.font.draw(matrix, title, x + 8, y + 6, ColourUtil.RGB(181, 181, 181));
 	}
 
 	public static class RealmstoneWorldInsert {

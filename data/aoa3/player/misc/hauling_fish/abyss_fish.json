@@ -1,0 +1,56 @@
+{
+  "biomes": [
+    "aoa3:abyssal_plains"
+  ],
+  "entities": [
+    {
+      "level": 5,
+      "weight": 300,
+      "weight_mod": -1.0,
+      "entity": "minecraft:pufferfish"
+    },
+    {
+      "weight": 10,
+      "weight_mod": 1.0,
+      "entity": "aoa3:rainbowfish"
+    },
+    {
+      "weight": 70,
+      "weight_mod": 1.0,
+      "entity": "aoa3:razorfish"
+    },
+    {
+      "weight": 60,
+      "weight_mod": 1.0,
+      "entity": "aoa3:parapiranha"
+    },
+    {
+      "level": 5,
+      "weight": 60,
+      "item": "minecraft:name_tag"
+    },
+    {
+      "level": 14,
+      "weight": 80,
+      "item": "minecraft:leather"
+    },
+    {
+      "level": 10,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:shiny_box"
+    },
+    {
+      "level": 30,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:treasure_box"
+    },
+    {
+      "level": 50,
+      "weight_mod": 1.0,
+      "item": "aoa3:old_boot"
+    },
+    "minecraft:water_bucket"
+  ]
+}

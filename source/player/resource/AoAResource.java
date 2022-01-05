@@ -7,7 +7,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nonnull;
@@ -16,10 +16,10 @@ import java.util.function.Function;
 
 public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 	private final Lazy<TranslationTextComponent> name;
-	private final BiFunction<PlayerDataManager, JsonObject, Instance> jsonFactory;
+	private final BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory;
 	private final Function<CompoundNBT, Instance> clientFactory;
 
-	public AoAResource(BiFunction<PlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundNBT, Instance> clientFactory) {
+	public AoAResource(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundNBT, Instance> clientFactory) {
 		this.name = () -> new TranslationTextComponent(Util.makeDescriptionId("resource", getRegistryName()));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
@@ -29,7 +29,7 @@ public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 		return this.name.get();
 	}
 
-	public AoAResource.Instance buildDefaultInstance(PlayerDataManager plData, JsonObject resourceData) {
+	public AoAResource.Instance buildDefaultInstance(ServerPlayerDataManager plData, JsonObject resourceData) {
 		return jsonFactory.apply(plData, resourceData);
 	}
 
@@ -40,15 +40,15 @@ public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 	public static abstract class Instance implements AoAPlayerEventListener {
 		private final AoAResource resource;
 
-		protected PlayerDataManager playerDataManager;
+		protected ServerPlayerDataManager playerDataManager;
 		public boolean needsSync = true;
 
-		protected Instance(AoAResource resource, PlayerDataManager plData) {
+		protected Instance(AoAResource resource, ServerPlayerDataManager plData) {
 			this.playerDataManager = plData;
 			this.resource = resource;
 		}
 
-		public void changePlayerInstance(PlayerDataManager plData) {
+		public void changePlayerInstance(ServerPlayerDataManager plData) {
 			this.playerDataManager = plData;
 		}
 
@@ -64,7 +64,7 @@ public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 			return type().getName();
 		}
 
-		public PlayerDataManager getPlayerDataManager() {
+		public ServerPlayerDataManager getPlayerDataManager() {
 			return this.playerDataManager;
 		}
 

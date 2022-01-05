@@ -15,11 +15,10 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -32,8 +31,7 @@ import net.tslat.aoa3.world.gen.structure.structures.special.ZalShipStructure;
 import java.util.*;
 import java.util.function.Supplier;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID)
-public class AoAStructures {
+public final class AoAStructures {
 	public static final ArrayList<StructureDataPackage> STRUCTURE_DATA = new ArrayList<StructureDataPackage>();
 	public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, AdventOfAscension.MOD_ID);
 
@@ -186,6 +184,10 @@ public class AoAStructures {
 		return registryObject;
 	}
 
+	public static void preInit() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, false, BiomeLoadingEvent.class, AoAStructures::onBiomeLoad);
+	}
+
 	public static void postInit() {
 		prePopulateStructureSpacings();
 		Configured.postInit();
@@ -243,8 +245,7 @@ public class AoAStructures {
 		}
 	}
 
-	@SubscribeEvent(priority = EventPriority.HIGH)
-	public static void onBiomeLoad(final BiomeLoadingEvent ev) {
+	private static void onBiomeLoad(final BiomeLoadingEvent ev) {
 		if (ev.getName() == null)
 			return;
 

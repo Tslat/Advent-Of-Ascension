@@ -15,7 +15,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.container.recipe.InfusionRecipe;
+import net.tslat.aoa3.object.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import org.apache.logging.log4j.Level;
 import org.openzen.zencode.java.ZenCodeType;

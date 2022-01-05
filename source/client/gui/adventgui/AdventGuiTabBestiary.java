@@ -39,7 +39,8 @@ import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.data.client.BestiaryReloadListener;
-import net.tslat.aoa3.entity.base.*;
+import net.tslat.aoa3.object.entity.base.*;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -211,7 +212,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				if (searchField.getValue().isEmpty()) {
 					filteredMobList = (ArrayList<EntityStats>)statList.clone();
 
-					searchField.setTextColor(NumberUtil.RGB(255, 255, 255));
+					searchField.setTextColor(ColourUtil.WHITE);
 				}
 				else if (searchField.getValue().length() != searchTextLength) {
 					searchFilterBestiaryEntries(searchTextLength < searchField.getValue().length());
@@ -244,7 +245,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				if (searchField.getValue().isEmpty()) {
 					filteredMobList = (ArrayList<EntityStats>)statList.clone();
 
-					searchField.setTextColor(NumberUtil.RGB(255, 255, 255));
+					searchField.setTextColor(ColourUtil.WHITE);
 				}
 				else if (searchField.getValue().length() != searchTextLength) {
 					searchFilterBestiaryEntries(searchTextLength < searchField.getValue().length());
@@ -258,7 +259,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 	}
 
 	private void searchFilterBestiaryEntries(boolean additiveEdit) {
-		searchField.setTextColor(NumberUtil.RGB(255, 255, 255));
+		searchField.setTextColor(ColourUtil.WHITE);
 
 		if (searchField.getValue().isEmpty()) {
 			filteredMobList = (ArrayList<EntityStats>)statList.clone();
@@ -283,7 +284,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 
 			if (searchFilter.isEmpty()) {
 				if (filteredMobList.isEmpty())
-					searchField.setTextColor(NumberUtil.RGB(255, 0, 0));
+					searchField.setTextColor(ColourUtil.RED);
 
 				return;
 			}
@@ -300,7 +301,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 		});
 
 		if (filteredMobList.isEmpty())
-			searchField.setTextColor(NumberUtil.RGB(255, 0, 0));
+			searchField.setTextColor(ColourUtil.RED);
 	}
 
 	private void gatherEntityStats(EntityStats stat) {
@@ -503,8 +504,8 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 			matrix.pushPose();
 
 			if (!receivedStats) {
-				RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.downloading"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
-				RenderUtil.drawCenteredScaledString(matrix, font, LOADING_SYMBOLS[(int)(Util.getMillis() / 150L % (long)LOADING_SYMBOLS.length)], left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f), 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.downloading"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, font, LOADING_SYMBOLS[(int)(Util.getMillis() / 150L % (long)LOADING_SYMBOLS.length)], left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f), 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			}
 			else if (filteredMobList.isEmpty()) {
 				if (!statList.isEmpty()) {
@@ -522,10 +523,10 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 						matrix.scale(0.5f, 0.5f, 0.5f);
 					}
 
-					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.emptySearch"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.emptySearch"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 				}
 				else {
-					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.empty"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.empty"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 				}
 			}
 			else {
@@ -543,14 +544,14 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 							drawEntity(matrix, entity, left + 200, rowTop + 170, 50f);
 
 						RenderUtil.drawColouredBox(matrix, left + 40, rowTop, 0, 320, 30, 0xFF010101);
-						RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + 200, rowTop + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+						RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 						getMinecraft().getTextureManager().bind(iconsTextures);
 						RenderSystem.enableAlphaTest();
 						RenderUtil.renderScaledCustomSizedTexture(matrix, left + 300, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
 						RenderUtil.renderScaledCustomSizedTexture(matrix, left + 43, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
 						RenderSystem.disableAlphaTest();
-						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 60, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 320, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 60, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 320, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 
 						if (i + 1 < filteredMobList.size()) {
 							entityStat = filteredMobList.get(i + 1);
@@ -563,14 +564,14 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 								drawEntity(matrix, entity, right - 200, rowTop + 170, 50f);
 
 							RenderUtil.drawColouredBox(matrix, right - 360, rowTop, 0, 320, 30, 0xFF010101);
-							RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, right - 200, rowTop + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+							RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, right - 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 							getMinecraft().getTextureManager().bind(iconsTextures);
 							RenderSystem.enableAlphaTest();
 							RenderUtil.renderScaledCustomSizedTexture(matrix, right - 100, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
 							RenderUtil.renderScaledCustomSizedTexture(matrix, right - 357, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
 							RenderSystem.disableAlphaTest();
-							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), right - 340, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), right - 80, rowTop + 163, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), right - 340, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), right - 80, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 						}
 					}
 
@@ -600,7 +601,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 					RenderUtil.drawColouredBox(matrix, left, top, 0, right - left, 30, 0xFF010101);
 					ITextComponent entityName = openEntryInstance != null ? openEntryInstance.getName() : LocaleUtil.getLocaleMessage("entity." + registryName.getNamespace().replace(".minecraft", "") + "." + registryName.getPath());
 
-					RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 
 					if (openEntryInstance != null)
 						drawEntity(matrix, openEntryInstance, left + 200, top + 240, 75f);
@@ -610,18 +611,18 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 425, top + 45, 0, 16, 16, 16, 16, 16, 16, 48);
 					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 425, top + 65, 0, 0, 16, 16, 16, 16, 16, 48);
 					RenderSystem.disableAlphaTest();
-					RenderUtil.drawScaledString(matrix, font, "X", right - 20, top + 5, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 445, top + 48, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
-					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 445, top + 68, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawScaledString(matrix, font, "X", right - 20, top + 5, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 445, top + 48, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 445, top + 68, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 
 					matrix.scale(1.5f, 1.5f, 1.5f);
 
 					for (int i = 0; i < openEntryStatsLines.size(); i++) {
-						font.drawShadow(matrix, openEntryStatsLines.get(i), (int)((left + 425) / 1.5f), (int)((top + 100 + 14 * i) / 1.5f), NumberUtil.RGB(255, 255, 255));
+						font.drawShadow(matrix, openEntryStatsLines.get(i), (int)((left + 425) / 1.5f), (int)((top + 100 + 14 * i) / 1.5f), ColourUtil.WHITE);
 					}
 
 					for (int i = 0; i < openEntryInfoLines.size(); i++) {
-						font.draw(matrix, openEntryInfoLines.get(i), (int)((left + 20) / 1.5f), (int)((top + 300 + i * 14) / 1.5f), NumberUtil.RGB(255, 255, 255));
+						font.draw(matrix, openEntryInfoLines.get(i), (int)((left + 20) / 1.5f), (int)((top + 300 + i * 14) / 1.5f), ColourUtil.WHITE);
 					}
 				}
 			}

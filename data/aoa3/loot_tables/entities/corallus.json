@@ -131,7 +131,7 @@
               }
             }
           ],
-          "name": "aoa3:raw_violet_skipper"
+          "name": "aoa3:sailback"
         },
         {
           "type": "minecraft:item",
@@ -146,7 +146,7 @@
               }
             }
           ],
-          "name": "aoa3:raw_sapphire_strider"
+          "name": "aoa3:sapphire_strider"
         },
         {
           "type": "minecraft:item",
@@ -161,7 +161,7 @@
               }
             }
           ],
-          "name": "aoa3:raw_dark_hatchetfish"
+          "name": "aoa3:dark_hatchetfish"
         }
       ],
       "bonus_rolls": 1.0

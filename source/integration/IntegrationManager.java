@@ -7,6 +7,7 @@ import net.tslat.aoa3.integration.immersiveengineering.ImmersiveEngineeringInteg
 import net.tslat.aoa3.integration.jer.JERIntegration;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.integration.tinkersconstruct.TinkersConstructIntegration;
+import net.tslat.aoa3.integration.tinkersconstruct.TinkersFluids;
 
 public class IntegrationManager {
 	static boolean jeiActive = false;
@@ -52,14 +53,16 @@ public class IntegrationManager {
 
 		if (isModPresent("tconstruct") && AoAConfig.INTEGRATIONS.tinkersConstructEnabled.get())
 			tinkersConstructPreInit();
+
+		TinkersFluids.preInit();
 	}
 
-	public static void init() {
+	public static void postInit() {
 		if (isJERActive())
-			JERIntegration.init();
+			JERIntegration.postInit();
 
 		if (isImmersiveEngineeringActive())
-			ImmersiveEngineeringIntegration.init();
+			ImmersiveEngineeringIntegration.postInit();
 	}
 
 	private static void jeiPreInit() {

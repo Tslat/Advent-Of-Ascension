@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#forge:molten_baronyte",
+    "#forge:molten_blazium",
+    "#forge:molten_emberstone",
+    "#forge:molten_skeletal",
+    "#forge:molten_varsium"
+  ]
+}

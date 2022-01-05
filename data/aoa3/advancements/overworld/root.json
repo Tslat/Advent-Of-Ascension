@@ -2,7 +2,7 @@
   "display": {
     "icon": {
       "item": "aoa3:blast_cannon",
-      "nbt": "{HideFlags:2b,Damage:0}"
+      "nbt": "{Damage:0}"
     },
     "title": {
       "color": "dark_green",

@@ -5,11 +5,9 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MainWindow;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.render.custom.AoAResourceRenderer;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
@@ -17,16 +15,19 @@ import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
 import java.util.HashMap;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
 public final class AoAGuiElementRenderers {
 	private static final HashMap<AoASkill, AoASkillRenderer> SKILL_RENDERERS = new HashMap<AoASkill, AoASkillRenderer>();
 	private static final HashMap<AoAResource, AoAResourceRenderer> RESOURCE_RENDERERS = new HashMap<AoAResource, AoAResourceRenderer>();
+
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGameOverlayEvent.Post.class, AoAGuiElementRenderers::onHudRender);
+	}
 
 	public static AoAResourceRenderer getResourceRenderer(AoAResource resource) {
 		return RESOURCE_RENDERERS.getOrDefault(resource, AoAResourceRenderer.DEFAULT);
@@ -81,7 +82,7 @@ public final class AoAGuiElementRenderers {
 		if (AoAKeybinds.statusResourceGui) {
 			int lastHeight = 0;
 
-			for (AoAResource.Instance resource : ClientPlayerDataManager.getResources()) {
+			for (AoAResource.Instance resource : ClientPlayerDataManager.get().getResources()) {
 				AoAResourceRenderer renderer = AoAGuiElementRenderers.getResourceRenderer(resource.type());
 				x += (renderer.hudRenderWidth(resource) * horizontalAdjuster);
 				y += (renderer.hudRenderHeight(resource) * verticalAdjuster);
@@ -89,7 +90,7 @@ public final class AoAGuiElementRenderers {
 
 				matrix.pushPose();
 				matrix.translate(x, y, 0);
-				renderer.renderInHud(matrix, resource, partialTicks);
+				renderer.renderInHud(matrix, resource, partialTicks, null);
 				matrix.popPose();
 			}
 
@@ -99,7 +100,7 @@ public final class AoAGuiElementRenderers {
 			matrix.scale(0.5f, 0.5f, 0);
 			TranslationTextComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", AoAKeybinds.RESOURCE_GUI.getTranslatedKeyMessage());
 
-			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)((y + 4) / 2f), 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)((y + 4) / 2f), 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			y = y + 4 + mc.font.lineHeight / 2;
 		}
@@ -120,7 +121,7 @@ public final class AoAGuiElementRenderers {
 			int maxHeight = 0;
 			int cumulativeXOffset = 0;
 
-			for (AoASkill.Instance skill : ClientPlayerDataManager.getSkills()) {
+			for (AoASkill.Instance skill : ClientPlayerDataManager.get().getSkills()) {
 				AoASkillRenderer renderer = AoAGuiElementRenderers.getSkillRenderer(skill.type());
 				int xOffset = renderer.hudRenderWidth(skill);
 				cumulativeXOffset += xOffset;
@@ -144,14 +145,13 @@ public final class AoAGuiElementRenderers {
 			matrix.scale(0.5f, 0.5f, 1);
 			TranslationTextComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.skills.showtip", AoAKeybinds.SKILL_GUI.getTranslatedKeyMessage());
 
-			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)(y / 2f) + 1, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)(y / 2f) + 1, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 		}
 
 		matrix.popPose();
 	}
 
-	@SubscribeEvent
-	public static void onHudRender(final RenderGameOverlayEvent.Post ev) {
+	private static void onHudRender(final RenderGameOverlayEvent.Post ev) {
 		if (ev.getType() == RenderGameOverlayEvent.ElementType.ALL) {
 			Minecraft mc = Minecraft.getInstance();
 
@@ -159,7 +159,6 @@ public final class AoAGuiElementRenderers {
 				return;
 
 			MatrixStack matrix = ev.getMatrixStack();
-
 
 			matrix.pushPose();
 			RenderSystem.disableDepthTest();

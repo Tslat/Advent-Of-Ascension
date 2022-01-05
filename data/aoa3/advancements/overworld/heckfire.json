@@ -2,8 +2,7 @@
   "parent": "aoa3:overworld/root",
   "display": {
     "icon": {
-      "item": "aoa3:hellfire",
-      "nbt": "{HideFlags:2b}"
+      "item": "aoa3:hellfire"
     },
     "title": {
       "color": "light_purple",

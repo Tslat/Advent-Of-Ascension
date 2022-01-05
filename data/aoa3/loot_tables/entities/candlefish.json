@@ -1,0 +1,14 @@
+{
+  "pools": [
+    {
+      "name": "fish",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:candlefish"
+        }
+      ]
+    }
+  ]
+}

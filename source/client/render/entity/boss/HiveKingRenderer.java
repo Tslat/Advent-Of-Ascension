@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.boss.HiveKingModel;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.boss.HiveKingEntity;
+import net.tslat.aoa3.object.entity.boss.HiveKingEntity;
 
 public class HiveKingRenderer extends MobRenderer<HiveKingEntity, EntityModel<HiveKingEntity>> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/hiveking/hive_king.png");

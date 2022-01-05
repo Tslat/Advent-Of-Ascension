@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:ore_melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:ores/ghoulish",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ores/ghoulish"
+  },
+  "result": {
+    "fluid": "aoa3:molten_ghoulish",
+    "amount": 144
+  },
+  "temperature": 380,
+  "time": 68
+}

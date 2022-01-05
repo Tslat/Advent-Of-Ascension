@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.particles.ParticleTypes;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.entity.projectile.staff.SunShotEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.object.entity.projectile.staff.SunShotEntity;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
 public class SunShotRenderer extends ParticleProjectileRenderer<SunShotEntity> {
@@ -17,8 +17,8 @@ public class SunShotRenderer extends ParticleProjectileRenderer<SunShotEntity> {
 
 	@Override
 	protected void addParticles(SunShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, NumberUtil.RGB(255, 255, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, NumberUtil.RGB(255, 0, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, ColourUtil.RED), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 
 		double posX = entity.getX() + RandomUtil.randomGaussianValue() * 0.5;
 		double posY = entity.getY() + RandomUtil.randomGaussianValue() * 0.5;

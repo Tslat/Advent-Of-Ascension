@@ -14,7 +14,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.tileentity.LunarCreationTableTileEntity;
+import net.tslat.aoa3.object.block.tileentity.LunarCreationTableTileEntity;
 
 public class LunarCreationTableRenderer extends TileEntityRenderer<LunarCreationTableTileEntity> {
 	public LunarCreationTableRenderer(TileEntityRendererDispatcher dispatcher) {

@@ -1,0 +1,25 @@
+{
+  "type": "tconstruct:incremental_modifier",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "input": {
+    "item": "aoa3:ice_crystal"
+  },
+  "amount_per_item": 1,
+  "needed_per_level": 3,
+  "tools": {
+    "tag": "tconstruct:modifiable/durability"
+  },
+  "slots": {
+    "upgrades": 1
+  },
+  "result": {
+    "name": "aoa3:refreezing",
+    "level": 1
+  },
+  "max_level": 3
+}

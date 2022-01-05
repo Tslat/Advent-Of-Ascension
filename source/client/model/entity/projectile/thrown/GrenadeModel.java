@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.object.entity.projectile.gun.BaseBullet;
 
 public class GrenadeModel extends EntityModel<BaseBullet> {
 	private final ModelRenderer part;
@@ -30,7 +30,7 @@ public class GrenadeModel extends EntityModel<BaseBullet> {
 			part.zRot = MathHelper.lerp(partialTicks, tickAge + 1 % 360, tickAge + 2 % 360);
 		}
 		else {
-			part.yRot = 0;
+			part.xRot = 0;
 			part.yRot = 0;
 			part.zRot = 0;
 		}

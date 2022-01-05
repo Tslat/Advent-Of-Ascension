@@ -5,10 +5,10 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.entity.projectile.misc.ErebonSticklerStuckEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.object.entity.projectile.misc.ErebonSticklerStuckEntity;
+import net.tslat.aoa3.util.ColourUtil;
 
 import javax.annotation.Nullable;
 
@@ -23,7 +23,7 @@ public class ErebonSticklerStuckRenderer extends EntityRenderer<ErebonSticklerSt
 	@Override
 	public void render(ErebonSticklerStuckEntity entity, float entityYaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
 		for (int i = 0; i < 7; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, NumberUtil.RGB(255, 0, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RED), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 

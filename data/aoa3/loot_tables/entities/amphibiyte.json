@@ -63,12 +63,12 @@
         {
           "type": "minecraft:item",
           "weight": 7,
-          "name": "aoa3:raw_pearl_stripefish"
+          "name": "aoa3:pearl_stripefish"
         },
         {
           "type": "minecraft:item",
           "weight": 6,
-          "name": "aoa3:raw_golden_gullfish"
+          "name": "aoa3:sailback"
         },
         {
           "type": "minecraft:item",

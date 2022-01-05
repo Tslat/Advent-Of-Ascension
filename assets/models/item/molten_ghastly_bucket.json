@@ -1,0 +1,6 @@
+{
+  "parent": "forge:item/bucket_drip",
+  "loader": "forge:bucket",
+  "fluid": "aoa3:molten_ghastly",
+  "applyFluidLuminosity": true
+}

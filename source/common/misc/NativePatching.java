@@ -20,12 +20,12 @@ public class NativePatching {
 		((RangedAttribute)Attributes.ATTACK_KNOCKBACK).maxValue = Double.MAX_VALUE;
 	}
 
-	public static void doSetupPatches() {
-		patchInToolTypes();
+	public static void postInit() {
+		scrapeItemRegistries();
 		patchInComposterBlocks();
 	}
 
-	private static void patchInToolTypes() {
+	private static void scrapeItemRegistries() {
 		ToolType toolTypeSword = ToolType.get("sword");
 		ToolType toolTypeShears = ToolType.get("shears");
 

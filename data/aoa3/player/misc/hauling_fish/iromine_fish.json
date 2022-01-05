@@ -1,0 +1,63 @@
+{
+  "biomes": [
+    "aoa3:iromine"
+  ],
+  "entities": [
+    {
+      "weight": 200,
+      "weight_mod": -3.0,
+      "entity": "minecraft:cod"
+    },
+    {
+      "weight": 200,
+      "weight_mod": -3.0,
+      "entity": "minecraft:salmon"
+    },
+    {
+      "weight": 10,
+      "weight_mod": 1.0,
+      "entity": "aoa3:rainbowfish"
+    },
+    {
+      "weight": 70,
+      "weight_mod": 1.0,
+      "entity": "aoa3:ironback"
+    },
+    {
+      "weight": 120,
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "weight": 100,
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "weight": 50,
+      "weight_mod": 1.0,
+      "item": "minecraft:gold_ingot"
+    },
+    {
+      "weight": 70,
+      "weight_mod": 1.0,
+      "item": "minecraft:iron_ingot"
+    },
+    {
+      "level": 25,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:crystal_box"
+    },
+    {
+      "level": 10,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:shiny_box"
+    },
+    {
+      "level": 50,
+      "weight_mod": 1.0,
+      "item": "aoa3:old_boot"
+    },
+    "minecraft:water_bucket"
+  ]
+}

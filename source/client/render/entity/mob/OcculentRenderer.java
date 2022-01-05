@@ -13,7 +13,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.tslat.aoa3.client.model.entity.mob.abyss.OcculentModel;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.mob.abyss.OcculentEntity;
+import net.tslat.aoa3.object.entity.mob.abyss.OcculentEntity;
 import net.tslat.aoa3.event.GlobalEvents;
 
 import java.util.concurrent.CopyOnWriteArrayList;

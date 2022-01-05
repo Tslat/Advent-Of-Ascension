@@ -2,6 +2,7 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -38,12 +39,12 @@ public class OneShotDamageLimiter extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
 		if (this.minActivationHealth <= 0) {
-			return new TranslationTextComponent(super.getDescription().getKey() + ".full", NumberUtil.roundToNthDecimalPlace(this.restoreHealthTo, 2));
+			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + ".full", NumberUtil.roundToNthDecimalPlace(this.restoreHealthTo, 2)));
 		}
 		else {
-			return new TranslationTextComponent(super.getDescription().getKey(), NumberUtil.roundToNthDecimalPlace(this.minActivationHealth, 2), NumberUtil.roundToNthDecimalPlace(this.restoreHealthTo, 2));
+			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.minActivationHealth, 2), NumberUtil.roundToNthDecimalPlace(this.restoreHealthTo, 2)));
 		}
 	}
 
@@ -51,11 +52,13 @@ public class OneShotDamageLimiter extends AoAAbility.Instance {
 	public void handlePostIncomingAttack(LivingDamageEvent ev) {
 		LivingEntity player = ev.getEntityLiving();
 
-		if (player.getHealth() - ev.getAmount() <= 0 && player.getHealth() >= (minActivationHealth == 0 ? player.getMaxHealth() : minActivationHealth)) {
+		if (player instanceof ServerPlayerEntity && player.getHealth() - ev.getAmount() <= 0 && player.getHealth() >= (minActivationHealth == 0 ? player.getMaxHealth() : minActivationHealth)) {
 			ev.setCanceled(true);
 			player.setHealth(restoreHealthTo);
 			skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).setValue(0);
-			skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 500), false, false);
+
+			if (skill.canGainXp(true))
+				skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 500), false, false);
 		}
 	}
 

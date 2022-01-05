@@ -1,7 +1,7 @@
 package net.tslat.aoa3.leaderboard.task;
 
 import net.tslat.aoa3.leaderboard.LeaderboardTask;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.sql.Connection;
@@ -13,7 +13,7 @@ public class UpdatePlayerTask extends LeaderboardTask {
 	private final int level;
 	private int newTotal;
 
-	public UpdatePlayerTask(PlayerDataManager plData, AoASkill.Instance skill) {
+	public UpdatePlayerTask(ServerPlayerDataManager plData, AoASkill.Instance skill) {
 		this.uuid = plData.player().getUUID().toString();
 		this.name = plData.player().getName().getString();
 		this.tableName = idToTableName(skill.type().getRegistryName());

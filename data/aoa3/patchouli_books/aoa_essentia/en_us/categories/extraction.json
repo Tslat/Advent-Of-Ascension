@@ -1,6 +1,6 @@
 {
   "name": "Extraction",
-  "description": "$(thing)Extraction$() is a resource-foraging skill based on $(o)extracting$() resources from the world.$(br2)Levelling this skill provides better results from resource extraction, faster tool usage, and more.",
+  "description": "$(thing)Extraction$() is a resource-foraging skill based on $(o)extracting$(/o) resources from the world.$(br2)Levelling this skill provides better results from resource extraction, faster tool usage, and more.",
   "icon": "aoa3:textures/gui/aoaskill/extraction.png",
   "parent": "aoa3:skills"
 }

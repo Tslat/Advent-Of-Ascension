@@ -1,0 +1,20 @@
+{
+  "default": [
+    {
+      "name": "aoa3:ethereal_miner",
+      "level": 1
+    },
+    {
+      "name": "aoa3:anti_air",
+      "level": 1
+    }
+  ],
+  "perStat": {
+    "tconstruct:head": [
+      {
+        "name": "aoa3:anti_air",
+        "level": 1
+      }
+    ]
+  }
+}

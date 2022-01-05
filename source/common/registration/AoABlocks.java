@@ -6,10 +6,8 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.Rarity;
+import net.minecraft.item.*;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.World;
@@ -22,40 +20,44 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.block.CustomToolsBlock;
-import net.tslat.aoa3.block.decoration.banner.BannerBlock;
-import net.tslat.aoa3.block.decoration.banner.BannerExtension;
-import net.tslat.aoa3.block.decoration.misc.CarpetBlock;
-import net.tslat.aoa3.block.decoration.misc.NonFullBlock;
-import net.tslat.aoa3.block.decoration.misc.SteelPlateBlock;
-import net.tslat.aoa3.block.functional.altar.*;
-import net.tslat.aoa3.block.functional.fluid.ClearWater;
-import net.tslat.aoa3.block.functional.fluid.ToxicWaste;
-import net.tslat.aoa3.block.functional.light.LampBlock;
-import net.tslat.aoa3.block.functional.light.VoxLight;
-import net.tslat.aoa3.block.functional.misc.*;
-import net.tslat.aoa3.block.functional.portal.NowhereActivityPortal;
-import net.tslat.aoa3.block.functional.portal.NowherePortalBlock;
-import net.tslat.aoa3.block.functional.portal.PortalBlock;
-import net.tslat.aoa3.block.functional.sapling.DarkGrowingSapling;
-import net.tslat.aoa3.block.functional.sapling.SaplingBlock;
-import net.tslat.aoa3.block.functional.utility.*;
-import net.tslat.aoa3.block.generation.grass.GrassBlock;
-import net.tslat.aoa3.block.generation.grass.UpsideDownGrassBlock;
-import net.tslat.aoa3.block.generation.grass.WaterGrassBlock;
-import net.tslat.aoa3.block.generation.leaves.LeavesBlock;
-import net.tslat.aoa3.block.generation.log.*;
-import net.tslat.aoa3.block.generation.misc.*;
-import net.tslat.aoa3.block.generation.ore.OreBlock;
-import net.tslat.aoa3.block.generation.plants.*;
-import net.tslat.aoa3.block.generation.stone.DenseStone;
 import net.tslat.aoa3.common.registration.worldgen.AoAFeatures;
-import net.tslat.aoa3.event.GlobalEvents;
+import net.tslat.aoa3.object.block.CustomToolsBlock;
+import net.tslat.aoa3.object.block.decoration.banner.BannerBlock;
+import net.tslat.aoa3.object.block.decoration.banner.BannerExtension;
+import net.tslat.aoa3.object.block.decoration.misc.CarpetBlock;
+import net.tslat.aoa3.object.block.decoration.misc.NonFullBlock;
+import net.tslat.aoa3.object.block.decoration.misc.SteelPlateBlock;
+import net.tslat.aoa3.object.block.functional.altar.*;
+import net.tslat.aoa3.object.block.functional.fluid.ClearWater;
+import net.tslat.aoa3.object.block.functional.fluid.ToxicWaste;
+import net.tslat.aoa3.object.block.functional.light.LampBlock;
+import net.tslat.aoa3.object.block.functional.light.VoxLight;
+import net.tslat.aoa3.object.block.functional.misc.*;
+import net.tslat.aoa3.object.block.functional.portal.NowhereActivityPortal;
+import net.tslat.aoa3.object.block.functional.portal.NowherePortalBlock;
+import net.tslat.aoa3.object.block.functional.portal.PortalBlock;
+import net.tslat.aoa3.object.block.functional.sapling.DarkGrowingSapling;
+import net.tslat.aoa3.object.block.functional.sapling.SaplingBlock;
+import net.tslat.aoa3.object.block.functional.utility.*;
+import net.tslat.aoa3.object.block.generation.grass.GrassBlock;
+import net.tslat.aoa3.object.block.generation.grass.UpsideDownGrassBlock;
+import net.tslat.aoa3.object.block.generation.grass.WaterGrassBlock;
+import net.tslat.aoa3.object.block.generation.leaves.LeavesBlock;
+import net.tslat.aoa3.object.block.generation.log.LogBlock;
+import net.tslat.aoa3.object.block.generation.log.Stranglewood;
+import net.tslat.aoa3.object.block.generation.log.StranglewoodLog;
+import net.tslat.aoa3.object.block.generation.log.VoxLog;
+import net.tslat.aoa3.object.block.generation.misc.*;
+import net.tslat.aoa3.object.block.generation.ore.OreBlock;
+import net.tslat.aoa3.object.block.generation.plants.*;
+import net.tslat.aoa3.object.block.generation.stone.DenseStone;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.BlockUtil.CompactProperties;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.aoa3.util.FluidUtil;
 import net.tslat.aoa3.world.gen.feature.features.trees.AoATree;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -869,12 +871,14 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> SHYRE_CLOUD = customRender(registerBlock("shyre_cloud", CloudBlock::new, AoAItemGroups.GENERATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> SHYRE_CRUST = registerBlock("shyre_crust", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.GOLD).stats(45f, 1000f).harvestTool(ToolType.PICKAXE).get()), AoAItemGroups.GENERATION_BLOCKS);
 
+	public static final RegistryObject<Block> FERTILISED_FARMLAND = registerItemlessBlock("fertilised_farmland", FertilisedFarmland::new);
+
 	public static final RegistryObject<Block> GIANT_SNAIL_ACID = registerItemlessBlock("giant_snail_acid", GiantSnailAcid::new);
 	public static final RegistryObject<Block> ORANGE_ACID = registerItemlessBlock("orange_acid", AcidBlock::new);
 
-	public static final RegistryObject<FlowingFluidBlock> CANDIED_WATER = customRender(new BlockUtil.FluidBuilder("candied_water").colour(255, 105, 180, 200).viscosity(1200).density(1200).register(), TRANSLUCENT);
-	public static final RegistryObject<FlowingFluidBlock> CLEAR_WATER = customRender(new BlockUtil.FluidBuilder("clear_water").colour(63, 118, 228, 255).blockFunction((supplier, properties) -> () -> new ClearWater(supplier, properties)).register(), TRANSLUCENT);
-	public static final RegistryObject<FlowingFluidBlock> TOXIC_WASTE = new BlockUtil.FluidBuilder("toxic_waste").colour(38, 42, 23, 255).viscosity(10000).density(5000).temperature(400).stillTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_still")).flowingTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_flow")).submergedOverlay(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_overlay")).blockFunction((fluid, properties) -> () -> new ToxicWaste(fluid, properties)).sourceFluid(properties -> {properties.tickRate(50); return () -> new ForgeFlowingFluid.Source(properties);}).register();
+	public static final RegistryObject<FlowingFluidBlock> CANDIED_WATER = customRender(new FluidUtil.Builder("candied_water").colour(255, 105, 180, 200).viscosity(1200).density(1200).defaultRegisterAll(), TRANSLUCENT);
+	public static final RegistryObject<FlowingFluidBlock> CLEAR_WATER = customRender(new FluidUtil.Builder("clear_water").colour(63, 118, 228, 255).customBlock((fluid, properties) -> () -> new ClearWater(fluid, properties)).defaultRegisterAll(), TRANSLUCENT);
+	public static final RegistryObject<FlowingFluidBlock> TOXIC_WASTE = new FluidUtil.Builder("toxic_waste").colour(38, 42, 23, 255).viscosity(10000).density(5000).temperature(400).stillTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_still")).flowingTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_flow")).submergedOverlay(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_overlay")).customBlock((fluid, properties) -> () -> new ToxicWaste(fluid, properties)).customSourceFluid(properties -> {properties.tickRate(50); return () -> new ForgeFlowingFluid.Source(properties);}).defaultRegisterAll();
 
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_WITHER = registerBlock("kaiyu_temple_trap_wither", KaiyuTempleTrapWither::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_DAMAGE = registerBlock("kaiyu_temple_trap_damage", KaiyuTempleTrapDamage::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
@@ -940,38 +944,38 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> VINOCORNE_SHRINE = registerBlock("vinocorne_shrine", VinocorneShrine::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> VOXXULON_ALTAR = registerBlock("voxxulon_altar", VoxxulonAltar::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	
-	public static final RegistryObject<Block> ABYSS_PORTAL =  customRender(registerBlock("abyss_portal", () -> new PortalBlock(AoADimensions.ABYSS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(229, 0, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> BARATHOS_PORTAL = customRender(registerBlock("barathos_portal", () -> new PortalBlock(AoADimensions.BARATHOS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(239, 137, 119)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> CANDYLAND_PORTAL = customRender(registerBlock("candyland_portal", () -> new PortalBlock(AoADimensions.CANDYLAND.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 232, 232)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> CELEVE_PORTAL = customRender(registerBlock("celeve_portal", () -> new PortalBlock(AoADimensions.CELEVE.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(247, 239, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> CREEPONIA_PORTAL = customRender(registerBlock("creeponia_portal", () -> new PortalBlock(AoADimensions.CREEPONIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(132, 188, 124)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> CRYSTEVIA_PORTAL = customRender(registerBlock("crystevia_portal", () -> new PortalBlock(AoADimensions.CRYSTEVIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(194, 73, 255)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> DEEPLANDS_PORTAL = customRender(registerBlock("deeplands_portal", () -> new PortalBlock(AoADimensions.DEEPLANDS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(181, 181, 181)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> DUSTOPIA_PORTAL = customRender(registerBlock("dustopia_portal", () -> new PortalBlock(AoADimensions.DUSTOPIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(0, 0, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> GARDENCIA_PORTAL = customRender(registerBlock("gardencia_portal", () -> new PortalBlock(AoADimensions.GARDENCIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 0, 114)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> GRECKON_PORTAL = customRender(registerBlock("greckon_portal", () -> new PortalBlock(AoADimensions.GRECKON.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(130, 178, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> HAVEN_PORTAL = customRender(registerBlock("haven_portal", () -> new PortalBlock(AoADimensions.HAVEN.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(0, 229, 237)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> IROMINE_PORTAL = customRender(registerBlock("iromine_portal", () -> new PortalBlock(AoADimensions.IROMINE.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(232, 208, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> LBOREAN_PORTAL = customRender(registerBlock("lborean_portal", () -> new PortalBlock(AoADimensions.LBOREAN.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(0, 173, 216)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> LELYETIA_PORTAL = customRender(registerBlock("lelyetia_portal", () -> new PortalBlock(AoADimensions.LELYETIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(221, 103, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> LUNALUS_PORTAL = customRender(registerBlock("lunalus_portal", () -> new PortalBlock(AoADimensions.LUNALUS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 226, 251)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> MYSTERIUM_PORTAL = customRender(registerBlock("mysterium_portal", () -> new PortalBlock(AoADimensions.MYSTERIUM.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(107, 0, 82)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> NETHER_PORTAL = customRender(registerBlock("nether_portal", () -> new PortalBlock(World.NETHER, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(193, 64, 215)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> ABYSS_PORTAL =  customRender(registerBlock("abyss_portal", () -> new PortalBlock(AoADimensions.ABYSS.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(229, 0, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> BARATHOS_PORTAL = customRender(registerBlock("barathos_portal", () -> new PortalBlock(AoADimensions.BARATHOS.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(239, 137, 119)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> CANDYLAND_PORTAL = customRender(registerBlock("candyland_portal", () -> new PortalBlock(AoADimensions.CANDYLAND.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(255, 232, 232)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> CELEVE_PORTAL = customRender(registerBlock("celeve_portal", () -> new PortalBlock(AoADimensions.CELEVE.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(247, 239, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> CREEPONIA_PORTAL = customRender(registerBlock("creeponia_portal", () -> new PortalBlock(AoADimensions.CREEPONIA.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(132, 188, 124)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> CRYSTEVIA_PORTAL = customRender(registerBlock("crystevia_portal", () -> new PortalBlock(AoADimensions.CRYSTEVIA.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(194, 73, 255)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> DEEPLANDS_PORTAL = customRender(registerBlock("deeplands_portal", () -> new PortalBlock(AoADimensions.DEEPLANDS.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(181, 181, 181)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> DUSTOPIA_PORTAL = customRender(registerBlock("dustopia_portal", () -> new PortalBlock(AoADimensions.DUSTOPIA.key, MaterialColor.COLOR_PURPLE, ColourUtil.BLACK), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> GARDENCIA_PORTAL = customRender(registerBlock("gardencia_portal", () -> new PortalBlock(AoADimensions.GARDENCIA.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(255, 0, 114)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> GRECKON_PORTAL = customRender(registerBlock("greckon_portal", () -> new PortalBlock(AoADimensions.GRECKON.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(130, 178, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> HAVEN_PORTAL = customRender(registerBlock("haven_portal", () -> new PortalBlock(AoADimensions.HAVEN.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(0, 229, 237)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> IROMINE_PORTAL = customRender(registerBlock("iromine_portal", () -> new PortalBlock(AoADimensions.IROMINE.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(232, 208, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> LBOREAN_PORTAL = customRender(registerBlock("lborean_portal", () -> new PortalBlock(AoADimensions.LBOREAN.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(0, 173, 216)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> LELYETIA_PORTAL = customRender(registerBlock("lelyetia_portal", () -> new PortalBlock(AoADimensions.LELYETIA.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(221, 103, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> LUNALUS_PORTAL = customRender(registerBlock("lunalus_portal", () -> new PortalBlock(AoADimensions.LUNALUS.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(255, 226, 251)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> MYSTERIUM_PORTAL = customRender(registerBlock("mysterium_portal", () -> new PortalBlock(AoADimensions.MYSTERIUM.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(107, 0, 82)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> NETHER_PORTAL = customRender(registerBlock("nether_portal", () -> new PortalBlock(World.NETHER, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(193, 64, 215)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> NOWHERE_PORTAL = customRender(registerBlock("nowhere_portal", NowherePortalBlock::new, AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> PRECASIA_PORTAL = customRender(registerBlock("precasia_portal", () -> new PortalBlock(AoADimensions.PRECASIA.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(207, 221, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> RUNANDOR_PORTAL = customRender(registerBlock("runandor_portal", () -> new PortalBlock(AoADimensions.RUNANDOR.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(124, 255, 255)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> SHYRELANDS_PORTAL = customRender(registerBlock("shyrelands_portal", () -> new PortalBlock(AoADimensions.SHYRELANDS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(255, 255, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
-	public static final RegistryObject<Block> VOX_PONDS_PORTAL = customRender(registerBlock("vox_ponds_portal", () -> new PortalBlock(AoADimensions.VOX_PONDS.key, MaterialColor.COLOR_PURPLE, NumberUtil.RGB(90, 104, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> PRECASIA_PORTAL = customRender(registerBlock("precasia_portal", () -> new PortalBlock(AoADimensions.PRECASIA.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(207, 221, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> RUNANDOR_PORTAL = customRender(registerBlock("runandor_portal", () -> new PortalBlock(AoADimensions.RUNANDOR.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(124, 255, 255)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> SHYRELANDS_PORTAL = customRender(registerBlock("shyrelands_portal", () -> new PortalBlock(AoADimensions.SHYRELANDS.key, MaterialColor.COLOR_PURPLE, ColourUtil.YELLOW), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
+	public static final RegistryObject<Block> VOX_PONDS_PORTAL = customRender(registerBlock("vox_ponds_portal", () -> new PortalBlock(AoADimensions.VOX_PONDS.key, MaterialColor.COLOR_PURPLE, ColourUtil.RGB(90, 104, 0)), AoAItemGroups.FUNCTIONAL_BLOCKS), TRANSLUCENT);
 
 	public static final RegistryObject<Block> NOWHERE_ACTIVITY_PORTAL = customRender(registerItemlessBlock("nowhere_activity_portal", NowhereActivityPortal::new), TRANSLUCENT);
 
 	public static final RegistryObject<Block> VOX_CRATE = registerBlock("vox_crate", VoxCrate::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> BLUE_CRYSTAL_CREATOR = registerBlock("blue_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_BLUE, AoAItems.BLUE_GEMSTONES, AoAItems.BLUE_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> GREEN_CRYSTAL_CREATOR = registerBlock("green_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_GREEN, AoAItems.GREEN_GEMSTONES, AoAItems.GREEN_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> PURPLE_CRYSTAL_CREATOR = registerBlock("purple_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_PURPLE, AoAItems.PURPLE_GEMSTONES, AoAItems.PURPLE_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> RED_CRYSTAL_CREATOR = registerBlock("red_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_RED, AoAItems.RED_GEMSTONES, AoAItems.RED_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> WHITE_CRYSTAL_CREATOR = registerBlock("white_crystal_creator", () -> new CrystalCreator(MaterialColor.TERRACOTTA_WHITE, AoAItems.WHITE_GEMSTONES, AoAItems.WHITE_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
-	public static final RegistryObject<Block> YELLOW_CRYSTAL_CREATOR = registerBlock("yellow_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_YELLOW, AoAItems.YELLOW_GEMSTONES, AoAItems.YELLOW_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
+	public static final RegistryObject<Block> BLUE_CRYSTAL_CREATOR = registerBlock("blue_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_BLUE, AoAItems.BLUE_GEMSTONES, AoAItems.BLUE_GEMTRAP, AoAItems.BLUE_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
+	public static final RegistryObject<Block> GREEN_CRYSTAL_CREATOR = registerBlock("green_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_GREEN, AoAItems.GREEN_GEMSTONES, AoAItems.GREEN_GEMTRAP, AoAItems.GREEN_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
+	public static final RegistryObject<Block> PURPLE_CRYSTAL_CREATOR = registerBlock("purple_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_PURPLE, AoAItems.PURPLE_GEMSTONES, AoAItems.PURPLE_GEMTRAP, AoAItems.PURPLE_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
+	public static final RegistryObject<Block> RED_CRYSTAL_CREATOR = registerBlock("red_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_RED, AoAItems.RED_GEMSTONES, AoAItems.RED_GEMTRAP, AoAItems.RED_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
+	public static final RegistryObject<Block> WHITE_CRYSTAL_CREATOR = registerBlock("white_crystal_creator", () -> new CrystalCreator(MaterialColor.TERRACOTTA_WHITE, AoAItems.WHITE_GEMSTONES, AoAItems.WHITE_GEMTRAP, AoAItems.WHITE_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
+	public static final RegistryObject<Block> YELLOW_CRYSTAL_CREATOR = registerBlock("yellow_crystal_creator", () -> new CrystalCreator(MaterialColor.COLOR_YELLOW, AoAItems.YELLOW_GEMSTONES, AoAItems.YELLOW_GEMTRAP, AoAItems.YELLOW_CRYSTAL), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> CRYSTAL_EXTENSION_SHRINE = registerBlock("crystal_extension_shrine", CrystalExtensionShrine::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> DECLOGGING_TABLE = registerBlock("declogging_table", DecloggingTable::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> DEEP_CASE = registerBlock("deep_case", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_LIGHT_GRAY).stats(5f, 3f).get()), AoAItemGroups.FUNCTIONAL_BLOCKS);
@@ -1115,6 +1119,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> TEA_CROP = customRender(registerItemlessBlock("tea_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.TEA_SEEDS)), CUTOUT);
 	public static final RegistryObject<Block> THORNY_PLANT_CROP = customRender(registerItemlessBlock("thorny_plant_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.THORNY_PLANT_SEEDS)), CUTOUT);
 	public static final RegistryObject<Block> TRILLIAD_CROP = customRender(registerItemlessBlock("trilliad_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.TRILLIAD_SEEDS)), CUTOUT);
+	public static final RegistryObject<Block> GREEN_MANURE = customRender(registerItemlessBlock("green_manure", GreenManure::new), CUTOUT);
 
 	public static final RegistryObject<Block> LIVING_GROWTH = customRender(registerItemlessBlock("living_growth", LivingGrowth::new), CUTOUT);
 
@@ -1303,15 +1308,19 @@ public final class AoABlocks {
 
 	private static <T extends Block> RegistryObject<T> registerBlock(String registryName, Supplier<T> supplier, ItemGroup itemGroup, Rarity rarity, int furnaceBurnTime) {
 		RegistryObject<T> block = BLOCKS.register(registryName, supplier);
-		RegistryObject<Item> blockItem = BLOCK_ITEMS.register(registryName, () -> new BlockItem(block.get(), new Item.Properties().tab(itemGroup).rarity(rarity)));
-
-		if (furnaceBurnTime > 0)
-			GlobalEvents.addFurnaceFuel(supplier, furnaceBurnTime);
+		RegistryObject<Item> blockItem = BLOCK_ITEMS.register(registryName,
+				furnaceBurnTime > 0 ?
+						() -> new BlockItem(block.get(), new Item.Properties().tab(itemGroup).rarity(rarity)) {
+							@Override
+							public int getBurnTime(ItemStack itemStack, @Nullable IRecipeType<?> recipeType) {
+								return furnaceBurnTime;
+							}} :
+						() -> new BlockItem(block.get(), new Item.Properties().tab(itemGroup).rarity(rarity)));
 
 		return block;
 	}
 
-	private static <T extends Block> RegistryObject<T> customRender(RegistryObject<T> object, CustomRenderType renderType) {
+	public static <T extends Block> RegistryObject<T> customRender(RegistryObject<T> object, CustomRenderType renderType) {
 		if (FMLEnvironment.dist == Dist.CLIENT)
 			CUSTOM_RENDER_TYPES.put(object, renderType);
 
@@ -1348,7 +1357,7 @@ public final class AoABlocks {
 		CUSTOM_RENDER_TYPES.clear();
 	}
 
-	enum CustomRenderType {
+	public enum CustomRenderType {
 		CUTOUT,
 		CUTOUT_MIPPED,
 		TRANSLUCENT

@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:wires/lyon",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:wires/lyon"
+  },
+  "result": {
+    "fluid": "aoa3:molten_lyon",
+    "amount": 72
+  },
+  "temperature": 520,
+  "time": 10
+}

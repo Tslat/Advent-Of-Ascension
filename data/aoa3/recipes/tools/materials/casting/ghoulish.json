@@ -1,0 +1,15 @@
+{
+  "type": "tconstruct:material_fluid",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "fluid": {
+    "tag": "forge:molten_ghoulish",
+    "amount": 144
+  },
+  "temperature": 380,
+  "output": "aoa3:ghoulish"
+}

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.tslat.aoa3.entity.boss.NethengeicWitherEntity;
+import net.tslat.aoa3.object.entity.boss.NethengeicWitherEntity;
 
 public class NethengeicWitherModel extends EntityModel<NethengeicWitherEntity> {
 	private final ModelRenderer body1;

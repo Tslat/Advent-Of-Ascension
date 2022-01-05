@@ -92,7 +92,7 @@
               }
             }
           ],
-          "name": "aoa3:raw_candlefish"
+          "name": "aoa3:candlefish"
         },
         {
           "type": "minecraft:item",
@@ -107,7 +107,7 @@
               }
             }
           ],
-          "name": "aoa3:raw_ironback"
+          "name": "aoa3:ironback"
         },
         {
           "type": "minecraft:item",

@@ -22,7 +22,7 @@ import net.tslat.aoa3.common.packet.packets.PatchouliBookOpenPacket;
 import net.tslat.aoa3.common.packet.packets.PatchouliGiveBookPacket;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
 import java.util.Collection;
@@ -131,38 +131,45 @@ public class AdventGuiTabLore extends Screen {
 		}
 
 		@Override
-		public void onRelease(double mouseX, double mouseY) {
-			if (!mouseHolding) {
-				if (isHovered)
-					PatchouliIntegration.openBook(id);
+		public boolean mouseReleased(double mouseX, double mouseY, int button) {
+			if (isValidClickButton(button)) {
+				if (!mouseHolding) {
+					if (isHovered) {
+						PatchouliIntegration.openBook(id);
 
-				mouseHolding = false;
-			}
-			else {
-				mouseHolding = false;
-
-				if (mouseX / AdventMainGui.SCALE < AdventMainGui.scaledRootX ||
-						mouseY / AdventMainGui.SCALE < AdventMainGui.scaledRootY ||
-						mouseX / AdventMainGui.SCALE > AdventMainGui.scaledRootX + AdventMainGui.BACKGROUND_TEXTURE_WIDTH ||
-						mouseY / AdventMainGui.SCALE > AdventMainGui.scaledRootY + AdventMainGui.BACKGROUND_TEXTURE_HEIGHT) {
-					PlayerEntity pl = Minecraft.getInstance().player;
-					Item patchouliBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
-
-					if (patchouliBook == null || patchouliBook == Items.AIR)
-						return;
-
-					for (ItemStack stack : pl.inventory.items) {
-						if (stack.getItem() == patchouliBook && stack.hasTag()) {
-							CompoundNBT bookTag = stack.getTag();
-
-							if (bookTag.contains("patchouli:book") && bookTag.getString("patchouli:book").equals(id.toString()))
-								return;
-						}
+						return true;
 					}
+				}
+				else {
+					mouseHolding = false;
 
-					AoAPackets.messageServer(new PatchouliGiveBookPacket(id));
+					if (mouseX / AdventMainGui.SCALE < AdventMainGui.scaledRootX ||
+							mouseY / AdventMainGui.SCALE < AdventMainGui.scaledRootY ||
+							mouseX / AdventMainGui.SCALE > AdventMainGui.scaledRootX + AdventMainGui.BACKGROUND_TEXTURE_WIDTH ||
+							mouseY / AdventMainGui.SCALE > AdventMainGui.scaledRootY + AdventMainGui.BACKGROUND_TEXTURE_HEIGHT) {
+						PlayerEntity pl = Minecraft.getInstance().player;
+						Item patchouliBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
+
+						if (patchouliBook == null || patchouliBook == Items.AIR)
+							return true;
+
+						for (ItemStack stack : pl.inventory.items) {
+							if (stack.getItem() == patchouliBook && stack.hasTag()) {
+								CompoundNBT bookTag = stack.getTag();
+
+								if (bookTag.contains("patchouli:book") && bookTag.getString("patchouli:book").equals(id.toString()))
+									return true;
+							}
+						}
+
+						AoAPackets.messageServer(new PatchouliGiveBookPacket(id));
+
+						return true;
+					}
 				}
 			}
+
+			return false;
 		}
 
 		@Override
@@ -185,7 +192,7 @@ public class AdventGuiTabLore extends Screen {
 			if (mouseX > (this.x + this.titleWidth / 2f + 32 + 5) * AdventMainGui.SCALE)
 				return false;
 
-			return !(mouseY > (this.y + 22 + 32 + 5) * AdventMainGui.SCALE);
+			return mouseY < (this.y + 22 + 32 + 5) * AdventMainGui.SCALE;
 		}
 
 		@Override
@@ -198,7 +205,7 @@ public class AdventGuiTabLore extends Screen {
 				int itemX = mouseHolding ? (int)(mouseX - 16 * AdventMainGui.SCALE) : (int)((x + titleWidth / 2f) * AdventMainGui.SCALE);
 				int itemY = mouseHolding ? (int)(mouseY - 16 * AdventMainGui.SCALE) : (int)(((y + 8 * 1.5f) + 10) * AdventMainGui.SCALE);
 
-				RenderUtil.drawScaledMessage(matrix, fontRenderer, book.getHoverName(), x, y, 1.5f, NumberUtil.RGB(255, 255, 255), RenderUtil.StringRenderType.DROP_SHADOW);
+				RenderUtil.drawScaledMessage(matrix, fontRenderer, book.getHoverName(), x, y, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
 
 				itemRenderer.renderAndDecorateItem(book, itemX, itemY);
 				itemRenderer.renderGuiItemDecorations(fontRenderer, book, itemX, itemY - 2, "");

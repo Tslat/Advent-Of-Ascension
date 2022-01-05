@@ -3,7 +3,7 @@
   "display": {
     "icon": {
       "item": "aoa3:carrot_cannon",
-      "nbt": "{HideFlags:2b,Damage:0}"
+      "nbt": "{Damage:0}"
     },
     "title": {
       "color": "light_purple",

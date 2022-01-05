@@ -1,0 +1,25 @@
+{
+  "type": "tconstruct:modifier",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "inputs": [
+    {
+      "item": "aoa3:unstable_gunpowder"
+    }
+  ],
+  "tools": {
+    "tag": "tconstruct:modifiable/held"
+  },
+  "slots": {
+    "abilities": 1
+  },
+  "result": {
+    "name": "aoa3:creepified",
+    "level": 1
+  },
+  "max_level": 2
+}

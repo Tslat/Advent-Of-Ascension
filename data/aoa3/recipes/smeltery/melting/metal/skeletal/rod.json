@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:rods/skeletal",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:rods/skeletal"
+  },
+  "result": {
+    "fluid": "aoa3:molten_skeletal",
+    "amount": 72
+  },
+  "temperature": 360,
+  "time": 9
+}

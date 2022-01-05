@@ -1,0 +1,81 @@
+{
+  "pools": [
+    {
+      "name": "ink",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": 1.0
+            }
+          ],
+          "name": "minecraft:ink_sac"
+        }
+      ]
+    },
+    {
+      "name": "extra",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 80,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:gold_nugget"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 40,
+          "name": "minecraft:gold_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "aoa3:small_skill_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "aoa3:medium_skill_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "aoa3:large_skill_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:giant_skill_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:golden_rod"
+        }
+      ]
+    }
+  ]
+}

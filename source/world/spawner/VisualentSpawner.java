@@ -10,7 +10,7 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraft.world.spawner.ISpecialSpawner;
 import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.boss.VisualentEntity;
+import net.tslat.aoa3.object.entity.boss.VisualentEntity;
 import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;

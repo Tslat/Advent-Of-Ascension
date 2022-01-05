@@ -108,8 +108,8 @@
               "enchantments": [
                 "minecraft:fortune",
                 "minecraft:efficiency",
-                "minecraft:silk_touch",
-                "minecraft:unbreaking"
+                "minecraft:unbreaking",
+                "minecraft:silk_touch"
               ]
             }
           ],

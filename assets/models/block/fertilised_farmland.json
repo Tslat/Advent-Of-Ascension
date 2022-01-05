@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/farmland",
+  "textures": {
+    "top": "aoa3:block/fertilised_farmland"
+  }
+}

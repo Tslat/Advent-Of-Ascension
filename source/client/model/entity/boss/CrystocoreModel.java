@@ -5,7 +5,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.tslat.aoa3.entity.boss.CrystocoreEntity;
+import net.tslat.aoa3.object.entity.boss.CrystocoreEntity;
 import org.lwjgl.opengl.GL11;
 
 public class CrystocoreModel extends EntityModel<CrystocoreEntity> {

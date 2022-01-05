@@ -1,12 +1,4 @@
 {
   "xp_modifier": 1.0,
-  "abilities": [
-    {
-      "id": "aoa3:dummy_ability",
-      "unique_id": "1900085726",
-      "description": "skills.aoa3.faunamancy.abilities.occultistHelm.description",
-      "display_name": "skills.aoa3.faunamancy.abilities.occultistHelm.name",
-      "level_req": 100
-    }
-  ]
+  "abilities": []
 }

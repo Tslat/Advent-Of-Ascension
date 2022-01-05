@@ -2,6 +2,8 @@ package net.tslat.aoa3.common.packet;
 
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -33,6 +35,14 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, PlayerAbilityKeybindPacket.class, PlayerAbilityKeybindPacket::encode, PlayerAbilityKeybindPacket::decode, PlayerAbilityKeybindPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, AddSkillCyclePacket.class, AddSkillCyclePacket::encode, AddSkillCyclePacket::decode, AddSkillCyclePacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ToggleAoAAbilityPacket.class, ToggleAoAAbilityPacket::encode, ToggleAoAAbilityPacket::decode, ToggleAoAAbilityPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, ServerParticlePacket.class, ServerParticlePacket::encode, ServerParticlePacket::decode, ServerParticlePacket::receiveMessage);
+	}
+
+	public static void messageNearbyPlayers(AoAPacket packet, ServerWorld world, Vector3d origin, double radius) {
+		for (ServerPlayerEntity player : world.players()) {
+			if (player.distanceToSqr(origin.x(), origin.y(), origin.z()) < radius * radius)
+				messagePlayer(player, packet);
+		}
 	}
 
 	public static void messagePlayer(ServerPlayerEntity player, AoAPacket packet) {

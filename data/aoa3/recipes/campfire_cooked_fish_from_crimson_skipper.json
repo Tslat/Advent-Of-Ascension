@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "aoa3:crimson_skipper"
+  },
+  "result": "aoa3:cooked_fish",
+  "experience": 3.0,
+  "cookingtime": 600
+}

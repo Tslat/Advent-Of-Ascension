@@ -11,6 +11,7 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -38,10 +39,11 @@ public class DoubleDropsChance extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		String suffix = baseChance > 0 ? perLevelMod > 0 ? ".combined" : ".fixed" : ".scaled";
-
-		return new TranslationTextComponent(super.getDescription().getKey() + suffix, NumberUtil.roundToNthDecimalPlace(baseChance * 100, 2), NumberUtil.roundToNthDecimalPlace(perLevelMod * 100, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(),
+				LocaleUtil.getAbilityValueDesc(baseChance > 0, perLevelMod > 0, true,
+						NumberUtil.roundToNthDecimalPlace(baseChance * 100, 2),
+						NumberUtil.roundToNthDecimalPlace(perLevelMod * 100, 2))));
 	}
 
 	@Override
@@ -73,7 +75,8 @@ public class DoubleDropsChance extends AoAAbility.Instance {
 
 						ItemStack newStack = stack.copy();
 
-						newStack.setCount(stack.getCount() * 2 - stack.getMaxStackSize());
+						newStack.setCount(stack.getCount() * 2 - newStack.getMaxStackSize());
+						stack.setCount(stack.getMaxStackSize());
 						extras.add(newStack);
 					}
 				}
@@ -84,6 +87,9 @@ public class DoubleDropsChance extends AoAAbility.Instance {
 					extras.add(stack.copy());
 				}
 			}
+
+			if (extras != null)
+				loot.addAll(extras);
 		}
 	}
 

@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:nuggets/emberstone",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/emberstone"
+  },
+  "result": {
+    "fluid": "aoa3:molten_emberstone",
+    "amount": 16
+  },
+  "temperature": 800,
+  "time": 20
+}

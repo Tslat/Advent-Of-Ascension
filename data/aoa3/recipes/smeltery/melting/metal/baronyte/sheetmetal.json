@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:sheetmetals/baronyte",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:sheetmetals/baronyte"
+  },
+  "result": {
+    "fluid": "aoa3:molten_baronyte",
+    "amount": 144
+  },
+  "temperature": 580,
+  "time": 53
+}

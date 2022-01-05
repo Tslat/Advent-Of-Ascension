@@ -11,7 +11,7 @@ import net.minecraft.world.gen.feature.template.IStructureProcessorType;
 import net.minecraft.world.gen.feature.template.PlacementSettings;
 import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
-import net.tslat.aoa3.block.functional.misc.TrophyBlock;
+import net.tslat.aoa3.object.block.functional.misc.TrophyBlock;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructureProcessors;
 
 import javax.annotation.Nullable;

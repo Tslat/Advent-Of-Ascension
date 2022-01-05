@@ -5,10 +5,10 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.entity.projectile.gun.MoonMakerEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.object.entity.projectile.gun.MoonMakerEntity;
+import net.tslat.aoa3.util.ColourUtil;
 
 public class MoonMakerRenderer extends TexturedProjectileRenderer<MoonMakerEntity> {
 	public MoonMakerRenderer(final EntityRendererManager manager, final ResourceLocation textureResource) {
@@ -20,7 +20,7 @@ public class MoonMakerRenderer extends TexturedProjectileRenderer<MoonMakerEntit
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 8; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, NumberUtil.RGB(255, 105, 180)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.RGB(255, 105, 180)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

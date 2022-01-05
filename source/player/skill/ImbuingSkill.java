@@ -3,10 +3,10 @@ package net.tslat.aoa3.player.skill;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundNBT;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 public class ImbuingSkill extends AoASkill.Instance {
-	public ImbuingSkill(PlayerDataManager plData, JsonObject jsonData) {
+	public ImbuingSkill(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoASkills.IMBUING.get(), plData, jsonData);
 	}
 

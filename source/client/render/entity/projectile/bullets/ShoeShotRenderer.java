@@ -11,7 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Matrix3f;
 import net.minecraft.util.math.vector.Matrix4f;
 import net.minecraft.util.math.vector.Vector3f;
-import net.tslat.aoa3.entity.projectile.gun.ShoeShotEntity;
+import net.tslat.aoa3.object.entity.projectile.gun.ShoeShotEntity;
 
 import javax.annotation.Nullable;
 

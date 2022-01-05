@@ -69,7 +69,7 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Block> STORAGE_BLOCKS_SAPPHIRE = tag("storage_blocks/sapphire");
 		public static final Tags.IOptionalNamedTag<Block> STORAGE_BLOCKS_SHYREGEM = tag("storage_blocks/shyregem");
 		public static final Tags.IOptionalNamedTag<Block> STORAGE_BLOCKS_SHYRESTONE = tag("storage_blocks/shyrestone");
-		public static final Tags.IOptionalNamedTag<Block> STORAGE_BLOCKS_SKELETAL_INGOT = tag("storage_blocks/skeletal_ingot");
+		public static final Tags.IOptionalNamedTag<Block> STORAGE_BLOCKS_SKELETAL = tag("storage_blocks/skeletal");
 		public static final Tags.IOptionalNamedTag<Block> STORAGE_BLOCKS_VARSIUM = tag("storage_blocks/varsium");
 
 		public static final Tags.IOptionalNamedTag<Block> CARVED_RUNE = aoaTag("carved_rune");
@@ -86,11 +86,15 @@ public final class AoATags {
 	}
 
 	public static class Fluids {
-		public static final Tags.IOptionalNamedTag<Fluid> CANDIED_WATER = aoaTag("candied_water");
-		public static final Tags.IOptionalNamedTag<Fluid> TOXIC_WASTE = aoaTag("toxic_waste");
+		public static final Tags.IOptionalNamedTag<Fluid> CANDIED_WATER = tag("candied_water");
+		public static final Tags.IOptionalNamedTag<Fluid> TOXIC_WASTE = tag("toxic_waste");
 
 		private static Tags.IOptionalNamedTag<Fluid> aoaTag(String id) {
 			return FluidTags.createOptional(new ResourceLocation(AdventOfAscension.MOD_ID, id));
+		}
+
+		private static Tags.IOptionalNamedTag<Fluid> tag(String id) {
+			return FluidTags.createOptional(new ResourceLocation("forge", id));
 		}
 	}
 
@@ -153,7 +157,7 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Item> STORAGE_BLOCKS_SAPPHIRE = tag("storage_blocks/sapphire");
 		public static final Tags.IOptionalNamedTag<Item> STORAGE_BLOCKS_SHYREGEM = tag("storage_blocks/shyregem");
 		public static final Tags.IOptionalNamedTag<Item> STORAGE_BLOCKS_SHYRESTONE = tag("storage_blocks/shyrestone");
-		public static final Tags.IOptionalNamedTag<Item> STORAGE_BLOCKS_SKELETAL_INGOT = tag("storage_blocks/skeletal_ingot");
+		public static final Tags.IOptionalNamedTag<Item> STORAGE_BLOCKS_SKELETAL = tag("storage_blocks/skeletal");
 		public static final Tags.IOptionalNamedTag<Item> STORAGE_BLOCKS_VARSIUM = tag("storage_blocks/varsium");
 
 		public static final Tags.IOptionalNamedTag<Item> GEMS_AMETHYST = tag("gems/amethyst");
@@ -193,6 +197,7 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Item> NUGGETS_MYSTITE = tag("nuggets/mystite");
 		public static final Tags.IOptionalNamedTag<Item> NUGGETS_ROSITE = tag("nuggets/rosite");
 		public static final Tags.IOptionalNamedTag<Item> NUGGETS_SHYRESTONE = tag("nuggets/shyrestone");
+		public static final Tags.IOptionalNamedTag<Item> NUGGETS_SKELETAL = tag("nuggets/skeletal");
 		public static final Tags.IOptionalNamedTag<Item> NUGGETS_VARSIUM = tag("nuggets/varsium");
 		
 		public static final Tags.IOptionalNamedTag<Item> PRECASIAN_BONE = aoaTag("precasian_bone");
@@ -200,7 +205,9 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Item> FRAME_BENCH_FRAME = aoaTag("frame_bench_frame");
 		public static final Tags.IOptionalNamedTag<Item> INFUSION_STONE = aoaTag("infusion_stone");
 		public static final Tags.IOptionalNamedTag<Item> SKILL_CRYSTAL = aoaTag("skill_crystal");
+		public static final Tags.IOptionalNamedTag<Item> HAULING_FISH = aoaTag("hauling_fish");
 
+		public static final Tags.IOptionalNamedTag<Item> SWORDS = tag("swords");
 		public static final Tags.IOptionalNamedTag<Item> CURRENCY = tag("currency");
 		public static final Tags.IOptionalNamedTag<Item> CANDY = tag("candy");
 		public static final Tags.IOptionalNamedTag<Item> FRUIT = tag("fruit");

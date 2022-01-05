@@ -14,7 +14,6 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.mixin.common.invoker.AccessibleLivingEntity;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.NumberUtil;
@@ -40,8 +39,8 @@ public class DoubleJump extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		return new TranslationTextComponent(super.getDescription().getKey(), NumberUtil.roundToNthDecimalPlace(this.energyConsumption, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.energyConsumption, 2)));
 	}
 
 	@Override
@@ -58,7 +57,7 @@ public class DoubleJump extends AoAAbility.Instance {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public boolean shouldSendKeyPress() {
-		return !Minecraft.getInstance().player.isOnGround() && ClientPlayerDataManager.getResource(AoAResources.ENERGY.get()).hasAmount(this.energyConsumption);
+		return !Minecraft.getInstance().player.isOnGround() && ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyConsumption);
 	}
 
 	@Override
@@ -69,12 +68,14 @@ public class DoubleJump extends AoAAbility.Instance {
 			if (player.isOnGround() || player.isCreative())
 				return;
 
-			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(energyConsumption, false)) {
+			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(energyConsumption, true)) {
 				canJump = false;
 
-				((AccessibleLivingEntity)player).jump();
+				player.jumpFromGround();
 				AoAPackets.messagePlayer(player, new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET).y((float)player.getDeltaMovement().y()));
-				skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 16), false, false);
+
+				if (skill.canGainXp(true))
+					skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 16), false, false);
 			}
 		}
 	}
@@ -82,7 +83,7 @@ public class DoubleJump extends AoAAbility.Instance {
 	@Override
 	public void handlePlayerFall(LivingFallEvent ev) {
 		if (!canJump)
-			ev.setDistance(ev.getDistance() - ((AccessibleLivingEntity)ev.getEntityLiving()).getJumpVelocity() * 10f);
+			ev.setDistance(ev.getDistance() - ev.getEntityLiving().getJumpPower() * 10f);
 
 		canJump = true;
 	}

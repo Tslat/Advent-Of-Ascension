@@ -11,7 +11,7 @@ import net.minecraft.util.math.vector.Quaternion;
 import net.minecraft.util.math.vector.Vector3f;
 import net.tslat.aoa3.client.model.entity.animal.MeganeuropsisModel;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.animal.MeganeuropsisEntity;
+import net.tslat.aoa3.object.entity.animal.MeganeuropsisEntity;
 
 public class MeganeuropsisRenderer extends MobRenderer<MeganeuropsisEntity, EntityModel<MeganeuropsisEntity>> {
 	private static final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/passive/meganeuropsis.png");

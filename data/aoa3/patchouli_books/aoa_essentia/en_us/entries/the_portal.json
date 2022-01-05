@@ -10,7 +10,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "From there, you must insert $(l)one$() of each of four $(thing)Carved Runes$() anywhere into the frame:$(br2)$(thing)Carved Rune of Reality$()$(br2)$(thing)Carved Rune of Travel$()$(br2)$(thing)Carved Rune of Space$()$(br2)$(thing)Carved Rune of Direction$()"
+      "text": "From there, you must insert $(l)one$(/l) of each of four $(thing)Carved Runes$() anywhere into the frame:$(br2)$(thing)Carved Rune of Reality$()$(br2)$(thing)Carved Rune of Travel$()$(br2)$(thing)Carved Rune of Space$()$(br2)$(thing)Carved Rune of Direction$()"
     },
     {
       "type": "patchouli:multiblock",

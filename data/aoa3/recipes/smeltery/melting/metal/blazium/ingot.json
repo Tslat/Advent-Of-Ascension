@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:ingots/blazium",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ingots/blazium"
+  },
+  "result": {
+    "fluid": "aoa3:molten_blazium",
+    "amount": 144
+  },
+  "temperature": 780,
+  "time": 60
+}

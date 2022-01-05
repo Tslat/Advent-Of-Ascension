@@ -34,11 +34,11 @@
         }
       }
     },
-    "consume_raw_razorfish": {
+    "consume_blue_gemtrap": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "aoa3:raw_razorfish"
+          "item": "aoa3:blue_gemtrap"
         }
       }
     },
@@ -47,14 +47,6 @@
       "conditions": {
         "item": {
           "item": "aoa3:candy_cane"
-        }
-      }
-    },
-    "consume_raw_turquoise_stripefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_turquoise_stripefish"
         }
       }
     },
@@ -82,11 +74,19 @@
         }
       }
     },
-    "consume_raw_crimson_stripefish": {
+    "consume_skelecanth": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "aoa3:raw_crimson_stripefish"
+          "item": "aoa3:skelecanth"
+        }
+      }
+    },
+    "consume_reeftooth": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:reeftooth"
         }
       }
     },
@@ -114,6 +114,14 @@
         }
       }
     },
+    "consume_razorfish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:razorfish"
+        }
+      }
+    },
     "consume_yeti_fingernails": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -130,14 +138,6 @@
         }
       }
     },
-    "consume_raw_fingerfish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_fingerfish"
-        }
-      }
-    },
     "consume_cooked_chimera_chop": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -146,11 +146,11 @@
         }
       }
     },
-    "consume_raw_dark_hatchetfish": {
+    "consume_yellow_gemtrap": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "aoa3:raw_dark_hatchetfish"
+          "item": "aoa3:yellow_gemtrap"
         }
       }
     },
@@ -159,6 +159,22 @@
       "conditions": {
         "item": {
           "item": "aoa3:raw_rainbowfish"
+        }
+      }
+    },
+    "consume_jamfish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:jamfish"
+        }
+      }
+    },
+    "consume_pearl_stripefish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:pearl_stripefish"
         }
       }
     },
@@ -178,27 +194,19 @@
         }
       }
     },
-    "consume_raw_golden_gullfish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_golden_gullfish"
-        }
-      }
-    },
-    "consume_raw_ironback": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_ironback"
-        }
-      }
-    },
     "consume_rosidons": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:rosidons"
+        }
+      }
+    },
+    "consume_ironback": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:ironback"
         }
       }
     },
@@ -210,11 +218,35 @@
         }
       }
     },
-    "consume_raw_rocketfish": {
+    "consume_red_gemtrap": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "aoa3:raw_rocketfish"
+          "item": "aoa3:red_gemtrap"
+        }
+      }
+    },
+    "consume_charred_char": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:charred_char"
+        }
+      }
+    },
+    "consume_chum_burger": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:chum_burger"
+        }
+      }
+    },
+    "consume_rocketfish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:rocketfish"
         }
       }
     },
@@ -234,27 +266,11 @@
         }
       }
     },
-    "consume_raw_violet_skipper": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_violet_skipper"
-        }
-      }
-    },
     "consume_lunarade": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:lunarade"
-        }
-      }
-    },
-    "consume_raw_pearl_stripefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_pearl_stripefish"
         }
       }
     },
@@ -274,27 +290,11 @@
         }
       }
     },
-    "consume_raw_sailback": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_sailback"
-        }
-      }
-    },
     "consume_magic_marang": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:magic_marang"
-        }
-      }
-    },
-    "consume_raw_crimson_skipper": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_crimson_skipper"
         }
       }
     },
@@ -322,6 +322,30 @@
         }
       }
     },
+    "consume_crimson_skipper": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:crimson_skipper"
+        }
+      }
+    },
+    "consume_parapiranha": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:parapiranha"
+        }
+      }
+    },
+    "consume_dark_hatchetfish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:dark_hatchetfish"
+        }
+      }
+    },
     "consume_floracle_sticks": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -338,19 +362,19 @@
         }
       }
     },
+    "consume_green_gemtrap": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:green_gemtrap"
+        }
+      }
+    },
     "consume_gingerbread_cookie": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:gingerbread_cookie"
-        }
-      }
-    },
-    "consume_raw_limefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_limefish"
         }
       }
     },
@@ -378,6 +402,14 @@
         }
       }
     },
+    "consume_chocaw": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:chocaw"
+        }
+      }
+    },
     "consume_goldicap_petals": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -394,11 +426,35 @@
         }
       }
     },
+    "consume_sailback": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:sailback"
+        }
+      }
+    },
     "consume_cooked_rainbowfish": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:cooked_rainbowfish"
+        }
+      }
+    },
+    "consume_candlefish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:candlefish"
+        }
+      }
+    },
+    "consume_white_gemtrap": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:white_gemtrap"
         }
       }
     },
@@ -410,19 +466,27 @@
         }
       }
     },
+    "consume_purple_gemtrap": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:purple_gemtrap"
+        }
+      }
+    },
+    "consume_chum": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:chum"
+        }
+      }
+    },
     "consume_lunalons": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:lunalons"
-        }
-      }
-    },
-    "consume_raw_candlefish": {
-      "trigger": "minecraft:consume_item",
-      "conditions": {
-        "item": {
-          "item": "aoa3:raw_candlefish"
         }
       }
     },
@@ -443,13 +507,10 @@
       "consume_tea"
     ],
     [
-      "consume_raw_razorfish"
+      "consume_blue_gemtrap"
     ],
     [
       "consume_candy_cane"
-    ],
-    [
-      "consume_raw_turquoise_stripefish"
     ],
     [
       "consume_lunacrike"
@@ -461,7 +522,10 @@
       "consume_eye_candy"
     ],
     [
-      "consume_raw_crimson_stripefish"
+      "consume_skelecanth"
+    ],
+    [
+      "consume_reeftooth"
     ],
     [
       "consume_raw_charger_shank"
@@ -473,22 +537,28 @@
       "consume_natural_tea"
     ],
     [
+      "consume_razorfish"
+    ],
+    [
       "consume_yeti_fingernails"
     ],
     [
       "consume_raw_furlion_chop"
     ],
     [
-      "consume_raw_fingerfish"
-    ],
-    [
       "consume_cooked_chimera_chop"
     ],
     [
-      "consume_raw_dark_hatchetfish"
+      "consume_yellow_gemtrap"
     ],
     [
       "consume_raw_rainbowfish"
+    ],
+    [
+      "consume_jamfish"
+    ],
+    [
+      "consume_pearl_stripefish"
     ],
     [
       "consume_raw_chimera_chop"
@@ -497,19 +567,25 @@
       "consume_candy_corn"
     ],
     [
-      "consume_raw_golden_gullfish"
-    ],
-    [
-      "consume_raw_ironback"
-    ],
-    [
       "consume_rosidons"
+    ],
+    [
+      "consume_ironback"
     ],
     [
       "consume_halycon_milk"
     ],
     [
-      "consume_raw_rocketfish"
+      "consume_red_gemtrap"
+    ],
+    [
+      "consume_charred_char"
+    ],
+    [
+      "consume_chum_burger"
+    ],
+    [
+      "consume_rocketfish"
     ],
     [
       "consume_spearmint_candy"
@@ -518,13 +594,7 @@
       "consume_heart_fruit"
     ],
     [
-      "consume_raw_violet_skipper"
-    ],
-    [
       "consume_lunarade"
-    ],
-    [
-      "consume_raw_pearl_stripefish"
     ],
     [
       "consume_cooked_halycon_beef"
@@ -533,13 +603,7 @@
       "consume_bubble_berries"
     ],
     [
-      "consume_raw_sailback"
-    ],
-    [
       "consume_magic_marang"
-    ],
-    [
-      "consume_raw_crimson_skipper"
     ],
     [
       "consume_sour_pop"
@@ -551,16 +615,25 @@
       "consume_trilliad_leaves"
     ],
     [
+      "consume_crimson_skipper"
+    ],
+    [
+      "consume_parapiranha"
+    ],
+    [
+      "consume_dark_hatchetfish"
+    ],
+    [
       "consume_floracle_sticks"
     ],
     [
       "consume_fiery_chops"
     ],
     [
-      "consume_gingerbread_cookie"
+      "consume_green_gemtrap"
     ],
     [
-      "consume_raw_limefish"
+      "consume_gingerbread_cookie"
     ],
     [
       "consume_hot_rod"
@@ -572,22 +645,37 @@
       "consume_cooked_furlion_chop"
     ],
     [
+      "consume_chocaw"
+    ],
+    [
       "consume_goldicap_petals"
     ],
     [
       "consume_nature_melon_slice"
     ],
     [
+      "consume_sailback"
+    ],
+    [
       "consume_cooked_rainbowfish"
+    ],
+    [
+      "consume_candlefish"
+    ],
+    [
+      "consume_white_gemtrap"
     ],
     [
       "consume_peppermint_candy"
     ],
     [
-      "consume_lunalons"
+      "consume_purple_gemtrap"
     ],
     [
-      "consume_raw_candlefish"
+      "consume_chum"
+    ],
+    [
+      "consume_lunalons"
     ],
     [
       "consume_raw_halycon_beef"

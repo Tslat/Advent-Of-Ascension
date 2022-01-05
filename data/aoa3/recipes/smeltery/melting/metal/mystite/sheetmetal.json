@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:sheetmetals/mystite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:sheetmetals/mystite"
+  },
+  "result": {
+    "fluid": "aoa3:molten_mystite",
+    "amount": 144
+  },
+  "temperature": 430,
+  "time": 47
+}

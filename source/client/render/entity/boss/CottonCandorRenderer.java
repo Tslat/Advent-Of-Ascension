@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.boss.CottonCandorModel;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.entity.boss.CottonCandorEntity;
+import net.tslat.aoa3.object.entity.boss.CottonCandorEntity;
 
 import javax.annotation.Nullable;
 

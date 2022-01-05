@@ -27,8 +27,10 @@ public class FlatXpBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		return new TranslationTextComponent(super.getDescription().getKey(), skill.getName(), NumberUtil.roundToNthDecimalPlace(modifier - 1f, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(),
+				skill.getName(),
+				NumberUtil.roundToNthDecimalPlace(modifier - 1f, 2)));
 	}
 
 	@Override

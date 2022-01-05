@@ -19,7 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoATags;
-import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.object.item.armour.AdventArmour;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -123,7 +123,11 @@ public final class ItemUtil {
 	}
 
 	public static void damageItem(ItemStack stack, LivingEntity entity, Hand hand) {
-		damageItem(stack, entity, 1, PlayerUtil.handToEquipmentSlotType(hand));
+		damageItem(stack, entity, hand, 1);
+	}
+
+	public static void damageItem(ItemStack stack, LivingEntity entity, Hand hand, int amount) {
+		damageItem(stack, entity, amount, PlayerUtil.handToEquipmentSlotType(hand));
 	}
 
 	public static void damageItem(ItemStack stack, LivingEntity entity, int amount, EquipmentSlotType slot) {
@@ -648,9 +652,29 @@ public final class ItemUtil {
 		if (a.isDamageableItem() ^ b.isDamageableItem())
 			return false;
 
-		if (!a.isDamageableItem() && a.getDamageValue() != b.getDamageValue())
-			return false;
+		return a.isDamageableItem() || a.getDamageValue() == b.getDamageValue();
+	}
 
-		return !a.hasTag() ? !b.hasTag() : b.hasTag() && a.getTag().equals(b.getTag());
+	public static List<ItemStack> increaseStackSize(ItemStack stack, int addAmount) {
+		int maxCount = stack.getMaxStackSize();
+
+		if (stack.getCount() + addAmount <= maxCount) {
+			stack.setCount(stack.getCount() + addAmount);
+
+			return Collections.emptyList();
+		}
+
+		ArrayList<ItemStack> newStacks = new ArrayList<ItemStack>((int)((addAmount + stack.getCount()) / (float)maxCount));
+
+		while (addAmount > 0) {
+			ItemStack copy = stack.copy();
+
+			copy.setCount(Math.min(maxCount, addAmount));
+			newStacks.add(copy);
+
+			addAmount -= copy.getCount();
+		}
+
+		return newStacks;
 	}
 }

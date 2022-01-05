@@ -1,6 +1,6 @@
 {
   "type": "thermal:pulverizer",
-  "input": {
+  "ingredient": {
     "item": "aoa3:hardened_confetti_ball"
   },
   "energy": 3000,

@@ -1,6 +1,6 @@
 {
   "type": "thermal:sawmill",
-  "input": {
+  "ingredient": {
     "item": "aoa3:haunted_log"
   },
   "energy": 1000,

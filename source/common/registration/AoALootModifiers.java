@@ -6,7 +6,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.loottable.modifier.*;
+import net.tslat.aoa3.object.loottable.modifier.*;
 
 import java.util.function.Supplier;
 
@@ -14,7 +14,7 @@ public class AoALootModifiers {
 	public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, AdventOfAscension.MOD_ID);
 
 	public static final RegistryObject<GlobalLootModifierSerializer<RollExtraTablesLootModifier>> ROLL_EXTRA_TABLES = registerSerializer("roll_extra_tables", RollExtraTablesLootModifier.Serializer::new);
-	public static final RegistryObject<GlobalLootModifierSerializer<InjectOrReplaceLootModifier>> INJECT_OR_REPLACE = registerSerializer("inject_or_replace", InjectOrReplaceLootModifier.Serializer::new);
+	public static final RegistryObject<GlobalLootModifierSerializer<AddItemsLootModifier>> ADD_ITEMS = registerSerializer("add_items", AddItemsLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<LootModifyingItemLootModifier>> LOOT_MODIFYING_ITEM = registerSerializer("loot_modifying_items", LootModifyingItemLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<PlayerEventListenerLootModifier>> PLAYER_EVENT_LISTENER = registerSerializer("player_event_listener", PlayerEventListenerLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<HavenLootModifier>> HAVEN = registerSerializer("haven", HavenLootModifier.Serializer::new);

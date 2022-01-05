@@ -1,0 +1,17 @@
+{
+  "type": "tconstruct:casting_basin",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "fluid": {
+    "tag": "forge:molten_mystite",
+    "amount": 1296
+  },
+  "result": {
+    "tag": "forge:storage_blocks/mystite"
+  },
+  "cooling_time": 142
+}

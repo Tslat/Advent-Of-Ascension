@@ -20,7 +20,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
@@ -74,7 +74,7 @@ public class CorruptedTravellerScreen extends ContainerScreen<CorruptedTraveller
 
 		RenderUtil.renderCustomSizedTexture(matrix, 28 + titleWidth - 2, 4, 178, 0, 1, 12, 256, 256);
 		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.font.draw(matrix, title, 30, 6, NumberUtil.RGB(255, 255, 255));
+		mc.font.draw(matrix, title, 30, 6, ColourUtil.WHITE);
 	}
 
 	private void renderGhostlyFood(MatrixStack matrix, int centerX, int centerY) {

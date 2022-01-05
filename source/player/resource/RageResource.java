@@ -7,7 +7,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 public class RageResource extends AoAResource.Instance {
 	private final float maxValue;
@@ -15,7 +15,7 @@ public class RageResource extends AoAResource.Instance {
 
 	private float value = 0;
 
-	public RageResource(PlayerDataManager plData, JsonObject jsonData) {
+	public RageResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.RAGE.get(), plData);
 
 		this.maxValue = Math.max(0, JSONUtils.getAsFloat(jsonData, "max_value"));

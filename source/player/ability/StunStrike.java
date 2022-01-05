@@ -42,8 +42,8 @@ public class StunStrike extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		return new TranslationTextComponent(super.getDescription().getKey(), NumberUtil.roundToNthDecimalPlace(this.stunDuration / 20f, 2), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.stunDuration / 20f, 2), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
 	}
 
 	@Override
@@ -79,7 +79,7 @@ public class StunStrike extends AoAAbility.Instance {
 		if (ev.getAmount() > 0 && primedAttack && DamageUtil.isMeleeDamage(ev.getSource()) && !getPlayer().getItemInHand(Hand.OFF_HAND).isEmpty()) {
 			this.primedAttack = false;
 
-			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, false)) {
+			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true)) {
 				ServerPlayerEntity player = getPlayer();
 				LivingEntity target = ev.getEntityLiving();
 
@@ -91,7 +91,9 @@ public class StunStrike extends AoAAbility.Instance {
 							DamageUtil.doScaledKnockback(target, player, 0.5f, player.getX() - target.getX(), player.getZ() - target.getZ());
 							EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new PotionUtil.EffectBuilder(Effects.DIG_SLOWDOWN, this.stunDuration).level(127));
 							activatedActionKey(player);
-							skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 30), false, false);
+
+							if (skill.canGainXp(true))
+								skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 30), false, false);
 						}
 					}
 				}, player.getCurrentSwingDuration() - 1);

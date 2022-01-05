@@ -22,7 +22,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.tslat.aoa3.item.armour.AdventArmour;
+import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
+import net.tslat.aoa3.object.item.armour.AdventArmour;
 
 import javax.annotation.Nullable;
 
@@ -275,6 +276,18 @@ public final class DamageUtil {
 		target.invulnerableTime = 0;
 		target.hurtMarked = true;
 		return target.hurt(source, dmg);
+	}
+
+	public static boolean dealHaulingDamage(PlayerEntity player, HaulingFishingBobberEntity bobber, Entity target, float dmg) {
+		DamageSource damageSource = new IndirectEntityDamageSource("hauling", bobber, player).bypassArmor().bypassMagic().bypassInvul();
+
+		if (target.isInvulnerableTo(damageSource))
+			return false;
+
+		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
+			return target.hurt(damageSource, dmg);
+
+		return target instanceof LivingEntity && target.hurt(damageSource, dmg);
 	}
 
 	public static boolean isMeleeDamage(DamageSource source) {

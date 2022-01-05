@@ -1,0 +1,25 @@
+{
+  "type": "tconstruct:modifier",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "inputs": [
+    {
+      "item": "aoa3:sharp_claw"
+    }
+  ],
+  "tools": {
+    "tag": "tconstruct:modifiable/melee/sword"
+  },
+  "slots": {
+    "abilities": 1
+  },
+  "result": {
+    "name": "aoa3:air_blade",
+    "level": 1
+  },
+  "max_level": 3
+}

@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:sheetmetals/elecanium",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:sheetmetals/elecanium"
+  },
+  "result": {
+    "fluid": "aoa3:molten_elecanium",
+    "amount": 144
+  },
+  "temperature": 670,
+  "time": 56
+}

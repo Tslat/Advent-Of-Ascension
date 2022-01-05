@@ -1,7 +1,7 @@
 package net.tslat.aoa3.event.custom.events;
 
 import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 /**
@@ -23,7 +23,7 @@ public class PlayerLevelChangeEvent extends PlayerEvent {
 	private final AoASkill.Instance skill;
 	private final boolean wasNaturallyChanged;
 
-	public PlayerLevelChangeEvent(PlayerDataManager playerDataManager, AoASkill.Instance skill, int oldLevel, boolean wasNaturallyChanged) {
+	public PlayerLevelChangeEvent(ServerPlayerDataManager playerDataManager, AoASkill.Instance skill, int oldLevel, boolean wasNaturallyChanged) {
 		super(playerDataManager.player());
 
 		this.oldLevel = oldLevel;

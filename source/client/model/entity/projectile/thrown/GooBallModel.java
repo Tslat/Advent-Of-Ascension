@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.entity.projectile.thrown.GooBallEntity;
+import net.tslat.aoa3.object.entity.projectile.thrown.GooBallEntity;
 
 public class GooBallModel extends EntityModel<GooBallEntity> {
 	private final ModelRenderer part;

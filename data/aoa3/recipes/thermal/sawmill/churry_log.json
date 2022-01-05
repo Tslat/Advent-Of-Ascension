@@ -1,6 +1,6 @@
 {
   "type": "thermal:sawmill",
-  "input": {
+  "ingredient": {
     "item": "aoa3:churry_log"
   },
   "energy": 1000,

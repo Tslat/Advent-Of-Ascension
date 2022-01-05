@@ -8,15 +8,15 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.enchantment.*;
-import net.tslat.aoa3.item.weapon.blaster.BaseBlaster;
-import net.tslat.aoa3.item.weapon.cannon.BaseCannon;
-import net.tslat.aoa3.item.weapon.greatblade.BaseGreatblade;
-import net.tslat.aoa3.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.item.weapon.maul.BaseMaul;
-import net.tslat.aoa3.item.weapon.shotgun.BaseShotgun;
-import net.tslat.aoa3.item.weapon.sniper.BaseSniper;
-import net.tslat.aoa3.item.weapon.staff.BaseStaff;
+import net.tslat.aoa3.object.enchantment.*;
+import net.tslat.aoa3.object.item.weapon.blaster.BaseBlaster;
+import net.tslat.aoa3.object.item.weapon.cannon.BaseCannon;
+import net.tslat.aoa3.object.item.weapon.greatblade.BaseGreatblade;
+import net.tslat.aoa3.object.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.object.item.weapon.maul.BaseMaul;
+import net.tslat.aoa3.object.item.weapon.shotgun.BaseShotgun;
+import net.tslat.aoa3.object.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.object.item.weapon.staff.BaseStaff;
 
 import java.util.function.Supplier;
 

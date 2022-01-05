@@ -1,0 +1,50 @@
+{
+  "biomes": [
+    "aoa3:candy_hills"
+  ],
+  "entities": [
+    {
+      "weight": 70,
+      "weight_mod": 1.0,
+      "entity": "aoa3:jamfish"
+    },
+    {
+      "weight": 70,
+      "weight_mod": 1.0,
+      "entity": "aoa3:chocaw"
+    },
+    {
+      "weight": 150,
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "weight": 200,
+      "item": "minecraft:sugar"
+    },
+    {
+      "level": 25,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:crystal_box"
+    },
+    {
+      "level": 10,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:shiny_box"
+    },
+    {
+      "level": 30,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:treasure_box"
+    },
+    {
+      "level": 20,
+      "weight": 2,
+      "weight_mod": 1.0,
+      "item": "aoa3:weapons_case"
+    },
+    "aoa3:candied_water_bucket"
+  ]
+}

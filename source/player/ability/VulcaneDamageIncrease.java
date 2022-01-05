@@ -36,10 +36,8 @@ public class VulcaneDamageIncrease extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
-		String keySuffix = minRage > 0 ? ".minRage" : "";
-
-		return new TranslationTextComponent(super.getDescription().getKey() + keySuffix, NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(minRage, 2));
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
+		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + (minRage > 0 ? ".minRage" : ""), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(minRage, 2)));
 	}
 
 	@Override

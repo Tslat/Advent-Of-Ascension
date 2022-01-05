@@ -3,20 +3,16 @@ package net.tslat.aoa3.client;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.adventgui.AdventMainGui;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import org.lwjgl.glfw.GLFW;
 
-@OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class AoAKeybinds {
 	private static final String CATEGORY = "key.categories." + AdventOfAscension.MOD_ID;
 
@@ -29,6 +25,10 @@ public class AoAKeybinds {
 	public static boolean statusSkillGui = false;
 	public static boolean statusResourceGuiMessage = true;
 	public static boolean statusSkillGuiMessage = true;
+
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, InputEvent.KeyInputEvent.class, AoAKeybinds::onKeyDown);
+	}
 
 	public static void registerKeybinds() {
 		ClientRegistry.registerKeyBinding(RESOURCE_GUI = new KeyBinding(keyName("resources"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_O), CATEGORY));
@@ -45,8 +45,7 @@ public class AoAKeybinds {
 		return InputMappings.Type.KEYSYM.getOrCreate(keyCode);
 	}
 
-	@SubscribeEvent
-	public static void onKeyDown(final InputEvent.KeyInputEvent ev) {
+	private static void onKeyDown(final InputEvent.KeyInputEvent ev) {
 		if (RESOURCE_GUI.consumeClick()) {
 			statusResourceGui = !statusResourceGui;
 			statusResourceGuiMessage = false;
@@ -69,6 +68,6 @@ public class AoAKeybinds {
 		}
 
 		if (ev.getAction() == GLFW.GLFW_PRESS && Minecraft.getInstance().screen == null)
-			ClientPlayerDataManager.handleKeyInput(ev.getKey());
+			ClientPlayerDataManager.get().handleKeyInput(ev.getKey());
 	}
 }

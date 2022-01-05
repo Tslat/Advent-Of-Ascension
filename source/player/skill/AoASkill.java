@@ -20,7 +20,7 @@ import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -31,10 +31,10 @@ import java.util.function.Function;
 
 public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 	private final Lazy<TranslationTextComponent> name;
-	private final BiFunction<PlayerDataManager, JsonObject, Instance> jsonFactory;
+	private final BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory;
 	private final Function<CompoundNBT, Instance> clientFactory;
 
-	public AoASkill(BiFunction<PlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundNBT, Instance> clientFactory) {
+	public AoASkill(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundNBT, Instance> clientFactory) {
 		this.name = () -> new TranslationTextComponent(Util.makeDescriptionId("skill", getRegistryName()));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
@@ -44,7 +44,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		return this.name.get();
 	}
 
-	public Instance buildDefaultInstance(PlayerDataManager plData, JsonObject resourceData) {
+	public Instance buildDefaultInstance(ServerPlayerDataManager plData, JsonObject resourceData) {
 		return jsonFactory.apply(plData, resourceData);
 	}
 
@@ -56,7 +56,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		private final AoASkill skill;
 		private final HashMap<String, AoAAbility.Instance> abilities = new HashMap<String, AoAAbility.Instance>();
 
-		protected PlayerDataManager playerDataManager;
+		protected ServerPlayerDataManager playerDataManager;
 
 		protected int cycle = 0;
 		protected int level = 1;
@@ -66,7 +66,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 
 		public boolean needsSync = true;
 
-		protected Instance(AoASkill skill, PlayerDataManager plData, JsonObject instanceData) {
+		protected Instance(AoASkill skill, ServerPlayerDataManager plData, JsonObject instanceData) {
 			this.skill = skill;
 
 			if (instanceData != null) {
@@ -101,7 +101,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			}
 		}
 
-		public void changePlayerInstance(PlayerDataManager plData) {
+		public void changePlayerInstance(ServerPlayerDataManager plData) {
 			this.playerDataManager = plData;
 		}
 
@@ -117,7 +117,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			return this.abilities;
 		}
 
-		public PlayerDataManager getPlayerDataManager() {
+		public ServerPlayerDataManager getPlayerDataManager() {
 			return this.playerDataManager;
 		}
 
@@ -388,6 +388,13 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 						ability.receiveSyncData(abilityData.getCompound(key));
 				}
 			}
+		}
+
+		public boolean canGainXp(boolean naturalXpSource) {
+			if (naturalXpSource && (playerDataManager.player().isCreative() || playerDataManager.player().isSpectator()))
+				return false;
+
+			return getLevel(true) < 1000;
 		}
 	}
 }

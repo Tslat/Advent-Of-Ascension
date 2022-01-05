@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:turquoise_stripefish"
+  },
+  "result": "aoa3:cooked_fish",
+  "experience": 3.0,
+  "cookingtime": 200
+}

@@ -1,0 +1,12 @@
+{
+  "default": [
+    {
+      "name": "aoa3:soul_harvest",
+      "level": 1
+    },
+    {
+      "name": "aoa3:soul_sap",
+      "level": 1
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:sheetmetals/limonite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:sheetmetals/limonite"
+  },
+  "result": {
+    "fluid": "aoa3:molten_limonite",
+    "amount": 144
+  },
+  "temperature": 350,
+  "time": 44
+}

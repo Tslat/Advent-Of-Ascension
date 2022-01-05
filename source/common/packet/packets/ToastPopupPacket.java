@@ -4,8 +4,10 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
+import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -28,6 +30,12 @@ public class ToastPopupPacket implements AoAPacket {
 		this.subject = resource.getRegistryName();
 	}
 
+	public ToastPopupPacket(final AoASkill skill, final AoAAbility ability) {
+		this.type = ToastPopupType.ABILITY_UNLOCK;
+		this.value = ability.getRegistryName();
+		this.subject = skill.getRegistryName();
+	}
+
 	@Override
 	public void encode(PacketBuffer buffer) {
 		buffer.writeUtf(type.toString());
@@ -41,6 +49,10 @@ public class ToastPopupPacket implements AoAPacket {
 				buffer.writeUtf(subject.toString());
 				buffer.writeFloat((Float)value);
 				break;
+			case ABILITY_UNLOCK:
+				buffer.writeUtf(subject.toString());
+				buffer.writeUtf(value.toString());
+				break;
 		}
 	}
 
@@ -52,19 +64,21 @@ public class ToastPopupPacket implements AoAPacket {
 				return new ToastPopupPacket(AoASkills.getSkill(new ResourceLocation(buffer.readUtf(32767))), buffer.readInt());
 			case RESOURCE_REQUIREMENT:
 				return new ToastPopupPacket(AoAResources.getResource(new ResourceLocation(buffer.readUtf(32767))), buffer.readFloat());
+			case ABILITY_UNLOCK:
+				return new ToastPopupPacket(AoASkills.getSkill(new ResourceLocation(buffer.readUtf(32767))), AoAAbilities.getAbility(new ResourceLocation(buffer.readUtf(32767))));
 		}
 
 		return null;
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		ClientOperations.addToast(type, subject, value);
-
+		context.get().enqueueWork(() -> ClientOperations.addToast(type, subject, value));
 		context.get().setPacketHandled(true);
 	}
 
 	public enum ToastPopupType {
 		SKILL_REQUIREMENT,
-		RESOURCE_REQUIREMENT
+		RESOURCE_REQUIREMENT,
+		ABILITY_UNLOCK
 	}
 }

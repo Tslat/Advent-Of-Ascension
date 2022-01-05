@@ -1,12 +1,4 @@
 {
   "xp_modifier": 1.0,
-  "abilities": [
-    {
-      "id": "aoa3:dummy_ability",
-      "unique_id": "802352392",
-      "description": "skills.aoa3.engineering.abilities.tinkererHelm.description",
-      "display_name": "skills.aoa3.engineering.abilities.tinkererHelm.name",
-      "level_req": 100
-    }
-  ]
+  "abilities": []
 }

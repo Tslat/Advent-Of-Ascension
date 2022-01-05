@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:ore_melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:ores/mystite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:ores/mystite"
+  },
+  "result": {
+    "fluid": "aoa3:molten_mystite",
+    "amount": 144
+  },
+  "temperature": 430,
+  "time": 71
+}

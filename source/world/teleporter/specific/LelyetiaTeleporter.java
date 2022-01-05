@@ -4,7 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.functional.portal.PortalBlock;
+import net.tslat.aoa3.object.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.world.teleporter.AoATeleporter;
 

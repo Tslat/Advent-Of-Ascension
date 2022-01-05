@@ -7,23 +7,22 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.RenderUtil;
 
 import java.util.HashMap;
 
-@Mod.EventBusSubscriber(modid = AdventOfAscension.MOD_ID, value = Dist.CLIENT)
-@OnlyIn(Dist.CLIENT)
-public class BossBarRenderer {
+public final class BossBarRenderer {
 	private static final HashMap<String, ResourceLocation> textureCache = new HashMap<String, ResourceLocation>();
 
-	@SubscribeEvent
-	public static void renderBossBar(RenderGameOverlayEvent.BossInfo ev) {
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGameOverlayEvent.BossInfo.class, BossBarRenderer::onBossInfoRender);
+	}
+
+	private static void onBossInfoRender(final RenderGameOverlayEvent.BossInfo ev) {
 		if (!ev.isCanceled()) {
 			ITextComponent nameComponent = ev.getBossInfo().getName();
 			ITextComponent name;

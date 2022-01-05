@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.model.GenericHeadModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.entity.projectile.mob.NethengeicWitherShotEntity;
+import net.tslat.aoa3.object.entity.projectile.mob.NethengeicWitherShotEntity;
 
 import javax.annotation.Nullable;
 

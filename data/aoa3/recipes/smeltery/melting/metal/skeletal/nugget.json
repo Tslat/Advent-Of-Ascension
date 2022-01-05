@@ -1,0 +1,21 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:nuggets/skeletal",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:nuggets/skeletal"
+  },
+  "result": {
+    "fluid": "aoa3:molten_skeletal",
+    "amount": 16
+  },
+  "temperature": 360,
+  "time": 15
+}

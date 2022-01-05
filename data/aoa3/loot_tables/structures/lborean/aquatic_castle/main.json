@@ -17,17 +17,12 @@
         {
           "type": "minecraft:item",
           "weight": 10,
-          "name": "aoa3:raw_fingerfish"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 8,
-          "name": "aoa3:raw_limefish"
+          "name": "aoa3:sailback"
         },
         {
           "type": "minecraft:item",
           "weight": 3,
-          "name": "aoa3:raw_sapphire_strider"
+          "name": "aoa3:sapphire_strider"
         },
         {
           "type": "minecraft:item",

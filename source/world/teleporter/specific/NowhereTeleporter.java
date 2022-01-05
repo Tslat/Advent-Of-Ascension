@@ -5,11 +5,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.tslat.aoa3.block.functional.portal.PortalBlock;
+import net.tslat.aoa3.object.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.world.teleporter.AoATeleporter;
 import net.tslat.aoa3.world.teleporter.PortalCoordinatesContainer;
@@ -28,7 +28,7 @@ public class NowhereTeleporter extends AoATeleporter {
 	public BlockPos findExistingPortal(World world, Entity entity) {
 		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
 			if (entity instanceof ServerPlayerEntity) {
-				PlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity);
+				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity);
 
 				PortalCoordinatesContainer portalLoc = new PortalCoordinatesContainer(entity.level.dimension(), entity.getX(), entity.getY(), entity.getZ());
 

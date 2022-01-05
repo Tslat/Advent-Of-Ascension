@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.ColourUtil;
 
 import javax.annotation.Nullable;
 
@@ -45,7 +45,7 @@ public class ModelledProjectileRenderer<T extends Entity> extends EntityRenderer
 		if (rendertype != null) {
 			IVertexBuilder ivertexbuilder = buffer.getBuffer(rendertype);
 
-			this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, NumberUtil.RGB(255, 255, 255), 1f, 1f, 1f, shade ? 0.15f : 1f);
+			this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, ColourUtil.WHITE, 1f, 1f, 1f, shade ? 0.15f : 1f);
 		}
 
 		matrix.popPose();

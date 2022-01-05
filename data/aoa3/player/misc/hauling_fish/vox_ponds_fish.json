@@ -1,0 +1,32 @@
+{
+  "biomes": [
+    "aoa3:vox_wastes"
+  ],
+  "entities": [
+    {
+      "weight": 50,
+      "weight_mod": 1.0,
+      "entity": "aoa3:hydrone"
+    },
+    {
+      "weight": 200,
+      "weight_mod": -2.0,
+      "item": "minecraft:stick"
+    },
+    {
+      "weight": 200,
+      "weight_mod": -2.0,
+      "item": "minecraft:dead_bush"
+    },
+    {
+      "weight": 60,
+      "item": "minecraft:poisonous_potato"
+    },
+    {
+      "weight": 40,
+      "weight_mod": 1.0,
+      "item": "aoa3:toxic_lump"
+    },
+    "aoa3:toxic_waste_bucket"
+  ]
+}

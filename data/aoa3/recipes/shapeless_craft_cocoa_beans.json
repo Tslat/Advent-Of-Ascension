@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:chocaw"
+    }
+  ],
+  "result": {
+    "item": "minecraft:cocoa_beans",
+    "count": 4
+  }
+}

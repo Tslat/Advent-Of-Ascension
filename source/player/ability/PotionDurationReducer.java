@@ -102,15 +102,15 @@ public class PotionDurationReducer extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getDescription() {
+	protected void updateDescription(TranslationTextComponent defaultDescription) {
 		String operationSuffix = useAddition ? ".addition" : ".multiply";
 		String value = useAddition ? NumberUtil.roundToNthDecimalPlace(modifier, 2) : NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2);
 
 		if (matchType != null) {
-			return new TranslationTextComponent(super.getDescription().getKey() + operationSuffix + ".type", StringUtil.toTitleCase(matchType.toString()), value);
+			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + operationSuffix + ".type", StringUtil.toTitleCase(matchType.toString()), value));
 		}
 		else {
-			return new TranslationTextComponent(super.getDescription().getKey() + operationSuffix + ".list", value);
+			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + operationSuffix + ".list", value));
 		}
 	}
 

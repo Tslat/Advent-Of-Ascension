@@ -1,0 +1,25 @@
+{
+  "type": "tconstruct:entity_melting",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "entity": {
+    "types": [
+      "aoa3:charger",
+      "aoa3:desert_charger",
+      "aoa3:hill_charger",
+      "aoa3:sea_charger",
+      "aoa3:swamp_charger",
+      "aoa3:snow_charger",
+      "aoa3:void_charger"
+    ]
+  },
+  "result": {
+    "fluid": "aoa3:molten_charger",
+    "amount": 16
+  },
+  "damage": 2
+}

@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.entity.mob.creeponia.AoACreeponiaCreeper;
+import net.tslat.aoa3.object.entity.mob.creeponia.AoACreeponiaCreeper;
 
 public class CustomCreeperChargeRenderLayer extends LayerRenderer<AoACreeponiaCreeper, EntityModel<AoACreeponiaCreeper>> {
 	private static final ResourceLocation texture = new ResourceLocation("textures/entity/creeper/creeper_armor.png");

@@ -2,10 +2,10 @@ package net.tslat.aoa3.client.render.entity.projectile.blasters;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.entity.projectile.blaster.BloodDrainerEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.object.entity.projectile.blaster.BloodDrainerEntity;
+import net.tslat.aoa3.util.ColourUtil;
 
 public class BloodDrainerRenderer extends ParticleProjectileRenderer<BloodDrainerEntity> {
 	public BloodDrainerRenderer(final EntityRendererManager manager) {
@@ -15,7 +15,7 @@ public class BloodDrainerRenderer extends ParticleProjectileRenderer<BloodDraine
 	@Override
 	protected void addParticles(BloodDrainerEntity entity, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, NumberUtil.RGB(255, 0, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RED), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }
