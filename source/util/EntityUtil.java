@@ -155,12 +155,17 @@ public final class EntityUtil {
 		targetEntity.hurtMarked = true;
 	}
 
-	public static void pullEntityIn(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
+	public static void pullEntityIn(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength, boolean normalised) {
 		Vector3d targetMotion = targetEntity.getDeltaMovement();
+		Vector3d velocity = new Vector3d((centralEntity.getX() - targetEntity.getX()) + targetMotion.x(),
+				(centralEntity.getY() - targetEntity.getY()) + targetMotion.y(),
+				(centralEntity.getZ() - targetEntity.getZ()) + targetMotion.z());
 
-		targetEntity.setDeltaMovement((centralEntity.getX() - targetEntity.getX()) * strength + targetMotion.x(),
-				(centralEntity.getY() - targetEntity.getY()) * strength + targetMotion.y(),
-				(centralEntity.getZ() - targetEntity.getZ()) * strength + targetMotion.z());
+		if (normalised)
+			velocity = velocity.normalize();
+
+		velocity = velocity.scale(strength);
+		targetEntity.setDeltaMovement(velocity);
 
 		targetEntity.hurtMarked = true;
 	}
@@ -309,5 +314,11 @@ public final class EntityUtil {
 				-MathHelper.sin(entity.yRot * (float)Math.PI / 180f) * MathHelper.cos(entity.xRot * (float)Math.PI / 180.0F) * velocityMod,
 				-MathHelper.sin(entity.xRot * (float)Math.PI / 180f) * velocityMod,
 				MathHelper.cos(entity.yRot * (float)Math.PI / 180f) * MathHelper.cos(entity.xRot * (float)Math.PI / 180f) * velocityMod);
+	}
+
+	public static boolean isEntityMoving(Entity entity) {
+		Vector3d velocity = entity.getDeltaMovement();
+
+		return velocity.x() != 0 || velocity.z() != 0 || velocity.y() > -0.07d || velocity.y() < -0.08d;
 	}
 }

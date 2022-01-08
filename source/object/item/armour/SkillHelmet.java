@@ -86,7 +86,6 @@ public class SkillHelmet extends AdventArmour {
 	public void appendHoverText(ItemStack stack, @Nullable World pLevel, List<ITextComponent> tooltip, ITooltipFlag pFlag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.unbreakable", LocaleUtil.ItemDescriptionType.UNIQUE));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.XP_BONUS, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, LocaleUtil.numToComponent(50), getSkill().getName()));
-		tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(getSkill(), 100));
 		tooltip.add(anySetEffectHeader());
 	}
 }

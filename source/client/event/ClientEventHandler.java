@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -13,7 +14,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.network.NetworkDirection;
 import net.tslat.aoa3.client.AoAKeybinds;
-import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
 import net.tslat.aoa3.client.gui.overlay.ScreenOverlayRenderer;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
@@ -34,7 +34,6 @@ public final class ClientEventHandler {
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerLoggedOutEvent.class, ClientEventHandler::onPlayerLogout);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingDeathEvent.class, ClientEventHandler::onPlayerDeath);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlaySoundEvent.class, ClientEventHandler::onSoundPlay);
-		forgeBus.addListener(EventPriority.NORMAL, false, TickEvent.RenderTickEvent.class, RecoilRenderer::renderEvent);
 	}
 
 	private static void onClientTick(final TickEvent.ClientTickEvent ev) {

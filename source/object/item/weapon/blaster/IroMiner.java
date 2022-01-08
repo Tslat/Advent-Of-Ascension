@@ -54,15 +54,13 @@ public class IroMiner extends BaseBlaster {
 			}
 		}
 
-		return DamageUtil.dealBlasterDamage(shooter, target, shot, (float)baseDmg * damageMod, false);
+		return DamageUtil.dealBlasterDamage(shooter, target, shot, (float)getDamage() * damageMod, false);
 	}
 
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-		CompoundNBT tag = stack.getOrCreateTag();
-
-		tag.putByte("HideFlags", (byte)2);
+		stack.getOrCreateTag().putInt("HideFlags", ItemStack.TooltipDisplayFlags.MODIFIERS.getMask());
 
 		return new VolatileStackCapabilityProvider();
 	}

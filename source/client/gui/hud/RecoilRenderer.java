@@ -2,14 +2,20 @@ package net.tslat.aoa3.client.gui.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.client.gui.overlay.ScopeOverlayRenderer;
 
 public final class RecoilRenderer {
 	private static float lastRecoil;
 	private static float totalRecoil;
 
-	public static void renderEvent(TickEvent.RenderTickEvent ev) {
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, TickEvent.RenderTickEvent.class, RecoilRenderer::onRender);
+	}
+
+	public static void onRender(TickEvent.RenderTickEvent ev) {
 		if (ev.phase != TickEvent.Phase.END || Minecraft.getInstance().isPaused())
 			return;
 

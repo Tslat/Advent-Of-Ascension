@@ -136,5 +136,7 @@ public final class ModelProperties {
 		};
 
 		registerItemProperty(AoATools.HAULING_ROD.get(), "cast", predicateHandler);
+		registerItemProperty(AoATools.GOLDEN_ROD.get(), "cast", predicateHandler);
+		registerItemProperty(AoATools.LIGHT_ROD.get(), "cast", predicateHandler);
 	}
 }

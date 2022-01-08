@@ -49,11 +49,9 @@
       "restricted_id": "aoa3:thermally_insulated_rod"
     },
     {
-      "id": "aoa3:hauling_rod_pull_damage",
-      "unique_id": "-1647232715",
-      "per_level_amount": 0.0,
-      "amount": 5.0,
-      "level_req": 63
+      "id": "aoa3:fishing_hostile_targeting_immunity",
+      "unique_id": "-392369457",
+      "level_req": 60
     },
     {
       "id": "aoa3:level_restriction",
@@ -65,9 +63,11 @@
       "restricted_id": "aoa3:light_rod"
     },
     {
-      "id": "aoa3:fishing_hostile_targeting_immunity",
-      "unique_id": "-392371162",
-      "level_req": 75
+      "id": "aoa3:hauling_rod_pull_damage",
+      "unique_id": "-1639107677",
+      "per_level_amount": 0.0,
+      "amount": 3.0,
+      "level_req": 77
     },
     {
       "id": "aoa3:level_restriction",

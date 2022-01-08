@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.common.registration.AoAEntities;
 
 public class HappyRenderer extends BipedRenderer<MonsterEntity, BipedModel<MonsterEntity>> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mobs/celeve/happy.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/celeve/happy.png");
 
 	public HappyRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new AbstractZombieModel<MonsterEntity>(0, 0, 64, 64) {

@@ -261,21 +261,25 @@ public abstract class BaseGun extends Item {
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-		CompoundNBT tag = stack.getOrCreateTag();
-
-		tag.putByte("HideFlags", (byte)2);
+		stack.getOrCreateTag().putInt("HideFlags", ItemStack.TooltipDisplayFlags.MODIFIERS.getMask());
 
 		return null;
 	}
 
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create(attributeModifiers);
+		if (slot == EquipmentSlotType.MAINHAND) {
+			return HashMultimap.create(attributeModifiers);
+		}
+		else if (slot == EquipmentSlotType.OFFHAND) {
+			Multimap<Attribute, AttributeModifier> multimap = HashMultimap.create(attributeModifiers);
 
-		if (slot == EquipmentSlotType.OFFHAND)
 			multimap.put(Attributes.MOVEMENT_SPEED, BraceEnchantment.BRACE_DEBUFF);
 
-		return multimap;
+			return multimap;
+		}
+
+		return super.getAttributeModifiers(slot, stack);
 	}
 
 	@Override

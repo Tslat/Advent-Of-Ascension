@@ -37,7 +37,7 @@ public class Odious extends BaseBlaster {
 		if (!EntityUtil.isImmuneToSpecialAttacks(target, shooter)) {
 			double motionY = target.getDeltaMovement().y();
 
-			EntityUtil.pullEntityIn(shooter, target, 0.1f);
+			EntityUtil.pullEntityIn(shooter, target, 0.25f, true);
 
 			motionY = Math.min(target.getDeltaMovement().y(), motionY + 0.9);
 

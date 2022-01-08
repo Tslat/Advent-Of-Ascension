@@ -32,29 +32,35 @@ public class LyonicArmour extends AdventArmour {
 	}
 
 	@Override
+	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
+		if (plData.player().level.getGameTime() % 2 == 0) {
+			PlayerEntity pl = plData.player();
+			int pulledCount = 0;
+
+			if (slots != null) {
+				float range = 1.5f * (float)slots.size();
+				ItemEntity item;
+				Iterator<ItemEntity> iterator = plData.player().level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pl.getX() - range, pl.getY() - range, pl.getZ() - range, pl.getX() + range, pl.getY() + range, pl.getZ() + range)).iterator();
+
+				while (iterator.hasNext() && pulledCount <= 200 && canPullItem(item = iterator.next())) {
+					EntityUtil.pullEntityIn(pl, item, 0.05f, true);
+					pulledCount++;
+				}
+			}
+			else {
+				Iterator<ExperienceOrbEntity> iterator = plData.player().level.getEntitiesOfClass(ExperienceOrbEntity.class, new AxisAlignedBB(pl.getX() - 6, pl.getY() - 6, pl.getZ() - 6, pl.getX() + 6, pl.getY() + 6, pl.getZ() + 6)).iterator();
+
+				while (iterator.hasNext() && pulledCount <= 200) {
+					EntityUtil.pullEntityIn(pl, iterator.next(), 0.05f, true);
+					pulledCount++;
+				}
+			}
+		}
+	}
+
+	@Override
 	public void onDamageDealt(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
-		if (slots != null) {
-			PlayerEntity pl = plData.player();
-			int pulledCount = 0;
-			float range = 1.5f * (float)slots.size();
-			ItemEntity item;
-			Iterator<ItemEntity> iterator = plData.player().level.getEntitiesOfClass(ItemEntity.class, new AxisAlignedBB(pl.getX() - range, pl.getY() - range, pl.getZ() - range, pl.getX() + range, pl.getY() + range, pl.getZ() + range)).iterator();
 
-			while (iterator.hasNext() && pulledCount <= 200 && canPullItem(item = iterator.next())) {
-				EntityUtil.pullEntityIn(pl, item, 0.1f);
-				pulledCount++;
-			}
-		}
-		else {
-			PlayerEntity pl = plData.player();
-			int pulledCount = 0;
-			Iterator<ExperienceOrbEntity> iterator = plData.player().level.getEntitiesOfClass(ExperienceOrbEntity.class, new AxisAlignedBB(pl.getX() - 6, pl.getY() - 6, pl.getZ() - 6, pl.getX() + 6, pl.getY() + 6, pl.getZ() + 6)).iterator();
-
-			while (iterator.hasNext() && pulledCount <= 200) {
-				EntityUtil.pullEntityIn(pl, iterator.next(), 0.1f);
-				pulledCount++;
-			}
-		}
 	}
 
 	private boolean canPullItem(ItemEntity item) {

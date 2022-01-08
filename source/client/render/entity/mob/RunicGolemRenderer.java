@@ -11,11 +11,11 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 import javax.annotation.Nullable;
 
 public class RunicGolemRenderer extends AoAMobRenderer {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mobs/mysterium/runic_golem.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/mysterium/runic_golem.png");
 	private final ResourceLocation invulnTexture = new ResourceLocation("aoa3", "textures/entity/misc/invulnerability_aura.png");
 
 	public RunicGolemRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new RunicGolemModel(0), AoAEntities.Mobs.RUNIC_GOLEM.get().getWidth() / 3, 1f, new ResourceLocation("aoa3", "textures/entity/mobs/mysterium/runic_golem.png"));
+		super(renderManager, new RunicGolemModel(0), AoAEntities.Mobs.RUNIC_GOLEM.get().getWidth() / 3, 1f, new ResourceLocation("aoa3", "textures/entity/mob/mysterium/runic_golem.png"));
 
 		this.addLayer(new InvulnerabilityAuraRenderLayer(this, new RunicGolemModel(0.5f), invulnTexture));
 	}

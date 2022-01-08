@@ -10,7 +10,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Every individual $(thing)ability$() can be disabled and re-enabled in the $(l:aoa3:advent_gui_base#advent_gui)Advent Gui$(/l), so if you don't like a particular ability or just don't want to use it for a while, you can toggle it off."
+      "text": "Every individual $(thing)ability$() can be disabled and re-enabled in the $(l:aoa3:advent_gui_base#advent_gui)Advent GUI$(/l), so if you don't like a particular ability or just don't want to use it for a while, you can toggle it off."
     }
   ],
   "sortnum": 1

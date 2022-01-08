@@ -3,12 +3,12 @@ package net.tslat.aoa3.client.model.entity.animal;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.MobEntity;
 import net.tslat.aoa3.client.model.misc.FullbrightModelRenderer;
+import net.tslat.aoa3.object.entity.animal.ShinySquidEntity;
 
 import java.util.Arrays;
 
-public class ShinySquidModel extends SegmentedModel<MobEntity> {
+public class ShinySquidModel extends SegmentedModel<ShinySquidEntity> {
 	protected final ModelRenderer body;
 	protected final ModelRenderer[] tentacles = new ModelRenderer[8];
 	protected final ImmutableList<ModelRenderer> parts;
@@ -40,7 +40,7 @@ public class ShinySquidModel extends SegmentedModel<MobEntity> {
 	}
 
 	@Override
-	public void setupAnim(MobEntity squid, float pLimbSwing, float pLimbSwingAmount, float age, float pNetHeadYaw, float pHeadPitch) {
+	public void setupAnim(ShinySquidEntity squid, float pLimbSwing, float pLimbSwingAmount, float age, float pNetHeadYaw, float pHeadPitch) {
 		for(ModelRenderer modelrenderer : this.tentacles) {
 			modelrenderer.xRot = age;
 		}

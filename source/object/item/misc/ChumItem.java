@@ -4,6 +4,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.passive.DolphinEntity;
 import net.minecraft.entity.passive.SquidEntity;
 import net.minecraft.entity.passive.fish.CodEntity;
@@ -11,12 +12,14 @@ import net.minecraft.entity.passive.fish.PufferfishEntity;
 import net.minecraft.entity.passive.fish.SalmonEntity;
 import net.minecraft.entity.passive.fish.TropicalFishEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +31,7 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -68,11 +72,11 @@ public class ChumItem extends Item {
 				stack.shrink(1);
 
 			Vector3d velocityVector = EntityUtil.getVelocityVectorForFacing(user).multiply(1, 1.5, 1);
-			ArrayList<BlockPos> positions = WorldUtil.getBlocksWithinAABB(level, user.getBoundingBox().move(velocityVector.x() * 3, velocityVector.y() * 3, velocityVector.z() * 3), (blockState, mutable) -> blockState.getFluidState().getHeight(level, mutable) > 0.85f);
+			ArrayList<BlockPos> positions = WorldUtil.getBlocksWithinAABB(level, user.getBoundingBox().move(velocityVector.x() * 3, velocityVector.y() * 3, velocityVector.z() * 3), (blockState, mutable) -> blockState.getFluidState().is(FluidTags.WATER) && blockState.getFluidState().getHeight(level, mutable) > 0.85f);
 
 			if (!positions.isEmpty() && RandomUtil.oneInNChance(Math.max(100 / positions.size(), 1))) {
-				Entity fish = getFishEntity(level);
 				BlockPos pos = RandomUtil.getRandomSelection(positions);
+				Entity fish = getFishEntity(user, level, pos);
 
 				fish.setPos(pos.getX(), pos.getY(), pos.getZ());
 				level.addFreshEntity(fish);
@@ -89,7 +93,16 @@ public class ChumItem extends Item {
 		}
 	}
 
-	private Entity getFishEntity(World world) {
+	private Entity getFishEntity(LivingEntity user, World world, BlockPos pos) {
+		if (user instanceof ServerPlayerEntity) {
+			ServerPlayerEntity player = (ServerPlayerEntity)user;
+			Entity entity = AoAHaulingFishReloadListener.getFishListForBiome(user.level.getBiome(pos), false).getRandomElement(player, player.getLuck()).apply(user.level);
+
+
+			if (!(entity instanceof ItemEntity))
+				return entity;
+		}
+
 		int selection = RandomUtil.randomNumberUpTo(66);
 
 		if (selection == 0)

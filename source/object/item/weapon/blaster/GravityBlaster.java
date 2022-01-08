@@ -29,7 +29,7 @@ public class GravityBlaster extends BaseBlaster {
 	public void fire(ItemStack blaster, LivingEntity shooter) {
 		for (LivingEntity mob : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2, 0, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
 			EntityUtil.pushEntityAway(shooter, mob, 0.5f);
-			mob.hurt(new DamageSource("blaster").setMagic(), (float)baseDmg);
+			mob.hurt(new DamageSource("blaster").setMagic(), (float)getDamage());
 		}
 
 		shooter.hurtMarked = true;

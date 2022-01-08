@@ -62,13 +62,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:skull_creature",
+        "type": "aoa3:valkyrie",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:valkyrie",
+        "type": "aoa3:skull_creature",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.item.Item;
+import net.minecraft.item.Rarity;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -64,7 +65,7 @@ public final class AoATools {
 	public static final RegistryObject<Item> HAULING_ROD = registerTool("hauling_rod", () -> new HaulingRod(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(400)));
 	public static final RegistryObject<Item> THERMALLY_INSULATED_ROD = registerTool("thermally_insulated_rod", () -> new ThermallyInsulatedRod(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(400)));
 	public static final RegistryObject<Item> LIGHT_ROD = registerTool("light_rod", () -> new LightRod(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(160)));
-	public static final RegistryObject<Item> GOLDEN_ROD = registerTool("golden_rod", () -> new GoldenRod(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(280)));
+	public static final RegistryObject<Item> GOLDEN_ROD = registerTool("golden_rod", () -> new GoldenRod(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(280).rarity(Rarity.EPIC)));
 	public static final RegistryObject<Item> FISHING_CAGE = registerTool("fishing_cage", () -> new FishingCage(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(10)));
 
 	public static final RegistryObject<Item> STONE_BOWL = registerTool("stone_bowl", () -> new InfusionBowl(100, 1, 0));

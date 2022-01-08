@@ -1,5 +1,6 @@
 package net.tslat.aoa3.object.item.tool.misc;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -10,13 +11,17 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.World;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.object.entity.misc.ThermalFishingBobberEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ThermallyInsulatedRod extends HaulingRod {
@@ -64,8 +69,14 @@ public class ThermallyInsulatedRod extends HaulingRod {
 			Entity hookedEntity = bobber.getHookedIn();
 
 			if (hookedEntity != null) {
-				EntityUtil.pullEntityIn(player, hookedEntity, 0.01f);
-				hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().add(0, (player.getY() - hookedEntity.getY()) * 0.1f, 0));
+				float pullStrength = getHaulStrengthMod(player, stack, bobber);
+
+				EntityUtil.pullEntityIn(player, hookedEntity, 0.25f * pullStrength, true);
+
+				hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().multiply(1, 0.5f, 1));
+
+				if (!player.isOnGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
+					EntityUtil.pullEntityIn(hookedEntity, player, 0.25f * pullStrength, true);
 			}
 		}
 	}
@@ -73,5 +84,10 @@ public class ThermallyInsulatedRod extends HaulingRod {
 	@Override
 	protected HaulingFishingBobberEntity getNewBobber(PlayerEntity player, ItemStack stack, int lureMod, int luckMod) {
 		return new ThermalFishingBobberEntity(player, player.level, stack, luckMod, lureMod);
+	}
+
+	@Override
+	public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> tooltip, ITooltipFlag pFlag) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.GENERAL_INFO, 1));
 	}
 }

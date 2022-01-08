@@ -59,16 +59,16 @@ public class AoAHaulingFishReloadListener extends JsonReloadListener {
 			JsonObject obj = entry.getValue().getAsJsonObject();
 
 			if (id.equals(AdventOfAscension.id("fish_default"))) {
-				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), FISH_RETRIEVER.FALLBACK);
+				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), FISH_RETRIEVER.FALLBACK, false);
 			}
 			else if (id.equals(AdventOfAscension.id("fish_lava_default"))) {
-				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), FISH_RETRIEVER.LAVA_FALLBACK);
+				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), FISH_RETRIEVER.LAVA_FALLBACK, true);
 			}
 			else if (id.equals(AdventOfAscension.id("traps_default"))) {
-				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), TRAPS_RETRIEVER.FALLBACK);
+				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), TRAPS_RETRIEVER.FALLBACK, false);
 			}
 			else if (id.equals(AdventOfAscension.id("traps_lava_default"))) {
-				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), TRAPS_RETRIEVER.LAVA_FALLBACK);
+				parseEntityList(JSONUtils.getAsJsonArray(obj, "entities"), TRAPS_RETRIEVER.LAVA_FALLBACK, true);
 			}
 			else {
 				try {
@@ -116,7 +116,7 @@ public class AoAHaulingFishReloadListener extends JsonReloadListener {
 				if (replace)
 					list.clear();
 
-				parseEntityList(json.get("entities").getAsJsonArray(), list);
+				parseEntityList(json.get("entities").getAsJsonArray(), list, forLava);
 			}
 		}
 
@@ -127,12 +127,12 @@ public class AoAHaulingFishReloadListener extends JsonReloadListener {
 				if (replace)
 					list.clear();
 
-				parseEntityList(json.get("entities").getAsJsonArray(), list);
+				parseEntityList(json.get("entities").getAsJsonArray(), list, forLava);
 			}
 		}
 	}
 
-	private void parseEntityList(JsonArray array, GenericEntryPool<Function<World, Entity>, ServerPlayerEntity> list) {
+	private void parseEntityList(JsonArray array, GenericEntryPool<Function<World, Entity>, ServerPlayerEntity> list, boolean forLava) {
 		final Predicate<ServerPlayerEntity> fallbackPredicate = player -> true;
 
 		for (JsonElement element : array) {
@@ -150,7 +150,12 @@ public class AoAHaulingFishReloadListener extends JsonReloadListener {
 						continue;
 
 					factory = world -> {
-						ItemEntity entity = EntityType.ITEM.create(world);
+						ItemEntity entity = new ItemEntity(EntityType.ITEM, world) {
+							@Override
+							public boolean fireImmune() {
+								return forLava || super.fireImmune();
+							}
+						};
 
 						entity.setItem(new ItemStack(item));
 						entity.setNeverPickUp();

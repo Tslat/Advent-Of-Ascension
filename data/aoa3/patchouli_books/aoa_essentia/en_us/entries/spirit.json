@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "anchor": "spirit",
-      "text": "$(thing)Spirit$() is a natural resource that represents the $(o)spiritual energy$(/o) of the body.$(br)Your $(thing)spirit$() generates naturally over time, but will have a short delay after it is used before it will begin to regenerate.",
+      "text": "$(thing)Spirit$() is a natural resource that represents the $(o)spiritual energy$() of the body.$(br)Your $(thing)spirit$() generates naturally over time, but will have a short delay after it is used before it will begin to regenerate.",
       "title": "Spirit"
     },
     {

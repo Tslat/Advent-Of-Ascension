@@ -17,7 +17,9 @@
     {
       "type": "patchouli:entity",
       "text": "Read more about the $(thing)Anemia$() on the $(l:https://adventofascension.fandom.com/wiki/Anemia)Official Wiki$(/l).",
-      "entity": "aoa3:anemia"
+      "entity": "aoa3:anemia",
+      "scale": 0.692,
+      "offset": 1.2
     },
     {
       "type": "patchouli:entity",
@@ -28,7 +30,7 @@
       "type": "patchouli:entity",
       "text": "Read more about the $(thing)Bloodsucker$() on the $(l:https://adventofascension.fandom.com/wiki/Bloodsucker)Official Wiki$(/l).",
       "entity": "aoa3:bloodsucker",
-      "scale": 32.0
+      "scale": 0.52
     },
     {
       "type": "patchouli:entity",
@@ -48,7 +50,8 @@
     {
       "type": "patchouli:entity",
       "text": "Read more about the $(thing)Jawe$() on the $(l:https://adventofascension.fandom.com/wiki/Jawe)Official Wiki$(/l).",
-      "entity": "aoa3:jawe"
+      "entity": "aoa3:jawe",
+      "scale": 0.625
     },
     {
       "type": "patchouli:entity",
@@ -58,7 +61,8 @@
     {
       "type": "patchouli:entity",
       "text": "Read more about the $(thing)Web Reaper$() on the $(l:https://adventofascension.fandom.com/wiki/Web_Reaper)Official Wiki$(/l).",
-      "entity": "aoa3:web_reaper"
+      "entity": "aoa3:web_reaper",
+      "scale": 0.802
     },
     {
       "type": "patchouli:text",
@@ -68,7 +72,8 @@
     {
       "type": "patchouli:entity",
       "text": "Read more about the $(thing)Abyssal Lottoman$() on the $(l:https://adventofascension.fandom.com/wiki/Abyssal_Lottoman)Official Wiki$(/l).",
-      "entity": "aoa3:abyssal_lottoman"
+      "entity": "aoa3:abyssal_lottoman",
+      "scale": 0.875
     },
     {
       "type": "patchouli:entity",
@@ -83,7 +88,8 @@
     {
       "type": "patchouli:entity",
       "text": "Read more about the $(thing)Shadowlord$() on the $(l:https://adventofascension.fandom.com/wiki/Shadowlord)Official Wiki$(/l).",
-      "entity": "aoa3:shadowlord"
+      "entity": "aoa3:shadowlord",
+      "scale": 0.6328
     },
     {
       "type": "patchouli:spotlight",
@@ -94,7 +100,8 @@
     {
       "type": "patchouli:entity",
       "text": "Read more about the $(thing)Elusive$() on the $(l:https://adventofascension.fandom.com/wiki/Elusive)Official Wiki$(/l).",
-      "entity": "aoa3:elusive"
+      "entity": "aoa3:elusive",
+      "scale": 0.914
     },
     {
       "type": "patchouli:spotlight",

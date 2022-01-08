@@ -85,7 +85,7 @@ public class BlockHasTag implements ILootCondition {
 		@Override
 		public BlockHasTag deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
 			JsonArray tagsArray = JSONUtils.getAsJsonArray(json, "tags");
-			ITag<Block>[] tags = new ITag.INamedTag[tagsArray.size()];
+			ITag<Block>[] tags = new ITag[tagsArray.size()];
 
 			for (int i = 0; i < tagsArray.size(); i++) {
 				tags[i] = TagCollectionManager.getInstance().getBlocks().getTag(new ResourceLocation(tagsArray.get(i).getAsString()));

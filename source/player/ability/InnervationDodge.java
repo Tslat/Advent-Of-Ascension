@@ -75,22 +75,21 @@ public class InnervationDodge extends AoAAbility.Instance {
 			player.setDeltaMovement(new Vector3d(velocityX, movement.y(), velocityZ));
 
 			activationTime = player.level.getGameTime();
-
-			return true;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
 	public void handleKeyInput() {
 		ServerPlayerEntity player = getPlayer();
 
-		skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true);
-		activatedActionKey(player);
+		if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true)) {
+			activatedActionKey(player);
 
-		if (skill.canGainXp(true))
-			skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 20), false, false);
+			if (skill.canGainXp(true))
+				skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 20), false, false);
+		}
 	}
 
 	@Override

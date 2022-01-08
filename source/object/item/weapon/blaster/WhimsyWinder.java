@@ -40,7 +40,7 @@ public class WhimsyWinder extends BaseBlaster {
 		nearbyTargets.removeIf(entity -> !(entity instanceof LivingEntity) || !EntityUtil.Predicates.HOSTILE_MOB.test((LivingEntity)entity));
 		nearbyTargets.add(target);
 
-		float splitDmg = (float)(baseDmg / nearbyTargets.size() * (Math.pow(1.05, nearbyTargets.size())));
+		float splitDmg = (float)(getDamage() / nearbyTargets.size() * (Math.pow(1.05, nearbyTargets.size())));
 		boolean success = false;
 
 		for (Entity entity : nearbyTargets) {

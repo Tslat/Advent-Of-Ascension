@@ -18,10 +18,17 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 	private final BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory;
 	private final BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory;
 
+	private final boolean canBeDisabled;
+
 	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory) {
+		this(jsonFactory, nbtFactory, true);
+	}
+
+	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory, boolean canBeDisabled) {
 		this.name = Lazy.of(() -> new TranslationTextComponent(Util.makeDescriptionId("ability", getRegistryName())));
 		this.jsonFactory = jsonFactory;
 		this.nbtFactory = nbtFactory;
+		this.canBeDisabled = canBeDisabled;
 	}
 
 	public TranslationTextComponent getName() {
@@ -34,6 +41,10 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 
 	public Instance loadFromNbt(AoASkill.Instance skillInstance, CompoundNBT abilityData) {
 		return nbtFactory.apply(skillInstance, abilityData);
+	}
+
+	public boolean canBeDisabled() {
+		return this.canBeDisabled;
 	}
 
 	public static abstract class Instance implements AoAPlayerEventListener {

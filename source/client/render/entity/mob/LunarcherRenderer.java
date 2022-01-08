@@ -12,7 +12,7 @@ import net.tslat.aoa3.common.registration.AoAEntities;
 
 @OnlyIn(Dist.CLIENT)
 public class LunarcherRenderer extends BipedRenderer<FlyingEntity, LunarcherModel<FlyingEntity>> {
-	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mobs/lunalus/lunarcher.png");
+	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/lunalus/lunarcher.png");
 
 	public LunarcherRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new LunarcherModel(), AoAEntities.Mobs.LUNARCHER.get().getWidth() / 3f);

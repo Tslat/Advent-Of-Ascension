@@ -5,8 +5,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -17,6 +17,7 @@ import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
+import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
@@ -56,7 +57,7 @@ public class FishingTrapSpawn extends AoAAbility.Instance {
 						baseChance != 0,
 						perLevelChance != 0,
 						true,
-						NumberUtil.roundToNthDecimalPlace(baseChance, 2), NumberUtil.roundToNthDecimalPlace(perLevelChance, 4))));
+						NumberUtil.roundToNthDecimalPlace(baseChance * 100, 2), NumberUtil.roundToNthDecimalPlace(perLevelChance * 100, 4))));
 	}
 
 	@Override
@@ -66,8 +67,15 @@ public class FishingTrapSpawn extends AoAAbility.Instance {
 			PlayerEntity player = ev.getPlayer();
 			World world = bobber.level;
 			BlockPos pos = bobber.blockPosition();
-			float luck = isHauling ? ((HaulingItemFishedEvent)ev).getLuck() : bobber.luck;
-			Function<World, Entity> trapEntityFunction = AoAHaulingFishReloadListener.getTrapListForBiome(world.getBiome(pos), world.getFluidState(pos).is(FluidTags.LAVA)).getRandomElement((ServerPlayerEntity)player, luck);
+			float luck = bobber.luck;
+			boolean isLava = false;
+
+			if (isHauling) {
+				luck = ((HaulingItemFishedEvent)ev).getLuck();
+				isLava = ((HaulingFishingBobberEntity)ev.getHookEntity()).getApplicableFluid().contains(Fluids.LAVA);
+			}
+
+			Function<World, Entity> trapEntityFunction = AoAHaulingFishReloadListener.getTrapListForBiome(world.getBiome(pos), isLava).getRandomElement((ServerPlayerEntity)player, luck);
 
 			if (trapEntityFunction != null) {
 				Entity trapEntity = trapEntityFunction.apply(world);
@@ -75,7 +83,7 @@ public class FishingTrapSpawn extends AoAAbility.Instance {
 				double velY = player.getY() - bobber.getY();
 				double velZ = player.getZ() - bobber.getZ();
 
-				trapEntity.setDeltaMovement(velX * 0.1d, velY * 0.1d + Math.sqrt(Math.sqrt(velX * velX + velY * velY + velZ * velZ)) * 0.1d, velZ * 0.1d);
+				trapEntity.setDeltaMovement(velX * 0.1d, velY * 0.1d + Math.sqrt(Math.sqrt(velX * velX + velY * velY + velZ * velZ)) * 0.15d, velZ * 0.1d);
 				trapEntity.setPos(bobber.getX(), bobber.getY(), bobber.getZ());
 				world.addFreshEntity(trapEntity);
 			}

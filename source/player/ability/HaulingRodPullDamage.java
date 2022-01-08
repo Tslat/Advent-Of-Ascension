@@ -50,12 +50,8 @@ public class HaulingRodPullDamage extends AoAAbility.Instance {
 
 	@Override
 	public void handleHaulingRodPullEntity(HaulingRodPullEntityEvent ev) {
-		if (ev.getHookedEntity() instanceof LivingEntity) {
+		if (ev.getHookedEntity() instanceof LivingEntity)
 			DamageUtil.dealHaulingDamage(getPlayer(), ev.getBobber(), ev.getHookedEntity(), amount + perLevelAmount * skill.getLevel(false));
-
-			if (!ev.getHookedEntity().isAlive())
-				ev.getBobber().remove();
-		}
 	}
 
 	@Override

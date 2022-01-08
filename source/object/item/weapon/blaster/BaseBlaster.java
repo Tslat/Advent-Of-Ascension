@@ -175,6 +175,14 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		return plData.getResource(AoAResources.SPIRIT.get()).consume(cost, false);
 	}
 
+	@Nullable
+	@Override
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+		stack.getOrCreateTag().putInt("HideFlags", ItemStack.TooltipDisplayFlags.MODIFIERS.getMask());
+
+		return null;
+	}
+
 	@Override
 	public Hand getWeaponHand(LivingEntity holder) {
 		return Hand.MAIN_HAND;
@@ -201,25 +209,18 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		return 8;
 	}
 
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
-		CompoundNBT tag = stack.getOrCreateTag();
-
-		tag.putByte("HideFlags", (byte)2);
-
-		return null;
-	}
-
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		return attributeModifiers;
+		if (slot == EquipmentSlotType.MAINHAND)
+			return attributeModifiers;
+
+		return super.getAttributeModifiers(slot, stack);
 	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
-		if (baseDmg > 0)
-			tooltip.add(1, LocaleUtil.getLocaleMessage("items.description.damage.blaster", TextFormatting.DARK_RED, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((float)baseDmg, 1))));
+		if (getDamage() > 0)
+			tooltip.add(1, LocaleUtil.getLocaleMessage("items.description.damage.blaster", TextFormatting.DARK_RED, new StringTextComponent(NumberUtil.roundToNthDecimalPlace((float)getDamage(), 1))));
 
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.fire", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.slowing", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));

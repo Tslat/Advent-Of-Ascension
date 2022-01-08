@@ -20,7 +20,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OcculentRenderer extends AoAMobRenderer {
 	public OcculentRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new OcculentModel(), AoAEntities.Mobs.OCCULENT.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entity/mobs/abyss/occulent.png"));
+		super(renderManager, new OcculentModel(), AoAEntities.Mobs.OCCULENT.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entity/mob/abyss/occulent.png"));
 	}
 
 	@Override

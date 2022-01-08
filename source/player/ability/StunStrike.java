@@ -60,7 +60,7 @@ public class StunStrike extends AoAAbility.Instance {
 	public boolean shouldSendKeyPress() {
 		ClientPlayerEntity pl = Minecraft.getInstance().player;
 
-		return !pl.input.hasForwardImpulse() && pl.input.leftImpulse == 0 && !pl.getItemInHand(Hand.OFF_HAND).isEmpty();
+		return !pl.input.hasForwardImpulse() && pl.input.leftImpulse == 0 && !pl.getItemInHand(Hand.OFF_HAND).isEmpty() && PlayerUtil.getResourceValue(pl, AoAResources.ENERGY.get()) >= this.energyCost;
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.util.math.MathHelper;
 import net.tslat.aoa3.object.entity.projectile.thrown.HellfireEntity;
 
 public class HellfireModel extends EntityModel<HellfireEntity> {
@@ -20,8 +21,17 @@ public class HellfireModel extends EntityModel<HellfireEntity> {
 	}
 
 	@Override
-	public void setupAnim(HellfireEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
-
+	public void setupAnim(HellfireEntity hellfire, float pLimbSwing, float partialTicks, float tickAge, float pNetHeadYaw, float pHeadPitch) {
+		if (hellfire.getDeltaMovement().x() != 0 || hellfire.getDeltaMovement().y() != 0 || hellfire.getDeltaMovement().z() != 0) {
+			part.yRot = MathHelper.lerp(partialTicks, tickAge - 1 % 360, tickAge % 360);
+			part.xRot = MathHelper.lerp(partialTicks, tickAge % 360, tickAge + 1 % 360);
+			part.zRot = MathHelper.lerp(partialTicks, tickAge + 1 % 360, tickAge + 2 % 360);
+		}
+		else {
+			part.xRot = 0;
+			part.yRot = 0;
+			part.zRot = 0;
+		}
 	}
 
 	@Override

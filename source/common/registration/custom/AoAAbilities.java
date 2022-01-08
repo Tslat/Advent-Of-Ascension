@@ -17,8 +17,8 @@ public class AoAAbilities {
 
 	public static final RegistryObject<AoAAbility> ATTRIBUTE_MODIFICATION = register("attribute_modification", () -> new AoAAbility(AttributeModification::new, AttributeModification::new));
 	public static final RegistryObject<AoAAbility> FLAT_XP_BOOST = register("flat_xp_boost", () -> new AoAAbility(FlatXpBoost::new, FlatXpBoost::new));
-	public static final RegistryObject<AoAAbility> DUMMY_ABILITY = register("dummy_ability", () -> new AoAAbility(DummyAbility::new, DummyAbility::new));
-	public static final RegistryObject<AoAAbility> LEVEL_RESTRICTION = register("level_restriction", () -> new AoAAbility(LevelRestriction::new, LevelRestriction::new));
+	public static final RegistryObject<AoAAbility> DUMMY_ABILITY = register("dummy_ability", () -> new AoAAbility(DummyAbility::new, DummyAbility::new, false));
+	public static final RegistryObject<AoAAbility> LEVEL_RESTRICTION = register("level_restriction", () -> new AoAAbility(LevelRestriction::new, LevelRestriction::new, false));
 	public static final RegistryObject<AoAAbility> FALL_DAMAGE_REDUCTION = register("fall_damage_reduction", () -> new AoAAbility(FallDamageReduction::new, FallDamageReduction::new));
 	public static final RegistryObject<AoAAbility> JUMP_BOOST = register("jump_boost", () -> new AoAAbility(JumpBoost::new, JumpBoost::new));
 	public static final RegistryObject<AoAAbility> DOUBLE_JUMP = register("double_jump", () -> new AoAAbility(DoubleJump::new, DoubleJump::new));
@@ -31,7 +31,7 @@ public class AoAAbilities {
 	public static final RegistryObject<AoAAbility> DOUBLE_DROPS_CHANCE = register("double_drops_chance", () -> new AoAAbility(DoubleDropsChance::new, DoubleDropsChance::new));
 	public static final RegistryObject<AoAAbility> INNERVATION_DODGE = register("innervation_dodge", () -> new AoAAbility(InnervationDodge::new, InnervationDodge::new));
 	public static final RegistryObject<AoAAbility> STUN_STRIKE = register("stun_strike", () -> new AoAAbility(StunStrike::new, StunStrike::new));
-	public static final RegistryObject<AoAAbility> FISHING_HOSTILE_TARGETING_IMMUNITY = register("fishing_hostile_targeting_immunity", () -> new AoAAbility(FishingHostileTargetingImmunity::new, FishingHostileTargetingImmunity::new));
+	public static final RegistryObject<AoAAbility> HAULING_GLOWING_FISH = register("fishing_hostile_targeting_immunity", () -> new AoAAbility(FishingHostileTargetingImmunity::new, FishingHostileTargetingImmunity::new));
 	public static final RegistryObject<AoAAbility> FISHING_XP_BOOST = register("fishing_xp_boost", () -> new AoAAbility(FishingXpBoost::new, FishingXpBoost::new));
 	public static final RegistryObject<AoAAbility> HAULING_ROD_PULL_STRENGTH = register("hauling_rod_pull_strength", () -> new AoAAbility(HaulingRodPullStrengthModifier::new, HaulingRodPullStrengthModifier::new));
 	public static final RegistryObject<AoAAbility> HAULING_ROD_PULL_DAMAGE = register("hauling_rod_pull_damage", () -> new AoAAbility(HaulingRodPullDamage::new, HaulingRodPullDamage::new));

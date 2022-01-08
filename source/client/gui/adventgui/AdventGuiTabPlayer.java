@@ -23,7 +23,6 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.AddSkillCyclePacket;
 import net.tslat.aoa3.common.packet.packets.ToggleAoAAbilityPacket;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
@@ -403,7 +402,7 @@ public class AdventGuiTabPlayer extends Screen {
 			if (isMouseHovering() && mouseX < right - 8) {
 				hoveredAbility = Math.min((int)-((top - mouseY - scrollDistance) / 50f), sortedAbilities.size() - 1);
 
-				if (hoveredAbility >= 0 && sortedAbilities.get(hoveredAbility).type() == AoAAbilities.DUMMY_ABILITY.get())
+				if (hoveredAbility >= 0 && !sortedAbilities.get(hoveredAbility).type().canBeDisabled())
 					hoveredAbility = -1;
 			}
 			else {

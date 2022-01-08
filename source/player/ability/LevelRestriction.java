@@ -3,41 +3,38 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.player.skill.AoASkill;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class LevelRestriction extends AoAAbility.Instance {
 	private final ListenerType[] LISTENERS = new ListenerType[0];
 
-	private final CompoundNBT restrictionData;
+	private final ResourceLocation restrictedId;
 
 	public LevelRestriction(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.LEVEL_RESTRICTION.get(), skill, data);
 
-		this.restrictionData = new CompoundNBT();
-		ListNBT restrictionsList = new ListNBT();
-		String restrictingId = generateRestrictionHandlers(data, restrictionsList);
-
-		this.restrictionData.put("restrictions", restrictionsList);
-		this.restrictionData.putString("restricted_id", restrictingId);
+		this.restrictedId = generateRestrictionHandlers(data);
 	}
 
 	public LevelRestriction(AoASkill.Instance skill, CompoundNBT data) {
 		super(AoAAbilities.LEVEL_RESTRICTION.get(), skill, data);
 
-		this.restrictionData = data.getCompound("reqs");
+		this.restrictedId = new ResourceLocation(data.getString("restriction_id"));
 	}
 
 	@Override
@@ -47,25 +44,32 @@ public class LevelRestriction extends AoAAbility.Instance {
 
 	@Override
 	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		ListNBT restrictions = this.restrictionData.getList("restrictions", Constants.NBT.TAG_STRING);
+		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(this.restrictedId);
+
+		if (restrictions == null) {
+			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), "??"));
+
+			return;
+		}
+
 		ITextComponent targetName;
 
 		if (isForBlock(restrictions)) {
-			targetName = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(this.restrictionData.getString("restricted_id"))).getName();
+			targetName = ForgeRegistries.BLOCKS.getValue(restrictedId).getName();
 		}
 		else {
-			Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(this.restrictionData.getString("restricted_id")));
+			Item item = ForgeRegistries.ITEMS.getValue(restrictedId);
 			targetName = item.getName(item.getDefaultInstance());
 		}
 
 		TranslationTextComponent description = new TranslationTextComponent(defaultDescription.getKey(), targetName);
 		boolean comma = false;
 
-		for (INBT restriction : restrictions) {
+		for (Map.Entry<String, List<Pair<ResourceLocation, Integer>>> restriction : restrictions.entrySet()) {
 			if (comma)
 				description.append(", ");
 
-			description.append(new TranslationTextComponent(defaultDescription.getKey() + "." + restriction.getAsString()));
+			description.append(new TranslationTextComponent(defaultDescription.getKey() + "." + restriction.getKey()));
 
 			comma = true;
 		}
@@ -78,28 +82,22 @@ public class LevelRestriction extends AoAAbility.Instance {
 		CompoundNBT data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
-			data.put("reqs", this.restrictionData);
+			data.putString("restriction_id", this.restrictedId.toString());
 
 		return data;
 	}
 
-	protected String generateRestrictionHandlers(JsonObject json, ListNBT restrictionsList) {
-		String restrictedId = JSONUtils.getAsString(json, "restricted_id");
+	protected ResourceLocation generateRestrictionHandlers(JsonObject json) {
+		ResourceLocation restrictedId = new ResourceLocation(JSONUtils.getAsString(json, "restricted_id"));
 		JsonArray reqs = JSONUtils.getAsJsonArray(json, "restrictions");
 
 		if (reqs.size() == 0)
 			throw new IllegalArgumentException("Invalid skill requirements for Level Restriction ability.");
 
-		JsonObject reqData = new JsonObject();
+		Map<String, List<Pair<ResourceLocation, Integer>>> reqData = new HashMap<String, List<Pair<ResourceLocation, Integer>>>();
 
-		for (JsonElement element : reqs) {
-			JsonObject group = new JsonObject();
-
-			group.addProperty("skill", skill.type().getRegistryName().toString());
-			group.addProperty("level", getLevelReq());
-			restrictionsList.add(StringNBT.valueOf(element.getAsString()));
-
-			reqData.add(element.getAsString(), group);
+		for (JsonElement entry : reqs) {
+			reqData.put(entry.getAsJsonPrimitive().getAsString(), Collections.singletonList(Pair.of(skill.type().getRegistryName(), getLevelReq())));
 		}
 
 		AoASkillReqReloadListener.SkillReqHandler skillReqHandler = AoASkillReqReloadListener.parse(reqData);
@@ -107,14 +105,15 @@ public class LevelRestriction extends AoAAbility.Instance {
 		if (!skillReqHandler.isValid())
 			throw new IllegalArgumentException("Invalid skill requirements for Level Restriction ability.");
 
-		AoASkillReqReloadListener.addRequirement(new ResourceLocation(restrictedId), skillReqHandler);
+		AoASkillReqReloadListener.addRequirement(restrictedId, skillReqHandler);
+		AoASkillReqReloadListener.addParsedData(restrictedId, reqData);
 
 		return restrictedId;
 	}
 
-	private boolean isForBlock(ListNBT restrictions) {
-		for (INBT nbt : restrictions) {
-			switch (nbt.getAsString()) {
+	private boolean isForBlock(Map<String, List<Pair<ResourceLocation, Integer>>> restrictions) {
+		for (String type : restrictions.keySet()) {
+			switch (type) {
 				case "break_block":
 				case "place_block":
 				case "interact_with":

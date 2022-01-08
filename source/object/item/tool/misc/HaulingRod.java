@@ -38,6 +38,11 @@ public class HaulingRod extends FishingRodItem {
 	}
 
 	@Override
+	public int getUseDuration(ItemStack pStack) {
+		return 72000;
+	}
+
+	@Override
 	public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
@@ -48,14 +53,20 @@ public class HaulingRod extends FishingRodItem {
 
 					if (bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_FISH) {
 						reelIn((ServerPlayerEntity)player, bobber, stack, hand);
+						player.startUsingItem(hand);
 					}
 					else if (bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY) {
 						landEntity(player, stack, hand, bobber);
+						player.startUsingItem(hand);
 					}
 					else {
 						bobber.remove();
 						player.fishing = null;
 					}
+				}
+				else {
+					player.fishing.remove();
+					player.fishing = null;
 				}
 			}
 			else {
@@ -87,8 +98,13 @@ public class HaulingRod extends FishingRodItem {
 					double velY = player.getY() - bobber.getY();
 					double velZ = player.getZ() - bobber.getZ();
 
-					entity.setDeltaMovement(velX * 0.1d, velY * 0.1d + Math.sqrt(Math.sqrt(velX * velX + velY * velY + velZ * velZ)) * 0.1d, velZ * 0.1d);
+					Vector3d pullVec = new Vector3d(velX, velY + Math.sqrt(Math.sqrt(velX * velX + velY * velY + velZ * velZ)), velZ).scale(0.1d);
+
+					entity.setDeltaMovement(pullVec);
 					player.level.addFreshEntity(entity);
+
+					if (!player.isOnGround())
+						player.setDeltaMovement(pullVec.reverse());
 
 					if (lootStack.getItem().is(ItemTags.FISHES))
 						player.awardStat(Stats.FISH_CAUGHT, 1);
@@ -105,8 +121,14 @@ public class HaulingRod extends FishingRodItem {
 			Entity hookedEntity = bobber.getHookedIn();
 
 			if (hookedEntity != null) {
-				EntityUtil.pullEntityIn(player, hookedEntity, 0.01f);
-				hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().add(0, (player.getY() - hookedEntity.getY()) * 0.1f, 0));
+				float pullStrength = getHaulStrengthMod(player, stack, bobber);
+
+				EntityUtil.pullEntityIn(player, hookedEntity, 0.25f * pullStrength, true);
+
+				hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().multiply(1, 0.5f, 1));
+
+				if (!player.isOnGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
+					EntityUtil.pullEntityIn(hookedEntity, player, 0.25f * pullStrength, true);
 			}
 		}
 	}
@@ -129,9 +151,14 @@ public class HaulingRod extends FishingRodItem {
 					ItemUtil.damageItem(stack, player, hand, event.getAdditionalRodDamage());
 			}
 
-			Vector3d pullVec = new Vector3d(player.getX() - bobber.getX(), player.getY() - bobber.getY(), player.getZ() - bobber.getZ()).scale(0.1D * pullStrength);
+			EntityUtil.pullEntityIn(player, hookedEntity, pullStrength, true);
 
-			hookedEntity.setDeltaMovement(pullVec);
+			hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().multiply(1, 0.25f, 1));
+
+			if (!player.isOnGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
+				EntityUtil.pullEntityIn(hookedEntity, player, 0.25f * pullStrength, true);
+
+			player.getCooldowns().addCooldown(this, 10);
 
 			return player instanceof ServerPlayerEntity ? getLootForHauledEntity((ServerPlayerEntity)player, stack, bobber, hookedEntity) : Collections.emptyList();
 		}

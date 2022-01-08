@@ -14,7 +14,7 @@ import net.tslat.aoa3.util.ColourUtil;
 
 public class RunicornRiderRenderer extends AoAMobRenderer {
 	public RunicornRiderRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new RunicornRiderModel(), AoAEntities.Mobs.RUNICORN_RIDER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entity/mobs/runandor/runicorn_rider.png"));
+		super(renderManager, new RunicornRiderModel(), AoAEntities.Mobs.RUNICORN_RIDER.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entity/mob/runandor/runicorn_rider.png"));
 
 	}
 

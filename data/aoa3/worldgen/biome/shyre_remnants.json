@@ -58,7 +58,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:arc_flower",
+        "type": "aoa3:omnilight",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sysker",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -70,13 +76,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:axiolight",
+        "type": "aoa3:arc_flower",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:soulscorne",
+        "type": "aoa3:axiolight",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -88,7 +94,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:sysker",
+        "type": "aoa3:soulscorne",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -102,12 +108,6 @@
       {
         "type": "aoa3:soulvyre",
         "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:omnilight",
-        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }

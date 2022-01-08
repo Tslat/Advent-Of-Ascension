@@ -3,6 +3,7 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.JSONUtils;
@@ -19,7 +20,8 @@ import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
-public class DoubleJump extends AoAAbility.Instance {
+public class
+DoubleJump extends AoAAbility.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.KEY_INPUT, ListenerType.PLAYER_FALL};
 
 	private final float energyConsumption;
@@ -57,7 +59,12 @@ public class DoubleJump extends AoAAbility.Instance {
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public boolean shouldSendKeyPress() {
-		return !Minecraft.getInstance().player.isOnGround() && ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyConsumption);
+		PlayerEntity player = Minecraft.getInstance().player;
+
+		if (!player.isOnGround() || player.isCreative())
+			return false;
+
+		return ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyConsumption);
 	}
 
 	@Override

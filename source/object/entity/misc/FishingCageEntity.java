@@ -160,7 +160,7 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public boolean isPushable() {
-		return !isOnGround();
+		return true;
 	}
 
 	@Override
@@ -174,8 +174,13 @@ public class FishingCageEntity extends Entity {
 	}
 
 	@Override
+	public boolean canBeCollidedWith() {
+		return true;
+	}
+
+	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source != DamageSource.OUT_OF_WORLD;
+		return source == DamageSource.OUT_OF_WORLD;
 	}
 
 	protected void doFishingCheckTick() {

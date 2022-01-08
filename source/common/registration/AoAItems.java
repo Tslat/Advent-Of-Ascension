@@ -420,7 +420,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> NATURAL_TEA = registerItem("natural_tea", NaturalTea::new);
 	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85F).build())));
 	public static final RegistryObject<Item> CHUM = registerItem("chum", ChumItem::new);
-	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 40).build(), 1f).build())));
+	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 80).build(), 1f).build())));
 
 	public static final RegistryObject<Item> BUBBLE_BERRY_SEEDS = registerItem("bubble_berry_seeds", () -> new BlockNamedItem(AoABlocks.BUBBLE_BERRY_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> CHILLI_SEEDS = registerItem("chilli_seeds", () -> new BlockNamedItem(AoABlocks.CHILLI_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));

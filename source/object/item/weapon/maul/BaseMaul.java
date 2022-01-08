@@ -135,6 +135,8 @@ public class BaseMaul extends Item {
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+		stack.getOrCreateTag().putInt("HideFlags", ItemStack.TooltipDisplayFlags.MODIFIERS.getMask());
+
 		return new VolatileStackCapabilityProvider();
 	}
 

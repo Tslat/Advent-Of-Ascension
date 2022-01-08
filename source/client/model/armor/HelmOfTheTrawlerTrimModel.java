@@ -8,7 +8,7 @@ import net.tslat.aoa3.client.model.misc.FullbrightModelRenderer;
 
 public class HelmOfTheTrawlerTrimModel extends SkillHelmetModel {
 	public HelmOfTheTrawlerTrimModel() {
-		super(AdventOfAscension.id("textures/models/armor/custom/helm_of_the_trawler.png"));
+		super(AdventOfAscension.id("textures/models/armor/custom/helm_of_the_trawler_trim.png"));
 		texWidth = 64;
 		texHeight = 32;
 

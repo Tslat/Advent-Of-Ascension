@@ -36,6 +36,7 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, AddSkillCyclePacket.class, AddSkillCyclePacket::encode, AddSkillCyclePacket::decode, AddSkillCyclePacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ToggleAoAAbilityPacket.class, ToggleAoAAbilityPacket::encode, ToggleAoAAbilityPacket::decode, ToggleAoAAbilityPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ServerParticlePacket.class, ServerParticlePacket::encode, ServerParticlePacket::decode, ServerParticlePacket::receiveMessage);
+		INSTANCE.registerMessage(id++, SkillRequirementDataPacket.class, SkillRequirementDataPacket::encode, SkillRequirementDataPacket::decode, SkillRequirementDataPacket::receiveMessage);
 	}
 
 	public static void messageNearbyPlayers(AoAPacket packet, ServerWorld world, Vector3d origin, double radius) {

@@ -29,10 +29,6 @@
       "rolls": 1,
       "entries": [
         {
-          "type": "minecraft:empty",
-          "weight": 100
-        },
-        {
           "type": "minecraft:item",
           "weight": 80,
           "functions": [

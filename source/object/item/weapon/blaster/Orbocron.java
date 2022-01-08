@@ -36,7 +36,7 @@ public class Orbocron extends BaseBlaster {
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		for (LivingEntity e : shot.level.getEntitiesOfClass(LivingEntity.class, shot.getBoundingBox().inflate(15), EntityUtil.Predicates.HOSTILE_MOB)) {
 			if (!EntityUtil.isImmuneToSpecialAttacks(e, shooter))
-				EntityUtil.pullEntityIn(target, e, 0.5f);
+				EntityUtil.pullEntityIn(target, e, 0.5f, false);
 		}
 	}
 

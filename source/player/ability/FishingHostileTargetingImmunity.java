@@ -1,24 +1,20 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 public class FishingHostileTargetingImmunity extends AoAAbility.Instance {
-	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.ENTITY_TARGET};
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.CUSTOM};
 
 	public FishingHostileTargetingImmunity(AoASkill.Instance skill, JsonObject data) {
-		super(AoAAbilities.FISHING_HOSTILE_TARGETING_IMMUNITY.get(), skill, data);
+		super(AoAAbilities.HAULING_GLOWING_FISH.get(), skill, data);
 	}
 
 	public FishingHostileTargetingImmunity(AoASkill.Instance skill, CompoundNBT data) {
-		super(AoAAbilities.FISHING_HOSTILE_TARGETING_IMMUNITY.get(), skill, data);
+		super(AoAAbilities.HAULING_GLOWING_FISH.get(), skill, data);
 	}
 
 	@Override
@@ -27,17 +23,8 @@ public class FishingHostileTargetingImmunity extends AoAAbility.Instance {
 	}
 
 	@Override
-	public void handleEntityTarget(LivingSetAttackTargetEvent ev) {
-		PlayerEntity player = getPlayer();
-		LivingEntity entity = ev.getEntityLiving();
-
-		if (player.fishing != null && entity.getLastHurtByMob() != player) {
-			if (entity instanceof MobEntity) {
-				((MobEntity)entity).setTarget(null);
-			}
-			else if (entity instanceof IAngerable) {
-				((IAngerable)entity).setTarget(null);
-			}
-		}
+	public void handleCustomInteraction(String interactionType, Object data) {
+		if (interactionType.equals("hauling_spawn_fish"))
+			((Entity)data).setGlowing(true);
 	}
 }

@@ -46,7 +46,7 @@ public class CandyStaff extends BaseStaff<List<LivingEntity>> {
 	@Override
 	public void cast(World world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (LivingEntity target : args) {
-			EntityUtil.pullEntityIn(caster, target, 0.4f);
+			EntityUtil.pullEntityIn(caster, target, 2.5f, true);
 			target.setDeltaMovement(target.getDeltaMovement().multiply(1, 0.25f, 1));
 		}
 	}

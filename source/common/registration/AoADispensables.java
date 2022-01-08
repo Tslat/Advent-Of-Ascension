@@ -69,6 +69,13 @@ public final class AoADispensables {
 				return new SliceStarEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
 			}
 		});
+
+		DispenserBlock.registerBehavior(AoAWeapons.HARDENED_PARAPIRANHA.get(), new ProjectileDispenseBehavior() {
+			@Override
+			protected ProjectileEntity getProjectile(World world, IPosition dispenserPos, ItemStack stack) {
+				return new HardenedParapiranhaEntity(world, dispenserPos.x(), dispenserPos.y(), dispenserPos.z());
+			}
+		});
 	}
 
 	private static void registerMiscDispensables() {

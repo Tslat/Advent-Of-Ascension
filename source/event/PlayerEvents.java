@@ -1,5 +1,6 @@
 package net.tslat.aoa3.event;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.block.BlockState;
@@ -21,10 +22,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.text.*;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -34,6 +32,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -44,7 +43,10 @@ import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoATools;
+import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.event.dimension.LelyetiaEvents;
 import net.tslat.aoa3.event.dimension.LunalusEvents;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
@@ -55,9 +57,12 @@ import net.tslat.aoa3.object.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.object.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.object.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
 
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class PlayerEvents {
@@ -77,6 +82,7 @@ public class PlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerXpEvent.PickupXp.class, PlayerEvents::onPlayerPickupXp);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemFishedEvent.class, PlayerEvents::onPlayerFishing);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerChangedDimensionEvent.class, PlayerEvents::onDimensionChange);
+		forgeBus.addListener(EventPriority.NORMAL, false, ItemTooltipEvent.class, PlayerEvents::onTooltip);
 	}
 
 	private static void onPlayerTick(final TickEvent.PlayerTickEvent ev) {
@@ -198,6 +204,7 @@ public class PlayerEvents {
 
 			AoAHaloUtil.syncWithNewClient(pl);
 			ServerPlayerDataManager.syncNewPlayer(pl);
+			AoASkillReqReloadListener.syncNewPlayer(pl);
 
 			PlayerAdvancements plAdvancements = pl.getAdvancements();
 			Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/root"));
@@ -283,5 +290,34 @@ public class PlayerEvents {
 	private static void onDimensionChange(final PlayerEvent.PlayerChangedDimensionEvent ev) {
 		if (ev.getFrom() == AoADimensions.NOWHERE.key)
 			NowhereEvents.doDimensionChange(ev);
+	}
+
+	private static void onTooltip(final ItemTooltipEvent ev) {
+		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(ev.getItemStack().getItem().getRegistryName());
+
+		if (restrictions != null) {
+			List<ITextComponent> lines = ev.getToolTip();
+
+			if (ev.getFlags().isAdvanced()) {
+				lines.add(1, LocaleUtil.getLocaleMessage("gui.tooltip.skillReq", TextFormatting.DARK_RED));
+
+				int index = 2;
+
+				for (Map.Entry<String, List<Pair<ResourceLocation, Integer>>> reqEntry : restrictions.entrySet()) {
+					lines.add(index++, new StringTextComponent("  ").withStyle(TextFormatting.RED).append(LocaleUtil.getLocaleMessage(Util.makeDescriptionId("ability", AoAAbilities.LEVEL_RESTRICTION.getId()) + ".description." + reqEntry.getKey())).append(":"));
+
+					for (Pair<ResourceLocation, Integer> pair : reqEntry.getValue()) {
+						AoASkill skill = AoASkills.getSkill(pair.getFirst());
+
+						lines.add(index++, new StringTextComponent("    ").withStyle(TextFormatting.GOLD).append(pair.getSecond() + " ").append(skill.getName()));
+					}
+				}
+
+				lines.add(index, new StringTextComponent(""));
+			}
+			else {
+				lines.add(1, LocaleUtil.getLocaleMessage("gui.tooltip.skillReq.hidden", TextFormatting.DARK_RED));
+			}
+		}
 	}
 }

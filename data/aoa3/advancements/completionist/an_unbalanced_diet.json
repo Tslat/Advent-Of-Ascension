@@ -98,6 +98,14 @@
         }
       }
     },
+    "consume_cooked_fish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:cooked_fish"
+        }
+      }
+    },
     "consume_fungal_tea": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -529,6 +537,9 @@
     ],
     [
       "consume_raw_charger_shank"
+    ],
+    [
+      "consume_cooked_fish"
     ],
     [
       "consume_fungal_tea"
