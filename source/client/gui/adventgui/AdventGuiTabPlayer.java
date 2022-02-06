@@ -183,6 +183,13 @@ public class AdventGuiTabPlayer extends Screen {
 
 	private void drawTotalLevel(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
 		Minecraft mc = Minecraft.getInstance();
+		int totalLevel = ClientPlayerDataManager.get().getTotalLevel();
+
+		if (totalLevel == 0) {
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.noSkills"), 280, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+
+			return;
+		}
 
 		RenderSystem.enableAlphaTest();
 		mc.textureManager.bind(TOTAL_LEVEL_ICON);
@@ -387,8 +394,12 @@ public class AdventGuiTabPlayer extends Screen {
 			if (!isMouseHovering())
 				return false;
 
-			if (wasDragging && clickStartScroll == distanceScrolled && hoveredAbility != -1)
-				AoAPackets.messageServer(new ToggleAoAAbilityPacket(skill.type(), sortedAbilities.get(hoveredAbility)));
+			if (wasDragging && clickStartScroll == distanceScrolled && hoveredAbility != -1) {
+				AoAAbility.Instance instance = sortedAbilities.get(hoveredAbility);
+
+				if (instance.onGuiClick(this.mouseX - left, this.mouseY - top - (hoveredAbility * 50) + (int)distanceScrolled * 2))
+					AoAPackets.messageServer(new ToggleAoAAbilityPacket(skill.type(), instance));
+			}
 
 			return super.handleMouseReleased(mouseX, mouseY, button);
 		}
@@ -401,9 +412,6 @@ public class AdventGuiTabPlayer extends Screen {
 
 			if (isMouseHovering() && mouseX < right - 8) {
 				hoveredAbility = Math.min((int)-((top - mouseY - scrollDistance) / 50f), sortedAbilities.size() - 1);
-
-				if (hoveredAbility >= 0 && !sortedAbilities.get(hoveredAbility).type().canBeDisabled())
-					hoveredAbility = -1;
 			}
 			else {
 				hoveredAbility = -1;
@@ -416,12 +424,13 @@ public class AdventGuiTabPlayer extends Screen {
 			for (int i = 0; i < sortedAbilities.size(); i++) {
 				AoAAbility.Instance ability = sortedAbilities.get(i);
 				int colour = ColourUtil.RGB(100, 100, 100);
+				boolean abilityHoverEffects = hoveredAbility == i && sortedAbilities.get(hoveredAbility).onGuiHover(mouseX - left, mouseY - top - ((i * 50) - (int)scrollDistance));
 
 				if (ability.getListenerState() == AoAPlayerEventListener.ListenerState.ACTIVE) {
-					colour = hoveredAbility == i ? ColourUtil.RGB(255, 255, 180) : ColourUtil.WHITE;
+					colour = abilityHoverEffects ? ColourUtil.RGB(255, 255, 180) : ColourUtil.WHITE;
 				}
 				else if (ability.getListenerState() == AoAPlayerEventListener.ListenerState.MANUALLY_DISABLED) {
-					if (hoveredAbility == i)
+					if (abilityHoverEffects)
 						colour = ColourUtil.RGB(150, 150, 100);
 				}
 

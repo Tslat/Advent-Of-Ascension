@@ -10,6 +10,7 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import org.apache.logging.log4j.Level;
@@ -29,6 +30,9 @@ public class AoASkillsReloadListener extends JsonReloadListener {
 
 	public static void populateSkillMap(ServerPlayerDataManager plData, HashMap<AoASkill, AoASkill.Instance> skillMap) {
 		skillMap.clear();
+
+		if (AoAConfig.SERVER.disableSkills.get())
+			return;
 
 		for (Map.Entry<AoASkill, JsonObject> skill : SKILLS_DATA.entrySet()) {
 			skillMap.put(skill.getKey(), skill.getKey().buildDefaultInstance(plData, skill.getValue()));

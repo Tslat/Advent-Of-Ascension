@@ -30,7 +30,7 @@ public class FlamingFury extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_2.get();
 	}
 
 	@Override

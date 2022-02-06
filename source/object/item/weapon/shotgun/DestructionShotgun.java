@@ -5,9 +5,11 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.object.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.object.entity.projectile.gun.LimoniteBulletEntity;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -19,6 +21,12 @@ import java.util.List;
 public class DestructionShotgun extends BaseShotgun {
 	public DestructionShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
 		super(dmg, pellets, durability, fireDelayTicks, knockbackFactor, recoil);
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getFiringSound() {
+		return AoASounds.ITEM_GUN_SHOTGUN_HEAVY_FIRE_LONG.get();
 	}
 
 	@Override

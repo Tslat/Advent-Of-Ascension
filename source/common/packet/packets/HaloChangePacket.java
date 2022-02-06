@@ -4,7 +4,6 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.AoAHaloUtil;
 import org.apache.logging.log4j.Level;
 
@@ -34,10 +33,7 @@ public class HaloChangePacket implements AoAPacket {
 			preferredHalo = AoAHaloUtil.Type.Choosable.valueOf(haloChoice).toBaseType();
 		}
 		catch (IllegalArgumentException e) {
-			if (AoAConfig.COMMON.doVerboseDebugging.get()) {
-				Logging.logMessage(Level.WARN, "Error parsing halo info from client: " + haloChoice);
-				e.printStackTrace();
-			}
+			Logging.logMessage(Level.WARN, "Error parsing halo info from client: " + haloChoice);
 		}
 
 		ServerPlayerEntity sender = context.get().getSender();

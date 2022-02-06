@@ -28,7 +28,7 @@ public class Sublimus extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GOLEM_GUN_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_5.get();
 	}
 
 	@Nullable

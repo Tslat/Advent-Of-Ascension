@@ -1,0 +1,25 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:plates/charger",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    },
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:plates/charger"
+  },
+  "result": {
+    "fluid": "aoa3:molten_charger",
+    "amount": 144
+  },
+  "temperature": 150,
+  "time": 36
+}

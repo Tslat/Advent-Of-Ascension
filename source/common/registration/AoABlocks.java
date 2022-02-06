@@ -33,11 +33,11 @@ import net.tslat.aoa3.object.block.functional.fluid.ToxicWaste;
 import net.tslat.aoa3.object.block.functional.light.LampBlock;
 import net.tslat.aoa3.object.block.functional.light.VoxLight;
 import net.tslat.aoa3.object.block.functional.misc.*;
+import net.tslat.aoa3.object.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.object.block.functional.plant.*;
 import net.tslat.aoa3.object.block.functional.portal.NowhereActivityPortal;
 import net.tslat.aoa3.object.block.functional.portal.NowherePortalBlock;
 import net.tslat.aoa3.object.block.functional.portal.PortalBlock;
-import net.tslat.aoa3.object.block.functional.sapling.DarkGrowingSapling;
-import net.tslat.aoa3.object.block.functional.sapling.SaplingBlock;
 import net.tslat.aoa3.object.block.functional.utility.*;
 import net.tslat.aoa3.object.block.generation.grass.GrassBlock;
 import net.tslat.aoa3.object.block.generation.grass.UpsideDownGrassBlock;
@@ -161,6 +161,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> VARSIUM_ORE = customRender(registerBlock("varsium_ore", () -> new OreBlock(MaterialColor.TERRACOTTA_CYAN, 3), AoAItemGroups.GENERATION_BLOCKS), CUTOUT_MIPPED);
 
 	public static final RegistryObject<Block> BARON_BRICKS = registerBlock("baron_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> BARON_TILES = registerBlock("baron_tiles", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_ORANGE).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BLOODSTONE_BRICKS = registerBlock("bloodstone_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> CORAL_BRICKS = registerBlock("coral_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_CYAN).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> CREEPONIA_BRICKS = registerBlock("creeponia_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.EMERALD).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
@@ -171,6 +172,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GARDENCIA_BRICKS = registerBlock("gardencia_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.EMERALD).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> GRECKON_BRICKS = registerBlock("greckon_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> HAUNTED_BRICKS = registerBlock("haunted_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> HELLSTONE_BRICKS = registerBlock("hellstone_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_DOTTED_BRICKS = registerBlock("iro_dotted_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_YELLOW).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_STRIPED_BRICKS = registerBlock("iro_striped_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_YELLOW).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> LELYETIAN_BRICKS = registerBlock("lelyetian_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.FIRE).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
@@ -183,7 +185,6 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> YELLOW_SHYRE_BRICKS = registerBlock("yellow_shyre_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_YELLOW).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> SKELETAL_BRICKS = registerBlock("skeletal_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_LIGHT_GREEN).stats(10f, 15f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> WHITEWASH_BRICKS = registerBlock("whitewash_bricks", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.QUARTZ).stats(50f, 2000f).harvestTool(ToolType.PICKAXE).sound(SoundType.NETHER_BRICKS).get()), AoAItemGroups.DECORATION_BLOCKS);
-	// TODO Block map colours down from here
 	public static final RegistryObject<Block> INTRICATE_AMETHYST_IVORY = registerBlock("intricate_amethyst_ivory", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_BLUE).stats(5f, 5f).harvestTool(ToolType.PICKAXE).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> INTRICATE_IVORY = registerBlock("intricate_ivory", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.QUARTZ).stats(5f, 5f).harvestTool(ToolType.PICKAXE).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> INTRICATE_JADE_IVORY = registerBlock("intricate_jade_ivory", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_LIGHT_GREEN).stats(5f, 5f).harvestTool(ToolType.PICKAXE).get()), AoAItemGroups.DECORATION_BLOCKS);
@@ -465,6 +466,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> RUNIC_STONE_SLAB = registerBlock("runic_stone_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(RUNIC_STONE.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> WEIGHTLESS_STONE_SLAB = registerBlock("weightless_stone_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(WEIGHTLESS_STONE.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_BRICKS_SLAB = registerBlock("baron_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BARON_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> BARON_TILES_SLAB = registerBlock("baron_tiles_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BARON_TILES.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BLACK_MYSTERIUM_BRICKS_SLAB = registerBlock("black_mysterium_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BLACK_MYSTERIUM_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BLOODSTONE_BRICKS_SLAB = registerBlock("bloodstone_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(BLOODSTONE_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> CORAL_BRICKS_SLAB = registerBlock("coral_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(CORAL_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
@@ -477,6 +479,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GRECKON_BRICKS_SLAB = registerBlock("greckon_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(GRECKON_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> GREEN_MYSTERIUM_BRICKS_SLAB = registerBlock("green_mysterium_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(GREEN_MYSTERIUM_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> HAUNTED_BRICKS_SLAB = registerBlock("haunted_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(HAUNTED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> HELLSTONE_BRICKS_SLAB = registerBlock("hellstone_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(HELLSTONE_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_DOTTED_BRICKS_SLAB = registerBlock("iro_dotted_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(IRO_DOTTED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_STRIPED_BRICKS_SLAB = registerBlock("iro_striped_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(IRO_STRIPED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> LELYETIAN_BRICKS_SLAB = registerBlock("lelyetian_bricks_slab", () -> new SlabBlock(AbstractBlock.Properties.copy(LELYETIAN_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
@@ -548,6 +551,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> RUNIC_STONE_STAIRS = registerBlock("runic_stone_stairs", () -> new StairsBlock(() -> RUNIC_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(RUNIC_STONE.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> WEIGHTLESS_STONE_STAIRS = registerBlock("weightless_stone_stairs", () -> new StairsBlock(() -> WEIGHTLESS_STONE.get().defaultBlockState(), AbstractBlock.Properties.copy(WEIGHTLESS_STONE.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_BRICKS_STAIRS = registerBlock("baron_bricks_stairs", () -> new StairsBlock(() -> BARON_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(BARON_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> BARON_TILES_STAIRS = registerBlock("baron_tiles_stairs", () -> new StairsBlock(() -> BARON_TILES.get().defaultBlockState(), AbstractBlock.Properties.copy(BARON_TILES.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BLACK_MYSTERIUM_BRICKS_STAIRS = registerBlock("black_mysterium_bricks_stairs", () -> new StairsBlock(() -> BLACK_MYSTERIUM_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(BLACK_MYSTERIUM_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BLOODSTONE_BRICKS_STAIRS = registerBlock("bloodstone_bricks_stairs", () -> new StairsBlock(() -> BLOODSTONE_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(BLOODSTONE_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> CORAL_BRICKS_STAIRS = registerBlock("coral_bricks_stairs", () -> new StairsBlock(() -> CORAL_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(CORAL_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
@@ -560,6 +564,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GRECKON_BRICKS_STAIRS = registerBlock("greckon_bricks_stairs", () -> new StairsBlock(() -> GRECKON_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(GRECKON_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> GREEN_MYSTERIUM_BRICKS_STAIRS = registerBlock("green_mysterium_bricks_stairs", () -> new StairsBlock(() -> GREEN_MYSTERIUM_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(GREEN_MYSTERIUM_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> HAUNTED_BRICKS_STAIRS = registerBlock("haunted_bricks_stairs", () -> new StairsBlock(() -> HAUNTED_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(HAUNTED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> HELLSTONE_BRICKS_STAIRS = registerBlock("hellstone_bricks_stairs", () -> new StairsBlock(() -> HELLSTONE_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(HELLSTONE_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_DOTTED_BRICKS_STAIRS = registerBlock("iro_dotted_bricks_stairs", () -> new StairsBlock(() -> IRO_DOTTED_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(IRO_DOTTED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_STRIPED_BRICKS_STAIRS = registerBlock("iro_striped_bricks_stairs", () -> new StairsBlock(() -> IRO_STRIPED_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(IRO_STRIPED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> LELYETIAN_BRICKS_STAIRS = registerBlock("lelyetian_bricks_stairs", () -> new StairsBlock(() -> LELYETIAN_BRICKS.get().defaultBlockState(), AbstractBlock.Properties.copy(LELYETIAN_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
@@ -630,6 +635,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> RUNIC_STONE_WALL = registerBlock("runic_stone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(RUNIC_STONE.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> WEIGHTLESS_STONE_WALL = registerBlock("weightless_stone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(WEIGHTLESS_STONE.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_BRICKS_WALL = registerBlock("baron_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(BARON_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> BARON_TILES_WALL = registerBlock("baron_tiles_wall", () -> new WallBlock(AbstractBlock.Properties.copy(BARON_TILES.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BLACK_MYSTERIUM_BRICKS_WALL = registerBlock("black_mysterium_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(BLACK_MYSTERIUM_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BLOODSTONE_BRICKS_WALL = registerBlock("bloodstone_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(BLOODSTONE_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> CORAL_BRICKS_WALL = registerBlock("coral_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(CORAL_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
@@ -643,6 +649,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GRECKON_STONE_WALL = registerBlock("greckon_stone_wall", () -> new WallBlock(AbstractBlock.Properties.copy(GRECKON_STONE.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> GREEN_MYSTERIUM_BRICKS_WALL = registerBlock("green_mysterium_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(GREEN_MYSTERIUM_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> HAUNTED_BRICKS_WALL = registerBlock("haunted_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(HAUNTED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> HELLSTONE_BRICKS_WALL = registerBlock("hellstone_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(HELLSTONE_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_DOTTED_BRICKS_WALL = registerBlock("iro_dotted_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(IRO_DOTTED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> IRO_STRIPED_BRICKS_WALL = registerBlock("iro_striped_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(IRO_STRIPED_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> LELYETIAN_BRICKS_WALL = registerBlock("lelyetian_bricks_wall", () -> new WallBlock(AbstractBlock.Properties.copy(LELYETIAN_BRICKS.get())), AoAItemGroups.DECORATION_BLOCKS);
@@ -792,11 +799,11 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> ANCIENT_TILE_SHRINE = registerBlock("ancient_tile_shrine", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(10f, 15f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> WHITE_ANCIENT_TILE = registerBlock("white_ancient_tile", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(10f, 15f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ARCHAIC_DIRT = registerBlock("archaic_dirt", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(1.5f, 10f).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_STREAM_HORIZONTAL = registerBlock("archaic_stream_horizontal", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(2.0f, 10.0f).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_STREAM_HORIZONTAL = registerBlock("archaic_stream_horizontal", () -> new RotatedPillarBlock(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(2.0f, 10.0f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ARCHAIC_RECTANGLES = registerBlock("archaic_rectangles", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(2.0f, 10.0f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ARCHAIC_SQUARES = registerBlock("archaic_squares", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(2.0f, 10.0f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ARCHAIC_TILES = registerBlock("archaic_tiles", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(2.0f, 10.0f).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> ARCHAIC_STREAM_VERTICAL = registerBlock("archaic_stream_vertical", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(2.0f, 10.0f).get()), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> ARCHAIC_STREAM_VERTICAL = registerBlock("archaic_stream_vertical", () -> new RotatedPillarBlock(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(2.0f, 10.0f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> ANCIENT_ROCK = registerBlock("ancient_rock", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(1.5f, 10f).get()), AoAItemGroups.GENERATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_CASTLE_WALL = registerBlock("baron_castle_wall", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(1.5f, 10f).get()), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BARON_CUBE = registerBlock("baron_cube", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(1.5f, 10f).get()), AoAItemGroups.DECORATION_BLOCKS);
@@ -871,7 +878,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> SHYRE_CLOUD = customRender(registerBlock("shyre_cloud", CloudBlock::new, AoAItemGroups.GENERATION_BLOCKS), TRANSLUCENT);
 	public static final RegistryObject<Block> SHYRE_CRUST = registerBlock("shyre_crust", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.GOLD).stats(45f, 1000f).harvestTool(ToolType.PICKAXE).get()), AoAItemGroups.GENERATION_BLOCKS);
 
-	public static final RegistryObject<Block> FERTILISED_FARMLAND = registerItemlessBlock("fertilised_farmland", FertilisedFarmland::new);
+	public static final RegistryObject<Block> FERTILISED_FARMLAND = registerBlock("fertilised_farmland", FertilisedFarmland::new, AoAItemGroups.DECORATION_BLOCKS);
 
 	public static final RegistryObject<Block> GIANT_SNAIL_ACID = registerItemlessBlock("giant_snail_acid", GiantSnailAcid::new);
 	public static final RegistryObject<Block> ORANGE_ACID = registerItemlessBlock("orange_acid", AcidBlock::new);
@@ -890,7 +897,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> MOONLIGHT_ORB = registerBlock("moonlight_orb", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_BLACK).stats(1.5f, 10f).get()), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> SUNFIRE_ORB = registerBlock("sunfire_orb", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_BLACK).stats(1.5f, 10f).get()), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> LUNAR_PAD = registerBlock("lunar_pad", () -> new Block(new CompactProperties(Material.STONE, MaterialColor.COLOR_BLACK).stats(1.5f, 10f).get()), AoAItemGroups.GENERATION_BLOCKS);
-	public static final RegistryObject<Block> COMPASS_RUNE_POST = registerBlock("compass_rune_post", () -> new RunePostBlock(AoAItems.COMPASS_RUNE), AoAItemGroups.GENERATION_BLOCKS);
+	public static final RegistryObject<Block> COMPASS_RUNE_POST = registerBlock("compass_rune_post", () -> new RunePostBlock(AoAItems.COMPASS_RUNE), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> DISTORTION_RUNE_POST = registerBlock("distortion_rune_post", () -> new RunePostBlock(AoAItems.DISTORTION_RUNE), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> ENERGY_RUNE_POST = registerBlock("energy_rune_post", () -> new RunePostBlock(AoAItems.ENERGY_RUNE), AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> FIRE_RUNE_POST = registerBlock("fire_rune_post", () -> new RunePostBlock(AoAItems.FIRE_RUNE), AoAItemGroups.FUNCTIONAL_BLOCKS);
@@ -1113,13 +1120,14 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> LUNACRIKE_CROP = customRender(registerItemlessBlock("lunacrike_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.LUNACRIKE_SEEDS)), CUTOUT);
 	public static final RegistryObject<Block> LUNA_GLOBE_CROP = customRender(registerItemlessBlock("luna_globe_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.LUNA_GLOBE_SEEDS)), CUTOUT);
 	public static final RegistryObject<Block> LUNALON_CROP = customRender(registerItemlessBlock("lunalon_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.LUNALON_SEEDS)), CUTOUT);
-	public static final RegistryObject<Block> MAGIC_MARANG_CROP = customRender(registerItemlessBlock("magic_marang_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.MAGIC_MARANG_SEEDS)), CUTOUT);
+	public static final RegistryObject<Block> MAGIC_MARANG_CROP = customRender(registerItemlessBlock("magic_marang_crop", () -> new MagicMarangCrop(MaterialColor.COLOR_GREEN, AoAItems.MAGIC_MARANG)), CUTOUT);
 	public static final RegistryObject<Block> MYSTIC_SHROOM_CROP = customRender(registerItemlessBlock("mystic_shroom_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.MYSTIC_SHROOMS)), CUTOUT);
 	public static final RegistryObject<Block> ROSIDON_CROP = customRender(registerItemlessBlock("rosidon_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.ROSIDON_SEEDS)), CUTOUT);
 	public static final RegistryObject<Block> TEA_CROP = customRender(registerItemlessBlock("tea_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.TEA_SEEDS)), CUTOUT);
-	public static final RegistryObject<Block> THORNY_PLANT_CROP = customRender(registerItemlessBlock("thorny_plant_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.THORNY_PLANT_SEEDS)), CUTOUT);
 	public static final RegistryObject<Block> TRILLIAD_CROP = customRender(registerItemlessBlock("trilliad_crop", () -> new CropBlock(MaterialColor.COLOR_GREEN, AoAItems.TRILLIAD_SEEDS)), CUTOUT);
 	public static final RegistryObject<Block> GREEN_MANURE = customRender(registerItemlessBlock("green_manure", GreenManure::new), CUTOUT);
+
+	public static final RegistryObject<Block> THORNY_PLANT_CROP = customRender(registerItemlessBlock("thorny_plant_crop", () -> new ThornyPlantCrop(MaterialColor.COLOR_GREEN, AoAItems.THORNY_PLANT_SEEDS)), CUTOUT);
 
 	public static final RegistryObject<Block> LIVING_GROWTH = customRender(registerItemlessBlock("living_growth", LivingGrowth::new), CUTOUT);
 

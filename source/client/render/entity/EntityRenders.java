@@ -51,6 +51,7 @@ import net.tslat.aoa3.client.render.entity.boss.*;
 import net.tslat.aoa3.client.render.entity.layer.PlayerHaloRenderLayer;
 import net.tslat.aoa3.client.render.entity.misc.*;
 import net.tslat.aoa3.client.render.entity.mob.*;
+import net.tslat.aoa3.client.render.entity.npc.ambient.DryadSpriteRenderer;
 import net.tslat.aoa3.client.render.entity.projectile.ModelledProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.projectile.blasters.*;
@@ -132,6 +133,7 @@ public class EntityRenders {
 		defaultAnimatedMob(AoAEntities.Mobs.VISULAR.get(), "mob/lunalus/visular");
 		defaultAnimatedMob(AoAEntities.Mobs.VISULON.get(), "mob/lunalus/visulon");
 		defaultAnimatedMob(AoAEntities.Mobs.WOOD_GIANT.get(), "mob/overworld/wood_giant");
+		defaultAnimatedMob(AoAEntities.Misc.THORNY_PLANT_SPROUT.get(), "mob/misc/thorny_plant_sprout");
 
 		registerMobRenderer(AoAEntities.NPCs.ABYSSAL_LOTTOMAN.get(), new LottomanModel(), AdventOfAscension.id("textures/entity/npc/lottoman/abyssal_lottoman.png"));
 		registerMobRenderer(AoAEntities.Mobs.AIRHEAD.get(), new AirheadModel(), AdventOfAscension.id("textures/entity/mob/candyland/airhead.png"));
@@ -229,6 +231,7 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.DUSTEIVA.get(), new DusteivaModel(), AdventOfAscension.id("textures/entity/mob/dustopia/dusteiva.png"));
 		registerMobRenderer(AoAEntities.Mobs.DUSTON.get(), new DustonModel(), AdventOfAscension.id("textures/entity/mob/dustopia/duston.png"));
 		registerMobRenderer(AoAEntities.NPCs.DUSTOPIAN_LOTTOMAN.get(), new LottomanModel(), AdventOfAscension.id("textures/entity/npc/lottoman/dustopian_lottoman.png"));
+		animatedMob(AoAEntities.NPCs.DRYAD_SPRITE.get(), shadow -> new DryadSpriteRenderer(renderManager, shadow));
 		registerMobRenderer(AoAEntities.Mobs.DWELLER.get(), new DwellerModel(), AdventOfAscension.id("textures/entity/mob/deeplands/dweller.png"));
 		registerMobRenderer(AoAEntities.Mobs.DYREHORN.get(), new DyrehornModel(), AdventOfAscension.id("textures/entity/mob/precasia/dyrehorn.png"));
 		registerMobRenderer(AoAEntities.Mobs.ECHODAR.get(), new EchodarModel(), AdventOfAscension.id("textures/entity/mob/barathos/echodar.png"));
@@ -341,7 +344,7 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.NPCs.METALLOID.get(), new BipedModel<MobEntity>(0f), AdventOfAscension.id("textures/entity/npc/trader/metalloid.png"));
 		registerMobRenderer(AoAEntities.Mobs.MIRAGE.get(), new MirageModel(), AdventOfAscension.id("textures/entity/boss/mirage/mirage.png"));
 		registerMobRenderer(AoAEntities.Mobs.MISKEL.get(), new MiskelModel(), AdventOfAscension.id("textures/entity/boss/primordialfive/miskel.png"));
-		registerMobRenderer(AoAEntities.Mobs.MODULO.get(), new ModuloModel(), AdventOfAscension.id("textures/entity/mob/overworld/lunalus.png"));
+		registerMobRenderer(AoAEntities.Mobs.MODULO.get(), new ModuloModel(), AdventOfAscension.id("textures/entity/mob/lunalus/modulo.png"));
 		registerMobRenderer(AoAEntities.Mobs.MOTHER_VOID_WALKER.get(), new MotherVoidWalkerModel(), AdventOfAscension.id("textures/entity/mob/overworld/void_walker.png"));
 		renderManager.register(AoAEntities.Mobs.MUSHROOM_SPIDER.get(), new AoASpiderRenderer(renderManager, new MushroomSpiderModel(), AoAEntities.Mobs.MUSHROOM_SPIDER.get().getWidth() / 3f, 1f, AdventOfAscension.id("textures/entity/mob/mysterium/mushroom_spider.png")));
 		registerMobRenderer(AoAEntities.NPCs.MYSTIC_LOTTOMAN.get(), new LottomanModel(), AdventOfAscension.id("textures/entity/npc/lottoman/mystic_lottoman.png"));
@@ -620,7 +623,7 @@ public class EntityRenders {
 		register(AoAEntities.Projectiles.HEAVY_BONE_CANNONBALL.get(), new HeavyBoneBallRenderer(renderManager, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 		register(AoAEntities.Projectiles.HEAVY_CANNONBALL.get(), new TexturedProjectileRenderer<HeavyCannonballEntity>(renderManager, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 		register(AoAEntities.Projectiles.HEAVY_RED_CANNONBALL.get(), new HeavyRedCannonballRenderer(renderManager, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
-		register(AoAEntities.Projectiles.HEAVY_GRENADE.get(), new SpriteRenderer<HeavyGrenadeEntity>(renderManager, Minecraft.getInstance().getItemRenderer()));
+		register(AoAEntities.Projectiles.HEAVY_GRENADE.get(), new ModelledProjectileRenderer<HeavyGrenadeEntity>(renderManager, new GrenadeModel(), AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
 		register(AoAEntities.Projectiles.HEAVY_RED_BULLET.get(), new ColouredTexturedProjectileRenderer(renderManager, ColourUtil.RED, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 		register(AoAEntities.Projectiles.HEAVY_SHADOWBALL.get(), new HeavyShadowBallRenderer(renderManager, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 		register(AoAEntities.Projectiles.HEAVY_SHOWER_SHOT.get(), new ShowerShotRenderer(renderManager));
@@ -658,7 +661,7 @@ public class EntityRenders {
 		register(AoAEntities.Projectiles.MOON_MAKER.get(), new MoonMakerRenderer(renderManager, AdventOfAscension.id("textures/entity/projectile/bullets/metal_slug.png")));
 		register(AoAEntities.Projectiles.MOON_SHINER_SHOT.get(), new MoonShinerRenderer(renderManager));
 		register(AoAEntities.Projectiles.MOON_SHOT.get(), new MoonShotRenderer(renderManager, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
-		register(AoAEntities.Projectiles.MULTIPLYING_GRENADE.get(), new MultiplyingGrenadeRenderer(renderManager, AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
+		register(AoAEntities.Projectiles.MULTIPLYING_GRENADE.get(), new ModelledProjectileRenderer<MultiplyingGrenadeEntity>(renderManager, new GrenadeModel(), AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
 		register(AoAEntities.Projectiles.NETHENGEIC_WITHER_SHOT.get(), new NethengeicWitherShotRenderer(renderManager, AdventOfAscension.id("textures/entity/projectile/mobshots/nethengeic_skull.png")));
 		register(AoAEntities.Projectiles.NIGHTMARE_FALL.get(), new NightmareFallRenderer(renderManager));
 		register(AoAEntities.Projectiles.NOXIOUS_SHOT.get(), new NoxiousShotRenderer(renderManager));

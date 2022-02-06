@@ -8,6 +8,8 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -53,11 +55,13 @@ public class InnervationMobLure extends AoAAbility.Instance {
 		return LISTENERS;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public KeyBinding getKeybind() {
 		return AoAKeybinds.ABILITY_ACTION;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean shouldSendKeyPress() {
 		return Minecraft.getInstance().player.isCrouching();

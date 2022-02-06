@@ -122,7 +122,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	}
 
 	protected int maxLureTime() {
-		return 1000;
+		return 700;
 	}
 
 	public State getState() {
@@ -156,8 +156,12 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 
 		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
-		if (nearbyFluidBlocks <=  50)
+		if (nearbyFluidBlocks <=  50) {
 			this.fishingBonusMod *= 0.5f;
+
+			if (nearbyFluidBlocks < 15)
+				this.fishingBonusMod *= 0.5f;
+		}
 
 		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0035f);
 		this.fishingBonusMod += 0.25f * lure;
@@ -198,6 +202,12 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		PlayerEntity player = getPlayerOwner();
 
 		if (!level.isClientSide() && !checkStillValid(player)) {
+			remove();
+
+			return;
+		}
+
+		if (isInLava() && getApplicableFluid() != FluidTags.LAVA) {
 			remove();
 
 			return;
@@ -389,7 +399,18 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		stopFishing();
 		calculateFishingLureBonus();
 
-		timeUntilFishSpawn = MathHelper.nextInt(random, minLureTime(), minLureTime() + 50 + (int)((maxLureTime() - minLureTime()) / fishingBonusMod));
+		int minTime = minLureTime();
+		int maxTime = maxLureTime();
+
+		if (fishingBonusMod < 1) {
+			minTime /= fishingBonusMod * 2f;
+			maxTime /= fishingBonusMod * 3f;
+		}
+		else {
+			maxTime /= fishingBonusMod;
+		}
+
+		timeUntilFishSpawn = MathHelper.nextInt(random, minTime, minTime + 50 + (maxTime - minTime));
 	}
 
 	protected void stopFishing() {

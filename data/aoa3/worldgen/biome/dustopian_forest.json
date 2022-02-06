@@ -13,7 +13,13 @@
     "sky_color": 0,
     "water_color": 0,
     "water_fog_color": 0,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aoa3:dustopian_forest_music",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
   },
   "surface_builder": "aoa3:dustopia",
   "carvers": {},
@@ -48,6 +54,12 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:duston",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:lurker",
         "weight": 20,
         "minCount": 0,
@@ -66,25 +78,19 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:devourer",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:basilisk",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:duston",
+        "type": "aoa3:dusteiva",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:dusteiva",
+        "type": "aoa3:devourer",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1

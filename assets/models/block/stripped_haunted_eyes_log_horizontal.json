@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
     "side": "aoa3:block/stripped_haunted_eyes_log",
-    "end": "aoa3:block/stripped_haunted_log_top"
+    "end": "aoa3:block/stripped_blood_log_top"
   }
 }

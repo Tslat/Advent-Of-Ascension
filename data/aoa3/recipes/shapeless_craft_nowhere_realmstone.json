@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "minecraft:enchanted_golden_apple"
-    },
-    {
-      "item": "minecraft:end_crystal"
+      "tag": "forge:shulker_boxes"
     },
     {
       "item": "minecraft:beacon"
+    },
+    {
+      "item": "minecraft:golden_apple"
     },
     {
       "item": "aoa3:blank_realmstone"

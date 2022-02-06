@@ -10,6 +10,8 @@ import net.minecraft.fluid.FluidState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.*;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.INBT;
+import net.minecraft.nbt.ListNBT;
 import net.minecraft.network.IPacket;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
@@ -24,7 +26,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoATools;
 import net.tslat.aoa3.event.AoAPlayerEvents;
@@ -145,12 +149,36 @@ public class FishingCageEntity extends Entity {
 	protected void addAdditionalSaveData(CompoundNBT compound) {
 		if (compound.hasUUID("OwnerUUID"))
 			ownerUUID = compound.getUUID("OwnerUUID");
+
+		if (!loot.isEmpty()) {
+			ListNBT lootList = new ListNBT();
+
+			for (ItemStack stack : loot) {
+				lootList.add(stack.save(new CompoundNBT()));
+			}
+
+			compound.put("loot", lootList);
+		}
 	}
 
 	@Override
 	protected void readAdditionalSaveData(CompoundNBT compound) {
 		if (ownerUUID != null)
 			compound.putUUID("OwnerUUID", ownerUUID);
+
+		if (compound.contains("loot")) {
+			ListNBT lootList = compound.getList("loot", Constants.NBT.TAG_COMPOUND);
+			this.loot = new ArrayList<ItemStack>(Math.min(lootList.size(), 3));
+
+			for (INBT nbt : lootList) {
+				try {
+					this.loot.add(ItemStack.of((CompoundNBT)nbt));
+				}
+				catch (Exception ignored) {}
+			}
+
+			updateLootData();
+		}
 	}
 
 	@Nonnull
@@ -214,10 +242,9 @@ public class FishingCageEntity extends Entity {
 						.withParameter(LootParameters.ORIGIN, this.position())
 						.withParameter(LootParameters.TOOL, new ItemStack(AoATools.FISHING_CAGE.get()))
 						.withParameter(LootParameters.THIS_ENTITY, this)
+						.withParameter(LootParameters.KILLER_ENTITY, owner)
 						.withRandom(random).withLuck(2 + owner.getLuck());
-				LootTable lootTable = level.getServer().getLootTables().get(LootTables.FISHING);
-
-				lootContext.withParameter(LootParameters.KILLER_ENTITY, owner).withParameter(LootParameters.THIS_ENTITY, this);
+				LootTable lootTable = level.getServer().getLootTables().get(AdventOfAscension.id("misc/fishing_cage_catches"));
 
 				if (loot == null)
 					loot = new ArrayList<ItemStack>(3);

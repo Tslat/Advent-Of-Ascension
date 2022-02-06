@@ -1,17 +1,25 @@
 {
-  "type": "tconstruct:casting_basin",
+  "type": "tconstruct:melting",
   "conditions": [
+    {
+      "value": {
+        "tag": "forge:storage_blocks/mystite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    },
     {
       "modid": "tconstruct",
       "type": "forge:mod_loaded"
     }
   ],
-  "fluid": {
-    "tag": "forge:molten_mystite",
-    "amount": 1296
-  },
-  "result": {
+  "ingredient": {
     "tag": "forge:storage_blocks/mystite"
   },
-  "cooling_time": 142
+  "result": {
+    "fluid": "aoa3:molten_mystite",
+    "amount": 1296
+  },
+  "temperature": 430,
+  "time": 142
 }

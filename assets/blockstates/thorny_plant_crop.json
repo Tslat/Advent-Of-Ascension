@@ -1,28 +1,139 @@
 {
   "variants": {
-    "age=0": {
-      "model": "aoa3:block/thorny_plant_crop_stage0"
+    "age=0,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage0"
     },
-    "age=1": {
-      "model": "aoa3:block/thorny_plant_crop_stage1"
+    "age=1,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage1"
     },
-    "age=2": {
-      "model": "aoa3:block/thorny_plant_crop_stage2"
+    "age=2,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage2"
     },
-    "age=3": {
-      "model": "aoa3:block/thorny_plant_crop_stage3"
+    "age=3,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage3"
     },
-    "age=4": {
-      "model": "aoa3:block/thorny_plant_crop_stage4"
+    "age=4,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage4"
     },
-    "age=5": {
-      "model": "aoa3:block/thorny_plant_crop_stage5"
+    "age=5,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage5"
     },
-    "age=6": {
-      "model": "aoa3:block/thorny_plant_crop_stage6"
+    "age=6,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage6"
     },
-    "age=7": {
-      "model": "aoa3:block/thorny_plant_crop_stage7"
+    "age=7,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage7"
+    },
+    "age=8,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage8"
+    },
+    "age=9,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage9"
+    },
+    "age=10,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage10"
+    },
+    "age=11,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage11"
+    },
+    "age=12,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage12"
+    },
+    "age=13,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage13"
+    },
+    "age=14,height=0": {
+      "model": "aoa3:block/thorny_plant_crop_bottom_stage14"
+    },
+    "age=0,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage0"
+    },
+    "age=1,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage1"
+    },
+    "age=2,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage2"
+    },
+    "age=3,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage3"
+    },
+    "age=4,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage4"
+    },
+    "age=5,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage5"
+    },
+    "age=6,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage6"
+    },
+    "age=7,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage7"
+    },
+    "age=8,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage8"
+    },
+    "age=9,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage9"
+    },
+    "age=10,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage10"
+    },
+    "age=11,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage11"
+    },
+    "age=12,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage12"
+    },
+    "age=13,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage13"
+    },
+    "age=14,height=1": {
+      "model": "aoa3:block/thorny_plant_crop_middle_stage14"
+    },
+    "age=0,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage0"
+    },
+    "age=1,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage1"
+    },
+    "age=2,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage2"
+    },
+    "age=3,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage3"
+    },
+    "age=4,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage4"
+    },
+    "age=5,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage5"
+    },
+    "age=6,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage6"
+    },
+    "age=7,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage7"
+    },
+    "age=8,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage8"
+    },
+    "age=9,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage9"
+    },
+    "age=10,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage10"
+    },
+    "age=11,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage11"
+    },
+    "age=12,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage12"
+    },
+    "age=13,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage13"
+    },
+    "age=14,height=2": {
+      "model": "aoa3:block/thorny_plant_crop_top_stage14"
     }
   }
 }

@@ -36,10 +36,7 @@ import net.tslat.aoa3.object.entity.mob.iromine.*;
 import net.tslat.aoa3.object.entity.mob.lborean.*;
 import net.tslat.aoa3.object.entity.mob.lelyetia.*;
 import net.tslat.aoa3.object.entity.mob.lunalus.*;
-import net.tslat.aoa3.object.entity.mob.misc.BaneCloneEntity;
-import net.tslat.aoa3.object.entity.mob.misc.BigBaneCloneEntity;
-import net.tslat.aoa3.object.entity.mob.misc.ElusiveCloneEntity;
-import net.tslat.aoa3.object.entity.mob.misc.HiveWorkerEntity;
+import net.tslat.aoa3.object.entity.mob.misc.*;
 import net.tslat.aoa3.object.entity.mob.misc.doppelganger.DoppelgangerEntity;
 import net.tslat.aoa3.object.entity.mob.mysterium.*;
 import net.tslat.aoa3.object.entity.mob.nether.*;
@@ -51,10 +48,7 @@ import net.tslat.aoa3.object.entity.mob.runandor.*;
 import net.tslat.aoa3.object.entity.mob.runandor.templars.*;
 import net.tslat.aoa3.object.entity.mob.shyrelands.*;
 import net.tslat.aoa3.object.entity.mob.voxponds.*;
-import net.tslat.aoa3.object.entity.npc.ambient.GorbCitizenEntity;
-import net.tslat.aoa3.object.entity.npc.ambient.PrimordialGuideEntity;
-import net.tslat.aoa3.object.entity.npc.ambient.ZalChildEntity;
-import net.tslat.aoa3.object.entity.npc.ambient.ZalCitizenEntity;
+import net.tslat.aoa3.object.entity.npc.ambient.*;
 import net.tslat.aoa3.object.entity.npc.banker.*;
 import net.tslat.aoa3.object.entity.npc.lottoman.*;
 import net.tslat.aoa3.object.entity.npc.trader.*;
@@ -429,33 +423,33 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<AnimalEntity>> ELKANYNE = registerAnimal("elkanyne", ElkanyneEntity::new, 0.85f, 1.1875f, 4471327, 7695709);
 		public static final RegistryObject<EntityType<AnimalEntity>> HALYCON = registerAnimal("halycon", HalyconEntity::new, 0.9f, 1.4f, 2683401, 734469);
 
-		public static final RegistryObject<EntityType<ShinySquidEntity>> SHINY_SQUID = registerAnimal("shiny_squid", ShinySquidEntity::new, EntityClassification.WATER_CREATURE, 0.8f, 0.8f, 15655680, 11763712, builder -> builder.clientTrackingRange(8));
-		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CANDLEFISH = registerAnimal("candlefish", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4).fireImmune());
-		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CHARRED_CHAR = registerAnimal("charred_char", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4).fireImmune());
-		public static final RegistryObject<EntityType<BasicFishEntity>> CHOCAW = registerAnimal("chocaw", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CRIMSON_SKIPPER = registerAnimal("crimson_skipper", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4).fireImmune());
-		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CRIMSON_STRIPEFISH = registerAnimal("crimson_stripefish", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4).fireImmune());
-		public static final RegistryObject<EntityType<BasicFishEntity>> DARK_HATCHETFISH = registerAnimal("dark_hatchetfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> BLUE_GEMTRAP = registerAnimal("blue_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> GREEN_GEMTRAP = registerAnimal("green_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> PURPLE_GEMTRAP = registerAnimal("purple_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> RED_GEMTRAP = registerAnimal("red_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> WHITE_GEMTRAP = registerAnimal("white_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> YELLOW_GEMTRAP = registerAnimal("yellow_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> HYDRONE = registerAnimal("hydrone", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> IRONBACK = registerAnimal("ironback", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> JAMFISH = registerAnimal("jamfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> PARAPIRANHA = registerAnimal("parapiranha", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> PEARL_STRIPEFISH = registerAnimal("pearl_stripefish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> RAINBOWFISH = registerAnimal("rainbowfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> RAZORFISH = registerAnimal("razorfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> REEFTOOTH = registerAnimal("reeftooth", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> ROCKETFISH = registerAnimal("rocketfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> SAILBACK = registerAnimal("sailback", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> SAPPHIRE_STRIDER = registerAnimal("sapphire_strider", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> SKELECANTH = registerAnimal("skelecanth", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> TURQUOISE_STRIPEFISH = registerAnimal("turquoise_stripefish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
-		public static final RegistryObject<EntityType<BasicFishEntity>> VIOLET_SKIPPER = registerAnimal("violet_skipper", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 15655680, 11763712, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<ShinySquidEntity>> SHINY_SQUID = registerAnimal("shiny_squid", ShinySquidEntity::new, EntityClassification.WATER_CREATURE, 0.8f, 0.8f, 24217, 978934, builder -> builder.clientTrackingRange(8));
+		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CANDLEFISH = registerAnimal("candlefish", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 739037, 199385, builder -> builder.clientTrackingRange(4).fireImmune());
+		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CHARRED_CHAR = registerAnimal("charred_char", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 1119770, 3384054, builder -> builder.clientTrackingRange(4).fireImmune());
+		public static final RegistryObject<EntityType<BasicFishEntity>> CHOCAW = registerAnimal("chocaw", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 1258848, 1258848, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CRIMSON_SKIPPER = registerAnimal("crimson_skipper", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 6174935, 4131984, builder -> builder.clientTrackingRange(4).fireImmune());
+		public static final RegistryObject<EntityType<BasicLavaFishEntity>> CRIMSON_STRIPEFISH = registerAnimal("crimson_stripefish", BasicLavaFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 5856681, 13682943, builder -> builder.clientTrackingRange(4).fireImmune());
+		public static final RegistryObject<EntityType<BasicFishEntity>> DARK_HATCHETFISH = registerAnimal("dark_hatchetfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 5323811, 4892782, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> BLUE_GEMTRAP = registerAnimal("blue_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 6570505, 15658578, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> GREEN_GEMTRAP = registerAnimal("green_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 687370, 1370063, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> PURPLE_GEMTRAP = registerAnimal("purple_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 9513058, 15027428, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> RED_GEMTRAP = registerAnimal("red_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 1256895, 6285047, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> WHITE_GEMTRAP = registerAnimal("white_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 9803157, 16250871, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> YELLOW_GEMTRAP = registerAnimal("yellow_gemtrap", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 610148, 6277111, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> HYDRONE = registerAnimal("hydrone", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 4869452, 1261627, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> IRONBACK = registerAnimal("ironback", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 8816741, 7303023, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> JAMFISH = registerAnimal("jamfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 16749559, 9706088, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> PARAPIRANHA = registerAnimal("parapiranha", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 728166, 1514273, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> PEARL_STRIPEFISH = registerAnimal("pearl_stripefish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 16709631, 9205136, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> RAINBOWFISH = registerAnimal("rainbowfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 6284953, 10071794, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> RAZORFISH = registerAnimal("razorfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 4480882, 6052956, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> REEFTOOTH = registerAnimal("reeftooth", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 7960386, 6312555, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> ROCKETFISH = registerAnimal("rocketfish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 994987, 10796527, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> SAILBACK = registerAnimal("sailback", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 14339700, 16250097, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> SAPPHIRE_STRIDER = registerAnimal("sapphire_strider", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 16621128, 16771764, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> SKELECANTH = registerAnimal("skelecanth", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 14016993, 10133150, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> TURQUOISE_STRIPEFISH = registerAnimal("turquoise_stripefish", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 11446887, 16773832, builder -> builder.clientTrackingRange(4));
+		public static final RegistryObject<EntityType<BasicFishEntity>> VIOLET_SKIPPER = registerAnimal("violet_skipper", BasicFishEntity::new, EntityClassification.WATER_AMBIENT, 0.7f, 0.4f, 11557499, 14776495, builder -> builder.clientTrackingRange(4));
 
 		public static final RegistryObject<EntityType<AnimalEntity>> ANGELICA = registerAnimal("angelica", AngelicaEntity::new, 0.6f, 2f, 3579029, 13290663);
 		public static final RegistryObject<EntityType<AnimalEntity>> DAWNLIGHT = registerAnimal("dawnlight", DawnlightEntity::new, 0.6875f, 1.375f, 10796201, 1948221);
@@ -574,6 +568,8 @@ public final class AoAEntities {
 		public static final RegistryObject<EntityType<AoATrader>> ZAL_SPELLBINDER = registerNPC("zal_spellbinder", ZalSpellbinderEntity::new, 0.5625f, 1.875f, 3475048, 6315353);
 		public static final RegistryObject<EntityType<AoATrader>> ZAL_VENDOR = registerNPC("zal_vendor", ZalVendorEntity::new, 0.5625f, 1.875f, 4144703, 9933723);
 
+		public static final RegistryObject<EntityType<DryadSpriteEntity>> DRYAD_SPRITE = registerNPC("dryad_sprite", DryadSpriteEntity::new, 1f, 1f, 2308682, 3174984);
+
 		private static <T extends Entity> RegistryObject<EntityType<T>> registerNPC(String registryName, EntityType.IFactory<T> factory, float width, float height, int primaryEggColour, int secondaryEggColour) {
 			return registerNPC(registryName, factory, false, width, height, primaryEggColour, secondaryEggColour);
 		}
@@ -627,6 +623,7 @@ public final class AoAEntities {
 
 		public static final RegistryObject<EntityType<MonsterEntity>> BANE_CLONE = registerMiscEntity("bane_clone", BaneCloneEntity::new, 0.75f, 2f, typeBuilder -> typeBuilder.noSave().noSummon());
 		public static final RegistryObject<EntityType<MonsterEntity>> BIG_BANE_CLONE = registerMiscEntity("big_bane_clone", BigBaneCloneEntity::new, 1.2f, 3.9375f, typeBuilder -> typeBuilder.noSave().noSummon());
+		public static final RegistryObject<EntityType<ThornyPlantSproutEntity>> THORNY_PLANT_SPROUT = registerMiscEntity("thorny_plant_sprout", ThornyPlantSproutEntity::new, 0.5f, 1.5f, EntityType.Builder::noSummon);
 
 		public static final RegistryObject<EntityType<HaulingFishingBobberEntity>> REINFORCED_BOBBER = registerMiscEntity("reinforced_bobber", EntityType.Builder.<HaulingFishingBobberEntity>createNothing(EntityClassification.MISC).noSave().noSummon().sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(5).setCustomClientFactory(HaulingFishingBobberEntity::handleClientSpawn));
 		public static final RegistryObject<EntityType<ThermalFishingBobberEntity>> THERMAL_BOBBER = registerMiscEntity("thermal_bobber", EntityType.Builder.<ThermalFishingBobberEntity>createNothing(EntityClassification.MISC).noSave().noSummon().sized(0.25f, 0.25f).clientTrackingRange(4).fireImmune().updateInterval(5).setCustomClientFactory(ThermalFishingBobberEntity::handleClientSpawn));

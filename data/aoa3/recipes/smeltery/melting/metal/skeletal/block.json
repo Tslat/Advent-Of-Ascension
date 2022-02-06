@@ -1,17 +1,25 @@
 {
-  "type": "tconstruct:casting_basin",
+  "type": "tconstruct:melting",
   "conditions": [
+    {
+      "value": {
+        "tag": "forge:storage_blocks/skeletal",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    },
     {
       "modid": "tconstruct",
       "type": "forge:mod_loaded"
     }
   ],
-  "fluid": {
-    "tag": "forge:molten_skeletal",
-    "amount": 1296
-  },
-  "result": {
+  "ingredient": {
     "tag": "forge:storage_blocks/skeletal"
   },
-  "cooling_time": 134
+  "result": {
+    "fluid": "aoa3:molten_skeletal",
+    "amount": 1296
+  },
+  "temperature": 360,
+  "time": 134
 }

@@ -9,6 +9,7 @@ public final class ServerConfig {
 	public final ForgeConfigSpec.BooleanValue allowNonPlayerPortalTravel;
 	public final ForgeConfigSpec.DoubleValue globalXpModifier;
 	public final ForgeConfigSpec.BooleanValue saveLootFromExplosions;
+	public final ForgeConfigSpec.BooleanValue disableSkills;
 
 	public final ForgeConfigSpec.BooleanValue skillsLeaderboardEnabled;
 	public final ForgeConfigSpec.IntValue maxLeaderboardThreads;
@@ -16,7 +17,7 @@ public final class ServerConfig {
 	public final ForgeConfigSpec.ConfigValue<String> databaseUsername;
 	public final ForgeConfigSpec.ConfigValue<String> databasePassword;
 
-	protected ServerConfig(ForgeConfigSpec.Builder configBuilder) {
+	ServerConfig(ForgeConfigSpec.Builder configBuilder) {
 		configBuilder.comment("AoA server-side configuration options").push("General Settings");
 
 		allowUnsafeInfusion = configBuilder
@@ -51,6 +52,11 @@ public final class ServerConfig {
 				.translation("config.aoa3.server.saveLootFromExplosions")
 				.define("saveLootFromExplosions", true);
 
+		disableSkills = configBuilder
+				.comment("Set to false to disable all AoA Skills for the server.", "This may give a slight performance improvement.", "NOTE: This will cause any player who logs in to lose any levels & xp they may have previously stored. Only turn this on if you intend for the server to run without skills.")
+				.translation("config.aoa3.server.disableSkills")
+				.define("disableSkills", false);
+
 		configBuilder.pop();
 		configBuilder.comment("AoA Leaderboard configuration options").push("Leaderboard Settings");
 
@@ -75,7 +81,7 @@ public final class ServerConfig {
 				.define("databaseUsername", "User");
 
 		databasePassword = configBuilder
-				.comment("The password to use along with the databaseUsername for leaderboard database connection. You shouldn't need to change this.", "NOTE: If setting your own password, be aware this will be stored in easibly accessible plaintext. Use a throwaway password.")
+				.comment("The password to use along with the databaseUsername for leaderboard database connection. You shouldn't need to change this.", "NOTE: If setting your own password, be aware this will be stored in easily accessible plaintext. Use a throwaway password.")
 				.translation("config.aoa3.server.databasePassword")
 				.define("databasePassword", "Password");
 

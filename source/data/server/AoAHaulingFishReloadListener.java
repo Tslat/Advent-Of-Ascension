@@ -174,12 +174,6 @@ public class AoAHaulingFishReloadListener extends JsonReloadListener {
 
 				list.add(factory, predicate, weight, weightMod);
 			}
-			else if (element.isJsonPrimitive()) {
-				EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(element.getAsString()));
-
-				if (entityType != null)
-					list.add(entityType::create, 1);
-			}
 		}
 	}
 

@@ -6,9 +6,12 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.Util;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
+import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.function.BiFunction;
@@ -18,17 +21,10 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 	private final BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory;
 	private final BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory;
 
-	private final boolean canBeDisabled;
-
 	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory) {
-		this(jsonFactory, nbtFactory, true);
-	}
-
-	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory, boolean canBeDisabled) {
 		this.name = Lazy.of(() -> new TranslationTextComponent(Util.makeDescriptionId("ability", getRegistryName())));
 		this.jsonFactory = jsonFactory;
 		this.nbtFactory = nbtFactory;
-		this.canBeDisabled = canBeDisabled;
 	}
 
 	public TranslationTextComponent getName() {
@@ -41,10 +37,6 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 
 	public Instance loadFromNbt(AoASkill.Instance skillInstance, CompoundNBT abilityData) {
 		return nbtFactory.apply(skillInstance, abilityData);
-	}
-
-	public boolean canBeDisabled() {
-		return this.canBeDisabled;
 	}
 
 	public static abstract class Instance implements AoAPlayerEventListener {
@@ -150,6 +142,14 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			return state;
 		}
 
+		protected ServerPlayerEntity getPlayer() {
+			return this.skill.getPlayerDataManager().player();
+		}
+
+		protected boolean consumeResource(AoAResource resource, float amount, boolean consumeIfInsufficient) {
+			return this.skill.getPlayerDataManager().getResource(resource).consume(amount, consumeIfInsufficient);
+		}
+
 		@Override
 		public boolean meetsRequirements() {
 			return skill.hasLevel(getLevelReq());
@@ -210,8 +210,16 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			this.state = ListenerState.fromId(data.getString("state"));
 		}
 
-		protected ServerPlayerEntity getPlayer() {
-			return this.skill.getPlayerDataManager().player();
+		public void receiveInteractionDataFromClient(String data) {}
+
+		@OnlyIn(Dist.CLIENT)
+		public boolean onGuiClick(final int mouseX, final int mouseY) {
+			return getListenerState() != ListenerState.DEACTIVATED;
+		}
+
+		@OnlyIn(Dist.CLIENT)
+		public boolean onGuiHover(final int mouseX, final int mouseY) {
+			return getListenerState() != ListenerState.DEACTIVATED;
 		}
 	}
 }

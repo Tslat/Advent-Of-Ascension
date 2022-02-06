@@ -8,6 +8,7 @@ import net.minecraft.pathfinding.Path;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Difficulty;
 import net.tslat.aoa3.object.entity.ai.animation.Animatable;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -86,6 +87,9 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 		long gameTime = this.entity.level.getGameTime();
 
 		if (gameTime - this.goalTimeoutCounter < 20)
+			return false;
+
+		if (entity.level.getDifficulty() == Difficulty.PEACEFUL)
 			return false;
 
 		this.goalTimeoutCounter = gameTime;

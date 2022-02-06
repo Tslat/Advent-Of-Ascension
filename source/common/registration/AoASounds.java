@@ -12,10 +12,61 @@ import net.tslat.aoa3.util.HolidayUtil;
 public final class AoASounds {
 	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, AdventOfAscension.MOD_ID);
 
-	public static final RegistryObject<SoundEvent> PLAYER_LEVEL_100 = registerSound("player_level_100", "player.skills.level_100");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_MINIGUN_AUTOMATIC_FIRE = registerSound("minigun_fire", "item.gun.minigun.fire");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_GENERIC_FIRE_1 = registerSound("generic_gun_fire_1", "item.gun.generic.fire.1");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_GENERIC_FIRE_2 = registerSound("generic_gun_fire_2", "item.gun.generic.fire.2");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_GENERIC_FIRE_3 = registerSound("generic_gun_fire_3", "item.gun.generic.fire.3");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_GENERIC_FIRE_4 = registerSound("generic_gun_fire_4", "item.gun.generic.fire.4");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_GENERIC_FIRE_5 = registerSound("generic_gun_fire_5", "item.gun.generic.fire.5");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_HEAVY_GENERIC_FIRE_1 = registerSound("heavy_generic_gun_fire_1", "item.gun.heavy_generic.fire.1");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_HEAVY_GENERIC_FIRE_2 = registerSound("heavy_generic_gun_fire_2", "item.gun.heavy_generic.fire.2");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_CANNON_FIRE_1_LONG = registerSound("cannon_fire_1_long", "item.gun.cannon.fire.1.long");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_CANNON_FIRE_1_SHORT = registerSound("cannon_fire_1_short", "item.gun.cannon.fire.1.short");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SNIPER_METALLIC_FIRE_SHORT = registerSound("metallic_sniper_fire_short", "item.gun.sniper.metallic_fire.short");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SNIPER_METALLIC_FIRE_LONG = registerSound("metallic_sniper_fire_long", "item.gun.sniper.metallic_fire.long");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SNIPER_HEAVY_FIRE_SHORT = registerSound("heavy_sniper_fire_short", "item.gun.sniper.heavy_fire.short");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SNIPER_HEAVY_FIRE_LONG = registerSound("heavy_sniper_fire_long", "item.gun.sniper.heavy_fire.long");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SNIPER_MEDIUM_FIRE_SHORT = registerSound("medium_sniper_fire_short", "item.gun.sniper.medium_fire.short");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SNIPER_MEDIUM_FIRE_LONG = registerSound("medium_sniper_fire_long", "item.gun.sniper.medium_fire.long");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_RIFLE_HEAVY_FIRE_SHORT = registerSound("heavy_rifle_fire_short", "item.gun.rifle.heavy_fire.short");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_RIFLE_HEAVY_FIRE_LONG = registerSound("heavy_rifle_fire_long", "item.gun.rifle.heavy_fire.long");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_RIFLE_MEDIUM_FIRE_SHORT = registerSound("medium_rifle_fire_short", "item.gun.rifle.medium_fire.short");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_RIFLE_MEDIUM_FIRE_LONG = registerSound("medium_rifle_fire_long", "item.gun.rifle.medium_fire.long");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SHOTGUN_HEAVY_FIRE_SHORT = registerSound("heavy_shotgun_fire_short", "item.gun.shotgun.heavy_fire.short");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SHOTGUN_HEAVY_FIRE_LONG = registerSound("heavy_shotgun_fire_long", "item.gun.shotgun.heavy_fire.long");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SHOTGUN_MEDIUM_FIRE_SHORT = registerSound("medium_shotgun_fire_short", "item.gun.shotgun.medium_fire.short");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_SHOTGUN_MEDIUM_FIRE_LONG = registerSound("medium_shotgun_fire_long", "item.gun.shotgun.medium_fire.long");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_MINIGUN_WINDDOWN = registerSound("minigun_winddown", "item.gun.minigun.winddown");
+
+	public static final RegistryObject<SoundEvent> ITEM_GUN_AIR_CANNON_FIRE = registerSound("air_cannon_fire", "item.gun.air_cannon.fire");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_PLASMA_GUN_FIRE = registerSound("plasma_gun_fire", "item.gun.plasma_gun.fire");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_BLOWPIPE_SHOOT = registerSound("blowpipe_shoot", "item.gun.blowpipe.shoot");
+	public static final RegistryObject<SoundEvent> ITEM_GUN_ENERGY_GUN_FIRE = registerSound("energy_gun_fire", "item.gun.energy_gun.fire");
+
 	public static final RegistryObject<SoundEvent> PLAYER_LEVEL_UP = registerSound("player_level_up", "player.skills.level_up");
-	public static final RegistryObject<SoundEvent> SKILL_LOOT = registerSound("skill_loot", "player.skills.loot");
-	public static final RegistryObject<SoundEvent> TRIBUTE_SUCCESS = registerSound("tribute_success", "player.tribute.success");
+
+	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_HAPPY = registerSound("dryad_sprite_happy", "entity.dryad_sprite.happy");
+	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_UNHAPPY = registerSound("dryad_sprite_unhappy", "entity.dryad_sprite.unhappy");
+
+	public static final RegistryObject<SoundEvent> BIOME_BARREN_GROUNDS_MUSIC = registerSound("barren_grounds_music", "biome.barren_grounds.music");
+	public static final RegistryObject<SoundEvent> BIOME_CAVERN_DEPTHS_MUSIC = registerSound("cavern_depths_music", "biome.cavern_depths.music");
+	public static final RegistryObject<SoundEvent> BIOME_CELEVE_EXTRA = registerSound("celeve_extra", "biome.celeve.extra");
+	public static final RegistryObject<SoundEvent> BIOME_CRYSTEVIAN_CAVERNS_MUSIC = registerSound("crystevian_caverns_music", "biome.crystevian_caverns.music");
+	public static final RegistryObject<SoundEvent> BIOME_DUSTOPIAN_FOREST_MUSIC = registerSound("dustopian_forest_music", "biome.dustopian_forest.music");
+	public static final RegistryObject<SoundEvent> BIOME_IROMINE_MUSIC = registerSound("iromine_music", "biome.iromine.music");
+	public static final RegistryObject<SoundEvent> BIOME_LELYETIAN_PLAINS_MUSIC = registerSound("lelyetian_plains_music", "biome.lelyetian_plains.music");
+	public static final RegistryObject<SoundEvent> BIOME_NOWHERE_MUSIC = registerSound("nowhere_music", "biome.nowhere.music");
+	public static final RegistryObject<SoundEvent> BIOME_RUNIC_CLIFFS_MUSIC = registerSound("runic_cliffs_music", "biome.runic_cliffs.music");
+	public static final RegistryObject<SoundEvent> BIOME_VOX_WASTES_MUSIC = registerSound("vox_wastes_music", "biome.vox_wastes.music");
+
+
 
 	public static final RegistryObject<SoundEvent> ENTITY_AIRHEAD_AMBIENT = registerSound("airhead_ambient", "entity.airhead.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_AIRHEAD_DEATH = registerSound("airhead_death", "entity.airhead.death");
@@ -615,55 +666,41 @@ public final class AoASounds {
 
 	public static final RegistryObject<SoundEvent> BARON_BOMB_PRIME = registerSound("baron_bomb_prime", "entity.baron_bomb.prime");
 	public static final RegistryObject<SoundEvent> BARON_BOMB_SPAWN = registerSound("baron_bomb_spawn", "entity.baron_bomb.spawn");
-	public static final RegistryObject<SoundEvent> BLOODLUST_COLLECT = registerSound("bloodlust_collect", "entity.bloodlust.collect");
 	public static final RegistryObject<SoundEvent> BUBBLE_SHOT_POP = registerSound("bubble_shot_pop", "entity.bubble_shot.pop");
 	public static final RegistryObject<SoundEvent> GOO_BALL_IMPACT = registerSound("goo_ball_impact", "entity.goo_ball.impact");
-	public static final RegistryObject<SoundEvent> HEART_STONE_COLLECT = registerSound("heart_stone_collect", "entity.heart_stone.collect");
-	public static final RegistryObject<SoundEvent> HEART_STONE_SPAWN = registerSound("heart_stone_spawn", "entity.heart_stone.spawn");
 	public static final RegistryObject<SoundEvent> HELLFIRE_IMPACT = registerSound("hellfire_impact", "entity.hellfire.impact");
 
 	public static final RegistryObject<SoundEvent> LOTTO_WIN = registerSound("lotto_win", "misc.lotto.win");
 	public static final RegistryObject<SoundEvent> JINGLE_BELLS = registerSound("jingle_bells", "misc.jingle_bells");
 
-	public static final RegistryObject<SoundEvent> ITEM_ABOMINATOR_FIRE = registerSound("abominator_fire", "item.abominator.fire");
-	public static final RegistryObject<SoundEvent> ITEM_ARTIFACT_FIRE = registerSound("artifact_fire", "item.artifact.fire");
 	public static final RegistryObject<SoundEvent> ITEM_ATLANTIC_STAFF_CAST = registerSound("atlantic_staff_cast", "item.atlantic_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_ATOMIZER_FIRE = registerSound("atomizer_fire", "item.atomizer.fire");
 	public static final RegistryObject<SoundEvent> ITEM_BALL_CANNON_FIRE = registerSound("ball_cannon_fire", "item.ball_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_BIG_BLAST_FIRE = registerSound("big_blast_fire", "item.big_blast.fire");
-	public static final RegistryObject<SoundEvent> ITEM_BLOWPIPE_FIRE = registerSound("blowpipe_fire", "item.blowpipe.fire");
 	public static final RegistryObject<SoundEvent> ITEM_BONE_HORN_CALL = registerSound("bone_horn_call", "item.bone_horn.call");
 	public static final RegistryObject<SoundEvent> ITEM_BOOM_CANNON_FIRE = registerSound("boom_cannon_fire", "item.boom_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_BUBBLE_GUN_FIRE = registerSound("bubble_gun_fire", "item.bubble_gun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_CANDY_STAFF_CAST = registerSound("candy_staff_cast", "item.candy_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_CARROT_CANNON_FIRE = registerSound("carrot_cannon_fire", "item.carrot_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_CELESTIAL_STAFF_CAST = registerSound("celestial_staff_cast", "item.celestial_staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_CHAINGUN_FIRE = registerSound("chaingun_fire", "item.chaingun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_CHAINSAW_USE = registerSound("chainsaw_use", "item.chainsaw.use");
-	public static final RegistryObject<SoundEvent> ITEM_CHUGGER_FIRE = registerSound("chugger_fire", "item.chugger.fire");
 	public static final RegistryObject<SoundEvent> ITEM_CLOWNER_FIRE = registerSound("clowner_fire", "item.clowner.fire");
 	public static final RegistryObject<SoundEvent> ITEM_COLOUR_CANNON_FIRE = registerSound("colour_cannon_fire", "item.colour_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_CONCUSSION_STAFF_CAST = registerSound("concussion_staff_cast", "item.concussion_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_CONFETTI_CANNON_FIRE = registerSound("confetti_cannon_fire", "item.confetti_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_CORAL_STAFF_CAST = registerSound("coral_staff_cast", "item.coral_staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_CREATION_SLAB_USE = registerSound("creation_slab_use", "item.creation_slab.use");
 	public static final RegistryObject<SoundEvent> ITEM_CRYSTEVIA_STAFF_CAST = registerSound("crystevia_staff_cast", "item.crystevia_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_DARK_GUN_FIRE = registerSound("dark_gun_fire", "item.dark_gun.fire");
-	public static final RegistryObject<SoundEvent> ITEM_DISCHARGE_GUN_FIRE = registerSound("discharge_gun_fire", "item.discharge_gun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_DOOM_GUN_FIRE = registerSound("doom_gun_fire", "item.doom_gun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_DRAIN_GUN_FIRE = registerSound("drain_gun_fire", "item.drain_gun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_EMBER_STAFF_CAST = registerSound("ember_staff_cast", "item.ember_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_ENERGY_CANNON_FIRE = registerSound("energy_cannon_fire", "item.energy_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_EVER_STAFF_CAST = registerSound("ever_staff_cast", "item.ever_staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_FAST_RIFLE_FIRE = registerSound("fast_rifle_fire", "item.fast_rifle.fire");
 	public static final RegistryObject<SoundEvent> ITEM_FIREFLY_STAFF_CAST = registerSound("firefly_staff_cast", "item.firefly_staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_FLINGER_FIRE = registerSound("flinger_fire", "item.flinger.fire");
 	public static final RegistryObject<SoundEvent> ITEM_FUNGAL_STAFF_CAST = registerSound("fungal_staff_cast", "item.fungal_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_GAS_GUN_FIRE = registerSound("gas_gun_fire", "item.gas_gun.fire");
-	public static final RegistryObject<SoundEvent> ITEM_GAUGE_RIFLE_FIRE = registerSound("gauge_rifle_fire", "item.gauge_rifle.fire");
 	public static final RegistryObject<SoundEvent> ITEM_GOLEM_GUN_FIRE = registerSound("golem_gun_fire", "item.golem_gun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_GRAVITY_BLASTER_FIRE = registerSound("gravity_blaster_fire", "item.gravity_blaster.fire");
-	public static final RegistryObject<SoundEvent> ITEM_HEAT_WAVE_FIRE = registerSound("heat_wave_fire", "item.heat_wave.fire");
 	public static final RegistryObject<SoundEvent> ITEM_HIGH_CANNON_FIRE = registerSound("high_cannon_fire", "item.high_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_ILLUSION_REVOLVER_FIRE = registerSound("illusion_revolver_fire", "item.illusion_revolver.fire");
 	public static final RegistryObject<SoundEvent> ITEM_ILLUSION_SMG_FIRE = registerSound("illusion_smg_fire", "item.illusion_smg.fire");
@@ -679,10 +716,8 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_MECHA_CANNON_FIRE = registerSound("mecha_cannon_fire", "item.mecha_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_METEOR_STAFF_CAST = registerSound("meteor_staff_cast", "item.meteor_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_MIND_BLASTER_FIRE = registerSound("mind_blaster_fire", "item.mind_blaster.fire");
-	public static final RegistryObject<SoundEvent> ITEM_MINIGUN_FIRE = registerSound("minigun_fire", "item.minigun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_MINI_PISTOL_FIRE = registerSound("mini_pistol_fire", "item.mini_pistol.fire");
 	public static final RegistryObject<SoundEvent> ITEM_MISSILE_MAKER_FIRE = registerSound("missile_maker_fire", "item.missile_maker.fire");
-	public static final RegistryObject<SoundEvent> ITEM_MONSTER_FIRE = registerSound("monster_fire", "item.monster.fire");
 	public static final RegistryObject<SoundEvent> ITEM_MOONLIGHT_STAFF_CAST = registerSound("moonlight_staff_cast", "item.moonlight_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_MOON_SHINER_FIRE = registerSound("moon_shiner_fire", "item.moon_shiner.fire");
 	public static final RegistryObject<SoundEvent> ITEM_NATURE_STAFF_CAST = registerSound("nature_staff_cast", "item.nature_staff.cast");
@@ -696,26 +731,19 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_REEF_STAFF_CAST = registerSound("reef_staff_cast", "item.reef_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_REJUVENATION_STAFF_CAST = registerSound("rejuvenation_staff_cast", "item.rejuvenation_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_REVOLUTION_FIRE = registerSound("revolution_fire", "item.revolution.fire");
-	public static final RegistryObject<SoundEvent> ITEM_REVOLVER_FIRE = registerSound("revolver_fire", "item.revolver.fire");
-	public static final RegistryObject<SoundEvent> ITEM_ROULETTE_FIRE = registerSound("roulette_fire", "item.roulette.fire");
 	public static final RegistryObject<SoundEvent> ITEM_RPG_FIRE = registerSound("rpg_fire", "item.rpg.fire");
 	public static final RegistryObject<SoundEvent> ITEM_RUNIC_STAFF_CAST = registerSound("runic_staff_cast", "item.runic_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_SHADOW_BLASTER_FIRE = registerSound("shadow_blaster_fire", "item.shadow_blaster.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SHADOW_STAFF_CAST = registerSound("shadow_staff_cast", "item.shadow_staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_SHOTGUN_FIRE = registerSound("shotgun_fire", "item.shotgun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SHOW_STAFF_CAST = registerSound("show_staff_cast", "item.show_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_SHYRE_STAFF_CAST = registerSound("shyre_staff_cast", "item.shyre_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_SKY_STAFF_CAST = registerSound("sky_staff_cast", "item.sky_staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_SLUGGER_FIRE = registerSound("slugger_fire", "item.slugger.fire");
-	public static final RegistryObject<SoundEvent> ITEM_SNIPER_FIRE = registerSound("sniper_fire", "item.sniper.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SOUL_SPARK_FIRE = registerSound("soul_spark_fire", "item.soul_spark.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SPACE_GUN_FIRE = registerSound("space_gun_fire", "item.space_gun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SPACE_REVOLVER_FIRE = registerSound("space_revolver_fire", "item.space_revolver.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SPIRIT_SHOWER_FIRE = registerSound("spirit_shower_fire", "item.spirit_shower.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SPRAYER_FIRE = registerSound("sprayer_fire", "item.sprayer.fire");
-	public static final RegistryObject<SoundEvent> ITEM_SQUAD_GUN_FIRE = registerSound("squad_gun_fire", "item.squad_gun.fire");
 	public static final RegistryObject<SoundEvent> ITEM_STAFF_CAST = registerSound("staff_cast", "item.staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_STAMPEDE_FIRE = registerSound("stampede_fire", "item.stampede.fire");
 	public static final RegistryObject<SoundEvent> ITEM_SUN_STAFF_CAST = registerSound("sun_staff_cast", "item.sun_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_SURGE_STAFF_CAST = registerSound("surge_staff_cast", "item.surge_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_SWARMOTRON_FIRE = registerSound("swarmotron_fire", "item.swarmotron.fire");
@@ -727,7 +755,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_WHIMSY_WINDER_FIRE = registerSound("whimsy_winder_fire", "item.whimsy_winder.fire");
 	public static final RegistryObject<SoundEvent> ITEM_WITHERS_WRATH_FIRE = registerSound("withers_wrath", "item.withers_wrath.fire");
 	public static final RegistryObject<SoundEvent> ITEM_WITHER_CANNON_FIRE = registerSound("wither_cannon_fire", "item.wither_cannon.fire");
-	public static final RegistryObject<SoundEvent> ITEM_WOOD_RIFLE_FIRE = registerSound("wood_rifle_fire", "item.wood_rifle.fire");
 
 	public static final RegistryObject<SoundEvent> ABYSS_PORTAL_ACTIVATE = registerSound("abyss_portal_activate", "portal.abyss.activate");
 	public static final RegistryObject<SoundEvent> BARREN_PORTAL_ACTIVATE = registerSound("barren_portal_activate", "portal.barren.activate");
@@ -742,12 +769,9 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> NOWHERE_PORTAL_ACTIVATE = registerSound("nowhere_portal_activate", "portal.nowhere.activate");
 	public static final RegistryObject<SoundEvent> SHYRELANDS_PORTAL_ACTIVATE = registerSound("shyrelands_portal_activate", "portal.shyrelands.activate");
 
-	public static final RegistryObject<SoundEvent> BLOCK_CREATION_FORGE_SACRIFICE = registerSound("creation_forge_sacrifice", "block.creation_forge.sacrifice");
 	public static final RegistryObject<SoundEvent> BLOCK_CRYSTAL_CREATOR_CONVERT = registerSound("crystal_creator_convert", "block.crystal_creator.convert");
 	public static final RegistryObject<SoundEvent> BLOCK_DECLOGGING_TABLE_USE = registerSound("declogging_table_use", "block.declogging_table.use");
-	public static final RegistryObject<SoundEvent> BLOCK_EXTRACTION_DEVICE_USE = registerSound("extraction_device_use", "block.extraction_device.use");
 	public static final RegistryObject<SoundEvent> BLOCK_HAUNTING_TABLE_USE = registerSound("haunting_table_use", "block.haunting_table.use");
-	public static final RegistryObject<SoundEvent> BLOCK_INFUSION_TABLE_CONVERT = registerSound("infusion_table_convert", "block.infusion_table.convert");
 	public static final RegistryObject<SoundEvent> BLOCK_PETAL_CRAFTING_STATION_USE = registerSound("petal_crafting_station_use", "block.petal_crafting_station.use");
 	public static final RegistryObject<SoundEvent> BLOCK_RUNE_RANDOMIZER_USE = registerSound("rune_randomizer_use", "block.rune_randomizer.use");
 	public static final RegistryObject<SoundEvent> BLOCK_TEA_SINK_FILL = registerSound("tea_sink_fill", "block.tea_sink.fill");

@@ -20,6 +20,11 @@ public class FertilisedFarmland extends FarmlandBlock {
 	}
 
 	@Override
+	public boolean isFertile(BlockState state, IBlockReader world, BlockPos pos) {
+		return state.getValue(MOISTURE) > 0;
+	}
+
+	@Override
 	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
 		PlantType type = plantable.getPlantType(world, pos.relative(facing));
 

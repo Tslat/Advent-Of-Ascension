@@ -178,23 +178,23 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> WART_GUN = registerWeapon("wart_gun", () -> new WartGun(4.5375f, 2320, 7, 0.2f));
 	public static final RegistryObject<Item> WRECKER = registerWeapon("wrecker", () -> new Wrecker(2.375f, 3680, 3, 1.1f));
 	
-	public static final RegistryObject<Item> ABYSSRO = registerWeapon("abyssro", () -> new Abyssro(18.5f, 2, 1100, 46, 0.3f, 0.2f));
+	public static final RegistryObject<Item> ABYSSRO = registerWeapon("abyssro", () -> new BaseShotgun(18.5f, 2, 1100, 46, 0.3f, 0.2f));
 	public static final RegistryObject<Item> AMPLIFIER = registerWeapon("amplifier", () -> new Amplifier(9.0f, 5, 1100, 56, 0.2f, 0.7f));
 	public static final RegistryObject<Item> BLAST_BARREL = registerWeapon("blast_barrel", () -> new BlastBarrel(13.0f, 3, 740, 62, 0.4f, 0.4f));
 	public static final RegistryObject<Item> BLUE_BARREL = registerWeapon("blue_barrel", () -> new BaseShotgun(14.5f, 3, 1120, 54, 0.4f, 0.4f));
-	public static final RegistryObject<Item> BOULDER = registerWeapon("boulder", () -> new Boulder(11.5f, 4,1080, 58, 0.4f, 0.5f));
+	public static final RegistryObject<Item> BOULDER = registerWeapon("boulder", () -> new BaseShotgun(11.5f, 4,1080, 58, 0.4f, 0.5f));
 	public static final RegistryObject<Item> BROWN_BLASTER = registerWeapon("brown_blaster", () -> new BaseShotgun(6.0f, 3, 300, 54, 0.4f, 0.9f));
 	public static final RegistryObject<Item> DEMOLISHER = registerWeapon("demolisher", () -> new Demolisher(8.5f, 4, 730, 58, 0.4f, 0.65f));
 	public static final RegistryObject<Item> DESTRUCTION_SHOTGUN = registerWeapon("destruction_shotgun", () -> new DestructionShotgun(10.5f, 3, 690, 56, 0.4f, 0.45f));
 	public static final RegistryObject<Item> DISCHARGE_SHOTGUN = registerWeapon("discharge_shotgun", () -> new DischargeShotgun(0.0f, 4, 160, 55, 0f, 13f));
-	public static final RegistryObject<Item> GIMMICK = registerWeapon("gimmick", () -> new BaseShotgun(4.5f, 10, 800, 68, 0.2f, 1.3f));
+	public static final RegistryObject<Item> GIMMICK = registerWeapon("gimmick", () -> new Gimmick(4.5f, 10, 800, 68, 0.2f, 1.3f));
 	public static final RegistryObject<Item> GINGER_BLASTER = registerWeapon("ginger_blaster", () -> new GingerBlaster(7.0f, 5, 720, 60, 0.4f, 0.75f));
 	public static final RegistryObject<Item> LONG_SHOT = registerWeapon("long_shot", () -> new LongShot(15.5f, 2, 730, 54, 0.2f, 0.3f));
 	public static final RegistryObject<Item> MECHYRO = registerWeapon("mechyro", () -> new Mechyro(13.0f, 2, 720, 46, 0.3f, 0.3f));
 	public static final RegistryObject<Item> PURITY_SHOTGUN = registerWeapon("purity_shotgun", () -> new PurityShotgun(15.0f, 3, 1090, 56, 0.4f, 0.25f));
 	public static final RegistryObject<Item> PURPLE_PUNISHER = registerWeapon("purple_punisher", () -> new BaseShotgun(20.5f, 2, 1120, 52, 0.785f, 0.2f));
 	public static final RegistryObject<Item> RED_ROCKET = registerWeapon("red_rocket", () -> new BaseShotgun(11.5f, 2, 500, 52, 0.785f, 0.4f));
-	public static final RegistryObject<Item> VIVO = registerWeapon("vivo", () -> new BaseShotgun(7.0f, 3, 710, 36, 0.3f, 0.8f));
+	public static final RegistryObject<Item> VIVO = registerWeapon("vivo", () -> new Vivo(7.0f, 3, 710, 36, 0.3f, 0.8f));
 
 	public static final RegistryObject<Item> BARON_SSR = registerWeapon("baron_ssr", () -> new BaronSSR(35.0f, 240, 88, 0.05f));
 	public static final RegistryObject<Item> BAYONETTE_SR = registerWeapon("bayonette_sr", () -> new BayonetteSR(33.0f, 300, 86, 0.06f));

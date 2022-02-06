@@ -29,10 +29,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 public class MeganeuropsisEntity extends AoAAnimal {
-	private static final DataParameter<Boolean> LANDED = EntityDataManager.<Boolean>defineId(MeganeuropsisEntity.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Integer> START_LANDING_TICKS = EntityDataManager.<Integer>defineId(MeganeuropsisEntity.class, DataSerializers.INT);
-	private static final DataParameter<Direction> LANDING_DIRECTION = EntityDataManager.<Direction>defineId(MeganeuropsisEntity.class, DataSerializers.DIRECTION);
-	private static final DataParameter<Optional<UUID>> LANDED_PLAYER = EntityDataManager.<Optional<UUID>>defineId(MeganeuropsisEntity.class, DataSerializers.OPTIONAL_UUID);
+	private static final DataParameter<Boolean> LANDED = EntityDataManager.defineId(MeganeuropsisEntity.class, DataSerializers.BOOLEAN);
+	private static final DataParameter<Integer> START_LANDING_TICKS = EntityDataManager.defineId(MeganeuropsisEntity.class, DataSerializers.INT);
+	private static final DataParameter<Direction> LANDING_DIRECTION = EntityDataManager.defineId(MeganeuropsisEntity.class, DataSerializers.DIRECTION);
+	private static final DataParameter<Optional<UUID>> LANDED_PLAYER = EntityDataManager.defineId(MeganeuropsisEntity.class, DataSerializers.OPTIONAL_UUID);
 
 	private PlayerEntity clientRidingPlayer = null;
 	private int clientStartLandingTicks = 0;

@@ -17,7 +17,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.WikiSearchPacket;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.StringUtil;
 
 import javax.annotation.Nullable;
@@ -57,8 +56,7 @@ public class WikiCommand implements Command<CommandSource> {
 				baseUrl = testRootUrl;
 		}
 		catch (UnsupportedEncodingException | MalformedURLException e) {
-			if (AoAConfig.CLIENT.doVerboseDebugging.get())
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 		catch (IOException ex) {
 			Minecraft.getInstance().player.sendMessage(AoACommand.getCmdPrefix("Wiki").append(new TranslationTextComponent("command.aoa.wiki.connectionFail").setStyle(Style.EMPTY.applyFormat(AoACommand.CommandFeedbackType.ERROR.getColour()))), Util.NIL_UUID);

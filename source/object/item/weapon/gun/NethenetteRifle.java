@@ -30,7 +30,7 @@ public class NethenetteRifle extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SNIPER_FIRE.get();
+		return AoASounds.ITEM_GUN_RIFLE_HEAVY_FIRE_LONG.get();
 	}
 
 	@Override

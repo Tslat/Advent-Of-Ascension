@@ -27,7 +27,7 @@ public class WartGun extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_BLOWPIPE_FIRE.get();
+		return AoASounds.ITEM_GUN_BLOWPIPE_SHOOT.get();
 	}
 
 	@Override
@@ -56,5 +56,10 @@ public class WartGun extends BaseGun {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.BURNS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 
 		super.appendHoverText(stack, world, tooltip, flag);
+	}
+
+	@Override
+	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, Hand hand) {
+		doFiringSound(shooter, bullet, stack, hand);
 	}
 }

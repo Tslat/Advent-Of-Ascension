@@ -11,7 +11,13 @@
     "sky_color": 8048895,
     "water_color": 6006271,
     "water_fog_color": 6006271,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aoa3:runic_cliffs_music",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
   },
   "surface_builder": "aoa3:runandor",
   "carvers": {},
@@ -53,7 +59,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:bouncer",
+        "type": "aoa3:runicorn",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -65,14 +71,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:runicorn",
-        "weight": 20,
+        "type": "aoa3:runicorn_rider",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:runicorn_rider",
-        "weight": 1,
+        "type": "aoa3:bouncer",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }

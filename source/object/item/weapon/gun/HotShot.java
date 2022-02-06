@@ -23,19 +23,19 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class HotShot extends BaseGun {
-	private final int firingDelay;
-	private final double dmg;
-
 	public HotShot(double dmg, int durability, int firingDelayTicks, float recoil) {
 		super(AoAItemGroups.GUNS, dmg, durability, firingDelayTicks, recoil);
-		this.dmg = dmg;
-		this.firingDelay = firingDelayTicks;
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_MINI_PISTOL_FIRE.get();
+		return AoASounds.ITEM_GUN_CANNON_FIRE_1_SHORT.get();
+	}
+
+	@Override
+	protected float getFiringSoundPitchAdjust() {
+		return 0.7f;
 	}
 
 	@Override

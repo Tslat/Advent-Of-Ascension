@@ -4,7 +4,6 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.VersionChecker;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.scheduling.async.UpdateHalosMapTask;
 import org.apache.commons.io.IOUtils;
@@ -66,8 +65,7 @@ public final class WebUtil {
 								uuid = UUID.fromString(lineSplit[1]);
 							}
 							catch (IllegalArgumentException ex) {
-								if (AoAConfig.CLIENT.doVerboseDebugging.get())
-									Logging.logMessage(Level.WARN, "Invalid UUID format from web: " + lineSplit[1]);
+								Logging.logMessage(Level.WARN, "Invalid UUID format from web: " + lineSplit[1]);
 
 								continue;
 							}
@@ -76,8 +74,7 @@ public final class WebUtil {
 								try {
 									halosSet.add(AoAHaloUtil.Type.valueOf(lineSplit[i]));
 								} catch (IllegalArgumentException ex) {
-									if (AoAConfig.CLIENT.doVerboseDebugging.get())
-										Logging.logMessage(Level.WARN, "Invalid halo type from web: " + lineSplit[i]);
+									Logging.logMessage(Level.WARN, "Invalid halo type from web: " + lineSplit[i]);
 								}
 							}
 
@@ -96,10 +93,7 @@ public final class WebUtil {
 			connection.disconnect();
 		}
 		catch (Exception e) {
-			Logging.logMessage(Level.WARN, "Error while performing HTTP Tasks, dropping.");
-
-			if (AoAConfig.CLIENT.doVerboseDebugging.get())
-				e.printStackTrace();
+			Logging.logMessage(Level.WARN, "Error while performing HTTP Tasks, dropping.", e);
 		}
 		finally {
 			IOUtils.closeQuietly(fileReader);

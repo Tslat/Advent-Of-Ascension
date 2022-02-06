@@ -110,7 +110,7 @@ public final class WorldUtil {
 		world.addFreshEntity(lightning);
 	}
 
-	public static boolean harvestAdditionalBlock(World world, PlayerEntity pl, BlockPos breakPos) {
+	public static boolean harvestAdditionalBlock(World world, PlayerEntity pl, BlockPos breakPos, boolean forceDropsInCreative) {
 		BlockState blockState = world.getBlockState(breakPos);
 		Block block = blockState.getBlock();
 
@@ -137,10 +137,18 @@ public final class WorldUtil {
 				return false;
 
 			if (pl.isCreative()) {
+				boolean canHarvest = forceDropsInCreative && blockState.canHarvestBlock(world, breakPos, pl);
 				boolean removed = blockState.removedByPlayer(world, breakPos, player, false, world.getFluidState(breakPos));
 
-				if (removed)
+				if (removed) {
 					blockState.getBlock().destroy(world, breakPos, blockState);
+
+					if (canHarvest)
+						block.playerDestroy(world, pl, breakPos, blockState, tileEntity, pl.getMainHandItem().copy());
+
+					if (forceDropsInCreative && blockXp > 0)
+						blockState.getBlock().popExperience((ServerWorld)world, breakPos, blockXp);
+				}
 			}
 			else {
 				ItemStack toolStack = pl.getMainHandItem();

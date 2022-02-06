@@ -32,7 +32,12 @@ public class ChilliChugger extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_CHUGGER_FIRE.get();
+		return AoASounds.ITEM_GUN_AIR_CANNON_FIRE.get();
+	}
+
+	@Override
+	protected float getFiringSoundPitchAdjust() {
+		return 0.85f;
 	}
 
 	@Override

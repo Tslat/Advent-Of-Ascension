@@ -6,13 +6,8 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.client.model.entity.mob.overworld.ChargerModel;
-import net.tslat.aoa3.config.AoAConfig;
 
 public class AoAMobRenderer extends MobRenderer<MobEntity, EntityModel<MobEntity>> {
-	private static final ChargerModel chargerModel = new ChargerModel();
-	public static final ResourceLocation chargerTexture = ChargerModel.getChargerTexture(chargerModel, null);
-
 	private final ResourceLocation texture;
 	private final float scale;
 
@@ -30,12 +25,7 @@ public class AoAMobRenderer extends MobRenderer<MobEntity, EntityModel<MobEntity
 	}
 
 	@Override
-	public EntityModel<MobEntity> getModel() {
-		return AoAConfig.CLIENT.alwaysChargers.get() ? chargerModel : super.getModel();
-	}
-
-	@Override
 	public ResourceLocation getTextureLocation(MobEntity entity) {
-		return AoAConfig.CLIENT.alwaysChargers.get() ? chargerTexture : texture;
+		return texture;
 	}
 }

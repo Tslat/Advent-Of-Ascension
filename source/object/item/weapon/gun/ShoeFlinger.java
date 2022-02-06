@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -39,7 +40,12 @@ public class ShoeFlinger extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_FLINGER_FIRE.get();
+		return AoASounds.ITEM_GUN_AIR_CANNON_FIRE.get();
+	}
+
+	@Override
+	protected float getFiringSoundPitchAdjust() {
+		return 0.85f;
 	}
 
 	@Override
@@ -65,6 +71,11 @@ public class ShoeFlinger extends BaseGun {
 			if (!livingTarget.hasItemInSlot(EquipmentSlotType.FEET))
 				livingTarget.setItemSlot(EquipmentSlotType.FEET, new ItemStack(Items.LEATHER_BOOTS));
 		}
+	}
+
+	@Override
+	protected void doFiringSound(LivingEntity shooter, BaseBullet bullet, ItemStack stack, Hand hand) {
+		shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundCategory.PLAYERS, 1.0f, getFiringSoundPitchAdjust() + (float)random.nextGaussian() * 0.01f);
 	}
 
 	@Override

@@ -37,14 +37,17 @@ import javax.annotation.Nullable;
 
 public final class PlayerUtil {
     private static final Int2FloatOpenHashMap XP_MAP = new Int2FloatOpenHashMap(1000);
+    private static final Int2FloatOpenHashMap TIME_BASED_XP_MAP = new Int2FloatOpenHashMap(1000);
 
     public static void init() {
         for (int i = 1; i <= 99; i++) {
             XP_MAP.put(i, (float)Math.pow(1.1, i) * 50f);
+            TIME_BASED_XP_MAP.put(i, XP_MAP.get(i) / (float)(20 + Math.pow(Math.pow(i, 3) / 18000d, 1.75d)));
         }
 
         for (int i = 100; i <= 999; i++) {
             XP_MAP.put(i, (float)Math.pow(i - 10, 2.5) / 100f + 630000);
+            TIME_BASED_XP_MAP.put(i, XP_MAP.get(i) / (1050 + i));
         }
     }
 
@@ -142,17 +145,8 @@ public final class PlayerUtil {
        return getXpRequiredForNextLevel(instance.getLevel(true)) - instance.getXp();
     }
 
-    public static float getTimeBasedXpForLevel(int currentLevel, int timeIntervalTicks) {
-        float baseXp;
-
-        if (currentLevel < 100) {
-           baseXp = getXpRequiredForNextLevel(currentLevel) / (float)(20 + Math.pow(Math.pow(currentLevel, 3) / 18000d, 1.75d));
-        }
-        else {
-            baseXp = getXpRequiredForNextLevel(currentLevel) / (1050 + currentLevel);
-        }
-
-        return baseXp * (timeIntervalTicks / 100f);
+    public static float getTimeBasedXpForLevel(int currentLevel, float timeIntervalTicks) {
+        return TIME_BASED_XP_MAP.get(currentLevel) * (timeIntervalTicks / 100f);
     }
 
     public static float getXpForFractionOfLevel(int currentLevel, float fraction) {

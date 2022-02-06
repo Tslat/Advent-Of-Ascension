@@ -66,7 +66,7 @@ public abstract class BaseSniper extends BaseGun {
 	@Override
 	public void doRecoil(ServerPlayerEntity player, ItemStack stack, Hand hand) {
 		int control = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CONTROL.get(), stack);
-		float recoilAmount = getRecoilForShot(stack, player) * 0.5f * (1 - control * 0.15f);
+		float recoilAmount = getRecoilForShot(stack, player) * 0.25f * (1 - control * 0.15f);
 
 		if (!player.isShiftKeyDown() || !player.onGround)
 			recoilAmount *= 3.5f;

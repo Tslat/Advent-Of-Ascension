@@ -10,7 +10,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.client.model.entity.misc.LunarcherModel;
 import net.tslat.aoa3.common.registration.AoAEntities;
 
-@OnlyIn(Dist.CLIENT)
 public class LunarcherRenderer extends BipedRenderer<FlyingEntity, LunarcherModel<FlyingEntity>> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/lunalus/lunarcher.png");
 

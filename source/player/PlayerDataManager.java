@@ -7,6 +7,7 @@ import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.List;
 
 public interface PlayerDataManager {
 	PlayerEntity player();
@@ -28,4 +29,8 @@ public interface PlayerDataManager {
 	AoAResource.Instance getResource(AoAResource resource);
 
 	void loadFromNbt(CompoundNBT nbt);
+
+	void addListener(AoAPlayerEventListener listener, boolean active, AoAPlayerEventListener.ListenerType... types);
+
+	List<AoAPlayerEventListener> getListeners(AoAPlayerEventListener.ListenerType eventType);
 }

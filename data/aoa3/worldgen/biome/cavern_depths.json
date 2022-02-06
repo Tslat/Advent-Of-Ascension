@@ -11,7 +11,13 @@
     "sky_color": 7907327,
     "water_color": 13158600,
     "water_fog_color": 13158600,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aoa3:cavern_depths_music",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
   },
   "surface_builder": "aoa3:deeplands",
   "carvers": {},
@@ -48,7 +54,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:dweller",
+        "type": "aoa3:cave_creep",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -60,13 +66,19 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:case_construct",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:doubler",
         "weight": 2,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:cave_creep",
+        "type": "aoa3:dweller",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -80,12 +92,6 @@
       {
         "type": "aoa3:rock_crawler",
         "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:case_construct",
-        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }

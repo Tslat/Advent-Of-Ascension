@@ -7,12 +7,18 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.ListNBT;
 import net.minecraft.tags.ITag;
 import net.minecraft.util.WeightedSpawnerEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.fml.RegistryObject;
 
@@ -376,5 +382,23 @@ public final class BlockUtil {
 
 			return nbt;
 		}
+	}
+
+	public static VoxelShape pixelBasedCube(int minPixelX, int minPixelY, int minPixelZ, int maxPixelX, int maxPixelY, int maxPixelZ) {
+		return VoxelShapes.create(new AxisAlignedBB(minPixelX / 16d, minPixelY / 16d, minPixelZ / 16d, maxPixelX / 16d, maxPixelY / 16d, maxPixelZ / 16d));
+	}
+
+	public static boolean canPlayerHarvest(BlockState state, PlayerEntity player, IBlockReader world, BlockPos pos) {
+		if (!state.requiresCorrectToolForDrops())
+			return true;
+
+		ItemStack toolStack = player.getMainHandItem();
+		ToolType harvestTool = state.getHarvestTool();
+		int toolLevel = toolStack.getHarvestLevel(harvestTool, player, state);
+
+		if (toolStack.isEmpty() || harvestTool == null || toolLevel < 0)
+			return player.inventory.getSelected().isCorrectToolForDrops(state);
+
+		return toolLevel >= state.getHarvestLevel();
 	}
 }

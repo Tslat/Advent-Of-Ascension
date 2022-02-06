@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/crop",
+  "parent": "minecraft:block/cross",
   "textures": {
-    "crop": "aoa3:block/magic_marang_crop_stage7"
+    "cross": "aoa3:block/magic_marang_crop_stage7"
   }
 }

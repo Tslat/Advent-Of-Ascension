@@ -5,7 +5,7 @@ import software.bernie.geckolib3.core.IAnimatable;
 import java.util.HashMap;
 
 public interface Animatable extends IAnimatable {
-	HashMap<String, Integer> animationStates = new HashMap<String, Integer>();
+	HashMap<String, Integer> animationStates = new HashMap<String, Integer>(1);
 
 	default void addAnimationState(String anim) {
 		addAnimationState(anim, 0);

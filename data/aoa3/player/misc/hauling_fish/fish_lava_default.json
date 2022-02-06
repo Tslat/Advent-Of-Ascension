@@ -13,33 +13,35 @@
       "entity": "aoa3:charred_char"
     },
     {
-      "weight": 70,
-      "weight_mod": 1.0,
+      "weight": 150,
       "entity": "aoa3:candlefish"
     },
     {
-      "weight": 50,
+      "weight": 100,
       "item": "minecraft:obsidian"
     },
     {
       "weight": 25,
+      "weight_mod": 2.0,
       "item": "minecraft:crying_obsidian"
     },
     {
-      "weight": 20,
-      "weight_mod": 2.0,
+      "weight": 50,
+      "weight_mod": 5.0,
       "item": "minecraft:diamond"
     },
     {
-      "weight": 10,
-      "weight_mod": 2.0,
+      "weight": 35,
+      "weight_mod": 7.0,
       "item": "minecraft:emerald"
     },
     {
-      "weight": 100,
-      "weight_mod": -2.0,
+      "weight": 120,
+      "weight_mod": -10.0,
       "item": "minecraft:coal"
     },
-    "minecraft:lava_bucket"
+    {
+      "item": "minecraft:lava_bucket"
+    }
   ]
 }

@@ -67,10 +67,10 @@ public class LottoTotem extends Item {
 					selectedWinner--;
 				}
 
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.lottoTotem.spawn").withStyle(TextFormatting.GOLD));
+				PlayerUtil.notifyPlayer(player, new TranslationTextComponent("message.feedback.lottoTotem.spawn").withStyle(TextFormatting.GOLD));
 			}
 			else {
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.lottoTotem.noSpace").withStyle(TextFormatting.RED));
+				PlayerUtil.notifyPlayer(player, new TranslationTextComponent("message.feedback.lottoTotem.noSpace").withStyle(TextFormatting.RED));
 
 				return ActionResultType.FAIL;
 			}

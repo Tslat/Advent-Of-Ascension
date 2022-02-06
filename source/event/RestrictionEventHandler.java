@@ -3,7 +3,7 @@ package net.tslat.aoa3.event;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.MusicDiscItem;
@@ -26,6 +26,7 @@ import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.object.entity.base.AoATrader;
 import net.tslat.aoa3.object.item.tablet.TabletItem;
+import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -35,16 +36,16 @@ import java.util.function.Predicate;
 
 public final class RestrictionEventHandler {
 	public static void preInit() {
-		cancelEventIf(PlayerInteractEvent.RightClickBlock.class, ev -> ev.getPlayer() instanceof ServerPlayerEntity && !AoASkillReqReloadListener.canInteractWith(PlayerUtil.getAdventPlayer((ServerPlayerEntity)ev.getPlayer()), ev.getWorld().getBlockState(ev.getPos()).getBlock()));
+		handleEventIf(PlayerInteractEvent.RightClickBlock.class, RestrictionEventHandler::handleRightClickBlock, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()));
 		cancelEventIf(EntityTeleportEvent.EnderPearl.class, ev -> ev.getTargetY() >= ev.getPlayer().level.dimensionType().logicalHeight());
 		cancelEventIf(LivingConversionEvent.Pre.class, ev -> ev.getEntityLiving() instanceof AoATrader);
 		cancelEventIf(PlayerEvent.BreakSpeed.class, ev -> WorldUtil.isWorld(ev.getPlayer().level, AoADimensions.NOWHERE.key));
 		cancelEventIf(BlockEvent.FluidPlaceBlockEvent.class, ev -> WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key));
-		cancelEventIf(EntityMobGriefingEvent.class, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
+		cancelEventIf(EntityMobGriefingEvent.class, ev -> ev.getEntity() != null && WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
 		cancelEventIf(LivingDropsEvent.class, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
 		cancelEventIf(FillBucketEvent.class, ev -> WorldUtil.isWorld(ev.getWorld(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()));
-		cancelEventIf(BlockEvent.BreakEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()) && (WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key) || (ev.getPlayer() instanceof ServerPlayerEntity && !AoASkillReqReloadListener.canBreakBlock(PlayerUtil.getAdventPlayer((ServerPlayerEntity)ev.getPlayer()), ev.getState().getBlock()))));
-		cancelEventIf(BlockEvent.EntityPlaceEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && (WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key) || (ev.getEntity() instanceof ServerPlayerEntity && !AoASkillReqReloadListener.canPlaceBlock(PlayerUtil.getAdventPlayer((ServerPlayerEntity)ev.getEntity()), ev.getState().getBlock()))));
+		cancelEventIf(BlockEvent.BreakEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()) && (WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key) || !AoASkillReqReloadListener.canBreakBlock(PlayerUtil.getAdventPlayer(ev.getPlayer()), ev.getState().getBlock())));
+		cancelEventIf(BlockEvent.EntityPlaceEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && (WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key) || (!AoASkillReqReloadListener.canPlaceBlock(PlayerUtil.getAdventPlayer((PlayerEntity)ev.getEntity()), ev.getState().getBlock()))));
 
 		handleEventIf(ExplosionEvent.Detonate.class,
 				ev -> ev.getAffectedBlocks().clear(),
@@ -92,6 +93,26 @@ public final class RestrictionEventHandler {
 		else {
 			ev.setCanceled(true);
 		}
+	}
+
+	private static void handleRightClickBlock(final PlayerInteractEvent.RightClickBlock ev) {
+		World world = ev.getWorld();
+
+		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
+			ev.setCanceled(true);
+
+			return;
+		}
+
+		PlayerDataManager plData = PlayerUtil.getAdventPlayer(ev.getPlayer());
+
+		if (!AoASkillReqReloadListener.canInteractWith(plData, world.getBlockState(ev.getPos()).getBlock()))
+			ev.setUseBlock(Event.Result.DENY);
+
+		Item item = ev.getItemStack().getItem();
+
+		if (item instanceof BlockItem && !AoASkillReqReloadListener.canPlaceBlock(plData, ((BlockItem)item).getBlock()))
+			ev.setUseItem(Event.Result.DENY);
 	}
 
 	private static <T extends Event> void handleEvent(Class<T> eventClass, Consumer<T> handler) {

@@ -56,6 +56,10 @@ public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 		public abstract void setValue(float amount);
 		public abstract float getMaxValue();
 
+		public float getPerTickRegen() {
+			return 0;
+		}
+
 		public AoAResource type() {
 			return this.resource;
 		}

@@ -1,25 +1,16 @@
 package net.tslat.aoa3.object.entity.projectile.cannon;
 
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.object.entity.projectile.HardProjectile;
 import net.tslat.aoa3.object.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.object.item.weapon.gun.BaseGun;
 
-@OnlyIn(
-		value = Dist.CLIENT,
-		_interface = IRendersAsItem.class
-)
-public class HeavyGrenadeEntity extends BaseBullet implements HardProjectile, IRendersAsItem {
+public class HeavyGrenadeEntity extends BaseBullet implements HardProjectile {
 	public HeavyGrenadeEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -39,10 +30,5 @@ public class HeavyGrenadeEntity extends BaseBullet implements HardProjectile, IR
 	@Override
 	public float getGravity() {
 		return 0.1f;
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return new ItemStack(AoAWeapons.GRENADE.get());
 	}
 }

@@ -17,6 +17,7 @@ import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
 import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
+import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.util.EntityUtil;
@@ -36,6 +37,7 @@ public final class AoAPlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingEvent.LivingJumpEvent.class, AoAPlayerEvents::onPlayerJump);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingFallEvent.class, AoAPlayerEvents::onPlayerFall);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingDeathEvent.class, AoAPlayerEvents::onPlayerDeath);
+		forgeBus.addListener(EventPriority.NORMAL, false, BabyEntitySpawnEvent.class, AoAPlayerEvents::onAnimalBreed);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerRespawnEvent.class, AoAPlayerEvents::onPlayerRespawn);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerLoggedInEvent.class, AoAPlayerEvents::onPlayerLogin);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerLoggedOutEvent.class, AoAPlayerEvents::onPlayerLogout);
@@ -66,6 +68,13 @@ public final class AoAPlayerEvents {
 
 	public static void issueEvent(ServerPlayerEntity pl, AoAPlayerEventListener.ListenerType listener, Consumer<? super AoAPlayerEventListener> eventConsumer) {
 		PlayerUtil.getAdventPlayer(pl).getListeners(listener).forEach(evListener -> {
+			if (evListener.getListenerState() == ACTIVE)
+				eventConsumer.accept(evListener);
+		});
+	}
+
+	public static void issueClientEvent(AoAPlayerEventListener.ListenerType listener, Consumer<AoAPlayerEventListener> eventConsumer) {
+		ClientPlayerDataManager.get().getListeners(listener).forEach(evListener -> {
 			if (evListener.getListenerState() == ACTIVE)
 				eventConsumer.accept(evListener);
 		});
@@ -115,6 +124,11 @@ public final class AoAPlayerEvents {
 		}
 	}
 
+	private static void onAnimalBreed(final BabyEntitySpawnEvent ev) {
+		if (ev.getCausedByPlayer() instanceof ServerPlayerEntity)
+			issueEvent((ServerPlayerEntity)ev.getCausedByPlayer(), ANIMAL_BREED, listener -> listener.handleAnimalBreed(ev));
+	}
+
 	private static void onPlayerRespawn(final PlayerEvent.PlayerRespawnEvent ev) {
 		if (!ev.isEndConquered() && ev.getPlayer() instanceof ServerPlayerEntity)
 			issueEvent((ServerPlayerEntity)ev.getPlayer(), PLAYER_RESPAWN, listener -> listener.handlePlayerRespawn(ev));
@@ -162,8 +176,12 @@ public final class AoAPlayerEvents {
 	}
 
 	private static void onBlockHarvestSpeed(final PlayerEvent.BreakSpeed ev) {
-		if (ev.getPlayer() instanceof ServerPlayerEntity)
+		if (ev.getPlayer() instanceof ServerPlayerEntity) {
 			issueEvent((ServerPlayerEntity)ev.getPlayer(), BLOCK_BREAK_SPEED, listener -> listener.handleHarvestSpeedCheck(ev));
+		}
+		else {
+			issueClientEvent(BLOCK_BREAK_SPEED, listener -> listener.handleHarvestSpeedCheck(ev));
+		}
 	}
 
 	private static void onBlockBreak(final BlockEvent.BreakEvent ev) {
@@ -206,13 +224,21 @@ public final class AoAPlayerEvents {
 	}
 
 	private static void onItemCraft(final PlayerEvent.ItemCraftedEvent ev) {
-		if (ev.getPlayer() instanceof ServerPlayerEntity)
+		if (ev.getPlayer() instanceof ServerPlayerEntity) {
 			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_CRAFT, listener -> listener.handleItemCraft(ev));
+		}
+		else {
+			issueClientEvent(ITEM_CRAFT, listener -> listener.handleItemCraft(ev));
+		}
 	}
 
 	private static void onItemSmelt(final PlayerEvent.ItemSmeltedEvent ev) {
-		if (ev.getPlayer() instanceof ServerPlayerEntity)
+		if (ev.getPlayer() instanceof ServerPlayerEntity) {
 			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_SMELT, listener -> listener.handleItemSmelt(ev));
+		}
+		else {
+			issueClientEvent(ITEM_SMELT, listener -> listener.handleItemSmelt(ev));
+		}
 	}
 
 	private static void onItemFished(final ItemFishedEvent ev) {

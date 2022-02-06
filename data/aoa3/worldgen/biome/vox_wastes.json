@@ -11,7 +11,13 @@
     "sky_color": 3694080,
     "water_color": 6787840,
     "water_fog_color": 6787840,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aoa3:vox_wastes_music",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
   },
   "surface_builder": "aoa3:vox_ponds",
   "carvers": {},
@@ -54,7 +60,19 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:gadgetoid",
+        "type": "aoa3:fischer",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:slimer",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:alarmo",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -66,15 +84,9 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:alarmo",
+        "type": "aoa3:centinel",
         "weight": 20,
         "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:slimer",
-        "weight": 1,
-        "minCount": 0,
         "maxCount": 1
       },
       {
@@ -84,13 +96,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:fischer",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:centinel",
+        "type": "aoa3:gadgetoid",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

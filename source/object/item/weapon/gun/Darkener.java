@@ -22,7 +22,7 @@ public class Darkener extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
+		return AoASounds.ITEM_GUN_HEAVY_GENERIC_FIRE_1.get();
 	}
 
 	@Override

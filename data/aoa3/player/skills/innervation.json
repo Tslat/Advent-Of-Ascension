@@ -77,8 +77,8 @@
     },
     {
       "id": "aoa3:double_drops_chance",
-      "unique_id": "-690063113",
-      "base_chance": 0.1,
+      "unique_id": "-1596895304",
+      "base_value": 0.1,
       "per_level_mod": 0.00147,
       "level_req": 77
     },

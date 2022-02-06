@@ -24,7 +24,12 @@ public class IonRevolver extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SPACE_REVOLVER_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_5.get();
+	}
+
+	@Override
+	protected float getFiringSoundPitchAdjust() {
+		return 0.8f;
 	}
 
 	@Override

@@ -1,7 +1,16 @@
 {
   "variants": {
-    "": {
+    "axis=x": {
+      "model": "aoa3:block/archaic_stream_vertical_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
       "model": "aoa3:block/archaic_stream_vertical"
+    },
+    "axis=z": {
+      "model": "aoa3:block/archaic_stream_vertical_horizontal",
+      "x": 90
     }
   }
 }

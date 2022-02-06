@@ -11,7 +11,13 @@
     "sky_color": 0,
     "water_color": 4159204,
     "water_fog_color": 329011,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aoa3:nowhere_music",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
   },
   "surface_builder": "minecraft:nope",
   "carvers": {},

@@ -226,6 +226,14 @@
         }
       }
     },
+    "consume_violet_skipper": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:violet_skipper"
+        }
+      }
+    },
     "consume_red_gemtrap": {
       "trigger": "minecraft:consume_item",
       "conditions": {
@@ -271,6 +279,14 @@
       "conditions": {
         "item": {
           "item": "aoa3:heart_fruit"
+        }
+      }
+    },
+    "consume_chum_and_salad_burger": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:chum_and_salad_burger"
         }
       }
     },
@@ -362,11 +378,35 @@
         }
       }
     },
+    "consume_turquoise_stripefish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:turquoise_stripefish"
+        }
+      }
+    },
     "consume_fiery_chops": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
           "item": "aoa3:fiery_chops"
+        }
+      }
+    },
+    "consume_crimson_stripefish": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:crimson_stripefish"
+        }
+      }
+    },
+    "consume_gingerbread_cookie": {
+      "trigger": "minecraft:consume_item",
+      "conditions": {
+        "item": {
+          "item": "aoa3:gingerbread_cookie"
         }
       }
     },
@@ -378,11 +418,11 @@
         }
       }
     },
-    "consume_gingerbread_cookie": {
+    "consume_sapphire_strider": {
       "trigger": "minecraft:consume_item",
       "conditions": {
         "item": {
-          "item": "aoa3:gingerbread_cookie"
+          "item": "aoa3:sapphire_strider"
         }
       }
     },
@@ -587,6 +627,9 @@
       "consume_halycon_milk"
     ],
     [
+      "consume_violet_skipper"
+    ],
+    [
       "consume_red_gemtrap"
     ],
     [
@@ -603,6 +646,9 @@
     ],
     [
       "consume_heart_fruit"
+    ],
+    [
+      "consume_chum_and_salad_burger"
     ],
     [
       "consume_lunarade"
@@ -638,13 +684,22 @@
       "consume_floracle_sticks"
     ],
     [
+      "consume_turquoise_stripefish"
+    ],
+    [
       "consume_fiery_chops"
+    ],
+    [
+      "consume_crimson_stripefish"
+    ],
+    [
+      "consume_gingerbread_cookie"
     ],
     [
       "consume_green_gemtrap"
     ],
     [
-      "consume_gingerbread_cookie"
+      "consume_sapphire_strider"
     ],
     [
       "consume_hot_rod"

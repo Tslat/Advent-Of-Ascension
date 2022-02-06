@@ -55,7 +55,7 @@ public class EnergyResource extends AoAResource.Instance {
 	public boolean consume(float amount, boolean consumeIfInsufficient) {
 		boolean success = super.consume(amount, true);
 
-		if (success && getCurrentValue() <= 0)
+		if (getCurrentValue() <= 0)
 			this.currentDelay += this.dischargeDelay;
 
 		return success;
@@ -72,12 +72,17 @@ public class EnergyResource extends AoAResource.Instance {
 	}
 
 	@Override
+	public float getPerTickRegen() {
+		return regenAmount;
+	}
+
+	@Override
 	public void handlePlayerTick(TickEvent.PlayerTickEvent ev) {
 		if (currentDelay > 0) {
 			currentDelay--;
 		}
 		else if (this.value < getMaxValue()) {
-			addValue(regenAmount);
+			addValue(getPerTickRegen());
 		}
 	}
 
@@ -98,10 +103,10 @@ public class EnergyResource extends AoAResource.Instance {
 		CompoundNBT data = new CompoundNBT();
 
 		if (forClientSetup) {
-			data.putFloat("max_value", maxValue);
+			data.putFloat("max_value", getMaxValue());
 			data.putInt("delay_on_empty", dischargeDelay);
 			data.putInt("delay_on_hit", hitDelay);
-			data.putFloat("regen_per_tick", regenAmount);
+			data.putFloat("regen_per_tick", getPerTickRegen());
 		}
 		else {
 			data.putFloat("value", getCurrentValue());

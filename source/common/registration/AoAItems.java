@@ -402,7 +402,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> LUNACRIKE = registerItem("lunacrike", Lunacrike::new);
 	public static final RegistryObject<Item> LUNA_GLOBE = registerItem("luna_globe", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 120).build(), 1).build())));
 	public static final RegistryObject<Item> LUNALONS = registerItem("lunalons", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 40).level(2).build(), 1).build())));
-	public static final RegistryObject<Item> MAGIC_MARANG = registerItem("magic_marang", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(5).saturationMod(0.7f).effect(new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 200).build(), 1).effect(new PotionUtil.EffectBuilder(Effects.GLOWING, 200).build(), 1).build())));
+	public static final RegistryObject<Item> MAGIC_MARANG = registerItem("magic_marang", MagicMarang::new);
 	public static final RegistryObject<Item> MYSTIC_SHROOMS = registerItem("mystic_shrooms", () -> new BlockNamedItem(AoABlocks.MYSTIC_SHROOM_CROP.get(), new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.4f).alwaysEat().build())));
 	public static final RegistryObject<Item> NATURE_MELON_SLICE = registerItem("nature_melon_slice", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.4f).build())));
 	public static final RegistryObject<Item> PEPPERMINT_CANDY = registerItem("peppermint_candy", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.2f).build())));
@@ -418,9 +418,10 @@ public final class AoAItems {
 	public static final RegistryObject<Item> TEA = registerItem("tea", Tea::new);
 	public static final RegistryObject<Item> FUNGAL_TEA = registerItem("fungal_tea", FungalTea::new);
 	public static final RegistryObject<Item> NATURAL_TEA = registerItem("natural_tea", NaturalTea::new);
-	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85F).build())));
+	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONDUIT_POWER, 600).build(), 1f).build())));
 	public static final RegistryObject<Item> CHUM = registerItem("chum", ChumItem::new);
 	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 80).build(), 1f).build())));
+	public static final RegistryObject<Item> CHUM_AND_SALAD_BURGER = registerItem("chum_and_salad_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(12).saturationMod(0.9F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 80).build(), 1f).build())));
 
 	public static final RegistryObject<Item> BUBBLE_BERRY_SEEDS = registerItem("bubble_berry_seeds", () -> new BlockNamedItem(AoABlocks.BUBBLE_BERRY_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> CHILLI_SEEDS = registerItem("chilli_seeds", () -> new BlockNamedItem(AoABlocks.CHILLI_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
@@ -430,7 +431,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> LUNACRIKE_SEEDS = registerItem("lunacrike_seeds", () -> new BlockNamedItem(AoABlocks.LUNACRIKE_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> LUNALON_SEEDS = registerItem("lunalon_seeds", () -> new BlockNamedItem(AoABlocks.LUNALON_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> LUNA_GLOBE_SEEDS = registerItem("luna_globe_seeds", () -> new BlockNamedItem(AoABlocks.LUNA_GLOBE_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> MAGIC_MARANG_SEEDS = registerItem("magic_marang_seeds", () -> new BlockNamedItem(AoABlocks.MAGIC_MARANG_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> ROSIDON_SEEDS = registerItem("rosidon_seeds", () -> new BlockNamedItem(AoABlocks.ROSIDON_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> TEA_SEEDS = registerItem("tea_seeds", () -> new BlockNamedItem(AoABlocks.TEA_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> THORNY_PLANT_SEEDS = registerItem("thorny_plant_seeds", () -> new BlockNamedItem(AoABlocks.THORNY_PLANT_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));

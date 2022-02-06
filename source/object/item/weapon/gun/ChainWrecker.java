@@ -14,6 +14,6 @@ public class ChainWrecker extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_CHAINGUN_FIRE.get();
+		return AoASounds.ITEM_GUN_HEAVY_GENERIC_FIRE_1.get();
 	}
 }

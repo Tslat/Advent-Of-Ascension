@@ -24,7 +24,7 @@ public class Draco extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_REVOLVER_FIRE.get();
+		return AoASounds.ITEM_GUN_ENERGY_GUN_FIRE.get();
 	}
 
 	@Override

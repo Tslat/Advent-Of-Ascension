@@ -15,7 +15,7 @@ public class Monster extends BaseSniper {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_MONSTER_FIRE.get();
+		return AoASounds.ITEM_GUN_SNIPER_HEAVY_FIRE_LONG.get();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
@@ -26,14 +27,16 @@ public class Dustometer extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_2.get();
 	}
 
 	@Override
 	protected boolean fireGun(LivingEntity shooter, ItemStack stack, Hand hand) {
 		if (super.fireGun(shooter, stack, hand)) {
-			if (RandomUtil.oneInNChance(3))
+			if (!shooter.level.isClientSide() && RandomUtil.oneInNChance(3)) {
 				shooter.level.addFreshEntity(new GrenadeEntity(shooter, this, hand, 120, 0));
+				shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_GUN_AIR_CANNON_FIRE.get(), SoundCategory.PLAYERS, 1.0f, getFiringSoundPitchAdjust() + (float)random.nextGaussian() * 0.075f);
+			}
 
 			return true;
 		}

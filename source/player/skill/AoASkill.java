@@ -258,12 +258,8 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {
 			ServerPlayerEntity player = playerDataManager.player();
 
-			if (newLevel < 100) {
-				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.PLAYER_LEVEL_UP.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-			}
-			else if (newLevel == 100 || newLevel == 1000) {
-				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.PLAYER_LEVEL_100.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-			}
+			if (newLevel < 100)
+				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.PLAYER_LEVEL_UP.get(), SoundCategory.PLAYERS, 0.8f, 1.0f);
 
 			this.level = newLevel;
 			this.xp = 0f;

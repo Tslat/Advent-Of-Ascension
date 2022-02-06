@@ -18,6 +18,7 @@ public class AoALootModifiers {
 	public static final RegistryObject<GlobalLootModifierSerializer<LootModifyingItemLootModifier>> LOOT_MODIFYING_ITEM = registerSerializer("loot_modifying_items", LootModifyingItemLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<PlayerEventListenerLootModifier>> PLAYER_EVENT_LISTENER = registerSerializer("player_event_listener", PlayerEventListenerLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<HavenLootModifier>> HAVEN = registerSerializer("haven", HavenLootModifier.Serializer::new);
+	public static final RegistryObject<GlobalLootModifierSerializer<FertilisedFarmlandLootModifier>> FERTILISED_FARMLAND = registerSerializer("fertilised_farmland", FertilisedFarmlandLootModifier.Serializer::new);
 
 	private static <T extends LootModifier> RegistryObject<GlobalLootModifierSerializer<T>> registerSerializer(String id, Supplier<GlobalLootModifierSerializer<T>> serializer) {
 		return LOOT_MODIFIERS.register(id, serializer);

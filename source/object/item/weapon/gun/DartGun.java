@@ -32,7 +32,7 @@ public class DartGun extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_BLOWPIPE_FIRE.get();
+		return AoASounds.ITEM_GUN_BLOWPIPE_SHOOT.get();
 	}
 
 	@Override
@@ -57,5 +57,10 @@ public class DartGun extends BaseGun {
 	@Override
 	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, Hand hand) {
 		return new SeedDartEntity(shooter, this, hand, 120, 0);
+	}
+
+	@Override
+	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, Hand hand) {
+		doFiringSound(shooter, bullet, stack, hand);
 	}
 }

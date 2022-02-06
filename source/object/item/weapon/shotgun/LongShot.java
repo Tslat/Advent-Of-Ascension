@@ -22,12 +22,6 @@ public class LongShot extends BaseShotgun {
 		super(dmg, pellets, durability, fireDelayTicks, knockbackFactor, recoil);
 	}
 
-	@Nullable
-	@Override
-	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_REVOLVER_FIRE.get();
-	}
-
 	@Override
 	protected boolean fireGun(LivingEntity shooter, ItemStack stack, Hand hand) {
 		BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);

@@ -47,7 +47,21 @@ public class LevelRequirementToast implements IToast {
 		AoAGuiElementRenderers.getSkillRenderer(skill).renderInHud(matrix, ClientPlayerDataManager.get().getSkill(skill), mc.getDeltaFrameTime(), AoASkillRenderer.ProgressRenderType.None, false);
 		matrix.popPose();
 		mc.font.draw(matrix, title, 30, 7, -11534256);
-		mc.font.draw(matrix, subtitle, 30, 18, ColourUtil.WHITE);
+
+		int subtitleWidth = mc.font.width(subtitle);
+
+		if (subtitleWidth <= 125f) {
+			mc.font.draw(matrix, subtitle, 30, 18, ColourUtil.WHITE);
+		}
+		else {
+			matrix.pushPose();
+
+			float scale = 125f / subtitleWidth;
+
+			matrix.scale(scale, scale, 1);
+			mc.font.draw(matrix, subtitle, 30 / scale, 18 / scale, ColourUtil.WHITE);
+			matrix.popPose();
+		}
 
 		return delta >= 3000 ? Visibility.HIDE : Visibility.SHOW;
 	}

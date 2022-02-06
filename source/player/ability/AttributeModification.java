@@ -136,8 +136,12 @@ public class AttributeModification extends AoAAbility.Instance {
 	public CompoundNBT saveToNbt() {
 		CompoundNBT data = super.saveToNbt();
 
-		if (attribute == Attributes.MAX_HEALTH)
-			data.putDouble("current_health", getPlayer().getHealth());
+		if (attribute == Attributes.MAX_HEALTH) {
+			double health = getPlayer().getHealth();
+
+			if (health > 0)
+				data.putDouble("current_health", getPlayer().getHealth());
+		}
 
 		return data;
 	}

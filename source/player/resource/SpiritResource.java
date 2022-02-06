@@ -67,9 +67,14 @@ public class SpiritResource extends AoAResource.Instance {
 	}
 
 	@Override
+	public float getPerTickRegen() {
+		return regenAmount;
+	}
+
+	@Override
 	public void handlePlayerTick(TickEvent.PlayerTickEvent ev) {
 		if (this.value < getMaxValue() && playerDataManager.player().level.getGameTime() - rechargeDelay > lastUseTick)
-			addValue(regenAmount);
+			addValue(getPerTickRegen());
 	}
 
 	@Nonnull
@@ -83,9 +88,9 @@ public class SpiritResource extends AoAResource.Instance {
 		CompoundNBT data = new CompoundNBT();
 
 		if (forClientSetup) {
-			data.putFloat("max_value", maxValue);
+			data.putFloat("max_value", getMaxValue());
 			data.putInt("recharge_delay", rechargeDelay);
-			data.putFloat("regen_per_tick", regenAmount);
+			data.putFloat("regen_per_tick", getPerTickRegen());
 		}
 		else {
 			data.putFloat("value", getCurrentValue());

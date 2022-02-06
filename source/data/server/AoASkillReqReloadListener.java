@@ -161,6 +161,9 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 
 	@Nullable
 	public static Map<String, List<Pair<ResourceLocation, Integer>>> getParsedReqDataFor(ResourceLocation itemId) {
+		if (requirementsData == null)
+			return null;
+
 		return requirementsData.get(itemId);
 	}
 
@@ -211,19 +214,19 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 		}
 
 		public boolean canEquip(PlayerDataManager plData) {
-			return handlingEquip() && equipPredicate.test(plData);
+			return !handlingEquip() || equipPredicate.test(plData);
 		}
 
 		public boolean canPlaceBlock(PlayerDataManager plData) {
-			return handlingBlockPlacement() && blockPlacePredicate.test(plData);
+			return !handlingBlockPlacement() || blockPlacePredicate.test(plData);
 		}
 
 		public boolean canBreakBlock(PlayerDataManager plData) {
-			return handlingBlockBreak() && blockBreakPredicate.test(plData);
+			return !handlingBlockBreak() || blockBreakPredicate.test(plData);
 		}
 
 		public boolean canInteractWith(PlayerDataManager plData) {
-			return handlingInteraction() && interactionPredicate.test(plData);
+			return !handlingInteraction() || interactionPredicate.test(plData);
 		}
 
 		public boolean isValid() {

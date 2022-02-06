@@ -30,7 +30,7 @@ public class HeatWave extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_HEAT_WAVE_FIRE.get();
+		return AoASounds.ITEM_GUN_CANNON_FIRE_1_SHORT.get();
 	}
 
 	@Override

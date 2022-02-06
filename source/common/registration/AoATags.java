@@ -215,6 +215,7 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Item> GINGERBREAD = tag("gingerbread");
 		public static final Tags.IOptionalNamedTag<Item> MINTS = tag("mints");
 		public static final Tags.IOptionalNamedTag<Item> FOOD = tag("food");
+		public static final Tags.IOptionalNamedTag<Item> SHULKER_BOXES = tag("shulker_boxes");
 
 		public static final Tags.IOptionalNamedTag<Item> COOKIES = tag("cookies");
 		public static final Tags.IOptionalNamedTag<Item> RAWMEATS = tag("rawmeats");

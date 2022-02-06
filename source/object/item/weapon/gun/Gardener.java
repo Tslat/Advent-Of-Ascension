@@ -33,7 +33,7 @@ public class Gardener extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_BLOWPIPE_FIRE.get();
+		return AoASounds.ITEM_GUN_BLOWPIPE_SHOOT.get();
 	}
 
 	@Override

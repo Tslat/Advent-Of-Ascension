@@ -7,7 +7,6 @@ import net.minecraft.entity.INPC;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.util.ActionResultType;
@@ -21,13 +20,18 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.object.entity.ai.animation.Animatable;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAAmbientNPC extends CreatureEntity implements INPC {
+public abstract class AoAAmbientNPC extends CreatureEntity implements INPC, Animatable {
+	private final AnimationFactory animationFactory = new AnimationFactory(this);
+
 	public AoAAmbientNPC(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
 	}
@@ -63,10 +67,6 @@ public abstract class AoAAmbientNPC extends CreatureEntity implements INPC {
 
 	@Nullable
 	protected abstract String getInteractMessage(ItemStack heldItem);
-
-	protected boolean isFixedTradesList() {
-		return false;
-	}
 
 	@Override
 	public boolean checkSpawnRules(IWorld world, SpawnReason reason) {
@@ -116,10 +116,18 @@ public abstract class AoAAmbientNPC extends CreatureEntity implements INPC {
 				String msg = getInteractMessage(heldStack);
 
 				if (msg != null)
-					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent(msg).withStyle(TextFormatting.GRAY));
+					PlayerUtil.notifyPlayer(player, new TranslationTextComponent(msg).withStyle(TextFormatting.GRAY));
 			}
 		}
 
 		return super.mobInteract(player, hand);
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return animationFactory;
 	}
 }

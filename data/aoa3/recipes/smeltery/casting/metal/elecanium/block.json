@@ -1,0 +1,17 @@
+{
+  "type": "tconstruct:casting_basin",
+  "conditions": [
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "fluid": {
+    "tag": "forge:molten_elecanium",
+    "amount": 1296
+  },
+  "result": {
+    "tag": "forge:storage_blocks/elecanium"
+  },
+  "cooling_time": 168
+}

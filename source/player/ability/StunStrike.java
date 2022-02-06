@@ -11,6 +11,8 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.Hand;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
@@ -51,11 +53,13 @@ public class StunStrike extends AoAAbility.Instance {
 		return LISTENERS;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public KeyBinding getKeybind() {
 		return AoAKeybinds.ABILITY_ACTION;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean shouldSendKeyPress() {
 		ClientPlayerEntity pl = Minecraft.getInstance().player;

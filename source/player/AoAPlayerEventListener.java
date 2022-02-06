@@ -199,6 +199,8 @@ public interface AoAPlayerEventListener {
 	 *
 	 * Will only trigger if {@link ListenerType#BLOCK_BREAK_SPEED} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
+	 * This handler is called on both the client and the server indiscriminately.
+	 *
 	 * @param ev {@link PlayerEvent.BreakSpeed} event
 	 */
 	default void handleHarvestSpeedCheck(final PlayerEvent.BreakSpeed ev) {}
@@ -282,6 +284,8 @@ public interface AoAPlayerEventListener {
 	 *
 	 * Will only trigger if {@link ListenerType#ITEM_CRAFT} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
+	 * This handler is called on both the client and the server indiscriminately.
+	 *
 	 * @param ev {@link PlayerEvent.ItemCraftedEvent} event
 	 */
 	default void handleItemCraft(final PlayerEvent.ItemCraftedEvent ev) {}
@@ -291,6 +295,8 @@ public interface AoAPlayerEventListener {
 	 * Override to trigger effects for when a player has retrieved an item from a furnace or smelting device. The resulting stack is not modifiable here.
 	 *
 	 * Will only trigger if {@link ListenerType#ITEM_SMELT} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
+	 * This handler is called on both the client and the server indiscriminately.
 	 *
 	 * @param ev {@link PlayerEvent.ItemSmeltedEvent} event
 	 */
@@ -438,6 +444,16 @@ public interface AoAPlayerEventListener {
 	default void handleEntityKill(final LivingDeathEvent ev) {}
 
 	/**
+	 * This method gets triggered when a baby is about to be spawned by two parent entities breeding.
+	 * Override this method to change or cancel the baby spawn interaction or trigger further effects.
+	 *
+	 * Will only trigger if {@link ListenerType#ANIMAL_BREED} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
+	 * @param ev {@link BabyEntitySpawnEvent} event
+	 */
+	default void handleAnimalBreed(final BabyEntitySpawnEvent ev) {}
+
+	/**
 	 * This method gets triggered when a loot table is rolled that involves the player in some way.
 	 * Override this method to handle loot modification, either addition, removal, or negation.
 	 * Modify the provided loot list, do not create a new one. The remaining contents of the list will be dropped in the world as normal.
@@ -550,6 +566,7 @@ public interface AoAPlayerEventListener {
 		OUTGOING_ATTACK_DURING,
 		OUTGOING_ATTACK_AFTER,
 		ENTITY_KILL,
+		ANIMAL_BREED,
 		KEY_INPUT,
 		CUSTOM
 	}

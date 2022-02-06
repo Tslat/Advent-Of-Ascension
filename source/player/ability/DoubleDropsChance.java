@@ -7,43 +7,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoubleDropsChance extends AoAAbility.Instance {
+public class DoubleDropsChance extends ScalableModAbility {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.LOOT_MODIFICATION};
-
-	private final float baseChance;
-	private final float perLevelMod;
 
 	public DoubleDropsChance(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.DOUBLE_DROPS_CHANCE.get(), skill, data);
-
-		this.baseChance = JSONUtils.getAsFloat(data, "base_chance", 0);
-		this.perLevelMod = JSONUtils.getAsFloat(data, "per_level_mod", 0);
 	}
 
 	public DoubleDropsChance(AoASkill.Instance skill, CompoundNBT data) {
 		super(AoAAbilities.DOUBLE_DROPS_CHANCE.get(), skill, data);
-
-		this.baseChance = data.getFloat("base_chance");
-		this.perLevelMod = data.getFloat("per_level_mod");
-	}
-
-	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(),
-				LocaleUtil.getAbilityValueDesc(baseChance > 0, perLevelMod > 0, true,
-						NumberUtil.roundToNthDecimalPlace(baseChance * 100, 2),
-						NumberUtil.roundToNthDecimalPlace(perLevelMod * 100, 2))));
 	}
 
 	@Override
@@ -61,7 +39,7 @@ public class DoubleDropsChance extends AoAAbility.Instance {
 		if (killedEntity instanceof PlayerEntity)
 			return;
 
-		if (RandomUtil.percentChance(baseChance + skill.getLevel(false) * perLevelMod)) {
+		if (testAsChance()) {
 			List<ItemStack> extras = null;
 
 			for (ItemStack stack : loot) {
@@ -91,17 +69,5 @@ public class DoubleDropsChance extends AoAAbility.Instance {
 			if (extras != null)
 				loot.addAll(extras);
 		}
-	}
-
-	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
-
-		if (forClientSetup) {
-			data.putFloat("base_chance", this.baseChance);
-			data.putFloat("per_level_mod", this.perLevelMod);
-		}
-
-		return data;
 	}
 }

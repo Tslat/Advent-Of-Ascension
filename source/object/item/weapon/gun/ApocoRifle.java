@@ -29,7 +29,7 @@ public class ApocoRifle extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_DISCHARGE_GUN_FIRE.get();
+		return AoASounds.ITEM_GUN_PLASMA_GUN_FIRE.get();
 	}
 
 	@Override

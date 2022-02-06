@@ -10,6 +10,8 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
@@ -123,6 +125,18 @@ public class LevelRestriction extends AoAAbility.Instance {
 			}
 		}
 
+		return false;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public boolean onGuiHover(int mouseX, int mouseY) {
+		return false;
+	}
+
+	@OnlyIn(Dist.CLIENT)
+	@Override
+	public boolean onGuiClick(int mouseX, int mouseY) {
 		return false;
 	}
 }

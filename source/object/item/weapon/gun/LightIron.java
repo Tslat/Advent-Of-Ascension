@@ -21,7 +21,12 @@ public class LightIron extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SLUGGER_FIRE.get();
+		return AoASounds.ITEM_GUN_CANNON_FIRE_1_LONG.get();
+	}
+
+	@Override
+	protected float getFiringSoundPitchAdjust() {
+		return 1.1f;
 	}
 
 	@Override

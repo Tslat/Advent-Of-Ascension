@@ -138,7 +138,6 @@ public class NativePatching {
 		ComposterBlock.add(0.3f, AoAItems.LUNACRIKE_SEEDS.get());
 		ComposterBlock.add(0.3f, AoAItems.LUNALON_SEEDS.get());
 		ComposterBlock.add(0.3f, AoAItems.LUNA_GLOBE_SEEDS.get());
-		ComposterBlock.add(0.3f, AoAItems.MAGIC_MARANG_SEEDS.get());
 		ComposterBlock.add(0.3f, AoAItems.ROSIDON_SEEDS.get());
 		ComposterBlock.add(0.3f, AoAItems.TEA_SEEDS.get());
 		ComposterBlock.add(0.3f, AoAItems.THORNY_PLANT_SEEDS.get());

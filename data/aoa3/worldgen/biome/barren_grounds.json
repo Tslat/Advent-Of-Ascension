@@ -11,7 +11,13 @@
     "sky_color": 12356653,
     "water_color": 16773825,
     "water_fog_color": 16773825,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aoa3:barren_grounds_music",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
   },
   "surface_builder": "aoa3:barathos",
   "carvers": {
@@ -54,31 +60,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:keeler",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:cryptid",
-        "weight": 30,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:echodar",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:arkback",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:ramradon",
+        "type": "aoa3:parasect",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -90,13 +72,19 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:echodar",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:tharafly",
         "weight": 15,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:parasect",
+        "type": "aoa3:arkback",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -104,6 +92,24 @@
       {
         "type": "aoa3:squiggler",
         "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:cryptid",
+        "weight": 30,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:keeler",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:ramradon",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }

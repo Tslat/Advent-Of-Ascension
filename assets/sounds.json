@@ -1,25 +1,379 @@
 {
-  "player.tribute.success": {
+  "item.gun.minigun.fire": {
+    "subtitle": "subtitles.item.gun.minigun.fire",
     "sounds": [
-      "aoa3:player/tribute/success"
+      "aoa3:item/gun/minigun/fire-01",
+      "aoa3:item/gun/minigun/fire-02",
+      "aoa3:item/gun/minigun/fire-03",
+      "aoa3:item/gun/minigun/fire-04",
+      "aoa3:item/gun/minigun/fire-05",
+      "aoa3:item/gun/minigun/fire-06",
+      "aoa3:item/gun/minigun/fire-07",
+      "aoa3:item/gun/minigun/fire-08",
+      "aoa3:item/gun/minigun/fire-09",
+      "aoa3:item/gun/minigun/fire-10",
+      "aoa3:item/gun/minigun/fire-11",
+      "aoa3:item/gun/minigun/fire-12",
+      "aoa3:item/gun/minigun/fire-13",
+      "aoa3:item/gun/minigun/fire-14",
+      "aoa3:item/gun/minigun/fire-15",
+      "aoa3:item/gun/minigun/fire-16",
+      "aoa3:item/gun/minigun/fire-17",
+      "aoa3:item/gun/minigun/fire-18",
+      "aoa3:item/gun/minigun/fire-19",
+      "aoa3:item/gun/minigun/fire-20",
+      "aoa3:item/gun/minigun/fire-21",
+      "aoa3:item/gun/minigun/fire-22",
+      "aoa3:item/gun/minigun/fire-23",
+      "aoa3:item/gun/minigun/fire-24",
+      "aoa3:item/gun/minigun/fire-25",
+      "aoa3:item/gun/minigun/fire-26",
+      "aoa3:item/gun/minigun/fire-27",
+      "aoa3:item/gun/minigun/fire-28",
+      "aoa3:item/gun/minigun/fire-29",
+      "aoa3:item/gun/minigun/fire-30",
+      "aoa3:item/gun/minigun/fire-31",
+      "aoa3:item/gun/minigun/fire-32",
+      "aoa3:item/gun/minigun/fire-33",
+      "aoa3:item/gun/minigun/fire-34",
+      "aoa3:item/gun/minigun/fire-35",
+      "aoa3:item/gun/minigun/fire-36",
+      "aoa3:item/gun/minigun/fire-37",
+      "aoa3:item/gun/minigun/fire-38",
+      "aoa3:item/gun/minigun/fire-39",
+      "aoa3:item/gun/minigun/fire-40",
+      "aoa3:item/gun/minigun/fire-41",
+      "aoa3:item/gun/minigun/fire-42",
+      "aoa3:item/gun/minigun/fire-43",
+      "aoa3:item/gun/minigun/fire-44",
+      "aoa3:item/gun/minigun/fire-45",
+      "aoa3:item/gun/minigun/fire-46",
+      "aoa3:item/gun/minigun/fire-47",
+      "aoa3:item/gun/minigun/fire-48",
+      "aoa3:item/gun/minigun/fire-49"
     ]
   },
-  "player.skills.loot": {
-    "subtitle": "subtitles.player.skills.loot",
+  "item.gun.generic.fire.1": {
+    "subtitle": "subtitles.item.gun.generic.fire.1",
     "sounds": [
-      "aoa3:player/skills/loot"
+      "aoa3:item/gun/generic/fire1-01",
+      "aoa3:item/gun/generic/fire1-02",
+      "aoa3:item/gun/generic/fire1-03",
+      "aoa3:item/gun/generic/fire1-04",
+      "aoa3:item/gun/generic/fire1-05"
     ]
   },
-  "player.skills.level_100": {
-    "subtitle": "subtitles.player.skills.level_100",
+  "item.gun.generic.fire.2": {
+    "subtitle": "subtitles.item.gun.generic.fire.2",
     "sounds": [
-      "aoa3:player/skills/level_100"
+      "aoa3:item/gun/generic/fire2-01",
+      "aoa3:item/gun/generic/fire2-02",
+      "aoa3:item/gun/generic/fire2-03",
+      "aoa3:item/gun/generic/fire2-04"
+    ]
+  },
+  "item.gun.generic.fire.3": {
+    "subtitle": "subtitles.item.gun.generic.fire.3",
+    "sounds": [
+      "aoa3:item/gun/generic/fire3-01",
+      "aoa3:item/gun/generic/fire3-02",
+      "aoa3:item/gun/generic/fire3-03",
+      "aoa3:item/gun/generic/fire3-04",
+      "aoa3:item/gun/generic/fire3-05",
+      "aoa3:item/gun/generic/fire3-06"
+    ]
+  },
+  "item.gun.generic.fire.4": {
+    "subtitle": "subtitles.item.gun.generic.fire.4",
+    "sounds": [
+      "aoa3:item/gun/generic/fire4-01",
+      "aoa3:item/gun/generic/fire4-02",
+      "aoa3:item/gun/generic/fire4-03",
+      "aoa3:item/gun/generic/fire4-04",
+      "aoa3:item/gun/generic/fire4-05",
+      "aoa3:item/gun/generic/fire4-06",
+      "aoa3:item/gun/generic/fire4-07",
+      "aoa3:item/gun/generic/fire4-08",
+      "aoa3:item/gun/generic/fire4-09",
+      "aoa3:item/gun/generic/fire4-10"
+    ]
+  },
+  "item.gun.generic.fire.5": {
+    "subtitle": "subtitles.item.gun.generic.fire.5",
+    "sounds": [
+      "aoa3:item/gun/generic/fire5-01",
+      "aoa3:item/gun/generic/fire5-02",
+      "aoa3:item/gun/generic/fire5-03",
+      "aoa3:item/gun/generic/fire5-04",
+      "aoa3:item/gun/generic/fire5-05"
+    ]
+  },
+  "item.gun.heavy_generic.fire.1": {
+    "subtitle": "subtitles.item.gun.heavy_generic.fire.1",
+    "sounds": [
+      "aoa3:item/gun/heavy_generic/fire1-01",
+      "aoa3:item/gun/heavy_generic/fire1-02",
+      "aoa3:item/gun/heavy_generic/fire1-03",
+      "aoa3:item/gun/heavy_generic/fire1-04",
+      "aoa3:item/gun/heavy_generic/fire1-05",
+      "aoa3:item/gun/heavy_generic/fire1-06",
+      "aoa3:item/gun/heavy_generic/fire1-07",
+      "aoa3:item/gun/heavy_generic/fire1-08",
+      "aoa3:item/gun/heavy_generic/fire1-09",
+      "aoa3:item/gun/heavy_generic/fire1-10"
+    ]
+  },
+  "item.gun.heavy_generic.fire.2": {
+    "subtitle": "subtitles.item.gun.heavy_generic.fire.2",
+    "sounds": [
+      "aoa3:item/gun/heavy_generic/fire2-01",
+      "aoa3:item/gun/heavy_generic/fire2-02",
+      "aoa3:item/gun/heavy_generic/fire2-03",
+      "aoa3:item/gun/heavy_generic/fire2-04"
+    ]
+  },
+  "item.gun.cannon.fire.1.short": {
+    "subtitle": "subtitles.item.gun.cannon.fire.1.short",
+    "sounds": [
+      "aoa3:item/gun/cannon/fire1_short"
+    ]
+  },
+  "item.gun.cannon.fire.1.long": {
+    "subtitle": "subtitles.item.gun.cannon.fire.1.long",
+    "sounds": [
+      "aoa3:item/gun/cannon/fire1_long"
+    ]
+  },
+  "item.gun.sniper.metallic_fire.short": {
+    "subtitle": "subtitles.item.gun.sniper.metallic_fire.short",
+    "sounds": [
+      "aoa3:item/gun/sniper/metallic_fire_short"
+    ]
+  },
+  "item.gun.sniper.metallic_fire.long": {
+    "subtitle": "subtitles.item.gun.sniper.metallic_fire.long",
+    "sounds": [
+      "aoa3:item/gun/sniper/metallic_fire_long"
+    ]
+  },
+  "item.gun.sniper.heavy_fire.short": {
+    "subtitle": "subtitles.item.gun.sniper.heavy_fire.short",
+    "sounds": [
+      "aoa3:item/gun/sniper/heavy_fire_short"
+    ]
+  },
+  "item.gun.sniper.heavy_fire.long": {
+    "subtitle": "subtitles.item.gun.sniper.heavy_fire.long",
+    "sounds": [
+      "aoa3:item/gun/sniper/heavy_fire_long"
+    ]
+  },
+  "item.gun.sniper.medium_fire.short": {
+    "subtitle": "subtitles.item.gun.sniper.medium_fire.short",
+    "sounds": [
+      "aoa3:item/gun/sniper/medium_fire_short"
+    ]
+  },
+  "item.gun.sniper.medium_fire.long": {
+    "subtitle": "subtitles.item.gun.sniper.medium_fire.long",
+    "sounds": [
+      "aoa3:item/gun/sniper/medium_fire_long"
+    ]
+  },
+  "item.gun.rifle.medium_fire.short": {
+    "subtitle": "subtitles.item.gun.rifle.medium_fire.short",
+    "sounds": [
+      "aoa3:item/gun/rifle/medium_fire_short"
+    ]
+  },
+  "item.gun.rifle.medium_fire.long": {
+    "subtitle": "subtitles.item.gun.rifle.medium_fire.long",
+    "sounds": [
+      "aoa3:item/gun/rifle/medium_fire_long"
+    ]
+  },
+  "item.gun.rifle.heavy_fire.short": {
+    "subtitle": "subtitles.item.gun.rifle.heavy_fire.short",
+    "sounds": [
+      "aoa3:item/gun/rifle/heavy_fire_short"
+    ]
+  },
+  "item.gun.rifle.heavy_fire.long": {
+    "subtitle": "subtitles.item.gun.rifle.heavy_fire.long",
+    "sounds": [
+      "aoa3:item/gun/rifle/heavy_fire_long"
+    ]
+  },
+  "item.gun.shotgun.heavy_fire.short": {
+    "subtitle": "subtitles.item.gun.shotgun.heavy_fire.short",
+    "sounds": [
+      "aoa3:item/gun/shotgun/heavy_fire_short-01",
+      "aoa3:item/gun/shotgun/heavy_fire_short-02"
+    ]
+  },
+  "item.gun.shotgun.heavy_fire.long": {
+    "subtitle": "subtitles.item.gun.shotgun.heavy_fire.long",
+    "sounds": [
+      "aoa3:item/gun/shotgun/heavy_fire_long-01",
+      "aoa3:item/gun/shotgun/heavy_fire_long-02"
+    ]
+  },
+  "item.gun.shotgun.medium_fire.short": {
+    "subtitle": "subtitles.item.gun.shotgun.medium_fire.short",
+    "sounds": [
+      "aoa3:item/gun/shotgun/medium_fire_short-01",
+      "aoa3:item/gun/shotgun/medium_fire_short-02"
+    ]
+  },
+  "item.gun.shotgun.medium_fire.long": {
+    "subtitle": "subtitles.item.gun.shotgun.medium_fire.long",
+    "sounds": [
+      "aoa3:item/gun/shotgun/medium_fire_long-01",
+      "aoa3:item/gun/shotgun/medium_fire_long-02"
+    ]
+  },
+  "item.gun.minigun.winddown": {
+    "sounds": [
+      "aoa3:item/gun/minigun/winddown"
+    ]
+  },
+  "item.gun.air_cannon.fire": {
+    "subtitle": "subtitles.item.gun.air_cannon.fire",
+    "sounds": [
+      "aoa3:item/gun/air_cannon/fire"
+    ]
+  },
+  "item.gun.plasma_gun.fire": {
+    "subtitle": "subtitles.item.gun.plasma_gun.fire",
+    "sounds": [
+      "aoa3:item/gun/plasma_gun/fire"
+    ]
+  },
+  "item.gun.blowpipe.shoot": {
+    "subtitle": "subtitles.item.gun.blowpipe.shoot",
+    "sounds": [
+      "aoa3:item/gun/blowpipe/shoot"
+    ]
+  },
+  "item.gun.energy_gun.fire": {
+    "subtitle": "subtitles.item.gun.energy_gun.fire",
+    "sounds": [
+      "aoa3:item/gun/energy_gun/fire-01",
+      "aoa3:item/gun/energy_gun/fire-02",
+      "aoa3:item/gun/energy_gun/fire-03",
+      "aoa3:item/gun/energy_gun/fire-04",
+      "aoa3:item/gun/energy_gun/fire-05",
+      "aoa3:item/gun/energy_gun/fire-06"
     ]
   },
   "player.skills.level_up": {
     "subtitle": "subtitles.player.skills.level_up",
     "sounds": [
       "aoa3:player/skills/level_up"
+    ]
+  },
+  "entity.dryad_sprite.happy": {
+    "subtitle": "subtitles.entity.dryad_sprite.happy",
+    "sounds": [
+      "aoa3:entity/dryad_sprite/dryad_sprite_happy"
+    ]
+  },
+  "entity.dryad_sprite.unhappy": {
+    "subtitle": "subtitles.entity.dryad_sprite.unhappy",
+    "sounds": [
+      "aoa3:entity/dryad_sprite/dryad_sprite_unhappy"
+    ]
+  },
+  "biome.barren_grounds.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/barathos/barren_grounds/barren_grounds_music_1",
+        "stream": true
+      },
+      {
+        "name": "aoa3:biome/barathos/barren_grounds/barren_grounds_music_2",
+        "stream": true
+      }
+    ]
+  },
+  "biome.cavern_depths.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/deeplands/cavern_depths/cavern_depths_music",
+        "stream": true
+      }
+    ]
+  },
+  "biome.celeve.extra": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/celeve/celeve_extra",
+        "stream": true
+      }
+    ]
+  },
+  "biome.crystevian_caverns.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/crystevia/crystevian_caverns/crystevian_caverns_music",
+        "stream": true
+      }
+    ]
+  },
+  "biome.dustopian_forest.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/dustopia/dustopian_forest/dustopian_forest_music",
+        "stream": true
+      }
+    ]
+  },
+  "biome.iromine.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/iromine/iromine/iromine_music",
+        "stream": true
+      }
+    ]
+  },
+  "biome.lelyetian_plains.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/lelyetia/lelyetian_plains/lelyetian_plains_music",
+        "stream": true
+      }
+    ]
+  },
+  "biome.nowhere.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/nowhere/nowhere/nowhere_music",
+        "stream": true
+      }
+    ]
+  },
+  "biome.runic_cliffs.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/runandor/runic_cliffs/runic_cliffs_music",
+        "stream": true
+      }
+    ]
+  },
+  "biome.vox_wastes.music": {
+    "sounds": [
+      {
+        "name": "aoa3:biome/vox_ponds/vox_wastes/vox_wastes_music_1",
+        "stream": true
+      },
+      {
+        "name": "aoa3:biome/vox_ponds/vox_wastes/vox_wastes_music_2",
+        "stream": true
+      },
+      {
+        "name": "aoa3:biome/vox_ponds/vox_wastes/vox_wastes_music_3",
+        "stream": true
+      }
     ]
   },
   "entity.airhead.ambient": {
@@ -3618,12 +3972,6 @@
       "aoa3:entity/baron_bomb/spawn"
     ]
   },
-  "entity.bloodlust.collect": {
-    "subtitle": "subtitles.entity.bloodlust.collect",
-    "sounds": [
-      "aoa3:entity/bloodlust/collect"
-    ]
-  },
   "entity.bubble_shot.pop": {
     "subtitle": "subtitles.entity.bubble_shot.pop",
     "sounds": [
@@ -3634,18 +3982,6 @@
     "subtitle": "subtitles.entity.goo_ball.impact",
     "sounds": [
       "aoa3:entity/goo_ball/impact"
-    ]
-  },
-  "entity.heart_stone.collect": {
-    "subtitle": "subtitles.entity.heart_stone.collect",
-    "sounds": [
-      "aoa3:entity/heart_stone/collect"
-    ]
-  },
-  "entity.heart_stone.spawn": {
-    "subtitle": "subtitles.entity.heart_stone.spawn",
-    "sounds": [
-      "aoa3:entity/heart_stone/spawn"
     ]
   },
   "entity.hellfire.impact": {
@@ -3664,18 +4000,6 @@
     "subtitle": "subtitles.misc.jingle_bells",
     "sounds": [
       "aoa3:misc/jingle_bells"
-    ]
-  },
-  "item.abominator.fire": {
-    "subtitle": "subtitles.item.abominator.fire",
-    "sounds": [
-      "aoa3:item/abominator/fire"
-    ]
-  },
-  "item.artifact.fire": {
-    "subtitle": "subtitles.item.artifact.fire",
-    "sounds": [
-      "aoa3:item/artifact/fire"
     ]
   },
   "item.atlantic_staff.cast": {
@@ -3700,12 +4024,6 @@
     "subtitle": "subtitles.item.big_blast.fire",
     "sounds": [
       "aoa3:item/big_blast/fire"
-    ]
-  },
-  "item.blowpipe.fire": {
-    "subtitle": "subtitles.item.blowpipe.fire",
-    "sounds": [
-      "aoa3:item/blowpipe/fire"
     ]
   },
   "item.bone_horn.call": {
@@ -3744,22 +4062,10 @@
       "aoa3:item/celestial_staff/cast"
     ]
   },
-  "item.chaingun.fire": {
-    "subtitle": "subtitles.item.chaingun.fire",
-    "sounds": [
-      "aoa3:item/chaingun/fire"
-    ]
-  },
   "item.chainsaw.use": {
     "subtitle": "subtitles.item.chainsaw.use",
     "sounds": [
       "aoa3:item/chainsaw/use"
-    ]
-  },
-  "item.chugger.fire": {
-    "subtitle": "subtitles.item.chugger.fire",
-    "sounds": [
-      "aoa3:item/chugger/fire"
     ]
   },
   "item.clowner.fire": {
@@ -3792,12 +4098,6 @@
       "aoa3:item/coral_staff/cast"
     ]
   },
-  "item.creation_slab.use": {
-    "subtitle": "subtitles.item.creation_slab.use",
-    "sounds": [
-      "aoa3:item/creation_slab/use"
-    ]
-  },
   "item.crystevia_staff.cast": {
     "subtitle": "subtitles.item.crystevia_staff.cast",
     "sounds": [
@@ -3808,12 +4108,6 @@
     "subtitle": "subtitles.item.dark_gun.fire",
     "sounds": [
       "aoa3:item/dark_gun/fire"
-    ]
-  },
-  "item.discharge_gun.fire": {
-    "subtitle": "subtitles.item.discharge_gun.fire",
-    "sounds": [
-      "aoa3:item/discharge_gun/fire"
     ]
   },
   "item.doom_gun.fire": {
@@ -3846,22 +4140,10 @@
       "aoa3:item/ever_staff/cast"
     ]
   },
-  "item.fast_rifle.fire": {
-    "subtitle": "subtitles.item.fast_rifle.fire",
-    "sounds": [
-      "aoa3:item/fast_rifle/fire"
-    ]
-  },
   "item.firefly_staff.cast": {
     "subtitle": "subtitles.item.firefly_staff.cast",
     "sounds": [
       "aoa3:item/firefly_staff/cast"
-    ]
-  },
-  "item.flinger.fire": {
-    "subtitle": "subtitles.item.flinger.fire",
-    "sounds": [
-      "aoa3:item/flinger/fire"
     ]
   },
   "item.fungal_staff.cast": {
@@ -3876,12 +4158,6 @@
       "aoa3:item/gas_gun/fire"
     ]
   },
-  "item.gauge_rifle.fire": {
-    "subtitle": "subtitles.item.gauge_rifle.fire",
-    "sounds": [
-      "aoa3:item/gauge_rifle/fire"
-    ]
-  },
   "item.golem_gun.fire": {
     "subtitle": "subtitles.item.golem_gun.fire",
     "sounds": [
@@ -3892,12 +4168,6 @@
     "subtitle": "subtitles.item.gravity_blaster.fire",
     "sounds": [
       "aoa3:item/gravity_blaster/fire"
-    ]
-  },
-  "item.heat_wave.fire": {
-    "subtitle": "subtitles.item.heat_wave.fire",
-    "sounds": [
-      "aoa3:item/heat_wave/fire"
     ]
   },
   "item.high_cannon.fire": {
@@ -3990,12 +4260,6 @@
       "aoa3:item/mind_blaster/fire"
     ]
   },
-  "item.minigun.fire": {
-    "subtitle": "subtitles.item.minigun.fire",
-    "sounds": [
-      "aoa3:item/minigun/fire"
-    ]
-  },
   "item.mini_pistol.fire": {
     "subtitle": "subtitles.item.mini_pistol.fire",
     "sounds": [
@@ -4006,12 +4270,6 @@
     "subtitle": "subtitles.item.missile_maker.fire",
     "sounds": [
       "aoa3:item/missile_maker/fire"
-    ]
-  },
-  "item.monster.fire": {
-    "subtitle": "subtitles.item.monster.fire",
-    "sounds": [
-      "aoa3:item/monster/fire"
     ]
   },
   "item.moonlight_staff.cast": {
@@ -4092,18 +4350,6 @@
       "aoa3:item/revolution/fire"
     ]
   },
-  "item.revolver.fire": {
-    "subtitle": "subtitles.item.revolver.fire",
-    "sounds": [
-      "aoa3:item/revolver/fire"
-    ]
-  },
-  "item.roulette.fire": {
-    "subtitle": "subtitles.item.roulette.fire",
-    "sounds": [
-      "aoa3:item/roulette/fire"
-    ]
-  },
   "item.rpg.fire": {
     "subtitle": "subtitles.item.rpg.fire",
     "sounds": [
@@ -4128,12 +4374,6 @@
       "aoa3:item/shadow_staff/cast"
     ]
   },
-  "item.shotgun.fire": {
-    "subtitle": "subtitles.item.shotgun.fire",
-    "sounds": [
-      "aoa3:item/shotgun/fire"
-    ]
-  },
   "item.show_staff.cast": {
     "subtitle": "subtitles.item.show_staff.cast",
     "sounds": [
@@ -4150,18 +4390,6 @@
     "subtitle": "subtitles.item.sky_staff.cast",
     "sounds": [
       "aoa3:item/sky_staff/cast"
-    ]
-  },
-  "item.slugger.fire": {
-    "subtitle": "subtitles.item.slugger.fire",
-    "sounds": [
-      "aoa3:item/slugger/fire"
-    ]
-  },
-  "item.sniper.fire": {
-    "subtitle": "subtitles.item.sniper.fire",
-    "sounds": [
-      "aoa3:item/sniper/fire"
     ]
   },
   "item.soul_spark.fire": {
@@ -4194,22 +4422,10 @@
       "aoa3:item/sprayer/fire"
     ]
   },
-  "item.squad_gun.fire": {
-    "subtitle": "subtitles.item.squad_gun.fire",
-    "sounds": [
-      "aoa3:item/squad_gun/fire"
-    ]
-  },
   "item.staff.cast": {
     "subtitle": "subtitles.item.staff.cast",
     "sounds": [
       "aoa3:item/staff/cast"
-    ]
-  },
-  "item.stampede.fire": {
-    "subtitle": "subtitles.item.stampede.fire",
-    "sounds": [
-      "aoa3:item/stampede/fire"
     ]
   },
   "item.sun_staff.cast": {
@@ -4276,12 +4492,6 @@
     "subtitle": "subtitles.item.wither_cannon.fire",
     "sounds": [
       "aoa3:item/wither_cannon/fire"
-    ]
-  },
-  "item.wood_rifle.fire": {
-    "subtitle": "subtitles.item.wood_rifle.fire",
-    "sounds": [
-      "aoa3:item/wood_rifle/fire"
     ]
   },
   "portal.abyss.activate": {
@@ -4356,12 +4566,6 @@
       "aoa3:portal/shyrelands/activate"
     ]
   },
-  "block.creation_forge.sacrifice": {
-    "subtitle": "subtitles.block.creation_forge.sacrifice",
-    "sounds": [
-      "aoa3:block/creation_forge/sacrifice"
-    ]
-  },
   "block.crystal_creator.convert": {
     "subtitle": "subtitles.block.crystal_creator.convert",
     "sounds": [
@@ -4374,22 +4578,10 @@
       "aoa3:block/declogging_table/use"
     ]
   },
-  "block.extraction_device.use": {
-    "subtitle": "subtitles.block.extraction_device.use",
-    "sounds": [
-      "aoa3:block/extraction_device/use"
-    ]
-  },
   "block.haunting_table.use": {
     "subtitle": "subtitles.block.haunting_table.use",
     "sounds": [
       "aoa3:block/haunting_table/use"
-    ]
-  },
-  "block.infusion_table.convert": {
-    "subtitle": "subtitles.block.infusion_table.convert",
-    "sounds": [
-      "aoa3:block/infusion_table/convert"
     ]
   },
   "block.petal_crafting_station.use": {
@@ -4437,7 +4629,7 @@
   "entity.bane.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/bane/music",
+        "name": "aoa3:entity/bane/bane_music",
         "stream": true
       }
     ]
@@ -4445,7 +4637,7 @@
   "entity.baroness.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/baroness/music",
+        "name": "aoa3:entity/baroness/baroness_music",
         "stream": true
       }
     ]
@@ -4461,7 +4653,7 @@
   "entity.clunkhead.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/clunkhead/music",
+        "name": "aoa3:entity/clunkhead/clunkhead_music",
         "stream": true
       }
     ]
@@ -4469,7 +4661,7 @@
   "entity.corallus.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/corallus/music",
+        "name": "aoa3:entity/corallus/corallus_music",
         "stream": true
       }
     ]
@@ -4477,7 +4669,7 @@
   "entity.cotton_candor.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/cotton_candor/music",
+        "name": "aoa3:entity/cotton_candor/cotton_candor_music",
         "stream": true
       }
     ]
@@ -4485,7 +4677,7 @@
   "entity.craexxeus.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/craexxeus/music",
+        "name": "aoa3:entity/craexxeus/craexxeus_music",
         "stream": true
       }
     ]
@@ -4517,7 +4709,7 @@
   "entity.elusive.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/elusive/music",
+        "name": "aoa3:entity/elusive/elusive_music",
         "stream": true
       }
     ]
@@ -4541,7 +4733,7 @@
   "entity.gyro.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/gyro/music",
+        "name": "aoa3:entity/gyro/gyro_music",
         "stream": true
       }
     ]
@@ -4549,7 +4741,7 @@
   "entity.hive_king.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/hive_king/music",
+        "name": "aoa3:entity/hive_king/hive_king_music",
         "stream": true
       }
     ]
@@ -4565,7 +4757,7 @@
   "entity.king_shroomus.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/king_shroomus/music",
+        "name": "aoa3:entity/king_shroomus/king_shroomus_music",
         "stream": true
       }
     ]
@@ -4581,7 +4773,7 @@
   "entity.mechbot.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/mechbot/music",
+        "name": "aoa3:entity/mechbot/mechbot_music",
         "stream": true
       }
     ]
@@ -4645,7 +4837,7 @@
   "entity.tyrosaur.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/tyrosaur/music",
+        "name": "aoa3:entity/tyrosaur/tyrosaur_music",
         "stream": true
       }
     ]
@@ -4653,7 +4845,7 @@
   "entity.vinocorne.music": {
     "sounds": [
       {
-        "name": "aoa3:entity/vinocorne/music",
+        "name": "aoa3:entity/vinocorne/vinocorne_music",
         "stream": true
       }
     ]

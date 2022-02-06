@@ -5,59 +5,63 @@
   "entities": [
     {
       "weight": 200,
-      "weight_mod": -3.0,
+      "weight_mod": -10.0,
       "entity": "minecraft:cod"
     },
     {
       "weight": 200,
-      "weight_mod": -3.0,
+      "weight_mod": -10.0,
       "entity": "minecraft:salmon"
     },
     {
-      "weight": 10,
-      "weight_mod": 1.0,
+      "weight": 50,
+      "weight_mod": 10.0,
       "entity": "aoa3:rainbowfish"
     },
     {
-      "weight": 70,
-      "weight_mod": 1.0,
+      "weight": 140,
+      "weight_mod": 20.0,
       "entity": "aoa3:ironback"
     },
     {
       "weight": 120,
+      "weight_mod": 5.0,
       "item": "minecraft:iron_nugget"
     },
     {
-      "weight": 100,
+      "weight": 110,
+      "weight_mod": 7.0,
       "item": "minecraft:gold_nugget"
     },
     {
-      "weight": 50,
-      "weight_mod": 1.0,
+      "weight": 90,
+      "weight_mod": 11.0,
       "item": "minecraft:gold_ingot"
     },
     {
-      "weight": 70,
-      "weight_mod": 1.0,
+      "weight": 100,
+      "weight_mod": 9.0,
       "item": "minecraft:iron_ingot"
     },
     {
       "level": 25,
-      "weight": 2,
-      "weight_mod": 1.0,
+      "weight": 35,
+      "weight_mod": 5.0,
       "item": "aoa3:crystal_box"
     },
     {
       "level": 10,
-      "weight": 2,
-      "weight_mod": 1.0,
+      "weight": 35,
+      "weight_mod": 5.0,
       "item": "aoa3:shiny_box"
     },
     {
       "level": 50,
-      "weight_mod": 1.0,
+      "weight_mod": 2.0,
       "item": "aoa3:old_boot"
     },
-    "minecraft:water_bucket"
+    {
+      "item": "minecraft:water_bucket"
+    }
   ]
 }

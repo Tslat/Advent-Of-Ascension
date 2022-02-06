@@ -38,7 +38,7 @@ public class Pickmax extends BasePickaxe {
 						BlockState extraBlock = world.getBlockState(breakPos);
 
 						if ((extraBlock.is(Tags.Blocks.STONE) || extraBlock.is(Tags.Blocks.COBBLESTONE)) && world.getBlockState(pos).getDestroyProgress(pl, world, pos) / extraBlock.getDestroyProgress(pl, world, breakPos) < 10f)
-							WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos);
+							WorldUtil.harvestAdditionalBlock(world, (PlayerEntity)entity, breakPos, false);
 					}
 				}
 			}

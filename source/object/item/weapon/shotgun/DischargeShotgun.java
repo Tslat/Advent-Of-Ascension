@@ -32,7 +32,7 @@ public class DischargeShotgun extends BaseShotgun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_DISCHARGE_GUN_FIRE.get();
+		return AoASounds.ITEM_GUN_SHOTGUN_HEAVY_FIRE_LONG.get();
 	}
 
 	@Override

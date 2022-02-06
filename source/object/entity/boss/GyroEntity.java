@@ -74,7 +74,7 @@ public class GyroEntity extends AoAFlyingRangedMob {
 	@Nullable
 	@Override
 	protected SoundEvent getShootSound() {
-		return AoASounds.ITEM_MINIGUN_FIRE.get();
+		return AoASounds.ITEM_GUN_RIFLE_HEAVY_FIRE_LONG.get();
 	}
 
 	@Override

@@ -38,7 +38,7 @@ public class BaseShotgun extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SHOTGUN_FIRE.get();
+		return AoASounds.ITEM_GUN_SHOTGUN_MEDIUM_FIRE_LONG.get();
 	}
 
 	@Override

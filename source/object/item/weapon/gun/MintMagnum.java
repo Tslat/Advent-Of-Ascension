@@ -14,7 +14,7 @@ public class MintMagnum extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
+		return AoASounds.ITEM_GUN_RIFLE_HEAVY_FIRE_LONG.get();
 	}
 
 	@Override

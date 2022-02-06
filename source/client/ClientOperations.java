@@ -5,6 +5,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.ReadBookScreen;
 import net.minecraft.client.particle.ParticleManager;
+import net.minecraft.client.util.InputMappings;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -208,5 +209,9 @@ public final class ClientOperations {
 
 	public static GameType getGameMode() {
 		return Minecraft.getInstance().gameMode.getPlayerMode();
+	}
+
+	public static boolean isPressingCrouchKey() {
+		return InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), Minecraft.getInstance().options.keyShift.getKey().getValue());
 	}
 }

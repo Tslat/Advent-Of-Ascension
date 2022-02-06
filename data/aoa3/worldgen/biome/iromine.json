@@ -11,7 +11,13 @@
     "sky_color": 3289650,
     "water_color": 16775597,
     "water_fog_color": 16775597,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "music": {
+      "sound": "aoa3:iromine_music",
+      "min_delay": 12000,
+      "max_delay": 24000,
+      "replace_current_music": false
+    }
   },
   "surface_builder": "aoa3:iromine",
   "carvers": {
@@ -51,7 +57,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:polytom",
+        "type": "aoa3:voltron",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:mechamaton",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -63,13 +75,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:mechamaton",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:voltron",
+        "type": "aoa3:polytom",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

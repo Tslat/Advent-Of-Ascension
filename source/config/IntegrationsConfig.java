@@ -9,7 +9,7 @@ public final class IntegrationsConfig {
 	public final ForgeConfigSpec.BooleanValue patchouliEnabled;
 	public final ForgeConfigSpec.BooleanValue tinkersConstructEnabled;
 
-	protected IntegrationsConfig(ForgeConfigSpec.Builder specBuilder) {
+	IntegrationsConfig(ForgeConfigSpec.Builder specBuilder) {
 		specBuilder.comment("Integration options for JEI (Just Enough Items)").push("JEI Settings");
 
 		jeiIntegrationEnabled = specBuilder

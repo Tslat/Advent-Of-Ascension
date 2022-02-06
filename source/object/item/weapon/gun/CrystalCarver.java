@@ -16,7 +16,7 @@ public class CrystalCarver extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SNIPER_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_1.get();
 	}
 
 	@Override

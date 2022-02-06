@@ -51,6 +51,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 		return LISTENERS;
 	}
 
+	@OnlyIn(Dist.CLIENT)
 	@Override
 	public KeyBinding getKeybind() {
 		return AoAKeybinds.ABILITY_ACTION;

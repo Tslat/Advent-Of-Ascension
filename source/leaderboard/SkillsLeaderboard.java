@@ -33,13 +33,13 @@ public class SkillsLeaderboard {
 	}
 
 	public static boolean isEnabled() {
-		return enabled.get();
+		return false;//enabled.get();
 	}
 
 	public static void init() {
 		enabled.set(AoAConfig.SERVER.skillsLeaderboardEnabled.get());
 
-		if (!enabled.get())
+		if (!isEnabled())
 			return;
 
 		try {
@@ -68,6 +68,7 @@ public class SkillsLeaderboard {
 		Logging.logMessage(Level.INFO, "Starting threads and opening connections for skills database..");
 
 		connectionProperties = new Properties();
+		threads = new LeaderboardConnection[AoAConfig.SERVER.maxLeaderboardThreads.get()];
 
 		connectionProperties.put("user", AoAConfig.SERVER.databaseUsername.get());
 		connectionProperties.put("password", AoAConfig.SERVER.databasePassword.get());

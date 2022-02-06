@@ -113,7 +113,11 @@ public class JERIntegration {
 		cropTableConsumer2.accept(new Tuple<IPlantable, Item>((IPlantable)AoABlocks.EYE_BULB_CROP.get(), AoAItems.EYE_BULB.get()));
 		cropTableConsumer2.accept(new Tuple<IPlantable, Item>((IPlantable)AoABlocks.MYSTIC_SHROOM_CROP.get(), AoAItems.MYSTIC_SHROOMS.get()));
 		cropTableConsumer3.accept(Triple.of((IPlantable)AoABlocks.HEART_FRUIT_CROP.get(), AoAItems.HEART_FRUIT.get(), AoAItems.HEART_FRUIT_SEEDS.get()));
-		cropTableConsumer3.accept(Triple.of((IPlantable)AoABlocks.MAGIC_MARANG_CROP.get(), AoAItems.MAGIC_MARANG.get(), AoAItems.MAGIC_MARANG_SEEDS.get()));
+
+		plantRegistry.register(
+				new ItemStack(AoAItems.MAGIC_MARANG.get()),
+				(IPlantable)AoABlocks.MAGIC_MARANG_CROP.get(),
+				new PlantDrop(new ItemStack(AoAItems.MAGIC_MARANG.get()), 1f));
 	}
 
 	private static void integrateDungeonLoot() {

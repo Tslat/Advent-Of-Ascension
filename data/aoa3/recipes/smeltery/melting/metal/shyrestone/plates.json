@@ -7,6 +7,10 @@
         "type": "forge:tag_empty"
       },
       "type": "forge:not"
+    },
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
     }
   ],
   "ingredient": {

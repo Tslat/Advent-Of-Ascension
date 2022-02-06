@@ -37,7 +37,7 @@ public class HoeAreaHarvest extends AoAAbility.Instance {
 	}
 
 	public HoeAreaHarvest(AoASkill.Instance skill, CompoundNBT data) {
-		super(AoAAbilities.BLOCK_CONVERSION.get(), skill, data);
+		super(AoAAbilities.HOE_AREA_HARVEST.get(), skill, data);
 
 		this.baseRadius = data.getInt("base_radius");
 		this.levelsPerRadiusIncrease = data.getInt("levels_per_radius_increase");
@@ -63,7 +63,7 @@ public class HoeAreaHarvest extends AoAAbility.Instance {
 			PlayerEntity player = ev.getPlayer();
 			ItemStack heldStack = player.getItemInHand(ev.getHand());
 
-			if (heldStack.getItem().getToolTypes(heldStack).contains(ToolType.HOE)) {
+			if (heldStack.getToolTypes().contains(ToolType.HOE)) {
 				int radius = this.levelsPerRadiusIncrease > 0 ? this.baseRadius + ((skill.getLevel(false) - getLevelReq()) / this.levelsPerRadiusIncrease) : this.baseRadius;
 				World world = ev.getWorld();
 				BlockPos basePos = ev.getPos();
@@ -77,7 +77,7 @@ public class HoeAreaHarvest extends AoAAbility.Instance {
 							CropsBlock crop = (CropsBlock)state.getBlock();
 
 							if (crop.isMaxAge(state) && WorldUtil.canModifyBlock(world, pos, player, heldStack)) {
-								WorldUtil.harvestAdditionalBlock(world, ev.getPlayer(), pos);
+								WorldUtil.harvestAdditionalBlock(world, ev.getPlayer(), pos, true);
 
 								if (this.perBlockHoeDamage > 0) {
 									ItemUtil.damageItem(heldStack, player, ev.getHand(), this.perBlockHoeDamage);

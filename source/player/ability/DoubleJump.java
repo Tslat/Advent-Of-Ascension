@@ -15,13 +15,11 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
-public class
-DoubleJump extends AoAAbility.Instance {
+public class DoubleJump extends AoAAbility.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.KEY_INPUT, ListenerType.PLAYER_FALL};
 
 	private final float energyConsumption;
@@ -61,10 +59,7 @@ DoubleJump extends AoAAbility.Instance {
 	public boolean shouldSendKeyPress() {
 		PlayerEntity player = Minecraft.getInstance().player;
 
-		if (!player.isOnGround() || player.isCreative())
-			return false;
-
-		return ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyConsumption);
+		return !player.isOnGround() && !player.isCreative();
 	}
 
 	@Override
@@ -75,14 +70,14 @@ DoubleJump extends AoAAbility.Instance {
 			if (player.isOnGround() || player.isCreative())
 				return;
 
-			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(energyConsumption, true)) {
+			if (consumeResource(AoAResources.ENERGY.get(), energyConsumption, true)) {
 				canJump = false;
 
 				player.jumpFromGround();
 				AoAPackets.messagePlayer(player, new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET).y((float)player.getDeltaMovement().y()));
 
-				if (skill.canGainXp(true))
-					skill.adjustXp(PlayerUtil.getTimeBasedXpForLevel(skill.getLevel(true), 16), false, false);
+				if (getSkill().canGainXp(true))
+					getSkill().adjustXp(PlayerUtil.getTimeBasedXpForLevel(getSkill().getLevel(true), 16), false, false);
 			}
 		}
 	}

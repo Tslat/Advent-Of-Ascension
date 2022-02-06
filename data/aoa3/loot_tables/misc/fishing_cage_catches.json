@@ -1,0 +1,130 @@
+{
+  "type": "minecraft:fishing",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 100,
+          "quality": -1,
+          "name": "minecraft:cod"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 100,
+          "quality": -1,
+          "name": "minecraft:salmon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 80,
+          "quality": -1,
+          "name": "minecraft:tropical_fish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 60,
+          "name": "minecraft:pufferfish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "quality": 1,
+          "name": "minecraft:nautilus_shell"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "name": "minecraft:diamond"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "quality": 2,
+          "name": "aoa3:sapphire"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "quality": 1,
+          "name": "aoa3:rune_box"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "quality": 1,
+          "name": "aoa3:shiny_box"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "aoa3:hauling",
+              "level": 10
+            }
+          ],
+          "weight": 75,
+          "name": "aoa3:sailback"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "aoa3:hauling",
+              "level": 10
+            }
+          ],
+          "weight": 75,
+          "name": "aoa3:violet_skipper"
+        },
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "aoa3:player_has_level",
+              "skill": "aoa3:hauling",
+              "level": 10
+            }
+          ],
+          "weight": 30,
+          "quality": 2,
+          "name": "aoa3:raw_rainbowfish"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "quality": 1,
+          "name": "aoa3:armour_plating"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 45,
+          "name": "aoa3:chitin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 55,
+          "name": "aoa3:chum"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 40,
+          "name": "minecraft:prismarine_slab"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 40,
+          "name": "minecraft:prismarine_crystals"
+        },
+        {
+          "type": "minecraft:item",
+          "quality": 3,
+          "name": "aoa3:tidal_greatblade"
+        }
+      ]
+    }
+  ]
+}

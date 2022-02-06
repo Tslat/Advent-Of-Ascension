@@ -14,6 +14,6 @@ public class Abominator extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_ABOMINATOR_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_1.get();
 	}
 }

@@ -2,12 +2,12 @@ package net.tslat.aoa3.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.BlockState;
-import net.tslat.aoa3.object.block.functional.sapling.SaplingBlock;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.object.block.functional.plant.SaplingBlock;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -190,8 +190,12 @@ public class HauntedTreeFeature extends AoATreeFeature {
 
 								for (int k = -1; k <= 1; k++) {
 									BlockState leafBlock = rand.nextInt(hauntedLeafChance) == 0 ? eyeLeaves : leaves;
+									BlockPos newPos = branchLocPos.relative(sidewaysDir, k);
 
-									placeBlock(reader, branchLocPos.relative(sidewaysDir, k), leafBlock);
+									placeBlock(reader, newPos, leafBlock);
+
+									if (rand.nextInt(100) == 0 && reader.getBlockState(newPos = newPos.below()).isAir(reader, newPos))
+										placeBlock(reader, newPos, AoABlocks.MAGIC_MARANG_CROP.get().defaultBlockState());
 								}
 							}
 						}

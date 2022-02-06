@@ -1,7 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/cube_column",
   "textures": {
-    "particle": "aoa3:block/archaic_stream_vertical",
-    "all": "aoa3:block/archaic_stream_vertical"
+    "side": "aoa3:block/archaic_stream_vertical",
+    "end": "aoa3:block/archaic_stream_vertical_top"
   }
 }

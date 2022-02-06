@@ -25,7 +25,7 @@ public class CamoRifle extends BaseSniper {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SNIPER_FIRE.get();
+		return AoASounds.ITEM_GUN_SNIPER_METALLIC_FIRE_LONG.get();
 	}
 
 	@Override

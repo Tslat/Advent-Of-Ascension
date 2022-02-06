@@ -54,7 +54,7 @@ public class BlockConversion extends AoAAbility.Instance {
 		this.replacementBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(data.getString("replacement_block")));
 
 		if (data.contains("interaction_item")) {
-			this.interactionItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("replacement_block")));
+			this.interactionItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("interaction_item")));
 		}
 		else {
 			this.interactionItem = null;
@@ -138,7 +138,7 @@ public class BlockConversion extends AoAAbility.Instance {
 						break;
 				}
 
-				if (success && this.interactionItem != null)
+				if (success && this.interactionItem != null && !ev.getPlayer().isCreative())
 					heldStack.shrink(1);
 			}
 		}

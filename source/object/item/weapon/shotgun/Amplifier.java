@@ -23,7 +23,7 @@ public class Amplifier extends BaseShotgun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SLUGGER_FIRE.get();
+		return AoASounds.ITEM_GUN_SHOTGUN_HEAVY_FIRE_LONG.get();
 	}
 
 	@Override

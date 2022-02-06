@@ -47,7 +47,7 @@ public class HaulingRod extends FishingRodItem {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (!level.isClientSide()) {
-			if (player.fishing != null) {
+			if (player.fishing != null && player.fishing.level == player.level) {
 				if (player.fishing instanceof HaulingFishingBobberEntity) {
 					HaulingFishingBobberEntity bobber = (HaulingFishingBobberEntity)player.fishing;
 

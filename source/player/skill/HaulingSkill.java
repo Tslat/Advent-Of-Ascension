@@ -33,10 +33,10 @@ public class HaulingSkill extends AoASkill.Instance {
 		if (!canGainXp(true))
 			return;
 
-		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 350) * (float)(1 + RandomUtil.randomScaledGaussianValue(0.25f));
+		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 200) * (float)(1 + RandomUtil.randomScaledGaussianValue(0.25f));
 
 		if (isHauling) {
-			xp *= 1.75f;
+			xp *= 2f;
 
 			for (ItemStack stack : ev.getDrops()) {
 				if (stack.getItem().is(AoATags.Items.HAULING_FISH))

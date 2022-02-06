@@ -227,6 +227,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		};
 	}
 
+	@Override
 	public void addListener(AoAPlayerEventListener listener, boolean active, ListenerType... types) {
 		ArrayListMultimap<ListenerType, AoAPlayerEventListener> holder = active ? this.activeEventListeners : this.disabledEventListeners;
 
@@ -235,10 +236,8 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 	}
 
+	@Override
 	public List<AoAPlayerEventListener> getListeners(ListenerType eventType) {
-		if (!activeEventListeners.containsKey(eventType))
-			return Collections.emptyList();
-
 		return activeEventListeners.get(eventType);
 	}
 

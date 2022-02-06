@@ -1,5 +1,6 @@
 package net.tslat.aoa3.player;
 
+import com.google.common.collect.ArrayListMultimap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -19,9 +20,7 @@ import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -30,6 +29,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 
 	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<AoASkill, AoASkill.Instance>(Comparator.comparing(AoASkill::getRegistryName));
 	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<AoAResource, AoAResource.Instance>(Comparator.comparing(AoAResource::getRegistryName));
+	private final ArrayListMultimap<AoAPlayerEventListener.ListenerType, AoAPlayerEventListener> eventListeners = ArrayListMultimap.create();
 
 	private final ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>> keyListeners = new ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>>(1);
 
@@ -136,10 +136,10 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 				AoASkill.Instance instance = skill.buildClientInstance(skillsNbt.getCompound(id));
 
 				skills.put(skill, instance);
-				checkForKeyListeners(instance);
+				checkForListeners(instance);
 
 				for (AoAAbility.Instance ability : instance.getAbilityMap().values()) {
-					checkForKeyListeners(ability);
+					checkForListeners(ability);
 				}
 			}
 
@@ -154,7 +154,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 				AoAResource.Instance instance = resource.buildClientInstance(resourcesNbt.getCompound(id));
 
 				resources.put(resource, instance);
-				checkForKeyListeners(instance);
+				checkForListeners(instance);
 			}
 		}
 
@@ -169,6 +169,20 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 
 			AdventGuiTabLore.syncBooks(books);
 		}
+	}
+
+	@Override
+	public void addListener(AoAPlayerEventListener listener, boolean active, AoAPlayerEventListener.ListenerType... types) {
+		if (active) {
+			for (AoAPlayerEventListener.ListenerType type : types) {
+				eventListeners.put(type, listener);
+			}
+		}
+	}
+
+	@Override
+	public List<AoAPlayerEventListener> getListeners(AoAPlayerEventListener.ListenerType eventType) {
+		return eventListeners.get(eventType);
 	}
 
 	public void updateData(CompoundNBT syncTag) {
@@ -206,7 +220,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 			isLegitimate = syncTag.getBoolean("legitimate");
 	}
 
-	private void checkForKeyListeners(AoAPlayerEventListener listener) {
+	private void checkForListeners(AoAPlayerEventListener listener) {
 		for (AoAPlayerEventListener.ListenerType type : listener.getListenerTypes()) {
 			if (type == AoAPlayerEventListener.ListenerType.KEY_INPUT) {
 				int keyCode = listener.getKeybind().getKey().getValue();
@@ -217,6 +231,9 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 				keyListeners.get(keyCode).add(listener);
 
 				return;
+			}
+			else {
+				eventListeners.put(type, listener);
 			}
 		}
 	}

@@ -27,7 +27,7 @@ public class LunarAssaultRifle extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_SPACE_GUN_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_3.get();
 	}
 
 	@Override

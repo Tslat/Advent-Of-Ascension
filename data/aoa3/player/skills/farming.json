@@ -2,32 +2,58 @@
   "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:block_conversion",
-      "unique_id": "-1216279049",
-      "replacement_block": "aoa3:fertilised_farmland",
-      "interaction_item": "bone_meal",
-      "radius": 0,
-      "level_req": 10,
-      "target_block": "minecraft:farmland"
+      "id": "aoa3:fertilise_farmland",
+      "unique_id": "-1220019474",
+      "level_req": 8
     },
     {
       "id": "aoa3:block_conversion",
-      "unique_id": "-277542003",
+      "unique_id": "1047471040",
       "replacement_block": "minecraft:mossy_cobblestone",
-      "interaction_item": "wheat_seeds",
+      "interaction_item": "minecraft:wheat_seeds",
       "radius": 1,
-      "level_req": 26,
+      "level_req": 16,
       "target_block": "minecraft:cobblestone"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "-53237965",
+      "unique_id": "-53236229",
       "restrictions": [
         "interact_with",
         "place_block"
       ],
-      "level_req": 32,
+      "level_req": 24,
       "restricted_id": "aoa3:green_manure"
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "-1900201208",
+      "restrictions": [
+        "place_block"
+      ],
+      "level_req": 29,
+      "restricted_id": "aoa3:magic_marang_crop"
+    },
+    {
+      "id": "aoa3:breeding_bonus",
+      "unique_id": "1383801170",
+      "base_value": 0.1,
+      "per_level_mod": 0.002,
+      "level_req": 35
+    },
+    {
+      "id": "aoa3:dryad_sprite_spawn",
+      "unique_id": "750531543",
+      "base_value": 0.005,
+      "per_level_mod": 2.5E-4,
+      "level_req": 44
+    },
+    {
+      "id": "aoa3:harvest_replant",
+      "unique_id": "2052180611",
+      "base_value": 0.1,
+      "per_level_mod": 0.003,
+      "level_req": 49
     },
     {
       "id": "aoa3:hoe_area_harvest",
@@ -39,12 +65,12 @@
     },
     {
       "id": "aoa3:block_conversion",
-      "unique_id": "137465640",
+      "unique_id": "1885647504",
       "replacement_block": "minecraft:mycelium",
-      "interaction_item": "mushroom_spores",
+      "interaction_item": "aoa3:mushroom_spores",
       "radius": 4,
       "level_req": 66,
-      "target_block": "minecraft:grass"
+      "target_block": "minecraft:grass_block"
     },
     {
       "id": "aoa3:level_restriction",

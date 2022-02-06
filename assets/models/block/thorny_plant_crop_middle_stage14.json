@@ -1,0 +1,7 @@
+{
+  "parent": "aoa3:block/thorny_plant_middle",
+  "textures": {
+    "crop": "aoa3:block/thorny_plant_crop_stage14",
+    "particle": "aoa3:block/thorny_plant_crop_stage14"
+  }
+}

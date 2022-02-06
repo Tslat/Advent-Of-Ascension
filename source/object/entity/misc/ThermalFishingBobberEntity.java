@@ -105,8 +105,12 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 
 		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
-		if (nearbyFluidBlocks <=  50)
+		if (nearbyFluidBlocks <=  50) {
 			this.fishingBonusMod *= 0.5f;
+
+			if (nearbyFluidBlocks < 15)
+				this.fishingBonusMod *= 0.5f;
+		}
 
 		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0035f);
 		this.fishingBonusMod += 0.25f * lure;
@@ -126,7 +130,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 			if (Math.abs(fluidAdjustedHeight) < 0.01D)
 				fluidAdjustedHeight += Math.signum(fluidAdjustedHeight) * 0.1D;
 
-			setDeltaMovement(vector3d.x * 0.9D, vector3d.y - fluidAdjustedHeight * (double)this.random.nextFloat() * 0.2D, vector3d.z * 0.9D);
+			setDeltaMovement(vector3d.x * 0.9D, vector3d.y - fluidAdjustedHeight * (double)this.random.nextFloat() * 0.05D, vector3d.z * 0.9D);
 		}
 	}
 

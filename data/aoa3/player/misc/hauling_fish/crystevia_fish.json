@@ -5,111 +5,119 @@
   "entities": [
     {
       "weight": 200,
-      "weight_mod": -3.0,
+      "weight_mod": -10.0,
       "entity": "minecraft:cod"
     },
     {
       "weight": 200,
-      "weight_mod": -3.0,
+      "weight_mod": -10.0,
       "entity": "minecraft:salmon"
     },
     {
       "weight": 180,
-      "weight_mod": -2.0,
+      "weight_mod": -5.0,
       "entity": "minecraft:tropical_fish"
     },
     {
-      "weight": 10,
-      "weight_mod": 1.0,
+      "weight": 25,
+      "weight_mod": 8.0,
       "entity": "aoa3:rainbowfish"
     },
     {
-      "weight": 15,
-      "weight_mod": 1.0,
+      "weight": 25,
+      "weight_mod": 8.0,
       "entity": "aoa3:blue_gemtrap"
     },
     {
-      "weight": 15,
-      "weight_mod": 1.0,
+      "weight": 25,
+      "weight_mod": 8.0,
       "entity": "aoa3:green_gemtrap"
     },
     {
-      "weight": 15,
-      "weight_mod": 1.0,
+      "weight": 25,
+      "weight_mod": 8.0,
       "entity": "aoa3:purple_gemtrap"
     },
     {
-      "weight": 15,
-      "weight_mod": 1.0,
+      "weight": 25,
+      "weight_mod": 8.0,
       "entity": "aoa3:red_gemtrap"
     },
     {
-      "weight": 15,
-      "weight_mod": 1.0,
+      "weight": 25,
+      "weight_mod": 8.0,
       "entity": "aoa3:white_gemtrap"
     },
     {
-      "weight": 15,
-      "weight_mod": 1.0,
+      "weight": 25,
+      "weight_mod": 8.0,
       "entity": "aoa3:yellow_gemtrap"
     },
     {
-      "weight": 35,
+      "weight": 20,
+      "weight_mod": 5.0,
       "item": "aoa3:blue_druse"
     },
     {
-      "weight": 35,
+      "weight": 20,
+      "weight_mod": 5.0,
       "item": "aoa3:green_druse"
     },
     {
-      "weight": 35,
+      "weight": 20,
+      "weight_mod": 5.0,
       "item": "aoa3:purple_druse"
     },
     {
-      "weight": 10,
-      "weight_mod": 2.0,
+      "weight": 30,
+      "weight_mod": 10.0,
       "item": "aoa3:rainbow_druse"
     },
     {
-      "weight": 35,
+      "weight": 20,
+      "weight_mod": 5.0,
       "item": "aoa3:red_druse"
     },
     {
-      "weight": 35,
+      "weight": 20,
+      "weight_mod": 5.0,
       "item": "aoa3:white_druse"
     },
     {
-      "weight": 35,
+      "weight": 20,
+      "weight_mod": 5.0,
       "item": "aoa3:yellow_druse"
     },
     {
       "level": 5,
-      "weight": 60,
+      "weight": 100,
       "item": "minecraft:name_tag"
     },
     {
       "level": 25,
-      "weight": 2,
-      "weight_mod": 1.0,
+      "weight": 35,
+      "weight_mod": 5.0,
       "item": "aoa3:crystal_box"
     },
     {
       "level": 15,
-      "weight": 2,
-      "weight_mod": 1.0,
+      "weight": 35,
+      "weight_mod": 5.0,
       "item": "aoa3:gem_bag"
     },
     {
       "level": 10,
-      "weight": 2,
-      "weight_mod": 1.0,
+      "weight": 35,
+      "weight_mod": 5.0,
       "item": "aoa3:shiny_box"
     },
     {
       "level": 50,
-      "weight_mod": 1.0,
+      "weight_mod": 2.0,
       "item": "aoa3:old_boot"
     },
-    "minecraft:water_bucket"
+    {
+      "item": "minecraft:water_bucket"
+    }
   ]
 }

@@ -21,7 +21,7 @@ public class HaulingRodPullStrengthModifier extends AoAAbility.Instance {
 	public HaulingRodPullStrengthModifier(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.HAULING_ROD_PULL_STRENGTH.get(), skill, data);
 
-		this.amount = JSONUtils.getAsFloat(data, "amount", 1);
+		this.amount = JSONUtils.getAsFloat(data, "amount", 0);
 		this.perLevelAmount = JSONUtils.getAsFloat(data, "per_level_amount", 0);
 	}
 
@@ -35,7 +35,7 @@ public class HaulingRodPullStrengthModifier extends AoAAbility.Instance {
 	@Override
 	protected void updateDescription(TranslationTextComponent defaultDescription) {
 		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(),
-				LocaleUtil.getAbilityValueDesc(amount != 0, perLevelAmount != 0, true, NumberUtil.roundToNthDecimalPlace(amount, 2), NumberUtil.roundToNthDecimalPlace(perLevelAmount, 2))));
+				LocaleUtil.getAbilityValueDesc(amount != 0, perLevelAmount != 0, true, NumberUtil.roundToNthDecimalPlace(amount * 100, 2), NumberUtil.roundToNthDecimalPlace(perLevelAmount * 100, 2))));
 	}
 
 	@Override
@@ -45,6 +45,7 @@ public class HaulingRodPullStrengthModifier extends AoAAbility.Instance {
 
 	@Override
 	public void handleHaulingRodPullEntity(HaulingRodPullEntityEvent ev) {
+		System.out.println(amount + perLevelAmount * skill.getLevel(false));
 		ev.setPullStrength(ev.getPullStrength() * (1 + (amount + perLevelAmount * skill.getLevel(false))));
 	}
 

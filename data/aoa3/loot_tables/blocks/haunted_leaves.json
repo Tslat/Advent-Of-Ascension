@@ -74,18 +74,12 @@
                 "max": 2.0,
                 "type": "minecraft:uniform"
               }
-            }
-          ],
-          "name": "minecraft:stick"
-        },
-        {
-          "type": "minecraft:item",
-          "functions": [
+            },
             {
               "function": "minecraft:explosion_decay"
             }
           ],
-          "name": "aoa3:magic_marang_seeds"
+          "name": "minecraft:stick"
         }
       ],
       "conditions": [

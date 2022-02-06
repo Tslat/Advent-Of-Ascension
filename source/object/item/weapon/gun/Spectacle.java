@@ -24,7 +24,12 @@ public class Spectacle extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_FAST_RIFLE_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_4.get();
+	}
+
+	@Override
+	protected float getFiringSoundPitchAdjust() {
+		return 0.85f;
 	}
 
 	@Override

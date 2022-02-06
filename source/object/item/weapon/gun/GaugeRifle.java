@@ -26,7 +26,7 @@ public class GaugeRifle extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_GAUGE_RIFLE_FIRE.get();
+		return AoASounds.ITEM_GUN_RIFLE_MEDIUM_FIRE_LONG.get();
 	}
 
 	@Override

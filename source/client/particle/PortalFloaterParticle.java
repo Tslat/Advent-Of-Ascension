@@ -70,8 +70,8 @@ public class PortalFloaterParticle extends SpriteTexturedParticle {
 	}
 
 	@Override
-	public int getLightColor(float p_189214_1_) {
-		int initialBrightness = super.getLightColor(p_189214_1_);
+	public int getLightColor(float partialTick) {
+		int initialBrightness = super.getLightColor(partialTick);
 		double percentAged = Math.pow((float)this.age / (float)this.lifetime, 3);
 		int brightnessLowerBits = initialBrightness & 255;
 		int brightnessUpperBits = initialBrightness >> 16 & 255;

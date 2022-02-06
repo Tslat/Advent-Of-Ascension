@@ -1,0 +1,25 @@
+{
+  "type": "tconstruct:melting",
+  "conditions": [
+    {
+      "value": {
+        "tag": "forge:wires/charger",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    },
+    {
+      "modid": "tconstruct",
+      "type": "forge:mod_loaded"
+    }
+  ],
+  "ingredient": {
+    "tag": "forge:wires/charger"
+  },
+  "result": {
+    "fluid": "aoa3:molten_charger",
+    "amount": 72
+  },
+  "temperature": 150,
+  "time": 7
+}

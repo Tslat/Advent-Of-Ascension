@@ -10,6 +10,8 @@ public final class AoAAnimations {
 	public static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("misc.idle", true);
 	public static final AnimationBuilder RECOVER = new AnimationBuilder().addAnimation("misc.rest", false);
 	public static final AnimationBuilder EAT = new AnimationBuilder().addAnimation("misc.eat", false);
+	public static final AnimationBuilder SUCCEED = new AnimationBuilder().addAnimation("misc.succeed", false);
+	public static final AnimationBuilder SPAWN = new AnimationBuilder().addAnimation("misc.spawn", false);
 
 	public static final AnimationBuilder WALK = new AnimationBuilder().addAnimation("move.walk", true);
 	public static final AnimationBuilder RUN = new AnimationBuilder().addAnimation("move.run", true);
@@ -132,5 +134,17 @@ public final class AoAAnimations {
 
 	public static <T extends LivingEntity & IAnimatable> AnimationController<T> customAttackController(T entity, AnimationController.IAnimationPredicate<T> controllerPredicate) {
 		return new AnimationController<T>(entity, "attacking", 0, controllerPredicate);
+	}
+
+	public static <T extends LivingEntity & IAnimatable> AnimationController<T> genericSpawnController(T entity, int spawnTicks) {
+		return new AnimationController<T>(entity, "spawning", 0, event -> {
+			if (entity.tickCount < spawnTicks) {
+				event.getController().setAnimation(SPAWN);
+
+				return PlayState.CONTINUE;
+			}
+
+			return PlayState.STOP;
+		});
 	}
 }

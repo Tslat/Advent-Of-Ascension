@@ -6,31 +6,23 @@ import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.util.AoAHaloUtil;
 
 public final class ClientConfig {
-	public final ForgeConfigSpec.BooleanValue doVerboseDebugging;
 	public final ForgeConfigSpec.BooleanValue showXpParticles;
 	public final ForgeConfigSpec.BooleanValue showWelcomeMessage;
 	public final ForgeConfigSpec.BooleanValue showPlayerHalos;
 	public final ForgeConfigSpec.EnumValue<AoAHaloUtil.Type.Choosable> personalHaloPreference;
 	public final ForgeConfigSpec.ConfigValue<String> adventGuiTheme;
 	public final ForgeConfigSpec.BooleanValue thirdPartyBestiary;
-	public final ForgeConfigSpec.EnumValue<AoAResourceRenderer.HudResourcesPosition> hudResourcesPosition;
 	public final ForgeConfigSpec.EnumValue<AoASkillRenderer.ProgressRenderType> hudSkillProgressRenderType;
+	public final ForgeConfigSpec.EnumValue<AoAResourceRenderer.HudResourcesPosition> hudResourcesPosition;
 	public final ForgeConfigSpec.BooleanValue hudResourcesHorizontal;
 	public final ForgeConfigSpec.BooleanValue disableHudPotionOffset;
 	public final ForgeConfigSpec.BooleanValue useToasts;
 	public final ForgeConfigSpec.BooleanValue rotatingTrophies;
 	public final ForgeConfigSpec.BooleanValue partyDeaths;
-	public final ForgeConfigSpec.BooleanValue alwaysChargers;
 	public final ForgeConfigSpec.BooleanValue renderNumericalHealth;
 
-	protected ClientConfig(ForgeConfigSpec.Builder specBuilder) {
+	ClientConfig(ForgeConfigSpec.Builder specBuilder) {
 		specBuilder.comment("AoA client-side configuration options").push("General Settings");
-
-		doVerboseDebugging = specBuilder
-				.comment("Set this to true to enable more detailed debugging.",
-						"If you don't mind your logs having a bit more info, or you are trying to figure out a bug or crash, this can be very helpful to have")
-				.translation("config.aoa3.client.doVerboseDebugging")
-				.define("doVerboseDebugging", false);
 
 		showXpParticles = specBuilder
 				.comment("Set this to false to disable the small scrolling popups that appear when you gain xp in a skill")
@@ -104,11 +96,6 @@ public final class ClientConfig {
 				.comment("Set this to true to enable party deaths")
 				.translation("config.aoa3.client.partyDeaths")
 				.define("partyDeaths", false);
-
-		alwaysChargers = specBuilder
-				.comment("Set this to true for Chargers. All the chargers")
-				.translation("config.aoa3.client.alwaysChargers")
-				.define("alwaysChargers", false);
 
 		specBuilder.pop();
 	}

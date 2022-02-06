@@ -2,28 +2,19 @@ package net.tslat.aoa3.object.entity.projectile.thrown;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.object.entity.projectile.HardProjectile;
 import net.tslat.aoa3.object.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.object.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.WorldUtil;
 
-@OnlyIn(
-		value = Dist.CLIENT,
-		_interface = IRendersAsItem.class
-)
-public class GrenadeEntity extends BaseBullet implements HardProjectile, IRendersAsItem {
+public class GrenadeEntity extends BaseBullet implements HardProjectile {
 	private float explosionStrength = 1.5f;
 
 	public GrenadeEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
@@ -71,10 +62,5 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile, IRender
 	@Override
 	public void doEntityImpact(Entity target) {
 		WorldUtil.createExplosion(getOwner(), level, this, explosionStrength);
-	}
-
-	@Override
-	public ItemStack getItem() {
-		return new ItemStack(AoAWeapons.GRENADE.get());
 	}
 }

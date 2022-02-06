@@ -25,7 +25,7 @@ public class PurityRifle extends BaseGun {
 	@Nullable
 	@Override
 	public SoundEvent getFiringSound() {
-		return AoASounds.ITEM_REVOLVER_FIRE.get();
+		return AoASounds.ITEM_GUN_GENERIC_FIRE_1.get();
 	}
 
 	@Override

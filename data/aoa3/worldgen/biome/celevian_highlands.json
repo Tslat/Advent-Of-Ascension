@@ -11,7 +11,11 @@
     "sky_color": 37120,
     "water_color": 255,
     "water_fog_color": 255,
-    "grass_color_modifier": "none"
+    "grass_color_modifier": "none",
+    "additions_sound": {
+      "sound": "aoa3:celeve_extra",
+      "tick_chance": 2.5E-5
+    }
   },
   "surface_builder": "aoa3:celeve",
   "carvers": {},
@@ -38,13 +42,43 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:snappy",
+        "type": "aoa3:tipsy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
+        "type": "aoa3:jumbo",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:koko",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:bobo",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:kranky",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stitches",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:happy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -62,37 +96,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:jumbo",
-        "weight": 2,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:kranky",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:tipsy",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:bobo",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:happy",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:stitches",
+        "type": "aoa3:snappy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

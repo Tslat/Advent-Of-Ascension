@@ -1,17 +1,25 @@
 {
-  "type": "tconstruct:casting_basin",
+  "type": "tconstruct:melting",
   "conditions": [
+    {
+      "value": {
+        "tag": "forge:storage_blocks/limonite",
+        "type": "forge:tag_empty"
+      },
+      "type": "forge:not"
+    },
     {
       "modid": "tconstruct",
       "type": "forge:mod_loaded"
     }
   ],
-  "fluid": {
-    "tag": "forge:molten_limonite",
-    "amount": 1296
-  },
-  "result": {
+  "ingredient": {
     "tag": "forge:storage_blocks/limonite"
   },
-  "cooling_time": 133
+  "result": {
+    "fluid": "aoa3:molten_limonite",
+    "amount": 1296
+  },
+  "temperature": 350,
+  "time": 133
 }
