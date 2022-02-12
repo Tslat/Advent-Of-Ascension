@@ -1,6 +1,9 @@
 ---
 name: Bug Report
 about: Submit a bug report for something that is broken or glitchy in the mod.
+title: ''
+labels: ''
+assignees: ''
 
 ---
 

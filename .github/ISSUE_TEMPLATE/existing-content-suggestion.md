@@ -1,6 +1,9 @@
 ---
 name: Existing Content Suggestion
 about: Suggest a change or tweak to something that already exists.
+title: ''
+labels: ''
+assignees: ''
 
 ---
 

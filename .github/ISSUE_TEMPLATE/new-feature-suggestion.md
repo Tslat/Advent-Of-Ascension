@@ -1,6 +1,9 @@
 ---
 name: New Feature Suggestion
 about: Suggest something new for the mod!
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
