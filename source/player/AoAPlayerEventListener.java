@@ -14,9 +14,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
-import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
-import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
-import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
+import net.tslat.aoa3.event.custom.events.*;
 
 import java.util.List;
 
@@ -232,6 +230,7 @@ public interface AoAPlayerEventListener {
 	 * Override to prevent interaction effects or trigger new ones.
 	 *
 	 * Will only trigger if {@link ListenerType#BLOCK_INTERACT} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
 	 * @param ev {@link PlayerInteractEvent.RightClickBlock} event
 	 */
 	default void handleBlockInteraction(final PlayerInteractEvent.RightClickBlock ev) {}
@@ -279,32 +278,54 @@ public interface AoAPlayerEventListener {
 	default void handleVanillaXpGain(final PlayerXpEvent.XpChange ev) {}
 
 	/**
-	 * This method gets triggered when the player takes an item out of a crafting device.
-	 * Override to trigger effects for when a player has retrieved an item from a crafting table or crafting device. The resulting stack is not modifiable here.
+	 * This method gets triggered when the player fulfils the criteria for a crafting recipe.
+	 * Override to modify the output stack set into the output slot. The crafting operation is not considered final at this stage, hook {@link AoAPlayerEventListener#handleItemCrafted} if that is your requirement
 	 *
-	 * Will only trigger if {@link ListenerType#ITEM_CRAFT} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 * Will only trigger if {@link ListenerType#ITEM_CRAFTING} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
+	 * @param ev {@link ItemCraftingEvent} event
+	 */
+	default void handleItemCrafting(final ItemCraftingEvent ev) {}
+
+	/**
+	 * This method gets triggered when the player takes an item out of a crafting device.
+	 * Override to trigger effects when a player has retrieved an item from a crafting table or crafting device. The crafted stack should not be modified here, hook {@link AoAPlayerEventListener#handleItemCrafting} if that is your requirement
+	 *
+	 * Will only trigger if {@link ListenerType#ITEM_CRAFTED} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
 	 * This handler is called on both the client and the server indiscriminately.
 	 *
 	 * @param ev {@link PlayerEvent.ItemCraftedEvent} event
 	 */
-	default void handleItemCraft(final PlayerEvent.ItemCraftedEvent ev) {}
+	default void handleItemCrafted(final PlayerEvent.ItemCraftedEvent ev) {}
+
+	/**
+	 * This method gets triggered when the player attempts to retrieve an item from a furnace, smoker, or blast furnace.
+	 * Override to modify the output stack set into the output slot. The crafting operation is not considered final at this stage, hook {@link AoAPlayerEventListener#handleItemCrafted} if that is your requirement
+	 *
+	 * Will only trigger if {@link ListenerType#ITEM_SMELTING} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 *
+	 * This handler is called on both the client and the server indiscriminately.
+	 *
+	 * @param ev {@link ItemSmeltingEvent} event
+	 */
+	default void handleItemSmelting(final ItemSmeltingEvent ev) {}
 
 	/**
 	 * This method gets triggered when the player takes an item out of a smelting device or furnace.
-	 * Override to trigger effects for when a player has retrieved an item from a furnace or smelting device. The resulting stack is not modifiable here.
+	 * Override to trigger effects when a player has retrieved an item from a furnace or smelting device. The smelted stack should not be modified here, hook {@link AoAPlayerEventListener#handleItemSmelting} if that is your requirement
 	 *
-	 * Will only trigger if {@link ListenerType#ITEM_SMELT} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
+	 * Will only trigger if {@link ListenerType#ITEM_SMELTED} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
 	 * This handler is called on both the client and the server indiscriminately.
 	 *
 	 * @param ev {@link PlayerEvent.ItemSmeltedEvent} event
 	 */
-	default void handleItemSmelt(final PlayerEvent.ItemSmeltedEvent ev) {}
+	default void handleItemSmelted(final PlayerEvent.ItemSmeltedEvent ev) {}
 
 	/**
 	 * This method gets triggered when the player fishes up an item.
-	 * Override to trigger effects or modify some values when a player has fished up an item via any applicable means. The resulting loot is not modifiable here.
+	 * Override to trigger effects when a player has fished up an item via any applicable means. The resulting loot is not reliably modifiable here.
 	 *
 	 * Will only trigger if {@link ListenerType#FISHED_ITEM} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
@@ -550,8 +571,10 @@ public interface AoAPlayerEventListener {
 		LEVEL_CHANGE,
 		GAIN_SKILL_XP,
 		GAIN_VANILLA_XP,
-		ITEM_CRAFT,
-		ITEM_SMELT,
+		ITEM_CRAFTING,
+		ITEM_CRAFTED,
+		ITEM_SMELTING,
+		ITEM_SMELTED,
 		FISHED_ITEM,
 		HAULING_ROD_PULL_ENTITY,
 		POTION_APPLIED,

@@ -23,7 +23,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.hooks.BasicEventHooks;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.object.recipe.InfusionRecipe;
+import net.tslat.aoa3.event.custom.AoAEvents;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
@@ -121,6 +122,8 @@ public class InfusionTableContainer extends Container {
 
 				if (!moveItemStackTo(slotStack, 11, 47, true))
 					return ItemStack.EMPTY;
+
+				slot.onQuickCraft(slotStack, stack);
 			}
 			else if (index >= 11 && index < 38) {
 				if (!moveItemStackTo(slotStack, 1, 11, false) && !moveItemStackTo(slotStack, 38, 47, false))
@@ -182,6 +185,10 @@ public class InfusionTableContainer extends Container {
 			}
 
 			craftResult.setItem(0, resultStack);
+
+			if (AoAEvents.firePlayerCraftingEvent(player, craftResult.getItem(0), inv, craftResult))
+				craftResult.setItem(0, ItemStack.EMPTY);
+
 			((ServerPlayerEntity)player).connection.send(new SSetSlotPacket(this.containerId, 0, resultStack));
 		}
 	}

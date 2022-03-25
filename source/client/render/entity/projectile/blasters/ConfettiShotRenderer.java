@@ -3,7 +3,7 @@ package net.tslat.aoa3.client.render.entity.projectile.blasters;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.object.entity.projectile.blaster.ConfettiShotEntity;
+import net.tslat.aoa3.content.entity.projectile.blaster.ConfettiShotEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 public class ConfettiShotRenderer extends ParticleProjectileRenderer<ConfettiShotEntity> {

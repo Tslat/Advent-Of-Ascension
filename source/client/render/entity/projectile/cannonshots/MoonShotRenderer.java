@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.object.entity.projectile.cannon.MoonShotEntity;
+import net.tslat.aoa3.content.entity.projectile.cannon.MoonShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
 import javax.annotation.Nullable;

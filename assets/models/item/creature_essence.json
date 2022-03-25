@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "base": "aoa3:item/creature_essence",
+    "overlay": "aoa3:item/creature_essence_overlay"
+  }
+}

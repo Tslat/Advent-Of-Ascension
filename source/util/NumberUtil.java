@@ -62,4 +62,8 @@ public final class NumberUtil {
 
 		return true;
 	}
+
+	public static boolean numberIsBetween(double value, double min, double max) {
+		return value > min && value < max;
+	}
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
@@ -14,9 +15,11 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.player.skill.ExtractionSkill;
 import net.tslat.aoa3.util.LootUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.List;
 
@@ -63,5 +66,6 @@ public class RareTableHarvestingChance extends ScalableModAbility {
 		PlayerEntity player = getPlayer();
 
 		loot.addAll(LootUtil.generateLoot(world,  new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftContext(world, origin, player.getLuck(), player)));
+		PlayerUtil.giveXpToPlayer((ServerPlayerEntity)player, AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(player, AoASkills.FARMING.get()), 10), false);
 	}
 }

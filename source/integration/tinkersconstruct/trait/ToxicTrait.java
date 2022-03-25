@@ -4,7 +4,7 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effects;
-import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.library.builder.EffectBuilder;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
 import slimeknights.tconstruct.library.tools.nbt.IModifierToolStack;
@@ -28,7 +28,7 @@ public class ToxicTrait extends Modifier {
 			cloud.setRadius(2);
 			cloud.setRadiusPerTick(-0.015f);
 			cloud.setFixedColor(3368448);
-			cloud.addEffect(new PotionUtil.EffectBuilder(Effects.POISON, 60).level(2).build());
+			cloud.addEffect(new EffectBuilder(Effects.POISON, 60).level(2).build());
 			cloud.setPos(target.getX(), target.getY(), target.getZ());
 			target.level.addFreshEntity(cloud);
 		}

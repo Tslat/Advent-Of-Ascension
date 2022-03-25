@@ -11,6 +11,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.render.custom.AoAResourceRenderer;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
+import net.tslat.aoa3.client.render.custom.EnergyResourceRenderer;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
@@ -27,6 +29,7 @@ public final class AoAGuiElementRenderers {
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGameOverlayEvent.Post.class, AoAGuiElementRenderers::onHudRender);
+		registerResourceRenderer(AoAResources.ENERGY.get(), new EnergyResourceRenderer());
 	}
 
 	public static AoAResourceRenderer getResourceRenderer(AoAResource resource) {

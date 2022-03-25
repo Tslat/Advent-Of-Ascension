@@ -16,6 +16,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.common.util.FakePlayer;
+import net.tslat.aoa3.library.builder.EffectBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -170,19 +171,19 @@ public final class EntityUtil {
 		targetEntity.hurtMarked = true;
 	}
 
-	public static void applyPotions(Collection<? extends Entity> entities, PotionUtil.EffectBuilder... effects) {
+	public static void applyPotions(Collection<? extends Entity> entities, EffectBuilder... effects) {
 		for (Entity entity : entities) {
 			applyPotions(entity, effects);
 		}
 	}
 
-	public static void applyPotions(Entity entity, PotionUtil.EffectBuilder... effects) {
+	public static void applyPotions(Entity entity, EffectBuilder... effects) {
 		if (!(entity instanceof LivingEntity) || !entity.isAlive() || entity.isSpectator() || entity instanceof FakePlayer)
 			return;
 
 		boolean onlyBeneficial = entity instanceof PlayerEntity && ((PlayerEntity)entity).isCreative();
 
-		for (PotionUtil.EffectBuilder builder : effects) {
+		for (EffectBuilder builder : effects) {
 			if (!onlyBeneficial || builder.getEffect().isBeneficial())
 				((LivingEntity)entity).addEffect(builder.build());
 		}

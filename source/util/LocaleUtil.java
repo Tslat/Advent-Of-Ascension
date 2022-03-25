@@ -75,14 +75,14 @@ public final class LocaleUtil {
 		return getLocaleMessage("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, new StringTextComponent(Integer.toString(levelReq)), skill.getName());
 	}
 
-	public static TranslationTextComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg) {
+	public static TranslationTextComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg, Object currentValueArg) {
 		if (flat && scaling)
-			return percent ? getPercentFlatAndScalingAbilityValueDesc(flatArg, scalingArg) : getFlatAndScalingAbilityValueDesc(flatArg, scalingArg);
+			return percent ? getPercentFlatAndScalingAbilityValueDesc(flatArg, scalingArg, currentValueArg) : getFlatAndScalingAbilityValueDesc(flatArg, scalingArg, currentValueArg);
 
 		if (flat)
 			return percent ? getPercentFlatAbilityValueDesc(flatArg) : getFlatAbilityValueDesc(flatArg);
 
-		return percent ? getPercentScalingAbilityValueDesc(scalingArg) : getScalingAbilityValueDesc(scalingArg);
+		return percent ? getPercentScalingAbilityValueDesc(scalingArg, currentValueArg) : getScalingAbilityValueDesc(scalingArg, currentValueArg);
 	}
 
 	public static TranslationTextComponent getScalingAbilityValueDesc(Object... args) {
@@ -112,11 +112,10 @@ public final class LocaleUtil {
 	public enum ItemDescriptionType {
 		BENEFICIAL(TextFormatting.DARK_GREEN),
 		HARMFUL(TextFormatting.RED),
-		NEUTRAL(TextFormatting.DARK_GRAY),
+		NEUTRAL(TextFormatting.GRAY),
 		UNIQUE(TextFormatting.DARK_PURPLE),
 		SPECIAL(TextFormatting.GOLD),
 		ITEM_TYPE_INFO(TextFormatting.AQUA),
-		GENERAL_INFO(TextFormatting.GRAY),
 		ITEM_DAMAGE(TextFormatting.DARK_RED),
 		ITEM_AMMO_COST(TextFormatting.LIGHT_PURPLE);
 

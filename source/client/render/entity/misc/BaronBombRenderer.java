@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import net.tslat.aoa3.client.model.entity.misc.BaronBombModel;
-import net.tslat.aoa3.object.entity.misc.BaronBombEntity;
+import net.tslat.aoa3.content.entity.misc.BaronBombEntity;
 
 import javax.annotation.Nullable;
 

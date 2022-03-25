@@ -52,14 +52,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:arc_flower",
+        "type": "aoa3:stimulo",
         "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:stimulosus",
-        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -76,20 +70,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:axiolight",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:soulvyre",
         "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:stimulo",
-        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -101,6 +83,24 @@
       },
       {
         "type": "aoa3:soulscorne",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arc_flower",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:stimulosus",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:axiolight",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

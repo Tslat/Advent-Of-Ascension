@@ -9,8 +9,8 @@ import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.block.tileentity.LunarCreationTableTileEntity;
-import net.tslat.aoa3.object.block.tileentity.TrophyTileEntity;
+import net.tslat.aoa3.content.block.tileentity.LunarCreationTableTileEntity;
+import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
 import net.tslat.aoa3.client.render.tileentity.LunarCreationTableRenderer;
 import net.tslat.aoa3.client.render.tileentity.TrophyRenderer;
 

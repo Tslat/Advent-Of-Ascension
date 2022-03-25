@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.entity.projectile.thrown.*;
+import net.tslat.aoa3.content.entity.projectile.thrown.*;
 
 public final class AoADispensables {
 	public static void registerDispenseBehaviours() {

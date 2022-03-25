@@ -7,10 +7,10 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.event.GlobalEvents;
+import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.PotionUtil;
 
 import java.util.Arrays;
 
@@ -40,12 +40,12 @@ public class UltimatumStaffTask implements Runnable {
 		EntityUtil.removePotions(target, Effects.REGENERATION);
 		EntityUtil.removePotions(shooter, Effects.REGENERATION);
 		EntityUtil.applyPotions(Arrays.asList(target, shooter),
-				new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 210).level(100).hideParticles(),
-				new PotionUtil.EffectBuilder(Effects.WEAKNESS, 210).level(50).hideParticles(),
-				new PotionUtil.EffectBuilder(Effects.DAMAGE_RESISTANCE, 210).level(5).hideParticles(),
-				new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 510).hideParticles(),
-				new PotionUtil.EffectBuilder(Effects.BLINDNESS, 210).hideParticles(),
-				new PotionUtil.EffectBuilder(Effects.LEVITATION, 210).level(-1).hideParticles());
+				new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 210).level(100).hideParticles(),
+				new EffectBuilder(Effects.WEAKNESS, 210).level(50).hideParticles(),
+				new EffectBuilder(Effects.DAMAGE_RESISTANCE, 210).level(5).hideParticles(),
+				new EffectBuilder(Effects.NIGHT_VISION, 510).hideParticles(),
+				new EffectBuilder(Effects.BLINDNESS, 210).hideParticles(),
+				new EffectBuilder(Effects.LEVITATION, 210).level(-1).hideParticles());
 	}
 
 	@Override

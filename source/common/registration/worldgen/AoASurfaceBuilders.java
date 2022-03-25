@@ -6,9 +6,9 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.world.gen.surfacebuilder.MirroredSurfaceBuilder;
-import net.tslat.aoa3.world.gen.surfacebuilder.OceanlessSurfaceBuilder;
-import net.tslat.aoa3.world.gen.surfacebuilder.TieredSurfaceBuilder;
+import net.tslat.aoa3.content.world.gen.surfacebuilder.MirroredSurfaceBuilder;
+import net.tslat.aoa3.content.world.gen.surfacebuilder.OceanlessSurfaceBuilder;
+import net.tslat.aoa3.content.world.gen.surfacebuilder.TieredSurfaceBuilder;
 
 import java.util.function.Supplier;
 

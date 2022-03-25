@@ -22,11 +22,11 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.world.gen.feature.features.config.IntRangeConfig;
-import net.tslat.aoa3.world.gen.structure.structures.*;
-import net.tslat.aoa3.world.gen.structure.structures.special.HauntedDungeonStructure;
-import net.tslat.aoa3.world.gen.structure.structures.special.KrorCaveStructure;
-import net.tslat.aoa3.world.gen.structure.structures.special.ZalShipStructure;
+import net.tslat.aoa3.content.world.gen.feature.features.config.IntRangeConfig;
+import net.tslat.aoa3.content.world.gen.structure.structures.*;
+import net.tslat.aoa3.content.world.gen.structure.structures.special.HauntedDungeonStructure;
+import net.tslat.aoa3.content.world.gen.structure.structures.special.KrorCaveStructure;
+import net.tslat.aoa3.content.world.gen.structure.structures.special.ZalShipStructure;
 
 import java.util.*;
 import java.util.function.Supplier;

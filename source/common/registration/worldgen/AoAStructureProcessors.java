@@ -9,8 +9,8 @@ import net.minecraft.world.gen.feature.template.IStructureProcessorType;
 import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.StructureProcessorList;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.world.gen.structure.processors.CrysteviaPillarProcessor;
-import net.tslat.aoa3.world.gen.structure.processors.TrophyProcessor;
+import net.tslat.aoa3.content.world.gen.structure.processors.CrysteviaPillarProcessor;
+import net.tslat.aoa3.content.world.gen.structure.processors.TrophyProcessor;
 
 import java.util.Arrays;
 

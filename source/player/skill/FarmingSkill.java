@@ -35,7 +35,7 @@ public class FarmingSkill extends AoASkill.Instance {
 			int xpTime = 0;
 
 			if (block instanceof CropsBlock) {
-				xpTime = 7 * ((CropsBlock)block).getMaxAge();
+				xpTime = ((CropsBlock)block).isMaxAge(ev.getState()) ? 7 * ((CropsBlock)block).getMaxAge() : 0;
 			}
 			else if (block instanceof StemGrownBlock) {
 				xpTime = 12;

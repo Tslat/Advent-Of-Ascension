@@ -9,12 +9,12 @@ import net.minecraft.loot.functions.ILootFunction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.loottable.condition.BlockHasTag;
-import net.tslat.aoa3.object.loottable.condition.HoldingItem;
-import net.tslat.aoa3.object.loottable.condition.PlayerHasLevel;
-import net.tslat.aoa3.object.loottable.condition.PlayerHasResource;
-import net.tslat.aoa3.object.loottable.function.EnchantSpecific;
-import net.tslat.aoa3.object.loottable.function.GrantSkillXp;
+import net.tslat.aoa3.content.loottable.condition.BlockHasTag;
+import net.tslat.aoa3.content.loottable.condition.HoldingItem;
+import net.tslat.aoa3.content.loottable.condition.PlayerHasLevel;
+import net.tslat.aoa3.content.loottable.condition.PlayerHasResource;
+import net.tslat.aoa3.content.loottable.function.EnchantSpecific;
+import net.tslat.aoa3.content.loottable.function.GrantSkillXp;
 
 public final class AoALootOperations {
 	public static final class LootFunctions {

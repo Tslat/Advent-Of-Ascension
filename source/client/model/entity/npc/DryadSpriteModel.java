@@ -3,7 +3,7 @@ package net.tslat.aoa3.client.model.entity.npc;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
-import net.tslat.aoa3.object.entity.npc.ambient.DryadSpriteEntity;
+import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
 
 public class DryadSpriteModel extends EntityGeoModel<DryadSpriteEntity> {
 	private static final ResourceLocation WOOD_TEXTURE = AdventOfAscension.id("textures/entity/npc/ambient/dryad_sprite_wood.png");

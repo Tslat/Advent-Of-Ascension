@@ -38,6 +38,7 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, ServerParticlePacket.class, ServerParticlePacket::encode, ServerParticlePacket::decode, ServerParticlePacket::receiveMessage);
 		INSTANCE.registerMessage(id++, SkillRequirementDataPacket.class, SkillRequirementDataPacket::encode, SkillRequirementDataPacket::decode, SkillRequirementDataPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, SyncAoAAbilityDataPacket.class, SyncAoAAbilityDataPacket::encode, SyncAoAAbilityDataPacket::decode, SyncAoAAbilityDataPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, AoASoundBuilderPacket.class, AoASoundBuilderPacket::encode, AoASoundBuilderPacket::decode, AoASoundBuilderPacket::receiveMessage);
 	}
 
 	public static void messageNearbyPlayers(AoAPacket packet, ServerWorld world, Vector3d origin, double radius) {

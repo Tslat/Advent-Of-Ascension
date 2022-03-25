@@ -1,7 +1,7 @@
 package net.tslat.aoa3.client.model.entity.boss;
 
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
-import net.tslat.aoa3.object.entity.boss.KrorEntity;
+import net.tslat.aoa3.content.entity.boss.KrorEntity;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
 

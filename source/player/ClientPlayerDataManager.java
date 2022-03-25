@@ -173,10 +173,8 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 
 	@Override
 	public void addListener(AoAPlayerEventListener listener, boolean active, AoAPlayerEventListener.ListenerType... types) {
-		if (active) {
-			for (AoAPlayerEventListener.ListenerType type : types) {
-				eventListeners.put(type, listener);
-			}
+		for (AoAPlayerEventListener.ListenerType type : types) {
+			eventListeners.put(type, listener);
 		}
 	}
 
@@ -233,7 +231,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 				return;
 			}
 			else {
-				eventListeners.put(type, listener);
+				addListener(listener, listener.meetsRequirements(), type);
 			}
 		}
 	}

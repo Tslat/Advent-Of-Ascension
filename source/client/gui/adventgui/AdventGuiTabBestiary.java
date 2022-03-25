@@ -39,7 +39,7 @@ import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.data.client.BestiaryReloadListener;
-import net.tslat.aoa3.object.entity.base.*;
+import net.tslat.aoa3.content.entity.base.*;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
@@ -335,10 +335,7 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				String attribute = "";
 
 				if (openEntryInstance instanceof LivingEntity && openEntryInstance instanceof IMob) {
-					if (!openEntryInstance.canChangeDimensions()) {
-						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.boss");
-					}
-					else if (openEntryInstance instanceof FlyingEntity) {
+					if (openEntryInstance instanceof FlyingEntity) {
 						if (((LivingEntity)openEntryInstance).getAttribute(Attributes.ATTACK_DAMAGE) != null) {
 							type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.flyingMelee");
 						}
@@ -397,11 +394,6 @@ public class AdventGuiTabBestiary extends Screen implements IProgressMeter {
 				}
 
 				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type") + TextFormatting.RESET + " " + type);
-
-				/*if (livingInstance != null && HunterUtil.isHunterCreature(livingInstance)) {
-					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.hunterReq") + TextFormatting.RESET + " " + HunterUtil.getHunterLevel((LivingEntity)openEntryInstance));
-					openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.hunterXp") + TextFormatting.RESET + " " + HunterUtil.getHunterXp((LivingEntity)openEntryInstance));
-				}*/ // TODO
 
 				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.attribute") + TextFormatting.RESET + " " + attribute);
 				openEntryStatsLines.add(TextFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.size") + TextFormatting.RESET + " " + ((int)(openEntryInstance.getBbWidth() * 1000)) / 1000f + "x" + ((int)(openEntryInstance.getBbHeight() * 1000)) / 1000f);

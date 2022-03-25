@@ -6,7 +6,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.object.entity.projectile.staff.SunShotEntity;
+import net.tslat.aoa3.content.entity.projectile.staff.SunShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RandomUtil;
 

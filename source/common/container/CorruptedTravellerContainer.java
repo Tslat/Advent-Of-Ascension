@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.object.entity.npc.trader.CorruptedTravellerEntity;
+import net.tslat.aoa3.content.entity.npc.trader.CorruptedTravellerEntity;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.AdvancementUtil;

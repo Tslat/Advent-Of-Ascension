@@ -3,28 +3,23 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.JSONUtils;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
 
-public class FallDamageReduction extends AoAAbility.Instance {
+public class FallDamageReduction extends ScalableModAbility {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.PLAYER_FALL};
 
 	private final int minHeight;
 	private final int maxHeight;
-	private final float baseReduction;
-	private final float perLevelReduction;
 
 	public FallDamageReduction(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.FALL_DAMAGE_REDUCTION.get(), skill, data);
 
 		this.minHeight = JSONUtils.getAsInt(data, "min_height", 0);
 		this.maxHeight = JSONUtils.getAsInt(data, "max_height", Integer.MAX_VALUE);
-		this.baseReduction = JSONUtils.getAsFloat(data, "base_reduction", 0);
-		this.perLevelReduction = JSONUtils.getAsFloat(data, "per_level_reduction", 0);
 	}
 
 	public FallDamageReduction(AoASkill.Instance skill, CompoundNBT data) {
@@ -32,8 +27,6 @@ public class FallDamageReduction extends AoAAbility.Instance {
 
 		this.minHeight = data.getInt("min_height");
 		this.maxHeight = data.getInt("max_height");
-		this.baseReduction = data.getFloat("base_reduction");
-		this.perLevelReduction = data.getFloat("per_level_reduction");
 	}
 
 	@Override
@@ -51,12 +44,7 @@ public class FallDamageReduction extends AoAAbility.Instance {
 		super.updateDescription(new TranslationTextComponent(key,
 				minHeight - 1,
 				maxHeight,
-				LocaleUtil.getAbilityValueDesc(
-						baseReduction != 0,
-						perLevelReduction != 0,
-						true,
-						NumberUtil.roundToNthDecimalPlace(baseReduction * 100, 2),
-						NumberUtil.roundToNthDecimalPlace(perLevelReduction * 100, 2))
+				getScalingDescriptionComponent(2)
 		));
 	}
 
@@ -68,9 +56,9 @@ public class FallDamageReduction extends AoAAbility.Instance {
 	@Override
 	public void handlePlayerFall(LivingFallEvent ev) {
 		if (ev.getDistance() >= minHeight && ev.getDistance() <= maxHeight) {
-			ev.setDamageMultiplier(Math.max(0, ev.getDamageMultiplier() * (1 - Math.min(1, baseReduction + skill.getLevel(false) * perLevelReduction))));
+			ev.setDamageMultiplier(Math.max(0, ev.getDamageMultiplier() * (1 - Math.min(1, getScaledValue()))));
 
-			if (ev.getDamageMultiplier() * ev.getDistance() < 1)
+			if (MathHelper.ceil((ev.getDistance() - 3) * ev.getDamageMultiplier()) < 1)
 				ev.setDamageMultiplier(0);
 		}
 	}
@@ -82,8 +70,6 @@ public class FallDamageReduction extends AoAAbility.Instance {
 		if (forClientSetup) {
 			data.putInt("min_height", this.minHeight);
 			data.putInt("max_height", this.maxHeight);
-			data.putFloat("base_reduction", this.baseReduction);
-			data.putFloat("per_level_reduction", this.perLevelReduction);
 		}
 
 		return data;

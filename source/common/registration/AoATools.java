@@ -6,11 +6,11 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.item.tool.axe.*;
-import net.tslat.aoa3.object.item.tool.hoe.DryadsBlessing;
-import net.tslat.aoa3.object.item.tool.misc.*;
-import net.tslat.aoa3.object.item.tool.pickaxe.*;
-import net.tslat.aoa3.object.item.tool.shovel.*;
+import net.tslat.aoa3.content.item.tool.axe.*;
+import net.tslat.aoa3.content.item.tool.hoe.DryadsBlessing;
+import net.tslat.aoa3.content.item.tool.misc.*;
+import net.tslat.aoa3.content.item.tool.pickaxe.*;
+import net.tslat.aoa3.content.item.tool.shovel.*;
 import net.tslat.aoa3.util.ItemUtil;
 
 import java.util.function.Supplier;

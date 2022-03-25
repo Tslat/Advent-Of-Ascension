@@ -3,8 +3,9 @@
   "abilities": [
     {
       "id": "aoa3:fishing_xp_boost",
-      "unique_id": "1238147950",
-      "amount": 1.0,
+      "unique_id": "-1580201954",
+      "base_value": 1.0,
+      "per_level_mod": 0.0,
       "level_req": 8
     },
     {
@@ -34,9 +35,9 @@
     },
     {
       "id": "aoa3:hauling_rod_pull_strength",
-      "unique_id": "2050978866",
-      "per_level_amount": 0.0025,
-      "amount": 0.0,
+      "unique_id": "1276940119",
+      "base_value": 0.0,
+      "per_level_mod": 0.0025,
       "level_req": 45
     },
     {
@@ -64,9 +65,9 @@
     },
     {
       "id": "aoa3:hauling_rod_pull_damage",
-      "unique_id": "-1639107677",
-      "per_level_amount": 0.0,
-      "amount": 3.0,
+      "unique_id": "-496987384",
+      "base_value": 3.0,
+      "per_level_mod": 0.0,
       "level_req": 77
     },
     {

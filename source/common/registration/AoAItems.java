@@ -8,12 +8,12 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.item.food.*;
-import net.tslat.aoa3.object.item.lootbox.*;
-import net.tslat.aoa3.object.item.misc.*;
-import net.tslat.aoa3.object.item.misc.summoning.*;
-import net.tslat.aoa3.object.item.tablet.*;
-import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.aoa3.content.item.food.*;
+import net.tslat.aoa3.content.item.lootbox.*;
+import net.tslat.aoa3.content.item.misc.*;
+import net.tslat.aoa3.content.item.misc.summoning.*;
+import net.tslat.aoa3.content.item.tablet.*;
+import net.tslat.aoa3.library.builder.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
@@ -198,6 +198,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> WORN_BOOK = registerItem("worn_book", WornBook::new);
 	public static final RegistryObject<Item> YELLOW_SPORES = registerItem("yellow_spores", miscItem());
 	public static final RegistryObject<Item> ZHINX_DUST = registerItem("zhinx_dust", miscItem());
+	public static final RegistryObject<Item> CREATURE_ESSENCE = registerItem("creature_essence", CreatureEssence::new);
 
 	public static final RegistryObject<Item> BALLOON = registerItem("balloon", () -> new Item(new Item.Properties().tab(AoAItemGroups.AMMUNITION)));
 	public static final RegistryObject<Item> CANNONBALL = registerItem("cannonball", () -> new Item(new Item.Properties().tab(AoAItemGroups.AMMUNITION)));
@@ -360,7 +361,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> GREEN_GEMTRAP = registerItem("green_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
 	public static final RegistryObject<Item> HYDRONE = registerItem("hydrone", miscItem());
 	public static final RegistryObject<Item> IRONBACK = registerItem("ironback", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
-	public static final RegistryObject<Item> JAMFISH = registerItem("jamfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(5).saturationMod(0.5f).effect(() -> new PotionUtil.EffectBuilder(Effects.MOVEMENT_SPEED, 600).build(), 1f).build())));
+	public static final RegistryObject<Item> JAMFISH = registerItem("jamfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(5).saturationMod(0.5f).effect(() -> new EffectBuilder(Effects.MOVEMENT_SPEED, 600).build(), 1f).build())));
 	public static final RegistryObject<Item> PARAPIRANHA = registerItem("parapiranha", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
 	public static final RegistryObject<Item> PEARL_STRIPEFISH = registerItem("pearl_stripefish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
 	public static final RegistryObject<Item> PURPLE_GEMTRAP = registerItem("purple_gemtrap", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
@@ -377,7 +378,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> VIOLET_SKIPPER = registerItem("violet_skipper", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).build())));
 
 	public static final RegistryObject<Item> RAW_RAINBOWFISH = registerItem("raw_rainbowfish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(3).saturationMod(0.85f).build())));
-	public static final RegistryObject<Item> COOKED_RAINBOWFISH = registerItem("cooked_rainbowfish", () -> new HealingFood(5.0f, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85f).effect(() -> new PotionUtil.EffectBuilder(Effects.LUCK, 600).build(), 1f).build())));
+	public static final RegistryObject<Item> COOKED_RAINBOWFISH = registerItem("cooked_rainbowfish", () -> new HealingFood(5.0f, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85f).effect(() -> new EffectBuilder(Effects.LUCK, 600).build(), 1f).build())));
 
 	public static final RegistryObject<Item> BUBBLE_BERRIES = registerItem("bubble_berries", BubbleBerries::new);
 	public static final RegistryObject<Item> CANDY_CANE = registerItem("candy_cane", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.1f).build())));
@@ -389,8 +390,8 @@ public final class AoAItems {
 	public static final RegistryObject<Item> COOKED_CHIMERA_CHOP = registerItem("cooked_chimera_chop", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.6f).meat().build())));
 	public static final RegistryObject<Item> RAW_FURLION_CHOP = registerItem("raw_furlion_chop", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.2f).meat().build())));
 	public static final RegistryObject<Item> COOKED_FURLION_CHOP = registerItem("cooked_furlion_chop", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.6f).meat().build())));
-	public static final RegistryObject<Item> RAW_HALYCON_BEEF = registerItem("raw_halycon_beef", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.3f).meat().effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 150).build(), 1f).effect(() -> new PotionUtil.EffectBuilder(Effects.POISON, 40).build(), 1f).build())));
-	public static final RegistryObject<Item> COOKED_HALYCON_BEEF = registerItem("cooked_halycon_beef", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(7).saturationMod(0.7f).meat().effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 150).build(), 1f).build())));
+	public static final RegistryObject<Item> RAW_HALYCON_BEEF = registerItem("raw_halycon_beef", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.3f).meat().effect(() -> new EffectBuilder(Effects.CONFUSION, 150).build(), 1f).effect(() -> new EffectBuilder(Effects.POISON, 40).build(), 1f).build())));
+	public static final RegistryObject<Item> COOKED_HALYCON_BEEF = registerItem("cooked_halycon_beef", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(7).saturationMod(0.7f).meat().effect(() -> new EffectBuilder(Effects.CONFUSION, 150).build(), 1f).build())));
 	public static final RegistryObject<Item> EYE_CANDY = registerItem("eye_candy", EyeCandy::new);
 	public static final RegistryObject<Item> FIERY_CHOPS = registerItem("fiery_chops", FieryChops::new);
 	public static final RegistryObject<Item> FLORACLE_STICKS = registerItem("floracle_sticks", FloracleSticks::new);
@@ -400,8 +401,8 @@ public final class AoAItems {
 	public static final RegistryObject<Item> HEART_FRUIT = registerItem("heart_fruit", HeartFruit::new);
 	public static final RegistryObject<Item> HOT_ROD = registerItem("hot_rod", HotRod::new);
 	public static final RegistryObject<Item> LUNACRIKE = registerItem("lunacrike", Lunacrike::new);
-	public static final RegistryObject<Item> LUNA_GLOBE = registerItem("luna_globe", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new PotionUtil.EffectBuilder(Effects.INVISIBILITY, 120).build(), 1).build())));
-	public static final RegistryObject<Item> LUNALONS = registerItem("lunalons", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new PotionUtil.EffectBuilder(Effects.NIGHT_VISION, 40).level(2).build(), 1).build())));
+	public static final RegistryObject<Item> LUNA_GLOBE = registerItem("luna_globe", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new EffectBuilder(Effects.INVISIBILITY, 120).build(), 1).build())));
+	public static final RegistryObject<Item> LUNALONS = registerItem("lunalons", () -> new TooltipItem(1, new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new EffectBuilder(Effects.NIGHT_VISION, 40).level(2).build(), 1).build())));
 	public static final RegistryObject<Item> MAGIC_MARANG = registerItem("magic_marang", MagicMarang::new);
 	public static final RegistryObject<Item> MYSTIC_SHROOMS = registerItem("mystic_shrooms", () -> new BlockNamedItem(AoABlocks.MYSTIC_SHROOM_CROP.get(), new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(2).saturationMod(0.4f).alwaysEat().build())));
 	public static final RegistryObject<Item> NATURE_MELON_SLICE = registerItem("nature_melon_slice", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(1).saturationMod(0.4f).build())));
@@ -418,10 +419,10 @@ public final class AoAItems {
 	public static final RegistryObject<Item> TEA = registerItem("tea", Tea::new);
 	public static final RegistryObject<Item> FUNGAL_TEA = registerItem("fungal_tea", FungalTea::new);
 	public static final RegistryObject<Item> NATURAL_TEA = registerItem("natural_tea", NaturalTea::new);
-	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONDUIT_POWER, 600).build(), 1f).build())));
+	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(6).saturationMod(0.85F).effect(() -> new EffectBuilder(Effects.CONDUIT_POWER, 600).build(), 1f).build())));
 	public static final RegistryObject<Item> CHUM = registerItem("chum", ChumItem::new);
-	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 80).build(), 1f).build())));
-	public static final RegistryObject<Item> CHUM_AND_SALAD_BURGER = registerItem("chum_and_salad_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(12).saturationMod(0.9F).effect(() -> new PotionUtil.EffectBuilder(Effects.CONFUSION, 80).build(), 1f).build())));
+	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new EffectBuilder(Effects.CONFUSION, 80).build(), 1f).build())));
+	public static final RegistryObject<Item> CHUM_AND_SALAD_BURGER = registerItem("chum_and_salad_burger", () -> new Item(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(12).saturationMod(0.9F).effect(() -> new EffectBuilder(Effects.CONFUSION, 80).build(), 1f).build())));
 
 	public static final RegistryObject<Item> BUBBLE_BERRY_SEEDS = registerItem("bubble_berry_seeds", () -> new BlockNamedItem(AoABlocks.BUBBLE_BERRY_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));
 	public static final RegistryObject<Item> CHILLI_SEEDS = registerItem("chilli_seeds", () -> new BlockNamedItem(AoABlocks.CHILLI_CROP.get(), new Item.Properties().tab(AoAItemGroups.MISC_ITEMS)));

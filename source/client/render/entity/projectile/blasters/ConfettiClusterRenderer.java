@@ -4,7 +4,7 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.util.math.vector.Vector3d;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.object.entity.projectile.blaster.ConfettiClusterEntity;
+import net.tslat.aoa3.content.entity.projectile.blaster.ConfettiClusterEntity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 public class ConfettiClusterRenderer extends ParticleProjectileRenderer<ConfettiClusterEntity> {

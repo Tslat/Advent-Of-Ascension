@@ -10,7 +10,7 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.recipe.UpgradeKitRecipe;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.util.LocaleUtil;
 

@@ -22,8 +22,8 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
-import net.tslat.aoa3.object.item.armour.AdventArmour;
+import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
+import net.tslat.aoa3.content.item.armour.AdventArmour;
 
 import javax.annotation.Nullable;
 

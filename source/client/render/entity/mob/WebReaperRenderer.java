@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.mob.abyss.WebReaperModel;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.object.entity.mob.abyss.WebReaperEntity;
+import net.tslat.aoa3.content.entity.mob.abyss.WebReaperEntity;
 
 public class WebReaperRenderer extends AoAMobRenderer {
 	public WebReaperRenderer(EntityRendererManager renderManager) {

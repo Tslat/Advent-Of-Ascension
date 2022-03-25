@@ -6,8 +6,8 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.world.gen.biomeprovider.FloatingIslandsBiomeProvider;
-import net.tslat.aoa3.world.gen.biomeprovider.LayeredBiomeProvider;
+import net.tslat.aoa3.content.world.gen.biomeprovider.FloatingIslandsBiomeProvider;
+import net.tslat.aoa3.content.world.gen.biomeprovider.LayeredBiomeProvider;
 
 public final class AoABiomes {
 	public static void postInit() {
@@ -28,7 +28,7 @@ public final class AoABiomes {
 		applyBiomeTypes("greckon_mountains", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.MAGICAL);
 		applyBiomeTypes("haven", BiomeDictionary.Type.MOUNTAIN, BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.VOID);
 		applyBiomeTypes("iromine", BiomeDictionary.Type.HOT, BiomeDictionary.Type.SPARSE);
-		applyBiomeTypes("coral_fields", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.WET, BiomeDictionary.Type.WATER);
+		applyBiomeTypes("coral_fields", BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.WET, BiomeDictionary.Type.WATER, BiomeDictionary.Type.OCEAN);
 		applyBiomeTypes("lelyetian_plains", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.HOT, BiomeDictionary.Type.VOID);
 		applyBiomeTypes("asteroid_belt", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.VOID, BiomeDictionary.Type.SPARSE);
 		applyBiomeTypes("fungal_caverns", BiomeDictionary.Type.MAGICAL, BiomeDictionary.Type.SPOOKY, BiomeDictionary.Type.FOREST, BiomeDictionary.Type.MUSHROOM);

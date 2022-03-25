@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FarmlandBlock;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.CompoundNBT;
@@ -12,7 +13,9 @@ import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 public class FertiliseFarmland extends AoAAbility.Instance {
@@ -41,6 +44,8 @@ public class FertiliseFarmland extends AoAAbility.Instance {
 
 			if (state.getBlock() == Blocks.FARMLAND && WorldUtil.canModifyBlock(world, ev.getPos(), ev.getPlayer(), stack)) {
 				world.setBlock(ev.getPos(), AoABlocks.FERTILISED_FARMLAND.get().defaultBlockState().setValue(FarmlandBlock.MOISTURE, state.getValue(FarmlandBlock.MOISTURE)), Constants.BlockFlags.DEFAULT);
+
+				PlayerUtil.giveXpToPlayer((ServerPlayerEntity)ev.getPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getPlayer(), AoASkills.FARMING.get()), 1), false);
 
 				if (!ev.getPlayer().isCreative())
 					stack.shrink(1);

@@ -36,7 +36,7 @@ public class ModelledProjectileRenderer<T extends Entity> extends EntityRenderer
 
 		model.prepareMobModel(entity, 0, 0, partialTicks);
 		model.setupAnim(entity, 0, partialTicks, entity.tickCount, 0, pitch);
-		matrix.translate(0.0D, -1.3f, 0.0D);
+		matrix.translate(0.0D, -1.6f, 0.0D);
 
 		boolean visible = !entity.isInvisible();
 		boolean shade = !visible && !entity.isInvisibleTo(Minecraft.getInstance().player);

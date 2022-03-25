@@ -4,7 +4,7 @@ import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.tslat.aoa3.object.entity.projectile.blaster.ArcwormShotEntity;
+import net.tslat.aoa3.content.entity.projectile.blaster.ArcwormShotEntity;
 
 public class ArcwormShotModel extends EntityModel<ArcwormShotEntity> {
 	private final ModelRenderer head;

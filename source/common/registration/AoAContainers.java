@@ -17,8 +17,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.container.*;
 import net.tslat.aoa3.common.container.*;
-import net.tslat.aoa3.object.entity.npc.banker.AoABanker;
-import net.tslat.aoa3.object.entity.npc.trader.CorruptedTravellerEntity;
+import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
+import net.tslat.aoa3.content.entity.npc.trader.CorruptedTravellerEntity;
 
 public final class AoAContainers {
 	public static final DeferredRegister<ContainerType<?>> CONTAINERS = DeferredRegister.create(ForgeRegistries.CONTAINERS, AdventOfAscension.MOD_ID);

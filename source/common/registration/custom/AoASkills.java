@@ -15,6 +15,17 @@ public class AoASkills {
 	private static IForgeRegistry<AoASkill> REGISTRY = null;
 	public static final DeferredRegister<AoASkill> SKILLS = DeferredRegister.create(AoASkill.class, AdventOfAscension.MOD_ID);
 
+	public static final RegistryObject<AoASkill> ALCHEMY = SKILLS.register("alchemy", () -> new AoASkill(AlchemySkill::new, AlchemySkill::new));
+	public static final RegistryObject<AoASkill> CREATION = SKILLS.register("creation", () -> new AoASkill(CreationSkill::new, CreationSkill::new));
+	public static final RegistryObject<AoASkill> DEXTERITY = SKILLS.register("dexterity", () -> new AoASkill(DexteritySkill::new, DexteritySkill::new));
+	public static final RegistryObject<AoASkill> ENGINEERING = SKILLS.register("engineering", () -> new AoASkill(EngineeringSkill::new, EngineeringSkill::new));
+	public static final RegistryObject<AoASkill> EXTRACTION = SKILLS.register("extraction", () -> new AoASkill(ExtractionSkill::new, ExtractionSkill::new));
+	public static final RegistryObject<AoASkill> FARMING = SKILLS.register("farming", () -> new AoASkill(FarmingSkill::new, FarmingSkill::new));
+	public static final RegistryObject<AoASkill> FAUNAMANCY = SKILLS.register("faunamancy", () -> new AoASkill(FaunamancySkill::new, FaunamancySkill::new));
+	public static final RegistryObject<AoASkill> HAULING = SKILLS.register("hauling", () -> new AoASkill(HaulingSkill::new, HaulingSkill::new));
+	public static final RegistryObject<AoASkill> IMBUING = SKILLS.register("imbuing", () -> new AoASkill(ImbuingSkill::new, ImbuingSkill::new));
+	public static final RegistryObject<AoASkill> INNERVATION = SKILLS.register("innervation", () -> new AoASkill(InnervationSkill::new, InnervationSkill::new));
+
 	public static final AoASkill.Instance DEFAULT = new AoASkill.Instance(null, null, null) {
 		@Override
 		public int getLevel(boolean includeVanityLevels) {
@@ -50,17 +61,6 @@ public class AoASkills {
 		@Override
 		public void receiveSyncData(CompoundNBT data) {}
 	};
-
-	public static final RegistryObject<AoASkill> ALCHEMY = SKILLS.register("alchemy", () -> new AoASkill(AlchemySkill::new, AlchemySkill::new));
-	public static final RegistryObject<AoASkill> CREATION = SKILLS.register("creation", () -> new AoASkill(CreationSkill::new, CreationSkill::new));
-	public static final RegistryObject<AoASkill> DEXTERITY = SKILLS.register("dexterity", () -> new AoASkill(DexteritySkill::new, DexteritySkill::new));
-	public static final RegistryObject<AoASkill> ENGINEERING = SKILLS.register("engineering", () -> new AoASkill(EngineeringSkill::new, EngineeringSkill::new));
-	public static final RegistryObject<AoASkill> EXTRACTION = SKILLS.register("extraction", () -> new AoASkill(ExtractionSkill::new, ExtractionSkill::new));
-	public static final RegistryObject<AoASkill> FARMING = SKILLS.register("farming", () -> new AoASkill(FarmingSkill::new, FarmingSkill::new));
-	public static final RegistryObject<AoASkill> FAUNAMANCY = SKILLS.register("faunamancy", () -> new AoASkill(FaunamancySkill::new, FaunamancySkill::new));
-	public static final RegistryObject<AoASkill> HAULING = SKILLS.register("hauling", () -> new AoASkill(HaulingSkill::new, HaulingSkill::new));
-	public static final RegistryObject<AoASkill> IMBUING = SKILLS.register("imbuing", () -> new AoASkill(ImbuingSkill::new, ImbuingSkill::new));
-	public static final RegistryObject<AoASkill> INNERVATION = SKILLS.register("innervation", () -> new AoASkill(InnervationSkill::new, InnervationSkill::new));
 
 	@Nullable
 	public static AoASkill getSkill(ResourceLocation id) {

@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.boss.NethengeicWitherModel;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.object.entity.boss.NethengeicWitherEntity;
+import net.tslat.aoa3.content.entity.boss.NethengeicWitherEntity;
 
 import javax.annotation.Nullable;
 

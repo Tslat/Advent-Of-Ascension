@@ -7,7 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.object.entity.projectile.gun.YellowBulletEntity;
+import net.tslat.aoa3.content.entity.projectile.gun.YellowBulletEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
 public class YellowBulletRenderer extends TexturedProjectileRenderer<YellowBulletEntity> {

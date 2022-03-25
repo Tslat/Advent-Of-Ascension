@@ -6,7 +6,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
-import net.tslat.aoa3.object.entity.animal.fish.BasicLavaFishEntity;
+import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 
 public class BasicLavaFishRenderer extends AnimatedMobRenderer<BasicLavaFishEntity> {
 	public BasicLavaFishRenderer(EntityRendererManager renderManager, String assetSubpath, float shadow) {

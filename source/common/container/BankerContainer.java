@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.object.entity.npc.banker.AoABanker;
+import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 
 public class BankerContainer extends Container {
 	private final Inventory inputs;

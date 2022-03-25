@@ -8,7 +8,7 @@ import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
 import net.tslat.aoa3.client.render.entity.projectile.ModelledProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.object.entity.projectile.cannon.FungalRockFragmentEntity;
+import net.tslat.aoa3.content.entity.projectile.cannon.FungalRockFragmentEntity;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RandomUtil;
 

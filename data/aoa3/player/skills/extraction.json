@@ -24,8 +24,8 @@
     },
     {
       "id": "aoa3:harvest_speed_boost",
-      "unique_id": "186065075",
-      "speed_boost": 2.0,
+      "unique_id": "194191539",
+      "speed_boost": 2.5,
       "energy_drain_per_tick": 1.7,
       "cost_reduction_per_level": 0.0135,
       "level_req": 25

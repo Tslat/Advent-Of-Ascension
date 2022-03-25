@@ -4,7 +4,7 @@ import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.tslat.aoa3.client.model.misc.FullbrightModelRenderer;
-import net.tslat.aoa3.object.entity.animal.ShinySquidEntity;
+import net.tslat.aoa3.content.entity.animal.ShinySquidEntity;
 
 import java.util.Arrays;
 

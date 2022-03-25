@@ -17,7 +17,7 @@ public class EnergyResource extends AoAResource.Instance {
 	private final int hitDelay;
 	private final float regenAmount;
 
-	private long currentDelay = 0;
+	private int currentDelay = 0;
 	private float value = 0;
 
 	public EnergyResource(ServerPlayerDataManager plData, JsonObject jsonData) {
@@ -49,6 +49,10 @@ public class EnergyResource extends AoAResource.Instance {
 	@Override
 	public float getCurrentValue() {
 		return this.value;
+	}
+
+	public int getCurrentDelay() {
+		return this.currentDelay;
 	}
 
 	@Override
@@ -110,6 +114,7 @@ public class EnergyResource extends AoAResource.Instance {
 		}
 		else {
 			data.putFloat("value", getCurrentValue());
+			data.putInt("current_delay", getCurrentDelay());
 		}
 
 		return data;
@@ -119,5 +124,8 @@ public class EnergyResource extends AoAResource.Instance {
 	public void receiveSyncData(CompoundNBT data) {
 		if (data.contains("value"))
 			this.value = data.getFloat("value");
+
+		if (data.contains("current_delay"))
+			this.currentDelay = data.getInt("current_delay");
 	}
 }

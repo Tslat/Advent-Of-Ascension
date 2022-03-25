@@ -4,7 +4,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
-import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
+import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 
 import java.util.List;
 

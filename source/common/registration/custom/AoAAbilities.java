@@ -50,6 +50,11 @@ public class AoAAbilities {
 	public static final RegistryObject<AoAAbility> AUTO_ENCHANT_CRAFTING = register("auto_enchant_crafting", () -> new AoAAbility(AutoEnchantCrafting::new, AutoEnchantCrafting::new));
 	public static final RegistryObject<AoAAbility> RARE_TABLE_HARVESTING_CHANCE = register("rare_table_harvesting_chance", () -> new AoAAbility(RareTableHarvestingChance::new, RareTableHarvestingChance::new));
 	public static final RegistryObject<AoAAbility> BONUS_CRAFTING_OUTPUT = register("bonus_crafting_output", () -> new AoAAbility(BonusCraftingOutput::new, BonusCraftingOutput::new));
+	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS = register("entity_tag_damage_bonus", () -> new AoAAbility(EntityTagDamageBonus::new, EntityTagDamageBonus::new));
+	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_MELEE = register("entity_tag_damage_bonus_melee", () -> new AoAAbility(EntityTagDamageBonusMelee::new, EntityTagDamageBonusMelee::new));
+	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_MAGIC = register("entity_tag_damage_bonus_magic", () -> new AoAAbility(EntityTagDamageBonusMagic::new, EntityTagDamageBonusMagic::new));
+	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_PROJECTILE = register("entity_tag_damage_bonus_projectile", () -> new AoAAbility(EntityTagDamageBonusProjectile::new, EntityTagDamageBonusProjectile::new));
+	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_EXPLOSION = register("entity_tag_damage_bonus_explosion", () -> new AoAAbility(EntityTagDamageBonusExplosion::new, EntityTagDamageBonusExplosion::new));
 
 	private static RegistryObject<AoAAbility> register(String id, Supplier<AoAAbility> ability) {
 		return ABILITIES.register(id, ability);

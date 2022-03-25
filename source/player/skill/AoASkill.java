@@ -2,11 +2,11 @@ package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -19,6 +19,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.event.custom.AoAEvents;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -115,6 +116,10 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 
 		public HashMap<String, AoAAbility.Instance> getAbilityMap() {
 			return this.abilities;
+		}
+
+		public PlayerEntity getPlayer() {
+			return this.playerDataManager.player();
 		}
 
 		public ServerPlayerDataManager getPlayerDataManager() {
@@ -225,7 +230,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		}
 
 		private void subtractXp(float xp, boolean isUnnaturalSource) {
-			float remaining = Math.min(544132359, xp);
+			float remaining = Math.min(544132359, Math.abs(xp));
 			int newLevels = 0;
 
 			if (this.level >= 1 && remaining >= this.xp) {
@@ -258,8 +263,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {
 			ServerPlayerEntity player = playerDataManager.player();
 
-			if (newLevel < 100)
-				player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.PLAYER_LEVEL_UP.get(), SoundCategory.PLAYERS, 0.8f, 1.0f);
+			new SoundBuilder(AoASounds.PLAYER_LEVEL_UP).isPlayer().notInWorld().include(player).play();
 
 			this.level = newLevel;
 			this.xp = 0f;
@@ -387,7 +391,9 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		}
 
 		public boolean canGainXp(boolean naturalXpSource) {
-			if (naturalXpSource && (playerDataManager.player().isCreative() || playerDataManager.player().isSpectator()))
+			PlayerEntity player = getPlayer();
+
+			if (naturalXpSource && (player.isCreative() || player.isSpectator()))
 				return false;
 
 			return getLevel(true) < 1000;

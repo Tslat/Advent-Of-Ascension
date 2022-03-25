@@ -11,7 +11,7 @@ import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.tslat.aoa3.object.item.weapon.sniper.BaseSniper;
+import net.tslat.aoa3.content.item.weapon.sniper.BaseSniper;
 import net.tslat.aoa3.util.RenderUtil;
 
 public final class ScopeOverlayRenderer {

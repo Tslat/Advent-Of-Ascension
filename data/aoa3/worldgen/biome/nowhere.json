@@ -13,7 +13,7 @@
     "water_fog_color": 329011,
     "grass_color_modifier": "none",
     "music": {
-      "sound": "aoa3:nowhere_music",
+      "sound": "aoa3:biome.nowhere.music",
       "min_delay": 12000,
       "max_delay": 24000,
       "replace_current_music": false

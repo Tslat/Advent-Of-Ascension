@@ -17,6 +17,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
@@ -93,7 +94,7 @@ public class StunStrike extends AoAAbility.Instance {
 					if (target != null && target.isAlive()) {
 						if (player.distanceToSqr(target) < 36 && player.canSee(target)) {
 							DamageUtil.doScaledKnockback(target, player, 0.5f, player.getX() - target.getX(), player.getZ() - target.getZ());
-							EntityUtil.applyPotions(target, new PotionUtil.EffectBuilder(Effects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new PotionUtil.EffectBuilder(Effects.DIG_SLOWDOWN, this.stunDuration).level(127));
+							EntityUtil.applyPotions(target, new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new EffectBuilder(Effects.DIG_SLOWDOWN, this.stunDuration).level(127));
 							activatedActionKey(player);
 
 							if (skill.canGainXp(true))

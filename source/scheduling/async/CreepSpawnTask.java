@@ -3,7 +3,7 @@ package net.tslat.aoa3.scheduling.async;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.object.entity.boss.CreepEntity;
+import net.tslat.aoa3.content.entity.boss.CreepEntity;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.WorldUtil;
 

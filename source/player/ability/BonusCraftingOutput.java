@@ -8,15 +8,15 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.event.custom.events.ItemCraftingEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nullable;
 
 public class BonusCraftingOutput extends ScalableModAbility {
-	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.ITEM_CRAFT};
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.ITEM_CRAFTING};
 
 	@Nullable
 	private final Item outputTarget;
@@ -54,10 +54,10 @@ public class BonusCraftingOutput extends ScalableModAbility {
 		TranslationTextComponent component;
 
 		if (outputTarget != null) {
-			component = new TranslationTextComponent(defaultDescription.getKey() + ".item", getChanceDescriptionComponent(2), this.outputTarget.getDefaultInstance().getHoverName());
+			component = new TranslationTextComponent(defaultDescription.getKey() + ".item", getScalingDescriptionComponent(2), this.outputTarget.getDefaultInstance().getHoverName());
 		}
 		else {
-			component = new TranslationTextComponent(defaultDescription.getKey() + ".tag", getChanceDescriptionComponent(2), this.outputTargetTag.getName().toString());
+			component = new TranslationTextComponent(defaultDescription.getKey() + ".tag", getScalingDescriptionComponent(2), this.outputTargetTag.getName().toString());
 		}
 
 		super.updateDescription(component);
@@ -69,14 +69,14 @@ public class BonusCraftingOutput extends ScalableModAbility {
 	}
 
 	@Override
-	public void handleItemCraft(PlayerEvent.ItemCraftedEvent ev) {
+	public void handleItemCrafting(ItemCraftingEvent ev) {
 		if (outputTarget != null) {
-			if (ev.getCrafting().getItem() == outputTarget)
-				ev.getCrafting().setCount((int)Math.ceil(ev.getCrafting().getCount() * (1 + getScaledValue())));
+			if (ev.getOutputStack().getItem() == outputTarget)
+				ev.getOutputStack().setCount((int)Math.ceil(ev.getOutputStack().getCount() * (1 + getScaledValue())));
 		}
 		else {
-			if (ev.getCrafting().getItem().is(outputTargetTag))
-				ev.getCrafting().setCount((int)Math.ceil(ev.getCrafting().getCount() * (1 + getScaledValue())));
+			if (ev.getOutputStack().getItem().is(outputTargetTag))
+				ev.getOutputStack().setCount((int)Math.ceil(ev.getOutputStack().getCount() * (1 + getScaledValue())));
 		}
 	}
 

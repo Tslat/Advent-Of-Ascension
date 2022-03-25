@@ -38,7 +38,7 @@ import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.data.server.AoASkillsReloadListener;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.object.item.armour.AdventArmour;
+import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -47,7 +47,7 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.world.teleporter.PortalCoordinatesContainer;
+import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -231,8 +231,13 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	public void addListener(AoAPlayerEventListener listener, boolean active, ListenerType... types) {
 		ArrayListMultimap<ListenerType, AoAPlayerEventListener> holder = active ? this.activeEventListeners : this.disabledEventListeners;
 
-		for (ListenerType type : types) {
-			holder.put(type, listener);
+		if (types.length > 0) {
+			for (ListenerType type : types) {
+				holder.put(type, listener);
+			}
+		}
+		else {
+			holder.put(null, listener);
 		}
 	}
 
@@ -784,25 +789,25 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					case FEET:
 						boots = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
 
-						if (boots != null && AoASkillReqReloadListener.canEquip(playerDataManager, boots))
+						if (boots != null && AoASkillReqReloadListener.canEquip(playerDataManager, boots, false))
 							equipAdventArmour(playerDataManager, boots, slot);
 						break;
 					case LEGS:
 						legs = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
 
-						if (legs != null && AoASkillReqReloadListener.canEquip(playerDataManager, legs))
+						if (legs != null && AoASkillReqReloadListener.canEquip(playerDataManager, legs, false))
 							equipAdventArmour(playerDataManager, legs, slot);
 						break;
 					case CHEST:
 						body = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
 
-						if (body != null && AoASkillReqReloadListener.canEquip(playerDataManager, body))
+						if (body != null && AoASkillReqReloadListener.canEquip(playerDataManager, body, false))
 							equipAdventArmour(playerDataManager, body, slot);
 						break;
 					case HEAD:
 						helmet = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
 
-						if (helmet != null && AoASkillReqReloadListener.canEquip(playerDataManager, helmet))
+						if (helmet != null && AoASkillReqReloadListener.canEquip(playerDataManager, helmet, false))
 							equipAdventArmour(playerDataManager, helmet, slot);
 						break;
 				}
@@ -822,13 +827,13 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				for (Hand hand : Hand.values()) {
 					ItemStack heldStack = player.getItemInHand(hand);
 
-					if (!AoASkillReqReloadListener.canEquip(playerDataManager, heldStack.getItem())) {
+					if (!AoASkillReqReloadListener.canEquip(playerDataManager, heldStack.getItem(), true)) {
 						ItemHandlerHelper.giveItemToPlayer(player, heldStack);
 						player.setItemInHand(hand, ItemStack.EMPTY);
 					}
 				}
 
-				if (boots != null && !AoASkillReqReloadListener.canEquip(playerDataManager, boots)) {
+				if (boots != null && !AoASkillReqReloadListener.canEquip(playerDataManager, boots, true)) {
 					doArmourTick = false;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(0));
@@ -836,7 +841,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					unequipAdventArmour(playerDataManager, boots, EquipmentSlotType.FEET);
 				}
 
-				if (legs != null && !AoASkillReqReloadListener.canEquip(playerDataManager, legs)) {
+				if (legs != null && !AoASkillReqReloadListener.canEquip(playerDataManager, legs, true)) {
 					doArmourTick = false;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(1));
@@ -844,7 +849,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					unequipAdventArmour(playerDataManager, legs, EquipmentSlotType.LEGS);
 				}
 
-				if (body != null && !AoASkillReqReloadListener.canEquip(playerDataManager, body)) {
+				if (body != null && !AoASkillReqReloadListener.canEquip(playerDataManager, body, true)) {
 					doArmourTick = false;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(2));
@@ -852,7 +857,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					unequipAdventArmour(playerDataManager, body, EquipmentSlotType.CHEST);
 				}
 
-				if (helmet != null && !AoASkillReqReloadListener.canEquip(playerDataManager, helmet)) {
+				if (helmet != null && !AoASkillReqReloadListener.canEquip(playerDataManager, helmet, true)) {
 					doArmourTick = false;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(3));

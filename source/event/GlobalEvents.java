@@ -12,12 +12,11 @@ import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.content.world.spawner.TraderSpawner;
+import net.tslat.aoa3.content.world.spawner.VisualentSpawner;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.WebUtil;
-import net.tslat.aoa3.world.spawner.PixonSpawner;
-import net.tslat.aoa3.world.spawner.TraderSpawner;
-import net.tslat.aoa3.world.spawner.VisualentSpawner;
 
 import java.util.ArrayList;
 
@@ -47,8 +46,8 @@ public final class GlobalEvents {
 			ServerWorld world = (ServerWorld)ev.getWorld();
 			ArrayList<ISpecialSpawner> spawners = new ArrayList<ISpecialSpawner>(world.customSpawners);
 
-			if (PixonSpawner.isValidSpawnWorld(world))
-				spawners.add(new PixonSpawner());
+			//if (PixonSpawner.isValidSpawnWorld(world))
+			//	spawners.add(new PixonSpawner());
 
 			if (world.dimension() == AoADimensions.LUNALUS.key)
 				spawners.add(new VisualentSpawner());

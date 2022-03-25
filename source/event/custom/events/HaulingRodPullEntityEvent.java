@@ -5,7 +5,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
-import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
+import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 
 @Cancelable
 public class HaulingRodPullEntityEvent extends PlayerEvent {

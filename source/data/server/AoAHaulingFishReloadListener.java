@@ -21,7 +21,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.misc.GenericEntryPool;
+import net.tslat.aoa3.library.object.GenericEntryPool;
 import org.apache.logging.log4j.Level;
 
 import java.util.ArrayList;

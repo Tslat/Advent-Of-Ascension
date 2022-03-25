@@ -3,69 +3,69 @@
   "abilities": [
     {
       "id": "aoa3:attribute_modification",
-      "unique_id": "-311082253",
-      "per_level_value": 0.002,
+      "unique_id": "-555905532",
       "base_value": 0.0,
+      "per_level_mod": 0.002,
       "attribute": "minecraft:generic.movement_speed",
       "operation": 1.0,
       "level_req": 5
     },
     {
       "id": "aoa3:fall_damage_reduction",
-      "unique_id": "-1960163638",
-      "base_reduction": 0.0,
-      "per_level_reduction": 0.0085,
+      "unique_id": "1581623737",
+      "base_value": 0.0,
       "min_height": 0,
       "max_height": 10,
+      "per_level_mod": 0.0085,
       "level_req": 15
     },
     {
       "id": "aoa3:jump_boost",
-      "unique_id": "917191254",
-      "per_level_boost": 0.004,
-      "base_boost": 0.25,
+      "unique_id": "-93812277",
+      "base_value": 0.25,
+      "per_level_mod": 0.004,
       "level_req": 25
     },
     {
       "id": "aoa3:attribute_modification",
-      "unique_id": "-1523199204",
-      "per_level_value": 0.0,
+      "unique_id": "-1239512341",
       "base_value": 0.05,
+      "per_level_mod": 0.0,
       "attribute": "minecraft:generic.movement_speed",
       "operation": 1.0,
       "level_req": 40
     },
     {
       "id": "aoa3:attribute_modification",
-      "unique_id": "-1698062231",
-      "per_level_value": 0.003,
+      "unique_id": "-1977693736",
       "base_value": 0.0,
+      "per_level_mod": 0.003,
       "attribute": "forge:swim_speed",
       "operation": 1.0,
       "level_req": 50
     },
     {
       "id": "aoa3:fall_damage_reduction",
-      "unique_id": "954011076",
-      "base_reduction": 0.0,
-      "per_level_reduction": 0.005,
+      "unique_id": "131469337",
+      "base_value": 0.0,
       "min_height": 11,
       "max_height": 2147483647,
+      "per_level_mod": 0.005,
       "level_req": 60
     },
     {
       "id": "aoa3:jump_boost",
-      "unique_id": "-687811887",
-      "per_level_boost": 0.0,
-      "base_boost": 0.25,
+      "unique_id": "-585227644",
+      "base_value": 0.25,
       "amplify_lateral_velocity": true,
+      "per_level_mod": 0.0,
       "level_req": 70
     },
     {
       "id": "aoa3:attribute_modification",
-      "unique_id": "-1523199948",
-      "per_level_value": 0.0,
+      "unique_id": "-1239513085",
       "base_value": 0.05,
+      "per_level_mod": 0.0,
       "attribute": "minecraft:generic.movement_speed",
       "operation": 1.0,
       "level_req": 80

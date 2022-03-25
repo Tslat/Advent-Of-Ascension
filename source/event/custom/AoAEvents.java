@@ -2,13 +2,13 @@ package net.tslat.aoa3.event.custom;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.CraftResultInventory;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
-import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
-import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
-import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
-import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
+import net.tslat.aoa3.event.custom.events.*;
+import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -41,5 +41,13 @@ public final class AoAEvents {
 		MinecraftForge.EVENT_BUS.post(event);
 
 		return event;
+	}
+
+	public static boolean firePlayerCraftingEvent(PlayerEntity player, ItemStack crafting, CraftingInventory craftingInventory, CraftResultInventory outputInventory) {
+		return MinecraftForge.EVENT_BUS.post(new ItemCraftingEvent(player, crafting, craftingInventory, outputInventory));
+	}
+
+	public static boolean firePlayerSmeltingEvent(PlayerEntity player, ItemStack smelting, IInventory outputInventory) {
+		return MinecraftForge.EVENT_BUS.post(new ItemSmeltingEvent(player, smelting, outputInventory));
 	}
 }

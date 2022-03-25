@@ -24,7 +24,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.ITextComponent;
-import net.tslat.aoa3.object.entity.mob.misc.doppelganger.DoppelgangerEntity;
+import net.tslat.aoa3.content.entity.mob.misc.doppelganger.DoppelgangerEntity;
 
 public class DoppelgangerRenderer extends LivingRenderer<DoppelgangerEntity, PlayerModel<DoppelgangerEntity>> {
 	public DoppelgangerRenderer(EntityRendererManager renderManager) {

@@ -5,21 +5,21 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.item.weapon.blaster.*;
-import net.tslat.aoa3.object.item.weapon.bow.*;
-import net.tslat.aoa3.object.item.weapon.cannon.*;
-import net.tslat.aoa3.object.item.weapon.crossbow.*;
-import net.tslat.aoa3.object.item.weapon.greatblade.*;
-import net.tslat.aoa3.object.item.weapon.gun.*;
-import net.tslat.aoa3.object.item.weapon.maul.*;
-import net.tslat.aoa3.object.item.weapon.shotgun.*;
-import net.tslat.aoa3.object.item.weapon.sniper.*;
-import net.tslat.aoa3.object.item.weapon.staff.*;
-import net.tslat.aoa3.object.item.weapon.sword.*;
-import net.tslat.aoa3.object.item.weapon.thrown.*;
-import net.tslat.aoa3.object.item.weapon.vulcane.*;
+import net.tslat.aoa3.content.item.weapon.blaster.*;
+import net.tslat.aoa3.content.item.weapon.bow.*;
+import net.tslat.aoa3.content.item.weapon.cannon.*;
+import net.tslat.aoa3.content.item.weapon.crossbow.*;
+import net.tslat.aoa3.content.item.weapon.greatblade.*;
+import net.tslat.aoa3.content.item.weapon.gun.*;
+import net.tslat.aoa3.content.item.weapon.maul.*;
+import net.tslat.aoa3.content.item.weapon.shotgun.*;
+import net.tslat.aoa3.content.item.weapon.sniper.*;
+import net.tslat.aoa3.content.item.weapon.staff.*;
+import net.tslat.aoa3.content.item.weapon.sword.*;
+import net.tslat.aoa3.content.item.weapon.thrown.*;
+import net.tslat.aoa3.content.item.weapon.vulcane.*;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.misc.AttackSpeed;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import java.util.function.Supplier;
 
@@ -62,6 +62,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> TROLL_BASHER_AXE = registerWeapon("troll_basher_axe", TrollBasherAxe::new);
 	public static final RegistryObject<Item> ULTRAFLAME = registerWeapon("ultraflame", Ultraflame::new);
 	public static final RegistryObject<Item> VOID_SWORD = registerWeapon("void_sword", VoidSword::new);
+	//public static final RegistryObject<Item> FAUNAMANCERS_BLADE = registerWeapon("faunamancers_blade", FaunamancersBlade::new);
 
 	public static final RegistryObject<Item> BARON_GREATBLADE = registerWeapon("baron_greatblade", BaronGreatblade::new);
 	public static final RegistryObject<Item> BLOODLURKER = registerWeapon("bloodlurker", () -> new BaseGreatblade(21.0f, AttackSpeed.GREATBLADE, 1350));

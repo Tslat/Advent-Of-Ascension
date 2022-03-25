@@ -12,10 +12,7 @@ import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
-import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
-import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
-import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
+import net.tslat.aoa3.event.custom.events.*;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -54,8 +51,10 @@ public final class AoAPlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerLevelChangeEvent.class, AoAPlayerEvents::onLevelChange);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerChangeXpEvent.class, AoAPlayerEvents::onXpGain);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerXpEvent.XpChange.class, AoAPlayerEvents::onVanillaXpGain);
-		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.ItemCraftedEvent.class, AoAPlayerEvents::onItemCraft);
-		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.ItemSmeltedEvent.class, AoAPlayerEvents::onItemSmelt);
+		forgeBus.addListener(EventPriority.NORMAL, false, ItemCraftingEvent.class, AoAPlayerEvents::onItemCrafting);
+		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.ItemCraftedEvent.class, AoAPlayerEvents::onItemCrafted);
+		forgeBus.addListener(EventPriority.NORMAL, false, ItemSmeltingEvent.class, AoAPlayerEvents::onItemSmelting);
+		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.ItemSmeltedEvent.class, AoAPlayerEvents::onItemSmelted);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemFishedEvent.class, AoAPlayerEvents::onItemFished);
 		forgeBus.addListener(EventPriority.NORMAL, false, HaulingRodPullEntityEvent.class, AoAPlayerEvents::onHaulingRodPullEntity);
 		forgeBus.addListener(EventPriority.NORMAL, false, PotionEvent.PotionAddedEvent.class, AoAPlayerEvents::onPotionApplied);
@@ -223,21 +222,35 @@ public final class AoAPlayerEvents {
 			issueEvent((ServerPlayerEntity)ev.getPlayer(), GAIN_VANILLA_XP, listener -> listener.handleVanillaXpGain(ev));
 	}
 
-	private static void onItemCraft(final PlayerEvent.ItemCraftedEvent ev) {
+	private static void onItemCrafting(final ItemCraftingEvent ev) {
+		if (ev.getPlayer() instanceof ServerPlayerEntity)
+			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_CRAFTING, listener -> listener.handleItemCrafting(ev));
+	}
+
+	private static void onItemCrafted(final PlayerEvent.ItemCraftedEvent ev) {
 		if (ev.getPlayer() instanceof ServerPlayerEntity) {
-			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_CRAFT, listener -> listener.handleItemCraft(ev));
+			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_CRAFTED, listener -> listener.handleItemCrafted(ev));
 		}
 		else {
-			issueClientEvent(ITEM_CRAFT, listener -> listener.handleItemCraft(ev));
+			issueClientEvent(ITEM_CRAFTED, listener -> listener.handleItemCrafted(ev));
 		}
 	}
 
-	private static void onItemSmelt(final PlayerEvent.ItemSmeltedEvent ev) {
+	private static void onItemSmelting(final ItemSmeltingEvent ev) {
 		if (ev.getPlayer() instanceof ServerPlayerEntity) {
-			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_SMELT, listener -> listener.handleItemSmelt(ev));
+			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_SMELTING, listener -> listener.handleItemSmelting(ev));
 		}
 		else {
-			issueClientEvent(ITEM_SMELT, listener -> listener.handleItemSmelt(ev));
+			issueClientEvent(ITEM_SMELTING, listener -> listener.handleItemSmelting(ev));
+		}
+	}
+
+	private static void onItemSmelted(final PlayerEvent.ItemSmeltedEvent ev) {
+		if (ev.getPlayer() instanceof ServerPlayerEntity) {
+			issueEvent((ServerPlayerEntity)ev.getPlayer(), ITEM_SMELTED, listener -> listener.handleItemSmelted(ev));
+		}
+		else {
+			issueClientEvent(ITEM_SMELTED, listener -> listener.handleItemSmelted(ev));
 		}
 	}
 

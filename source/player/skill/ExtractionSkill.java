@@ -22,7 +22,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 import java.util.List;
 
 public class ExtractionSkill extends AoASkill.Instance {
-	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.LOOT_MODIFICATION, ListenerType.ITEM_SMELT};
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.LOOT_MODIFICATION, ListenerType.ITEM_SMELTED};
 
 	public ExtractionSkill(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoASkills.EXTRACTION.get(), plData, jsonData);
@@ -80,7 +80,10 @@ public class ExtractionSkill extends AoASkill.Instance {
 	}
 
 	@Override
-	public void handleItemSmelt(PlayerEvent.ItemSmeltedEvent ev) {
+	public void handleItemSmelted(PlayerEvent.ItemSmeltedEvent ev) {
+		if (ev.getPlayer().level.isClientSide())
+			return;
+
 		Item item = ev.getSmelting().getItem();
 
 		if (item.getFoodProperties() == null && canGainXp(true)) {
@@ -102,6 +105,8 @@ public class ExtractionSkill extends AoASkill.Instance {
 
 	public static boolean isApplicableBlock(Block block) {
 		return block.is(Tags.Blocks.STONE) ||
+				block.is(Tags.Blocks.COBBLESTONE) ||
+				block.is(Tags.Blocks.ORES) ||
 				block.is(BlockTags.LOGS) ||
 				block.is(Tags.Blocks.SAND) ||
 				block.is(AoATags.Blocks.GRASS) ||

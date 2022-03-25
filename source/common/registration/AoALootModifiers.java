@@ -6,7 +6,7 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.loottable.modifier.*;
+import net.tslat.aoa3.content.loottable.modifier.*;
 
 import java.util.function.Supplier;
 

@@ -4,9 +4,9 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
+import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.PotionUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,7 +32,7 @@ public class EchoGullTask implements Runnable {
 				if (distance == 0 || entry.getB() <= distance + 1) {
 					distance = entry.getB();
 
-					EntityUtil.applyPotions(entry.getA(), new PotionUtil.EffectBuilder(Effects.GLOWING, 7));
+					EntityUtil.applyPotions(entry.getA(), new EffectBuilder(Effects.GLOWING, 7));
 					it.remove();
 				}
 				else {

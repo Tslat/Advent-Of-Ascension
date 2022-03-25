@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.boss.CrystocoreModel;
 import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.object.entity.boss.CrystocoreEntity;
+import net.tslat.aoa3.content.entity.boss.CrystocoreEntity;
 
 import javax.annotation.Nullable;
 

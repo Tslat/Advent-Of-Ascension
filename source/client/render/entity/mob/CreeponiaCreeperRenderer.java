@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.tslat.aoa3.client.render.entity.layer.CustomCreeperChargeRenderLayer;
-import net.tslat.aoa3.object.entity.mob.creeponia.AoACreeponiaCreeper;
+import net.tslat.aoa3.content.entity.mob.creeponia.AoACreeponiaCreeper;
 
 public class CreeponiaCreeperRenderer extends MobRenderer<AoACreeponiaCreeper, EntityModel<AoACreeponiaCreeper>> {
 	private final ResourceLocation texture;

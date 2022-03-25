@@ -11,6 +11,7 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
+import net.tslat.aoa3.library.object.DynamicTextComponent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.EntityUtil;
@@ -23,12 +24,10 @@ import java.util.UUID;
 import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerType.ATTRIBUTE_MODIFIERS;
 import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerType.LEVEL_CHANGE;
 
-public class AttributeModification extends AoAAbility.Instance {
+public class AttributeModification extends ScalableModAbility {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ATTRIBUTE_MODIFIERS, LEVEL_CHANGE};
 
 	private final Attribute attribute;
-	private final float baseValue;
-	private final float perLevelValue;
 	private final AttributeModifier modifier;
 
 	private float loginHealth = -1;
@@ -37,12 +36,10 @@ public class AttributeModification extends AoAAbility.Instance {
 		super(AoAAbilities.ATTRIBUTE_MODIFICATION.get(), skill, data);
 
 		this.attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(JSONUtils.getAsString(data, "attribute")));
-		this.baseValue = JSONUtils.getAsFloat(data, "base_value", 0);
-		this.perLevelValue = JSONUtils.getAsFloat(data, "per_level_value", 0);
 		this.modifier = new AttributeModifier(UUID.randomUUID(), getUniqueIdentifier(), 0, AttributeModifier.Operation.fromValue(JSONUtils.getAsInt(data, "operation"))) {
 			@Override
 			public double getAmount() {
-				return baseValue + (perLevelValue != 0 ? skill.getLevel(false) * perLevelValue : 0);
+				return getScaledValue();
 			}
 		};
 	}
@@ -51,12 +48,10 @@ public class AttributeModification extends AoAAbility.Instance {
 		super(AoAAbilities.ATTRIBUTE_MODIFICATION.get(), skill, data);
 
 		this.attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(data.getString("attribute")));
-		this.baseValue = data.getFloat("base_value");
-		this.perLevelValue = data.getFloat("per_level_value");
 		this.modifier = new AttributeModifier(data.getUUID("uuid"), getUniqueIdentifier(), 0, AttributeModifier.Operation.fromValue(data.getInt("operation"))) {
 			@Override
 			public double getAmount() {
-				return baseValue + (perLevelValue != 0 ? skill.getLevel(false) * perLevelValue : 0);
+				return getScaledValue();
 			}
 		};
 	}
@@ -70,10 +65,10 @@ public class AttributeModification extends AoAAbility.Instance {
 			case MULTIPLY_BASE:
 			case MULTIPLY_TOTAL:
 				if (baseValue != 0)
-					amount = "+" + NumberUtil.roundToNthDecimalPlace(baseValue * 100, 3) + "%";
+					amount = "+" + NumberUtil.roundToNthDecimalPlace(baseValue * 100, 3);
 
-				if (perLevelValue != 0)
-					perLevel = NumberUtil.roundToNthDecimalPlace(this.perLevelValue * 100, 3) + "%";
+				if (perLevelMod != 0)
+					perLevel = NumberUtil.roundToNthDecimalPlace(this.perLevelMod * 100, 3);
 
 				break;
 			case ADDITION:
@@ -81,15 +76,15 @@ public class AttributeModification extends AoAAbility.Instance {
 				if (baseValue != 0)
 					amount = NumberUtil.roundToNthDecimalPlace(baseValue, 3);
 
-				if (perLevelValue != 0)
-					perLevel = NumberUtil.roundToNthDecimalPlace(this.perLevelValue, 3);
+				if (perLevelMod != 0)
+					perLevel = NumberUtil.roundToNthDecimalPlace(this.perLevelMod, 3);
 
 				break;
 		}
 
 		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(),
 				StringUtil.toTitleCase(attribute.getDescriptionId().substring(attribute.getDescriptionId().lastIndexOf(".") + 1)),
-				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelValue != 0, modifier.getOperation() != AttributeModifier.Operation.ADDITION, amount, perLevel)));
+				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, modifier.getOperation() != AttributeModifier.Operation.ADDITION, amount, perLevel, new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace((float)modifier.getAmount() * (modifier.getOperation() == AttributeModifier.Operation.ADDITION ? 1 : 100), 3)))));
 	}
 
 	@Override
@@ -124,8 +119,6 @@ public class AttributeModification extends AoAAbility.Instance {
 		if (forClientSetup) {
 			data.putString("attribute", attribute.getRegistryName().toString());
 			data.putInt("operation", this.modifier.getOperation().toValue());
-			data.putFloat("base_value", this.baseValue);
-			data.putFloat("per_level_value", this.perLevelValue);
 			data.putUUID("uuid", this.modifier.getId());
 		}
 

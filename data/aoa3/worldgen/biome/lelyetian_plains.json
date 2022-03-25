@@ -13,7 +13,7 @@
     "water_fog_color": 329011,
     "grass_color_modifier": "none",
     "music": {
-      "sound": "aoa3:lelyetian_plains_music",
+      "sound": "aoa3:biome.lelyetian_plains.music",
       "min_delay": 12000,
       "max_delay": 24000,
       "replace_current_music": false
@@ -52,19 +52,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:grobbler",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:lelyetian_warrior",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:lelyetian_caster",
+        "type": "aoa3:flye",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -76,7 +64,19 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:flye",
+        "type": "aoa3:grobbler",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:lelyetian_caster",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:lelyetian_warrior",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

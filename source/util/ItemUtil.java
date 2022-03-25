@@ -19,7 +19,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoATags;
-import net.tslat.aoa3.object.item.armour.AdventArmour;
+import net.tslat.aoa3.content.item.armour.AdventArmour;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

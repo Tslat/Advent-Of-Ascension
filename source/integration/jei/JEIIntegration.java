@@ -33,10 +33,10 @@ import net.tslat.aoa3.integration.jei.recipe.upgradekit.UpgradeKitRecipeTransfer
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeTransferInfo;
 import net.tslat.aoa3.integration.tinkersconstruct.TinkersFluids;
-import net.tslat.aoa3.object.recipe.FrameBenchRecipe;
-import net.tslat.aoa3.object.recipe.InfusionRecipe;
-import net.tslat.aoa3.object.recipe.ToolInteractionRecipe;
-import net.tslat.aoa3.object.recipe.WhitewashingRecipe;
+import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
+import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
+import net.tslat.aoa3.content.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.util.FluidUtil;
 
 import java.util.ArrayList;

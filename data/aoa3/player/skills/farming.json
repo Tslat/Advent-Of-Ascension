@@ -43,9 +43,9 @@
     },
     {
       "id": "aoa3:dryad_sprite_spawn",
-      "unique_id": "750531543",
-      "base_value": 0.005,
-      "per_level_mod": 2.5E-4,
+      "unique_id": "-2033215558",
+      "base_value": 7.5E-4,
+      "per_level_mod": 8.0E-5,
       "level_req": 44
     },
     {

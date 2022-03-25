@@ -7,15 +7,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.event.custom.events.ItemCraftingEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.Map;
 
 public class AutoEnchantCrafting extends ScalableModAbility {
-	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.ITEM_CRAFT};
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.ITEM_CRAFTING};
 
 	private final EnchantmentData[] enchantments;
 
@@ -70,8 +70,8 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 	}
 
 	@Override
-	public void handleItemCraft(PlayerEvent.ItemCraftedEvent ev) {
-		ItemStack output = ev.getCrafting();
+	public void handleItemCrafting(ItemCraftingEvent ev) {
+		ItemStack output = ev.getOutputStack();
 
 		for (EnchantmentData data : enchantments) {
 			if (!data.enchantment.canApplyAtEnchantingTable(output))

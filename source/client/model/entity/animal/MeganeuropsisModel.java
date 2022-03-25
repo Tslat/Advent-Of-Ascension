@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.object.entity.animal.MeganeuropsisEntity;
+import net.tslat.aoa3.content.entity.animal.MeganeuropsisEntity;
 
 public class MeganeuropsisModel extends EntityModel<MeganeuropsisEntity> {
 	private final ModelRenderer root;

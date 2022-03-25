@@ -5,7 +5,7 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.Size2i;
-import net.tslat.aoa3.object.recipe.ToolInteractionRecipe;
+import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
 
 import javax.annotation.Nullable;
 

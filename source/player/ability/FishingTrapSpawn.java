@@ -15,7 +15,7 @@ import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
-import net.tslat.aoa3.object.entity.misc.HaulingFishingBobberEntity;
+import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.function.Function;

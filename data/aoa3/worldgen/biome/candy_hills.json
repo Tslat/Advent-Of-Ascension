@@ -45,15 +45,15 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:lollypopper",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:airhead",
         "weight": 20,
         "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:lollypopper",
+        "weight": 20,
+        "minCount": 1,
         "maxCount": 1
       },
       {

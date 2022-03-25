@@ -14,7 +14,7 @@ import net.minecraft.util.math.MathHelper;
 import net.tslat.aoa3.client.model.entity.misc.GyrocopterModel;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.object.entity.misc.GyrocopterEntity;
+import net.tslat.aoa3.content.entity.misc.GyrocopterEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
 import javax.annotation.Nullable;

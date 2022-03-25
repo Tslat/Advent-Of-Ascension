@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.object.entity.boss.CorallusEntity;
+import net.tslat.aoa3.content.entity.boss.CorallusEntity;
 
 public class CorallusModel extends EntityModel<CorallusEntity> {
 	private final ModelRenderer head1;

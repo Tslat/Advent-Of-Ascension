@@ -72,10 +72,6 @@ public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 			return this.playerDataManager;
 		}
 
-		public boolean needsCustomRender() {
-			return false;
-		}
-
 		public boolean hasAmount(float amount) {
 			return getCurrentValue() >= amount;
 		}

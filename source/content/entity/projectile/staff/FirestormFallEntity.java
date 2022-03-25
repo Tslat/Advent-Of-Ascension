@@ -1,0 +1,26 @@
+package net.tslat.aoa3.content.entity.projectile.staff;
+
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ThrowableEntity;
+import net.minecraft.world.World;
+import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
+
+public class FirestormFallEntity extends BaseEnergyShot {
+	public FirestormFallEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+		super(entityType, world);
+	}
+	
+	public FirestormFallEntity(World world) {
+		super(AoAEntities.Projectiles.FIRESTORM_FALL.get(), world);
+	}
+
+	public FirestormFallEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, float velocity) {
+		super(AoAEntities.Projectiles.FIRESTORM_FALL.get(),shooter, weapon, posX, posY, posZ, velocity);
+	}
+
+	public FirestormFallEntity(World world, double x, double y, double z) {
+		super(AoAEntities.Projectiles.FIRESTORM_FALL.get(),world, x, y, z);
+	}
+}

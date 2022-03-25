@@ -3,12 +3,12 @@ package net.tslat.aoa3.client.model;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.object.capability.persistentstack.PersistentStackCapabilityHandles;
-import net.tslat.aoa3.object.capability.persistentstack.PersistentStackCapabilityProvider;
+import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
+import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
 import net.tslat.aoa3.common.registration.AoATools;
 import net.tslat.aoa3.common.registration.AoAWeapons;
-import net.tslat.aoa3.object.item.weapon.bow.BaseBow;
-import net.tslat.aoa3.object.item.weapon.crossbow.BaseCrossbow;
+import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
+import net.tslat.aoa3.content.item.weapon.crossbow.BaseCrossbow;
 
 public final class ModelProperties {
 	public static void init() {

@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
-import net.tslat.aoa3.object.entity.npc.ambient.DryadSpriteEntity;
+import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.RandomUtil;
 

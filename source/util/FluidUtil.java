@@ -20,7 +20,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.util.misc.MutableSupplier;
+import net.tslat.aoa3.library.object.MutableSupplier;
 
 import javax.annotation.Nullable;
 import java.util.function.BiFunction;

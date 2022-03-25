@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.object.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 
 public class GrenadeModel extends EntityModel<BaseBullet> {
 	private final ModelRenderer part;

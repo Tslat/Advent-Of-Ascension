@@ -13,7 +13,7 @@
     "water_fog_color": 16773825,
     "grass_color_modifier": "none",
     "music": {
-      "sound": "aoa3:barren_grounds_music",
+      "sound": "aoa3:biome.barren_grounds.music",
       "min_delay": 12000,
       "max_delay": 24000,
       "replace_current_music": false
@@ -54,37 +54,13 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:emperor_beast",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:parasect",
-        "weight": 20,
+        "type": "aoa3:cryptid",
+        "weight": 30,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:nospike",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:echodar",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:tharafly",
-        "weight": 15,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:arkback",
+        "type": "aoa3:ramradon",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -96,8 +72,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:cryptid",
-        "weight": 30,
+        "type": "aoa3:emperor_beast",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arkback",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -108,8 +90,26 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:ramradon",
+        "type": "aoa3:echodar",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:parasect",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tharafly",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:nospike",
+        "weight": 5,
         "minCount": 1,
         "maxCount": 1
       }

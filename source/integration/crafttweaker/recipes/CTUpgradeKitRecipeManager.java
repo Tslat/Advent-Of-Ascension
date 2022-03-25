@@ -8,7 +8,7 @@ import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.object.recipe.UpgradeKitRecipe;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import org.openzen.zencode.java.ZenCodeType;
 

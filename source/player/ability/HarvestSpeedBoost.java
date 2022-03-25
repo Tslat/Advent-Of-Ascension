@@ -98,17 +98,22 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 		if (player.isCreative())
 			return false;
 
-		return Minecraft.getInstance().gameMode.isDestroying();
+		return Minecraft.getInstance().gameMode.isDestroying() || active;
 	}
 
 	@Override
 	public void handleKeyInput() {
 		ServerPlayerEntity player = getPlayer();
 
-		if (player.isCreative() || !player.gameMode.isDestroyingBlock)
-			return;
+		if (active) {
+			active = false;
+		}
+		else {
+			if (player.isCreative() || !player.gameMode.isDestroyingBlock)
+				return;
 
-		active = true;
+			active = true;
+		}
 
 		activatedActionKey(player);
 		markForClientSync();
@@ -120,9 +125,9 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 			return;
 
 		AoAResource.Instance energy = skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get());
+		ServerPlayerEntity player = getPlayer();
 
-		if (energy.consume(energy.getPerTickRegen() + energyDrainPerTick - costReductionPerLevel * skill.getLevel(true), true)) {
-			ServerPlayerEntity player = getPlayer();
+		if (!player.isCreative() && !player.isSpectator() && energy.consume(energy.getPerTickRegen() + energyDrainPerTick - costReductionPerLevel * skill.getLevel(true), true)) {
 
 			if (player.level.getGameTime() % 10 == 0)
 				activatedActionKey(player);

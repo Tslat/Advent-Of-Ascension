@@ -9,10 +9,10 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.object.recipe.ToolInteractionRecipe;
-import net.tslat.aoa3.object.recipe.InfusionRecipe;
-import net.tslat.aoa3.object.recipe.TrophyRecipe;
-import net.tslat.aoa3.object.recipe.UpgradeKitRecipe;
+import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
+import net.tslat.aoa3.content.recipe.TrophyRecipe;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 
 import java.util.function.Supplier;
 

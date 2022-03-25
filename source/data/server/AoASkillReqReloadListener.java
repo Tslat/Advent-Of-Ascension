@@ -18,12 +18,14 @@ import net.tslat.aoa3.common.packet.packets.SkillRequirementDataPacket;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class AoASkillReqReloadListener extends JsonReloadListener {
@@ -37,28 +39,56 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 		super(GSON, folder);
 	}
 
-	public static boolean canEquip(PlayerDataManager plData, Item item) {
+	public static boolean canEquip(PlayerDataManager plData, Item item, boolean notifyPlayer) {
 		SkillReqHandler handler = getRequirements(item.getRegistryName());
 
-		return handler == null || handler.canEquip(plData);
+		if (handler != null && !handler.canEquip(plData)) {
+			if (notifyPlayer && !plData.player().level.isClientSide())
+				handler.notifyPlayerCantEquip((ServerPlayerEntity)plData.player());
+
+			return false;
+		}
+
+		return true;
 	}
 
-	public static boolean canPlaceBlock(PlayerDataManager plData, Block block) {
+	public static boolean canPlaceBlock(PlayerDataManager plData, Block block, boolean notifyPlayer) {
 		SkillReqHandler handler = getRequirements(block.getRegistryName());
 
-		return handler == null || handler.canPlaceBlock(plData);
+		if (handler != null && !handler.canPlaceBlock(plData)) {
+			if (notifyPlayer && !plData.player().level.isClientSide())
+				handler.notifyPlayerCantPlaceBlock((ServerPlayerEntity)plData.player());
+
+			return false;
+		}
+
+		return true;
 	}
 
-	public static boolean canBreakBlock(PlayerDataManager plData, Block block) {
+	public static boolean canBreakBlock(PlayerDataManager plData, Block block, boolean notifyPlayer) {
 		SkillReqHandler handler = getRequirements(block.getRegistryName());
 
-		return handler == null || handler.canBreakBlock(plData);
+		if (handler != null && !handler.canBreakBlock(plData)) {
+			if (notifyPlayer && !plData.player().level.isClientSide())
+				handler.notifyPlayerCantBreakBlock((ServerPlayerEntity)plData.player());
+
+			return false;
+		}
+
+		return true;
 	}
 
-	public static boolean canInteractWith(PlayerDataManager plData, Block block) {
+	public static boolean canInteractWith(PlayerDataManager plData, Block block, boolean notifyPlayer) {
 		SkillReqHandler handler = getRequirements(block.getRegistryName());
 
-		return handler == null || handler.canInteractWith(plData);
+		if (handler != null && !handler.canInteractWith(plData)) {
+			if (notifyPlayer && !plData.player().level.isClientSide())
+				handler.notifyPlayerCantInteract((ServerPlayerEntity)plData.player());
+
+			return false;
+		}
+
+		return true;
 	}
 
 	@Nullable
@@ -104,8 +134,9 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 		return handler;
 	}
 
-	private static Predicate<PlayerDataManager> parseRequirements(List<Pair<ResourceLocation, Integer>> reqs) {
+	private static Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> parseRequirements(List<Pair<ResourceLocation, Integer>> reqs) {
 		Predicate<PlayerDataManager> predicate = plData -> true;
+		Consumer<ServerPlayerEntity> notificationHandler = plData -> {};
 
 		for (Pair<ResourceLocation, Integer> pair : reqs) {
 			AoASkill skill = AoASkills.getSkill(pair.getFirst());
@@ -114,9 +145,10 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 				throw new IllegalArgumentException("Unknown skill: '" + pair.getFirst() + "' for item skill entry.");
 
 			predicate = predicate.and(plData -> plData.getSkill(skill).hasLevel(pair.getSecond()));
+			notificationHandler = notificationHandler.andThen(player -> PlayerUtil.notifyPlayerOfInsufficientLevel(player, skill, pair.getSecond()));
 		}
 
-		return predicate;
+		return Pair.of(predicate, notificationHandler);
 	}
 
 	private Map<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> prepData(Map<ResourceLocation, JsonElement> jsonData) {
@@ -173,27 +205,27 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 
 	public static class SkillReqHandler {
 		@Nullable
-		private Predicate<PlayerDataManager> equipPredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> equipPredicate;
 		@Nullable
-		private Predicate<PlayerDataManager> blockPlacePredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockPlacePredicate;
 		@Nullable
-		private Predicate<PlayerDataManager> blockBreakPredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockBreakPredicate;
 		@Nullable
-		private Predicate<PlayerDataManager> interactionPredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> interactionPredicate;
 
-		private void forEquipping(Predicate<PlayerDataManager> equipPredicate) {
+		private void forEquipping(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> equipPredicate) {
 			this.equipPredicate = equipPredicate;
 		}
 
-		private void forPlacingBlocks(Predicate<PlayerDataManager> blockPlacePredicate) {
+		private void forPlacingBlocks(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockPlacePredicate) {
 			this.blockPlacePredicate = blockPlacePredicate;
 		}
 
-		private void forBreakingBlocks(Predicate<PlayerDataManager> blockBreakPredicate) {
+		private void forBreakingBlocks(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockBreakPredicate) {
 			this.blockBreakPredicate = blockBreakPredicate;
 		}
 
-		private void forInteracting(Predicate<PlayerDataManager> interactionPredicate) {
+		private void forInteracting(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> interactionPredicate) {
 			this.interactionPredicate = interactionPredicate;
 		}
 
@@ -214,19 +246,39 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 		}
 
 		public boolean canEquip(PlayerDataManager plData) {
-			return !handlingEquip() || equipPredicate.test(plData);
+			return !handlingEquip() || equipPredicate.getFirst().test(plData);
+		}
+
+		public void notifyPlayerCantEquip(ServerPlayerEntity player) {
+			if (handlingEquip())
+				equipPredicate.getSecond().accept(player);
 		}
 
 		public boolean canPlaceBlock(PlayerDataManager plData) {
-			return !handlingBlockPlacement() || blockPlacePredicate.test(plData);
+			return !handlingBlockPlacement() || blockPlacePredicate.getFirst().test(plData);
+		}
+
+		public void notifyPlayerCantPlaceBlock(ServerPlayerEntity player) {
+			if (handlingBlockPlacement())
+				blockPlacePredicate.getSecond().accept(player);
 		}
 
 		public boolean canBreakBlock(PlayerDataManager plData) {
-			return !handlingBlockBreak() || blockBreakPredicate.test(plData);
+			return !handlingBlockBreak() || blockBreakPredicate.getFirst().test(plData);
+		}
+
+		public void notifyPlayerCantBreakBlock(ServerPlayerEntity player) {
+			if (handlingBlockBreak())
+				blockBreakPredicate.getSecond().accept(player);
 		}
 
 		public boolean canInteractWith(PlayerDataManager plData) {
-			return !handlingInteraction() || interactionPredicate.test(plData);
+			return !handlingInteraction() || interactionPredicate.getFirst().test(plData);
+		}
+
+		public void notifyPlayerCantInteract(ServerPlayerEntity player) {
+			if (handlingInteraction())
+				interactionPredicate.getSecond().accept(player);
 		}
 
 		public boolean isValid() {

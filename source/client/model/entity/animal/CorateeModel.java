@@ -1,7 +1,7 @@
 package net.tslat.aoa3.client.model.entity.animal;
 
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
-import net.tslat.aoa3.object.entity.animal.CorateeEntity;
+import net.tslat.aoa3.content.entity.animal.CorateeEntity;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
 

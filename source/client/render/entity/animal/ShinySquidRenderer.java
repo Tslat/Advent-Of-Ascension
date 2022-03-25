@@ -8,7 +8,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3f;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
-import net.tslat.aoa3.object.entity.animal.ShinySquidEntity;
+import net.tslat.aoa3.content.entity.animal.ShinySquidEntity;
 
 public class ShinySquidRenderer extends MobRenderer<ShinySquidEntity, ShinySquidModel> {
 	private static final ResourceLocation TEXTURE = AdventOfAscension.id("textures/entity/animal/shiny_squid.png");

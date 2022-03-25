@@ -15,7 +15,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.fml.ModList;
 import net.tslat.aoa3.client.model.entity.npc.DryadSpriteModel;
-import net.tslat.aoa3.object.entity.npc.ambient.DryadSpriteEntity;
+import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
 import software.bernie.geckolib3.compat.PatchouliCompat;
 import software.bernie.geckolib3.core.IAnimatableModel;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;

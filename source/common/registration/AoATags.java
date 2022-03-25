@@ -1,9 +1,11 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityType;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.Item;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.EntityTypeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
@@ -82,19 +84,6 @@ public final class AoATags {
 
 		private static Tags.IOptionalNamedTag<Block> tag(String id) {
 			return BlockTags.createOptional(new ResourceLocation("forge", id));
-		}
-	}
-
-	public static class Fluids {
-		public static final Tags.IOptionalNamedTag<Fluid> CANDIED_WATER = tag("candied_water");
-		public static final Tags.IOptionalNamedTag<Fluid> TOXIC_WASTE = tag("toxic_waste");
-
-		private static Tags.IOptionalNamedTag<Fluid> aoaTag(String id) {
-			return FluidTags.createOptional(new ResourceLocation(AdventOfAscension.MOD_ID, id));
-		}
-
-		private static Tags.IOptionalNamedTag<Fluid> tag(String id) {
-			return FluidTags.createOptional(new ResourceLocation("forge", id));
 		}
 	}
 
@@ -206,6 +195,7 @@ public final class AoATags {
 		public static final Tags.IOptionalNamedTag<Item> INFUSION_STONE = aoaTag("infusion_stone");
 		public static final Tags.IOptionalNamedTag<Item> SKILL_CRYSTAL = aoaTag("skill_crystal");
 		public static final Tags.IOptionalNamedTag<Item> HAULING_FISH = aoaTag("hauling_fish");
+		public static final Tags.IOptionalNamedTag<Item> FAUNAMANCER_TOOL = aoaTag("faunamancer_tool");
 
 		public static final Tags.IOptionalNamedTag<Item> SWORDS = tag("swords");
 		public static final Tags.IOptionalNamedTag<Item> CURRENCY = tag("currency");
@@ -234,6 +224,34 @@ public final class AoATags {
 
 		private static Tags.IOptionalNamedTag<Item> tag(String id) {
 			return ItemTags.createOptional(new ResourceLocation("forge", id));
+		}
+	}
+
+	public static class Fluids {
+		public static final Tags.IOptionalNamedTag<Fluid> CANDIED_WATER = tag("candied_water");
+		public static final Tags.IOptionalNamedTag<Fluid> TOXIC_WASTE = tag("toxic_waste");
+
+		private static Tags.IOptionalNamedTag<Fluid> aoaTag(String id) {
+			return FluidTags.createOptional(new ResourceLocation(AdventOfAscension.MOD_ID, id));
+		}
+
+		private static Tags.IOptionalNamedTag<Fluid> tag(String id) {
+			return FluidTags.createOptional(new ResourceLocation("forge", id));
+		}
+	}
+
+	public static class Entities {
+		public static final Tags.IOptionalNamedTag<EntityType<?>> WEAK_TO_MELEE = tag("weak_to_melee");
+		public static final Tags.IOptionalNamedTag<EntityType<?>> WEAK_TO_MAGIC = tag("weak_to_magic");
+		public static final Tags.IOptionalNamedTag<EntityType<?>> WEAK_TO_RANGED = tag("weak_to_ranged");
+		public static final Tags.IOptionalNamedTag<EntityType<?>> WEAK_TO_EXPLOSIONS = tag("weak_to_explosions");
+
+		private static Tags.IOptionalNamedTag<EntityType<?>> aoaTag(String id) {
+			return EntityTypeTags.createOptional(AdventOfAscension.id(id));
+		}
+
+		private static Tags.IOptionalNamedTag<EntityType<?>> tag(String id) {
+			return EntityTypeTags.createOptional(new ResourceLocation("forge", id));
 		}
 	}
 }
