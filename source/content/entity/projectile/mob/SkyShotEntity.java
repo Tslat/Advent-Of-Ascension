@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.mob;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
 
 public class SkyShotEntity extends BaseMobProjectile {
-	public SkyShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public SkyShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public SkyShotEntity(World world) {
-		super(AoAEntities.Projectiles.SKY_SHOT.get(), world);
+	public SkyShotEntity(Level world) {
+		super(AoAProjectiles.SKY_SHOT.get(), world);
 	}
 
 	public SkyShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.SKY_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.SKY_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override

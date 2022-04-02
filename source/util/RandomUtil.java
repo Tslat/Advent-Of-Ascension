@@ -1,9 +1,9 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -71,11 +71,11 @@ public final class RandomUtil {
 		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius);
 	}
 
-	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world) {
+	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, Level world) {
 		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world);
 	}
 
-	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world, @Nullable Predicate<BlockState> statePredicate, int tries) {
+	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, Level world, @Nullable Predicate<BlockState> statePredicate, int tries) {
 		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world, statePredicate, tries);
 	}
 
@@ -175,12 +175,12 @@ public final class RandomUtil {
 			return getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, false, null);
 		}
 
-		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world) {
+		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, Level world) {
 			return getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world, null, 1);
 		}
 
-		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, World world, @Nullable Predicate<BlockState> statePredicate, int tries) {
-			BlockPos.Mutable mutablePos = centerPos.mutable();
+		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, Level world, @Nullable Predicate<BlockState> statePredicate, int tries) {
+			BlockPos.MutableBlockPos mutablePos = centerPos.mutable();
 
 			for (int i = 0; i < tries; i++) {
 				int newX = (int)Math.floor(mutablePos.getX() + RANDOM.nextFloat() * xRadius * 2 - xRadius);
@@ -190,7 +190,7 @@ public final class RandomUtil {
 				mutablePos.set(newX, newY, newZ);
 
 				if (safeSurfacePlacement && world != null)
-					mutablePos.set(world.getHeightmapPos(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, mutablePos));
+					mutablePos.set(world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, mutablePos));
 
 				if (statePredicate == null || statePredicate.test(world.getBlockState(mutablePos)))
 					return mutablePos.immutable();

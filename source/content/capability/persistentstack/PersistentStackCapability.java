@@ -1,6 +1,6 @@
 package net.tslat.aoa3.content.capability.persistentstack;
 
-import net.minecraft.nbt.FloatNBT;
+import net.minecraft.nbt.FloatTag;
 
 public class PersistentStackCapability implements PersistentStackCapabilityHandles {
 	private float value;
@@ -16,12 +16,12 @@ public class PersistentStackCapability implements PersistentStackCapabilityHandl
 	}
 
 	@Override
-	public FloatNBT serializeNBT() {
-		return FloatNBT.valueOf(value);
+	public FloatTag serializeNBT() {
+		return FloatTag.valueOf(value);
 	}
 
 	@Override
-	public void deserializeNBT(FloatNBT nbt) {
+	public void deserializeNBT(FloatTag nbt) {
 		setValue(nbt.getAsFloat());
 	}
 }

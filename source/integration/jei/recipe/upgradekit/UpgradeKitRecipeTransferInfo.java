@@ -1,17 +1,23 @@
 package net.tslat.aoa3.integration.jei.recipe.upgradekit;
 
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.Slot;
 import net.tslat.aoa3.common.container.DivineStationContainer;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineStationContainer> {
+public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineStationContainer, UpgradeKitRecipe> {
 	@Override
 	public Class<DivineStationContainer> getContainerClass() {
 		return DivineStationContainer.class;
+	}
+
+	@Override
+	public Class<UpgradeKitRecipe> getRecipeClass() {
+		return UpgradeKitRecipe.class;
 	}
 
 	@Override
@@ -20,12 +26,12 @@ public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineS
 	}
 
 	@Override
-	public boolean canHandle(DivineStationContainer container) {
+	public boolean canHandle(DivineStationContainer container, UpgradeKitRecipe recipe) {
 		return true;
 	}
 
 	@Override
-	public List<Slot> getRecipeSlots(DivineStationContainer container) {
+	public List<Slot> getRecipeSlots(DivineStationContainer container, UpgradeKitRecipe recipe) {
 		List<Slot> slots = new ArrayList<>(2);
 
 		for (int i = 1; i <= 2; i++) {
@@ -36,7 +42,7 @@ public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineS
 	}
 
 	@Override
-	public List<Slot> getInventorySlots(DivineStationContainer container) {
+	public List<Slot> getInventorySlots(DivineStationContainer container, UpgradeKitRecipe recipe) {
 		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 3);
 
 		for (int i = 3; i < container.slots.size(); i++) {

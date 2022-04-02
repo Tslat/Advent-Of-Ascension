@@ -1,20 +1,20 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
@@ -23,21 +23,21 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class CorruptedTravellerEntity extends CreatureEntity {
-	public CorruptedTravellerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+public class CorruptedTravellerEntity extends PathfinderMob {
+	public CorruptedTravellerEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 
-		setGlowing(AoAConfig.SERVER.easyCorruptedTravellers.get());
+		setGlowingTag(AoAConfig.SERVER.easyCorruptedTravellers.get());
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(0, new SwimGoal(this));
+		goalSelector.addGoal(0, new FloatGoal(this));
 		goalSelector.addGoal(1, new AvoidEntityGoal<AoAMeleeMob>(this, AoAMeleeMob.class, 8f, 0.8d, 1d));
 		goalSelector.addGoal(2, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 3f, 1f));
-		goalSelector.addGoal(4, new RandomWalkingGoal(this, 0.6d));
-		goalSelector.addGoal(5, new LookRandomlyGoal(this));
+		goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 3f, 1f));
+		goalSelector.addGoal(4, new RandomStrollGoal(this, 0.6d));
+		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 	}
 
 	@Override
@@ -46,11 +46,11 @@ public class CorruptedTravellerEntity extends CreatureEntity {
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == Items.NAME_TAG) {
-			ActionResultType result = heldStack.interactLivingEntity(player, this, hand);
+			InteractionResult result = heldStack.interactLivingEntity(player, this, hand);
 
 			if (result.consumesAction())
 				return result;
@@ -60,23 +60,23 @@ public class CorruptedTravellerEntity extends CreatureEntity {
 			if (!level.isClientSide)
 				openGui(player);
 
-			return ActionResultType.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 
 		return super.mobInteract(player, hand);
 	}
 
-	protected void openGui(PlayerEntity player) {
-		NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
+	protected void openGui(Player player) {
+		NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
+			public Component getDisplayName() {
 				return CorruptedTravellerEntity.this.getDisplayName();
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int screenId, PlayerInventory inv, PlayerEntity player) {
-				return new CorruptedTravellerContainer(screenId, player.inventory, CorruptedTravellerEntity.this);
+			public AbstractContainerMenu createMenu(int screenId, Inventory inv, Player player) {
+				return new CorruptedTravellerContainer(screenId, player.getInventory(), CorruptedTravellerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
 	}

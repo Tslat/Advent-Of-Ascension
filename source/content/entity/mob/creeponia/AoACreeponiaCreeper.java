@@ -1,32 +1,33 @@
 package net.tslat.aoa3.content.entity.mob.creeponia;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.passive.CatEntity;
-import net.minecraft.entity.passive.OcelotEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Cat;
+import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Constants;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -34,9 +35,9 @@ import java.util.Collection;
 import java.util.EnumSet;
 
 public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
-	private static final DataParameter<Integer> STATE = EntityDataManager.defineId(AoACreeponiaCreeper.class, DataSerializers.INT);
-	private static final DataParameter<Boolean> POWERED = EntityDataManager.defineId(AoACreeponiaCreeper.class, DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> IGNITED = EntityDataManager.defineId(AoACreeponiaCreeper.class, DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(AoACreeponiaCreeper.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Boolean> POWERED = SynchedEntityData.defineId(AoACreeponiaCreeper.class, EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> IGNITED = SynchedEntityData.defineId(AoACreeponiaCreeper.class, EntityDataSerializers.BOOLEAN);
 	protected int fuseTime = 30;
 	protected int lastActiveTime;
 	protected int timeSinceIgnited;
@@ -44,22 +45,22 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	private float lastSwimAnimation;
 	private int explosionRadius = 3;
 
-	public AoACreeponiaCreeper(EntityType<? extends AoACreeponiaCreeper> entityType, World world) {
+	public AoACreeponiaCreeper(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new CustomCreeperSwellGoal(this));
-		goalSelector.addGoal(3, new AvoidEntityGoal<>(this, OcelotEntity.class, 6.0F, 1.0D, 1.2D));
-		goalSelector.addGoal(3, new AvoidEntityGoal<>(this, CatEntity.class, 6.0F, 1.0D, 1.2D));
+		goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Ocelot.class, 6.0F, 1.0D, 1.2D));
+		goalSelector.addGoal(3, new AvoidEntityGoal<>(this, Cat.class, 6.0F, 1.0D, 1.2D));
 		goalSelector.addGoal(4, new MeleeAttackGoal(this, 1.0D, false));
-		goalSelector.addGoal(5, new WaterAvoidingRandomWalkingGoal(this, 0.8D));
-		goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 8.0F));
-		goalSelector.addGoal(6, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, TameableEntity.class, 10, true, false, entity -> entity instanceof TameableEntity && ((TameableEntity)entity).isTame()));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 0.8D));
+		goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
+		goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, TamableAnimal.class, 10, true, false, entity -> entity instanceof TamableAnimal && ((TamableAnimal)entity).isTame()));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		targetSelector.addGoal(3, new HurtByTargetGoal(this));
 	}
 
@@ -99,14 +100,14 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	}
 
 	@Override
-	public void thunderHit(ServerWorld world, LightningBoltEntity lightningBolt) {
+	public void thunderHit(ServerLevel world, LightningBolt lightningBolt) {
 		super.thunderHit(world, lightningBolt);
 
 		entityData.set(POWERED, true);
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (itemstack.getItem() == Items.FLINT_AND_STEEL) {
@@ -119,7 +120,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 				});
 			}
 
-			return ActionResultType.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 		else {
 			return super.mobInteract(player, hand);
@@ -153,7 +154,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 
 		if (!net.minecraftforge.common.ForgeHooks.onLivingUpdate(this)) {
 			if (!level.isClientSide)
-				setSharedFlag(6, isGlowing());
+				setSharedFlag(6, isCurrentlyGlowing());
 
 			baseTick();
 
@@ -194,8 +195,8 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 				if (tickCount % 20 == 0)
 					getCombatTracker().recheckStatus();
 
-				if (!glowing) {
-					boolean glowing = hasEffect(Effects.GLOWING);
+				if (!isCurrentlyGlowing()) {
+					boolean glowing = hasEffect(MobEffects.GLOWING);
 
 					if (getSharedFlag(6) != glowing)
 						setSharedFlag(6, glowing);
@@ -215,8 +216,8 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			if (movementDiff > 0.0025000002F) {
 				moveSpeedBase = 1.0F;
 				distanceMoved = (float)Math.sqrt(movementDiff) * 3.0F;
-				float f = (float)MathHelper.atan2(diffZ, diffX) * (180F / (float)Math.PI) - 90.0F;
-				float f1 = MathHelper.abs(MathHelper.wrapDegrees(yRot) - f);
+				float f = (float)Mth.atan2(diffZ, diffX) * (180F / (float)Math.PI) - 90.0F;
+				float f1 = Mth.abs(Mth.wrapDegrees(getYRot()) - f);
 
 				if (95.0F < f1 && f1 < 265.0F) {
 					direction = f - 180.0F;
@@ -227,7 +228,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			}
 
 			if (attackAnim > 0.0F)
-				direction = yRot;
+				direction = getYRot();
 
 			if (!onGround)
 				moveSpeedBase = 0.0F;
@@ -241,11 +242,11 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			level.getProfiler().pop();
 			level.getProfiler().push("rangeChecks");
 
-			while (yRot - yRotO < -180.0F) {
+			while (getYRot() - yRotO < -180.0F) {
 				yRotO -= 360.0F;
 			}
 
-			while (yRot - yRotO >= 180.0F) {
+			while (getYRot() - yRotO >= 180.0F) {
 				yRotO += 360.0F;
 			}
 
@@ -257,11 +258,11 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 				yBodyRotO += 360.0F;
 			}
 
-			while (xRot - xRotO < -180.0F) {
+			while (getXRot() - xRotO < -180.0F) {
 				xRotO -= 360.0F;
 			}
 
-			while (xRot - xRotO >= 180.0F) {
+			while (getXRot() - xRotO >= 180.0F) {
 				xRotO += 360.0F;
 			}
 
@@ -285,7 +286,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			}
 
 			if (isSleeping())
-				xRot = 0.0F;
+				setXRot(0);
 		}
 
 		if (!level.isClientSide) {
@@ -297,7 +298,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
 		if (this.entityData.get(POWERED))
@@ -309,15 +310,15 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		entityData.set(POWERED, compound.getBoolean("powered"));
 
-		if (compound.contains("Fuse", Constants.NBT.TAG_ANY_NUMERIC))
+		if (compound.contains("Fuse", Tag.TAG_ANY_NUMERIC))
 			fuseTime = compound.getShort("Fuse");
 
-		if (compound.contains("ExplosionRadius", Constants.NBT.TAG_ANY_NUMERIC))
+		if (compound.contains("ExplosionRadius", Tag.TAG_ANY_NUMERIC))
 			explosionRadius = compound.getByte("ExplosionRadius");
 
 		if (compound.getBoolean("ignited"))
@@ -325,8 +326,8 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean causeFallDamage(float distance, float damageMultiplier) {
-		boolean success = super.causeFallDamage(distance, damageMultiplier);
+	public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
+		boolean success = super.causeFallDamage(distance, damageMultiplier, damageSource);
 
 		timeSinceIgnited = (int)((float)timeSinceIgnited + distance * 1.5F);
 
@@ -338,13 +339,13 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 
 	@OnlyIn(Dist.CLIENT)
 	public float getCreeperFlashIntensity(float partialTicks) {
-		return MathHelper.lerp(partialTicks, (float)lastActiveTime, (float)timeSinceIgnited) / (float)(fuseTime - 2);
+		return Mth.lerp(partialTicks, (float)lastActiveTime, (float)timeSinceIgnited) / (float)(fuseTime - 2);
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public float getSwimAmount(float partialTicks) {
-		return MathHelper.lerp(partialTicks, this.lastSwimAnimation, this.swimAnimation);
+		return Mth.lerp(partialTicks, this.lastSwimAnimation, this.swimAnimation);
 	}
 
 	public boolean hasIgnited() {
@@ -362,24 +363,24 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 	protected void explode() {
 		if (!level.isClientSide) {
 			WorldUtil.createExplosion(this, level, getExplosionStrength() * (isCharged() ? 2f : 1f));
-			remove();
+			discard();
 			spawnLingeringCloud();
 		}
 	}
 
 	protected void spawnLingeringCloud() {
-		Collection<EffectInstance> activeEffects = getActiveEffects();
+		Collection<MobEffectInstance> activeEffects = getActiveEffects();
 
 		if (!activeEffects.isEmpty()) {
-			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(level, getX(), getY(), getZ());
+			AreaEffectCloud cloud = new AreaEffectCloud(level, getX(), getY(), getZ());
 			cloud.setRadius(2.5F);
 			cloud.setRadiusOnUse(-0.5F);
 			cloud.setWaitTime(10);
 			cloud.setDuration(cloud.getDuration() / 2);
 			cloud.setRadiusPerTick(-cloud.getRadius() / (float)cloud.getDuration());
 
-			for (EffectInstance effect : activeEffects) {
-				cloud.addEffect(new EffectInstance(effect));
+			for (MobEffectInstance effect : activeEffects) {
+				cloud.addEffect(new MobEffectInstance(effect));
 			}
 
 			level.addFreshEntity(cloud);
@@ -420,7 +421,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			else if (this.swellingCreeper.distanceToSqr(this.target) > 49.0D) {
 				this.swellingCreeper.setCreeperState(-1);
 			}
-			else if (!this.swellingCreeper.getSensing().canSee(this.target)) {
+			else if (!this.swellingCreeper.getSensing().hasLineOfSight(this.target)) {
 				this.swellingCreeper.setCreeperState(-1);
 			}
 			else {

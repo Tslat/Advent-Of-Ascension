@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
 public class MeteorFallEntity extends BaseEnergyShot {
-	public MeteorFallEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public MeteorFallEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public MeteorFallEntity(World world) {
-		super(AoAEntities.Projectiles.METEOR_FALL.get(), world);
+	public MeteorFallEntity(Level world) {
+		super(AoAProjectiles.METEOR_FALL.get(), world);
 	}
 
 	public MeteorFallEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, float velocity) {
-		super(AoAEntities.Projectiles.METEOR_FALL.get(), shooter, weapon, posX, posY, posZ, velocity);
+		super(AoAProjectiles.METEOR_FALL.get(), shooter, weapon, posX, posY, posZ, velocity);
 	}
 
-	public MeteorFallEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.METEOR_FALL.get(), world, x, y, z);
+	public MeteorFallEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.METEOR_FALL.get(), world, x, y, z);
 	}
 }

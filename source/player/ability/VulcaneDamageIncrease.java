@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -19,11 +19,11 @@ public class VulcaneDamageIncrease extends AoAAbility.Instance {
 	public VulcaneDamageIncrease(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.VULCANE_DAMAGE_INCREASE.get(), skill, data);
 
-		this.minRage = JSONUtils.getAsFloat(data, "min_rage", 0);
-		this.modifier = JSONUtils.getAsFloat(data, "modifier");
+		this.minRage = GsonHelper.getAsFloat(data, "min_rage", 0);
+		this.modifier = GsonHelper.getAsFloat(data, "modifier");
 	}
 
-	public VulcaneDamageIncrease(AoASkill.Instance skill, CompoundNBT data) {
+	public VulcaneDamageIncrease(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.VULCANE_DAMAGE_INCREASE.get(), skill, data);
 
 		this.minRage = data.getFloat("min_rage");
@@ -36,8 +36,8 @@ public class VulcaneDamageIncrease extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + (minRage > 0 ? ".minRage" : ""), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(minRage, 2)));
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + (minRage > 0 ? ".minRage" : ""), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(minRage, 2)));
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class VulcaneDamageIncrease extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			data.putFloat("min_rage", this.minRage);

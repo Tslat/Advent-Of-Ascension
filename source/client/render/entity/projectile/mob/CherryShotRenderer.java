@@ -1,6 +1,6 @@
 package net.tslat.aoa3.client.render.entity.projectile.mob;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -8,7 +8,7 @@ import net.tslat.aoa3.content.entity.projectile.mob.CherryShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
 public class CherryShotRenderer extends ParticleProjectileRenderer<CherryShotEntity> {
-	public CherryShotRenderer(final EntityRendererManager manager) {
+	public CherryShotRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 

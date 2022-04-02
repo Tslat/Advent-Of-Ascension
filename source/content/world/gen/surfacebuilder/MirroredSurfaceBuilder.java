@@ -1,12 +1,13 @@
+/*
 package net.tslat.aoa3.content.world.gen.surfacebuilder;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.chunk.ChunkAccess;
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
 
@@ -18,12 +19,12 @@ public class MirroredSurfaceBuilder extends SurfaceBuilder<MirroredSurfaceBuilde
 	}
 
 	@Override
-	public void apply(Random rand, IChunk chunk, Biome biome, int x, int z, int startHeight, double noise, BlockState fillerBlock, BlockState defaultFluid, int seaLevel, long seed, Config config) {
+	public void apply(Random rand, ChunkAccess chunk, Biome biome, int x, int z, int startHeight, double noise, BlockState fillerBlock, BlockState defaultFluid, int seaLevel, long seed, Config config) {
 		BlockState surfaceBlock = config.getTopMaterial();
 		BlockState subSurfaceBlock = config.getUnderMaterial();
 		BlockState invertedSurfaceBlock = config.getInvertedTop();
 		BlockState invertedSubsurfaceBlock = config.getInvertedUnder();
-		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 		int height = (int)(noise / 3d + 3d + rand.nextDouble() * 0.25d);
 		int subSurfaceBlockLayers = -1;
 		int bottomYPos = 0;
@@ -133,3 +134,4 @@ public class MirroredSurfaceBuilder extends SurfaceBuilder<MirroredSurfaceBuilde
 		}
 	}
 }
+*/

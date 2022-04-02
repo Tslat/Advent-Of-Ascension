@@ -1,12 +1,12 @@
 package net.tslat.aoa3.client.render.entity.projectile.misc;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.particles.ParticleTypes;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.content.entity.projectile.misc.TidalWaveEntity;
 
 public class TidalWaveRenderer extends ParticleProjectileRenderer<TidalWaveEntity> {
-	public TidalWaveRenderer(final EntityRendererManager manager) {
+	public TidalWaveRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 

@@ -1,25 +1,25 @@
 package net.tslat.aoa3.content.entity.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.potion.EffectUtils;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.ai.animation.Animatable;
 import net.tslat.aoa3.content.entity.ai.mob.FlyingLookRandomlyGoal;
@@ -35,12 +35,12 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, IRangedAttackMob, AoARangedAttacker, Animatable {
+public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, RangedAttackMob, AoARangedAttacker, Animatable {
 	protected boolean isSlipperyMovement = false;
 
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 
-	protected AoAFlyingRangedMob(EntityType<? extends FlyingEntity> entityType, World world) {
+	protected AoAFlyingRangedMob(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 
 		moveControl = new RoamingFlightMovementController(this);
@@ -51,28 +51,28 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
 		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
 		goalSelector.addGoal(3, new FlyingRangedAttackGoal(this, Math.max(getAttackSwingDuration() + 1, 40), 80));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, true, pl -> pl instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)pl)));
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 		xpReward = (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()) * 2) / 10f);
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World world) {
-		return new FlyingPathNavigator(this, world);
+	protected PathNavigation createNavigation(Level world) {
+		return new FlyingPathNavigation(this, world);
 	}
 
 	@Override
-	protected abstract float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn);
+	protected abstract float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn);
 
 	@Override
-	public SoundCategory getSoundSource() {
-		return SoundCategory.HOSTILE;
+	public SoundSource getSoundSource() {
+		return SoundSource.HOSTILE;
 	}
 
 	@Nullable
@@ -124,10 +124,10 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 		double distanceFactorX = target.getX() - projectile.getX();
 		double distanceFactorY = target.getBoundingBox().minY + (target.getBbHeight() / 3) - projectile.getY();
 		double distanceFactorZ = target.getZ() - projectile.getZ();
-		double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
+		double hyp = Math.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
 		if (getShootSound() != null)
-			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
 		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - level.getDifficulty().getId()));
 		level.addFreshEntity(projectile);
@@ -171,8 +171,8 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 	}
 
 	@Override
-	protected boolean isMovementNoisy() {
-		return false;
+	protected Entity.MovementEmission getMovementEmission() {
+		return MovementEmission.EVENTS;
 	}
 
 	@Override
@@ -187,11 +187,11 @@ public abstract class AoAFlyingRangedMob extends FlyingEntity implements IMob, I
 	public int getCurrentSwingDuration() {
 		int time = getAttackSwingDuration();
 
-		if (EffectUtils.hasDigSpeed(this))
-			time -= 1 + EffectUtils.getDigSpeedAmplification(this);
+		if (MobEffectUtil.hasDigSpeed(this))
+			time -= 1 + MobEffectUtil.getDigSpeedAmplification(this);
 
-		if (hasEffect(Effects.DIG_SLOWDOWN))
-			time += (1 + getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) * 2;
+		if (hasEffect(MobEffects.DIG_SLOWDOWN))
+			time += (1 + getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) * 2;
 
 		return time;
 	}

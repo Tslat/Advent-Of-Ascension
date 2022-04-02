@@ -1,23 +1,24 @@
 package net.tslat.aoa3.content.item.weapon.greatblade;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.IForgeShearable;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,7 +29,7 @@ public class RosidianGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, PlayerEntity player) {
+	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
 		if (player.level.isClientSide || player.isCreative())
 			return false;
 
@@ -50,16 +51,16 @@ public class RosidianGreatblade extends BaseGreatblade {
 							drops = ((IForgeShearable)block).onSheared(player, stack, player.level, newPos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
 
 							for (ItemStack drop : drops) {
-								double xMod = random.nextFloat() * 0.7f + 0.15f;
-								double yMod = random.nextFloat() * 0.7f + 0.15f;
-								double zMod = random.nextFloat() * 0.7f + 0.15f;
+								double xMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
+								double yMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
+								double zMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
 								ItemEntity item = new ItemEntity(player.level, x + xMod, y + yMod, z + zMod, drop);
 
 								item.setDefaultPickUpDelay();
 								player.level.addFreshEntity(item);
 							}
 
-							ItemUtil.damageItem(stack, player, 1, EquipmentSlotType.MAINHAND);
+							ItemUtil.damageItem(stack, player, 1, EquipmentSlot.MAINHAND);
 							player.awardStat(Stats.BLOCK_MINED.get(block));
 							player.level.setBlock(newPos, Blocks.AIR.defaultBlockState(), 11);
 						}
@@ -74,12 +75,12 @@ public class RosidianGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public boolean canAttackBlock(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+	public boolean canAttackBlock(BlockState state, Level world, BlockPos pos, Player player) {
 		return super.canAttackBlock(state, world, pos, player) || world.getBlockState(pos) instanceof IForgeShearable;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -1,27 +1,31 @@
 package net.tslat.aoa3.content.entity.mob.abyss;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAAttributes;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.MagicBallEntity;
@@ -34,7 +38,7 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public class WebReaperEntity extends AoARangedMob {
-	private static final DataParameter<Integer> STAGE = EntityDataManager.<Integer>defineId(WebReaperEntity.class, DataSerializers.INT);
+	private static final EntityDataAccessor<Integer> STAGE = SynchedEntityData.<Integer>defineId(WebReaperEntity.class, EntityDataSerializers.INT);
 	private final AttributeModifier STAGE_HEALTH_MOD = new AttributeModifier(UUID.fromString("9c59eceb-dcd0-40e0-a608-a46d3794b1c3"), "StageHealthModifier", 1, AttributeModifier.Operation.MULTIPLY_TOTAL) {
 		@Override
 		public double getAmount() {
@@ -58,13 +62,13 @@ public class WebReaperEntity extends AoARangedMob {
 	private float stageMod;
 	private boolean shouldHeal = false;
 
-	public WebReaperEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public WebReaperEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
 		EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, STAGE_HEALTH_MOD, false);
 		EntityUtil.applyAttributeModifierSafely(this, Attributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD, false);
 		EntityUtil.applyAttributeModifierSafely(this, AoAAttributes.RANGED_ATTACK_DAMAGE.get(), STAGE_DAMAGE_MOD, false);
@@ -82,7 +86,7 @@ public class WebReaperEntity extends AoARangedMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 2.375f * stageMod;
 	}
 
@@ -119,12 +123,12 @@ public class WebReaperEntity extends AoARangedMob {
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.NIGHTMARE_FLAKES.get()) {
 			if (stage >= 10)
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 
 			if (!level.isClientSide) {
 				heldStack.shrink(1);
@@ -133,7 +137,7 @@ public class WebReaperEntity extends AoARangedMob {
 				shouldHeal = true;
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		else if (heldStack.getItem() == Items.ENCHANTED_BOOK && stage > 1) {
 			if (!level.isClientSide) {
@@ -146,10 +150,10 @@ public class WebReaperEntity extends AoARangedMob {
 				}
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	private void updateStage() {
@@ -173,18 +177,18 @@ public class WebReaperEntity extends AoARangedMob {
 	}
 
 	@Override
-	public EntitySize getDimensions(Pose poseIn) {
+	public EntityDimensions getDimensions(Pose poseIn) {
 		return getType().getDimensions().scale(stageMod);
 	}
 
 	@Override
-	public void onSyncedDataUpdated(DataParameter<?> key) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		if (key == STAGE)
 			updateStage();
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (compound.contains("WebReaperStage")) {
@@ -194,7 +198,7 @@ public class WebReaperEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
 		if (stage > 1)
@@ -209,15 +213,15 @@ public class WebReaperEntity extends AoARangedMob {
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
 		if (stage >= 15)
-			EntityUtil.applyPotions(target, new EffectBuilder(Effects.WITHER, 100).level(2));
+			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 100).level(2));
 	}
 
 	@Override
 	public void die(DamageSource cause) {
 		super.die(cause);
 
-		if (cause.getEntity() instanceof ServerPlayerEntity && stage >= 15)
-			AdvancementUtil.completeAdvancement((ServerPlayerEntity)cause.getEntity(), new ResourceLocation(AdventOfAscension.MOD_ID, "abyss/reaper_reaper"), "nightmare_web_reaper_kill");
+		if (cause.getEntity() instanceof ServerPlayer && stage >= 15)
+			AdvancementUtil.completeAdvancement((ServerPlayer)cause.getEntity(), new ResourceLocation(AdventOfAscension.MOD_ID, "abyss/reaper_reaper"), "nightmare_web_reaper_kill");
 	}
 
 	@Override
@@ -232,7 +236,7 @@ public class WebReaperEntity extends AoARangedMob {
 	}
 
 	@Override
-	public ITextComponent getName() {
+	public Component getName() {
 		if (hasCustomName()) {
 			return getCustomName();
 		}

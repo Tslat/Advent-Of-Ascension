@@ -1,47 +1,41 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 
-@OnlyIn(
-		value = Dist.CLIENT,
-		_interface = IRendersAsItem.class
-)
-public class SliceStarEntity extends BaseBullet implements HardProjectile, IRendersAsItem {
-	public SliceStarEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+public class SliceStarEntity extends BaseBullet implements HardProjectile, ItemSupplier {
+	public SliceStarEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public SliceStarEntity(World world) {
-		super(AoAEntities.Projectiles.SLICE_STAR.get(), world);
+	public SliceStarEntity(Level world) {
+		super(AoAProjectiles.SLICE_STAR.get(), world);
 	}
 
 	public SliceStarEntity(LivingEntity shooter, BaseGun gun) {
-		super(AoAEntities.Projectiles.SLICE_STAR.get(), shooter, gun, 1.0f, 0, 3.0f);
+		super(AoAProjectiles.SLICE_STAR.get(), shooter, gun, 1.0f, 0, 3.0f);
 	}
 
-	public SliceStarEntity(LivingEntity shooter, BaseGun gun, Hand hand, int maxAge, int piercingValue) {
-		super(AoAEntities.Projectiles.SLICE_STAR.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
+	public SliceStarEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
+		super(AoAProjectiles.SLICE_STAR.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
 	}
 
-	public SliceStarEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.SLICE_STAR.get(), world, x, y, z);
+	public SliceStarEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.SLICE_STAR.get(), world, x, y, z);
 	}
 
 	@Override
@@ -55,8 +49,8 @@ public class SliceStarEntity extends BaseBullet implements HardProjectile, IRend
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
-		if (result instanceof BlockRayTraceResult && tickCount <= 1 && getOwner() == null)
+	protected void onHit(HitResult result) {
+		if (result instanceof BlockHitResult && tickCount <= 1 && getOwner() == null)
 			return;
 
 		super.onHit(result);

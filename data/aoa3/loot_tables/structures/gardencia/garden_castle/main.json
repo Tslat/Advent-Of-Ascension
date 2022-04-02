@@ -2,7 +2,12 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 10,
+      "rolls": 10.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": -1.0,
+        "max": 1.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
@@ -16,10 +21,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 6.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:poppy"
@@ -31,10 +37,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 6.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:dandelion"
@@ -46,10 +53,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 4.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:large_fern"
@@ -61,10 +69,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 8.0,
-                "max": 29.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 29.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:beetroot"
@@ -76,10 +85,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 11.0,
-                "max": 31.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 31.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:carrot"
@@ -91,10 +101,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 2.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:golden_carrot"
@@ -106,10 +117,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 2.0,
-                "max": 11.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 11.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:melon"
@@ -121,10 +133,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 2.0,
-                "max": 11.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 11.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:pumpkin"
@@ -136,10 +149,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:emerald"
@@ -156,10 +170,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 2.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:hay_block"
@@ -171,10 +186,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:nature_melon_slice"
@@ -186,19 +202,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 2.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:magic_repair_dust"
         }
-      ],
-      "bonus_rolls": {
-        "min": -1.0,
-        "max": 1.0
-      }
+      ]
     }
   ]
 }

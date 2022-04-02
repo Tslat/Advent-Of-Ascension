@@ -86,22 +86,10 @@
       "title": "Bosses"
     },
     {
-      "type": "patchouli:entity",
-      "text": "Read more about the $(thing)Shadowlord$() on the $(l:https://adventofascension.fandom.com/wiki/Shadowlord)Official Wiki$(/l).",
-      "entity": "aoa3:shadowlord",
-      "scale": 0.6328
-    },
-    {
       "type": "patchouli:spotlight",
       "text": "This dark book obtained from an empowered $(thing)Web Reaper$() can be used to summon $(thing)Shadowlord$() at a $(thing)Shadowlord Altar$() on a $(l:aoa3:abyss_structures#shadowlord_platform)Shadowlord Platform$(/l).",
       "title": "Book of Shadows",
       "item": "aoa3:book_of_shadows"
-    },
-    {
-      "type": "patchouli:entity",
-      "text": "Read more about the $(thing)Elusive$() on the $(l:https://adventofascension.fandom.com/wiki/Elusive)Official Wiki$(/l).",
-      "entity": "aoa3:elusive",
-      "scale": 0.914
     },
     {
       "type": "patchouli:spotlight",

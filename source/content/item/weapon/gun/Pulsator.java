@@ -1,17 +1,17 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -35,19 +35,19 @@ public class Pulsator extends BaseGun {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity && target.level instanceof ServerWorld) {
-			List<LivingEntity> nearbyEntities = target.level.getEntitiesOfClass(MobEntity.class, new AxisAlignedBB(bullet.position(), bullet.position()).inflate(7, 5, 7), entity -> entity.isAlive() && entity instanceof IMob);
+		if (target instanceof LivingEntity && target.level instanceof ServerLevel) {
+			List<Mob> nearbyEntities = target.level.getEntitiesOfClass(Mob.class, new AABB(bullet.position(), bullet.position()).inflate(7, 5, 7), entity -> entity.isAlive() && entity instanceof Enemy);
 
 			if (!nearbyEntities.isEmpty() && RandomUtil.oneInNChance(8)) {
-				LivingEntity entity = RandomUtil.getRandomSelection(nearbyEntities);
+				Mob entity = RandomUtil.getRandomSelection(nearbyEntities);
 
-				WorldUtil.spawnLightning((ServerWorld)target.level, shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity)shooter : null, entity.getX(), entity.getY(), entity.getZ(), true);
+				WorldUtil.spawnLightning((ServerLevel)target.level, shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, entity.getX(), entity.getY(), entity.getZ(), true);
 			}
 		}
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

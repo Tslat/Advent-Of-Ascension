@@ -1,22 +1,23 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -30,17 +31,17 @@ public class OkazorEntity extends AoAMeleeMob {
 	private int healCounter = 0;
 
 	public OkazorEntity(RaxxanEntity raxxan) {
-		this(AoAEntities.Mobs.OKAZOR.get(), raxxan.level);
+		this(AoAMobs.OKAZOR.get(), raxxan.level);
 
-		moveTo(raxxan.getX(), raxxan.getY(), raxxan.getZ(), raxxan.yRot, raxxan.xRot);
+		moveTo(raxxan.getX(), raxxan.getY(), raxxan.getZ(), raxxan.getYRot(), raxxan.getXRot());
 	}
 
-	public OkazorEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public OkazorEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 2.009375f;
 	}
 
@@ -96,15 +97,15 @@ public class OkazorEntity extends AoAMeleeMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.OKAZOR.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.OKAZOR.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -112,14 +113,14 @@ public class OkazorEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.PRIMORDIAL_MUSIC.getId()));
@@ -127,7 +128,7 @@ public class OkazorEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.PRIMORDIAL_MUSIC.getId()));
@@ -135,3 +136,4 @@ public class OkazorEntity extends AoAMeleeMob {
 	}
 
 }
+*/

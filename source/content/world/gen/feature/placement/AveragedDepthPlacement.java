@@ -1,7 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.gen.placement.DepthAverageConfig;
 import net.minecraft.world.gen.placement.SimplePlacement;
 
@@ -22,3 +23,4 @@ public class AveragedDepthPlacement extends SimplePlacement<DepthAverageConfig> 
 		return Stream.of(new BlockPos(k, i1, l));
 	}
 }
+*/

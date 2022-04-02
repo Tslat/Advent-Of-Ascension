@@ -1,13 +1,13 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.common.Tags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.ItemCraftingEvent;
@@ -21,22 +21,22 @@ public class BonusCraftingOutput extends ScalableModAbility {
 	@Nullable
 	private final Item outputTarget;
 	@Nullable
-	private final Tags.IOptionalNamedTag<Item> outputTargetTag;
+	private final TagKey<Item> outputTargetTag;
 
 	public BonusCraftingOutput(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.BONUS_CRAFTING_OUTPUT.get(), skill, data);
 
 		if (data.has("item")) {
 			outputTargetTag = null;
-			outputTarget = ForgeRegistries.ITEMS.getValue(new ResourceLocation(JSONUtils.getAsString(data, "item")));
+			outputTarget = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(data, "item")));
 		}
 		else {
 			outputTarget = null;
-			outputTargetTag = ItemTags.createOptional(new ResourceLocation(JSONUtils.getAsString(data, "tag")));
+			outputTargetTag = ItemTags.create(new ResourceLocation(GsonHelper.getAsString(data, "tag")));
 		}
 	}
 
-	public BonusCraftingOutput(AoASkill.Instance skill, CompoundNBT data) {
+	public BonusCraftingOutput(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.BONUS_CRAFTING_OUTPUT.get(), skill, data);
 
 		if (data.contains("item")) {
@@ -45,19 +45,19 @@ public class BonusCraftingOutput extends ScalableModAbility {
 		}
 		else {
 			outputTarget = null;
-			outputTargetTag = ItemTags.createOptional(new ResourceLocation(data.getString("tag")));
+			outputTargetTag = ItemTags.create(new ResourceLocation(data.getString("tag")));
 		}
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		TranslationTextComponent component;
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		TranslatableComponent component;
 
 		if (outputTarget != null) {
-			component = new TranslationTextComponent(defaultDescription.getKey() + ".item", getScalingDescriptionComponent(2), this.outputTarget.getDefaultInstance().getHoverName());
+			component = new TranslatableComponent(defaultDescription.getKey() + ".item", getScalingDescriptionComponent(2), this.outputTarget.getDefaultInstance().getHoverName());
 		}
 		else {
-			component = new TranslationTextComponent(defaultDescription.getKey() + ".tag", getScalingDescriptionComponent(2), this.outputTargetTag.getName().toString());
+			component = new TranslatableComponent(defaultDescription.getKey() + ".tag", getScalingDescriptionComponent(2), this.outputTargetTag.location().toString());
 		}
 
 		super.updateDescription(component);
@@ -75,21 +75,21 @@ public class BonusCraftingOutput extends ScalableModAbility {
 				ev.getOutputStack().setCount((int)Math.ceil(ev.getOutputStack().getCount() * (1 + getScaledValue())));
 		}
 		else {
-			if (ev.getOutputStack().getItem().is(outputTargetTag))
+			if (ev.getOutputStack().is(outputTargetTag))
 				ev.getOutputStack().setCount((int)Math.ceil(ev.getOutputStack().getCount() * (1 + getScaledValue())));
 		}
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			if (outputTarget != null) {
 				data.putString("item", outputTarget.getRegistryName().toString());
 			}
 			else {
-				data.putString("tag", outputTargetTag.getName().toString());
+				data.putString("tag", outputTargetTag.location().toString());
 			}
 		}
 

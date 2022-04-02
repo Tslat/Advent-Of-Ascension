@@ -1,22 +1,25 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.pathfinder.PathComputationType;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.IPlantable;
 import net.tslat.aoa3.util.BlockUtil;
@@ -28,7 +31,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GenericPlantBlock extends Block implements IForgeShearable, IPlantable {
-	private static final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.1, 0, 0.1, 0.9, 0.9, 0.9));
+	private static final VoxelShape SHAPE = Shapes.create(new AABB(0.1, 0, 0.1, 0.9, 0.9, 0.9));
 	protected final List<Material> growthMaterials;
 
 	public GenericPlantBlock(Material material, MaterialColor mapColour, SoundType sound, int lightLevel, Material... growthMaterials) {
@@ -46,38 +49,39 @@ public class GenericPlantBlock extends Block implements IForgeShearable, IPlanta
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState targetState = world.getBlockState(pos.below());
 
 		return (growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isSolidRender(world, pos.below());
 	}
 
-	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
-		return type == PathType.AIR && !this.hasCollision || super.isPathfindable(state, worldIn, pos, type);
+	@Override
+	public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+		return type == PathComputationType.AIR && !this.hasCollision || super.isPathfindable(state, worldIn, pos, type);
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos pos, BlockPos facingPos) {
 		return !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, world, pos, facingPos);
 	}
 
 	@Override
-	public boolean isShearable(@Nonnull ItemStack item, World world, BlockPos pos) {
+	public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public BlockState getPlant(IBlockReader world, BlockPos pos) {
+	public BlockState getPlant(BlockGetter world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 
 		if (state.getBlock() != this)
@@ -88,7 +92,7 @@ public class GenericPlantBlock extends Block implements IForgeShearable, IPlanta
 
 	@Nonnull
 	@Override
-	public List<ItemStack> onSheared(@Nullable PlayerEntity player, @Nonnull ItemStack item, World world, BlockPos pos, int fortune) {
+	public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
 		if (!world.isClientSide()) {
 			ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 

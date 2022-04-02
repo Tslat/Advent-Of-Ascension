@@ -1,8 +1,8 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -28,13 +28,13 @@ public class SyncAoAAbilityDataPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeResourceLocation(skillId);
 		buffer.writeUtf(abilityUniqueId);
 		buffer.writeUtf(data);
 	}
 
-	public static SyncAoAAbilityDataPacket decode(PacketBuffer buffer) {
+	public static SyncAoAAbilityDataPacket decode(FriendlyByteBuf buffer) {
 		return new SyncAoAAbilityDataPacket(buffer.readResourceLocation(), buffer.readUtf(), buffer.readUtf());
 	}
 

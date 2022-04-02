@@ -1,42 +1,42 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.network.NetworkHooks;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.WorldUtil;
 
-public class PlutonSticklerStuckEntity extends ThrowableEntity {
+public class PlutonSticklerStuckEntity extends ThrowableProjectile {
 	private LivingEntity target;
 	private LivingEntity shooter;
 	private int age;
 
-	public PlutonSticklerStuckEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public PlutonSticklerStuckEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public PlutonSticklerStuckEntity(World world) {
-		super(AoAEntities.Projectiles.PLUTON_STICKLER_STUCK.get(), world);
+	public PlutonSticklerStuckEntity(Level world) {
+		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), world);
 	}
 
 	public PlutonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAEntities.Projectiles.PLUTON_STICKLER_STUCK.get(), shooter.level);
+		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), shooter.level);
 		this.target = target;
 		this.shooter = shooter;
 		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
 		shoot(0, 0, 0, 0, 0);
 	}
 
-	public PlutonSticklerStuckEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.PLUTON_STICKLER_STUCK.get(), x, y, z, world);
+	public PlutonSticklerStuckEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), x, y, z, world);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {}
+	protected void onHit(HitResult result) {}
 
 	@Override
 	protected void defineSynchedData() {}
@@ -67,7 +67,7 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 			explodeCoins();
 
 			if (!level.isClientSide)
-				remove();
+				discard();
 		}
 
 		if (age >= 100) {
@@ -75,7 +75,7 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 			explodeCoins();
 
 			if (!level.isClientSide)
-				remove();
+				discard();
 		}
 	}
 
@@ -95,7 +95,7 @@ public class PlutonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

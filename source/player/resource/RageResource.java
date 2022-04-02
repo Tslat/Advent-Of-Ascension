@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.resource;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
@@ -18,11 +18,11 @@ public class RageResource extends AoAResource.Instance {
 	public RageResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.RAGE.get(), plData);
 
-		this.maxValue = Math.max(0, JSONUtils.getAsFloat(jsonData, "max_value"));
-		this.perTickDrain = JSONUtils.getAsFloat(jsonData, "per_tick_drain");
+		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value"));
+		this.perTickDrain = GsonHelper.getAsFloat(jsonData, "per_tick_drain");
 	}
 
-	public RageResource(CompoundNBT nbtData) {
+	public RageResource(CompoundTag nbtData) {
 		super(AoAResources.RAGE.get(), null);
 
 		this.maxValue = nbtData.getFloat("max_value");
@@ -44,7 +44,7 @@ public class RageResource extends AoAResource.Instance {
 
 	@Override
 	public void setValue(float amount) {
-		this.value = MathHelper.clamp(amount, 0, getMaxValue());
+		this.value = Mth.clamp(amount, 0, getMaxValue());
 	}
 
 	@Override
@@ -65,8 +65,8 @@ public class RageResource extends AoAResource.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT nbt = new CompoundNBT();
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag nbt = new CompoundTag();
 
 		if (forClientSetup) {
 			nbt.putFloat("max_value", maxValue);
@@ -80,7 +80,7 @@ public class RageResource extends AoAResource.Instance {
 	}
 
 	@Override
-	public void receiveSyncData(CompoundNBT data) {
+	public void receiveSyncData(CompoundTag data) {
 		this.value = data.getFloat("value");
 	}
 }

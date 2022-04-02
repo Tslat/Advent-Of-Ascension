@@ -3,7 +3,8 @@
   "pools": [
     {
       "name": "yeti_fingernails",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:empty",
@@ -30,7 +31,8 @@
     },
     {
       "name": "loot",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:empty",
@@ -45,6 +47,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",

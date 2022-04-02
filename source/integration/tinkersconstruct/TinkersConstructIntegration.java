@@ -1,12 +1,11 @@
 package net.tslat.aoa3.integration.tinkersconstruct;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.integration.tinkersconstruct.modifier.*;
 import net.tslat.aoa3.integration.tinkersconstruct.trait.*;
 import net.tslat.aoa3.util.FluidUtil;
@@ -56,7 +55,7 @@ public class TinkersConstructIntegration {
 
 		fluidHandler.accept(fluidBuilder);
 
-		return fluidBuilder.registerAll(AoAItems.ITEMS, AoABlocks.BLOCKS, AoABlocks.FLUIDS);
+		return fluidBuilder.registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get());
 	}
 
 	private static FluidUtil.RegisteredFluidHolder registerFluid(String id, Consumer<FluidUtil.Builder> fluidHandler) {
@@ -64,6 +63,6 @@ public class TinkersConstructIntegration {
 
 		fluidHandler.accept(fluidBuilder);
 
-		return fluidBuilder.registerAll(AoAItems.ITEMS, AoABlocks.BLOCKS, AoABlocks.FLUIDS);
+		return fluidBuilder.registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get());
 	}
 }

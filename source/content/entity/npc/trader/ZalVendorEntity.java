@@ -1,21 +1,21 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class ZalVendorEntity extends AoATrader {
-	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
 					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.LUNARADE_MUG).xp(1).stock(64),
 					BuildableTrade.trade(AoAItems.LUNARADE).cost(AoAItems.COPPER_COIN, 5).xp(2).stock(64))
@@ -23,12 +23,12 @@ public class ZalVendorEntity extends AoATrader {
 					BuildableTrade.trade(AoAItems.POP_SHOT, 2).cost(AoAItems.COPPER_COIN, 4).stock(32),
 					BuildableTrade.trade(AoAWeapons.SLINGSHOT).cost(AoAItems.GOLD_COIN).xp(40).stock(5)).build();
 
-	public ZalVendorEntity(EntityType<? extends AoATrader> entityType, World world) {
+	public ZalVendorEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.6875f;
 	}
 
@@ -39,7 +39,7 @@ public class ZalVendorEntity extends AoATrader {
 
 	@Nullable
 	@Override
-	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap() {
 		return TRADES;
 	}
 }

@@ -2,7 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -11,10 +16,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 5.0,
-                "max": 20.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 20.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:runium_chunk"
@@ -26,10 +32,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 4.0,
-                "max": 16.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 16.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:charged_runium_chunk"
@@ -41,10 +48,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 2.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:dense_rock"
@@ -56,10 +64,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 8.0,
-                "max": 13.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 13.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:copper_coin"
@@ -71,10 +80,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 2.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 4.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:silver_coin"
@@ -91,10 +101,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 12.0,
-                "max": 25.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 25.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:coal"
@@ -106,10 +117,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 5.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 5.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:small_skill_crystal"
@@ -121,10 +133,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:medium_skill_crystal"
@@ -160,7 +173,12 @@
       ]
     },
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:item",

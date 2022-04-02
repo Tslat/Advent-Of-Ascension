@@ -1,20 +1,20 @@
 package net.tslat.aoa3.content.entity.mob.voxponds;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.RangedAttackGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -24,7 +24,7 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class DestructorEntity extends AoARangedMob {
-	public DestructorEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public DestructorEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		setInvulnerable(true);
@@ -33,12 +33,12 @@ public class DestructorEntity extends AoARangedMob {
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new RangedAttackGoal(this, 1.0d, 20, 40, 32));
-		goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 8f));
+		goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8f));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 7.4375f;
 	}
 

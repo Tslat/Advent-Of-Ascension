@@ -1,23 +1,21 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.content.entity.boss.CreepEntity;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.concurrent.TimeUnit;
 
 public class CreepSpawnTask implements Runnable {
-    private final World world;
+    private final Level world;
     private final double centerX;
     private final double centerY;
     private final double centerZ;
     private int currentCorner;
     private int count = 0;
 
-    public CreepSpawnTask(World w, double centerX, double centerY, double centerZ, int startingPosition) {
+    public CreepSpawnTask(Level w, double centerX, double centerY, double centerZ, int startingPosition) {
         this.world = w;
         this.centerX = centerX;
         this.centerY = centerY;
@@ -31,33 +29,33 @@ public class CreepSpawnTask implements Runnable {
         double z = centerZ;
 
         switch (currentCorner) {
-            case 0:
+            case 0 -> {
                 x += 9;
                 z += 9;
-                break;
-            case 1:
+            }
+            case 1 -> {
                 x -= 9;
                 z += 9;
-                break;
-            case 2:
+            }
+            case 2 -> {
                 x -= 9;
                 z -= 9;
-                break;
-            case 3:
+            }
+            case 3 -> {
                 x += 9;
                 z -= 9;
-                break;
+            }
         }
 
-        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, Explosion.Mode.DESTROY);
+        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, Explosion.BlockInteraction.DESTROY);
 
         count++;
 
         if (count >= 4) {
-            CreepEntity creep = new CreepEntity(AoAEntities.Mobs.CREEP.get(), world);
+            /*CreepEntity creep = new CreepEntity(AoAMobs.CREEP.get(), world);
 
             creep.setPos(x, centerY, z);
-            world.addFreshEntity(creep);
+            world.addFreshEntity(creep);*/
 
             return;
         }

@@ -1,11 +1,11 @@
 package net.tslat.aoa3.client;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
-import net.minecraft.client.audio.SimpleSound;
-import net.minecraft.client.audio.SoundHandler;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.SoundManager;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
 import org.apache.logging.log4j.Level;
@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Level;
 import java.util.HashMap;
 
 public final class MusicPlayer {
-	private static final HashMap<ResourceLocation, ISound> playingSounds = new HashMap<ResourceLocation, ISound>();
+	private static final HashMap<ResourceLocation, SoundInstance> playingSounds = new HashMap<ResourceLocation, SoundInstance>();
 
 	public static void playMusic(ResourceLocation id) {
 		if (playingSounds.containsKey(id)) {
@@ -33,16 +33,16 @@ public final class MusicPlayer {
 			return;
 		}
 
-		ISound sound = SimpleSound.forMusic(soundEvent);
+		SoundInstance sound = SimpleSoundInstance.forMusic(soundEvent);
 		Minecraft.getInstance().getSoundManager().play(sound);
 		playingSounds.put(id, sound);
 	}
 
 	public static void stopMusic(ResourceLocation id) {
-		ISound sound = playingSounds.get(id);
+		SoundInstance sound = playingSounds.get(id);
 
 		if (sound != null) {
-			SoundHandler soundHandler = Minecraft.getInstance().getSoundManager();
+			SoundManager soundHandler = Minecraft.getInstance().getSoundManager();
 
 			if (soundHandler.isActive(sound))
 				soundHandler.stop(sound);

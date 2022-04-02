@@ -1,15 +1,16 @@
+/*
 package net.tslat.aoa3.content.entity.mob.misc;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.level.Level;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.boss.ElusiveEntity;
@@ -23,20 +24,20 @@ public class ElusiveCloneEntity extends AoAMeleeMob {
 	private final ElusiveEntity elusive;
 
 	public ElusiveCloneEntity(ElusiveEntity elusive) {
-		super(AoAEntities.Mobs.ELUSIVE_CLONE.get(), elusive.level);
+		super(AoAMobs.ELUSIVE_CLONE.get(), elusive.level);
 
-		moveTo(elusive.getX(), elusive.getY(), elusive.getZ(), elusive.yRot, elusive.xRot);
+		moveTo(elusive.getX(), elusive.getY(), elusive.getZ(), elusive.getYRot(), elusive.getXRot());
 		this.elusive = elusive;
 	}
 
-	public ElusiveCloneEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public ElusiveCloneEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		this.elusive = null;
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.5f;
 	}
 
@@ -60,8 +61,8 @@ public class ElusiveCloneEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new EffectBuilder(Effects.BLINDNESS, 80).level(3));
-		EntityUtil.applyPotions(this, new EffectBuilder(Effects.INVISIBILITY, 40));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.BLINDNESS, 80).level(3));
+		EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.INVISIBILITY, 40));
 	}
 
 	@Override
@@ -80,3 +81,4 @@ public class ElusiveCloneEntity extends AoAMeleeMob {
 			WorldUtil.createExplosion(elusive, level, getX(), getY(), getZ(), 2f);
 	}
 }
+*/

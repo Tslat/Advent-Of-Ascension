@@ -1,36 +1,36 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class InvertedAchonyTreeFeature extends AoATreeFeature {
-	public InvertedAchonyTreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public InvertedAchonyTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
 	@Override
-	protected boolean checkSafeHeight(ISeedReader reader, BlockPos pos, int maxHeight, int trunkWidth, boolean isWorldGen) {
+	protected boolean checkSafeHeight(WorldGenLevel reader, BlockPos pos, int maxHeight, int trunkWidth, boolean isWorldGen) {
 		return pos.getY() <= 256 && pos.getY() - maxHeight >= 1;
 	}
 
 	@Override
-	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 20 + rand.nextInt(10);
 		int coreHeight = 4 + rand.nextInt(3);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + (int)(coreHeight * 1.5f), 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.above());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.above());
 		BlockState log = AoABlocks.ACHONY_LOG.get().defaultBlockState();
 		boolean lastRowRinged = false;
 
@@ -52,7 +52,7 @@ public class InvertedAchonyTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void buildCrown(ISeedReader reader, BlockPos pos, int coreHeight) {
+	private void buildCrown(WorldGenLevel reader, BlockPos pos, int coreHeight) {
 		BlockState achonyLeaves = AoABlocks.ACHONY_LEAVES.get().defaultBlockState();
 		BlockState lelyetianLeaves = AoABlocks.LELYETIAN_LEAVES.get().defaultBlockState();
 
@@ -105,7 +105,7 @@ public class InvertedAchonyTreeFeature extends AoATreeFeature {
 		}
 	}
 
-	private void buildLeafRing(ISeedReader reader, BlockPos pos) {
+	private void buildLeafRing(WorldGenLevel reader, BlockPos pos) {
 		BlockState achonyLeaves = AoABlocks.ACHONY_LEAVES.get().defaultBlockState();
 
 		for (int x = -1; x <= 1; x++) {

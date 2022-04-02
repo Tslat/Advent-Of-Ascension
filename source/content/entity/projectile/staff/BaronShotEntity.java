@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
 public class BaronShotEntity extends BaseEnergyShot {
-	public BaronShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public BaronShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public BaronShotEntity(World world) {
-		super(AoAEntities.Projectiles.BARON_SHOT.get(), world);
+	public BaronShotEntity(Level world) {
+		super(AoAProjectiles.BARON_SHOT.get(), world);
 	}
 
 	public BaronShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAEntities.Projectiles.BARON_SHOT.get(), shooter, weapon, maxAge);
+		super(AoAProjectiles.BARON_SHOT.get(), shooter, weapon, maxAge);
 	}
 
-	public BaronShotEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.BARON_SHOT.get(), world, x, y, z);
+	public BaronShotEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.BARON_SHOT.get(), world, x, y, z);
 	}
 }

@@ -1,14 +1,13 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -25,7 +24,7 @@ public class BonusMiningResult extends ScalableModAbility {
 		super(AoAAbilities.BONUS_MINING_RESULT.get(), skill, data);
 	}
 
-	public BonusMiningResult(AoASkill.Instance skill, CompoundNBT data) {
+	public BonusMiningResult(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.BONUS_MINING_RESULT.get(), skill, data);
 	}
 
@@ -36,7 +35,7 @@ public class BonusMiningResult extends ScalableModAbility {
 
 	@Override
 	public void handleLootModification(List<ItemStack> loot, LootContext context) {
-		BlockState state = context.getParamOrNull(LootParameters.BLOCK_STATE);
+		BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 
 		if (state == null)
 			return;
@@ -44,12 +43,10 @@ public class BonusMiningResult extends ScalableModAbility {
 		if (!testAsChance())
 			return;
 
-		Block block = state.getBlock();
-
-		if (!block.is(Tags.Blocks.ORES))
+		if (!state.is(Tags.Blocks.ORES))
 			return;
 
-		Item blockItem = block.asItem();
+		Item blockItem = state.getBlock().asItem();
 
 		if (blockItem != Items.AIR) {
 			for (ItemStack stack : loot) {
@@ -58,7 +55,7 @@ public class BonusMiningResult extends ScalableModAbility {
 			}
 		}
 
-		List<ItemStack> extraStacks = new ArrayList<ItemStack>();
+		List<ItemStack> extraStacks = new ArrayList<>();
 
 		for (ItemStack stack : loot) {
 			extraStacks.addAll(ItemUtil.increaseStackSize(stack, 1));

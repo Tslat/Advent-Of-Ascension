@@ -1,23 +1,22 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
@@ -29,7 +28,7 @@ import javax.annotation.Nullable;
 public class SmashEntity extends AoAMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getType().getDescription()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public SmashEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public SmashEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;
@@ -62,7 +61,7 @@ public class SmashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 2.35f;
 	}
 
@@ -90,7 +89,7 @@ public class SmashEntity extends AoAMeleeMob {
 
 			if (percentHealth > 0) {
 				double resist = 1;
-				ModifiableAttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+				AttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 				if (attrib != null)
 					resist -= attrib.getValue();
@@ -118,10 +117,10 @@ public class SmashEntity extends AoAMeleeMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.SMASH.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.SMASH.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -131,7 +130,7 @@ public class SmashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -139,14 +138,14 @@ public class SmashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.SMASH_MUSIC.getId()));
@@ -154,10 +153,11 @@ public class SmashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.SMASH_MUSIC.getId()));
 		bossInfo.removePlayer(player);
 	}
 }
+*/

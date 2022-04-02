@@ -1,19 +1,19 @@
 package net.tslat.aoa3.content.item.armour;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -23,13 +23,13 @@ import java.util.UUID;
 public class BattlebornArmour extends AdventArmour {
 	private static final UUID BATTLEBORN_ARMOUR_BUFF = UUID.fromString("5cf50cfa-4298-46d1-b7ec-c648f8e8d5c9");
 
-	public BattlebornArmour(EquipmentSlotType slot) {
+	public BattlebornArmour(EquipmentSlot slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:battleborn", 65, new int[] {4, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
-	public AdventArmour.Type setType() {
-		return AdventArmour.Type.BATTLEBORN;
+	public Type setType() {
+		return Type.BATTLEBORN;
 	}
 
 	private AttributeModifier buff(double currentValue) {
@@ -37,7 +37,7 @@ public class BattlebornArmour extends AdventArmour {
 	}
 
 	@Override
-	public void onDamageDealt(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
+	public void onDamageDealt(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
 		if (slots != null && DamageUtil.isMeleeDamage(event.getSource())) {
 			int counter = plData.equipment().getCooldown("battleborn");
 			int newAmount = Math.min(300, counter + slots.size() * 6);
@@ -49,7 +49,7 @@ public class BattlebornArmour extends AdventArmour {
 	}
 
 	@Override
-	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
+	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
 		int counter = plData.equipment().getCooldown("battleborn");
 
 		if (counter == 1) {
@@ -62,7 +62,7 @@ public class BattlebornArmour extends AdventArmour {
 	}
 
 	@Override
-	public void onUnequip(ServerPlayerDataManager plData, @Nullable EquipmentSlotType slot) {
+	public void onUnequip(ServerPlayerDataManager plData, @Nullable EquipmentSlot slot) {
 		if (slot != null) {
 			int cooldown = plData.equipment().getCooldown("battleborn");
 
@@ -74,7 +74,7 @@ public class BattlebornArmour extends AdventArmour {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.battleborn_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.battleborn_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

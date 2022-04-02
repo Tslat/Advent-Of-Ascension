@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.item;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameter;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -15,7 +15,7 @@ public interface LootModifyingItem {
 	void doLootModification(final List<ItemStack> existingLoot, final LootContext lootContext);
 
 	default boolean isBlockHarvestLoot(LootContext context) {
-		for (LootParameter<?> param : LootParameterSets.BLOCK.getRequired()) {
+		for (LootContextParam<?> param : LootContextParamSets.BLOCK.getRequired()) {
 			if (!context.hasParam(param))
 				return false;
 		}
@@ -24,7 +24,7 @@ public interface LootModifyingItem {
 	}
 
 	default boolean isEntityKillLoot(LootContext context) {
-		for (LootParameter<?> param : LootParameterSets.ENTITY.getRequired()) {
+		for (LootContextParam<?> param : LootContextParamSets.ENTITY.getRequired()) {
 			if (!context.hasParam(param))
 				return false;
 		}
@@ -33,7 +33,7 @@ public interface LootModifyingItem {
 	}
 
 	default boolean isFishingLoot(LootContext context) {
-		for (LootParameter<?> param : LootParameterSets.FISHING.getRequired()) {
+		for (LootContextParam<?> param : LootContextParamSets.FISHING.getRequired()) {
 			if (!context.hasParam(param))
 				return false;
 		}
@@ -46,6 +46,10 @@ public interface LootModifyingItem {
 		if (!isBlockHarvestLoot(lootContext))
 			return Blocks.AIR.defaultBlockState();
 
-		return lootContext.getParamOrNull(LootParameters.BLOCK_STATE);
+		return lootContext.getParamOrNull(LootContextParams.BLOCK_STATE);
+	}
+
+	default ItemStack getToolStack(LootContext lootContext) {
+		return lootContext.getParamOrNull(LootContextParams.TOOL);
 	}
 }

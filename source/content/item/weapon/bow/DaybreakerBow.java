@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.item.weapon.bow;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -21,7 +21,7 @@ public class DaybreakerBow extends BaseBow {
 	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
 		CustomArrowEntity centralArrow = super.makeArrow(shooter, bowStack, ammoStack, velocity, consumeAmmo);
 
-		if (shooter.xRot < -70) {
+		if (shooter.getXRot() < -70) {
 			for (double x = -0.5; x <= 0.5; x += 0.5) {
 				for (double z = -0.5; z <= 0.5; z += 0.5) {
 					if (x == 0 && z == 0)
@@ -29,7 +29,7 @@ public class DaybreakerBow extends BaseBow {
 
 					CustomArrowEntity arrow = CustomArrowEntity.fromArrow(centralArrow, this, shooter, dmg);
 
-					arrow.pickup = AbstractArrowEntity.PickupStatus.CREATIVE_ONLY;
+					arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 					arrow.teleportTo(arrow.getX() + x, arrow.getY(), arrow.getZ() + z);
 					arrow.level.addFreshEntity(arrow);
 				}
@@ -40,7 +40,7 @@ public class DaybreakerBow extends BaseBow {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

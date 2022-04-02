@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
-import net.tslat.aoa3.content.block.generation.plants.VinesBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.block.generation.plants.VinesBlock;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,12 +18,12 @@ public class CreepTreeFeature extends AoATreeFeature {
 	private static final BlockState leaves = AoABlocks.CREEP_LEAVES.get().defaultBlockState();
 	private static final BlockState vines = AoABlocks.CREEP_VINES.get().defaultBlockState();
 
-	public CreepTreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public CreepTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
 	@Override
-	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		ArrayList<BlockPos> leafPositions = new ArrayList<BlockPos>();
 		int trunkHeight = 6 + rand.nextInt(10);
 
@@ -33,7 +33,7 @@ public class CreepTreeFeature extends AoATreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = AoABlocks.CREEP_LOG.get().defaultBlockState();
 		int ringLocation = 1 + rand.nextInt(trunkHeight - 3);
 
@@ -98,12 +98,12 @@ public class CreepTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void placeLeafBlock(ISeedReader reader, BlockPos leafPos, ArrayList<BlockPos> leafPositions) {
+	private void placeLeafBlock(WorldGenLevel reader, BlockPos leafPos, ArrayList<BlockPos> leafPositions) {
 		placeBlock(reader, leafPos, leaves);
 		leafPositions.add(leafPos);
 	}
 
-	private void populateVines(ISeedReader reader, Random rand, ArrayList<BlockPos> leafPositions) {
+	private void populateVines(WorldGenLevel reader, Random rand, ArrayList<BlockPos> leafPositions) {
 		for (BlockPos pos : leafPositions) {
 			for (Direction dir : Direction.Plane.HORIZONTAL) {
 				BlockPos vinePos;

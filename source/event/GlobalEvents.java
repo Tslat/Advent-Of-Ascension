@@ -1,17 +1,18 @@
 package net.tslat.aoa3.event;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.spawner.ISpecialSpawner;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.CustomSpawner;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.server.ServerStartedEvent;
+import net.minecraftforge.event.server.ServerStartingEvent;
+import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.event.server.FMLServerStartedEvent;
-import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
-import net.minecraftforge.fml.event.server.FMLServerStoppingEvent;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.content.world.spawner.PixonSpawner;
 import net.tslat.aoa3.content.world.spawner.TraderSpawner;
 import net.tslat.aoa3.content.world.spawner.VisualentSpawner;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
@@ -28,9 +29,9 @@ public final class GlobalEvents {
 
 		forgeBus.addListener(EventPriority.NORMAL, false, TickEvent.ServerTickEvent.class, GlobalEvents::serverTick);
 		forgeBus.addListener(EventPriority.NORMAL, false, WorldEvent.Load.class, GlobalEvents::worldLoad);
-		forgeBus.addListener(EventPriority.NORMAL, false, FMLServerStartingEvent.class, GlobalEvents::serverStarting);
-		forgeBus.addListener(EventPriority.NORMAL, false, FMLServerStartedEvent.class, GlobalEvents::serverStarted);
-		forgeBus.addListener(EventPriority.NORMAL, false, FMLServerStoppingEvent.class, GlobalEvents::serverStopping);
+		forgeBus.addListener(EventPriority.NORMAL, false, ServerStartingEvent.class, GlobalEvents::serverStarting);
+		forgeBus.addListener(EventPriority.NORMAL, false, ServerStartedEvent.class, GlobalEvents::serverStarted);
+		forgeBus.addListener(EventPriority.NORMAL, false, ServerStoppingEvent.class, GlobalEvents::serverStopping);
 	}
 
 	private static void serverTick(final TickEvent.ServerTickEvent ev) {
@@ -42,12 +43,11 @@ public final class GlobalEvents {
 	}
 
 	private static void worldLoad(final WorldEvent.Load ev) {
-		if (ev.getWorld() instanceof ServerWorld) {
-			ServerWorld world = (ServerWorld)ev.getWorld();
-			ArrayList<ISpecialSpawner> spawners = new ArrayList<ISpecialSpawner>(world.customSpawners);
+		if (ev.getWorld() instanceof ServerLevel world) {
+			ArrayList<CustomSpawner> spawners = new ArrayList<>(world.customSpawners);
 
-			//if (PixonSpawner.isValidSpawnWorld(world))
-			//	spawners.add(new PixonSpawner());
+			if (PixonSpawner.isValidSpawnWorld(world))
+				spawners.add(new PixonSpawner());
 
 			if (world.dimension() == AoADimensions.LUNALUS.key)
 				spawners.add(new VisualentSpawner());
@@ -59,17 +59,17 @@ public final class GlobalEvents {
 		}
 	}
 
-	private static void serverStarting(final FMLServerStartingEvent ev) {
+	private static void serverStarting(final ServerStartingEvent ev) {
 		WebUtil.extraPlayerHalosFromWeb();
 		AoAScheduler.serverStartupTasks();
 	}
 
-	private static void serverStarted(final FMLServerStartedEvent ev) {
+	private static void serverStarted(final ServerStartedEvent ev) {
 		if (ev.getServer().isDedicatedServer())
 			SkillsLeaderboard.init();
 	}
 
-	private static void serverStopping(final FMLServerStoppingEvent ev) {
+	private static void serverStopping(final ServerStoppingEvent ev) {
 		if (ev.getServer().isDedicatedServer())
 			AoAScheduler.serverShutdownTasks();
 	}

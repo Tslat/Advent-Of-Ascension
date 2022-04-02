@@ -1,16 +1,18 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ public class SweetSword extends BaseSword {
 	private static boolean populated = false;
 
 	public SweetSword() {
-		super(ItemUtil.customItemTier(1850, AttackSpeed.NORMAL, 15.0f, 4, 10, null));
+		super(ItemUtil.customItemTier(1850, AttackSpeed.NORMAL, 15.0f, 4, 10, null, null));
 	}
 
 	@Override
@@ -30,14 +32,14 @@ public class SweetSword extends BaseSword {
 			if (!populated)
 				populateCandyList();
 
-			target.spawnAtLocation(candyList.get(random.nextInt(candyList.size())), target.getBbHeight() / 2f);
+			target.spawnAtLocation(RandomUtil.getRandomSelection(candyList), target.getBbHeight() / 2f);
 		}
 	}
 
 	private static void populateCandyList() {
 		candyList.add(new ItemStack(Items.SUGAR, 3));
 
-		AoATags.Items.CANDY.getValues().forEach(item -> candyList.add(new ItemStack(item)));
+		ServerLifecycleHooks.getCurrentServer().registryAccess().registry(Registry.ITEM_REGISTRY).get().getTag(AoATags.Items.CANDY).ifPresent(tag -> tag.forEach(item -> candyList.add(new ItemStack(item))));
 
 		populated = true;
 	}
@@ -50,7 +52,7 @@ public class SweetSword extends BaseSword {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.UNIQUE, 1));
 	}
 }

@@ -1,53 +1,52 @@
 package net.tslat.aoa3.client.model.entity.animal;
 
-import com.google.common.collect.ImmutableList;
-import net.minecraft.client.renderer.entity.model.SegmentedModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.tslat.aoa3.client.model.misc.FullbrightModelRenderer;
+import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.tslat.aoa3.client.model.misc.FullbrightMeshDefinition;
+import net.tslat.aoa3.client.model.misc.FullbrightPartDefinition;
 import net.tslat.aoa3.content.entity.animal.ShinySquidEntity;
 
 import java.util.Arrays;
 
-public class ShinySquidModel extends SegmentedModel<ShinySquidEntity> {
-	protected final ModelRenderer body;
-	protected final ModelRenderer[] tentacles = new ModelRenderer[8];
-	protected final ImmutableList<ModelRenderer> parts;
+public class ShinySquidModel extends HierarchicalModel<ShinySquidEntity> {
+	private final ModelPart[] tentacles = new ModelPart[8];
+	private final ModelPart root;
 
-	public ShinySquidModel() {
-		this.body = new FullbrightModelRenderer(this, 0, 0);
-		this.body.addBox(-6, -8, -6, 12, 16, 12);
-		this.body.y += 8;
+	public ShinySquidModel(ModelPart root) {
+		this.root = root;
 
-		for(int i = 0; i < this.tentacles.length; ++i) {
-			this.tentacles[i] = new FullbrightModelRenderer(this, 48, 0);
-			double rotPos = (double)i * Math.PI * 2 / (double)this.tentacles.length;
+		Arrays.setAll(this.tentacles, num -> root.getChild("tentacle" + num));
+	}
 
-			this.tentacles[i].addBox(-1, 0, -1, 2, 18, 2);
+	public static LayerDefinition createBodyLayer() {
+		FullbrightMeshDefinition meshDefinition = new FullbrightMeshDefinition();
+		FullbrightPartDefinition rootPart = meshDefinition.getRoot();
+		CubeListBuilder cubesBuilder = CubeListBuilder.create().texOffs(48, 0).addBox(-1, 0, -1, 2, 18, 2);
 
-			this.tentacles[i].x = (float)Math.cos(rotPos) * 5;
-			this.tentacles[i].z = (float)Math.sin(rotPos) * 5;
-			this.tentacles[i].y = 15;
-			rotPos = (double)i * Math.PI * -2 / (double)this.tentacles.length + (Math.PI / 2d);
-			this.tentacles[i].yRot = (float)rotPos;
+		rootPart.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-6, -8, -6, 12, 16, 12), PartPose.offset(0, 8, 0));
+
+
+		for(int i = 0; i < 8; ++i) {
+			double angle = (double)i * Math.PI / 4d;
+
+			rootPart.addOrReplaceChild("tentacle" + i, cubesBuilder, PartPose.offsetAndRotation((float)Math.cos(angle) * 5f, 15.0F, (float)Math.sin(angle) * 5f, 0.0F, (float)((double)i * Math.PI * -2d / 8d + (Math.PI / 2d)), 0.0F));
 		}
 
-		ImmutableList.Builder<ModelRenderer> builder = ImmutableList.builder();
-		
-		builder.add(this.body);
-		builder.addAll(Arrays.asList(this.tentacles));
-		
-		this.parts = builder.build();
+		return LayerDefinition.create(meshDefinition, 64, 32);
 	}
 
 	@Override
-	public void setupAnim(ShinySquidEntity squid, float pLimbSwing, float pLimbSwingAmount, float age, float pNetHeadYaw, float pHeadPitch) {
-		for(ModelRenderer modelrenderer : this.tentacles) {
-			modelrenderer.xRot = age;
-		}
+	public ModelPart root() {
+		return this.root;
 	}
 
 	@Override
-	public Iterable<ModelRenderer> parts() {
-		return this.parts;
+	public void setupAnim(ShinySquidEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+		for(ModelPart modelpart : this.tentacles) {
+			modelpart.xRot = ageInTicks;
+		}
 	}
 }

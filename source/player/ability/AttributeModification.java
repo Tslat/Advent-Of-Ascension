@@ -1,13 +1,13 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
@@ -35,8 +35,8 @@ public class AttributeModification extends ScalableModAbility {
 	public AttributeModification(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.ATTRIBUTE_MODIFICATION.get(), skill, data);
 
-		this.attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(JSONUtils.getAsString(data, "attribute")));
-		this.modifier = new AttributeModifier(UUID.randomUUID(), getUniqueIdentifier(), 0, AttributeModifier.Operation.fromValue(JSONUtils.getAsInt(data, "operation"))) {
+		this.attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(GsonHelper.getAsString(data, "attribute")));
+		this.modifier = new AttributeModifier(UUID.randomUUID(), getUniqueIdentifier(), 0, AttributeModifier.Operation.fromValue(GsonHelper.getAsInt(data, "operation"))) {
 			@Override
 			public double getAmount() {
 				return getScaledValue();
@@ -44,7 +44,7 @@ public class AttributeModification extends ScalableModAbility {
 		};
 	}
 
-	public AttributeModification(AoASkill.Instance skill, CompoundNBT data) {
+	public AttributeModification(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.ATTRIBUTE_MODIFICATION.get(), skill, data);
 
 		this.attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(data.getString("attribute")));
@@ -57,32 +57,26 @@ public class AttributeModification extends ScalableModAbility {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
+	protected void updateDescription(TranslatableComponent defaultDescription) {
 		String amount = "";
 		String perLevel = "";
 
 		switch (this.modifier.getOperation()) {
-			case MULTIPLY_BASE:
-			case MULTIPLY_TOTAL:
+			case MULTIPLY_BASE, MULTIPLY_TOTAL -> {
 				if (baseValue != 0)
 					amount = "+" + NumberUtil.roundToNthDecimalPlace(baseValue * 100, 3);
-
 				if (perLevelMod != 0)
 					perLevel = NumberUtil.roundToNthDecimalPlace(this.perLevelMod * 100, 3);
-
-				break;
-			case ADDITION:
-			default:
+			}
+			default -> {
 				if (baseValue != 0)
 					amount = NumberUtil.roundToNthDecimalPlace(baseValue, 3);
-
 				if (perLevelMod != 0)
 					perLevel = NumberUtil.roundToNthDecimalPlace(this.perLevelMod, 3);
-
-				break;
+			}
 		}
 
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(),
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(),
 				StringUtil.toTitleCase(attribute.getDescriptionId().substring(attribute.getDescriptionId().lastIndexOf(".") + 1)),
 				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, modifier.getOperation() != AttributeModifier.Operation.ADDITION, amount, perLevel, new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace((float)modifier.getAmount() * (modifier.getOperation() == AttributeModifier.Operation.ADDITION ? 1 : 100), 3)))));
 	}
@@ -113,8 +107,8 @@ public class AttributeModification extends ScalableModAbility {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			data.putString("attribute", attribute.getRegistryName().toString());
@@ -126,8 +120,8 @@ public class AttributeModification extends ScalableModAbility {
 	}
 
 	@Override
-	public CompoundNBT saveToNbt() {
-		CompoundNBT data = super.saveToNbt();
+	public CompoundTag saveToNbt() {
+		CompoundTag data = super.saveToNbt();
 
 		if (attribute == Attributes.MAX_HEALTH) {
 			double health = getPlayer().getHealth();
@@ -140,7 +134,7 @@ public class AttributeModification extends ScalableModAbility {
 	}
 
 	@Override
-	public void loadFromNbt(CompoundNBT data) {
+	public void loadFromNbt(CompoundTag data) {
 		super.loadFromNbt(data);
 
 		if (attribute == Attributes.MAX_HEALTH && getListenerState() == ListenerState.ACTIVE && data.contains("current_health")) {

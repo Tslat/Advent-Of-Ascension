@@ -1,12 +1,9 @@
 package net.tslat.aoa3.common.registration.custom;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryManager;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.RegistryObject;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.resource.EnergyResource;
 import net.tslat.aoa3.player.resource.RageResource;
@@ -16,8 +13,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AoAResources {
-	private static IForgeRegistry<AoAResource> REGISTRY = null;
-	public static final DeferredRegister<AoAResource> RESOURCES = DeferredRegister.create(AoAResource.class, AdventOfAscension.MOD_ID);
+	public static void init() {}
 
 	public static final AoAResource.Instance DEFAULT = new AoAResource.Instance(null, null) {
 		@Override
@@ -40,24 +36,17 @@ public class AoAResources {
 
 		@Nonnull
 		@Override
-		public CompoundNBT saveToNbt() {
-			return new CompoundNBT();
+		public CompoundTag saveToNbt() {
+			return new CompoundTag();
 		}
 	};
 
-	public static final RegistryObject<AoAResource> SPIRIT = RESOURCES.register("spirit", () -> new AoAResource(SpiritResource::new, SpiritResource::new));
-	public static final RegistryObject<AoAResource> ENERGY = RESOURCES.register("energy", () -> new AoAResource(EnergyResource::new, EnergyResource::new));
-	public static final RegistryObject<AoAResource> RAGE = RESOURCES.register("rage", () -> new AoAResource(RageResource::new, RageResource::new));
+	public static final RegistryObject<AoAResource> SPIRIT = AoARegistries.AOA_RESOURCES.register("spirit", () -> new AoAResource(SpiritResource::new, SpiritResource::new));
+	public static final RegistryObject<AoAResource> ENERGY = AoARegistries.AOA_RESOURCES.register("energy", () -> new AoAResource(EnergyResource::new, EnergyResource::new));
+	public static final RegistryObject<AoAResource> RAGE = AoARegistries.AOA_RESOURCES.register("rage", () -> new AoAResource(RageResource::new, RageResource::new));
 
 	@Nullable
 	public static AoAResource getResource(ResourceLocation id) {
-		return getRegistry().getValue(id);
-	}
-
-	public static IForgeRegistry<AoAResource> getRegistry() {
-		if (REGISTRY == null)
-			REGISTRY = RegistryManager.ACTIVE.getRegistry(AoAResource.class);
-
-		return REGISTRY;
+		return AoARegistries.AOA_RESOURCES.getObject(id);
 	}
 }

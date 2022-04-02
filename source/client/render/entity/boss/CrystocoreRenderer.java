@@ -1,12 +1,12 @@
+/*
 package net.tslat.aoa3.client.render.entity.boss;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.client.model.entity.boss.CrystocoreModel;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.resources.ResourceLocation;
+
 import net.tslat.aoa3.content.entity.boss.CrystocoreEntity;
 
 import javax.annotation.Nullable;
@@ -19,12 +19,12 @@ public class CrystocoreRenderer extends MobRenderer<CrystocoreEntity, EntityMode
 	private static final ResourceLocation NAUSEA_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_nausea.png");
 	private static final ResourceLocation WITHER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_wither.png");
 
-	public CrystocoreRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new CrystocoreModel(), AoAEntities.Mobs.CRYSTOCORE.get().getWidth() / 3);
+	public CrystocoreRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new CrystocoreModel(), AoAMobs.CRYSTOCORE.get().getWidth() / 3);
 	}
 
 	@Override
-	protected void scale(CrystocoreEntity crystocore, MatrixStack matrix, float partialTicks) {
+	protected void scale(CrystocoreEntity crystocore, PoseStack matrix, float partialTicks) {
 		matrix.scale(2, 2, 2);
 	}
 
@@ -47,4 +47,4 @@ public class CrystocoreRenderer extends MobRenderer<CrystocoreEntity, EntityMode
 				return SLOWNESS_PHASE_TEXTURE;
 		}
 	}
-}
+}*/

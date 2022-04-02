@@ -1,7 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.gen.placement.SimplePlacement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 
@@ -19,3 +20,4 @@ public class YFillPlacement extends SimplePlacement<TopSolidRangeConfig> {
 		return IntStream.range(config.bottomOffset, config.maximum + 1).mapToObj(y -> new BlockPos(pos.getX(), y, pos.getZ()));
 	}
 }
+*/

@@ -1,15 +1,17 @@
 package net.tslat.aoa3.content.entity.mob.nether;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.HopAtTargetGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -17,25 +19,25 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import javax.annotation.Nullable;
 
 public class ScrubbyEntity extends AoAMeleeMob {
-	public ScrubbyEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public ScrubbyEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.9f;
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1, false));
 		goalSelector.addGoal(3, new HopAtTargetGoal(this, 0.9f));
-		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
 	}
 
 	@Nullable

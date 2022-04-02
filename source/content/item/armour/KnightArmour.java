@@ -1,19 +1,19 @@
 package net.tslat.aoa3.content.item.armour;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -26,23 +26,23 @@ public class KnightArmour extends AdventArmour {
 	public static final AttributeModifier KNIGHT_CHESTPLATE_BUFF = new AttributeModifier(UUID.fromString("8ecbc122-563a-4de5-8f27-3f461ad2fb5c"), "AoAKnightArmourBody", 1.5d, AttributeModifier.Operation.ADDITION);
 	public static final AttributeModifier KNIGHT_HELMET_BUFF = new AttributeModifier(UUID.fromString("673ef5d8-9df5-4dbb-84f0-1da677d59f05"), "AoAKnightArmourHelmet", 1.5d, AttributeModifier.Operation.ADDITION);
 
-	public KnightArmour(EquipmentSlotType slot) {
+	public KnightArmour(EquipmentSlot slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:knight", 70, new int[] {4, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
 	@Override
-	public AdventArmour.Type setType() {
-		return AdventArmour.Type.KNIGHT;
+	public Type setType() {
+		return Type.KNIGHT;
 	}
 
 	@Override
-	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
+	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
 		if (slots == null && EntityUtil.checkBelowHealthPercentThreshold(plData.player(), 0.2f))
-			plData.player().addEffect(new EffectInstance(Effects.DAMAGE_BOOST, -1, 1, false, true));
+			plData.player().addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, -1, 1, false, true));
 	}
 
 	@Override
-	public void onEquip(ServerPlayerDataManager plData, @Nullable EquipmentSlotType slot) {
+	public void onEquip(ServerPlayerDataManager plData, @Nullable EquipmentSlot slot) {
 		if (slot != null) {
 			switch (slot) {
 				case FEET:
@@ -62,7 +62,7 @@ public class KnightArmour extends AdventArmour {
 	}
 
 	@Override
-	public void onUnequip(ServerPlayerDataManager plData, @Nullable EquipmentSlotType slot) {
+	public void onUnequip(ServerPlayerDataManager plData, @Nullable EquipmentSlot slot) {
 		if (slot != null) {
 			switch (slot) {
 				case FEET:
@@ -82,7 +82,7 @@ public class KnightArmour extends AdventArmour {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.knight_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(setEffectHeader());

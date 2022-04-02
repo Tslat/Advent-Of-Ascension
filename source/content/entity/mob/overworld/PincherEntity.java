@@ -1,18 +1,18 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.GroundPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.movehelper.UnderwaterWalkingMovementController;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
@@ -22,7 +22,7 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class PincherEntity extends AoAWaterMeleeMob {
-	public PincherEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
+	public PincherEntity(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
 
 		this.moveControl = new UnderwaterWalkingMovementController(this);
@@ -30,9 +30,9 @@ public class PincherEntity extends AoAWaterMeleeMob {
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 		if (EntityUtil.isNaturalSpawnReason(reason)) {
-			BlockPos.Mutable spawnPos = new BlockPos.Mutable().set(blockPosition());
+			BlockPos.MutableBlockPos spawnPos = new BlockPos.MutableBlockPos().set(blockPosition());
 
 			while (!world.getBlockState(spawnPos).getMaterial().blocksMotion() && spawnPos.getY() > 0) {
 				spawnPos.move(Direction.DOWN);
@@ -45,13 +45,13 @@ public class PincherEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return sizeIn.height * 0.85f;
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World world) {
-		return new GroundPathNavigator(this, world);
+	protected PathNavigation createNavigation(Level world) {
+		return new GroundPathNavigation(this, world);
 	}
 
 	@Nullable
@@ -71,7 +71,7 @@ public class PincherEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
-	public void travel(Vector3d motion) {
+	public void travel(Vec3 motion) {
 		if (isEffectiveAi() && isInWater()) {
 			moveRelative(0.01F, motion);
 			move(MoverType.SELF, getDeltaMovement());
@@ -92,7 +92,7 @@ public class PincherEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.ARTHROPOD;
+	public MobType getMobType() {
+		return MobType.ARTHROPOD;
 	}
 }

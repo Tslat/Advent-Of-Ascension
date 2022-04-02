@@ -2,16 +2,13 @@ package net.tslat.aoa3.common.registration;
 
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.content.loottable.modifier.*;
 
 import java.util.function.Supplier;
 
 public class AoALootModifiers {
-	public static final DeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.LOOT_MODIFIER_SERIALIZERS, AdventOfAscension.MOD_ID);
+	public static void init() {}
 
 	public static final RegistryObject<GlobalLootModifierSerializer<RollExtraTablesLootModifier>> ROLL_EXTRA_TABLES = registerSerializer("roll_extra_tables", RollExtraTablesLootModifier.Serializer::new);
 	public static final RegistryObject<GlobalLootModifierSerializer<AddItemsLootModifier>> ADD_ITEMS = registerSerializer("add_items", AddItemsLootModifier.Serializer::new);
@@ -21,6 +18,6 @@ public class AoALootModifiers {
 	public static final RegistryObject<GlobalLootModifierSerializer<FertilisedFarmlandLootModifier>> FERTILISED_FARMLAND = registerSerializer("fertilised_farmland", FertilisedFarmlandLootModifier.Serializer::new);
 
 	private static <T extends LootModifier> RegistryObject<GlobalLootModifierSerializer<T>> registerSerializer(String id, Supplier<GlobalLootModifierSerializer<T>> serializer) {
-		return LOOT_MODIFIERS.register(id, serializer);
+		return AoARegistries.LOOT_MODIFIERS.register(id, serializer);
 	}
 }

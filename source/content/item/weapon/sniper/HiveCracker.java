@@ -1,8 +1,8 @@
 package net.tslat.aoa3.content.item.weapon.sniper;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;

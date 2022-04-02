@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
 public class PolymorphShotEntity extends BaseEnergyShot {
-	public PolymorphShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public PolymorphShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public PolymorphShotEntity(World world) {
-		super(AoAEntities.Projectiles.POLYMORPH_SHOT.get(), world);
+	public PolymorphShotEntity(Level world) {
+		super(AoAProjectiles.POLYMORPH_SHOT.get(), world);
 	}
 
 	public PolymorphShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAEntities.Projectiles.POLYMORPH_SHOT.get(), shooter, weapon, maxAge);
+		super(AoAProjectiles.POLYMORPH_SHOT.get(), shooter, weapon, maxAge);
 	}
 
-	public PolymorphShotEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.POLYMORPH_SHOT.get(), world, x, y, z);
+	public PolymorphShotEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.POLYMORPH_SHOT.get(), world, x, y, z);
 	}
 }

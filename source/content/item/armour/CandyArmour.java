@@ -1,33 +1,33 @@
 package net.tslat.aoa3.content.item.armour;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Food;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
 public class CandyArmour extends AdventArmour {
-	public CandyArmour(EquipmentSlotType slot) {
+	public CandyArmour(EquipmentSlot slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:candy", 59, new int[] {4, 7, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
 	@Override
-	public AdventArmour.Type setType() {
-		return AdventArmour.Type.CANDY;
+	public Type setType() {
+		return Type.CANDY;
 	}
 
 	@Override
-	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots) {
+	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
 		if (plData.player().getFoodData().needsFood()) {
 			if (slots == null || plData.equipment().isCooledDown("candy_armour")) {
 				if (findAndConsumeFood(plData.player()))
@@ -36,15 +36,15 @@ public class CandyArmour extends AdventArmour {
 		}
 	}
 
-	private boolean findAndConsumeFood(PlayerEntity player) {
-		for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-			ItemStack stack = player.inventory.getItem(i);
+	private boolean findAndConsumeFood(Player player) {
+		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			ItemStack stack = player.getInventory().getItem(i);
 
 			if (stack.getItem().isEdible()) {
-				Food food = stack.getItem().getFoodProperties();
+				FoodProperties food = stack.getItem().getFoodProperties();
 
 				if (food.getNutrition() > 0 && food.getSaturationModifier() > 0) {
-					player.inventory.setItem(i, stack.getItem().finishUsingItem(stack, player.level, player));
+					player.getInventory().setItem(i, stack.getItem().finishUsingItem(stack, player.level, player));
 
 					return true;
 				}
@@ -55,7 +55,7 @@ public class CandyArmour extends AdventArmour {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.candy_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		tooltip.add(pieceEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.candy_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));

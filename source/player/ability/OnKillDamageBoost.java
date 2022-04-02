@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
@@ -21,11 +21,11 @@ public class OnKillDamageBoost extends AoAAbility.Instance {
 	public OnKillDamageBoost(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.ON_KILL_DAMAGE_BOOST.get(), skill, data);
 
-		this.modifier = JSONUtils.getAsFloat(data, "modifier");
-		this.postKillDuration = JSONUtils.getAsInt(data, "post_kill_ticks");
+		this.modifier = GsonHelper.getAsFloat(data, "modifier");
+		this.postKillDuration = GsonHelper.getAsInt(data, "post_kill_ticks");
 	}
 
-	public OnKillDamageBoost(AoASkill.Instance skill, CompoundNBT data) {
+	public OnKillDamageBoost(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.ON_KILL_DAMAGE_BOOST.get(), skill, data);
 
 		this.modifier = data.getFloat("modifier");
@@ -33,8 +33,8 @@ public class OnKillDamageBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(postKillDuration / 20f, 2)));
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(postKillDuration / 20f, 2)));
 	}
 
 	@Override
@@ -54,8 +54,8 @@ public class OnKillDamageBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			data.putFloat("modifier", this.modifier);

@@ -1,6 +1,6 @@
 package net.tslat.aoa3.client.render.entity.projectile.blasters;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -8,7 +8,7 @@ import net.tslat.aoa3.content.entity.projectile.blaster.ParalyzerShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
 public class ParalyzerShotRenderer extends ParticleProjectileRenderer<ParalyzerShotEntity> {
-	public ParalyzerShotRenderer(final EntityRendererManager manager) {
+	public ParalyzerShotRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 

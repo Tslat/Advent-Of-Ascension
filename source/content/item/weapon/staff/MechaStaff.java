@@ -1,21 +1,21 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.entity.projectile.staff.LyonicShotEntity;
 import net.tslat.aoa3.util.EntityUtil;
@@ -48,7 +48,7 @@ public class MechaStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+	public void cast(Level world, ItemStack staff, LivingEntity caster, Object args) {
 		world.addFreshEntity(new LyonicShotEntity(caster, this, 60));
 	}
 
@@ -56,16 +56,16 @@ public class MechaStaff extends BaseStaff<Object> {
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (target instanceof LivingEntity) {
 			LivingEntity entity = (LivingEntity)target;
-			ModifiableAttributeInstance armour = entity.getAttribute(Attributes.ARMOR);
+			AttributeInstance armour = entity.getAttribute(Attributes.ARMOR);
 
 			if (armour != null && armour.getValue() > 0 && !armour.hasModifier(DEBUFF)) {
 				EntityUtil.applyAttributeModifierSafely(entity, Attributes.ARMOR, DEBUFF, false);
 
 				if (!entity.level.isClientSide) {
-					AxisAlignedBB bounds = entity.getBoundingBox();
+					AABB bounds = entity.getBoundingBox();
 
 					for (int i = 0; i < 8; i++) {
-						((ServerWorld)entity.level).sendParticles(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getBbWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getBbWidth()), 1, 0, 0, 0, 0);
+						((ServerLevel)entity.level).sendParticles(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getBbWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getBbWidth()), 1, 0, 0, 0, 0);
 					}
 				}
 			}
@@ -77,7 +77,7 @@ public class MechaStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

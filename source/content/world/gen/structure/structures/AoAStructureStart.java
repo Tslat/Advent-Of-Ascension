@@ -1,14 +1,15 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.FeatureConfiguration;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
@@ -22,7 +23,7 @@ import net.tslat.aoa3.content.world.gen.structure.JigsawAssembler;
 import java.util.List;
 import java.util.Random;
 
-public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<T> {
+public class AoAStructureStart<T extends FeatureConfiguration> extends StructureStart<T> {
 	public AoAStructureStart(AoAStructureBase<T> structure, int chunkX, int chunkZ, MutableBoundingBox boundingBox, int references, long seed) {
 		super(structure, chunkX, chunkZ, boundingBox, references, seed);
 	}
@@ -50,13 +51,13 @@ public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<
 
 	@Override
 	public void generatePieces(DynamicRegistries dynamicRegistry, ChunkGenerator chunkGenerator, TemplateManager templateManager, int chunkX, int chunkZ, Biome biome, T config) {
-		BlockPos.Mutable chunkCenter = new BlockPos.Mutable((chunkX << 4), 0, (chunkZ << 4));
+		BlockPos.MutableBlockPos chunkCenter = new BlockPos.MutableBlockPos((chunkX << 4), 0, (chunkZ << 4));
 
 		if (checkAndAdjustGeneration(chunkGenerator, chunkCenter, biome, config))
 			generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface(), config);
 	}
 
-	protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, T config) {
+	protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.MutableBlockPos chunkCenter, Biome biome, T config) {
 		return chunkGenerator.getFirstFreeHeight(chunkCenter.getX(), chunkCenter.getZ(), Heightmap.Type.WORLD_SURFACE_WG) > 0;
 	}
 
@@ -91,3 +92,4 @@ public class AoAStructureStart<T extends IFeatureConfig> extends StructureStart<
 
 	protected void doPostPlacementOperations(int maxDepth, ChunkGenerator chunkGenerator, BlockPos originPos, Random rand) {}
 }
+*/

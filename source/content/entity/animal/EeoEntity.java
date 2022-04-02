@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.entity.animal;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.ai.mob.CompletePanicGoal;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.content.entity.mob.haven.SpiritGuardianEntity;
@@ -15,7 +15,7 @@ import net.tslat.aoa3.content.entity.mob.haven.SpiritProtectorEntity;
 import javax.annotation.Nullable;
 
 public class EeoEntity extends AoAAnimal {
-	public EeoEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+	public EeoEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -27,7 +27,7 @@ public class EeoEntity extends AoAAnimal {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.125f;
 	}
 
@@ -61,15 +61,15 @@ public class EeoEntity extends AoAAnimal {
 				return false;
 
 			if (random.nextBoolean()) {
-				SpiritGuardianEntity guardian = new SpiritGuardianEntity(AoAEntities.Mobs.SPIRIT_GUARDIAN.get(), level);
+				SpiritGuardianEntity guardian = new SpiritGuardianEntity(AoAMobs.SPIRIT_GUARDIAN.get(), level);
 
-				guardian.absMoveTo(getX(), getY(), getZ(), yRot, xRot);
+				guardian.absMoveTo(getX(), getY(), getZ(), getYRot(), getXRot());
 				level.addFreshEntity(guardian);
 			}
 			else {
-				SpiritProtectorEntity protector = new SpiritProtectorEntity(AoAEntities.Mobs.SPIRIT_PROTECTOR.get(), level);
+				SpiritProtectorEntity protector = new SpiritProtectorEntity(AoAMobs.SPIRIT_PROTECTOR.get(), level);
 
-				protector.absMoveTo(getX(), getY(), getZ(), yRot, xRot);
+				protector.absMoveTo(getX(), getY(), getZ(), getYRot(), getXRot());
 				level.addFreshEntity(protector);
 			}
 		}

@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class NBTUtil {
-	public static class NBTBuilder<T extends INBT> {
+	public static class NBTBuilder<T extends Tag> {
 		private final T tag;
 		private HashMap<String, NBTBuilder<?>> childTags;
 
@@ -25,44 +25,44 @@ public final class NBTUtil {
 		}
 
 		public NBTBuilder<T> putString(@Nullable String key, String value) {
-			if (tag.getType() == CompoundNBT.TYPE && key != null) {
-				((CompoundNBT)tag).put(key, StringNBT.valueOf(value));
+			if (tag.getType() == CompoundTag.TYPE && key != null) {
+				((CompoundTag)tag).put(key, StringTag.valueOf(value));
 			}
-			else if (tag.getType() == ListNBT.TYPE) {
-				((ListNBT)tag).add(StringNBT.valueOf(value));
+			else if (tag.getType() == ListTag.TYPE) {
+				((ListTag)tag).add(StringTag.valueOf(value));
 			}
 
 			return this;
 		}
 
 		public NBTBuilder<T> putInteger(@Nullable String key, int value) {
-			if (tag.getType() == CompoundNBT.TYPE && key != null) {
-				((CompoundNBT)tag).put(key, IntNBT.valueOf(value));
+			if (tag.getType() == CompoundTag.TYPE && key != null) {
+				((CompoundTag)tag).put(key, IntTag.valueOf(value));
 			}
-			else if (tag.getType() == ListNBT.TYPE) {
-				((ListNBT)tag).add(IntNBT.valueOf(value));
+			else if (tag.getType() == ListTag.TYPE) {
+				((ListTag)tag).add(IntTag.valueOf(value));
 			}
 
 			return this;
 		}
 
 		public NBTBuilder<T> putFloat(@Nullable String key, float value) {
-			if (tag.getType() == CompoundNBT.TYPE && key != null) {
-				((CompoundNBT)tag).put(key, FloatNBT.valueOf(value));
+			if (tag.getType() == CompoundTag.TYPE && key != null) {
+				((CompoundTag)tag).put(key, FloatTag.valueOf(value));
 			}
-			else if (tag.getType() == ListNBT.TYPE) {
-				((ListNBT)tag).add(FloatNBT.valueOf(value));
+			else if (tag.getType() == ListTag.TYPE) {
+				((ListTag)tag).add(FloatTag.valueOf(value));
 			}
 
 			return this;
 		}
 
 		public NBTBuilder<T> putLong(@Nullable String key, long value) {
-			if (tag.getType() == CompoundNBT.TYPE && key != null) {
-				((CompoundNBT)tag).put(key, LongNBT.valueOf(value));
+			if (tag.getType() == CompoundTag.TYPE && key != null) {
+				((CompoundTag)tag).put(key, LongTag.valueOf(value));
 			}
-			else if (tag.getType() == ListNBT.TYPE) {
-				((ListNBT)tag).add(LongNBT.valueOf(value));
+			else if (tag.getType() == ListTag.TYPE) {
+				((ListTag)tag).add(LongTag.valueOf(value));
 			}
 
 			return this;
@@ -70,14 +70,14 @@ public final class NBTUtil {
 
 		public T build() {
 			if (childTags != null && !childTags.isEmpty()) {
-				if (tag.getType() == CompoundNBT.TYPE) {
+				if (tag.getType() == CompoundTag.TYPE) {
 					Map.Entry<String, NBTBuilder<?>> firstEntry = childTags.entrySet().stream().findFirst().get();
 
-					((CompoundNBT)tag).put(firstEntry.getKey(), firstEntry.getValue().build());
+					((CompoundTag)tag).put(firstEntry.getKey(), firstEntry.getValue().build());
 				}
-				else if (tag.getType() == ListNBT.TYPE) {
+				else if (tag.getType() == ListTag.TYPE) {
 					for (Map.Entry<String, NBTBuilder<?>> childEntry : childTags.entrySet()) {
-						((ListNBT)tag).add(childEntry.getValue().build());
+						((ListTag)tag).add(childEntry.getValue().build());
 					}
 				}
 			}

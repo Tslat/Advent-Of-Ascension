@@ -1,7 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.gen.feature.WorldDecoratingHelper;
 import net.minecraft.world.gen.placement.Placement;
 import net.tslat.aoa3.content.world.gen.feature.placement.config.IntRangeConfig;
@@ -22,3 +23,4 @@ public class NTimesPlacement extends Placement<IntRangeConfig> {
 		return IntStream.range(0, amount).mapToObj(count -> pos);
 	}
 }
+*/

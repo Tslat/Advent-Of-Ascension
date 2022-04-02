@@ -1,22 +1,22 @@
 package net.tslat.aoa3.integration.crafttweaker.recipes;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
-import com.blamejared.crafttweaker.api.item.IIngredient;
+import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
+import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.blamejared.crafttweaker.api.managers.IRecipeManager;
-import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
+import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import org.apache.logging.log4j.Level;
 import org.openzen.zencode.java.ZenCodeType;
 
@@ -77,7 +77,7 @@ public class CTInfusionRecipeManager implements IRecipeManager {
 	}
 
 	@Override
-	public IRecipeType<InfusionRecipe> getRecipeType() {
+	public RecipeType<InfusionRecipe> getRecipeType() {
 		return AoARecipes.INFUSION.getA();
 	}
 }

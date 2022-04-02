@@ -1,28 +1,28 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.WeightedSpawnerEntity;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.SpawnData;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.registries.RegistryObject;
 
-import java.util.ArrayList;
+import javax.annotation.Nullable;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
@@ -31,38 +31,18 @@ public final class BlockUtil {
 	public static final float UNBREAKABLE_RESISTANCE = 999999999f;
 
 	public static class CompactProperties {
-		private final AbstractBlock.Properties properties;
+		private final Block.Properties properties;
 
 		public CompactProperties(Material material, Function<BlockState, MaterialColor> mapColours) {
-			this.properties = AbstractBlock.Properties.of(material, mapColours).sound(approximateSound(material));
+			this.properties = Block.Properties.of(material, mapColours).sound(approximateSound(material));
 		}
 
 		public CompactProperties(Material material, MaterialColor mapColour) {
 			this(material, state -> mapColour);
 		}
 
-		public CompactProperties harvestTool(ToolType tool, int harvestLevel) {
-			harvestTool(tool);
-			this.properties.harvestLevel(harvestLevel);
-
-			return this;
-		}
-
-		public CompactProperties harvestTool(ToolType tool) {
-			tool(tool);
+		public CompactProperties needsTool() {
 			this.properties.requiresCorrectToolForDrops();
-
-			return this;
-		}
-
-		public CompactProperties tool(ToolType tool) {
-			this.properties.harvestTool(tool);
-
-			return this;
-		}
-
-		public CompactProperties harvestLevel(int level) {
-			this.properties.harvestLevel(level);
 
 			return this;
 		}
@@ -127,7 +107,7 @@ public final class BlockUtil {
 			return emissive((state, world, pos) -> true);
 		}
 
-		public CompactProperties emissive(AbstractBlock.IPositionPredicate when) {
+		public CompactProperties emissive(BlockBehaviour.StatePredicate when) {
 			this.properties.emissiveRendering(when);
 
 			return this;
@@ -137,7 +117,7 @@ public final class BlockUtil {
 			return renderAdjust((state, world, pos) -> true);
 		}
 
-		public CompactProperties renderAdjust(AbstractBlock.IPositionPredicate when) {
+		public CompactProperties renderAdjust(BlockBehaviour.StatePredicate when) {
 			this.properties.hasPostProcess(when);
 
 			return this;
@@ -174,7 +154,7 @@ public final class BlockUtil {
 			return this;
 		}
 
-		public CompactProperties coversScreen(AbstractBlock.IPositionPredicate when) {
+		public CompactProperties coversScreen(BlockBehaviour.StatePredicate when) {
 			this.properties.isViewBlocking(when);
 
 			return this;
@@ -184,7 +164,7 @@ public final class BlockUtil {
 			return conductRedstone((state, world, pos) -> false);
 		}
 
-		public CompactProperties conductRedstone(AbstractBlock.IPositionPredicate when) {
+		public CompactProperties conductRedstone(BlockBehaviour.StatePredicate when) {
 			this.properties.isRedstoneConductor(when);
 
 			return this;
@@ -194,7 +174,7 @@ public final class BlockUtil {
 			return specialSpawns((state, world, pos, entityType) -> false);
 		}
 
-		public CompactProperties specialSpawns(AbstractBlock.IExtendedPositionPredicate<EntityType<?>> when) {
+		public CompactProperties specialSpawns(BlockBehaviour.StateArgumentPredicate<EntityType<?>> when) {
 			this.properties.isValidSpawn(when);
 
 			return this;
@@ -204,13 +184,13 @@ public final class BlockUtil {
 			return suffocate((state, world, pos) -> false);
 		}
 
-		public CompactProperties suffocate(AbstractBlock.IPositionPredicate when) {
+		public CompactProperties suffocate(BlockBehaviour.StatePredicate when) {
 			this.properties.isSuffocating(when);
 
 			return this;
 		}
 
-		public AbstractBlock.Properties get() {
+		public Block.Properties get() {
 			return this.properties;
 		}
 
@@ -245,13 +225,13 @@ public final class BlockUtil {
 		}
 	}
 
-	public static Vector3d posToVec(BlockPos pos) {
-		return new Vector3d(pos.getX(), pos.getY(), pos.getZ());
+	public static Vec3 posToVec(BlockPos pos) {
+		return new Vec3(pos.getX(), pos.getY(), pos.getZ());
 	}
 
-	public static boolean isBlockTaggedAs(Block block, ITag<Block>... tags) {
-		for (ITag<Block> tag : tags) {
-			if (block.is(tag))
+	public static boolean isBlockTaggedAs(Block block, TagKey<Block>... tags) {
+		for (TagKey<Block> tag : tags) {
+			if (block.builtInRegistryHolder().is(tag))
 				return true;
 		}
 
@@ -272,8 +252,8 @@ public final class BlockUtil {
 		private short requiredPlayerRange = 16;
 		private short spawnRange = 4;
 
-		private WeightedSpawnerEntity nextSpawn = null;
-		private final ArrayList<WeightedSpawnerEntity> mobs = new ArrayList<WeightedSpawnerEntity>(1);
+		private SpawnData nextSpawn = null;
+		private final SimpleWeightedRandomList.Builder<SpawnData> mobs = SimpleWeightedRandomList.builder();
 
 		public SpawnerBuilder initialSpawnDelay(int ticks) {
 			this.initialSpawnDelay = (short)ticks;
@@ -334,27 +314,31 @@ public final class BlockUtil {
 		}
 
 		public SpawnerBuilder withSpawn(int weight, EntityType<?> entity) {
-			CompoundNBT tag = new CompoundNBT();
+			return withSpawn(weight, entity, null);
+		}
+
+		public SpawnerBuilder withSpawn(int weight, EntityType<?> entity, SpawnData.CustomSpawnRules spawnRules) {
+			CompoundTag tag = new CompoundTag();
 
 			tag.putString("id", entity.getRegistryName().toString());
 
-			return withSpawn(weight, tag);
+			return withSpawn(weight, tag, spawnRules);
 		}
 
-		public SpawnerBuilder withSpawn(int weight, CompoundNBT nbt) {
+		public SpawnerBuilder withSpawn(int weight, CompoundTag nbt, @Nullable SpawnData.CustomSpawnRules spawnRules) {
 			if (this.nextSpawn == null) {
-				this.nextSpawn = new WeightedSpawnerEntity(weight, nbt);
+				this.nextSpawn = new SpawnData(nbt, (spawnRules == null ? Optional.empty() : Optional.of(spawnRules)));
 
 				return this;
 			}
 
-			this.mobs.add(new WeightedSpawnerEntity(weight, nbt));
+			this.mobs.add(new SpawnData(nbt, (spawnRules == null ? Optional.empty() : Optional.of(spawnRules))), weight);
 
 			return this;
 		}
 
-		public CompoundNBT build() {
-			CompoundNBT nbt = new CompoundNBT();
+		public CompoundTag build() {
+			CompoundTag nbt = new CompoundTag();
 
 			if (nextSpawn == null)
 				throw new IllegalStateException("Attempted to create spawner data with no mobs listed.");
@@ -366,39 +350,21 @@ public final class BlockUtil {
 			nbt.putShort("MaxNearbyEntities", this.maxNearbyEntities);
 			nbt.putShort("RequiredPlayerRange", this.requiredPlayerRange);
 			nbt.putShort("SpawnRange", this.spawnRange);
-			nbt.put("SpawnData", this.nextSpawn.getTag().copy());
-
-			ListNBT mobs = new ListNBT();
-
-			if (this.mobs.isEmpty()) {
-				mobs.add(this.nextSpawn.save());
-			}
-			else {
-				for (WeightedSpawnerEntity entry : this.mobs) {
-					mobs.add(entry.save());
-				}
-			}
-			nbt.put("SpawnPotentials", mobs);
+			nbt.put("SpawnData", SpawnData.CODEC.encodeStart(NbtOps.INSTANCE, this.nextSpawn).result().orElseThrow(() -> new IllegalStateException("Invalid SpawnData")));
+			nbt.put("SpawnPotentials", SpawnData.LIST_CODEC.encodeStart(NbtOps.INSTANCE, this.mobs.build()).result().orElseThrow());
 
 			return nbt;
 		}
 	}
 
 	public static VoxelShape pixelBasedCube(int minPixelX, int minPixelY, int minPixelZ, int maxPixelX, int maxPixelY, int maxPixelZ) {
-		return VoxelShapes.create(new AxisAlignedBB(minPixelX / 16d, minPixelY / 16d, minPixelZ / 16d, maxPixelX / 16d, maxPixelY / 16d, maxPixelZ / 16d));
+		return Shapes.create(new AABB(minPixelX / 16d, minPixelY / 16d, minPixelZ / 16d, maxPixelX / 16d, maxPixelY / 16d, maxPixelZ / 16d));
 	}
 
-	public static boolean canPlayerHarvest(BlockState state, PlayerEntity player, IBlockReader world, BlockPos pos) {
+	public static boolean canPlayerHarvest(BlockState state, Player player, LevelAccessor world, BlockPos pos) {
 		if (!state.requiresCorrectToolForDrops())
 			return true;
 
-		ItemStack toolStack = player.getMainHandItem();
-		ToolType harvestTool = state.getHarvestTool();
-		int toolLevel = toolStack.getHarvestLevel(harvestTool, player, state);
-
-		if (toolStack.isEmpty() || harvestTool == null || toolLevel < 0)
-			return player.inventory.getSelected().isCorrectToolForDrops(state);
-
-		return toolLevel >= state.getHarvestLevel();
+		return player.getMainHandItem().isCorrectToolForDrops(state);
 	}
 }

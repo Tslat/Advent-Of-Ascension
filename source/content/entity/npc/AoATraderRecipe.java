@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.entity.npc;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.MerchantOffer;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.MerchantOffer;
 
 public class AoATraderRecipe extends MerchantOffer {
-	public AoATraderRecipe(CompoundNBT tagCompound) {
+	public AoATraderRecipe(CompoundTag tagCompound) {
 		super(tagCompound);
 	}
 

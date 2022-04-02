@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.mob;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 
 public class GreenGuardianShotEntity extends BaseMobProjectile {
-	public GreenGuardianShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public GreenGuardianShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public GreenGuardianShotEntity(World world) {
-		super(AoAEntities.Projectiles.GREEN_GUARDIAN_SHOT.get(), world);
+	public GreenGuardianShotEntity(Level world) {
+		super(AoAProjectiles.GREEN_GUARDIAN_SHOT.get(), world);
 	}
 
 	public GreenGuardianShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.GREEN_GUARDIAN_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.GREEN_GUARDIAN_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override

@@ -1,9 +1,10 @@
 package net.tslat.aoa3.client.render.custom;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -14,11 +15,12 @@ import javax.annotation.Nullable;
 public interface AoAResourceRenderer {
 	AoAResourceRenderer DEFAULT = new AoAResourceRenderer() {};
 
-	default void renderInHud(MatrixStack matrix, AoAResource.Instance resource, float partialTicks, @Nullable String valueOverride) {
+	default void renderInHud(PoseStack matrix, AoAResource.Instance resource, float partialTicks, @Nullable String valueOverride) {
 		matrix.pushPose();
 		matrix.scale(0.5f, 0.5f, 0);
-		RenderSystem.color4f(1, 1, 1, 1);
-		Minecraft.getInstance().getTextureManager().bind(new ResourceLocation(resource.type().getRegistryName().getNamespace(), "textures/gui/aoaresource/" + resource.type().getRegistryName().getPath() + ".png"));
+		RenderSystem.setShaderColor(1, 1, 1, 1);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderTexture(0, new ResourceLocation(resource.type().getRegistryName().getNamespace(), "textures/gui/aoaresource/" + resource.type().getRegistryName().getPath() + ".png"));
 
 		int renderWidth = hudRenderWidth(resource) * 2;
 		int renderHeight = hudRenderHeight(resource) * 2;
@@ -47,7 +49,7 @@ public interface AoAResourceRenderer {
 		RenderUtil.drawCenteredScaledString(matrix, Minecraft.getInstance().font, value, 26, 29, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 		matrix.popPose();
 	}
-	default void renderInGui(MatrixStack matrix, AoAResource.Instance resource, float partialTicks, int mouseX, int mouseY) {};
+	default void renderInGui(PoseStack matrix, AoAResource.Instance resource, float partialTicks, int mouseX, int mouseY) {};
 
 	default int hudRenderWidth(AoAResource.Instance resource) {
 		return 25;

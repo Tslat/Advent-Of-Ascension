@@ -1,6 +1,6 @@
 package net.tslat.aoa3.client.render.entity.projectile.mob;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -8,7 +8,7 @@ import net.tslat.aoa3.content.entity.projectile.mob.ShyreBeamEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
 public class ShyreBeamRenderer extends ParticleProjectileRenderer<ShyreBeamEntity> {
-	public ShyreBeamRenderer(final EntityRendererManager manager) {
+	public ShyreBeamRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 

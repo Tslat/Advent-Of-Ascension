@@ -1,30 +1,31 @@
+/*
 package net.tslat.aoa3.content.entity.projectile.mob;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.level.Level;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.boss.CorallusEntity;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class CorallusShotEntity extends FlyingEntity {
+public class CorallusShotEntity extends FlyingMob {
 	private final CorallusEntity corallus;
 	private final LivingEntity target;
 	private final float dmg;
 
 	public CorallusShotEntity(CorallusEntity corallus, LivingEntity target, int dmg) {
-		super(AoAEntities.Projectiles.CORALLUS_SHOT.get(), corallus.level);
+		super(AoAProjectiles.CORALLUS_SHOT.get(), corallus.level);
 		this.corallus = corallus;
 		this.target = target;
 		this.dmg = dmg;
@@ -32,7 +33,7 @@ public class CorallusShotEntity extends FlyingEntity {
 		setNoGravity(true);
 	}
 
-	public CorallusShotEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public CorallusShotEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 		corallus = null;
 		target = null;
@@ -50,7 +51,7 @@ public class CorallusShotEntity extends FlyingEntity {
 	}
 
 	@Override
-	protected boolean isMovementNoisy() {
+	protected Entity.MovementEmission getMovementEmission() {
 		return false;
 	}
 
@@ -164,12 +165,12 @@ public class CorallusShotEntity extends FlyingEntity {
 				final double distanceZ = this.shot.target.getZ() - shot.getZ();
 
 				if (Math.signum(distanceX) != 0 || Math.signum(distanceY) != 0 || Math.signum(distanceZ) != 0) {
-					Vector3d motion = shot.getDeltaMovement();
+					Vec3 motion = shot.getDeltaMovement();
 
 					shot.setDeltaMovement(motion.add((Math.signum(distanceX) * 0.3 - motion.x()) * 0.10000000149011612, (Math.signum(distanceY) * 0.3 - motion.y()) * 0.10000000149011612, (Math.signum(distanceZ) * 0.3 -motion.z()) * 0.10000000149011612));
-					shot.yRot += MathHelper.wrapDegrees(((float)(Math.atan2(shot.getDeltaMovement().z(), shot.getDeltaMovement().x()) * 180.0 / 3.141592653589793) - 90.0f) - this.shot.yRot);
+					shot.getYRot() += Mth.wrapDegrees(((float)(Math.atan2(shot.getDeltaMovement().z(), shot.getDeltaMovement().x()) * 180.0 / 3.141592653589793) - 90.0f) - this.shot.getYRot());
 				}
 			}
 		}
 	}
-}
+}*/

@@ -1,21 +1,19 @@
 package net.tslat.aoa3.content.item.misc.summoning;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.content.entity.misc.GyrocopterEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -28,29 +26,29 @@ public class ToyGyrocopter extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (world.getDifficulty() != Difficulty.PEACEFUL) {
-			if (!world.isClientSide) {
+			/*if (!world.isClientSide) {
 				world.addFreshEntity(new GyrocopterEntity(player));
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.GYRO.get().getDescriptionId() + ".spawn", player.getDisplayName()), world, player.blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.GYRO.get().getDescriptionId() + ".spawn", player.getDisplayName()), world, player.blockPosition(), 50);
 
 				if (!player.isCreative())
 					player.getItemInHand(hand).shrink(1);
-			}
+			}*/
 
-			return ActionResult.success(heldItem);
+			return InteractionResultHolder.success(heldItem);
 		}
-		else if (player instanceof ServerPlayerEntity) {
-			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail").withStyle(TextFormatting.RED));
+		else if (player instanceof ServerPlayer) {
+			PlayerUtil.notifyPlayer((ServerPlayer)player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
 		}
 
-		return ActionResult.fail(heldItem);
+		return InteractionResultHolder.fail(heldItem);
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

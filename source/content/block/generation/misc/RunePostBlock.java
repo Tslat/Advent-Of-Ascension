@@ -1,20 +1,20 @@
 package net.tslat.aoa3.content.block.generation.misc;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.content.item.misc.RuneSource;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.scheduling.sync.RuneCreationTask;
@@ -36,27 +36,27 @@ public class RunePostBlock extends Block {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World level, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (heldItem.getItem() instanceof RuneSource) {
 			if (level.getBlockState(pos.above()).getMaterial().blocksMotion()) {
 				if (!level.isClientSide())
-					player.sendMessage(new TranslationTextComponent("message.feedback.runeShrine.blocked"), Util.NIL_UUID);
+					player.sendMessage(new TranslatableComponent("message.feedback.runeShrine.blocked"), Util.NIL_UUID);
 
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 			}
 
 			if (!level.isClientSide()) {
-				AoAScheduler.scheduleSyncronisedTask(new RuneCreationTask((ServerWorld)level, pos, getRune(), heldItem.getCount() * ((RuneSource)heldItem.getItem()).getRuneGenFactor(), player.getUUID()), 1);
+				AoAScheduler.scheduleSyncronisedTask(new RuneCreationTask((ServerLevel)level, pos, getRune(), heldItem.getCount() * ((RuneSource)heldItem.getItem()).getRuneGenFactor(), player.getUUID()), 1);
 
 				if (!player.isCreative())
 					heldItem.shrink(heldItem.getCount());
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 }

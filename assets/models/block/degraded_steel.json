@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "particle": "aoa3:block/degraded_steel",
     "all": "aoa3:block/degraded_steel"
   }
 }

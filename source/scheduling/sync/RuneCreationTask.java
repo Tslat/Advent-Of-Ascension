@@ -1,18 +1,18 @@
 package net.tslat.aoa3.scheduling.sync;
 
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.UUID;
 
 public class RuneCreationTask implements Runnable {
-	private final ServerWorld level;
+	private final ServerLevel level;
 	private final BlockPos pos;
 	private final Item rune;
 	private final int count;
@@ -20,7 +20,7 @@ public class RuneCreationTask implements Runnable {
 
 	private int ticker;
 
-	public RuneCreationTask(ServerWorld level, BlockPos pos, Item rune, int count, UUID owner) {
+	public RuneCreationTask(ServerLevel level, BlockPos pos, Item rune, int count, UUID owner) {
 		this.level = level;
 		this.pos = pos;
 		this.rune = rune;
@@ -40,13 +40,12 @@ public class RuneCreationTask implements Runnable {
 		}
 		else {
 			for (int spawned = 0; spawned < count;) {
-				ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 1.85f, pos.getZ() + 0.5f);
+				ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 1.85f, pos.getZ() + 0.5f, new ItemStack(rune, Math.min(64, count)));
 
 				entity.setDeltaMovement(0, 0, 0);
 				entity.setOwner(this.owner);
 				entity.setNoPickUpDelay();
 				entity.setNoGravity(true);
-				entity.setItem(new ItemStack(rune, Math.min(64, count)));
 				level.addFreshEntity(entity);
 
 				spawned += entity.getItem().getCount();

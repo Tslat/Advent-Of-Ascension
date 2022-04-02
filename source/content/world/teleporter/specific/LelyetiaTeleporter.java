@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.world.teleporter.specific;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.AoATeleporter;
 
 import java.util.HashMap;
@@ -29,12 +29,12 @@ public class LelyetiaTeleporter extends AoATeleporter {
 	}
 
 	@Override
-	public BlockPos findExistingPortal(World world, Entity entity) {
+	public BlockPos findExistingPortal(Level world, Entity entity) {
 		return super.findExistingPortal(world, entity);
 	}
 
 	@Override
-	public BlockPos findSuitablePortalLocation(World world, Entity entity) {
+	public BlockPos findSuitablePortalLocation(Level world, Entity entity) {
 		return super.findSuitablePortalLocation(world, entity);
 	}
 }

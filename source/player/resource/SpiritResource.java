@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.resource;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
 import net.minecraftforge.event.TickEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -21,12 +21,12 @@ public class SpiritResource extends AoAResource.Instance {
 	public SpiritResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.SPIRIT.get(), plData);
 
-		this.maxValue = Math.max(0, JSONUtils.getAsFloat(jsonData, "max_value"));
-		this.rechargeDelay = JSONUtils.getAsInt(jsonData, "recharge_delay");
-		this.regenAmount = JSONUtils.getAsFloat(jsonData, "regen_per_tick");
+		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value"));
+		this.rechargeDelay = GsonHelper.getAsInt(jsonData, "recharge_delay");
+		this.regenAmount = GsonHelper.getAsFloat(jsonData, "regen_per_tick");
 	}
 
-	public SpiritResource(CompoundNBT nbtData) {
+	public SpiritResource(CompoundTag nbtData) {
 		super(AoAResources.SPIRIT.get(), null);
 
 		this.maxValue = nbtData.getFloat("max_value");
@@ -58,7 +58,7 @@ public class SpiritResource extends AoAResource.Instance {
 
 	@Override
 	public void setValue(float amount) {
-		this.value = MathHelper.clamp(amount, 0, getMaxValue());
+		this.value = Mth.clamp(amount, 0, getMaxValue());
 	}
 
 	@Override
@@ -79,13 +79,13 @@ public class SpiritResource extends AoAResource.Instance {
 
 	@Nonnull
 	@Override
-	public CompoundNBT saveToNbt() {
-		return new CompoundNBT();
+	public CompoundTag saveToNbt() {
+		return new CompoundTag();
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = new CompoundNBT();
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = new CompoundTag();
 
 		if (forClientSetup) {
 			data.putFloat("max_value", getMaxValue());
@@ -100,7 +100,7 @@ public class SpiritResource extends AoAResource.Instance {
 	}
 
 	@Override
-	public void receiveSyncData(CompoundNBT data) {
+	public void receiveSyncData(CompoundTag data) {
 		if (data.contains("value"))
 			this.value = data.getFloat("value");
 	}

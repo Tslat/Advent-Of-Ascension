@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.animal;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 
 import javax.annotation.Nullable;
 
 public class PeppermintSnailEntity extends AoAAnimal {
-	public PeppermintSnailEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+	public PeppermintSnailEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.3125f;
 	}
 

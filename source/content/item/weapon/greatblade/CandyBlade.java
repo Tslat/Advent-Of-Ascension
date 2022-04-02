@@ -1,18 +1,18 @@
 package net.tslat.aoa3.content.item.weapon.greatblade;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -23,8 +23,8 @@ public class CandyBlade extends BaseGreatblade {
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.EAT;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.EAT;
 	}
 
 	@Override
@@ -33,33 +33,33 @@ public class CandyBlade extends BaseGreatblade {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (player.canEat(false)) {
 			player.startUsingItem(hand);
 
-			return ActionResult.success(stack);
+			return InteractionResultHolder.success(stack);
 		}
 
-		return ActionResult.fail(stack);
+		return InteractionResultHolder.fail(stack);
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
-		if (entity instanceof PlayerEntity) {
-			PlayerEntity pl = (PlayerEntity)entity;
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
+		if (entity instanceof Player) {
+			Player pl = (Player)entity;
 			int foodHealAmount = Math.min(20 - pl.getFoodData().getFoodLevel(), stack.getMaxDamage() - stack.getDamageValue());
 
 			pl.getFoodData().eat(foodHealAmount, 20f);
-			ItemUtil.damageItem(stack, entity, foodHealAmount * 4, pl.getUsedItemHand() == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND);
+			ItemUtil.damageItem(stack, entity, foodHealAmount * 4, pl.getUsedItemHand() == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 		}
 
 		return stack;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -1,11 +1,11 @@
 package net.tslat.aoa3.event;
 
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.boss.WitherEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -15,8 +15,8 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -34,7 +34,7 @@ public final class EntityEvents {
 
 	private static void onEntityUpdate(LivingEvent.LivingUpdateEvent ev) {
 		if (ev.getEntityLiving().level.isClientSide && AoAConfig.CLIENT.partyDeaths.get() && ev.getEntityLiving().deathTime >= 19) {
-			AxisAlignedBB boundingBox = ev.getEntity().getBoundingBox();
+			AABB boundingBox = ev.getEntity().getBoundingBox();
 			double width = boundingBox.maxX - boundingBox.minX;
 			double depth = boundingBox.maxZ - boundingBox.minZ;
 			double height = boundingBox.maxY - boundingBox.minY;
@@ -47,8 +47,8 @@ public final class EntityEvents {
 
 	private static void onEntityJoinWorld(EntityJoinWorldEvent ev) {
 		if (!ev.getWorld().isClientSide && WorldUtil.isWorld(ev.getWorld(), AoADimensions.NETHER.key)) {
-			if (ev.getEntity() instanceof WitherEntity && ((WitherEntity)ev.getEntity()).getInvulnerableTicks() == 220) {
-				for (PlayerEntity pl : ev.getWorld().getEntitiesOfClass(PlayerEntity.class, ev.getEntity().getBoundingBox().inflate(50))) {
+			if (ev.getEntity() instanceof WitherBoss && ((WitherBoss)ev.getEntity()).getInvulnerableTicks() == 220) {
+				for (Player pl : ev.getWorld().getEntitiesOfClass(Player.class, ev.getEntity().getBoundingBox().inflate(50))) {
 					if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.ABYSS_REALMSTONE.get()));
 				}
@@ -57,7 +57,7 @@ public final class EntityEvents {
 	}
 
 	private static void onEntitySpawn(final LivingSpawnEvent.SpecialSpawn ev) {
-		if (ev.getSpawnReason() == SpawnReason.SPAWNER)
+		if (ev.getSpawnReason() == MobSpawnType.SPAWNER)
 			ev.getEntity().getPersistentData().putBoolean("spawned_by_spawner", true);
 	}
 

@@ -1,26 +1,30 @@
 package net.tslat.aoa3.content.entity.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.SwimmerPathNavigator;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAEntityData;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
@@ -32,10 +36,10 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRangedAttackMob, AoARangedAttacker, IMob, IAnimatable {
+public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAttackMob, AoARangedAttacker, Enemy, IAnimatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 
-	protected AoAWaterRangedMob(EntityType<? extends WaterMobEntity> entityType, World world) {
+	protected AoAWaterRangedMob(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
 
 		this.moveControl = new RoamingSwimmingMovementController(this);
@@ -44,27 +48,27 @@ public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRange
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 20, 40, 32));
-		goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 6));
+		goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 6));
 		goalSelector.addGoal(6, new RandomSwimmingGoal(this, 1, 30));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World world) {
-		return new SwimmerPathNavigator(this, world);
+	protected PathNavigation createNavigation(Level world) {
+		return new WaterBoundPathNavigation(this, world);
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 		xpReward = (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()) * 2) / 10f);
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Override
-	protected abstract float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn);
+	protected abstract float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn);
 
 	@Nullable
 	@Override
@@ -91,7 +95,7 @@ public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRange
 	protected void onHit(DamageSource source, float amount) {}
 
 	@Override
-	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
+	public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) {
 		return AoAEntityData.SpawnConditions.DAYLIGHT_MOBS.contains(getType()) ? 1 : super.getWalkTargetValue(pos, worldIn);
 	}
 
@@ -119,23 +123,12 @@ public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRange
 
 	@Override
 	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
-		boolean success;
-
-		switch (projectile.getProjectileType()) {
-			case MAGIC:
-				success = DamageUtil.dealMagicDamage(projectile, this, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()), false);
-				break;
-			case GUN:
-				success = DamageUtil.dealGunDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
-				break;
-			case PHYSICAL:
-				success = DamageUtil.dealRangedDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
-				break;
-			case OTHER:
-			default:
-				success = target.hurt(DamageSource.indirectMobAttack(projectile, this), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
-				break;
-		}
+		boolean success = switch (projectile.getProjectileType()) {
+			case MAGIC -> DamageUtil.dealMagicDamage(projectile, this, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()), false);
+			case GUN -> DamageUtil.dealGunDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
+			case PHYSICAL -> DamageUtil.dealRangedDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
+			default -> target.hurt(DamageSource.indirectMobAttack(projectile, this), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
+		};
 
 		if (success)
 			doProjectileImpactEffect(projectile, target);
@@ -154,10 +147,10 @@ public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRange
 		double distanceFactorX = target.getX() - getX();
 		double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - projectile.getY();
 		double distanceFactorZ = target.getZ() - getZ();
-		double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
+		double hyp = Math.sqrt((distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ)) + 0.2D;
 
 		if (getShootSound() != null)
-			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
 		projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - level.getDifficulty().getId()));
 		level.addFreshEntity(projectile);
@@ -171,7 +164,7 @@ public abstract class AoAWaterRangedMob extends WaterMobEntity implements IRange
 	}
 
 	@Override
-	public void travel(Vector3d motion) {
+	public void travel(Vec3 motion) {
 		if (isEffectiveAi() && isInWater()) {
 			move(MoverType.SELF, getDeltaMovement());
 			setDeltaMovement(getDeltaMovement().scale(0.9D));

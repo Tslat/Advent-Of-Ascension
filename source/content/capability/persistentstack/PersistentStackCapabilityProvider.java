@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.capability.persistentstack;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.FloatNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -14,11 +14,9 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class PersistentStackCapabilityProvider implements ICapabilitySerializable<FloatNBT> {
+public class PersistentStackCapabilityProvider implements ICapabilitySerializable<FloatTag> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "persistent_stack");
-	@CapabilityInject(PersistentStackCapabilityHandles.class)
-	public static final Capability<PersistentStackCapabilityHandles> INSTANCE = null;
-
+	public static final Capability<PersistentStackCapabilityHandles> CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {});
 	private final LazyOptional<PersistentStackCapability> implContainer = LazyOptional.of(PersistentStackCapability::new);
 	private final Direction dir;
 
@@ -29,24 +27,23 @@ public class PersistentStackCapabilityProvider implements ICapabilitySerializabl
 	@Nonnull
 	@Override
 	public <T> LazyOptional<T> getCapability(@Nonnull Capability<T> cap, @Nullable Direction side) {
-		return INSTANCE == cap ? implContainer.cast() : LazyOptional.empty();
+		return CAPABILITY == cap && dir == side ? implContainer.cast() : LazyOptional.empty();
 	}
 
 	@Override
-	public FloatNBT serializeNBT() {
-		return (FloatNBT)INSTANCE.writeNBT(implContainer.orElse(new PersistentStackCapability()), dir);
+	public FloatTag serializeNBT() {
+		if (!implContainer.isPresent())
+			return FloatTag.ZERO;
+
+		return implContainer.resolve().get().serializeNBT();
 	}
 
 	@Override
-	public void deserializeNBT(FloatNBT nbt) {
-		INSTANCE.readNBT(implContainer.orElse(new PersistentStackCapability()), dir, nbt);
+	public void deserializeNBT(FloatTag nbt) {
+		implContainer.ifPresent(cap -> cap.deserializeNBT(nbt));
 	}
 
 	public static PersistentStackCapabilityHandles getOrDefault(ItemStack stack, Direction side) {
-		return stack.getCapability(INSTANCE, side).orElse(new PersistentStackCapability());
-	}
-
-	public static void register() {
-		CapabilityManager.INSTANCE.register(PersistentStackCapabilityHandles.class, new PersistentStackStorage(() -> INSTANCE), PersistentStackCapability::new);
+		return stack.getCapability(CAPABILITY, side).orElse(new PersistentStackCapability());
 	}
 }

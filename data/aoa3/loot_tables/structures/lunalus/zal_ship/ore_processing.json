@@ -2,7 +2,12 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 10,
+      "rolls": 10.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": -1.0,
+        "max": 1.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
@@ -16,10 +21,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 3.0,
-                "max": 20.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 20.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:coal"
@@ -31,10 +37,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:coal_ore"
@@ -46,10 +53,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:iron_ore"
@@ -61,10 +69,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 8.0,
-                "max": 40.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 40.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:iron_nugget"
@@ -76,10 +85,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 6.0,
-                "max": 35.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 35.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:lapis_lazuli"
@@ -91,10 +101,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:lapis_ore"
@@ -107,10 +118,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 2.0,
-                "max": 12.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 12.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:diamond"
@@ -123,10 +135,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:diamond_ore"
@@ -139,10 +152,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 8.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 8.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:emerald"
@@ -155,10 +169,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 5.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 5.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:emerald_ore"
@@ -171,10 +186,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 7.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 7.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:sapphire"
@@ -186,10 +202,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 4.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:sapphire_ore"
@@ -201,10 +218,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 7.0,
-                "max": 35.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 35.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:gold_nugget"
@@ -216,10 +234,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 5.0,
-                "max": 20.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 20.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:gold_ingot"
@@ -231,10 +250,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:gold_ore"
@@ -247,10 +267,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 4.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:scrap_metal"
@@ -263,19 +284,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 5.0,
-                "max": 30.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 30.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:lunar_ingot"
         }
-      ],
-      "bonus_rolls": {
-        "min": -1.0,
-        "max": 1.0
-      }
+      ]
     }
   ]
 }

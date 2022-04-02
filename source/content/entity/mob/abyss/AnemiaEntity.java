@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.entity.mob.abyss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
@@ -19,12 +19,12 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class AnemiaEntity extends AoAFlyingRangedMob {
-	public AnemiaEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public AnemiaEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 2.0625f;
 	}
 
@@ -59,8 +59,8 @@ public class AnemiaEntity extends AoAFlyingRangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		if (target instanceof ServerPlayerEntity)
-			PlayerUtil.consumeResource((ServerPlayerEntity)target, AoAResources.SPIRIT.get(), 50f, true);
+		if (target instanceof ServerPlayer)
+			PlayerUtil.consumeResource((ServerPlayer)target, AoAResources.SPIRIT.get(), 50f, true);
 
 		WorldUtil.createExplosion(this, level, projectile, 2.0f);
 	}

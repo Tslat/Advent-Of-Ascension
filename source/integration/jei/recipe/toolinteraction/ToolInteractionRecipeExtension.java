@@ -3,7 +3,7 @@ package net.tslat.aoa3.integration.jei.recipe.toolinteraction;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.util.Size2i;
 import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
 

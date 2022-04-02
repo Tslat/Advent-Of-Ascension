@@ -1,19 +1,14 @@
 package net.tslat.aoa3.client.gui.hud.toasts;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.toasts.IToast;
-import net.minecraft.client.gui.toasts.ToastGui;
-import net.minecraft.util.text.TextFormatting;
-import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
-import net.tslat.aoa3.player.ClientPlayerDataManager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.ChatFormatting;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.tslat.aoa3.player.resource.AoAResource;
-import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 
-public class ResourceRequirementToast implements IToast {
+public class ResourceRequirementToast implements Toast {
 	private final AoAResource resource;
 	private final float resourceAmount;
 	private final String title;
@@ -22,7 +17,7 @@ public class ResourceRequirementToast implements IToast {
 	public ResourceRequirementToast(AoAResource relevantResource, float resourceRequirement) {
 		this.resource = relevantResource;
 		this.resourceAmount = resourceRequirement;
-		this.title = LocaleUtil.getLocaleString("gui.aoatoast.resourceReq.title", TextFormatting.DARK_RED);
+		this.title = LocaleUtil.getLocaleString("gui.aoatoast.resourceReq.title", ChatFormatting.DARK_RED);
 		this.subtitle = LocaleUtil.getLocaleString("gui.aoatoast.resourceReq.subtitle", relevantResource.getName().getString(), NumberUtil.roundToNthDecimalPlace(resourceRequirement, 2));
 	}
 
@@ -35,11 +30,11 @@ public class ResourceRequirementToast implements IToast {
 	}
 
 	@Override
-	public Visibility render(MatrixStack matrix, ToastGui toastGui, long delta) {
-		Minecraft mc = toastGui.getMinecraft();
+	public Visibility render(PoseStack matrix, ToastComponent toastGui, long delta) {
+		/*Minecraft mc = toastGui.getMinecraft();
 
 		mc.getTextureManager().bind(TEXTURE);
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		toastGui.blit(matrix, 0, 0, 0, 0, 160, 32);
 		matrix.pushPose();
 		matrix.scale(0.9f, 0.9f, 1f);
@@ -61,7 +56,7 @@ public class ResourceRequirementToast implements IToast {
 			matrix.scale(scale, scale, 1);
 			mc.font.draw(matrix, subtitle, 30 / scale, 18 / scale, ColourUtil.WHITE);
 			matrix.popPose();
-		}
+		}*/
 
 		return delta >= 3000 ? Visibility.HIDE : Visibility.SHOW;
 	}

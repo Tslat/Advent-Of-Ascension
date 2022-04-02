@@ -1,14 +1,15 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.processors;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.LevelReader;
 import net.minecraft.world.gen.feature.template.IStructureProcessorType;
-import net.minecraft.world.gen.feature.template.PlacementSettings;
+import net.minecraft.world.gen.feature.template.StructurePlaceSettings;
 import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructureProcessors;
@@ -34,9 +35,9 @@ public class CrysteviaPillarProcessor extends StructureProcessor {
 
 	@Nullable
 	@Override
-	public Template.BlockInfo process(IWorldReader world, BlockPos pos1, BlockPos pos2, Template.BlockInfo blockInfo, Template.BlockInfo relativisedBlockInfo, PlacementSettings placementSettings, @Nullable Template template) {
+	public Template.BlockInfo process(LevelReader world, BlockPos pos1, BlockPos pos2, Template.BlockInfo blockInfo, Template.BlockInfo relativisedBlockInfo, StructurePlaceSettings placementSettings, @Nullable Template template) {
 		if (blockInfo.state.is(Blocks.BEDROCK)) {
-			BlockPos.Mutable placementPos = new BlockPos.Mutable().set(relativisedBlockInfo.pos);
+			BlockPos.MutableBlockPos placementPos = new BlockPos.MutableBlockPos().set(relativisedBlockInfo.pos);
 			BlockState testBlock = world.getBlockState(placementPos);
 			world.getChunk(placementPos).setBlockState(placementPos, pillarBlock, false);
 
@@ -52,3 +53,4 @@ public class CrysteviaPillarProcessor extends StructureProcessor {
 		return relativisedBlockInfo;
 	}
 }
+*/

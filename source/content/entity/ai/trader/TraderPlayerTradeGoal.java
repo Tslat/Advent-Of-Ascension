@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.entity.ai.trader;
 
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 
 import java.util.EnumSet;
@@ -16,10 +16,10 @@ public class TraderPlayerTradeGoal extends Goal {
 	}
 
 	public boolean canUse() {
-		if (!trader.isAlive() || trader.isInWater() || !trader.onGround || trader.hurtMarked)
+		if (!trader.isAlive() || trader.isInWater() || !trader.isOnGround() || trader.hurtMarked)
 			return false;
 
-		PlayerEntity customer = trader.getTradingPlayer();
+		Player customer = trader.getTradingPlayer();
 
 		if (customer == null || trader.distanceToSqr(customer) > 16.0D)
 			return false;

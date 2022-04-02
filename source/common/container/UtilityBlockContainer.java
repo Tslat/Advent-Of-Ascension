@@ -1,27 +1,25 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.ContainerType;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 
-public abstract class UtilityBlockContainer extends Container {
-	public final Inventory inputs;
-	public final CraftResultInventory output;
-	private final IWorldPosCallable functionCaller;
+public abstract class UtilityBlockContainer extends AbstractContainerMenu {
+	public Inventory inputs;
+	//public final CraftResultInventory output;
+	private final ContainerLevelAccess functionCaller;
 
-	public UtilityBlockContainer(ContainerType<?> type, int id, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
+	public UtilityBlockContainer(MenuType<?> type, int id, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(type, id);
 
 		this.functionCaller = functionCaller;
-		inputs = new Inventory(2) {
+		/*inputs = new Inventory(2) {
 			@Override
 			public void setChanged() {
 				super.setChanged();
@@ -44,28 +42,28 @@ public abstract class UtilityBlockContainer extends Container {
 
 		for (int x = 0; x < 9; x++) {
 			addSlot(new Slot(plInventory, x, 8 + x * 18, 118));
-		}
+		}*/
 	}
 
 	@Override
-	public void slotsChanged(IInventory inventory) {
+	public void slotsChanged(Container inventory) {
 		functionCaller.execute((world, pos) -> updateOutput());
 	}
 
 	@Override
-	public void removed(PlayerEntity playerIn) {
+	public void removed(Player playerIn) {
 		super.removed(playerIn);
 
-		functionCaller.execute((world, pos) -> clearContainer(playerIn, world, inputs));
+		functionCaller.execute((world, pos) -> clearContainer(playerIn, inputs));
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return stillValid(functionCaller, player, getBlock());
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 

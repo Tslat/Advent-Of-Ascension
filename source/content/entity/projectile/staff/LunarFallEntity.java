@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
 public class LunarFallEntity extends BaseEnergyShot {
-	public LunarFallEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public LunarFallEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public LunarFallEntity(World world) {
-		super(AoAEntities.Projectiles.LUNAR_FALL.get(), world);
+	public LunarFallEntity(Level world) {
+		super(AoAProjectiles.LUNAR_FALL.get(), world);
 	}
 
 	public LunarFallEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, float velocity) {
-		super(AoAEntities.Projectiles.LUNAR_FALL.get(), shooter, weapon, posX, posY, posZ, velocity);
+		super(AoAProjectiles.LUNAR_FALL.get(), shooter, weapon, posX, posY, posZ, velocity);
 	}
 
-	public LunarFallEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.LUNAR_FALL.get(), world, x, y, z);
+	public LunarFallEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.LUNAR_FALL.get(), world, x, y, z);
 	}
 }

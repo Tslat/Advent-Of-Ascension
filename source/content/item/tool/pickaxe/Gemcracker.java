@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.item.tool.pickaxe;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Gemcracker extends BasePickaxe implements LootModifyingItem {
 	public Gemcracker() {
-		super(ItemUtil.customItemTier(2100, 10.0f, 6.0f, 6, 10, null));
+		super(ItemUtil.customItemTier(2100, 10.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_PICKAXE));
 	}
 
 	@Override
@@ -28,7 +28,7 @@ public class Gemcracker extends BasePickaxe implements LootModifyingItem {
 		BlockState harvestedBlock = getHarvestedBlock(lootContext);
 		Block block = harvestedBlock.getBlock();
 
-		if (BlockUtil.isAirBlock(harvestedBlock) || existingLoot.isEmpty() || !harvestedBlock.isToolEffective(ToolType.PICKAXE) || !harvestedBlock.is(Tags.Blocks.ORES))
+		if (BlockUtil.isAirBlock(harvestedBlock) || existingLoot.isEmpty() || getDestroySpeed(getToolStack(lootContext), harvestedBlock) <= 1 || !harvestedBlock.is(Tags.Blocks.ORES))
 			return;
 
 		ItemStack primaryStack = existingLoot.get(0);
@@ -38,7 +38,7 @@ public class Gemcracker extends BasePickaxe implements LootModifyingItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

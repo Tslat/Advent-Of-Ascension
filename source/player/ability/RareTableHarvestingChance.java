@@ -1,18 +1,17 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -30,7 +29,7 @@ public class RareTableHarvestingChance extends ScalableModAbility {
 		super(AoAAbilities.RARE_TABLE_HARVESTING_CHANCE.get(), skill, data);
 	}
 
-	public RareTableHarvestingChance(AoASkill.Instance skill, CompoundNBT data) {
+	public RareTableHarvestingChance(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.RARE_TABLE_HARVESTING_CHANCE.get(), skill, data);
 	}
 
@@ -44,28 +43,26 @@ public class RareTableHarvestingChance extends ScalableModAbility {
 		if (!testAsChance())
 			return;
 
-		BlockState state = context.getParamOrNull(LootParameters.BLOCK_STATE);
+		BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 
 		if (state == null)
 			return;
 
-		Vector3d origin = context.getParamOrNull(LootParameters.ORIGIN);
+		Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
 
 		if (origin == null)
 			return;
 
-		ServerWorld world = context.getLevel();
-		Block block = state.getBlock();
-
 		if (!Block.isShapeFullBlock(state.getCollisionShape(context.getLevel(), new BlockPos(origin))))
 			return;
 
-		if (!ExtractionSkill.isApplicableBlock(block))
+		if (!ExtractionSkill.isApplicableBlock(state))
 			return;
 
-		PlayerEntity player = getPlayer();
+		ServerPlayer player = getPlayer();
+		ServerLevel world = context.getLevel();
 
 		loot.addAll(LootUtil.generateLoot(world,  new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftContext(world, origin, player.getLuck(), player)));
-		PlayerUtil.giveXpToPlayer((ServerPlayerEntity)player, AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(player, AoASkills.FARMING.get()), 10), false);
+		PlayerUtil.giveXpToPlayer(player, AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(player, AoASkills.FARMING.get()), 10), false);
 	}
 }

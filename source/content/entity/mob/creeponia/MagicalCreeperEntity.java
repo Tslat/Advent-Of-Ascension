@@ -1,17 +1,16 @@
 package net.tslat.aoa3.content.entity.mob.creeponia;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -23,12 +22,12 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARangedAttacker {
-    public MagicalCreeperEntity(EntityType<? extends AoACreeponiaCreeper> entityType, World world) {
+    public MagicalCreeperEntity(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 1.40625f;
     }
 
@@ -57,7 +56,7 @@ public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARang
     public void aiStep() {
         super.aiStep();
 
-        PlayerEntity target = level.getNearestPlayer(getX(), getY(), getZ(), 20, false);
+        Player target = level.getNearestPlayer(getX(), getY(), getZ(), 20, false);
 
         if (target == null || target.isCreative())
             return;
@@ -68,7 +67,7 @@ public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARang
             double distanceFactorX = target.getX() - this.getX();
             double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - projectile.getY();
             double distanceFactorZ = target.getZ() - this.getZ();
-            double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
+            double hyp = Math.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
             playSound(AoASounds.ENTITY_MAGICAL_CREEPER_SHOOT.get(), 1.0f, 1.0f);
             projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));

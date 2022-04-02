@@ -1,25 +1,25 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class IllusionSword extends BaseSword {
 	public IllusionSword() { // TODO look into false-swipe attacking
-		super(ItemUtil.customItemTier(1900, AttackSpeed.NORMAL, 14.5f, 4, 10, null));
+		super(ItemUtil.customItemTier(1900, AttackSpeed.NORMAL, 14.5f, 4, 10, null, null));
 	}
 
 	@Override
@@ -40,16 +40,16 @@ public class IllusionSword extends BaseSword {
 
 				target.setLastHurtByMob(newTarget);
 
-				if (target instanceof CreatureEntity)
-					((CreatureEntity)target).setTarget(newTarget);
+				if (target instanceof PathfinderMob)
+					((PathfinderMob)target).setTarget(newTarget);
 
-				target.addEffect(new EffectInstance(Effects.BLINDNESS, 60, 0, false, true));
+				target.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 60, 0, false, true));
 			}
 		}
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

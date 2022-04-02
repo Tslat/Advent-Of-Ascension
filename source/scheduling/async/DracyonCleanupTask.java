@@ -1,17 +1,17 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 
 import java.util.concurrent.TimeUnit;
 
 public class DracyonCleanupTask implements Runnable {
-    private final World world;
+    private final Level world;
     private final BlockPos waterPosition;
 
-    public DracyonCleanupTask(World world, BlockPos waterPos) {
+    public DracyonCleanupTask(Level world, BlockPos waterPos) {
         this.world = world;
         this.waterPosition = waterPos;
     }

@@ -1,33 +1,34 @@
 package net.tslat.aoa3.content.block.tileentity;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.NetworkManager;
-import net.minecraft.network.play.server.SUpdateTileEntityPacket;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
-import net.tslat.aoa3.common.registration.AoATileEntities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.common.registration.AoABlockEntities;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LunarCreationTableTileEntity extends TileEntity {
+public class LunarCreationTableTileEntity extends BlockEntity {
 	private final NonNullList<ItemStack> items = NonNullList.withSize(9, ItemStack.EMPTY);
 
-	public LunarCreationTableTileEntity() {
-		super(AoATileEntities.LUNAR_CREATION_TABLE.get());
+	public LunarCreationTableTileEntity(BlockPos pos, BlockState state) {
+		super(AoABlockEntities.LUNAR_CREATION_TABLE.get(), pos, state);
 	}
 
 	public NonNullList<ItemStack> getContents() {
 		return this.items;
 	}
 
-	public void dropContents(World world, BlockPos pos) {
+	public void dropContents(Level world, BlockPos pos) {
 		for (ItemStack stack : getContents()) {
 			world.addFreshEntity(new ItemEntity(world, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, stack));
 		}
@@ -42,7 +43,7 @@ public class LunarCreationTableTileEntity extends TileEntity {
 		setChanged();
 
 		if (level != null)
-			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 	}
 
 	public void setContents(List<ItemStack> contents) {
@@ -55,11 +56,11 @@ public class LunarCreationTableTileEntity extends TileEntity {
 		setChanged();
 
 		if (level != null)
-			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Constants.BlockFlags.BLOCK_UPDATE);
+			level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), Block.UPDATE_ALL);
 	}
 
-	private CompoundNBT serializeContents() {
-		CompoundNBT tag = new CompoundNBT();
+	private CompoundTag serializeContents() {
+		CompoundTag tag = new CompoundTag();
 
 		for (int i = 0; i < 9; i++) {
 			if (!items.get(i).isEmpty())
@@ -69,7 +70,7 @@ public class LunarCreationTableTileEntity extends TileEntity {
 		return tag;
 	}
 
-	private void deserializeContents(CompoundNBT contentsTag) {
+	private void deserializeContents(CompoundTag contentsTag) {
 		items.clear();
 
 		for (int i = 0; i < 9; i++) {
@@ -79,8 +80,8 @@ public class LunarCreationTableTileEntity extends TileEntity {
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT tag = super.getUpdateTag();
+	public CompoundTag getUpdateTag() {
+		CompoundTag tag = super.getUpdateTag();
 
 		tag.put("contents", serializeContents());
 
@@ -88,29 +89,22 @@ public class LunarCreationTableTileEntity extends TileEntity {
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT compound) {
-		super.save(compound);
+	public void saveAdditional(CompoundTag compound) {
+		super.saveAdditional(compound);
 
 		compound.put("contents", serializeContents());
-
-		return compound;
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT compound) {
-		super.load(state, compound);
+	public void load(CompoundTag compound) {
+		super.load(compound);
 
 		deserializeContents(compound.getCompound("contents"));
 	}
 
 	@Nullable
 	@Override
-	public SUpdateTileEntityPacket getUpdatePacket() {
-		return new SUpdateTileEntityPacket(getBlockPos(), 0, serializeContents());
-	}
-
-	@Override
-	public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
-		deserializeContents(pkt.getTag());
+	public Packet<ClientGamePacketListener> getUpdatePacket() {
+		return ClientboundBlockEntityDataPacket.create(this);
 	}
 }

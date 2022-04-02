@@ -1,7 +1,7 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
 
 import java.util.function.Supplier;
@@ -16,12 +16,12 @@ public class GunRecoilPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeFloat(recoilAmount);
 		buffer.writeInt(firingTime);
 	}
 
-	public static GunRecoilPacket decode(PacketBuffer buffer) {
+	public static GunRecoilPacket decode(FriendlyByteBuf buffer) {
 		return new GunRecoilPacket(buffer.readFloat(), buffer.readInt());
 	}
 

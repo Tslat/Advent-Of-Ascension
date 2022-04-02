@@ -1,21 +1,23 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
@@ -26,8 +28,6 @@ import net.tslat.aoa3.content.entity.projectile.mob.GreenGuardianShotEntity;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
-import javax.annotation.Nullable;
-
 public class GreenGuardianEntity extends AoARangedMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
@@ -35,24 +35,24 @@ public class GreenGuardianEntity extends AoARangedMob {
 	private RedGuardianEntity redGuardian;
 	private YellowGuardianEntity yellowGuardian;
 
-	public GreenGuardianEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public GreenGuardianEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.875f;
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 35, 60, 32));
-		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
 	}
 
 	@Nullable
@@ -123,7 +123,7 @@ public class GreenGuardianEntity extends AoARangedMob {
 			remove();
 
 			if (checkGuardian(yellowGuardian) && checkGuardian(blueGuardian) && checkGuardian(redGuardian)) {
-				for (ServerPlayerEntity pl : level.getEntitiesOfClass(ServerPlayerEntity.class, getBoundingBox().inflate(20))) {
+				for (ServerPlayer pl : level.getEntitiesOfClass(ServerPlayer.class, getBoundingBox().inflate(20))) {
 					AdvancementUtil.completeAdvancement(pl, new ResourceLocation(AdventOfAscension.MOD_ID, "haven/guard_that"), "kill_four_guardians");
 				}
 			}
@@ -154,7 +154,7 @@ public class GreenGuardianEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -162,14 +162,14 @@ public class GreenGuardianEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.GREEN_GUARDIAN_MUSIC.getId()));
@@ -177,7 +177,7 @@ public class GreenGuardianEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.GREEN_GUARDIAN_MUSIC.getId()));
@@ -185,3 +185,4 @@ public class GreenGuardianEntity extends AoARangedMob {
 	}
 
 }
+*/

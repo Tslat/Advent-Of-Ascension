@@ -1,27 +1,27 @@
 package net.tslat.aoa3.content.recipe;
 
 import com.google.gson.JsonObject;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 
 import javax.annotation.Nullable;
 
-public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory> {
+public class TrophyRecipe implements CraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingContainer> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "trophy");
 	private final String group;
 
@@ -30,7 +30,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inv, World worldIn) {
+	public boolean matches(CraftingContainer inv, Level worldIn) {
 		for(int x = 0; x <= inv.getWidth() - 3; ++x) {
 			for(int y = 0; y <= inv.getHeight() - 3; ++y) {
 				if (checkMatch(inv))
@@ -58,7 +58,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inv) {
+	public ItemStack assemble(CraftingContainer inv) {
 		for (int i = 0; i < inv.getContainerSize(); i++) {
 			if (inv.getItem(i).getItem() == AoABlocks.TROPHY.get().asItem())
 				return TrophyBlock.cloneTrophy(inv.getItem(i), AoABlocks.GOLD_TROPHY.get());
@@ -67,7 +67,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 		return ItemStack.EMPTY;
 	}
 
-	private boolean checkMatch(CraftingInventory inv) {
+	private boolean checkMatch(CraftingContainer inv) {
 		String entityType = null;
 
 		for(int gridX = 0; gridX < inv.getWidth(); ++gridX) {
@@ -77,12 +77,12 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 				if (slotStack.getItem() != AoABlocks.TROPHY.get().asItem() || !slotStack.hasTag())
 					return false;
 
-				CompoundNBT tag = slotStack.getTag();
+				CompoundTag tag = slotStack.getTag();
 
 				if (!tag.contains("BlockEntityTag"))
 					return false;
 
-				CompoundNBT blockEntityTag = tag.getCompound("BlockEntityTag");
+				CompoundTag blockEntityTag = tag.getCompound("BlockEntityTag");
 
 				if (!blockEntityTag.contains("OriginalTrophy") || !blockEntityTag.getBoolean("OriginalTrophy"))
 					return false;
@@ -117,13 +117,13 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return AoARecipes.TROPHY.getB().get();
 	}
 
 	@Override
-	public IRecipeType<?> getType() {
-		return IRecipeType.CRAFTING;
+	public RecipeType<?> getType() {
+		return RecipeType.CRAFTING;
 	}
 
 	@Override
@@ -136,20 +136,20 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 		return 3;
 	}
 
-	public static class Factory extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<TrophyRecipe> {
+	public static class Factory extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<TrophyRecipe> {
 		@Override
 		public TrophyRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			return new TrophyRecipe(json.has("group") ? JSONUtils.getAsString(json, "group") : "");
+			return new TrophyRecipe(json.has("group") ? GsonHelper.getAsString(json, "group") : "");
 		}
 
 		@Nullable
 		@Override
-		public TrophyRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public TrophyRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			return new TrophyRecipe(buffer.readUtf(32767));
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, TrophyRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, TrophyRecipe recipe) {
 			buffer.writeUtf(recipe.getGroup());
 		}
 	}

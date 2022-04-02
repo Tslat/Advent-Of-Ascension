@@ -3,16 +3,16 @@ package net.tslat.aoa3.content.entity.brain;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.Dynamic;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.entity.ai.brain.schedule.Activity;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
-import net.minecraft.entity.ai.brain.sensor.SensorType;
-import net.minecraft.entity.ai.brain.task.Task;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.tslat.aoa3.advent.Logging;
 import org.apache.commons.lang3.mutable.MutableObject;
@@ -46,7 +46,7 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 		this.hasDynamicTasks = hasDynamicTasks;
 	}
 
-	public Brain.BrainCodec<T> getBrainCodec() {
+	public Brain.Provider<T> getBrainCodec() {
 		if (!this.hasDynamicTasks && brainMemoryCache.containsKey(this.owner.getType()))
 			return Brain.provider(brainMemoryCache.get(this.owner.getType()), this.owner.getSensors());
 
@@ -67,7 +67,7 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 			return this.brain;
 
 		ImmutableList<SensorType<? extends Sensor<? super T>>> sensors = owner.getSensors();
-		Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> taskList = compileTasks();
+		Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> taskList = compileTasks();
 		ImmutableList<MemoryModuleType<?>> memories;
 
 		if (!hasDynamicTasks && brainMemoryCache.containsKey(owner.getType())) {
@@ -82,7 +82,7 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 
 		if (!saveMemories) {
 			Codec<Brain<T>> brainCodec = emptyBrainCodec();
-			this.brain = new Brain<T>(memories, sensors, ImmutableList.of(), () -> brainCodec);
+			this.brain = new Brain<>(memories, sensors, ImmutableList.of(), () -> brainCodec);
 		}
 		else {
 			this.brain = Brain.provider(memories, sensors).makeBrain(codecLoader);
@@ -95,26 +95,26 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 	}
 
 	private Codec<Brain<T>> emptyBrainCodec() {
-		MutableObject<Codec<Brain<T>>> brainCodec = new MutableObject<Codec<Brain<T>>>();
+		MutableObject<Codec<Brain<T>>> brainCodec = new MutableObject<>();
 
-		brainCodec.setValue(Codec.unit(() -> new Brain<T>(ImmutableList.of(), ImmutableList.of(), ImmutableList.of(), brainCodec::getValue)));
+		brainCodec.setValue(Codec.unit(() -> new Brain<>(ImmutableList.of(), ImmutableList.of(), ImmutableList.of(), brainCodec::getValue)));
 
 		return brainCodec.getValue();
 	}
 
-	protected ImmutableList<MemoryModuleType<?>> getMemoryList(Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> taskList, ImmutableList<SensorType<? extends Sensor<? super T>>> sensors) {
+	protected ImmutableList<MemoryModuleType<?>> getMemoryList(Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> taskList, ImmutableList<SensorType<? extends Sensor<? super T>>> sensors) {
 		if (!hasDynamicTasks && brainMemoryCache.containsKey(owner.getType()))
 			return brainMemoryCache.get(owner.getType());
 
-		HashSet<MemoryModuleType<?>> memoryTypes = new HashSet<MemoryModuleType<?>>();
+		HashSet<MemoryModuleType<?>> memoryTypes = new HashSet<>();
 
 		taskList.forEach((key, value) -> value.getMiddle().forEach(task -> memoryTypes.addAll(task.entryCondition.keySet())));
 
 		return ImmutableList.copyOf(memoryTypes);
 	}
 
-	private Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> compileTasks() {
-		Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> map = new HashMap<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>>();
+	private Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> compileTasks() {
+		Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> map = new HashMap<>();
 
 		map.put(Activity.CORE, owner.getCoreTasks());
 		map.put(Activity.IDLE, owner.getIdleTasks());
@@ -126,9 +126,9 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 		return map;
 	}
 
-	private void applyTasks(Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> taskList) {
-		for (Map.Entry<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> tasksEntry : taskList.entrySet()) {
-			Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>> tasks = tasksEntry.getValue();
+	private void applyTasks(Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> taskList) {
+		for (Map.Entry<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> tasksEntry : taskList.entrySet()) {
+			Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>> tasks = tasksEntry.getValue();
 
 			if (tasks.getRight() != null) {
 				this.brain.addActivityAndRemoveMemoryWhenStopped(tasksEntry.getKey(), tasks.getLeft(), tasks.getMiddle(), tasks.getRight());
@@ -144,7 +144,7 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 		this.owner.handleAdditionalBrainSetup(this.brain);
 	}
 
-	private void sanityCheckBrainState(Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> taskList) {
+	private void sanityCheckBrainState(Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> taskList) {
 		if (!FMLLoader.isProduction()) {
 			for (Sensor<? super T> sensor : this.brain.sensors.values()) {
 				for (MemoryModuleType<?> memoryType : sensor.requires()) {
@@ -157,11 +157,11 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 
 	public void tick() {
 		this.owner.level.getProfiler().push("SmartBrain");
-		this.brain.tick((ServerWorld)this.owner.level, this.owner);
+		this.brain.tick((ServerLevel)this.owner.level, this.owner);
 		this.brain.setActiveActivityToFirstValid(this.owner.getActivityPriorities());
 		this.owner.level.getProfiler().pop();
 
-		if (this.owner instanceof MobEntity)
-			((MobEntity)this.owner).setAggressive(((MobEntity)this.owner).getTarget() != null);
+		if (this.owner instanceof Mob)
+			((Mob)this.owner).setAggressive(((Mob)this.owner).getTarget() != null);
 	}
 }

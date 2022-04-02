@@ -1,28 +1,28 @@
 package net.tslat.aoa3.content.entity.mob.lelyetia;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
 
 import javax.annotation.Nullable;
 
 public class LelyetianWarriorEntity extends AoAMeleeMob {
-	public LelyetianWarriorEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public LelyetianWarriorEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.75f;
 	}
 
@@ -48,7 +48,7 @@ public class LelyetianWarriorEntity extends AoAMeleeMob {
 	public void die(DamageSource cause) {
 		super.die(cause);
 
-		if (!level.isClientSide() && cause.getMsgId().equals("fireworks") && cause.getEntity() instanceof PlayerEntity && ItemUtil.findInventoryItem((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-			ItemUtil.givePlayerItemOrDrop((PlayerEntity)cause.getEntity(), new ItemStack(AoAItems.CELEVE_REALMSTONE.get()));
+		if (!level.isClientSide() && cause.getMsgId().equals("fireworks") && cause.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			ItemUtil.givePlayerItemOrDrop((Player)cause.getEntity(), new ItemStack(AoAItems.CELEVE_REALMSTONE.get()));
 	}
 }

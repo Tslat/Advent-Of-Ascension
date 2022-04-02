@@ -1,25 +1,24 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.boss.dragon.EnderDragonPartEntity;
-import net.minecraft.entity.item.EnderCrystalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
-import net.minecraft.util.IndirectEntityDamageSource;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.boss.EnderDragonPart;
+import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
@@ -29,7 +28,7 @@ import javax.annotation.Nullable;
 
 public final class DamageUtil {
 	public static void doScaledKnockback(LivingEntity target, Entity attacker, float strength, double xRatio, double zRatio) {
-		if (target instanceof PlayerEntity && !PlayerUtil.shouldPlayerBeAffected((PlayerEntity)target))
+		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
 
 		LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, strength, xRatio, zRatio);
@@ -42,13 +41,13 @@ public final class DamageUtil {
 		zRatio = event.getRatioZ();
 		target.hasImpulse = true;
 		target.hurtMarked = true;
-		float vec = MathHelper.sqrt(xRatio * xRatio + zRatio * zRatio);
-		Vector3d targetMotion = target.getDeltaMovement();
+		double vec = Math.sqrt((xRatio * xRatio + zRatio * zRatio));
+		Vec3 targetMotion = target.getDeltaMovement();
 		double motionX = targetMotion.x() / 2d - xRatio / (double)vec * (double)strength;
 		double motionZ = targetMotion.z() / 2d - zRatio / (double)vec * (double)strength;
 		double motionY = targetMotion.y();
 
-		if (target.onGround) {
+		if (target.isOnGround()) {
 			motionY /= 2.0D;
 			motionY += strength;
 
@@ -56,15 +55,15 @@ public final class DamageUtil {
 				motionY = 0.4000000059604645D;
 		}
 
-		target.setDeltaMovement(new Vector3d(motionX, motionY, motionZ));
+		target.setDeltaMovement(new Vec3(motionX, motionY, motionZ));
 		target.hurtMarked = true;
 	}
 
 	public static void doBodySlamKnockback(LivingEntity target, Entity attacker, float xModifier, float yModifier, float zModifier) {
-		if (target instanceof PlayerEntity && !PlayerUtil.shouldPlayerBeAffected((PlayerEntity)target))
+		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
 
-		Vector3d attackerVelocity = attacker.getDeltaMovement();
+		Vec3 attackerVelocity = attacker.getDeltaMovement();
 		double xVelocity = attackerVelocity.x() * xModifier;
 		double yVelocity = attackerVelocity.y() * yModifier;
 		double zVelocity = attackerVelocity.z() * zModifier;
@@ -74,7 +73,7 @@ public final class DamageUtil {
 			return;
 
 		double resist = 1;
-		ModifiableAttributeInstance attrib = target.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+		AttributeInstance attrib = target.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 		if (attrib != null)
 			resist -= attrib.getValue();
@@ -86,7 +85,7 @@ public final class DamageUtil {
 	public static void killEntityCleanly(Entity entity) {
 		if (!(entity instanceof LivingEntity)) {
 			entity.hurt(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
-			entity.remove();
+			entity.discard();
 
 			return;
 		}
@@ -106,7 +105,7 @@ public final class DamageUtil {
 			damageSource = new IndirectEntityDamageSource("aoe", indirectSource, attacker).setMagic();
 		}
 		else {
-			damageSource = attacker instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity)attacker) : DamageSource.mobAttack(attacker);
+			damageSource = attacker instanceof Player ? DamageSource.playerAttack((Player)attacker) : DamageSource.mobAttack(attacker);
 		}
 
 		if (bypassProtections) {
@@ -126,7 +125,7 @@ public final class DamageUtil {
 
 		damageSource.setMagic();
 
-		if (!(target instanceof PlayerEntity))
+		if (!(target instanceof Player))
 			damageSource.bypassArmor();
 
 		if (bypassProtections) {
@@ -137,14 +136,14 @@ public final class DamageUtil {
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
-		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
+		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
 			return target.hurt(damageSource, dmg);
 
 		if (!(target instanceof LivingEntity))
 			return false;
 
 		target.invulnerableTime = 0;
-		Vector3d targetMotion = target.getDeltaMovement();
+		Vec3 targetMotion = target.getDeltaMovement();
 		boolean success = target.hurt(damageSource, dmg);
 		target.setDeltaMovement(targetMotion);
 		target.hurtMarked = false;
@@ -152,7 +151,7 @@ public final class DamageUtil {
 	}
 
 	public static boolean dealMeleeDamage(LivingEntity attacker, Entity target, float dmg, boolean bypassProtections) {
-		DamageSource damageSource = attacker instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity)attacker) : DamageSource.mobAttack(attacker);
+		DamageSource damageSource = attacker instanceof Player ? DamageSource.playerAttack((Player)attacker) : DamageSource.mobAttack(attacker);
 
 		if (target.isInvulnerableTo(damageSource))
 			return false;
@@ -177,12 +176,12 @@ public final class DamageUtil {
 			damageSource = new IndirectEntityDamageSource("magic", indirectSource, attacker);
 		}
 		else {
-			damageSource = attacker instanceof PlayerEntity ? DamageSource.playerAttack((PlayerEntity)attacker) : DamageSource.mobAttack(attacker);
+			damageSource = attacker instanceof Player ? DamageSource.playerAttack((Player)attacker) : DamageSource.mobAttack(attacker);
 		}
 
 		damageSource.setMagic();
 
-		if (!(target instanceof PlayerEntity))
+		if (!(target instanceof Player))
 			damageSource.bypassArmor();
 
 		if (bypassProtections)
@@ -191,7 +190,7 @@ public final class DamageUtil {
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
-		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
+		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
 			return target.hurt(damageSource, dmg);
 
 		if (!(target instanceof LivingEntity))
@@ -202,7 +201,7 @@ public final class DamageUtil {
 	}
 
 	public static void dealSelfHarmDamage(LivingEntity target, float dmg) {
-		if (target instanceof PlayerEntity && !PlayerUtil.shouldPlayerBeAffected((PlayerEntity)target))
+		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
 
 		if (target.getHealth() - dmg > 0.0f) {
@@ -214,13 +213,13 @@ public final class DamageUtil {
 		}
 	}
 
-	public static boolean dealGunDamage(Entity target, LivingEntity attacker, ThrowableEntity bullet, float dmg) {
+	public static boolean dealGunDamage(Entity target, LivingEntity attacker, ThrowableProjectile bullet, float dmg) {
 		DamageSource source = new IndirectEntityDamageSource("gun", bullet, attacker).setProjectile();
 
 		if (target.isInvulnerableTo(source))
 			return false;
 
-		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
+		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
 			return target.hurt(source, dmg);
 
 		if (!(target instanceof LivingEntity))
@@ -230,7 +229,7 @@ public final class DamageUtil {
 		boolean success;
 
 		if (RandomUtil.percentChance(0.6f)) {
-			Vector3d targetMotion = target.getDeltaMovement();
+			Vec3 targetMotion = target.getDeltaMovement();
 			success = target.hurt(source, dmg);
 			target.setDeltaMovement(targetMotion);
 			target.hurtMarked = false;
@@ -243,14 +242,14 @@ public final class DamageUtil {
 		return success;
 	}
 
-	public static boolean dealVulcaneDamage(LivingEntity target, PlayerEntity attacker, float dmg) {
+	public static boolean dealVulcaneDamage(LivingEntity target, Player attacker, float dmg) {
 		DamageSource source = new EntityDamageSource("vulcane", attacker) {
 			@Override
-			public ITextComponent getLocalizedDeathMessage(LivingEntity entity) {
+			public Component getLocalizedDeathMessage(LivingEntity livingEntity) {
 				ItemStack itemstack = this.entity instanceof LivingEntity ? ((LivingEntity)this.entity).getMainHandItem() : ItemStack.EMPTY;
 				String prefix = "death.attack.player";
 
-				return !itemstack.isEmpty() && itemstack.hasCustomHoverName() ? new TranslationTextComponent(prefix + ".item", entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getDisplayName()) : new TranslationTextComponent(prefix, entity.getDisplayName(), this.entity.getDisplayName());
+				return !itemstack.isEmpty() && itemstack.hasCustomHoverName() ? new TranslatableComponent(prefix + ".item", entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getDisplayName()) : new TranslatableComponent(prefix, entity.getDisplayName(), this.entity.getDisplayName());
 			}
 		}.bypassMagic().bypassArmor();
 
@@ -267,7 +266,7 @@ public final class DamageUtil {
 		if (target.isInvulnerableTo(source))
 			return false;
 
-		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
+		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
 			return target.hurt(source, dmg);
 
 		if (!(target instanceof LivingEntity))
@@ -278,13 +277,13 @@ public final class DamageUtil {
 		return target.hurt(source, dmg);
 	}
 
-	public static boolean dealHaulingDamage(PlayerEntity player, HaulingFishingBobberEntity bobber, Entity target, float dmg) {
+	public static boolean dealHaulingDamage(Player player, HaulingFishingBobberEntity bobber, Entity target, float dmg) {
 		DamageSource damageSource = new IndirectEntityDamageSource("hauling", bobber, player).bypassArmor().bypassMagic().bypassInvul();
 
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
-		if (target instanceof EnderDragonPartEntity || target instanceof EnderCrystalEntity)
+		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
 			return target.hurt(damageSource, dmg);
 
 		return target instanceof LivingEntity && target.hurt(damageSource, dmg);
@@ -311,7 +310,7 @@ public final class DamageUtil {
 	}
 
 	public static boolean isPoisonDamage(DamageSource source, Entity target, float dmg) {
-		return source.isMagic() && source.getEntity() == null && !source.getMsgId().equals("thorns") && target instanceof LivingEntity && ((LivingEntity)target).hasEffect(Effects.POISON) && dmg == 1.0f;
+		return source.isMagic() && source.getEntity() == null && !source.getMsgId().equals("thorns") && target instanceof LivingEntity && ((LivingEntity)target).hasEffect(MobEffects.POISON) && dmg == 1.0f;
 	}
 
 	public static boolean isPhysicalDamage(DamageSource source, Entity target, float dmg) {
@@ -326,27 +325,14 @@ public final class DamageUtil {
 		if (source.getEntity() != null || source.isExplosion())
 			return false;
 
-		switch (source.getMsgId()) {
-			case "onFire":
-			case "inFire":
-			case "cactus":
-			case "acid":
-			case "lightningBolt":
-			case "lava":
-			case "cramming":
-			case "inWall":
-			case "fallingBlock":
-			case "starve":
-			case "anvil":
-			case "outOfWorld":
-				return true;
-			default:
-				return false;
-		}
+		return switch (source.getMsgId()) {
+			case "onFire", "inFire", "cactus", "acid", "lightningBolt", "lava", "cramming", "inWall", "fallingBlock", "starve", "anvil", "outOfWorld" -> true;
+			default -> false;
+		};
 	}
 
-	public static boolean isPlayerEnvironmentallyProtected(ServerPlayerEntity player) {
-		Item helmet = player.inventory.armor.get(EquipmentSlotType.HEAD.getIndex()).getItem();
+	public static boolean isPlayerEnvironmentallyProtected(ServerPlayer player) {
+		Item helmet = player.getInventory().armor.get(EquipmentSlot.HEAD.getIndex()).getItem();
 
 		return helmet instanceof AdventArmour && ((AdventArmour)helmet).isHelmetAirTight(player);
 	}

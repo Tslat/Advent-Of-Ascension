@@ -1,17 +1,17 @@
 package net.tslat.aoa3.content.item.weapon.maul;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAGameRules;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -26,7 +26,7 @@ public class VulcammerMaul extends BaseMaul {
 		if (attackCooldown > 0.85f) {
 			boolean doWorldDamage = AoAGameRules.checkDestructiveWeaponPhysics(attacker.level);
 
-			WorldUtil.createExplosion(attacker, attacker.level, (attacker.getX() + target.getX()) / 2d, (attacker.getY() + target.getY()) / 2d, (attacker.getZ() + target.getZ()) / 2d, 2f, doWorldDamage ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, doWorldDamage);
+			WorldUtil.createExplosion(attacker, attacker.level, (attacker.getX() + target.getX()) / 2d, (attacker.getY() + target.getY()) / 2d, (attacker.getZ() + target.getZ()) / 2d, 2f, doWorldDamage ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, doWorldDamage);
 
 			if (!doWorldDamage) {
 				for (LivingEntity entity : attacker.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(2), EntityUtil.Predicates.HOSTILE_MOB)) {
@@ -37,7 +37,7 @@ public class VulcammerMaul extends BaseMaul {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}

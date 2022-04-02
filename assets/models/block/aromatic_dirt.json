@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "particle": "aoa3:block/aromatic_dirt",
     "all": "aoa3:block/aromatic_dirt"
   }
 }

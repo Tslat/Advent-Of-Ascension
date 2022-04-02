@@ -2,11 +2,11 @@ package net.tslat.aoa3.content.world.gen.feature.features.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
-public class BlockPosConfig implements IFeatureConfig {
+public class BlockPosConfig implements FeatureConfiguration {
 	public static final Codec<BlockPosConfig> CODEC = RecordCodecBuilder.create(builder -> builder.group(
 			BlockPos.CODEC.fieldOf("position").forGetter(config -> config.pos))
 			.apply(builder, BlockPosConfig::new));

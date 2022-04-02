@@ -3,7 +3,8 @@
   "pools": [
     {
       "name": "eye",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -16,14 +17,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": -1.0,
-                "max": 1.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 1.0
+              },
+              "add": false
             },
             {
               "function": "minecraft:looting_enchant",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 0.0,
                 "max": 1.0
               }
@@ -35,7 +38,8 @@
     },
     {
       "name": "string",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -43,14 +47,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 0.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 2.0
+              },
+              "add": false
             },
             {
               "function": "minecraft:looting_enchant",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 0.0,
                 "max": 1.0
               }
@@ -62,6 +68,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
@@ -71,7 +78,8 @@
     },
     {
       "name": "mob_specific_loot",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:empty",
@@ -89,10 +97,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:red_mushroom"
@@ -104,10 +113,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:brown_mushroom"
@@ -124,10 +134,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 4.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 4.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:chakram"

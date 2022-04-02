@@ -1,21 +1,17 @@
 package net.tslat.aoa3.content.item.misc.summoning;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.content.entity.boss.CorallusEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.content.entity.misc.BossItemEntity;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class AmphibiyteLung extends BossSpawningItem {
@@ -34,21 +30,21 @@ public class AmphibiyteLung extends BossSpawningItem {
 	}
 
 	@Override
-	public void spawnBoss(World world, ServerPlayerEntity summoner, double posX, double posY, double posZ) {
-		CorallusEntity corallus = new CorallusEntity(AoAEntities.Mobs.CORALLUS.get(), world);
+	public void spawnBoss(Level world, ServerPlayer summoner, double posX, double posY, double posZ) {
+		/*CorallusEntity corallus = new CorallusEntity(AoAMobs.CORALLUS.get(), world);
 
 		corallus.moveTo(posX, posY, posZ, RandomUtil.randomValueUpTo(360f), 0f);
 		world.addFreshEntity(corallus);
-		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.CORALLUS.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);
+		PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.CORALLUS.get().getDescriptionId() + ".spawn", summoner.getDisplayName()), world, new BlockPos(posX, posY, posZ), 50);*/
 	}
 
 	@Override
-	public boolean canSpawnHere(World world, ServerPlayerEntity player, double posX, double posY, double posZ) {
+	public boolean canSpawnHere(Level world, ServerPlayer player, double posX, double posY, double posZ) {
 		if (world.getBlockState(new BlockPos(posX, posY, posZ)).getBlock() != Blocks.WATER)
 			return false;
 
-		if (!checkSpawnArea(world, new AxisAlignedBB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 3d, posZ + 0.5d))) {
-			PlayerUtil.notifyPlayer(player, new TranslationTextComponent("message.feedback.spawnBoss.noSpace"));
+		if (!checkSpawnArea(world, new AABB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 3d, posZ + 0.5d))) {
+			PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.noSpace"));
 
 			return false;
 		}
@@ -56,15 +52,15 @@ public class AmphibiyteLung extends BossSpawningItem {
 		return true;
 	}
 
-	private boolean checkSpawnArea(World world, AxisAlignedBB boundingBox) {
-		BlockPos.Mutable checkPos = new BlockPos.Mutable();
+	private boolean checkSpawnArea(Level world, AABB boundingBox) {
+		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 
-		for(int x = MathHelper.floor(boundingBox.minX); x < MathHelper.ceil(boundingBox.maxX); ++x) {
-			for(int y = MathHelper.floor(boundingBox.minY); y < MathHelper.ceil(boundingBox.maxY); ++y) {
-				for(int z = MathHelper.floor(boundingBox.minZ); z < MathHelper.ceil(boundingBox.maxZ); ++z) {
+		for(int x = Mth.floor(boundingBox.minX); x < Mth.ceil(boundingBox.maxX); ++x) {
+			for(int y = Mth.floor(boundingBox.minY); y < Mth.ceil(boundingBox.maxY); ++y) {
+				for(int z = Mth.floor(boundingBox.minZ); z < Mth.ceil(boundingBox.maxZ); ++z) {
 					BlockState state = world.getBlockState(checkPos.set(x, y, z));
 
-					if (!state.isAir(world, checkPos) && state.getFluidState().getType() == Fluids.EMPTY)
+					if (!state.isAir() && state.getFluidState().getType() == Fluids.EMPTY)
 						return false;
 				}
 			}

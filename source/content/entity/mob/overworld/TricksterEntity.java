@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
@@ -22,12 +22,12 @@ public class TricksterEntity extends AoAMeleeMob {
 	private int cloneCooldown = 0;
 	private HashSet<TricksterCloneEntity> clones = new HashSet<TricksterCloneEntity>();
 
-	public TricksterEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public TricksterEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.65f;
 	}
 
@@ -65,12 +65,12 @@ public class TricksterEntity extends AoAMeleeMob {
 				cloneCooldown = 60;
 				invisCooldown = 240;
 
-				EntityUtil.applyPotions(this, new EffectBuilder(Effects.INVISIBILITY, 60));
+				EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.INVISIBILITY, 60));
 				playSound(AoASounds.ENTITY_TRICKSTER_HIDE.get(), 1.0f, 1.0f);
 			}
 
 			if (cloneCooldown == 1 && level.getEntitiesOfClass(TricksterCloneEntity.class, getBoundingBox().inflate(10)).size() < 5) {
-				TricksterCloneEntity clone = new TricksterCloneEntity(AoAEntities.Mobs.TRICKSTER_CLONE.get(), level);
+				TricksterCloneEntity clone = new TricksterCloneEntity(AoAMobs.TRICKSTER_CLONE.get(), level);
 
 				clone.setPos(getX(), getY(), getZ());
 
@@ -87,7 +87,7 @@ public class TricksterEntity extends AoAMeleeMob {
 
 		if (!level.isClientSide) {
 			for (TricksterCloneEntity clone : clones) {
-				clone.remove();
+				clone.discard();
 			}
 		}
 	}

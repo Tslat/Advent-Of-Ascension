@@ -1,29 +1,28 @@
 package net.tslat.aoa3.client.gui.container;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.inventory.ContainerScreen;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.AtlasTexture;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
-public class BankerScreen extends ContainerScreen<BankerContainer> {
+public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 	private static final ResourceLocation guiTexture = new ResourceLocation("aoa3", "textures/gui/containers/banker.png");
 	private final Minecraft mc;
-	public BankerScreen(BankerContainer container, PlayerInventory inv, ITextComponent guiTitle) {
+	public BankerScreen(BankerContainer container, Inventory inv, Component guiTitle) {
 		super(container, inv, guiTitle);
 
 		this.imageHeight = 187;
@@ -31,20 +30,19 @@ public class BankerScreen extends ContainerScreen<BankerContainer> {
 	}
 
 	@Override
-	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 		renderBackground(matrix);
 		super.render(matrix, mouseX, mouseY, partialTicks);
 		renderTooltip(matrix, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(MatrixStack matrix, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
 		final int centerX = (width - imageWidth) / 2;
 		final int centerY = (height - imageHeight) / 2;
 
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.getTextureManager().bind(guiTexture);
-
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderUtil.prepRenderTexture(guiTexture);
 		RenderUtil.renderCustomSizedTexture(matrix, centerX, centerY, 0, 0, imageWidth, imageHeight, 256, 256);
 
 		if (mc.player != null)
@@ -52,11 +50,11 @@ public class BankerScreen extends ContainerScreen<BankerContainer> {
 	}
 
 	@Override
-	protected void renderLabels(MatrixStack matrix, int mouseX, int mouseY) {
+	protected void renderLabels(PoseStack matrix, int mouseX, int mouseY) {
 		int titleWidth = 4 + mc.font.width(title);
 
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.getTextureManager().bind(guiTexture);
+		RenderUtil.resetShaderColour();
+		RenderUtil.prepRenderTexture(guiTexture);
 		RenderUtil.renderCustomSizedTexture(matrix, 28, 4, 176, 15, 1, 12, 256, 256);
 
 		for (int i = 0; i < titleWidth - 2; i++) {
@@ -64,51 +62,49 @@ public class BankerScreen extends ContainerScreen<BankerContainer> {
 		}
 
 		RenderUtil.renderCustomSizedTexture(matrix, 28 + titleWidth - 2, 4, 178, 15, 1, 12, 256, 256);
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderUtil.resetShaderColour();
 		mc.font.draw(matrix, title, 30, 6, ColourUtil.WHITE);
 	}
 
-	private void renderCoinPlaceholders(MatrixStack matrix, int centerX, int centerY) {
+	private void renderCoinPlaceholders(PoseStack matrix, int centerX, int centerY) {
 		for (int i = 0; i < 12; i++) {
 			Slot slot = menu.getSlot(i);
 			ItemStack stack = slot.getItem();
 
 			if (stack.isEmpty()) {
 				ItemStack coinStack = new ItemStack(BankerContainer.getCoinForSlot(i), (i < 3 || i > 8) ? 20 : 1);
-				IBakedModel model = mc.getItemRenderer().getModel(coinStack, null, null);
+				BakedModel model = mc.getItemRenderer().getModel(coinStack, null, null, 0);
 
 				matrix.pushPose();
-				mc.textureManager.bind(AtlasTexture.LOCATION_BLOCKS);
-				mc.textureManager.getTexture(AtlasTexture.LOCATION_BLOCKS).setFilter(false, false);
-				RenderSystem.enableRescaleNormal();
-				RenderSystem.enableAlphaTest();
-				RenderSystem.defaultAlphaFunc();
+				RenderUtil.prepRenderTexture(InventoryMenu.BLOCK_ATLAS);
+				mc.textureManager.getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
+				//RenderSystem.enableRescaleNormal();
+				//RenderSystem.enableAlphaTest();
 				RenderSystem.enableBlend();
-				RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
-				matrix.translate(slot.x + centerX, slot.y + centerY, 100.0F);
-				matrix.translate(8.0F, 8.0F, 0.0F);
-				matrix.scale(1.0F, -1.0F, 1.0F);
-				matrix.scale(16.0F, 16.0F, 16.0F);
+				RenderUtil.setDefaultAlphaBlend();
+				RenderUtil.resetShaderColour();
+				matrix.translate(slot.x + centerX, slot.y + centerY, 100);
+				matrix.translate(8, 8, 0);
+				matrix.scale(1, -1, 1);
+				matrix.scale(16, 16, 16);
 
-				IRenderTypeBuffer.Impl renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
+				MultiBufferSource.BufferSource renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
 				boolean diffuseLighting = !model.usesBlockLight();
 
 				if (diffuseLighting)
-					RenderHelper.setupForFlatItems();
+					Lighting.setupForFlatItems();
 
-				mc.getItemRenderer().render(coinStack, ItemCameraTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, 1000, OverlayTexture.NO_OVERLAY, model);
+				mc.getItemRenderer().render(coinStack, ItemTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, 1000, OverlayTexture.NO_OVERLAY, model);
 				renderTypeBuffer.endBatch();
 				RenderSystem.enableDepthTest();
-
 				if (diffuseLighting)
-					RenderHelper.setupFor3DItems();
+					Lighting.setupFor3DItems();
 
-				RenderSystem.disableAlphaTest();
-				RenderSystem.disableRescaleNormal();
+				//RenderSystem.disableAlphaTest();
+				//RenderSystem.disableRescaleNormal();
 				matrix.popPose();
 				mc.getItemRenderer().renderGuiItemDecorations(mc.font, coinStack, slot.x + centerX, slot.y + centerY);
-				RenderSystem.enableAlphaTest();
+				//RenderSystem.enableAlphaTest();
 			}
 		}
 	}

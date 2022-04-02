@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Slice;
 
 @Mixin(GameRenderer.class)
-public class GameRendererMixin {
-	@ModifyConstant(method = "Lnet/minecraft/client/renderer/GameRenderer;pick(F)V",
+public class GameRendererMixin { // Increases client-side entity pick potential range to 10 blocks instead of 3. Allows for Reach Attribute to work
+	@ModifyConstant(method = "pick",
 			slice = @Slice(
-					from = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/EntityRayTraceResult;getEntity()Lnet/minecraft/entity/Entity;"),
-					to = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockRayTraceResult;miss(Lnet/minecraft/util/math/vector/Vector3d;Lnet/minecraft/util/Direction;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/BlockRayTraceResult;")
+					from = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/EntityHitResult;getEntity()Lnet/minecraft/world/entity/Entity;"),
+					to = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/BlockHitResult;miss(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/Direction;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;")
 			),
 			constant = @Constant(doubleValue = 9.0D))
 	private static double checkMaxRange(double defaultDist) {

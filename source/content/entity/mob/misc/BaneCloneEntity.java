@@ -1,28 +1,29 @@
+/*
 package net.tslat.aoa3.content.entity.mob.misc;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.content.entity.boss.BaneEntity;
 
 public class BaneCloneEntity extends AoAMeleeMob {
 	public BaneCloneEntity(BaneEntity bane) {
-		this(AoAEntities.Misc.BANE_CLONE.get(), bane.level);
+		this(AoAMiscEntities.BANE_CLONE.get(), bane.level);
 
 		moveTo(bane.getX(), bane.getY(), bane.getZ(), random.nextFloat() * 360, 0);
 	}
 
-	public BaneCloneEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public BaneCloneEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.1875f;
 	}
 
 }
+*/

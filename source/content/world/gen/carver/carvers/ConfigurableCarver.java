@@ -1,18 +1,19 @@
+/*
 package net.tslat.aoa3.content.world.gen.carver.carvers;
 
 import com.google.common.collect.ImmutableSet;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.block.material.Material;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.chunk.ChunkAccess;
 import net.minecraft.world.gen.carver.WorldCarver;
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
 import net.tslat.aoa3.content.world.gen.carver.config.ConfigurableCarverConfig;
@@ -30,26 +31,26 @@ public class ConfigurableCarver extends WorldCarver<ConfigurableCarverConfig> {
 		this.liquids = ImmutableSet.of();
 	}
 
-	protected boolean carveSlice(ConfigurableCarverConfig config, IChunk chunk, Function<BlockPos, Biome> biomePos, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, double horizontalRadius, double verticalRadius, BitSet carvingMask) {
+	protected boolean carveSlice(ConfigurableCarverConfig config, ChunkAccess chunk, Function<BlockPos, Biome> biomePos, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, double horizontalRadius, double verticalRadius, BitSet carvingMask) {
 		Random random = new Random(seed + (long)chunkX + (long)chunkZ);
 		double chunkCenterX = chunkX * 16 + 8;
 		double chunkCenterZ = chunkZ * 16 + 8;
 
 		if (!(randOffsetXCoord < chunkCenterX - 16 - horizontalRadius * 2) && !(randOffsetZCoord < chunkCenterZ - 16 - horizontalRadius * 2) && !(randOffsetXCoord > chunkCenterX + 16 + horizontalRadius * 2) && !(randOffsetZCoord > chunkCenterZ + 16 + horizontalRadius * 2)) {
-			int minXPos = Math.max(MathHelper.floor(randOffsetXCoord - horizontalRadius) - chunkX * 16 - 1, 0);
-			int maxXPos = Math.min(MathHelper.floor(randOffsetXCoord + horizontalRadius) - chunkX * 16 + 1, 16);
-			int minYPos = Math.max(MathHelper.floor(startY - verticalRadius) - 1, config.minHeight);
-			int maxYPos = Math.min(MathHelper.floor(startY + verticalRadius) + 1, config.maxHeight - (int)verticalRadius);
-			int minZPos = Math.max(MathHelper.floor(randOffsetZCoord - horizontalRadius) - chunkZ * 16 - 1, 0);
-			int maxZPos = Math.min(MathHelper.floor(randOffsetZCoord + horizontalRadius) - chunkZ * 16 + 1, 16);
+			int minXPos = Math.max(Mth.floor(randOffsetXCoord - horizontalRadius) - chunkX * 16 - 1, 0);
+			int maxXPos = Math.min(Mth.floor(randOffsetXCoord + horizontalRadius) - chunkX * 16 + 1, 16);
+			int minYPos = Math.max(Mth.floor(startY - verticalRadius) - 1, config.minHeight);
+			int maxYPos = Math.min(Mth.floor(startY + verticalRadius) + 1, config.maxHeight - (int)verticalRadius);
+			int minZPos = Math.max(Mth.floor(randOffsetZCoord - horizontalRadius) - chunkZ * 16 - 1, 0);
+			int maxZPos = Math.min(Mth.floor(randOffsetZCoord + horizontalRadius) - chunkZ * 16 + 1, 16);
 
 			if (blockedByFluid(config, chunk, chunkX, chunkZ, minXPos, maxXPos, minYPos, maxYPos, minZPos, maxZPos))
 				return false;
 
 			boolean carved = false;
-			BlockPos.Mutable mutablePos1 = new BlockPos.Mutable();
-			BlockPos.Mutable mutablePos2 = new BlockPos.Mutable();
-			BlockPos.Mutable mutablePos3 = new BlockPos.Mutable();
+			BlockPos.MutableBlockPos mutablePos1 = new BlockPos.MutableBlockPos();
+			BlockPos.MutableBlockPos mutablePos2 = new BlockPos.MutableBlockPos();
+			BlockPos.MutableBlockPos mutablePos3 = new BlockPos.MutableBlockPos();
 
 			for(int x = minXPos; x < maxXPos; ++x) {
 				int posX = x + chunkX * 16;
@@ -78,7 +79,7 @@ public class ConfigurableCarver extends WorldCarver<ConfigurableCarverConfig> {
 		return false;
 	}
 
-	protected boolean carveBlock(ConfigurableCarverConfig config, IChunk chunk, Function<BlockPos, Biome> biomeFunction, BitSet carvingMask, Random rand, BlockPos.Mutable basePos, BlockPos.Mutable upPos, BlockPos.Mutable mutablePos, int p_230358_8_, int p_230358_9_, int p_230358_10_, int posX, int posZ, int bitPosX, int posY, int bitPosZ, MutableBoolean isSurface) {
+	protected boolean carveBlock(ConfigurableCarverConfig config, ChunkAccess chunk, Function<BlockPos, Biome> biomeFunction, BitSet carvingMask, Random rand, BlockPos.MutableBlockPos basePos, BlockPos.MutableBlockPos upPos, BlockPos.MutableBlockPos mutablePos, int p_230358_8_, int p_230358_9_, int p_230358_10_, int posX, int posZ, int bitPosX, int posY, int bitPosZ, MutableBoolean isSurface) {
 		int maskBit = bitPosX | bitPosZ << 4 | posY << 8;
 
 		if (carvingMask.get(maskBit)) {
@@ -128,8 +129,8 @@ public class ConfigurableCarver extends WorldCarver<ConfigurableCarverConfig> {
 		return config.carvableBlocks.contains(state.getBlock()) && aboveState.getFluidState().getType() == Fluids.EMPTY;
 	}
 
-	protected boolean blockedByFluid(ConfigurableCarverConfig config, IChunk chunk, int chunkX, int chunkZ, int minX, int maxX, int minY, int maxY, int minZ, int maxZ) {
-		BlockPos.Mutable checkPos = new BlockPos.Mutable();
+	protected boolean blockedByFluid(ConfigurableCarverConfig config, ChunkAccess chunk, int chunkX, int chunkZ, int minX, int maxX, int minY, int maxY, int minZ, int maxZ) {
+		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 
 		for(int posX = minX; posX < maxX; ++posX) {
 			for(int posZ = minZ; posZ < maxZ; ++posZ) {
@@ -153,7 +154,7 @@ public class ConfigurableCarver extends WorldCarver<ConfigurableCarverConfig> {
 	}
 
 	@Override
-	public boolean carve(IChunk chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ConfigurableCarverConfig config) {
+	public boolean carve(ChunkAccess chunk, Function<BlockPos, Biome> biomePos, Random rand, int seaLevel, int chunkXOffset, int chunkZOffset, int chunkX, int chunkZ, BitSet carvingMask, ConfigurableCarverConfig config) {
 		int i = (getRange() * 2 - 1) * 16;
 		int j = rand.nextInt(rand.nextInt(rand.nextInt(15) + 1) + 1);
 
@@ -195,14 +196,14 @@ public class ConfigurableCarver extends WorldCarver<ConfigurableCarverConfig> {
 		return rand.nextInt(rand.nextInt(120) + 8);
 	}
 
-	protected void carveShallowSlice(ConfigurableCarverConfig config, IChunk chunk, Function<BlockPos, Biome> biomeFunction, long p_227205_3_, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float radiusModifier, double verticalRadiusRatio, BitSet carvingMask) {
-		double horizontalRadius = 1.5D + (double)(MathHelper.sin(((float)Math.PI / 2F)) * radiusModifier);
+	protected void carveShallowSlice(ConfigurableCarverConfig config, ChunkAccess chunk, Function<BlockPos, Biome> biomeFunction, long p_227205_3_, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float radiusModifier, double verticalRadiusRatio, BitSet carvingMask) {
+		double horizontalRadius = 1.5D + (double)(Mth.sin(((float)Math.PI / 2F)) * radiusModifier);
 		double verticalRadius = horizontalRadius * verticalRadiusRatio;
 
 		carveSlice(config, chunk, biomeFunction, p_227205_3_, seaLevel, chunkX, chunkZ, randOffsetXCoord + 1.0D, startY, randOffsetZCoord, horizontalRadius, verticalRadius, carvingMask);
 	}
 
-	protected void genTunnel(ConfigurableCarverConfig config, IChunk chunk, Function<BlockPos, Biome> biomeFunction, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float caveRadius, float pitch, float p_227206_16_, int p_227206_17_, int p_227206_18_, double p_227206_19_, BitSet carvingMask) {
+	protected void genTunnel(ConfigurableCarverConfig config, ChunkAccess chunk, Function<BlockPos, Biome> biomeFunction, long seed, int seaLevel, int chunkX, int chunkZ, double randOffsetXCoord, double startY, double randOffsetZCoord, float caveRadius, float pitch, float p_227206_16_, int p_227206_17_, int p_227206_18_, double p_227206_19_, BitSet carvingMask) {
 		Random rand = new Random(seed);
 		int i = rand.nextInt(p_227206_18_ / 2) + p_227206_18_ / 4;
 		boolean flag = rand.nextInt(6) == 0;
@@ -210,12 +211,12 @@ public class ConfigurableCarver extends WorldCarver<ConfigurableCarverConfig> {
 		float f1 = 0;
 
 		for(int j = p_227206_17_; j < p_227206_18_; ++j) {
-			double d0 = 1.5D + (double)(MathHelper.sin((float)Math.PI * (float)j / (float)p_227206_18_) * caveRadius);
+			double d0 = 1.5D + (double)(Mth.sin((float)Math.PI * (float)j / (float)p_227206_18_) * caveRadius);
 			double d1 = d0 * p_227206_19_;
-			float f2 = MathHelper.cos(p_227206_16_);
-			randOffsetXCoord += MathHelper.cos(pitch) * f2;
-			startY += MathHelper.sin(p_227206_16_);
-			randOffsetZCoord += MathHelper.sin(pitch) * f2;
+			float f2 = Mth.cos(p_227206_16_);
+			randOffsetXCoord += Mth.cos(pitch) * f2;
+			startY += Mth.sin(p_227206_16_);
+			randOffsetZCoord += Mth.sin(pitch) * f2;
 			p_227206_16_ = p_227206_16_ * (flag ? 0.92F : 0.7F);
 			p_227206_16_ = p_227206_16_ + f1 * 0.1F;
 			pitch += f * 0.1F;
@@ -250,3 +251,4 @@ public class ConfigurableCarver extends WorldCarver<ConfigurableCarverConfig> {
 		return yRadius <= -0.7D || xRadius * xRadius + yRadius * yRadius + zRadius * zRadius >= 1.0D;
 	}
 }
+*/

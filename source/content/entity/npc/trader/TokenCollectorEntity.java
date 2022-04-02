@@ -1,9 +1,9 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
@@ -11,7 +11,7 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class TokenCollectorEntity extends AoATrader {
-	public TokenCollectorEntity(EntityType<? extends AoATrader> entityType, World world) {
+	public TokenCollectorEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
 
 		this.setInvulnerable(true);
@@ -24,7 +24,7 @@ public class TokenCollectorEntity extends AoATrader {
 
 	@Nullable
 	@Override
-	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap() {
 		return null;
 	}
 

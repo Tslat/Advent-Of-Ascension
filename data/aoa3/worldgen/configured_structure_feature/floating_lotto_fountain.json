@@ -1,7 +1,0 @@
-{
-  "config": {
-    "min": 60,
-    "max": 130
-  },
-  "type": "aoa3:floating_lotto_fountain"
-}

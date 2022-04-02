@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.entity.brain.task;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleStatus;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.Task;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.tslat.aoa3.util.BrainUtils;
 import net.tslat.aoa3.util.EntityUtil;
 
@@ -15,7 +15,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class RetaliateOrTargetTask<E extends MobEntity> extends Task<E> {
+public class RetaliateOrTargetTask<E extends Mob> extends Behavior<E> {
 	private final Predicate<E> canAttackPredicate;
 	private final Predicate<Entity> retaliationPredicate;
 	private final Function<E, Optional<? extends LivingEntity>> targetFinder;
@@ -23,11 +23,11 @@ public class RetaliateOrTargetTask<E extends MobEntity> extends Task<E> {
 	private LivingEntity toTarget = null;
 
 	public RetaliateOrTargetTask(E owner) {
-		this(owner2 -> true, entity -> owner.getTarget() == null && EntityUtil.Predicates.ATTACKABLE_ENTITY.test(entity), entity -> BrainUtils.getOptionalMemory(owner, MemoryModuleType.NEAREST_VISIBLE_TARGETABLE_PLAYER));
+		this(owner2 -> true, entity -> owner.getTarget() == null && EntityUtil.Predicates.ATTACKABLE_ENTITY.test(entity), entity -> BrainUtils.getOptionalMemory(owner, MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER));
 	}
 
 	public RetaliateOrTargetTask(Predicate<E> canAttack, Predicate<Entity> shouldRetaliate, Function<E, Optional<? extends LivingEntity>> targetFinder) {
-		super(ImmutableMap.of(MemoryModuleType.ATTACK_TARGET, MemoryModuleStatus.REGISTERED, MemoryModuleType.HURT_BY_ENTITY, MemoryModuleStatus.REGISTERED));
+		super(ImmutableMap.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.REGISTERED, MemoryModuleType.HURT_BY_ENTITY, MemoryStatus.REGISTERED));
 
 		this.retaliationPredicate = shouldRetaliate;
 		this.targetFinder = targetFinder;
@@ -35,7 +35,7 @@ public class RetaliateOrTargetTask<E extends MobEntity> extends Task<E> {
 	}
 
 	@Override
-	protected boolean checkExtraStartConditions(ServerWorld pLevel, E owner) {
+	protected boolean checkExtraStartConditions(ServerLevel pLevel, E owner) {
 		if (!canAttackPredicate.test(owner))
 			return false;
 
@@ -50,7 +50,7 @@ public class RetaliateOrTargetTask<E extends MobEntity> extends Task<E> {
 	}
 
 	@Override
-	protected void start(ServerWorld pLevel, E owner, long gameTime) {
+	protected void start(ServerLevel pLevel, E owner, long gameTime) {
 		BrainUtils.setTargetOfEntity(owner, toTarget);
 		BrainUtils.clearMemory(owner, MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE);
 

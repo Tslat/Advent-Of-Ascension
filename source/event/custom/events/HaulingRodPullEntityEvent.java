@@ -1,8 +1,8 @@
 package net.tslat.aoa3.event.custom.events;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
@@ -16,7 +16,7 @@ public class HaulingRodPullEntityEvent extends PlayerEvent {
 	private int rodDamage;
 	private float pullStrength;
 
-	public HaulingRodPullEntityEvent(PlayerEntity player, ItemStack haulingRod, HaulingFishingBobberEntity bobber, Entity hookedEntity, int rodDamage, float pullStrength) {
+	public HaulingRodPullEntityEvent(Player player, ItemStack haulingRod, HaulingFishingBobberEntity bobber, Entity hookedEntity, int rodDamage, float pullStrength) {
 		super(player);
 
 		this.haulingRod = haulingRod;

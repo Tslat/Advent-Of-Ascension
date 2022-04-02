@@ -1,40 +1,40 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.network.NetworkHooks;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
-public class SelyanSticklerStuckEntity extends ThrowableEntity {
+public class SelyanSticklerStuckEntity extends ThrowableProjectile {
 	private LivingEntity target;
 	private LivingEntity shooter;
 	private int age;
 
-	public SelyanSticklerStuckEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public SelyanSticklerStuckEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public SelyanSticklerStuckEntity(World world) {
-		super(AoAEntities.Projectiles.SELYAN_STICKLER_STUCK.get(), world);
+	public SelyanSticklerStuckEntity(Level world) {
+		super(AoAProjectiles.SELYAN_STICKLER_STUCK.get(), world);
 	}
 
 	public SelyanSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAEntities.Projectiles.SELYAN_STICKLER_STUCK.get(), shooter.level);
+		super(AoAProjectiles.SELYAN_STICKLER_STUCK.get(), shooter.level);
 		this.target = target;
 		this.shooter = shooter;
 		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
 		shoot(0, 0, 0, 0, 0);
 	}
 
-	public SelyanSticklerStuckEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.SELYAN_STICKLER_STUCK.get(), x, y, z, world);
+	public SelyanSticklerStuckEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.SELYAN_STICKLER_STUCK.get(), x, y, z, world);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class SelyanSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {}
+	protected void onHit(HitResult result) {}
 
 	@Override
 	public void tick() {
@@ -62,14 +62,14 @@ public class SelyanSticklerStuckEntity extends ThrowableEntity {
 			WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
 
 			if (!level.isClientSide)
-				remove();
+				discard();
 		}
 
 		if (age >= 100) {
 			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
 
 			if (!level.isClientSide)
-				remove();
+				discard();
 		}
 	}
 
@@ -77,7 +77,7 @@ public class SelyanSticklerStuckEntity extends ThrowableEntity {
 	protected void defineSynchedData() {}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

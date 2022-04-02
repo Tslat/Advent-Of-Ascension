@@ -1,42 +1,45 @@
+/*
 package net.tslat.aoa3.content.entity.mob.runandor.templars;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootTable;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.*;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
-import net.minecraft.world.server.ServerWorld;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LootUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
 
-public abstract class RuneTemplarEntity extends CreatureEntity {
+public abstract class RuneTemplarEntity extends PathfinderMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
-	private static final DataParameter<Boolean> DISABLED = EntityDataManager.<Boolean>defineId(RuneTemplarEntity.class, DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> DISABLED = SynchedEntityData.<Boolean>defineId(RuneTemplarEntity.class, EntityDataSerializers.BOOLEAN);
 	private final HashSet<RunicLifeformEntity> lifeforms = new HashSet<RunicLifeformEntity>();
 
-	public RuneTemplarEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	public RuneTemplarEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 
 		bossInfo.setVisible(false);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.8125f;
 	}
 
@@ -106,7 +109,7 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	protected abstract Item getActivationRune();
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -114,21 +117,21 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		bossInfo.removePlayer(player);
@@ -140,17 +143,17 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (isDisabled() && heldStack.getItem() == getActivationRune()) {
 			if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.RUNIC_ENERGY.get()), true, 1)) {
 				changeState(false);
 
-				return ActionResultType.CONSUME;
+				return InteractionResult.CONSUME;
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		else {
 			return super.mobInteract(player, hand);
@@ -206,7 +209,7 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 	private void doDrops() {
 		float luck = 0;
 
-		for (PlayerEntity pl : level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(8))) {
+		for (Player pl : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(8))) {
 			float plLuck = pl.getLuck();
 
 			if (plLuck > luck)
@@ -214,11 +217,12 @@ public abstract class RuneTemplarEntity extends CreatureEntity {
 		}
 
 		if (!level.isClientSide()) {
-			LootTable table = LootUtil.getTable((ServerWorld)level, getDefaultLootTable());
+			LootTable table = LootUtil.getTable((ServerLevel)level, getDefaultLootTable());
 
-			for (ItemStack stack : table.getRandomItems(createLootContext(false, DamageSource.GENERIC).create(LootParameterSets.ENTITY))) {
+			for (ItemStack stack : table.getRandomItems(createLootContext(false, DamageSource.GENERIC).create(LootContextParamSets.ENTITY))) {
 				spawnAtLocation(stack, 0);
 			}
 		}
 	}
 }
+*/

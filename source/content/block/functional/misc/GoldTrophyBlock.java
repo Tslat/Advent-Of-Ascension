@@ -1,30 +1,30 @@
 package net.tslat.aoa3.content.block.functional.misc;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.HitResult;
 import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 
 public class GoldTrophyBlock extends TrophyBlock {
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		ItemStack stack = new ItemStack(asItem());
-		TileEntity tile = world.getBlockEntity(pos);
+		BlockEntity tile = world.getBlockEntity(pos);
 		TrophyTileEntity trophyTile;
 
 		if (tile instanceof TrophyTileEntity && ((trophyTile = (TrophyTileEntity)tile).getEntityId() != null)) {
-			CompoundNBT nbt = new CompoundNBT();
-			CompoundNBT dataTag = new CompoundNBT();
+			CompoundTag nbt = new CompoundTag();
+			CompoundTag dataTag = new CompoundTag();
 
 			dataTag.putString("EntityID", ((TrophyTileEntity)tile).getEntityId());
 			dataTag.putBoolean("OriginalTrophy", ((TrophyTileEntity)tile).isOriginal());
@@ -34,8 +34,8 @@ public class GoldTrophyBlock extends TrophyBlock {
 
 			if (trophyTile.getCachedEntity() != null) {
 				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
-				ITextComponent entityName = cachedEntity == null ? new StringTextComponent("") : cachedEntity.getType().getDescription();
-				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", TextFormatting.GOLD, entityName));
+				Component entityName = cachedEntity == null ? new TextComponent("") : cachedEntity.getType().getDescription();
+				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", ChatFormatting.GOLD, entityName));
 			}
 		}
 

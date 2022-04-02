@@ -1,7 +1,7 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -13,7 +13,7 @@ public class HardBlockSpeedIncrease extends ScalableModAbility {
 		super(AoAAbilities.HARD_BLOCK_SPEED_INCREASE.get(), skill, data);
 	}
 
-	public HardBlockSpeedIncrease(AoASkill.Instance skill, CompoundNBT data) {
+	public HardBlockSpeedIncrease(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.HARD_BLOCK_SPEED_INCREASE.get(), skill, data);
 	}
 

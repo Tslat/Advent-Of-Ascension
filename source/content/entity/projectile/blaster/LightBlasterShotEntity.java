@@ -1,10 +1,10 @@
 package net.tslat.aoa3.content.entity.projectile.blaster;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
@@ -15,19 +15,19 @@ public class LightBlasterShotEntity extends BaseEnergyShot {
 	public boolean toggle2 = true;
 
 
-	public LightBlasterShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public LightBlasterShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public LightBlasterShotEntity(World world) {
-		super(AoAEntities.Projectiles.LIGHT_BLASTER_SHOT.get(), world);
+	public LightBlasterShotEntity(Level world) {
+		super(AoAProjectiles.LIGHT_BLASTER_SHOT.get(), world);
 	}
 
 	public LightBlasterShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAEntities.Projectiles.LIGHT_BLASTER_SHOT.get(), shooter, weapon, maxAge);
+		super(AoAProjectiles.LIGHT_BLASTER_SHOT.get(), shooter, weapon, maxAge);
 	}
 
-	public LightBlasterShotEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.LIGHT_BLASTER_SHOT.get(), world, x, y, z);
+	public LightBlasterShotEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.LIGHT_BLASTER_SHOT.get(), world, x, y, z);
 	}
 }

@@ -1,27 +1,27 @@
 package net.tslat.aoa3.content.entity.animal;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.pathfinding.SwimmerPathNavigator;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.util.EntityUtil;
@@ -30,18 +30,18 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 
 public class CorateeEntity extends AoAAnimal {
-	public CorateeEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+	public CorateeEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 
-		setPathfindingMalus(PathNodeType.WATER, 0.0F);
+		setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
 		this.moveControl = new RoamingSwimmingMovementController(this);
 	}
 
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new PanicGoal(this, 1.5D));
 		goalSelector.addGoal(5, new RandomSwimmingGoal(this, 1, 70));
-		goalSelector.addGoal(6, new LookAtGoal(this, PlayerEntity.class, 6.0F));
-		goalSelector.addGoal(7, new LookRandomlyGoal(this));
+		goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6.0F));
+		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
 		if (isBreedable()) {
 			goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
@@ -50,12 +50,12 @@ public class CorateeEntity extends AoAAnimal {
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World world) {
-		return new SwimmerPathNavigator(this, world);
+	protected PathNavigation createNavigation(Level world) {
+		return new WaterBoundPathNavigation(this, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.6875f;
 	}
 
@@ -90,8 +90,8 @@ public class CorateeEntity extends AoAAnimal {
 
 	@Nullable
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity partner) {
-		return new CorateeEntity(AoAEntities.Animals.CORATEE.get(), this.level);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob partner) {
+		return new CorateeEntity(AoAAnimals.CORATEE.get(), this.level);
 	}
 
 	@Override
@@ -100,17 +100,17 @@ public class CorateeEntity extends AoAAnimal {
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.WATER;
+	public MobType getMobType() {
+		return MobType.WATER;
 	}
 
 	@Override
-	public boolean checkSpawnObstruction(IWorldReader world) {
+	public boolean checkSpawnObstruction(LevelReader world) {
 		return world.isUnobstructed(this);
 	}
 
 	@Override
-	public boolean checkSpawnRules(IWorld world, SpawnReason reason) {
+	public boolean checkSpawnRules(LevelAccessor world, MobSpawnType reason) {
 		if (!EntityUtil.isNaturalSpawnReason(reason))
 			return true;
 
@@ -130,7 +130,7 @@ public class CorateeEntity extends AoAAnimal {
 	}
 
 	@Override
-	public boolean canBeLeashed(PlayerEntity player) {
+	public boolean canBeLeashed(Player player) {
 		return false;
 	}
 
@@ -138,7 +138,7 @@ public class CorateeEntity extends AoAAnimal {
 	protected void playStepSound(BlockPos pos, BlockState block) {}
 
 	@Override
-	public void travel(Vector3d motion) {
+	public void travel(Vec3 motion) {
 		if (isEffectiveAi() && isInWater()) {
 			moveRelative(0.01F, motion);
 			move(MoverType.SELF, getDeltaMovement());

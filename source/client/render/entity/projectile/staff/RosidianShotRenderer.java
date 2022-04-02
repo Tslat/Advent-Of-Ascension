@@ -1,6 +1,6 @@
 package net.tslat.aoa3.client.render.entity.projectile.staff;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -8,7 +8,7 @@ import net.tslat.aoa3.content.entity.projectile.staff.RosidianShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
 public class RosidianShotRenderer extends ParticleProjectileRenderer<RosidianShotEntity> {
-	public RosidianShotRenderer(final EntityRendererManager manager) {
+	public RosidianShotRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 

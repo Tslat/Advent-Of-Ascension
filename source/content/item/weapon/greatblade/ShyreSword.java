@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.item.weapon.greatblade;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -22,14 +22,14 @@ public class ShyreSword extends BaseGreatblade {
 	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
 		double dmg = super.getDamageForAttack(target, attacker, swordStack, baseDamage);
 
-		if (!(attacker.level instanceof IServerWorld))
+		if (!(attacker.level instanceof ServerLevelAccessor))
 			return dmg;
 
-		return dmg - 4 + (WorldUtil.getLightLevel((IServerWorld)attacker.level, attacker.blockPosition(), false, false) / 15f * 9f);
+		return dmg - 4 + (WorldUtil.getLightLevel((ServerLevelAccessor)attacker.level, attacker.blockPosition(), false, false) / 15f * 9f);
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

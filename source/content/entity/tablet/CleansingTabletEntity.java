@@ -1,35 +1,35 @@
 package net.tslat.aoa3.content.entity.tablet;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
 
 import java.util.ArrayList;
 
 public class CleansingTabletEntity extends SoulTabletEntity {
-	public CleansingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world) {
+	public CleansingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world) {
 		this(entityType, world, null);
 	}
 
-	public CleansingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world, ServerPlayerEntity placer) {
+	public CleansingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world, ServerPlayer placer) {
 		super(entityType, world, placer);
 	}
 
 	@Override
 	protected void doTickEffect() {
-		for (PlayerEntity pl : getTargetsWithinRadius(PlayerEntity.class, player -> player != null && player.isAlive() && !player.getActiveEffectsMap().isEmpty())) {
-			ArrayList<EffectInstance> removeList = new ArrayList<EffectInstance>(pl.getActiveEffects().size());
+		for (Player pl : getTargetsWithinRadius(Player.class, player -> player != null && player.isAlive() && !player.getActiveEffectsMap().isEmpty())) {
+			ArrayList<MobEffectInstance> removeList = new ArrayList<MobEffectInstance>(pl.getActiveEffects().size());
 
-			for (EffectInstance effect : pl.getActiveEffects()) {
+			for (MobEffectInstance effect : pl.getActiveEffects()) {
 				if (!effect.getEffect().isBeneficial())
 					removeList.add(effect);
 			}
 
-			for (EffectInstance effect : removeList) {
+			for (MobEffectInstance effect : removeList) {
 				pl.removeEffect(effect.getEffect());
 			}
 		}

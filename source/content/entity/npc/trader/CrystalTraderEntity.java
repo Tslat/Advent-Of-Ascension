@@ -1,21 +1,21 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class CrystalTraderEntity extends AoATrader {
-	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new AoATrader.TradeListBuilder()
+	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					AoATrader.BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.BLUE_CRYSTAL).stock(9999),
+					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.BLUE_CRYSTAL).stock(9999),
 					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.GREEN_CRYSTAL).stock(9999),
 					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.PURPLE_CRYSTAL).stock(9999),
 					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.RED_CRYSTAL).stock(9999),
@@ -32,7 +32,7 @@ public class CrystalTraderEntity extends AoATrader {
 					BuildableTrade.trade(AoAWeapons.CRYSTAL_MAUL).cost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5),
 					BuildableTrade.trade(AoAWeapons.CRYSTAL_GREATBLADE).cost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5)).build();
 
-	public CrystalTraderEntity(EntityType<? extends AoATrader> entityType, World world) {
+	public CrystalTraderEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -48,7 +48,7 @@ public class CrystalTraderEntity extends AoATrader {
 
 	@Nullable
 	@Override
-	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap() {
 		return TRADES;
 	}
 }

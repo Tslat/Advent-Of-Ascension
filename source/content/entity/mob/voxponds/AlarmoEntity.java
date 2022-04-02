@@ -1,16 +1,18 @@
 package net.tslat.aoa3.content.entity.mob.voxponds;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -20,19 +22,19 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AlarmoEntity extends AoAMeleeMob {
-    public AlarmoEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public AlarmoEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(1, new WaterAvoidingRandomWalkingGoal(this, 1));
-        goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 8f));
-        goalSelector.addGoal(3, new LookRandomlyGoal(this));
+        goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1));
+        goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8f));
+        goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 1f;
     }
 
@@ -61,12 +63,12 @@ public class AlarmoEntity extends AoAMeleeMob {
         if (level.isClientSide || isNoAi())
             return;
 
-        List<PlayerEntity> playerList = level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(4), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && canSee(pl));
+        List<Player> playerList = level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(4), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && hasLineOfSight(pl));
 
         if (!playerList.isEmpty()) {
             List<LivingEntity> mobList = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB);
 
-            EntityUtil.applyPotions(this, new EffectBuilder(Effects.MOVEMENT_SLOWDOWN).level(20));
+            EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN).level(20));
 
             for (LivingEntity mob : mobList) {
                 mob.setLastHurtByMob(playerList.get(random.nextInt(playerList.size())));

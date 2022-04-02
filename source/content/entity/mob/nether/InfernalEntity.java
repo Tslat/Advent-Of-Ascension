@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.entity.mob.nether;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
@@ -16,12 +16,12 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class InfernalEntity extends AoAMeleeMob {
-    public InfernalEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public InfernalEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 1.71875f;
     }
 
@@ -57,7 +57,7 @@ public class InfernalEntity extends AoAMeleeMob {
 
     @Override
     protected void onHit(DamageSource source, float amount) {
-        if (DamageUtil.isMeleeDamage(source) && (!(source.getEntity() instanceof PlayerEntity) || PlayerUtil.shouldPlayerBeAffected((PlayerEntity)source.getEntity())))
+        if (DamageUtil.isMeleeDamage(source) && (!(source.getEntity() instanceof Player) || PlayerUtil.shouldPlayerBeAffected((Player)source.getEntity())))
             source.getEntity().setSecondsOnFire(5);
     }
 }

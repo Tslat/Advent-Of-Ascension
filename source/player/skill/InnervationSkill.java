@@ -4,14 +4,13 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.SwimmerPathNavigator;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -19,10 +18,8 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
-import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerType.OUTGOING_ATTACK_AFTER;
-
 public class InnervationSkill extends AoASkill.Instance {
-	private static final ListenerType[] LISTENERS = new ListenerType[] {OUTGOING_ATTACK_AFTER, ListenerType.ENTITY_KILL, };
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.OUTGOING_ATTACK_AFTER, ListenerType.ENTITY_KILL, };
 
 	private final Int2ObjectOpenHashMap<Pair<Long, Float>> attackTracker = new Int2ObjectOpenHashMap<Pair<Long, Float>>();
 
@@ -30,7 +27,7 @@ public class InnervationSkill extends AoASkill.Instance {
 		super(AoASkills.INNERVATION.get(), plData, jsonData);
 	}
 
-	public InnervationSkill(CompoundNBT nbtData) {
+	public InnervationSkill(CompoundTag nbtData) {
 		super(AoASkills.INNERVATION.get(), nbtData);
 	}
 
@@ -90,13 +87,13 @@ public class InnervationSkill extends AoASkill.Instance {
 		if (target.getPersistentData().contains("spawned_by_spawner"))
 			xp *= 0.3f;
 
-		if (target instanceof FlyingEntity || (target instanceof MobEntity && ((MobEntity)target).getNavigation() instanceof SwimmerPathNavigator))
+		if (target instanceof FlyingMob || (target instanceof Mob mob && mob.getNavigation() instanceof WaterBoundPathNavigation))
 			xp *= 1.1f;
 
 		if (speed > 0.3f)
 			xp *= 1.1f;
 
-		if (!(target instanceof IMob))
+		if (!EntityUtil.isHostileMob(target))
 			xp *= 0.5f;
 
 		return xp;

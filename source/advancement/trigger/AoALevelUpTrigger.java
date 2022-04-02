@@ -1,27 +1,18 @@
 package net.tslat.aoa3.advancement.trigger;
 
 import com.google.gson.JsonObject;
-import net.minecraft.advancements.ICriterionTrigger;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.advancements.criterion.CriterionInstance;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ConditionArrayParser;
-import net.minecraft.loot.ConditionArraySerializer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
-public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.Instance> {
+public class AoALevelUpTrigger extends SimpleCriterionTrigger<AoALevelUpTrigger.Instance> {
 	private static final ResourceLocation triggerId = new ResourceLocation("aoa3", "level_up");
-	private final HashMap<PlayerAdvancements, Listeners> listeners = new HashMap<PlayerAdvancements, Listeners>();
 
 	@Override
 	public ResourceLocation getId() {
@@ -29,74 +20,44 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 	}
 
 	@Override
-	public void addPlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
-		Listeners playerListeners = this.listeners.get(playerAdvancements);
-
-		if (playerListeners == null)
-			this.listeners.put(playerAdvancements, (playerListeners = new Listeners(playerAdvancements)));
-
-		playerListeners.add(listener);
-	}
-
-	@Override
-	public void removePlayerListener(PlayerAdvancements playerAdvancements, Listener<Instance> listener) {
-		Listeners playerListeners = this.listeners.get(playerAdvancements);
-
-		if (playerListeners != null) {
-			playerListeners.remove(listener);
-
-			if (playerListeners.isEmpty())
-				this.listeners.remove(playerAdvancements);
-		}
-	}
-
-	@Override
-	public void removePlayerListeners(PlayerAdvancements playerAdvancements) {
-		this.listeners.remove(playerAdvancements);
-	}
-
-	@Override
-	public Instance createInstance(JsonObject json, ConditionArrayParser conditions) {
+	public Instance createInstance(JsonObject json, EntityPredicate.Composite predicate, DeserializationContext conditions) {
 		AoASkill skill = null;
 
 		if (json.has("skill")) {
-			ResourceLocation skillId = new ResourceLocation(JSONUtils.getAsString(json, "skill"));
+			ResourceLocation skillId = new ResourceLocation(GsonHelper.getAsString(json, "skill"));
 			skill = AoASkills.getSkill(skillId);
 
 			if (skill == null)
 				throw new IllegalArgumentException("Invalid AoASkill ID: '" + skillId + "'");
 		}
 
-		int lvl = json.has("level") ? MathHelper.clamp(JSONUtils.getAsInt(json, "level"), 1, 1000) : 0;
+		int lvl = json.has("level") ? Mth.clamp(GsonHelper.getAsInt(json, "level"), 1, 1000) : 0;
 
-		return new AoALevelUpTrigger.Instance(skill, lvl);
+		return new Instance(skill, lvl);
 	}
 
-	public void trigger(ServerPlayerEntity player, AoASkill skill, int level) {
-		Listeners playerListeners = this.listeners.get(player.getAdvancements());
-
-		if (playerListeners != null)
-			playerListeners.trigger(skill, level);
+	public void trigger(ServerPlayer player, AoASkill skill, int newLevel) {
+		trigger(player, instance -> instance.test(skill, newLevel));
 	}
 
-	public static class Instance extends CriterionInstance {
+	public static class Instance extends AbstractCriterionTriggerInstance {
 		@Nullable
 		private final AoASkill skill;
 		private final int level;
 
-		public Instance(@Nullable AoASkill skill, int lvl, EntityPredicate.AndPredicate playerPredicate) {
+		public Instance(@Nullable AoASkill skill, int lvl, EntityPredicate.Composite playerPredicate) {
 			super(triggerId, playerPredicate);
 
 			this.skill = skill;
-			this.level = MathHelper.clamp(lvl, 1, 1000);
+			this.level = Mth.clamp(lvl, 1, 1000);
 		}
 
 		public Instance(@Nullable AoASkill skill, int lvl) {
-			this(skill, lvl, EntityPredicate.AndPredicate.ANY);
+			this(skill, lvl, EntityPredicate.Composite.ANY);
 		}
 
 		@Override
-		public JsonObject serializeToJson(ConditionArraySerializer conditions) {
+		public JsonObject serializeToJson(SerializationContext conditions) {
 			JsonObject obj = super.serializeToJson(conditions);
 
 			if (skill != null)
@@ -110,46 +71,6 @@ public class AoALevelUpTrigger implements ICriterionTrigger<AoALevelUpTrigger.In
 
 		public boolean test(AoASkill skill, int level) {
 			return (this.skill == null || this.skill == skill) && (this.level == 0 || level >= this.level);
-		}
-	}
-
-	static class Listeners {
-		private final PlayerAdvancements advancements;
-		private final HashSet<Listener<Instance>> listeners = new HashSet<Listener<Instance>>();
-
-		public Listeners(PlayerAdvancements playerAdvancements) {
-			this.advancements = playerAdvancements;
-		}
-
-		public boolean isEmpty() {
-			return this.listeners.isEmpty();
-		}
-
-		public void add(Listener<AoALevelUpTrigger.Instance> listener) {
-			this.listeners.add(listener);
-		}
-
-		public void remove(Listener<AoALevelUpTrigger.Instance> listener) {
-			this.listeners.remove(listener);
-		}
-
-		public void trigger(AoASkill skill, int lvl) {
-			ArrayList<Listener<Instance>> list = null;
-
-			for (Listener<Instance> listener : this.listeners) {
-				if (listener.getTriggerInstance().test(skill, lvl)) {
-					if (list == null)
-						list = new ArrayList<Listener<Instance>>();
-
-					list.add(listener);
-				}
-			}
-
-			if (list != null) {
-				for (Listener<Instance> listener : list) {
-					listener.run(this.advancements);
-				}
-			}
 		}
 	}
 }

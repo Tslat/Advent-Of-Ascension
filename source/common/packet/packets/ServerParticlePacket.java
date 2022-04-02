@@ -1,12 +1,12 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.registry.Registry;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
 
 import java.util.ArrayList;
@@ -24,31 +24,31 @@ public class ServerParticlePacket implements AoAPacket {
 		this.longRange = longRange;
 	}
 
-	public ServerParticlePacket particle(IParticleData particle, Entity entity) {
+	public ServerParticlePacket particle(ParticleOptions particle, Entity entity) {
 		return particle(particle, entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 
-	public ServerParticlePacket particle(IParticleData particle, Entity entity, double velX, double velY, double velZ) {
+	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, double velX, double velY, double velZ) {
 		return particle(particle, entity.getX(), entity.getY(), entity.getZ(), velX, velY, velZ, 1);
 	}
 
-	public ServerParticlePacket particle(IParticleData particle, Entity entity, double velX, double velY, double velZ, int amount) {
+	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, double velX, double velY, double velZ, int amount) {
 		return particle(particle, entity.getX(), entity.getY(), entity.getZ(), velX, velY, velZ, amount);
 	}
 
-	public ServerParticlePacket particle(IParticleData particle, double x, double y, double z) {
+	public ServerParticlePacket particle(ParticleOptions particle, double x, double y, double z) {
 		return particle(particle, x, y, z, 1);
 	}
 
-	public ServerParticlePacket particle(IParticleData particle, double x, double y, double z, int amount) {
+	public ServerParticlePacket particle(ParticleOptions particle, double x, double y, double z, int amount) {
 		return particle(particle, x, y, z, 0, 0, 0, amount);
 	}
 
-	public ServerParticlePacket particle(IParticleData particle, double x, double y, double z, double velX, double velY, double velZ) {
+	public ServerParticlePacket particle(ParticleOptions particle, double x, double y, double z, double velX, double velY, double velZ) {
 		return particle(particle, x, y, z, velX, velY, velZ, 1);
 	}
 
-	public ServerParticlePacket particle(IParticleData particle, double x, double y, double z, double velX, double velY, double velZ, int amount) {
+	public ServerParticlePacket particle(ParticleOptions particle, double x, double y, double z, double velX, double velY, double velZ, int amount) {
 		particles.add(new ParticleData(particle, x, y, z, velX, velY, velZ, amount));
 
 		return this;
@@ -59,7 +59,7 @@ public class ServerParticlePacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeInt(particles.size());
 
 		for (ParticleData data : particles) {
@@ -67,7 +67,7 @@ public class ServerParticlePacket implements AoAPacket {
 		}
 	}
 
-	public static ServerParticlePacket decode(PacketBuffer buffer) {
+	public static ServerParticlePacket decode(FriendlyByteBuf buffer) {
 		ServerParticlePacket packet = new ServerParticlePacket();
 		int count = buffer.readInt();
 
@@ -88,12 +88,12 @@ public class ServerParticlePacket implements AoAPacket {
 		context.get().setPacketHandled(true);
 	}
 
-	private static <T extends IParticleData> T deserializeParticle(PacketBuffer buffer, ParticleType<T> particleType) {
+	private static <T extends ParticleOptions> T deserializeParticle(FriendlyByteBuf buffer, ParticleType<T> particleType) {
 		return particleType.getDeserializer().fromNetwork(particleType, buffer);
 	}
 
 	private static class ParticleData {
-		private final IParticleData particle;
+		private final ParticleOptions particle;
 
 		private final double x;
 		private final double y;
@@ -104,7 +104,7 @@ public class ServerParticlePacket implements AoAPacket {
 
 		private final int amount;
 
-		private ParticleData(IParticleData particle, double x, double y, double z, double velX, double velY, double velZ, int amount) {
+		private ParticleData(ParticleOptions particle, double x, double y, double z, double velX, double velY, double velZ, int amount) {
 			this.particle = particle;
 			this.x = x;
 			this.y = y;
@@ -115,7 +115,7 @@ public class ServerParticlePacket implements AoAPacket {
 			this.amount = amount;
 		}
 
-		private void toBuffer(PacketBuffer buffer) {
+		private void toBuffer(FriendlyByteBuf buffer) {
 			buffer.writeInt(Registry.PARTICLE_TYPE.getId(this.particle.getType()));
 			this.particle.writeToNetwork(buffer);
 			buffer.writeDouble(this.x);
@@ -127,11 +127,11 @@ public class ServerParticlePacket implements AoAPacket {
 			buffer.writeInt(this.amount);
 		}
 
-		private static ParticleData fromBuffer(PacketBuffer buffer) {
-			ParticleType<? extends IParticleData> particle = Registry.PARTICLE_TYPE.byId(buffer.readInt());
+		private static ParticleData fromBuffer(FriendlyByteBuf buffer) {
+			ParticleType<? extends ParticleOptions> particle = Registry.PARTICLE_TYPE.byId(buffer.readInt());
 
 			if (particle == null)
-				particle = ParticleTypes.BARRIER;
+				particle = ParticleTypes.BLOCK_MARKER;
 
 			return new ParticleData(deserializeParticle(buffer, particle), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readInt());
 		}

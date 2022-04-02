@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.item.food;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -20,14 +20,14 @@ import java.util.List;
 
 public class Rosidons extends Item {
 	public Rosidons() {
-		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(new Food.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
+		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity entity) {
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
 		if (!world.isClientSide) {
 			if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, new TranslationTextComponent("message.feedback.item.rosidons.dimFail"));
+				PlayerUtil.notifyPlayer((ServerPlayer)entity, new TranslatableComponent("message.feedback.item.rosidons.dimFail"));
 
 				return super.finishUsingItem(stack, world, entity);
 			}
@@ -35,7 +35,7 @@ public class Rosidons extends Item {
 			int calculatedY = WorldUtil.getTrueWorldHeight(world, (int)entity.getX(), (int)entity.getZ());
 
 			if (calculatedY == 0) {
-				PlayerUtil.notifyPlayer((ServerPlayerEntity)entity, new TranslationTextComponent("message.feedback.item.rosidons.noHeightFail"));
+				PlayerUtil.notifyPlayer((ServerPlayer)entity, new TranslatableComponent("message.feedback.item.rosidons.noHeightFail"));
 
 				return super.finishUsingItem(stack, world, entity);
 			}
@@ -47,7 +47,7 @@ public class Rosidons extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

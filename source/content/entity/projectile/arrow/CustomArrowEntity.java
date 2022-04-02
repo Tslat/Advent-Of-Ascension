@@ -3,51 +3,51 @@ package net.tslat.aoa3.content.entity.projectile.arrow;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.AbstractArrowEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.play.server.SChangeGameStatePacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Arrow;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.content.item.weapon.crossbow.BaseCrossbow;
 
 import javax.annotation.Nullable;
-import java.util.Arrays;
+import java.util.List;
 
-public class CustomArrowEntity extends ArrowEntity {
+public class CustomArrowEntity extends Arrow {
 	protected BaseBow bow;
 	protected BaseCrossbow crossbow;
 
 	private boolean ignoreExplosions = false;
 	private Entity cachedOwner = null;
 
-	public CustomArrowEntity(EntityType<? extends ArrowEntity> type, World world) {
+	public CustomArrowEntity(EntityType<? extends Arrow> type, Level world) {
 		super(type, world);
 	}
 
-	public CustomArrowEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.ARROW.get(), world);
+	public CustomArrowEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.ARROW.get(), world);
 
 		setPos(x, y, z);
 	}
 
-	public CustomArrowEntity(World world, BaseBow bow, LivingEntity shooter, double baseDamage) {
-		super(AoAEntities.Projectiles.ARROW.get(), world);
+	public CustomArrowEntity(Level world, BaseBow bow, LivingEntity shooter, double baseDamage) {
+		super(AoAProjectiles.ARROW.get(), world);
 
 		setOwner(shooter);
 		setBaseDamage(baseDamage);
@@ -57,8 +57,8 @@ public class CustomArrowEntity extends ArrowEntity {
 		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 	}
 
-	public CustomArrowEntity(World world, BaseCrossbow crossbow, LivingEntity shooter, double baseDamage) {
-		super(AoAEntities.Projectiles.ARROW.get(), world);
+	public CustomArrowEntity(Level world, BaseCrossbow crossbow, LivingEntity shooter, double baseDamage) {
+		super(AoAProjectiles.ARROW.get(), world);
 
 		setOwner(shooter);
 		setBaseDamage(baseDamage);
@@ -68,20 +68,18 @@ public class CustomArrowEntity extends ArrowEntity {
 		setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 	}
 
-	public static CustomArrowEntity fromArrow(AbstractArrowEntity baseArrow, BaseBow bow, LivingEntity shooter, double baseDamage) {
-		CustomArrowEntity arrow = new CustomArrowEntity(AoAEntities.Projectiles.ARROW.get(), baseArrow.level);
+	public static CustomArrowEntity fromArrow(AbstractArrow baseArrow, BaseBow bow, LivingEntity shooter, double baseDamage) {
+		CustomArrowEntity arrow = new CustomArrowEntity(AoAProjectiles.ARROW.get(), baseArrow.level);
 
 		arrow.setOwner(shooter);
 		arrow.setBaseDamage(baseDamage);
-		arrow.setKnockback(baseArrow.knockback);
+		arrow.setKnockback(baseArrow.getKnockback());
 		arrow.setCritArrow(baseArrow.isCritArrow());
 		arrow.setSecondsOnFire(baseArrow.getRemainingFireTicks());
 		duplicateArrowVelocity(baseArrow, arrow);
 		arrow.setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 
-		if (baseArrow instanceof ArrowEntity) {
-			ArrowEntity baseArrowEntity = (ArrowEntity)baseArrow;
-
+		if (baseArrow instanceof Arrow baseArrowEntity) {
 			arrow.potion = baseArrowEntity.potion;
 			arrow.effects = baseArrowEntity.effects;
 			arrow.setFixedColor(baseArrowEntity.getColor());
@@ -92,20 +90,18 @@ public class CustomArrowEntity extends ArrowEntity {
 		return arrow;
 	}
 
-	public static CustomArrowEntity fromArrow(AbstractArrowEntity baseArrow, BaseCrossbow crossbow, LivingEntity shooter, double baseDamage) {
-		CustomArrowEntity arrow = new CustomArrowEntity(AoAEntities.Projectiles.ARROW.get(), baseArrow.level);
+	public static CustomArrowEntity fromArrow(AbstractArrow baseArrow, BaseCrossbow crossbow, LivingEntity shooter, double baseDamage) {
+		CustomArrowEntity arrow = new CustomArrowEntity(AoAProjectiles.ARROW.get(), baseArrow.level);
 
 		arrow.setOwner(shooter);
 		arrow.setBaseDamage(baseDamage);
-		arrow.setKnockback(baseArrow.knockback);
+		arrow.setKnockback(baseArrow.getKnockback());
 		arrow.setCritArrow(baseArrow.isCritArrow());
 		arrow.setSecondsOnFire(baseArrow.getRemainingFireTicks());
 		duplicateArrowVelocity(baseArrow, arrow);
 		arrow.setPos(shooter.getX(), shooter.getEyeY() - 0.1f, shooter.getZ());
 
-		if (baseArrow instanceof ArrowEntity) {
-			ArrowEntity baseArrowEntity = (ArrowEntity)baseArrow;
-
+		if (baseArrow instanceof Arrow baseArrowEntity) {
 			arrow.potion = baseArrowEntity.potion;
 			arrow.effects = baseArrowEntity.effects;
 			arrow.setFixedColor(baseArrowEntity.getColor());
@@ -116,11 +112,12 @@ public class CustomArrowEntity extends ArrowEntity {
 		return arrow;
 	}
 
-	protected static void duplicateArrowVelocity(AbstractArrowEntity source, AbstractArrowEntity target) {
+	protected static void duplicateArrowVelocity(AbstractArrow source, AbstractArrow target) {
 		target.setDeltaMovement(source.getDeltaMovement());
 
-		target.xRot = source.xRot;
-		target.yRot = source.yRot;
+		target.setXRot(source.getXRot());
+		target.setYRot(source.getYRot());
+
 		target.xRotO = source.xRotO;
 		target.yRotO = source.yRotO;
 	}
@@ -158,15 +155,15 @@ public class CustomArrowEntity extends ArrowEntity {
 	}
 
 	@Override
-	protected void onHit(RayTraceResult rayTrace) {
-		if (rayTrace.getType() == RayTraceResult.Type.ENTITY) {
-			onHitEntity((EntityRayTraceResult)rayTrace);
+	protected void onHit(HitResult rayTrace) {
+		if (rayTrace.getType() == HitResult.Type.ENTITY) {
+			onHitEntity((EntityHitResult)rayTrace);
 		}
-		else if (rayTrace.getType() == RayTraceResult.Type.BLOCK) {
-			BlockRayTraceResult blockTrace = (BlockRayTraceResult)rayTrace;
+		else if (rayTrace.getType() == HitResult.Type.BLOCK) {
+			BlockHitResult blockTrace = (BlockHitResult)rayTrace;
 			BlockState blockstate = level.getBlockState(blockTrace.getBlockPos());
 			lastState = blockstate;
-			Vector3d Vector3d = blockTrace.getLocation().subtract(getX(), getY(), getZ());
+			Vec3 Vec3 = blockTrace.getLocation().subtract(getX(), getY(), getZ());
 
 			if (bow != null) {
 				bow.onBlockHit(this, blockTrace, getOwner());
@@ -175,9 +172,9 @@ public class CustomArrowEntity extends ArrowEntity {
 				crossbow.onBlockHit(this, blockTrace, getOwner());
 			}
 
-			setDeltaMovement(Vector3d);
+			setDeltaMovement(Vec3);
 
-			Vector3d Vector3d1 = Vector3d.normalize().scale((double)0.05F);
+			Vec3 Vector3d1 = Vec3.normalize().scale((double)0.05F);
 
 			setPosRaw(getX() - Vector3d1.x, getY() - Vector3d1.y, getZ() - Vector3d1.z);
 			playSound(getHitGroundSoundEvent(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
@@ -201,7 +198,7 @@ public class CustomArrowEntity extends ArrowEntity {
 	}
 
 	@Override
-	protected void onHitEntity(EntityRayTraceResult rayTrace) {
+	protected void onHitEntity(EntityHitResult rayTrace) {
 		Entity target = rayTrace.getEntity();
 		float drawPower = (float)this.getDeltaMovement().length();
 		double damage = getBaseDamage();
@@ -224,7 +221,7 @@ public class CustomArrowEntity extends ArrowEntity {
 				piercedAndKilledEntities = Lists.newArrayListWithCapacity(5);
 
 			if (piercingIgnoreEntityIds.size() >= getPierceLevel() + 1) {
-				remove();
+				discard();
 
 				return;
 			}
@@ -262,17 +259,15 @@ public class CustomArrowEntity extends ArrowEntity {
 				crossbow.onEntityHit(this, target, shooter, damage, drawPower);
 			}
 
-			if (target instanceof LivingEntity) {
-				LivingEntity livingTarget = (LivingEntity)target;
-
+			if (target instanceof LivingEntity livingTarget) {
 				if (!level.isClientSide && getPierceLevel() <= 0)
 					livingTarget.setArrowCount(livingTarget.getArrowCount() + 1);
 
-				if (knockback > 0) {
-					Vector3d Vector3d = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(knockback * 0.6D);
+				if (getKnockback() > 0) {
+					Vec3 Vec3 = getDeltaMovement().multiply(1.0D, 0.0D, 1.0D).normalize().scale(getKnockback() * 0.6D);
 
-					if (Vector3d.lengthSqr() > 0.0D)
-						livingTarget.push(Vector3d.x, 0.1D, Vector3d.z);
+					if (Vec3.lengthSqr() > 0.0D)
+						livingTarget.push(Vec3.x, 0.1D, Vec3.z);
 				}
 
 				if (!level.isClientSide && shooter instanceof LivingEntity) {
@@ -282,20 +277,18 @@ public class CustomArrowEntity extends ArrowEntity {
 
 				doPostHurtEffects(livingTarget);
 
-				if (livingTarget != shooter && livingTarget instanceof PlayerEntity && shooter instanceof ServerPlayerEntity)
-					((ServerPlayerEntity)shooter).connection.send(new SChangeGameStatePacket(SChangeGameStatePacket.ARROW_HIT_PLAYER, 0.0F));
+				if (livingTarget != shooter && livingTarget instanceof Player && shooter instanceof ServerPlayer)
+					((ServerPlayer)shooter).connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.ARROW_HIT_PLAYER, 0.0F));
 
 				if (!target.isAlive() && piercedAndKilledEntities != null)
 					piercedAndKilledEntities.add(livingTarget);
 
-				if (!level.isClientSide && shooter instanceof ServerPlayerEntity) {
-					ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)shooter;
-
+				if (!level.isClientSide && shooter instanceof ServerPlayer serverPlayer) {
 					if (piercedAndKilledEntities != null && shotFromCrossbow()) {
-						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, this.piercedAndKilledEntities);
+						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverPlayer, this.piercedAndKilledEntities);
 					}
 					else if (!target.isAlive() && shotFromCrossbow()) {
-						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverplayerentity, Arrays.asList(target));
+						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverPlayer, List.of(target));
 					}
 				}
 			}
@@ -303,26 +296,27 @@ public class CustomArrowEntity extends ArrowEntity {
 			playSound(getHitGroundSoundEvent(), 1.0F, 1.2F / (random.nextFloat() * 0.2F + 0.9F));
 
 			if (getPierceLevel() <= 0)
-				remove();
+				discard();
 		}
 		else {
 			target.setRemainingFireTicks(fireTimer);
 			setDeltaMovement(getDeltaMovement().scale(-0.1D));
 
-			yRot += 180.0F;
+			setYRot(getYRot() + 180f);
+
 			yRotO += 180.0F;
 
 			if (!level.isClientSide && getDeltaMovement().lengthSqr() < 0.0000001) {
-				if (pickup == PickupStatus.ALLOWED)
+				if (pickup == Pickup.ALLOWED)
 					spawnAtLocation(getPickupItem(), 0.1F);
 
-				remove();
+				discard();
 			}
 		}
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

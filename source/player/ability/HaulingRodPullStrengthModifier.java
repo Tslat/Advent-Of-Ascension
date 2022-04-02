@@ -1,7 +1,7 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -15,7 +15,7 @@ public class HaulingRodPullStrengthModifier extends ScalableModAbility {
 		super(AoAAbilities.HAULING_ROD_PULL_STRENGTH.get(), skill, data);
 	}
 
-	public HaulingRodPullStrengthModifier(AoASkill.Instance skill, CompoundNBT data) {
+	public HaulingRodPullStrengthModifier(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.HAULING_ROD_PULL_STRENGTH.get(), skill, data);
 	}
 

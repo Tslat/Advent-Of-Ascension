@@ -1,7 +1,7 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
 
 import java.util.function.Supplier;
@@ -35,7 +35,7 @@ public class UpdateClientMovementPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeBoolean(x != null);
 
 		if (x != null)
@@ -54,7 +54,7 @@ public class UpdateClientMovementPacket implements AoAPacket {
 		buffer.writeInt(operation.toOrdinal());
 	}
 
-	public static UpdateClientMovementPacket decode(PacketBuffer buffer) {
+	public static UpdateClientMovementPacket decode(FriendlyByteBuf buffer) {
 		Float x = buffer.readBoolean() ? buffer.readFloat() : null;
 		Float y = buffer.readBoolean() ? buffer.readFloat() : null;
 		Float z = buffer.readBoolean() ? buffer.readFloat() : null;
@@ -81,19 +81,13 @@ public class UpdateClientMovementPacket implements AoAPacket {
 		}
 
 		public static Operation fromOrdinal(int ordinal) {
-			switch (ordinal) {
-				case 1:
-					return ADD;
-				case 2:
-					return MULTIPLY;
-				case 3:
-					return MAX;
-				case 4:
-					return MIN;
-				case 0:
-				default:
-					return SET;
-			}
+			return switch (ordinal) {
+				case 1 -> ADD;
+				case 2 -> MULTIPLY;
+				case 3 -> MAX;
+				case 4 -> MIN;
+				default -> SET;
+			};
 		}
 
 		public int toOrdinal() {

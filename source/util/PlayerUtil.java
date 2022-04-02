@@ -1,23 +1,27 @@
 package net.tslat.aoa3.util;
 
 import it.unimi.dsi.fastutil.ints.Int2FloatOpenHashMap;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.network.play.server.SPlaySoundEffectPacket;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.GameType;
-import net.minecraft.world.World;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.OwnableEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
@@ -52,18 +56,18 @@ public final class PlayerUtil {
     }
 
     @Nonnull
-    public static ServerPlayerDataManager getAdventPlayer(@Nonnull ServerPlayerEntity player) {
-        AdventPlayerCapabilityHandles cap = player.getCapability(AdventPlayerCapabilityProvider.INSTANCE, null).orElseGet(() -> new AdventPlayerCapability((ServerPlayerEntity)player));
+    public static ServerPlayerDataManager getAdventPlayer(@Nonnull ServerPlayer player) {
+        AdventPlayerCapabilityHandles cap = player.getCapability(AdventPlayerCapabilityProvider.CAPABILITY, null).orElseGet(() -> new AdventPlayerCapability(player));
 
         return cap.getPlayerData();
     }
 
     @Nonnull
-    public static PlayerDataManager getAdventPlayer(@Nonnull PlayerEntity player) {
+    public static PlayerDataManager getAdventPlayer(@Nonnull Player player) {
         PlayerDataManager plData;
 
         if (!player.level.isClientSide()) {
-            plData = getAdventPlayer((ServerPlayerEntity)player);
+            plData = getAdventPlayer((ServerPlayer)player);
         }
         else {
             plData = ClientOperations.CLIENT_PLAYER_DATA;
@@ -76,21 +80,21 @@ public final class PlayerUtil {
     }
 
     @Nonnull
-    public static AoASkill.Instance getSkill(PlayerEntity player, AoASkill skill) {
+    public static AoASkill.Instance getSkill(Player player, AoASkill skill) {
         return getAdventPlayer(player).getSkill(skill);
     }
 
-    public static int getLevel(PlayerEntity player, AoASkill skill) {
+    public static int getLevel(Player player, AoASkill skill) {
         AoASkill.Instance instance = getSkill(player, skill);
 
         return instance == AoASkills.DEFAULT ? 0 : instance.getLevel(true);
     }
 
-    public static boolean doesPlayerHaveLevel(PlayerEntity player, AoASkill skill, int level) {
+    public static boolean doesPlayerHaveLevel(Player player, AoASkill skill, int level) {
         return getLevel(player, skill) >= level;
     }
 
-    public static void giveXpToPlayer(ServerPlayerEntity player, AoASkill skill, float xp, boolean ignoreXpBuffs) {
+    public static void giveXpToPlayer(ServerPlayer player, AoASkill skill, float xp, boolean ignoreXpBuffs) {
         AoASkill.Instance instance = getSkill(player, skill);
 
         if (instance != AoASkills.DEFAULT)
@@ -98,24 +102,24 @@ public final class PlayerUtil {
     }
 
     @Nonnull
-    public static AoAResource.Instance getResource(PlayerEntity player, AoAResource resource) {
+    public static AoAResource.Instance getResource(Player player, AoAResource resource) {
         return getAdventPlayer(player).getResource(resource);
     }
 
-    public static float getResourceValue(PlayerEntity player, AoAResource resource) {
+    public static float getResourceValue(Player player, AoAResource resource) {
         AoAResource.Instance instance = getResource(player, resource);
 
         return instance == AoAResources.DEFAULT ? 0 : instance.getCurrentValue();
     }
 
-    public static void addResourceToPlayer(ServerPlayerEntity player, AoAResource resource, float amount) {
+    public static void addResourceToPlayer(ServerPlayer player, AoAResource resource, float amount) {
         AoAResource.Instance instance = getResource(player, resource);
 
         if (instance != AoAResources.DEFAULT)
             instance.addValue(amount);
     }
 
-    public static boolean consumeResource(ServerPlayerEntity player, AoAResource resource, float amount, boolean forceConsume) {
+    public static boolean consumeResource(ServerPlayer player, AoAResource resource, float amount, boolean forceConsume) {
         AoAResource.Instance instance = getResource(player, resource);
 
         if (instance == AoAResources.DEFAULT)
@@ -132,7 +136,7 @@ public final class PlayerUtil {
         return XP_MAP.get(currentLevel);
     }
 
-    public static boolean isWearingFullSet(ServerPlayerEntity player, AdventArmour.Type setType) {
+    public static boolean isWearingFullSet(ServerPlayer player, AdventArmour.Type setType) {
         return getAdventPlayer(player).equipment().getCurrentFullArmourSet() == setType;
     }
 
@@ -192,25 +196,25 @@ public final class PlayerUtil {
         return highestSkill == null ? null : highestSkill.type();
     }
 
-    public static void notifyPlayer(PlayerEntity player, ITextComponent msg) {
+    public static void notifyPlayer(Player player, Component msg) {
         player.sendMessage(msg, Util.NIL_UUID);
     }
 
-    public static void notifyPlayerOfInsufficientLevel(ServerPlayerEntity player, AoASkill skill, int level) {
+    public static void notifyPlayerOfInsufficientLevel(ServerPlayer player, AoASkill skill, int level) {
         AoAPackets.messagePlayer(player, new ToastPopupPacket(skill, level));
     }
 
-    public static void notifyPlayerOfInsufficientResources(ServerPlayerEntity player, AoAResource resource, float amount) {
+    public static void notifyPlayerOfInsufficientResources(ServerPlayer player, AoAResource resource, float amount) {
         AoAPackets.messagePlayer(player, new ToastPopupPacket(resource, amount));
     }
 
-    public static void messageAllPlayersInRange(ITextComponent msg, World world, BlockPos center, int radius) {
-        for (PlayerEntity pl : WorldUtil.getAllPlayersInRegion(world, new AxisAlignedBB(center).inflate(radius))) {
+    public static void messageAllPlayersInRange(Component msg, Level world, BlockPos center, int radius) {
+        for (Player pl : WorldUtil.getAllPlayersInRegion(world, new AABB(center).inflate(radius))) {
             pl.sendMessage(msg, Util.NIL_UUID);
         }
     }
 
-    public static boolean shouldPlayerBeAffected(PlayerEntity pl) {
+    public static boolean shouldPlayerBeAffected(Player pl) {
         return pl.isAlive() && !pl.isSpectator() && !pl.isCreative();
     }
 
@@ -226,59 +230,51 @@ public final class PlayerUtil {
         }
     }
 
-    public static BlockPos getBlockAimingAt(PlayerEntity pl, double distance) {
-        Vector3d startVec = new Vector3d(pl.getX(), pl.getY() + (double)pl.getEyeHeight(), pl.getZ());
-        float cosYaw = MathHelper.cos((float)(-pl.yRot * Math.toRadians(1) - Math.PI));
-        float sinYaw = MathHelper.sin((float)(-pl.yRot * Math.toRadians(1) - Math.PI));
-        float cosPitch = -MathHelper.cos((float)(-pl.xRot * Math.toRadians(1)));
-        float sinPitch = MathHelper.sin((float)(-pl.xRot * Math.toRadians(1)));
+    public static BlockPos getBlockAimingAt(Player pl, double distance) {
+        Vec3 startVec = new Vec3(pl.getX(), pl.getY() + (double)pl.getEyeHeight(), pl.getZ());
+        float cosYaw = Mth.cos((float)(-pl.getYRot() * Math.toRadians(1) - Math.PI));
+        float sinYaw = Mth.sin((float)(-pl.getYRot() * Math.toRadians(1) - Math.PI));
+        float cosPitch = -Mth.cos((float)(-pl.getXRot() * Math.toRadians(1)));
+        float sinPitch = Mth.sin((float)(-pl.getXRot() * Math.toRadians(1)));
         float angleX = sinYaw * cosPitch;
         float angleZ = cosYaw * cosPitch;
-        Vector3d endVec = startVec.add((double)angleX * distance, (double)sinPitch * distance, (double)angleZ * distance);
-        BlockRayTraceResult ray = pl.level.clip(new RayTraceContext(startVec, endVec, RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, null));
+        Vec3 endVec = startVec.add((double)angleX * distance, (double)sinPitch * distance, (double)angleZ * distance);
+        BlockHitResult ray = pl.level.clip(new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, null));
 
-        if (ray.getType() != RayTraceResult.Type.BLOCK)
+        if (ray.getType() != HitResult.Type.BLOCK)
             return null;
 
         return ray.getBlockPos();
     }
 
-    public static void playSoundForPlayer(ServerPlayerEntity player, SoundEvent sound, SoundCategory category, double posX, double posY, double posZ, float volume, float pitch) {
-        player.connection.send(new SPlaySoundEffectPacket(sound, category, posX, posY, posZ, volume, pitch));
+    public static void playSoundForPlayer(ServerPlayer player, SoundEvent sound, SoundSource category, double posX, double posY, double posZ, float volume, float pitch) {
+        player.connection.send(new ClientboundSoundPacket(sound, category, posX, posY, posZ, volume, pitch));
     }
 
     @Nullable
-    public static PlayerEntity getPlayerOrOwnerIfApplicable(@Nullable Entity entity) {
+    public static Player getPlayerOrOwnerIfApplicable(@Nullable Entity entity) {
         if (entity == null)
             return null;
 
-        if (entity instanceof PlayerEntity)
-            return (PlayerEntity)entity;
+        if (entity instanceof Player player)
+            return player;
 
-        if (entity instanceof TameableEntity) {
-            LivingEntity owner = ((TameableEntity)entity).getOwner();
+        if (entity instanceof OwnableEntity tameable && tameable.getOwner() instanceof Player player)
+            return player;
 
-            if (owner instanceof PlayerEntity)
-                return (PlayerEntity)owner;
-        }
-
-        if (entity instanceof ProjectileEntity) {
-           Entity owner = ((ProjectileEntity)entity).getOwner();
-
-           if (owner instanceof PlayerEntity)
-               return (PlayerEntity)owner;
-        }
+        if (entity instanceof Projectile projectile && projectile.getOwner() instanceof Player player)
+            return player;
 
         return null;
     }
 
-    public static EquipmentSlotType handToEquipmentSlotType(Hand hand) {
-        return hand == Hand.MAIN_HAND ? EquipmentSlotType.MAINHAND : EquipmentSlotType.OFFHAND;
+    public static EquipmentSlot handToEquipmentSlotType(InteractionHand hand) {
+        return hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
     }
 
-    public static GameType getGameMode(PlayerEntity player) {
-        if (player instanceof ServerPlayerEntity) {
-            return ((ServerPlayerEntity)player).gameMode.getGameModeForPlayer();
+    public static GameType getGameMode(Player player) {
+        if (player instanceof ServerPlayer serverPlayer) {
+            return serverPlayer.gameMode.getGameModeForPlayer();
         }
         else {
             return ClientOperations.getGameMode();

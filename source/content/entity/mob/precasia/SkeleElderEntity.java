@@ -1,21 +1,21 @@
 package net.tslat.aoa3.content.entity.mob.precasia;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.tslat.aoa3.content.block.functional.altar.ArmyBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.content.block.functional.altar.ArmyBlock;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
@@ -24,8 +24,8 @@ public class SkeleElderEntity extends AoAMeleeMob {
 	private BlockPos armyBlockPos;
 	private int wave;
 
-	public SkeleElderEntity(World world, BlockPos armyBlockPos, int wave) {
-		super(AoAEntities.Mobs.SKELE_ELDER.get(), world);
+	public SkeleElderEntity(Level world, BlockPos armyBlockPos, int wave) {
+		super(AoAMobs.SKELE_ELDER.get(), world);
 
 		this.armyBlockPos = armyBlockPos;
 		this.wave = wave;
@@ -33,7 +33,7 @@ public class SkeleElderEntity extends AoAMeleeMob {
 		restrictTo(armyBlockPos, 18);
 	}
 
-	public SkeleElderEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public SkeleElderEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		this.armyBlockPos = null;
@@ -46,7 +46,7 @@ public class SkeleElderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 2.34375f;
 	}
 
@@ -74,7 +74,7 @@ public class SkeleElderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (compound.contains("SkeletalArmyWave"))
@@ -85,7 +85,7 @@ public class SkeleElderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
 		if (wave > 0)
@@ -96,8 +96,8 @@ public class SkeleElderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.UNDEAD;
+	public MobType getMobType() {
+		return MobType.UNDEAD;
 	}
 
 	@Override

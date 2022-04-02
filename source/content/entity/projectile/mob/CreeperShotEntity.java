@@ -1,27 +1,27 @@
 package net.tslat.aoa3.content.entity.projectile.mob;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.mob.creeponia.CreeperlockEntity;
 import net.tslat.aoa3.content.entity.mob.creeponia.MagicalCreeperEntity;
 
 public class CreeperShotEntity extends BaseMobProjectile {
-	public CreeperShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public CreeperShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public CreeperShotEntity(World world) {
-		super(AoAEntities.Projectiles.CREEPER_SHOT.get(), world);
+	public CreeperShotEntity(Level world) {
+		super(AoAProjectiles.CREEPER_SHOT.get(), world);
 	}
 
 	public CreeperShotEntity(CreeperlockEntity shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.CREEPER_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CREEPER_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	public CreeperShotEntity(MagicalCreeperEntity shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.CREEPER_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CREEPER_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override

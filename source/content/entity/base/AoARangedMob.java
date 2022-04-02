@@ -1,30 +1,33 @@
 package net.tslat.aoa3.content.entity.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAEntityData;
@@ -34,35 +37,35 @@ import net.tslat.aoa3.util.DamageUtil;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public abstract class AoARangedMob extends MonsterEntity implements IRangedAttackMob, AoARangedAttacker {
+public abstract class AoARangedMob extends Monster implements RangedAttackMob, AoARangedAttacker {
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
 	protected boolean isSlipperyMovement = false;
 
-	protected AoARangedMob(EntityType<? extends MonsterEntity> entityType, World world) {
+	protected AoARangedMob(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 20, 40, 32));
-		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
 		xpReward = (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()) * 2) / 10f);
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
 
 	@Override
-	protected abstract float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn);
+	protected abstract float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn);
 
 	@Nullable
 	@Override
@@ -103,7 +106,7 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 	}
 
 	@Override
-	public float getWalkTargetValue(BlockPos pos, IWorldReader worldIn) {
+	public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) {
 		return AoAEntityData.SpawnConditions.DAYLIGHT_MOBS.contains(getType()) ? 1 : super.getWalkTargetValue(pos, worldIn);
 	}
 
@@ -166,22 +169,22 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 		double distanceFactorX = target.getX() - getX();
 		double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - projectile.getY();
 		double distanceFactorZ = target.getZ() - getZ();
-		double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
+		double hyp = Math.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
 		if (getShootSound() != null)
-			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
 		projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - level.getDifficulty().getId()));
 		level.addFreshEntity(projectile);
 	}
 
 	@Override
-	public void travel(Vector3d travelVector) {
+	public void travel(Vec3 travelVector) {
 		if (isEffectiveAi() || isControlledByLocalInstance()) {
-			ModifiableAttributeInstance gravity = getAttribute(ForgeMod.ENTITY_GRAVITY.get());
+			AttributeInstance gravity = getAttribute(ForgeMod.ENTITY_GRAVITY.get());
 			boolean isFalling = getDeltaMovement().y <= 0.0D;
 
-			if (isFalling && hasEffect(Effects.SLOW_FALLING)) {
+			if (isFalling && hasEffect(MobEffects.SLOW_FALLING)) {
 				if (!gravity.hasModifier(SLOW_FALLING)) gravity.addTransientModifier(SLOW_FALLING);
 				fallDistance = 0.0F;
 			}
@@ -193,7 +196,7 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 
 			FluidState fluidState = level.getFluidState(blockPosition());
 
-			if (isInWater() && isAffectedByFluids() && !canStandOnFluid(fluidState.getType())) {
+			if (isInWater() && isAffectedByFluids() && !canStandOnFluid(fluidState)) {
 				double initialYPos = getY();
 				float drag = isSprinting() ? 0.9F : getWaterSlowDown();
 				float swimMotionFactor = 0.02F;
@@ -210,7 +213,7 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 					swimMotionFactor += (getSpeed() - swimMotionFactor) * depthStrider / 3.0F;
 				}
 
-				if (hasEffect(Effects.DOLPHINS_GRACE))
+				if (hasEffect(MobEffects.DOLPHINS_GRACE))
 					drag = 0.96F;
 
 				swimMotionFactor *= (float)getAttribute(ForgeMod.SWIM_SPEED.get()).getValue();
@@ -218,21 +221,21 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 				moveRelative(swimMotionFactor, travelVector);
 				move(MoverType.SELF, getDeltaMovement());
 
-				Vector3d vector3d6 = getDeltaMovement();
+				Vec3 vector3d6 = getDeltaMovement();
 
 				if (horizontalCollision && onClimbable())
-					vector3d6 = new Vector3d(vector3d6.x, 0.2D, vector3d6.z);
+					vector3d6 = new Vec3(vector3d6.x, 0.2D, vector3d6.z);
 
 				setDeltaMovement(vector3d6.multiply(drag, 0.8F, drag));
 
-				Vector3d constrainedMotion = getFluidFallingAdjustedMovement(gravityValue, isFalling, getDeltaMovement());
+				Vec3 constrainedMotion = getFluidFallingAdjustedMovement(gravityValue, isFalling, getDeltaMovement());
 
 				setDeltaMovement(constrainedMotion);
 
 				if (horizontalCollision && isFree(constrainedMotion.x, constrainedMotion.y + (double)0.6F - getY() + initialYPos, constrainedMotion.z))
 					setDeltaMovement(constrainedMotion.x, 0.3F, constrainedMotion.z);
 			}
-			else if (isInLava() && isAffectedByFluids() && !canStandOnFluid(fluidState.getType())) {
+			else if (isInLava() && isAffectedByFluids() && !canStandOnFluid(fluidState)) {
 				double originalYPos = getY();
 				moveRelative(0.02F, travelVector);
 				move(MoverType.SELF, getDeltaMovement());
@@ -240,7 +243,7 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 				if (getFluidHeight(FluidTags.LAVA) <= getFluidJumpThreshold()) {
 					setDeltaMovement(getDeltaMovement().multiply(0.5D, 0.8F, 0.5D));
 
-					Vector3d constrainedMotion = getFluidFallingAdjustedMovement(gravityValue, isFalling, getDeltaMovement());
+					Vec3 constrainedMotion = getFluidFallingAdjustedMovement(gravityValue, isFalling, getDeltaMovement());
 
 					setDeltaMovement(constrainedMotion);
 				}
@@ -251,23 +254,23 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 				if (!isNoGravity())
 					setDeltaMovement(getDeltaMovement().add(0.0D, -gravityValue / 4.0D, 0.0D));
 
-				Vector3d newMotion = getDeltaMovement();
+				Vec3 newMotion = getDeltaMovement();
 
 				if (horizontalCollision && isFree(newMotion.x, newMotion.y + (double)0.6F - getY() + originalYPos, newMotion.z))
 					setDeltaMovement(newMotion.x, 0.3F, newMotion.z);
 			}
 			else if (isFallFlying()) {
-				Vector3d curMotion = getDeltaMovement();
+				Vec3 curMotion = getDeltaMovement();
 
 				if (curMotion.y > -0.5D)
 					fallDistance = 1.0F;
 
-				Vector3d lookVec = getLookAngle();
-				float normalizedPitch = xRot * ((float)Math.PI / 180F);
+				Vec3 lookVec = getLookAngle();
+				float normalizedPitch = getXRot() * ((float)Math.PI / 180F);
 				double lookHypot = Math.sqrt(lookVec.x * lookVec.x + lookVec.z * lookVec.z);
-				double lateralMotion = Math.sqrt(getHorizontalDistanceSqr(curMotion));
+				double lateralMotion =  curMotion.horizontalDistance();
 				double lookVecLength = lookVec.length();
-				float pitchRotation = MathHelper.cos(normalizedPitch);
+				float pitchRotation = Mth.cos(normalizedPitch);
 				pitchRotation = (float)((double)pitchRotation * (double)pitchRotation * Math.min(1.0D, lookVecLength / 0.4D));
 				curMotion = getDeltaMovement().add(0.0D, gravityValue * (-1.0D + (double)pitchRotation * 0.75D), 0.0D);
 
@@ -277,7 +280,7 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 				}
 
 				if (normalizedPitch < 0.0F && lookHypot > 0.0D) {
-					double lateralVelocityAdjust = lateralMotion * (double)(-MathHelper.sin(normalizedPitch)) * 0.04D;
+					double lateralVelocityAdjust = lateralMotion * (double)(-Mth.sin(normalizedPitch)) * 0.04D;
 					curMotion = curMotion.add(-lookVec.x * lateralVelocityAdjust / lookHypot, lateralVelocityAdjust * 3.2D, -lookVec.z * lateralVelocityAdjust / lookHypot);
 				}
 
@@ -288,7 +291,7 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 				move(MoverType.SELF, getDeltaMovement());
 
 				if (horizontalCollision && !level.isClientSide) {
-					double newLateralMotion = Math.sqrt(getHorizontalDistanceSqr(getDeltaMovement()));
+					double newLateralMotion = getDeltaMovement().horizontalDistance();
 					double lateralMotionDiff = lateralMotion - newLateralMotion;
 					float lateralCollisionSpeed = (float)(lateralMotionDiff * 10.0D - 3.0D);
 
@@ -303,16 +306,16 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 			}
 			else {
 				BlockPos standingPosition = getBlockPosBelowThatAffectsMyMovement();
-				float blockSlipperiness = level.getBlockState(getBlockPosBelowThatAffectsMyMovement()).getSlipperiness(level, getBlockPosBelowThatAffectsMyMovement(), this);
+				float blockSlipperiness = level.getBlockState(getBlockPosBelowThatAffectsMyMovement()).getFriction(level, getBlockPosBelowThatAffectsMyMovement(), this);
 				float friction = onGround ? blockSlipperiness * 0.91F : 0.91F;
-				Vector3d newMotion = handleRelativeFrictionAndCalculateMovement(travelVector, blockSlipperiness);
+				Vec3 newMotion = handleRelativeFrictionAndCalculateMovement(travelVector, blockSlipperiness);
 				double verticalMotion = newMotion.y;
 
 				if (isSlipperyMovement)
 					friction *= 0.9f;
 
-				if (hasEffect(Effects.LEVITATION)) {
-					verticalMotion += (0.05D * (double)(getEffect(Effects.LEVITATION).getAmplifier() + 1) - newMotion.y) * 0.2D;
+				if (hasEffect(MobEffects.LEVITATION)) {
+					verticalMotion += (0.05D * (double)(getEffect(MobEffects.LEVITATION).getAmplifier() + 1) - newMotion.y) * 0.2D;
 					fallDistance = 0.0F;
 				}
 				else if (level.isClientSide && !level.hasChunkAt(standingPosition)) {
@@ -331,6 +334,6 @@ public abstract class AoARangedMob extends MonsterEntity implements IRangedAttac
 			}
 		}
 
-		calculateEntityAnimation(this, this instanceof IFlyingAnimal);
+		calculateEntityAnimation(this, this instanceof FlyingAnimal);
 	}
 }

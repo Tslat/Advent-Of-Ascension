@@ -1,38 +1,37 @@
 package net.tslat.aoa3.client.render.tileentity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.client.renderer.WorldRenderer;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
-import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.world.World;
+import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.block.model.ItemTransforms;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
+import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.block.tileentity.LunarCreationTableTileEntity;
 
-public class LunarCreationTableRenderer extends TileEntityRenderer<LunarCreationTableTileEntity> {
-	public LunarCreationTableRenderer(TileEntityRendererDispatcher dispatcher) {
-		super(dispatcher);
+public class LunarCreationTableRenderer implements BlockEntityRenderer<LunarCreationTableTileEntity> {
+	public LunarCreationTableRenderer(BlockEntityRendererProvider.Context context) {
 	}
 
 	@Override
-	public void render(LunarCreationTableTileEntity tileEntity, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int combinedLight, int combinedOverlay) {
-		NonNullList<ItemStack> contents = tileEntity.getContents();
+	public void render(LunarCreationTableTileEntity blockEntity, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+		NonNullList<ItemStack> contents = blockEntity.getContents();
 		ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
-		World world = tileEntity.getLevel();
-		BlockPos abovePos = tileEntity.getBlockPos().above();
+		Level world = blockEntity.getLevel();
+		BlockPos abovePos = blockEntity.getBlockPos().above();
 
 		if (world != null) {
 			if (world.getBlockState(abovePos).isSolidRender(world, abovePos))
 				return;
 
-			combinedLight = WorldRenderer.getLightColor(world, abovePos);
+			combinedLight = LevelRenderer.getLightColor(world, abovePos);
 		}
 		else {
 			combinedLight = 15728880;
@@ -56,7 +55,7 @@ public class LunarCreationTableRenderer extends TileEntityRenderer<LunarCreation
 			if (!(stack.getItem() instanceof BlockItem))
 				matrix.scale(0.5f, 0.5f, 0.5f);
 
-			renderer.renderStatic(stack, ItemCameraTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrix, buffer);
+			renderer.renderStatic(stack, ItemTransforms.TransformType.FIXED, combinedLight, combinedOverlay, matrix, buffer, 0);
 			matrix.popPose();
 		}
 

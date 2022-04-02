@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -18,12 +18,12 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 
 public class BugeyeEntity extends AoAMeleeMob {
-	public BugeyeEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public BugeyeEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.65f;
 	}
 
@@ -45,13 +45,13 @@ public class BugeyeEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (target.isAlive() && target instanceof ServerPlayerEntity)
-			AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/circles.png"), 150));
+		if (target.isAlive() && target instanceof ServerPlayer)
+			AoAPackets.messagePlayer((ServerPlayer)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/circles.png"), 150));
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.ARTHROPOD;
+	public MobType getMobType() {
+		return MobType.ARTHROPOD;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.common.container.FrameBenchContainer;
 
 import java.util.function.Supplier;
@@ -16,12 +16,12 @@ public class GuiDataPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeUtf(type.toString());
 		buffer.writeUtf(stringData);
 	}
 
-	public static GuiDataPacket decode(PacketBuffer buffer) {
+	public static GuiDataPacket decode(FriendlyByteBuf buffer) {
 		return new GuiDataPacket(Type.valueOf(buffer.readUtf(32767)), buffer.readUtf(32767));
 	}
 

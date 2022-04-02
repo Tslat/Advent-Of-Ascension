@@ -2,7 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -16,7 +21,7 @@
         },
         {
           "function": "minecraft:copy_nbt",
-          "source": "block_entity",
+          "source": "this",
           "ops": [
             {
               "source": "EntityID",
@@ -27,7 +32,7 @@
         },
         {
           "function": "minecraft:copy_nbt",
-          "source": "block_entity",
+          "source": "this",
           "ops": [
             {
               "source": "OriginalTrophy",

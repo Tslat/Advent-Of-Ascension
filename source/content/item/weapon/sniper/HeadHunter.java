@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.item.weapon.sniper;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -34,8 +34,8 @@ public class HeadHunter extends BaseSniper {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity && target.level instanceof ServerWorld) {
-			Vector3d preciseImpactSpot = EntityUtil.preciseEntityInterceptCalculation(target, bullet, 20);
+		if (target instanceof LivingEntity && target.level instanceof ServerLevel) {
+			Vec3 preciseImpactSpot = EntityUtil.preciseEntityInterceptCalculation(target, bullet, 20);
 
 			if (preciseImpactSpot != null) {
 				double headMinRange = (target.getBoundingBox().minY + target.getEyeHeight()) - target.getBbHeight() * 0.105f;
@@ -43,21 +43,21 @@ public class HeadHunter extends BaseSniper {
 
 				if (preciseImpactSpot.y > headMinRange && preciseImpactSpot.y < headMaxRange) {
 					for (int i = 0; i < 5; i++) {
-						((ServerWorld)target.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, preciseImpactSpot.x + Item.random.nextDouble() - 0.5d, preciseImpactSpot.y + Item.random.nextDouble() - 0.5d, preciseImpactSpot.z + Item.random.nextDouble() - 0.5d, 3, 0, 0, 0, 0);
+						((ServerLevel)target.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, preciseImpactSpot.x + RandomUtil.randomValueBetween(-0.5d, 0.5d), preciseImpactSpot.y + RandomUtil.randomValueBetween(-0.5d, 0.5d), preciseImpactSpot.z + RandomUtil.randomValueBetween(-0.5d, 0.5d), 3, 0, 0, 0, 0);
 					}
 
-					if (shooter.getItemInHand(Hand.MAIN_HAND).getItem() != this && shooter.getItemInHand(Hand.OFF_HAND).getItem() != this)
+					if (shooter.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this && shooter.getItemInHand(InteractionHand.OFF_HAND).getItem() != this)
 						return;
 
-					if (shooter instanceof PlayerEntity)
-						((PlayerEntity)shooter).getCooldowns().addCooldown(this, (int)(getFiringDelay() / 2f));
+					if (shooter instanceof Player)
+						((Player)shooter).getCooldowns().addCooldown(this, (int)(getFiringDelay() / 2f));
 				}
 			}
 		}
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

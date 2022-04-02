@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.item.armour;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -15,21 +15,21 @@ import java.util.List;
 
 public class FaceMask extends AdventArmour {
 	public FaceMask() {
-		super(ItemUtil.customArmourMaterial("aoa3:face_mask", 36, new int[] {4, 7, 8, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), EquipmentSlotType.HEAD);
+		super(ItemUtil.customArmourMaterial("aoa3:face_mask", 36, new int[] {4, 7, 8, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), EquipmentSlot.HEAD);
 	}
 
 	@Override
-	public AdventArmour.Type setType() {
-		return AdventArmour.Type.ALL;
+	public Type setType() {
+		return Type.ALL;
 	}
 
 	@Override
-	public boolean isHelmetAirTight(ServerPlayerEntity player) {
+	public boolean isHelmetAirTight(ServerPlayer player) {
 		return true;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.helmet.airTight", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(anySetEffectHeader());
 	}

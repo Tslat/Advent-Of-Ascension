@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "aoa3:bloodstone_ore",
+    "aoa3:blue_gemstone_ore",
+    "aoa3:crystallite_ore",
+    "aoa3:elecanium_ore",
+    "aoa3:ghastly_ore",
+    "aoa3:ghoulish_ore",
+    "aoa3:green_gemstone_ore",
+    "aoa3:lyon_ore",
+    "aoa3:mystite_ore",
+    "aoa3:purple_gemstone_ore",
+    "aoa3:red_gemstone_ore",
+    "aoa3:shyregem_ore",
+    "aoa3:shyrestone_ore",
+    "aoa3:white_gemstone_ore",
+    "aoa3:yellow_gemstone_ore"
+  ]
+}

@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.scheduling.async.ShadowlordSpawnTask;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -22,17 +22,17 @@ public class ShadowAltar extends BossAltarBlock {
 	}
 
 	@Override
-	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
 		if (!player.level.isClientSide) {
 			new ShadowlordSpawnTask(player, blockPos).schedule(1, TimeUnit.SECONDS);
 
-			if (player.hasEffect(Effects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (player.hasEffect(MobEffects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.DUSTOPIA_REALMSTONE.get()));
 		}
 	}
 
 	@Override
-	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
 		return WorldUtil.isWorld(player.level, AoADimensions.ABYSS.key);
 	}
 

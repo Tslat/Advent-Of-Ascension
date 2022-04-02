@@ -1,8 +1,8 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.function.Supplier;
@@ -15,11 +15,11 @@ public class PatchouliBookOpenPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeResourceLocation(book);
 	}
 
-	public static PatchouliBookOpenPacket decode(PacketBuffer buffer) {
+	public static PatchouliBookOpenPacket decode(FriendlyByteBuf buffer) {
 		return new PatchouliBookOpenPacket(buffer.readResourceLocation());
 	}
 

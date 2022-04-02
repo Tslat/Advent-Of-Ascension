@@ -1,28 +1,29 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.datasync.SynchedEntityData;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -34,12 +35,12 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class RockRiderEntity extends AoAMeleeMob {
-	private static final DataParameter<Boolean> ALTERNATE_FORM = EntityDataManager.<Boolean>defineId(RockRiderEntity.class, DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> ALTERNATE_FORM = SynchedEntityData.<Boolean>defineId(RockRiderEntity.class, EntityDataSerializers.BOOLEAN);
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private boolean alternateForm = false;
 	private int formCooldown = 300;
 
-	public RockRiderEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public RockRiderEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;
@@ -48,7 +49,7 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 3.0625f;
 	}
 
@@ -137,7 +138,7 @@ public class RockRiderEntity extends AoAMeleeMob {
 			}
 
 			if (!level.isClientSide)
-				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_ROCK_RIDER_SWITCH.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_ROCK_RIDER_SWITCH.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 		}
 
 		if (!level.isClientSide()) {
@@ -153,17 +154,17 @@ public class RockRiderEntity extends AoAMeleeMob {
 		if (target instanceof LivingEntity) {
 			if (alternateForm) {
 				double resist = 1;
-				ModifiableAttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+				AttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
 
 				if (attrib != null)
 					resist -= attrib.getValue();
 
-				EntityUtil.applyPotions(target, new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 150).level(4));
+				EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 150).level(4));
 				target.push(getDeltaMovement().x() * 5 * resist, getDeltaMovement().y() * resist, getDeltaMovement().z() * 5 * resist);
 				target.hurtMarked = true;
 			}
 			else {
-				EntityUtil.applyPotions(target, new EffectBuilder(Effects.WEAKNESS, 150).level(4));
+				EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WEAKNESS, 150).level(4));
 			}
 		}
 	}
@@ -173,10 +174,10 @@ public class RockRiderEntity extends AoAMeleeMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.ROCK_RIDER.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.ROCK_RIDER.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -186,7 +187,7 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -194,14 +195,14 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.ROCK_RIDER_MUSIC.getId()));
@@ -209,10 +210,11 @@ public class RockRiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.ROCK_RIDER_MUSIC.getId()));
 		bossInfo.removePlayer(player);
 	}
 }
+*/

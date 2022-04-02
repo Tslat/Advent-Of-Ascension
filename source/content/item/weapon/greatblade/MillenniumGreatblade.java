@@ -1,20 +1,21 @@
 package net.tslat.aoa3.content.item.weapon.greatblade;
 
 import com.google.common.collect.ImmutableSetMultimap;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,7 +30,7 @@ public class MillenniumGreatblade extends BaseGreatblade {
 
 	@Override
 	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
-		return super.getDamageForAttack(target, attacker, swordStack, (float)(Item.random.nextFloat() * (maxDmg - baseDamage) + baseDamage) - 1);
+		return super.getDamageForAttack(target, attacker, swordStack, (float)(RandomUtil.randomNumberUpTo(1) * (maxDmg - baseDamage) + baseDamage) - 1);
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class MillenniumGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new StringTextComponent(Double.toString(getDamage())), new StringTextComponent(Double.toString(maxDmg))));
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new TextComponent(Double.toString(getDamage())), new TextComponent(Double.toString(maxDmg))));
 	}
 }

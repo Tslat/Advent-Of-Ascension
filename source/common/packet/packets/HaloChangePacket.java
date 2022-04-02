@@ -1,8 +1,8 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.util.AoAHaloUtil;
 import org.apache.logging.log4j.Level;
@@ -18,11 +18,11 @@ public class HaloChangePacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeUtf(haloChoice);
 	}
 
-	public static HaloChangePacket decode(PacketBuffer buffer) {
+	public static HaloChangePacket decode(FriendlyByteBuf buffer) {
 		return new HaloChangePacket(AoAHaloUtil.Type.Choosable.valueOf(buffer.readUtf(32767)));
 	}
 
@@ -36,7 +36,7 @@ public class HaloChangePacket implements AoAPacket {
 			Logging.logMessage(Level.WARN, "Error parsing halo info from client: " + haloChoice);
 		}
 
-		ServerPlayerEntity sender = context.get().getSender();
+		ServerPlayer sender = context.get().getSender();
 
 		if (sender != null) {
 			AoAHaloUtil.syncNewHaloChoice(sender.getGameProfile().getId(), preferredHalo);

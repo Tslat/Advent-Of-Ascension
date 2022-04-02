@@ -1,9 +1,9 @@
 package net.tslat.aoa3.content.entity.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 
 public interface AoARangedAttacker {

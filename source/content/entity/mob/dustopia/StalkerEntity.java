@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.entity.mob.dustopia;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
@@ -22,12 +22,12 @@ import net.tslat.aoa3.util.RandomUtil;
 import javax.annotation.Nullable;
 
 public class StalkerEntity extends AoAMeleeMob {
-    public StalkerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public StalkerEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 2.375f;
     }
 
@@ -53,11 +53,11 @@ public class StalkerEntity extends AoAMeleeMob {
     public void tick() {
         super.tick();
 
-        if (getTarget() instanceof ServerPlayerEntity && canSee(getTarget()) && EntityUtil.isPlayerLookingAtEntity((PlayerEntity)getTarget(), this)) {
+        if (getTarget() instanceof ServerPlayer && hasLineOfSight(getTarget()) && EntityUtil.isPlayerLookingAtEntity((Player)getTarget(), this)) {
             setDeltaMovement(0, getDeltaMovement().y(), 0);
 
             if (getTarget().distanceToSqr(this) <= 2 * 2)
-                AoAPackets.messagePlayer((ServerPlayerEntity)getTarget(), new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/static.png"), 30));
+                AoAPackets.messagePlayer((ServerPlayer)getTarget(), new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/static.png"), 30));
 
         }
     }

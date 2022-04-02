@@ -1,7 +1,7 @@
 package net.tslat.aoa3.integration.jei.recipe.infusion;
 
 import com.google.common.collect.Lists;
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -10,17 +10,18 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "infusion");
-	private final String title = LocaleUtil.getLocaleString("recipe.aoa3.infusion");
+	private final Component title = LocaleUtil.getLocaleMessage("recipe.aoa3.infusion");
 	private final IDrawable background;
 	private final IDrawable icon;
 	private final ICraftingGridHelper craftingGridHelper;
@@ -51,7 +52,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	}
 
 	@Override
-	public String getTitle() {
+	public Component getTitle() {
 		return title;
 	}
 
@@ -110,17 +111,17 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 			guiStacks.addTooltipCallback(((slotIndex, input, ingredient, tooltip) -> {
 				if (slotIndex == 0) {
 					if (!recipeRegistryName.getNamespace().equals("aoa3"))
-						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.by", TextFormatting.GRAY, new StringTextComponent(recipeRegistryName.getNamespace())));
+						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.by", ChatFormatting.GRAY, new TextComponent(recipeRegistryName.getNamespace())));
 
 					if (Minecraft.getInstance().options.advancedItemTooltips || Screen.hasShiftDown())
-						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.id", TextFormatting.DARK_GRAY, new StringTextComponent(recipeRegistryName.toString())));
+						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.id", ChatFormatting.DARK_GRAY, new TextComponent(recipeRegistryName.toString())));
 				}
 			}));
 		}
 	}
 
 	@Override
-	public void draw(InfusionRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
+	public void draw(InfusionRecipe recipe, PoseStack matrix, double mouseX, double mouseY) {
 		if (recipe == null)
 			return;
 

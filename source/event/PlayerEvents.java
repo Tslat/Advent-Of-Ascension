@@ -1,32 +1,34 @@
 package net.tslat.aoa3.event;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.block.IGrowable;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.item.TNTEntity;
-import net.minecraft.entity.monster.CreeperEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.FishingBobberEntity;
-import net.minecraft.item.BoneMealItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ChatType;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.ChatType;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.PlayerAdvancements;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.item.BoneMealItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
@@ -41,8 +43,8 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoATools;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
 import net.tslat.aoa3.content.item.misc.summoning.BossSpawningItem;
@@ -97,39 +99,35 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerJump(final LivingEvent.LivingJumpEvent ev) {
-		if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.LUNALUS.key) && ev.getEntity() instanceof PlayerEntity)
-			LunalusEvents.doPlayerJump((PlayerEntity)ev.getEntity());
+		if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.LUNALUS.key) && ev.getEntity() instanceof Player)
+			LunalusEvents.doPlayerJump((Player)ev.getEntity());
 	}
 
 	private static void onPlayerHit(final LivingAttackEvent ev) {
-		if (ev.getEntityLiving() instanceof ServerPlayerEntity && ev.getEntityLiving().getHealth() - ev.getAmount() <= 0 && ev.getEntityLiving().level.getLevelData().isHardcore())
-			ReservedItem.handlePlayerDeath((ServerPlayerEntity)ev.getEntityLiving());
+		if (ev.getEntityLiving() instanceof ServerPlayer && ev.getEntityLiving().getHealth() - ev.getAmount() <= 0 && ev.getEntityLiving().level.getLevelData().isHardcore())
+			ReservedItem.handlePlayerDeath((ServerPlayer)ev.getEntityLiving());
 	}
 
 	private static void onPlayerHurt(final LivingHurtEvent ev) {
 		Entity attacker = ev.getSource().getEntity();
 
 		if (DamageUtil.isMeleeDamage(ev.getSource()) && attacker instanceof LivingEntity) {
-			ItemStack weapon = ((LivingEntity)attacker).getItemInHand(Hand.MAIN_HAND);
+			ItemStack weapon = ((LivingEntity)attacker).getItemInHand(InteractionHand.MAIN_HAND);
 
 			if (weapon.getItem() instanceof BaseSword)
 				ev.setAmount((float)((BaseSword)weapon.getItem()).getDamageForAttack(ev.getEntityLiving(), (LivingEntity)attacker, weapon, ev.getAmount()));
 		}
 
-		if (ev.getEntityLiving() instanceof ServerPlayerEntity) {
-			ServerPlayerEntity pl = (ServerPlayerEntity)ev.getEntityLiving();
-
-			if (pl.getHealth() > 0 && ev.getSource().isExplosion() && ev.getSource().getDirectEntity() instanceof CreeperEntity) {
-				if ((!pl.level.getEntitiesOfClass(TNTEntity.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level.getEntitiesOfClass(TNTEntity.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+		if (ev.getEntityLiving() instanceof ServerPlayer pl) {
+			if (pl.getHealth() > 0 && ev.getSource().isExplosion() && ev.getSource().getDirectEntity() instanceof Creeper) {
+				if ((!pl.level.getEntitiesOfClass(PrimedTnt.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level.getEntitiesOfClass(PrimedTnt.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.CREEPONIA_REALMSTONE.get()));
 			}
 		}
 	}
 
 	private static void onPlayerFall(final LivingFallEvent ev) {
-		if (ev.getEntityLiving() instanceof ServerPlayerEntity) {
-			ServerPlayerEntity player = (ServerPlayerEntity)ev.getEntityLiving();
-
+		if (ev.getEntityLiving() instanceof ServerPlayer player) {
 			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.LELYETIA_REALMSTONE.get()));
 
@@ -140,12 +138,12 @@ public class PlayerEvents {
 
 	private static void onEntityDeath(final LivingDeathEvent ev) {
 		if (!ev.getEntity().level.isClientSide) {
-			if (ev.getEntity() instanceof ServerPlayerEntity) {
-				ReservedItem.handlePlayerDeath((ServerPlayerEntity)ev.getEntity());
+			if (ev.getEntity() instanceof ServerPlayer) {
+				ReservedItem.handlePlayerDeath((ServerPlayer)ev.getEntity());
 			}
-			else if (ev.getSource().getEntity() instanceof ServerPlayerEntity) {
+			else if (ev.getSource().getEntity() instanceof ServerPlayer) {
 				if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.DEEPLANDS.key)) {
-					if (ev.getEntityLiving() instanceof FlyingEntity)
+					if (ev.getEntityLiving() instanceof FlyingMob)
 						ev.getEntityLiving().spawnAtLocation(new ItemStack(AoAItems.MUSIC_DISC_CAVERNS.get()), 0.5f);
 				}
 			}
@@ -153,9 +151,9 @@ public class PlayerEvents {
 	}
 
 	private static void onBlockBreak(final BlockEvent.BreakEvent ev) {
-		PlayerEntity pl = ev.getPlayer();
+		Player pl = ev.getPlayer();
 
-		if (pl instanceof ServerPlayerEntity) {
+		if (pl instanceof ServerPlayer) {
 			BlockPos pos = ev.getPos();
 
 			if (ev.getState().is(Tags.Blocks.ORES) && pos.getY() <= 5 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
@@ -164,41 +162,39 @@ public class PlayerEvents {
 	}
 
 	private static void onBlockPlace(final BlockEvent.EntityPlaceEvent ev) {
-		if (ev.getEntity() instanceof ServerPlayerEntity) {
-			ServerPlayerEntity pl = (ServerPlayerEntity)ev.getEntity();
+		if (!(ev.getEntity() instanceof ServerPlayer player))
+			return;
 
-			if (PlayerUtil.isWearingFullSet(pl, AdventArmour.Type.HYDRANGIC)) {
-				if (ev.getPlacedBlock().getBlock() instanceof IGrowable && BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), ev.getEntity().level, ev.getPos(), pl)) {
-					ev.getWorld().levelEvent(2005, ev.getPos(), 0);
-					pl.inventory.hurtArmor(DamageSource.GENERIC, 16);
-				}
+		if (PlayerUtil.isWearingFullSet(player, AdventArmour.Type.HYDRANGIC)) {
+			if (ev.getPlacedBlock().getBlock() instanceof BonemealableBlock && BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), ev.getEntity().level, ev.getPos(), player)) {
+				ev.getWorld().levelEvent(2005, ev.getPos(), 0);
+				player.hurtArmor(DamageSource.GENERIC, 16);
 			}
 		}
 	}
 
 	private static void onPlayerLogin(final PlayerEvent.PlayerLoggedInEvent ev) {
-		if (ev.getEntityLiving() instanceof ServerPlayerEntity) {
-			ServerPlayerEntity pl = (ServerPlayerEntity)ev.getEntityLiving();
-			UUID uuid = pl.getGameProfile().getId();
+		if (ev.getEntityLiving() instanceof ServerPlayer player) {
+			UUID uuid = player.getGameProfile().getId();
 			String msg = null;
 
 			if (uuid.compareTo(UUID.fromString("2459b511-ca45-43d8-808d-f0eb30a63be4")) == 0) {
-				msg = TextFormatting.DARK_RED + "It begins...Is this the end?";
+				msg = ChatFormatting.DARK_RED + "It begins...Is this the end?";
 
-				((ServerWorld)pl.level).sendParticles(ParticleTypes.LARGE_SMOKE, pl.getX(), pl.getY() + 0.2d, pl.getZ(), 16, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, 1);
+				((ServerLevel)player.level).sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 0.2d, player.getZ(), 16, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, 1);
 			}
 			else if (AoAHaloUtil.isCrazyDonator(uuid)) {
-				msg = TextFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
+				msg = ChatFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
 			}
 
 			if (msg != null)
-				pl.getServer().getPlayerList().broadcastMessage(new StringTextComponent(msg), ChatType.GAME_INFO, Util.NIL_UUID);
+				player.getServer().getPlayerList().broadcastMessage(new TextComponent(msg), ChatType.GAME_INFO, Util.NIL_UUID);
 
-			AoAHaloUtil.syncWithNewClient(pl);
-			ServerPlayerDataManager.syncNewPlayer(pl);
-			AoASkillReqReloadListener.syncNewPlayer(pl);
+			AoAHaloUtil.syncWithNewClient(player);
+			ServerPlayerDataManager.syncNewPlayer(player);
+			AoASkillReqReloadListener.syncNewPlayer(player);
 
-			PlayerAdvancements plAdvancements = pl.getAdvancements();
+			PlayerAdvancements plAdvancements = player.getAdvancements();
 			Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/root"));
 
 			if (rootAdv == null) {
@@ -212,24 +208,24 @@ public class PlayerEvents {
 	}
 
 	private static void onItemToss(final ItemTossEvent ev) {
-		if (ev.getPlayer() instanceof ServerPlayerEntity) {
+		if (ev.getPlayer() instanceof ServerPlayer) {
 			ItemEntity entityItem = ev.getEntityItem();
 			Item item = entityItem.getItem().getItem();
 
 			if (item == AoAItems.BLANK_REALMSTONE.get()) {
 				if (ev.getPlayer().isInLava()) {
 					ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAItems.NETHER_REALMSTONE.get()));
-					ev.getEntityItem().remove();
+					ev.getEntityItem().discard();
 				}
 			}
 			else if (item instanceof ReservedItem) {
 				ReservedItem.handlePlayerToss(ev);
 			}
-			else if (item instanceof BossSpawningItem) {
-				World world = ev.getPlayer().getCommandSenderWorld();
+			else if (item instanceof BossSpawningItem bossItem) {
+				net.minecraft.world.level.Level world = ev.getPlayer().getCommandSenderWorld();
 
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					ev.getPlayer().sendMessage(new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail"), Util.NIL_UUID);
+					ev.getPlayer().sendMessage(new TranslatableComponent("message.feedback.spawnBoss.difficultyFail"), Util.NIL_UUID);
 
 					return;
 				}
@@ -237,10 +233,8 @@ public class PlayerEvents {
 				ev.setCanceled(true);
 				world.addFreshEntity(BossSpawningItem.newBossEntityItemFromExisting(entityItem, ev.getPlayer()));
 
-				BossSpawningItem bossItem = (BossSpawningItem)item;
-
 				if (bossItem.getThrowingSound() != null)
-					world.playSound(null, entityItem.getX(), entityItem.getX(), entityItem.getZ(), bossItem.getThrowingSound(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+					world.playSound(null, entityItem.getX(), entityItem.getX(), entityItem.getZ(), bossItem.getThrowingSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
 			}
 		}
 	}
@@ -253,23 +247,23 @@ public class PlayerEvents {
 				ExpFlask.addExp(stack, ev.getOrb().value);
 				ev.setCanceled(true);
 				ev.getOrb().value = 0;
-				ev.getOrb().remove();
+				ev.getOrb().discard();
 			}
 		}
 	}
 
 	private static void onPlayerFishing(final ItemFishedEvent ev) {
 		if (WorldUtil.isWorld(ev.getEntityLiving().level, AoADimensions.LBOREAN.key) && RandomUtil.oneInNChance(10)) {
-			FishingBobberEntity hook = ev.getHookEntity();
+			FishingHook hook = ev.getHookEntity();
 			LivingEntity fisher = ev.getEntityLiving();
 
 			ItemEntity drop = new ItemEntity(fisher.level, hook.getX(), hook.getY(), hook.getZ(), new ItemStack(AoAItems.CALL_OF_THE_DRAKE.get()));
 			double velocityX = fisher.getX() - hook.getX();
 			double velocityY = fisher.getY() - hook.getY();
 			double velocityZ = fisher.getZ() - hook.getZ();
-			double velocity = MathHelper.sqrt(velocityX * velocityX + velocityY * velocityY + velocityZ * velocityZ);
+			double velocity = Math.sqrt((velocityX * velocityX + velocityY * velocityY + velocityZ * velocityZ));
 
-			drop.setDeltaMovement(velocityX * 0.1D, velocityY * 0.1D + (double)MathHelper.sqrt(velocity) * 0.08D, velocityZ * 0.1D);
+			drop.setDeltaMovement(velocityX * 0.1D, velocityY * 0.1D + (double)Math.sqrt(velocity) * 0.08D, velocityZ * 0.1D);
 			fisher.level.addFreshEntity(drop);
 		}
 	}

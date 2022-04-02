@@ -1,31 +1,23 @@
 package net.tslat.aoa3.content.item.misc.summoning;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.content.entity.boss.CottonCandorEntity;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class TreatBag extends Item {
 	public TreatBag() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.UNCOMMON).food(new Food.Builder().alwaysEat().build()));
+		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder().alwaysEat().build()));
 	}
 
 	@Override
@@ -34,36 +26,35 @@ public class TreatBag extends Item {
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity eater) {
-		if (eater instanceof ServerPlayerEntity) {
-			ServerPlayerEntity pl = (ServerPlayerEntity)eater;
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity eater) {
+		if (eater instanceof ServerPlayer player) {
 
-			if (world.getDifficulty() == Difficulty.PEACEFUL) {
-				PlayerUtil.notifyPlayer(pl, new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail").withStyle(TextFormatting.RED));
+			/*if (world.getDifficulty() == Difficulty.PEACEFUL) {
+				PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
 			}
 			else {
 				if (!WorldUtil.isWorld(world, AoADimensions.CANDYLAND.key)) {
-					PlayerUtil.notifyPlayer(pl, new TranslationTextComponent(AoAEntities.Mobs.COTTON_CANDOR.get().getDescriptionId() + ".wrongDimension").withStyle(TextFormatting.RED));
+					PlayerUtil.notifyPlayer(player, new TranslatableComponent(AoAMobs.COTTON_CANDOR.get().getDescriptionId() + ".wrongDimension").withStyle(ChatFormatting.RED));
 				}
 				else {
-					CottonCandorEntity cottonCandor = new CottonCandorEntity(AoAEntities.Mobs.COTTON_CANDOR.get(), world);
+					CottonCandorEntity cottonCandor = new CottonCandorEntity(AoAMobs.COTTON_CANDOR.get(), world);
 
 					cottonCandor.setPos(eater.getX(), eater.getY() + 15, eater.getZ());
 					world.addFreshEntity(cottonCandor);
 
-					if (!((ServerPlayerEntity)eater).isCreative())
+					if (!((ServerPlayer)eater).isCreative())
 						stack.shrink(1);
 
-					PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.COTTON_CANDOR.get().getDescriptionId() + ".spawn", pl.getDisplayName()), eater.level, eater.blockPosition(), 50);
+					PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.COTTON_CANDOR.get().getDescriptionId() + ".spawn", player.getDisplayName()), eater.level, eater.blockPosition(), 50);
 				}
-			}
+			}*/
 		}
 
 		return stack;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}

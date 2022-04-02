@@ -1,16 +1,16 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Hand;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -20,7 +20,10 @@ import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 public class StunStrike extends AoAAbility.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.KEY_INPUT, ListenerType.OUTGOING_ATTACK_AFTER};
@@ -33,11 +36,11 @@ public class StunStrike extends AoAAbility.Instance {
 	public StunStrike(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.STUN_STRIKE.get(), skill, data);
 
-		this.energyCost = JSONUtils.getAsFloat(data, "energy_cost");
-		this.stunDuration = JSONUtils.getAsInt(data, "stun_duration", 20);
+		this.energyCost = GsonHelper.getAsFloat(data, "energy_cost");
+		this.stunDuration = GsonHelper.getAsInt(data, "stun_duration", 20);
 	}
 
-	public StunStrike(AoASkill.Instance skill, CompoundNBT data) {
+	public StunStrike(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.STUN_STRIKE.get(), skill, data);
 
 		this.energyCost = data.getFloat("energy_cost");
@@ -45,8 +48,8 @@ public class StunStrike extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.stunDuration / 20f, 2), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.stunDuration / 20f, 2), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
 	}
 
 	@Override
@@ -56,21 +59,21 @@ public class StunStrike extends AoAAbility.Instance {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public KeyBinding getKeybind() {
+	public KeyMapping getKeybind() {
 		return AoAKeybinds.ABILITY_ACTION;
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean shouldSendKeyPress() {
-		ClientPlayerEntity pl = Minecraft.getInstance().player;
+		LocalPlayer pl = Minecraft.getInstance().player;
 
-		return !pl.input.hasForwardImpulse() && pl.input.leftImpulse == 0 && !pl.getItemInHand(Hand.OFF_HAND).isEmpty() && PlayerUtil.getResourceValue(pl, AoAResources.ENERGY.get()) >= this.energyCost;
+		return !pl.input.hasForwardImpulse() && pl.input.leftImpulse == 0 && !pl.getItemInHand(InteractionHand.OFF_HAND).isEmpty() && PlayerUtil.getResourceValue(pl, AoAResources.ENERGY.get()) >= this.energyCost;
 	}
 
 	@Override
 	public void handleKeyInput() {
-		ServerPlayerEntity player = getPlayer();
+		ServerPlayer player = getPlayer();
 
 		if (!primedAttack && skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyCost)) {
 			this.primedAttack = true;
@@ -81,20 +84,20 @@ public class StunStrike extends AoAAbility.Instance {
 
 	@Override
 	public void handlePostOutgoingAttack(LivingDamageEvent ev) {
-		if (ev.getAmount() > 0 && primedAttack && DamageUtil.isMeleeDamage(ev.getSource()) && !getPlayer().getItemInHand(Hand.OFF_HAND).isEmpty()) {
+		if (ev.getAmount() > 0 && primedAttack && DamageUtil.isMeleeDamage(ev.getSource()) && !getPlayer().getItemInHand(InteractionHand.OFF_HAND).isEmpty()) {
 			this.primedAttack = false;
 
 			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true)) {
-				ServerPlayerEntity player = getPlayer();
+				ServerPlayer player = getPlayer();
 				LivingEntity target = ev.getEntityLiving();
 
 				AoAScheduler.scheduleSyncronisedTask(() -> {
-					player.swing(Hand.OFF_HAND, true);
+					player.swing(InteractionHand.OFF_HAND, true);
 
 					if (target != null && target.isAlive()) {
-						if (player.distanceToSqr(target) < 36 && player.canSee(target)) {
+						if (player.distanceToSqr(target) < 36 && player.hasLineOfSight(target)) {
 							DamageUtil.doScaledKnockback(target, player, 0.5f, player.getX() - target.getX(), player.getZ() - target.getZ());
-							EntityUtil.applyPotions(target, new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new EffectBuilder(Effects.DIG_SLOWDOWN, this.stunDuration).level(127));
+							EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new EffectBuilder(MobEffects.DIG_SLOWDOWN, this.stunDuration).level(127));
 							activatedActionKey(player);
 
 							if (skill.canGainXp(true))
@@ -107,8 +110,8 @@ public class StunStrike extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			data.putFloat("energy_cost", this.energyCost);

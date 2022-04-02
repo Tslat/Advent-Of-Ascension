@@ -1,8 +1,7 @@
 package net.tslat.aoa3.integration.tinkersconstruct;
 
-import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.resources.ResourceLocation;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.FluidUtil;
 
@@ -36,7 +35,7 @@ public final class TinkersFluids {
 		fluidBuilder.stillTexture(new ResourceLocation("tconstruct", "block/fluid/molten/still")).flowingTexture(new ResourceLocation("tconstruct", "block/fluid/molten/flowing"));
 		fluidHandler.accept(fluidBuilder);
 
-		return fluidBuilder.registerAll(AoAItems.ITEMS, AoABlocks.BLOCKS, AoABlocks.FLUIDS);
+		return fluidBuilder.registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get());
 	}
 
 	private static FluidUtil.RegisteredFluidHolder registerFluid(String id, Consumer<FluidUtil.Builder> fluidHandler) {
@@ -47,12 +46,12 @@ public final class TinkersFluids {
 
 		fluidHandler.accept(fluidBuilder);
 
-		return fluidBuilder.registerAll(AoAItems.ITEMS, AoABlocks.BLOCKS, AoABlocks.FLUIDS);
+		return fluidBuilder.registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get());
 	}
 
 	private static FluidUtil.RegisteredFluidHolder registerDummyFluid(Consumer<FluidUtil.Builder> fluidHandler, FluidUtil.Builder fluidBuilder) {
 		fluidHandler.accept(fluidBuilder);
 
-		return new FluidUtil.RegisteredFluidHolder(null, null, fluidBuilder.registerFluid(AoABlocks.FLUIDS));
+		return new FluidUtil.RegisteredFluidHolder(null, null, fluidBuilder.registerFluid(AoARegistries.FLUIDS.registry().get()));
 	}
 }

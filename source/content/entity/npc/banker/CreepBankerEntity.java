@@ -1,27 +1,27 @@
 package net.tslat.aoa3.content.entity.npc.banker;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class CreepBankerEntity extends AoABanker {
-	public CreepBankerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	public CreepBankerEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -31,27 +31,27 @@ public class CreepBankerEntity extends AoABanker {
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 
 		return super.mobInteract(player, hand);
 	}
 
 	@Override
-	protected void openGui(PlayerEntity player) {
-		NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
+	protected void openGui(Player player) {
+		NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
+			public Component getDisplayName() {
 				return CreepBankerEntity.this.getDisplayName();
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int screenId, PlayerInventory inv, PlayerEntity player) {
-				return new BankerContainer(screenId, player.inventory, CreepBankerEntity.this);
+			public AbstractContainerMenu createMenu(int screenId, Inventory inv, Player player) {
+				return new BankerContainer(screenId, player.getInventory(), CreepBankerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
 	}

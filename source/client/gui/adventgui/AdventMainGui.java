@@ -1,20 +1,20 @@
 package net.tslat.aoa3.client.gui.adventgui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.bridge.game.Language;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.IProgressMeter;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.resources.Language;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.config.AoAConfig;
@@ -24,8 +24,9 @@ import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
+import java.util.Optional;
 
-public class AdventMainGui extends Screen implements IProgressMeter {
+public class AdventMainGui extends Screen implements StatsUpdateListener {	
 	private static final ResourceLocation TITLE = HolidayUtil.isAprilFools() ? new ResourceLocation("aoa3", "textures/gui/adventgui/aoa_title_alt.png") : new ResourceLocation("aoa3", "textures/gui/adventgui/aoa_title.png");
 	protected static final int GUI_WIDTH = 1024;
 	protected static final int GUI_HEIGHT = 512;
@@ -33,7 +34,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	protected static final int BACKGROUND_TEXTURE_HEIGHT = 480;
 	protected static final float SCALE = 0.45f;
 
-	private static AdventMainGui instance;
+	protected static AdventMainGui instance;
 
 	public static Language currentLanguage = Minecraft.getInstance().getLanguageManager().getSelected();
 	protected static AdventGuiThemeReloadListener.AdventGuiTheme theme = null;
@@ -42,7 +43,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	@Nullable
 	private static Screen tabScreen;
 
-	protected PlayerEntity player;
+	protected Player player;
 
 	protected static int scaledRootX;
 	protected static int scaledRootY;
@@ -51,8 +52,8 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 	private static int updateMessageTicker = 0;
 
-	public AdventMainGui(PlayerEntity player) {
-		super(new TranslationTextComponent("gui.aoa3.adventGui.title"));
+	public AdventMainGui(Player player) {
+		super(new TranslatableComponent("gui.aoa3.adventGui.title"));
 
 		this.player = player;
 		instance = this;
@@ -64,41 +65,42 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	protected void init() {
 		theme = AdventGuiThemeReloadListener.setTheme(AoAConfig.CLIENT.adventGuiTheme.get());
 
-		addButton(new AdventMainGuiTabButton(11, 129, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.stats"), ADVENT_WINDOW_TAB.PLAYER));
-		addButton(new AdventMainGuiTabButton(11, 199, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
-		addButton(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.lore"), ADVENT_WINDOW_TAB.LORE));
-		addButton(new AdventMainGuiTabButton(11, 339, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.leaderboards"), ADVENT_WINDOW_TAB.LEADERBOARDS));
-		addButton(new AdventMainGuiTabButton(11, 409, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help"), ADVENT_WINDOW_TAB.HELP));
+		addRenderableWidget(new AdventMainGuiTabButton(11, 129, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.stats"), ADVENT_WINDOW_TAB.PLAYER));
+		addRenderableWidget(new AdventMainGuiTabButton(11, 199, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
+		addRenderableWidget(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.lore"), ADVENT_WINDOW_TAB.LORE));
+		addRenderableWidget(new AdventMainGuiTabButton(11, 339, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.leaderboards"), ADVENT_WINDOW_TAB.LEADERBOARDS));
+		addRenderableWidget(new AdventMainGuiTabButton(11, 409, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help"), ADVENT_WINDOW_TAB.HELP));
 
 		correctGuiPositions();
 		initTabScreen();
 	}
 
 	@Override
-	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 		renderBackground(matrix);
 
-		getMinecraft().getTextureManager().bind(theme.getBackgroundTexture());
+		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		RenderSystem.setShaderTexture(0, theme.backgroundTexture());
 
 		matrix.pushPose();
-		RenderSystem.color4f(1, 1, 1, 1);
+		RenderSystem.setShaderColor(1, 1, 1, 1);
 		matrix.scale(SCALE, SCALE, SCALE);
 
 		RenderUtil.renderCustomSizedTexture(matrix, scaledRootX, scaledRootY, 24, 16, BACKGROUND_TEXTURE_WIDTH, BACKGROUND_TEXTURE_HEIGHT, GUI_WIDTH, GUI_HEIGHT);
-		getMinecraft().getTextureManager().bind(TITLE);
+		RenderSystem.setShaderTexture(0, TITLE);
 		RenderUtil.renderCustomSizedTexture(matrix, scaledRootX - ((GUI_WIDTH - BACKGROUND_TEXTURE_WIDTH) / 2) + 68, scaledRootY - ((GUI_HEIGHT - BACKGROUND_TEXTURE_HEIGHT) / 2) + 21, 0, 0, 892, 112, 892, 112);
 
 		super.render(matrix, mouseX, mouseY, partialTicks);
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-		if (theme.getOverlayTexture() != null) {
-			getMinecraft().getTextureManager().bind(theme.getOverlayTexture());
+		if (theme.overlayTexture() != null) {
+			RenderSystem.setShaderTexture(0, theme.overlayTexture());
 			RenderSystem.enableBlend();
 			RenderUtil.renderCustomSizedTexture(matrix, scaledRootX - ((GUI_WIDTH - BACKGROUND_TEXTURE_WIDTH) / 2), scaledRootY - ((GUI_HEIGHT - BACKGROUND_TEXTURE_HEIGHT) / 2), 0, 0, GUI_WIDTH, GUI_HEIGHT, GUI_WIDTH, GUI_HEIGHT);
 			RenderSystem.disableBlend();
 		}
 
-		RenderUtil.drawScaledMessage(matrix, font, new StringTextComponent("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawScaledMessage(matrix, font, new TextComponent("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 
 		if (WebUtil.isUpdateAvailable()) {
 			updateMessageTicker--;
@@ -107,7 +109,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 				updateMessageTicker = 90;
 
 			if (updateMessageTicker > 0) {
-				ITextComponent msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", new StringTextComponent(WebUtil.getLatestVersion()));
+				Component msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", new TextComponent(WebUtil.getLatestVersion()));
 
 				RenderUtil.drawScaledMessage(matrix, font, msg, scaledRootX + 925 - font.width(msg), scaledRootY + 105, 1.25f, ColourUtil.RGB(229, 0, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 			}
@@ -116,13 +118,13 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 		if (tabScreen != null)
 			tabScreen.render(matrix, mouseX, mouseY, partialTicks);
 
-		RenderSystem.color4f(1, 1, 1, 1);
+		RenderSystem.setShaderColor(1, 1, 1, 1);
 		matrix.popPose();
 	}
 
 	public static boolean isBlockingKeys() {
 		if (tabScreen instanceof AdventGuiTabBestiary) {
-			TextFieldWidget bestiarySearchField = ((AdventGuiTabBestiary)tabScreen).searchField;
+			EditBox bestiarySearchField = ((AdventGuiTabBestiary)tabScreen).searchField;
 
 			return bestiarySearchField != null && bestiarySearchField.isFocused();
 		}
@@ -132,8 +134,8 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 	@Override
 	public void onStatsUpdated() {
-		if (tabScreen instanceof IProgressMeter)
-			((IProgressMeter)tabScreen).onStatsUpdated();
+		if (tabScreen instanceof StatsUpdateListener)
+			((StatsUpdateListener)tabScreen).onStatsUpdated();
 	}
 
 	protected enum ADVENT_WINDOW_TAB {
@@ -144,14 +146,14 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 		HELP
 	}
 
-	private static class AdventMainGuiTabButton extends Widget {
+	private static class AdventMainGuiTabButton extends Button {
 		private static final int buttonWidth = 180;
 		private static final int buttonHeight = 60;
 
 		private final ADVENT_WINDOW_TAB tabID;
 
-		private AdventMainGuiTabButton(int x, int y, ITextComponent buttonText, ADVENT_WINDOW_TAB tab) {
-			super(x, y, buttonWidth, buttonHeight, buttonText);
+		private AdventMainGuiTabButton(int x, int y, Component buttonText, ADVENT_WINDOW_TAB tab) {
+			super(x, y, buttonWidth, buttonHeight, buttonText, button -> {});
 
 			this.tabID = tab;
 
@@ -164,12 +166,12 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 		}
 
 		@Override
-		public void renderButton(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void renderButton(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
 
-				mc.getTextureManager().bind(theme.getMenuButtonTexture());
-				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+				RenderSystem.setShaderTexture(0, theme.menuButtonTexture());
+				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
 				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
 				int textureX = 0;
@@ -218,9 +220,9 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 		}
 
 		@Override
-		public void renderToolTip(MatrixStack matrix, int mouseX, int mouseY) {
+		public void renderToolTip(PoseStack matrix, int mouseX, int mouseY) {
 			if (!active && this.tabID == ADVENT_WINDOW_TAB.LORE)
-				GuiUtils.drawHoveringText(matrix, Collections.singletonList(new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.patchouli")), mouseX, mouseY, AdventMainGui.GUI_WIDTH, AdventMainGui.GUI_HEIGHT, -1, Minecraft.getInstance().font);
+				AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.patchouli")), Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font);
 		}
 	}
 
@@ -302,24 +304,24 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 		}
 		else {
 			switch (selectedTab) {
-				case PLAYER:
+				case PLAYER -> {
 					tabScreen = new AdventGuiTabPlayer();
 					tabScreen.resize(mc, tabWidth, tabHeight);
-					break;
-				case HELP:
+				}
+				case HELP -> {
 					tabScreen = new AdventGuiTabHelp();
 					tabScreen.resize(mc, tabWidth, tabHeight);
-					break;
-				case BESTIARY:
+				}
+				case BESTIARY -> {
 					tabScreen = new AdventGuiTabBestiary();
 					tabScreen.resize(mc, tabWidth, tabHeight);
-					break;
-				case LORE:
+				}
+				case LORE -> {
 					tabScreen = new AdventGuiTabLore();
 					tabScreen.resize(mc, tabWidth, tabHeight);
-					break;
-				default:
-					break;
+				}
+				default -> {
+				}
 			}
 		}
 	}
@@ -330,7 +332,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	}
 
 	private void correctGuiPositions() {
-		MainWindow window = getMinecraft().getWindow();
+		Window window = getMinecraft().getWindow();
 
 		scaledRootX = (int) (Math.round((window.getGuiScaledWidth() / 2d) / SCALE) - Math.round(BACKGROUND_TEXTURE_WIDTH / 2d));
 		scaledRootY = (int) (Math.round((window.getGuiScaledHeight() / 2d) / SCALE) - Math.round(BACKGROUND_TEXTURE_HEIGHT / 2d));
@@ -359,6 +361,6 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 	public static void changeTheme() {
 		theme = AdventGuiThemeReloadListener.getNextTheme();
 
-		AoAConfig.CLIENT.changeAdventGuiTheme(theme.getName());
+		AoAConfig.CLIENT.changeAdventGuiTheme(theme.name());
 	}
 }

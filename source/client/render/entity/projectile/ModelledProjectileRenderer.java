@@ -1,38 +1,41 @@
 package net.tslat.aoa3.client.render.entity.projectile;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.tslat.aoa3.util.ColourUtil;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 
 import javax.annotation.Nullable;
+import java.util.function.Function;
 
 public class ModelledProjectileRenderer<T extends Entity> extends EntityRenderer<T> {
 	private final ResourceLocation texture;
 	protected final EntityModel<? super T> model;
 
-	public ModelledProjectileRenderer(final EntityRendererManager renderManager, final EntityModel<? super T> model, final ResourceLocation texture) {
-		super(renderManager);
+	public ModelledProjectileRenderer(final EntityRendererProvider.Context context, final ModelLayerLocation modelLayerLocation, final Function<ModelPart, EntityModel<? super T>> model, final ResourceLocation texture) {
+		super(context);
 
-		this.model = model;
+		this.model = model.apply(context.bakeLayer(modelLayerLocation));
 		this.texture = texture;
 	}
 
 	@Override
-	public void render(T entity, float yaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
+	public void render(T entity, float yaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		matrix.pushPose();
 		matrix.scale(-1.0F, -1.0F, 1.0F);
 		preRenderCallback(entity, matrix, partialTicks);
 
-		float pitch = MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot);
+		float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
 
 		model.prepareMobModel(entity, 0, 0, partialTicks);
 		model.setupAnim(entity, 0, partialTicks, entity.tickCount, 0, pitch);
@@ -43,9 +46,9 @@ public class ModelledProjectileRenderer<T extends Entity> extends EntityRenderer
 		RenderType rendertype = getRenderType(entity, visible, shade);
 
 		if (rendertype != null) {
-			IVertexBuilder ivertexbuilder = buffer.getBuffer(rendertype);
+			VertexConsumer vertexConsumer = buffer.getBuffer(rendertype);
 
-			this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, ColourUtil.WHITE, 1f, 1f, 1f, shade ? 0.15f : 1f);
+			this.model.renderToBuffer(matrix, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1f, 1f, 1f, shade ? 0.15f : 1f);
 		}
 
 		matrix.popPose();
@@ -63,11 +66,11 @@ public class ModelledProjectileRenderer<T extends Entity> extends EntityRenderer
 			return model.renderType(texture);
 		}
 		else {
-			return entity.isGlowing() ? RenderType.outline(texture) : null;
+			return entity.isCurrentlyGlowing() ? RenderType.outline(texture) : null;
 		}
 	}
 
-	protected void preRenderCallback(T entity, MatrixStack matrix, float partialTicks) {}
+	protected void preRenderCallback(T entity, PoseStack matrix, float partialTicks) {}
 
 	@Override
 	public ResourceLocation getTextureLocation(T entity) {

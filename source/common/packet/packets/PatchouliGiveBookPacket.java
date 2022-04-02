@@ -1,17 +1,17 @@
 package net.tslat.aoa3.common.packet.packets;
 
 import com.mojang.brigadier.tree.CommandNode;
-import net.minecraft.command.CommandSource;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvents;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.function.Supplier;
@@ -24,11 +24,11 @@ public class PatchouliGiveBookPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeResourceLocation(id);
 	}
 
-	public static PatchouliGiveBookPacket decode(PacketBuffer buffer) {
+	public static PatchouliGiveBookPacket decode(FriendlyByteBuf buffer) {
 		return new PatchouliGiveBookPacket(buffer.readResourceLocation());
 	}
 
@@ -37,14 +37,14 @@ public class PatchouliGiveBookPacket implements AoAPacket {
 
 		if (guideBook != null && guideBook != Items.AIR) {
 			ItemStack book = new ItemStack(guideBook);
-			ServerPlayerEntity pl = context.get().getSender();
-			CommandSource commandSource = pl.createCommandSourceStack();
-			CommandNode<CommandSource> giveCommand = pl.getServer().getCommands().getDispatcher().getRoot().getChild("give");
+			ServerPlayer pl = context.get().getSender();
+			CommandSourceStack commandSource = pl.createCommandSourceStack();
+			CommandNode<CommandSourceStack> giveCommand = pl.getServer().getCommands().getDispatcher().getRoot().getChild("give");
 
 			book.getOrCreateTag().putString("patchouli:book", id.toString());
 
 			if ((giveCommand != null && giveCommand.canUse(commandSource)) || commandSource.hasPermission(pl.getServer().getOperatorUserPermissionLevel())) {
-				if (pl.inventory.add(book) && book.isEmpty()) {
+				if (pl.getInventory().add(book) && book.isEmpty()) {
 					book.setCount(1);
 
 					ItemEntity itemEntity = pl.drop(book, false);
@@ -52,7 +52,7 @@ public class PatchouliGiveBookPacket implements AoAPacket {
 					if (itemEntity != null)
 						itemEntity.makeFakeItem();
 
-					pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), SoundEvents.ITEM_PICKUP, SoundCategory.PLAYERS, 0.2f, ((pl.getRandom().nextFloat() - pl.getRandom().nextFloat()) * 0.7f + 1) * 2f);
+					pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2f, ((pl.getRandom().nextFloat() - pl.getRandom().nextFloat()) * 0.7f + 1) * 2f);
 					pl.containerMenu.broadcastChanges();
 				}
 				else {

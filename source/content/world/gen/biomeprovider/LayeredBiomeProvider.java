@@ -1,9 +1,10 @@
+/*
 package net.tslat.aoa3.content.world.gen.biomeprovider;
 
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceKey;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.RegistryLookupCodec;
 import net.minecraft.world.biome.Biome;
@@ -41,7 +42,7 @@ public class LayeredBiomeProvider extends BiomeProvider {
 	private final Registry<Biome> lookupRegistry;
 
 	protected LayeredBiomeProvider(long seed, boolean largeBiomes, List<Pair<Biome.Attributes, Supplier<Biome>>> biomes, Registry<Biome> lookupRegistry) {
-		super(biomes.stream().map((key) -> () -> lookupRegistry.getOrThrow(RegistryKey.create(Registry.BIOME_REGISTRY, key.getSecond().get().getRegistryName()))));
+		super(biomes.stream().map((key) -> () -> lookupRegistry.getOrThrow(ResourceKey.create(Registry.BIOME_REGISTRY, key.getSecond().get().getRegistryName()))));
 
 		this.seed = seed;
 		this.largeBiomes = largeBiomes;
@@ -65,3 +66,4 @@ public class LayeredBiomeProvider extends BiomeProvider {
 		return biomeLayer.get(lookupRegistry, x, z);
 	}
 }
+*/

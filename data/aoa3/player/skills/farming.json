@@ -98,15 +98,6 @@
       ],
       "level_req": 92,
       "restricted_id": "aoa3:dryads_blessing"
-    },
-    {
-      "id": "aoa3:level_restriction",
-      "unique_id": "-870832574",
-      "restrictions": [
-        "equip"
-      ],
-      "level_req": 100,
-      "restricted_id": "aoa3:helm_of_the_dryad"
     }
   ]
 }

@@ -26,9 +26,9 @@ public final class WebUtil {
 		Logging.logMessage(Level.DEBUG, "Starting web tasks");
 		VersionChecker.CheckResult updateCheckResult = VersionChecker.getResult(ModList.get().getModFileById(AdventOfAscension.MOD_ID).getMods().get(0));
 
-		if (updateCheckResult.status == VersionChecker.Status.OUTDATED) {
+		if (updateCheckResult.status() == VersionChecker.Status.OUTDATED) {
 			isUpdateAvailable = true;
-			latestVersion = updateCheckResult.target.toString();
+			latestVersion = updateCheckResult.target().toString();
 		}
 	}
 

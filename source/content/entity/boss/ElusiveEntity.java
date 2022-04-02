@@ -1,27 +1,28 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.Vec3;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
+
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.mob.misc.ElusiveCloneEntity;
@@ -41,12 +42,12 @@ public class ElusiveEntity extends AoAMeleeMob {
 	private int summonCooldown = 300;
 	private int teleportCooldown = 300;
 
-	public ElusiveEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public ElusiveEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.5f;
 	}
 
@@ -74,17 +75,17 @@ public class ElusiveEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
+	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		if (player.getItemInHand(hand).getItem() == AoAItems.NIGHTMARE_FLAKES.get()) {
 			if (!level.isClientSide() && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1)) {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.GRECKON_REALMSTONE.get()));
 				player.getItemInHand(hand).shrink(1);
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Override
@@ -110,7 +111,7 @@ public class ElusiveEntity extends AoAMeleeMob {
 			else if (getTarget() != null) {
 				teleportCooldown = 300;
 
-				Vector3d targetLookVec = (new Vector3d(getX() - getTarget().getX(), (getBoundingBox().minY + getBbHeight() / 2f) - getTarget().getY() + getTarget().getEyeHeight(), getZ() - getTarget().getZ())).normalize();
+				Vec3 targetLookVec = (new Vec3(getX() - getTarget().getX(), (getBoundingBox().minY + getBbHeight() / 2f) - getTarget().getY() + getTarget().getEyeHeight(), getZ() - getTarget().getZ())).normalize();
 				final double x = getX() + (random.nextDouble() - 0.5) * 8 - targetLookVec.x * 16;
 				final double y = getY() + (random.nextInt(16) - 8) - targetLookVec.y * 16;
 				final double z = getZ() + (random.nextDouble() - 0.5) * 8 - targetLookVec.z * 16;
@@ -131,12 +132,12 @@ public class ElusiveEntity extends AoAMeleeMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null) {
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.ELUSIVE.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.ELUSIVE.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 
-				if (killer instanceof ServerPlayerEntity && killer.hasEffect(Effects.INVISIBILITY)) {
+				if (killer instanceof ServerPlayer && killer.hasEffect(MobEffects.INVISIBILITY)) {
 					boolean armourless = true;
 
 					for (ItemStack stack : killer.getArmorSlots()) {
@@ -145,7 +146,7 @@ public class ElusiveEntity extends AoAMeleeMob {
 					}
 
 					if (armourless)
-						AdvancementUtil.completeAdvancement((ServerPlayerEntity)killer, new ResourceLocation(AdventOfAscension.MOD_ID, "abyss/activated_my_trap_card"), "invisible_armourless_elusive_kill");
+						AdvancementUtil.completeAdvancement((ServerPlayer)killer, new ResourceLocation(AdventOfAscension.MOD_ID, "abyss/activated_my_trap_card"), "invisible_armourless_elusive_kill");
 				}
 			}
 
@@ -157,7 +158,7 @@ public class ElusiveEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -165,14 +166,14 @@ public class ElusiveEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.ELUSIVE_MUSIC.getId()));
@@ -180,7 +181,7 @@ public class ElusiveEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.ELUSIVE_MUSIC.getId()));
@@ -188,3 +189,4 @@ public class ElusiveEntity extends AoAMeleeMob {
 	}
 
 }
+*/

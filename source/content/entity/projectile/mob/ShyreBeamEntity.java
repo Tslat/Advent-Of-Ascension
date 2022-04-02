@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.mob;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 
 public class ShyreBeamEntity extends BaseMobProjectile {
-	public ShyreBeamEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public ShyreBeamEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public ShyreBeamEntity(World world) {
-		super(AoAEntities.Projectiles.SHYRE_BEAM.get(), world);
+	public ShyreBeamEntity(Level world) {
+		super(AoAProjectiles.SHYRE_BEAM.get(), world);
 	}
 
 	public ShyreBeamEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.SHYRE_BEAM.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.SHYRE_BEAM.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override

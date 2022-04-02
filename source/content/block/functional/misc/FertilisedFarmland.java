@@ -1,38 +1,41 @@
 package net.tslat.aoa3.content.block.functional.misc;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
-public class FertilisedFarmland extends FarmlandBlock {
+public class FertilisedFarmland extends FarmBlock {
 	public static final BooleanProperty WELL_FERTILISED = BooleanProperty.create("well_fertilised");
 
 	public FertilisedFarmland() {
-		super(AbstractBlock.Properties.of(Material.DIRT).randomTicks().strength(0.6f).sound(SoundType.GRAVEL).isViewBlocking((state, world, pos) -> true).isSuffocating((state, world, pos) -> true));
+		super(Block.Properties.of(Material.DIRT).randomTicks().strength(0.6f).sound(SoundType.GRAVEL).isViewBlocking((state, world, pos) -> true).isSuffocating((state, world, pos) -> true));
 
 		registerDefaultState(defaultBlockState().setValue(WELL_FERTILISED, false));
 	}
 
 	@Override
-	public boolean isFertile(BlockState state, IBlockReader world, BlockPos pos) {
+	public boolean isFertile(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.getValue(MOISTURE) > 0;
 	}
 
 	@Override
-	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing, IPlantable plantable) {
+	public boolean canSustainPlant(BlockState state, BlockGetter world, BlockPos pos, Direction facing, IPlantable plantable) {
 		PlantType type = plantable.getPlantType(world, pos.relative(facing));
 
 		return type == PlantType.CROP;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		super.createBlockStateDefinition(builder);
 
 		builder.add(WELL_FERTILISED);

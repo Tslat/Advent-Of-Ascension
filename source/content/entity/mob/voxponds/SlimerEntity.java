@@ -1,13 +1,16 @@
 package net.tslat.aoa3.content.entity.mob.voxponds;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -16,12 +19,12 @@ import net.tslat.aoa3.util.EntityUtil;
 import javax.annotation.Nullable;
 
 public class SlimerEntity extends AoAMeleeMob {
-	public SlimerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public SlimerEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 2.8f;
 	}
 
@@ -48,6 +51,6 @@ public class SlimerEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new EffectBuilder(Effects.POISON, 120).level(16));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.POISON, 120).level(16));
 	}
 }

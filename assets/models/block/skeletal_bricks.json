@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "particle": "aoa3:block/skeletal_bricks",
     "all": "aoa3:block/skeletal_bricks"
   }
 }

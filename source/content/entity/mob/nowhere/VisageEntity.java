@@ -1,16 +1,17 @@
+/*
 package net.tslat.aoa3.content.entity.mob.nowhere;
 
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.RandomUtil;
@@ -20,18 +21,18 @@ import javax.annotation.Nullable;
 public class VisageEntity extends AoAMeleeMob {
 	private VisageEntity mirageHost = null;
 
-	public VisageEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public VisageEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	public VisageEntity(VisageEntity mirageHost) {
-		this(AoAEntities.Mobs.VISAGE.get(), mirageHost.level);
+		this(AoAMobs.VISAGE.get(), mirageHost.level);
 
 		this.mirageHost = mirageHost;
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.46875f;
 	}
 
@@ -60,8 +61,8 @@ public class VisageEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.UNDEAD;
+	public MobType getMobType() {
+		return MobType.UNDEAD;
 	}
 
 	@Override
@@ -95,3 +96,4 @@ public class VisageEntity extends AoAMeleeMob {
 		}
 	}
 }
+*/

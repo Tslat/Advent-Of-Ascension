@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -21,6 +21,6 @@ public class CrystalCarver extends BaseGun {
 
 	@Override
 	public boolean isValidRepairItem(ItemStack stack, ItemStack repairMaterial) {
-		return repairMaterial.getItem().is(Tags.Items.GEMS) || super.isValidRepairItem(stack, repairMaterial);
+		return repairMaterial.is(Tags.Items.GEMS) || super.isValidRepairItem(stack, repairMaterial);
 	}
 }

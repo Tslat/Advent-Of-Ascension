@@ -1,27 +1,27 @@
 package net.tslat.aoa3.content.entity.mob.creeponia;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.mob.nether.SkeletalCowmanEntity;
 
 import javax.annotation.Nullable;
 
 public class KingCreeperEntity extends AoACreeponiaCreeper {
-    public KingCreeperEntity(EntityType<? extends AoACreeponiaCreeper> entityType, World world) {
+    public KingCreeperEntity(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {
         super(entityType, world);
 
         fuseTime = 80;
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 1.40625f;
     }
 

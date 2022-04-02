@@ -1,10 +1,11 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 public class GenericAoAStructure extends AoAStructureBase<NoFeatureConfig> {
-	public GenericAoAStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public GenericAoAStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(NoFeatureConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -13,3 +14,4 @@ public class GenericAoAStructure extends AoAStructureBase<NoFeatureConfig> {
 		return AoAStructureStart::new;
 	}
 }
+*/

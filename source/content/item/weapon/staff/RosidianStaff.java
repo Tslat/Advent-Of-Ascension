@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.entity.projectile.staff.RosidianShotEntity;
 import net.tslat.aoa3.util.DamageUtil;
@@ -39,7 +39,7 @@ public class RosidianStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+	public void cast(Level world, ItemStack staff, LivingEntity caster, Object args) {
 		world.addFreshEntity(new RosidianShotEntity(caster, this));
 	}
 
@@ -60,7 +60,7 @@ public class RosidianStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 2));
 		super.appendHoverText(stack, world, tooltip, flag);

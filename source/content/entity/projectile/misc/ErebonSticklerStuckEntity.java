@@ -1,35 +1,35 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraftforge.network.NetworkHooks;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.WorldUtil;
 
-public class ErebonSticklerStuckEntity extends ThrowableEntity {
+public class ErebonSticklerStuckEntity extends ThrowableProjectile {
 	private LivingEntity target;
 	private LivingEntity shooter;
 	private int age;
-	private AreaEffectCloudEntity cloud = null;
+	private AreaEffectCloud cloud = null;
 
-	public ErebonSticklerStuckEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public ErebonSticklerStuckEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public ErebonSticklerStuckEntity(World world) {
-		super(AoAEntities.Projectiles.EREBON_STICKLER_STUCK.get(), world);
+	public ErebonSticklerStuckEntity(Level world) {
+		super(AoAProjectiles.EREBON_STICKLER_STUCK.get(), world);
 	}
 
 	public ErebonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAEntities.Projectiles.EREBON_STICKLER_STUCK.get(), shooter.level);
+		super(AoAProjectiles.EREBON_STICKLER_STUCK.get(), shooter.level);
 		this.target = target;
 		this.shooter = shooter;
 
@@ -37,8 +37,8 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 		shoot(0, 0, 0, 0, 0);
 	}
 
-	public ErebonSticklerStuckEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.EREBON_STICKLER_STUCK.get(), x, y, z, world);
+	public ErebonSticklerStuckEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.EREBON_STICKLER_STUCK.get(), x, y, z, world);
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {}
+	protected void onHit(HitResult result) {}
 
 	@Override
 	public void tick() {
@@ -63,30 +63,30 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 		}
 		else {
 			WorldUtil.createExplosion(shooter, level, this, 2.0f);
-			remove();
+			discard();
 
 			if (cloud != null)
-				cloud.remove();
+				cloud.discard();
 
 			return;
 		}
 
 		if (age >= 100) {
 			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
-			remove();
+			discard();
 
 			if (cloud != null)
-				cloud.remove();
+				cloud.discard();
 
 			return;
 		}
 
 		if (cloud == null) {
-			cloud = new AreaEffectCloudEntity(level, target.getX(), target.getY(), target.getZ());
+			cloud = new AreaEffectCloud(level, target.getX(), target.getY(), target.getZ());
 
 			cloud.setDuration(100 - age);
 			cloud.setRadius(2);
-			cloud.addEffect(new EffectInstance(Effects.WITHER, 40, 0, false, true));
+			cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 0, false, true));
 			level.addFreshEntity(cloud);
 		}
 		else {
@@ -98,7 +98,7 @@ public class ErebonSticklerStuckEntity extends ThrowableEntity {
 	protected void defineSynchedData() {}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

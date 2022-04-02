@@ -1,32 +1,27 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.passive.DolphinEntity;
-import net.minecraft.entity.passive.SquidEntity;
-import net.minecraft.entity.passive.fish.CodEntity;
-import net.minecraft.entity.passive.fish.PufferfishEntity;
-import net.minecraft.entity.passive.fish.SalmonEntity;
-import net.minecraft.entity.passive.fish.TropicalFishEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -45,19 +40,19 @@ public class ChumItem extends Item {
 	public ChumItem() {
 		super(new Item.Properties()
 				.tab(AoAItemGroups.FOOD)
-				.food(new Food.Builder()
+				.food(new FoodProperties.Builder()
 						.nutrition(1)
 						.saturationMod(0.1f)
 						.alwaysEat()
-						.effect(() -> new EffectInstance(Effects.CONFUSION, 60), 1)
-						.effect(() -> new EffectInstance(Effects.POISON, 60), 1).build()));
+						.effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 60), 1)
+						.effect(() -> new MobEffectInstance(MobEffects.POISON, 60), 1).build()));
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World level, PlayerEntity pPlayer, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player pPlayer, InteractionHand hand) {
 		pPlayer.startUsingItem(hand);
 
-		return ActionResult.consume(pPlayer.getItemInHand(hand));
+		return InteractionResultHolder.consume(pPlayer.getItemInHand(hand));
 	}
 
 	@Override
@@ -66,12 +61,12 @@ public class ChumItem extends Item {
 	}
 
 	@Override
-	public void releaseUsing(ItemStack stack, World level, LivingEntity user, int timeLeft) {
+	public void releaseUsing(ItemStack stack, Level level, LivingEntity user, int timeLeft) {
 		if (!level.isClientSide() && getUseDuration(stack) - timeLeft < 5) {
-			if (!(user instanceof PlayerEntity) || !((PlayerEntity)user).isCreative())
+			if (!(user instanceof Player) || !((Player)user).isCreative())
 				stack.shrink(1);
 
-			Vector3d velocityVector = EntityUtil.getVelocityVectorForFacing(user).multiply(1, 1.5, 1);
+			Vec3 velocityVector = EntityUtil.getVelocityVectorForFacing(user).multiply(1, 1.5, 1);
 			ArrayList<BlockPos> positions = WorldUtil.getBlocksWithinAABB(level, user.getBoundingBox().move(velocityVector.x() * 3, velocityVector.y() * 3, velocityVector.z() * 3), (blockState, mutable) -> blockState.getFluidState().is(FluidTags.WATER) && blockState.getFluidState().getHeight(level, mutable) > 0.85f);
 
 			if (!positions.isEmpty() && RandomUtil.oneInNChance(Math.max(100 / positions.size(), 1))) {
@@ -83,21 +78,19 @@ public class ChumItem extends Item {
 			}
 
 			ServerParticlePacket packet = new ServerParticlePacket();
-			ItemParticleData particleData = new ItemParticleData(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), stack);
+			ItemParticleOption particleData = new ItemParticleOption(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), stack);
 
 			for (float i = -0.15f; i <= 0.15f; i += 0.05f) {
 				packet.particle(particleData, user.getX(), user.getY() + user.getEyeHeight(), user.getZ(), velocityVector.x() + (i * 2 * velocityVector.z()), velocityVector.y(), velocityVector.z() + (i * 2 * velocityVector.x()));
 			}
 
-			AoAPackets.messageNearbyPlayers(packet, (ServerWorld)level, user.position(), packet.isLongRange() ? 512 : 32);
+			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, user.position(), packet.isLongRange() ? 512 : 32);
 		}
 	}
 
-	private Entity getFishEntity(LivingEntity user, World world, BlockPos pos) {
-		if (user instanceof ServerPlayerEntity) {
-			ServerPlayerEntity player = (ServerPlayerEntity)user;
-			Entity entity = AoAHaulingFishReloadListener.getFishListForBiome(user.level.getBiome(pos), false).getRandomElement(player, player.getLuck()).apply(user.level);
-
+	private Entity getFishEntity(LivingEntity user, Level world, BlockPos pos) {
+		if (user instanceof ServerPlayer player) {
+			Entity entity = AoAHaulingFishReloadListener.getFishListForBiome(user.level.getBiome(pos).value(), false).getRandomElement(player, player.getLuck()).apply(user.level);
 
 			if (!(entity instanceof ItemEntity))
 				return entity;
@@ -106,25 +99,25 @@ public class ChumItem extends Item {
 		int selection = RandomUtil.randomNumberUpTo(66);
 
 		if (selection == 0)
-			return new DolphinEntity(EntityType.DOLPHIN, world);
+			return new Dolphin(EntityType.DOLPHIN, world);
 
 		if (selection <= 5)
-			return new SquidEntity(EntityType.SQUID, world);
+			return new Squid(EntityType.SQUID, world);
 
 		if (selection <= 15)
-			return new PufferfishEntity(EntityType.PUFFERFISH, world);
+			return new Pufferfish(EntityType.PUFFERFISH, world);
 
 		if (selection <= 30)
-			return new CodEntity(EntityType.COD, world);
+			return new Cod(EntityType.COD, world);
 
 		if (selection <= 45)
-			return new SalmonEntity(EntityType.SALMON, world);
+			return new Salmon(EntityType.SALMON, world);
 
-		return new TropicalFishEntity(EntityType.TROPICAL_FISH, world);
+		return new TropicalFish(EntityType.TROPICAL_FISH, world);
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World pLevel, List<ITextComponent> tooltip, ITooltipFlag flags) {
+	public void appendHoverText(ItemStack stack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag flags) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

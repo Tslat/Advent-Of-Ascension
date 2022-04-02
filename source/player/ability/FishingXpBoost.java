@@ -1,8 +1,8 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -15,10 +15,10 @@ public class FishingXpBoost extends ScalableModAbility {
 	public FishingXpBoost(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.FISHING_XP_BOOST.get(), skill, data);
 
-		this.useAddition = JSONUtils.getAsBoolean(data, "use_addition", false);
+		this.useAddition = GsonHelper.getAsBoolean(data, "use_addition", false);
 	}
 
-	public FishingXpBoost(AoASkill.Instance skill, CompoundNBT data) {
+	public FishingXpBoost(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.FISHING_XP_BOOST.get(), skill, data);
 
 		this.useAddition = data.getBoolean("use_addition");
@@ -51,8 +51,8 @@ public class FishingXpBoost extends ScalableModAbility {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
 			data.putBoolean("use_addition", this.useAddition);

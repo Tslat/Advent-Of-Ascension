@@ -1,18 +1,19 @@
 package net.tslat.aoa3.content.item.tool.pickaxe;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -26,12 +27,12 @@ import java.util.List;
 
 public class OccultPickaxe extends BasePickaxe {
 	public OccultPickaxe() {
-		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null),
+		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_PICKAXE),
 				new Item.Properties().durability(3000).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		if (world.isClientSide()) {
 			ArrayList<Pair<BlockPos, BlockState>> blocks = new ArrayList<Pair<BlockPos, BlockState>>();
 
@@ -50,16 +51,16 @@ public class OccultPickaxe extends BasePickaxe {
 			ClientOperations.addOccultBlocks(GlobalEvents.tick + 150, blocks);
 		}
 
-		ActionResult<ItemStack> result = super.use(world, player, hand);
+		InteractionResultHolder<ItemStack> result = super.use(world, player, hand);
 
-		if (result.getResult() == ActionResultType.FAIL)
-			return ActionResult.pass(result.getObject());
+		if (result.getResult() == InteractionResult.FAIL)
+			return InteractionResultHolder.pass(result.getObject());
 
 		return result;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

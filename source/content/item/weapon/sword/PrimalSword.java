@@ -1,21 +1,21 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
 import com.google.common.collect.Multimap;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.ConcurrentModificationException;
@@ -23,11 +23,11 @@ import java.util.List;
 
 public class PrimalSword extends BaseSword {
 	public PrimalSword() {
-		super(ItemUtil.customItemTier(1960, AttackSpeed.NORMAL, 13.0f, 4, 10, null));
+		super(ItemUtil.customItemTier(1960, AttackSpeed.NORMAL, 13.0f, 4, 10, null, null));
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
 		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
@@ -37,13 +37,13 @@ public class PrimalSword extends BaseSword {
 					float currentCalcBuff = getCurrentDamageBuff(entity);
 
 					if (currentDamageMod != currentCalcBuff) {
-						((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+						((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 						cap.setValue(currentCalcBuff);
-						((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+						((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					}
 				}
 				else if (cap.getValue() != 0 && ((LivingEntity)entity).getMainHandItem().isEmpty()) {
-					((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlotType.MAINHAND, stack));
+					((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					cap.setValue(0);
 				}
 			}
@@ -69,10 +69,10 @@ public class PrimalSword extends BaseSword {
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> modifierMap =  super.getAttributeModifiers(slot, stack);
 
-		if (slot == EquipmentSlotType.MAINHAND) {
+		if (slot == EquipmentSlot.MAINHAND) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
 			ItemUtil.setAttribute(modifierMap, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_UUID, getDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
@@ -82,7 +82,7 @@ public class PrimalSword extends BaseSword {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

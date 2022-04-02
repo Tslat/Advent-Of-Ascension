@@ -1,18 +1,17 @@
 package net.tslat.aoa3.client.render.entity.animal;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.client.model.entity.animal.ShikModel;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.resources.ResourceLocation;
+import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.animal.ShikEntity;
 
 public class ShikRenderer extends MobRenderer<ShikEntity, EntityModel<ShikEntity>> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/passive/shik.png");
 
-	public ShikRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new ShikModel(), AoAEntities.Animals.SHIK.get().getWidth() / 3f);
+	public ShikRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, null/*new ShikModel()*/, AoAAnimals.SHIK.get().getWidth() / 3f);
 	}
 
 	@Override

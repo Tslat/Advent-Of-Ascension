@@ -4,12 +4,15 @@ import com.google.common.collect.ImmutableSet;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.*;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.tslat.aoa3.common.registration.AoALootOperations;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.resource.AoAResource;
@@ -17,7 +20,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.Set;
 
-public class PlayerHasResource implements ILootCondition {
+public class PlayerHasResource implements LootItemCondition {
 	private final AoAResource resource;
 	private final float amount;
 	private final boolean consume;
@@ -29,24 +32,24 @@ public class PlayerHasResource implements ILootCondition {
 	}
 
 	@Override
-	public LootConditionType getType() {
+	public LootItemConditionType getType() {
 		return AoALootOperations.LootConditions.PLAYER_HAS_RESOURCE;
 	}
 
 	@Override
-	public Set<LootParameter<?>> getReferencedContextParams() {
-		return ImmutableSet.of(LootParameters.KILLER_ENTITY);
+	public Set<LootContextParam<?>> getReferencedContextParams() {
+		return ImmutableSet.of(LootContextParams.KILLER_ENTITY);
 	}
 
 	@Override
 	public boolean test(LootContext lootContext) {
-		Entity entity = lootContext.getParamOrNull(LootParameters.KILLER_ENTITY);
+		Entity entity = lootContext.getParamOrNull(LootContextParams.KILLER_ENTITY);
 
 		if (entity == null)
-			entity = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);
+			entity = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
 
-		if (entity instanceof ServerPlayerEntity)
-			return consume ? PlayerUtil.consumeResource((ServerPlayerEntity)entity, resource, amount, false) : PlayerUtil.getResourceValue((ServerPlayerEntity)entity, resource) >= amount;
+		if (entity instanceof ServerPlayer)
+			return consume ? PlayerUtil.consumeResource((ServerPlayer)entity, resource, amount, false) : PlayerUtil.getResourceValue((ServerPlayer)entity, resource) >= amount;
 
 		return false;
 	}
@@ -59,7 +62,7 @@ public class PlayerHasResource implements ILootCondition {
 		return this.amount;
 	}
 
-	public static class Serializer implements ILootSerializer<PlayerHasResource> {
+	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<PlayerHasResource> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasResource playerHasResource, JsonSerializationContext jsonSerializationContext) {
 			json.addProperty("resource", playerHasResource.resource.getRegistryName().toString());
@@ -69,7 +72,7 @@ public class PlayerHasResource implements ILootCondition {
 
 		@Override
 		public PlayerHasResource deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
-			return new PlayerHasResource(AoAResources.getResource(new ResourceLocation(JSONUtils.getAsString(json, "resource"))), JSONUtils.getAsFloat(json, "amount"), JSONUtils.isValidNode(json, "consume") && JSONUtils.getAsBoolean(json, "consume"));
+			return new PlayerHasResource(AoAResources.getResource(new ResourceLocation(GsonHelper.getAsString(json, "resource"))), GsonHelper.getAsFloat(json, "amount"), GsonHelper.isValidNode(json, "consume") && GsonHelper.getAsBoolean(json, "consume"));
 		}
 	}
 }

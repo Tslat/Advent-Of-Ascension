@@ -1,26 +1,27 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -37,12 +38,12 @@ public class KingShroomusEntity extends AoARangedMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int healingCounter = 0;
 
-	public KingShroomusEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public KingShroomusEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 2.40625f;
 	}
 
@@ -87,7 +88,7 @@ public class KingShroomusEntity extends AoARangedMob {
 
 		if (healingCounter == 0 && random.nextInt(200) == 0) {
 			if (!level.isClientSide)
-				level.playSound(null, blockPosition(), AoASounds.ENTITY_KING_SHROOMUS_HEAL.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.playSound(null, blockPosition(), AoASounds.ENTITY_KING_SHROOMUS_HEAL.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
 			healingCounter = 80;
 		}
@@ -109,10 +110,10 @@ public class KingShroomusEntity extends AoARangedMob {
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
 		EntityUtil.applyPotions(target, RandomUtil.getRandomSelection(
-				new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 80).level(3),
-				new EffectBuilder(Effects.POISON, 80).level(5),
-				new EffectBuilder(Effects.CONFUSION, 140),
-				new EffectBuilder(Effects.WEAKNESS, 100).level(3)
+				new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 80).level(3),
+				new EffectBuilder(MobEffects.POISON, 80).level(5),
+				new EffectBuilder(MobEffects.CONFUSION, 140),
+				new EffectBuilder(MobEffects.WEAKNESS, 100).level(3)
 		));
 	}
 
@@ -126,10 +127,10 @@ public class KingShroomusEntity extends AoARangedMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.KING_SHROOMUS.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.KING_SHROOMUS.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -139,7 +140,7 @@ public class KingShroomusEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -147,14 +148,14 @@ public class KingShroomusEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.KING_SHROOMUS_MUSIC.getId()));
@@ -162,7 +163,7 @@ public class KingShroomusEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.KING_SHROOMUS_MUSIC.getId()));
@@ -170,3 +171,4 @@ public class KingShroomusEntity extends AoARangedMob {
 	}
 
 }
+*/

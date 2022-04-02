@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.item.tool.misc;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -35,8 +35,8 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.DRINK;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.DRINK;
 	}
 
 	@Override
@@ -45,25 +45,24 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (!world.isClientSide) {
 			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
 			if (cap.getValue() <= 0)
-				return ActionResult.fail(stack);
+				return InteractionResultHolder.fail(stack);
 
 			player.startUsingItem(hand);
 		}
 
-		return ActionResult.pass(stack);
+		return InteractionResultHolder.pass(stack);
 	}
 
 	@Override
 	public void onUsingTick(ItemStack stack, LivingEntity entity, int count) {
-		if (entity instanceof ServerPlayerEntity) {
-			ServerPlayerEntity player = (ServerPlayerEntity)entity;
+		if (entity instanceof ServerPlayer player) {
 			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
 			if (cap.getValue() > 0) {
@@ -80,11 +79,11 @@ public class ExpFlask extends Item {
 
 	@Nullable
 	@Override
-	public CompoundNBT getShareTag(ItemStack stack) {
-		CompoundNBT tag = super.getShareTag(stack);
+	public CompoundTag getShareTag(ItemStack stack) {
+		CompoundTag tag = super.getShareTag(stack);
 
 		if (tag == null)
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 
 		tag.putFloat("AdventMiscStackCapability", PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue());
 
@@ -92,7 +91,7 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+	public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
 		if (nbt != null && nbt.contains("AdventMiscStackCapability"))
 			PersistentStackCapabilityProvider.getOrDefault(stack, null).setValue(nbt.getFloat("AdventMiscStackCapability"));
 
@@ -101,7 +100,7 @@ public class ExpFlask extends Item {
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		return new PersistentStackCapabilityProvider(null);
 	}
 
@@ -128,11 +127,11 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		int storedValue = (int)PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue();
 
 		if (storedValue > 0)
-			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.SPECIAL, 1, new StringTextComponent(NumberUtil.floorAndAppendSuffix(storedValue, true) + (storedValue >= 7 ? " (" + PlayerUtil.getPlayerLevelFromExp(storedValue) + ")" : ""))));
+			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.SPECIAL, 1, new TextComponent(NumberUtil.floorAndAppendSuffix(storedValue, true) + (storedValue >= 7 ? " (" + PlayerUtil.getPlayerLevelFromExp(storedValue) + ")" : ""))));
 
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 3));

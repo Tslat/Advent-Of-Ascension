@@ -1,20 +1,21 @@
 package net.tslat.aoa3.client.gui.adventgui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
@@ -22,7 +23,8 @@ import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.AddSkillCyclePacket;
 import net.tslat.aoa3.common.packet.packets.ToggleAoAAbilityPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.entity.AoAAnimals;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
@@ -50,7 +52,7 @@ public class AdventGuiTabPlayer extends Screen {
 	private long addCycleLastClicked = -1;
 
 	protected AdventGuiTabPlayer() {
-		super(new TranslationTextComponent("gui.aoa3.adventGui.stats"));
+		super(new TranslatableComponent("gui.aoa3.adventGui.stats"));
 	}
 
 	@Override
@@ -60,11 +62,11 @@ public class AdventGuiTabPlayer extends Screen {
 		boolean scaled;
 
 		do {
-			buttons.clear();
-			children.clear();
 			int totalWidth = 40;
 			int totalHeight = 0;
 			scaled = true;
+
+			clearWidgets();
 
 			for (AoASkill.Instance skill : ClientPlayerDataManager.get().getSkills()) {
 				AoASkillRenderer renderer = AoAGuiElementRenderers.getSkillRenderer(skill.type());
@@ -83,7 +85,7 @@ public class AdventGuiTabPlayer extends Screen {
 					}
 				}
 
-				addButton(new SkillEntry(this, totalWidth + 7, totalHeight + 10, renderer, skill, skillRenderScale));
+				addRenderableWidget(new SkillEntry(this, totalWidth + 7, totalHeight + 10, renderer, skill, skillRenderScale));
 
 				totalWidth += renderWidth;
 			}
@@ -97,7 +99,7 @@ public class AdventGuiTabPlayer extends Screen {
 	}
 
 	@Override
-	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 		adjustedMouseX = (int)(mouseX * (1 / AdventMainGui.SCALE));
 		adjustedMouseY = (int)(mouseY * (1 / AdventMainGui.SCALE));
 
@@ -120,7 +122,7 @@ public class AdventGuiTabPlayer extends Screen {
 		}
 		else {
 			AoASkillRenderer skillRenderer = AoAGuiElementRenderers.getSkillRenderer(abilityPane.skill.type());
-			FontRenderer font = Minecraft.getInstance().font;
+			Font font = Minecraft.getInstance().font;
 			float skillRenderWidth = skillRenderer.guiRenderWidth(abilityPane.skill) * 3 / 2f;
 			hoveringSkillClose = (adjustedMouseX > AdventMainGui.scaledTabRootX + 736 && adjustedMouseX < AdventMainGui.scaledTabRootX + 755 && adjustedMouseY > AdventMainGui.scaledTabRootY + 7 && adjustedMouseY < AdventMainGui.scaledTabRootY + 27);
 
@@ -141,19 +143,19 @@ public class AdventGuiTabPlayer extends Screen {
 
 			matrix.popPose();
 
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillLevel", ""), 0, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillLevel", ""), 0, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, String.valueOf(abilityPane.skill.getLevel(true)), 0, 95, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXp", ""), 0, 120, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXp", ""), 0, 120, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, NumberUtil.roundToNthDecimalPlace(abilityPane.skill.getXp(), 2), 0, 135, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXpRemaining", ""), 0, 160, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXpRemaining", ""), 0, 160, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, NumberUtil.roundToNthDecimalPlace(PlayerUtil.getXpRequiredForNextLevel(abilityPane.skill.getLevel(true)) - abilityPane.skill.getXp(), 2), 0, 175, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillProgress", ""), 0, 200, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillProgress", ""), 0, 200, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, PlayerUtil.getLevelProgressPercentage(abilityPane.skill.getLevel(true), abilityPane.skill.getXp()) + "%", 0, 215, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillCycles", ""), 0, 240, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillCycles", ""), 0, 240, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, String.valueOf(abilityPane.skill.getCycles()), 0, 255, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			if (abilityPane.skill.getLevel(true) >= 100 && abilityPane.skill.getCycles() < 10) {
-				TranslationTextComponent text = addCycleLastClicked > 0 ? new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle.confirm") : new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle");
+				TranslatableComponent text = addCycleLastClicked > 0 ? new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle.confirm") : new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle");
 				int buttonWidth = font.width(text);
 				hoveringAddCycle = (adjustedMouseX > AdventMainGui.scaledTabRootX + (150 - skillRenderWidth / 2f) - (buttonWidth / 2f * 1.5f) && adjustedMouseX < AdventMainGui.scaledTabRootX + (150 - skillRenderWidth / 2f) + (buttonWidth / 2f * 1.5f) && adjustedMouseY > AdventMainGui.scaledTabRootY + 315 && adjustedMouseY < AdventMainGui.scaledTabRootY + 327);
 
@@ -168,7 +170,7 @@ public class AdventGuiTabPlayer extends Screen {
 
 			matrix.popPose();
 
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.abilities"), 500, 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.abilities"), 500, 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			matrix.popPose();
 
@@ -181,24 +183,25 @@ public class AdventGuiTabPlayer extends Screen {
 		matrix.popPose();
 	}
 
-	private void drawTotalLevel(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+	private void drawTotalLevel(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 		Minecraft mc = Minecraft.getInstance();
 		int totalLevel = ClientPlayerDataManager.get().getTotalLevel();
 
 		if (totalLevel == 0) {
-			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.noSkills"), 280, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.noSkills"), 280, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			return;
 		}
 
-		RenderSystem.enableAlphaTest();
-		mc.textureManager.bind(TOTAL_LEVEL_ICON);
+		//RenderSystem.enableAlphaTest();
+		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+		RenderSystem.setShaderTexture(0, TOTAL_LEVEL_ICON);
 		RenderUtil.renderScaledCustomSizedTexture(matrix, 10, 14, 0, 0, 48, 48, 60, 60, 48, 48);
-		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.totalLevel"), 40, 10, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.totalLevel"), 40, 10, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 		RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf(ClientPlayerDataManager.get().getTotalLevel()), 40, 40, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 	}
 
-	private void drawPlayerBox(MatrixStack matrix, int mouseX, int mouseY, int scale, float partialTicks) {
+	private void drawPlayerBox(PoseStack matrix, int mouseX, int mouseY, int scale, float partialTicks) {
 		matrix.pushPose();
 
 		if (entityToRender == null)
@@ -206,7 +209,7 @@ public class AdventGuiTabPlayer extends Screen {
 
 		Minecraft mc = Minecraft.getInstance();
 		
-		ITextComponent name = mc.player.getDisplayName();
+		Component name = mc.player.getDisplayName();
 
 		matrix.translate(40, 206, 1050.0F);
 		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, name, 0, 206 - 310, 1.0f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
@@ -222,28 +225,28 @@ public class AdventGuiTabPlayer extends Screen {
 		matrix.mulPose(quaternion);
 
 		float yawOffset = entityToRender.yBodyRot;
-		float rotYaw = entityToRender.yRot;
-		float rotPitch = entityToRender.xRot;
+		float rotYaw = entityToRender.getYRot();
+		float rotPitch = entityToRender.getXRot();
 		float prevYawHead = entityToRender.yHeadRotO;
 		float rotYawHead = entityToRender.yHeadRot;
 		entityToRender.yBodyRot = 0;
-		entityToRender.yRot = (float)Math.atan((((AdventMainGui.scaledRootX + 264) - mouseX) / 40.0F)) * 40.0F;
-		entityToRender.xRot = -((float)Math.atan((((AdventMainGui.scaledRootY + 465) - 111 - mouseY) / 40.0F))) * 20.0F;
-		entityToRender.yHeadRot = entityToRender.yRot;
-		entityToRender.yHeadRotO = entityToRender.yRot;
-		EntityRendererManager renderManager = Minecraft.getInstance().getEntityRenderDispatcher();
+		entityToRender.setYRot((float)Math.atan((((AdventMainGui.scaledRootX + 264) - mouseX) / 40.0F)) * 40.0F);
+		entityToRender.setXRot(-((float)Math.atan((((AdventMainGui.scaledRootY + 465) - 111 - mouseY) / 40.0F))) * 20.0F);
+		entityToRender.yHeadRot = entityToRender.getYRot();
+		entityToRender.yHeadRotO = entityToRender.getYRot();
+		EntityRenderDispatcher renderManager = Minecraft.getInstance().getEntityRenderDispatcher();
 
 		renderManager.setRenderShadow(false);
 
-		IRenderTypeBuffer.Impl renderBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
+		MultiBufferSource.BufferSource renderBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
 
 		renderManager.render(entityToRender, 0, 0, 0, 0, 1, matrix, renderBuffer, 15728880);
 		renderBuffer.endBatch();
 		renderManager.setRenderShadow(true);
 
 		entityToRender.yBodyRot = yawOffset;
-		entityToRender.yRot = rotYaw;
-		entityToRender.xRot = rotPitch;
+		entityToRender.setYRot(rotYaw);
+		entityToRender.setXRot(rotPitch);
 		entityToRender.yHeadRotO = prevYawHead;
 		entityToRender.yHeadRot = rotYawHead;
 
@@ -254,8 +257,8 @@ public class AdventGuiTabPlayer extends Screen {
 	public void removed() {
 		super.removed();
 
-		if (entityToRender != null && !(entityToRender instanceof PlayerEntity))
-			entityToRender.remove();
+		if (entityToRender != null && !(entityToRender instanceof Player))
+			entityToRender.discard();
 
 		entityToRender = null;
 	}
@@ -266,30 +269,30 @@ public class AdventGuiTabPlayer extends Screen {
 			
 			if (!ClientPlayerDataManager.get().isLegitimate()) {
 				entityToRender = RandomUtil.getRandomSelection(
-						AoAEntities.Mobs.ARCWORM,
-						AoAEntities.Mobs.CHARGER,
-						AoAEntities.Mobs.DESERT_CHARGER,
-						AoAEntities.Mobs.HILL_CHARGER,
-						AoAEntities.Mobs.OCCULENT,
-						AoAEntities.Mobs.SEA_CHARGER,
-						AoAEntities.Mobs.SNOW_CHARGER,
-						AoAEntities.Mobs.SWAMP_CHARGER,
-						AoAEntities.Mobs.VOID_CHARGER,
-						AoAEntities.Mobs.CYCLOPS,
-						AoAEntities.Mobs.STICKY,
-						AoAEntities.Mobs.KRANKY,
-						AoAEntities.Mobs.GINGERBREAD_MAN,
-						AoAEntities.Mobs.SHADE,
-						AoAEntities.Mobs.BOBO,
-						AoAEntities.Mobs.CHOCKO,
-						AoAEntities.Mobs.STITCHES,
-						AoAEntities.Mobs.BUGEYE,
-						AoAEntities.Mobs.SEA_TROLL,
-						AoAEntities.Mobs.ELITE_SKELE_PIG,
-						AoAEntities.Animals.SPEARMINT_SNAIL,
-						AoAEntities.Mobs.SHADOW,
-						AoAEntities.Mobs.ALARMO,
-						AoAEntities.Mobs.ANCIENT_GOLEM
+						AoAMobs.ARCWORM,
+						AoAMobs.CHARGER,
+						AoAMobs.DESERT_CHARGER,
+						AoAMobs.HILL_CHARGER,
+						AoAMobs.OCCULENT,
+						AoAMobs.SEA_CHARGER,
+						AoAMobs.SNOW_CHARGER,
+						AoAMobs.SWAMP_CHARGER,
+						AoAMobs.VOID_CHARGER,
+						AoAMobs.CYCLOPS,
+						AoAMobs.STICKY,
+						AoAMobs.KRANKY,
+						AoAMobs.GINGERBREAD_MAN,
+						AoAMobs.SHADE,
+						AoAMobs.BOBO,
+						AoAMobs.CHOCKO,
+						AoAMobs.STITCHES,
+						AoAMobs.BUGEYE,
+						AoAMobs.SEA_TROLL,
+						AoAMobs.ELITE_SKELE_PIG,
+						AoAAnimals.SPEARMINT_SNAIL,
+						AoAMobs.SHADOW,
+						AoAMobs.ALARMO,
+						AoAMobs.ANCIENT_GOLEM
 				).get().create(mc.level);
 			}
 			else {
@@ -405,9 +408,9 @@ public class AdventGuiTabPlayer extends Screen {
 		}
 
 		@Override
-		public void drawPaneContents(MatrixStack matrix, int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
+		public void drawPaneContents(PoseStack matrix, int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
 			Minecraft mc = Minecraft.getInstance();
-			FontRenderer font = mc.font;
+			Font font = mc.font;
 			float center = (right - left) / 2f;
 
 			if (isMouseHovering() && mouseX < right - 8) {
@@ -445,10 +448,10 @@ public class AdventGuiTabPlayer extends Screen {
 		}
 
 		@Override
-		public void drawBackground(MatrixStack matrix) {}
+		public void drawBackground(PoseStack matrix) {}
 	}
 
-	private static class SkillEntry extends Widget {
+	private static class SkillEntry extends Button {
 		private final AdventGuiTabPlayer tab;
 
 		private final AoASkillRenderer renderer;
@@ -456,7 +459,7 @@ public class AdventGuiTabPlayer extends Screen {
 		private final float scale;
 
 		private SkillEntry(AdventGuiTabPlayer tab, float posX, float posY, AoASkillRenderer renderer, AoASkill.Instance instance, float scale) {
-			super((int)posX, (int)posY, renderer.guiRenderHeight(instance), renderer.guiRenderWidth(instance), instance.getName());
+			super((int)posX, (int)posY, renderer.guiRenderHeight(instance), renderer.guiRenderWidth(instance), instance.getName(), button -> {});
 
 			this.tab = tab;
 			this.renderer = renderer;
@@ -465,7 +468,7 @@ public class AdventGuiTabPlayer extends Screen {
 		}
 
 		@Override
-		public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 			if (this.visible) {
 				this.isHovered = isMouseOver(mouseX - AdventMainGui.scaledTabRootX, mouseY - AdventMainGui.scaledTabRootY);
 
@@ -476,7 +479,7 @@ public class AdventGuiTabPlayer extends Screen {
 				matrix.translate(0, -5, 0);
 				matrix.scale(0.5f, 0.5f, 1);
 
-				RenderUtil.drawCenteredScaledMessage(matrix, Minecraft.getInstance().font, getMessage(), width, 0, 1, isHovered() ? ColourUtil.RGB(255, 255, 100) : ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledMessage(matrix, Minecraft.getInstance().font, getMessage(), width, 0, 1, isHovered ? ColourUtil.RGB(255, 255, 100) : ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 				matrix.popPose();
 			}
 		}

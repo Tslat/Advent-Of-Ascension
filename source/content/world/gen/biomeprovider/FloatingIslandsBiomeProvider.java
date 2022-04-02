@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.world.gen.biomeprovider;
 
 import com.mojang.datafixers.util.Pair;
@@ -60,3 +61,4 @@ public class FloatingIslandsBiomeProvider extends BiomeProvider {
 		return possibleBiomes.get(0);
 	}
 }
+*/

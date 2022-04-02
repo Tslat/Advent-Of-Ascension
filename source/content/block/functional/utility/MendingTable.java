@@ -1,30 +1,29 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.container.MendingTableContainer;
 import net.tslat.aoa3.util.BlockUtil;
 
 public class MendingTable extends Block {
 	public MendingTable() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(5f, 10f).harvestTool(ToolType.PICKAXE).get());
+		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_RED).stats(5f, 10f).needsTool().get());
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player instanceof ServerPlayerEntity)
-			MendingTableContainer.openContainer((ServerPlayerEntity)player, pos);
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (player instanceof ServerPlayer)
+			MendingTableContainer.openContainer((ServerPlayer)player, pos);
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

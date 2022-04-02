@@ -1,24 +1,24 @@
 package net.tslat.aoa3.content.entity.misc.faunamancytrap;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 
 public abstract class FaunamancyTrapEntity extends Entity {
 
-	public FaunamancyTrapEntity(EntityType<? extends FaunamancyTrapEntity> entityType, PlayerEntity player, int lifeSpan) {
+	public FaunamancyTrapEntity(EntityType<? extends FaunamancyTrapEntity> entityType, Player player, int lifeSpan) {
 		this(entityType, player.level);
 	}
 
-	public FaunamancyTrapEntity(EntityType<? extends FaunamancyTrapEntity> entityType, World level) {
+	public FaunamancyTrapEntity(EntityType<? extends FaunamancyTrapEntity> entityType, Level level) {
 		super(entityType, level);
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

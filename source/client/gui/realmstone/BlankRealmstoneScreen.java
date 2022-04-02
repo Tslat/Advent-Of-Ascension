@@ -3,17 +3,17 @@ package net.tslat.aoa3.client.gui.realmstone;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.util.IReorderingProcessor;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Mth;
 import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
@@ -54,7 +54,7 @@ public class BlankRealmstoneScreen extends Screen {
 	}
 
 	@Override
-	public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 		if (minecraft == null)
 			return;
 
@@ -69,8 +69,8 @@ public class BlankRealmstoneScreen extends Screen {
 			}
 
 			isPanning = true;
-			offsetX = MathHelper.clamp(offsetX + (int)((panMouseX - mouseX) / scale), 0, backgroundWidth - (int)(viewSpaceWidth / scale));
-			offsetY = MathHelper.clamp(offsetY + (int)((panMouseY - mouseY) / scale), 0, backgroundHeight - (int)(viewSpaceHeight / scale));
+			offsetX = Mth.clamp(offsetX + (int)((panMouseX - mouseX) / scale), 0, backgroundWidth - (int)(viewSpaceWidth / scale));
+			offsetY = Mth.clamp(offsetY + (int)((panMouseY - mouseY) / scale), 0, backgroundHeight - (int)(viewSpaceHeight / scale));
 			panMouseX = mouseX;
 			panMouseY = mouseY;
 		}
@@ -83,7 +83,8 @@ public class BlankRealmstoneScreen extends Screen {
 		renderBackground(matrix);
 		matrix.pushPose();
 		matrix.scale(scale, scale, scale);
-		minecraft.getTextureManager().bind(background);
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderTexture(0, background);
 		RenderUtil.renderCustomSizedTexture(matrix, (int)((x + 5) / scale), (int)((y + 7) / scale), offsetX, offsetY, (int)(viewSpaceWidth / scale), (int)(viewSpaceHeight / scale), backgroundWidth, backgroundHeight);
 
 		for (RealmstoneWorldInsert insert : worldInserts.values()) {
@@ -97,11 +98,12 @@ public class BlankRealmstoneScreen extends Screen {
 			renderTooltip(matrix, currentlyHoveredInsert.getHoverTexts(), mouseX, mouseY);
 	}
 
-	private void drawWindowFrame(MatrixStack matrix, int x, int y) {
-		RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+	private void drawWindowFrame(PoseStack matrix, int x, int y) {
+		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.enableBlend();
-		RenderHelper.turnOff();
-		minecraft.getTextureManager().bind(windowFrame);
+		//Lighting.turnOff();
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+		RenderSystem.setShaderTexture(0, windowFrame);
 		RenderUtil.renderCustomSizedTexture(matrix, x, y, 0, 0, 256, 187, 256, 256);
 		minecraft.font.draw(matrix, title, x + 8, y + 6, ColourUtil.RGB(181, 181, 181));
 	}
@@ -115,7 +117,7 @@ public class BlankRealmstoneScreen extends Screen {
 		private final int posY;
 		private final String[] parentNodes;
 
-		private final Lazy<ArrayList<IReorderingProcessor>> hoverTexts;
+		private final Lazy<ArrayList<FormattedCharSequence>> hoverTexts;
 
 		public RealmstoneWorldInsert(String id, int posX, int posY, String... parentNodes) {
 			this.id = id;
@@ -125,9 +127,9 @@ public class BlankRealmstoneScreen extends Screen {
 			this.texture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/worlds/" + id + ".png");
 
 			hoverTexts = Lazy.of(() -> {
-				ArrayList<IReorderingProcessor> texts = new ArrayList<IReorderingProcessor>(2);
+				ArrayList<FormattedCharSequence> texts = new ArrayList<>(2);
 
-				texts.add(LocaleUtil.getLocaleMessage("dimension." + AdventOfAscension.MOD_ID + "." + id, TextFormatting.BLUE).getVisualOrderText());
+				texts.add(LocaleUtil.getLocaleMessage("dimension." + AdventOfAscension.MOD_ID + "." + id, ChatFormatting.BLUE).getVisualOrderText());
 				texts.addAll(Minecraft.getInstance().font.split(LocaleUtil.getLocaleMessage("gui.realmstoneMenu.hover." + id), 200));
 
 				return texts;
@@ -183,19 +185,19 @@ public class BlankRealmstoneScreen extends Screen {
 			return new RealmstoneWorldInsert(jsonObject.get("id").getAsString(), jsonObject.get("gui_x").getAsInt(), jsonObject.get("gui_y").getAsInt(), parentNodes);
 		}
 
-		private void render(MatrixStack matrix, Minecraft mc, HashMap<String, RealmstoneWorldInsert> worldInserts, int baseX, int baseY, int scrollX, int scrollY, int mouseX, int mouseY) {
+		private void render(PoseStack matrix, Minecraft mc, HashMap<String, RealmstoneWorldInsert> worldInserts, int baseX, int baseY, int scrollX, int scrollY, int mouseX, int mouseY) {
 			int renderX = baseX + posX - scrollX;
 			int renderY = baseY + posY - scrollY;
-			int overlapLeft = MathHelper.clamp(baseX - renderX, 0, iconSize);
+			int overlapLeft = Mth.clamp(baseX - renderX, 0, iconSize);
 
 			if (overlapLeft < 100) {
-				int overlapTop = MathHelper.clamp(baseY - renderY, 0, iconSize);
+				int overlapTop = Mth.clamp(baseY - renderY, 0, iconSize);
 
 				if (overlapTop < 100) {
-					int overlapRight = MathHelper.clamp(renderX + 100 - (baseX + (int)(viewSpaceWidth / scale)), 0, iconSize);
+					int overlapRight = Mth.clamp(renderX + 100 - (baseX + (int)(viewSpaceWidth / scale)), 0, iconSize);
 
 					if (overlapRight < 100) {
-						int overlapBottom = MathHelper.clamp(renderY + 100 - (baseY + (int)(viewSpaceHeight / scale)), 0, iconSize);
+						int overlapBottom = Mth.clamp(renderY + 100 - (baseY + (int)(viewSpaceHeight / scale)), 0, iconSize);
 
 						if (overlapBottom < 100) {
 							renderX += overlapLeft;
@@ -204,9 +206,10 @@ public class BlankRealmstoneScreen extends Screen {
 							int height = iconSize - overlapTop - overlapBottom;
 
 							GlStateManager._enableBlend();
-							mc.getTextureManager().bind(texture);
+							RenderSystem.setShader(GameRenderer::getPositionTexShader);
+							RenderSystem.setShaderTexture(0, texture);
 							RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, overlapLeft, overlapTop, width, height, 100, 100);
-							mc.getTextureManager().bind(widgets);
+							RenderSystem.setShaderTexture(0, widgets);
 							RenderUtil.renderCustomSizedTexture(matrix, renderX, renderY, overlapLeft, overlapTop, width, height, 210, 100);
 							GlStateManager._disableBlend();
 
@@ -220,10 +223,11 @@ public class BlankRealmstoneScreen extends Screen {
 			renderLinks(matrix, mc, worldInserts, baseX, baseY, scrollX, scrollY);
 		}
 
-		private void renderLinks(MatrixStack matrix, Minecraft mc, HashMap<String, RealmstoneWorldInsert> nodes, int baseX, int baseY, int scrollX, int scrollY) {
+		private void renderLinks(PoseStack matrix, Minecraft mc, HashMap<String, RealmstoneWorldInsert> nodes, int baseX, int baseY, int scrollX, int scrollY) {
 			rand.setSeed(0);
-			GlStateManager._enableBlend();
-			mc.getTextureManager().bind(widgets);
+			RenderSystem.enableBlend();
+			RenderSystem.setShader(GameRenderer::getPositionTexShader);
+			RenderSystem.setShaderTexture(0, widgets);
 
 			int minX = baseX - (int)(1.5f / scale);
 			int minY = baseY - (int)(3 / scale);
@@ -311,17 +315,18 @@ public class BlankRealmstoneScreen extends Screen {
 
 				matrix.pushPose();
 				matrix.translate(x, y, 0);
-				GlStateManager._color4f(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 1);
+				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+				RenderSystem.setShaderColor(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 1);
 				matrix.mulPose(new Quaternion(0, 0, (float)angle, false));
 				RenderUtil.renderScaledCustomSizedTexture(matrix, 40, -7.5f, u, rand.nextInt(5) * 15, uWidth, 15, renderWidth, 15, 210, 100);
-				GlStateManager._color4f(1, 1, 1, 1);
+				RenderSystem.setShaderColor(1, 1, 1, 1);
 				matrix.popPose();
 			}
 
 			GlStateManager._disableBlend();
 		}
 
-		private ArrayList<IReorderingProcessor> getHoverTexts() {
+		private ArrayList<FormattedCharSequence> getHoverTexts() {
 			return hoverTexts.get();
 		}
 
@@ -370,7 +375,7 @@ public class BlankRealmstoneScreen extends Screen {
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
 		scale += scrollAmount / 100f;
-		scale = (float)MathHelper.clamp(scale, 0.14, 1.3);
+		scale = (float)Mth.clamp(scale, 0.14, 1.3);
 
 		offsetX = Math.min(offsetX, backgroundWidth - (int)(viewSpaceWidth / scale));
 		offsetY = Math.min(offsetY, backgroundHeight - (int)(viewSpaceHeight / scale));

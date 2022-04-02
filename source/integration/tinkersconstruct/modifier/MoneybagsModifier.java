@@ -1,21 +1,30 @@
 package net.tslat.aoa3.integration.tinkersconstruct.modifier;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.item.ItemStack;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.RandomUtil;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 import slimeknights.tconstruct.library.tools.context.ToolAttackContext;
-import slimeknights.tconstruct.library.tools.nbt.IModifierToolStack;
+import slimeknights.tconstruct.library.tools.nbt.IToolStackView;
+import slimeknights.tconstruct.library.utils.RomanNumeralHelper;
 
 public class MoneybagsModifier extends Modifier {
-	public MoneybagsModifier() {
-		super(0xFFCC00);
+	@Override
+	public Component getDisplayName(int level) {
+		return applyStyle(new TranslatableComponent(getTranslationKey())
+				.append(" ")
+				.append(RomanNumeralHelper.getNumeral(level))
+				.withStyle(Style.EMPTY.withColor(TextColor.fromRgb(0xFFCC00))));
 	}
 
 	@Override
-	public int afterEntityHit(IModifierToolStack tool, int level, ToolAttackContext context, float damageDealt) {
+	public int afterEntityHit(IToolStackView tool, int level, ToolAttackContext context, float damageDealt) {
 		LivingEntity attacker = context.getAttacker();
 		LivingEntity target = context.getLivingTarget();
 

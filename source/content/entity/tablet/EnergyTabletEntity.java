@@ -1,25 +1,25 @@
 package net.tslat.aoa3.content.entity.tablet;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class EnergyTabletEntity extends SoulTabletEntity {
-	public EnergyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world) {
+	public EnergyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world) {
 		this(entityType, world, null);
 	}
 
-	public EnergyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world, ServerPlayerEntity placer) {
+	public EnergyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world, ServerPlayer placer) {
 		super(entityType, world, placer);
 	}
 
 	@Override
 	protected void doTickEffect() {
-		for (ServerPlayerEntity pl : getTargetsWithinRadius(ServerPlayerEntity.class, player -> player != null && player.isAlive())) {
+		for (ServerPlayer pl : getTargetsWithinRadius(ServerPlayer.class, player -> player != null && player.isAlive())) {
 			PlayerUtil.addResourceToPlayer(pl, AoAResources.SPIRIT.get(), 10f); // TODO
 		}
 	}

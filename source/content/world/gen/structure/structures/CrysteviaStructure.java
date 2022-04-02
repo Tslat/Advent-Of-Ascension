@@ -1,15 +1,16 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.BlockGetter;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.tslat.aoa3.content.world.gen.feature.features.config.IntRangeConfig;
 
 public class CrysteviaStructure extends AoAStructureBase<IntRangeConfig> {
-	public CrysteviaStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public CrysteviaStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(IntRangeConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -17,8 +18,8 @@ public class CrysteviaStructure extends AoAStructureBase<IntRangeConfig> {
 	protected AoAStartFactory<IntRangeConfig> getStructureStart() {
 		return (structure, chunkX, chunkZ, boundingBox, references, seed) -> new AoAStructureStart<IntRangeConfig>(structure, chunkX, chunkZ, boundingBox, references, seed) {
 			@Override
-			protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, IntRangeConfig config) {
-				IBlockReader blockReader = chunkGenerator.getBaseColumn(chunkCenter.getX(), chunkCenter.getZ());
+			protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.MutableBlockPos chunkCenter, Biome biome, IntRangeConfig config) {
+				BlockGetter blockReader = chunkGenerator.getBaseColumn(chunkCenter.getX(), chunkCenter.getZ());
 
 				chunkCenter.setY(config.getValue(random));
 
@@ -40,3 +41,4 @@ public class CrysteviaStructure extends AoAStructureBase<IntRangeConfig> {
 		};
 	}
 }
+*/

@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.entity.mob.dustopia;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -17,12 +17,12 @@ import javax.annotation.Nullable;
 public class DustonEntity extends AoAFlyingMeleeMob {
 	private int cooldown = 600;
 
-	public DustonEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public DustonEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.875f;
 	}
 
@@ -36,7 +36,7 @@ public class DustonEntity extends AoAFlyingMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide && isAlive() && tickCount % 20 == 0 && level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(15), PlayerUtil::shouldPlayerBeAffected).size() > 0) {
+		if (!level.isClientSide && isAlive() && tickCount % 20 == 0 && level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(15), PlayerUtil::shouldPlayerBeAffected).size() > 0) {
 			cooldown -= 20;
 
 			if (cooldown <= 0) {

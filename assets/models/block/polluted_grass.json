@@ -1,9 +1,9 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "particle": "aoa3:block/polluted_grass_side",
     "side": "aoa3:block/polluted_grass_side",
     "bottom": "aoa3:block/polluted_soil",
-    "top": "aoa3:block/polluted_grass_top"
+    "top": "aoa3:block/polluted_grass_top",
+    "particle": "aoa3:block/polluted_grass_side"
   }
 }

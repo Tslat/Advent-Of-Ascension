@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.block.functional.plant;
 
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.Item;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.content.entity.mob.misc.ThornyPlantSproutEntity;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -43,46 +43,46 @@ public class ThornyPlantCrop extends MultiBlockCrop {
 	}
 
 	@Override
-	public VoxelShape getBlockSupportShape(BlockState pState, IBlockReader pReader, BlockPos pPos) {
+	public VoxelShape getBlockSupportShape(BlockState pState, BlockGetter pReader, BlockPos pPos) {
 		return super.getBlockSupportShape(pState, pReader, pPos);
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState pState, IBlockReader pLevel, BlockPos pPos, ISelectionContext pContext) {
+	public VoxelShape getCollisionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
 		return super.getCollisionShape(pState, pLevel, pPos, pContext);
 	}
 
 	@Override
-	public VoxelShape getInteractionShape(BlockState pState, IBlockReader pLevel, BlockPos pPos) {
+	public VoxelShape getInteractionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
 		return super.getInteractionShape(pState, pLevel, pPos);
 	}
 
 	@Override
-	public VoxelShape getOcclusionShape(BlockState pState, IBlockReader pLevel, BlockPos pPos) {
+	public VoxelShape getOcclusionShape(BlockState pState, BlockGetter pLevel, BlockPos pPos) {
 		return super.getOcclusionShape(pState, pLevel, pPos);
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		if (isMaxAge(state) && world instanceof World) {
-			return state.getValue(getHeightProperty()) == 0 ? BOTTOM_FULL_SHAPE : VoxelShapes.empty();
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		if (isMaxAge(state) && world instanceof Level) {
+			return state.getValue(getHeightProperty()) == 0 ? BOTTOM_FULL_SHAPE : Shapes.empty();
 		}
 
 		return super.getShape(state, world, pos, context);
 	}
 
 	@Override
-	public VoxelShape getVisualShape(BlockState pState, IBlockReader pReader, BlockPos pPos, ISelectionContext pContext) {
+	public VoxelShape getVisualShape(BlockState pState, BlockGetter pReader, BlockPos pPos, CollisionContext pContext) {
 		return super.getVisualShape(pState, pReader, pPos, pContext);
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState pState) {
+	public RenderShape getRenderShape(BlockState pState) {
 		return super.getRenderShape(pState);
 	}
 
 	@Override
-	protected void growDown(World world, BlockPos pos, BlockState currentState) {
+	protected void growDown(Level world, BlockPos pos, BlockState currentState) {
 		super.growDown(world, pos, currentState);
 
 		pos = pos.below(currentState.getValue(getHeightProperty()));

@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.blaster.ToxicShotEntity;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
@@ -39,7 +39,7 @@ public class GasBlaster extends BaseBlaster {
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (target instanceof LivingEntity) {
-			if (target instanceof PlayerEntity || (target instanceof TameableEntity && shooter.getUUID().equals(((TameableEntity)target).getOwnerUUID()))) {
+			if (target instanceof Player || (target instanceof TamableAnimal && shooter.getUUID().equals(((TamableAnimal)target).getOwnerUUID()))) {
 				EntityUtil.healEntity((LivingEntity)target, 0.05f);
 
 				return true;
@@ -51,13 +51,13 @@ public class GasBlaster extends BaseBlaster {
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (!((LivingEntity)target).hasEffect(Effects.POISON))
-			EntityUtil.applyPotions(target, new EffectBuilder(Effects.POISON, 13).level(2));
+		if (!((LivingEntity)target).hasEffect(MobEffects.POISON))
+			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.POISON, 13).level(2));
 	}
 
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

@@ -1,9 +1,10 @@
 package net.tslat.aoa3.player;
 
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
@@ -22,9 +23,9 @@ import java.util.List;
 public interface AoAPlayerEventListener {
 	/**
 	 * Used to determine which events your listener should be listening for.
-	 * Override and return whichever {@link AoAPlayerEventListener.ListenerType} types you want to handle
+	 * Override and return whichever {@link ListenerType} types you want to handle
 	 *
-	 * @return an array of {@link AoAPlayerEventListener.ListenerType} types this listener should receive events for
+	 * @return an array of {@link ListenerType} types this listener should receive events for
 	 */
 	default ListenerType[] getListenerTypes() {
 		return new ListenerType[] {};
@@ -268,7 +269,7 @@ public interface AoAPlayerEventListener {
 	default void handleSkillXpGain(final PlayerChangeXpEvent ev) {}
 
 	/**
-	 * This method gets triggered when the player is granted xp via the {@link net.minecraft.entity.player.PlayerEntity#giveExperiencePoints} method.
+	 * This method gets triggered when the player is granted xp via the {@link Player#giveExperiencePoints} method.
 	 * Override to trigger effects for when a player is granted vanilla xp.
 	 *
 	 * Will only trigger if {@link ListenerType#GAIN_VANILLA_XP} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
@@ -487,7 +488,7 @@ public interface AoAPlayerEventListener {
 	default void handleLootModification(final List<ItemStack> loot, LootContext context) {}
 
 	@OnlyIn(Dist.CLIENT)
-	default KeyBinding getKeybind() {
+	default KeyMapping getKeybind() {
 		return null;
 	}
 
@@ -506,7 +507,7 @@ public interface AoAPlayerEventListener {
 	 */
 	default void handleKeyInput() {}
 
-	default void activatedActionKey(ServerPlayerEntity player) {
+	default void activatedActionKey(ServerPlayer player) {
 		AoAPackets.messagePlayer(player, new ScreenOverlayPacket(AdventOfAscension.id("textures/gui/overlay/misc/action_key_activation_vignette.png"), 10));
 	}
 

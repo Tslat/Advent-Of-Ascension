@@ -4,20 +4,24 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.*;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CustomRecipe;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.common.registration.AoARecipes;
 
 import javax.annotation.Nullable;
 
-public class ToolInteractionRecipe extends SpecialRecipe {
+public class ToolInteractionRecipe extends CustomRecipe {
 	private final NonNullList<Ingredient> ingredients;
 	private final Ingredient toolItem;
 	private final ItemStack result;
@@ -31,8 +35,8 @@ public class ToolInteractionRecipe extends SpecialRecipe {
 	}
 
 	@Override
-	public boolean matches(CraftingInventory inventory, World level) {
-		RecipeItemHelper itemHelper = new RecipeItemHelper();
+	public boolean matches(CraftingContainer inventory, Level level) {
+		StackedContents itemHelper = new StackedContents();
 		boolean hasTool = false;
 		int ingredientCount = 0;
 
@@ -53,12 +57,12 @@ public class ToolInteractionRecipe extends SpecialRecipe {
 	}
 
 	@Override
-	public ItemStack assemble(CraftingInventory inventory) {
+	public ItemStack assemble(CraftingContainer inventory) {
 		return result.copy();
 	}
 
 	@Override
-	public NonNullList<ItemStack> getRemainingItems(CraftingInventory inventory) {
+	public NonNullList<ItemStack> getRemainingItems(CraftingContainer inventory) {
 		NonNullList<ItemStack> returns = NonNullList.withSize(inventory.getContainerSize(), ItemStack.EMPTY);
 		boolean hasTool = false;
 
@@ -94,7 +98,7 @@ public class ToolInteractionRecipe extends SpecialRecipe {
 	}
 
 	@Override
-	public IRecipeSerializer<?> getSerializer() {
+	public RecipeSerializer<?> getSerializer() {
 		return AoARecipes.TOOL_INTERACTION.getB().get();
 	}
 
@@ -103,12 +107,12 @@ public class ToolInteractionRecipe extends SpecialRecipe {
 		return this.result.copy();
 	}
 
-	public static class Factory extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<ToolInteractionRecipe> {
+	public static class Factory extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ToolInteractionRecipe> {
 		@Override
 		public ToolInteractionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			NonNullList<Ingredient> ingredients = NonNullList.create();
 			Ingredient toolItem = Ingredient.fromJson(json.get("tool"));
-			ItemStack result = ShapedRecipe.itemFromJson(JSONUtils.getAsJsonObject(json, "result"));
+			ItemStack result = ShapedRecipe.itemStackFromJson(GsonHelper.getAsJsonObject(json, "result"));
 			JsonArray ingredientsArray = json.getAsJsonArray("ingredients");
 
 			for (JsonElement ingredientElement : ingredientsArray) {
@@ -126,7 +130,7 @@ public class ToolInteractionRecipe extends SpecialRecipe {
 
 		@Nullable
 		@Override
-		public ToolInteractionRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public ToolInteractionRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			int ingredientsCount = buffer.readVarInt();
 			NonNullList<Ingredient> ingredients = NonNullList.withSize(ingredientsCount, Ingredient.EMPTY);
 
@@ -141,7 +145,7 @@ public class ToolInteractionRecipe extends SpecialRecipe {
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, ToolInteractionRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, ToolInteractionRecipe recipe) {
 			buffer.writeVarInt(recipe.ingredients.size());
 
 			for (Ingredient ingredient : recipe.ingredients) {

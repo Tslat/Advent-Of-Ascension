@@ -4,12 +4,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
@@ -22,7 +22,7 @@ import java.util.List;
 public class AddItemsLootModifier extends LootModifier {
 	private final List<ItemStack> additionalStacks;
 
-	public AddItemsLootModifier(ILootCondition[] conditions, List<ItemStack> additionalStacks) {
+	public AddItemsLootModifier(LootItemCondition[] conditions, List<ItemStack> additionalStacks) {
 		super(conditions);
 
 		this.additionalStacks = additionalStacks;
@@ -38,8 +38,8 @@ public class AddItemsLootModifier extends LootModifier {
 
 	public static class Serializer extends GlobalLootModifierSerializer<AddItemsLootModifier> {
 		@Override
-		public AddItemsLootModifier read(ResourceLocation location, JsonObject object, ILootCondition[] lootConditions) {
-			JsonArray items = JSONUtils.getAsJsonArray(object, "items");
+		public AddItemsLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] lootConditions) {
+			JsonArray items = GsonHelper.getAsJsonArray(object, "items");
 			ArrayList<ItemStack> extraItems = new ArrayList<ItemStack>(items.size());
 
 			for (JsonElement element : items) {

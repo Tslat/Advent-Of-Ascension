@@ -1,17 +1,15 @@
 package net.tslat.aoa3.client.gui.hud;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.util.RenderUtil;
 
 import java.util.HashMap;
 
@@ -24,15 +22,15 @@ public final class BossBarRenderer {
 
 	private static void onBossInfoRender(final RenderGameOverlayEvent.BossInfo ev) {
 		if (!ev.isCanceled()) {
-			ITextComponent nameComponent = ev.getBossInfo().getName();
-			ITextComponent name;
+			Component nameComponent = ev.getBossEvent().getName();
+			Component name;
 			String id;
-			MatrixStack matrix = ev.getMatrixStack();
+			PoseStack matrix = ev.getMatrixStack();
 
-			if (nameComponent.getSiblings().isEmpty() || !(nameComponent instanceof TranslationTextComponent))
+			if (nameComponent.getSiblings().isEmpty() || !(nameComponent instanceof TranslatableComponent))
 				return;
 
-			id = ((TranslationTextComponent)nameComponent).getKey();
+			id = ((TranslatableComponent)nameComponent).getKey();
 
 			if (!id.startsWith("entity.aoa3."))
 				return;
@@ -40,18 +38,18 @@ public final class BossBarRenderer {
 			name = nameComponent.getSiblings().get(0);
 
 			Minecraft mc = Minecraft.getInstance();
-			MainWindow mainWindow = mc.getWindow();
+			Window mainWindow = mc.getWindow();
 			ResourceLocation texture = getTexture(id.substring(12));
 			int textureWidth = 196;
 			int xPos = mainWindow.getGuiScaledWidth() / 2 - 100;
-			int percentPixels = (int)Math.ceil(ev.getBossInfo().getPercent() * textureWidth);
+			int percentPixels = (int)Math.ceil(ev.getBossEvent().getProgress() * textureWidth);
 			int stringWidth = mc.font.width(name);
 			int x = mainWindow.getGuiScaledWidth() / 2 - stringWidth / 2;
 
 			matrix.pushPose();
-			RenderSystem.enableAlphaTest();
+			/*RenderSystem.enableAlphaTest();
 			RenderSystem.disableDepthTest();
-			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+			RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 			mc.getTextureManager().bind(texture);
 
 			if (percentPixels < textureWidth)
@@ -63,7 +61,7 @@ public final class BossBarRenderer {
 			RenderUtil.renderCustomSizedTexture(matrix, xPos, ev.getY(), 0, 24, 200, 12, 200, 36);
 			mc.font.drawShadow(ev.getMatrixStack(), name, x, ev.getY() - 9, 16777215);
 			RenderSystem.enableDepthTest();
-			RenderSystem.disableAlphaTest();
+			RenderSystem.disableAlphaTest();*/
 			matrix.popPose();
 
 			ev.setIncrement(ev.getIncrement() + 5);

@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.mob;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 
 public class HagShotEntity extends BaseMobProjectile {
-	public HagShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public HagShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public HagShotEntity(World world) {
-		super(AoAEntities.Projectiles.HAG_SHOT.get(), world);
+	public HagShotEntity(Level world) {
+		super(AoAProjectiles.HAG_SHOT.get(), world);
 	}
 
 	public HagShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.HAG_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.HAG_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override

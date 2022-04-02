@@ -1,18 +1,18 @@
 package net.tslat.aoa3.client.particle;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 
 import javax.annotation.Nullable;
 
-public class PortalFloaterParticle extends SpriteTexturedParticle {
-	private final IAnimatedSprite sprite;
+public class PortalFloaterParticle extends TextureSheetParticle {
+	private final SpriteSet sprite;
 	private final double originPosX;
 	private final double originPosY;
 	private final double originPosZ;
 
-	public PortalFloaterParticle(ClientWorld world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, IAnimatedSprite sprite, float red, float green, float blue, float alpha) {
+	public PortalFloaterParticle(ClientLevel world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, SpriteSet sprite, float red, float green, float blue, float alpha) {
 		super(world, posX, posY, posZ, velocityX, velocityY, velocityZ);
 
 		this.sprite = sprite;
@@ -41,8 +41,8 @@ public class PortalFloaterParticle extends SpriteTexturedParticle {
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() {
-		return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
 	}
 
 	@Override
@@ -80,16 +80,16 @@ public class PortalFloaterParticle extends SpriteTexturedParticle {
 		return brightnessLowerBits | brightnessUpperBits << 16;
 	}
 
-	public static class Factory implements IParticleFactory<PortalFloaterParticleType.Data> {
-		private final IAnimatedSprite sprite;
+	public static class Factory implements ParticleProvider<PortalFloaterParticleType.Data> {
+		private final SpriteSet sprite;
 
-		public Factory(IAnimatedSprite sprite) {
+		public Factory(SpriteSet sprite) {
 			this.sprite = sprite;
 		}
 
 		@Nullable
 		@Override
-		public Particle createParticle(PortalFloaterParticleType.Data data, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(PortalFloaterParticleType.Data data, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			return new PortalFloaterParticle(world, x, y, z, velocityX, velocityY, velocityZ, sprite, data.red, data.green, data.blue, data.alpha);
 		}
 	}

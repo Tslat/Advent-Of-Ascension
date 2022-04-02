@@ -1,8 +1,8 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class PatchouliBookSyncPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeVarInt(books.size());
 
 		for (ResourceLocation id : books) {
@@ -24,7 +24,7 @@ public class PatchouliBookSyncPacket implements AoAPacket {
 		}
 	}
 
-	public static PatchouliBookSyncPacket decode(PacketBuffer buffer) {
+	public static PatchouliBookSyncPacket decode(FriendlyByteBuf buffer) {
 		int bookCount = buffer.readVarInt();
 		ArrayList<ResourceLocation> books = new ArrayList<ResourceLocation>(bookCount);
 

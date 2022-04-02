@@ -1,15 +1,19 @@
 package net.tslat.aoa3.content.block.functional.misc;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.item.misc.BlankRealmstone;
 import net.tslat.aoa3.content.item.misc.Realmstone;
@@ -23,10 +27,9 @@ public class CarvedRuneOfPower extends Block {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (!world.isClientSide) {
-			if (player.getItemInHand(hand).getItem() instanceof Realmstone) {
-				Realmstone realmstone = (Realmstone)player.getItemInHand(hand).getItem();
+			if (player.getItemInHand(hand).getItem() instanceof Realmstone realmstone) {
 				PortalBlock portalBlock = (PortalBlock)realmstone.getPortalBlock().get();
 				AoAPortalFrame.PortalDirection direction = AoAPortalFrame.testFrameForActivation(world, pos, hit.getDirection(), portalBlock);
 
@@ -40,25 +43,25 @@ public class CarvedRuneOfPower extends Block {
 					AoAPortalFrame.lightPortalFrame(world, pos, direction, portalBlock);
 
 					if (realmstone.getActivationSound() != null)
-						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), realmstone.getActivationSound().get(), SoundCategory.MASTER, 1.0f, 1.0f);
+						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), realmstone.getActivationSound().get(), SoundSource.MASTER, 1.0f, 1.0f);
 				}
 
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 			else if (player.getItemInHand(hand).getItem() instanceof BlankRealmstone) {
 				if (world.getBlockState(pos.relative(Direction.UP)).getBlock() instanceof PortalBlock) {
 					world.setBlockAndUpdate(pos.relative(Direction.UP), Blocks.AIR.defaultBlockState());
 
-					return ActionResultType.SUCCESS;
+					return InteractionResult.SUCCESS;
 				}
 
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 			}
 			else {
-				return ActionResultType.FAIL;
+				return InteractionResult.FAIL;
 			}
 		}
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

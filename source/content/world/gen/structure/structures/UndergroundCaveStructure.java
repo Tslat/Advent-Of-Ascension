@@ -1,19 +1,20 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.BlockGetter;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
 import net.tslat.aoa3.content.world.gen.feature.features.config.IntRangeConfig;
 
 import java.util.Random;
 
 public class UndergroundCaveStructure extends AoAStructureBase<IntRangeConfig> {
-	public UndergroundCaveStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public UndergroundCaveStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(IntRangeConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -31,7 +32,7 @@ public class UndergroundCaveStructure extends AoAStructureBase<IntRangeConfig> {
 			}
 
 			@Override
-			protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.Mutable chunkCenter, Biome biome, IntRangeConfig config) {
+			protected boolean checkAndAdjustGeneration(ChunkGenerator chunkGenerator, BlockPos.MutableBlockPos chunkCenter, Biome biome, IntRangeConfig config) {
 				chunkCenter.setY(config.getValue(random));
 
 				return true;
@@ -39,9 +40,9 @@ public class UndergroundCaveStructure extends AoAStructureBase<IntRangeConfig> {
 
 			@Override
 			protected void doPostPlacementOperations(int maxDepth, ChunkGenerator chunkGenerator, BlockPos originPos, Random rand) {
-				IBlockReader blockReader = chunkGenerator.getBaseColumn(originPos.getX(), originPos.getZ());
+				BlockGetter blockReader = chunkGenerator.getBaseColumn(originPos.getX(), originPos.getZ());
 				MutableBoundingBox bounds = getBoundingBox();
-				BlockPos.Mutable testPos = new BlockPos.Mutable().set(originPos.getX() - ((bounds.x1 - bounds.x0) / 2), bounds.y0, originPos.getZ() - ((bounds.z1 - bounds.z0) / 2));
+				BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos().set(originPos.getX() - ((bounds.x1 - bounds.x0) / 2), bounds.y0, originPos.getZ() - ((bounds.z1 - bounds.z0) / 2));
 				int height = bounds.y1 - bounds.y0;
 
 				if (blockReader.getBlockState(testPos).getMaterial().isReplaceable()) {
@@ -72,3 +73,4 @@ public class UndergroundCaveStructure extends AoAStructureBase<IntRangeConfig> {
 		};
 	}
 }
+*/

@@ -2,13 +2,13 @@ package net.tslat.aoa3.content.entity.brain;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.entity.ai.brain.schedule.Activity;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
-import net.minecraft.entity.ai.brain.sensor.SensorType;
-import net.minecraft.entity.ai.brain.task.Task;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.schedule.Activity;
 import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
@@ -23,19 +23,19 @@ public interface SmartBrainOwner<T extends LivingEntity & SmartBrainOwner<T>> {
 	void setBrainHandler(SmartBrainHandler<T> handler);
 	ImmutableList<SensorType<? extends Sensor<? super T>>> getSensors();
 
-	default Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>> getCoreTasks() {
+	default Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>> getCoreTasks() {
 		return Triple.of(0, ImmutableList.of(), null);
 	}
 
-	default Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>> getIdleTasks() {
+	default Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>> getIdleTasks() {
 		return Triple.of(0, ImmutableList.of(), null);
 	}
 
-	default Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>> getFightTasks() {
+	default Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>> getFightTasks() {
 		return Triple.of(0, ImmutableList.of(), MemoryModuleType.ATTACK_TARGET);
 	}
 
-	default Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super T>>, MemoryModuleType<?>>> getAdditionalTasks() {
+	default Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super T>>, MemoryModuleType<?>>> getAdditionalTasks() {
 		return new HashMap<>();
 	}
 

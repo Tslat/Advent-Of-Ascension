@@ -1,42 +1,44 @@
 package net.tslat.aoa3.content.entity.mob.precasia;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.CreatureAttribute;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
 public class EliteSkeleHopperEntity extends AoAMeleeMob {
-	public EliteSkeleHopperEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public EliteSkeleHopperEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.4375f;
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new LeapAtTargetGoal(this, 1));
 		goalSelector.addGoal(3, new MeleeAttackGoal(this, 1, false));
-		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(2, new HurtByTargetGoal(this));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(3, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
 	}
 
 	@Nullable
@@ -58,8 +60,8 @@ public class EliteSkeleHopperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.UNDEAD;
+	public MobType getMobType() {
+		return MobType.UNDEAD;
 	}
 
 	@Nullable

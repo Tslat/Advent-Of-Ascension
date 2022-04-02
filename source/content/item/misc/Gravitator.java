@@ -1,18 +1,18 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -32,26 +32,24 @@ public class Gravitator extends Item {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (isSelected && entity instanceof LivingEntity) {
 			if (entity.getDeltaMovement().y() < -0.079) {
 				entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0.8f, 1));
 				entity.fallDistance *= 0.8f;
 
-				if (RandomUtil.oneInNChance(15) && (!(entity instanceof PlayerEntity) || !((PlayerEntity)entity).isCreative()))
-					ItemUtil.damageItem(stack, (LivingEntity)entity, 1, EquipmentSlotType.MAINHAND);
+				if (RandomUtil.oneInNChance(15) && (!(entity instanceof Player) || !((Player)entity).isCreative()))
+					ItemUtil.damageItem(stack, (LivingEntity)entity, 1, EquipmentSlot.MAINHAND);
 			}
 
 			if (!world.isClientSide) {
-				if (WorldUtil.isWorld(world, AoADimensions.HAVEN.key) && !entity.onGround && world.getGameTime() % 5 == 0 && entity instanceof PlayerEntity) {
-					PlayerEntity pl = (PlayerEntity)entity;
-
+				if (WorldUtil.isWorld(world, AoADimensions.HAVEN.key) && !entity.isOnGround() && world.getGameTime() % 5 == 0 && entity instanceof Player pl) {
 					if (pl.isCreative())
 						return;
 
-					BlockPos.Mutable pos = new BlockPos.Mutable(entity.blockPosition().getX(), entity.blockPosition().getY(), entity.blockPosition().getZ());
+					BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(entity.blockPosition().getX(), entity.blockPosition().getY(), entity.blockPosition().getZ());
 
-					for (ItemStack invStack : pl.inventory.items) {
+					for (ItemStack invStack : pl.getInventory().items) {
 						if (invStack.getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 							for (int i = 0; i < entity.getY(); i++) {
 								if (!world.isEmptyBlock(pos.set(pos.getX(), pos.getY() - i, pos.getZ())))
@@ -70,7 +68,7 @@ public class Gravitator extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

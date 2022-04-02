@@ -1,14 +1,14 @@
 package net.tslat.aoa3.util;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.item.Item;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -18,24 +18,24 @@ import net.tslat.aoa3.player.skill.AoASkill;
 import javax.annotation.Nullable;
 
 public final class LocaleUtil {
-	public static ITextComponent getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, ITextComponent... args) {
+	public static Component getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, TextComponent... args) {
 		return getFormattedItemDescriptionText("item." + item.getRegistryName().getNamespace() + "." + item.getRegistryName().getPath() + ".desc." + descNumber, type, args);
 	}
 
-	public static ITextComponent getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, ITextComponent... args) {
-		return new TranslationTextComponent(langKey, (Object[])args).withStyle(type.format);
+	public static Component getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, Component... args) {
+		return new TranslatableComponent(langKey, (Object[])args).withStyle(type.format);
 	}
 
-	public static TranslationTextComponent getLocaleMessage(String langKey) {
-		return getLocaleMessage(langKey, (TextFormatting)null);
+	public static TranslatableComponent getLocaleMessage(String langKey) {
+		return getLocaleMessage(langKey, (ChatFormatting)null);
 	}
 
-	public static TranslationTextComponent getLocaleMessage(String langKey, ITextComponent... args) {
+	public static TranslatableComponent getLocaleMessage(String langKey, Component... args) {
 		return getLocaleMessage(langKey, null, args);
 	}
 
-	public static TranslationTextComponent getLocaleMessage(String langKey, @Nullable TextFormatting format, ITextComponent... args) {
-		TranslationTextComponent localeMessage = new TranslationTextComponent(langKey, (Object[])args);
+	public static TranslatableComponent getLocaleMessage(String langKey, @Nullable ChatFormatting format, Component... args) {
+		TranslatableComponent localeMessage = new TranslatableComponent(langKey, (Object[])args);
 
 		if (format != null)
 			localeMessage.withStyle(format);
@@ -43,17 +43,17 @@ public final class LocaleUtil {
 		return localeMessage;
 	}
 
-	public static StringTextComponent numToComponent(Number number) {
-		return new StringTextComponent(String.valueOf(number));
+	public static TextComponent numToComponent(Number number) {
+		return new TextComponent(String.valueOf(number));
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	public static String getLocaleString(String langKey) {
-		return getLocaleString(langKey, (TextFormatting)null);
+		return getLocaleString(langKey, (ChatFormatting)null);
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static String getItemName(IItemProvider object) {
+	public static String getItemName(ItemLike object) {
 		return I18n.get(object.asItem().getDescriptionId());
 	}
 
@@ -63,19 +63,19 @@ public final class LocaleUtil {
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static String getLocaleString(String langKey, @Nullable TextFormatting colour, String... args) {
+	public static String getLocaleString(String langKey, @Nullable ChatFormatting colour, String... args) {
 		return (colour != null ? colour : "") + I18n.get(langKey, (Object[])args);
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static ITextComponent getFormattedLevelRestrictedDescriptionText(AoASkill skill, int levelReq) {
-		ClientPlayerEntity player = Minecraft.getInstance().player;
+	public static Component getFormattedLevelRestrictedDescriptionText(AoASkill skill, int levelReq) {
+		LocalPlayer player = Minecraft.getInstance().player;
 		boolean meetsReq = (player != null && player.isCreative()) || ClientPlayerDataManager.get().getSkill(skill).hasLevel(levelReq);
 
-		return getLocaleMessage("items.description.skillRequirement", meetsReq ? TextFormatting.GREEN : TextFormatting.RED, new StringTextComponent(Integer.toString(levelReq)), skill.getName());
+		return getLocaleMessage("items.description.skillRequirement", meetsReq ? ChatFormatting.GREEN : ChatFormatting.RED, new TextComponent(Integer.toString(levelReq)), skill.getName());
 	}
 
-	public static TranslationTextComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg, Object currentValueArg) {
+	public static TranslatableComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg, Object currentValueArg) {
 		if (flat && scaling)
 			return percent ? getPercentFlatAndScalingAbilityValueDesc(flatArg, scalingArg, currentValueArg) : getFlatAndScalingAbilityValueDesc(flatArg, scalingArg, currentValueArg);
 
@@ -85,43 +85,43 @@ public final class LocaleUtil {
 		return percent ? getPercentScalingAbilityValueDesc(scalingArg, currentValueArg) : getScalingAbilityValueDesc(scalingArg, currentValueArg);
 	}
 
-	public static TranslationTextComponent getScalingAbilityValueDesc(Object... args) {
-		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling", args);
+	public static TranslatableComponent getScalingAbilityValueDesc(Object... args) {
+		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling", args);
 	}
 
-	public static TranslationTextComponent getFlatAbilityValueDesc(Object... args) {
-		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat", args);
+	public static TranslatableComponent getFlatAbilityValueDesc(Object... args) {
+		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat", args);
 	}
 
-	public static TranslationTextComponent getFlatAndScalingAbilityValueDesc(Object... args) {
-		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling", args);
+	public static TranslatableComponent getFlatAndScalingAbilityValueDesc(Object... args) {
+		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling", args);
 	}
 
-	public static TranslationTextComponent getPercentScalingAbilityValueDesc(Object... args) {
-		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling.percent", args);
+	public static TranslatableComponent getPercentScalingAbilityValueDesc(Object... args) {
+		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling.percent", args);
 	}
 
-	public static TranslationTextComponent getPercentFlatAbilityValueDesc(Object... args) {
-		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat.percent", args);
+	public static TranslatableComponent getPercentFlatAbilityValueDesc(Object... args) {
+		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat.percent", args);
 	}
 
-	public static TranslationTextComponent getPercentFlatAndScalingAbilityValueDesc(Object... args) {
-		return new TranslationTextComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling.percent", args);
+	public static TranslatableComponent getPercentFlatAndScalingAbilityValueDesc(Object... args) {
+		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling.percent", args);
 	}
 
 	public enum ItemDescriptionType {
-		BENEFICIAL(TextFormatting.DARK_GREEN),
-		HARMFUL(TextFormatting.RED),
-		NEUTRAL(TextFormatting.GRAY),
-		UNIQUE(TextFormatting.DARK_PURPLE),
-		SPECIAL(TextFormatting.GOLD),
-		ITEM_TYPE_INFO(TextFormatting.AQUA),
-		ITEM_DAMAGE(TextFormatting.DARK_RED),
-		ITEM_AMMO_COST(TextFormatting.LIGHT_PURPLE);
+		BENEFICIAL(ChatFormatting.DARK_GREEN),
+		HARMFUL(ChatFormatting.RED),
+		NEUTRAL(ChatFormatting.GRAY),
+		UNIQUE(ChatFormatting.DARK_PURPLE),
+		SPECIAL(ChatFormatting.GOLD),
+		ITEM_TYPE_INFO(ChatFormatting.AQUA),
+		ITEM_DAMAGE(ChatFormatting.DARK_RED),
+		ITEM_AMMO_COST(ChatFormatting.LIGHT_PURPLE);
 
-		public final TextFormatting format;
+		public final ChatFormatting format;
 
-		ItemDescriptionType(TextFormatting format) {
+		ItemDescriptionType(ChatFormatting format) {
 			this.format = format;
 		}
 	}

@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.entity.npc.lottoman;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class CreeponiaLottomanEntity extends AoATrader {
-	public CreeponiaLottomanEntity(EntityType<? extends AoATrader> entityType, World world) {
+	public CreeponiaLottomanEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -26,11 +26,11 @@ public class CreeponiaLottomanEntity extends AoATrader {
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.BLANK_REALMSTONE.get() && heldStack.getItem().interactLivingEntity(heldStack, player, this, hand).consumesAction())
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 
 		return super.mobInteract(player, hand);
 	}
@@ -42,7 +42,7 @@ public class CreeponiaLottomanEntity extends AoATrader {
 
 	@Nullable
 	@Override
-	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap() {
 		return LottomanEntity.TRADES;
 	}
 }

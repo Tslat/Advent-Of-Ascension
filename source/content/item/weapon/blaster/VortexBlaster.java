@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -27,9 +27,9 @@ public class VortexBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		float x = -MathHelper.sin(shooter.yRot / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.xRot / 180.0F * (float)Math.PI);
-		float y = -MathHelper.sin(shooter.xRot / 180.0F * (float)Math.PI);
-		float z = MathHelper.cos(shooter.yRot / 180.0F * (float)Math.PI) * MathHelper.cos(shooter.xRot / 180.0F * (float)Math.PI);
+		float x = -Mth.sin(shooter.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(shooter.getXRot() / 180.0F * (float)Math.PI);
+		float y = -Mth.sin(shooter.getXRot() / 180.0F * (float)Math.PI);
+		float z = Mth.cos(shooter.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(shooter.getXRot() / 180.0F * (float)Math.PI);
 
 		for (LivingEntity entity : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(x * 7 + 1, y * 7 + 1, z * 7 + 1))) {
 			DamageUtil.doScaledKnockback(entity, shooter, 4f, shooter.getX() - entity.getX(), shooter.getZ() - entity.getZ());
@@ -37,7 +37,7 @@ public class VortexBlaster extends BaseBlaster {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

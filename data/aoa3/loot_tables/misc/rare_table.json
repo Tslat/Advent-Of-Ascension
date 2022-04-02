@@ -3,7 +3,12 @@
   "pools": [
     {
       "name": "treasures",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
@@ -21,10 +26,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 5.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 5.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:magic_repair_dust"
@@ -36,10 +42,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 10.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 10.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:small_skill_crystal"
@@ -51,10 +58,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 9.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 9.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:medium_skill_crystal"
@@ -66,10 +74,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 8.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 8.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:large_skill_crystal"
@@ -81,10 +90,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 7.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 7.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:giant_skill_crystal"
@@ -96,10 +106,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 5.0,
-                "max": 25.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 25.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:diamond"
@@ -111,10 +122,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 5.0,
-                "max": 25.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 25.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:emerald"
@@ -140,10 +152,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 10.0,
-                "max": 32.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 32.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:experience_bottle"
@@ -155,10 +168,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 2.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 2.0
+              },
+              "add": false
             }
           ],
           "name": "minecraft:enchanted_golden_apple"

@@ -1,13 +1,14 @@
+/*
 package net.tslat.aoa3.content.entity.mob.runandor.templars;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 
 public class GreenRuneTemplarEntity extends RuneTemplarEntity {
-	public GreenRuneTemplarEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	public GreenRuneTemplarEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -21,3 +22,4 @@ public class GreenRuneTemplarEntity extends RuneTemplarEntity {
 		return AoAItems.POISON_RUNE.get();
 	}
 }
+*/

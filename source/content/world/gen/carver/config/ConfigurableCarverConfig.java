@@ -1,19 +1,20 @@
+/*
 package net.tslat.aoa3.content.world.gen.carver.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.carver.ICarverConfig;
+import net.minecraft.core.Registry;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.carver.CarverConfiguration;
+import net.minecraft.world.level.material.Fluid;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ConfigurableCarverConfig implements ICarverConfig {
+public class ConfigurableCarverConfig implements CarverConfiguration {
 	public static final Codec<ConfigurableCarverConfig> CODEC = RecordCodecBuilder.create(builder -> builder.group(
 			Codec.floatRange(0, 1).optionalFieldOf("carve_chance", 0.14285715f).forGetter(config -> config.carveChance),
 			Registry.BLOCK.listOf().fieldOf("carvable_blocks").forGetter(config -> config.carvableBlocks),
@@ -130,3 +131,4 @@ public class ConfigurableCarverConfig implements ICarverConfig {
 		}
 	}
 }
+*/

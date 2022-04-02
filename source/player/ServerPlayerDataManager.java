@@ -3,23 +3,22 @@ package net.tslat.aoa3.player;
 import com.google.common.collect.ArrayListMultimap;
 import io.netty.util.internal.ConcurrentSet;
 import net.minecraft.advancements.Advancement;
-import net.minecraft.advancements.PlayerAdvancements;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.Hand;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.Registry;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.PlayerAdvancements;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -33,12 +32,13 @@ import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.content.item.armour.AdventArmour;
+import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.data.server.AoAResourcesReloadListener;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.data.server.AoASkillsReloadListener;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -47,8 +47,6 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
-import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -59,7 +57,7 @@ import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerState.ACTIVE;
 import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerState.DEACTIVATED;
 
 public final class ServerPlayerDataManager implements AoAPlayerEventListener, PlayerDataManager {
-	private ServerPlayerEntity player;
+	private ServerPlayer player;
 
 	private PlayerEquipment equipment;
 
@@ -70,7 +68,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	private final ArrayListMultimap<ListenerType, AoAPlayerEventListener> disabledEventListeners = ArrayListMultimap.create();
 	private final HashSet<AoAPlayerEventListener> dirtyListeners = new HashSet<AoAPlayerEventListener>();
 
-	private HashMap<RegistryKey<World>, PortalCoordinatesContainer> portalCoordinatesMap = new HashMap<RegistryKey<World>, PortalCoordinatesContainer>();
+	private HashMap<ResourceKey<Level>, PortalCoordinatesContainer> portalCoordinatesMap = new HashMap<ResourceKey<Level>, PortalCoordinatesContainer>();
 	private HashSet<ItemStack> itemStorage = null;
 
 	private ConcurrentSet<ResourceLocation> patchouliBooks = null;
@@ -78,7 +76,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	private boolean isLegitimate = true;
 
-	public ServerPlayerDataManager(ServerPlayerEntity player) {
+	public ServerPlayerDataManager(ServerPlayer player) {
 		this.player = player;
 		this.equipment = new PlayerEquipment(this);
 
@@ -87,7 +85,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	@Override
-	public ServerPlayerEntity player() {
+	public ServerPlayer player() {
 		return player;
 	}
 
@@ -128,7 +126,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	@Override
-	public void loadFromNbt(CompoundNBT baseTag) {
+	public void loadFromNbt(CompoundTag baseTag) {
 		this.isLegitimate = baseTag.getBoolean("legitimate");
 		int hash = baseTag.getInt("hash");
 
@@ -143,7 +141,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (baseTag.contains("skills")) {
-			CompoundNBT skillsNbt = baseTag.getCompound("skills");
+			CompoundTag skillsNbt = baseTag.getCompound("skills");
 
 			for (AoASkill.Instance skill : skills.values()) {
 				String id = skill.type().getRegistryName().toString();
@@ -154,7 +152,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (baseTag.contains("resources")) {
-			CompoundNBT resourcesNbt = baseTag.getCompound("resources");
+			CompoundTag resourcesNbt = baseTag.getCompound("resources");
 
 			for (AoAResource.Instance resource : resources.values()) {
 				String id = resource.type().getRegistryName().toString();
@@ -166,7 +164,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 		if (baseTag.contains("ItemStorage")) {
 			itemStorage = new HashSet<ItemStack>();
-			CompoundNBT itemStorage = baseTag.getCompound("ItemStorage");
+			CompoundTag itemStorage = baseTag.getCompound("ItemStorage");
 			int i = 0;
 
 			while (itemStorage.contains(String.valueOf(i))) {
@@ -177,27 +175,27 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (baseTag.contains("PortalMap")) {
-			CompoundNBT portalMapTag = baseTag.getCompound("PortalMap");
+			CompoundTag portalMapTag = baseTag.getCompound("PortalMap");
 
 			for (String s : portalMapTag.getAllKeys()) {
 				try {
-					CompoundNBT portalReturnTag = portalMapTag.getCompound(s);
+					CompoundTag portalReturnTag = portalMapTag.getCompound(s);
 					ResourceLocation fromDim = new ResourceLocation(portalReturnTag.getString("FromDim"));
 					double x = portalReturnTag.getDouble("PosX");
 					double y = portalReturnTag.getDouble("PosY");
 					double z = portalReturnTag.getDouble("PosZ");
-					RegistryKey<World> toDimKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(s));
-					RegistryKey<World> fromDimKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, fromDim);
+					ResourceKey<Level> toDimKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(s));
+					ResourceKey<Level> fromDimKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, fromDim);
 
 					portalCoordinatesMap.put(toDimKey, new PortalCoordinatesContainer(fromDimKey, x, y, z));
 				} catch (NumberFormatException e) {
-					Logging.logMessage(Level.WARN, "Found invalid portal map data, has someone been tampering with files? Data: " + s);
+					Logging.logMessage(org.apache.logging.log4j.Level.WARN, "Found invalid portal map data, has someone been tampering with files? Data: " + s);
 				}
 			}
 		}
 
 		if (baseTag.contains("PatchouliBooks")) {
-			ListNBT booksNbt = baseTag.getList("PatchouliBooks", Constants.NBT.TAG_STRING);
+			ListTag booksNbt = baseTag.getList("PatchouliBooks", Tag.TAG_STRING);
 
 			if (patchouliBooks == null) {
 				patchouliBooks = new ConcurrentSet<ResourceLocation>();
@@ -206,7 +204,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				patchouliBooks.clear();
 			}
 
-			for (INBT book : booksNbt) {
+			for (Tag book : booksNbt) {
 				patchouliBooks.add(new ResourceLocation(book.getAsString()));
 			}
 		}
@@ -251,8 +249,8 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	@Override
-	public void updatePlayerInstance(PlayerEntity player) {
-		this.player = (ServerPlayerEntity)player;
+	public void updatePlayerInstance(Player player) {
+		this.player = (ServerPlayer)player;
 	}
 
 	private void selfDestruct() {
@@ -291,7 +289,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 	}
 
-	public static void syncNewPlayer(ServerPlayerEntity pl) {
+	public static void syncNewPlayer(ServerPlayer pl) {
 		ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
 		if (plData.patchouliBooks == null && IntegrationManager.isPatchouliActive()) {
@@ -332,14 +330,14 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 		equipment.handleEquipmentCheck(this);
 
-		CompoundNBT syncData = null;
-		CompoundNBT skillData = null;
-		CompoundNBT resourceData = null;
+		CompoundTag syncData = null;
+		CompoundTag skillData = null;
+		CompoundTag resourceData = null;
 
 		for (AoASkill.Instance skill : getSkills()) {
 			if (skill.needsSync) {
 				if (skillData == null)
-					skillData = new CompoundNBT();
+					skillData = new CompoundTag();
 
 				skillData.put(skill.type().getRegistryName().toString(), skill.getSyncData(false));
 			}
@@ -348,7 +346,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		for (AoAResource.Instance resource : getResources()) {
 			if (resource.needsSync) {
 				if (resourceData == null)
-					resourceData = new CompoundNBT();
+					resourceData = new CompoundTag();
 
 				resourceData.put(resource.type().getRegistryName().toString(), resource.getSyncData(false));
 			}
@@ -356,26 +354,26 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 		if (skillData != null) {
 			if (syncData == null)
-				syncData = new CompoundNBT();
+				syncData = new CompoundTag();
 
 			syncData.put("skills", skillData);
 		}
 
 		if (resourceData != null) {
 			if (syncData == null)
-				syncData = new CompoundNBT();
+				syncData = new CompoundTag();
 
 			syncData.put("resources", resourceData);
 		}
 
 		if (syncBooks) {
 			if (syncData == null)
-				syncData = new CompoundNBT();
+				syncData = new CompoundTag();
 
-			ListNBT booksNbt = new ListNBT();
+			ListTag booksNbt = new ListTag();
 
 			for (ResourceLocation id : patchouliBooks) {
-				booksNbt.add(StringNBT.valueOf(id.toString()));
+				booksNbt.add(StringTag.valueOf(id.toString()));
 			}
 
 			syncData.put("patchouliBooks", booksNbt);
@@ -392,27 +390,27 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		if (itemStorage == null)
 			itemStorage = new HashSet<ItemStack>();
 
-		for (int i = 0; i < player.inventory.getContainerSize(); i++) {
-			ItemStack stack = player.inventory.getItem(i);
+		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
+			ItemStack stack = player.getInventory().getItem(i);
 
 			if (EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
 				if (RandomUtil.oneInNChance(5))
 					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
 
 				itemStorage.add(stack);
-				player.inventory.setItem(i, ItemStack.EMPTY);
+				player.getInventory().setItem(i, ItemStack.EMPTY);
 			}
 		}
 
 		for (int i = 0; i < 4; i++) {
-			ItemStack stack = player.inventory.armor.get(i);
+			ItemStack stack = player.getInventory().armor.get(i);
 
 			if (EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
 				if (RandomUtil.oneInNChance(5))
 					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
 
 				itemStorage.add(stack);
-				player.inventory.armor.set(i, ItemStack.EMPTY);
+				player.getInventory().armor.set(i, ItemStack.EMPTY);
 			}
 		}
 	}
@@ -438,11 +436,11 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		storeItems(Arrays.asList(stacks));
 	}
 
-	public void setPortalReturnLocation(RegistryKey<World> toDim, PortalCoordinatesContainer coords) {
+	public void setPortalReturnLocation(ResourceKey<Level> toDim, PortalCoordinatesContainer coords) {
 		portalCoordinatesMap.put(toDim, coords);
 	}
 
-	public void removePortalReturnLocation(RegistryKey<World> toDim) {
+	public void removePortalReturnLocation(ResourceKey<Level> toDim) {
 		portalCoordinatesMap.remove(toDim);
 	}
 
@@ -450,7 +448,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		portalCoordinatesMap.clear();
 	}
 
-	public PortalCoordinatesContainer getPortalReturnLocation(RegistryKey<World> toDim) {
+	public PortalCoordinatesContainer getPortalReturnLocation(ResourceKey<Level> toDim) {
 		return portalCoordinatesMap.get(toDim);
 	}
 
@@ -469,7 +467,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		Stream.of(activeEventListeners.values(), disabledEventListeners.values()).forEach(collection -> collection.forEach(listener -> {
 			if (listener.getListenerState() == ACTIVE) {
 				if (!listener.meetsRequirements())
-					listener.disable(ListenerState.DEACTIVATED, false);
+					listener.disable(DEACTIVATED, false);
 			}
 			else if (listener.getListenerState() == DEACTIVATED) {
 				if (listener.meetsRequirements()) {
@@ -531,7 +529,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	@Override
 	public void handlePlayerDataClone(final PlayerEvent.Clone ev) {
-		ServerPlayerDataManager sourceData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)ev.getOriginal());
+		ServerPlayerDataManager sourceData = PlayerUtil.getAdventPlayer((ServerPlayer)ev.getOriginal());
 
 		for (Map.Entry<AoASkill, AoASkill.Instance> entry : sourceData.skills.entrySet()) {
 			AoASkill.Instance newInstance = skills.get(entry.getKey());
@@ -556,11 +554,11 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		AoAScheduler.scheduleSyncronisedTask(sourceData::selfDestruct, 1);
 	}
 
-	public CompoundNBT savetoNbt(boolean forClientSync) {
-		CompoundNBT baseTag = new CompoundNBT();
+	public CompoundTag savetoNbt(boolean forClientSync) {
+		CompoundTag baseTag = new CompoundTag();
 
 		if (!skills.isEmpty()) {
-			CompoundNBT skillsNbt = new CompoundNBT();
+			CompoundTag skillsNbt = new CompoundTag();
 
 			for (AoASkill.Instance skill : skills.values()) {
 				skillsNbt.put(skill.type().getRegistryName().toString(), forClientSync ? skill.getSyncData(true) : skill.saveToNbt());
@@ -571,7 +569,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (!resources.isEmpty()) {
-			CompoundNBT resourcesNbt = new CompoundNBT();
+			CompoundTag resourcesNbt = new CompoundTag();
 
 			for (AoAResource.Instance resource : resources.values()) {
 				resourcesNbt.put(resource.type().getRegistryName().toString(), forClientSync ? resource.getSyncData(true) : resource.saveToNbt());
@@ -582,10 +580,10 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (patchouliBooks != null) {
-			ListNBT booksNbt = new ListNBT();
+			ListTag booksNbt = new ListTag();
 
 			for (ResourceLocation id : patchouliBooks) {
-				booksNbt.add(StringNBT.valueOf(id.toString()));
+				booksNbt.add(StringTag.valueOf(id.toString()));
 			}
 
 			baseTag.put("PatchouliBooks", booksNbt);
@@ -593,7 +591,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 		if (!forClientSync) {
 			if (itemStorage != null) {
-				CompoundNBT itemStorage = new CompoundNBT();
+				CompoundTag itemStorage = new CompoundTag();
 				int i = 0;
 
 				for (ItemStack stack : this.itemStorage) {
@@ -605,10 +603,10 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			}
 
 			if (!portalCoordinatesMap.isEmpty()) {
-				CompoundNBT portalCoordinatesNBT = new CompoundNBT();
+				CompoundTag portalCoordinatesNBT = new CompoundTag();
 
-				for (Map.Entry<RegistryKey<World>, PortalCoordinatesContainer> entry : portalCoordinatesMap.entrySet()) {
-					CompoundNBT portalReturnTag = new CompoundNBT();
+				for (Map.Entry<ResourceKey<Level>, PortalCoordinatesContainer> entry : portalCoordinatesMap.entrySet()) {
+					CompoundTag portalReturnTag = new CompoundTag();
 					PortalCoordinatesContainer container = entry.getValue();
 
 					portalReturnTag.putString("FromDim", container.fromDim.location().toString());
@@ -747,10 +745,10 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 			boolean armourChanged;
 
-			armourChanged = checkAndHandleArmourSwap(boots, player.inventory.armor.get(0).getItem(), EquipmentSlotType.FEET);
-			armourChanged |= checkAndHandleArmourSwap(legs, player.inventory.armor.get(1).getItem(), EquipmentSlotType.LEGS);
-			armourChanged |= checkAndHandleArmourSwap(body, player.inventory.armor.get(2).getItem(), EquipmentSlotType.CHEST);
-			armourChanged |= checkAndHandleArmourSwap(helmet, player.inventory.armor.get(3).getItem(), EquipmentSlotType.HEAD);
+			armourChanged = checkAndHandleArmourSwap(boots, player.getInventory().armor.get(0).getItem(), EquipmentSlot.FEET);
+			armourChanged |= checkAndHandleArmourSwap(legs, player.getInventory().armor.get(1).getItem(), EquipmentSlot.LEGS);
+			armourChanged |= checkAndHandleArmourSwap(body, player.getInventory().armor.get(2).getItem(), EquipmentSlot.CHEST);
+			armourChanged |= checkAndHandleArmourSwap(helmet, player.getInventory().armor.get(3).getItem(), EquipmentSlot.HEAD);
 
 			AdventArmour oldSet = currentFullSet;
 
@@ -776,7 +774,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			checkEquipment = false;
 		}
 
-		private boolean checkAndHandleArmourSwap(@Nullable AdventArmour currentPiece, @Nonnull Item newPiece, @Nonnull EquipmentSlotType slot) {
+		private boolean checkAndHandleArmourSwap(@Nullable AdventArmour currentPiece, @Nonnull Item newPiece, @Nonnull EquipmentSlot slot) {
 			boolean changed = false;
 
 			if (newPiece != currentPiece) {
@@ -786,30 +784,26 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					unequipAdventArmour(playerDataManager, currentPiece, slot);
 
 				switch (slot) {
-					case FEET:
+					case FEET -> {
 						boots = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
-
 						if (boots != null && AoASkillReqReloadListener.canEquip(playerDataManager, boots, false))
 							equipAdventArmour(playerDataManager, boots, slot);
-						break;
-					case LEGS:
+					}
+					case LEGS -> {
 						legs = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
-
 						if (legs != null && AoASkillReqReloadListener.canEquip(playerDataManager, legs, false))
 							equipAdventArmour(playerDataManager, legs, slot);
-						break;
-					case CHEST:
+					}
+					case CHEST -> {
 						body = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
-
 						if (body != null && AoASkillReqReloadListener.canEquip(playerDataManager, body, false))
 							equipAdventArmour(playerDataManager, body, slot);
-						break;
-					case HEAD:
+					}
+					case HEAD -> {
 						helmet = newPiece instanceof AdventArmour ? (AdventArmour)newPiece : null;
-
 						if (helmet != null && AoASkillReqReloadListener.canEquip(playerDataManager, helmet, false))
 							equipAdventArmour(playerDataManager, helmet, slot);
-						break;
+					}
 				}
 			}
 
@@ -824,7 +818,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			boolean doArmourTick = true;
 
 			if (PlayerUtil.shouldPlayerBeAffected(player)) {
-				for (Hand hand : Hand.values()) {
+				for (InteractionHand hand : InteractionHand.values()) {
 					ItemStack heldStack = player.getItemInHand(hand);
 
 					if (!AoASkillReqReloadListener.canEquip(playerDataManager, heldStack.getItem(), true)) {
@@ -836,33 +830,33 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (boots != null && !AoASkillReqReloadListener.canEquip(playerDataManager, boots, true)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(0));
-					player.inventory.armor.set(0, ItemStack.EMPTY);
-					unequipAdventArmour(playerDataManager, boots, EquipmentSlotType.FEET);
+					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(0));
+					player.getInventory().armor.set(0, ItemStack.EMPTY);
+					unequipAdventArmour(playerDataManager, boots, EquipmentSlot.FEET);
 				}
 
 				if (legs != null && !AoASkillReqReloadListener.canEquip(playerDataManager, legs, true)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(1));
-					player.inventory.armor.set(1, ItemStack.EMPTY);
-					unequipAdventArmour(playerDataManager, legs, EquipmentSlotType.LEGS);
+					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(1));
+					player.getInventory().armor.set(1, ItemStack.EMPTY);
+					unequipAdventArmour(playerDataManager, legs, EquipmentSlot.LEGS);
 				}
 
 				if (body != null && !AoASkillReqReloadListener.canEquip(playerDataManager, body, true)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(2));
-					player.inventory.armor.set(2, ItemStack.EMPTY);
-					unequipAdventArmour(playerDataManager, body, EquipmentSlotType.CHEST);
+					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(2));
+					player.getInventory().armor.set(2, ItemStack.EMPTY);
+					unequipAdventArmour(playerDataManager, body, EquipmentSlot.CHEST);
 				}
 
 				if (helmet != null && !AoASkillReqReloadListener.canEquip(playerDataManager, helmet, true)) {
 					doArmourTick = false;
 
-					ItemHandlerHelper.giveItemToPlayer(player, player.inventory.armor.get(3));
-					player.inventory.armor.set(3, ItemStack.EMPTY);
-					unequipAdventArmour(playerDataManager, helmet, EquipmentSlotType.HEAD);
+					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(3));
+					player.getInventory().armor.set(3, ItemStack.EMPTY);
+					unequipAdventArmour(playerDataManager, helmet, EquipmentSlot.HEAD);
 				}
 			}
 
@@ -879,7 +873,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			player.inventoryMenu.broadcastChanges();
 		}
 
-		private void equipAdventArmour(ServerPlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlotType slot) {
+		private void equipAdventArmour(ServerPlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlot slot) {
 			item.onEquip(plData, slot);
 
 			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.setType());
@@ -894,7 +888,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			}
 		}
 
-		private void unequipAdventArmour(ServerPlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlotType slot) {
+		private void unequipAdventArmour(ServerPlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlot slot) {
 			item.onUnequip(plData, slot);
 
 			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.setType());
@@ -926,9 +920,9 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 		private class ArmourEffectWrapper {
 			private final AdventArmour armour;
-			private final HashSet<EquipmentSlotType> currentSlots = new HashSet<EquipmentSlotType>(4);
+			private final HashSet<EquipmentSlot> currentSlots = new HashSet<EquipmentSlot>(4);
 
-			private ArmourEffectWrapper(AdventArmour armour, EquipmentSlotType firstSlotEquipped) {
+			private ArmourEffectWrapper(AdventArmour armour, EquipmentSlot firstSlotEquipped) {
 				this.armour = armour;
 
 				currentSlots.add(firstSlotEquipped);

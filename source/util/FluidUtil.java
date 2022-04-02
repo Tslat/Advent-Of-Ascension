@@ -1,25 +1,24 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.library.object.MutableSupplier;
 
 import javax.annotation.Nullable;
@@ -34,7 +33,7 @@ public final class FluidUtil {
 		private final MutableSupplier<ForgeFlowingFluid.Source> sourceFluid = new MutableSupplier<ForgeFlowingFluid.Source>(null);
 		private final MutableSupplier<ForgeFlowingFluid.Flowing> flowingFluid = new MutableSupplier<ForgeFlowingFluid.Flowing>(null);
 
-		private BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, AbstractBlock.Properties, Supplier<FlowingFluidBlock>> blockCreationFunction = (flowingFluid, blockProperties) -> () -> new FlowingFluidBlock(flowingFluid, blockProperties);
+		private BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, Block.Properties, Supplier<LiquidBlock>> blockCreationFunction = (flowingFluid, blockProperties) -> () -> new LiquidBlock(flowingFluid, blockProperties);
 		private BiFunction<MutableSupplier<ForgeFlowingFluid.Source>, Item.Properties, Supplier<BucketItem>> bucketCreationFunction = (sourceFluid, itemProperties) -> () -> new BucketItem(sourceFluid, itemProperties);
 		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Source>> sourceFluidFunction = properties -> () ->  new ForgeFlowingFluid.Source(properties);
 		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Flowing>> flowingFluidFunction = properties -> () ->  new ForgeFlowingFluid.Flowing(properties);
@@ -180,7 +179,7 @@ public final class FluidUtil {
 			return this;
 		}
 
-		public Builder customBlock(BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, AbstractBlock.Properties, Supplier<FlowingFluidBlock>> blockCreationFunction) {
+		public Builder customBlock(BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, Block.Properties, Supplier<LiquidBlock>> blockCreationFunction) {
 			this.blockCreationFunction = blockCreationFunction;
 
 			return this;
@@ -204,26 +203,26 @@ public final class FluidUtil {
 			return this;
 		}
 
-		public RegistryObject<FlowingFluidBlock> defaultRegisterAll() {
-			return registerAll(AoAItems.ITEMS, AoABlocks.BLOCKS, AoABlocks.FLUIDS).getFluidBlock();
+		public RegistryObject<LiquidBlock> defaultRegisterAll() {
+			return registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get()).getFluidBlock();
 		}
 
 		public RegisteredFluidHolder registerAll(DeferredRegister<Item> itemRegistry, DeferredRegister<Block> blockRegistry, DeferredRegister<Fluid> fluidRegistry) {
 			final RegistryObject<BucketItem> bucket = registerBucket(itemRegistry);
-			final RegistryObject<FlowingFluidBlock> fluidBlock = registerBlock(blockRegistry);
+			final RegistryObject<LiquidBlock> fluidBlock = registerBlock(blockRegistry);
 			final RegistryObject<ForgeFlowingFluid.Source> fluid = registerFluid(fluidRegistry);
 
 			return new RegisteredFluidHolder(bucket, fluidBlock, fluid);
 		}
 
 		@Nullable
-		public RegistryObject<FlowingFluidBlock> registerBlock(DeferredRegister<Block> blockRegistry) {
+		public RegistryObject<LiquidBlock> registerBlock(DeferredRegister<Block> blockRegistry) {
 			if (this.blockCreationFunction == null)
 				return null;
 
 			makeFluidProperties();
 
-			RegistryObject<FlowingFluidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, AbstractBlock.Properties.of(this.material).noCollission().strength(100).noDrops().lightLevel(state -> luminosity)));
+			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, Block.Properties.of(this.material).noCollission().strength(100).noDrops().lightLevel(state -> luminosity)));
 
 			this.fluidProperties.block(block);
 
@@ -282,10 +281,10 @@ public final class FluidUtil {
 
 	public static final class RegisteredFluidHolder {
 		private final RegistryObject<BucketItem> bucket;
-		private final RegistryObject<FlowingFluidBlock> fluidBlock;
+		private final RegistryObject<LiquidBlock> fluidBlock;
 		private final RegistryObject<ForgeFlowingFluid.Source> fluid;
 
-		public RegisteredFluidHolder(RegistryObject<BucketItem> bucket, RegistryObject<FlowingFluidBlock> fluidBlock, RegistryObject<ForgeFlowingFluid.Source> fluid) {
+		public RegisteredFluidHolder(RegistryObject<BucketItem> bucket, RegistryObject<LiquidBlock> fluidBlock, RegistryObject<ForgeFlowingFluid.Source> fluid) {
 			this.bucket = bucket;
 			this.fluidBlock = fluidBlock;
 			this.fluid = fluid;
@@ -299,7 +298,7 @@ public final class FluidUtil {
 			return this.fluid;
 		}
 
-		public RegistryObject<FlowingFluidBlock> getFluidBlock() {
+		public RegistryObject<LiquidBlock> getFluidBlock() {
 			return this.fluidBlock;
 		}
 	}

@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.entity.mob.shyrelands;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -19,12 +19,12 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AxiolightEntity extends AoAMeleeMob {
-    public AxiolightEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public AxiolightEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return sizeIn.height * 0.85f;
     }
 
@@ -50,9 +50,9 @@ public class AxiolightEntity extends AoAMeleeMob {
     public void aiStep() {
         super.aiStep();
 
-        List<PlayerEntity> playerList = level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(12), PlayerUtil::shouldPlayerBeAffected);
+        List<Player> playerList = level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(12), PlayerUtil::shouldPlayerBeAffected);
 
         if (playerList.isEmpty())
-            EntityUtil.applyPotions(this, new EffectBuilder(Effects.INVISIBILITY).hideParticles());
+            EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.INVISIBILITY).hideParticles());
     }
 }

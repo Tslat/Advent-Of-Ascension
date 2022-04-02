@@ -1,8 +1,8 @@
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -19,7 +19,7 @@ public class HaulingSkill extends AoASkill.Instance {
 		super(AoASkills.HAULING.get(), plData, jsonData);
 	}
 
-	public HaulingSkill(CompoundNBT nbtData) {
+	public HaulingSkill(CompoundTag nbtData) {
 		super(AoASkills.HAULING.get(), nbtData);
 	}
 
@@ -39,7 +39,7 @@ public class HaulingSkill extends AoASkill.Instance {
 			xp *= 2f;
 
 			for (ItemStack stack : ev.getDrops()) {
-				if (stack.getItem().is(AoATags.Items.HAULING_FISH))
+				if (stack.is(AoATags.Items.HAULING_FISH))
 					xp *= 1.25f;
 			}
 		}

@@ -1,32 +1,32 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 
 import javax.annotation.Nullable;
 
 public class WhitewashingTableContainer extends UtilityBlockContainer {
-	public WhitewashingTableContainer(int screenId, PlayerInventory plInventory) {
-		this(screenId, plInventory, IWorldPosCallable.NULL);
+	public WhitewashingTableContainer(int screenId, Inventory plInventory) {
+		this(screenId, plInventory, ContainerLevelAccess.NULL);
 	}
 
-	public WhitewashingTableContainer(int screenId, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
+	public WhitewashingTableContainer(int screenId, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(AoAContainers.WHITEWASHING_TABLE.get(), screenId, plInventory, functionCaller);
 	}
 
@@ -52,26 +52,27 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 
 	@Override
 	protected Slot initOutputSlot() {
-		return new Slot(output, 2, 134, 23) {
+		return null;
+		/*return new Slot(output, 2, 134, 23) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 
 			@Override
-			public boolean mayPickup(PlayerEntity player) {
+			public boolean mayPickup(Player player) {
 				return hasItem();
 			}
 
 			@Override
-			public ItemStack onTake(PlayerEntity player, ItemStack stack) {
+			public ItemStack onTake(Player player, ItemStack stack) {
 				inputs.getItem(0).shrink(1);
 				inputs.getItem(1).shrink(1);
 
 				slotsChanged(inputs);
 				return stack;
 			}
-		};
+		};*/
 	}
 
 	@Override
@@ -79,7 +80,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 		ItemStack brickStack = inputs.getItem(0);
 		ItemStack powderStack = inputs.getItem(1);
 
-		if (!powderStack.isEmpty() && brickStack.getItem() == BlockItem.byBlock(Blocks.OBSIDIAN)) {
+		/*if (!powderStack.isEmpty() && brickStack.getItem() == BlockItem.byBlock(Blocks.OBSIDIAN)) {
 			if (powderStack.getItem() == AoAItems.DARKLY_POWDER.get()) {
 				output.setItem(0, new ItemStack(AoABlocks.DARKWASH_BRICKS.get(), 2));
 			}
@@ -92,7 +93,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 		}
 		else {
 			output.setItem(0, ItemStack.EMPTY);
-		}
+		}*/
 	}
 
 	@Override
@@ -100,17 +101,17 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 		return AoABlocks.WHITEWASHING_TABLE.get();
 	}
 
-	public static void openContainer(ServerPlayerEntity player, BlockPos pos) {
-		NetworkHooks.openGui(player, new INamedContainerProvider() {
+	public static void openContainer(ServerPlayer player, BlockPos pos) {
+		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
-				return new TranslationTextComponent("container.aoa3.whitewashing_table");
+			public Component getDisplayName() {
+				return new TranslatableComponent("container.aoa3.whitewashing_table");
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new WhitewashingTableContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
+			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
+				return new WhitewashingTableContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
 			}
 		}, pos);
 	}

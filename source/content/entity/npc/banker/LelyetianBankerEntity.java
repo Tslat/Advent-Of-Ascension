@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.entity.npc.banker;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
@@ -17,7 +17,7 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class LelyetianBankerEntity extends AoABanker {
-	public LelyetianBankerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+	public LelyetianBankerEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -27,17 +27,17 @@ public class LelyetianBankerEntity extends AoABanker {
 	}
 
 	@Override
-	protected void openGui(PlayerEntity player) {
-		NetworkHooks.openGui((ServerPlayerEntity)player, new INamedContainerProvider() {
+	protected void openGui(Player player) {
+		NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
+			public Component getDisplayName() {
 				return LelyetianBankerEntity.this.getDisplayName();
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int screenId, PlayerInventory inv, PlayerEntity player) {
-				return new BankerContainer(screenId, player.inventory, LelyetianBankerEntity.this);
+			public AbstractContainerMenu createMenu(int screenId, Inventory inv, Player player) {
+				return new BankerContainer(screenId, player.getInventory(), LelyetianBankerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
 	}

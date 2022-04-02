@@ -12,7 +12,7 @@ public class DoppelgangerHandler {
 		this.brain = this.doppelganger.getBrain();
 	}
 
-	public static Brain.BrainCodec<DoppelgangerEntity> getCodecHandler() {
+	public static Brain.Provider<DoppelgangerEntity> getCodecHandler() {
 		return Brain.provider(MEMORIES, SENSORS);
 	}
 
@@ -38,21 +38,21 @@ public class DoppelgangerHandler {
 
 	private static ImmutableList<? extends Task<? super DoppelgangerEntity>> getIdleActivities() {
 		return ImmutableList.of(
-				new FirstShuffledTask<DoppelgangerEntity>(ImmutableList.of(
-						Pair.of(new ForgetAttackTargetTask<>(doppelganger -> doppelganger.getBrain().getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(ImmutableList.of()).stream().filter(EntityPredicates.ATTACK_ALLOWED).findFirst()), 1),
-						Pair.of(new LookAtEntityTask(EntityType.PLAYER, 8), 1),
-						Pair.of(new LookAtEntityTask(8), 1),
-						Pair.of(new DummyTask(30, 60), 1))),
-				new FirstShuffledTask<DoppelgangerEntity>(ImmutableList.of(
-						Pair.of(new WalkRandomlyTask(1f), 1),
-						Pair.of(new DummyTask(30, 60), 1))));
+				new RunOne<DoppelgangerEntity>(ImmutableList.of(
+						Pair.of(new ForgetAttackTargetTask<>(doppelganger -> doppelganger.getBrain().getMemory(MemoryModuleType.NEAREST_PLAYERS).orElse(ImmutableList.of()).stream().filter(EntitySelector.ATTACK_ALLOWED).findFirst()), 1),
+						Pair.of(new SetEntityLookTarget(EntityType.PLAYER, 8), 1),
+						Pair.of(new SetEntityLookTarget(8), 1),
+						Pair.of(new DoNothing(30, 60), 1))),
+				new RunOne<DoppelgangerEntity>(ImmutableList.of(
+						Pair.of(new RandomStroll(1f), 1),
+						Pair.of(new DoNothing(30, 60), 1))));
 	}
 
 	private static ImmutableList<? extends Task<? super DoppelgangerEntity>> getFightActivities() {
 		return ImmutableList.of(
-				new AttackTargetTask(6),
-				new MoveToTargetTask(1.3f),
-				new FindNewAttackTargetTask<>(target -> !target.isAlive() || target instanceof PlayerEntity && ((PlayerEntity)target).isCreative()));
+				new MeleeAttack(6),
+				new SetWalkTargetFromAttackTargetIfTargetOutOfReach(1.3f),
+				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || target instanceof Player && ((Player)target).isCreative()));
 	}
 
 	public boolean hasSensor(SensorType<?> sensorType) {
@@ -65,7 +65,7 @@ public class DoppelgangerHandler {
 
 	public void tick() {
 		doppelganger.level.getProfiler().push("doppelgangerBrain");
-		brain.tick((ServerWorld)doppelganger.level, doppelganger);
+		brain.tick((ServerLevel)doppelganger.level, doppelganger);
 		brain.setActiveActivityToFirstValid(ImmutableList.of(Activity.FIGHT, Activity.IDLE));
 		doppelganger.setAggressive(getCurrentTarget() != null);
 		doppelganger.level.getProfiler().pop();

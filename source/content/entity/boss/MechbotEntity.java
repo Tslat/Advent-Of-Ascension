@@ -1,24 +1,25 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
@@ -38,12 +39,12 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	private int jumpCount = 0;
 	private int jumpIntervalTimer = 0;
 
-	public MechbotEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public MechbotEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 2.21875f;
 	}
 
@@ -98,7 +99,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 					hurtMarked = true;
 
 					if (!level.isClientSide) {
-						level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MECHBOT_JUMP.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+						level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MECHBOT_JUMP.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 						level.addFreshEntity(new MechFallEntity(this, getX(), getY() - 0.25, getZ(), BaseMobProjectile.Type.MAGIC));
 
 						if (getHealth() < 1250) {
@@ -126,9 +127,9 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 			double distanceFactorX = target.getX() - this.getX();
 			double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - projectile.getY();
 			double distanceFactorZ = target.getZ() - this.getZ();
-			double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
+			double hyp = Mth.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MECHBOT_SHOOT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MECHBOT_SHOOT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 			projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
 			level.addFreshEntity(projectile);
 		}
@@ -146,10 +147,10 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.MECHBOT.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.MECHBOT.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -175,7 +176,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -183,14 +184,14 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.MECHBOT_MUSIC.getId()));
@@ -198,7 +199,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.MECHBOT_MUSIC.getId()));
@@ -206,3 +207,4 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 }
+*/

@@ -1,28 +1,28 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 
 import javax.annotation.Nullable;
 
 public class MendingTableContainer extends UtilityBlockContainer {
 	private int totalMaterialCost = 0;
 
-	public MendingTableContainer(int screenId, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
+	public MendingTableContainer(int screenId, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(AoAContainers.MENDING_TABLE.get(), screenId, plInventory, functionCaller);
 	}
 
@@ -38,19 +38,20 @@ public class MendingTableContainer extends UtilityBlockContainer {
 
 	@Override
 	protected Slot initOutputSlot() {
-		return new Slot(output, 2, 134, 23) {
+		return null;
+		/*return new Slot(output, 2, 134, 23) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return false;
 			}
 
 			@Override
-			public boolean mayPickup(PlayerEntity playerIn) {
+			public boolean mayPickup(Player playerIn) {
 				return hasItem();
 			}
 
 			@Override
-			public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
+			public ItemStack onTake(Player thePlayer, ItemStack stack) {
 				if (totalMaterialCost > 0) {
 					ItemStack repairMaterialStack = inputs.getItem(1);
 
@@ -69,7 +70,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 
 				return stack;
 			}
-		};
+		};*/
 	}
 
 	@Override
@@ -104,7 +105,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 						}
 
 						totalMaterialCost = repairCount;
-						output.setItem(0, repairedStack);
+						//output.setItem(0, repairedStack);
 					}
 				}
 			}
@@ -112,7 +113,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 	}
 
 	private void resetMendingContainerState() {
-		output.setItem(0, ItemStack.EMPTY);
+		//output.setItem(0, ItemStack.EMPTY);
 		totalMaterialCost = 0;
 	}
 
@@ -121,17 +122,17 @@ public class MendingTableContainer extends UtilityBlockContainer {
 		return AoABlocks.MENDING_TABLE.get();
 	}
 
-	public static void openContainer(ServerPlayerEntity player, BlockPos pos) {
-		NetworkHooks.openGui(player, new INamedContainerProvider() {
+	public static void openContainer(ServerPlayer player, BlockPos pos) {
+		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
-				return new TranslationTextComponent("container.aoa3.mending_table");
+			public Component getDisplayName() {
+				return new TranslatableComponent("container.aoa3.mending_table");
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new MendingTableContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
+			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
+				return new MendingTableContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
 			}
 		}, pos);
 	}

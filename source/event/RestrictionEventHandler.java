@@ -1,17 +1,17 @@
 package net.tslat.aoa3.event;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.item.MusicDiscItem;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;
-import net.minecraftforge.event.entity.living.EntityTeleportEvent;
+import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingConversionEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
@@ -22,10 +22,10 @@ import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
+import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -40,12 +40,12 @@ public final class RestrictionEventHandler {
 		cancelEventIf(EntityTeleportEvent.EnderPearl.class, ev -> ev.getTargetY() >= ev.getPlayer().level.dimensionType().logicalHeight());
 		cancelEventIf(LivingConversionEvent.Pre.class, ev -> ev.getEntityLiving() instanceof AoATrader);
 		cancelEventIf(PlayerEvent.BreakSpeed.class, ev -> WorldUtil.isWorld(ev.getPlayer().level, AoADimensions.NOWHERE.key));
-		cancelEventIf(BlockEvent.FluidPlaceBlockEvent.class, ev -> WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key));
+		cancelEventIf(BlockEvent.FluidPlaceBlockEvent.class, ev -> WorldUtil.isWorld((Level)ev.getWorld(), AoADimensions.NOWHERE.key));
 		cancelEventIf(EntityMobGriefingEvent.class, ev -> ev.getEntity() != null && WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
 		cancelEventIf(LivingDropsEvent.class, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
 		cancelEventIf(FillBucketEvent.class, ev -> WorldUtil.isWorld(ev.getWorld(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()));
-		cancelEventIf(BlockEvent.BreakEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()) && (WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key) || !AoASkillReqReloadListener.canBreakBlock(PlayerUtil.getAdventPlayer(ev.getPlayer()), ev.getState().getBlock(), true)));
-		cancelEventIf(BlockEvent.EntityPlaceEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && (WorldUtil.isWorld((World)ev.getWorld(), AoADimensions.NOWHERE.key) || (!AoASkillReqReloadListener.canPlaceBlock(PlayerUtil.getAdventPlayer((PlayerEntity)ev.getEntity()), ev.getState().getBlock(), true))));
+		cancelEventIf(BlockEvent.BreakEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()) && (WorldUtil.isWorld((Level)ev.getWorld(), AoADimensions.NOWHERE.key) || !AoASkillReqReloadListener.canBreakBlock(PlayerUtil.getAdventPlayer(ev.getPlayer()), ev.getState().getBlock(), true)));
+		cancelEventIf(BlockEvent.EntityPlaceEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && (WorldUtil.isWorld((Level)ev.getWorld(), AoADimensions.NOWHERE.key) || (!AoASkillReqReloadListener.canPlaceBlock(PlayerUtil.getAdventPlayer((Player)ev.getEntity()), ev.getState().getBlock(), true))));
 
 		handleEventIf(ExplosionEvent.Detonate.class,
 				ev -> ev.getAffectedBlocks().clear(),
@@ -53,17 +53,17 @@ public final class RestrictionEventHandler {
 
 		handleEventIf(EntityTeleportEvent.ChorusFruit.class, ev -> {
 			cancelEvent(ev);
-			PlayerUtil.notifyPlayer((PlayerEntity)ev.getEntity(), new TranslationTextComponent("message.feedback.nowhere.chorusFruit"));
+			PlayerUtil.notifyPlayer((Player)ev.getEntity(), new TranslatableComponent("message.feedback.nowhere.chorusFruit"));
 			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 
 		handleEventIf(EntityTeleportEvent.EnderPearl.class, ev -> {
 			cancelEvent(ev);
-			PlayerUtil.notifyPlayer((PlayerEntity)ev.getEntity(), new TranslationTextComponent("message.feedback.nowhere.enderPearl"));
+			PlayerUtil.notifyPlayer((Player)ev.getEntity(), new TranslatableComponent("message.feedback.nowhere.enderPearl"));
 			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 
 		handleEventIf(EntityTeleportEvent.TeleportCommand.class, ev -> {
 			cancelEvent(ev);
-			PlayerUtil.notifyPlayer((PlayerEntity)ev.getEntity(), new TranslationTextComponent("message.feedback.nowhere.teleport"));
+			PlayerUtil.notifyPlayer((Player)ev.getEntity(), new TranslatableComponent("message.feedback.nowhere.teleport"));
 			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 
 		handleEventIf(PlayerInteractEvent.RightClickBlock.class,
@@ -76,10 +76,10 @@ public final class RestrictionEventHandler {
 		Item heldItem = ev.getPlayer().getItemInHand(ev.getHand()).getItem();
 
 		if (block.getBlock() == Blocks.JUKEBOX) {
-			if (heldItem == Items.AIR || heldItem instanceof MusicDiscItem) {
+			if (heldItem == Items.AIR || heldItem instanceof RecordItem) {
 				ev.setUseItem(Event.Result.ALLOW);
 				ev.setUseBlock(Event.Result.ALLOW);
-				ev.getPlayer().abilities.mayBuild = true;
+				ev.getPlayer().getAbilities().mayBuild = true;
 			}
 		}
 		else if (block.getBlock() == Blocks.SOUL_CAMPFIRE || block.getBlock() == Blocks.ENDER_CHEST) {
@@ -88,7 +88,7 @@ public final class RestrictionEventHandler {
 		else if (heldItem instanceof TabletItem || heldItem == AoAItems.LOTTO_TOTEM.get()) {
 			ev.setUseItem(Event.Result.ALLOW);
 			ev.setUseBlock(Event.Result.DENY);
-			ev.getPlayer().abilities.mayBuild = true;
+			ev.getPlayer().getAbilities().mayBuild = true;
 		}
 		else {
 			ev.setCanceled(true);
@@ -96,7 +96,7 @@ public final class RestrictionEventHandler {
 	}
 
 	private static void handleRightClickBlock(final PlayerInteractEvent.RightClickBlock ev) {
-		World world = ev.getWorld();
+		Level world = ev.getWorld();
 
 		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
 			ev.setCanceled(true);

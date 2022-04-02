@@ -3,7 +3,8 @@
   "pools": [
     {
       "name": "rares",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:empty",
@@ -18,7 +19,8 @@
     },
     {
       "name": "ice",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -27,14 +29,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 0.0,
-                "max": 34.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 34.0
+              },
+              "add": false
             },
             {
               "function": "minecraft:looting_enchant",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 0.0,
                 "max": 10.0
               }
@@ -48,14 +52,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 0.0,
-                "max": 34.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 34.0
+              },
+              "add": false
             },
             {
               "function": "minecraft:looting_enchant",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 0.0,
                 "max": 10.0
               }
@@ -67,6 +73,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",

@@ -1,10 +1,10 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.registries.RegistryManager;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.gui.hud.XpParticlesRenderer;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -22,19 +22,19 @@ public class XpGainPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeResourceLocation(skillId);
 		buffer.writeFloat(xp);
 		buffer.writeBoolean(levelUp);
 	}
 
-	public static XpGainPacket decode(PacketBuffer buffer) {
+	public static XpGainPacket decode(FriendlyByteBuf buffer) {
 		return new XpGainPacket(buffer.readResourceLocation(), buffer.readFloat(), buffer.readBoolean());
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
 		if (AoAConfig.CLIENT.showXpParticles.get()) {
-			AoASkill skill = RegistryManager.ACTIVE.getRegistry(AoASkill.class).getValue(skillId);
+			AoASkill skill = AoASkills.getSkill(skillId);
 
 			if (skill != null)
 				XpParticlesRenderer.addXpParticle(skill, xp, levelUp);

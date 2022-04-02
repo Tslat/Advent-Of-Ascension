@@ -1,12 +1,13 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Random;
 
 public class VariableHeightStructure extends AoAStructureBase<VariablePieceCountConfig> {
-	public VariableHeightStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public VariableHeightStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(VariablePieceCountConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -62,3 +63,4 @@ public class VariableHeightStructure extends AoAStructureBase<VariablePieceCount
 		};
 	}
 }
+*/

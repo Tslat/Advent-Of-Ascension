@@ -1,19 +1,19 @@
 package net.tslat.aoa3.content.entity.mob.deeplands;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.ClimberPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -22,9 +22,9 @@ import net.tslat.aoa3.util.EntityUtil;
 import javax.annotation.Nullable;
 
 public class ArocknidEntity extends AoAMeleeMob {
-    private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>defineId(ArocknidEntity.class, DataSerializers.BYTE);
+    private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.<Byte>defineId(ArocknidEntity.class, EntityDataSerializers.BYTE);
 
-    public ArocknidEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public ArocknidEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -35,12 +35,12 @@ public class ArocknidEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected PathNavigator createNavigation(World world) {
-        return new ClimberPathNavigator(this, world);
+    protected PathNavigation createNavigation(Level world) {
+        return new WallClimberNavigation(this, world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 0.59375f;
     }
 
@@ -69,8 +69,8 @@ public class ArocknidEntity extends AoAMeleeMob {
     }
 
     @Override
-    public CreatureAttribute getMobType() {
-        return CreatureAttribute.ARTHROPOD;
+    public MobType getMobType() {
+        return MobType.ARTHROPOD;
     }
 
 	@Override
@@ -105,6 +105,6 @@ public class ArocknidEntity extends AoAMeleeMob {
 
     @Override
     protected void onAttack(Entity target) {
-        EntityUtil.applyPotions(target, new EffectBuilder(Effects.WEAKNESS, 120));
+        EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WEAKNESS, 120));
     }
 }

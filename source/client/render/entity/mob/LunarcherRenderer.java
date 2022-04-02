@@ -1,26 +1,22 @@
+/*
 package net.tslat.aoa3.client.render.entity.mob;
 
-import net.minecraft.client.renderer.entity.BipedRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.layers.HeldItemLayer;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.client.model.entity.misc.LunarcherModel;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.FlyingMob;
 
-public class LunarcherRenderer extends BipedRenderer<FlyingEntity, LunarcherModel<FlyingEntity>> {
+
+public class LunarcherRenderer extends HumanoidMobRenderer<FlyingMob, LunarcherModel<FlyingMob>> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/lunalus/lunarcher.png");
 
-	public LunarcherRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new LunarcherModel(), AoAEntities.Mobs.LUNARCHER.get().getWidth() / 3f);
+	public LunarcherRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new LunarcherModel(), AoAMobs.LUNARCHER.get().getWidth() / 3f);
 
 		addLayer(new HeldItemLayer(this));
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(FlyingEntity entity) {
+	public ResourceLocation getTextureLocation(FlyingMob entity) {
 		return texture;
 	}
-}
+}*/

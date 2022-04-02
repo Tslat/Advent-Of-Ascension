@@ -1,23 +1,23 @@
 package net.tslat.aoa3.content.world.spawner;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.spawner.ISpecialSpawner;
-import net.minecraft.world.spawner.WorldEntitySpawner;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.level.CustomSpawner;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.NaturalSpawner;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoADimensions;
@@ -28,13 +28,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-public class TraderSpawner implements ISpecialSpawner {
-	private static final HashMap<RegistryKey<Biome>, List<MobSpawnInfo.Spawners>> SPAWNS = new HashMap<RegistryKey<Biome>, List<MobSpawnInfo.Spawners>>();
+public class TraderSpawner implements CustomSpawner {
+	private static final HashMap<ResourceKey<Biome>, List<MobSpawnSettings.SpawnerData>> SPAWNS = new HashMap<ResourceKey<Biome>, List<MobSpawnSettings.SpawnerData>>();
 
 	private int spawnCooldown = 24000;
 
 	@Override
-	public int tick(ServerWorld world, boolean spawnHostiles, boolean spawnPassives) {
+	public int tick(ServerLevel world, boolean spawnHostiles, boolean spawnPassives) {
 		if (this.spawnCooldown-- > 12000 || !spawnPassives || !world.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
 			return 0;
 
@@ -47,20 +47,20 @@ public class TraderSpawner implements ISpecialSpawner {
 		return 0;
 	}
 
-	private int doSpawning(ServerWorld world) {
+	private int doSpawning(ServerLevel world) {
 		int count = 0;
 
-		for (ServerPlayerEntity pl : world.getPlayers(pl -> !pl.isSpectator() && pl.isAlive())) {
-			for (Pair<EntityType<? extends MobEntity>, BlockPos> spawn : findNearbySpawnPositions(world, pl.blockPosition(), 64, 2)) {
+		for (ServerPlayer pl : world.getPlayers(pl -> !pl.isSpectator() && pl.isAlive())) {
+			for (Pair<EntityType<? extends Mob>, BlockPos> spawn : findNearbySpawnPositions(world, pl.blockPosition(), 64, 2)) {
 				BlockPos pos = spawn.getSecond();
-				MobEntity entity = spawn.getFirst().create(world, null, null, null, pos, SpawnReason.NATURAL, false, false);
+				Mob entity = spawn.getFirst().create(world, null, null, null, pos, MobSpawnType.NATURAL, false, false);
 
 				if (entity == null)
 					continue;
 
-				int eventResult = ForgeHooks.canEntitySpawn(entity, world, pos.getX(), pos.getY(), pos.getZ(), null, SpawnReason.NATURAL);
+				int eventResult = ForgeHooks.canEntitySpawn(entity, world, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.NATURAL);
 
-				if (eventResult != -1 && (eventResult == 1 || (entity.checkSpawnRules(world, SpawnReason.NATURAL) && entity.checkSpawnObstruction(world)))) {
+				if (eventResult != -1 && (eventResult == 1 || (entity.checkSpawnRules(world, MobSpawnType.NATURAL) && entity.checkSpawnObstruction(world)))) {
 					world.addFreshEntity(entity);
 
 					spawnCooldown += 3600;
@@ -72,25 +72,25 @@ public class TraderSpawner implements ISpecialSpawner {
 		return count;
 	}
 
-	private List<Pair<EntityType<? extends MobEntity>, BlockPos>> findNearbySpawnPositions(ServerWorld world, BlockPos centerPos, int radius, int maxTries) {
-		ArrayList<Pair<EntityType<? extends MobEntity>, BlockPos>> positions = new ArrayList<Pair<EntityType<? extends MobEntity>, BlockPos>>();
+	private List<Pair<EntityType<? extends Mob>, BlockPos>> findNearbySpawnPositions(ServerLevel world, BlockPos centerPos, int radius, int maxTries) {
+		ArrayList<Pair<EntityType<? extends Mob>, BlockPos>> positions = new ArrayList<Pair<EntityType<? extends Mob>, BlockPos>>();
 
 		for (int i = 0; i < maxTries; i++) {
 			int x = centerPos.getX() + RandomUtil.randomNumberBetween(-radius, radius);
 			int z = centerPos.getZ() + RandomUtil.randomNumberBetween(-radius, radius);
 			BlockPos pos = new BlockPos(x, centerPos.getY(), z);
-			Biome biome = world.getBiome(pos);
-			Optional<RegistryKey<Biome>> key = world.getServer().registryAccess().registry(Registry.BIOME_REGISTRY).get().getResourceKey(biome);
+			Biome biome = world.getBiome(pos).value();
+			Optional<ResourceKey<Biome>> key = world.getServer().registryAccess().registry(Registry.BIOME_REGISTRY).get().getResourceKey(biome);
 
-			if (!key.isPresent() || !SPAWNS.containsKey(key.get()))
+			if (key.isEmpty() || !SPAWNS.containsKey(key.get()))
 				continue;
 
-			EntityType<? extends MobEntity> trader = (EntityType<? extends MobEntity>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.source(), SPAWNS.get(key.get())).type;
-			EntitySpawnPlacementRegistry.PlacementType placementType = EntitySpawnPlacementRegistry.getPlacementType(trader);
-			Heightmap.Type heightmap = EntitySpawnPlacementRegistry.getHeightmapType(trader);
+			EntityType<? extends Mob> trader = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.source(), SPAWNS.get(key.get())).get().type;
+			SpawnPlacements.Type placementType = SpawnPlacements.getPlacementType(trader);
+			Heightmap.Types heightmap = SpawnPlacements.getHeightmapType(trader);
 			pos = new BlockPos(x, world.getHeight(heightmap, x, z), z);
 
-			if (!WorldEntitySpawner.isSpawnPositionOk(placementType, world, pos, trader))
+			if (!NaturalSpawner.isSpawnPositionOk(placementType, world, pos, trader))
 				continue;
 
 			if (world.noCollision(trader.getAABB(pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d)))
@@ -100,12 +100,12 @@ public class TraderSpawner implements ISpecialSpawner {
 		return positions;
 	}
 
-	public static void addSpawn(RegistryKey<Biome> biome, MobSpawnInfo.Spawners spawnData) {
+	public static void addSpawn(ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawnData) {
 		if (SPAWNS.containsKey(biome)) {
 			SPAWNS.get(biome).add(spawnData);
 		}
 		else {
-			ArrayList<MobSpawnInfo.Spawners> spawnList = new ArrayList<MobSpawnInfo.Spawners>();
+			ArrayList<MobSpawnSettings.SpawnerData> spawnList = new ArrayList<MobSpawnSettings.SpawnerData>();
 
 			spawnList.add(spawnData);
 
@@ -113,9 +113,9 @@ public class TraderSpawner implements ISpecialSpawner {
 		}
 	}
 
-	public static boolean isValidSpawnWorld(ServerWorld world) {
-		RegistryKey<World> key = world.dimension();
+	public static boolean isValidSpawnWorld(ServerLevel world) {
+		ResourceKey<Level> key = world.dimension();
 
-		return key == World.OVERWORLD || key == World.NETHER || (key.location().getNamespace().equals(AdventOfAscension.MOD_ID) && key != AoADimensions.NOWHERE.key);
+		return key == Level.OVERWORLD || key == Level.NETHER || (key.location().getNamespace().equals(AdventOfAscension.MOD_ID) && key != AoADimensions.NOWHERE.key);
 	}
 }

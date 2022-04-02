@@ -1,31 +1,28 @@
 package net.tslat.aoa3.content.block;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.level.block.Block;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import net.minecraft.block.AbstractBlock;
 
 public class CustomToolsBlock extends Block {
-	@Nonnull
-	private final ToolType[] validToolTypes;
+	//@Nonnull
+	//private final ToolType[] validToolTypes;
 
-	public CustomToolsBlock(AbstractBlock.Properties properties, @Nonnull String primaryType, String... secondaryTypes) {
+	public CustomToolsBlock(Block.Properties properties, @Nonnull String primaryType, String... secondaryTypes) {
 		super(properties);
 
-		validToolTypes = new ToolType[secondaryTypes.length + 1];
+		// This doesn't appear to be possible anymore? I think Forge outright broke this functionality as of 1.17
+
+		/*validToolTypes = new ToolType[secondaryTypes.length + 1];
 
 		validToolTypes[0] = ToolType.get(primaryType);
 
 		for (int i = 0; i < secondaryTypes.length; i++) {
 			validToolTypes[i + 1] = ToolType.get(secondaryTypes[i]);
-		}
+		}*/
 	}
 
-	@Nullable
+	/*@Nullable
 	@Override
 	public ToolType getHarvestTool(BlockState state) {
 		return validToolTypes[0];
@@ -39,5 +36,5 @@ public class CustomToolsBlock extends Block {
 		}
 
 		return false;
-	}
+	}*/
 }

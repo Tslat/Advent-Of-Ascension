@@ -1,7 +1,6 @@
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -10,20 +9,20 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RenderUtil;
 
 public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecipe> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench");
 	public static final ResourceLocation texture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/containers/frame_bench.png");
-	private final String title = LocaleUtil.getLocaleString("recipe.aoa3.frameBench");
+	private final Component title = LocaleUtil.getLocaleMessage("recipe.aoa3.frameBench");
 	private final IDrawable background;
 	private final IDrawable icon;
 
@@ -43,7 +42,7 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	}
 
 	@Override
-	public String getTitle() {
+	public Component getTitle() {
 		return title;
 	}
 
@@ -58,7 +57,7 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	}
 
 	@Override
-	public void draw(FrameBenchRecipe recipe, MatrixStack matrix, double mouseX, double mouseY) {
+	public void draw(FrameBenchRecipe recipe, PoseStack matrix, double mouseX, double mouseY) {
 		Minecraft mc = Minecraft.getInstance();
 
 		drawButton(matrix, mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
@@ -73,15 +72,15 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 		drawButton(matrix, mc, AoAItems.SNIPER_FRAME.get(), recipe, 85, 41);
 	}
 
-	private void drawButton(MatrixStack matrix, Minecraft mc, Item frame, FrameBenchRecipe recipe, int x, int y) {
-		mc.getTextureManager().bind(texture);
+	private void drawButton(PoseStack matrix, Minecraft mc, Item frame, FrameBenchRecipe recipe, int x, int y) {
+		/*mc.getTextureManager().bind(texture);
 		matrix.pushPose();
-		RenderSystem.color4f(1f, 1f, 1f, 1f);
+		RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 		RenderUtil.renderCustomSizedTexture(matrix, x, y, 176, recipe.getResultItem().getItem() == frame ? 21 : 39, 18, 18, 256, 256);
 		matrix.translate(0, 0, 32);
 		RenderUtil.renderItemInGui(matrix, mc, new ItemStack(frame), x + 1, y + 1);
 		matrix.popPose();
-		RenderSystem.color4f(1f, 1f, 1f, 1f);
+		RenderSystem.setShaderColor(1f, 1f, 1f, 1f);*/
 	}
 
 	@Override

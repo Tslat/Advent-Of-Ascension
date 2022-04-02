@@ -1,23 +1,23 @@
 package net.tslat.aoa3.content.entity.misc.pixon;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.PanicGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.PanicGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.tool.misc.InfusionBowl;
@@ -26,23 +26,23 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public abstract class PixonEntity extends CreatureEntity {
+public abstract class PixonEntity extends PathfinderMob {
     public long nextHarvestTick = 0;
 
-    public PixonEntity(EntityType<? extends CreatureEntity> entityType, World world) {
+    public PixonEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
     // TODO Fix level distribution across dimensions
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new PanicGoal(this, 0.75d));
-        goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.55d));
-        goalSelector.addGoal(3, new LookRandomlyGoal(this));
+        goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 0.55d));
+        goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
 
     @Nullable
     @Override
-    public ILivingEntityData finalizeSpawn(IServerWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor worldIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         this.getAttribute(Attributes.MAX_HEALTH).addPermanentModifier(new AttributeModifier("Random spawn health bonus", this.random.nextInt(30), AttributeModifier.Operation.ADDITION));
 
         setHealth(getMaxHealth());
@@ -51,7 +51,7 @@ public abstract class PixonEntity extends CreatureEntity {
     }
 
     @Override
-    public boolean addEffect(EffectInstance effectInstanceIn) {
+    public boolean addEffect(MobEffectInstance effectInstanceIn, @Nullable Entity source) {
         return false;
     }
 
@@ -78,7 +78,7 @@ public abstract class PixonEntity extends CreatureEntity {
         return 1;
     }
 
-    public boolean canHarvest(ServerPlayerEntity player, ItemStack bowlStack) {
+    public boolean canHarvest(ServerPlayer player, ItemStack bowlStack) {
         if (level.getGameTime() >= this.nextHarvestTick && bowlStack.getItem() instanceof InfusionBowl) {
             InfusionBowl bowl = ((InfusionBowl)bowlStack.getItem());
 
@@ -94,14 +94,14 @@ public abstract class PixonEntity extends CreatureEntity {
     }
 
     @Override
-    public boolean checkSpawnRules(IWorld world, SpawnReason reason) {
+    public boolean checkSpawnRules(LevelAccessor world, MobSpawnType reason) {
         if (!EntityUtil.isNaturalSpawnReason(reason))
             return true;
 
         if (!super.checkSpawnRules(world, reason))
             return false;
 
-        return world.getBlockState(blockPosition().below()).getBlock() == world.getBiome(blockPosition()).getGenerationSettings().getSurfaceBuilder().get().config.getTopMaterial().getBlock();
+        return false; //world.getBlockState(blockPosition().below()).getBlock() == world.getBiome(blockPosition()).getGenerationSettings().getSurfaceBuilder().get().config.getTopMaterial().getBlock();
     }
 
     @Override
@@ -115,7 +115,7 @@ public abstract class PixonEntity extends CreatureEntity {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
         return 0.65f;
     }
 
@@ -143,7 +143,7 @@ public abstract class PixonEntity extends CreatureEntity {
     }
 
     @Override
-    protected SoundEvent getFallDamageSound(int heightIn) {
+    public SoundEvent getFallDamageSound(int heightIn) {
         return null;
     }
 

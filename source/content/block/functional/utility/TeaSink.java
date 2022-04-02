@@ -1,30 +1,30 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.HorizontalBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -32,13 +32,13 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class TeaSink extends HorizontalBlock {
+public class TeaSink extends HorizontalDirectionalBlock {
 	public static final BooleanProperty FILLED = BooleanProperty.create("filled");
 	private static final VoxelShape BOTTOM_SHAPE = box(0, 0, 0, 16, 7, 16);
-	private static final VoxelShape NORTH_SHAPE = VoxelShapes.or(BOTTOM_SHAPE, box(6, 7, 0, 10, 16, 10));
-	private static final VoxelShape SOUTH_SHAPE = VoxelShapes.or(BOTTOM_SHAPE, box(6, 7, 6, 10, 16, 16));
-	private static final VoxelShape WEST_SHAPE = VoxelShapes.or(BOTTOM_SHAPE, box(0, 7, 6, 10, 16, 10));
-	private static final VoxelShape EAST_SHAPE = VoxelShapes.or(BOTTOM_SHAPE, box(6, 7, 6, 16, 16, 10));
+	private static final VoxelShape NORTH_SHAPE = Shapes.or(BOTTOM_SHAPE, box(6, 7, 0, 10, 16, 10));
+	private static final VoxelShape SOUTH_SHAPE = Shapes.or(BOTTOM_SHAPE, box(6, 7, 6, 10, 16, 16));
+	private static final VoxelShape WEST_SHAPE = Shapes.or(BOTTOM_SHAPE, box(0, 7, 6, 10, 16, 10));
+	private static final VoxelShape EAST_SHAPE = Shapes.or(BOTTOM_SHAPE, box(6, 7, 6, 16, 16, 10));
 
 	public TeaSink() {
 		super(new BlockUtil.CompactProperties(Material.WOOD, MaterialColor.COLOR_LIGHT_GRAY).stats(5f, 3f).get());
@@ -47,24 +47,19 @@ public class TeaSink extends HorizontalBlock {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
-		switch (state.getValue(FACING)) {
-			case EAST:
-				return EAST_SHAPE;
-			case SOUTH:
-				return SOUTH_SHAPE;
-			case WEST:
-				return WEST_SHAPE;
-			case NORTH:
-			default:
-				return NORTH_SHAPE;
-		}
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+		return switch (state.getValue(FACING)) {
+			case EAST -> EAST_SHAPE;
+			case SOUTH -> SOUTH_SHAPE;
+			case WEST -> WEST_SHAPE;
+			default -> NORTH_SHAPE;
+		};
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (state.getValue(FILLED)) {
-			if (player.getItemInHand(hand).getItem() == AoAItems.CUP.get() && player.inventory.contains(new ItemStack(AoAItems.TEA_SHREDDINGS.get()))) {
+			if (player.getItemInHand(hand).getItem() == AoAItems.CUP.get() && player.getInventory().contains(new ItemStack(AoAItems.TEA_SHREDDINGS.get()))) {
 				if (!world.isClientSide()) {
 					boolean success = false;
 
@@ -90,15 +85,15 @@ public class TeaSink extends HorizontalBlock {
 						if (!player.isCreative())
 							player.getItemInHand(hand).shrink(1);
 
-						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_USE.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+						world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_USE.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
 
 						if (RandomUtil.oneInNChance(7))
-							world.setBlockAndUpdate(pos, AoABlocks.TEA_SINK.get().defaultBlockState().setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)));
+							world.setBlockAndUpdate(pos, AoABlocks.TEA_SINK.get().defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING)));
 					}
 				}
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		else {
 			if (player.getItemInHand(hand).getItem() == Items.WATER_BUCKET) {
@@ -108,25 +103,25 @@ public class TeaSink extends HorizontalBlock {
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(Items.BUCKET));
 					}
 
-					world.setBlockAndUpdate(pos, defaultBlockState().setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)).setValue(FILLED, true));
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_FILL.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+					world.setBlockAndUpdate(pos, defaultBlockState().setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING)).setValue(FILLED, true));
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_TEA_SINK_FILL.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
 				}
 
-				return ActionResultType.SUCCESS;
+				return InteractionResult.SUCCESS;
 			}
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return defaultBlockState().setValue(FILLED, false).setValue(HorizontalBlock.FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true));
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState().setValue(FILLED, false).setValue(HorizontalDirectionalBlock.FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true));
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(FILLED, HorizontalBlock.FACING);
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(FILLED, HorizontalDirectionalBlock.FACING);
 	}
 }

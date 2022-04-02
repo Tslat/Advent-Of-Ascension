@@ -1,25 +1,24 @@
 package net.tslat.aoa3.content.block.decoration.misc;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SixWayBlock;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
@@ -30,8 +29,7 @@ public class SteelPlateBlock extends Block {
 	public SteelPlateBlock() {
 		super(new BlockUtil.CompactProperties(Material.HEAVY_METAL, MaterialColor.METAL)
 						.stats(7f, 20f)
-						.tool(ToolType.PICKAXE)
-						.harvestTool(ToolType.PICKAXE).get());
+						.needsTool().get());
 
 		registerDefaultState(defaultBlockState()
 				.setValue(BlockStateProperties.UP, false)
@@ -44,28 +42,28 @@ public class SteelPlateBlock extends Block {
 	}
 
 	@Override
-	public boolean canBeReplaced(BlockState state, BlockItemUseContext useContext) {
+	public boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
 		if (useContext.getItemInHand().getItem() != this.asItem())
 			return false;
 
 		if (state == defaultBlockState())
 			return false;
 
-		return !state.getValue(SixWayBlock.PROPERTY_BY_DIRECTION.get((useContext.replacingClickedOnBlock() ? useContext.getClickedFace() : useContext.getClickedFace().getOpposite())));
+		return !state.getValue(PipeBlock.PROPERTY_BY_DIRECTION.get((useContext.replacingClickedOnBlock() ? useContext.getClickedFace() : useContext.getClickedFace().getOpposite())));
 	}
 
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
 		BlockState replacingState = context.getLevel().getBlockState(context.getClickedPos());
 
 		if (replacingState.getBlock() == this) {
 			if (!context.replacingClickedOnBlock()) {
-				return replacingState.setValue(SixWayBlock.PROPERTY_BY_DIRECTION.get(context.getClickedFace().getOpposite()), true);
+				return replacingState.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(context.getClickedFace().getOpposite()), true);
 			}
 			else {
 				for (Direction direction : context.getNearestLookingDirections()) {
-					BooleanProperty property = SixWayBlock.PROPERTY_BY_DIRECTION.get(direction);
+					BooleanProperty property = PipeBlock.PROPERTY_BY_DIRECTION.get(direction);
 
 					if (!replacingState.getValue(property))
 						return replacingState.setValue(property, true).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
@@ -79,10 +77,10 @@ public class SteelPlateBlock extends Block {
 				return defaultBlockState();
 
 			if (!context.replacingClickedOnBlock())
-				return defaultBlockState().setValue(SixWayBlock.PROPERTY_BY_DIRECTION.get(context.getClickedFace().getOpposite()), true).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+				return defaultBlockState().setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(context.getClickedFace().getOpposite()), true).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 
 			for (Direction direction : context.getNearestLookingDirections()) {
-				return defaultBlockState().setValue(SixWayBlock.PROPERTY_BY_DIRECTION.get(direction), true).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+				return defaultBlockState().setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(direction), true).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 			}
 
 			return null;
@@ -95,15 +93,15 @@ public class SteelPlateBlock extends Block {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(BlockStateProperties.WATERLOGGED))
-			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 
 		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(BlockStateProperties.UP, BlockStateProperties.DOWN, BlockStateProperties.NORTH, BlockStateProperties.SOUTH, BlockStateProperties.EAST, BlockStateProperties.WEST, BlockStateProperties.WATERLOGGED);
 	}
 
@@ -113,7 +111,7 @@ public class SteelPlateBlock extends Block {
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader level, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
 		return SHAPE_MAP.get(stateToShapeIndex(state));
 	}
 
@@ -144,14 +142,14 @@ public class SteelPlateBlock extends Block {
 	private static NonNullList<VoxelShape> generateShapeMap() {
 		VoxelShape[] shapeList = new VoxelShape[64];
 		VoxelShape[] definedShapes = new VoxelShape[] {
-				VoxelShapes.box(0, 15 / 16d, 0, 1, 1, 1),
-				VoxelShapes.box(0, 0, 0, 1, 1 / 16d, 1),
-				VoxelShapes.box(0, 0, 0, 1, 1, 1 / 16d),
-				VoxelShapes.box(0, 0, 15 / 16d, 1, 1, 1),
-				VoxelShapes.box(15 / 16d, 0, 0, 1, 1, 1),
-				VoxelShapes.box(0, 0, 0, 1 / 16d, 1, 1)};
+				Shapes.box(0, 15 / 16d, 0, 1, 1, 1),
+				Shapes.box(0, 0, 0, 1, 1 / 16d, 1),
+				Shapes.box(0, 0, 0, 1, 1, 1 / 16d),
+				Shapes.box(0, 0, 15 / 16d, 1, 1, 1),
+				Shapes.box(15 / 16d, 0, 0, 1, 1, 1),
+				Shapes.box(0, 0, 0, 1 / 16d, 1, 1)};
 
-		shapeList[0] = VoxelShapes.block();
+		shapeList[0] = Shapes.block();
 
 		for (int i = 1; i < 64; i++) {
 			int shapeIndex = 0;
@@ -162,9 +160,9 @@ public class SteelPlateBlock extends Block {
 					shapes[shapeIndex++] = definedShapes[j];
 			}
 
-			shapeList[i] = VoxelShapes.or(VoxelShapes.empty(), shapes);
+			shapeList[i] = Shapes.or(Shapes.empty(), shapes);
 		}
 
-		return NonNullList.of(VoxelShapes.empty(), shapeList);
+		return NonNullList.of(Shapes.empty(), shapeList);
 	}
 }

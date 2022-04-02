@@ -1,7 +1,7 @@
 package net.tslat.aoa3.event.custom.events;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;

@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.entity.ai.trader;
 
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 
-public class TraderFaceCustomerGoal extends LookAtGoal {
+public class TraderFaceCustomerGoal extends LookAtPlayerGoal {
 	private final AoATrader trader;
 
 	public TraderFaceCustomerGoal(AoATrader trader) {
-		super(trader, PlayerEntity.class, 8.0F);
+		super(trader, Player.class, 8.0F);
 
 		this.trader = trader;
 	}

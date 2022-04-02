@@ -1,27 +1,27 @@
 package net.tslat.aoa3.content.entity.misc;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.item.TNTEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
+import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.util.WorldUtil;
 
-public class FakeTntEntity extends TNTEntity {
+public class FakeTntEntity extends PrimedTnt {
 	private final Entity owner;
 
-	public FakeTntEntity(World world, BlockPos position, Entity owner) {
-		super(AoAEntities.Misc.FAKE_TNT.get(), world);
+	public FakeTntEntity(Level world, BlockPos position, Entity owner) {
+		super(AoAMiscEntities.FAKE_TNT.get(), world);
 
 		this.owner = owner;
 
 		moveTo(position.getX(), position.getY(), position.getZ(), random.nextFloat() * 360.0f, 0.0f);
 	}
 
-	public FakeTntEntity(EntityType<? extends TNTEntity> entityType, World world) {
+	public FakeTntEntity(EntityType<? extends PrimedTnt> entityType, Level world) {
 		super(entityType, world);
 
 		this.owner = null;
@@ -37,7 +37,7 @@ public class FakeTntEntity extends TNTEntity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

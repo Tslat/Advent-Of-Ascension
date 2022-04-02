@@ -1,6 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.cannon;
 
-import net.minecraft.util.SoundEvent;
+import net.minecraft.sounds.SoundEvent;
 import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;

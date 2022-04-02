@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.item.tool.axe;
 
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.IItemTier;
-import net.minecraft.item.Item;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Tier;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 
 public class BaseAxe extends AxeItem {
-	public BaseAxe(IItemTier stats) {
+	public BaseAxe(Tier stats) {
 		this(stats, new Properties().durability(stats.getUses()).tab(AoAItemGroups.TOOLS));
 	}
 
-	public BaseAxe(IItemTier stats, Item.Properties properties) {
+	public BaseAxe(Tier stats, Item.Properties properties) {
 		super(stats, 1.5F, -3F, properties);
 	}
 }

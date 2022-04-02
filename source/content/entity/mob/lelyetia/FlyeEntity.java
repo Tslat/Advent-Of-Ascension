@@ -1,24 +1,24 @@
 package net.tslat.aoa3.content.entity.mob.lelyetia;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.*;
@@ -26,15 +26,15 @@ import net.tslat.aoa3.util.*;
 import javax.annotation.Nullable;
 
 public class FlyeEntity extends AoAFlyingMeleeMob {
-	private static final DataParameter<BlockPos> ALTAR_POS = EntityDataManager.<BlockPos>defineId(FlyeEntity.class, DataSerializers.BLOCK_POS);
+	private static final EntityDataAccessor<BlockPos> ALTAR_POS = SynchedEntityData.<BlockPos>defineId(FlyeEntity.class, EntityDataSerializers.BLOCK_POS);
 	private BlockPos altarPos = null;
 
-	public FlyeEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public FlyeEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public FlyeEntity(World world, BlockPos altarPos) {
-		this(AoAEntities.Mobs.FLYE.get(), world);
+	public FlyeEntity(Level world, BlockPos altarPos) {
+		this(AoAMobs.FLYE.get(), world);
 
 		this.entityData.set(ALTAR_POS, altarPos);
 
@@ -46,7 +46,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 		while (world.getBlockState(spawnPos).getMaterial().blocksMotion());
 
 		setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-		EntityUtil.applyPotions(this, new EffectBuilder(Effects.GLOWING, PotionUtil.MAX_POTION_DURATION).isAmbient().hideParticles());
+		EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.GLOWING, PotionUtil.MAX_POTION_DURATION).isAmbient().hideParticles());
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.375f;
 	}
 
@@ -80,7 +80,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	public void onSyncedDataUpdated(DataParameter<?> key) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
 
 		if (key == ALTAR_POS) {
@@ -92,7 +92,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
 		if (altarPos != null)
@@ -100,7 +100,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (compound.contains("GrawAltarPos"))
@@ -138,8 +138,8 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			if (WorldUtil.isWorld(level, AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof PlayerEntity) {
-				PlayerEntity pl = (PlayerEntity)cause.getEntity();
+			if (WorldUtil.isWorld(level, AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof Player) {
+				Player pl = (Player)cause.getEntity();
 
 				if (pl.getY() >= 120 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.HAVEN_REALMSTONE.get()));

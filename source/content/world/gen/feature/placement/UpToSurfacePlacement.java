@@ -1,7 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.WorldDecoratingHelper;
 import net.minecraft.world.gen.placement.HeightmapBasedPlacement;
@@ -32,3 +33,4 @@ public class UpToSurfacePlacement extends HeightmapBasedPlacement<IntRangeConfig
 		return Stream.of(new BlockPos(x, y, z));
 	}
 }
+*/

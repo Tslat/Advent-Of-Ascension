@@ -1,17 +1,17 @@
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.tslat.aoa3.common.registration.AoATags;
@@ -28,7 +28,7 @@ public class ExtractionSkill extends AoASkill.Instance {
 		super(AoASkills.EXTRACTION.get(), plData, jsonData);
 	}
 
-	public ExtractionSkill(CompoundNBT nbtData) {
+	public ExtractionSkill(CompoundTag nbtData) {
 		super(AoASkills.EXTRACTION.get(), nbtData);
 	}
 
@@ -42,24 +42,24 @@ public class ExtractionSkill extends AoASkill.Instance {
 		if (!canGainXp(true))
 			return;
 
-		BlockState state = context.getParamOrNull(LootParameters.BLOCK_STATE);
+		BlockState state = context.getParamOrNull(LootContextParams.BLOCK_STATE);
 
 		if (state == null)
 			return;
 
-		Vector3d origin = context.getParamOrNull(LootParameters.ORIGIN);
+		Vec3 origin = context.getParamOrNull(LootContextParams.ORIGIN);
 
 		if (origin == null)
 			return;
 
-		ServerWorld world = context.getLevel();
+		ServerLevel world = context.getLevel();
 		BlockPos pos = new BlockPos(origin);
 		Block block = state.getBlock();
 
 		if (!Block.isShapeFullBlock(state.getCollisionShape(context.getLevel(), pos)))
 			return;
 
-		if (!isApplicableBlock(block))
+		if (!isApplicableBlock(state))
 			return;
 
 		float hardness = state.getDestroySpeed(world, pos);
@@ -84,18 +84,19 @@ public class ExtractionSkill extends AoASkill.Instance {
 		if (ev.getPlayer().level.isClientSide())
 			return;
 
-		Item item = ev.getSmelting().getItem();
+		ItemStack smelting = ev.getSmelting();
+		Item item = smelting.getItem();
 
 		if (item.getFoodProperties() == null && canGainXp(true)) {
 			float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 40);
 
-			if (item.is(Tags.Items.NUGGETS)) {
+			if (smelting.is(Tags.Items.NUGGETS)) {
 				xp *= 1.5f;
 			}
-			else if (item.is(Tags.Items.INGOTS)) {
+			else if (smelting.is(Tags.Items.INGOTS)) {
 				xp *= 2f;
 			}
-			else if (item.is(Tags.Items.GEMS)) {
+			else if (smelting.is(Tags.Items.GEMS)) {
 				xp *= 2.5f;
 			}
 
@@ -103,14 +104,14 @@ public class ExtractionSkill extends AoASkill.Instance {
 		}
 	}
 
-	public static boolean isApplicableBlock(Block block) {
+	public static boolean isApplicableBlock(BlockState block) {
 		return block.is(Tags.Blocks.STONE) ||
 				block.is(Tags.Blocks.COBBLESTONE) ||
 				block.is(Tags.Blocks.ORES) ||
 				block.is(BlockTags.LOGS) ||
 				block.is(Tags.Blocks.SAND) ||
 				block.is(AoATags.Blocks.GRASS) ||
-				block.is(Tags.Blocks.DIRT) ||
+				block.is(BlockTags.DIRT) ||
 				block.is(Tags.Blocks.GRAVEL) ||
 				block.is(Tags.Blocks.NETHERRACK) ||
 				block.is(Tags.Blocks.OBSIDIAN);

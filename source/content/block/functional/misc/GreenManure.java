@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.block.functional.misc;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.FarmlandBlock;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.block.functional.plant.CropBlock;
 import net.tslat.aoa3.util.BlockUtil;
 
@@ -31,17 +31,17 @@ public class GreenManure extends CropBlock {
 	}
 
 	@Override
-	public void destroy(IWorld world, BlockPos pos, BlockState state) {
+	public void destroy(LevelAccessor world, BlockPos pos, BlockState state) {
 		if (getAge(state) >= getMaxAge()) {
 			BlockState groundState = world.getBlockState(pos.below());
 
-			if (groundState.getBlock() instanceof FarmlandBlock)
-				world.setBlock(pos.below(), AoABlocks.FERTILISED_FARMLAND.get().defaultBlockState().setValue(FertilisedFarmland.WELL_FERTILISED, true).setValue(FarmlandBlock.MOISTURE, groundState.getValue(FarmlandBlock.MOISTURE)), Constants.BlockFlags.DEFAULT);
+			if (groundState.getBlock() instanceof FarmBlock)
+				world.setBlock(pos.below(), AoABlocks.FERTILISED_FARMLAND.get().defaultBlockState().setValue(FertilisedFarmland.WELL_FERTILISED, true).setValue(FarmBlock.MOISTURE, groundState.getValue(FarmBlock.MOISTURE)), Block.UPDATE_ALL);
 		}
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return SHAPES[state.getValue(AGE)];
 	}
 }

@@ -1,23 +1,24 @@
 package net.tslat.aoa3.content.block.tileentity;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.tileentity.ITickableTileEntity;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.INameable;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.Nameable;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.common.registration.AoABlockEntities;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoATileEntities;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
 
-public class TrophyTileEntity extends TileEntity implements ITickableTileEntity, INameable {
+public class TrophyTileEntity extends BlockEntity implements Nameable {
 	@Nullable
 	private Entity cachedEntity = null;
 	@Nullable
@@ -30,8 +31,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	private float prevMobRotation;
 	public double hoverStep;
 
-	public TrophyTileEntity() {
-		super(AoATileEntities.TROPHY.get());
+	public TrophyTileEntity(BlockPos pos, BlockState state) {
+		super(AoABlockEntities.TROPHY.get(), pos, state);
 	}
 
 	public void setEntity(String entityId, boolean isEgg) {
@@ -40,13 +41,12 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 		this.isOriginal = !isEgg;
 	}
 
-	@Override
-	public void tick() {
-		prevMobRotation = mobRotation;
-		mobRotation = (mobRotation + 0.05f) % 360;
+	public static void doClientTick(Level level, BlockPos pos, BlockState state, TrophyTileEntity blockEntity) {
+		blockEntity.prevMobRotation = blockEntity.mobRotation;
+		blockEntity.mobRotation = (blockEntity.mobRotation + 0.05f) % 360;
 
-		if (trophyBlock == null && level != null)
-			trophyBlock = level.getBlockState(getBlockPos()).getBlock();
+		if (blockEntity.trophyBlock == null && level != null)
+			blockEntity.trophyBlock = level.getBlockState(pos).getBlock();
 	}
 
 	public float getMobRotation() {
@@ -66,8 +66,8 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	}
 
 	@Override
-	public CompoundNBT getUpdateTag() {
-		CompoundNBT tag = super.getUpdateTag();
+	public CompoundTag getUpdateTag() {
+		CompoundTag tag = super.getUpdateTag();
 
 		if (entityId != null) {
 			tag.putString("EntityID", entityId);
@@ -78,30 +78,26 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	}
 
 	@Override
-	public void handleUpdateTag(BlockState state, CompoundNBT tag) {
-		super.handleUpdateTag(state, tag);
+	public void handleUpdateTag(CompoundTag tag) {
+		super.handleUpdateTag(tag);
 
-		if (tag.contains("EntityID", Constants.NBT.TAG_STRING)) {
+		if (tag.contains("EntityID", Tag.TAG_STRING)) {
 			entityId = tag.getString("EntityID");
 			isOriginal = tag.getBoolean("OriginalTrophy");
 		}
 	}
 
 	@Override
-	public CompoundNBT save(CompoundNBT compound) {
-		super.save(compound);
-
+	protected void saveAdditional(CompoundTag compound) {
 		if (entityId != null) {
 			compound.putString("EntityID", entityId);
 			compound.putBoolean("OriginalTrophy", isOriginal);
 		}
-
-		return compound;
 	}
 
 	@Override
-	public void load(BlockState state, CompoundNBT compound) {
-		super.load(state, compound);
+	public void load(CompoundTag compound) {
+		super.load(compound);
 
 		if (compound.contains("EntityID")) {
 			entityId = compound.getString("EntityID");
@@ -112,14 +108,14 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	@Nullable
 	public Entity getCachedEntity() {
 		if (this.cachedEntity == null && entityId != null) {
-			CompoundNBT entityNBT = new CompoundNBT();
+			CompoundTag entityNBT = new CompoundTag();
 
 			entityNBT.putString("id", entityId);
 
 			cachedEntity = EntityType.loadEntityRecursive(entityNBT, getLevel(), Function.identity());
 
 			if (cachedEntity == null) {
-				entityNBT = new CompoundNBT();
+				entityNBT = new CompoundTag();
 				entityId = "minecraft:end_crystal";
 
 				entityNBT.putString("id", entityId);
@@ -135,7 +131,7 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 	}
 
 	@Override
-	public ITextComponent getName() {
+	public Component getName() {
 		if (trophyBlock == null || entityId == null)
 			return LocaleUtil.getLocaleMessage("block.aoa3.trophy");
 
@@ -161,7 +157,7 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 
 	@Nullable
 	@Override
-	public ITextComponent getCustomName() {
+	public Component getCustomName() {
 		return getName();
 	}
 }

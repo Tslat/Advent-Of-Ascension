@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -23,12 +23,12 @@ import java.util.UUID;
 public class ChomperEntity extends AoAMeleeMob {
 	private static final AttributeModifier BLOODTHIRSTY_BUFF = new AttributeModifier(UUID.fromString("2803f9b4-57ed-471f-8a0e-7a41fa100608"), "AoABloodthirstyBuff", 1.05, AttributeModifier.Operation.MULTIPLY_BASE);
 
-	public ChomperEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public ChomperEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.75f;
 	}
 
@@ -69,7 +69,7 @@ public class ChomperEntity extends AoAMeleeMob {
 	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity)
-			((LivingEntity)target).addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 20, 2, true, true));
+			((LivingEntity)target).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2, true, true));
 	}
 
 	@Override

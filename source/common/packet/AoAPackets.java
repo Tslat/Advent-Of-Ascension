@@ -1,12 +1,12 @@
 package net.tslat.aoa3.common.packet;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.packets.*;
 
@@ -41,14 +41,14 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, AoASoundBuilderPacket.class, AoASoundBuilderPacket::encode, AoASoundBuilderPacket::decode, AoASoundBuilderPacket::receiveMessage);
 	}
 
-	public static void messageNearbyPlayers(AoAPacket packet, ServerWorld world, Vector3d origin, double radius) {
-		for (ServerPlayerEntity player : world.players()) {
+	public static void messageNearbyPlayers(AoAPacket packet, ServerLevel world, Vec3 origin, double radius) {
+		for (ServerPlayer player : world.players()) {
 			if (player.distanceToSqr(origin.x(), origin.y(), origin.z()) < radius * radius)
 				messagePlayer(player, packet);
 		}
 	}
 
-	public static void messagePlayer(ServerPlayerEntity player, AoAPacket packet) {
+	public static void messagePlayer(ServerPlayer player, AoAPacket packet) {
 		if (player.connection != null)
 			INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
 	}

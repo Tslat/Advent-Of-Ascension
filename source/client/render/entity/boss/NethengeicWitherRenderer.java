@@ -1,12 +1,13 @@
+/*
 package net.tslat.aoa3.client.render.entity.boss;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.boss.NethengeicWitherModel;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.content.entity.boss.NethengeicWitherEntity;
 
 import javax.annotation.Nullable;
@@ -16,12 +17,12 @@ public class NethengeicWitherRenderer extends MobRenderer<NethengeicWitherEntity
 	private static final ResourceLocation ENRAGED_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/nethengeicwither/nethengeic_wither_enraged.png");
 	private static final ResourceLocation CATACLYSMIC_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/nethengeicwither/nethengeic_wither_cataclysmic.png");
 
-	public NethengeicWitherRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new NethengeicWitherModel(), AoAEntities.Mobs.NETHENGEIC_WITHER.get().getWidth() / 3);
+	public NethengeicWitherRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new NethengeicWitherModel(), AoAMobs.NETHENGEIC_WITHER.get().getWidth() / 3);
 	}
 
 	@Override
-	protected void scale(NethengeicWitherEntity nethengeicWither, MatrixStack matrix, float partialTicks) {
+	protected void scale(NethengeicWitherEntity nethengeicWither, PoseStack matrix, float partialTicks) {
 		matrix.scale(1.5f, 1.5f, 1.5f);
 	}
 
@@ -38,4 +39,4 @@ public class NethengeicWitherRenderer extends MobRenderer<NethengeicWitherEntity
 				return CATACLYSMIC_TEXTURE;
 		}
 	}
-}
+}*/

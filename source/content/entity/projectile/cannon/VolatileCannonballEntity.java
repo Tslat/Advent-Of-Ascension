@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -15,21 +15,21 @@ import net.tslat.aoa3.util.WorldUtil;
 public class VolatileCannonballEntity extends BaseBullet implements HardProjectile {
 	private LivingEntity shooter;
 
-	public VolatileCannonballEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public VolatileCannonballEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public VolatileCannonballEntity(World world) {
-		super(AoAEntities.Projectiles.VOLATILE_CANNONBALL.get(), world);
+	public VolatileCannonballEntity(Level world) {
+		super(AoAProjectiles.VOLATILE_CANNONBALL.get(), world);
 	}
 
-	public VolatileCannonballEntity(LivingEntity shooter, BaseGun gun, Hand hand, int maxAge, int piercingValue) {
-		super(AoAEntities.Projectiles.VOLATILE_CANNONBALL.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
+	public VolatileCannonballEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
+		super(AoAProjectiles.VOLATILE_CANNONBALL.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
 		this.shooter = shooter;
 	}
 
-	public VolatileCannonballEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.VOLATILE_CANNONBALL.get(), world, x, y, z);
+	public VolatileCannonballEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.VOLATILE_CANNONBALL.get(), world, x, y, z);
 	}
 
 	@Override

@@ -1,18 +1,18 @@
 package net.tslat.aoa3.content.entity.ai.mob;
 
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.controller.MovementController;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 import java.util.EnumSet;
 import java.util.Random;
 
 public class RandomFlyingGoal extends Goal {
-	private final MobEntity taskOwner;
+	private final Mob taskOwner;
 	private final boolean maintainTarget;
 
-	public RandomFlyingGoal(MobEntity creature, boolean maintainTarget) {
+	public RandomFlyingGoal(Mob creature, boolean maintainTarget) {
 		this.taskOwner = creature;
 		this.maintainTarget = maintainTarget;
 
@@ -21,7 +21,7 @@ public class RandomFlyingGoal extends Goal {
 
 	@Override
 	public boolean canUse() {
-		MovementController moveHelper = this.taskOwner.getMoveControl();
+		MoveControl moveHelper = this.taskOwner.getMoveControl();
 
 		if (!moveHelper.hasWanted()) {
 			return true;
@@ -29,7 +29,7 @@ public class RandomFlyingGoal extends Goal {
 		else if (maintainTarget && taskOwner.getTarget() != null) {
 			return false;
 		}
-		else if (taskOwner.onGround) {
+		else if (taskOwner.isOnGround()) {
 			return true;
 		}
 		else {
@@ -50,7 +50,7 @@ public class RandomFlyingGoal extends Goal {
 	@Override
 	public void start() {
 		Random rand = this.taskOwner.getRandom();
-		float heightMod = (float)(taskOwner.getY() + 1) / (float)(taskOwner.level.getHeight(Heightmap.Type.MOTION_BLOCKING, (int)taskOwner.getX(), (int)taskOwner.getZ()) + 10);
+		float heightMod = (float)(taskOwner.getY() + 1) / (float)(taskOwner.level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)taskOwner.getX(), (int)taskOwner.getZ()) + 10);
 		double targetX = this.taskOwner.getX() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
 		double targetY = this.taskOwner.getY() + (double)((rand.nextFloat() * 2.0F - heightMod) * 16.0F);
 		double targetZ = this.taskOwner.getZ() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);

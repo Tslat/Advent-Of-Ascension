@@ -4,11 +4,11 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Locale;
@@ -33,8 +33,8 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 		return CODEC;
 	}
 
-	public static class Data implements IParticleData {
-		public final ParticleType<CustomisableParticleType.Data> particleType;
+	public static class Data implements ParticleOptions {
+		public final ParticleType<Data> particleType;
 
 		public final float scale;
 		public final float ageModifier;
@@ -43,15 +43,15 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 		public final float blue;
 		public final float alpha;
 
-		public Data(ParticleType<CustomisableParticleType.Data> particleType, int colour) {
+		public Data(ParticleType<Data> particleType, int colour) {
 			this(particleType, 1, 1, colour);
 		}
 
-		public Data(ParticleType<CustomisableParticleType.Data> particleType, float scale, float ageModifier, int colour) {
+		public Data(ParticleType<Data> particleType, float scale, float ageModifier, int colour) {
 			this(particleType, scale, ageModifier, (colour >> 16) / 255.0f, ((colour >> 8) & 0xff) / 255.0f, (colour & 0xff) / 255.0f, (colour >> 24) / 255.0f);
 		}
 
-		public Data(ParticleType<CustomisableParticleType.Data> particleType, float scale, float ageModifier, float red, float green, float blue, float alpha) {
+		public Data(ParticleType<Data> particleType, float scale, float ageModifier, float red, float green, float blue, float alpha) {
 			this.scale = scale;
 			this.ageModifier = ageModifier;
 			this.particleType = particleType;
@@ -67,7 +67,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 		}
 
 		@Override
-		public void writeToNetwork(PacketBuffer buffer) {
+		public void writeToNetwork(FriendlyByteBuf buffer) {
 			buffer.writeFloat(scale);
 			buffer.writeFloat(ageModifier);
 			buffer.writeFloat(red);
@@ -81,7 +81,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getKey(getType()), scale, ageModifier, red, green, blue, alpha);
 		}
 
-		public static final IParticleData.IDeserializer<Data> DESERIALIZER = new IParticleData.IDeserializer<Data>() {
+		public static final ParticleOptions.Deserializer<Data> DESERIALIZER = new ParticleOptions.Deserializer<Data>() {
 			public Data fromCommand(ParticleType<Data> particleType, StringReader reader) throws CommandSyntaxException {
 				reader.expect(' ');
 				float scale = (float)reader.readDouble();
@@ -99,7 +99,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 				return new Data(particleType, scale, ageMod, red, green, blue, alpha);
 			}
 
-			public Data fromNetwork(ParticleType<Data> particleType, PacketBuffer buffer) {
+			public Data fromNetwork(ParticleType<Data> particleType, FriendlyByteBuf buffer) {
 				return new Data(particleType, buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 			}
 		};

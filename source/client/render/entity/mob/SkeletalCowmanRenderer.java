@@ -1,26 +1,23 @@
+/*
 package net.tslat.aoa3.client.render.entity.mob;
 
-import net.minecraft.client.renderer.entity.BipedRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.layers.HeldItemLayer;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.common.registration.AoAEntities;
 
-@OnlyIn(Dist.CLIENT)
-public class SkeletalCowmanRenderer extends BipedRenderer<MonsterEntity, BipedModel<MonsterEntity>> {
+
+public class SkeletalCowmanRenderer extends HumanoidMobRenderer<Monster, HumanoidModel<Monster>> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/nether/skeletal_cowman.png");
 
-	public SkeletalCowmanRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new BipedModel<MonsterEntity>(0), AoAEntities.Mobs.SKELETAL_COWMAN.get().getWidth() / 3f);
-		addLayer(new HeldItemLayer<MonsterEntity, BipedModel<MonsterEntity>>(this));
+	public SkeletalCowmanRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new HumanoidModel<Monster>(0), AoAMobs.SKELETAL_COWMAN.get().getWidth() / 3f);
+		addLayer(new HeldItemLayer<Monster, HumanoidModel<Monster>>(this));
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(MonsterEntity entity) {
+	public ResourceLocation getTextureLocation(Monster entity) {
 		return texture;
 	}
-}
+}*/

@@ -1,10 +1,10 @@
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
-import net.minecraft.block.Block;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.block.StemGrownBlock;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.StemGrownBlock;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -19,7 +19,7 @@ public class FarmingSkill extends AoASkill.Instance {
 		super(AoASkills.FARMING.get(), plData, jsonData);
 	}
 
-	public FarmingSkill(CompoundNBT nbtData) {
+	public FarmingSkill(CompoundTag nbtData) {
 		super(AoASkills.FARMING.get(), nbtData);
 	}
 
@@ -34,8 +34,8 @@ public class FarmingSkill extends AoASkill.Instance {
 			Block block = ev.getState().getBlock();
 			int xpTime = 0;
 
-			if (block instanceof CropsBlock) {
-				xpTime = ((CropsBlock)block).isMaxAge(ev.getState()) ? 7 * ((CropsBlock)block).getMaxAge() : 0;
+			if (block instanceof CropBlock crop) {
+				xpTime = crop.isMaxAge(ev.getState()) ? 7 * crop.getMaxAge() : 0;
 			}
 			else if (block instanceof StemGrownBlock) {
 				xpTime = 12;

@@ -1,10 +1,10 @@
 package net.tslat.aoa3.content.entity.mob.mysterium;
 
-import net.minecraft.entity.*;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -13,12 +13,12 @@ import net.tslat.aoa3.util.EntityUtil;
 import javax.annotation.Nullable;
 
 public class FungatEntity extends AoAFlyingMeleeMob {
-	public FungatEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public FungatEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.59375f;
 	}
 
@@ -42,6 +42,6 @@ public class FungatEntity extends AoAFlyingMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new EffectBuilder(Effects.POISON, 60).level(2));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.POISON, 60).level(2));
 	}
 }

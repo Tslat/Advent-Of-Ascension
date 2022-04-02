@@ -1,35 +1,35 @@
 package net.tslat.aoa3.content.entity.mob.dustopia;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
 public class DustStriderEntity extends AoAMeleeMob {
-    public DustStriderEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public DustStriderEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     public DustStriderEntity(DustonEntity duston) {
-        this(AoAEntities.Mobs.DUST_STRIDER.get(), duston.level);
+        this(AoAMobs.DUST_STRIDER.get(), duston.level);
 
-        moveTo(duston.getX(), duston.getY() + 0.5, duston.getZ(), duston.yRot, duston.xRot);
+        moveTo(duston.getX(), duston.getY() + 0.5, duston.getZ(), duston.getYRot(), duston.getXRot());
         fallDistance = -10;
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 0.8125f;
     }
 
@@ -52,13 +52,13 @@ public class DustStriderEntity extends AoAMeleeMob {
     }
 
     @Override
-    public CreatureAttribute getMobType() {
-        return CreatureAttribute.ARTHROPOD;
+    public MobType getMobType() {
+        return MobType.ARTHROPOD;
     }
 
     @Override
     protected void onAttack(Entity target) {
-        if (target instanceof ServerPlayerEntity)
-            AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/darkness.png"), 60));
+        if (target instanceof ServerPlayer)
+            AoAPackets.messagePlayer((ServerPlayer)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/darkness.png"), 60));
     }
 }

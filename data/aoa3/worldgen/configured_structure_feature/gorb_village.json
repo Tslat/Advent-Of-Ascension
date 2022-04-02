@@ -1,8 +1,0 @@
-{
-  "config": {
-    "min": 5,
-    "max": 50,
-    "ignore_obstructions": true
-  },
-  "type": "aoa3:gorb_village"
-}

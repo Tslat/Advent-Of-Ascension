@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.entity.brain.sensor;
 
 import com.google.common.collect.ImmutableSet;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.tslat.aoa3.common.registration.AoABrainMemories;
 
 import java.util.Comparator;
@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public class IncomingProjectilesSensor extends Sensor<MobEntity> {
+public class IncomingProjectilesSensor extends Sensor<Mob> {
 	public IncomingProjectilesSensor() {
 		super(3);
 	}
 
 	@Override
-	protected void doTick(ServerWorld level, MobEntity owner) {
-		List<ProjectileEntity> projectiles = level.getEntitiesOfClass(ProjectileEntity.class, owner.getBoundingBox().inflate(7, 7, 7), projectile -> {
+	protected void doTick(ServerLevel level, Mob owner) {
+		List<Projectile> projectiles = level.getEntitiesOfClass(Projectile.class, owner.getBoundingBox().inflate(7, 7, 7), projectile -> {
 			if (projectile.isOnGround() || projectile.horizontalCollision || projectile.verticalCollision)
 				return false;
 

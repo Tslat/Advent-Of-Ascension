@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.entity.mob.overworld.bigday;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -17,12 +17,12 @@ import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public class StoneGiantEntity extends AoAMeleeMob {
-	public StoneGiantEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public StoneGiantEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 4.34375f;
 	}
 
@@ -61,7 +61,7 @@ public class StoneGiantEntity extends AoAMeleeMob {
 		if (target instanceof LivingEntity)
 			DamageUtil.doBodySlamKnockback((LivingEntity)target, this, 21f, 1.6f, 21f);
 
-		EntityUtil.applyPotions(target, new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 50));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 50));
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.util.AoAHaloUtil;
 import org.apache.logging.log4j.Level;
@@ -28,7 +28,7 @@ public class PlayerHaloDataPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeInt(mapSize);
 
 		for (Map.Entry<UUID, AoAHaloUtil.PlayerHaloContainer> entry : halosMap.entrySet()) {
@@ -37,7 +37,7 @@ public class PlayerHaloDataPacket implements AoAPacket {
 		}
 	}
 
-	public static PlayerHaloDataPacket decode(PacketBuffer buffer) {
+	public static PlayerHaloDataPacket decode(FriendlyByteBuf buffer) {
 		int mapSize = buffer.readInt();
 		HashMap<UUID, AoAHaloUtil.PlayerHaloContainer> halosMap = new HashMap<UUID, AoAHaloUtil.PlayerHaloContainer>();
 

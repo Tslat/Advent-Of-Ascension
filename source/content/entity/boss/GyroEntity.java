@@ -1,20 +1,17 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.FlyingRangedAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
@@ -31,26 +28,26 @@ public class GyroEntity extends AoAFlyingRangedMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public GyroEntity(GyrocopterEntity copter) {
-		this(AoAEntities.Mobs.GYRO.get(), copter.level);
+		this(AoAMobs.GYRO.get(), copter.level);
 
-		moveTo(copter.getX(), copter.getY(), copter.getZ(), copter.yRot, copter.xRot);
+		moveTo(copter.getX(), copter.getY(), copter.getZ(), copter.getYRot(), copter.getXRot());
 	}
 
-	public GyroEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public GyroEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.40625f;
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
-		goalSelector.addGoal(2, new LookRandomlyGoal(this));
+		goalSelector.addGoal(2, new RandomLookAroundGoal(this));
 		goalSelector.addGoal(3, new FlyingRangedAttackGoal(this, 10, 20));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 10, true, true, pl -> pl instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)pl)));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, true, pl -> pl instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)pl)));
 	}
 
 	@Nullable
@@ -104,10 +101,10 @@ public class GyroEntity extends AoAFlyingRangedMob {
 		super.die(cause);
 
 		if (!level.isClientSide && !isNoAi()) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.GYRO.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.GYRO.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -117,7 +114,7 @@ public class GyroEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -125,14 +122,14 @@ public class GyroEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.GYRO_MUSIC.getId()));
@@ -140,7 +137,7 @@ public class GyroEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.GYRO_MUSIC.getId()));
@@ -148,3 +145,4 @@ public class GyroEntity extends AoAFlyingRangedMob {
 	}
 
 }
+*/

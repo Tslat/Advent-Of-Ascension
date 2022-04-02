@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.block.generation.grass;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.lighting.LightEngine;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.lighting.LayerLightEngine;
+import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -21,26 +21,26 @@ public class WaterGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	public boolean canStayGrass(BlockState grassState, World world, BlockPos grassPos) {
+	public boolean canStayGrass(BlockState grassState, Level world, BlockPos grassPos) {
 		return hasSufficientLight(grassState, world, grassPos);
 	}
 
 	@Override
-	public boolean hasSufficientLight(BlockState grassState, World world, BlockPos grassPos) {
+	public boolean hasSufficientLight(BlockState grassState, Level world, BlockPos grassPos) {
 		BlockPos topPos = grassPos.above();
 		BlockState topBlock = world.getBlockState(topPos);
 
-		if (topBlock.getBlock() == Blocks.SNOW && topBlock.getValue(SnowBlock.LAYERS) == 1)
+		if (topBlock.getBlock() == Blocks.SNOW && topBlock.getValue(SnowLayerBlock.LAYERS) == 1)
 			return true;
 
 		if (topBlock.getFluidState().getAmount() == 8)
 			return true;
 
-		return LightEngine.getLightBlockInto(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getLightBlock(world, topPos)) < world.getMaxLightLevel();
+		return LayerLightEngine.getLightBlockInto(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getLightBlock(world, topPos)) < world.getMaxLightLevel();
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
 		if (!couldBeSnowy(state, world, pos)) {
 			if (!world.isAreaLoaded(pos, 3))
 				return;
@@ -62,18 +62,18 @@ public class WaterGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	protected boolean couldBeSnowy(BlockState state, IWorldReader worldReader, BlockPos pos) {
+	protected boolean couldBeSnowy(BlockState state, LevelAccessor worldReader, BlockPos pos) {
 		BlockPos upPos = pos.above();
 		BlockState topBlock = worldReader.getBlockState(upPos);
 
-		if (topBlock.is(Blocks.SNOW) && topBlock.getValue(SnowBlock.LAYERS) == 1) {
+		if (topBlock.is(Blocks.SNOW) && topBlock.getValue(SnowLayerBlock.LAYERS) == 1) {
 			return true;
 		}
 		else if (topBlock.getFluidState().getAmount() == 8) {
 			return true;
 		}
 		else {
-			int i = LightEngine.getLightBlockInto(worldReader, state, pos, topBlock, upPos, Direction.UP, topBlock.getLightBlock(worldReader, upPos));
+			int i = LayerLightEngine.getLightBlockInto(worldReader, state, pos, topBlock, upPos, Direction.UP, topBlock.getLightBlock(worldReader, upPos));
 
 			return i < worldReader.getMaxLightLevel();
 		}

@@ -1,39 +1,39 @@
 package net.tslat.aoa3.content.block.decoration.banner;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
 
-import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
-public class BannerExtension extends Block implements IWaterLoggable {
+public class BannerExtension extends Block implements SimpleWaterloggedBlock {
 	public BannerExtension() {
 		super(new BlockUtil.CompactProperties(Material.DECORATION, MaterialColor.METAL).stats(0.5f, 1f).sound(SoundType.WOOL).noClip().noOcclusion().get());
 
-		registerDefaultState(defaultBlockState().setValue(BannerBlock.TYPE, BannerBlock.BannerType.MOUNTED).setValue(HorizontalBlock.FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+		registerDefaultState(defaultBlockState().setValue(BannerBlock.TYPE, BannerBlock.BannerType.MOUNTED).setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}
 
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		BlockPos bannerPos = state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED ? pos.above() : pos.below();
 		BlockState banner = world.getBlockState(bannerPos);
 
@@ -47,14 +47,14 @@ public class BannerExtension extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
+	public int getLightEmission(BlockState state, BlockGetter world, BlockPos pos) {
 		BlockState banner;
 
-		return state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED ? (banner = world.getBlockState(pos.above())).getBlock().getLightValue(banner, world, pos.above()) : (banner = world.getBlockState(pos.below())).getBlock().getLightValue(banner, world, pos.below());
+		return state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED ? (banner = world.getBlockState(pos.above())).getBlock().getLightEmission(banner, world, pos.above()) : (banner = world.getBlockState(pos.below())).getBlock().getLightEmission(banner, world, pos.below());
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 		if (state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED) {
 			if (!(world.getBlockState(pos.above()).getBlock() instanceof BannerBlock))
 				world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
@@ -66,12 +66,12 @@ public class BannerExtension extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		return world.getBlockState(pos.above()).getBlock() instanceof BannerBlock || world.getBlockState(pos.below()).getBlock() instanceof BannerBlock;
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		if (state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED) {
 			return world.getBlockState(pos.above()).getShape(world, pos.below());
 		}
@@ -81,46 +81,46 @@ public class BannerExtension extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
 		return 1;
 	}
 
 	@Override
-	public BlockRenderType getRenderShape(BlockState state) {
-		return BlockRenderType.INVISIBLE;
+	public RenderShape getRenderShape(BlockState state) {
+		return RenderShape.INVISIBLE;
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(BannerBlock.TYPE, HorizontalBlock.FACING, WATERLOGGED);
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(BannerBlock.TYPE, HorizontalDirectionalBlock.FACING, WATERLOGGED);
 	}
 
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		return defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return defaultBlockState().setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
 	}
 
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.getValue(BlockStateProperties.WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
-		if (state.getValue(BlockStateProperties.WATERLOGGED))
-			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
+		if (state.getValue(WATERLOGGED))
+			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 
 		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
 	}
 
 	@Override
-	public ItemStack getPickBlock(BlockState state, RayTraceResult target, IBlockReader world, BlockPos pos, PlayerEntity player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
 		if (state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED) {
 			BlockPos bannerPos = pos.below();
 			BlockState banner = world.getBlockState(bannerPos);

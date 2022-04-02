@@ -1,7 +1,0 @@
-{
-  "config": {
-    "min": 35,
-    "max": 35
-  },
-  "type": "aoa3:charging_station"
-}

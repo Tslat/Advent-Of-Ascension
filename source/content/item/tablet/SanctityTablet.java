@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.item.tablet;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.entity.tablet.SanctityTabletEntity;
 import net.tslat.aoa3.content.entity.tablet.SoulTabletEntity;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -19,12 +19,12 @@ public class SanctityTablet extends TabletItem {
 	}
 
 	@Override
-	protected SoulTabletEntity getTabletEntity(World world, ServerPlayerEntity placer) {
-		return new SanctityTabletEntity(AoAEntities.Misc.SANCTITY_TABLET.get(), world, placer);
+	protected SoulTabletEntity getTabletEntity(Level world, ServerPlayer placer) {
+		return new SanctityTabletEntity(AoAMiscEntities.SANCTITY_TABLET.get(), world, placer);
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}

@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.entity.mob.lborean;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
@@ -19,12 +19,12 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 
 public class SeaViperEntity extends AoAWaterMeleeMob {
-	public SeaViperEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
+	public SeaViperEntity(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.40625f;
 	}
 
@@ -48,7 +48,7 @@ public class SeaViperEntity extends AoAWaterMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new EffectBuilder(Effects.POISON, 200));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.POISON, 200));
 	}
 
 	@Override

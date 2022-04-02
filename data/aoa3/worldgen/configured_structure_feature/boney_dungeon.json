@@ -1,8 +1,0 @@
-{
-  "config": {
-    "min": 40,
-    "max": 45,
-    "ignore_obstructions": true
-  },
-  "type": "aoa3:boney_dungeon"
-}

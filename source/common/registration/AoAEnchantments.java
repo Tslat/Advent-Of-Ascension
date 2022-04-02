@@ -1,13 +1,10 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.content.enchantment.*;
 import net.tslat.aoa3.content.item.weapon.blaster.BaseBlaster;
 import net.tslat.aoa3.content.item.weapon.cannon.BaseCannon;
@@ -21,19 +18,19 @@ import net.tslat.aoa3.content.item.weapon.staff.BaseStaff;
 import java.util.function.Supplier;
 
 public final class AoAEnchantments {
-	public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, AdventOfAscension.MOD_ID);
+	public static void init() {}
 
-	public static final EnchantmentType GUN = EnchantmentType.create("GUN", item -> item instanceof BaseGun);
-	public static final EnchantmentType GREATBLADE = EnchantmentType.create("GREATBLADE", item -> item instanceof BaseGreatblade);
-	public static final EnchantmentType SHOTGUN = EnchantmentType.create("SHOTGUN", item -> item instanceof BaseShotgun);
-	public static final EnchantmentType MAUL = EnchantmentType.create("MAUL", item -> item instanceof BaseMaul);
-	public static final EnchantmentType MELEE_WEAPON = EnchantmentType.create("MELEE_WEAPON", item -> item instanceof SwordItem || item instanceof BaseMaul);
-	public static final EnchantmentType STAFF = EnchantmentType.create("STAFF", item -> item instanceof BaseStaff);
-	public static final EnchantmentType AMMO_CONSUMING = EnchantmentType.create("AMMO_CONSUMING", item -> item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff);
-	public static final EnchantmentType BULLET_FIRING = EnchantmentType.create("BULLET_FIRING", item -> item instanceof BaseGun && !(item instanceof BaseCannon));
-	public static final EnchantmentType BLASTER = EnchantmentType.create("BLASTER", item -> item instanceof BaseBlaster);
-	public static final EnchantmentType UNSTACKABLE = EnchantmentType.create("UNSTACKABLE", item -> item != null && item.getItemStackLimit(new ItemStack(item)) == 0);
-	public static final EnchantmentType LIGHT_GUN = EnchantmentType.create("DUAL_WIELDABLE_GUN", item -> item instanceof BaseGun && !(item instanceof BaseSniper) && !(item instanceof BaseCannon));
+	public static final EnchantmentCategory GUN = EnchantmentCategory.create("GUN", item -> item instanceof BaseGun);
+	public static final EnchantmentCategory GREATBLADE = EnchantmentCategory.create("GREATBLADE", item -> item instanceof BaseGreatblade);
+	public static final EnchantmentCategory SHOTGUN = EnchantmentCategory.create("SHOTGUN", item -> item instanceof BaseShotgun);
+	public static final EnchantmentCategory MAUL = EnchantmentCategory.create("MAUL", item -> item instanceof BaseMaul);
+	public static final EnchantmentCategory MELEE_WEAPON = EnchantmentCategory.create("MELEE_WEAPON", item -> item instanceof SwordItem || item instanceof BaseMaul);
+	public static final EnchantmentCategory STAFF = EnchantmentCategory.create("STAFF", item -> item instanceof BaseStaff);
+	public static final EnchantmentCategory AMMO_CONSUMING = EnchantmentCategory.create("AMMO_CONSUMING", item -> item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff);
+	public static final EnchantmentCategory BULLET_FIRING = EnchantmentCategory.create("BULLET_FIRING", item -> item instanceof BaseGun && !(item instanceof BaseCannon));
+	public static final EnchantmentCategory BLASTER = EnchantmentCategory.create("BLASTER", item -> item instanceof BaseBlaster);
+	public static final EnchantmentCategory UNSTACKABLE = EnchantmentCategory.create("UNSTACKABLE", item -> item != null && item.getItemStackLimit(new ItemStack(item)) == 0);
+	public static final EnchantmentCategory LIGHT_GUN = EnchantmentCategory.create("DUAL_WIELDABLE_GUN", item -> item instanceof BaseGun && !(item instanceof BaseSniper) && !(item instanceof BaseCannon));
 
 	public static final RegistryObject<Enchantment> ARCHMAGE = registerEnchantment("archmage", ArchmageEnchantment::new);
 	public static final RegistryObject<Enchantment> BRACE = registerEnchantment("brace", BraceEnchantment::new);
@@ -46,6 +43,6 @@ public final class AoAEnchantments {
 	public static final RegistryObject<Enchantment> SHELL = registerEnchantment("shell", ShellEnchantment::new);
 
 	private static RegistryObject<Enchantment> registerEnchantment(String id, Supplier<Enchantment> enchantment) {
-		return ENCHANTMENTS.register(id, enchantment);
+		return AoARegistries.ENCHANTMENTS.register(id, enchantment);
 	}
 }

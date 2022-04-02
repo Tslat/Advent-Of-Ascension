@@ -1,12 +1,13 @@
 package net.tslat.aoa3.client.gui.hud;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.IngameGui;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.Util;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.common.MinecraftForge;
@@ -14,97 +15,97 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.*;
 
-import static net.minecraft.client.gui.AbstractGui.GUI_ICONS_LOCATION;
-import static net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.HEALTH;
-
 public class HealthStatusRenderer {
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, RenderGameOverlayEvent.Pre.class, HealthStatusRenderer::onHealthRender);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, RenderGameOverlayEvent.PreLayer.class, HealthStatusRenderer::onHealthRender);
 	}
 
-	private static void onHealthRender(RenderGameOverlayEvent.Pre ev) {
-		if (ev.getType() == RenderGameOverlayEvent.ElementType.HEALTH && !ev.isCanceled() && AoAConfig.CLIENT.renderNumericalHealth.get()) {
-			Minecraft mc = Minecraft.getInstance();
-			ClientPlayerEntity player = mc.player;
-			MatrixStack matrix = ev.getMatrixStack();
+	private static void onHealthRender(RenderGameOverlayEvent.PreLayer ev) {
+		if (ev.isCanceled() || ev.getOverlay() != ForgeIngameGui.PLAYER_HEALTH_ELEMENT || !AoAConfig.CLIENT.renderNumericalHealth.get())
+			return;
 
-			int left = (mc.getWindow().getGuiScaledWidth() / 2) - 91;
-			int top = mc.getWindow().getGuiScaledHeight() - ForgeIngameGui.left_height;
-			ForgeIngameGui.left_height += 10;
-			int healthColour;
+		Minecraft mc = Minecraft.getInstance();
 
-			float currentHealth = player.getHealth();
-			float maxHealth = player.getMaxHealth();
-			float absorption = player.getAbsorptionAmount();
+		if (!(mc.gui instanceof ForgeIngameGui gui) || mc.options.hideGui || !gui.shouldDrawSurvivalElements())
+			return;
 
-			if (absorption > 0)
-				left -= 22;
+		LocalPlayer player = mc.player;
+		PoseStack matrix = ev.getMatrixStack();
 
-			if (mc.player.hasEffect(Effects.POISON)) {
-				healthColour = ColourUtil.RGB(117, 113, 0);
-			}
-			else if (mc.player.hasEffect(Effects.WITHER)) {
-				healthColour = ColourUtil.RGB(28, 28, 28);
-			}
-			else {
-				healthColour = ColourUtil.RGB(252, 20, 0);
-			}
+		int left = (mc.getWindow().getGuiScaledWidth() / 2) - 91;
+		int top = mc.getWindow().getGuiScaledHeight() - gui.left_height;
+		gui.left_height += 10;
+		int healthColour;
 
-			ev.setCanceled(true);
-			mc.getProfiler().push("health");
-			RenderSystem.enableBlend();
-			matrix.pushPose();
-			matrix.translate(left + 22, top + 1, 0);
-			matrix.scale(0.9f, 0.9f, 1);
+		float currentHealth = player.getHealth();
+		float maxHealth = player.getMaxHealth();
+		float absorption = player.getAbsorptionAmount();
 
-			if (player.getHealth() > 0) {
-				renderHeart(matrix, mc, currentHealth, maxHealth, absorption, handleHealthState(player, mc.gui, currentHealth));
+		if (absorption > 0)
+			left -= 22;
 
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
-
-				if (absorption > 0) {
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, "-->", 68, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 88, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
-				}
-			}
-			else {
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), 24, 0, 1, ColourUtil.RGB(132, 0, 0), RenderUtil.StringRenderType.OUTLINED);
-			}
-
-			matrix.popPose();
-			RenderSystem.disableBlend();
-			mc.getProfiler().pop();
-			mc.textureManager.bind(GUI_ICONS_LOCATION);
-			MinecraftForge.EVENT_BUS.post(new RenderGameOverlayEvent.Post(matrix, ev, HEALTH));
+		if (mc.player.hasEffect(MobEffects.POISON)) {
+			healthColour = ColourUtil.RGB(117, 113, 0);
 		}
+		else if (mc.player.hasEffect(MobEffects.WITHER)) {
+			healthColour = ColourUtil.RGB(28, 28, 28);
+		}
+		else {
+			healthColour = ColourUtil.RGB(252, 20, 0);
+		}
+
+		gui.setupOverlayRenderState(true, false);
+		ev.setCanceled(true);
+
+		mc.getProfiler().push("health");
+		RenderSystem.enableBlend();
+		matrix.pushPose();
+		matrix.translate(left + 22, top + 1, 0);
+		matrix.scale(0.9f, 0.9f, 1);
+
+		if (player.getHealth() > 0) {
+			renderHeart(matrix, mc, currentHealth, maxHealth, absorption, handleHealthState(player, gui, (int)Math.ceil(currentHealth)));
+
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
+
+			if (absorption > 0) {
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, "-->", 68, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 88, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+			}
+		}
+		else {
+			RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), 24, 0, 1, ColourUtil.RGB(132, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+		}
+
+		matrix.popPose();
+		RenderSystem.disableBlend();
+		mc.getProfiler().pop();
+		MinecraftForge.EVENT_BUS.post(new RenderGameOverlayEvent.Post(matrix, ev, RenderGameOverlayEvent.ElementType.LAYER));
 	}
 
-	private static void renderHeart(MatrixStack matrix, Minecraft mc, float currentHealth, float maxHealth, float absorb, boolean flashing) {
+	private static void renderHeart(PoseStack matrix, Minecraft mc, float currentHealth, float maxHealth, float absorb, boolean flashing) {
 		int uvX = 16;
-		int uvY = 0;
+		int uvY = mc.level.getLevelData().isHardcore() ? 45 : 0;
 		int y = -1;
 
 		if (absorb <= 0) {
-			if (mc.player.hasEffect(Effects.POISON)) {
+			if (mc.player.hasEffect(MobEffects.POISON)) {
 				uvX += 36;
 			}
-			else if (mc.player.hasEffect(Effects.WITHER)) {
+			else if (mc.player.hasEffect(MobEffects.WITHER)) {
 				uvX += 72;
 			}
 		}
 
-		if (mc.level.getLevelData().isHardcore())
-			uvY = 45;
-
 		if (currentHealth <= maxHealth * 0.2f && RandomUtil.fiftyFifty())
 			y += 1;
 
-		if (mc.gui.tickCount % 25 == 0 && mc.player.hasEffect(Effects.REGENERATION))
+		if (mc.gui.tickCount % 25 == 0 && mc.player.hasEffect(MobEffects.REGENERATION))
 			y -= 2;
 
-		mc.textureManager.bind(GUI_ICONS_LOCATION);
+		RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
 
-		RenderUtil.renderCustomSizedTexture(matrix, 0, y, flashing ? 25 : 16, uvY, 9, 9, 256, 256);
+		RenderUtil.renderCustomSizedTexture(matrix, 0, y, Gui.HeartType.CONTAINER.getX(false, flashing), uvY, 9, 9, 256, 256);
 
 		if (flashing)
 			RenderUtil.renderCustomSizedTexture(matrix, 0, y, uvX + 54, uvY, 9, 9, 256, 256);
@@ -112,13 +113,16 @@ public class HealthStatusRenderer {
 		if (absorb > 0) {
 			RenderUtil.renderCustomSizedTexture(matrix, 0, y, uvX + 144, uvY, 9, 9, 256, 256);
 		}
+		else if (mc.player.isFullyFrozen()) {
+			RenderUtil.renderCustomSizedTexture(matrix, 0, y, uvX + 162, uvY, 9, 9, 256, 256);
+		}
 		else {
 			RenderUtil.renderCustomSizedTexture(matrix, 0, y, uvX + (currentHealth >= mc.player.getMaxHealth() ? 36 : 45), uvY, 9, 9, 256, 256);
 		}
 	}
 
-	private static boolean handleHealthState(ClientPlayerEntity player, IngameGui gui, float currentHealth) {
-		boolean shouldFlash = gui.healthBlinkTime > (long)gui.tickCount && (gui.healthBlinkTime - (long)gui.tickCount) / 3L %2L == 1L;
+	private static boolean handleHealthState(LocalPlayer player, ForgeIngameGui gui, float currentHealth) {
+		boolean shouldFlash = gui.healthBlinkTime > (long)gui.tickCount && (gui.healthBlinkTime - (long)gui.tickCount) / 3L % 2L == 1L;
 
 		if (currentHealth < gui.lastHealth && player.invulnerableTime > 0) {
 			gui.lastHealthTime = Util.getMillis();

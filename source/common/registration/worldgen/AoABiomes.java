@@ -1,13 +1,11 @@
 package net.tslat.aoa3.common.registration.worldgen;
 
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.world.gen.biomeprovider.FloatingIslandsBiomeProvider;
-import net.tslat.aoa3.content.world.gen.biomeprovider.LayeredBiomeProvider;
 
 public final class AoABiomes {
 	public static void postInit() {
@@ -40,13 +38,13 @@ public final class AoABiomes {
 	}
 
 	private static void applyBiomeTypes(String biomeId, BiomeDictionary.Type... types) {
-		RegistryKey<Biome> key = RegistryKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, biomeId));
+		ResourceKey<Biome> key = ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, biomeId));
 
 		BiomeDictionary.addTypes(key, types);
 	}
 
 	private static void registerBiomeProviders() {
-		Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(AdventOfAscension.MOD_ID, "layered"), LayeredBiomeProvider.CODEC);
-		Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(AdventOfAscension.MOD_ID, "floating_islands"), FloatingIslandsBiomeProvider.CODEC);
+		//Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(AdventOfAscension.MOD_ID, "layered"), LayeredBiomeProvider.CODEC);
+		//Registry.register(Registry.BIOME_SOURCE, new ResourceLocation(AdventOfAscension.MOD_ID, "floating_islands"), FloatingIslandsBiomeProvider.CODEC);
 	}
 }

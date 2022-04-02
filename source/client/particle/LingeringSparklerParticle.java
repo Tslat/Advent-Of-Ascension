@@ -1,15 +1,15 @@
 package net.tslat.aoa3.client.particle;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 import javax.annotation.Nullable;
 
-public class LingeringSparklerParticle extends SpriteTexturedParticle {
-	private final IAnimatedSprite sprite;
+public class LingeringSparklerParticle extends TextureSheetParticle {
+	private final SpriteSet sprite;
 
-	public LingeringSparklerParticle(ClientWorld world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, IAnimatedSprite sprite, float scale, float ageModifier, float red, float green, float blue, float alpha) {
+	public LingeringSparklerParticle(ClientLevel world, double posX, double posY, double posZ, double speedX, double speedY, double speedZ, SpriteSet sprite, float scale, float ageModifier, float red, float green, float blue, float alpha) {
 		super(world, posX, posY, posZ, speedX, speedY, speedZ);
 
 		this.sprite = sprite;
@@ -30,8 +30,8 @@ public class LingeringSparklerParticle extends SpriteTexturedParticle {
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() {
-		return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
 	}
 
 	@Override
@@ -56,16 +56,16 @@ public class LingeringSparklerParticle extends SpriteTexturedParticle {
 			remove();
 	}
 
-	public static class Factory implements IParticleFactory<CustomisableParticleType.Data> {
-		private final IAnimatedSprite sprite;
+	public static class Factory implements ParticleProvider<CustomisableParticleType.Data> {
+		private final SpriteSet sprite;
 
-		public Factory(IAnimatedSprite sprite) {
+		public Factory(SpriteSet sprite) {
 			this.sprite = sprite;
 		}
 
 		@Nullable
 		@Override
-		public Particle createParticle(CustomisableParticleType.Data data, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(CustomisableParticleType.Data data, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			return new LingeringSparklerParticle(world, x, y, z, velocityX, velocityY, velocityZ, sprite, data.scale, data.ageModifier, data.red, data.green, data.blue, data.alpha);
 		}
 	}

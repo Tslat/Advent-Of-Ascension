@@ -1,25 +1,20 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.JigsawBlock;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MutableBoundingBox;
-import net.minecraft.util.math.shapes.IBooleanFunction;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.util.registry.DynamicRegistries;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.jigsaw.*;
-import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
-import net.minecraft.world.gen.feature.template.Template;
-import net.minecraft.world.gen.feature.template.TemplateManager;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.JigsawBlock;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.structure.pools.JigsawJunction;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.advent.Logging;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.Level;
@@ -52,7 +47,7 @@ public class JigsawAssembler {
 	}
 
 	public static void preGenPieces(AbstractVillagePiece startPiece, JigsawAssembler assembler) {
-		assembler.placeQueue.addLast(new Entry(startPiece, new MutableObject<VoxelShape>(VoxelShapes.INFINITY), 0, 0));
+		assembler.placeQueue.addLast(new Entry(startPiece, new MutableObject<VoxelShape>(Shapes.INFINITY), 0, 0));
 
 		while(!assembler.placeQueue.isEmpty()) {
 			Entry entry = assembler.placeQueue.removeFirst();
@@ -117,7 +112,7 @@ public class JigsawAssembler {
 			boundingBoxTop = yMin;
 
 			if (boundsShape.getValue() == null)
-				boundsShape.setValue(VoxelShapes.create(AxisAlignedBB.of(pieceBounds)));
+				boundsShape.setValue(Shapes.create(AABB.of(pieceBounds)));
 		}
 		else {
 			freeBounds = templateFreeBounds;
@@ -136,7 +131,8 @@ public class JigsawAssembler {
 				break;
 
 			for(Rotation nextRotation : Rotation.getShuffled(this.random)) {
-				/*List<Template.BlockInfo> jigsawBlocks = nextTemplate.getShuffledJigsawBlocks(this.structureManager, BlockPos.ZERO, nextRotation, this.random);
+				*/
+/*List<Template.BlockInfo> jigsawBlocks = nextTemplate.getShuffledJigsawBlocks(this.structureManager, BlockPos.ZERO, nextRotation, this.random);
 				MutableBoundingBox templateBounds = nextTemplate.getBoundingBox(this.structureManager, BlockPos.ZERO, nextRotation);
 				int yExpansion = 0;
 
@@ -152,7 +148,8 @@ public class JigsawAssembler {
 
 						return Math.max(targetMaxSize, fallbackMaxSize);
 					}).max().orElse(0);
-				}*/
+				}*//*
+
 
 				for(Template.BlockInfo templateBlockInfo : nextTemplate.getShuffledJigsawBlocks(this.structureManager, BlockPos.ZERO, nextRotation, this.random)) {
 					if (JigsawBlock.canAttach(jigsawInfo, templateBlockInfo)) {
@@ -180,11 +177,13 @@ public class JigsawAssembler {
 						MutableBoundingBox jigsawOffsetBounds = posBoundingBox.moved(0, jigsawOffsetRelative, 0);
 						BlockPos jigsawOffsetPos = templateRelativeBlockInfoPos.offset(0, jigsawOffsetRelative, 0);
 
-						/*if (yExpansion > 0)
-							jigsawOffsetBounds.y1 = jigsawOffsetBounds.y0 + Math.max(yExpansion + 1, jigsawOffsetBounds.y1 - jigsawOffsetBounds.y0);*/
+						*/
+/*if (yExpansion > 0)
+							jigsawOffsetBounds.y1 = jigsawOffsetBounds.y0 + Math.max(yExpansion + 1, jigsawOffsetBounds.y1 - jigsawOffsetBounds.y0);*//*
 
-						if (!VoxelShapes.joinIsNotEmpty(freeBounds.getValue(), VoxelShapes.create(AxisAlignedBB.of(jigsawOffsetBounds).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
-							freeBounds.setValue(VoxelShapes.joinUnoptimized(freeBounds.getValue(), VoxelShapes.create(AxisAlignedBB.of(jigsawOffsetBounds)), IBooleanFunction.ONLY_FIRST));
+
+						if (!Shapes.joinIsNotEmpty(freeBounds.getValue(), Shapes.create(AABB.of(jigsawOffsetBounds).deflate(0.25)), IBooleanFunction.ONLY_SECOND)) {
+							freeBounds.setValue(Shapes.joinUnoptimized(freeBounds.getValue(), Shapes.create(AABB.of(jigsawOffsetBounds)), IBooleanFunction.ONLY_FIRST));
 							int pieceGroundDelta = piece.getGroundLevelDelta();
 							int pieceGroundDeltaOffset;
 							pieceGroundDeltaOffset = rigidPiece ? pieceGroundDelta - yDelta : nextTemplate.getGroundLevelDelta();
@@ -233,3 +232,4 @@ public class JigsawAssembler {
 		}
 	}
 }
+*/

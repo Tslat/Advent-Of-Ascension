@@ -1,7 +1,7 @@
 package net.tslat.aoa3.player;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -10,9 +10,9 @@ import java.util.Collection;
 import java.util.List;
 
 public interface PlayerDataManager {
-	PlayerEntity player();
+	Player player();
 
-	void updatePlayerInstance(PlayerEntity player);
+	void updatePlayerInstance(Player player);
 
 	boolean isLegitimate();
 
@@ -28,7 +28,7 @@ public interface PlayerDataManager {
 	@Nonnull
 	AoAResource.Instance getResource(AoAResource resource);
 
-	void loadFromNbt(CompoundNBT nbt);
+	void loadFromNbt(CompoundTag nbt);
 
 	void addListener(AoAPlayerEventListener listener, boolean active, AoAPlayerEventListener.ListenerType... types);
 

@@ -1,16 +1,14 @@
+/*
 package net.tslat.aoa3.client.render.entity.misc;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.vector.Vector3f;
-import net.tslat.aoa3.client.model.entity.misc.BaronBombModel;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.content.entity.misc.BaronBombEntity;
 
 import javax.annotation.Nullable;
@@ -19,12 +17,12 @@ public class BaronBombRenderer extends EntityRenderer<BaronBombEntity> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/misc/baron_bomb.png");
 	private final EntityModel<BaronBombEntity> model = new BaronBombModel();
 
-	public BaronBombRenderer(EntityRendererManager renderManager) {
+	public BaronBombRenderer(EntityRendererProvider.Context renderManager) {
 		super(renderManager);
 	}
 
 	@Override
-	public void render(BaronBombEntity entity, float entityYaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
+	public void render(BaronBombEntity entity, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		matrix.pushPose();
 		matrix.mulPose(Vector3f.XP.rotationDegrees(180));
 		matrix.scale(-1, 1, -1);
@@ -45,3 +43,4 @@ public class BaronBombRenderer extends EntityRenderer<BaronBombEntity> {
 		return TEXTURE;
 	}
 }
+*/

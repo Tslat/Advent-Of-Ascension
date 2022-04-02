@@ -3,30 +3,33 @@ package net.tslat.aoa3.content.entity.base;
 import com.mojang.serialization.Dynamic;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.effect.LightningBoltEntity;
-import net.minecraft.entity.item.ExperienceOrbEntity;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.MerchantOffer;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.pathfinding.GroundPathNavigator;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.*;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoAProfessions;
 import net.tslat.aoa3.content.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.content.entity.ai.trader.TraderPlayerTradeGoal;
@@ -40,32 +43,32 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Random;
 
-public abstract class AoATrader extends VillagerEntity implements IAnimatable {
+public abstract class AoATrader extends Villager implements IAnimatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 
-	public AoATrader(EntityType<? extends AoATrader> entityType, World world) {
+	public AoATrader(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
 
-		((GroundPathNavigator)getNavigation()).setCanOpenDoors(true);
+		((GroundPathNavigation)getNavigation()).setCanOpenDoors(true);
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(0, new SwimGoal(this));
-		goalSelector.addGoal(1, new AvoidEntityGoal<MonsterEntity>(this, MonsterEntity.class, 8f, 0.8d, 1d));
+		goalSelector.addGoal(0, new FloatGoal(this));
+		goalSelector.addGoal(1, new AvoidEntityGoal<Monster>(this, Monster.class, 8f, 0.8d, 1d));
 		goalSelector.addGoal(1, new TraderPlayerTradeGoal(this));
 		goalSelector.addGoal(1, new TraderFaceCustomerGoal(this));
 		goalSelector.addGoal(2, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 3f, 1f));
+		goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 3f, 1f));
 		goalSelector.addGoal(3, new TraderRestockGoal(this));
-		goalSelector.addGoal(4, new RandomWalkingGoal(this, 0.6d));
-		goalSelector.addGoal(5, new LookRandomlyGoal(this));
+		goalSelector.addGoal(4, new RandomStrollGoal(this, 0.6d));
+		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 	}
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
-		ILivingEntityData data = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+		SpawnGroupData data = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 
 		setVillagerData(getVillagerData().setProfession(AoAProfessions.WANDERER.get()));
 
@@ -78,17 +81,17 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 	}
 
 	@Override
-	public void refreshBrain(ServerWorld world) {}
+	public void refreshBrain(ServerLevel world) {}
 
 	@Override
 	protected void ageBoundaryReached() {}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack itemStack = player.getItemInHand(hand);
 
 		if (itemStack.getItem() != Items.VILLAGER_SPAWN_EGG && isAlive() && !isTrading() && !isBaby()) {
-			if (hand == Hand.MAIN_HAND)
+			if (hand == InteractionHand.MAIN_HAND)
 				player.awardStat(Stats.TALKED_TO_VILLAGER);
 
 			if (!getOffers().isEmpty()) {
@@ -98,30 +101,30 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 					openTradingScreen(player, getDisplayName(), getVillagerData().getLevel());
 				}
 			}
-			return ActionResultType.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
 		else {
-			return ActionResultType.PASS;
+			return InteractionResult.PASS;
 		}
 	}
 
-	protected void updateSpecialPrices(PlayerEntity player) {
+	protected void updateSpecialPrices(Player player) {
 		int reputation = getPlayerReputation(player);
 
 		if (reputation != 0) {
 			for(MerchantOffer offer : getOffers()) {
-				offer.addToSpecialPriceDiff(-MathHelper.floor((float)reputation * offer.getPriceMultiplier()));
+				offer.addToSpecialPriceDiff(-Mth.floor((float)reputation * offer.getPriceMultiplier()));
 			}
 		}
 	}
 
 	@Override
 	protected void updateTrades() {
-		Int2ObjectMap<VillagerTrades.ITrade[]> trades = getTradesMap();
+		Int2ObjectMap<VillagerTrades.ItemListing[]> trades = getTradesMap();
 
 		if (trades != null && !trades.isEmpty()) {
 			int professionLevel = getVillagerData().getLevel();
-			VillagerTrades.ITrade[] currentLevelOffers = trades.get(professionLevel);
+			VillagerTrades.ItemListing[] currentLevelOffers = trades.get(professionLevel);
 
 			if (currentLevelOffers != null)
 				addOffersFromItemListings(getOffers(), currentLevelOffers, getMaxTradesToUnlock(professionLevel));
@@ -129,7 +132,7 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 	}
 
 	@Override
-	protected ITextComponent getTypeName() {
+	protected Component getTypeName() {
 		return getType().getDescription();
 	}
 
@@ -171,7 +174,7 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 		xp /= (offer.getMaxUses() / 16f);
 
 		if (offer.shouldRewardExp())
-			level.addFreshEntity(new ExperienceOrbEntity(level, getX(), getY() + 0.5D, getZ(), xp));
+			level.addFreshEntity(new ExperienceOrb(level, getX(), getY() + 0.5D, getZ(), xp));
 	}
 
 	@Nullable
@@ -192,16 +195,16 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !isOverworldNPC() || !WorldUtil.isWorld(level, World.OVERWORLD) || tickCount >= 48000;
+		return !isOverworldNPC() || !WorldUtil.isWorld(level, Level.OVERWORLD) || tickCount >= 48000;
 	}
 
 	@Override
-	public VillagerEntity getBreedOffspring(ServerWorld world, AgeableEntity mate) {
+	public Villager getBreedOffspring(ServerLevel world, AgeableMob mate) {
 		return null;
 	}
 
 	@Override
-	public void thunderHit(ServerWorld world, LightningBoltEntity lightning) {
+	public void thunderHit(ServerLevel world, LightningBolt lightning) {
 		setRemainingFireTicks(getRemainingFireTicks() + 1);
 
 		if (getRemainingFireTicks() == 0)
@@ -216,7 +219,7 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 			this.tellWitnessesThatIWasMurdered(cause.getEntity());
 
 		if (!ForgeHooks.onLivingDeath(this, cause)) {
-			if (!removed && !dead) {
+			if (!isRemoved() && !dead) {
 				Entity entity = cause.getEntity();
 				LivingEntity killer = getKillCredit();
 
@@ -227,9 +230,9 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 
 				getCombatTracker().recheckStatus();
 
-				if (this.level instanceof ServerWorld) {
+				if (this.level instanceof ServerLevel) {
 					if (entity != null) {
-						entity.killed((ServerWorld)this.level, this);
+						entity.killed((ServerLevel)this.level, this);
 					}
 
 					dropAllDeathLoot(cause);
@@ -245,10 +248,10 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 	}
 
 	@Nullable
-	public abstract Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap();
+	public abstract Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap();
 
 	public static class TradeListBuilder {
-		private final HashMap<Integer, VillagerTrades.ITrade[]> trades = new HashMap<Integer, VillagerTrades.ITrade[]>();
+		private final HashMap<Integer, VillagerTrades.ItemListing[]> trades = new HashMap<Integer, VillagerTrades.ItemListing[]>();
 
 		public TradeListBuilder trades(int professionLevel, BuildableTrade... offers) {
 			this.trades.put(professionLevel, offers);
@@ -256,12 +259,12 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 			return this;
 		}
 
-		public Int2ObjectMap<VillagerTrades.ITrade[]> build() {
-			return new Int2ObjectOpenHashMap<VillagerTrades.ITrade[]>(trades);
+		public Int2ObjectMap<VillagerTrades.ItemListing[]> build() {
+			return new Int2ObjectOpenHashMap<VillagerTrades.ItemListing[]>(trades);
 		}
 	}
 
-	public static class BuildableTrade implements VillagerTrades.ITrade {
+	public static class BuildableTrade implements VillagerTrades.ItemListing {
 		private final ItemStack item;
 		private ItemStack cost1 = null;
 		@Nullable
@@ -277,19 +280,19 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 			this.item = item;
 		}
 
-		public static BuildableTrade trade(RegistryObject<? extends IItemProvider> item) {
+		public static BuildableTrade trade(RegistryObject<? extends ItemLike> item) {
 			return trade(item, 1);
 		}
 
-		public static BuildableTrade trade(RegistryObject<? extends IItemProvider> item, int amount) {
+		public static BuildableTrade trade(RegistryObject<? extends ItemLike> item, int amount) {
 			return trade(item.get(), amount);
 		}
 
-		public static BuildableTrade trade(IItemProvider item) {
+		public static BuildableTrade trade(ItemLike item) {
 			return trade(item, 1);
 		}
 
-		public static BuildableTrade trade(IItemProvider item, int amount) {
+		public static BuildableTrade trade(ItemLike item, int amount) {
 			return trade(new ItemStack(item, amount));
 		}
 
@@ -304,19 +307,19 @@ public abstract class AoATrader extends VillagerEntity implements IAnimatable {
 			return this;
 		}
 
-		public BuildableTrade cost(RegistryObject<? extends IItemProvider> item) {
+		public BuildableTrade cost(RegistryObject<? extends ItemLike> item) {
 			return cost(item, 1);
 		}
 
-		public BuildableTrade cost(RegistryObject<? extends IItemProvider> item, int amount) {
+		public BuildableTrade cost(RegistryObject<? extends ItemLike> item, int amount) {
 			return cost(item.get(), amount);
 		}
 
-		public BuildableTrade cost(IItemProvider item) {
+		public BuildableTrade cost(ItemLike item) {
 			return cost(item, 1);
 		}
 
-		public BuildableTrade cost(IItemProvider item, int amount) {
+		public BuildableTrade cost(ItemLike item, int amount) {
 			return cost(new ItemStack(item, amount));
 		}
 

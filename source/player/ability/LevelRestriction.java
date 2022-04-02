@@ -4,12 +4,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -33,7 +33,7 @@ public class LevelRestriction extends AoAAbility.Instance {
 		this.restrictedId = generateRestrictionHandlers(data);
 	}
 
-	public LevelRestriction(AoASkill.Instance skill, CompoundNBT data) {
+	public LevelRestriction(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.LEVEL_RESTRICTION.get(), skill, data);
 
 		this.restrictedId = new ResourceLocation(data.getString("restriction_id"));
@@ -45,16 +45,16 @@ public class LevelRestriction extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
+	protected void updateDescription(TranslatableComponent defaultDescription) {
 		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(this.restrictedId);
 
 		if (restrictions == null) {
-			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), "??"));
+			super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), "??"));
 
 			return;
 		}
 
-		ITextComponent targetName;
+		Component targetName;
 
 		if (isForBlock(restrictions)) {
 			targetName = ForgeRegistries.BLOCKS.getValue(restrictedId).getName();
@@ -64,14 +64,14 @@ public class LevelRestriction extends AoAAbility.Instance {
 			targetName = item.getName(item.getDefaultInstance());
 		}
 
-		TranslationTextComponent description = new TranslationTextComponent(defaultDescription.getKey(), targetName);
+		TranslatableComponent description = new TranslatableComponent(defaultDescription.getKey(), targetName);
 		boolean comma = false;
 
 		for (Map.Entry<String, List<Pair<ResourceLocation, Integer>>> restriction : restrictions.entrySet()) {
 			if (comma)
 				description.append(", ");
 
-			description.append(new TranslationTextComponent(defaultDescription.getKey() + "." + restriction.getKey()));
+			description.append(new TranslatableComponent(defaultDescription.getKey() + "." + restriction.getKey()));
 
 			comma = true;
 		}
@@ -80,8 +80,8 @@ public class LevelRestriction extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
 			data.putString("restriction_id", this.restrictedId.toString());
@@ -90,8 +90,8 @@ public class LevelRestriction extends AoAAbility.Instance {
 	}
 
 	protected ResourceLocation generateRestrictionHandlers(JsonObject json) {
-		ResourceLocation restrictedId = new ResourceLocation(JSONUtils.getAsString(json, "restricted_id"));
-		JsonArray reqs = JSONUtils.getAsJsonArray(json, "restrictions");
+		ResourceLocation restrictedId = new ResourceLocation(GsonHelper.getAsString(json, "restricted_id"));
+		JsonArray reqs = GsonHelper.getAsJsonArray(json, "restrictions");
 
 		if (reqs.size() == 0)
 			throw new IllegalArgumentException("Invalid skill requirements for Level Restriction ability.");

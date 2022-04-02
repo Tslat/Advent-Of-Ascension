@@ -1,21 +1,21 @@
 package net.tslat.aoa3.content.world.teleporter;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.IChunk;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraftforge.common.util.ITeleporter;
-import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.specific.NowhereTeleporter;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.BlockUtil;
@@ -34,14 +34,14 @@ public abstract class AoATeleporter implements ITeleporter {
 	public abstract Block getBorderBlock();
 
 	@Override
-	public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw, Function<Boolean, Entity> entityPlacementFunction) {
+	public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> entityPlacementFunction) {
 		ServerPlayerDataManager plData = null;
 		boolean failedPortalReturn = false;
 		BlockPos startPos = entity.blockPosition();
 
-		if (entity instanceof ServerPlayerEntity) {
+		if (entity instanceof ServerPlayer) {
 			entity.setNoGravity(false);
-			PortalCoordinatesContainer loc = (plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity)).getPortalReturnLocation(currentWorld.dimension());
+			PortalCoordinatesContainer loc = (plData = PlayerUtil.getAdventPlayer((ServerPlayer)entity)).getPortalReturnLocation(currentWorld.dimension());
 			BlockPos locPos;
 
 			if (loc != null) {
@@ -50,7 +50,7 @@ public abstract class AoATeleporter implements ITeleporter {
 				if (locationBlock == getPortalBlock()) {
 					placeInPortal(destWorld, entity, locPos);
 
-					return customPlayerPlacementFunction((ServerPlayerEntity)entity, currentWorld, destWorld, false);
+					return customPlayerPlacementFunction((ServerPlayer)entity, currentWorld, destWorld, false);
 				}
 				else if (!(locationBlock instanceof PortalBlock)) {
 					plData.removePortalReturnLocation(currentWorld.dimension());
@@ -69,7 +69,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		BlockPos pos = null;
 
 		if (failedPortalReturn) {
-			if (WorldUtil.isWorld((World)destWorld, AoADimensions.NOWHERE.key) && !(this instanceof NowhereTeleporter))
+			if (WorldUtil.isWorld((Level)destWorld, AoADimensions.NOWHERE.key) && !(this instanceof NowhereTeleporter))
 				pos = new BlockPos(0, 202, 0);
 		}
 
@@ -94,26 +94,26 @@ public abstract class AoATeleporter implements ITeleporter {
 				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.level.dimension());
 
 				if (returnPortalLoc != null && returnPortalLoc.fromDim == destWorld.dimension())
-					return customPlayerPlacementFunction((ServerPlayerEntity)entity, currentWorld, destWorld, false);
+					return customPlayerPlacementFunction((ServerPlayer)entity, currentWorld, destWorld, false);
 			}
 
 			if (portalLoc == null || entity.level.dimension() == portalLoc.fromDim || entity.distanceToSqr(BlockUtil.posToVec(portalLoc.asBlockPos())) > AoAConfig.SERVER.portalSearchRadius.get())
 				plData.setPortalReturnLocation(destWorld.dimension(), new PortalCoordinatesContainer(currentWorld.dimension(), startPos.getX(), startPos.getY(), startPos.getZ()));
 		}
 
-		return entity instanceof ServerPlayerEntity ? customPlayerPlacementFunction((ServerPlayerEntity)entity, currentWorld, destWorld, false) : customEntityPlacementFunction(entity, currentWorld, destWorld, false);
+		return entity instanceof ServerPlayer ? customPlayerPlacementFunction((ServerPlayer)entity, currentWorld, destWorld, false) : customEntityPlacementFunction(entity, currentWorld, destWorld, false);
 	}
 
-	private Entity customPlayerPlacementFunction(ServerPlayerEntity entity, ServerWorld fromWorld, ServerWorld toWorld, boolean spawnPortal) {
+	private Entity customPlayerPlacementFunction(ServerPlayer entity, ServerLevel fromWorld, ServerLevel toWorld, boolean spawnPortal) {
 		BlockPos originPos = entity.blockPosition();
 
 		fromWorld.getProfiler().push("moving");
 
-		if (fromWorld.dimension() == World.OVERWORLD && toWorld.dimension() == World.NETHER) {
+		if (fromWorld.dimension() == Level.OVERWORLD && toWorld.dimension() == Level.NETHER) {
 			entity.enteredNetherPosition = entity.position();
 		}
-		else if (spawnPortal && toWorld.dimension() == World.END) {
-			BlockPos.Mutable mutablePos = originPos.mutable();
+		else if (spawnPortal && toWorld.dimension() == Level.END) {
+			BlockPos.MutableBlockPos mutablePos = originPos.mutable();
 
 			for(int x = -2; x <= 2; ++x) {
 				for(int y = -2; y <= 2; ++y) {
@@ -137,25 +137,25 @@ public abstract class AoATeleporter implements ITeleporter {
 		return entity;
 	}
 
-	private Entity customEntityPlacementFunction(Entity entity, ServerWorld fromWorld, ServerWorld toWorld, boolean spawnPortal) {
+	private Entity customEntityPlacementFunction(Entity entity, ServerLevel fromWorld, ServerLevel toWorld, boolean spawnPortal) {
 		entity.level.getProfiler().popPush("reloading");
 
 		Entity newEntity = entity.getType().create(toWorld);
 
 		if (newEntity != null) {
 			newEntity.restoreFrom(entity);
-			newEntity.moveTo(entity.getX(),entity.getY(), entity.getZ(), entity.yRot, entity.xRot);
+			newEntity.moveTo(entity.getX(),entity.getY(), entity.getZ(), entity.getYRot(), entity.getXRot());
 			newEntity.setDeltaMovement(entity.getDeltaMovement());
-			toWorld.addFromAnotherDimension(newEntity);
+			toWorld.addDuringTeleport(newEntity);
 
-			if (spawnPortal && toWorld.dimension() == World.END)
-				ServerWorld.makeObsidianPlatform(toWorld);
+			if (spawnPortal && toWorld.dimension() == Level.END)
+				ServerLevel.makeObsidianPlatform(toWorld);
 		}
 
 		return newEntity;
 	}
 
-	public BlockPos findExistingPortal(World world, Entity entity) {
+	public BlockPos findExistingPortal(Level world, Entity entity) {
 		int posX = (int)Math.floor(entity.getX());
 		int posY = (int)Math.floor(entity.getY());
 		int posZ = (int)Math.floor(entity.getZ());
@@ -174,7 +174,7 @@ public abstract class AoATeleporter implements ITeleporter {
 			}
 		}
 
-		BlockPos.Mutable checkPos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 		int searchRadius = AoAConfig.SERVER.portalSearchRadius.get();
 		int worldHeight = world.dimensionType().logicalHeight();
 
@@ -186,7 +186,7 @@ public abstract class AoATeleporter implements ITeleporter {
 				;
 			}
 
-			IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
+			ChunkAccess chunk = world.getChunk(checkPos.move(Direction.UP));
 
 			cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockZ(), chunk.getPos().getMinBlockZ()), checkPos);
 
@@ -226,7 +226,7 @@ public abstract class AoATeleporter implements ITeleporter {
 								;
 							}
 
-							IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
+							ChunkAccess chunk = world.getChunk(checkPos.move(Direction.UP));
 
 							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ()), checkPos);
 
@@ -268,7 +268,7 @@ public abstract class AoATeleporter implements ITeleporter {
 								;
 							}
 
-							IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
+							ChunkAccess chunk = world.getChunk(checkPos.move(Direction.UP));
 
 							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ()), checkPos);
 
@@ -297,7 +297,7 @@ public abstract class AoATeleporter implements ITeleporter {
 								;
 							}
 
-							IChunk chunk = world.getChunk(checkPos.move(Direction.UP));
+							ChunkAccess chunk = world.getChunk(checkPos.move(Direction.UP));
 
 							cachedPortalMap.put(ChunkPos.asLong(chunk.getPos().getMinBlockX(), chunk.getPos().getMinBlockZ()), checkPos);
 
@@ -342,8 +342,8 @@ public abstract class AoATeleporter implements ITeleporter {
 		return null;
 	}
 	
-	public BlockPos findSuitablePortalLocation(World world, Entity entity) {
-		BlockPos.Mutable checkPos = new BlockPos.Mutable();
+	public BlockPos findSuitablePortalLocation(Level world, Entity entity) {
+		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 		int posX = (int)Math.floor(entity.getX());
 		int posY = (int)Math.floor(entity.getY());
 		int posZ = (int)Math.floor(entity.getZ());
@@ -601,7 +601,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		return placementPos;
 	}
 	
-	public BlockPos makePortal(World world, Entity entity, BlockPos pos) {
+	public BlockPos makePortal(Level world, Entity entity, BlockPos pos) {
 		if (WorldUtil.isWorld(world, AoADimensions.OVERWORLD.key))
 			return pos;
 
@@ -671,7 +671,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		return returnPos;
 	}
 	
-	public void makePortalPlatformAndDecorate(World world, BlockPos pos, Direction.Axis direction) {
+	public void makePortalPlatformAndDecorate(Level world, BlockPos pos, Direction.Axis direction) {
 		BlockState border = getBorderBlock().defaultBlockState();
 
 		for (int x = pos.getX() - 2; x <= pos.getX() + 2; x++) {
@@ -681,14 +681,14 @@ public abstract class AoATeleporter implements ITeleporter {
 		}
 	}
 	
-	public void placeInPortal(World world, Entity entity, BlockPos pos) {
+	public void placeInPortal(Level world, Entity entity, BlockPos pos) {
 		entity.setDeltaMovement(0, 0, 0);
 
-		if (entity instanceof ServerPlayerEntity) {
-			((ServerPlayerEntity)entity).connection.teleport(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.yRot, entity.xRot);
+		if (entity instanceof ServerPlayer) {
+			((ServerPlayer)entity).connection.teleport(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.getYRot(), entity.getXRot());
 		}
 		else {
-			entity.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.yRot, entity.xRot);
+			entity.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.getYRot(), entity.getXRot());
 		}
 	}
 }

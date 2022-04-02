@@ -1,25 +1,25 @@
 package net.tslat.aoa3.content.world.teleporter;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3i;
-import net.minecraft.world.World;
-import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 
 import java.util.ArrayList;
 
 import static net.tslat.aoa3.content.world.teleporter.AoAPortalFrame.PortalDirection.*;
 
 public class AoAPortalFrame {
-    private static final ArrayList<Vector3i> northSouthPattern = new ArrayList<Vector3i>();
-    private static final ArrayList<Vector3i> eastWestPattern = new ArrayList<Vector3i>();
+    private static final ArrayList<Vec3i> northSouthPattern = new ArrayList<Vec3i>();
+    private static final ArrayList<Vec3i> eastWestPattern = new ArrayList<Vec3i>();
 
-    public static PortalDirection testFrameForActivation(World world, BlockPos activationPos, Direction sideClicked, PortalBlock portalBlock) {
+    public static PortalDirection testFrameForActivation(Level world, BlockPos activationPos, Direction sideClicked, PortalBlock portalBlock) {
         switch (sideClicked) {
             case NORTH:
             case SOUTH:
@@ -39,20 +39,21 @@ public class AoAPortalFrame {
         }
     }
 
-    public static PortalDirection testNorthSouthPortalFrame(World world, BlockPos basePos, PortalBlock portalBlock) {
+    public static PortalDirection testNorthSouthPortalFrame(Level world, BlockPos basePos, PortalBlock portalBlock) {
         Block carvedRuneTravel = null;
         Block carvedRuneReality = null;
         Block carvedRuneSpace = null;
         Block carvedRuneDirection = null;
         int ancientRockCount = 0;
 
-        for (Vector3i pos : northSouthPattern) {
-            Block testBlock = world.getBlockState(basePos.offset(pos)).getBlock();
+        for (Vec3i pos : northSouthPattern) {
+            BlockState testState = world.getBlockState(basePos.offset(pos));
+            Block testBlock = testState.getBlock();
 
             if (testBlock == AoABlocks.ANCIENT_ROCK.get()) {
                 ancientRockCount++;
             }
-            else if (testBlock.is(AoATags.Blocks.CARVED_RUNE)) {
+            else if (testState.is(AoATags.Blocks.CARVED_RUNE)) {
                 if (testBlock == AoABlocks.CARVED_RUNE_OF_TRAVEL.get()) {
                     if (carvedRuneTravel != null)
                         return INVALID;
@@ -101,20 +102,21 @@ public class AoAPortalFrame {
         return INVALID;
     }
 
-    public static PortalDirection testEastWestPortalFrame(World world, BlockPos basePos, PortalBlock portalBlock) {
+    public static PortalDirection testEastWestPortalFrame(Level world, BlockPos basePos, PortalBlock portalBlock) {
         Block carvedRuneTravel = null;
         Block carvedRuneReality = null;
         Block carvedRuneSpace = null;
         Block carvedRuneDirection = null;
         int ancientRockCount = 0;
 
-        for (Vector3i pos : eastWestPattern) {
-            Block testBlock = world.getBlockState(basePos.offset(pos)).getBlock();
+        for (Vec3i pos : eastWestPattern) {
+            BlockState testState = world.getBlockState(basePos.offset(pos));
+            Block testBlock = testState.getBlock();
 
             if (testBlock == AoABlocks.ANCIENT_ROCK.get()) {
                 ancientRockCount++;
             }
-            else if (testBlock.is(AoATags.Blocks.CARVED_RUNE)) {
+            else if (testState.is(AoATags.Blocks.CARVED_RUNE)) {
                 if (testBlock == AoABlocks.CARVED_RUNE_OF_TRAVEL.get()) {
                     if (carvedRuneTravel != null)
                         return INVALID;
@@ -163,7 +165,7 @@ public class AoAPortalFrame {
         return INVALID;
     }
 
-    public static void lightPortalFrame(World world, BlockPos basePos, PortalDirection direction, PortalBlock portalBlock) {
+    public static void lightPortalFrame(Level world, BlockPos basePos, PortalDirection direction, PortalBlock portalBlock) {
         switch (direction) {
             case NORTH_SOUTH:
                 for (int x = -1; x < 2; x++) {
@@ -192,42 +194,42 @@ public class AoAPortalFrame {
     }
 
     static {
-        northSouthPattern.add(new Vector3i(-2, 0, 0));
-        northSouthPattern.add(new Vector3i(-1, 0, 0));
-        northSouthPattern.add(new Vector3i(-0, 0, 0));
-        northSouthPattern.add(new Vector3i(1, 0, 0));
-        northSouthPattern.add(new Vector3i(2, 0, 0));
-        northSouthPattern.add(new Vector3i(2, 1, 0));
-        northSouthPattern.add(new Vector3i(2, 2, 0));
-        northSouthPattern.add(new Vector3i(2, 3, 0));
-        northSouthPattern.add(new Vector3i(2, 4, 0));
-        northSouthPattern.add(new Vector3i(2, 5, 0));
-        northSouthPattern.add(new Vector3i(1, 5, 0));
-        northSouthPattern.add(new Vector3i(0, 5, 0));
-        northSouthPattern.add(new Vector3i(-1, 5, 0));
-        northSouthPattern.add(new Vector3i(-2, 5, 0));
-        northSouthPattern.add(new Vector3i(-2, 4, 0));
-        northSouthPattern.add(new Vector3i(-2, 3, 0));
-        northSouthPattern.add(new Vector3i(-2, 2, 0));
-        northSouthPattern.add(new Vector3i(-2, 1, 0));
+        northSouthPattern.add(new Vec3i(-2, 0, 0));
+        northSouthPattern.add(new Vec3i(-1, 0, 0));
+        northSouthPattern.add(new Vec3i(-0, 0, 0));
+        northSouthPattern.add(new Vec3i(1, 0, 0));
+        northSouthPattern.add(new Vec3i(2, 0, 0));
+        northSouthPattern.add(new Vec3i(2, 1, 0));
+        northSouthPattern.add(new Vec3i(2, 2, 0));
+        northSouthPattern.add(new Vec3i(2, 3, 0));
+        northSouthPattern.add(new Vec3i(2, 4, 0));
+        northSouthPattern.add(new Vec3i(2, 5, 0));
+        northSouthPattern.add(new Vec3i(1, 5, 0));
+        northSouthPattern.add(new Vec3i(0, 5, 0));
+        northSouthPattern.add(new Vec3i(-1, 5, 0));
+        northSouthPattern.add(new Vec3i(-2, 5, 0));
+        northSouthPattern.add(new Vec3i(-2, 4, 0));
+        northSouthPattern.add(new Vec3i(-2, 3, 0));
+        northSouthPattern.add(new Vec3i(-2, 2, 0));
+        northSouthPattern.add(new Vec3i(-2, 1, 0));
 
-        eastWestPattern.add(new Vector3i(0, 0, -2));
-        eastWestPattern.add(new Vector3i(0, 0, -1));
-        eastWestPattern.add(new Vector3i(0, 0, 0));
-        eastWestPattern.add(new Vector3i(0, 0, 1));
-        eastWestPattern.add(new Vector3i(0, 0, 2));
-        eastWestPattern.add(new Vector3i(0, 1, 2));
-        eastWestPattern.add(new Vector3i(0, 2, 2));
-        eastWestPattern.add(new Vector3i(0, 3, 2));
-        eastWestPattern.add(new Vector3i(0, 4, 2));
-        eastWestPattern.add(new Vector3i(0, 5, 2));
-        eastWestPattern.add(new Vector3i(0, 5, 1));
-        eastWestPattern.add(new Vector3i(0, 5, 0));
-        eastWestPattern.add(new Vector3i(0, 5, -1));
-        eastWestPattern.add(new Vector3i(0, 5, -2));
-        eastWestPattern.add(new Vector3i(0, 4, -2));
-        eastWestPattern.add(new Vector3i(0, 3, -2));
-        eastWestPattern.add(new Vector3i(0, 2, -2));
-        eastWestPattern.add(new Vector3i(0, 1, -2));
+        eastWestPattern.add(new Vec3i(0, 0, -2));
+        eastWestPattern.add(new Vec3i(0, 0, -1));
+        eastWestPattern.add(new Vec3i(0, 0, 0));
+        eastWestPattern.add(new Vec3i(0, 0, 1));
+        eastWestPattern.add(new Vec3i(0, 0, 2));
+        eastWestPattern.add(new Vec3i(0, 1, 2));
+        eastWestPattern.add(new Vec3i(0, 2, 2));
+        eastWestPattern.add(new Vec3i(0, 3, 2));
+        eastWestPattern.add(new Vec3i(0, 4, 2));
+        eastWestPattern.add(new Vec3i(0, 5, 2));
+        eastWestPattern.add(new Vec3i(0, 5, 1));
+        eastWestPattern.add(new Vec3i(0, 5, 0));
+        eastWestPattern.add(new Vec3i(0, 5, -1));
+        eastWestPattern.add(new Vec3i(0, 5, -2));
+        eastWestPattern.add(new Vec3i(0, 4, -2));
+        eastWestPattern.add(new Vec3i(0, 3, -2));
+        eastWestPattern.add(new Vec3i(0, 2, -2));
+        eastWestPattern.add(new Vec3i(0, 1, -2));
     }
 }

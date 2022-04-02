@@ -1,15 +1,15 @@
 package net.tslat.aoa3.integration.crafttweaker.recipes;
 
 import com.blamejared.crafttweaker.api.CraftTweakerAPI;
-import com.blamejared.crafttweaker.api.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.action.recipe.ActionAddRecipe;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.blamejared.crafttweaker.api.managers.IRecipeManager;
-import com.blamejared.crafttweaker.impl.actions.recipes.ActionAddRecipe;
+import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker_annotations.annotations.Document;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import org.openzen.zencode.java.ZenCodeType;
 
 @Document("aoa3/api/UpgradeKitRecipe")
@@ -24,7 +24,7 @@ public class CTUpgradeKitRecipeManager implements IRecipeManager {
 	}
 
 	@Override
-	public IRecipeType<UpgradeKitRecipe> getRecipeType() {
+	public RecipeType<UpgradeKitRecipe> getRecipeType() {
 		return AoARecipes.UPGRADE_KIT.getA();
 	}
 }

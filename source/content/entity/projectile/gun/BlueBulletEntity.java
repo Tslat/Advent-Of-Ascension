@@ -1,28 +1,28 @@
 package net.tslat.aoa3.content.entity.projectile.gun;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 
 public class BlueBulletEntity extends BaseBullet implements HardProjectile {
-	public BlueBulletEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public BlueBulletEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public BlueBulletEntity(World world) {
-		super(AoAEntities.Projectiles.BLUE_BULLET.get(), world);
+	public BlueBulletEntity(Level world) {
+		super(AoAProjectiles.BLUE_BULLET.get(), world);
 	}
 
-	public BlueBulletEntity(LivingEntity shooter, BaseGun gun, Hand hand, int maxAge, int piercingValue) {
-		super(AoAEntities.Projectiles.BLUE_BULLET.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
+	public BlueBulletEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
+		super(AoAProjectiles.BLUE_BULLET.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
 	}
 
-	public BlueBulletEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.BLUE_BULLET.get(), world, x, y, z);
+	public BlueBulletEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.BLUE_BULLET.get(), world, x, y, z);
 	}
 }

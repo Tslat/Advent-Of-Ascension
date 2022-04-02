@@ -1,15 +1,16 @@
 package net.tslat.aoa3.content.item.tool.hoe;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.HoeItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.HoeItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.ItemUtil;
@@ -21,7 +22,7 @@ import java.util.ListIterator;
 
 public class DryadsBlessing extends HoeItem implements LootModifyingItem {
 	public DryadsBlessing() {
-		super(ItemUtil.customItemTier(3020, 10f, 3f, 5, 18, null),
+		super(ItemUtil.customItemTier(3020, 10f, 3f, 5, 18, null, BlockTags.MINEABLE_WITH_HOE),
 				-4,
 				0,
 				new Item.Properties().tab(AoAItemGroups.TOOLS));
@@ -32,10 +33,10 @@ public class DryadsBlessing extends HoeItem implements LootModifyingItem {
 		BlockState harvestedBlock = getHarvestedBlock(lootContext);
 		Block block = harvestedBlock.getBlock();
 
-		if (existingLoot.isEmpty() || !(block instanceof CropsBlock))
+		if (existingLoot.isEmpty() || !(block instanceof CropBlock))
 			return;
 
-		if (!((CropsBlock)block).isMaxAge(harvestedBlock))
+		if (!((CropBlock)block).isMaxAge(harvestedBlock))
 			return;
 
 		for (ListIterator<ItemStack> iterator = existingLoot.listIterator(); iterator.hasNext();) {
@@ -46,7 +47,7 @@ public class DryadsBlessing extends HoeItem implements LootModifyingItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> pTooltip, ITooltipFlag pFlag) {
+	public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
 		pTooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
 	}

@@ -3,30 +3,30 @@ package net.tslat.aoa3.content.item.weapon.maul;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 
@@ -65,8 +65,8 @@ public class BaseMaul extends Item {
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BLOCK;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.BLOCK;
 	}
 
 	protected Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> buildDefaultAttributes() {
@@ -82,7 +82,7 @@ public class BaseMaul extends Item {
 	}
 
 	@Override
-	public boolean canAttackBlock(BlockState state, World worldIn, BlockPos pos, PlayerEntity player) {
+	public boolean canAttackBlock(BlockState state, Level worldIn, BlockPos pos, Player player) {
 		return !player.isCreative();
 	}
 
@@ -92,15 +92,15 @@ public class BaseMaul extends Item {
 	}
 
 	@Override
-	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity holder) {
+	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity holder) {
 		if (!world.isClientSide && (double)state.getDestroySpeed(world, pos) != 0.0D)
-			ItemUtil.damageItem(stack, holder, state.getMaterial() == Material.STONE ? 1 : 2, EquipmentSlotType.MAINHAND);
+			ItemUtil.damageItem(stack, holder, state.getMaterial() == Material.STONE ? 1 : 2, EquipmentSlot.MAINHAND);
 
 		return true;
 	}
 
 	@Override
-	public boolean onLeftClickEntity(ItemStack stack, PlayerEntity player, Entity entity) {
+	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
 		float attackStr = player.getAttackStrengthScale(0.0f);
 
 		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(attackStr);
@@ -114,7 +114,7 @@ public class BaseMaul extends Item {
 		float cooldown = VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).getValue();
 
 		doMeleeEffect(stack, target, attacker, cooldown);
-		ItemUtil.damageItem(stack, attacker, Hand.MAIN_HAND);
+		ItemUtil.damageItem(stack, attacker, InteractionHand.MAIN_HAND);
 		EntityUtil.reapplyAttributeModifier(attacker, Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(1), false);
 
 		return true;
@@ -134,13 +134,13 @@ public class BaseMaul extends Item {
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		return new VolatileStackCapabilityProvider();
 	}
 
 	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-		if (slot == EquipmentSlotType.MAINHAND) {
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
+		if (slot == EquipmentSlot.MAINHAND) {
 			Multimap<Attribute, AttributeModifier> newMap = HashMultimap.create();
 			ImmutableSetMultimap<Attribute, AttributeModifier> attributes = attributeModifiers.get();
 

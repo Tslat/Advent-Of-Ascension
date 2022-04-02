@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.base;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.pathfinding.PathNodeType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 
-public abstract class LavaMobEntity extends CreatureEntity {
-	protected LavaMobEntity(EntityType<? extends LavaMobEntity> entityType, World world) {
+public abstract class LavaMobEntity extends PathfinderMob {
+	protected LavaMobEntity(EntityType<? extends LavaMobEntity> entityType, Level world) {
 		super(entityType, world);
 
-		this.setPathfindingMalus(PathNodeType.LAVA, 0);
-		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 0);
+		this.setPathfindingMalus(BlockPathTypes.LAVA, 0);
+		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0);
 	}
 
 	public boolean canBreatheUnderwater() {
 		return true;
 	}
 
-	public boolean checkSpawnObstruction(IWorldReader pLevel) {
+	public boolean checkSpawnObstruction(LevelReader pLevel) {
 		return pLevel.isUnobstructed(this);
 	}
 
@@ -28,7 +28,7 @@ public abstract class LavaMobEntity extends CreatureEntity {
 		return 120;
 	}
 
-	protected int getExperienceReward(PlayerEntity pPlayer) {
+	protected int getExperienceReward(Player pPlayer) {
 		return 1 + this.level.random.nextInt(3);
 	}
 
@@ -62,7 +62,7 @@ public abstract class LavaMobEntity extends CreatureEntity {
 		return false;
 	}
 
-	public boolean canBeLeashed(PlayerEntity player) {
+	public boolean canBeLeashed(Player player) {
 		return false;
 	}
 }

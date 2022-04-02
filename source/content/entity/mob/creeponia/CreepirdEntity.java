@@ -1,26 +1,28 @@
 package net.tslat.aoa3.content.entity.mob.creeponia;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class CreepirdEntity extends AoAFlyingMeleeMob {
-	public CreepirdEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public CreepirdEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.46875f;
 	}
 
@@ -45,7 +47,7 @@ public class CreepirdEntity extends AoAFlyingMeleeMob {
 	@Override
 	protected void onAttack(Entity target) {
 		WorldUtil.createExplosion(this, level, 2.5f);
-		remove();
+		discard();
 	}
 
 	@Override
@@ -53,9 +55,9 @@ public class CreepirdEntity extends AoAFlyingMeleeMob {
 		super.die(cause);
 
 		if (this.dead && !level.isClientSide()) {
-			PlayerEntity player = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
-			if (player != null && player.hasEffect(Effects.POISON) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (player != null && player.hasEffect(MobEffects.POISON) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.MYSTERIUM_REALMSTONE.get()));
 		}
 	}

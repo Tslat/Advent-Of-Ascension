@@ -1,69 +1,68 @@
 package net.tslat.aoa3.content.block.decoration.banner;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.state.EnumProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.IStringSerializable;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-import static net.minecraft.state.properties.BlockStateProperties.WATERLOGGED;
+public class BannerBlock extends Block implements SimpleWaterloggedBlock {
+	public static final EnumProperty<BannerType> TYPE = EnumProperty.create("type", BannerType.class);
 
-public class BannerBlock extends Block implements IWaterLoggable {
-	public static final EnumProperty<BannerType> TYPE = EnumProperty.<BannerType>create("type", BannerType.class);
+	private static final VoxelShape MOUNTED_NORTH_SHAPE = Shapes.create(new AABB(0, 0, 0, 1, 1, 0.15625));
+	private static final VoxelShape MOUNTED_SOUTH_SHAPE = Shapes.create(new AABB(0, 0, 0.84375, 1, 1, 1));
+	private static final VoxelShape MOUNTED_EAST_SHAPE = Shapes.create(new AABB(0.84375, 0, 0, 1, 1, 1));
+	private static final VoxelShape MOUNTED_WEST_SHAPE = Shapes.create(new AABB(0, 0, 0, 0.15625, 1, 1));
 
-	private static final VoxelShape MOUNTED_NORTH_SHAPE = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 1, 1, 0.15625));
-	private static final VoxelShape MOUNTED_SOUTH_SHAPE = VoxelShapes.create(new AxisAlignedBB(0, 0, 0.84375, 1, 1, 1));
-	private static final VoxelShape MOUNTED_EAST_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.84375, 0, 0, 1, 1, 1));
-	private static final VoxelShape MOUNTED_WEST_SHAPE = VoxelShapes.create(new AxisAlignedBB(0, 0, 0, 0.15625, 1, 1));
-
-	private static final VoxelShape STANDING_NORTH_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.1875, 0, 0.453125, 0.8125, 1, 0.609375));
-	private static final VoxelShape STANDING_SOUTH_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.1875, 0, 0.390625, 0.8125, 1, 0.546875));
-	private static final VoxelShape STANDING_EAST_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.390625, 0, 0.1875, 0.546875, 1, 0.8125));
-	private static final VoxelShape STANDING_WEST_SHAPE = VoxelShapes.create(new AxisAlignedBB(0.453125, 0, 0.1875, 0.609375, 1, 0.8125));
+	private static final VoxelShape STANDING_NORTH_SHAPE = Shapes.create(new AABB(0.1875, 0, 0.453125, 0.8125, 1, 0.609375));
+	private static final VoxelShape STANDING_SOUTH_SHAPE = Shapes.create(new AABB(0.1875, 0, 0.390625, 0.8125, 1, 0.546875));
+	private static final VoxelShape STANDING_EAST_SHAPE = Shapes.create(new AABB(0.390625, 0, 0.1875, 0.546875, 1, 0.8125));
+	private static final VoxelShape STANDING_WEST_SHAPE = Shapes.create(new AABB(0.453125, 0, 0.1875, 0.609375, 1, 0.8125));
 
 	public BannerBlock() {
 		super(new BlockUtil.CompactProperties(Material.DECORATION, MaterialColor.METAL).stats(0.5f, 1f).sound(SoundType.WOOL).noClip().noOcclusion().get());
 
-		registerDefaultState(defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalBlock.FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+		registerDefaultState(defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.WATERLOGGED, false));
 	}
 
 	@Override
-	public void setPlacedBy(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+	public void setPlacedBy(Level world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
 		if (!world.isClientSide()) {
 			if (state.getValue(TYPE) == BannerType.MOUNTED) {
-				world.setBlockAndUpdate(pos.below(), AoABlocks.BANNER_EXTENSION.get().defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)).setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.below()).getType() == Fluids.WATER));
+				world.setBlockAndUpdate(pos.below(), AoABlocks.BANNER_EXTENSION.get().defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING)).setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.below()).getType() == Fluids.WATER));
 			}
 			else {
-				world.setBlockAndUpdate(pos.above(), AoABlocks.BANNER_EXTENSION.get().defaultBlockState().setValue(TYPE, BannerType.STANDING).setValue(HorizontalBlock.FACING, state.getValue(HorizontalBlock.FACING)).setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.above()).getType() == Fluids.WATER));
+				world.setBlockAndUpdate(pos.above(), AoABlocks.BANNER_EXTENSION.get().defaultBlockState().setValue(TYPE, BannerType.STANDING).setValue(HorizontalDirectionalBlock.FACING, state.getValue(HorizontalDirectionalBlock.FACING)).setValue(BlockStateProperties.WATERLOGGED, world.getFluidState(pos.above()).getType() == Fluids.WATER));
 			}
 		}
 	}
 
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(TYPE) == BannerType.MOUNTED) {
 			world.setBlockAndUpdate(pos.below(), Blocks.AIR.defaultBlockState());
 		}
@@ -75,14 +74,14 @@ public class BannerBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public float getShadeBrightness(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	public float getShadeBrightness(BlockState state, BlockGetter worldIn, BlockPos pos) {
 		return 1;
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		if (state.getValue(TYPE) == BannerType.MOUNTED) {
-			Direction mountedFace = state.getValue(HorizontalBlock.FACING);
+			Direction mountedFace = state.getValue(HorizontalDirectionalBlock.FACING);
 
 			return canSupportCenter(world, pos.relative(mountedFace), mountedFace.getOpposite()) && world.getBlockState(pos.below()).getMaterial().isReplaceable();
 		}
@@ -93,41 +92,29 @@ public class BannerBlock extends Block implements IWaterLoggable {
 
 	@Nullable
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		switch (context.getClickedFace()) {
-			case SOUTH:
-			case NORTH:
-			case WEST:
-			case EAST:
-				return defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalBlock.FACING, context.getClickedFace().getOpposite()).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
-			case UP:
-			case DOWN:
-			default:
-				return defaultBlockState().setValue(TYPE, BannerType.STANDING).setValue(HorizontalBlock.FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true)).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
-		}
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		return switch (context.getClickedFace()) {
+			case SOUTH, NORTH, WEST, EAST -> defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalDirectionalBlock.FACING, context.getClickedFace().getOpposite()).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+			case UP, DOWN -> defaultBlockState().setValue(TYPE, BannerType.STANDING).setValue(HorizontalDirectionalBlock.FACING, EntityUtil.getDirectionFacing(context.getPlayer(), true)).setValue(BlockStateProperties.WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+		};
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		boolean mounted = state.getValue(TYPE) == BannerType.MOUNTED;
 
-		switch (state.getValue(HorizontalBlock.FACING)) {
-			case SOUTH:
-				return mounted ? MOUNTED_SOUTH_SHAPE : STANDING_SOUTH_SHAPE;
-			case EAST:
-				return mounted ? MOUNTED_EAST_SHAPE : STANDING_EAST_SHAPE;
-			case WEST:
-				return mounted ? MOUNTED_WEST_SHAPE : STANDING_WEST_SHAPE;
-			case NORTH:
-			default:
-				return mounted ? MOUNTED_NORTH_SHAPE : STANDING_NORTH_SHAPE;
-		}
+		return switch (state.getValue(HorizontalDirectionalBlock.FACING)) {
+			case SOUTH -> mounted ? MOUNTED_SOUTH_SHAPE : STANDING_SOUTH_SHAPE;
+			case EAST -> mounted ? MOUNTED_EAST_SHAPE : STANDING_EAST_SHAPE;
+			case WEST -> mounted ? MOUNTED_WEST_SHAPE : STANDING_WEST_SHAPE;
+			case NORTH, DOWN, UP -> mounted ? MOUNTED_NORTH_SHAPE : STANDING_NORTH_SHAPE;
+		};
 	}
 
 	@Override
-	public void neighborChanged(BlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
+	public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (state.getValue(TYPE) == BannerType.MOUNTED) {
-			if (!world.getBlockState(pos.relative(state.getValue(HorizontalBlock.FACING))).getMaterial().isSolid())
+			if (!world.getBlockState(pos.relative(state.getValue(HorizontalDirectionalBlock.FACING))).getMaterial().isSolid())
 				world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 		else {
@@ -137,13 +124,13 @@ public class BannerBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	protected void createBlockStateDefinition(StateContainer.Builder<Block, BlockState> builder) {
-		builder.add(TYPE, HorizontalBlock.FACING, WATERLOGGED);
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+		builder.add(TYPE, HorizontalDirectionalBlock.FACING, BlockStateProperties.WATERLOGGED);
 	}
 
 	@Override
@@ -152,14 +139,14 @@ public class BannerBlock extends Block implements IWaterLoggable {
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos currentPos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos currentPos, BlockPos facingPos) {
 		if (state.getValue(BlockStateProperties.WATERLOGGED))
-			world.getLiquidTicks().scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+			world.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
 
 		return super.updateShape(state, facing, facingState, world, currentPos, facingPos);
 	}
 
-	public enum BannerType implements IStringSerializable {
+	public enum BannerType implements StringRepresentable {
 		MOUNTED("mounted"),
 		STANDING("standing");
 

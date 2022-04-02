@@ -1,23 +1,22 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.scheduling.async.KrorSpawnTask;
-import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,26 +26,26 @@ public class KrorAltar extends BossAltarBlock {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (player.getItemInHand(hand).getItem() == Item.byBlock(AoABlocks.CHARGING_TABLE.get()))
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
 		return super.use(state, world, pos, player, hand, hit);
 	}
 
 	@Override
-	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		if (player instanceof ServerPlayerEntity) {
-			new KrorSpawnTask((ServerPlayerEntity)player, blockPos.above()).schedule(1, TimeUnit.SECONDS);
+	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
+		if (player instanceof ServerPlayer) {
+			new KrorSpawnTask((ServerPlayer)player, blockPos.above()).schedule(1, TimeUnit.SECONDS);
 
-			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent(AoAEntities.Mobs.KROR.get().getDescriptionId() + ".start"));
+			//PlayerUtil.notifyPlayer((ServerPlayer)player, new TranslatableComponent(AoAMobs.KROR.get().getDescriptionId() + ".start"));
 		}
 	}
 
 	@Override
-	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
-		if (player.level.getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayerEntity) {
-			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.krorAltar.chargingTable"));
+	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
+		if (player.level.getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayer) {
+			PlayerUtil.notifyPlayer((ServerPlayer)player, new TranslatableComponent("message.feedback.krorAltar.chargingTable"));
 
 			return false;
 		}

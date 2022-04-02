@@ -1,36 +1,36 @@
 package net.tslat.aoa3.content.entity.npc.ambient;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ILivingEntityData;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.ai.animation.Animatable;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -42,17 +42,17 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
-	private static final DataParameter<Integer> VARIANT = EntityDataManager.defineId(DryadSpriteEntity.class, DataSerializers.INT);
-	private static final DataParameter<Optional<UUID>> OWNER = EntityDataManager.defineId(DryadSpriteEntity.class, DataSerializers.OPTIONAL_UUID);
+	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 
 	public boolean successful = false;
 
-	public DryadSpriteEntity(EntityType<? extends DryadSpriteEntity> entityType, World world) {
+	public DryadSpriteEntity(EntityType<? extends DryadSpriteEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public DryadSpriteEntity(PlayerEntity owner) {
-		super(AoAEntities.NPCs.DRYAD_SPRITE.get(), owner.level);
+	public DryadSpriteEntity(Player owner) {
+		super(AoANpcs.DRYAD_SPRITE.get(), owner.level);
 
 		entityData.set(OWNER, Optional.of(owner.getUUID()));
 		entityData.set(VARIANT, RandomUtil.randomNumberUpTo(6));
@@ -60,7 +60,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT nbt) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag nbt) {
 		entityData.set(VARIANT, RandomUtil.randomNumberUpTo(6));
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, nbt);
@@ -72,18 +72,18 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
 		if (heldItem.isEmpty())
 			return getType().getDescriptionId() + ".interact.empty";
 
-		if (!heldItem.getToolTypes().contains(ToolType.HOE))
+		if (!ItemUtil.isHoe(heldItem.getItem()))
 			return getType().getDescriptionId() + ".interact.incorrect";
 
 		return null;
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
-		if (true || isOwner(player)) {
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
+		if (isOwner(player)) {
 			ItemStack heldStack = player.getItemInHand(hand);
 
-			if (heldStack.getToolTypes().contains(ToolType.HOE)) {
+			if (ItemUtil.isHoe(heldStack.getItem())) {
 				if (heldStack.getItem() == getVariant().getTool()) {
 					successful = true;
 
@@ -93,7 +93,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
 				else {
 					deathTime = -1;
 
-					remove();
+					discard();
 				}
 			}
 		}
@@ -104,14 +104,14 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (source == DamageSource.OUT_OF_WORLD) {
-			remove();
+			discard();
 
 			return true;
 		}
 		else if (successful && !level.isClientSide()) {
-			if (source.getEntity() instanceof ServerPlayerEntity) {
-				((ServerPlayerEntity)source.getEntity()).awardStat(Stats.DAMAGE_DEALT_ABSORBED, (int)getHealth());
-				source.getEntity().killed((ServerWorld)level, this);
+			if (source.getEntity() instanceof ServerPlayer) {
+				((ServerPlayer)source.getEntity()).awardStat(Stats.DAMAGE_DEALT_ABSORBED, (int)getHealth());
+				source.getEntity().killed((ServerLevel)level, this);
 			}
 
 			this.getCombatTracker().recordDamage(source, 0, amount);
@@ -138,16 +138,16 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
 	public void checkDespawn() {
 		super.checkDespawn();
 
-		if (!removed && tickCount > 100 && !successful)
-			remove();
+		if (!isRemoved() && tickCount > 100 && !successful)
+			discard();
 	}
 
 	@Override
-	public void remove(boolean keepData) {
-		super.remove(keepData);
+	public void remove(RemovalReason pReason) {
+		super.remove(pReason);
 
 		if (deathTime == -1) {
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_UNHAPPY.get(), SoundCategory.PLAYERS, 1, 1);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_UNHAPPY.get(), SoundSource.PLAYERS, 1, 1);
 
 			for(int i = 0; i < 20; ++i) {
 				this.level.addParticle(ParticleTypes.ANGRY_VILLAGER, this.getRandomX(1), this.getRandomY(), this.getRandomZ(1), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d));
@@ -160,10 +160,10 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
 		++this.deathTime;
 
 		if (this.deathTime == 44) {
-			this.remove(false);
+			this.remove(RemovalReason.KILLED);
 
-			IParticleData particle = successful ? ParticleTypes.HAPPY_VILLAGER : ParticleTypes.POOF;
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundCategory.PLAYERS, 1, 1);
+			ParticleOptions particle = successful ? ParticleTypes.HAPPY_VILLAGER : ParticleTypes.POOF;
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundSource.PLAYERS, 1, 1);
 
 			for(int i = 0; i < 20; ++i) {
 				this.level.addParticle(particle, this.getRandomX(1), this.getRandomY(), this.getRandomZ(1), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d));

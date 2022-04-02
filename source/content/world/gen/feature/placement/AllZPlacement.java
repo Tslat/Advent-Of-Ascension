@@ -1,7 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.gen.placement.NoPlacementConfig;
 import net.minecraft.world.gen.placement.SimplePlacement;
 
@@ -19,3 +20,4 @@ public class AllZPlacement extends SimplePlacement<NoPlacementConfig> {
 		return IntStream.range(0, 16).mapToObj(z -> new BlockPos(pos.getX(), pos.getY(), z + pos.getZ()));
 	}
 }
+*/

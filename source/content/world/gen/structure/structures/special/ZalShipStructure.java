@@ -1,19 +1,20 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures.special;
 
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.gen.GenerationStage;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.biome.MobSpawnSettings;
+import net.minecraft.world.gen.GenerationStep;
+
 import net.tslat.aoa3.content.world.gen.structure.structures.YPosStructure;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class ZalShipStructure extends YPosStructure {
-	private static final List<MobSpawnInfo.Spawners> ZAL_SPAWNS = Arrays.asList(
-			new MobSpawnInfo.Spawners(AoAEntities.NPCs.ZAL_CHILD.get(), 3, 1, 3),
-			new MobSpawnInfo.Spawners(AoAEntities.NPCs.ZAL_CITIZEN.get(), 5, 1, 1));
+	private static final List<MobSpawnSettings.SpawnerData> ZAL_SPAWNS = Arrays.asList(
+			new MobSpawnSettings.SpawnerData(AoANpcs.ZAL_CHILD.get(), 3, 1, 3),
+			new MobSpawnSettings.SpawnerData(AoANpcs.ZAL_CITIZEN.get(), 5, 1, 1));
 
-	public ZalShipStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public ZalShipStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(decorationStage, templatePoolPath);
 	}
 
@@ -23,7 +24,8 @@ public class ZalShipStructure extends YPosStructure {
 	}
 
 	@Override
-	public List<MobSpawnInfo.Spawners> getDefaultCreatureSpawnList() {
+	public List<MobSpawnSettings.SpawnerData> getDefaultCreatureSpawnList() {
 		return ZAL_SPAWNS;
 	}
 }
+*/

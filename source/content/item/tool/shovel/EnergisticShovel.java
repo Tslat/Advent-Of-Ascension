@@ -1,23 +1,24 @@
 package net.tslat.aoa3.content.item.tool.shovel;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
-import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class EnergisticShovel extends BaseShovel {
 	public EnergisticShovel() {
-		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null));
+		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_SHOVEL));
 	}
 
 	@Override
@@ -42,7 +43,7 @@ public class EnergisticShovel extends BaseShovel {
 	}
 
 	@Override
-	public boolean mineBlock(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity entity) {
+	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity entity) {
 		PersistentStackCapabilityHandles cap = getCapability(stack);
 
 		if (super.getDestroySpeed(stack, state) != 1.0f)
@@ -52,16 +53,16 @@ public class EnergisticShovel extends BaseShovel {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		if (!world.isClientSide) {
 			PersistentStackCapabilityHandles cap = getCapability(player.getItemInHand(hand));
-			AoAResource.Instance spirit = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).getResource(AoAResources.SPIRIT.get());
-			float storeAmount = MathHelper.clamp(2000f - cap.getValue(), 0, Math.min(20, spirit.getCurrentValue()));
+			AoAResource.Instance spirit = PlayerUtil.getAdventPlayer((ServerPlayer)player).getResource(AoAResources.SPIRIT.get());
+			float storeAmount = Mth.clamp(2000f - cap.getValue(), 0, Math.min(20, spirit.getCurrentValue()));
 
 			cap.setValue(cap.getValue() + storeAmount);
 			spirit.consume(storeAmount, true);
 
-			return ActionResult.success(player.getItemInHand(hand));
+			return InteractionResultHolder.success(player.getItemInHand(hand));
 		}
 
 		return super.use(world, player, hand);
@@ -73,17 +74,17 @@ public class EnergisticShovel extends BaseShovel {
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		return new PersistentStackCapabilityProvider(null);
 	}
 
 	@Nullable
 	@Override
-	public CompoundNBT getShareTag(ItemStack stack) {
-		CompoundNBT tag = super.getShareTag(stack);
+	public CompoundTag getShareTag(ItemStack stack) {
+		CompoundTag tag = super.getShareTag(stack);
 
 		if (tag == null)
-			tag = new CompoundNBT();
+			tag = new CompoundTag();
 
 		tag.putFloat("AoAEnergyStored", getCapability(stack).getValue());
 
@@ -91,7 +92,7 @@ public class EnergisticShovel extends BaseShovel {
 	}
 
 	@Override
-	public void readShareTag(ItemStack stack, @Nullable CompoundNBT nbt) {
+	public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
 		if (nbt != null && nbt.contains("AoAEnergyStored"))
 			getCapability(stack).setValue(Math.min(2000, nbt.getFloat("AoAEnergyStored")));
 
@@ -103,12 +104,12 @@ public class EnergisticShovel extends BaseShovel {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticCharge", LocaleUtil.ItemDescriptionType.NEUTRAL));
 
 		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticStorage", LocaleUtil.ItemDescriptionType.NEUTRAL, new StringTextComponent( Integer.toString((int)cap.getValue()))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticStorage", LocaleUtil.ItemDescriptionType.NEUTRAL, new TextComponent( Integer.toString((int)cap.getValue()))));
 	}
 }

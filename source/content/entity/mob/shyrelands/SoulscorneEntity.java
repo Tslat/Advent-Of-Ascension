@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.entity.mob.shyrelands;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
@@ -13,12 +13,12 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class SoulscorneEntity extends AoAMeleeMob {
-    public SoulscorneEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public SoulscorneEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 1.59375f;
     }
 
@@ -42,16 +42,15 @@ public class SoulscorneEntity extends AoAMeleeMob {
 
     @Override
     protected void onAttack(Entity target) {
-        if (target instanceof LivingEntity) {
-            LivingEntity entity = (LivingEntity)target;
-            ArrayList<EffectInstance> positiveEffects = new ArrayList<EffectInstance>(entity.getActiveEffects().size());
+        if (target instanceof LivingEntity entity) {
+            ArrayList<MobEffectInstance> positiveEffects = new ArrayList<>(entity.getActiveEffects().size());
 
-            for (EffectInstance effect : entity.getActiveEffects()) {
+            for (MobEffectInstance effect : entity.getActiveEffects()) {
                 if (effect.getEffect().isBeneficial())
                     positiveEffects.add(effect);
             }
 
-            for (EffectInstance effect : positiveEffects) {
+            for (MobEffectInstance effect : positiveEffects) {
                 entity.removeEffect(effect.getEffect());
             }
         }

@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.enchantment;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.content.item.weapon.blaster.BaseBlaster;
 
 public class RechargeEnchantment extends Enchantment {
 	public RechargeEnchantment() {
-		super(Enchantment.Rarity.RARE, AoAEnchantments.BLASTER, new EquipmentSlotType[] {EquipmentSlotType.MAINHAND});
+		super(Enchantment.Rarity.RARE, AoAEnchantments.BLASTER, new EquipmentSlot[] {EquipmentSlot.MAINHAND});
 	}
 
 	public boolean canEnchant(ItemStack stack) {

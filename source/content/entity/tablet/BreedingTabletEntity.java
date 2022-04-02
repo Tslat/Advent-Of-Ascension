@@ -1,24 +1,24 @@
 package net.tslat.aoa3.content.entity.tablet;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
 
 public class BreedingTabletEntity extends SoulTabletEntity {
-	public BreedingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world) {
+	public BreedingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world) {
 		this(entityType, world, null);
 	}
 
-	public BreedingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world, ServerPlayerEntity placer) {
+	public BreedingTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world, ServerPlayer placer) {
 		super(entityType, world, placer);
 	}
 
 	@Override
 	protected void doTickEffect() {
-		for (AnimalEntity animal : getTargetsWithinRadius(AnimalEntity.class, animal -> animal != null && animal.isAlive() && !animal.isInLove() && animal.getAge() >= 0)) {
+		for (Animal animal : getTargetsWithinRadius(Animal.class, animal -> animal != null && animal.isAlive() && !animal.isInLove() && animal.getAge() >= 0)) {
 			int growingAge = animal.getAge();
 
 			if (growingAge == 0) {

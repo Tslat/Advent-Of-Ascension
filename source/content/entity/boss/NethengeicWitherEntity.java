@@ -1,35 +1,36 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.datasync.SynchedEntityData;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+
 import net.minecraft.world.BossInfo;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -40,13 +41,13 @@ import net.tslat.aoa3.util.*;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class NethengeicWitherEntity extends MonsterEntity implements IRangedAttackMob, AoARangedAttacker {
+public class NethengeicWitherEntity extends Monster implements RangedAttackMob, AoARangedAttacker {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
-	private static final DataParameter<Integer> FIRST_HEAD_TARGET = EntityDataManager.<Integer>defineId(NethengeicWitherEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer> SECOND_HEAD_TARGET = EntityDataManager.<Integer>defineId(NethengeicWitherEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer> THIRD_HEAD_TARGET = EntityDataManager.<Integer>defineId(NethengeicWitherEntity.class, DataSerializers.INT);
-	private static final DataParameter<Integer>[] HEAD_TARGETS = new DataParameter[] {FIRST_HEAD_TARGET, SECOND_HEAD_TARGET, THIRD_HEAD_TARGET};
-	private static final EntityPredicate NOT_UNDEAD = (new EntityPredicate()).range(20.0D).selector((entity) -> entity.getMobType() != CreatureAttribute.UNDEAD && entity.attackable());
+	private static final EntityDataAccessor<Integer> FIRST_HEAD_TARGET = SynchedEntityData.<Integer>defineId(NethengeicWitherEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> SECOND_HEAD_TARGET = SynchedEntityData.<Integer>defineId(NethengeicWitherEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer> THIRD_HEAD_TARGET = SynchedEntityData.<Integer>defineId(NethengeicWitherEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataAccessor<Integer>[] HEAD_TARGETS = new EntityDataAccessor[] {FIRST_HEAD_TARGET, SECOND_HEAD_TARGET, THIRD_HEAD_TARGET};
+	private static final EntityPredicate NOT_UNDEAD = (new EntityPredicate()).range(20.0D).selector((entity) -> entity.getMobType() != MobType.UNDEAD && entity.attackable());
 	private final float[] xRotationHeads = new float[2];
 	private final float[] yRotationHeads = new float[2];
 	private final float[] xRotOHeads = new float[2];
@@ -56,24 +57,24 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 
 	private int attackCooldown = 45;
 
-	public NethengeicWitherEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public NethengeicWitherEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		getNavigation().setCanFloat(true);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 2.484375f;
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 1, 10, 32));
-		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<LivingEntity>(this, LivingEntity.class, true));
 	}
@@ -110,7 +111,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 
 	@Override
 	public void aiStep() {
-		Vector3d motion = getDeltaMovement().multiply(1, 0.6d, 1);
+		Vec3 motion = getDeltaMovement().multiply(1, 0.6d, 1);
 
 		if (!level.isClientSide && getWatchedTargetId(0) > 0) {
 			Entity primaryTarget = level.getEntity(getWatchedTargetId(0));
@@ -123,8 +124,8 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 					yVelocity = yVelocity + (0.3D - yVelocity * (double)0.6f);
 				}
 
-				motion = new Vector3d(motion.x, yVelocity, motion.z);
-				Vector3d targetVec = new Vector3d(primaryTarget.getX() - getX(), 00D, primaryTarget.getZ() - getZ());
+				motion = new Vec3(motion.x, yVelocity, motion.z);
+				Vec3 targetVec = new Vec3(primaryTarget.getX() - getX(), 00D, primaryTarget.getZ() - getZ());
 
 				if (getHorizontalDistanceSqr(targetVec) > 9.0D) {
 					targetVec = targetVec.normalize();
@@ -136,7 +137,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 		setDeltaMovement(motion);
 
 		if (getHorizontalDistanceSqr(motion) > 0.05d)
-			yRot = (float)MathHelper.atan2(motion.z, motion.x) * (180f / (float)Math.PI) - 90f;
+			yRot = (float)Mth.atan2(motion.z, motion.x) * (180f / (float)Math.PI) - 90f;
 
 		super.aiStep();
 
@@ -159,9 +160,9 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 				double headTargetDistanceX = target.getX() - headX;
 				double headTargetDistanceY = target.getEyeY() - headY;
 				double headTargetDistanceZ = target.getZ() - headZ;
-				double targetDistance = MathHelper.sqrt(headTargetDistanceX * headTargetDistanceX + headTargetDistanceZ * headTargetDistanceZ);
-				float f = (float)(MathHelper.atan2(headTargetDistanceZ, headTargetDistanceX) * (double)(180f / (float)Math.PI)) - 90f;
-				float f1 = (float)(-(MathHelper.atan2(headTargetDistanceY, targetDistance) * (double)(180f / (float)Math.PI)));
+				double targetDistance = Mth.sqrt(headTargetDistanceX * headTargetDistanceX + headTargetDistanceZ * headTargetDistanceZ);
+				float f = (float)(Mth.atan2(headTargetDistanceZ, headTargetDistanceX) * (double)(180f / (float)Math.PI)) - 90f;
+				float f1 = (float)(-(Mth.atan2(headTargetDistanceY, targetDistance) * (double)(180f / (float)Math.PI)));
 				xRotationHeads[headId] = clampRotation(xRotationHeads[headId], f1, 40.0F);
 				yRotationHeads[headId] = clampRotation(yRotationHeads[headId], f, 10.0F);
 			}
@@ -196,9 +197,9 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 					idleHeadUpdates[prevHeadId] = idleHeadUpdates[prevHeadId] + 1;
 
 					if (idleHeadUpdate > 15) {
-						double targetPosX = MathHelper.nextDouble(random, getX() - 10, getX() + 10);
-						double targetPosY = MathHelper.nextDouble(random, getY() - 5, getY() + 5);
-						double targetPosZ = MathHelper.nextDouble(random, getZ() - 10, getZ() + 10);
+						double targetPosX = Mth.nextDouble(random, getX() - 10, getX() + 10);
+						double targetPosY = Mth.nextDouble(random, getY() - 5, getY() + 5);
+						double targetPosZ = Mth.nextDouble(random, getZ() - 10, getZ() + 10);
 
 						shootAtBlockPos(i + 1, targetPosX, targetPosY, targetPosZ);
 
@@ -211,8 +212,8 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 				if (targetId > 0) {
 					Entity entity = level.getEntity(targetId);
 
-					if (entity != null && entity.isAlive() && !(distanceToSqr(entity) > 900) && canSee(entity)) {
-						if (entity instanceof PlayerEntity && ((PlayerEntity)entity).abilities.invulnerable) {
+					if (entity != null && entity.isAlive() && !(distanceToSqr(entity) > 900) && hasLineOfSight(entity)) {
+						if (entity instanceof Player && ((Player)entity).abilities.invulnerable) {
 							setWatchedTargetId(i, 0);
 						}
 						else {
@@ -231,9 +232,9 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 					for(int j2 = 0; j2 < 10 && !list.isEmpty(); ++j2) {
 						LivingEntity entity = list.get(random.nextInt(list.size()));
 
-						if (entity != this && entity.isAlive() && !entity.isInvertedHealAndHarm() && canSee(entity)) {
-							if (entity instanceof PlayerEntity) {
-								if (!((PlayerEntity)entity).abilities.invulnerable)
+						if (entity != this && entity.isAlive() && !entity.isInvertedHealAndHarm() && hasLineOfSight(entity)) {
+							if (entity instanceof Player) {
+								if (!((Player)entity).abilities.invulnerable)
 									setWatchedTargetId(i, entity.getId());
 							}
 							else {
@@ -262,7 +263,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 		if (head <= 0)
 			return this.getX();
 
-		return this.getX() + MathHelper.cos((this.yBodyRot + (180 * (head - 1))) * 0.017453292F) * 1.3;
+		return this.getX() + Mth.cos((this.yBodyRot + (180 * (head - 1))) * 0.017453292F) * 1.3;
 	}
 
 	private double getHeadY(int head) {
@@ -273,13 +274,13 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 		if (head <= 0)
 			return this.getZ();
 
-		return this.getX() + MathHelper.sin((this.yBodyRot + (180 * (head - 1))) * 0.017453292F) * 1.3;
+		return this.getX() + Mth.sin((this.yBodyRot + (180 * (head - 1))) * 0.017453292F) * 1.3;
 	}
 
 	private float clampRotation(float xRotationOld, float xRotationNew, float max) {
-		float degrees = MathHelper.wrapDegrees(xRotationNew - xRotationOld);
+		float degrees = Mth.wrapDegrees(xRotationNew - xRotationOld);
 
-		return xRotationOld + MathHelper.clamp(degrees, -max, max);
+		return xRotationOld + Mth.clamp(degrees, -max, max);
 	}
 
 	private void shootAtBlockPos(int head, double posX, double posY, double posZ) {
@@ -293,7 +294,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 			double distanceFactorX = posX - projectile.getX();
 			double distanceFactorY = posY - projectile.getY();
 			double distanceFactorZ = posZ - projectile.getZ();
-			double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
+			double hyp = Mth.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
 			projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
 			level.addFreshEntity(projectile);
@@ -301,12 +302,12 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	public boolean causeFallDamage(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource damageSource) {
 		return false;
 	}
 
 	@Override
-	public boolean addEffect(EffectInstance effectInstanceIn) {
+	public boolean addEffect(MobEffectInstance effectInstanceIn) {
 		return false;
 	}
 
@@ -344,11 +345,11 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	public void swing(Hand hand) {}
+	public void swing(InteractionHand hand) {}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.UNDEAD;
+	public MobType getMobType() {
+		return MobType.UNDEAD;
 	}
 
 	@Override
@@ -389,10 +390,10 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.NETHENGEIC_WITHER.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.NETHENGEIC_WITHER.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -412,10 +413,10 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 		if (target instanceof LivingEntity) {
 			if (projectile instanceof NethengeicWitherShotEntity) {
 				if (((NethengeicWitherShotEntity)projectile).cataclysmic) {
-					EntityUtil.applyPotions(target, new EffectBuilder(Effects.WITHER, 70).level(3));
+					EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 70).level(3));
 				}
 				else {
-					EntityUtil.applyPotions(target, new EffectBuilder(Effects.WITHER, 90).level(2));
+					EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 90).level(2));
 				}
 			}
 		}
@@ -424,7 +425,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -432,14 +433,14 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.NETHENGEIC_WITHER_MUSIC.getId()));
@@ -447,7 +448,7 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.NETHENGEIC_WITHER_MUSIC.getId()));
@@ -455,3 +456,4 @@ public class NethengeicWitherEntity extends MonsterEntity implements IRangedAtta
 	}
 
 }
+*/

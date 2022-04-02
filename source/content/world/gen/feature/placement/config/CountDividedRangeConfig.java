@@ -1,10 +1,10 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.gen.placement.IPlacementConfig;
 
-public class CountDividedRangeConfig implements IPlacementConfig {
+public class CountDividedRangeConfig implements PlacementConfig {
 	public static final Codec<CountDividedRangeConfig> CODEC = RecordCodecBuilder.create(builder -> builder.group(
 			Codec.INT.fieldOf("divide_point").forGetter(config -> config.dividePoint),
 			Codec.INT.fieldOf("below_divide").forGetter(config -> config.belowDivide),
@@ -25,3 +25,4 @@ public class CountDividedRangeConfig implements IPlacementConfig {
 		return worldHeight < dividePoint ? belowDivide : aboveDivide;
 	}
 }
+*/

@@ -1,17 +1,23 @@
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.Slot;
 import net.tslat.aoa3.common.container.FrameBenchContainer;
+import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBenchContainer> {
+public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBenchContainer, FrameBenchRecipe> {
 	@Override
 	public Class<FrameBenchContainer> getContainerClass() {
 		return FrameBenchContainer.class;
+	}
+
+	@Override
+	public Class<FrameBenchRecipe> getRecipeClass() {
+		return FrameBenchRecipe.class;
 	}
 
 	@Override
@@ -20,12 +26,18 @@ public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBe
 	}
 
 	@Override
-	public boolean canHandle(FrameBenchContainer container) {
-		return true;
+	public List<Slot> getInventorySlots(FrameBenchContainer container, FrameBenchRecipe recipe) {
+		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 2);
+
+		for (int i = 2; i < container.slots.size(); i++) {
+			inventorySlots.add(container.getSlot(i));
+		}
+
+		return inventorySlots;
 	}
 
 	@Override
-	public List<Slot> getRecipeSlots(FrameBenchContainer container) {
+	public List<Slot> getRecipeSlots(FrameBenchContainer container, FrameBenchRecipe recipe) {
 		List<Slot> slots = new ArrayList<>(1);
 
 		slots.add(container.getSlot(0));
@@ -34,13 +46,7 @@ public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBe
 	}
 
 	@Override
-	public List<Slot> getInventorySlots(FrameBenchContainer container) {
-		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 2);
-
-		for (int i = 2; i < container.slots.size(); i++) {
-			inventorySlots.add(container.getSlot(i));
-		}
-
-		return inventorySlots;
+	public boolean canHandle(FrameBenchContainer container, FrameBenchRecipe recipe) {
+		return true;
 	}
 }

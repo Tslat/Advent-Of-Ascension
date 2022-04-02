@@ -3,7 +3,8 @@
   "pools": [
     {
       "name": "loot",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:empty",
@@ -16,10 +17,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:candy_cane"
@@ -40,10 +42,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 8.0,
-                "max": 22.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 22.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:red_candy"
@@ -55,10 +58,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 8.0,
-                "max": 22.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 22.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:white_candy"
@@ -77,6 +81,7 @@
     },
     {
       "rolls": 1.0,
+      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",

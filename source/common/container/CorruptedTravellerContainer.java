@@ -1,40 +1,39 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAContainers;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.npc.trader.CorruptedTravellerEntity;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.ItemUtil;
 
-public class CorruptedTravellerContainer extends Container {
-	private final Inventory input;
+public class CorruptedTravellerContainer extends AbstractContainerMenu {
+	private Inventory input;
 
 	public final CorruptedTravellerEntity traveller;
-	private final PlayerEntity player;
+	private final Player player;
 
 	private boolean handledFood = false;
 
-	public CorruptedTravellerContainer(int screenId, PlayerInventory playerInventory) {
+	public CorruptedTravellerContainer(int screenId, Inventory playerInventory) {
 		this(screenId, playerInventory, null);
 	}
 
-	public CorruptedTravellerContainer(int screenId, PlayerInventory playerInventory, CorruptedTravellerEntity traveller) {
+	public CorruptedTravellerContainer(int screenId, Inventory playerInventory, CorruptedTravellerEntity traveller) {
 		super(AoAContainers.CORRUPTED_TRAVELLER.get(), screenId);
 
 		this.traveller = traveller;
 		this.player = playerInventory.player;
 
-		input = new Inventory(1) {
+		/*input = new Inventory(1) {
 			@Override
 			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem().getFoodProperties() != null;
@@ -58,13 +57,13 @@ public class CorruptedTravellerContainer extends Container {
 
 		for (int inventoryY = 0; inventoryY < 3; inventoryY++) {
 			for (int inventoryX = 0; inventoryX < 9; inventoryX++) {
-				addSlot(new Slot(player.inventory, inventoryX + inventoryY * 9 + 9, 8 + inventoryX * 18, 65 + inventoryY * 18));
+				addSlot(new Slot(player.getInventory(), inventoryX + inventoryY * 9 + 9, 8 + inventoryX * 18, 65 + inventoryY * 18));
 			}
 		}
 
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
-			addSlot(new Slot(player.inventory, hotbarSlot, 8 + hotbarSlot * 18, 123));
-		}
+			addSlot(new Slot(player.getInventory(), hotbarSlot, 8 + hotbarSlot * 18, 123));
+		}*/
 	}
 
 	private void handleFoodInput() {
@@ -77,8 +76,8 @@ public class CorruptedTravellerContainer extends Container {
 				if (IntegrationManager.isPatchouliActive()) {
 					bookStack = PatchouliIntegration.getBook(AdventOfAscension.id("worn_book")).copy();
 
-					if (player instanceof ServerPlayerEntity)
-						AdvancementUtil.completeAdvancement((ServerPlayerEntity)player, AdventOfAscension.id("overworld/the_journey_begins"), "obtain_worn_book");
+					if (player instanceof ServerPlayer)
+						AdvancementUtil.completeAdvancement((ServerPlayer)player, AdventOfAscension.id("overworld/the_journey_begins"), "obtain_worn_book");
 
 					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()));
 				}
@@ -98,15 +97,15 @@ public class CorruptedTravellerContainer extends Container {
 	}
 
 	@Override
-	public void removed(PlayerEntity player) {
+	public void removed(Player player) {
 		super.removed(player);
 
 		if (!player.level.isClientSide)
-			clearContainer(player, player.level, input);
+			clearContainer(player, input);
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 
@@ -146,7 +145,7 @@ public class CorruptedTravellerContainer extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return traveller != null && traveller.isAlive() && this.player.distanceToSqr(traveller) <= 64;
 	}
 }

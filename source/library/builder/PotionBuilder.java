@@ -1,12 +1,12 @@
 package net.tslat.aoa3.library.builder;
 
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.PotionUtils;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.alchemy.PotionUtils;
 
 import java.util.ArrayList;
 
@@ -14,7 +14,7 @@ public class PotionBuilder {
 	Item potionItem;
 	String displayName = null;
 	boolean translatable = false;
-	ArrayList<EffectInstance> effects = null;
+	ArrayList<MobEffectInstance> effects = null;
 	Integer colour = null;
 	boolean dynamicColour = true;
 
@@ -35,9 +35,9 @@ public class PotionBuilder {
 		return this;
 	}
 
-	public PotionBuilder addEffect(EffectInstance effect) {
+	public PotionBuilder addEffect(MobEffectInstance effect) {
 		if (effects == null)
-			effects = new ArrayList<EffectInstance>(1);
+			effects = new ArrayList<MobEffectInstance>(1);
 
 		this.effects.add(effect);
 
@@ -53,11 +53,11 @@ public class PotionBuilder {
 
 	public ItemStack build() {
 		ItemStack stack = new ItemStack(potionItem);
-		CompoundNBT nbt = stack.getOrCreateTag();
-		CompoundNBT displayTag = stack.getOrCreateTagElement("display");
+		CompoundTag nbt = stack.getOrCreateTag();
+		CompoundTag displayTag = stack.getOrCreateTagElement("display");
 
 		if (displayName != null)
-			stack.setHoverName(translatable ? new TranslationTextComponent(displayName) : new StringTextComponent(displayName));
+			stack.setHoverName(translatable ? new TranslatableComponent(displayName) : new TextComponent(displayName));
 
 		if (dynamicColour && effects != null)
 			colour = PotionUtils.getColor(effects);

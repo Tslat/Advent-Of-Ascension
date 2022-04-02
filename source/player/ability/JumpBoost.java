@@ -1,11 +1,11 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
@@ -23,20 +23,20 @@ public class JumpBoost extends ScalableModAbility {
 	public JumpBoost(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.JUMP_BOOST.get(), skill, data);
 
-		this.sprintJumpBoost = JSONUtils.getAsBoolean(data, "amplify_lateral_velocity", false);
+		this.sprintJumpBoost = GsonHelper.getAsBoolean(data, "amplify_lateral_velocity", false);
 
 		updateMultipliers();
 	}
 
-	public JumpBoost(AoASkill.Instance skill, CompoundNBT data) {
+	public JumpBoost(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.JUMP_BOOST.get(), skill, data);
 
 		this.sprintJumpBoost = data.getBoolean("amplify_lateral_velocity");
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + (sprintJumpBoost ? ".lateral" : ".vertical"), getScalingDescriptionComponent(2)));
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + (sprintJumpBoost ? ".lateral" : ".vertical"), getScalingDescriptionComponent(2)));
 	}
 
 	@Override
@@ -57,8 +57,8 @@ public class JumpBoost extends ScalableModAbility {
 	@Override
 	public void handlePlayerJump(LivingEvent.LivingJumpEvent ev) {
 		LivingEntity entity = ev.getEntityLiving();
-		Vector3d oldMotion = entity.getDeltaMovement();
-		Vector3d newMotion;
+		Vec3 oldMotion = entity.getDeltaMovement();
+		Vec3 newMotion;
 
 		if (!sprintJumpBoost) {
 			newMotion = oldMotion.multiply(1, launchMultiplier / 1.02040814340536d, 1);
@@ -75,15 +75,15 @@ public class JumpBoost extends ScalableModAbility {
 	}
 
 	@Override
-	public void loadFromNbt(CompoundNBT data) {
+	public void loadFromNbt(CompoundTag data) {
 		super.loadFromNbt(data);
 
 		updateMultipliers();
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
 			data.putBoolean("amplify_lateral_velocity", this.sprintJumpBoost);

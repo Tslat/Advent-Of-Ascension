@@ -1,24 +1,24 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class LucalusTreeFeature extends AoATreeFeature {
-	public LucalusTreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public LucalusTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
 	@Override
-	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		pos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
 
 		if (pos == null)
@@ -111,7 +111,7 @@ public class LucalusTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void buildNorthSouthBranch(ISeedReader reader, BlockPos branchPos, Random rand, boolean north) {
+	private void buildNorthSouthBranch(WorldGenLevel reader, BlockPos branchPos, Random rand, boolean north) {
 		BlockState log = AoABlocks.LUCALUS_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUCALUS_LEAVES.get().defaultBlockState();
 		int branchLength = 3 + rand.nextInt(2);
@@ -162,7 +162,7 @@ public class LucalusTreeFeature extends AoATreeFeature {
 		}
 	}
 
-	private void buildEastWestBranch(ISeedReader reader, BlockPos branchPos, Random rand, boolean east) {
+	private void buildEastWestBranch(WorldGenLevel reader, BlockPos branchPos, Random rand, boolean east) {
 		BlockState log = AoABlocks.LUCALUS_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUCALUS_LEAVES.get().defaultBlockState();
 		int branchLength = 3 + rand.nextInt(2);

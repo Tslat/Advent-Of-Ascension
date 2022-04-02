@@ -1,15 +1,15 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
@@ -32,18 +32,18 @@ public class InnervationDodge extends AoAAbility.Instance {
 	public InnervationDodge(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.INNERVATION_DODGE.get(), skill, data);
 
-		this.energyCost = JSONUtils.getAsFloat(data, "energy_cost");
+		this.energyCost = GsonHelper.getAsFloat(data, "energy_cost");
 	}
 
-	public InnervationDodge(AoASkill.Instance skill, CompoundNBT data) {
+	public InnervationDodge(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.INNERVATION_DODGE.get(), skill, data);
 
 		this.energyCost = data.getFloat("energy_cost");
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
 	}
 
 	@Override
@@ -53,27 +53,26 @@ public class InnervationDodge extends AoAAbility.Instance {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public KeyBinding getKeybind() {
+	public KeyMapping getKeybind() {
 		return AoAKeybinds.ABILITY_ACTION;
 	}
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean shouldSendKeyPress() {
-		ClientPlayerEntity player = Minecraft.getInstance().player;
-
+		LocalPlayer player = Minecraft.getInstance().player;
 		float yRot = player.getViewYRot(Minecraft.getInstance().getDeltaFrameTime());
 
-		if (player.input.leftImpulse == 0 || player.input.hasForwardImpulse() || player.level.getGameTime() <= activationTime + 5 || player.abilities.flying)
+		if (player.input.leftImpulse == 0 || player.input.hasForwardImpulse() || player.level.getGameTime() <= activationTime + 5 || player.getAbilities().flying)
 			return false;
 
 		if (ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyCost)) {
-			Vector3d movement = player.getDeltaMovement();
+			Vec3 movement = player.getDeltaMovement();
 			double limit = player.isOnGround() ? 2.5d : 0.9d;
-			double velocityX = MathHelper.clamp(movement.x() + (MathHelper.cos(yRot * ((float)Math.PI / 180F)) * player.input.leftImpulse), -limit, limit);
-			double velocityZ = MathHelper.clamp(movement.z() + (MathHelper.sin(yRot * ((float)Math.PI / 180F)) * player.input.leftImpulse), -limit, limit);
+			double velocityX = Mth.clamp(movement.x() + (Mth.cos(yRot * ((float)Math.PI / 180F)) * player.input.leftImpulse), -limit, limit);
+			double velocityZ = Mth.clamp(movement.z() + (Mth.sin(yRot * ((float)Math.PI / 180F)) * player.input.leftImpulse), -limit, limit);
 
-			player.setDeltaMovement(new Vector3d(velocityX, movement.y(), velocityZ));
+			player.setDeltaMovement(new Vec3(velocityX, movement.y(), velocityZ));
 
 			activationTime = player.level.getGameTime();
 		}
@@ -83,7 +82,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 
 	@Override
 	public void handleKeyInput() {
-		ServerPlayerEntity player = getPlayer();
+		ServerPlayer player = getPlayer();
 
 		if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true)) {
 			activatedActionKey(player);
@@ -100,8 +99,8 @@ public class InnervationDodge extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
 			data.putFloat("energy_cost", this.energyCost);

@@ -1,7 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "particle": "aoa3:block/ornate_jade_ivory",
     "all": "aoa3:block/ornate_jade_ivory"
   }
 }

@@ -1,24 +1,25 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
@@ -34,14 +35,14 @@ import java.util.concurrent.TimeUnit;
 public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacker {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public DracyonEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public DracyonEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 
 		this.setSpeed(3.7f);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.15625f;
 	}
 
@@ -90,9 +91,9 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 				double distanceFactorX = target.getX() - projectile.getX();
 				double distanceFactorY = target.getBoundingBox().minY + (target.getBbHeight() / 3) - projectile.getY();
 				double distanceFactorZ = target.getZ() - projectile.getZ();
-				double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
+				double hyp = Mth.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-				level.playSound(null, blockPosition(), AoASounds.ENTITY_DRACYON_AMBIENT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.playSound(null, blockPosition(), AoASounds.ENTITY_DRACYON_AMBIENT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 				projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
 				level.addFreshEntity(projectile);
 			}
@@ -109,17 +110,17 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 		super.die(cause);
 
 		if (!level.isClientSide && !isNoAi()) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.DRACYON.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.DRACYON.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (target instanceof ServerPlayerEntity)
-			AoAPackets.messagePlayer((ServerPlayerEntity)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/scratches.png"), 40));
+		if (target instanceof ServerPlayer)
+			AoAPackets.messagePlayer((ServerPlayer)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/scratches.png"), 40));
 	}
 
 	@Override
@@ -133,11 +134,11 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		EntityUtil.applyPotions(target, new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 45));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 45));
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -145,14 +146,14 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.DRACYON_MUSIC.getId()));
@@ -160,7 +161,7 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.DRACYON_MUSIC.getId()));
@@ -168,3 +169,4 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 	}
 
 }
+*/

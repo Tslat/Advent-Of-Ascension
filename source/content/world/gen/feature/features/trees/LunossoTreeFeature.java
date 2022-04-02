@@ -1,24 +1,24 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class LunossoTreeFeature extends AoATreeFeature {
-	public LunossoTreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public LunossoTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
 	@Override
-	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		switch (rand.nextInt(3)) {
 			case 0:
 				return generateTree1(reader, rand, pos, isWorldGen);
@@ -30,7 +30,7 @@ public class LunossoTreeFeature extends AoATreeFeature {
 		}
 	}
 
-	private boolean generateTree1(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree1(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 3 + rand.nextInt(5);
 		int leafLoopWidth = 1 + rand.nextInt(2);
 
@@ -40,7 +40,7 @@ public class LunossoTreeFeature extends AoATreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = AoABlocks.LUNIDE_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUNOSSO_LEAVES.get().defaultBlockState();
 
@@ -81,7 +81,7 @@ public class LunossoTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree2(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree2(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 3 + rand.nextInt(5);
 		int leafRings = 1 + rand.nextInt(3);
 
@@ -91,7 +91,7 @@ public class LunossoTreeFeature extends AoATreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = AoABlocks.LUNIDE_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUNOSSO_LEAVES.get().defaultBlockState();
 
@@ -113,7 +113,7 @@ public class LunossoTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree3(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree3(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 3 + rand.nextInt(5);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 8, 1, isWorldGen))
@@ -122,7 +122,7 @@ public class LunossoTreeFeature extends AoATreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = AoABlocks.LUNIDE_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUNOSSO_LEAVES.get().defaultBlockState();
 

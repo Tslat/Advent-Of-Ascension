@@ -1,17 +1,17 @@
 package net.tslat.aoa3.content.entity.tablet;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
 
 public class ProficiencyTabletEntity extends SoulTabletEntity {
-	public ProficiencyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world) {
+	public ProficiencyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world) {
 		this(entityType, world, null);
 	}
 
-	public ProficiencyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world, ServerPlayerEntity placer) {
+	public ProficiencyTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world, ServerPlayer placer) {
 		super(entityType, world, placer);
 	}
 

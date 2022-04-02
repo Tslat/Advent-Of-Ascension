@@ -1,15 +1,19 @@
 package net.tslat.aoa3.content.entity.mob.barathos;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -19,21 +23,21 @@ import net.tslat.aoa3.util.EntityUtil;
 import javax.annotation.Nullable;
 
 public class EmperorBeastEntity extends AoAMeleeMob {
-	public EmperorBeastEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public EmperorBeastEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1, false));
-		goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(3, new LookRandomlyGoal(this));
+		goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 5.3125f;
 	}
 
@@ -62,7 +66,7 @@ public class EmperorBeastEntity extends AoAMeleeMob {
 	@Override
 	protected void onAttack(Entity target) {
 		if (target instanceof LivingEntity) {
-			EntityUtil.applyPotions(target, new EffectBuilder(Effects.CONFUSION, 350).isAmbient());
+			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.CONFUSION, 350).isAmbient());
 			DamageUtil.doBodySlamKnockback((LivingEntity)target, this, 21, 1.6f, 21);
 		}
 	}

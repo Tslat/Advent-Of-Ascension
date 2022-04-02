@@ -1,11 +1,11 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.CropBlock;
 import net.minecraftforge.event.world.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
@@ -19,7 +19,7 @@ public class DryadSpriteSpawn extends ScalableModAbility {
 		super(AoAAbilities.DRYAD_SPRITE_SPAWN.get(), skill, data);
 	}
 
-	public DryadSpriteSpawn(AoASkill.Instance skill, CompoundNBT data) {
+	public DryadSpriteSpawn(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.DRYAD_SPRITE_SPAWN.get(), skill, data);
 	}
 
@@ -31,10 +31,10 @@ public class DryadSpriteSpawn extends ScalableModAbility {
 	@Override
 	public void handleBlockBreak(BlockEvent.BreakEvent ev) {
 		if (testAsChance()) {
-			if (!(ev.getState().getBlock() instanceof CropsBlock) || !((CropsBlock)ev.getState().getBlock()).isMaxAge(ev.getState()) || getPlayer().isCreative())
+			if (!(ev.getState().getBlock() instanceof CropBlock) || !((CropBlock)ev.getState().getBlock()).isMaxAge(ev.getState()) || getPlayer().isCreative())
 				return;
 
-			IWorld world = ev.getWorld();
+			LevelAccessor world = ev.getWorld();
 			BlockPos pos = ev.getPos();
 
 			if (world.getBlockState(pos.above()).isAir()) {

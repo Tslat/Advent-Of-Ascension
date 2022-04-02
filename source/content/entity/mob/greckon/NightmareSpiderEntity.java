@@ -1,23 +1,25 @@
 package net.tslat.aoa3.content.entity.mob.greckon;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.ClimberPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
@@ -26,22 +28,22 @@ import net.tslat.aoa3.util.EntityUtil;
 import javax.annotation.Nullable;
 
 public class NightmareSpiderEntity extends AoAMeleeMob {
-	private static final DataParameter<Byte> CLIMBING = EntityDataManager.<Byte>defineId(NightmareSpiderEntity.class, DataSerializers.BYTE);
+	private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.<Byte>defineId(NightmareSpiderEntity.class, EntityDataSerializers.BYTE);
 
-	public NightmareSpiderEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public NightmareSpiderEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new SwimGoal(this));
+		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4f));
 		goalSelector.addGoal(3, new MeleeAttackGoal(this, 1, true));
-		goalSelector.addGoal(7, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
 	}
 
 	@Override
@@ -51,12 +53,12 @@ public class NightmareSpiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected PathNavigator createNavigation(World world) {
-		return new ClimberPathNavigator(this, world);
+	protected PathNavigation createNavigation(Level world) {
+		return new WallClimberNavigation(this, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.59275f;
 	}
 
@@ -84,12 +86,12 @@ public class NightmareSpiderEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public CreatureAttribute getMobType() {
-		return CreatureAttribute.ARTHROPOD;
+	public MobType getMobType() {
+		return MobType.ARTHROPOD;
 	}
 
 	@Override
-	public void makeStuckInBlock(BlockState state, Vector3d motionMultiplierIn) {
+	public void makeStuckInBlock(BlockState state, Vec3 motionMultiplierIn) {
 		if (state.getBlock() != Blocks.COBWEB)
 			super.makeStuckInBlock(state, motionMultiplierIn);
 	}
@@ -126,6 +128,6 @@ public class NightmareSpiderEntity extends AoAMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		EntityUtil.applyPotions(target, new EffectBuilder(Effects.CONFUSION, 10), new EffectBuilder(Effects.BLINDNESS, 80));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.CONFUSION, 10), new EffectBuilder(MobEffects.BLINDNESS, 80));
 	}
 }

@@ -1,8 +1,9 @@
+/*
 package net.tslat.aoa3.common.registration.worldgen;
 
 import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
 import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -23,3 +24,4 @@ public class AoASurfaceBuilders {
 		return SURFACE_BUILDERS.register(id, surfaceBuilder);
 	}
 }
+*/

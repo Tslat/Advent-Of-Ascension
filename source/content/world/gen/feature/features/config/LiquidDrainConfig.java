@@ -2,17 +2,17 @@ package net.tslat.aoa3.content.world.gen.feature.features.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class LiquidDrainConfig implements IFeatureConfig {
+public class LiquidDrainConfig implements FeatureConfiguration {
 	public static final Codec<LiquidDrainConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			FluidState.CODEC.optionalFieldOf("fluid", Fluids.WATER.getFlowing(8, true)).forGetter(config -> config.fluid),
 			Codec.BOOL.optionalFieldOf("fill_with_liquid", false).forGetter(config -> config.fill),

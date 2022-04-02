@@ -1,9 +1,9 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -94,8 +94,8 @@ public final class BrainUtils {
 	}
 
 	public static void setTargetOfEntity(LivingEntity entity, LivingEntity target) {
-		if (entity instanceof MobEntity)
-			((MobEntity)entity).setTarget(target);
+		if (entity instanceof Mob mob)
+			mob.setTarget(target);
 
 
 		setMemory(entity, MemoryModuleType.ATTACK_TARGET, target);

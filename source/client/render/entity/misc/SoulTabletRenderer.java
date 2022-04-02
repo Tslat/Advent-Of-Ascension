@@ -1,17 +1,18 @@
+/*
 package net.tslat.aoa3.client.render.entity.misc;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.Entity;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.particles.ParticleOptions;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import net.tslat.aoa3.content.entity.tablet.SoulTabletEntity;
 
@@ -24,9 +25,9 @@ public class SoulTabletRenderer extends EntityRenderer<Entity> {
 	private final ResourceLocation texture;
 	private final EntityModel<Entity> model;
 	@Nullable
-	private final IParticleData particleData;
+	private final ParticleOptions particleData;
 
-	public SoulTabletRenderer(EntityRendererManager renderManager, EntityModel<Entity> model, ResourceLocation texture, @Nullable IParticleData particleData) {
+	public SoulTabletRenderer(EntityRendererProvider.Context renderManager, EntityModel<Entity> model, ResourceLocation texture, @Nullable ParticleOptions particleData) {
 		super(renderManager);
 		this.texture = texture;
 		this.model = model;
@@ -34,7 +35,7 @@ public class SoulTabletRenderer extends EntityRenderer<Entity> {
 	}
 
 	@Override
-	public void render(Entity entity, float entityYaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
+	public void render(Entity entity, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		matrix.pushPose();
 		matrix.translate(0, 1.5d, 0);
 		matrix.mulPose(Vector3f.XP.rotationDegrees(180));
@@ -67,3 +68,4 @@ public class SoulTabletRenderer extends EntityRenderer<Entity> {
 		return texture;
 	}
 }
+*/

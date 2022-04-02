@@ -1,11 +1,11 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.tslat.aoa3.library.object.DynamicTextComponent;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -19,11 +19,11 @@ public abstract class ScalableModAbility extends AoAAbility.Instance {
 	public ScalableModAbility(AoAAbility ability, AoASkill.Instance skill, JsonObject data) {
 		super(ability, skill, data);
 
-		this.baseValue = JSONUtils.getAsFloat(data, "base_value", 0);
-		this.perLevelMod = JSONUtils.getAsFloat(data, "per_level_mod", 0);
+		this.baseValue = GsonHelper.getAsFloat(data, "base_value", 0);
+		this.perLevelMod = GsonHelper.getAsFloat(data, "per_level_mod", 0);
 	}
 
-	public ScalableModAbility(AoAAbility ability, AoASkill.Instance skill, CompoundNBT data) {
+	public ScalableModAbility(AoAAbility ability, AoASkill.Instance skill, CompoundTag data) {
 		super(ability, skill, data);
 
 		this.baseValue = data.getFloat("base_value");
@@ -31,13 +31,13 @@ public abstract class ScalableModAbility extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
+	protected void updateDescription(TranslatableComponent defaultDescription) {
 		String defaultKey = Util.makeDescriptionId("ability", type().getRegistryName()) + ".description";
 
 		if (defaultDescription.getKey().equals(defaultKey) && defaultDescription.getArgs().length == 0) {
-			TranslationTextComponent component = new TranslationTextComponent(defaultDescription.getKey(), getScalingDescriptionComponent(4));
+			TranslatableComponent component = new TranslatableComponent(defaultDescription.getKey(), getScalingDescriptionComponent(4));
 
-			for (ITextComponent child : defaultDescription.getSiblings()) {
+			for (Component child : defaultDescription.getSiblings()) {
 				component.append(child);
 			}
 
@@ -49,7 +49,7 @@ public abstract class ScalableModAbility extends AoAAbility.Instance {
 		super.updateDescription(defaultDescription);
 	}
 
-	protected TranslationTextComponent getScalingDescriptionComponent(int precision) {
+	protected TranslatableComponent getScalingDescriptionComponent(int precision) {
 		return LocaleUtil.getAbilityValueDesc(baseValue > 0, perLevelMod > 0, isPercent(),
 				NumberUtil.roundToNthDecimalPlace(baseValue * (isPercent() ? 100 : 1), precision),
 				NumberUtil.roundToNthDecimalPlace(perLevelMod * (isPercent() ? 100 : 1), precision),
@@ -72,8 +72,8 @@ public abstract class ScalableModAbility extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			data.putFloat("base_value", this.baseValue);

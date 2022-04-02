@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.world.gen.feature.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.tslat.aoa3.content.world.gen.feature.features.config.MiscStateAndVariablesConfig;
 
 import java.util.Random;
@@ -16,7 +16,11 @@ public class CubeFeature extends Feature<MiscStateAndVariablesConfig> {
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, MiscStateAndVariablesConfig config) {
+	public boolean place(FeaturePlaceContext<MiscStateAndVariablesConfig> context) {
+		BlockPos pos = context.origin();
+		MiscStateAndVariablesConfig config = context.config();
+		Random rand = context.random();
+		WorldGenLevel reader = context.level();
 		BlockState state = config.stateProvider.getState(rand, pos);
 		int sizeX = config.x.getValue(rand);
 		int sizeY = config.y.getValue(rand);

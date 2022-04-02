@@ -1,20 +1,20 @@
 package net.tslat.aoa3.content.entity.ai.mob;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.content.entity.ai.animation.Animatable;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.EnumSet;
 
-public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends Goal {
+public class AnimatableMeleeAttackGoal<T extends Mob & Animatable> extends Goal {
 	private final T entity;
 
 	protected double speedModifier = 1d;
@@ -27,7 +27,7 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 
 	protected long attackDamageTick = -1;
 	protected Path currentPath;
-	protected Vector3d targetLocation;
+	protected Vec3 targetLocation;
 	protected int newPathCooldown;
 	protected int attackCooldown;
 
@@ -121,7 +121,7 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 		if (target == null || !target.isAlive())
 			return false;
 
-		if (target.isSpectator() || (target instanceof PlayerEntity && ((PlayerEntity)target).isCreative()))
+		if (target.isSpectator() || (target instanceof Player && ((Player)target).isCreative()))
 			return false;
 
 		if (attackDamageTick >= 0)
@@ -143,7 +143,7 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 
 		this.entity.getLookControl().setLookAt(target, 30, 30);
 
-		if (this.newPathCooldown <= 0 && (this.ignoreLineOfSight || this.entity.getSensing().canSee(target)) && (this.targetLocation == null || target.distanceToSqr(this.targetLocation) >= 1 || RandomUtil.oneInNChance(20))) {
+		if (this.newPathCooldown <= 0 && (this.ignoreLineOfSight || this.entity.getSensing().hasLineOfSight(target)) && (this.targetLocation == null || target.distanceToSqr(this.targetLocation) >= 1 || RandomUtil.oneInNChance(20))) {
 			this.targetLocation = target.position();
 			this.newPathCooldown = RandomUtil.randomNumberBetween(4, 11);
 
@@ -166,7 +166,7 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 
 	@Override
 	public void stop() {
-		if (!EntityPredicates.NO_CREATIVE_OR_SPECTATOR.test(this.entity.getTarget()))
+		if (!EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(this.entity.getTarget()))
 			this.entity.setTarget(null);
 
 		this.entity.setAggressive(false);
@@ -183,7 +183,7 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 		if (sqrDistToTarget <= getAttackReachSqr(target) || (animState > 0 && !this.stopAttackIfOutOfRange)) {
 			if (attackCooldown <= 0) {
 				this.attackCooldown = this.attackInterval;
-				this.entity.swing(Hand.MAIN_HAND);
+				this.entity.swing(InteractionHand.MAIN_HAND);
 				this.entity.setAnimationState(animKey, 1);
 
 				this.attackDamageTick = this.entity.level.getGameTime() + this.preAttackTime;

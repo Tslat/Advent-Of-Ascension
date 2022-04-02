@@ -7,9 +7,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import net.minecraft.command.ISuggestionProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.resource.AoAResource;
 
@@ -21,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 public class AoAResourceArgument implements ArgumentType<AoAResource> {
 	private static final List<String> EXAMPLES = Arrays.asList("aoa3:spirit");
 
-	private static final DynamicCommandExceptionType UNKNOWN_RESOURCE_ERROR = new DynamicCommandExceptionType(input -> new TranslationTextComponent("argument.aoa.resource.notFound"));
+	private static final DynamicCommandExceptionType UNKNOWN_RESOURCE_ERROR = new DynamicCommandExceptionType(input -> new TranslatableComponent("argument.aoa.resource.notFound"));
 
 	public static AoAResourceArgument resource() {
 		return new AoAResourceArgument();
@@ -49,7 +50,7 @@ public class AoAResourceArgument implements ArgumentType<AoAResource> {
 		reader.setCursor(builder.getStart());
 		builder = builder.createOffset(reader.getCursor());
 
-		ISuggestionProvider.suggestResource(AoAResources.getRegistry().getKeys(), builder);
+		SharedSuggestionProvider.suggestResource(AoARegistries.AOA_RESOURCES.getAllIds(), builder);
 
 		return builder.buildFuture();
 	}

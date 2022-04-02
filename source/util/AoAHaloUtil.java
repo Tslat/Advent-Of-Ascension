@@ -1,6 +1,6 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.server.level.ServerPlayer;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.PlayerHaloDataPacket;
@@ -13,7 +13,7 @@ public final class AoAHaloUtil {
 	private static final HashMap<UUID, PlayerHaloContainer> playerHalos = new HashMap<UUID, PlayerHaloContainer>();
 	private static final HashSet<UUID> renderCheckedPlayers = new HashSet<UUID>();
 
-	public static void syncWithNewClient(ServerPlayerEntity player) {
+	public static void syncWithNewClient(ServerPlayer player) {
 		Logging.logMessage(Level.DEBUG, "Syncing player halos with new player: " + player.getUUID().toString());
 		AoAPackets.messagePlayer(player, new PlayerHaloDataPacket(playerHalos));
 	}

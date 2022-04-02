@@ -1,7 +1,7 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.event.AoAPlayerEvents;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class PlayerAbilityKeybindPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeInt(abilities.size());
 
 		for (String st : abilities) {
@@ -24,7 +24,7 @@ public class PlayerAbilityKeybindPacket implements AoAPacket {
 		}
 	}
 
-	public static PlayerAbilityKeybindPacket decode(PacketBuffer buffer) {
+	public static PlayerAbilityKeybindPacket decode(FriendlyByteBuf buffer) {
 		int size = buffer.readInt();
 		ArrayList<String> abilities = new ArrayList<String>(size);
 

@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.entity.ai.mob;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
 public class LookAroundGoal extends Goal {
-	private final MobEntity taskOwner;
+	private final Mob taskOwner;
 
-	public LookAroundGoal(MobEntity creature) {
+	public LookAroundGoal(Mob creature) {
 		this.taskOwner = creature;
 
 		setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
@@ -24,8 +24,8 @@ public class LookAroundGoal extends Goal {
 	@Override
 	public void tick() {
 		if (taskOwner.getTarget() == null) {
-			taskOwner.yRot = -((float)MathHelper.atan2(taskOwner.getDeltaMovement().x(), taskOwner.getDeltaMovement().z())) * (180F / (float)Math.PI);
-			taskOwner.yBodyRot = taskOwner.yRot;
+			taskOwner.setYRot(-((float)Mth.atan2(taskOwner.getDeltaMovement().x(), taskOwner.getDeltaMovement().z())) * (180F / (float)Math.PI));
+			taskOwner.yBodyRot = taskOwner.getYRot();
 		}
 		else {
 			LivingEntity target = this.taskOwner.getTarget();
@@ -34,8 +34,8 @@ public class LookAroundGoal extends Goal {
 				double vecX = target.getX() - this.taskOwner.getX();
 				double vecZ = target.getZ() - this.taskOwner.getZ();
 
-				this.taskOwner.yRot = -((float)MathHelper.atan2(vecX, vecZ)) * (180F / (float)Math.PI);
-				this.taskOwner.yBodyRot = this.taskOwner.yRot;
+				this.taskOwner.setYRot(-((float)Mth.atan2(vecX, vecZ)) * (180F / (float)Math.PI));
+				this.taskOwner.yBodyRot = this.taskOwner.getYRot();
 			}
 		}
 	}

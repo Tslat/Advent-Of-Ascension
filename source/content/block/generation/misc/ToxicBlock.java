@@ -1,46 +1,45 @@
 package net.tslat.aoa3.content.block.generation.misc;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.World;
-import net.minecraftforge.common.ToolType;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 
 public class ToxicBlock extends Block {
-	private final VoxelShape SHAPE = VoxelShapes.create(new AxisAlignedBB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
+	private final VoxelShape SHAPE = Shapes.create(new AABB(0.002, 0.002, 0.002, 0.998, 0.998, 0.998));
 
 	public ToxicBlock() {
-		super(new BlockUtil.CompactProperties(Material.DIRT, MaterialColor.TERRACOTTA_GREEN).stats(1.5f, 1f).tool(ToolType.SHOVEL).sound(SoundType.SLIME_BLOCK).get());
+		super(new BlockUtil.CompactProperties(Material.DIRT, MaterialColor.TERRACOTTA_GREEN).stats(1.5f, 1f).sound(SoundType.SLIME_BLOCK).get());
 	}
 
 	@Override
-	public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
 		return SHAPE;
 	}
 
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative()) {
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		if (entity instanceof Player && !((Player)entity).isCreative()) {
 			entity.hurt(new DamageSource("toxic_block").bypassArmor(), 4);
 			EntityUtil.applyPotions(entity,
-					new EffectBuilder(Effects.POISON, 60).level(6),
-					new EffectBuilder(Effects.CONFUSION, 40),
-					new EffectBuilder(Effects.BLINDNESS, 40));
+					new EffectBuilder(MobEffects.POISON, 60).level(6),
+					new EffectBuilder(MobEffects.CONFUSION, 40),
+					new EffectBuilder(MobEffects.BLINDNESS, 40));
 		}
 	}
 }

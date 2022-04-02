@@ -1,12 +1,12 @@
 package net.tslat.aoa3.event.dimension;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.world.entity.player.Player;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class LelyetiaEvents {
-	public static void doPlayerTick(PlayerEntity pl) {
+	public static void doPlayerTick(Player pl) {
 		if (ItemUtil.hasItemInHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) || ItemUtil.hasItemInOffhand(pl, AoAItems.DISTORTING_ARTIFACT.get()))
 			return;
 

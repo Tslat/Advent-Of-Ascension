@@ -1,19 +1,19 @@
+/*
 package net.tslat.aoa3.content.entity.misc;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.Explosion;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.boss.BaronessEntity;
@@ -25,22 +25,22 @@ import java.util.UUID;
 public class BaronBombEntity extends Entity {
 	private int timer = 150;
 	private UUID ownerUUID = null;
-	private PlayerEntity ownerPlayer = null;
+	private Player ownerPlayer = null;
 	private BaronessEntity baroness = null;
 
-	public BaronBombEntity(EntityType<? extends Entity> entityType, World world) {
+	public BaronBombEntity(EntityType<? extends Entity> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public BaronBombEntity(PlayerEntity pl) {
-		this(AoAEntities.Misc.BARON_BOMB.get(), pl.level);
+	public BaronBombEntity(Player pl) {
+		this(AoAMiscEntities.BARON_BOMB.get(), pl.level);
 
 		ownerUUID = pl.getUUID();
 		teleportTo(pl.getX(), pl.getY(), pl.getZ());
 	}
 
 	public BaronBombEntity(BaronessEntity baroness) {
-		this(AoAEntities.Misc.BARON_BOMB.get(), baroness.level);
+		this(AoAMiscEntities.BARON_BOMB.get(), baroness.level);
 
 		this.baroness = baroness;
 
@@ -48,7 +48,7 @@ public class BaronBombEntity extends Entity {
 	}
 
 	@Override
-	protected float getEyeHeight(Pose pose, EntitySize size) {
+	protected float getEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.25f;
 	}
 
@@ -69,16 +69,16 @@ public class BaronBombEntity extends Entity {
 	protected void defineSynchedData() {}
 
 	@Override
-	public void playerTouch(PlayerEntity entity) {
+	public void playerTouch(Player entity) {
 		if (!level.isClientSide && checkEntityCollision(entity)) {
 			if (ownerUUID == null) {
-				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
 			}
 			else {
 				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2.3f);
 			}
 
-			remove();
+			discard();
 		}
 	}
 
@@ -94,24 +94,24 @@ public class BaronBombEntity extends Entity {
 				WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2.3f);
 			}
 			else {
-				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+				WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
 			}
 
-			remove();
+			discard();
 		}
 	}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (!level.isClientSide) {
-			remove();
+			discard();
 
 			if (!source.isExplosion() && source.getEntity() != baroness && source.getEntity() != ownerPlayer) {
 				if (ownerPlayer != null) {
 					WorldUtil.createExplosion(ownerPlayer, level, getX(), getY() + 1, getZ(), 2.3f);
 				}
 				else {
-					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.Mode.DESTROY : Explosion.Mode.NONE, false);
+					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 3.5f, AoAGameRules.checkStrongerMobGriefing(level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
 				}
 			}
 
@@ -124,7 +124,7 @@ public class BaronBombEntity extends Entity {
 	@Override
 	public boolean skipAttackInteraction(Entity attacker) {
 		if (!level.isClientSide && checkEntityCollision(attacker))
-			remove();
+			discard();
 
 		return true;
 	}
@@ -134,14 +134,14 @@ public class BaronBombEntity extends Entity {
 			return !(target instanceof BaronessEntity);
 		}
 		else {
-			if (target instanceof PlayerEntity) {
+			if (target instanceof Player) {
 				updateOwner();
 
-				if (ownerPlayer != null && !EntityUtil.canPvp(ownerPlayer, (PlayerEntity)target))
+				if (ownerPlayer != null && !EntityUtil.canPvp(ownerPlayer, (Player)target))
 					return false;
 			}
-			else if (target instanceof TameableEntity) {
-				UUID ownerUUID = ((TameableEntity)target).getOwnerUUID();
+			else if (target instanceof TamableAnimal) {
+				UUID ownerUUID = ((TamableAnimal)target).getOwnerUUID();
 
 				if (ownerUUID != null && ownerUUID.equals(this.ownerUUID))
 					return false;
@@ -160,7 +160,7 @@ public class BaronBombEntity extends Entity {
 		super.tick();
 
 		BlockPos pos = new BlockPos(getX(), 0, getZ());
-		Vector3d motion = getDeltaMovement();
+		Vec3 motion = getDeltaMovement();
 		double motionY = motion.y();
 
 		if (!level.isClientSide || level.hasChunkAt(pos) && level.isAreaLoaded(pos, 1)) {
@@ -174,11 +174,11 @@ public class BaronBombEntity extends Entity {
 			motionY = 0.0D;
 		}
 
-		move(MoverType.SELF, new Vector3d(0, motionY, 0));
+		move(MoverType.SELF, new Vec3(0, motionY, 0));
 
 		if (!level.isClientSide) {
 			if (ownerUUID == null && level.getDifficulty() == Difficulty.PEACEFUL) {
-				remove();
+				discard();
 
 				return;
 			}
@@ -186,7 +186,7 @@ public class BaronBombEntity extends Entity {
 			timer--;
 
 			if (timer == 16) {
-				level.playSound(null, getX(), getY(), getZ(), AoASounds.BARON_BOMB_PRIME.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.playSound(null, getX(), getY(), getZ(), AoASounds.BARON_BOMB_PRIME.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 			}
 			else if (timer <= 0) {
 				updateOwner();
@@ -198,19 +198,20 @@ public class BaronBombEntity extends Entity {
 					WorldUtil.createExplosion(baroness, level, getX(), getY() + 1, getZ(), 4f);
 				}
 
-				remove();
+				discard();
 			}
 		}
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT compound) {}
+	protected void readAdditionalSaveData(CompoundTag compound) {}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT compound) {}
+	protected void addAdditionalSaveData(CompoundTag compound) {}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }
+*/

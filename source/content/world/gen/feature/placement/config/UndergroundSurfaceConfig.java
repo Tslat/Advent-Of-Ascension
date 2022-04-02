@@ -1,8 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.gen.placement.IPlacementConfig;
 
 import java.util.Random;
 
@@ -32,3 +32,4 @@ public class UndergroundSurfaceConfig implements IPlacementConfig {
 		return bottomOffset + rand.nextInt(Math.max(1, maximum - bottomOffset - topOffset));
 	}
 }
+*/

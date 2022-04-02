@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.world.gen.feature.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.tslat.aoa3.content.world.gen.feature.features.config.CappedColumnConfig;
 
 import java.util.Random;
@@ -17,9 +17,13 @@ public class CappedColumnFeature extends Feature<CappedColumnConfig> {
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, CappedColumnConfig config) {
+	public boolean place(FeaturePlaceContext<CappedColumnConfig> context) {
+		Random rand = context.random();
+		BlockPos pos = context.origin();
+		CappedColumnConfig config = context.config();
+		WorldGenLevel reader = context.level();
 		boolean placed = false;
-		BlockPos.Mutable placementPos = new BlockPos.Mutable(pos.getX(), pos.getY(), pos.getZ());
+		BlockPos.MutableBlockPos placementPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
 		int stemHeight = rand.nextInt(1 + Math.max(0, config.maxStemSize - config.minStemSize));
 
 		if (!config.uniformHeightDistribution)

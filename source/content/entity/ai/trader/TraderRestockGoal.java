@@ -1,6 +1,6 @@
 package net.tslat.aoa3.content.entity.ai.trader;
 
-import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 
 import java.util.EnumSet;

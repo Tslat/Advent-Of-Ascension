@@ -1,21 +1,21 @@
 package net.tslat.aoa3.content.entity.mob.misc;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib3.core.PlayState;
@@ -27,41 +27,41 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 	private static final AnimationBuilder ATTACK_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", false);
 	private static final AnimationBuilder ATTACK_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", false);
 
-	public ThornyPlantSproutEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public ThornyPlantSproutEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		setPersistenceRequired();
 	}
 
-	public ThornyPlantSproutEntity(World world, BlockPos plantPos) {
-		this(AoAEntities.Misc.THORNY_PLANT_SPROUT.get(), world);
+	public ThornyPlantSproutEntity(Level world, BlockPos plantPos) {
+		this(AoAMiscEntities.THORNY_PLANT_SPROUT.get(), world);
 
 		moveTo(plantPos.getX() + 0.5f + random.nextGaussian() * 0.1f, plantPos.getY() + 0.1f ,plantPos.getZ() + 0.5f + random.nextGaussian() * 0.1f, random.nextFloat() * 360, 0);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.4f;
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<AoAMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()).attackReach(2f));
-		goalSelector.addGoal(8, new LookAtGoal(this, PlayerEntity.class, 8f));
-		goalSelector.addGoal(8, new LookRandomlyGoal(this));
+		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
+		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<MonsterEntity>(this, MonsterEntity.class, 5, true, true, entity -> entity.getType() != this.getType()));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, 5, true, true, null));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Monster>(this, Monster.class, 5, true, true, entity -> entity.getType() != this.getType()));
+		targetSelector.addGoal(3, new NearestAttackableTargetGoal<Player>(this, Player.class, 5, true, true, null));
 	}
 
 	@Override
 	protected void customServerAiStep() {
 		if (tickCount % 5 == 0 && level.getBlockState(new BlockPos(getX(), getY() + 0.25f, getZ())).getBlock() != AoABlocks.THORNY_PLANT_CROP.get())
-			remove();
+			discard();
 	}
 
 	@Override
-	public void move(MoverType pType, Vector3d pPos) {}
+	public void move(MoverType pType, Vec3 pPos) {}
 
 	@Override
 	public void push(double pX, double pY, double pZ) {}
@@ -87,8 +87,8 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void remove(boolean keepData) {
-		super.remove(keepData);
+	public void remove(RemovalReason reason) {
+		super.remove(reason);
 
 		if (level.getBlockState(blockPosition().above()).getBlock() == AoABlocks.THORNY_PLANT_CROP.get() && level.getEntities(this, getBoundingBox(), entity -> entity.getType() == getType()).isEmpty())
 			level.destroyBlock(blockPosition().above(), true);

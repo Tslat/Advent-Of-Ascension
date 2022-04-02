@@ -1,9 +1,10 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.gen.feature.WorldDecoratingHelper;
 import net.minecraft.world.gen.placement.Placement;
 import net.tslat.aoa3.content.world.gen.feature.placement.config.UndergroundSurfaceConfig;
@@ -21,7 +22,7 @@ public class UndergroundSurfacePlacement extends Placement<UndergroundSurfaceCon
 		int x = pos.getX();
 		int z = pos.getZ();
 		int y = config.getRandomValue(rand);
-		BlockPos.Mutable checkPos = new BlockPos.Mutable(x, y, z);
+		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos(x, y, z);
 
 		for (int i = 0; i < 5; i++) {
 			if (isEmptyPosition(helper, checkPos))
@@ -39,7 +40,7 @@ public class UndergroundSurfacePlacement extends Placement<UndergroundSurfaceCon
 		return findFloorPosition(helper, checkPos, config, x, z);
 	}
 
-	private Stream<BlockPos> findRoofPosition(WorldDecoratingHelper helper, BlockPos.Mutable startPos, UndergroundSurfaceConfig config, int x, int z) {
+	private Stream<BlockPos> findRoofPosition(WorldDecoratingHelper helper, BlockPos.MutableBlockPos startPos, UndergroundSurfaceConfig config, int x, int z) {
 		int roofPos = helper.getGenDepth();
 
 		if (!isEmptyPosition(helper, startPos)) {
@@ -68,7 +69,7 @@ public class UndergroundSurfacePlacement extends Placement<UndergroundSurfaceCon
 		return Stream.of(startPos.immutable());
 	}
 
-	private Stream<BlockPos> findFloorPosition(WorldDecoratingHelper helper, BlockPos.Mutable startPos, UndergroundSurfaceConfig config, int x, int z) {
+	private Stream<BlockPos> findFloorPosition(WorldDecoratingHelper helper, BlockPos.MutableBlockPos startPos, UndergroundSurfaceConfig config, int x, int z) {
 		int roofPos = helper.getGenDepth();
 
 		if (!isEmptyPosition(helper, startPos)) {
@@ -103,3 +104,4 @@ public class UndergroundSurfacePlacement extends Placement<UndergroundSurfaceCon
 		return material == Material.AIR || material == Material.WATER || material == Material.LAVA;
 	}
 }
+*/

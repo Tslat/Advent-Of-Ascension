@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -28,9 +28,9 @@ public class CreatureEssence extends Item {
 		if (!stack.hasTag())
 			return null;
 
-		CompoundNBT tag = stack.getTag();
+		CompoundTag tag = stack.getTag();
 
-		if (!tag.contains("essence_entity",Constants.NBT.TAG_STRING))
+		if (!tag.contains("essence_entity", Tag.TAG_STRING))
 			return null;
 
 		ResourceLocation entityId = new ResourceLocation(tag.getString("essence_entity"));
@@ -43,7 +43,7 @@ public class CreatureEssence extends Item {
 		String entityName = "?";
 
 		if (stack.hasTag()) {
-			CompoundNBT tag = stack.getTag();
+			CompoundTag tag = stack.getTag();
 
 			if (tag.contains("essence_entity_name"))
 				entityName = tag.getString("essence_entity_name");
@@ -53,7 +53,7 @@ public class CreatureEssence extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World level, List<ITextComponent> tooltip, ITooltipFlag tooltipType) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, 1, new StringTextComponent(getStoredEntityName(stack))));
+	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag tooltipType) {
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, 1, new TextComponent(getStoredEntityName(stack))));
 	}
 }

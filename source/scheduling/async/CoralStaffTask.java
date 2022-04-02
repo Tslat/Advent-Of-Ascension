@@ -1,9 +1,9 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 
@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class CoralStaffTask implements Runnable {
-    private World world;
-    private ArrayList<BlockPos> coralPositions;
+    private final Level world;
+    private final ArrayList<BlockPos> coralPositions;
 
     private static final Block coralBlock = AoABlocks.PINK_CORAL.get();
 
-    public CoralStaffTask(World world, ArrayList<BlockPos> coralPositions) {
+    public CoralStaffTask(Level world, ArrayList<BlockPos> coralPositions) {
         this.world = world;
         this.coralPositions = coralPositions;
     }

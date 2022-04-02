@@ -1,42 +1,40 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 
 import javax.annotation.Nullable;
 
-public class FrameBenchContainer extends Container {
-	private final Inventory input;
-	private final CraftResultInventory output;
-	private final IWorldPosCallable functionCaller;
+public class FrameBenchContainer extends AbstractContainerMenu {
+	private Inventory input;
+	//private final CraftResultInventory output;
+	private ContainerLevelAccess functionCaller;
 
 	private Item currentSelection = AoAItems.HELMET_FRAME.get();
 
-	public FrameBenchContainer(int id, PlayerInventory inventory) {
-		this(id, inventory, IWorldPosCallable.NULL);
+	public FrameBenchContainer(int id, Inventory inventory) {
+		this(id, inventory, ContainerLevelAccess.NULL);
 	}
 
-	public FrameBenchContainer(int screenId, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
+	public FrameBenchContainer(int screenId, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(AoAContainers.FRAME_BENCH.get(), screenId);
 
-		this.functionCaller = functionCaller;
+		/*this.functionCaller = functionCaller;
 		output = new CraftResultInventory();
 		input = new Inventory(1) {
 			@Override
@@ -59,12 +57,12 @@ public class FrameBenchContainer extends Container {
 			}
 
 			@Override
-			public boolean mayPickup(PlayerEntity playerIn) {
+			public boolean mayPickup(Player playerIn) {
 				return hasItem();
 			}
 
 			@Override
-			public ItemStack onTake(PlayerEntity player, ItemStack stack) {
+			public ItemStack onTake(Player player, ItemStack stack) {
 				FrameBenchContainer.this.input.removeItem(0, 1);
 
 				return stack;
@@ -86,63 +84,41 @@ public class FrameBenchContainer extends Container {
 
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
 			addSlot(new Slot(plInventory, hotbarSlot, 8 + hotbarSlot * 18, 142));
-		}
+		}*/
 	}
 
 	@Override
-	public void slotsChanged(IInventory inventory) {
+	public void slotsChanged(Container inventory) {
 		functionCaller.execute((world, pos) -> updateOutput());
 	}
 
 	@Override
-	public void removed(PlayerEntity player) {
+	public void removed(Player player) {
 		super.removed(player);
 
-		functionCaller.execute((world, pos) -> clearContainer(player, world, input));
+		functionCaller.execute((world, pos) -> clearContainer(player, input));
 	}
 
 	public void changeSelection(String selection) {
 		switch (selection) {
-			case "crossbow":
-				currentSelection = AoAItems.CROSSBOW_FRAME.get();
-				break;
-			case "blaster":
-				currentSelection = AoAItems.BLASTER_FRAME.get();
-				break;
-			case "boots":
-				currentSelection = AoAItems.BOOTS_FRAME.get();
-				break;
-			case "cannon":
-				currentSelection = AoAItems.CANNON_FRAME.get();
-				break;
-			case "chestplate":
-				currentSelection = AoAItems.CHESTPLATE_FRAME.get();
-				break;
-			case "gun":
-				currentSelection = AoAItems.GUN_FRAME.get();
-				break;
-			case "helmet":
-				currentSelection = AoAItems.HELMET_FRAME.get();
-				break;
-			case "leggings":
-				currentSelection = AoAItems.LEGGINGS_FRAME.get();
-				break;
-			case "shotgun":
-				currentSelection = AoAItems.SHOTGUN_FRAME.get();
-				break;
-			case "sniper":
-				currentSelection = AoAItems.SNIPER_FRAME.get();
-				break;
-			default:
-				currentSelection = AoAItems.HELMET_FRAME.get();
-				break;
+			case "crossbow" -> currentSelection = AoAItems.CROSSBOW_FRAME.get();
+			case "blaster" -> currentSelection = AoAItems.BLASTER_FRAME.get();
+			case "boots" -> currentSelection = AoAItems.BOOTS_FRAME.get();
+			case "cannon" -> currentSelection = AoAItems.CANNON_FRAME.get();
+			case "chestplate" -> currentSelection = AoAItems.CHESTPLATE_FRAME.get();
+			case "gun" -> currentSelection = AoAItems.GUN_FRAME.get();
+			case "helmet" -> currentSelection = AoAItems.HELMET_FRAME.get();
+			case "leggings" -> currentSelection = AoAItems.LEGGINGS_FRAME.get();
+			case "shotgun" -> currentSelection = AoAItems.SHOTGUN_FRAME.get();
+			case "sniper" -> currentSelection = AoAItems.SNIPER_FRAME.get();
+			default -> currentSelection = AoAItems.HELMET_FRAME.get();
 		}
 
 		updateOutput();
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 
@@ -178,40 +154,42 @@ public class FrameBenchContainer extends Container {
 			if (slotStack.getCount() == stack.getCount())
 				return ItemStack.EMPTY;
 
+			slot.onTake(player, slotStack);
+
 			if (index == 0)
-				player.drop(slot.onTake(player, slotStack), false);
+				player.drop(slotStack, false);
 		}
 
 		return stack;
 	}
 
 	private void updateOutput() {
-		if (input.isEmpty()) {
+	/*	if (input.isEmpty()) {
 			output.setItem(0, ItemStack.EMPTY);
 		}
 		else {
 			output.setItem(0, new ItemStack(currentSelection, 1));
 		}
 
-		broadcastChanges();
+		broadcastChanges();*/
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return stillValid(functionCaller, player, AoABlocks.FRAME_BENCH.get());
 	}
 
-	public static void openContainer(ServerPlayerEntity player, BlockPos pos) {
-		NetworkHooks.openGui(player, new INamedContainerProvider() {
+	public static void openContainer(ServerPlayer player, BlockPos pos) {
+		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
-				return new TranslationTextComponent("container.aoa3.frame_bench");
+			public Component getDisplayName() {
+				return new TranslatableComponent("container.aoa3.frame_bench");
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new FrameBenchContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
+			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
+				return new FrameBenchContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
 			}
 		}, pos);
 	}

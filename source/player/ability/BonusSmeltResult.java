@@ -1,8 +1,8 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.ItemSmeltingEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -14,7 +14,7 @@ public class BonusSmeltResult extends ScalableModAbility {
 		super(AoAAbilities.BONUS_SMELT_RESULT.get(), skill, data);
 	}
 
-	public BonusSmeltResult(AoASkill.Instance skill, CompoundNBT data) {
+	public BonusSmeltResult(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.BONUS_SMELT_RESULT.get(), skill, data);
 	}
 

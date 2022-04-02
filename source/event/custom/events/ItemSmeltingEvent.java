@@ -1,8 +1,8 @@
 package net.tslat.aoa3.event.custom.events;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 
 import javax.annotation.Nonnull;
@@ -10,9 +10,9 @@ import javax.annotation.Nonnull;
 public class ItemSmeltingEvent extends PlayerEvent {
 	@Nonnull
 	private final ItemStack outputStack;
-	private final IInventory outputSlotInventory;
+	private final Container outputSlotInventory;
 
-	public ItemSmeltingEvent(PlayerEntity player, @Nonnull ItemStack smelting, IInventory outputSlotInventory) {
+	public ItemSmeltingEvent(Player player, @Nonnull ItemStack smelting, Container outputSlotInventory) {
 		super(player);
 
 		this.outputStack = smelting;
@@ -24,7 +24,7 @@ public class ItemSmeltingEvent extends PlayerEvent {
 		return this.outputStack;
 	}
 
-	public IInventory getSlotInventory() {
+	public Container getSlotInventory() {
 		return this.outputSlotInventory;
 	}
 }

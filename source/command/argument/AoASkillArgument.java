@@ -7,9 +7,10 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import net.minecraft.command.ISuggestionProvider;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -21,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 public class AoASkillArgument implements ArgumentType<AoASkill> {
 	private static final List<String> EXAMPLES = Arrays.asList("aoa3:alchemy", "aoa3:creation", "aoa3:hauling", "aoa3:innervation");
 
-	private static final DynamicCommandExceptionType UNKNOWN_SKILL_ERROR = new DynamicCommandExceptionType(input -> new TranslationTextComponent("argument.aoa.skill.notFound"));
+	private static final DynamicCommandExceptionType UNKNOWN_SKILL_ERROR = new DynamicCommandExceptionType(input -> new TranslatableComponent("argument.aoa.skill.notFound"));
 
 	public static AoASkillArgument skill() {
 		return new AoASkillArgument();
@@ -49,7 +50,7 @@ public class AoASkillArgument implements ArgumentType<AoASkill> {
 		reader.setCursor(builder.getStart());
 		builder = builder.createOffset(reader.getCursor());
 
-		ISuggestionProvider.suggestResource(AoASkills.getRegistry().getKeys(), builder);
+		SharedSuggestionProvider.suggestResource(AoARegistries.AOA_SKILLS.getAllIds(), builder);
 
 		return builder.buildFuture();
 	}

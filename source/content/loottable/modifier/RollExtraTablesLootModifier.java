@@ -2,13 +2,13 @@ package net.tslat.aoa3.content.loottable.modifier;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameter;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.tslat.aoa3.advent.Logging;
@@ -20,7 +20,7 @@ import java.util.List;
 public class RollExtraTablesLootModifier extends LootModifier {
 	private final ResourceLocation[] additionalTables;
 
-	public RollExtraTablesLootModifier(ILootCondition[] conditions, ResourceLocation[] additionalTables) {
+	public RollExtraTablesLootModifier(LootItemCondition[] conditions, ResourceLocation[] additionalTables) {
 		super(conditions);
 
 		this.additionalTables = additionalTables;
@@ -33,7 +33,7 @@ public class RollExtraTablesLootModifier extends LootModifier {
 			LootTable table = context.getLootTable(tableLocation);
 			boolean compatible = true;
 
-			for (LootParameter<?> param : table.getParamSet().getRequired()) {
+			for (LootContextParam<?> param : table.getParamSet().getRequired()) {
 				if (!context.hasParam(param)) {
 					compatible = false;
 
@@ -52,8 +52,8 @@ public class RollExtraTablesLootModifier extends LootModifier {
 
 	public static class Serializer extends GlobalLootModifierSerializer<RollExtraTablesLootModifier> {
 		@Override
-		public RollExtraTablesLootModifier read(ResourceLocation location, JsonObject object, ILootCondition[] lootConditions) {
-			JsonArray tables = JSONUtils.getAsJsonArray(object, "tables");
+		public RollExtraTablesLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] lootConditions) {
+			JsonArray tables = GsonHelper.getAsJsonArray(object, "tables");
 			ResourceLocation[] tableList = new ResourceLocation[tables.size()];
 
 			for (int i = 0; i < tables.size(); i++) {

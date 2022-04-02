@@ -1,16 +1,17 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
 public class OceanFloorStructure extends AoAStructureBase<NoFeatureConfig> {
-	public OceanFloorStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public OceanFloorStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(NoFeatureConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -27,7 +28,7 @@ public class OceanFloorStructure extends AoAStructureBase<NoFeatureConfig> {
 				int x = (chunkX << 4) + 7;
 				int z = (chunkZ << 4) + 7;
 
-				final BlockPos.Mutable chunkCenter = new BlockPos.Mutable(x, chunkGenerator.getFirstFreeHeight(x, z, Heightmap.Type.OCEAN_FLOOR_WG) + 1, z);
+				final BlockPos.MutableBlockPos chunkCenter = new BlockPos.MutableBlockPos(x, chunkGenerator.getFirstFreeHeight(x, z, Heightmap.Type.OCEAN_FLOOR_WG) + 1, z);
 
 				if (checkAndAdjustGeneration(chunkGenerator, chunkCenter, biome, config))
 					generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface(), config);
@@ -35,3 +36,4 @@ public class OceanFloorStructure extends AoAStructureBase<NoFeatureConfig> {
 		};
 	}
 }
+*/

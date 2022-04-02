@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.recipe;
 
 import com.google.gson.JsonObject;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeSerializer;
-import net.minecraft.item.crafting.IRecipeType;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
@@ -20,7 +20,7 @@ import net.tslat.aoa3.common.registration.AoARecipes;
 
 import javax.annotation.Nullable;
 
-public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineStationInventory> {
+public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineStationInventory> {
 	private final ResourceLocation id;
 	private final String group;
 
@@ -42,7 +42,7 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 	}
 
 	@Override
-	public boolean matches(DivineStationContainer.DivineStationInventory inv, World world) {
+	public boolean matches(DivineStationContainer.DivineStationInventory inv, Level world) {
 		return ItemStack.isSame(input, inv.getItem(0)) && ItemStack.isSame(upgradeKit, inv.getItem(1));
 	}
 
@@ -67,12 +67,12 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 	}
 
 	@Override
-	public IRecipeSerializer<UpgradeKitRecipe> getSerializer() {
+	public RecipeSerializer<UpgradeKitRecipe> getSerializer() {
 		return AoARecipes.UPGRADE_KIT.getB().get();
 	}
 
 	@Override
-	public IRecipeType<UpgradeKitRecipe> getType() {
+	public RecipeType<UpgradeKitRecipe> getType() {
 		return AoARecipes.UPGRADE_KIT.getA();
 	}
 
@@ -104,20 +104,20 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 		return group;
 	}
 
-	public static class Factory extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<UpgradeKitRecipe> {
+	public static class Factory extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<UpgradeKitRecipe> {
 		@Override
 		public UpgradeKitRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			String group = JSONUtils.getAsString(json, "group", "");
-			ItemStack inputItem = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "input"), false);
-			ItemStack upgradeKit = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "upgrade_kit"), false);
-			ItemStack output = CraftingHelper.getItemStack(JSONUtils.getAsJsonObject(json, "result"), true);
+			String group = GsonHelper.getAsString(json, "group", "");
+			ItemStack inputItem = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input"), false);
+			ItemStack upgradeKit = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "upgrade_kit"), false);
+			ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
 
 			return new UpgradeKitRecipe(recipeId, group, inputItem, upgradeKit, output);
 		}
 
 		@Nullable
 		@Override
-		public UpgradeKitRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
+		public UpgradeKitRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
 			String group = buffer.readUtf(32767);
 			ItemStack inputItem = buffer.readItem();
 			ItemStack upgradeKit = buffer.readItem();
@@ -127,7 +127,7 @@ public class UpgradeKitRecipe implements IRecipe<DivineStationContainer.DivineSt
 		}
 
 		@Override
-		public void toNetwork(PacketBuffer buffer, UpgradeKitRecipe recipe) {
+		public void toNetwork(FriendlyByteBuf buffer, UpgradeKitRecipe recipe) {
 			buffer.writeUtf(recipe.getGroup(), 32767);
 			buffer.writeItem(recipe.input);
 			buffer.writeItem(recipe.upgradeKit);

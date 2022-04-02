@@ -1,20 +1,20 @@
 package net.tslat.aoa3.content.block.generation.grass;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SnowBlock;
-import net.minecraft.block.material.MaterialColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
-import net.minecraft.world.lighting.LightEngine;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.lighting.LayerLightEngine;
+import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 import java.util.Random;
@@ -26,24 +26,24 @@ public class UpsideDownGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	public void performBonemeal(ServerWorld world, Random rand, BlockPos pos, BlockState state) {}
+	public void performBonemeal(ServerLevel world, Random rand, BlockPos pos, BlockState state) {}
 
-	public boolean hasSufficientLight(BlockState grassState, World world, BlockPos grassPos) {
-		if (world.dimension() == RegistryKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetia")))
+	public boolean hasSufficientLight(BlockState grassState, Level world, BlockPos grassPos) {
+		if (world.dimension() == ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetia")))
 			return true;
 
 		BlockPos bottomPos = grassPos.below();
 		BlockState bottomBlock = world.getBlockState(bottomPos);
 
-		return LightEngine.getLightBlockInto(world, grassState, grassPos, bottomBlock, bottomPos, Direction.DOWN, bottomBlock.getLightBlock(world, bottomPos)) < world.getMaxLightLevel();
+		return LayerLightEngine.getLightBlockInto(world, grassState, grassPos, bottomBlock, bottomPos, Direction.DOWN, bottomBlock.getLightBlock(world, bottomPos)) < world.getMaxLightLevel();
 	}
 
-	public boolean canStayGrass(BlockState grassState, World world, BlockPos grassPos) {
+	public boolean canStayGrass(BlockState grassState, Level world, BlockPos grassPos) {
 		return hasSufficientLight(grassState, world, grassPos) && !world.getFluidState(grassPos.below()).is(FluidTags.WATER);
 	}
 
 	@Override
-	public void tick(BlockState state, ServerWorld world, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
 		if (!hasSufficientLight(state, world, pos)) {
 			if (!world.isAreaLoaded(pos, 3))
 				return;
@@ -63,18 +63,18 @@ public class UpsideDownGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	protected boolean couldBeSnowy(BlockState state, IWorldReader worldReader, BlockPos pos) {
+	protected boolean couldBeSnowy(BlockState state, LevelAccessor worldReader, BlockPos pos) {
 		BlockPos downPos = pos.below();
 		BlockState bottomBlock = worldReader.getBlockState(downPos);
 
-		if (bottomBlock.is(Blocks.SNOW) && bottomBlock.getValue(SnowBlock.LAYERS) == 1) {
+		if (bottomBlock.is(Blocks.SNOW) && bottomBlock.getValue(SnowLayerBlock.LAYERS) == 1) {
 			return true;
 		}
 		else if (bottomBlock.getFluidState().getAmount() == 8) {
 			return false;
 		}
 		else {
-			int i = LightEngine.getLightBlockInto(worldReader, state, pos, bottomBlock, downPos, Direction.DOWN, bottomBlock.getLightBlock(worldReader, downPos));
+			int i = LayerLightEngine.getLightBlockInto(worldReader, state, pos, bottomBlock, downPos, Direction.DOWN, bottomBlock.getLightBlock(worldReader, downPos));
 
 			return i < worldReader.getMaxLightLevel();
 		}

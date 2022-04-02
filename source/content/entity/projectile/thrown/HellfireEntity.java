@@ -1,24 +1,22 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRendersAsItem;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ItemSupplier;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.misc.HellfireProjectileEntity;
@@ -26,35 +24,31 @@ import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.EntityUtil;
 
-@OnlyIn(
-		value = Dist.CLIENT,
-		_interface = IRendersAsItem.class
-)
-public class HellfireEntity extends BaseBullet implements HardProjectile, IRendersAsItem {
+public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSupplier {
 	private float explosionStrength = 1.5f;
 	private LivingEntity shooter;
 	private BaseGun gun;
 
-	public HellfireEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public HellfireEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public HellfireEntity(World world) {
-		super(AoAEntities.Projectiles.HELLFIRE.get(), world);
+	public HellfireEntity(Level world) {
+		super(AoAProjectiles.HELLFIRE.get(), world);
 	}
 
 	public HellfireEntity(LivingEntity shooter, BaseGun gun) {
-		super(AoAEntities.Projectiles.HELLFIRE.get(), shooter, gun, 1.0f, 0, 1.5f);
+		super(AoAProjectiles.HELLFIRE.get(), shooter, gun, 1.0f, 0, 1.5f);
 		this.shooter = shooter;
 		this.gun = gun;
 	}
 
-	public HellfireEntity(LivingEntity shooter, BaseGun gun, Hand hand, int maxAge, int piercingValue) {
-		super(AoAEntities.Projectiles.HELLFIRE.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
+	public HellfireEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
+		super(AoAProjectiles.HELLFIRE.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
 	}
 
-	public HellfireEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.HELLFIRE.get(), world, x, y, z);
+	public HellfireEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.HELLFIRE.get(), world, x, y, z);
 	}
 
 	@Override
@@ -67,8 +61,8 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, IRende
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
-		if (result instanceof BlockRayTraceResult && tickCount <= 1 && getOwner() == null)
+	protected void onHit(HitResult result) {
+		if (result instanceof BlockHitResult && tickCount <= 1 && getOwner() == null)
 			return;
 
 		super.onHit(result);
@@ -84,11 +78,11 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, IRende
 			count++;
 		}
 
-		if (shooter instanceof PlayerEntity) {
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.HELLFIRE_IMPACT.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+		if (shooter instanceof Player) {
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.HELLFIRE_IMPACT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
-			if (count >= 20 && shooter instanceof ServerPlayerEntity)
-				AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/heckfire"), "20_target_hellfire");
+			if (count >= 20 && shooter instanceof ServerPlayer)
+				AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/heckfire"), "20_target_hellfire");
 		}
 	}
 

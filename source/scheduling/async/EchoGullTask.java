@@ -1,9 +1,9 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.Tuple;
-import net.minecraft.world.World;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
@@ -12,10 +12,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class EchoGullTask implements Runnable {
-	private final World world;
+	private final Level world;
 	private final ArrayList<Tuple<LivingEntity, Integer>> entityList;
 
-	public EchoGullTask(World world, ArrayList<Tuple<LivingEntity, Integer>> entities) {
+	public EchoGullTask(Level world, ArrayList<Tuple<LivingEntity, Integer>> entities) {
 		this.world = world;
 		this.entityList = entities;
 	}
@@ -32,7 +32,7 @@ public class EchoGullTask implements Runnable {
 				if (distance == 0 || entry.getB() <= distance + 1) {
 					distance = entry.getB();
 
-					EntityUtil.applyPotions(entry.getA(), new EffectBuilder(Effects.GLOWING, 7));
+					EntityUtil.applyPotions(entry.getA(), new EffectBuilder(MobEffects.GLOWING, 7));
 					it.remove();
 				}
 				else {

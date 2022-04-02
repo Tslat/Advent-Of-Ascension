@@ -1,14 +1,15 @@
+/*
 package net.tslat.aoa3.content.entity.mob.nether;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.level.Level;
+
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.boss.KingBambambamEntity;
 import net.tslat.aoa3.util.WorldUtil;
@@ -19,14 +20,14 @@ public class LittleBamEntity extends AoAMeleeMob {
 	private boolean isMinion = false;
 
 	public LittleBamEntity(KingBambambamEntity kingBambambam) {
-		this(AoAEntities.Mobs.LITTLE_BAM.get(), kingBambambam.level);
+		this(AoAMobs.LITTLE_BAM.get(), kingBambambam.level);
 
 		moveTo(kingBambambam.getX(), kingBambambam.getY(), kingBambambam.getZ(), random.nextFloat() * 360, 0);
 
 		isMinion = true;
 	}
 
-	public LittleBamEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public LittleBamEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -39,7 +40,7 @@ public class LittleBamEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.78125f;
 	}
 
@@ -68,7 +69,7 @@ public class LittleBamEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (compound.contains("IsKingBambambamMinion"))
@@ -76,7 +77,7 @@ public class LittleBamEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
+	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
 		if (isMinion)
@@ -88,3 +89,4 @@ public class LittleBamEntity extends AoAMeleeMob {
 		WorldUtil.createExplosion(this, level, 2f);
 	}
 }
+*/

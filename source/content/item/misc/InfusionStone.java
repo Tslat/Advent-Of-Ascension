@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.item.Item;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 
 public class InfusionStone extends Item {

@@ -1,53 +1,39 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Supplier;
 
 public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
-	public HavenTreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public HavenTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
 	@Override
-	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		BlockPos multiSaplingPos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
-		boolean success = false;
 
-		switch (rand.nextInt(3) + (multiSaplingPos == null ? 0 : 3)) {
-			case 0:
-				success = generateTree1(reader, rand, pos, leafBlock, isWorldGen);
-				break;
-			case 1:
-				success = generateTree2(reader, rand, pos, leafBlock, isWorldGen);
-				break;
-			case 2:
-				success = generateTree3(reader, rand, pos, leafBlock, isWorldGen);
-				break;
-			case 3:
-				success = generateTree4(reader, rand, multiSaplingPos, leafBlock, isWorldGen);
-				break;
-			case 4:
-				success = generateTree5(reader, rand, multiSaplingPos, leafBlock, isWorldGen);
-				break;
-			case 5:
-				success = generateTree6(reader, rand, multiSaplingPos, leafBlock, isWorldGen);
-				break;
-		}
-
-		return success;
+		return switch (rand.nextInt(3) + (multiSaplingPos == null ? 0 : 3)) {
+			case 0 -> generateTree1(reader, rand, pos, leafBlock, isWorldGen);
+			case 1 -> generateTree2(reader, rand, pos, leafBlock, isWorldGen);
+			case 2 -> generateTree3(reader, rand, pos, leafBlock, isWorldGen);
+			case 3 -> generateTree4(reader, rand, multiSaplingPos, leafBlock, isWorldGen);
+			case 4 -> generateTree5(reader, rand, multiSaplingPos, leafBlock, isWorldGen);
+			case 5 -> generateTree6(reader, rand, multiSaplingPos, leafBlock, isWorldGen);
+			default -> false;
+		};
 	}
 
-	private boolean generateTree1(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree1(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 10 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 2, 1, isWorldGen))
@@ -56,7 +42,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = Blocks.OAK_LOG.defaultBlockState();
 		boolean builtLeafRing = false;
 
@@ -128,7 +114,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree2(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree2(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 7 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 2, 1, isWorldGen))
@@ -137,7 +123,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = Blocks.OAK_LOG.defaultBlockState();
 
 
@@ -173,7 +159,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree3(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree3(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 5 + rand.nextInt(4);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 8, 1, isWorldGen))
@@ -182,7 +168,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = Blocks.OAK_LOG.defaultBlockState();
 		BlockState barkLog = Blocks.OAK_WOOD.defaultBlockState();
 
@@ -192,10 +178,10 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 
 		placeBlock(reader, movablePos, barkLog);
 
-		BlockPos.Mutable branchMovablePos;
+		BlockPos.MutableBlockPos branchMovablePos;
 
 		for (Direction direction : Direction.Plane.HORIZONTAL) {
-			branchMovablePos = new BlockPos.Mutable().set(movablePos);
+			branchMovablePos = new BlockPos.MutableBlockPos().set(movablePos);
 			ArrayList<Direction> availableDirections = new ArrayList<Direction>(5);
 
 			for (Direction dir : Direction.values()) {
@@ -261,7 +247,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree4(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree4(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 7 + rand.nextInt(5);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 4, 2, isWorldGen))
@@ -374,7 +360,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree5(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree5(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 20 + rand.nextInt(15);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 2, 2, isWorldGen))
@@ -514,7 +500,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree6(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree6(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 15 + rand.nextInt(8);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 4, 2, isWorldGen))

@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.resource;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
@@ -15,25 +15,25 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
-	private final Lazy<TranslationTextComponent> name;
+	private final Lazy<TranslatableComponent> name;
 	private final BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory;
-	private final Function<CompoundNBT, Instance> clientFactory;
+	private final Function<CompoundTag, Instance> clientFactory;
 
-	public AoAResource(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundNBT, Instance> clientFactory) {
-		this.name = () -> new TranslationTextComponent(Util.makeDescriptionId("resource", getRegistryName()));
+	public AoAResource(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundTag, Instance> clientFactory) {
+		this.name = () -> new TranslatableComponent(Util.makeDescriptionId("resource", getRegistryName()));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
 	}
 
-	public TranslationTextComponent getName() {
+	public TranslatableComponent getName() {
 		return this.name.get();
 	}
 
-	public AoAResource.Instance buildDefaultInstance(ServerPlayerDataManager plData, JsonObject resourceData) {
+	public Instance buildDefaultInstance(ServerPlayerDataManager plData, JsonObject resourceData) {
 		return jsonFactory.apply(plData, resourceData);
 	}
 
-	public AoAResource.Instance buildClientInstance(CompoundNBT resourceData) {
+	public Instance buildClientInstance(CompoundTag resourceData) {
 		return clientFactory.apply(resourceData);
 	}
 
@@ -64,7 +64,7 @@ public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 			return this.resource;
 		}
 
-		public TranslationTextComponent getName() {
+		public TranslatableComponent getName() {
 			return type().getName();
 		}
 
@@ -100,16 +100,16 @@ public final class AoAResource extends ForgeRegistryEntry<AoAResource> {
 		}
 
 		@Nonnull
-		public CompoundNBT saveToNbt() {
-			return new CompoundNBT();
+		public CompoundTag saveToNbt() {
+			return new CompoundTag();
 		}
 
-		public void loadFromNbt(CompoundNBT resourceDataNbt) {}
+		public void loadFromNbt(CompoundTag resourceDataNbt) {}
 
-		public CompoundNBT getSyncData(boolean forClientSetup) {
-			return new CompoundNBT();
+		public CompoundTag getSyncData(boolean forClientSetup) {
+			return new CompoundTag();
 		}
 
-		public void receiveSyncData(CompoundNBT data) {}
+		public void receiveSyncData(CompoundTag data) {}
 	}
 }

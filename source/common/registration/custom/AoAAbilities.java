@@ -1,19 +1,15 @@
 package net.tslat.aoa3.common.registration.custom;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.RegistryManager;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.registries.RegistryObject;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.ability.*;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public class AoAAbilities {
-	private static IForgeRegistry<AoAAbility> REGISTRY = null;
-	public static final DeferredRegister<AoAAbility> ABILITIES = DeferredRegister.create(AoAAbility.class, AdventOfAscension.MOD_ID);
+	public static void init() {}
 
 	public static final RegistryObject<AoAAbility> ATTRIBUTE_MODIFICATION = register("attribute_modification", () -> new AoAAbility(AttributeModification::new, AttributeModification::new));
 	public static final RegistryObject<AoAAbility> FLAT_XP_BOOST = register("flat_xp_boost", () -> new AoAAbility(FlatXpBoost::new, FlatXpBoost::new));
@@ -57,18 +53,11 @@ public class AoAAbilities {
 	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_EXPLOSION = register("entity_tag_damage_bonus_explosion", () -> new AoAAbility(EntityTagDamageBonusExplosion::new, EntityTagDamageBonusExplosion::new));
 
 	private static RegistryObject<AoAAbility> register(String id, Supplier<AoAAbility> ability) {
-		return ABILITIES.register(id, ability);
+		return AoARegistries.AOA_ABILITIES.register(id, ability);
 	}
 
 	@Nullable
 	public static AoAAbility getAbility(ResourceLocation id) {
-		return getRegistry().getValue(id);
-	}
-
-	public static IForgeRegistry<AoAAbility> getRegistry() {
-		if (REGISTRY == null)
-			REGISTRY = RegistryManager.ACTIVE.getRegistry(AoAAbility.class);
-
-		return REGISTRY;
+		return AoARegistries.AOA_ABILITIES.getObject(id);
 	}
 }

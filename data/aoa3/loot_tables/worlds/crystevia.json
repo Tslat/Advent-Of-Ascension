@@ -3,7 +3,12 @@
   "pools": [
     {
       "name": "rare_table",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
@@ -18,9 +23,14 @@
     {
       "name": "supplies",
       "rolls": {
+        "type": "minecraft:uniform",
         "min": 1.0,
-        "max": 3.0,
-        "type": "minecraft:uniform"
+        "max": 3.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
       },
       "entries": [
         {
@@ -34,14 +44,16 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             },
             {
               "function": "minecraft:looting_enchant",
               "count": {
+                "type": "minecraft:uniform",
                 "min": -1.0,
                 "max": 2.0
               }

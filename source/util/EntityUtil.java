@@ -1,20 +1,23 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.FlyingEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.attributes.*;
-import net.minecraft.entity.boss.WitherEntity;
-import net.minecraft.entity.boss.dragon.EnderDragonEntity;
-import net.minecraft.entity.monster.IMob;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.*;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.CombatEntry;
+import net.minecraft.world.damagesource.CombatTracker;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.world.entity.boss.wither.WitherBoss;
+import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.FakePlayer;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 
@@ -34,22 +37,17 @@ public final class EntityUtil {
 		if (source == null ? entity.isInvulnerable() : entity.isInvulnerableTo(source))
 			return false;
 
-		if (!(entity instanceof PlayerEntity))
-			return true;
-
-		PlayerEntity player = (PlayerEntity)entity;
-
-		return PlayerUtil.shouldPlayerBeAffected(player);
+		return !(entity instanceof Player player) || PlayerUtil.shouldPlayerBeAffected(player);
 	}
 
 	public static boolean isHostileMob(Entity entity) {
-		return entity instanceof IMob;
+		return entity instanceof Enemy;
 	}
 
 	public static class Predicates {
-		public static final Predicate<LivingEntity> HOSTILE_MOB = entity -> entity instanceof IMob;
-		public static final Predicate<Entity> ATTACKABLE_ENTITY = entity -> entity.isAlive() && EntityPredicates.ATTACK_ALLOWED.test(entity);
-		public static final Predicate<Entity> SURVIVAL_PLAYER = entity -> entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative() && !entity.isSpectator();
+		public static final Predicate<LivingEntity> HOSTILE_MOB = entity -> entity instanceof Enemy;
+		public static final Predicate<Entity> SURVIVAL_PLAYER = entity -> entity instanceof Player && !((Player)entity).isCreative() && !entity.isSpectator();
+		public static final Predicate<Entity> ATTACKABLE_ENTITY = entity -> entity.isAlive() && SURVIVAL_PLAYER.test(entity);
 	}
 
 	public static void healEntity(LivingEntity entity, float amount) {
@@ -76,22 +74,22 @@ public final class EntityUtil {
 	}
 
 	public static boolean isImmuneToSpecialAttacks(Entity target, LivingEntity attacker) {
-		return target instanceof PlayerEntity || target instanceof WitherEntity || target instanceof EnderDragonEntity || !target.canChangeDimensions() || target.isInvulnerable() || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
+		return target instanceof Player || target instanceof WitherBoss || target instanceof EnderDragon || !target.canChangeDimensions() || target.isInvulnerable() || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
 	}
 
 	public static float getAttackCooldown(LivingEntity entity) {
-		if (entity instanceof PlayerEntity)
-			return ((PlayerEntity)entity).getAttackStrengthScale(0);
+		if (entity instanceof Player)
+			return ((Player)entity).getAttackStrengthScale(0);
 
 		return 1f;
 	}
 
 	public static boolean isFlyingCreature(Entity entity) {
-		return entity instanceof LivingEntity && (entity instanceof FlyingEntity || entity instanceof IFlyingAnimal);
+		return entity instanceof LivingEntity && (entity instanceof FlyingMob || entity instanceof FlyingAnimal);
 	}
 
 	public static void reapplyAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier, boolean permanentModifier) {
-		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
+		AttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null) {
 			if (instance.getModifier(modifier.getId()) != null)
@@ -110,7 +108,7 @@ public final class EntityUtil {
 	}
 
 	public static void applyAttributeModifierSafely(LivingEntity entity, Attribute attribute, AttributeModifier modifier, boolean permanentModifier) {
-		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
+		AttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null && !instance.hasModifier(modifier)) {
 			if (permanentModifier) {
@@ -127,7 +125,7 @@ public final class EntityUtil {
 	}
 
 	public static void removeAttributeModifier(LivingEntity entity, Attribute attribute, UUID modifierId) {
-		ModifiableAttributeInstance instance = entity.getAttribute(attribute);
+		AttributeInstance instance = entity.getAttribute(attribute);
 
 		if (instance != null) {
 			AttributeModifier modifier = instance.getModifier(modifierId);
@@ -142,13 +140,13 @@ public final class EntityUtil {
 	}
 
 	public static double safelyGetAttributeValue(LivingEntity entity, Attribute attribute) {
-		AttributeModifierManager attributes = entity.getAttributes();
+		AttributeMap attributes = entity.getAttributes();
 
 		return attributes.hasAttribute(attribute) ? attributes.getValue(attribute) : 0;
 	}
 
 	public static void pushEntityAway(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
-		Vector3d targetMotion = targetEntity.getDeltaMovement();
+		Vec3 targetMotion = targetEntity.getDeltaMovement();
 
 		targetEntity.setDeltaMovement((targetEntity.getX() - centralEntity.getX()) * strength + targetMotion.x(),
 				(targetEntity.getY() - centralEntity.getY()) * strength + targetMotion.y(),
@@ -157,8 +155,8 @@ public final class EntityUtil {
 	}
 
 	public static void pullEntityIn(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength, boolean normalised) {
-		Vector3d targetMotion = targetEntity.getDeltaMovement();
-		Vector3d velocity = new Vector3d((centralEntity.getX() - targetEntity.getX()) + targetMotion.x(),
+		Vec3 targetMotion = targetEntity.getDeltaMovement();
+		Vec3 velocity = new Vec3((centralEntity.getX() - targetEntity.getX()) + targetMotion.x(),
 				(centralEntity.getY() - targetEntity.getY()) + targetMotion.y(),
 				(centralEntity.getZ() - targetEntity.getZ()) + targetMotion.z());
 
@@ -181,7 +179,7 @@ public final class EntityUtil {
 		if (!(entity instanceof LivingEntity) || !entity.isAlive() || entity.isSpectator() || entity instanceof FakePlayer)
 			return;
 
-		boolean onlyBeneficial = entity instanceof PlayerEntity && ((PlayerEntity)entity).isCreative();
+		boolean onlyBeneficial = entity instanceof Player && ((Player)entity).isCreative();
 
 		for (EffectBuilder builder : effects) {
 			if (!onlyBeneficial || builder.getEffect().isBeneficial())
@@ -189,20 +187,20 @@ public final class EntityUtil {
 		}
 	}
 
-	public static void removePotions(LivingEntity entity, Effect... effects) {
-		for (Effect effect : effects) {
+	public static void removePotions(LivingEntity entity, MobEffect... effects) {
+		for (MobEffect effect : effects) {
 			if (entity.hasEffect(effect))
 				entity.removeEffect(effect);
 		}
 	}
 
-	public static boolean isPlayerLookingAtEntity(PlayerEntity pl, Entity target) {
-		return isPlayerLookingAt(pl, target.getX(), target.getBoundingBox().minY + target.getBbHeight() / 2D, target.getZ()) && pl.canSee(target);
+	public static boolean isPlayerLookingAtEntity(Player pl, Entity target) {
+		return isPlayerLookingAt(pl, target.getX(), target.getBoundingBox().minY + target.getBbHeight() / 2D, target.getZ()) && pl.hasLineOfSight(target);
 	}
 
-	public static boolean isPlayerLookingAt(PlayerEntity pl, double posX, double posY, double posZ) {
-		Vector3d playerLookVec = pl.getLookAngle().normalize();
-		Vector3d requiredLookVec = new Vector3d(posX - pl.getX(), posY - (pl.getY() + pl.getEyeHeight()),posZ - pl.getZ());
+	public static boolean isPlayerLookingAt(Player pl, double posX, double posY, double posZ) {
+		Vec3 playerLookVec = pl.getLookAngle().normalize();
+		Vec3 requiredLookVec = new Vec3(posX - pl.getX(), posY - (pl.getY() + pl.getEyeHeight()),posZ - pl.getZ());
 		double requiredLookVecLength = requiredLookVec.length();
 		requiredLookVec = requiredLookVec.normalize();
 		double vecDotProduct = playerLookVec.dot(requiredLookVec);
@@ -210,13 +208,13 @@ public final class EntityUtil {
 		return vecDotProduct > 1.0 - 0.025d / requiredLookVecLength;
 	}
 
-	public static boolean isNaturalSpawnReason(SpawnReason reason) {
-		return reason == SpawnReason.CHUNK_GENERATION || reason == SpawnReason.NATURAL;
+	public static boolean isNaturalSpawnReason(MobSpawnType reason) {
+		return reason == MobSpawnType.CHUNK_GENERATION || reason == MobSpawnType.NATURAL;
 	}
 
 	@Nullable
-	public static Vector3d preciseEntityInterceptCalculation(Entity impactedEntity, Entity impactingEntity, int granularity) {
-		Vector3d vecVelocity = impactingEntity.getDeltaMovement();
+	public static Vec3 preciseEntityInterceptCalculation(Entity impactedEntity, Entity impactingEntity, int granularity) {
+		Vec3 vecVelocity = impactingEntity.getDeltaMovement();
 		final double velocityX = vecVelocity.x();
 		final double velocityY = vecVelocity.y();
 		final double velocityZ = vecVelocity.z();
@@ -225,8 +223,8 @@ public final class EntityUtil {
 			double projectionX = velocityX * (1 / (float)granularity) * i;
 			double projectionY = velocityY * (1 / (float)granularity) * i;
 			double projectionZ = velocityZ * (1 / (float)granularity) * i;
-			Vector3d initialVec = new Vector3d(impactingEntity.getX(), impactingEntity.getY(), impactingEntity.getZ());
-			Vector3d projectedVec = initialVec.add(projectionX, projectionY, projectionZ);
+			Vec3 initialVec = new Vec3(impactingEntity.getX(), impactingEntity.getY(), impactingEntity.getZ());
+			Vec3 projectedVec = initialVec.add(projectionX, projectionY, projectionZ);
 
 			List<Entity> entityList = impactingEntity.level.getEntities(impactingEntity, impactingEntity.getBoundingBox().inflate(projectionX, projectionY, projectionZ));
 
@@ -234,7 +232,7 @@ public final class EntityUtil {
 				if (entity != impactedEntity)
 					continue;
 
-				Optional<Vector3d> intercept = entity.getBoundingBox().clip(initialVec, projectedVec);
+				Optional<Vec3> intercept = entity.getBoundingBox().clip(initialVec, projectedVec);
 
 				if (intercept.isPresent())
 					return intercept.get();
@@ -244,39 +242,34 @@ public final class EntityUtil {
 		return null;
 	}
 
-	public static boolean canPvp(PlayerEntity attacker, PlayerEntity target) {
+	public static boolean canPvp(Player attacker, Player target) {
 		return attacker.level.getServer().isPvpAllowed() && attacker != target && !attacker.isAlliedTo(target);
 	}
 
 	public static Direction getDirectionFacing(Entity entity, boolean lateralOnly) {
 		if (!lateralOnly) {
-			if (entity.xRot < -50)
+			if (entity.getXRot() < -50)
 				return Direction.DOWN;
 
-			if (entity.xRot > 50)
+			if (entity.getXRot() > 50)
 				return Direction.UP;
 		}
 
-		int vec = MathHelper.floor(entity.yRot * 4 / 360 + 0.5) & 0x3;
+		int vec = Mth.floor(entity.getYRot() * 4 / 360 + 0.5) & 0x3;
 
-		switch (++vec % 4) {
-			case 0:
-				return Direction.EAST;
-			case 1:
-				return Direction.SOUTH;
-			case 2:
-				return Direction.WEST;
-			case 3:
-			default:
-				return Direction.NORTH;
-		}
+		return switch (++vec % 4) {
+			case 0 -> Direction.EAST;
+			case 1 -> Direction.SOUTH;
+			case 2 -> Direction.WEST;
+			default -> Direction.NORTH;
+		};
 	}
 
 	public static double getEntityJumpVelocity(LivingEntity entity) {
 		float jumpVelocity = entity.getJumpPower();
 
-		if (entity.hasEffect(Effects.JUMP))
-			jumpVelocity += 0.1f * entity.getEffect(Effects.JUMP).getAmplifier() + 1;
+		if (entity.hasEffect(MobEffects.JUMP))
+			jumpVelocity += 0.1f * entity.getEffect(MobEffects.JUMP).getAmplifier() + 1;
 
 		return jumpVelocity;
 	}
@@ -285,7 +278,7 @@ public final class EntityUtil {
 	public static Set<Entity> getAttackersForMob(LivingEntity entity, @Nullable Predicate<Entity> filter) {
 		CombatTracker tracker = entity.getCombatTracker();
 
-		if (tracker.entries.isEmpty() || !tracker.inCombat)
+		if (tracker.entries.isEmpty() || !tracker.isInCombat())
 			return Collections.emptySet();
 
 		HashSet<Entity> killers = new HashSet<Entity>(tracker.entries.size());
@@ -298,27 +291,27 @@ public final class EntityUtil {
 		return killers;
 	}
 
-	public static Vector3d getDirectionForFacing(Entity entity) {
-		return new Vector3d(
-				-MathHelper.sin(entity.yRot * (float)Math.PI / 180f),
-				-MathHelper.sin(entity.xRot * (float)Math.PI / 180f),
-				MathHelper.cos(entity.yRot * (float)Math.PI / 180f)
+	public static Vec3 getDirectionForFacing(Entity entity) {
+		return new Vec3(
+				-Mth.sin(entity.getYRot() * (float)Math.PI / 180f),
+				-Mth.sin(entity.getXRot() * (float)Math.PI / 180f),
+				Mth.cos(entity.getYRot() * (float)Math.PI / 180f)
 		);
 	}
 
-	public static Vector3d getVelocityVectorForFacing(Entity entity) {
+	public static Vec3 getVelocityVectorForFacing(Entity entity) {
 		return getVelocityVectorForFacing(entity, 1f);
 	}
 
-	public static Vector3d getVelocityVectorForFacing(Entity entity, float velocityMod) {
-		return new Vector3d(
-				-MathHelper.sin(entity.yRot * (float)Math.PI / 180f) * MathHelper.cos(entity.xRot * (float)Math.PI / 180.0F) * velocityMod,
-				-MathHelper.sin(entity.xRot * (float)Math.PI / 180f) * velocityMod,
-				MathHelper.cos(entity.yRot * (float)Math.PI / 180f) * MathHelper.cos(entity.xRot * (float)Math.PI / 180f) * velocityMod);
+	public static Vec3 getVelocityVectorForFacing(Entity entity, float velocityMod) {
+		return new Vec3(
+				-Mth.sin(entity.getYRot() * (float)Math.PI / 180f) * Mth.cos(entity.getXRot() * (float)Math.PI / 180.0F) * velocityMod,
+				-Mth.sin(entity.getXRot() * (float)Math.PI / 180f) * velocityMod,
+				Mth.cos(entity.getYRot() * (float)Math.PI / 180f) * Mth.cos(entity.getXRot() * (float)Math.PI / 180f) * velocityMod);
 	}
 
 	public static boolean isEntityMoving(Entity entity) {
-		Vector3d velocity = entity.getDeltaMovement();
+		Vec3 velocity = entity.getDeltaMovement();
 
 		return velocity.x() != 0 || velocity.z() != 0 || velocity.y() > -0.07d || velocity.y() < -0.08d;
 	}

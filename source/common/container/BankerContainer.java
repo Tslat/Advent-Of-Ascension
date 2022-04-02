@@ -1,35 +1,34 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.tslat.aoa3.common.registration.AoAContainers;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 
-public class BankerContainer extends Container {
-	private final Inventory inputs;
-	private final Inventory outputs;
+public class BankerContainer extends AbstractContainerMenu {
+	private Inventory inputs;
+	private Inventory outputs;
 
 	public final AoABanker banker;
-	private final PlayerEntity player;
+	private final Player player;
 
-	public BankerContainer(int screenId, PlayerInventory playerInventory) {
+	public BankerContainer(int screenId, Inventory playerInventory) {
 		this(screenId, playerInventory, null);
 	}
 
-	public BankerContainer(int screenId, PlayerInventory playerInventory, AoABanker banker) {
+	public BankerContainer(int screenId, Inventory playerInventory, AoABanker banker) {
 		super(AoAContainers.BANKER.get(), screenId);
 
 		this.player = playerInventory.player;
 		this.banker = banker;
 
-		inputs = new Inventory(6) {
+		/*inputs = new Inventory(6) {
 			@Override
 			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem() == getCoinForSlot(index);
@@ -67,12 +66,12 @@ public class BankerContainer extends Container {
 				}
 
 				@Override
-				public boolean mayPickup(PlayerEntity playerIn) {
+				public boolean mayPickup(Player playerIn) {
 					return hasItem();
 				}
 
 				@Override
-				public ItemStack onTake(PlayerEntity thePlayer, ItemStack stack) {
+				public ItemStack onTake(Player thePlayer, ItemStack stack) {
 					inputs.getItem(getSlotIndex()).shrink(getSlotIndex() < 3 ? 20 : 1);
 					updateOutput(getSlotIndex());
 
@@ -83,21 +82,21 @@ public class BankerContainer extends Container {
 
 		for (int inventoryY = 0; inventoryY < 3; inventoryY++) {
 			for (int inventoryX = 0; inventoryX < 9; inventoryX++) {
-				addSlot(new Slot(player.inventory, inventoryX + inventoryY * 9 + 9, 8 + inventoryX * 18, 105 + inventoryY * 18));
+				addSlot(new Slot(player.getInventory(), inventoryX + inventoryY * 9 + 9, 8 + inventoryX * 18, 105 + inventoryY * 18));
 			}
 		}
 
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
-			addSlot(new Slot(player.inventory, hotbarSlot, 8 + hotbarSlot * 18, 163));
-		}
+			addSlot(new Slot(player.getInventory(), hotbarSlot, 8 + hotbarSlot * 18, 163));
+		}*/
 	}
 
 	@Override
-	public void removed(PlayerEntity player) {
+	public void removed(Player player) {
 		super.removed(player);
 
 		if (!player.level.isClientSide)
-			clearContainer(player, player.level, inputs);
+			clearContainer(player, inputs);
 	}
 
 	protected void updateOutput(int index) {
@@ -114,7 +113,7 @@ public class BankerContainer extends Container {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 
@@ -163,30 +162,17 @@ public class BankerContainer extends Container {
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return banker != null && banker.isAlive() && this.player.distanceToSqr(banker) <= 64;
 	}
 
 	public static Item getCoinForSlot(int index) {
-		switch (index) {
-			case 0:
-			case 9:
-				return AoAItems.COPPER_COIN.get();
-			case 1:
-			case 3:
-			case 6:
-			case 10:
-				return AoAItems.SILVER_COIN.get();
-			case 2:
-			case 4:
-			case 7:
-			case 11:
-				return AoAItems.GOLD_COIN.get();
-			case 5:
-			case 8:
-				return AoAItems.LUNAVER_COIN.get();
-			default:
-				return Items.AIR;
-		}
+		return switch (index) {
+			case 0, 9 -> AoAItems.COPPER_COIN.get();
+			case 1, 3, 6, 10 -> AoAItems.SILVER_COIN.get();
+			case 2, 4, 7, 11 -> AoAItems.GOLD_COIN.get();
+			case 5, 8 -> AoAItems.LUNAVER_COIN.get();
+			default -> Items.AIR;
+		};
 	}
 }

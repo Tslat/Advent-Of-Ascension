@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
 public class TangleFallEntity extends BaseEnergyShot {
-	public TangleFallEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public TangleFallEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public TangleFallEntity(World world) {
-		super(AoAEntities.Projectiles.TANGLE_FALL.get(), world);
+	public TangleFallEntity(Level world) {
+		super(AoAProjectiles.TANGLE_FALL.get(), world);
 	}
 
 	public TangleFallEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, float velocity) {
-		super(AoAEntities.Projectiles.TANGLE_FALL.get(), shooter, weapon, posX, posY, posZ, velocity);
+		super(AoAProjectiles.TANGLE_FALL.get(), shooter, weapon, posX, posY, posZ, velocity);
 	}
 
-	public TangleFallEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.TANGLE_FALL.get(), world, x, y, z);
+	public TangleFallEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.TANGLE_FALL.get(), world, x, y, z);
 	}
 }

@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.world.gen.feature.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.tslat.aoa3.content.world.gen.feature.features.config.LiquidDrainConfig;
 
 import java.util.Random;
@@ -18,8 +18,12 @@ public class LiquidDrainFeature extends Feature<LiquidDrainConfig> {
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, LiquidDrainConfig config) {
-		BlockPos.Mutable placementPos = new BlockPos.Mutable().set(pos);
+	public boolean place(FeaturePlaceContext<LiquidDrainConfig> context) {
+		BlockPos pos = context.origin();
+		LiquidDrainConfig config = context.config();
+		Random rand = context.random();
+		WorldGenLevel reader = context.level();
+		BlockPos.MutableBlockPos placementPos = new BlockPos.MutableBlockPos().set(pos);
 
 		if (config.stopBlocks.contains(reader.getBlockState(placementPos)))
 			return false;
@@ -35,10 +39,10 @@ public class LiquidDrainFeature extends Feature<LiquidDrainConfig> {
 		}
 
 		if (config.fill) {
-			reader.getLiquidTicks().scheduleTick(placementPos.move(config.inverseDirection ? Direction.DOWN : Direction.UP), config.fluid.getType(), 0);
+			reader.scheduleTick(placementPos.move(config.inverseDirection ? Direction.DOWN : Direction.UP), config.fluid.getType(), 0);
 		}
 		else {
-			reader.getLiquidTicks().scheduleTick(pos, config.fluid.getType(), 0);
+			reader.scheduleTick(pos, config.fluid.getType(), 0);
 		}
 
 		return true;

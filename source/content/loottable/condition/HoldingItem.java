@@ -3,27 +3,26 @@ package net.tslat.aoa3.content.loottable.condition;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.Hand;
-import net.minecraft.util.JSONUtils;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.tslat.aoa3.common.registration.AoALootOperations;
 
 import javax.annotation.Nullable;
 
-public class HoldingItem implements ILootCondition {
+public class HoldingItem implements LootItemCondition {
 	private final LootContext.EntityTarget target;
 	private final ItemPredicate predicate;
 	@Nullable
-	private final Hand hand;
+	private final InteractionHand hand;
 
-	public HoldingItem(LootContext.EntityTarget target, ItemPredicate predicate, @Nullable Hand hand) {
+	public HoldingItem(LootContext.EntityTarget target, ItemPredicate predicate, @Nullable InteractionHand hand) {
 		this.target = target;
 		this.predicate = predicate;
 		this.hand = hand;
@@ -49,7 +48,7 @@ public class HoldingItem implements ILootCondition {
 	}
 
 	@Override
-	public LootConditionType getType() {
+	public LootItemConditionType getType() {
 		return AoALootOperations.LootConditions.HOLDING_ITEM;
 	}
 
@@ -62,11 +61,11 @@ public class HoldingItem implements ILootCondition {
 	}
 
 	@Nullable
-	public Hand getHand() {
+	public InteractionHand getHand() {
 		return this.hand;
 	}
 
-	public static class Serializer implements ILootSerializer<HoldingItem> {
+	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<HoldingItem> {
 		@Override
 		public void serialize(JsonObject json, HoldingItem holdingItem, JsonSerializationContext jsonSerializationContext) {
 			json.add("target", jsonSerializationContext.serialize(holdingItem.target));
@@ -78,7 +77,7 @@ public class HoldingItem implements ILootCondition {
 
 		@Override
 		public HoldingItem deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
-			return new HoldingItem(JSONUtils.getAsObject(json, "target", jsonDeserializationContext, LootContext.EntityTarget.class), ItemPredicate.fromJson(json.get("predicate")), json.has("hand") ? Hand.valueOf(json.get("hand").getAsString().toUpperCase()) : null);
+			return new HoldingItem(GsonHelper.getAsObject(json, "target", jsonDeserializationContext, LootContext.EntityTarget.class), ItemPredicate.fromJson(json.get("predicate")), json.has("hand") ? InteractionHand.valueOf(json.get("hand").getAsString().toUpperCase()) : null);
 		}
 	}
 }

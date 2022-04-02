@@ -1,14 +1,14 @@
 package net.tslat.aoa3.library.builder;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -26,9 +26,9 @@ import java.util.function.Supplier;
 
 public class SoundBuilder {
 	private SoundEvent sound;
-	private SoundCategory category = SoundCategory.MASTER;
-	private World world = null;
-	private Vector3d location = null;
+	private SoundSource category = SoundSource.MASTER;
+	private Level world = null;
+	private Vec3 location = null;
 
 	private Entity followingEntity = null;
 
@@ -42,8 +42,8 @@ public class SoundBuilder {
 	private boolean loop = false;
 	private int loopDelay = 0;
 
-	private Set<PlayerEntity> playTo = null;
-	private Set<PlayerEntity> exclude = null;
+	private Set<Player> playTo = null;
+	private Set<Player> exclude = null;
 
 	public SoundBuilder(Supplier<SoundEvent> sound) {
 		this.sound = sound.get();
@@ -60,12 +60,12 @@ public class SoundBuilder {
 		return this;
 	}
 
-	public SoundBuilder atBlock(World world, BlockPos pos) {
+	public SoundBuilder atBlock(Level world, BlockPos pos) {
 		return atPos(world, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d);
 	}
 
-	public SoundBuilder atPos(World world, double x, double y, double z) {
-		this.location = new Vector3d(x, y, z);
+	public SoundBuilder atPos(Level world, double x, double y, double z) {
+		this.location = new Vec3(x, y, z);
 		this.world = world;
 
 		return this;
@@ -97,46 +97,46 @@ public class SoundBuilder {
 		return this;
 	}
 
-	public SoundBuilder category(SoundCategory category) {
+	public SoundBuilder category(SoundSource category) {
 		this.category = category;
 
 		return this;
 	}
 
 	public SoundBuilder isMusic() {
-		return category(SoundCategory.MUSIC);
+		return category(SoundSource.MUSIC);
 	}
 
 	public SoundBuilder isRecord() {
-		return category(SoundCategory.RECORDS);
+		return category(SoundSource.RECORDS);
 	}
 
 	public SoundBuilder isWeather() {
-		return category(SoundCategory.WEATHER);
+		return category(SoundSource.WEATHER);
 	}
 
 	public SoundBuilder isBlocks() {
-		return category(SoundCategory.BLOCKS);
+		return category(SoundSource.BLOCKS);
 	}
 
 	public SoundBuilder isMonster() {
-		return category(SoundCategory.HOSTILE);
+		return category(SoundSource.HOSTILE);
 	}
 
 	public SoundBuilder isFriendlyMob() {
-		return category(SoundCategory.NEUTRAL);
+		return category(SoundSource.NEUTRAL);
 	}
 
 	public SoundBuilder isPlayer() {
-		return category(SoundCategory.PLAYERS);
+		return category(SoundSource.PLAYERS);
 	}
 
 	public SoundBuilder isAmbience() {
-		return category(SoundCategory.AMBIENT);
+		return category(SoundSource.AMBIENT);
 	}
 
 	public SoundBuilder isNarration() {
-		return category(SoundCategory.VOICE);
+		return category(SoundSource.VOICE);
 	}
 
 	public SoundBuilder applyTimeDilation() {
@@ -168,28 +168,28 @@ public class SoundBuilder {
 		return this;
 	}
 
-	public SoundBuilder exclude(PlayerEntity... players) {
+	public SoundBuilder exclude(Player... players) {
 		if (exclude == null)
-			exclude = new HashSet<PlayerEntity>();
+			exclude = new HashSet<Player>();
 
 		if (world == null)
 			world = players[0].level;
 
-		for (PlayerEntity player : players) {
+		for (Player player : players) {
 			exclude.add(player);
 		}
 
 		return this;
 	}
 
-	public SoundBuilder include(PlayerEntity... players) {
+	public SoundBuilder include(Player... players) {
 		if (playTo == null)
-			playTo = new HashSet<PlayerEntity>();
+			playTo = new HashSet<Player>();
 
 		if (world == null)
 			world = players[0].level;
 
-		for (PlayerEntity player : players) {
+		for (Player player : players) {
 			playTo.add(player);
 		}
 
@@ -200,11 +200,11 @@ public class SoundBuilder {
 		return this.sound;
 	}
 
-	public SoundCategory getCategory() {
+	public SoundSource getCategory() {
 		return this.category;
 	}
 
-	public Vector3d getLocation() {
+	public Vec3 getLocation() {
 		return this.location;
 	}
 
@@ -255,13 +255,13 @@ public class SoundBuilder {
 			AoASoundBuilderPacket packet = new AoASoundBuilderPacket(this);
 
 			if (playTo != null) {
-				for (PlayerEntity pl : playTo) {
+				for (Player pl : playTo) {
 					if (exclude == null || !exclude.contains(pl))
-						AoAPackets.messagePlayer((ServerPlayerEntity)pl, packet);
+						AoAPackets.messagePlayer((ServerPlayer)pl, packet);
 				}
 			}
 			else {
-				for (ServerPlayerEntity pl : world.getServer().getPlayerList().getPlayers()) {
+				for (ServerPlayer pl : world.getServer().getPlayerList().getPlayers()) {
 					if (pl.level == world && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
 						AoAPackets.messagePlayer(pl, packet);
 				}
@@ -269,7 +269,7 @@ public class SoundBuilder {
 		}
 	}
 
-	public void toNetwork(PacketBuffer buffer) {
+	public void toNetwork(FriendlyByteBuf buffer) {
 		buffer.writeResourceLocation(sound.getRegistryName());
 
 		ArrayList<Section> sections = new ArrayList<Section>();
@@ -287,7 +287,7 @@ public class SoundBuilder {
 		}
 	}
 
-	public static SoundBuilder fromNetwork(PacketBuffer buffer) {
+	public static SoundBuilder fromNetwork(FriendlyByteBuf buffer) {
 		SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(buffer.readResourceLocation());
 		SoundBuilder builder = new SoundBuilder(sound);
 
@@ -301,10 +301,10 @@ public class SoundBuilder {
 	}
 
 	enum Section {
-		CATEGORY(builder -> builder.category != SoundCategory.MASTER, (builder, buffer) -> {
+		CATEGORY(builder -> builder.category != SoundSource.MASTER, (builder, buffer) -> {
 			buffer.writeEnum(builder.category);
 		}, (builder, buffer) -> {
-			builder.category(buffer.readEnum(SoundCategory.class));
+			builder.category(buffer.readEnum(SoundSource.class));
 		}),
 		LOCATION(builder -> builder.location != null, (builder, buffer) -> {
 			buffer.writeDouble(builder.location.x());
@@ -349,10 +349,10 @@ public class SoundBuilder {
 		});
 
 		final Predicate<SoundBuilder> shouldWrite;
-		final BiConsumer<SoundBuilder, PacketBuffer> writer;
-		final BiConsumer<SoundBuilder, PacketBuffer> reader;
+		final BiConsumer<SoundBuilder, FriendlyByteBuf> writer;
+		final BiConsumer<SoundBuilder, FriendlyByteBuf> reader;
 
-		Section(Predicate<SoundBuilder> shouldWrite, BiConsumer<SoundBuilder, PacketBuffer> writer, BiConsumer<SoundBuilder, PacketBuffer> reader) {
+		Section(Predicate<SoundBuilder> shouldWrite, BiConsumer<SoundBuilder, FriendlyByteBuf> writer, BiConsumer<SoundBuilder, FriendlyByteBuf> reader) {
 			this.shouldWrite = shouldWrite;
 			this.writer = writer;
 			this.reader = reader;

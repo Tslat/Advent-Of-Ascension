@@ -1,19 +1,19 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.Util;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.npc.trader.StoreKeeperEntity;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -24,14 +24,14 @@ public class VoxStoreCrate extends Block {
 	}
 
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
-		if (!world.isClientSide && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getItemInHand(Hand.MAIN_HAND)) == 0) {
-			StoreKeeperEntity storeKeeper = new StoreKeeperEntity(AoAEntities.NPCs.STORE_KEEPER.get(), world);
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+		if (!world.isClientSide && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getItemInHand(InteractionHand.MAIN_HAND)) == 0) {
+			StoreKeeperEntity storeKeeper = new StoreKeeperEntity(AoANpcs.STORE_KEEPER.get(), world);
 
 			storeKeeper.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
-			storeKeeper.finalizeSpawn((ServerWorld)world, world.getCurrentDifficultyAt(pos), SpawnReason.EVENT, null, null);
+			storeKeeper.finalizeSpawn((ServerLevel)world, world.getCurrentDifficultyAt(pos), MobSpawnType.EVENT, null, null);
 			world.addFreshEntity(storeKeeper);
-			player.sendMessage(LocaleUtil.getLocaleMessage(AoAEntities.NPCs.STORE_KEEPER.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
+			player.sendMessage(LocaleUtil.getLocaleMessage(AoANpcs.STORE_KEEPER.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
 		}
 	}
 }

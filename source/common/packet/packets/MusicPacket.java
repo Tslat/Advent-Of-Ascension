@@ -1,8 +1,8 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.MusicPlayer;
 
 import java.util.function.Supplier;
@@ -17,12 +17,12 @@ public class MusicPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeBoolean(startingMusic);
 		buffer.writeUtf(id.toString());
 	}
 
-	public static MusicPacket decode(PacketBuffer buffer) {
+	public static MusicPacket decode(FriendlyByteBuf buffer) {
 		return new MusicPacket(buffer.readBoolean(), new ResourceLocation(buffer.readUtf(32767)));
 	}
 

@@ -4,10 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -17,11 +17,11 @@ import org.apache.logging.log4j.Level;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AoAResourcesReloadListener extends JsonReloadListener {
+public class AoAResourcesReloadListener extends SimpleJsonResourceReloadListener {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private static final String folder = "player/resources";
 
-	private static final HashMap<AoAResource, JsonObject> RESOURCES = new HashMap<AoAResource, JsonObject>();
+	private static final HashMap<AoAResource, JsonObject> RESOURCES = new HashMap<>();
 
 	public AoAResourcesReloadListener() {
 		super(GSON, folder);
@@ -36,7 +36,7 @@ public class AoAResourcesReloadListener extends JsonReloadListener {
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> jsonMap, IResourceManager resourceManager, IProfiler profiler) {
+	protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {
 		RESOURCES.clear();
 
 		for (Map.Entry<ResourceLocation, JsonElement> entry : jsonMap.entrySet()) {

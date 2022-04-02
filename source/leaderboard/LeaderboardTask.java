@@ -1,7 +1,7 @@
 package net.tslat.aoa3.leaderboard;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.Logging;
 import org.apache.logging.log4j.Level;
 
@@ -14,7 +14,7 @@ import java.util.function.Consumer;
 
 public abstract class LeaderboardTask {
 	private boolean cachedAutoCommitStatus = true;
-	protected static final ConcurrentHashMap<Connection, HashMap<String, PreparedStatement>> preparedStatements = new ConcurrentHashMap<Connection, HashMap<String, PreparedStatement>>();
+	protected static final ConcurrentHashMap<Connection, HashMap<String, PreparedStatement>> preparedStatements = new ConcurrentHashMap<>();
 
 	protected abstract void execute(final Connection connection);
 
@@ -27,7 +27,7 @@ public abstract class LeaderboardTask {
 
 	protected void savePreparedStatement(Connection connection, String id, PreparedStatement statement) {
 		if (!preparedStatements.containsKey(connection))
-			preparedStatements.put(connection, new HashMap<String, PreparedStatement>());
+			preparedStatements.put(connection, new HashMap<>());
 
 		preparedStatements.get(connection).put(id, statement);
 	}

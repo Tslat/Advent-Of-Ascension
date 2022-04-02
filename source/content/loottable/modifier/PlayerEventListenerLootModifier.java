@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameter;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.tslat.aoa3.event.AoAPlayerEvents;
@@ -20,21 +20,21 @@ import javax.annotation.Nonnull;
 import java.util.List;
 
 public class PlayerEventListenerLootModifier extends LootModifier {
-	private static final LootParameter<?>[] ENTITY_SOURCE_PARAMS = new LootParameter<?>[] {LootParameters.THIS_ENTITY, LootParameters.DIRECT_KILLER_ENTITY, LootParameters.KILLER_ENTITY, LootParameters.LAST_DAMAGE_PLAYER};
+	private static final LootContextParam<?>[] ENTITY_SOURCE_PARAMS = new LootContextParam<?>[] {LootContextParams.THIS_ENTITY, LootContextParams.DIRECT_KILLER_ENTITY, LootContextParams.KILLER_ENTITY, LootContextParams.LAST_DAMAGE_PLAYER};
 
-	public PlayerEventListenerLootModifier(ILootCondition[] conditions) {
+	public PlayerEventListenerLootModifier(LootItemCondition[] conditions) {
 		super(conditions);
 	}
 
 	@Nonnull
 	@Override
 	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
-		for (LootParameter<?> param : ENTITY_SOURCE_PARAMS) {
+		for (LootContextParam<?> param : ENTITY_SOURCE_PARAMS) {
 			if (context.hasParam(param)) {
-				PlayerEntity pl = PlayerUtil.getPlayerOrOwnerIfApplicable((Entity)context.getParamOrNull(param));
+				Player pl = PlayerUtil.getPlayerOrOwnerIfApplicable((Entity)context.getParamOrNull(param));
 
-				if (pl instanceof ServerPlayerEntity) {
-					AoAPlayerEvents.issueEvent((ServerPlayerEntity)pl, AoAPlayerEventListener.ListenerType.LOOT_MODIFICATION, listener -> listener.handleLootModification(generatedLoot, context));
+				if (pl instanceof ServerPlayer) {
+					AoAPlayerEvents.issueEvent((ServerPlayer)pl, AoAPlayerEventListener.ListenerType.LOOT_MODIFICATION, listener -> listener.handleLootModification(generatedLoot, context));
 
 					return generatedLoot;
 				}
@@ -46,7 +46,7 @@ public class PlayerEventListenerLootModifier extends LootModifier {
 
 	public static class Serializer extends GlobalLootModifierSerializer<PlayerEventListenerLootModifier> {
 		@Override
-		public PlayerEventListenerLootModifier read(ResourceLocation location, JsonObject object, ILootCondition[] lootConditions) {
+		public PlayerEventListenerLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] lootConditions) {
 			return new PlayerEventListenerLootModifier(lootConditions);
 		}
 

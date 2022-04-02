@@ -2,13 +2,12 @@ package net.tslat.aoa3.player;
 
 import com.google.common.collect.ArrayListMultimap;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.Constants;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -20,18 +19,21 @@ import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public final class ClientPlayerDataManager implements PlayerDataManager {
-	private ClientPlayerEntity player;
+	private LocalPlayer player;
 
-	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<AoASkill, AoASkill.Instance>(Comparator.comparing(AoASkill::getRegistryName));
-	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<AoAResource, AoAResource.Instance>(Comparator.comparing(AoAResource::getRegistryName));
+	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<>(Comparator.comparing(AoASkill::getRegistryName));
+	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<>(Comparator.comparing(AoAResource::getRegistryName));
 	private final ArrayListMultimap<AoAPlayerEventListener.ListenerType, AoAPlayerEventListener> eventListeners = ArrayListMultimap.create();
 
-	private final ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>> keyListeners = new ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>>(1);
+	private final ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>> keyListeners = new ConcurrentHashMap<>(1);
 
 	private boolean isLegitimate = true;
 	private int totalLevel = 0;
@@ -41,8 +43,8 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	@Override
-	public void updatePlayerInstance(PlayerEntity pl) {
-		player = (ClientPlayerEntity)pl;
+	public void updatePlayerInstance(Player pl) {
+		player = (LocalPlayer)pl;
 	}
 
 	public void reset() {
@@ -56,7 +58,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	@Override
-	public ClientPlayerEntity player() {
+	public LocalPlayer player() {
 		return player;
 	}
 
@@ -97,7 +99,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 			return;
 
 		ArrayList<AoAPlayerEventListener> listeners = keyListeners.get(keycode);
-		ArrayList<String> abilities = new ArrayList<String>(listeners.size());
+		ArrayList<String> abilities = new ArrayList<>(listeners.size());
 
 		for (AoAPlayerEventListener listener : listeners) {
 			if (listener.getListenerState() == AoAPlayerEventListener.ListenerState.ACTIVE && listener.shouldSendKeyPress())
@@ -118,7 +120,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	@Override
-	public void loadFromNbt(CompoundNBT baseTag) {
+	public void loadFromNbt(CompoundTag baseTag) {
 		isLegitimate = baseTag.getBoolean("legitimate");
 		int hash = baseTag.getInt("hash");
 
@@ -129,7 +131,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		resources.clear();
 
 		if (baseTag.contains("skills")) {
-			CompoundNBT skillsNbt = baseTag.getCompound("skills");
+			CompoundTag skillsNbt = baseTag.getCompound("skills");
 
 			for (String id : skillsNbt.getAllKeys()) {
 				AoASkill skill = AoASkills.getSkill(new ResourceLocation(id));
@@ -147,7 +149,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		}
 
 		if (baseTag.contains("resources")) {
-			CompoundNBT resourcesNbt = baseTag.getCompound("resources");
+			CompoundTag resourcesNbt = baseTag.getCompound("resources");
 
 			for (String id : resourcesNbt.getAllKeys()) {
 				AoAResource resource = AoAResources.getResource(new ResourceLocation(id));
@@ -159,11 +161,11 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		}
 
 		if (baseTag.contains("PatchouliBooks")) {
-			ArrayList<ResourceLocation> books = new ArrayList<ResourceLocation>();
+			ArrayList<ResourceLocation> books = new ArrayList<>();
 
-			ListNBT booksNbt = baseTag.getList("PatchouliBooks", Constants.NBT.TAG_STRING);
+			ListTag booksNbt = baseTag.getList("PatchouliBooks", Tag.TAG_STRING);
 
-			for (INBT book : booksNbt) {
+			for (Tag book : booksNbt) {
 				books.add(new ResourceLocation(book.getAsString()));
 			}
 
@@ -183,9 +185,9 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		return eventListeners.get(eventType);
 	}
 
-	public void updateData(CompoundNBT syncTag) {
+	public void updateData(CompoundTag syncTag) {
 		if (syncTag.contains("skills")) {
-			CompoundNBT skillsData = syncTag.getCompound("skills");
+			CompoundTag skillsData = syncTag.getCompound("skills");
 
 			for (String key : skillsData.getAllKeys()) {
 				getSkill(AoASkills.getSkill(new ResourceLocation(key))).receiveSyncData(skillsData.getCompound(key));
@@ -195,7 +197,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		}
 
 		if (syncTag.contains("resources")) {
-			CompoundNBT resourcesData = syncTag.getCompound("resources");
+			CompoundTag resourcesData = syncTag.getCompound("resources");
 
 			for (String key : resourcesData.getAllKeys()) {
 				getResource(AoAResources.getResource(new ResourceLocation(key))).receiveSyncData(resourcesData.getCompound(key));
@@ -203,11 +205,11 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		}
 
 		if (syncTag.contains("patchouliBooks")) {
-			ArrayList<ResourceLocation> books = new ArrayList<ResourceLocation>();
+			ArrayList<ResourceLocation> books = new ArrayList<>();
 
-			ListNBT booksNbt = syncTag.getList("patchouliBooks", Constants.NBT.TAG_STRING);
+			ListTag booksNbt = syncTag.getList("patchouliBooks", Tag.TAG_STRING);
 
-			for (INBT book : booksNbt) {
+			for (Tag book : booksNbt) {
 				books.add(new ResourceLocation(book.getAsString()));
 			}
 
@@ -224,7 +226,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 				int keyCode = listener.getKeybind().getKey().getValue();
 
 				if (!keyListeners.containsKey(keyCode))
-					keyListeners.putIfAbsent(keyCode, new ArrayList<AoAPlayerEventListener>(1));
+					keyListeners.putIfAbsent(keyCode, new ArrayList<>(1));
 
 				keyListeners.get(keyCode).add(listener);
 

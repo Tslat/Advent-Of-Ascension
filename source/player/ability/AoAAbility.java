@@ -1,11 +1,11 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
@@ -17,17 +17,17 @@ import net.tslat.aoa3.player.skill.AoASkill;
 import java.util.function.BiFunction;
 
 public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
-	private final Lazy<TranslationTextComponent> name;
+	private final Lazy<TranslatableComponent> name;
 	private final BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory;
-	private final BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory;
+	private final BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory;
 
-	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundNBT, Instance> nbtFactory) {
-		this.name = Lazy.of(() -> new TranslationTextComponent(Util.makeDescriptionId("ability", getRegistryName())));
+	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory) {
+		this.name = Lazy.of(() -> new TranslatableComponent(Util.makeDescriptionId("ability", getRegistryName())));
 		this.jsonFactory = jsonFactory;
 		this.nbtFactory = nbtFactory;
 	}
 
-	public TranslationTextComponent getName() {
+	public TranslatableComponent getName() {
 		return this.name.get();
 	}
 
@@ -35,7 +35,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 		return jsonFactory.apply(skillInstance, abilityData);
 	}
 
-	public Instance loadFromNbt(AoASkill.Instance skillInstance, CompoundNBT abilityData) {
+	public Instance loadFromNbt(AoASkill.Instance skillInstance, CompoundTag abilityData) {
 		return nbtFactory.apply(skillInstance, abilityData);
 	}
 
@@ -44,7 +44,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 		protected AoASkill.Instance skill;
 		private final int levelReq;
 		private final String uniqueIdentifier;
-		private TranslationTextComponent description;
+		private TranslatableComponent description;
 
 		public boolean needsSync = true;
 		private ListenerState state;
@@ -52,24 +52,24 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 		public Instance(AoAAbility ability, AoASkill.Instance skill, JsonObject data) {
 			this.skill = skill;
 			this.ability = ability;
-			this.uniqueIdentifier = JSONUtils.getAsString(data, "unique_id");
-			this.levelReq = JSONUtils.getAsInt(data, "level_req");
-			this.state = ListenerState.fromId(JSONUtils.getAsString(data, "state", ListenerState.ACTIVE.getId()));
-			this.description = data.has("description") ? new TranslationTextComponent(JSONUtils.getAsString(data, "description")) : null;
+			this.uniqueIdentifier = GsonHelper.getAsString(data, "unique_id");
+			this.levelReq = GsonHelper.getAsInt(data, "level_req");
+			this.state = ListenerState.fromId(GsonHelper.getAsString(data, "state", ListenerState.ACTIVE.getId()));
+			this.description = data.has("description") ? new TranslatableComponent(GsonHelper.getAsString(data, "description")) : null;
 
 			checkDeactivation(true, false);
 		}
 
-		public Instance(AoAAbility ability, AoASkill.Instance skill, CompoundNBT data) {
+		public Instance(AoAAbility ability, AoASkill.Instance skill, CompoundTag data) {
 			this.skill = skill;
 			this.ability = ability;
 			this.uniqueIdentifier = data.getString("unique_identifier");
 			this.levelReq = data.getInt("level_req");
 			this.state = ListenerState.fromId(data.getString("state"));
-			this.description = data.contains("description") ? new TranslationTextComponent(data.getString("description")) : null;
+			this.description = data.contains("description") ? new TranslatableComponent(data.getString("description")) : null;
 		}
 
-		protected void updateDescription(TranslationTextComponent defaultDescription) {
+		protected void updateDescription(TranslatableComponent defaultDescription) {
 			this.description = defaultDescription;
 		}
 
@@ -77,13 +77,13 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			return this.ability;
 		}
 
-		public TranslationTextComponent getName() {
+		public TranslatableComponent getName() {
 			return type().getName();
 		}
 
-		public TranslationTextComponent getDescription() {
+		public TranslatableComponent getDescription() {
 			if (this.description == null)
-				updateDescription(new TranslationTextComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+				updateDescription(new TranslatableComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
 
 			return this.description;
 		}
@@ -142,7 +142,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			return state;
 		}
 
-		protected ServerPlayerEntity getPlayer() {
+		protected ServerPlayer getPlayer() {
 			return this.skill.getPlayerDataManager().player();
 		}
 
@@ -174,23 +174,23 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			}
 		}
 
-		public CompoundNBT saveToNbt() {
-			CompoundNBT data = new CompoundNBT();
+		public CompoundTag saveToNbt() {
+			CompoundTag data = new CompoundTag();
 
 			data.putString("state", this.state.getId());
 
 			return data;
 		}
 
-		public void loadFromNbt(CompoundNBT data) {
+		public void loadFromNbt(CompoundTag data) {
 			ListenerState prevState = this.state;
 			this.state = ListenerState.fromId(data.getString("state"));
 
 			checkDeactivation(false, prevState != state);
 		}
 
-		public CompoundNBT getSyncData(boolean forClientSetup) {
-			CompoundNBT data = new CompoundNBT();
+		public CompoundTag getSyncData(boolean forClientSetup) {
+			CompoundTag data = new CompoundTag();
 
 			 data.putString("state", this.state.getId());
 
@@ -206,7 +206,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			 return data;
 		}
 
-		public void receiveSyncData(CompoundNBT data) {
+		public void receiveSyncData(CompoundTag data) {
 			this.state = ListenerState.fromId(data.getString("state"));
 		}
 

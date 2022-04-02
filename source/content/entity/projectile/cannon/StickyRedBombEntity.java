@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -21,28 +21,28 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 	private LivingEntity shooter;
 	private int ticksInGround = 0;
 
-	public StickyRedBombEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public StickyRedBombEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public StickyRedBombEntity(World world) {
-		super(AoAEntities.Projectiles.STICKY_RED_BOMB.get(), world);
+	public StickyRedBombEntity(Level world) {
+		super(AoAProjectiles.STICKY_RED_BOMB.get(), world);
 	}
 
-	public StickyRedBombEntity(LivingEntity shooter, BaseGun gun, Hand hand, int maxAge, int piercingValue) {
-		super(AoAEntities.Projectiles.STICKY_RED_BOMB.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
+	public StickyRedBombEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
+		super(AoAProjectiles.STICKY_RED_BOMB.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
 		this.weapon = gun;
 		this.shooter = shooter;
 	}
 
-	public StickyRedBombEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.STICKY_RED_BOMB.get(), world, x, y, z);
+	public StickyRedBombEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.STICKY_RED_BOMB.get(), world, x, y, z);
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
-		if (result.getType() == RayTraceResult.Type.BLOCK) {
-			BlockRayTraceResult rayTraceResult = (BlockRayTraceResult)result;
+	protected void onHit(HitResult result) {
+		if (result.getType() == HitResult.Type.BLOCK) {
+			BlockHitResult rayTraceResult = (BlockHitResult)result;
 			BlockState bl = level.getBlockState(rayTraceResult.getBlockPos());
 			double posX = rayTraceResult.getBlockPos().getX();
 			double posY = rayTraceResult.getBlockPos().getY();
@@ -82,16 +82,16 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 		}
 		else {
 			if (!level.isClientSide()) {
-				if (result.getType() == RayTraceResult.Type.ENTITY) {
+				if (result.getType() == HitResult.Type.ENTITY) {
 					Entity shooter = getOwner();
 
 					if (shooter instanceof LivingEntity)
-						weapon.doImpactDamage(((EntityRayTraceResult)result).getEntity(), (LivingEntity)shooter, this, 1.0f);
+						weapon.doImpactDamage(((EntityHitResult)result).getEntity(), (LivingEntity)shooter, this, 1.0f);
 
 					doImpactEffect();
 				}
 
-				remove();
+				discard();
 			}
 		}
 	}
@@ -111,7 +111,7 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 			}
 
 			if (!level.isClientSide)
-				removed = false;
+				unsetRemoved();
 		}
 	}
 
@@ -120,6 +120,6 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 		WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
 
 		if (!level.isClientSide)
-			remove();
+			discard();
 	}
 }

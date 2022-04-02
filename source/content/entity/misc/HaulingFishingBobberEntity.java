@@ -1,38 +1,39 @@
 package net.tslat.aoa3.content.entity.misc;
 
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.FishingBobberEntity;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.tags.ITag;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraftforge.fml.network.FMLPlayMessages;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraftforge.network.PlayMessages;
+import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
+import net.tslat.aoa3.content.item.tool.misc.HaulingRod;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.AoAPlayerEvents;
-import net.tslat.aoa3.content.item.tool.misc.HaulingRod;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -41,9 +42,9 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 import java.util.function.Function;
 
-public class HaulingFishingBobberEntity extends FishingBobberEntity {
-	protected static final DataParameter<Integer> HOOKED_ENTITY = EntityDataManager.defineId(HaulingFishingBobberEntity.class, DataSerializers.INT);
-	protected static final DataParameter<Integer> STATE = EntityDataManager.defineId(HaulingFishingBobberEntity.class, DataSerializers.INT);
+public class HaulingFishingBobberEntity extends FishingHook {
+	protected static final EntityDataAccessor<Integer> HOOKED_ENTITY = SynchedEntityData.defineId(HaulingFishingBobberEntity.class, EntityDataSerializers.INT);
+	protected static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(HaulingFishingBobberEntity.class, EntityDataSerializers.INT);
 
 	protected final ItemStack rod;
 	protected float luck;
@@ -61,23 +62,30 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	public int ownerId;
 
 	// Clientside constructor, don't use.
-	public HaulingFishingBobberEntity(World world, PlayerEntity player, double posX, double posY, double posZ) {
-		super(world, player, posX, posY, posZ);
+	public HaulingFishingBobberEntity(Level world, Player player, double posX, double posY, double posZ) {
+		super(AoAMiscEntities.REINFORCED_BOBBER.get(), world);
 
+		setPos(posX, posY, posZ);
+		setOwner(player);
+
+		player.fishing = this;
+		this.xo = getX();
+		this.yo = getY();
+		this.zo = getZ();
 		this.rod = null;
 		this.luck = 0;
 		this.lure = 0;
 		this.ownerId = player.getId();
 	}
 
-	public HaulingFishingBobberEntity(PlayerEntity player, World world, ItemStack rod) {
+	public HaulingFishingBobberEntity(Player player, Level world, ItemStack rod) {
 		this(player, world, rod, 0, 0);
 
 		this.luck = calculateLuck(player, rod);
 		this.lure = calculateLure(player, rod);
 	}
 
-	public HaulingFishingBobberEntity(PlayerEntity player, World world, ItemStack rod, float luck, float lure) {
+	public HaulingFishingBobberEntity(Player player, Level world, ItemStack rod, float luck, float lure) {
 		super(player, world, 0, 0);
 
 		this.rod = rod;
@@ -95,7 +103,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		getEntityData().define(STATE, 0);
 	}
 
-	protected float calculateLuck(PlayerEntity player, ItemStack rod) {
+	protected float calculateLuck(Player player, ItemStack rod) {
 		float luck = player.getLuck();
 
 		if (rod.getItem() instanceof HaulingRod) {
@@ -108,7 +116,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		return luck;
 	}
 
-	protected float calculateLure(PlayerEntity player, ItemStack rod) {
+	protected float calculateLure(Player player, ItemStack rod) {
 		if (rod.getItem() instanceof HaulingRod) {
 			return ((HaulingRod)rod.getItem()).getLureMod(player, rod);
 		}
@@ -136,8 +144,8 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	protected void calculateFishingLureBonus() {
 		this.fishingBonusMod = 1;
 
-		Biome biome = level.getBiome(blockPosition());
-		float temperature = biome.getTemperature(blockPosition());
+		Holder<Biome> biome = level.getBiome(blockPosition());
+		float temperature = biome.value().getTemperature(blockPosition());
 
 		if (temperature < 0.15f) {
 			this.fishingBonusMod *= 0.9f;
@@ -146,13 +154,13 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 			this.fishingBonusMod *= 0.8f;
 		}
 
-		if (biome.getPrecipitation() == Biome.RainType.RAIN)
+		if (biome.value().getPrecipitation() == Biome.Precipitation.RAIN)
 			this.fishingBonusMod *= 1.1f;
 
 		if (level.isRainingAt(blockPosition()))
 			this.fishingBonusMod *= 1.1f;
 
-		this.fishingBonusMod *= fishingBonusModForBiomeCategory(biome.getBiomeCategory());
+		this.fishingBonusMod *= fishingBonusModForBiomeCategory(Biome.getBiomeCategory(biome));
 
 		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
@@ -170,21 +178,12 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 			this.fishingBonusMod *= 0.2f;
 	}
 
-	protected float fishingBonusModForBiomeCategory(Biome.Category category) {
-		switch (category) {
-			case OCEAN:
-			case RIVER:
-			case SWAMP:
-				return 1.25f;
-			case DESERT:
-			case THEEND:
-			case SAVANNA:
-			case MESA:
-			case NETHER:
-				return 0.5f;
-			default:
-				return 1;
-		}
+	protected float fishingBonusModForBiomeCategory(Biome.BiomeCategory category) {
+		return switch (category) {
+			case OCEAN, RIVER, SWAMP -> 1.25f;
+			case DESERT, THEEND, SAVANNA, MESA, NETHER -> 0.5f;
+			default -> 1;
+		};
 	}
 
 	@Override
@@ -199,16 +198,16 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	public void tick() {
 		handleSuperTick();
 
-		PlayerEntity player = getPlayerOwner();
+		Player player = getPlayerOwner();
 
 		if (!level.isClientSide() && !checkStillValid(player)) {
-			remove();
+			discard();
 
 			return;
 		}
 
 		if (isInLava() && getApplicableFluid() != FluidTags.LAVA) {
-			remove();
+			discard();
 
 			return;
 		}
@@ -220,7 +219,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 			checkIfCollided();
 
 		if (!level.isClientSide() && position().distanceToSqr(player.position()) > Math.pow(getMaxCastDistance() * 2f, 2)) {
-			remove();
+			discard();
 
 			return;
 		}
@@ -240,12 +239,12 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 						if (EntityUtil.isEntityMoving(player))
 							hookTime -= 2;
 
-						if (hookedEntity instanceof CreatureEntity) {
+						if (hookedEntity instanceof PathfinderMob) {
 							if (!level.isClientSide()) {
-								CreatureEntity creature = (CreatureEntity)hookedEntity;
+								PathfinderMob creature = (PathfinderMob)hookedEntity;
 
 								if (creature.getNavigation().isDone()) {
-									Vector3d targetPos = RandomPositionGenerator.getPosAvoid(creature, 30, 5, player.position());
+									Vec3 targetPos = DefaultRandomPos.getPosAway(creature, 30, 5, player.position());
 
 									if (targetPos != null)
 										creature.getNavigation().moveTo(creature.getNavigation().createPath(new BlockPos(targetPos), 0), 5);
@@ -270,14 +269,13 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		if (!level.isClientSide()) {
 			if (timeUntilFishSpawn >= 0) {
 				if (timeUntilFishSpawn-- == 0)
-					spawnFish((ServerPlayerEntity)player);
+					spawnFish((ServerPlayer)player);
 			}
 			else if (state == State.IN_FLUID) {
 				if (spawnedFish != null && spawnedFish.isAlive()) {
-					if (spawnedFish instanceof CreatureEntity) {
-						CreatureEntity creature = (CreatureEntity)spawnedFish;
+					if (spawnedFish instanceof PathfinderMob creature) {
 						BlockPos targetPos = blockPosition();
-						PathNavigator navigator = creature.getNavigation();
+						PathNavigation navigator = creature.getNavigation();
 						float dist = (float)creature.distanceToSqr(this);
 
 						if (lastFishDist - dist < 0.2 || dist <= 5) {
@@ -316,7 +314,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		if (state == State.IN_FLUID) {
 			BlockPos pos = blockPosition();
 			float fluidHeight = fluidState.getHeight(level, pos);
-			Vector3d vector3d = this.getDeltaMovement();
+			Vec3 vector3d = this.getDeltaMovement();
 			double fluidAdjustedHeight = this.getY() + vector3d.y - (double)pos.getY() - (double)fluidHeight + 0.1;
 
 			if (Math.abs(fluidAdjustedHeight) < 0.01D)
@@ -372,7 +370,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		}
 
 		if (toState == State.HOOKED_IN_ENTITY || toState == State.HOOKED_FISH || toState == State.STUCK) {
-			setDeltaMovement(Vector3d.ZERO);
+			setDeltaMovement(Vec3.ZERO);
 
 			if (toState == State.STUCK) {
 				stopFishing();
@@ -410,7 +408,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 			maxTime /= fishingBonusMod;
 		}
 
-		timeUntilFishSpawn = MathHelper.nextInt(random, minTime, minTime + 50 + (maxTime - minTime));
+		timeUntilFishSpawn = Mth.nextInt(random, minTime, minTime + 50 + (maxTime - minTime));
 	}
 
 	protected void stopFishing() {
@@ -420,22 +418,22 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 
 		if (hookedEntity != null) {
 			if (hookedEntity == spawnedFish)
-				hookedEntity.remove();
+				hookedEntity.discard();
 
 			hookedEntity = null;
 		}
 
 		if (spawnedFish != null) {
-			spawnedFish.remove();
+			spawnedFish.discard();
 			spawnedFish = null;
 		}
 
-		if (!removed)
+		if (!isRemoved())
 			updateHookedEntity();
 	}
 
-	protected void spawnFish(ServerPlayerEntity player) {
-		Function<World, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()), false).getRandomElement(player, getLuck());
+	protected void spawnFish(ServerPlayer player) {
+		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()).value(), false).getRandomElement(player, getLuck());
 
 		if (fishFunction != null) {
 			Entity entity = fishFunction.apply(player.level);
@@ -443,8 +441,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 			if (entity == null)
 				return;
 
-			if (entity instanceof MobEntity) {
-				MobEntity mob = (MobEntity)entity;
+			if (entity instanceof Mob mob) {
 				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, false, level, state -> state.getFluidState().getType() == Fluids.WATER, 5);
 
 				mob.setPos(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
@@ -463,9 +460,9 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	}
 
 	protected void checkIfCollided() {
-		RayTraceResult rayTrace = ProjectileHelper.getHitResult(this, this::canHitEntity);
+		HitResult rayTrace = ProjectileUtil.getHitResult(this, this::canHitEntity);
 
-		if (rayTrace.getType() != RayTraceResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTrace))
+		if (rayTrace.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTrace))
 			this.onHit(rayTrace);
 	}
 
@@ -490,12 +487,12 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 			this.leftOwner = checkLeftOwner();
 
 		if (!this.level.isClientSide())
-			setSharedFlag(6, isGlowing());
+			setSharedFlag(6, hasGlowingTag());
 
 		baseTick();
 	}
 
-	protected boolean checkStillValid(PlayerEntity owner) {
+	protected boolean checkStillValid(Player owner) {
 		if (!isAlive())
 			return false;
 
@@ -514,7 +511,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	}
 
 	@Override
-	protected void onHitEntity(EntityRayTraceResult rayTrace) {
+	protected void onHitEntity(EntityHitResult rayTrace) {
 		if (!level.isClientSide()) {
 			this.hookedEntity = rayTrace.getEntity();
 
@@ -523,7 +520,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	}
 
 	@Override
-	public void onSyncedDataUpdated(DataParameter<?> param) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> param) {
 		if (param == HOOKED_ENTITY) {
 			int id = getEntityData().get(HOOKED_ENTITY);
 
@@ -543,11 +540,11 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 
 	@Override
 	public EntityType<?> getType() {
-		return AoAEntities.Misc.REINFORCED_BOBBER.get();
+		return AoAMiscEntities.REINFORCED_BOBBER.get();
 	}
 
 	@Override
-	public EntitySize getDimensions(Pose pose) {
+	public EntityDimensions getDimensions(Pose pose) {
 		return getType().getDimensions();
 	}
 
@@ -559,7 +556,7 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		return 1;
 	}
 
-	public ITag<Fluid> getApplicableFluid() {
+	public TagKey<Fluid> getApplicableFluid() {
 		return FluidTags.WATER;
 	}
 
@@ -567,11 +564,11 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	public void handleEntityEvent(byte p_70103_1_) {}
 
 	@Nullable
-	public static HaulingFishingBobberEntity handleClientSpawn(FMLPlayMessages.SpawnEntity packet, World world) {
+	public static HaulingFishingBobberEntity handleClientSpawn(PlayMessages.SpawnEntity packet, Level world) {
 		Entity owner = world.getEntity((int)packet.getPosY());
 
-		if (owner instanceof PlayerEntity)
-			return new HaulingFishingBobberEntity(world, (PlayerEntity)owner, packet.getPosX(), owner.getEyeY(), packet.getPosZ());
+		if (owner instanceof Player)
+			return new HaulingFishingBobberEntity(world, (Player)owner, packet.getPosX(), owner.getEyeY(), packet.getPosZ());
 
 		return null;
 	}
@@ -583,24 +580,24 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 	}
 
 	@Override
-	public void remove(boolean keepData) {
-		super.remove(keepData);
+	public void remove(RemovalReason pReason) {
+		super.remove(pReason);
 
 		stopFishing();
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		double y = getY();
 
 		setPosRaw(getX(), ownerId, getZ());
 
-		IPacket<?> spawnPacket = NetworkHooks.getEntitySpawningPacket(this);
+		Packet<?> spawnPacket = NetworkHooks.getEntitySpawningPacket(this);
 
 		setPosRaw(getX(), y, getZ());
 
 		if (ownerId == -1)
-			remove();
+			discard();
 
 		return spawnPacket;
 	}
@@ -623,19 +620,13 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 		}
 
 		public static State byValue(int value) {
-			switch (value) {
-				case 0:
-					return MIDAIR;
-				case 1:
-					return HOOKED_FISH;
-				case 2:
-					return HOOKED_IN_ENTITY;
-				case 3:
-					return IN_FLUID;
-				case 4:
-				default:
-					return STUCK;
-			}
+			return switch (value) {
+				case 0 -> MIDAIR;
+				case 1 -> HOOKED_FISH;
+				case 2 -> HOOKED_IN_ENTITY;
+				case 3 -> IN_FLUID;
+				default -> STUCK;
+			};
 		}
 	}
 }

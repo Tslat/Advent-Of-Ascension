@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.entity.mob.lelyetia;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
@@ -19,12 +19,12 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 
 public class LelyetianCasterEntity extends AoARangedMob {
-	public LelyetianCasterEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public LelyetianCasterEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.75f;
 	}
 
@@ -48,8 +48,8 @@ public class LelyetianCasterEntity extends AoARangedMob {
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-		if (target instanceof ServerPlayerEntity)
-			PlayerUtil.consumeResource((ServerPlayerEntity)target, AoAResources.SPIRIT.get(), 50, true);
+		if (target instanceof ServerPlayer)
+			PlayerUtil.consumeResource((ServerPlayer)target, AoAResources.SPIRIT.get(), 50, true);
 	}
 
 	@Nullable

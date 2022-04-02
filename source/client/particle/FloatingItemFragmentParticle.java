@@ -1,17 +1,17 @@
 package net.tslat.aoa3.client.particle;
 
-import net.minecraft.client.particle.BreakingParticle;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.BreakingItemParticle;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
 
-public class FloatingItemFragmentParticle extends BreakingParticle {
-	public FloatingItemFragmentParticle(ClientWorld level, double x, double y, double z, double velocityX, double velocityY, double velocityZ, ItemStack stack) {
+public class FloatingItemFragmentParticle extends BreakingItemParticle {
+	public FloatingItemFragmentParticle(ClientLevel level, double x, double y, double z, double velocityX, double velocityY, double velocityZ, ItemStack stack) {
 		super(level, x, y, z, stack);
 
 		this.xd *= 0.1f;
@@ -34,10 +34,10 @@ public class FloatingItemFragmentParticle extends BreakingParticle {
 		}
 	}
 
-	public static class Factory implements IParticleFactory<ItemParticleData> {
+	public static class Factory implements ParticleProvider<ItemParticleOption> {
 		@Nullable
 		@Override
-		public Particle createParticle(ItemParticleData data, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(ItemParticleOption data, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			return new FloatingItemFragmentParticle(world, x, y, z, velocityX, velocityY, velocityZ, data.getItem());
 		}
 	}

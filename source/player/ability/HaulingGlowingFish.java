@@ -1,8 +1,8 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -13,7 +13,7 @@ public class HaulingGlowingFish extends AoAAbility.Instance {
 		super(AoAAbilities.HAULING_GLOWING_FISH.get(), skill, data);
 	}
 
-	public HaulingGlowingFish(AoASkill.Instance skill, CompoundNBT data) {
+	public HaulingGlowingFish(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.HAULING_GLOWING_FISH.get(), skill, data);
 	}
 
@@ -25,6 +25,6 @@ public class HaulingGlowingFish extends AoAAbility.Instance {
 	@Override
 	public void handleCustomInteraction(String interactionType, Object data) {
 		if (interactionType.equals("hauling_spawn_fish"))
-			((Entity)data).setGlowing(true);
+			((Entity)data).setGlowingTag(true);
 	}
 }

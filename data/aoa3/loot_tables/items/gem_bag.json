@@ -4,9 +4,14 @@
     {
       "name": "gems",
       "rolls": {
+        "type": "minecraft:uniform",
         "min": 1.0,
-        "max": 4.0,
-        "type": "minecraft:uniform"
+        "max": 4.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
       },
       "entries": [
         {

@@ -1,10 +1,10 @@
 package net.tslat.aoa3.content.entity.mob.lborean;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.passive.WaterMobEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
@@ -14,12 +14,12 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 
 public class NeptunoEntity extends AoAWaterMeleeMob {
-	public NeptunoEntity(EntityType<? extends WaterMobEntity> entityType, World world) {
+	public NeptunoEntity(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 2.71875f;
 	}
 

@@ -3,27 +3,27 @@ package net.tslat.aoa3.content.loottable.function;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootFunction;
-import net.minecraft.loot.LootFunctionType;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.tslat.aoa3.common.registration.AoALootOperations;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
 
-public class GrantSkillXp extends LootFunction {
+public class GrantSkillXp extends LootItemConditionalFunction {
 	private final AoASkill skill;
 	private final float xp;
 
-	protected GrantSkillXp(ILootCondition[] lootConditions, AoASkill skill, float xp) {
+	protected GrantSkillXp(LootItemCondition[] lootConditions, AoASkill skill, float xp) {
 		super(lootConditions);
 
 		this.skill = skill;
@@ -31,19 +31,19 @@ public class GrantSkillXp extends LootFunction {
 	}
 
 	@Override
-	public LootFunctionType getType() {
+	public LootItemFunctionType getType() {
 		return AoALootOperations.LootFunctions.GRANT_SKILL_XP;
 	}
 
 	@Override
 	protected ItemStack run(ItemStack stack, LootContext context) {
-		Entity entity = context.getParamOrNull(LootParameters.KILLER_ENTITY);
+		Entity entity = context.getParamOrNull(LootContextParams.KILLER_ENTITY);
 
-		if (!(entity instanceof PlayerEntity))
-			entity = context.getParamOrNull(LootParameters.THIS_ENTITY);
+		if (!(entity instanceof Player))
+			entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
 
-		if (entity instanceof ServerPlayerEntity)
-			PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity).getSkill(skill).adjustXp(xp, false, false);
+		if (entity instanceof ServerPlayer)
+			PlayerUtil.getAdventPlayer((ServerPlayer)entity).getSkill(skill).adjustXp(xp, false, false);
 
 		return stack;
 	}
@@ -60,7 +60,7 @@ public class GrantSkillXp extends LootFunction {
 		return simpleBuilder((conditions) -> new GrantSkillXp(conditions, skill, xp));
 	}
 
-	public static class Serializer extends LootFunction.Serializer<GrantSkillXp> {
+	public static class Serializer extends LootItemConditionalFunction.Serializer<GrantSkillXp> {
 		@Override
 		public void serialize(JsonObject object, GrantSkillXp function, JsonSerializationContext context) {
 			super.serialize(object, function, context);
@@ -70,8 +70,8 @@ public class GrantSkillXp extends LootFunction {
 		}
 
 		@Override
-		public GrantSkillXp deserialize(JsonObject object, JsonDeserializationContext deserializationContext, ILootCondition[] conditions) {
-			return new GrantSkillXp(conditions, AoASkills.getSkill(new ResourceLocation(JSONUtils.getAsString(object, "skill"))), JSONUtils.getAsFloat(object, "xp"));
+		public GrantSkillXp deserialize(JsonObject object, JsonDeserializationContext deserializationContext, LootItemCondition[] conditions) {
+			return new GrantSkillXp(conditions, AoASkills.getSkill(new ResourceLocation(GsonHelper.getAsString(object, "skill"))), GsonHelper.getAsFloat(object, "xp"));
 		}
 	}
 }

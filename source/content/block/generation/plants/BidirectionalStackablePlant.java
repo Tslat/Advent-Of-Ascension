@@ -1,21 +1,19 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.monster.piglin.PiglinTasks;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.monster.piglin.PiglinAi;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.function.Supplier;
-
-import net.minecraft.block.AbstractBlock;
 
 public class BidirectionalStackablePlant extends StackablePlant {
 	public Supplier<Block> bottomHatBlock = null;
@@ -28,7 +26,7 @@ public class BidirectionalStackablePlant extends StackablePlant {
 		super(Material.REPLACEABLE_PLANT, mapColour, SoundType.GRASS, growthMaterial);
 	}
 
-	public BidirectionalStackablePlant(AbstractBlock.Properties properties, Material... growthMaterial) {
+	public BidirectionalStackablePlant(Block.Properties properties, Material... growthMaterial) {
 		super(properties, growthMaterial);
 	}
 
@@ -39,7 +37,7 @@ public class BidirectionalStackablePlant extends StackablePlant {
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState downState = world.getBlockState(pos.below());
 		BlockState upState = world.getBlockState(pos.above());
 
@@ -48,7 +46,7 @@ public class BidirectionalStackablePlant extends StackablePlant {
 	}
 
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		BlockPos downPos = pos;
 		boolean isUpPlant = false;
 		boolean isDownPlant = false;
@@ -108,7 +106,7 @@ public class BidirectionalStackablePlant extends StackablePlant {
 
 		world.levelEvent(player, 2001, pos, getId(state));
 
-		if (is(BlockTags.GUARDED_BY_PIGLINS))
-			PiglinTasks.angerNearbyPiglins(player, false);
+		if (builtInRegistryHolder().is(BlockTags.GUARDED_BY_PIGLINS))
+			PiglinAi.angerNearbyPiglins(player, false);
 	}
 }

@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.entity.ai.mob;
 
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.projectile.ProjectileHelper;
-import net.minecraft.item.BowItem;
-import net.minecraft.item.Items;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.item.BowItem;
+import net.minecraft.world.item.Items;
 
 import java.util.EnumSet;
 
-public class AdventBowAttackGoal<T extends MobEntity & IRangedAttackMob> extends Goal {
+public class AdventBowAttackGoal<T extends Mob & RangedAttackMob> extends Goal {
 	private final T shooter;
 	private final double moveSpeedAmp;
 	private int attackCooldown;
@@ -68,7 +68,7 @@ public class AdventBowAttackGoal<T extends MobEntity & IRangedAttackMob> extends
 
 		if (target != null) {
 			double distanceToTarget = shooter.distanceToSqr(target.getX(), target.getY(), target.getZ());
-			boolean canSeeTarget = shooter.getSensing().canSee(target);
+			boolean canSeeTarget = shooter.getSensing().hasLineOfSight(target);
 
 
 			if (canSeeTarget != seeTime > 0)
@@ -130,7 +130,7 @@ public class AdventBowAttackGoal<T extends MobEntity & IRangedAttackMob> extends
 				}
 			}
 			else if (--attackTime <= 0 && seeTime >= -60) {
-				shooter.startUsingItem(ProjectileHelper.getWeaponHoldingHand(shooter, Items.BOW));
+				shooter.startUsingItem(ProjectileUtil.getWeaponHoldingHand(shooter, Items.BOW));
 			}
 		}
 	}

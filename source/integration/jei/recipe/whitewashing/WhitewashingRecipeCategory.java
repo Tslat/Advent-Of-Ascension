@@ -7,21 +7,22 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.ArrayList;
 
 public class WhitewashingRecipeCategory implements IRecipeCategory<WhitewashingRecipe> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "whitewashing");
-	private final String title = LocaleUtil.getLocaleString("recipe.aoa3.whitewashing");
+	private final Component title = LocaleUtil.getLocaleMessage("recipe.aoa3.whitewashing");
 	private final IDrawable background;
 	private final IDrawable icon;
 
@@ -42,7 +43,7 @@ public class WhitewashingRecipeCategory implements IRecipeCategory<WhitewashingR
 	}
 
 	@Override
-	public String getTitle() {
+	public Component getTitle() {
 		return title;
 	}
 

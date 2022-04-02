@@ -1,10 +1,10 @@
 package net.tslat.aoa3.content.item.tool.misc;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -17,17 +17,17 @@ public class LightRod extends HaulingRod {
 	}
 
 	@Override
-	protected HaulingFishingBobberEntity getNewBobber(PlayerEntity player, ItemStack stack, int lureMod, int luckMod) {
+	protected HaulingFishingBobberEntity getNewBobber(Player player, ItemStack stack, int lureMod, int luckMod) {
 		return new HaulingFishingBobberEntity(player, player.level, stack, luckMod, lureMod);
 	}
 
 	@Override
-	public float getHaulStrengthMod(PlayerEntity player, ItemStack stack, HaulingFishingBobberEntity bobber) {
+	public float getHaulStrengthMod(Player player, ItemStack stack, HaulingFishingBobberEntity bobber) {
 		return super.getHaulStrengthMod(player, stack, bobber) * 2f;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> tooltip, ITooltipFlag pFlag) {
+	public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pFlag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

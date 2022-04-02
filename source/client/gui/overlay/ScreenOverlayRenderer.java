@@ -1,20 +1,10 @@
 package net.tslat.aoa3.client.gui.overlay;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MainWindow;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.settings.PointOfView;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoATags;
 
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public final class ScreenOverlayRenderer {
@@ -38,38 +28,38 @@ public final class ScreenOverlayRenderer {
 	}
 
 	private static void handleToxicWaste(RenderGameOverlayEvent.Post event) {
-		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
+		/*if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
-		MainWindow window = mc.getWindow();
+		Window window = mc.getWindow();
 
 		if (mc.player != null && mc.player.isEyeInFluid(AoATags.Fluids.TOXIC_WASTE)) {
-			final BufferBuilder buff = Tessellator.getInstance().getBuilder();
-			float yMod = mc.player.xRot / 512f + (mc.player.tickCount / 1800f);
-			float xMod = mc.player.yRot / 1024f + (mc.player.tickCount / 3600f);
+			final BufferBuilder buff = Tesselator.getInstance().getBuilder();
+			float yMod = mc.player.getXRot() / 512f + (mc.player.tickCount / 1800f);
+			float xMod = mc.player.getYRot() / 1024f + (mc.player.tickCount / 3600f);
 
 			RenderSystem.pushTextureAttributes();
 			RenderSystem.enableAlphaTest();
 			RenderSystem.enableBlend();
 			mc.getTextureManager().bind(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/block/toxic_waste_overlay.png"));
-			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 0.1001f);
-			buff.begin(7, DefaultVertexFormats.POSITION_TEX);
+			RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 0.1001f);
+			buff.begin(7, DefaultVertexFormat.POSITION_TEX);
 			buff.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(xMod, 1f + yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
 			buff.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(1f + xMod, 1f + yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
 			buff.vertex(window.getGuiScaledWidth(), 0.0, -90.0D).uv(1f + xMod, yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
 			buff.vertex(0.0D, 0.0D, -90.0D).uv(xMod, yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
-			Tessellator.getInstance().end();
+			Tesselator.getInstance().end();
 			RenderSystem.depthMask(true);
-			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 1.0f);
+			RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 			RenderSystem.disableAlphaTest();
 			RenderSystem.disableBlend();
 			RenderSystem.popAttributes();
-		}
+		}*/
 	}
 
 	private static void onOverlayRender(final RenderGameOverlayEvent.Post event) {
-		if (Minecraft.getInstance().options.getCameraType() != PointOfView.FIRST_PERSON)
+		/*if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON)
 			return;
 
 		handleToxicWaste(event);
@@ -78,9 +68,9 @@ public final class ScreenOverlayRenderer {
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
-		MainWindow window = mc.getWindow();
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder buffer = tessellator.getBuilder();
+		Window window = mc.getWindow();
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder buffer = Tesselator.getBuilder();
 
 		RenderSystem.disableDepthTest();
 		RenderSystem.depthMask(false);
@@ -89,18 +79,18 @@ public final class ScreenOverlayRenderer {
 
 		for (Map.Entry<ResourceLocation, Integer> entry : overlays.entrySet()) {
 			mc.getTextureManager().bind(entry.getKey());
-			RenderSystem.color4f(1, 1, 1, entry.getValue() / 50f);
-			buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+			RenderSystem.setShaderColor(1, 1, 1, entry.getValue() / 50f);
+			buffer.begin(7, DefaultVertexFormat.POSITION_TEX);
 			buffer.vertex(0, window.getGuiScaledHeight(), -90).uv(0, 1).endVertex();
 			buffer.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90).uv(1, 1).endVertex();
 			buffer.vertex(window.getGuiScaledWidth(), 0, -90).uv(1, 0).endVertex();
 			buffer.vertex(0, 0, -90).uv(0, 0).endVertex();
-			tessellator.end();
+			Tesselator.end();
 		}
 
 		RenderSystem.depthMask(true);
 		RenderSystem.enableDepthTest();
 		RenderSystem.enableAlphaTest();
-		RenderSystem.color4f(1, 1, 1, 1);
+		RenderSystem.setShaderColor(1, 1, 1, 1);*/
 	}
 }

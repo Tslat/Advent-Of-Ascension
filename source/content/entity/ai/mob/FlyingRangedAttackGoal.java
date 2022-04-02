@@ -1,8 +1,8 @@
 package net.tslat.aoa3.content.entity.ai.mob;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
 
 public class FlyingRangedAttackGoal extends Goal {
@@ -31,11 +31,11 @@ public class FlyingRangedAttackGoal extends Goal {
 	public void tick() {
 		LivingEntity target = this.taskOwner.getTarget();
 
-		if (target.distanceToSqr(this.taskOwner) < 4096 && this.taskOwner.canSee(target)) {
+		if (target.distanceToSqr(this.taskOwner) < 4096 && this.taskOwner.hasLineOfSight(target)) {
 			this.attackCooldownTimer++;
 
 			if (this.attackCooldownTimer == attackCooldownMin - taskOwner.getPreAttackTime())
-				this.taskOwner.swing(Hand.MAIN_HAND);
+				this.taskOwner.swing(InteractionHand.MAIN_HAND);
 
 			if (this.attackCooldownTimer >= attackCooldownMin) {
 				taskOwner.performRangedAttack(target, 0);

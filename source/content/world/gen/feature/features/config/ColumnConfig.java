@@ -2,12 +2,12 @@ package net.tslat.aoa3.content.world.gen.feature.features.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.gen.blockstateprovider.BlockStateProvider;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
 import java.util.Random;
 
-public class ColumnConfig implements IFeatureConfig {
+public class ColumnConfig implements FeatureConfiguration {
 	public static final Codec<ColumnConfig> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			BlockStateProvider.CODEC.fieldOf("block").forGetter(config -> config.block),
 			Codec.INT.fieldOf("min_size").forGetter(config -> config.minSize),

@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -41,17 +41,17 @@ public class ReefStaff extends BaseStaff<Boolean> {
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, LivingEntity caster, Boolean args) {
-		float velocityX = -MathHelper.sin(caster.yRot * (float)Math.PI / 180f) * MathHelper.cos(caster.xRot * (float)Math.PI / 180f);
-		float velocityY = -MathHelper.sin(caster.xRot * (float)Math.PI / 180f);
-		float velocityZ = MathHelper.cos(caster.yRot * (float)Math.PI / 180f) * MathHelper.cos(caster.xRot * (float)Math.PI / 180f);
+	public void cast(Level world, ItemStack staff, LivingEntity caster, Boolean args) {
+		float velocityX = -Mth.sin(caster.getYRot() * (float)Math.PI / 180f) * Mth.cos(caster.getXRot() * (float)Math.PI / 180f);
+		float velocityY = -Mth.sin(caster.getXRot() * (float)Math.PI / 180f);
+		float velocityZ = Mth.cos(caster.getYRot() * (float)Math.PI / 180f) * Mth.cos(caster.getXRot() * (float)Math.PI / 180f);
 
-		caster.setDeltaMovement(new Vector3d(velocityX * 3, velocityY * 3, velocityZ * 3));
+		caster.setDeltaMovement(new Vec3(velocityX * 3, velocityY * 3, velocityZ * 3));
 		caster.hurtMarked = true;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

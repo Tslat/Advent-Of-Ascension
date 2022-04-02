@@ -1,10 +1,10 @@
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -19,7 +19,7 @@ public class FaunamancySkill extends AoASkill.Instance {
 		super(AoASkills.FAUNAMANCY.get(), plData, jsonData);
 	}
 
-	public FaunamancySkill(CompoundNBT nbtData) {
+	public FaunamancySkill(CompoundTag nbtData) {
 		super(AoASkills.FAUNAMANCY.get(), nbtData);
 	}
 
@@ -34,14 +34,14 @@ public class FaunamancySkill extends AoASkill.Instance {
 			adjustXp(PlayerUtil.getTimeBasedXpForLevel(getLevel(true), (int)(ev.getEntityLiving().getMaxHealth() / 30f * 20)), false, false);
 	}
 
-	public static boolean isValidSacrifice(LivingEntity target, PlayerEntity attacker) {
+	public static boolean isValidSacrifice(LivingEntity target, Player attacker) {
 		if (target.getHealth() > 0)
 			return false;
 
-		if (!attacker.getMainHandItem().getItem().is(AoATags.Items.FAUNAMANCER_TOOL))
+		if (!attacker.getMainHandItem().is(AoATags.Items.FAUNAMANCER_TOOL))
 			return false;
 
-		Vector3d targetVelocity = target.getDeltaMovement();
+		Vec3 targetVelocity = target.getDeltaMovement();
 
 		return targetVelocity.x() == 0 && targetVelocity.z() == 0 && !NumberUtil.numberIsBetween(targetVelocity.y(), -0.08, -0.07);
 	}

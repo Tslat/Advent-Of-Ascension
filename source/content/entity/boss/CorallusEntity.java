@@ -1,27 +1,26 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.projectile.mob.CorallusShotEntity;
@@ -35,19 +34,19 @@ import java.util.List;
 
 public class CorallusEntity extends AoAMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
-	private static final DataParameter<Boolean> ENRAGED = EntityDataManager.<Boolean>defineId(CorallusEntity.class, DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> ENRAGED = SynchedEntityData.<Boolean>defineId(CorallusEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private int shotCooldown = 7;
 	private int shootStageTimer = 0;
 	private int jumpCooldown = 320;
 	private int rageStateCooldown = 200;
 
-	public CorallusEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public CorallusEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 2.72f;
 	}
 
@@ -104,7 +103,7 @@ public class CorallusEntity extends AoAMeleeMob {
 	public void tick() {
 		super.tick();
 
-		Vector3d motion = getDeltaMovement();
+		Vec3 motion = getDeltaMovement();
 		double motionX = motion.x();
 		double motionY = motion.y();
 		double motionZ = motion.z();
@@ -115,7 +114,7 @@ public class CorallusEntity extends AoAMeleeMob {
 			jumpCooldown = 320;
 			shootStageTimer = 60;
 
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CORALLUS_TAUNT.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CORALLUS_TAUNT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 		}
 		else {
 			jumpCooldown--;
@@ -123,9 +122,9 @@ public class CorallusEntity extends AoAMeleeMob {
 
 		if (shootStageTimer > 0) {
 			if (shotCooldown == 0 && !level.isClientSide) {
-				List<PlayerEntity> targets = level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(40), PlayerUtil::shouldPlayerBeAffected);
+				List<Player> targets = level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(40), PlayerUtil::shouldPlayerBeAffected);
 
-				for (PlayerEntity target : targets) {
+				for (Player target : targets) {
 					CorallusShotEntity shot = new CorallusShotEntity(this, target, 12);
 
 					shot.moveTo(getX(), getY() + getEyeHeight(), getZ(), random.nextFloat() * 360, 0);
@@ -155,7 +154,7 @@ public class CorallusEntity extends AoAMeleeMob {
 					setEnraged(true);
 
 				rageStateCooldown = 80;
-				EntityUtil.applyPotions(this, new EffectBuilder(Effects.DAMAGE_BOOST, 80).level(4));
+				EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.DAMAGE_BOOST, 80).level(4));
 			}
 		}
 
@@ -184,8 +183,8 @@ public class CorallusEntity extends AoAMeleeMob {
 
 			if (!isInWater()) {
 				EntityUtil.applyPotions(target,
-						new EffectBuilder(Effects.WEAKNESS, 100).level(15),
-						new EffectBuilder(Effects.MOVEMENT_SLOWDOWN, 50).level(4));
+						new EffectBuilder(MobEffects.WEAKNESS, 100).level(15),
+						new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 50).level(4));
 			}
 		}
 	}
@@ -195,10 +194,10 @@ public class CorallusEntity extends AoAMeleeMob {
 		super.die(cause);
 
 		if (!level.isClientSide && !isNoAi()) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.CORALLUS.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.CORALLUS.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -208,7 +207,7 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -216,14 +215,14 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.CORALLUS_MUSIC.getId()));
@@ -231,7 +230,7 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.CORALLUS_MUSIC.getId()));
@@ -239,3 +238,4 @@ public class CorallusEntity extends AoAMeleeMob {
 	}
 
 }
+*/

@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.resource;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
@@ -23,13 +23,13 @@ public class EnergyResource extends AoAResource.Instance {
 	public EnergyResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.ENERGY.get(), plData);
 
-		this.maxValue = Math.max(0, JSONUtils.getAsFloat(jsonData, "max_value"));
-		this.dischargeDelay = JSONUtils.getAsInt(jsonData, "delay_on_empty");
-		this.hitDelay = JSONUtils.getAsInt(jsonData, "delay_on_hit");
-		this.regenAmount = JSONUtils.getAsFloat(jsonData, "regen_per_tick");
+		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value"));
+		this.dischargeDelay = GsonHelper.getAsInt(jsonData, "delay_on_empty");
+		this.hitDelay = GsonHelper.getAsInt(jsonData, "delay_on_hit");
+		this.regenAmount = GsonHelper.getAsFloat(jsonData, "regen_per_tick");
 	}
 
-	public EnergyResource(CompoundNBT nbtData) {
+	public EnergyResource(CompoundTag nbtData) {
 		super(AoAResources.ENERGY.get(), null);
 
 		this.maxValue = nbtData.getFloat("max_value");
@@ -67,7 +67,7 @@ public class EnergyResource extends AoAResource.Instance {
 
 	@Override
 	public void setValue(float amount) {
-		this.value = MathHelper.clamp(amount, 0, getMaxValue());
+		this.value = Mth.clamp(amount, 0, getMaxValue());
 	}
 
 	@Override
@@ -98,13 +98,13 @@ public class EnergyResource extends AoAResource.Instance {
 
 	@Nonnull
 	@Override
-	public CompoundNBT saveToNbt() {
-		return new CompoundNBT();
+	public CompoundTag saveToNbt() {
+		return new CompoundTag();
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = new CompoundNBT();
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = new CompoundTag();
 
 		if (forClientSetup) {
 			data.putFloat("max_value", getMaxValue());
@@ -121,7 +121,7 @@ public class EnergyResource extends AoAResource.Instance {
 	}
 
 	@Override
-	public void receiveSyncData(CompoundNBT data) {
+	public void receiveSyncData(CompoundTag data) {
 		if (data.contains("value"))
 			this.value = data.getFloat("value");
 

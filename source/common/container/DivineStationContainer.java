@@ -1,52 +1,47 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.CraftingResultSlot;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class DivineStationContainer extends Container { // TODO Look at RecipeBookContainer extensions
+public class DivineStationContainer extends AbstractContainerMenu { // TODO Look at RecipeBookContainer extensions
 	public DivineStationInventory inputs = new DivineStationInventory(this);
-	public CraftResultInventory output = new CraftResultInventory();
-	private final IWorldPosCallable functionCaller;
-	private final PlayerEntity player;
+	public ResultContainer output = new ResultContainer();
+	private final ContainerLevelAccess functionCaller;
+	private final Player player;
 
-	public DivineStationContainer(int id, PlayerInventory inventory) {
-		this(id, inventory, IWorldPosCallable.NULL);
+	public DivineStationContainer(int id, Inventory inventory) {
+		this(id, inventory, ContainerLevelAccess.NULL);
 	}
 
-	public DivineStationContainer(int screenId, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
+	public DivineStationContainer(int screenId, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(AoAContainers.DIVINE_STATION.get(), screenId);
 
 		this.functionCaller = functionCaller;
 		this.player = plInventory.player;
 
-		addSlot(new CraftingResultSlot(player, inputs, output, 0, 134, 23));
+		addSlot(new ResultSlot(player, inputs, output, 0, 134, 23));
 		addSlot(new Slot(inputs, 0, 27, 23));
 		addSlot(new Slot(inputs, 1, 76, 23));
 
@@ -62,20 +57,20 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 	}
 
 	@Override
-	public void slotsChanged(IInventory inventory) {
+	public void slotsChanged(Container inventory) {
 		functionCaller.execute((world, pos) -> slotChangedCraftingGrid(world, player, inputs, output));
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return stillValid(functionCaller, player, AoABlocks.DIVINE_STATION.get());
 	}
 
 	@Override
-	public void removed(PlayerEntity player) {
+	public void removed(Player player) {
 		super.removed(player);
 
-		functionCaller.execute((world, pos) -> clearContainer(player, world, inputs));
+		functionCaller.execute((world, pos) -> clearContainer(player, inputs));
 	}
 
 	@Override
@@ -84,7 +79,7 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 
@@ -118,14 +113,16 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 			if (slotStack.getCount() == stack.getCount())
 				return ItemStack.EMPTY;
 
+			slot.onTake(player, slotStack);
+
 			if (index == 0)
-				player.drop(slot.onTake(player, slotStack), false);
+				player.drop(slotStack, false);
 		}
 
 		return stack;
 	}
 
-	protected void slotChangedCraftingGrid(World world, PlayerEntity player, DivineStationInventory inv, CraftResultInventory craftResult) {
+	protected void slotChangedCraftingGrid(Level world, Player player, DivineStationInventory inv, ResultContainer craftResult) {
 		if (!world.isClientSide) {
 			ItemStack resultStack = ItemStack.EMPTY;
 			Optional<UpgradeKitRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.UPGRADE_KIT.getA(), inv, world);
@@ -133,7 +130,7 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 			if (recipeMatch.isPresent()) {
 				UpgradeKitRecipe recipe = recipeMatch.get();
 
-				if (recipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(recipe)) {
+				if (recipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayer)player).getRecipeBook().contains(recipe)) {
 					craftResult.setRecipeUsed(recipe);
 
 					resultStack = recipe.assemble(inv);
@@ -141,30 +138,30 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 			}
 
 			craftResult.setItem(0, resultStack);
-			((ServerPlayerEntity)player).connection.send(new SSetSlotPacket(this.containerId, 0, resultStack));
+			((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(this.containerId, incrementStateId(), 0, resultStack));
 		}
 	}
 
-	public static void openContainer(ServerPlayerEntity player, BlockPos pos) {
-		NetworkHooks.openGui(player, new INamedContainerProvider() {
+	public static void openContainer(ServerPlayer player, BlockPos pos) {
+		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
-				return new TranslationTextComponent("container.aoa3.divine_station");
+			public Component getDisplayName() {
+				return new TranslatableComponent("container.aoa3.divine_station");
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new DivineStationContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
+			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
+				return new DivineStationContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
 			}
 		}, pos);
 	}
 
-	public static class DivineStationInventory extends CraftingInventory {
+	public static class DivineStationInventory extends CraftingContainer {
 		private final NonNullList<ItemStack> stackList;
-		private final Container eventListener;
+		private final AbstractContainerMenu eventListener;
 
-		public DivineStationInventory(Container container) {
+		public DivineStationInventory(AbstractContainerMenu container) {
 			super(container, 0, 0);
 
 			this.stackList = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
@@ -193,12 +190,12 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 
 		@Override
 		public ItemStack removeItemNoUpdate(int index) {
-			return ItemStackHelper.takeItem(stackList, index);
+			return ContainerHelper.takeItem(stackList, index);
 		}
 
 		@Override
 		public ItemStack removeItem(int index, int count) {
-			ItemStack stack = ItemStackHelper.removeItem(stackList, index, count);
+			ItemStack stack = ContainerHelper.removeItem(stackList, index, count);
 
 			if (!stack.isEmpty())
 				eventListener.slotsChanged(this);
@@ -218,7 +215,7 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 		}
 
 		@Override
-		public void fillStackedContents(RecipeItemHelper recipeItemHelper) {
+		public void fillStackedContents(StackedContents recipeItemHelper) {
 			for (ItemStack stack : stackList) {
 				recipeItemHelper.accountStack(stack);
 			}

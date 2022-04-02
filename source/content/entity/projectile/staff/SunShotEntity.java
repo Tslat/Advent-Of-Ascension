@@ -1,32 +1,32 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 public class SunShotEntity extends BaseEnergyShot {
-	public SunShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public SunShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public SunShotEntity(World world) {
-		super(AoAEntities.Projectiles.SUN_SHOT.get(), world);
+	public SunShotEntity(Level world) {
+		super(AoAProjectiles.SUN_SHOT.get(), world);
 	}
 
 	public SunShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAEntities.Projectiles.SUN_SHOT.get(), shooter, weapon, maxAge);
+		super(AoAProjectiles.SUN_SHOT.get(), shooter, weapon, maxAge);
 	}
 
-	public SunShotEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.SUN_SHOT.get(), world, x, y, z);
+	public SunShotEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.SUN_SHOT.get(), world, x, y, z);
 	}
 
 	@Override
@@ -42,12 +42,12 @@ public class SunShotEntity extends BaseEnergyShot {
 
 		if (getAge() >= 260) {
 			WorldUtil.createExplosion(getOwner(), level, this, 3.5f);
-			remove();
+			discard();
 		}
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
-		setDeltaMovement(new Vector3d(0, level.getBlockState(blockPosition().below()).getBlock() != Blocks.AIR ? 1 : getDeltaMovement().y(), 0));
+	protected void onHit(HitResult result) {
+		setDeltaMovement(new Vec3(0, level.getBlockState(blockPosition().below()).getBlock() != Blocks.AIR ? 1 : getDeltaMovement().y(), 0));
 	}
 }

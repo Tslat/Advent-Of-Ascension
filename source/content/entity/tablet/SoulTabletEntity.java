@@ -1,27 +1,26 @@
 package net.tslat.aoa3.content.entity.tablet;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
-import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,17 +28,17 @@ import java.util.UUID;
 import java.util.function.Predicate;
 
 public abstract class SoulTabletEntity extends Entity {
-	private static final DataParameter<Boolean> ACTIVE = EntityDataManager.<Boolean>defineId(SoulTabletEntity.class, DataSerializers.BOOLEAN);
-	protected ServerPlayerEntity owner = null;
+	private static final EntityDataAccessor<Boolean> ACTIVE = SynchedEntityData.<Boolean>defineId(SoulTabletEntity.class, EntityDataSerializers.BOOLEAN);
+	protected ServerPlayer owner = null;
 	private UUID ownerUUID = null;
 
-	public SoulTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world) {
+	public SoulTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.blocksBuilding = true;
 	}
 
-	public SoulTabletEntity(EntityType<? extends SoulTabletEntity> entityType, World world, ServerPlayerEntity placer) {
+	public SoulTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world, ServerPlayer placer) {
 		this(entityType, world);
 		this.owner = placer;
 		this.ownerUUID = owner != null ? owner.getUUID() : null;
@@ -51,12 +50,12 @@ public abstract class SoulTabletEntity extends Entity {
 	}
 
 	@Override
-	public ActionResultType interact(PlayerEntity player, Hand hand) {
-		return ownerUUID == null || player.getUUID().equals(ownerUUID) ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+	public InteractionResult interact(Player player, InteractionHand hand) {
+		return ownerUUID == null || player.getUUID().equals(ownerUUID) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
 	}
 
 	@Override
-	public ActionResultType interactAt(PlayerEntity player, Vector3d vec, Hand hand) {
+	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		if (isAlive() && (ownerUUID == null || player.getUUID().equals(ownerUUID))) {
 			if (!level.isClientSide && !player.isCreative()) {
 				ItemStack stack = new ItemStack(getRelevantItem());
@@ -69,29 +68,29 @@ public abstract class SoulTabletEntity extends Entity {
 				}
 			}
 
-			remove();
+			discard();
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundTag compound) {
 		if (owner != null)
 			compound.putString("OwnedBy", ownerUUID.toString());
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundTag compound) {
 		if (compound.contains("OwnedBy")) {
 			try {
 				ownerUUID = UUID.fromString(compound.getString("OwnedBy"));
-				owner = level instanceof ServerWorld ? (ServerPlayerEntity)level.getPlayerByUUID(ownerUUID) : null;
+				owner = level instanceof ServerLevel ? (ServerPlayer)level.getPlayerByUUID(ownerUUID) : null;
 			}
 			catch (IllegalArgumentException e) {
-				Logging.logMessage(Level.WARN, "Unknown or malformed owner UUID for soul tablet entity: " + compound.getString("OwnerBy"));
+				Logging.logMessage(org.apache.logging.log4j.Level.WARN, "Unknown or malformed owner UUID for soul tablet entity: " + compound.getString("OwnerBy"));
 			}
 		}
 	}
@@ -106,7 +105,7 @@ public abstract class SoulTabletEntity extends Entity {
 					if (owner != null && itemDrop != null)
 						itemDrop.setOwner(ownerUUID);
 
-					remove();
+					discard();
 
 					return;
 				}
@@ -122,7 +121,7 @@ public abstract class SoulTabletEntity extends Entity {
 			}
 		}
 		else if (level.isEmptyBlock(blockPosition().below())) {
-			remove();
+			discard();
 		}
 	}
 
@@ -147,14 +146,14 @@ public abstract class SoulTabletEntity extends Entity {
 	}
 
 	@Override
-	public void move(MoverType typeIn, Vector3d pos) {}
+	public void move(MoverType typeIn, Vec3 pos) {}
 
 	protected abstract void doTickEffect();
 
 	public abstract TabletItem getRelevantItem();
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -173,7 +172,7 @@ public abstract class SoulTabletEntity extends Entity {
 		entityData.set(ACTIVE, false);
 	}
 
-	protected <T extends Entity> List<T> getTargetsWithinRadius(Class<? extends T> targetClass, @Nullable Predicate<? super T> predicate) {
+	protected <T extends Entity> List<T> getTargetsWithinRadius(Class<T> targetClass, @Nullable Predicate<? super T> predicate) {
 		return level.getEntitiesOfClass(targetClass, getBoundingBox().inflate(getRelevantItem().getEffectRadius()), predicate);
 	}
 }

@@ -1,23 +1,23 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 public class EyebushTreeFeature extends AoATreeFeature {
-	public EyebushTreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public EyebushTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
 	@Override
-	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
 		boolean doubleTrunk = rand.nextBoolean();
 
 		if (!checkSafeHeight(reader, pos, (doubleTrunk ? 2 : 1) + 5, 1, isWorldGen))
@@ -55,7 +55,7 @@ public class EyebushTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void buildLeafRing(ISeedReader reader, BlockPos pos, int radius) {
+	private void buildLeafRing(WorldGenLevel reader, BlockPos pos, int radius) {
 		BlockState leaves = AoABlocks.VEIN_LEAVES.get().defaultBlockState();
 
 		for (int x = -radius; x <= radius; x++) {

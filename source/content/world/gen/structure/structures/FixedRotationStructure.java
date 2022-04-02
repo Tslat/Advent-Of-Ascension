@@ -1,10 +1,11 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
 public class FixedRotationStructure extends AoAStructureBase<NoFeatureConfig> {
-	public FixedRotationStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public FixedRotationStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(NoFeatureConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -18,3 +19,4 @@ public class FixedRotationStructure extends AoAStructureBase<NoFeatureConfig> {
 		};
 	}
 }
+*/

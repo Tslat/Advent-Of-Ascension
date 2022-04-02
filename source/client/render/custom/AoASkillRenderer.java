@@ -1,11 +1,11 @@
 package net.tslat.aoa3.client.render.custom;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ColourUtil;
@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.RenderUtil;
 public interface AoASkillRenderer {
 	ResourceLocation SKILL_ICON_BASE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/aoaskill/skill_icon_base.png");
 
-	void renderInHud(MatrixStack matrix, AoASkill.Instance skill, float partialTicks, ProgressRenderType progressRenderType, boolean renderLevel);
-	void renderInGui(MatrixStack matrix, AoASkill.Instance skill, float partialTicks, int mouseX, int mouseY, ProgressRenderType progressRenderType, boolean renderLevel);
+	void renderInHud(PoseStack matrix, AoASkill.Instance skill, float partialTicks, ProgressRenderType progressRenderType, boolean renderLevel);
+	void renderInGui(PoseStack matrix, AoASkill.Instance skill, float partialTicks, int mouseX, int mouseY, ProgressRenderType progressRenderType, boolean renderLevel);
 
 	default int hudRenderWidth(AoASkill.Instance skill) {
 		return 25;
@@ -37,22 +37,22 @@ public interface AoASkillRenderer {
 
 	AoASkillRenderer DEFAULT = new AoASkillRenderer() {
 		@Override
-		public void renderInHud(MatrixStack matrix, AoASkill.Instance skill, float partialTicks, ProgressRenderType progressRenderType, boolean renderLevel) {
+		public void renderInHud(PoseStack matrix, AoASkill.Instance skill, float partialTicks, ProgressRenderType progressRenderType, boolean renderLevel) {
 			matrix.pushPose();
 			matrix.scale(0.5f, 0.5f, 0);
-			RenderSystem.color4f(1, 1, 1, 1);
+			RenderSystem.setShaderColor(1, 1, 1, 1);
+			RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
-			TextureManager textureManager = Minecraft.getInstance().getTextureManager();
-			FontRenderer fontRenderer = Minecraft.getInstance().font;
+			Font fontRenderer = Minecraft.getInstance().font;
 			int renderWidth = hudRenderWidth(skill) * 2;
 			int renderHeight = hudRenderHeight(skill) * 2;
 			int level = skill.getLevel(true);
 
-			textureManager.bind(SKILL_ICON_BASE);
+			RenderSystem.setShaderTexture(0, SKILL_ICON_BASE);
 			RenderUtil.renderScaledCustomSizedTexture(matrix, 0, 0, 0, 0, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth * 4, renderHeight * 2);
-			textureManager.bind(new ResourceLocation(skill.type().getRegistryName().getNamespace(), "textures/gui/aoaskill/" + skill.type().getRegistryName().getPath() + ".png"));
+			RenderSystem.setShaderTexture(0, new ResourceLocation(skill.type().getRegistryName().getNamespace(), "textures/gui/aoaskill/" + skill.type().getRegistryName().getPath() + ".png"));
 			RenderUtil.renderScaledCustomSizedTexture(matrix, 0, 0, 0, 0, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth, renderHeight);
-			textureManager.bind(SKILL_ICON_BASE);
+			RenderSystem.setShaderTexture(0, SKILL_ICON_BASE);
 
 			if (level == 1000) {
 				RenderUtil.renderScaledCustomSizedTexture(matrix, 0, 0, renderWidth * 3, 0, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth * 4, renderHeight * 2);
@@ -63,20 +63,17 @@ public interface AoASkillRenderer {
 				RenderUtil.renderScaledCustomSizedTexture(matrix, 0, 0, renderWidth, 0, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth * 4, renderHeight * 2);
 
 				switch (progressRenderType) {
-					case Ring:
-						RenderUtil.renderScaledCustomSizedTexture(matrix, 0, renderHeight - percentComplete * renderHeight, renderWidth * 2, renderHeight - percentComplete * renderHeight, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth * 4, renderHeight * 2);
-						break;
-					case Percent:
+					case Ring -> RenderUtil.renderScaledCustomSizedTexture(matrix, 0, renderHeight - percentComplete * renderHeight, renderWidth * 2, renderHeight - percentComplete * renderHeight, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth * 4, renderHeight * 2);
+					case Percent -> {
 						String percentMessage = NumberUtil.roundToNthDecimalPlace(percentComplete * 100, 0) + "%";
 						RenderUtil.drawScaledString(matrix, fontRenderer, percentMessage, (int)(renderWidth - fontRenderer.width(percentMessage) * 1.5f), (int)(renderHeight - fontRenderer.lineHeight * 1.5f), 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-						break;
-					case Bar:
+					}
+					case Bar -> {
 						RenderUtil.renderScaledCustomSizedTexture(matrix, 0, renderHeight - 10, 0, 50, 100, 20, renderWidth, 10, renderWidth * 4, renderHeight * 2);
 						RenderUtil.renderScaledCustomSizedTexture(matrix, 0, renderHeight - 10, 0, 70, percentComplete * 100, 20, percentComplete * renderWidth, 10, renderWidth * 4, renderHeight * 2);
-						break;
-					case None:
-					default:
-						break;
+					}
+					default -> {
+					}
 				}
 			}
 
@@ -91,7 +88,7 @@ public interface AoASkillRenderer {
 		}
 
 		@Override
-		public void renderInGui(MatrixStack matrix, AoASkill.Instance skill, float partialTicks, int mouseX, int mouseY, ProgressRenderType progressRenderType, boolean renderLevel) {
+		public void renderInGui(PoseStack matrix, AoASkill.Instance skill, float partialTicks, int mouseX, int mouseY, ProgressRenderType progressRenderType, boolean renderLevel) {
 			renderInHud(matrix, skill, partialTicks, progressRenderType, renderLevel);
 		}
 	};

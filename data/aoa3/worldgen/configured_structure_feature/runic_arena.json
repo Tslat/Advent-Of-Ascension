@@ -1,8 +1,0 @@
-{
-  "config": {
-    "min": 5,
-    "max": 80,
-    "ignore_obstructions": true
-  },
-  "type": "aoa3:runic_arena"
-}

@@ -1,23 +1,23 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.entity.projectile.staff.ShyreShotEntity;
 import net.tslat.aoa3.util.AdvancementUtil;
@@ -46,36 +46,36 @@ public class ShyreStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void cast(World world, ItemStack staff, LivingEntity caster, Object args) {
+	public void cast(Level world, ItemStack staff, LivingEntity caster, Object args) {
 		world.addFreshEntity(new ShyreShotEntity(caster, this, 120));
 	}
 
 	@Override
-	public void doBlockImpact(BaseEnergyShot shot, Vector3d hitPos, LivingEntity shooter) {
-		World world = shooter.level;
-		BlockPos.Mutable testPos = new BlockPos.Mutable(hitPos.x(), hitPos.y(), hitPos.z());
+	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
+		Level world = shooter.level;
+		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(hitPos.x(), hitPos.y(), hitPos.z());
 		BlockState state = world.getBlockState(testPos);
-		Vector3d shotMotion = shot.getDeltaMovement();
-		Vector3d testVec = hitPos;
+		Vec3 shotMotion = shot.getDeltaMovement();
+		Vec3 testVec = hitPos;
 		int tests = 0;
 
-		while (tests <= 10 && !(state = world.getBlockState(testPos)).getBlock().isAir(state, world, testPos)) {
+		while (tests <= 10 && !(state = world.getBlockState(testPos)).isAir()) {
 			testVec = testVec.subtract(shotMotion.x() * 0.15f, shotMotion.y() * 0.15f, shotMotion.z() * 0.15f);
 			testPos.set(testVec.x() + shooter.getBbWidth(), testVec.y(), testVec.z() + shooter.getBbWidth());
 			tests++;
 		}
 
-		if (state.getBlock().isAir(state, world, testPos) && !ForgeEventFactory.onEntityTeleportCommand(shooter, testVec.x(), testVec.y(), testVec.z()).isCanceled()) {
+		if (state.isAir() && !ForgeEventFactory.onEntityTeleportCommand(shooter, testVec.x(), testVec.y(), testVec.z()).isCanceled()) {
 			shooter.teleportTo(testVec.x(), testVec.y(), testVec.z());
 
-			if (shooter instanceof ServerPlayerEntity && WorldUtil.isWorld(shooter.level, AoADimensions.LUNALUS.key))
-				AdvancementUtil.completeAdvancement((ServerPlayerEntity)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
+			if (shooter instanceof ServerPlayer && WorldUtil.isWorld(shooter.level, AoADimensions.LUNALUS.key))
+				AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
 		}
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		Vector3d teleportPos = new Vector3d((target.getX() + shot.getX()) / 2d, (target.getY() + shot.getY()) / 2d, (target.getZ() + shot.getZ()) / 2d);
+		Vec3 teleportPos = new Vec3((target.getX() + shot.getX()) / 2d, (target.getY() + shot.getY()) / 2d, (target.getZ() + shot.getZ()) / 2d);
 
 		if (!ForgeEventFactory.onEntityTeleportCommand(shooter, teleportPos.x(), teleportPos.y(), teleportPos.z()).isCanceled())
 			shooter.teleportTo(teleportPos.x(), teleportPos.y(), teleportPos.z());
@@ -84,7 +84,7 @@ public class ShyreStaff extends BaseStaff<Object> {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

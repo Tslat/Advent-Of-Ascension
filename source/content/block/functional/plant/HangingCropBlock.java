@@ -1,17 +1,17 @@
 package net.tslat.aoa3.content.block.functional.plant;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.Item;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 
@@ -24,15 +24,15 @@ public abstract class HangingCropBlock extends CropBlock {
 	}
 
 	@Override
-	protected boolean mayPlaceOn(BlockState state, IBlockReader world, BlockPos pos) {
+	protected boolean mayPlaceOn(BlockState state, BlockGetter world, BlockPos pos) {
 		return state.is(BlockTags.LEAVES);
 	}
 
 	@Override
-	public abstract VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context);
+	public abstract VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context);
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
 		if (!world.isAreaLoaded(pos, 1))
 			return;
 
@@ -50,9 +50,9 @@ public abstract class HangingCropBlock extends CropBlock {
 		}
 	}
 
-	public float getGrowthMod(Block block, IBlockReader level, BlockPos pos) {
+	public float getGrowthMod(Block block, BlockGetter level, BlockPos pos) {
 		float modifier = 1;
-		BlockPos.Mutable testPos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos();
 
 		for(int x = -1; x <= 1; ++x) {
 			for(int z = -1; z <= 1; ++z) {
@@ -89,7 +89,7 @@ public abstract class HangingCropBlock extends CropBlock {
 	}
 
 	@Override
-	public boolean canSurvive(BlockState pState, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState pState, LevelReader world, BlockPos pos) {
 		BlockPos leafPos = pos.above();
 
 		return this.mayPlaceOn(world.getBlockState(leafPos), world, leafPos);

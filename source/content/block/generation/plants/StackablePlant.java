@@ -1,19 +1,22 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.pathfinding.PathType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.IPlantable;
 import net.tslat.aoa3.util.BlockUtil;
@@ -30,7 +33,7 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 	protected Supplier<Block> stemBlock;
 	protected final List<Material> growthMaterials;
 
-	public StackablePlant(AbstractBlock.Properties properties, Material... growthMaterial) {
+	public StackablePlant(Block.Properties properties, Material... growthMaterial) {
 		super(properties);
 
 		this.hatBlock = () -> this;
@@ -63,7 +66,7 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 	}
 
 	@Override
-	public void playerWillDestroy(World world, BlockPos pos, BlockState state, PlayerEntity player) {
+	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		BlockPos newPos;
 		BlockState blockState = world.getBlockState(newPos = pos.above());
 		Block block = blockState.getBlock();
@@ -85,39 +88,39 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, IWorldReader world, BlockPos pos) {
+	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
 		BlockState targetState = world.getBlockState(pos.below());
 
 		return ((growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isSolidRender(world, pos.below())) || targetState.getBlock() == stemBlock.get();
 	}
 
 	@Override
-	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, IWorld world, BlockPos pos, BlockPos facingPos) {
+	public BlockState updateShape(BlockState state, Direction facing, BlockState facingState, LevelAccessor world, BlockPos pos, BlockPos facingPos) {
 		return !state.canSurvive(world, pos) ? Blocks.AIR.defaultBlockState() : super.updateShape(state, facing, facingState, world, pos, facingPos);
 	}
 
 	@Override
-	public boolean canBeReplaced(BlockState state, BlockItemUseContext useContext) {
+	public boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
 		return false;
 	}
 
 	@Override
-	public boolean isShearable(@Nonnull ItemStack item, World world, BlockPos pos) {
+	public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState state, IBlockReader worldIn, BlockPos pos, PathType type) {
-		return type == PathType.AIR && !this.hasCollision || super.isPathfindable(state, worldIn, pos, type);
+	public boolean isPathfindable(BlockState state, BlockGetter worldIn, BlockPos pos, PathComputationType type) {
+		return type == PathComputationType.AIR && !this.hasCollision || super.isPathfindable(state, worldIn, pos, type);
 	}
 
 	@Override
-	public boolean propagatesSkylightDown(BlockState state, IBlockReader reader, BlockPos pos) {
+	public boolean propagatesSkylightDown(BlockState state, BlockGetter reader, BlockPos pos) {
 		return true;
 	}
 
 	@Override
-	public BlockState getPlant(IBlockReader world, BlockPos pos) {
+	public BlockState getPlant(BlockGetter world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
 
 		if (state.getBlock() != this)
@@ -128,7 +131,7 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 
 	@Nonnull
 	@Override
-	public List<ItemStack> onSheared(@Nullable PlayerEntity player, @Nonnull ItemStack item, World world, BlockPos pos, int fortune) {
+	public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
 		drops.add(new ItemStack(Item.byBlock(this)));

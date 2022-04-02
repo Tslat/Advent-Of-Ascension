@@ -2,28 +2,28 @@ package net.tslat.aoa3.content.world.gen.feature.features.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.template.*;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.structure.templatesystem.*;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Supplier;
 
-public class StructureFeatureConfig implements IFeatureConfig {
+public class StructureFeatureConfig implements FeatureConfiguration {
 	public static final Codec<StructureFeatureConfig> CODEC = RecordCodecBuilder.create(builder -> builder.group(
 			ResourceLocation.CODEC.listOf().fieldOf("templates").forGetter(config -> config.templatePaths),
 			Codec.BOOL.optionalFieldOf("random_mirroring", true).forGetter(config -> config.doMirroring),
 			Codec.BOOL.optionalFieldOf("random_rotation", true).forGetter(config -> config.doRotations),
 			Codec.BOOL.optionalFieldOf("spawn_entities", true).forGetter(config -> config.spawnEntities),
 			Codec.BOOL.optionalFieldOf("require_ground", true).forGetter(config -> config.requireGround),
-			IStructureProcessorType.LIST_CODEC.fieldOf("processors").forGetter(config -> config.processors))
+			StructureProcessorType.LIST_CODEC.fieldOf("processors").forGetter(config -> config.processors))
 			.apply(builder, StructureFeatureConfig::new));
 
 	public final List<ResourceLocation> templatePaths;
@@ -31,9 +31,9 @@ public class StructureFeatureConfig implements IFeatureConfig {
 	public final boolean doRotations;
 	public final boolean spawnEntities;
 	public final boolean requireGround;
-	public final Supplier<StructureProcessorList> processors;
+	public final Holder<StructureProcessorList> processors;
 
-	public StructureFeatureConfig(List<ResourceLocation> templatePaths, boolean doMirroring, boolean doRotations, boolean spawnEntities, boolean requireGround, Supplier<StructureProcessorList> processors) {
+	public StructureFeatureConfig(List<ResourceLocation> templatePaths, boolean doMirroring, boolean doRotations, boolean spawnEntities, boolean requireGround, Holder<StructureProcessorList> processors) {
 		this.templatePaths = templatePaths;
 		this.doMirroring = doMirroring;
 		this.doRotations = doRotations;
@@ -91,19 +91,19 @@ public class StructureFeatureConfig implements IFeatureConfig {
 		}
 
 		public StructureFeatureConfig build() {
-			return new StructureFeatureConfig(templatePaths, doMirroring, doRotations, spawnEntities, requireGround, () -> new StructureProcessorList(this.processors));
+			return new StructureFeatureConfig(templatePaths, doMirroring, doRotations, spawnEntities, requireGround, Holder.direct(new StructureProcessorList(this.processors)));
 		}
 	}
 
-	public Template getTemplate(Random rand) {
+	public StructureTemplate getTemplate(Random rand) {
 		ResourceLocation templatePath = templatePaths.get(rand.nextInt(templatePaths.size()));
 
-		return ServerLifecycleHooks.getCurrentServer().getStructureManager().get(templatePath);
+		return ServerLifecycleHooks.getCurrentServer().getStructureManager().get(templatePath).get();
 	}
 
-	public PlacementSettings getPlacementSettings(Random rand) {
+	public StructurePlaceSettings getPlacementSettings(Random rand) {
 		RandomUtil.EasyRandom random = new RandomUtil.EasyRandom(rand);
-		PlacementSettings settings = new PlacementSettings();
+		StructurePlaceSettings settings = new StructurePlaceSettings();
 
 		if (doMirroring)
 			settings.setMirror(random.getRandomSelection(Mirror.values()));
@@ -114,7 +114,7 @@ public class StructureFeatureConfig implements IFeatureConfig {
 		settings.setIgnoreEntities(!spawnEntities);
 		settings.setFinalizeEntities(spawnEntities);
 
-		for (StructureProcessor processor : this.processors.get().list()) {
+		for (StructureProcessor processor : this.processors.value().list()) {
 			settings.addProcessor(processor);
 		}
 

@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
@@ -30,7 +30,7 @@ public class DistortingArtifact extends Item {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, World world, Entity entity, int itemSlot, boolean isSelected) {
+	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (itemSlot >= 9)
 			return;
 
@@ -40,11 +40,11 @@ public class DistortingArtifact extends Item {
 				entity.fallDistance = -255;
 
 				if (entity instanceof LivingEntity) {
-					EntityUtil.applyPotions(entity, new EffectBuilder(Effects.BLINDNESS, 40).isAmbient().hideParticles());
+					EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.BLINDNESS, 40).isAmbient().hideParticles());
 
-					if (entity instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)entity)) {
-						ItemUtil.damageItem(stack, (PlayerEntity)entity, 1, null);
-						((PlayerEntity)entity).inventoryMenu.broadcastChanges();
+					if (entity instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)entity)) {
+						ItemUtil.damageItem(stack, (Player)entity, 1, null);
+						((Player)entity).inventoryMenu.broadcastChanges();
 					}
 				}
 			}
@@ -52,7 +52,7 @@ public class DistortingArtifact extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}

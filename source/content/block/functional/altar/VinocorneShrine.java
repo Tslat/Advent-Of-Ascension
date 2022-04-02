@@ -1,20 +1,18 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
@@ -25,20 +23,20 @@ public class VinocorneShrine extends BossAltarBlock {
 	}
 
 	@Override
-	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
 		return WorldUtil.isWorld(player.level, AoADimensions.GARDENCIA.key) && player.level.getBlockState(pos.above()).getMaterial().isReplaceable();
 	}
 
 	@Override
-	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
+	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
 		player.level.setBlockAndUpdate(blockPos.above(), AoABlocks.LIVING_GROWTH.get().defaultBlockState());
-		player.level.getBlockTicks().scheduleTick(blockPos.above(), AoABlocks.LIVING_GROWTH.get(), 40);
+		player.level.scheduleTick(blockPos.above(), AoABlocks.LIVING_GROWTH.get(), 40);
 
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.VINOCORNE.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
+		//sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAMobs.VINOCORNE.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
 	@Override
-	public void playerDestroy(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable TileEntity te, ItemStack stack) {
+	public void playerDestroy(Level world, Player player, BlockPos pos, BlockState state, @Nullable BlockEntity te, ItemStack stack) {
 		super.playerDestroy(world, player, pos, state, te, stack);
 
 		if (world.getBlockState(pos.above()).getBlock() == AoABlocks.LIVING_GROWTH.get())

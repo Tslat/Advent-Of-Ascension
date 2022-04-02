@@ -1,25 +1,35 @@
 package net.tslat.aoa3.client.model.entity.projectile;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.world.entity.Entity;
 
 public class CobblestoneProjectileModel extends EntityModel<Entity> {
-	private final ModelRenderer block;
+	private final ModelPart block;
 
-	public CobblestoneProjectileModel() {
-		texWidth = 64;
-		texHeight = 32;
+	public CobblestoneProjectileModel(ModelPart meshDefRoot) {
+		this.block = meshDefRoot.getChild("root");
+	}
 
-		block = new ModelRenderer(this);
-		block.setPos(0.0F, 16.0F, 0.0F);
-		block.texOffs(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16, 16, 16, -2.0F, true);
+	public static LayerDefinition createLayerDefinition() {
+		MeshDefinition meshDefinition = new MeshDefinition();
+
+		meshDefinition.getRoot().addOrReplaceChild("root", CubeListBuilder.create()
+				.mirror().texOffs(0, 0).addBox(-8.0F, -8.0F, -8.0F, 16, 16, 16, new CubeDeformation(-2.0f)),
+				PartPose.offset(0, 16, 0));
+
+		return LayerDefinition.create(meshDefinition, 64, 32);
 	}
 
 	@Override
-	public void renderToBuffer(MatrixStack matrix, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+	public void renderToBuffer(PoseStack matrix, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
 		block.render(matrix, buffer, packedLight, packedOverlay, red, green, blue, alpha);
 	}
 

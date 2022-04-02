@@ -1,29 +1,29 @@
 package net.tslat.aoa3.content.entity.animal;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.item.Item;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 
 import javax.annotation.Nullable;
 
 public class ElkanyneEntity extends AoAAnimal {
-	public ElkanyneEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+	public ElkanyneEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.05f;
 	}
 
@@ -56,7 +56,7 @@ public class ElkanyneEntity extends AoAAnimal {
 
 	@Nullable
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity mate) {
-		return new ElkanyneEntity(AoAEntities.Animals.ELKANYNE.get(), this.level);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
+		return new ElkanyneEntity(AoAAnimals.ELKANYNE.get(), this.level);
 	}
 }

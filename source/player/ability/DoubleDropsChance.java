@@ -1,12 +1,12 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -20,7 +20,7 @@ public class DoubleDropsChance extends ScalableModAbility {
 		super(AoAAbilities.DOUBLE_DROPS_CHANCE.get(), skill, data);
 	}
 
-	public DoubleDropsChance(AoASkill.Instance skill, CompoundNBT data) {
+	public DoubleDropsChance(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.DOUBLE_DROPS_CHANCE.get(), skill, data);
 	}
 
@@ -31,12 +31,12 @@ public class DoubleDropsChance extends ScalableModAbility {
 
 	@Override
 	public void handleLootModification(List<ItemStack> loot, LootContext context) {
-		if (!context.hasParam(LootParameters.THIS_ENTITY))
+		if (!context.hasParam(LootContextParams.THIS_ENTITY))
 			return;
 
-		Entity killedEntity = context.getParamOrNull(LootParameters.THIS_ENTITY);
+		Entity killedEntity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
 
-		if (killedEntity instanceof PlayerEntity)
+		if (killedEntity instanceof Player)
 			return;
 
 		if (testAsChance()) {
@@ -49,7 +49,7 @@ public class DoubleDropsChance extends ScalableModAbility {
 					}
 					else {
 						if (extras == null)
-							extras = new ArrayList<ItemStack>();
+							extras = new ArrayList<>();
 
 						ItemStack newStack = stack.copy();
 
@@ -60,7 +60,7 @@ public class DoubleDropsChance extends ScalableModAbility {
 				}
 				else {
 					if (extras == null)
-						extras = new ArrayList<ItemStack>();
+						extras = new ArrayList<>();
 
 					extras.add(stack.copy());
 				}

@@ -1,18 +1,19 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
@@ -20,45 +21,49 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Supplier;
 
-public abstract class AoATreeFeature extends Feature<BlockStateFeatureConfig> {
+public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> {
 	protected final Supplier<SaplingBlock> sapling;
 
-	public AoATreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> sapling) {
+	public AoATreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> sapling) {
 		super(codec);
 
 		this.sapling = sapling;
 	}
 
-	public boolean generate(ServerWorld world, Random rand, BlockPos pos) {
+	public boolean generate(ServerLevel world, Random rand, BlockPos pos) {
 		return generateTree(world, rand, pos, false);
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BlockStateFeatureConfig config) {
-		return generateTree(reader, rand, pos, true);
+	public boolean place(FeaturePlaceContext<BlockStatePlacementConfig> pContext) {
+		return false;
 	}
 
-	protected abstract boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, boolean isWorldGen);
+	@Override
+	public boolean place(BlockStatePlacementConfig config, WorldGenLevel level, ChunkGenerator chunkGen, Random rand, BlockPos pos) {
+		return generateTree(level, rand, pos, true);
+	}
 
-	protected void placeBlock(ISeedReader reader, BlockPos pos, BlockState state, boolean overwriteBlocks) {
+	protected abstract boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen);
+
+	protected void placeBlock(WorldGenLevel reader, BlockPos pos, BlockState state, boolean overwriteBlocks) {
 		if (!overwriteBlocks && !isSafeBlock(reader, pos))
 			return;
 
 		reader.setBlock(pos, state, 19);
 	}
 
-	protected void placeBlock(ISeedReader reader, BlockPos pos, BlockState state) {
+	protected void placeBlock(WorldGenLevel reader, BlockPos pos, BlockState state) {
 		placeBlock(reader, pos, state, false);
 	}
 
-	protected static boolean isSafeBlock(ISeedReader reader, BlockPos pos) {
+	protected static boolean isSafeBlock(WorldGenLevel reader, BlockPos pos) {
 		BlockState existingState = reader.getBlockState(pos);
-		Block existingBlock = existingState.getBlock();
 
-		return existingBlock.isAir(existingState, reader, pos) || existingState.getMaterial().isReplaceable() || existingBlock.is(BlockTags.LEAVES);
+		return existingState.isAir() || existingState.getMaterial().isReplaceable() || existingState.is(BlockTags.LEAVES);
 	}
 
-	protected boolean checkSafeHeight(ISeedReader reader, BlockPos pos, int maxHeight, int trunkWidth, boolean isWorldGen) {
+	protected boolean checkSafeHeight(WorldGenLevel reader, BlockPos pos, int maxHeight, int trunkWidth, boolean isWorldGen) {
 		if (pos.getY() >= 1 && pos.getY() + maxHeight < 256) {
 			if (isWorldGen)
 				return true;
@@ -78,7 +83,7 @@ public abstract class AoATreeFeature extends Feature<BlockStateFeatureConfig> {
 		return false;
 	}
 
-	protected boolean checkAndPrepSoil(ISeedReader reader, BlockPos pos, int trunkWidth, boolean isWorldGen) {
+	protected boolean checkAndPrepSoil(WorldGenLevel reader, BlockPos pos, int trunkWidth, boolean isWorldGen) {
 		if (isWorldGen)
 			return true;
 
@@ -90,7 +95,7 @@ public abstract class AoATreeFeature extends Feature<BlockStateFeatureConfig> {
 				BlockState soilState = reader.getBlockState(soilPos);
 				Block soil = soilState.getBlock();
 
-				if (soil.isAir(soilState, reader, soilPos.above()) || !soil.canSustainPlant(soilState, reader, soilPos, Direction.UP, sapling.get()))
+				if (soilState.isAir() || !soil.canSustainPlant(soilState, reader, soilPos, Direction.UP, sapling.get()))
 					return false;
 
 				soils.add(Triple.of(soilState, soil, soilPos));
@@ -105,7 +110,7 @@ public abstract class AoATreeFeature extends Feature<BlockStateFeatureConfig> {
 	}
 
 	@Nullable
-	protected BlockPos findMultiSaplingPosition(ISeedReader reader, Random rand, BlockPos pos, int size, boolean isWorldGen) {
+	protected BlockPos findMultiSaplingPosition(WorldGenLevel reader, Random rand, BlockPos pos, int size, boolean isWorldGen) {
 		if (isWorldGen)
 			return pos;
 

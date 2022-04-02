@@ -1,18 +1,18 @@
 package net.tslat.aoa3.client.render.entity;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Mob;
 
-public class AoAMobRenderer extends MobRenderer<MobEntity, EntityModel<MobEntity>> {
+public class AoAMobRenderer extends MobRenderer<Mob, EntityModel<Mob>> {
 	private final ResourceLocation texture;
 	private final float scale;
 
-	public AoAMobRenderer(EntityRendererManager renderManager, EntityModel<MobEntity> model, float shadowSize, float scale, ResourceLocation texture) {
-		super(renderManager, model, shadowSize);
+	public AoAMobRenderer(EntityRendererProvider.Context renderManager, EntityModel<? extends Mob> model, float shadowSize, float scale, ResourceLocation texture) {
+		super(renderManager, (EntityModel<Mob>)model, shadowSize);
 
 		this.model = getModel();
 		this.texture = texture;
@@ -20,12 +20,12 @@ public class AoAMobRenderer extends MobRenderer<MobEntity, EntityModel<MobEntity
 	}
 
 	@Override
-	protected void scale(MobEntity entity, MatrixStack matrix, float partialTicks) {
+	protected void scale(Mob entity, PoseStack matrix, float partialTicks) {
 		matrix.scale(scale, scale, scale);
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(MobEntity entity) {
+	public ResourceLocation getTextureLocation(Mob entity) {
 		return texture;
 	}
 }

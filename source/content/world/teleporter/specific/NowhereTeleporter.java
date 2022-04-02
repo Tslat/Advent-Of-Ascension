@@ -1,18 +1,18 @@
 package net.tslat.aoa3.content.world.teleporter.specific;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.AoATeleporter;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.HashMap;
 
@@ -25,10 +25,10 @@ public class NowhereTeleporter extends AoATeleporter {
 	}
 
 	@Override
-	public BlockPos findExistingPortal(World world, Entity entity) {
+	public BlockPos findExistingPortal(Level world, Entity entity) {
 		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
-			if (entity instanceof ServerPlayerEntity) {
-				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)entity);
+			if (entity instanceof ServerPlayer) {
+				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayer)entity);
 
 				PortalCoordinatesContainer portalLoc = new PortalCoordinatesContainer(entity.level.dimension(), entity.getX(), entity.getY(), entity.getZ());
 
@@ -42,7 +42,7 @@ public class NowhereTeleporter extends AoATeleporter {
 	}
 
 	@Override
-	public BlockPos makePortal(World world, Entity entity, BlockPos pos) {
+	public BlockPos makePortal(Level world, Entity entity, BlockPos pos) {
 		return pos;
 	}
 

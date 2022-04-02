@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.item.tool.misc;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.misc.FishingCageEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -21,7 +21,7 @@ public class FishingCage extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World level, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (!level.isClientSide()) {
@@ -29,7 +29,7 @@ public class FishingCage extends Item {
 			stack.shrink(1);
 		}
 
-		return ActionResult.sidedSuccess(stack, level.isClientSide());
+		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class FishingCage extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack pStack, @Nullable World pLevel, List<ITextComponent> tooltip, ITooltipFlag pFlag) {
+	public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pFlag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

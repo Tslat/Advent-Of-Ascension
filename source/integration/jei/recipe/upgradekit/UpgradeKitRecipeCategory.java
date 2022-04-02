@@ -7,16 +7,17 @@ import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 
 public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecipe> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "upgrade_kit");
-	private final String title = LocaleUtil.getLocaleString("recipe.aoa3.upgradeKit");
+	private final Component title = LocaleUtil.getLocaleMessage("recipe.aoa3.upgradeKit");
 	private final IDrawable background;
 	private final IDrawable icon;
 
@@ -37,7 +38,7 @@ public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecip
 	}
 
 	@Override
-	public String getTitle() {
+	public Component getTitle() {
 		return title;
 	}
 

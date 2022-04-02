@@ -1,15 +1,16 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.entity.*;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.entity.*;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
@@ -27,12 +28,12 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int chargeCooldown = 300;
 
-	public CraexxeusEntity(EntityType<? extends FlyingEntity> entityType, World world) {
+	public CraexxeusEntity(EntityType<? extends FlyingMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 3.9f;
 	}
 
@@ -86,7 +87,7 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 				chargeCooldown--;
 
 				if (chargeCooldown == 40)
-					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CRAEXXEUS_CHARGE.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CRAEXXEUS_CHARGE.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 			}
 			else {
 				chargeCooldown = 300;
@@ -98,9 +99,9 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 					double distanceFactorX = target.getX() - projectile.getX();
 					double distanceFactorY = target.getBoundingBox().minY + (target.getBbHeight() / 3) - projectile.getY();
 					double distanceFactorZ = target.getZ() - projectile.getZ();
-					double hyp = MathHelper.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
+					double hyp = Mth.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
-					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CRAEXXEUS_NUKE.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CRAEXXEUS_NUKE.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 					projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
 					level.addFreshEntity(projectile);
 				}
@@ -136,7 +137,7 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -144,14 +145,14 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.CRAEXXEUS_MUSIC.getId()));
@@ -159,7 +160,7 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.CRAEXXEUS_MUSIC.getId()));
@@ -167,3 +168,4 @@ public class CraexxeusEntity extends AoAFlyingRangedMob {
 	}
 
 }
+*/

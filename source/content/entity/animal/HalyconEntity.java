@@ -1,32 +1,32 @@
 package net.tslat.aoa3.content.entity.animal;
 
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.entity.AoAAnimals;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.util.ItemUtil;
 
 import javax.annotation.Nullable;
 
 public class HalyconEntity extends AoAAnimal {
-	public HalyconEntity(EntityType<? extends AnimalEntity> entityType, World world) {
+	public HalyconEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	public ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == Items.BUCKET) {
@@ -42,7 +42,7 @@ public class HalyconEntity extends AoAAnimal {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.HALYCON_MILK.get()));
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 		else {
 			return super.mobInteract(player, hand);
@@ -62,7 +62,7 @@ public class HalyconEntity extends AoAAnimal {
 
 	@Nullable
 	@Override
-	public AgeableEntity getBreedOffspring(ServerWorld world, AgeableEntity mate) {
-		return new HalyconEntity(AoAEntities.Animals.HALYCON.get(), this.level);
+	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
+		return new HalyconEntity(AoAAnimals.HALYCON.get(), this.level);
 	}
 }

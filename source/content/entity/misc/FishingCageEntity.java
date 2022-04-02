@@ -1,36 +1,38 @@
 package net.tslat.aoa3.content.entity.misc;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.fluid.FlowingFluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.*;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.INBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.Constants;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.FlowingFluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoATools;
+import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
+import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.event.AoAPlayerEvents;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -43,19 +45,19 @@ import java.util.List;
 import java.util.UUID;
 
 public class FishingCageEntity extends Entity {
-	private static final DataParameter<ItemStack> CAUGHT_STACK_1 = EntityDataManager.defineId(FishingCageEntity.class, DataSerializers.ITEM_STACK);
-	private static final DataParameter<ItemStack> CAUGHT_STACK_2 = EntityDataManager.defineId(FishingCageEntity.class, DataSerializers.ITEM_STACK);
-	private static final DataParameter<ItemStack> CAUGHT_STACK_3 = EntityDataManager.defineId(FishingCageEntity.class, DataSerializers.ITEM_STACK);
+	private static final EntityDataAccessor<ItemStack> CAUGHT_STACK_1 = SynchedEntityData.defineId(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
+	private static final EntityDataAccessor<ItemStack> CAUGHT_STACK_2 = SynchedEntityData.defineId(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
+	private static final EntityDataAccessor<ItemStack> CAUGHT_STACK_3 = SynchedEntityData.defineId(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
 
 	private UUID ownerUUID = null;
 	private int damage;
 	private List<ItemStack> loot = null;
 
-	public FishingCageEntity(World world, PlayerEntity player, ItemStack stack) {
-		this(AoAEntities.Misc.FISHING_CAGE.get(), world);
+	public FishingCageEntity(Level world, Player player, ItemStack stack) {
+		this(AoAMiscEntities.FISHING_CAGE.get(), world);
 
 		setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
-		setRot(player.yRot, player.xRot);
+		setRot(player.getYRot(), player.getXRot());
 
 		setDeltaMovement(EntityUtil.getDirectionForFacing(player).multiply(0.75f, 0.75f, 0.75f));
 
@@ -63,14 +65,14 @@ public class FishingCageEntity extends Entity {
 		this.damage = stack.getDamageValue();
 	}
 
-	public FishingCageEntity(EntityType<? extends Entity> entityType, World world) {
+	public FishingCageEntity(EntityType<? extends Entity> entityType, Level world) {
 		super(entityType, world);
 
 		blocksBuilding = true;
 	}
 
 	@Override
-	public ActionResultType interact(PlayerEntity player, Hand hand) {
+	public InteractionResult interact(Player player, InteractionHand hand) {
 		if (!level.isClientSide() && ownerUUID == null || player.getUUID().equals(ownerUUID)) {
 			ItemStack fishingCage = new ItemStack(AoATools.FISHING_CAGE.get());
 			int damage = this.damage + 1;
@@ -85,10 +87,10 @@ public class FishingCageEntity extends Entity {
 			List<ItemStack> loot = getLoot();
 
 			if (!loot.isEmpty()) {
-				AoAPlayerEvents.handleCustomInteraction((ServerPlayerEntity)player, "fishing_cage_harvest", loot);
+				AoAPlayerEvents.handleCustomInteraction((ServerPlayer)player, "fishing_cage_harvest", loot);
 
 				for (ItemStack drop : loot) {
-					if (drop.getItem().is(ItemTags.FISHES))
+					if (drop.is(ItemTags.FISHES))
 						player.awardStat(Stats.FISH_CAUGHT, 1);
 
 					ItemUtil.givePlayerItemOrDrop(player, drop);
@@ -96,12 +98,12 @@ public class FishingCageEntity extends Entity {
 			}
 
 			player.awardStat(Stats.ITEM_USED.get(AoATools.FISHING_CAGE.get()));
-			remove();
+			discard();
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return level.isClientSide() ? ActionResultType.SUCCESS : ActionResultType.FAIL;
+		return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.FAIL;
 	}
 
 	@Override
@@ -110,7 +112,7 @@ public class FishingCageEntity extends Entity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
@@ -122,7 +124,7 @@ public class FishingCageEntity extends Entity {
 	}
 
 	@Override
-	public void onSyncedDataUpdated(DataParameter<?> key) {
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		if (level.isClientSide()) {
 			ItemStack stack = ItemStack.EMPTY;
 
@@ -138,7 +140,7 @@ public class FishingCageEntity extends Entity {
 
 			if (stack != ItemStack.EMPTY) {
 				if (loot == null)
-					loot = new ArrayList<ItemStack>(3);
+					loot = new ArrayList<>(3);
 
 				loot.add(stack);
 			}
@@ -146,15 +148,15 @@ public class FishingCageEntity extends Entity {
 	}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundNBT compound) {
+	protected void addAdditionalSaveData(CompoundTag compound) {
 		if (compound.hasUUID("OwnerUUID"))
 			ownerUUID = compound.getUUID("OwnerUUID");
 
 		if (!loot.isEmpty()) {
-			ListNBT lootList = new ListNBT();
+			ListTag lootList = new ListTag();
 
 			for (ItemStack stack : loot) {
-				lootList.add(stack.save(new CompoundNBT()));
+				lootList.add(stack.save(new CompoundTag()));
 			}
 
 			compound.put("loot", lootList);
@@ -162,17 +164,17 @@ public class FishingCageEntity extends Entity {
 	}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundNBT compound) {
+	protected void readAdditionalSaveData(CompoundTag compound) {
 		if (ownerUUID != null)
 			compound.putUUID("OwnerUUID", ownerUUID);
 
 		if (compound.contains("loot")) {
-			ListNBT lootList = compound.getList("loot", Constants.NBT.TAG_COMPOUND);
-			this.loot = new ArrayList<ItemStack>(Math.min(lootList.size(), 3));
+			ListTag lootList = compound.getList("loot", Tag.TAG_COMPOUND);
+			this.loot = new ArrayList<>(Math.min(lootList.size(), 3));
 
-			for (INBT nbt : lootList) {
+			for (Tag nbt : lootList) {
 				try {
-					this.loot.add(ItemStack.of((CompoundNBT)nbt));
+					this.loot.add(ItemStack.of((CompoundTag)nbt));
 				}
 				catch (Exception ignored) {}
 			}
@@ -224,39 +226,36 @@ public class FishingCageEntity extends Entity {
 		if (RandomUtil.oneInNChance(5000)) {
 			FluidState fluid = level.getFluidState(blockPosition());
 
-			if (!(fluid.getType() instanceof FlowingFluid)) {
+			if (!(fluid.getType() instanceof FlowingFluid flowingFluid)) {
 				if (!RandomUtil.oneInNChance(3))
 					return;
 			}
-			else {
-				FlowingFluid flowingFluid = (FlowingFluid)fluid.getType();
-
-				if (flowingFluid.getFlow(level, blockPosition(), fluid).lengthSqr() == 0 && !RandomUtil.fiftyFifty())
-					return;
+			else if (flowingFluid.getFlow(level, blockPosition(), fluid).lengthSqr() == 0 && !RandomUtil.fiftyFifty()) {
+				return;
 			}
 
-			PlayerEntity owner = level.getPlayerByUUID(ownerUUID);
+			Player owner = level.getPlayerByUUID(ownerUUID);
 
 			if (owner != null) {
-				LootContext.Builder lootContext = new LootContext.Builder((ServerWorld)this.level)
-						.withParameter(LootParameters.ORIGIN, this.position())
-						.withParameter(LootParameters.TOOL, new ItemStack(AoATools.FISHING_CAGE.get()))
-						.withParameter(LootParameters.THIS_ENTITY, this)
-						.withParameter(LootParameters.KILLER_ENTITY, owner)
+				LootContext.Builder lootContext = new LootContext.Builder((ServerLevel)this.level)
+						.withParameter(LootContextParams.ORIGIN, this.position())
+						.withParameter(LootContextParams.TOOL, new ItemStack(AoATools.FISHING_CAGE.get()))
+						.withParameter(LootContextParams.THIS_ENTITY, this)
+						.withParameter(LootContextParams.KILLER_ENTITY, owner)
 						.withRandom(random).withLuck(2 + owner.getLuck());
 				LootTable lootTable = level.getServer().getLootTables().get(AdventOfAscension.id("misc/fishing_cage_catches"));
 
 				if (loot == null)
-					loot = new ArrayList<ItemStack>(3);
+					loot = new ArrayList<>(3);
 
-				this.loot.addAll(lootTable.getRandomItems(lootContext.create(LootParameterSets.FISHING)));
+				this.loot.addAll(lootTable.getRandomItems(lootContext.create(LootContextParamSets.FISHING)));
 				updateLootData();
 			}
 		}
 	}
 
 	protected void updateLootData() {
-		EntityDataManager data = getEntityData();
+		SynchedEntityData data = getEntityData();
 
 		if (loot == null || loot.isEmpty()) {
 			data.set(CAUGHT_STACK_1, ItemStack.EMPTY);
@@ -282,7 +281,7 @@ public class FishingCageEntity extends Entity {
 		baseTick();
 		doFishingCheckTick();
 
-		Vector3d velocity = getDeltaMovement();
+		Vec3 velocity = getDeltaMovement();
 		double gravity = 0.08d;
 
 		if (isInWater()) {
@@ -298,7 +297,7 @@ public class FishingCageEntity extends Entity {
 
 			move(MoverType.SELF, getDeltaMovement());
 
-			Vector3d motion = getDeltaMovement().multiply(drag, 0.8f, drag);
+			Vec3 motion = getDeltaMovement().multiply(drag, 0.8f, drag);
 			double yVelocity;
 
 			if (velocity.y() <= 0 && Math.abs(motion.y() - 0.005D) >= 0.003d && Math.abs(motion.y() - gravity / 16d) < 0.003d) {
@@ -308,7 +307,7 @@ public class FishingCageEntity extends Entity {
 				yVelocity = motion.y() - gravity / 16d;
 			}
 
-			Vector3d newVelocity = new Vector3d(motion.x(), yVelocity, motion.z());
+			Vec3 newVelocity = new Vec3(motion.x(), yVelocity, motion.z());
 
 			setDeltaMovement(newVelocity);
 
@@ -317,12 +316,12 @@ public class FishingCageEntity extends Entity {
 		}
 		else {
 			BlockPos feetPos = getBlockPosBelowThatAffectsMyMovement();
-			float blockSlipperiness = this.level.getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).getSlipperiness(level, this.getBlockPosBelowThatAffectsMyMovement(), this);
+			float blockSlipperiness = this.level.getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).getFriction(level, this.getBlockPosBelowThatAffectsMyMovement(), this);
 			float friction = this.onGround ? blockSlipperiness * 0.91f : 0.91f;
 
 			move(MoverType.SELF, getDeltaMovement());
 
-			Vector3d newVelocity = getDeltaMovement();
+			Vec3 newVelocity = getDeltaMovement();
 			double newYVelocity = newVelocity.y();
 
 			if (this.level.isClientSide && !this.level.hasChunkAt(feetPos)) {
@@ -343,7 +342,7 @@ public class FishingCageEntity extends Entity {
 		setDeltaMovement(getDeltaMovement().multiply(0.98f, 0.98f, 0.98f));
 
 		if (!level.isClientSide())
-			setSharedFlag(6, isGlowing());
+			setSharedFlag(6, hasGlowingTag());
 	}
 
 	@Override
@@ -364,7 +363,7 @@ public class FishingCageEntity extends Entity {
 
 				fishingCage.setDamageValue(this.damage);
 				spawnAtLocation(fishingCage);
-				remove();
+				discard();
 			}
 		}
 
@@ -378,20 +377,20 @@ public class FishingCageEntity extends Entity {
 
 		if (!level.isClientSide() && amount >= 1) {
 			markHurt();
-			remove();
+			discard();
 		}
 
 		return true;
 	}
 
 	@Override
-	public void remove() {
-		super.remove();
-
+	public void remove(RemovalReason reason) {
 		if (!level.isClientSide() && loot != null) {
 			for (ItemStack stack : loot) {
 				spawnAtLocation(stack);
 			}
 		}
+
+		super.remove(reason);
 	}
 }

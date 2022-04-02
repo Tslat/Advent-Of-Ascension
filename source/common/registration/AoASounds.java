@@ -1,16 +1,13 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.DatagenModLoader;
-import net.minecraftforge.fml.RegistryObject;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraftforge.data.loading.DatagenModLoader;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.util.HolidayUtil;
 
 public final class AoASounds {
-	public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, AdventOfAscension.MOD_ID);
+	public static void init() {}
 
 	public static final RegistryObject<SoundEvent> ITEM_GUN_MINIGUN_AUTOMATIC_FIRE = registerSound("minigun_fire", "item.gun.minigun.fire");
 
@@ -813,7 +810,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> YELLOW_GUARDIAN_MUSIC = registerSound("yellow_guardian_music", "entity.yellow_guardian.music");
 
 	private static RegistryObject<SoundEvent> registerSound(String registryName, String soundPath) {
-		return SOUNDS.register(registryName, () -> createSoundEvent(soundPath));
+		return AoARegistries.SOUNDS.register(registryName, () -> createSoundEvent(soundPath));
 	}
 
 	private static SoundEvent createSoundEvent(String soundPath) {

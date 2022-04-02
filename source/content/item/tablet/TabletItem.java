@@ -1,17 +1,17 @@
 package net.tslat.aoa3.content.item.tablet;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemUseContext;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.content.entity.tablet.SoulTabletEntity;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -45,17 +45,17 @@ public abstract class TabletItem extends Item {
 	}
 
 	@Override
-	public ActionResultType useOn(ItemUseContext context) {
+	public InteractionResult useOn(UseOnContext context) {
 		BlockPos pos = context.getClickedPos();
-		World world = context.getLevel();
+		Level world = context.getLevel();
 
 		BlockState targetBlockState = context.getLevel().getBlockState(pos);
 
 		if (context.getClickedFace() != Direction.UP || !targetBlockState.isFaceSturdy(world, pos, Direction.UP))
-			return ActionResultType.FAIL;
+			return InteractionResult.FAIL;
 
-		if (context.getPlayer() instanceof ServerPlayerEntity) {
-			ServerPlayerEntity player = (ServerPlayerEntity)context.getPlayer();
+		if (context.getPlayer() instanceof ServerPlayer) {
+			ServerPlayer player = (ServerPlayer)context.getPlayer();
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
 			/*if (player.isCreative() || plData.stats().getLevel(Skills.ANIMA) >= animaLevelReq) {
@@ -63,16 +63,16 @@ public abstract class TabletItem extends Item {
 				SoulTabletEntity tabletEntity = getTabletEntity(world, player);
 				VoxelShape blockBoundingBox = targetBlockState.getCollisionShape(world, pos);
 
-				tabletEntity.absMoveTo(context.getClickLocation().x(), pos.getY() + (blockBoundingBox.isEmpty() ? 0 : blockBoundingBox.max(Direction.Axis.Y)), context.getClickLocation().z(), player.yRot, 0);
+				tabletEntity.absMoveTo(context.getClickLocation().x(), pos.getY() + (blockBoundingBox.isEmpty() ? 0 : blockBoundingBox.max(Direction.Axis.Y)), context.getClickLocation().z(), player.getYRot(), 0);
 
-				if (world.isUnobstructed(tabletEntity, VoxelShapes.create(tabletEntity.getBoundingBox()))) {
+				if (world.isUnobstructed(tabletEntity, Shapes.create(tabletEntity.getBoundingBox()))) {
 					if (plData.stats().consumeResource(AoAResource.SOUL, soulCost, false)) {
 						world.addFreshEntity(tabletEntity);
 
 						if (!player.isCreative())
 							player.getItemInHand(context.getHand()).shrink(1);
 
-						return ActionResultType.SUCCESS;
+						return InteractionResult.SUCCESS;
 					}
 				}
 			}
@@ -81,16 +81,16 @@ public abstract class TabletItem extends Item {
 			}*/ // TODO
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
-	protected abstract SoulTabletEntity getTabletEntity(World world, ServerPlayerEntity placer);
+	protected abstract SoulTabletEntity getTabletEntity(Level world, ServerPlayer placer);
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		//tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.ANIMA, animaLevelReq));
-		//tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f))))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(effectRadius))));
+		//tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new TextComponent(String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f))))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new TextComponent(String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new TextComponent(String.valueOf(effectRadius))));
 	}
 }

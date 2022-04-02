@@ -1,19 +1,19 @@
 package net.tslat.aoa3.content.entity.mob.crystevia;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PotionUtil;
@@ -21,12 +21,12 @@ import net.tslat.aoa3.util.PotionUtil;
 import javax.annotation.Nullable;
 
 public class ConstructOfStrengthEntity extends AoAMeleeMob {
-    public ConstructOfStrengthEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public ConstructOfStrengthEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 2.125f;
     }
 
@@ -57,8 +57,8 @@ public class ConstructOfStrengthEntity extends AoAMeleeMob {
     }
 
     @Override
-    public boolean addEffect(EffectInstance effect) {
-        if (effect.getEffect() == Effects.DAMAGE_BOOST)
+    public boolean addEffect(MobEffectInstance effect, @Nullable Entity source) {
+        if (effect.getEffect() == MobEffects.DAMAGE_BOOST)
             PotionUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 4 - effect.getAmplifier());
 
         return super.addEffect(effect);
@@ -66,7 +66,7 @@ public class ConstructOfStrengthEntity extends AoAMeleeMob {
 
     @Override
     protected void onAttack(Entity target) {
-        if (!level.isClientSide && target instanceof PlayerEntity && ((PlayerEntity)target).getHealth() > 0 && hasEffect(Effects.DAMAGE_BOOST) && ItemUtil.findInventoryItem((PlayerEntity)target, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-            ItemUtil.givePlayerItemOrDrop((PlayerEntity)target, new ItemStack(AoAItems.NOWHERE_REALMSTONE.get()));
+        if (!level.isClientSide && target instanceof Player && ((Player)target).getHealth() > 0 && hasEffect(MobEffects.DAMAGE_BOOST) && ItemUtil.findInventoryItem((Player)target, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+            ItemUtil.givePlayerItemOrDrop((Player)target, new ItemStack(AoAItems.NOWHERE_REALMSTONE.get()));
     }
 }

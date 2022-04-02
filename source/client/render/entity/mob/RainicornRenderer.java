@@ -1,24 +1,25 @@
+/*
 package net.tslat.aoa3.client.render.entity.mob;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.util.ResourceLocation;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
+import net.minecraft.entity.Mob;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.animal.RainicornModel;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.util.ColourUtil;
 
 public class RainicornRenderer extends AoAMobRenderer {
-	public RainicornRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new RainicornModel(), AoAEntities.Animals.RAINICORN.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entity/animal/rainicorn.png"));
+	public RainicornRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new RainicornModel(), AoAAnimals.RAINICORN.get().getWidth() / 3f, 1f, new ResourceLocation("aoa3", "textures/entity/animal/rainicorn.png"));
 	}
 
 	@Override
-	public void render(MobEntity entity, float entityYaw, float partialTicks, MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn) {
+	public void render(Mob entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
 		super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 
 		if (entity.getDeltaMovement().x() > 0 || entity.getDeltaMovement().z() > 0 || entity.getDeltaMovement().y() > 0) {
@@ -31,4 +32,4 @@ public class RainicornRenderer extends AoAMobRenderer {
 			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, ColourUtil.RGB(193, 64, 215)), entity.getX(), entity.getY() + 0.5, entity.getZ(), 0, 0, 0);
 		}
 	}
-}
+}*/

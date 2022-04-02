@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.block.functional.portal;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.util.ColourUtil;
 
@@ -16,8 +16,8 @@ public class NowherePortalBlock extends PortalBlock {
 	}
 
 	@Override
-	public void entityInside(BlockState state, World world, BlockPos pos, Entity entity) {
-		if (entity instanceof PlayerEntity || (entity instanceof TameableEntity && ((TameableEntity)entity).isTame()))
+	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		if (entity instanceof Player || (entity instanceof TamableAnimal && ((TamableAnimal)entity).isTame()))
 			super.entityInside(state, world, pos, entity);
 	}
 }

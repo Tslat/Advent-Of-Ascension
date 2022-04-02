@@ -1,14 +1,15 @@
 package net.tslat.aoa3.content.entity.mob.crystevia;
 
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.PotionUtil;
@@ -16,7 +17,7 @@ import net.tslat.aoa3.util.PotionUtil;
 import javax.annotation.Nullable;
 
 public class ConstructOfSpeedEntity extends AoAMeleeMob {
-    public ConstructOfSpeedEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public ConstructOfSpeedEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
 
         isSlipperyMovement = true;
@@ -24,7 +25,7 @@ public class ConstructOfSpeedEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 2f;
     }
 
@@ -47,8 +48,8 @@ public class ConstructOfSpeedEntity extends AoAMeleeMob {
     }
 
     @Override
-    public boolean addEffect(EffectInstance effect) {
-        if (effect.getEffect() == Effects.MOVEMENT_SPEED)
+    public boolean addEffect(MobEffectInstance effect, @Nullable Entity source) {
+        if (effect.getEffect() == MobEffects.MOVEMENT_SPEED)
             PotionUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 2 - effect.getAmplifier());
 
         return super.addEffect(effect);

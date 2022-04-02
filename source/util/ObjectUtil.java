@@ -3,8 +3,8 @@ package net.tslat.aoa3.util;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.serialization.JsonOps;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTDynamicOps;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.world.item.ItemStack;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
@@ -44,7 +44,7 @@ public final class ObjectUtil {
 		json.addProperty("count", stack.getCount());
 
 		if (stack.hasTag())
-			json.add("nbt", NBTDynamicOps.INSTANCE.convertTo(JsonOps.INSTANCE, stack.getTag()).getAsJsonObject());
+			json.add("nbt", NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, stack.getTag()).getAsJsonObject());
 
 		return json;
 	}

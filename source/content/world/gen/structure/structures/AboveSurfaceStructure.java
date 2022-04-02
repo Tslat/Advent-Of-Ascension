@@ -1,16 +1,17 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.tslat.aoa3.content.world.gen.feature.features.config.IntRangeConfig;
 
 public class AboveSurfaceStructure extends AoAStructureBase<IntRangeConfig> {
-	public AboveSurfaceStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public AboveSurfaceStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(IntRangeConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -31,7 +32,7 @@ public class AboveSurfaceStructure extends AoAStructureBase<IntRangeConfig> {
 				if (y == 0)
 					return;
 
-				final BlockPos.Mutable chunkCenter = new BlockPos.Mutable(x, y + config.getValue(random), z);
+				final BlockPos.MutableBlockPos chunkCenter = new BlockPos.MutableBlockPos(x, y + config.getValue(random), z);
 
 				if (checkAndAdjustGeneration(chunkGenerator, chunkCenter, biome, config))
 					generateStructurePieces(dynamicRegistry, getStructurePieceDepth(), chunkGenerator, templateManager, chunkCenter, getRandom(), false, shouldGenerateOnWorldSurface(), config);
@@ -39,3 +40,4 @@ public class AboveSurfaceStructure extends AoAStructureBase<IntRangeConfig> {
 		};
 	}
 }
+*/

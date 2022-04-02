@@ -1,13 +1,13 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
@@ -31,12 +31,12 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 	public HarvestSpeedBoost(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.HARVEST_SPEED_BOOST.get(), skill, data);
 
-		this.energyDrainPerTick = JSONUtils.getAsFloat(data, "energy_drain_per_tick");
-		this.costReductionPerLevel = JSONUtils.getAsFloat(data, "cost_reduction_per_level", 0);
-		this.speedBoostMod = JSONUtils.getAsFloat(data, "speed_boost", 2);
+		this.energyDrainPerTick = GsonHelper.getAsFloat(data, "energy_drain_per_tick");
+		this.costReductionPerLevel = GsonHelper.getAsFloat(data, "cost_reduction_per_level", 0);
+		this.speedBoostMod = GsonHelper.getAsFloat(data, "speed_boost", 2);
 	}
 
-	public HarvestSpeedBoost(AoASkill.Instance skill, CompoundNBT data) {
+	public HarvestSpeedBoost(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.HARVEST_SPEED_BOOST.get(), skill, data);
 
 		this.energyDrainPerTick = data.getFloat("energy_drain_per_tick");
@@ -45,8 +45,8 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + (costReductionPerLevel != 0 ? ".scaling" : ""),
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + (costReductionPerLevel != 0 ? ".scaling" : ""),
 				NumberUtil.roundToNthDecimalPlace(this.energyDrainPerTick * 20, 2),
 				NumberUtil.roundToNthDecimalPlace(this.costReductionPerLevel * 20, 2)));
 	}
@@ -57,8 +57,8 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			data.putFloat("energy_drain_per_tick", this.energyDrainPerTick);
@@ -72,7 +72,7 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	public void receiveSyncData(CompoundNBT data) {
+	public void receiveSyncData(CompoundTag data) {
 		super.receiveSyncData(data);
 
 		this.active = data.getBoolean("active");
@@ -86,14 +86,14 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public KeyBinding getKeybind() {
+	public KeyMapping getKeybind() {
 		return AoAKeybinds.ABILITY_ACTION;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public boolean shouldSendKeyPress() {
-		PlayerEntity player = Minecraft.getInstance().player;
+		Player player = Minecraft.getInstance().player;
 
 		if (player.isCreative())
 			return false;
@@ -103,7 +103,7 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 
 	@Override
 	public void handleKeyInput() {
-		ServerPlayerEntity player = getPlayer();
+		ServerPlayer player = getPlayer();
 
 		if (active) {
 			active = false;
@@ -125,7 +125,7 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 			return;
 
 		AoAResource.Instance energy = skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get());
-		ServerPlayerEntity player = getPlayer();
+		ServerPlayer player = getPlayer();
 
 		if (!player.isCreative() && !player.isSpectator() && energy.consume(energy.getPerTickRegen() + energyDrainPerTick - costReductionPerLevel * skill.getLevel(true), true)) {
 

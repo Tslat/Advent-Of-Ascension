@@ -1,26 +1,25 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
@@ -28,19 +27,18 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.VoxxulonMeteorEntity;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.*;
-import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
 public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public VoxxulonEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public VoxxulonEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.8125f;
 	}
 
@@ -81,10 +79,10 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 			teleportTo(getTarget().getX(), getTarget().getY(), getTarget().getZ());
 
 		if (random.nextInt(200) == 0)
-			EntityUtil.applyPotions(level.getEntitiesOfClass(PlayerEntity.class, getBoundingBox().inflate(40), PlayerUtil::shouldPlayerBeAffected), new EffectBuilder(Effects.POISON, 100).level(5));
+			EntityUtil.applyPotions(level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(40), PlayerUtil::shouldPlayerBeAffected), new EffectBuilder(MobEffects.POISON, 100).level(5));
 
 		if (random.nextInt(10) == 0) {
-			PlayerEntity pl = level.getNearestPlayer(getX(), getY(), getZ(), 30, false);
+			Player pl = level.getNearestPlayer(getX(), getY(), getZ(), 30, false);
 
 			if (pl != null && !pl.isCreative())
 				level.addFreshEntity(new VoxxulonMeteorEntity(this, pl, BaseMobProjectile.Type.MAGIC));
@@ -103,10 +101,10 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.VOXXULON.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.VOXXULON.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 		}
 	}
 
@@ -131,7 +129,7 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -139,14 +137,14 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.VOXXULON_MUSIC.getId()));
@@ -154,10 +152,11 @@ public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.VOXXULON_MUSIC.getId()));
 		bossInfo.removePlayer(player);
 	}
 }
+*/

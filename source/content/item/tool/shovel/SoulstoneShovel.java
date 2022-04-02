@@ -1,22 +1,22 @@
 package net.tslat.aoa3.content.item.tool.shovel;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.GrassBlock;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GrassBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.ToolType;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.BlockUtil;
@@ -28,7 +28,7 @@ import java.util.List;
 
 public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 	public SoulstoneShovel() {
-		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null));
+		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_SHOVEL));
 	}
 
 	@Override
@@ -36,19 +36,19 @@ public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 		BlockState harvestedBlock = getHarvestedBlock(lootContext);
 		Block block = harvestedBlock.getBlock();
 
-		if (block == Blocks.AIR || existingLoot.isEmpty() || !harvestedBlock.isToolEffective(ToolType.SHOVEL) || !lootContext.hasParam(LootParameters.THIS_ENTITY))
+		if (block == Blocks.AIR || existingLoot.isEmpty() || getDestroySpeed(getToolStack(lootContext), harvestedBlock) <= 1 || !lootContext.hasParam(LootContextParams.THIS_ENTITY))
 			return;
 
-		if (!BlockUtil.isBlockTaggedAs(block, Tags.Blocks.DIRT, Tags.Blocks.SAND, Tags.Blocks.GRAVEL, AoATags.Blocks.GRASS) && !(block instanceof GrassBlock))
+		if (!BlockUtil.isBlockTaggedAs(block, BlockTags.DIRT, Tags.Blocks.SAND, Tags.Blocks.GRAVEL, AoATags.Blocks.GRASS) && !(block instanceof GrassBlock))
 			return;
 
-		Entity harvestingPlayer = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);
+		Entity harvestingPlayer = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
 
-		if (!(harvestingPlayer instanceof ServerPlayerEntity))
+		if (!(harvestingPlayer instanceof ServerPlayer))
 			return;
 
-		ServerWorld world = lootContext.getLevel();
-		BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootParameters.ORIGIN));
+		ServerLevel world = lootContext.getLevel();
+		BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootContextParams.ORIGIN));
 		ItemStack blockDrop = ItemStack.EMPTY;
 		Item blockItem = byBlock(block);
 
@@ -63,7 +63,7 @@ public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 		if (blockDrop == ItemStack.EMPTY)
 			blockDrop = existingLoot.get(0);
 
-		/*if (blockDrop != ItemStack.EMPTY && PlayerUtil.consumeResource((ServerPlayerEntity)harvestingPlayer, AoAResource.SOUL, 1, false)) {
+		/*if (blockDrop != ItemStack.EMPTY && PlayerUtil.consumeResource((ServerPlayer)harvestingPlayer, AoAResource.SOUL, 1, false)) {
 			blockDrop.setCount(blockDrop.getCount() * 2);
 
 			for (int i = 0; i < 5; i++) {
@@ -73,7 +73,7 @@ public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoAGameRules;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -18,21 +18,21 @@ import net.tslat.aoa3.util.WorldUtil;
 public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile {
 	LivingEntity shooter;
 
-	public WaterBalloonBombEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public WaterBalloonBombEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public WaterBalloonBombEntity(World world) {
-		super(AoAEntities.Projectiles.WATER_BALLOON_BOMB.get(), world);
+	public WaterBalloonBombEntity(Level world) {
+		super(AoAProjectiles.WATER_BALLOON_BOMB.get(), world);
 	}
 
-	public WaterBalloonBombEntity(LivingEntity shooter, BaseGun gun, Hand hand, int maxAge, int piercingValue) {
-		super(AoAEntities.Projectiles.WATER_BALLOON_BOMB.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
+	public WaterBalloonBombEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
+		super(AoAProjectiles.WATER_BALLOON_BOMB.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
 		this.shooter = shooter;
 	}
 
-	public WaterBalloonBombEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.WATER_BALLOON_BOMB.get(), world, x, y, z);
+	public WaterBalloonBombEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.WATER_BALLOON_BOMB.get(), world, x, y, z);
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile
 		WorldUtil.createExplosion(shooter, level, this, 1.5f);
 
 		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition()) && !level.dimensionType().ultraWarm()) {
-			if (!WorldUtil.canPlaceBlock(level, blockPosition(), shooter instanceof PlayerEntity ? shooter : null, null))
+			if (!WorldUtil.canPlaceBlock(level, blockPosition(), shooter instanceof Player ? shooter : null, null))
 				return;
 
 			int i = 1;

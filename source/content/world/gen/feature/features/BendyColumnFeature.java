@@ -1,9 +1,10 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.blockstateprovider.BlockStateProvider;
 import net.minecraft.world.gen.feature.Feature;
@@ -17,9 +18,9 @@ public class BendyColumnFeature extends Feature<MiscStateAndVariablesConfig> {
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, MiscStateAndVariablesConfig config) {
+	public boolean place(WorldGenLevel reader, ChunkGenerator generator, Random rand, BlockPos pos, MiscStateAndVariablesConfig config) {
 		boolean placed = false;
-		BlockPos.Mutable placementPos = new BlockPos.Mutable(pos.getX(), pos.getY(), pos.getZ());
+		BlockPos.MutableBlockPos placementPos = new BlockPos.MutableBlockPos(pos.getX(), pos.getY(), pos.getZ());
 		BlockStateProvider blockProvider = config.stateProvider;
 		int height = config.count.getValue(rand);
 		int count = 0;
@@ -54,3 +55,4 @@ public class BendyColumnFeature extends Feature<MiscStateAndVariablesConfig> {
 		return placed;
 	}
 }
+*/

@@ -1,7 +1,7 @@
 package net.tslat.aoa3.leaderboard.task;
 
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.leaderboard.LeaderboardTask;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
@@ -25,7 +25,7 @@ public class InitializeLeaderboardTask extends LeaderboardTask {
 			if (AoAConfig.SERVER.dontCacheDatabase.get())
 				runStatement(connection, "SET TABLE Totals TYPE TEXT");
 
-			for (AoASkill skill : AoASkills.getRegistry().getValues()) {
+			for (AoASkill skill : AoARegistries.AOA_SKILLS.getAllRegisteredObjects()) {
 				String tableName = idToTableName(skill.getRegistryName());
 
 				runStatement(connection, "CREATE TABLE IF NOT EXISTS " + tableName + " (Uuid UUID, Username VARCHCHAR(16), Level SMALLINT, LastUpdate DATE)");

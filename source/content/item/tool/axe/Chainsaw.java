@@ -1,25 +1,25 @@
 package net.tslat.aoa3.content.item.tool.axe;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.tslat.aoa3.content.block.generation.log.LogBlock;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.content.block.generation.log.LogBlock;
 import net.tslat.aoa3.util.ItemUtil;
 
 public class Chainsaw extends AxeItem {
 	public Chainsaw() {
-		super(ItemUtil.customItemTier(2500, 18.0f, 4.0f, 2, 0, null), 4.0f, -2F, new Properties().durability(2500).tab(AoAItemGroups.TOOLS));
+		super(ItemUtil.customItemTier(2500, 18.0f, 4.0f, 2, 0, null, BlockTags.MINEABLE_WITH_AXE), 4.0f, -2F, new Properties().durability(2500).tab(AoAItemGroups.TOOLS));
 	}
 
 	@Override
@@ -28,14 +28,14 @@ public class Chainsaw extends AxeItem {
 	}
 
 	@Override
-	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, PlayerEntity player) {
+	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
 		if (!player.level.isClientSide) {
-			player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
-			Block block = player.level.getBlockState(pos).getBlock();
+			BlockState state = player.level.getBlockState(pos);
 
-			if (block instanceof LogBlock || block.is(BlockTags.LOGS))
-				player.addEffect(new EffectInstance(Effects.DIG_SPEED, 10, 30, true, false));
+			if (state.getBlock() instanceof LogBlock || state.is(BlockTags.LOGS))
+				player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 10, 30, true, false));
 		}
 
 		return false;
@@ -44,8 +44,8 @@ public class Chainsaw extends AxeItem {
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (!attacker.level.isClientSide) {
-			attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
-			ItemUtil.damageItem(stack, attacker, 1, EquipmentSlotType.MAINHAND);
+			attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+			ItemUtil.damageItem(stack, attacker, 1, EquipmentSlot.MAINHAND);
 		}
 
 		return true;
@@ -57,7 +57,7 @@ public class Chainsaw extends AxeItem {
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.NONE;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.NONE;
 	}
 }

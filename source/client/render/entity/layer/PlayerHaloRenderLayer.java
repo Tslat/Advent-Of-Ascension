@@ -1,20 +1,21 @@
+/*
 package net.tslat.aoa3.client.render.entity.layer;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderState;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormat;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.misc.PlayerHaloModel;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.AoAHaloUtil;
@@ -31,7 +32,7 @@ public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEnt
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IRenderTypeBuffer buffer, int packedLightIn, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void render(PoseStack matrix, MultiBufferSource buffer, int packedLightIn, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (player.isCapeLoaded() && !player.isInvisible() && AoAConfig.CLIENT.showPlayerHalos.get()) {
 			AoAHaloUtil.Type chosenHalo = AoAHaloUtil.getHalo(player.getUUID());
 			float red = 0;
@@ -97,6 +98,7 @@ public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEnt
 			RenderSystem.disableFog();
 		});
 
-		return RenderType.create("halo", DefaultVertexFormats.NEW_ENTITY, 7, 256, false, true, RenderType.State.builder().setTextureState(renderState).setTransparencyState(transparencyState).setWriteMaskState(new RenderState.WriteMaskState(true, false)).setDepthTestState(new RenderState.DepthTestState("==", 515)).setDiffuseLightingState(new RenderState.DiffuseLightingState(true)).setFogState(fogState).createCompositeState(false));
+		return RenderType.create("halo", DefaultVertexFormat.NEW_ENTITY, 7, 256, false, true, RenderType.State.builder().setTextureState(renderState).setTransparencyState(transparencyState).setWriteMaskState(new RenderState.WriteMaskState(true, false)).setDepthTestState(new RenderState.DepthTestState("==", 515)).setDiffuseLightingState(new RenderState.DiffuseLightingState(true)).setFogState(fogState).createCompositeState(false));
 	}
 }
+*/

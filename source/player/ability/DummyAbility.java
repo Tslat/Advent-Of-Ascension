@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
@@ -13,18 +13,18 @@ import net.tslat.aoa3.player.skill.AoASkill;
 public class DummyAbility extends AoAAbility.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.LEVEL_CHANGE};
 
-	private final TranslationTextComponent displayName;
+	private final TranslatableComponent displayName;
 
 	public DummyAbility(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.DUMMY_ABILITY.get(), skill, data);
 
-		this.displayName = new TranslationTextComponent(JSONUtils.getAsString(data, "display_name", ""));
+		this.displayName = new TranslatableComponent(GsonHelper.getAsString(data, "display_name", ""));
 	}
 
-	public DummyAbility(AoASkill.Instance skill, CompoundNBT data) {
+	public DummyAbility(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.DUMMY_ABILITY.get(), skill, data);
 
-		this.displayName = new TranslationTextComponent(data.getString("display_name"));
+		this.displayName = new TranslatableComponent(data.getString("display_name"));
 	}
 
 	@Override
@@ -39,13 +39,13 @@ public class DummyAbility extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslationTextComponent getName() {
+	public TranslatableComponent getName() {
 		return displayName;
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
 			data.putString("display_name", this.displayName.getKey());

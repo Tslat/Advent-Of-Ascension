@@ -1,8 +1,7 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.tslat.aoa3.command.WikiCommand;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -14,16 +13,16 @@ public class WikiSearchPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeUtf(searchString);
 	}
 
-	public static WikiSearchPacket decode(PacketBuffer buffer) {
+	public static WikiSearchPacket decode(FriendlyByteBuf buffer) {
 		return new WikiSearchPacket(buffer.readUtf(32767));
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		WikiCommand.handleSearchRequest(searchString);
+		//WikiCommand.handleSearchRequest(searchString);
 
 		context.get().setPacketHandled(true);
 	}

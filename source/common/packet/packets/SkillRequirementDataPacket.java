@@ -1,9 +1,9 @@
 package net.tslat.aoa3.common.packet.packets;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class SkillRequirementDataPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeVarInt(requirementData.size());
 
 		for (Map.Entry<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> entry : requirementData.entrySet()) {
@@ -43,7 +43,7 @@ public class SkillRequirementDataPacket implements AoAPacket {
 		}
 	}
 
-	public static SkillRequirementDataPacket decode(PacketBuffer buffer) {
+	public static SkillRequirementDataPacket decode(FriendlyByteBuf buffer) {
 		int size = buffer.readVarInt();
 		Map<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> data = new HashMap<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>>(size);
 

@@ -1,9 +1,9 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -17,18 +17,18 @@ public class FlatXpBoost extends AoAAbility.Instance {
 	public FlatXpBoost(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.FLAT_XP_BOOST.get(), skill, data);
 
-		this.modifier = JSONUtils.getAsFloat(data, "modifier");
+		this.modifier = GsonHelper.getAsFloat(data, "modifier");
 	}
 
-	public FlatXpBoost(AoASkill.Instance skill, CompoundNBT data) {
+	public FlatXpBoost(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.FLAT_XP_BOOST.get(), skill, data);
 
 		this.modifier = data.getFloat("modifier");
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(),
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(),
 				skill.getName(),
 				NumberUtil.roundToNthDecimalPlace(modifier - 1f, 2)));
 	}
@@ -44,8 +44,8 @@ public class FlatXpBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
 			data.putFloat("modifier", this.modifier);

@@ -1,18 +1,10 @@
 package net.tslat.aoa3.common.misc;
 
-import net.minecraft.block.ComposterBlock;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.attributes.RangedAttribute;
-import net.minecraft.item.*;
-import net.minecraftforge.common.ToolType;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.advent.Logging;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
-import org.apache.logging.log4j.Level;
-
-import java.util.HashMap;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 
 public class NativePatching {
 	public static void doEarlyPatches() {
@@ -21,49 +13,7 @@ public class NativePatching {
 	}
 
 	public static void postInit() {
-		scrapeItemRegistries();
 		patchInComposterBlocks();
-	}
-
-	private static void scrapeItemRegistries() {
-		ToolType toolTypeSword = ToolType.get("sword");
-		ToolType toolTypeShears = ToolType.get("shears");
-
-		for (Item item : ForgeRegistries.ITEMS) {
-			try {
-				if (item instanceof SwordItem) {
-					HashMap<ToolType, Integer> toolTypes = ObfuscationReflectionHelper.getPrivateValue(Item.class, item, "toolClasses");
-					ItemStack stack = new ItemStack(item);
-					int highestTier = 0;
-
-					for (ToolType type : item.getToolTypes(stack)) {
-						highestTier = Math.max(highestTier, item.getHarvestLevel(stack, type, null, null));
-					}
-
-					if (!toolTypes.containsKey(toolTypeSword)) {
-						toolTypes.put(toolTypeSword, highestTier);
-						Logging.logMessage(Level.DEBUG, "Patched in sword tooltype for: " + item.getRegistryName().toString());
-					}
-				}
-				else if (item instanceof ShearsItem) {
-					HashMap<ToolType, Integer> toolTypes = ObfuscationReflectionHelper.getPrivateValue(Item.class, item, "toolClasses");
-					ItemStack stack = new ItemStack(item);
-					int highestTier = 0;
-
-					for (ToolType type : item.getToolTypes(stack)) {
-						highestTier = Math.max(highestTier, item.getHarvestLevel(stack, type, null, null));
-					}
-
-					if (!toolTypes.containsKey(toolTypeShears)) {
-						toolTypes.put(toolTypeShears, highestTier);
-						Logging.logMessage(Level.DEBUG, "Patched in shears tooltype for: " + item.getRegistryName().toString());
-					}
-				}
-			}
-			catch (Exception ex) {
-				Logging.logMessage(Level.ERROR, "Error while patching in tooltypes to a registered item, skipping this one.", ex);
-			}
-		}
 	}
 
 	private static void patchInComposterBlocks() {

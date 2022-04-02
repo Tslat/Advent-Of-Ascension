@@ -1,29 +1,29 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 
-public class TidalWaveEntity extends ThrowableEntity {
-	public TidalWaveEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+public class TidalWaveEntity extends ThrowableProjectile {
+	public TidalWaveEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public TidalWaveEntity(World world) {
-		super(AoAEntities.Projectiles.TIDAL_WAVE.get(), world);
+	public TidalWaveEntity(Level world) {
+		super(AoAProjectiles.TIDAL_WAVE.get(), world);
 	}
 
-	public TidalWaveEntity(World world, LivingEntity shooter, double xOffset, double zOffset) {
-		super(AoAEntities.Projectiles.TIDAL_WAVE.get(), shooter, world);
+	public TidalWaveEntity(Level world, LivingEntity shooter, double xOffset, double zOffset) {
+		super(AoAProjectiles.TIDAL_WAVE.get(), shooter, world);
 
-		shootFromRotation(shooter, shooter.xRot, shooter.yRot, 0, 1.5f, 0.05f);
+		shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0, 1.5f, 0.05f);
 		setPos(getX() + xOffset, getY(), getZ() + zOffset);
 	}
 
@@ -38,7 +38,7 @@ public class TidalWaveEntity extends ThrowableEntity {
 	@Override
 	public void tick() {
 		if (tickCount > 20) {
-			remove();
+			discard();
 
 			return;
 		}
@@ -47,16 +47,16 @@ public class TidalWaveEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
+	protected void onHit(HitResult result) {
 		if (!level.isClientSide) {
-			if (result.getType() == RayTraceResult.Type.BLOCK) {
-				remove();
+			if (result.getType() == HitResult.Type.BLOCK) {
+				discard();
 			}
-			else if (result.getType() == RayTraceResult.Type.ENTITY) {
-				EntityRayTraceResult rayTraceResult = (EntityRayTraceResult)result;
+			else if (result.getType() == HitResult.Type.ENTITY) {
+				EntityHitResult rayTraceResult = (EntityHitResult)result;
 
 				if (rayTraceResult.getEntity() != getOwner()) {
-					Vector3d motion = getDeltaMovement();
+					Vec3 motion = getDeltaMovement();
 
 					rayTraceResult.getEntity().push(motion.x() * 0.3, motion.y() * 0.3, motion.z() * 0.3);
 					rayTraceResult.getEntity().hurtMarked = true;
@@ -66,7 +66,7 @@ public class TidalWaveEntity extends ThrowableEntity {
 	}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

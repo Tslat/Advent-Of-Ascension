@@ -1,13 +1,13 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -29,18 +29,18 @@ public class DoubleJump extends AoAAbility.Instance {
 	public DoubleJump(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.DOUBLE_JUMP.get(), skill, data);
 
-		this.energyConsumption = Math.max(0, JSONUtils.getAsFloat(data, "energy_consumption"));
+		this.energyConsumption = Math.max(0, GsonHelper.getAsFloat(data, "energy_consumption"));
 	}
 
-	public DoubleJump(AoASkill.Instance skill, CompoundNBT data) {
+	public DoubleJump(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.DOUBLE_JUMP.get(), skill, data);
 
 		this.energyConsumption = data.getFloat("energy_consumption");
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.energyConsumption, 2)));
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.energyConsumption, 2)));
 	}
 
 	@Override
@@ -50,14 +50,14 @@ public class DoubleJump extends AoAAbility.Instance {
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
-	public KeyBinding getKeybind() {
+	public KeyMapping getKeybind() {
 		return Minecraft.getInstance().options.keyJump;
 	}
 
 	@Override
 	@OnlyIn(Dist.CLIENT)
 	public boolean shouldSendKeyPress() {
-		PlayerEntity player = Minecraft.getInstance().player;
+		Player player = Minecraft.getInstance().player;
 
 		return !player.isOnGround() && !player.isCreative();
 	}
@@ -65,7 +65,7 @@ public class DoubleJump extends AoAAbility.Instance {
 	@Override
 	public void handleKeyInput() {
 		if (canJump) {
-			ServerPlayerEntity player = getPlayer();
+			ServerPlayer player = getPlayer();
 
 			if (player.isOnGround() || player.isCreative())
 				return;
@@ -91,8 +91,8 @@ public class DoubleJump extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT syncData = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag syncData = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
 			syncData.putFloat("energy_consumption", energyConsumption);

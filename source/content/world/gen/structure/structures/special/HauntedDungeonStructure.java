@@ -1,16 +1,17 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.structures.special;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.util.registry.DynamicRegistries;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.biome.MobSpawnSettings;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.GenerationStage;
+import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
@@ -21,7 +22,7 @@ import net.minecraft.world.gen.feature.structure.Structure;
 import net.minecraft.world.gen.feature.structure.VillageConfig;
 import net.minecraft.world.gen.feature.template.Template;
 import net.minecraft.world.gen.feature.template.TemplateManager;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.content.world.gen.structure.JigsawAssembler;
 import net.tslat.aoa3.content.world.gen.structure.structures.AoAStructureBase;
 import net.tslat.aoa3.content.world.gen.structure.structures.AoAStructureStart;
@@ -32,14 +33,14 @@ import java.util.List;
 import java.util.Random;
 
 public class HauntedDungeonStructure extends AoAStructureBase<NoFeatureConfig> {
-	private static final List<MobSpawnInfo.Spawners> DEFAULT_MOBS = Arrays.asList(
-			new MobSpawnInfo.Spawners(EntityType.CAVE_SPIDER, 5, 1, 3),
-			new MobSpawnInfo.Spawners(EntityType.SPIDER, 7, 1, 2),
-			new MobSpawnInfo.Spawners(AoAEntities.Mobs.BANSHEE.get(), 2, 1, 1),
-			new MobSpawnInfo.Spawners(AoAEntities.Mobs.UNDEAD_TROLL.get(), 2, 1, 1),
-			new MobSpawnInfo.Spawners(AoAEntities.Mobs.NIGHTMARE_SPIDER.get(), 2, 1, 1));
+	private static final List<MobSpawnSettings.SpawnerData> DEFAULT_MOBS = Arrays.asList(
+			new MobSpawnSettings.SpawnerData(EntityType.CAVE_SPIDER, 5, 1, 3),
+			new MobSpawnSettings.SpawnerData(EntityType.SPIDER, 7, 1, 2),
+			new MobSpawnSettings.SpawnerData(AoAMobs.BANSHEE.get(), 2, 1, 1),
+			new MobSpawnSettings.SpawnerData(AoAMobs.UNDEAD_TROLL.get(), 2, 1, 1),
+			new MobSpawnSettings.SpawnerData(AoAMobs.NIGHTMARE_SPIDER.get(), 2, 1, 1));
 
-	public HauntedDungeonStructure(GenerationStage.Decoration decorationStage, String templatePoolPath) {
+	public HauntedDungeonStructure(GenerationStep.Decoration decorationStage, String templatePoolPath) {
 		super(NoFeatureConfig.CODEC, decorationStage, templatePoolPath);
 	}
 
@@ -49,7 +50,7 @@ public class HauntedDungeonStructure extends AoAStructureBase<NoFeatureConfig> {
 	}
 
 	@Override
-	public List<MobSpawnInfo.Spawners> getDefaultSpawnList() {
+	public List<MobSpawnSettings.SpawnerData> getDefaultSpawnList() {
 		return DEFAULT_MOBS;
 	}
 
@@ -128,3 +129,4 @@ public class HauntedDungeonStructure extends AoAStructureBase<NoFeatureConfig> {
 		};
 	}
 }
+*/

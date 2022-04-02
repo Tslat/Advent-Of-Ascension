@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.entity.mob.abyss;
 
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.event.GlobalEvents;
@@ -18,14 +18,14 @@ import javax.annotation.Nullable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OcculentEntity extends AoAMeleeMob {
-	public final CopyOnWriteArrayList<Pair<Integer, Vector3d>> clones = new CopyOnWriteArrayList<Pair<Integer, Vector3d>>();
+	public final CopyOnWriteArrayList<Pair<Integer, Vec3>> clones = new CopyOnWriteArrayList<Pair<Integer, Vec3>>();
 
-	public OcculentEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public OcculentEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return sizeIn.height * 0.85f;
 	}
 
@@ -53,7 +53,7 @@ public class OcculentEntity extends AoAMeleeMob {
 			double xPos = random.nextFloat() * 10 - 5;
 			double zPos = random.nextFloat() * 10 - 5;
 
-			clones.add(Pair.of(GlobalEvents.tick + 600, new Vector3d(xPos, 0, zPos)));
+			clones.add(Pair.of(GlobalEvents.tick + 600, new Vec3(xPos, 0, zPos)));
 		}
 	}
 }

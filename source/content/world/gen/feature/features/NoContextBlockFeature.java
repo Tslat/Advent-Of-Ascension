@@ -1,23 +1,20 @@
 package net.tslat.aoa3.content.world.gen.feature.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
-import java.util.Random;
-
-public class NoContextBlockFeature extends Feature<BlockStateFeatureConfig> {
-	public NoContextBlockFeature(Codec<BlockStateFeatureConfig> codec) {
+public class NoContextBlockFeature extends Feature<BlockStatePlacementConfig> {
+	public NoContextBlockFeature(Codec<BlockStatePlacementConfig> codec) {
 		super(codec);
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BlockStateFeatureConfig config) {
-		reader.setBlock(pos, config.state, 2);
+	public boolean place(FeaturePlaceContext<BlockStatePlacementConfig> context) {
+		context.level().setBlock(context.origin(), context.config().block, Block.UPDATE_CLIENTS);
 
-		return false;
+		return true;
 	}
 }

@@ -1,17 +1,17 @@
 package net.tslat.aoa3.content.item.weapon.vulcane;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
@@ -34,8 +34,8 @@ public abstract class BaseVulcane extends Item {
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BOW;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.BOW;
 	}
 
 	public double getDamage() {
@@ -43,36 +43,36 @@ public abstract class BaseVulcane extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack stack = player.getItemInHand(hand);
 
-		if (!(player instanceof ServerPlayerEntity))
-			return ActionResult.fail(stack);
+		if (!(player instanceof ServerPlayer))
+			return InteractionResultHolder.fail(stack);
 
-		AoAResource.Instance rage = PlayerUtil.getResource((ServerPlayerEntity)player, AoAResources.RAGE.get());
+		AoAResource.Instance rage = PlayerUtil.getResource((ServerPlayer)player, AoAResources.RAGE.get());
 
 		if (!rage.hasAmount(50) || player.getLastHurtByMob() == null)
-			return ActionResult.fail(stack);
+			return InteractionResultHolder.fail(stack);
 
 		return activate(rage, stack, hand);
 	}
 
-	public ActionResult<ItemStack> activate(AoAResource.Instance rage, ItemStack vulcane, Hand hand) {
-		PlayerEntity pl = rage.getPlayerDataManager().player();
+	public InteractionResultHolder<ItemStack> activate(AoAResource.Instance rage, ItemStack vulcane, InteractionHand hand) {
+		Player pl = rage.getPlayerDataManager().player();
 
 		if (DamageUtil.dealVulcaneDamage(pl.getLastHurtByMob(), pl, (float)getDamage() * (1 + ((rage.getCurrentValue() - 50) / 100)))) {
 			doAdditionalEffect(pl.getLastHurtByMob(), pl);
-			pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundCategory.PLAYERS, 1.0f, 1.0f);
+			pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 			ItemUtil.damageItem(vulcane, pl, hand);
 			rage.consume(rage.getCurrentValue(), true);
 
-			return ActionResult.success(vulcane);
+			return InteractionResultHolder.success(vulcane);
 		}
 
-		return ActionResult.fail(vulcane);
+		return InteractionResultHolder.fail(vulcane);
 	}
 
-	public void doAdditionalEffect(LivingEntity target, PlayerEntity player) {}
+	public void doAdditionalEffect(LivingEntity target, Player player) {}
 
 	@Override
 	public int getEnchantmentValue() {
@@ -80,7 +80,7 @@ public abstract class BaseVulcane extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.true", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, LocaleUtil.numToComponent(baseDmg)));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.vulcane.use", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.vulcane.target", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));

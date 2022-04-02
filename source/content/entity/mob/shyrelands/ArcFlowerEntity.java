@@ -1,40 +1,40 @@
 package net.tslat.aoa3.content.entity.mob.shyrelands;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
 public class ArcFlowerEntity extends AoAMeleeMob {
-    public ArcFlowerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+    public ArcFlowerEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
     }
 
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new MeleeAttackGoal(this, 1, false));
-        goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1));
+        goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
-        targetSelector.addGoal(2, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true));
+        targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 0.05f;
     }
 
@@ -51,12 +51,12 @@ public class ArcFlowerEntity extends AoAMeleeMob {
     public void aiStep() {
         super.aiStep();
 
-        PlayerEntity nearestPlayer = level.getNearestPlayer(this, 64);
+        Player nearestPlayer = level.getNearestPlayer(this, 64);
 
         if (nearestPlayer == null)
             return;
 
-        if (nearestPlayer.canSee(this))
+        if (nearestPlayer.hasLineOfSight(this))
             setDeltaMovement(0, getDeltaMovement().y(), 0);
     }
 
@@ -76,11 +76,11 @@ public class ArcFlowerEntity extends AoAMeleeMob {
         super.die(cause);
 
         if (!level.isClientSide) {
-            ArcwormEntity arcworm = new ArcwormEntity(AoAEntities.Mobs.ARCWORM.get(), level);
+            ArcwormEntity arcworm = new ArcwormEntity(AoAMobs.ARCWORM.get(), level);
 
-            arcworm.moveTo(getX(), getY(), getZ(), yRot, xRot);
+            arcworm.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
             level.addFreshEntity(arcworm);
-            remove();
+            discard();
         }
     }
 }

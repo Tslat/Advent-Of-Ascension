@@ -6,19 +6,18 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.RecipeManager;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.container.DivineStationContainer;
-import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.recipe.*;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.jei.ingredient.subtype.TrophySubtypeInterpreter;
 import net.tslat.aoa3.integration.jei.recipe.framebench.FrameBenchRecipeCategory;
@@ -33,15 +32,11 @@ import net.tslat.aoa3.integration.jei.recipe.upgradekit.UpgradeKitRecipeTransfer
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.whitewashing.WhitewashingRecipeTransferInfo;
 import net.tslat.aoa3.integration.tinkersconstruct.TinkersFluids;
-import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
-import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
-import net.tslat.aoa3.content.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.util.FluidUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 
 @JeiPlugin
@@ -117,8 +112,8 @@ public class JEIIntegration implements IModPlugin {
 		registration.registerSubtypeInterpreter(AoABlocks.ORNATE_TROPHY.get().asItem(), TrophySubtypeInterpreter.INSTANCE);
 	}
 
-	private Collection<IRecipe<DivineStationContainer.DivineStationInventory>> compileUpgradeKitRecipes(RecipeManager recipeManager) {
-		return recipeManager.byType(AoARecipes.UPGRADE_KIT.getA()).values();
+	private List<UpgradeKitRecipe> compileUpgradeKitRecipes(RecipeManager recipeManager) {
+		return recipeManager.getAllRecipesFor(AoARecipes.UPGRADE_KIT.getA());
 	}
 
 	private ArrayList<WhitewashingRecipe> compileWhitewashingRecipes(RecipeManager recipeManager) {
@@ -130,8 +125,8 @@ public class JEIIntegration implements IModPlugin {
 		return whitewashingRecipes;
 	}
 
-	private ArrayList<IRecipe<Inventory>> compileFrameBenchRecipes(RecipeManager recipeManager) {
-		ArrayList<IRecipe<Inventory>> frameRecipes = new ArrayList<IRecipe<Inventory>>(10);
+	private ArrayList<Recipe<Inventory>> compileFrameBenchRecipes(RecipeManager recipeManager) {
+		ArrayList<Recipe<Inventory>> frameRecipes = new ArrayList<Recipe<Inventory>>(10);
 
 		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_crossbow"), AoAItems.CROSSBOW_FRAME.get()));
 		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_blaster"), AoAItems.BLASTER_FRAME.get()));
@@ -150,11 +145,9 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
-			if (recipe instanceof InfusionRecipe) {
-				if (((InfusionRecipe)recipe).isEnchanting())
-					imbuingRecipes.add((InfusionRecipe)recipe);
-			}
+		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.getA())) {
+			if (recipe.isEnchanting())
+				imbuingRecipes.add(recipe);
 		}
 
 		return imbuingRecipes;
@@ -163,11 +156,9 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<InfusionRecipe>();
 
-		for (IRecipe<InfusionTableContainer.InfusionInventory> recipe : recipeManager.byType(AoARecipes.INFUSION.getA()).values()) {
-			if (recipe instanceof InfusionRecipe) {
-				if (!((InfusionRecipe)recipe).isEnchanting())
-					infusionRecipes.add((InfusionRecipe)recipe);
-			}
+		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.getA())) {
+			if (!recipe.isEnchanting())
+				infusionRecipes.add(recipe);
 		}
 
 		return infusionRecipes;

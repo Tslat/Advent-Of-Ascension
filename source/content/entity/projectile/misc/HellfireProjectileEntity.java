@@ -1,28 +1,28 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.thrown.HellfireEntity;
 
-public class HellfireProjectileEntity extends ThrowableEntity {
-	public HellfireProjectileEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+public class HellfireProjectileEntity extends ThrowableProjectile {
+	public HellfireProjectileEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public HellfireProjectileEntity(World world) {
-		super(AoAEntities.Projectiles.HELLFIRE_TAIL.get(), world);
+	public HellfireProjectileEntity(Level world) {
+		super(AoAProjectiles.HELLFIRE_TAIL.get(), world);
 	}
 
 	public HellfireProjectileEntity(HellfireEntity source, double targetPosX, double targetPosY, double targetPosZ) {
-		super(AoAEntities.Projectiles.HELLFIRE_TAIL.get(), source.getX(), source.getY(), source.getZ(), source.level);
+		super(AoAProjectiles.HELLFIRE_TAIL.get(), source.getX(), source.getY(), source.getZ(), source.level);
 
-		Vector3d motion = new Vector3d(targetPosX - source.getX(), targetPosY - source.getY(), targetPosZ - source.getZ());
+		Vec3 motion = new Vec3(targetPosX - source.getX(), targetPosY - source.getY(), targetPosZ - source.getZ());
 
 		setDeltaMovement(motion);
 		shoot(motion.x(), motion.y() + 0.5, motion.z(), 1.5f, 1.0f);
@@ -37,16 +37,16 @@ public class HellfireProjectileEntity extends ThrowableEntity {
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
+	protected void onHit(HitResult result) {
 		if (!level.isClientSide)
-			remove();
+			discard();
 	}
 
 	@Override
 	protected void defineSynchedData() {}
 
 	@Override
-	public IPacket<?> getAddEntityPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

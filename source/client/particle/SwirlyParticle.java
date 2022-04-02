@@ -1,15 +1,15 @@
 package net.tslat.aoa3.client.particle;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 import javax.annotation.Nullable;
 
-public class SwirlyParticle extends SpriteTexturedParticle {
-	private final IAnimatedSprite sprite;
+public class SwirlyParticle extends TextureSheetParticle {
+	private final SpriteSet sprite;
 
-	public SwirlyParticle(ClientWorld world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, IAnimatedSprite sprite, float scale, float ageModifier, float red, float green, float blue, float alpha) {
+	public SwirlyParticle(ClientLevel world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, SpriteSet sprite, float scale, float ageModifier, float red, float green, float blue, float alpha) {
 		super(world, posX, posY, posZ, velocityX, velocityY, velocityZ);
 
 		this.sprite = sprite;
@@ -30,8 +30,8 @@ public class SwirlyParticle extends SpriteTexturedParticle {
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() {
-		return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
 	}
 
 	@Override
@@ -57,16 +57,16 @@ public class SwirlyParticle extends SpriteTexturedParticle {
 			remove();
 	}
 
-	public static class Factory implements IParticleFactory<CustomisableParticleType.Data> {
-		private final IAnimatedSprite sprite;
+	public static class Factory implements ParticleProvider<CustomisableParticleType.Data> {
+		private final SpriteSet sprite;
 
-		public Factory(IAnimatedSprite sprite) {
+		public Factory(SpriteSet sprite) {
 			this.sprite = sprite;
 		}
 
 		@Nullable
 		@Override
-		public Particle createParticle(CustomisableParticleType.Data data, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(CustomisableParticleType.Data data, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			return new SwirlyParticle(world, x, y, z, velocityX, velocityY, velocityZ, sprite, data.scale, data.ageModifier, data.red, data.green, data.blue, data.alpha);
 		}
 	}

@@ -1,10 +1,10 @@
 package net.tslat.aoa3.library.builder;
 
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public class EffectBuilder {
-	private final Effect effect;
+	private final MobEffect effect;
 	private final int duration;
 
 	private int level = 1;
@@ -12,11 +12,11 @@ public class EffectBuilder {
 	private boolean showParticles = true;
 	private boolean showIcon = true;
 
-	public EffectBuilder(Effect effect) {
+	public EffectBuilder(MobEffect effect) {
 		this(effect, -1);
 	}
 
-	public EffectBuilder(Effect effect, int duration) {
+	public EffectBuilder(MobEffect effect, int duration) {
 		this.effect = effect;
 		this.duration = duration;
 	}
@@ -45,11 +45,11 @@ public class EffectBuilder {
 		return this;
 	}
 
-	public Effect getEffect() {
+	public MobEffect getEffect() {
 		return this.effect;
 	}
 
-	public EffectInstance build() {
-		return new EffectInstance(effect, duration, level - 1, ambient, showParticles, showIcon);
+	public MobEffectInstance build() {
+		return new MobEffectInstance(effect, duration, level - 1, ambient, showParticles, showIcon);
 	}
 }

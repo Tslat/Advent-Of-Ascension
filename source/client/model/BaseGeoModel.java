@@ -1,14 +1,14 @@
 package net.tslat.aoa3.client.model;
 
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public abstract class BaseGeoModel<T extends IAnimatable> extends AnimatedGeoModel<T> {
-	private final ResourceLocation model;
+	private ResourceLocation model;
 	private final ResourceLocation texture;
-	private final ResourceLocation animations;
+	private ResourceLocation animations;
 
 	public BaseGeoModel(String assetSubpath) {
 		this.model = AdventOfAscension.id("geo/" + subtype() + "/" + assetSubpath + ".geo.json");
@@ -16,16 +16,16 @@ public abstract class BaseGeoModel<T extends IAnimatable> extends AnimatedGeoMod
 		this.animations = AdventOfAscension.id("animations/" + subtype() + "/" + assetSubpath + ".animation.json");
 	}
 
-	public BaseGeoModel(String modelSubpath, String textureSubpath) {
-		this.model = AdventOfAscension.id("geo/" + subtype() + "/" + modelSubpath + ".geo.json");
-		this.texture = AdventOfAscension.id("textures/" + subtype() + "/" + textureSubpath + ".png");
-		this.animations = AdventOfAscension.id("animations/" + subtype() + "/" + modelSubpath + ".animation.json");
+	public BaseGeoModel<T> withModel(String modelPath) {
+		this.model = AdventOfAscension.id("geo/" + subtype() + "/" + modelPath + ".geo.json");
+
+		return this;
 	}
 
-	public BaseGeoModel(String modelSubpath, String textureSubpath, String animationSubpath) {
-		this.model = AdventOfAscension.id("geo/" + subtype() + "/" + modelSubpath + ".geo.json");
-		this.texture = AdventOfAscension.id("textures/" + subtype() + "/" + textureSubpath + ".png");
-		this.animations = AdventOfAscension.id("animations/" + subtype() + "/" + animationSubpath + ".animation.json");
+	public BaseGeoModel<T> withAnimations(String modelPath) {
+		this.animations = AdventOfAscension.id("animations/" + subtype() + "/" + modelPath + ".animation.json");
+
+		return this;
 	}
 
 	protected abstract String subtype();

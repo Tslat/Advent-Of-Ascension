@@ -1,9 +1,9 @@
 package net.tslat.aoa3.event.custom.events;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.item.ItemStack;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.CraftingContainer;
+import net.minecraft.world.inventory.ResultContainer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.Cancelable;
 
@@ -13,10 +13,10 @@ import javax.annotation.Nonnull;
 public class ItemCraftingEvent extends PlayerEvent {
 	@Nonnull
 	private final ItemStack outputStack;
-	private final CraftingInventory craftMatrix;
-	private final CraftResultInventory outputInventory;
+	private final CraftingContainer craftMatrix;
+	private final ResultContainer outputInventory;
 
-	public ItemCraftingEvent(PlayerEntity player, @Nonnull ItemStack crafting, CraftingInventory craftingInventory, CraftResultInventory outputInventory) {
+	public ItemCraftingEvent(Player player, @Nonnull ItemStack crafting, CraftingContainer craftingInventory, ResultContainer outputInventory) {
 		super(player);
 
 		this.outputStack = crafting;
@@ -34,11 +34,11 @@ public class ItemCraftingEvent extends PlayerEvent {
 		return this.outputStack;
 	}
 
-	public CraftingInventory getCraftMatrix() {
+	public CraftingContainer getCraftMatrix() {
 		return this.craftMatrix;
 	}
 
-	public CraftResultInventory getOutputInventory() {
+	public ResultContainer getOutputInventory() {
 		return this.outputInventory;
 	}
 }

@@ -1,11 +1,11 @@
 package net.tslat.aoa3.library.object;
 
-import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.network.chat.TextComponent;
 
 import java.util.Objects;
 import java.util.function.Supplier;
 
-public class DynamicTextComponent extends StringTextComponent {
+public class DynamicTextComponent extends TextComponent {
 	private final Supplier<String> text;
 
 	public DynamicTextComponent(Supplier<String> text) {
@@ -25,7 +25,7 @@ public class DynamicTextComponent extends StringTextComponent {
 	}
 
 	@Override
-	public StringTextComponent plainCopy() {
+	public TextComponent plainCopy() {
 		return new DynamicTextComponent(this.text);
 	}
 
@@ -34,12 +34,10 @@ public class DynamicTextComponent extends StringTextComponent {
 		if (this == other) {
 			return true;
 		}
-		else if (!(other instanceof DynamicTextComponent)) {
+		else if (!(other instanceof DynamicTextComponent otherComponent)) {
 			return false;
 		}
 		else {
-			DynamicTextComponent otherComponent = (DynamicTextComponent)other;
-
 			return this.getText().equals(otherComponent.getText()) && this.getSiblings().equals(otherComponent.getSiblings()) && Objects.equals(this.getStyle(), otherComponent.getStyle());
 		}
 	}

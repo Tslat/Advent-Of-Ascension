@@ -1,17 +1,17 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.WorldDecoratingHelper;
-import net.minecraft.world.gen.placement.HeightmapBasedPlacement;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.placement.HeightmapPlacement;
 import net.tslat.aoa3.content.world.gen.feature.placement.config.CountDividedRangeConfig;
 
 import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class CountWorldHeightDependentPlacement extends HeightmapBasedPlacement<CountDividedRangeConfig> {
+public class CountWorldHeightDependentPlacement extends HeightmapPlacement<CountDividedRangeConfig> {
 	public CountWorldHeightDependentPlacement(Codec<CountDividedRangeConfig> codec) {
 		super(codec);
 	}
@@ -31,3 +31,4 @@ public class CountWorldHeightDependentPlacement extends HeightmapBasedPlacement<
 		return IntStream.range(0, amount).mapToObj(count -> pos);
 	}
 }
+*/

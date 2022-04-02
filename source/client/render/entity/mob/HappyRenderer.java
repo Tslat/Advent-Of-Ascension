@@ -1,30 +1,30 @@
+/*
 package net.tslat.aoa3.client.render.entity.mob;
 
-import net.minecraft.client.renderer.entity.BipedRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.entity.layers.HeldItemLayer;
-import net.minecraft.client.renderer.entity.model.AbstractZombieModel;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.util.ResourceLocation;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.client.model.AbstractZombieModel;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.HumanoidMobRenderer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.monster.Monster;
 
-public class HappyRenderer extends BipedRenderer<MonsterEntity, BipedModel<MonsterEntity>> {
+
+public class HappyRenderer extends HumanoidMobRenderer<Monster, HumanoidModel<Monster>> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/celeve/happy.png");
 
-	public HappyRenderer(EntityRendererManager renderManager) {
-		super(renderManager, new AbstractZombieModel<MonsterEntity>(0, 0, 64, 64) {
+	public HappyRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new AbstractZombieModel<Monster>(0, 0, 64, 64) {
 			@Override
-			public boolean isAggressive(MonsterEntity entityIn) {
+			public boolean isAggressive(Monster entityIn) {
 				return false;
 			}
-		}, AoAEntities.Mobs.HAPPY.get().getWidth() / 3f);
+		}, AoAMobs.HAPPY.get().getWidth() / 3f);
 
 		addLayer(new HeldItemLayer<>(this));
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(MonsterEntity entity) {
+	public ResourceLocation getTextureLocation(Monster entity) {
 		return texture;
 	}
-}
+}*/

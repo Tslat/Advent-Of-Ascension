@@ -1,31 +1,22 @@
 package net.tslat.aoa3.content.item.misc.summoning;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.boss.TyrosaurEntity;
-import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,8 +27,8 @@ public class BoneHorn extends Item {
 	}
 
 	@Override
-	public UseAction getUseAnimation(ItemStack stack) {
-		return UseAction.BOW;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.BOW;
 	}
 
 	@Override
@@ -46,7 +37,7 @@ public class BoneHorn extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (world.getDifficulty() != Difficulty.PEACEFUL) {
@@ -54,19 +45,19 @@ public class BoneHorn extends Item {
 			player.startUsingItem(hand);
 			player.getCooldowns().addCooldown(this, 150);
 
-			return ActionResult.success(heldItem);
+			return InteractionResultHolder.success(heldItem);
 		}
-		else if (player instanceof ServerPlayerEntity) {
-			PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail").withStyle(TextFormatting.RED));
+		else if (player instanceof ServerPlayer) {
+			PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
 		}
 
-		return ActionResult.fail(heldItem);
+		return InteractionResultHolder.fail(heldItem);
 	}
 
 	@Override
-	public ItemStack finishUsingItem(ItemStack stack, World world, LivingEntity user) {
+	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
 		if (!world.isClientSide && WorldUtil.isWorld(world, AoADimensions.PRECASIA.key)) {
-			TyrosaurEntity tyrosaur = new TyrosaurEntity(AoAEntities.Mobs.TYROSAUR.get(), world);
+			/*TyrosaurEntity tyrosaur = new TyrosaurEntity(AoAMobs.TYROSAUR.get(), world);
 			BlockPos spawnPos = RandomUtil.getRandomPositionWithinRange(user.blockPosition(), 20, 10, 20, true, world);
 			int tries = 10;
 
@@ -82,14 +73,14 @@ public class BoneHorn extends Item {
 			tyrosaur.setTarget(user);
 			world.addFreshEntity(tyrosaur);
 			ItemUtil.damageItem(stack, user, user.getUsedItemHand());
-			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.TYROSAUR.get().getDescriptionId() + ".spawn", user.getDisplayName()), world, user.blockPosition(), 50);
+			PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.TYROSAUR.get().getDescriptionId() + ".spawn", user.getDisplayName()), world, user.blockPosition(), 50);*/
 		}
 
 		return stack;
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 	}
 }

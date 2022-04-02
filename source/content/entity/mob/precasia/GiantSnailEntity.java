@@ -1,16 +1,17 @@
 package net.tslat.aoa3.content.entity.mob.precasia;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -18,12 +19,12 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import javax.annotation.Nullable;
 
 public class GiantSnailEntity extends AoAMeleeMob {
-	public GiantSnailEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public GiantSnailEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
+	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 1.125f;
 	}
 
@@ -52,7 +53,7 @@ public class GiantSnailEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean addEffect(EffectInstance effect) {
+	public boolean addEffect(MobEffectInstance effect, @Nullable Entity source) {
 		return false;
 	}
 

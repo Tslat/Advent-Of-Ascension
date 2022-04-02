@@ -3,7 +3,12 @@
   "pools": [
     {
       "name": "parent_table",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:loot_table",
@@ -14,7 +19,12 @@
     },
     {
       "name": "loot",
-      "rolls": 1,
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
@@ -37,10 +47,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 4.0,
-                "max": 8.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 8.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:water_rune"
@@ -52,10 +63,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 6.0,
-                "max": 13.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 13.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:orange_coral"
@@ -67,10 +79,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 6.0,
-                "max": 13.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 13.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:pink_coral"
@@ -82,10 +95,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 6.0,
-                "max": 13.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 13.0
+              },
+              "add": false
             }
           ],
           "name": "aoa3:blue_coral"
@@ -97,10 +111,11 @@
             {
               "function": "minecraft:set_count",
               "count": {
+                "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
+                "max": 3.0
+              },
+              "add": false
             }
           ],
           "name": "forge:rawfish",

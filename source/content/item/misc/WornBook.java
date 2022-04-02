@@ -1,31 +1,31 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.WrittenBookItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.ListNBT;
-import net.minecraft.nbt.StringNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Util;
-import net.minecraft.world.World;
+import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.WrittenBookItem;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.data.client.MiscellaneousReloadListener;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class WornBook extends WrittenBookItem {
-	private static final CompoundNBT contents = new CompoundNBT();
+	private static final CompoundTag contents = new CompoundTag();
 
 	public WornBook() {
 		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
@@ -38,14 +38,14 @@ public class WornBook extends WrittenBookItem {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack bookStack = player.getItemInHand(hand);
 
 		if (!world.isClientSide) {
 			if (!ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), false, 1)) {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()));
 				player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.wornBook.droppedRealmstone"), Util.NIL_UUID);
-				PlayerUtil.getAdventPlayer((ServerPlayerEntity)player).addPatchouliBook(AdventOfAscension.id("worn_book"));
+				PlayerUtil.getAdventPlayer((ServerPlayer)player).addPatchouliBook(AdventOfAscension.id("worn_book"));
 			}
 		}
 		else {
@@ -53,11 +53,11 @@ public class WornBook extends WrittenBookItem {
 
 		}
 
-		return ActionResult.success(bookStack);
+		return InteractionResultHolder.success(bookStack);
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	public static CompoundNBT getBookContents() {
+	public static CompoundTag getBookContents() {
 		contents.putString("author", LocaleUtil.getLocaleString("entity.aoa3.corrupted_traveller"));
 		contents.putString("title", LocaleUtil.getLocaleString("item.aoa3.worn_book"));
 
@@ -67,10 +67,10 @@ public class WornBook extends WrittenBookItem {
 			return contents;
 
 		String[] lines = pageContents.split("\n");
-		ListNBT pages = new ListNBT();
+		ListTag pages = new ListTag();
 
 		for (String line : lines) {
-			pages.add(StringNBT.valueOf(line.replaceAll("<br>", "\n")));
+			pages.add(StringTag.valueOf(line.replaceAll("<br>", "\n")));
 		}
 
 		contents.put("pages", pages);

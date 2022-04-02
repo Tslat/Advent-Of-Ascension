@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
 import java.util.UUID;
@@ -15,39 +15,39 @@ import java.util.UUID;
 public class PhantomShotEntity extends BaseEnergyShot {
 	private UUID lastHit = null;
 
-	public PhantomShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public PhantomShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public PhantomShotEntity(World world) {
-		super(AoAEntities.Projectiles.PHANTOM_SHOT.get(), world);
+	public PhantomShotEntity(Level world) {
+		super(AoAProjectiles.PHANTOM_SHOT.get(), world);
 	}
 
 	public PhantomShotEntity(LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(AoAEntities.Projectiles.PHANTOM_SHOT.get(), shooter, weapon, maxAge);
+		super(AoAProjectiles.PHANTOM_SHOT.get(), shooter, weapon, maxAge);
 	}
 
-	public PhantomShotEntity(World world, double x, double y, double z) {
-		super(AoAEntities.Projectiles.PHANTOM_SHOT.get(), world, x, y, z);
+	public PhantomShotEntity(Level world, double x, double y, double z) {
+		super(AoAProjectiles.PHANTOM_SHOT.get(), world, x, y, z);
 	}
 
 	@Override
-	protected void onHit(RayTraceResult result) {
+	protected void onHit(HitResult result) {
 		if (!level.isClientSide) {
 			if (weapon != null) {
-				if (result.getType() == RayTraceResult.Type.BLOCK) {
+				if (result.getType() == HitResult.Type.BLOCK) {
 					Entity shooter = getOwner();
 
 					if (shooter instanceof LivingEntity)
 						weapon.doBlockImpact(this, result.getLocation(), (LivingEntity)shooter);
 
-					remove();
+					discard();
 				}
-				else if (result.getType() == RayTraceResult.Type.ENTITY && !((EntityRayTraceResult)result).getEntity().getUUID().equals(lastHit)) {
+				else if (result.getType() == HitResult.Type.ENTITY && !((EntityHitResult)result).getEntity().getUUID().equals(lastHit)) {
 					Entity shooter = getOwner();
 
 					if (shooter instanceof LivingEntity)
-						weapon.doEntityImpact(this, ((EntityRayTraceResult)result).getEntity(), (LivingEntity)shooter);
+						weapon.doEntityImpact(this, ((EntityHitResult)result).getEntity(), (LivingEntity)shooter);
 				}
 			}
 		}

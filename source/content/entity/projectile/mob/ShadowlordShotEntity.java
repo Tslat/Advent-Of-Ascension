@@ -1,25 +1,26 @@
+/*
 package net.tslat.aoa3.content.entity.projectile.mob;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.projectile.ThrowableEntity;
-import net.minecraft.world.World;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
+import net.minecraft.world.level.Level;
+
 import net.tslat.aoa3.content.entity.boss.ShadowlordEntity;
 
 public class ShadowlordShotEntity extends BaseMobProjectile {
 	public boolean toggle = false;
 	public int counter = 0;
 
-	public ShadowlordShotEntity(EntityType<? extends ThrowableEntity> entityType, World world) {
+	public ShadowlordShotEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
 	
-	public ShadowlordShotEntity(World world) {
-		super(AoAEntities.Projectiles.SHADOWLORD_SHOT.get(), world);
+	public ShadowlordShotEntity(Level world) {
+		super(AoAProjectiles.SHADOWLORD_SHOT.get(), world);
 	}
 
 	public ShadowlordShotEntity(ShadowlordEntity shooter, Type projectileType) {
-		super(AoAEntities.Projectiles.SHADOWLORD_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.SHADOWLORD_SHOT.get(), shooter.level, shooter, projectileType);
 	}
 
 	@Override
@@ -27,3 +28,4 @@ public class ShadowlordShotEntity extends BaseMobProjectile {
 		return 0.075f;
 	}
 }
+*/

@@ -1,7 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.gen.feature.WorldDecoratingHelper;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraft.world.gen.placement.TopSolidRangeConfig;
@@ -22,3 +23,4 @@ public class YFillCeilingPlacement extends Placement<TopSolidRangeConfig> {
 		return IntStream.range(worldHeight - config.bottomOffset - config.topOffset, worldHeight - config.topOffset).mapToObj(y -> new BlockPos(pos.getX(), y, pos.getZ()));
 	}
 }
+*/

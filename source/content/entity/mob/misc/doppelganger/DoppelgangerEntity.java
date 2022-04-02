@@ -5,37 +5,37 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.entity.ai.brain.schedule.Activity;
-import net.minecraft.entity.ai.brain.sensor.Sensor;
-import net.minecraft.entity.ai.brain.sensor.SensorType;
-import net.minecraft.entity.ai.brain.task.*;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ShootableItem;
-import net.minecraft.item.UseAction;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IServerWorld;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.behavior.*;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.sensing.Sensor;
+import net.minecraft.world.entity.ai.sensing.SensorType;
+import net.minecraft.world.entity.monster.CrossbowAttackMob;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.entity.schedule.Activity;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoAArmour;
 import net.tslat.aoa3.common.registration.AoABrainSensors;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.content.entity.brain.SmartBrainHandler;
 import net.tslat.aoa3.content.entity.brain.SmartBrainOwner;
 import net.tslat.aoa3.content.entity.brain.task.*;
@@ -47,18 +47,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner<DoppelgangerEntity>, ICrossbowUser {
+public class DoppelgangerEntity extends Monster implements SmartBrainOwner<DoppelgangerEntity>, CrossbowAttackMob {
 	private static final ImmutableList<SensorType<? extends Sensor<? super DoppelgangerEntity>>> SENSORS = ImmutableList.of(SensorType.NEAREST_PLAYERS, SensorType.HURT_BY, SensorType.NEAREST_LIVING_ENTITIES, AoABrainSensors.INCOMING_PROJECTILES.get());
-	private static final DataParameter<Boolean> LOADING_CROSSBOW = EntityDataManager.defineId(DoppelgangerEntity.class, DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> LOADING_CROSSBOW = SynchedEntityData.defineId(DoppelgangerEntity.class, EntityDataSerializers.BOOLEAN);
 
 	private SmartBrainHandler<DoppelgangerEntity> handler;
 
-	public DoppelgangerEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public DoppelgangerEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
-	public DoppelgangerEntity(World world) {
-		super(AoAEntities.Mobs.DOPPELGANGER.get(), world);
+	public DoppelgangerEntity(Level world) {
+		super(AoAMobs.DOPPELGANGER.get(), world);
 	}
 
 	@Nullable
@@ -78,14 +78,14 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 	}
 
 	@Override
-	public Brain.BrainCodec<?> brainProvider() {
+	public Brain.Provider<?> brainProvider() {
 		return getBrainHandler().getBrainCodec();
 	}
 
 	@Override
 	public Brain<?> makeBrain(Dynamic<?> codecLoader) {
 		if (getBrainHandler() == null)
-			setBrainHandler(new SmartBrainHandler<DoppelgangerEntity>(this));
+			setBrainHandler(new SmartBrainHandler<>(this));
 
 		return getBrainHandler().makeBrain(codecLoader);
 	}
@@ -96,42 +96,42 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 	}
 
 	@Override
-	public Triple<Integer, ImmutableList<? extends Task<? super DoppelgangerEntity>>, MemoryModuleType<?>> getCoreTasks() {
+	public Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>> getCoreTasks() {
 		return Triple.of(0,
 				ImmutableList.of(
-						new LookTask(60, 240),
-						new WalkToTargetTask()),
+						new LookAtTargetSink(60, 240),
+						new MoveToTargetSink()),
 				null);
 	}
 
 	@Override
-	public Triple<Integer, ImmutableList<? extends Task<? super DoppelgangerEntity>>, MemoryModuleType<?>> getIdleTasks() {
+	public Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>> getIdleTasks() {
 		return Triple.of(10,
 				ImmutableList.of(
-						new FirstSuccessfulTask<DoppelgangerEntity>(ImmutableList.of(
-								Pair.of(new RetaliateOrTargetTask<DoppelgangerEntity>(this), 1),
-								Pair.of(new LookAtEntityTask(EntityType.PLAYER, 8), 1),
-								Pair.of(new LookAtEntityTask(8), 1),
-								Pair.of(new DummyTask(30, 60), 1))),
-						new FirstShuffledTask<DoppelgangerEntity>(ImmutableList.of(
-								Pair.of(new WalkRandomlyTask(1f), 1),
-								Pair.of(new DummyTask(30, 60), 1)))),
+						new FirstSuccessfulTask<>(ImmutableList.of(
+								Pair.of(new RetaliateOrTargetTask<>(this), 1),
+								Pair.of(new SetEntityLookTarget(EntityType.PLAYER, 8), 1),
+								Pair.of(new SetEntityLookTarget(8), 1),
+								Pair.of(new DoNothing(30, 60), 1))),
+						new RunOne<>(ImmutableList.of(
+								Pair.of(new RandomStroll(1f), 1),
+								Pair.of(new DoNothing(30, 60), 1)))),
 				null);
 	}
 
 	@Override
-	public Triple<Integer, ImmutableList<? extends Task<? super DoppelgangerEntity>>, MemoryModuleType<?>> getFightTasks() {
+	public Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>> getFightTasks() {
 		return Triple.of(10,
 				ImmutableList.of(
-						new FindNewAttackTargetTask<>(target -> !target.isAlive() || target instanceof PlayerEntity && ((PlayerEntity)target).isCreative()),
+						new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || target instanceof Player && ((Player)target).isCreative()),
 						new CounterTargetWeaponTask(),
-						new AttackTargetTask(6),
-						new MoveToTargetTask(1.3f)),
+						new MeleeAttack(6),
+						new SetWalkTargetFromAttackTargetIfTargetOutOfReach(1.3f)),
 				MemoryModuleType.ATTACK_TARGET);
 	}
 
 	@Override
-	public Map<Activity, Triple<Integer, ImmutableList<? extends Task<? super DoppelgangerEntity>>, MemoryModuleType<?>>> getAdditionalTasks() {
+	public Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>>> getAdditionalTasks() {
 		return ImmutableMap.of(
 				Activity.AVOID,
 				Triple.of(0, ImmutableList.of(
@@ -158,8 +158,8 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 
 	@Nullable
 	@Override
-	public ILivingEntityData finalizeSpawn(IServerWorld pLevel, DifficultyInstance difficulty, SpawnReason pReason, @Nullable ILivingEntityData pSpawnData, @Nullable CompoundNBT pDataTag) {
-		ILivingEntityData data = super.finalizeSpawn(pLevel, difficulty, pReason, pSpawnData, pDataTag);
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance difficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
+		SpawnGroupData data = super.finalizeSpawn(pLevel, difficulty, pReason, pSpawnData, pDataTag);
 
 		populateDefaultEquipmentSlots(difficulty);
 		populateDefaultEquipmentEnchantments(difficulty);
@@ -174,10 +174,10 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 		if (difficulty.getDifficulty() == Difficulty.NORMAL || difficulty.getDifficulty() == Difficulty.HARD)
 			armourSet = AoAArmour.KNIGHT_ARMOUR;
 
-		setItemSlot(EquipmentSlotType.HEAD, new ItemStack(armourSet.helmet.get()));
-		setItemSlot(EquipmentSlotType.CHEST, new ItemStack(armourSet.chestplate.get()));
-		setItemSlot(EquipmentSlotType.LEGS, new ItemStack(armourSet.leggings.get()));
-		setItemSlot(EquipmentSlotType.FEET, new ItemStack(armourSet.boots.get()));
+		setItemSlot(EquipmentSlot.HEAD, new ItemStack(armourSet.helmet.get()));
+		setItemSlot(EquipmentSlot.CHEST, new ItemStack(armourSet.chestplate.get()));
+		setItemSlot(EquipmentSlot.LEGS, new ItemStack(armourSet.leggings.get()));
+		setItemSlot(EquipmentSlot.FEET, new ItemStack(armourSet.boots.get()));
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 	}
 
 	@Override
-	public ITextComponent getDisplayName() {
+	public Component getDisplayName() {
 		if (this.level.isClientSide())
 			return ClientOperations.getPlayerName();
 
@@ -214,7 +214,7 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 
 	@Override
 	public boolean isBlocking() {
-		return this.isUsingItem() && !this.useItem.isEmpty() && useItem.getItem().getUseAnimation(this.useItem) == UseAction.BLOCK;
+		return this.isUsingItem() && !this.useItem.isEmpty() && useItem.getItem().getUseAnimation(this.useItem) == UseAnim.BLOCK;
 	}
 
 	@Override
@@ -228,7 +228,7 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 	}
 
 	@Override
-	public void shootCrossbowProjectile(LivingEntity target, ItemStack crossbow, ProjectileEntity bolt, float angle) {
+	public void shootCrossbowProjectile(LivingEntity target, ItemStack crossbow, Projectile bolt, float angle) {
 		shootCrossbowProjectile(this, target, bolt, angle, 1.6f);
 	}
 
@@ -239,7 +239,7 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 	}
 
 	@Override
-	public boolean canFireProjectileWeapon(ShootableItem weapon) {
+	public boolean canFireProjectileWeapon(ProjectileWeaponItem weapon) {
 		return weapon instanceof CrossbowItem;
 	}
 

@@ -1,33 +1,33 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.monster.HuskEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Husk;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.DistExecutor;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.entity.mob.precasia.PrimitiveCarrotopEntity;
 import net.tslat.aoa3.util.*;
@@ -41,11 +41,11 @@ public class BlankRealmstone extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		if (world.isClientSide)
 			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientOperations::displayBlankRealmstoneGui);
 
-		return ActionResult.success(player.getItemInHand(hand));
+		return InteractionResultHolder.success(player.getItemInHand(hand));
 	}
 
 	@Override
@@ -55,12 +55,12 @@ public class BlankRealmstone extends Item {
 				BlockPos pos = entity.blockPosition();
 				BlockState state = entity.level.getBlockState(pos);
 
-				if (state.getBlock() == Blocks.CARROTS && ((CropsBlock)state.getBlock()).isMaxAge(state)) {
-					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAEntities.Mobs.PRIMITIVE_CARROTOP.get(), entity.level);
+				if (state.getBlock() == Blocks.CARROTS && ((CropBlock)state.getBlock()).isMaxAge(state)) {
+					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAMobs.PRIMITIVE_CARROTOP.get(), entity.level);
 
 					carrotop.setPos(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
 					entity.level.addFreshEntity(carrotop);
-					entity.remove();
+					entity.discard();
 					entity.level.setBlockAndUpdate(entity.blockPosition(), Blocks.AIR.defaultBlockState());
 				}
 			}
@@ -70,36 +70,36 @@ public class BlankRealmstone extends Item {
 	}
 
 	@Override
-	public ActionResultType interactLivingEntity(ItemStack stack, PlayerEntity player, LivingEntity target, Hand hand) {
+	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
 		if (WorldUtil.isWorld(player.level, AoADimensions.CREEPONIA.key) && target instanceof AoATrader) {
-			if (player instanceof ServerPlayerEntity && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayerEntity)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
+			if (player instanceof ServerPlayer && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
-				PlayerUtil.notifyPlayer(player, new TranslationTextComponent("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
+				PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
 			}
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
-		return ActionResultType.PASS;
+		return InteractionResult.PASS;
 	}
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (!attacker.level.isClientSide && target.getHealth() <= 0 && target instanceof HuskEntity && attacker instanceof PlayerEntity)
-			attacker.setItemInHand(Hand.MAIN_HAND, new ItemStack(AoAItems.BARATHOS_REALMSTONE.get()));
+		if (!attacker.level.isClientSide && target.getHealth() <= 0 && target instanceof Husk && attacker instanceof Player)
+			attacker.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(AoAItems.BARATHOS_REALMSTONE.get()));
 
 		return super.hurtEnemy(stack, target, attacker);
 	}
 
 	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundNBT nbt) {
+	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		return new VolatileStackCapabilityProvider();
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 1));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.NEUTRAL, 2));
 	}

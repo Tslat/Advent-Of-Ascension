@@ -1,9 +1,9 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.util.SoundEvent;
-import net.minecraftforge.fml.RegistryObject;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 
 import javax.annotation.Nullable;

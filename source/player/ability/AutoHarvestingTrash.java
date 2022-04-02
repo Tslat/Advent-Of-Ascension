@@ -1,17 +1,17 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.ForgeHooksClient;
@@ -36,7 +36,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		super(AoAAbilities.AUTO_HARVESTING_TRASH.get(), skill, data);
 	}
 
-	public AutoHarvestingTrash(AoASkill.Instance skill, CompoundNBT data) {
+	public AutoHarvestingTrash(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.AUTO_HARVESTING_TRASH.get(), skill, data);
 
 		String itemId = data.getString("item");
@@ -44,11 +44,11 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		TranslationTextComponent description = defaultDescription;
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		TranslatableComponent description = defaultDescription;
 
 		if (this.consumingItem != null)
-			description = new TranslationTextComponent(defaultDescription.getKey() + ".item", new TranslationTextComponent(this.consumingItem.asItem().getDescriptionId()).withStyle(TextFormatting.GRAY));
+			description = new TranslatableComponent(defaultDescription.getKey() + ".item", new TranslatableComponent(this.consumingItem.asItem().getDescriptionId()).withStyle(ChatFormatting.GRAY));
 
 		super.updateDescription(description);
 	}
@@ -60,25 +60,25 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 
 	@Override
 	public void handleLootModification(List<ItemStack> loot, LootContext context) {
-		if (consumingItem != null && context.getParamOrNull(LootParameters.BLOCK_STATE) != null)
+		if (consumingItem != null && context.getParamOrNull(LootContextParams.BLOCK_STATE) != null)
 			loot.removeIf(stack -> stack.getItem() == consumingItem);
 	}
 
 	@Override
-	public void loadFromNbt(CompoundNBT data) {
+	public void loadFromNbt(CompoundTag data) {
 		super.loadFromNbt(data);
 
 		if (data.contains("item")) {
 			this.consumingItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("item")));
 
-			updateDescription(new TranslationTextComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+			updateDescription(new TranslatableComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
 			markForClientSync();
 		}
 	}
 
 	@Override
-	public CompoundNBT saveToNbt() {
-		CompoundNBT data = super.saveToNbt();
+	public CompoundTag saveToNbt() {
+		CompoundTag data = super.saveToNbt();
 
 		if (this.consumingItem != null)
 			data.putString("item", this.consumingItem.getRegistryName().toString());
@@ -87,8 +87,8 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		data.putString("item", consumingItem != null ? consumingItem.getRegistryName().toString() : "");
 
@@ -96,7 +96,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 	}
 
 	@Override
-	public void receiveSyncData(CompoundNBT data) {
+	public void receiveSyncData(CompoundTag data) {
 		super.receiveSyncData(data);
 
 		if (data.getString("item").equals("")) {
@@ -106,7 +106,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 			this.consumingItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("item")));
 		}
 
-		updateDescription(new TranslationTextComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+		updateDescription(new TranslatableComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
 	}
 
 	@Override

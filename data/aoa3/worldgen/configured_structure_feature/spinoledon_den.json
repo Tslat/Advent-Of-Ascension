@@ -1,8 +1,0 @@
-{
-  "config": {
-    "min": 5,
-    "max": 20,
-    "ignore_obstructions": true
-  },
-  "type": "aoa3:spinoledon_den"
-}

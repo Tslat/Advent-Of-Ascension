@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 import net.tslat.aoa3.content.item.LootModifyingItem;
@@ -16,7 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class LootModifyingItemLootModifier extends LootModifier {
-	public LootModifyingItemLootModifier(ILootCondition[] conditions) {
+	public LootModifyingItemLootModifier(LootItemCondition[] conditions) {
 		super(conditions);
 	}
 
@@ -25,14 +25,14 @@ public class LootModifyingItemLootModifier extends LootModifier {
 	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
 		ItemStack tool = ItemStack.EMPTY;
 
-		if (context.hasParam(LootParameters.TOOL)) {
-			tool = context.getParamOrNull(LootParameters.TOOL);
+		if (context.hasParam(LootContextParams.TOOL)) {
+			tool = context.getParamOrNull(LootContextParams.TOOL);
 
 			if (tool == null)
 				return generatedLoot;
 		}
-		else if (context.hasParam(LootParameters.KILLER_ENTITY)) {
-			Entity entity = context.getParamOrNull(LootParameters.KILLER_ENTITY);
+		else if (context.hasParam(LootContextParams.KILLER_ENTITY)) {
+			Entity entity = context.getParamOrNull(LootContextParams.KILLER_ENTITY);
 
 			if (entity != null) {
 				Iterator<ItemStack> heldItems = entity.getHandSlots().iterator();
@@ -50,7 +50,7 @@ public class LootModifyingItemLootModifier extends LootModifier {
 
 	public static class Serializer extends GlobalLootModifierSerializer<LootModifyingItemLootModifier> {
 		@Override
-		public LootModifyingItemLootModifier read(ResourceLocation location, JsonObject object, ILootCondition[] lootConditions) {
+		public LootModifyingItemLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] lootConditions) {
 			return new LootModifyingItemLootModifier(lootConditions);
 		}
 

@@ -1,26 +1,22 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.content.block.functional.light.LampBlock;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.content.entity.boss.ShadowlordEntity;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.concurrent.TimeUnit;
 
 public class ShadowlordSpawnTask implements Runnable {
-    private final PlayerEntity player;
+    private final Player player;
     private final BlockPos altarPosition;
     private boolean spawning = false;
     private boolean spawned = false;
 
-    public ShadowlordSpawnTask(PlayerEntity player, BlockPos altarPosition) {
+    public ShadowlordSpawnTask(Player player, BlockPos altarPosition) {
         this.player = player;
         this.altarPosition = altarPosition;
     }
@@ -40,11 +36,11 @@ public class ShadowlordSpawnTask implements Runnable {
         }
         else if (spawning) {
             spawned = true;
-            ShadowlordEntity shadowlord = new ShadowlordEntity(AoAEntities.Mobs.SHADOWLORD.get(), player.level);
+            /*ShadowlordEntity shadowlord = new ShadowlordEntity(AoAMobs.SHADOWLORD.get(), player.level);
 
             shadowlord.moveTo(altarPosition.getX(), altarPosition.getY() + 3, altarPosition.getZ(), 0, 0);
             player.level.addFreshEntity(shadowlord);
-            PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.SHADOWLORD.get().getDescriptionId() + ".spawn", player.getDisplayName()), player.level, player.blockPosition(), 50);
+            PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.SHADOWLORD.get().getDescriptionId() + ".spawn", player.getDisplayName()), player.level, player.blockPosition(), 50);*/
             schedule(5, TimeUnit.SECONDS);
         }
         else {

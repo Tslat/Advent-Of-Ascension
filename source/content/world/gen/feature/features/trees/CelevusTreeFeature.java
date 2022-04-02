@@ -1,25 +1,25 @@
 package net.tslat.aoa3.content.world.gen.feature.features.trees;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.Random;
 import java.util.function.Supplier;
 
 public abstract class CelevusTreeFeature extends AoAVariableLeafTreeFeature {
-	public CelevusTreeFeature(Codec<BlockStateFeatureConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public CelevusTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
 	@Override
-	protected boolean generateTree(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		BlockPos multiSaplingPos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
 		boolean success;
 
@@ -33,7 +33,7 @@ public abstract class CelevusTreeFeature extends AoAVariableLeafTreeFeature {
 		return success;
 	}
 
-	public boolean genBigTree(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	public boolean genBigTree(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 15 + rand.nextInt(10);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 5, 2, isWorldGen))
@@ -131,7 +131,7 @@ public abstract class CelevusTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	public boolean genSmallTree(ISeedReader reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	public boolean genSmallTree(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 8 + rand.nextInt(7);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 5, 1, isWorldGen))
@@ -140,7 +140,7 @@ public abstract class CelevusTreeFeature extends AoAVariableLeafTreeFeature {
 		if (!checkAndPrepSoil(reader, pos, 1, isWorldGen))
 			return false;
 
-		BlockPos.Mutable movablePos = new BlockPos.Mutable().set(pos.below());
+		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		BlockState log = AoABlocks.CELEVE_STEM.get().defaultBlockState();
 		BlockState whiteLeaves = AoABlocks.WHITE_CELEVUS_LEAVES.get().defaultBlockState();
 		int leafRingGap = -1;

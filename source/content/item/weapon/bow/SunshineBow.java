@@ -1,15 +1,15 @@
 package net.tslat.aoa3.content.item.weapon.bow;
 
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.ColourUtil;
@@ -27,9 +27,9 @@ public class SunshineBow extends BaseBow {
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
 		if (arrow.isCritArrow()) {
-			AreaEffectCloudEntity cloud = new AreaEffectCloudEntity(target.level, arrow.getX(), arrow.getY(), arrow.getZ());
+			AreaEffectCloud cloud = new AreaEffectCloud(target.level, arrow.getX(), arrow.getY(), arrow.getZ());
 
-			cloud.addEffect(new EffectInstance(Effects.GLOWING, 200, 0, true, false));
+			cloud.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0, true, false));
 			cloud.setRadius(0.5f);
 			cloud.setRadiusPerTick(30);
 			cloud.setDuration(2);
@@ -43,13 +43,13 @@ public class SunshineBow extends BaseBow {
 			target.level.addFreshEntity(cloud);
 
 			for (LivingEntity entity : arrow.level.getEntitiesOfClass(LivingEntity.class, arrow.getBoundingBox().inflate(30, 1, 30), EntityUtil.Predicates.HOSTILE_MOB)) {
-				EntityUtil.applyPotions(entity, new EffectBuilder(Effects.GLOWING, 200));
+				EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.GLOWING, 200));
 			}
 		}
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
+	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}

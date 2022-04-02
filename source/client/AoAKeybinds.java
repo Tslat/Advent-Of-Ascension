@@ -1,13 +1,13 @@
 package net.tslat.aoa3.client;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.client.util.InputMappings;
+import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.adventgui.AdventMainGui;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
@@ -16,10 +16,10 @@ import org.lwjgl.glfw.GLFW;
 public class AoAKeybinds {
 	private static final String CATEGORY = "key.categories." + AdventOfAscension.MOD_ID;
 
-	public static KeyBinding RESOURCE_GUI;
-	public static KeyBinding SKILL_GUI;
-	public static KeyBinding ADVENT_GUI;
-	public static KeyBinding ABILITY_ACTION;
+	public static KeyMapping RESOURCE_GUI;
+	public static KeyMapping SKILL_GUI;
+	public static KeyMapping ADVENT_GUI;
+	public static KeyMapping ABILITY_ACTION;
 
 	public static boolean statusResourceGui = false;
 	public static boolean statusSkillGui = false;
@@ -31,18 +31,18 @@ public class AoAKeybinds {
 	}
 
 	public static void registerKeybinds() {
-		ClientRegistry.registerKeyBinding(RESOURCE_GUI = new KeyBinding(keyName("resources"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_O), CATEGORY));
-		ClientRegistry.registerKeyBinding(SKILL_GUI = new KeyBinding(keyName("skills"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_UNKNOWN), CATEGORY));
-		ClientRegistry.registerKeyBinding(ADVENT_GUI = new KeyBinding(keyName("adventGui"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_DELETE), CATEGORY));
-		ClientRegistry.registerKeyBinding(ABILITY_ACTION = new KeyBinding(keyName("abilityAction"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_V), CATEGORY));
+		ClientRegistry.registerKeyBinding(RESOURCE_GUI = new KeyMapping(keyName("resources"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_O), CATEGORY));
+		ClientRegistry.registerKeyBinding(SKILL_GUI = new KeyMapping(keyName("skills"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_UNKNOWN), CATEGORY));
+		ClientRegistry.registerKeyBinding(ADVENT_GUI = new KeyMapping(keyName("adventGui"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_DELETE), CATEGORY));
+		ClientRegistry.registerKeyBinding(ABILITY_ACTION = new KeyMapping(keyName("abilityAction"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_V), CATEGORY));
 	}
 
 	private static String keyName(String id) {
 		return "key." + AdventOfAscension.MOD_ID + "." + id;
 	}
 
-	private static InputMappings.Input getKey(int keyCode) {
-		return InputMappings.Type.KEYSYM.getOrCreate(keyCode);
+	private static InputConstants.Key getKey(int keyCode) {
+		return InputConstants.Type.KEYSYM.getOrCreate(keyCode);
 	}
 
 	private static void onKeyDown(final InputEvent.KeyInputEvent ev) {
@@ -63,7 +63,7 @@ public class AoAKeybinds {
 				mc.setScreen(null);
 			}
 			else if (mc.screen == null) {
-				mc.setScreen(new AdventMainGui(mc.player));
+				mc.setScreen(new AdventMainGui(Minecraft.getInstance().player));
 			}
 		}
 

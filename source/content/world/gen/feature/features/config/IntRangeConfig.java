@@ -1,12 +1,13 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.features.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.gen.feature.IFeatureConfig;
+import net.minecraft.world.gen.feature.FeatureConfiguration;
 
 import java.util.Random;
 
-public class IntRangeConfig implements IFeatureConfig {
+public class IntRangeConfig implements FeatureConfiguration {
 	public static final Codec<IntRangeConfig> CODEC = RecordCodecBuilder.create(builder -> builder.group(
 			Codec.INT.optionalFieldOf("min", 0).forGetter(config -> config.min),
 			Codec.INT.optionalFieldOf("max", 0).forGetter(config -> config.max),
@@ -37,3 +38,4 @@ public class IntRangeConfig implements IFeatureConfig {
 		return rand.nextInt(1 + max - min) + min;
 	}
 }
+*/

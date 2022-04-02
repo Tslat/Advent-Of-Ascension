@@ -1,6 +1,6 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 
 import java.util.function.Supplier;
 

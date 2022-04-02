@@ -1,24 +1,24 @@
 package net.tslat.aoa3.content.item.tool.axe;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.particles.ParticleTypes;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.ToolType;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 	public EmberstoneAxe() {
-		super(ItemUtil.customItemTier(2000, 10.0f, 11f, 5, 10, AoAItems.EMBERSTONE_INGOT));
+		super(ItemUtil.customItemTier(2000, 10.0f, 11f, 5, 10, AoAItems.EMBERSTONE_INGOT, BlockTags.MINEABLE_WITH_AXE));
 	}
 
 	@Override
@@ -37,9 +37,9 @@ public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 		if (block == Blocks.AIR || existingLoot.isEmpty())
 			return;
 
-		if (block.is(BlockTags.LOGS) && harvestedBlock.isToolEffective(ToolType.AXE)) {
-			ServerWorld world = lootContext.getLevel();
-			BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootParameters.ORIGIN));
+		if (harvestedBlock.is(BlockTags.LOGS) && getDestroySpeed(getToolStack(lootContext), harvestedBlock) > 1) {
+			ServerLevel world = lootContext.getLevel();
+			BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootContextParams.ORIGIN));
 			ItemStack blockDrop = ItemStack.EMPTY;
 			Item blockItem = Item.byBlock(block);
 			Iterator<ItemStack> stackIterator = existingLoot.iterator();
@@ -56,17 +56,17 @@ public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 			}
 
 			if (blockDrop != ItemStack.EMPTY) {
-				block.popExperience(world, pos, (1 + random.nextInt(3)) * blockDrop.getCount());
+				block.popExperience(world, pos, RandomUtil.randomNumberBetween(1, 3) * blockDrop.getCount());
 
 				for (int i = 0; i < 5; i++) {
-					world.sendParticles(ParticleTypes.FLAME, pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat(), pos.getZ() + random.nextFloat(), 1, 0, 0, 0, 0);
+					world.sendParticles(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + RandomUtil.randomValueUpTo(1), pos.getZ() + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 	}
 }

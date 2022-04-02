@@ -1,13 +1,13 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.Mob;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
@@ -29,16 +29,16 @@ public class InnervationMobLure extends AoAAbility.Instance {
 	private final float luredDamageModifier;
 
 	private boolean isLuring = false;
-	private MobEntity luringEntity = null;
+	private Mob luringEntity = null;
 
 	public InnervationMobLure(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.INNERVATION_MOB_LURE.get(), skill, data);
 
-		this.perTickDrain = JSONUtils.getAsFloat(data, "per_tick_energy_drain");
-		this.luredDamageModifier = JSONUtils.getAsFloat(data, "lured_damage_modifier", 0.5f);
+		this.perTickDrain = GsonHelper.getAsFloat(data, "per_tick_energy_drain");
+		this.luredDamageModifier = GsonHelper.getAsFloat(data, "lured_damage_modifier", 0.5f);
 	}
 
-	public InnervationMobLure(AoASkill.Instance skill, CompoundNBT data) {
+	public InnervationMobLure(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.INNERVATION_MOB_LURE.get(), skill, data);
 
 		this.perTickDrain = data.getFloat("per_tick_energy_drain");
@@ -46,8 +46,8 @@ public class InnervationMobLure extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslationTextComponent defaultDescription) {
-		super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.perTickDrain * 20, 2), NumberUtil.roundToNthDecimalPlace(this.luredDamageModifier * 100, 2)));
+	protected void updateDescription(TranslatableComponent defaultDescription) {
+		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.perTickDrain * 20, 2), NumberUtil.roundToNthDecimalPlace(this.luredDamageModifier * 100, 2)));
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class InnervationMobLure extends AoAAbility.Instance {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public KeyBinding getKeybind() {
+	public KeyMapping getKeybind() {
 		return AoAKeybinds.ABILITY_ACTION;
 	}
 
@@ -69,10 +69,10 @@ public class InnervationMobLure extends AoAAbility.Instance {
 
 	@Override
 	public void handleKeyInput() {
-		ServerPlayerEntity player = getPlayer();
+		ServerPlayer player = getPlayer();
 
-		if (!isLuring && player.isCrouching() && player.getLastHurtMob() instanceof MobEntity) {
-			this.luringEntity = (MobEntity)player.getLastHurtMob();
+		if (!isLuring && player.isCrouching() && player.getLastHurtMob() instanceof Mob mob) {
+			this.luringEntity = mob;
 			this.isLuring = true;
 
 			activatedActionKey(player);
@@ -90,8 +90,8 @@ public class InnervationMobLure extends AoAAbility.Instance {
 			return;
 		}
 
-		if (ev.player.level.getGameTime() % 10 == 0 && ev.player instanceof ServerPlayerEntity)
-			AoAPackets.messagePlayer((ServerPlayerEntity)ev.player, new ScreenOverlayPacket(AdventOfAscension.id("textures/gui/overlay/misc/action_key_activation_vignette.png"), 10));
+		if (ev.player.level.getGameTime() % 10 == 0 && ev.player instanceof ServerPlayer)
+			AoAPackets.messagePlayer((ServerPlayer)ev.player, new ScreenOverlayPacket(AdventOfAscension.id("textures/gui/overlay/misc/action_key_activation_vignette.png"), 10));
 
 		if (luringEntity.getTarget() != ev.player)
 			luringEntity.setTarget(ev.player);
@@ -115,8 +115,8 @@ public class InnervationMobLure extends AoAAbility.Instance {
 	}
 
 	@Override
-	public CompoundNBT getSyncData(boolean forClientSetup) {
-		CompoundNBT data = super.getSyncData(forClientSetup);
+	public CompoundTag getSyncData(boolean forClientSetup) {
+		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
 			data.putFloat("per_tick_energy_drain", this.perTickDrain);

@@ -1,21 +1,21 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.entity.projectile.FishingBobberEntity;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.FishingHook;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
-import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.function.Function;
@@ -27,7 +27,7 @@ public class FishingTrapSpawn extends ScalableModAbility {
 		super(AoAAbilities.FISHING_TRAP_SPAWN.get(), skill, data);
 	}
 
-	public FishingTrapSpawn(AoASkill.Instance skill, CompoundNBT data) {
+	public FishingTrapSpawn(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.FISHING_TRAP_SPAWN.get(), skill, data);
 	}
 
@@ -38,20 +38,20 @@ public class FishingTrapSpawn extends ScalableModAbility {
 
 	@Override
 	public void handleItemFished(ItemFishedEvent ev, boolean isHauling) {
-		if (ev.getPlayer() instanceof ServerPlayerEntity && testAsChance()) {
-			FishingBobberEntity bobber = ev.getHookEntity();
-			PlayerEntity player = ev.getPlayer();
-			World world = bobber.level;
+		if (ev.getPlayer() instanceof ServerPlayer && testAsChance()) {
+			FishingHook bobber = ev.getHookEntity();
+			Player player = ev.getPlayer();
+			Level world = bobber.level;
 			BlockPos pos = bobber.blockPosition();
 			float luck = bobber.luck;
 			boolean isLava = false;
 
 			if (isHauling) {
 				luck = ((HaulingItemFishedEvent)ev).getLuck();
-				isLava = ((HaulingFishingBobberEntity)ev.getHookEntity()).getApplicableFluid().contains(Fluids.LAVA);
+				isLava = Fluids.LAVA.is(((HaulingFishingBobberEntity)ev.getHookEntity()).getApplicableFluid());
 			}
 
-			Function<World, Entity> trapEntityFunction = AoAHaulingFishReloadListener.getTrapListForBiome(world.getBiome(pos), isLava).getRandomElement((ServerPlayerEntity)player, luck);
+			Function<Level, Entity> trapEntityFunction = AoAHaulingFishReloadListener.getTrapListForBiome(world.getBiome(pos).value(), isLava).getRandomElement((ServerPlayer)player, luck);
 
 			if (trapEntityFunction != null) {
 				Entity trapEntity = trapEntityFunction.apply(world);

@@ -1,16 +1,17 @@
+/*
 package net.tslat.aoa3.client.render.entity.misc;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.tslat.aoa3.client.model.entity.misc.GyrocopterModel;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -23,16 +24,16 @@ public class GyrocopterRenderer extends EntityRenderer<GyrocopterEntity> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/boss/gyro/gyro.png");
 	private final EntityModel<Entity> model = new GyrocopterModel();
 
-	public GyrocopterRenderer(EntityRendererManager renderManager) {
+	public GyrocopterRenderer(EntityRendererProvider.Context renderManager) {
 		super(renderManager);
 	}
 
 	@Override
-	public void render(GyrocopterEntity entity, float yaw, float partialTicks, MatrixStack matrix, IRenderTypeBuffer buffer, int packedLight) {
+	public void render(GyrocopterEntity entity, float yaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		matrix.pushPose();
 		matrix.scale(-1.0F, -1.0F, 1.0F);
 
-		float pitch = MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot);
+		float pitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
 
 		model.prepareMobModel(entity, 0, 0, partialTicks);
 		model.setupAnim(entity, 0, 0, entity.tickCount, 0, pitch);
@@ -73,4 +74,4 @@ public class GyrocopterRenderer extends EntityRenderer<GyrocopterEntity> {
 	public ResourceLocation getTextureLocation(GyrocopterEntity entity) {
 		return texture;
 	}
-}
+}*/

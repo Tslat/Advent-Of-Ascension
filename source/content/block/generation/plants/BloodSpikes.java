@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.Effects;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -18,8 +18,8 @@ public class BloodSpikes extends StackablePlant {
 	}
 
 	@Override
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entity) {
-		if (entity instanceof PlayerEntity && PlayerUtil.shouldPlayerBeAffected((PlayerEntity)entity))
-			EntityUtil.applyPotions(entity, new EffectBuilder(Effects.BLINDNESS, 100), new EffectBuilder(Effects.POISON, 100).level(3));
+	public void entityInside(BlockState state, Level worldIn, BlockPos pos, Entity entity) {
+		if (entity instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)entity))
+			EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.BLINDNESS, 100), new EffectBuilder(MobEffects.POISON, 100).level(3));
 	}
 }

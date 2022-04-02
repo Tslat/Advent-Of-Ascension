@@ -1,24 +1,24 @@
 package net.tslat.aoa3.content.entity.base;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.INPC;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.npc.Npc;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.content.entity.ai.animation.Animatable;
 import net.tslat.aoa3.util.EntityUtil;
@@ -29,22 +29,22 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAAmbientNPC extends CreatureEntity implements INPC, Animatable {
+public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, Animatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 
-	public AoAAmbientNPC(EntityType<? extends CreatureEntity> entityType, World world) {
+	public AoAAmbientNPC(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(0, new SwimGoal(this));
+		goalSelector.addGoal(0, new FloatGoal(this));
 		goalSelector.addGoal(1, new PanicGoal(this, 1));
 		goalSelector.addGoal(1, new AvoidEntityGoal<AoAMeleeMob>(this, AoAMeleeMob.class, 8f, 0.8d, 1d));
 		goalSelector.addGoal(2, new OpenDoorGoal(this, true));
-		goalSelector.addGoal(3, new LookAtGoal(this, PlayerEntity.class, 3f, 1f));
-		goalSelector.addGoal(4, new RandomWalkingGoal(this, 0.6d));
-		goalSelector.addGoal(5, new LookRandomlyGoal(this));
+		goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 3f, 1f));
+		goalSelector.addGoal(4, new RandomStrollGoal(this, 0.6d));
+		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 	}
 
 	@Nullable
@@ -69,29 +69,29 @@ public abstract class AoAAmbientNPC extends CreatureEntity implements INPC, Anim
 	protected abstract String getInteractMessage(ItemStack heldItem);
 
 	@Override
-	public boolean checkSpawnRules(IWorld world, SpawnReason reason) {
+	public boolean checkSpawnRules(LevelAccessor world, MobSpawnType reason) {
 		return checkSpawnChance(reason) && isValidLightLevel(reason) && canSpawnAt(reason, world.getBlockState(blockPosition().below()));
 	}
 
-	protected boolean canSpawnAt(SpawnReason reason, BlockState blockState) {
-		return reason == SpawnReason.SPAWNER || blockState.isValidSpawn(level, blockPosition(), getType());
+	protected boolean canSpawnAt(MobSpawnType reason, BlockState blockState) {
+		return reason == MobSpawnType.SPAWNER || blockState.isValidSpawn(level, blockPosition(), getType());
 	}
 
 	protected int getSpawnChanceFactor() {
 		return 1;
 	}
 
-	private boolean checkSpawnChance(SpawnReason reason) {
+	private boolean checkSpawnChance(MobSpawnType reason) {
 		return EntityUtil.isNaturalSpawnReason(reason) || getSpawnChanceFactor() <= 1 || random.nextInt(getSpawnChanceFactor()) == 0;
 	}
 
-	protected boolean isValidLightLevel(SpawnReason reason) {
+	protected boolean isValidLightLevel(MobSpawnType reason) {
 		if (!WorldUtil.isWorld(level, AoADimensions.OVERWORLD.key))
 			return true;
 
 		BlockPos blockpos = new BlockPos(getX(), getBoundingBox().minY, getZ());
 
-		if (level.getBrightness(LightType.SKY, blockpos) > random.nextInt(32)) {
+		if (level.getBrightness(LightLayer.SKY, blockpos) > random.nextInt(32)) {
 			return true;
 		}
 		else {
@@ -102,21 +102,21 @@ public abstract class AoAAmbientNPC extends CreatureEntity implements INPC, Anim
 	}
 
 	@Override
-	protected ActionResultType mobInteract(PlayerEntity player, Hand hand) {
+	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == Items.NAME_TAG) {
 			heldStack.interactLivingEntity(player, this, hand);
 
-			return ActionResultType.SUCCESS;
+			return InteractionResult.SUCCESS;
 		}
 
 		if (!level.isClientSide) {
-			if (hand == Hand.MAIN_HAND) {
+			if (hand == InteractionHand.MAIN_HAND) {
 				String msg = getInteractMessage(heldStack);
 
 				if (msg != null)
-					PlayerUtil.notifyPlayer(player, new TranslationTextComponent(msg).withStyle(TextFormatting.GRAY));
+					PlayerUtil.notifyPlayer(player, new TranslatableComponent(msg).withStyle(ChatFormatting.GRAY));
 			}
 		}
 

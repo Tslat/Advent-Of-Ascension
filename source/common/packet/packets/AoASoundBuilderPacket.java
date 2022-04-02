@@ -1,7 +1,7 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 
 import java.util.function.Supplier;
@@ -14,11 +14,11 @@ public class AoASoundBuilderPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		soundBuilder.toNetwork(buffer);
 	}
 
-	public static AoASoundBuilderPacket decode(PacketBuffer buffer) {
+	public static AoASoundBuilderPacket decode(FriendlyByteBuf buffer) {
 		return new AoASoundBuilderPacket(SoundBuilder.fromNetwork(buffer));
 	}
 

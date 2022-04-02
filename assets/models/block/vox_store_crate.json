@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "particle": "aoa3:block/vox_crate",
-    "all": "aoa3:block/vox_crate"
+    "all": "aoa3:block/vox_crate",
+    "particle": "aoa3:block/vox_crate"
   }
 }

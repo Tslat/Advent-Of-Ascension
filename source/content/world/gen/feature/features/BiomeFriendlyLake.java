@@ -1,32 +1,33 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.material.Material;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.SectionPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.LightType;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.NoiseChunkGenerator;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
-import net.minecraft.world.gen.feature.LakesFeature;
-import net.minecraft.world.gen.feature.structure.Structure;
-import net.minecraft.world.gen.surfacebuilders.ISurfaceBuilderConfig;
+import com.sun.jna.Structure;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.LakeFeature;
+import net.minecraft.world.level.material.Material;
+import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.Random;
 
-public class BiomeFriendlyLake extends LakesFeature {
+public class BiomeFriendlyLake extends LakeFeature {
 	private BlockState dimensionFillerBlock = null;
 
-	public BiomeFriendlyLake(Codec<BlockStateFeatureConfig> codec) {
+	public BiomeFriendlyLake(Codec<LakeFeature.Configuration> codec) {
 		super(codec);
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, BlockStateFeatureConfig config) {
+	public boolean place(FeaturePlaceContext<Configuration> p_159958_) {
 		while(pos.getY() > 5 && reader.isEmptyBlock(pos)) {
 			pos = pos.below();
 		}
@@ -101,7 +102,7 @@ public class BiomeFriendlyLake extends LakesFeature {
 								BlockPos placementPos = pos.offset(chunkRelX, chunkRelY - 1, chunkRelZ);
 								ISurfaceBuilderConfig surfaceBuilderConfig = reader.getBiome(placementPos).getGenerationSettings().getSurfaceBuilderConfig();
 
-								if (reader.getBlockState(placementPos).getBlock() == surfaceBuilderConfig.getUnderMaterial().getBlock() && reader.getBrightness(LightType.SKY, pos.offset(chunkRelX, chunkRelY, chunkRelZ)) > 0)
+								if (reader.getBlockState(placementPos).getBlock() == surfaceBuilderConfig.getUnderMaterial().getBlock() && reader.getBrightness(LightLayer.SKY, pos.offset(chunkRelX, chunkRelY, chunkRelZ)) > 0)
 									reader.setBlock(placementPos, surfaceBuilderConfig.getTopMaterial(), 2);
 							}
 						}
@@ -138,18 +139,19 @@ public class BiomeFriendlyLake extends LakesFeature {
 		}
 	}
 
-	private BlockState getFillerBlockState(IWorldReader reader, ChunkGenerator generator, BlockPos pos) {
+	private BlockState getFillerBlockState(LevelReader reader, ChunkGenerator generator, BlockPos pos) {
 		if (dimensionFillerBlock != null)
 			return dimensionFillerBlock;
 
-		if (generator instanceof NoiseChunkGenerator) {
-			dimensionFillerBlock = ((NoiseChunkGenerator)generator).settings.get().getDefaultBlock();
+		if (generator instanceof NoiseBasedChunkGenerator) {
+			dimensionFillerBlock = ((NoiseBasedChunkGenerator)generator).settings.get().getDefaultBlock();
 
 			return dimensionFillerBlock;
 		}
 
-		dimensionFillerBlock = reader.getBiome(pos).getGenerationSettings().getSurfaceBuilderConfig().getUnderMaterial();
+		dimensionFillerBlock = reader.getBiome(pos).value().getGenerationSettings().getSurfaceBuilderConfig().getUnderMaterial();
 
 		return dimensionFillerBlock;
 	}
 }
+*/

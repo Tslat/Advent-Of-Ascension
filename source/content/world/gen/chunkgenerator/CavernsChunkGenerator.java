@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.world.gen.chunkgenerator;
 
 import com.mojang.serialization.Codec;
@@ -5,22 +6,22 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectList;
 import it.unimi.dsi.fastutil.objects.ObjectListIterator;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityClassification;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.entity.MobCategory;
 import net.minecraft.util.SharedSeedRandom;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.*;
 import net.minecraft.world.Blockreader;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.BlockGetter;
+import net.minecraft.world.LevelAccessor;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.MobSpawnInfo;
+import net.minecraft.world.biome.MobSpawnSettings;
 import net.minecraft.world.biome.provider.BiomeProvider;
 import net.minecraft.world.biome.provider.EndBiomeProvider;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.chunk.ChunkSection;
-import net.minecraft.world.chunk.IChunk;
+import net.minecraft.world.chunk.ChunkAccess;
 import net.minecraft.world.gen.*;
 import net.minecraft.world.gen.feature.jigsaw.JigsawJunction;
 import net.minecraft.world.gen.feature.jigsaw.JigsawPattern;
@@ -58,7 +59,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 	private static final float[] biomeWeightModifiers = Util.make(new float[25], (weights) -> {
 		for(int x = -2; x <= 2; ++x) {
 			for(int z = -2; z <= 2; ++z) {
-				float weight = 10.0F / MathHelper.sqrt((float)(x * x + z * z) + 0.2F);
+				float weight = 10.0F / Math.sqrt((x * x + z * z) + 0.2F);
 				weights[x + 2 + (z + 2) * 5] = weight;
 			}
 		}
@@ -161,7 +162,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 			noiseStageMultiplier /= 2.0D;
 		}
 
-		return MathHelper.clampedLerp(lowerNoise / 512.0D, upperNoise / 512.0D, (lerpNoise / 10.0D + 1.0D) / 2.0D);
+		return Mth.clampedLerp(lowerNoise / 512.0D, upperNoise / 512.0D, (lerpNoise / 10.0D + 1.0D) / 2.0D);
 	}
 
 	private double[] getNoiseColumn(int noiseX, int noiseZ, boolean isCeiling) {
@@ -258,12 +259,12 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 
 			if (upperSlideSize > 0.0D) {
 				double upperSlideNoiseFraction = ((double)(noiseSizeY - noiseY) - upperSlideOffset) / upperSlideSize;
-				height = MathHelper.clampedLerp(upperSlideTarget, height, upperSlideNoiseFraction);
+				height = Mth.clampedLerp(upperSlideTarget, height, upperSlideNoiseFraction);
 			}
 
 			if (lowerSlideSize > 0.0D) {
 				double lowerSlideNoiseFraction = ((double)noiseY - lowerSlideOffset) / lowerSlideSize;
-				height = MathHelper.clampedLerp(lowerSlideTarget, height, lowerSlideNoiseFraction);
+				height = Mth.clampedLerp(lowerSlideTarget, height, lowerSlideNoiseFraction);
 			}
 
 			noiseColumn[noiseY] = height;
@@ -288,7 +289,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 	}
 
 	@Override
-	public IBlockReader getBaseColumn(int posX, int posZ) {
+	public BlockGetter getBaseColumn(int posX, int posZ) {
 		BlockState[] noiseColumnStates = new BlockState[this.noiseSizeY * this.verticalNoiseGranularity];
 
 		createAndGetGroundPos(posX, posZ, noiseColumnStates, null);
@@ -317,7 +318,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 
 			for(int noiseColumnStep = verticalNoiseGranularity - 1; noiseColumnStep >= 0; --noiseColumnStep) {
 				double noiseColumnProgressPercent = (double)noiseColumnStep / (double)verticalNoiseGranularity;
-				double lerpedNoisePos = MathHelper.lerp3(noiseColumnProgressPercent, xNoiseStepProgress, zNoiseStepProgress, posYNoise, posYNoiseUp, posYNoisePlusX, posYNoisePlusXUp, posYNoisePlusZ, posYNoisePlusZUp, posYNoisePlusXZ, posYNoisePlusXZUp);
+				double lerpedNoisePos = Mth.lerp3(noiseColumnProgressPercent, xNoiseStepProgress, zNoiseStepProgress, posYNoise, posYNoiseUp, posYNoisePlusX, posYNoisePlusXUp, posYNoisePlusZ, posYNoisePlusZUp, posYNoisePlusXZ, posYNoisePlusXZUp);
 				int yPos = noisePosY * verticalNoiseGranularity + noiseColumnStep;
 				BlockState state = getStateForPosition(lerpedNoisePos, yPos);
 
@@ -349,7 +350,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 	}
 
 	@Override
-	public void buildSurfaceAndBedrock(WorldGenRegion worldGenRegion, IChunk chunk) {
+	public void buildSurfaceAndBedrock(WorldGenRegion worldGenRegion, ChunkAccess chunk) {
 		ChunkPos chunkpos = chunk.getPos();
 		int chunkX = chunkpos.x;
 		int chunkZ = chunkpos.z;
@@ -357,7 +358,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 		seedRandom.setBaseChunkSeed(chunkX, chunkZ);
 		int chunkStartPosX = chunkpos.getMinBlockX();
 		int chunkStartPosZ = chunkpos.getMinBlockZ();
-		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
 		for(int x = 0; x < 16; ++x) {
 			for(int z = 0; z < 16; ++z) {
@@ -373,8 +374,8 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 		makeBedrock(chunk, seedRandom);
 	}
 
-	private void makeBedrock(IChunk chunk, Random rand) {
-		BlockPos.Mutable blockpos$mutable = new BlockPos.Mutable();
+	private void makeBedrock(ChunkAccess chunk, Random rand) {
+		BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
 		int i = chunk.getPos().getMinBlockX();
 		int j = chunk.getPos().getMinBlockZ();
 		DimensionSettings dimensionsettings = this.dimensionSettings.get();
@@ -403,7 +404,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 		}
 	}
 
-	private void generateCeiling(IChunk chunk) {
+	private void generateCeiling(ChunkAccess chunk) {
 		ChunkPos chunkPos = chunk.getPos();
 		int chunkX = chunkPos.x;
 		int chunkZ = chunkPos.z;
@@ -422,7 +423,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 		ChunkPrimer primer = (ChunkPrimer)chunk;
 		Heightmap oceanFloorHeightmap = primer.getOrCreateHeightmapUnprimed(Heightmap.Type.OCEAN_FLOOR_WG);
 		Heightmap surfaceHeightmap = primer.getOrCreateHeightmapUnprimed(Heightmap.Type.WORLD_SURFACE_WG);
-		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 
 		for(int noisePosX = 0; noisePosX < noiseSizeX; ++noisePosX) {
 			for(int i = 0; i < noiseSizeZ + 1; ++i) {
@@ -455,30 +456,30 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 						}
 
 						double yNoiseStepProgress = (double)yNoiseStepPos / (double)verticalNoiseGranularity;
-						double lerpYNoise = MathHelper.lerp(yNoiseStepProgress, yNoiseMin, yNoiseMax);
-						double lerpXYNoise = MathHelper.lerp(yNoiseStepProgress, xAdjacentYNoiseMin, xAdjacentYNoiseMax);
-						double lerpZYNoise = MathHelper.lerp(yNoiseStepProgress, zAdjacentYNoiseMin, zAdjacentYNoiseMax);
-						double lerpXYZNoise = MathHelper.lerp(yNoiseStepProgress, xzAdjacentYNoiseMin, xzAdjacentYNoiseMax);
+						double lerpYNoise = Mth.lerp(yNoiseStepProgress, yNoiseMin, yNoiseMax);
+						double lerpXYNoise = Mth.lerp(yNoiseStepProgress, xAdjacentYNoiseMin, xAdjacentYNoiseMax);
+						double lerpZYNoise = Mth.lerp(yNoiseStepProgress, zAdjacentYNoiseMin, zAdjacentYNoiseMax);
+						double lerpXYZNoise = Mth.lerp(yNoiseStepProgress, xzAdjacentYNoiseMin, xzAdjacentYNoiseMax);
 
 						for(int xNoiseStepPos = 0; xNoiseStepPos < horizontalNoiseGranularity; ++xNoiseStepPos) {
 							int posX = chunkStartPosX + noisePosX * horizontalNoiseGranularity + xNoiseStepPos;
 							int chunkRelativePosX = posX & 15;
 							double xNoiseStepProgress = (double)xNoiseStepPos / (double)horizontalNoiseGranularity;
-							double xLerpYNoise = MathHelper.lerp(xNoiseStepProgress, lerpYNoise, lerpXYNoise);
-							double zLerpYNoise = MathHelper.lerp(xNoiseStepProgress, lerpZYNoise, lerpXYZNoise);
+							double xLerpYNoise = Mth.lerp(xNoiseStepProgress, lerpYNoise, lerpXYNoise);
+							double zLerpYNoise = Mth.lerp(xNoiseStepProgress, lerpZYNoise, lerpXYZNoise);
 
 							for(int zNoiseStepPos = 0; zNoiseStepPos < horizontalNoiseGranularity; ++zNoiseStepPos) {
 								int posZ = chunkStartPosZ + noisePosZ * horizontalNoiseGranularity + zNoiseStepPos;
 								int chunkRelativePosZ = posZ & 15;
 								double zNoiseStepProgress = (double)zNoiseStepPos / (double)horizontalNoiseGranularity;
-								double finalLerpNoise = MathHelper.lerp(zNoiseStepProgress, xLerpYNoise, zLerpYNoise);
-								double lerpedNoisePos = MathHelper.clamp(finalLerpNoise / 200d, -1, 1);
+								double finalLerpNoise = Mth.lerp(zNoiseStepProgress, xLerpYNoise, zLerpYNoise);
+								double lerpedNoisePos = Mth.clamp(finalLerpNoise / 200d, -1, 1);
 								BlockState state = getStateForPosition(lerpedNoisePos, posY);
 
 								if (state != AIR) {
 									mutablePos.set(posX, posY, posZ);
 
-									if (state.getLightValue(primer, mutablePos) != 0)
+									if (state.getLightEmission(primer, mutablePos) != 0)
 										primer.addLight(mutablePos);
 
 									chunkSection.setBlockState(chunkRelativePosX, chunkSectionRelativePosY, chunkRelativePosZ, state, false);
@@ -500,7 +501,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 	}
 
 	@Override
-	public void fillFromNoise(IWorld world, StructureManager structureManager, IChunk chunkPrimer) {
+	public void fillFromNoise(LevelAccessor world, StructureManager structureManager, ChunkAccess chunkPrimer) {
 		ObjectList<StructurePiece> structurePieces = new ObjectArrayList<>(10);
 		ObjectList<JigsawJunction> jigsawJunctions = new ObjectArrayList<>(32);
 		ChunkPos chunkPos = chunkPrimer.getPos();
@@ -548,7 +549,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 		ChunkPrimer primer = (ChunkPrimer)chunkPrimer;
 		Heightmap oceanFloorHeightmap = primer.getOrCreateHeightmapUnprimed(Heightmap.Type.OCEAN_FLOOR_WG);
 		Heightmap surfaceHeightmap = primer.getOrCreateHeightmapUnprimed(Heightmap.Type.WORLD_SURFACE_WG);
-		BlockPos.Mutable mutablePos = new BlockPos.Mutable();
+		BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 		ObjectListIterator<StructurePiece> structurePiecesIterator = structurePieces.iterator();
 		ObjectListIterator<JigsawJunction> jigsawJunctionsIterator = jigsawJunctions.iterator();
 
@@ -583,24 +584,24 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 						}
 
 						double yNoiseStepProgress = (double)yNoiseStepPos / (double)verticalNoiseGranularity;
-						double lerpYNoise = MathHelper.lerp(yNoiseStepProgress, yNoiseMin, yNoiseMax);
-						double lerpXYNoise = MathHelper.lerp(yNoiseStepProgress, xAdjacentYNoiseMin, xAdjacentYNoiseMax);
-						double lerpZYNoise = MathHelper.lerp(yNoiseStepProgress, zAdjacentYNoiseMin, zAdjacentYNoiseMax);
-						double lerpXYZNoise = MathHelper.lerp(yNoiseStepProgress, xzAdjacentYNoiseMin, xzAdjacentYNoiseMax);
+						double lerpYNoise = Mth.lerp(yNoiseStepProgress, yNoiseMin, yNoiseMax);
+						double lerpXYNoise = Mth.lerp(yNoiseStepProgress, xAdjacentYNoiseMin, xAdjacentYNoiseMax);
+						double lerpZYNoise = Mth.lerp(yNoiseStepProgress, zAdjacentYNoiseMin, zAdjacentYNoiseMax);
+						double lerpXYZNoise = Mth.lerp(yNoiseStepProgress, xzAdjacentYNoiseMin, xzAdjacentYNoiseMax);
 
 						for(int xNoiseStepPos = 0; xNoiseStepPos < horizontalNoiseGranularity; ++xNoiseStepPos) {
 							int posX = chunkStartPosX + noisePosX * horizontalNoiseGranularity + xNoiseStepPos;
 							int chunkRelativePosX = posX & 15;
 							double xNoiseStepProgress = (double)xNoiseStepPos / (double)horizontalNoiseGranularity;
-							double xLerpYNoise = MathHelper.lerp(xNoiseStepProgress, lerpYNoise, lerpXYNoise);
-							double zLerpYNoise = MathHelper.lerp(xNoiseStepProgress, lerpZYNoise, lerpXYZNoise);
+							double xLerpYNoise = Mth.lerp(xNoiseStepProgress, lerpYNoise, lerpXYNoise);
+							double zLerpYNoise = Mth.lerp(xNoiseStepProgress, lerpZYNoise, lerpXYZNoise);
 
 							for(int zNoiseStepPos = 0; zNoiseStepPos < horizontalNoiseGranularity; ++zNoiseStepPos) {
 								int posZ = chunkStartPosZ + noisePosZ * horizontalNoiseGranularity + zNoiseStepPos;
 								int chunkRelativePosZ = posZ & 15;
 								double zNoiseStepProgress = (double)zNoiseStepPos / (double)horizontalNoiseGranularity;
-								double finalLerpNoise = MathHelper.lerp(zNoiseStepProgress, xLerpYNoise, zLerpYNoise);
-								double lerpedNoisePos = MathHelper.clamp(finalLerpNoise / 200d, -1, 1);
+								double finalLerpNoise = Mth.lerp(zNoiseStepProgress, xLerpYNoise, zLerpYNoise);
+								double lerpedNoisePos = Mth.clamp(finalLerpNoise / 200d, -1, 1);
 
 								int structureYOffset;
 								int structureZOffset;
@@ -630,7 +631,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 								if (state != AIR) {
 									mutablePos.set(posX, posY, posZ);
 
-									if (state.getLightValue(primer, mutablePos) != 0)
+									if (state.getLightEmission(primer, mutablePos) != 0)
 										primer.addLight(mutablePos);
 
 									chunkSection.setBlockState(chunkRelativePosX, chunkSectionRelativePosY, chunkRelativePosZ, state, false);
@@ -669,7 +670,7 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 		double yCenter = (double)y + 0.5D;
 		double ySquared = yCenter * yCenter;
 		double d3 = Math.pow(Math.E, -(ySquared / 16.0D + xzSquared / 16.0D));
-		double d4 = -yCenter * MathHelper.fastInvSqrt(ySquared / 2.0D + xzSquared / 2.0D) / 2.0D;
+		double d4 = -yCenter * Mth.fastInvSqrt(ySquared / 2.0D + xzSquared / 2.0D) / 2.0D;
 
 		return d4 * d3;
 	}
@@ -685,8 +686,8 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 	}
 
 	@Override
-	public List<MobSpawnInfo.Spawners> getMobsAt(Biome biome, StructureManager structureManager, EntityClassification classification, BlockPos pos) {
-		List<MobSpawnInfo.Spawners> spawns = net.minecraftforge.common.world.StructureSpawnManager.getStructureSpawns(structureManager, classification, pos);
+	public List<MobSpawnSettings.SpawnerData> getMobsAt(Biome biome, StructureManager structureManager, MobCategory classification, BlockPos pos) {
+		List<MobSpawnSettings.SpawnerData> spawns = net.minecraftforge.common.world.StructureSpawnManager.getStructureSpawns(structureManager, classification, pos);
 
 		if (spawns != null)
 			return spawns;
@@ -707,3 +708,4 @@ public class CavernsChunkGenerator extends ChunkGenerator {
 		}
 	}
 }
+*/

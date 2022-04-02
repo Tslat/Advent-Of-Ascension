@@ -1,8 +1,8 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
@@ -37,7 +37,7 @@ public class ToastPopupPacket implements AoAPacket {
 	}
 
 	@Override
-	public void encode(PacketBuffer buffer) {
+	public void encode(FriendlyByteBuf buffer) {
 		buffer.writeUtf(type.toString());
 
 		switch (type) {
@@ -56,7 +56,7 @@ public class ToastPopupPacket implements AoAPacket {
 		}
 	}
 
-	public static ToastPopupPacket decode(PacketBuffer buffer) {
+	public static ToastPopupPacket decode(FriendlyByteBuf buffer) {
 		ToastPopupType type = ToastPopupType.valueOf(buffer.readUtf(32767));
 
 		switch (type) {

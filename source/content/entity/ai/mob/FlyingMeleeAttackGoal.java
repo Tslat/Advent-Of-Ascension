@@ -1,10 +1,10 @@
 package net.tslat.aoa3.content.entity.ai.mob;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.pathfinding.Path;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.pathfinder.Path;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 
 import java.util.EnumSet;
@@ -56,7 +56,7 @@ public class FlyingMeleeAttackGoal extends Goal {
 		if (!this.retainTarget)
 			return !this.taskOwner.getNavigation().isDone();
 
-		return !(target instanceof PlayerEntity) || !target.isSpectator() && !((PlayerEntity)target).isCreative();
+		return !(target instanceof Player) || !target.isSpectator() && !((Player)target).isCreative();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class FlyingMeleeAttackGoal extends Goal {
 	public void stop() {
 		LivingEntity target = this.taskOwner.getTarget();
 
-		if (target instanceof PlayerEntity && (target.isSpectator() || ((PlayerEntity)target).isCreative()))
+		if (target instanceof Player && (target.isSpectator() || ((Player)target).isCreative()))
 			this.taskOwner.setTarget(null);
 
 		this.taskOwner.getNavigation().stop();
@@ -90,7 +90,7 @@ public class FlyingMeleeAttackGoal extends Goal {
 		this.taskOwner.getLookControl().setLookAt(target, 30, 30);
 		this.delayTicks--;
 
-		if ((this.retainTarget || this.taskOwner.getSensing().canSee(target)) &&
+		if ((this.retainTarget || this.taskOwner.getSensing().hasLineOfSight(target)) &&
 				this.delayTicks <= 0 &&
 				(this.targetX == 0 && this.targetY == 0 && this.targetZ == 0 || target.distanceToSqr(this.targetX, this.targetY, this.targetZ) >= 1 ||
 						this.taskOwner.getRandom().nextFloat() < 0.05f)) {
@@ -126,7 +126,7 @@ public class FlyingMeleeAttackGoal extends Goal {
 
 		if (attackDistance <= reach & this.attackCooldown <= 0) {
 			this.attackCooldown = 20;
-			this.taskOwner.swing(Hand.MAIN_HAND);
+			this.taskOwner.swing(InteractionHand.MAIN_HAND);
 			this.taskOwner.doHurtTarget(target);
 		}
 	}

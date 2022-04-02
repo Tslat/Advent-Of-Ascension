@@ -4,19 +4,17 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 
 import java.util.Locale;
 
-import net.minecraft.particles.IParticleData.IDeserializer;
-
 public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticleType.Data> {
-	public static final Codec<PortalFloaterParticleType.Data> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+	public static final Codec<Data> CODEC = RecordCodecBuilder.create(instance -> instance.group(
 			Codec.INT.fieldOf("portal_x").forGetter(data -> data.portalPos.getX()),
 			Codec.INT.fieldOf("portal_y").forGetter(data -> data.portalPos.getY()),
 			Codec.INT.fieldOf("portal_z").forGetter(data -> data.portalPos.getZ()),
@@ -24,7 +22,7 @@ public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticl
 			Codec.FLOAT.fieldOf("green").forGetter(data -> data.green),
 			Codec.FLOAT.fieldOf("blue").forGetter(data -> data.blue),
 			Codec.FLOAT.fieldOf("alpha").forGetter(data -> data.alpha)
-	).apply(instance, (x, y, z, red, green, blue, alpha) -> new PortalFloaterParticleType.Data(new BlockPos(x, y, z), red, green, blue, alpha)));
+	).apply(instance, (x, y, z, red, green, blue, alpha) -> new Data(new BlockPos(x, y, z), red, green, blue, alpha)));
 
 	public PortalFloaterParticleType(boolean alwaysShow) {
 		super(alwaysShow, Data.DESERIALIZER);
@@ -35,7 +33,7 @@ public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticl
 		return CODEC;
 	}
 
-	public static class Data implements IParticleData {
+	public static class Data implements ParticleOptions {
 		public final BlockPos portalPos;
 		public final float red;
 		public final float green;
@@ -60,7 +58,7 @@ public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticl
 		}
 
 		@Override
-		public void writeToNetwork(PacketBuffer buffer) {
+		public void writeToNetwork(FriendlyByteBuf buffer) {
 			buffer.writeBlockPos(portalPos);
 			buffer.writeFloat(red);
 			buffer.writeFloat(green);
@@ -73,7 +71,7 @@ public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticl
 			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getKey(getType()), red, green, blue, alpha);
 		}
 
-		public static final IDeserializer<Data> DESERIALIZER = new IDeserializer<Data>() {
+		public static final Deserializer<Data> DESERIALIZER = new Deserializer<Data>() {
 			@Override
 			public Data fromCommand(ParticleType<Data> particleType, StringReader reader) throws CommandSyntaxException {
 				reader.expect(' ');
@@ -95,7 +93,7 @@ public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticl
 			}
 
 			@Override
-			public Data fromNetwork(ParticleType<Data> particleType, PacketBuffer buffer) {
+			public Data fromNetwork(ParticleType<Data> particleType, FriendlyByteBuf buffer) {
 				return new Data(buffer.readBlockPos(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 			}
 		};

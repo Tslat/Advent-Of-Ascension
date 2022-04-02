@@ -1,26 +1,23 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.content.entity.boss.ClunkheadEntity;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 public class ClunkheadAltar extends BossAltarBlock {
 	public ClunkheadAltar() {
@@ -28,17 +25,17 @@ public class ClunkheadAltar extends BossAltarBlock {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (getActivationItem() != null && heldItem.getItem() != getActivationItem())
-			return ActionResultType.PASS;
+			return InteractionResult.PASS;
 
-		if (player instanceof ServerPlayerEntity) {
+		if (player instanceof ServerPlayer) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					PlayerUtil.notifyPlayer((ServerPlayerEntity)player, new TranslationTextComponent("message.feedback.spawnBoss.difficultyFail"));
-					return ActionResultType.FAIL;
+					PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail"));
+					return InteractionResult.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {
 					if (!player.isCreative())
@@ -49,20 +46,20 @@ public class ClunkheadAltar extends BossAltarBlock {
 			}
 		}
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 
 	@Override
-	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		ClunkheadEntity clunkhead = new ClunkheadEntity(AoAEntities.Mobs.CLUNKHEAD.get(), player.level);
+	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
+		/*ClunkheadEntity clunkhead = new ClunkheadEntity(AoAMobs.CLUNKHEAD.get(), player.level);
 
 		clunkhead.teleportTo(blockPos.getX() - 1, blockPos.above().getY() + 1, blockPos.getZ() - 1);
 		player.level.addFreshEntity(clunkhead);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAEntities.Mobs.CLUNKHEAD.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAMobs.CLUNKHEAD.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);*/
 	}
 
 	@Override
-	protected boolean checkActivationConditions(PlayerEntity player, Hand hand, BlockState state, BlockPos pos) {
+	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
 		return WorldUtil.isWorld(player.level, AoADimensions.RUNANDOR.key);
 	}
 

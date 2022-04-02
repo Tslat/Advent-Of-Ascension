@@ -1,8 +1,8 @@
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -23,7 +23,7 @@ public class DexteritySkill extends AoASkill.Instance {
 		super(AoASkills.DEXTERITY.get(), plData, jsonData);
 	}
 
-	public DexteritySkill(CompoundNBT nbtData) {
+	public DexteritySkill(CompoundTag nbtData) {
 		super(AoASkills.DEXTERITY.get(), nbtData);
 	}
 
@@ -37,10 +37,10 @@ public class DexteritySkill extends AoASkill.Instance {
 		if (!canGainXp(true) || ev.player.isPassenger())
 			return;
 
-		Vector3d pos = ev.player.position();
+		Vec3 pos = ev.player.position();
 
 		if (ev.player.isSprinting()) {
-			if (ev.player.onGround || ev.player.isSwimming()) {
+			if (ev.player.isOnGround() || ev.player.isSwimming()) {
 				if (lastX != 0 && lastZ != 0) {
 					double distX = pos.x() - this.lastX;
 					double distZ = pos.z() - this.lastZ;

@@ -1,18 +1,18 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.content.item.misc.InfusionStone;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -25,19 +25,19 @@ public class InfusionTable extends Block {
 	}
 
 	@Override
-	public ActionResultType use(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
-		if (player instanceof ServerPlayerEntity) {
+	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (player instanceof ServerPlayer) {
 			ItemStack stack = player.getItemInHand(hand);
 			Item item = stack.getItem();
 
 			if (item instanceof InfusionStone) {
-				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
+				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayer)player);
 				InfusionStone stone = (InfusionStone)item;
 				int count = stack.getCount();
 
 				/*if (player.isCreative() || plData.stats().getLevel(Skills.INFUSION) >= stone.getLvl()) {
 					plData.stats().addXp(Skills.INFUSION, stone.getXp() * count, false, false);
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_INFUSION_TABLE_CONVERT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_INFUSION_TABLE_CONVERT.get(), SoundSource.BLOCKS, 1.0f, 1.0f);
 
 					int chanceMod = plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.INFUSION ? 33 : 100;
 					int powerStoneCount = 0;
@@ -61,10 +61,10 @@ public class InfusionTable extends Block {
 				}*/ // TODO
 			}
 			else {
-				InfusionTableContainer.openContainer((ServerPlayerEntity)player, pos);
+				InfusionTableContainer.openContainer((ServerPlayer)player, pos);
 			}
 		}
 
-		return ActionResultType.SUCCESS;
+		return InteractionResult.SUCCESS;
 	}
 }

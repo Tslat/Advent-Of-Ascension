@@ -3,21 +3,20 @@ package net.tslat.aoa3.content.loottable.condition;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.tslat.aoa3.common.registration.AoALootOperations;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
 
-public class PlayerHasLevel implements ILootCondition {
+public class PlayerHasLevel implements LootItemCondition {
 	private final AoASkill skill;
 	private final int level;
 
@@ -27,18 +26,18 @@ public class PlayerHasLevel implements ILootCondition {
 	}
 
 	@Override
-	public LootConditionType getType() {
+	public LootItemConditionType getType() {
 		return AoALootOperations.LootConditions.PLAYER_HAS_LEVEL;
 	}
 
 	@Override
 	public boolean test(LootContext lootContext) {
-		Entity entity = lootContext.getParamOrNull(LootParameters.KILLER_ENTITY);
+		Entity entity = lootContext.getParamOrNull(LootContextParams.KILLER_ENTITY);
 
 		if (entity == null)
-			entity = lootContext.getParamOrNull(LootParameters.THIS_ENTITY);
+			entity = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
 
-		return entity instanceof ServerPlayerEntity && PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)entity, skill, level);
+		return entity instanceof ServerPlayer && PlayerUtil.doesPlayerHaveLevel((ServerPlayer)entity, skill, level);
 	}
 
 	public AoASkill getSkill() {
@@ -49,7 +48,7 @@ public class PlayerHasLevel implements ILootCondition {
 		return this.level;
 	}
 
-	public static class Serializer implements ILootSerializer<PlayerHasLevel> {
+	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<PlayerHasLevel> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasLevel playerHasLevel, JsonSerializationContext jsonSerializationContext) {
 			json.addProperty("skill", playerHasLevel.skill.getRegistryName().toString());
@@ -58,7 +57,7 @@ public class PlayerHasLevel implements ILootCondition {
 
 		@Override
 		public PlayerHasLevel deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
-			return new PlayerHasLevel(AoASkills.getSkill(new ResourceLocation(JSONUtils.getAsString(json, "skill"))), JSONUtils.getAsInt(json, "level"));
+			return new PlayerHasLevel(AoASkills.getSkill(new ResourceLocation(GsonHelper.getAsString(json, "skill"))), GsonHelper.getAsInt(json, "level"));
 		}
 	}
 }

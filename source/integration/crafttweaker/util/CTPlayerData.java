@@ -1,13 +1,13 @@
 package net.tslat.aoa3.integration.crafttweaker.util;
 
 import com.blamejared.crafttweaker.api.item.IItemStack;
-import com.blamejared.crafttweaker.impl.item.MCItemStack;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import com.blamejared.crafttweaker.api.item.MCItemStack;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -32,11 +32,11 @@ public class CTPlayerData {
 	}
 
 	@Nullable
-	public static CTPlayerData getForPlayer(PlayerEntity player) {
+	public static CTPlayerData getForPlayer(Player player) {
 		if (player.level.isClientSide())
 			return null;
 
-		return new CTPlayerData(PlayerUtil.getAdventPlayer((ServerPlayerEntity)player));
+		return new CTPlayerData(PlayerUtil.getAdventPlayer((ServerPlayer)player));
 	}
 
 	@ZenCodeType.Method
@@ -175,7 +175,7 @@ public class CTPlayerData {
 		if (plData.equipment().getCurrentFullArmourSet() == null)
 			return MCItemStack.EMPTY.get();
 
-		return new MCItemStack(new ItemStack(plData.player().getItemBySlot(EquipmentSlotType.FEET).getItem()));
+		return new MCItemStack(new ItemStack(plData.player().getItemBySlot(EquipmentSlot.FEET).getItem()));
 	}
 
 	private boolean validatePlayerData() {
@@ -183,7 +183,7 @@ public class CTPlayerData {
 			if (backupPlayerUUID == null)
 				return false;
 
-			ServerPlayerEntity pl = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(backupPlayerUUID);
+			ServerPlayer pl = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayer(backupPlayerUUID);
 
 			if (pl == null)
 				return false;

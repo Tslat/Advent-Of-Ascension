@@ -1,15 +1,16 @@
+/*
 package net.tslat.aoa3.client.render.entity.npc.ambient;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.Pose;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.client.event.RenderNameplateEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
@@ -29,29 +30,29 @@ import java.awt.*;
 import java.util.Collections;
 
 public class DryadSpriteRenderer extends GeoEntityRenderer<DryadSpriteEntity> {
-	public DryadSpriteRenderer(EntityRendererManager renderManager, float shadowSize) {
+	public DryadSpriteRenderer(EntityRendererProvider.Context renderManager, float shadowSize) {
 		super(renderManager, new DryadSpriteModel());
 
 		shadowRadius = shadowSize;
 	}
 
 	@Override
-	public void render(DryadSpriteEntity entity, float entityYaw, float partialTicks, MatrixStack stack, IRenderTypeBuffer bufferIn, int packedLightIn) {
+	public void render(DryadSpriteEntity entity, float entityYaw, float partialTicks, PoseStack stack, MultiBufferSource bufferIn, int packedLightIn) {
 		stack.pushPose();
 		boolean shouldSit = entity.isPassenger() && (entity.getVehicle() != null && entity.getVehicle().shouldRiderSit());
 		EntityModelData entityModelData = new EntityModelData();
 		entityModelData.isSitting = shouldSit;
 		entityModelData.isChild = entity.isBaby();
 
-		float lerpBodyRot = MathHelper.rotLerp(partialTicks, entity.yBodyRotO, entity.yBodyRot);
-		float lerpHeadRot = MathHelper.rotLerp(partialTicks, entity.yHeadRotO, entity.yHeadRot);
+		float lerpBodyRot = Mth.rotLerp(partialTicks, entity.yBodyRotO, entity.yBodyRot);
+		float lerpHeadRot = Mth.rotLerp(partialTicks, entity.yHeadRotO, entity.yHeadRot);
 		float netHeadYaw = lerpHeadRot - lerpBodyRot;
 
 		if (shouldSit && entity.getVehicle() instanceof LivingEntity) {
 			LivingEntity vehicle = (LivingEntity) entity.getVehicle();
-			lerpBodyRot = MathHelper.rotLerp(partialTicks, vehicle.yBodyRotO, vehicle.yBodyRot);
+			lerpBodyRot = Mth.rotLerp(partialTicks, vehicle.yBodyRotO, vehicle.yBodyRot);
 			netHeadYaw = lerpHeadRot - lerpBodyRot;
-			float finalHeadYaw = MathHelper.clamp(MathHelper.wrapDegrees(netHeadYaw), -85, 85);
+			float finalHeadYaw = Mth.clamp(Mth.wrapDegrees(netHeadYaw), -85, 85);
 
 			lerpBodyRot = lerpHeadRot - finalHeadYaw;
 
@@ -61,7 +62,7 @@ public class DryadSpriteRenderer extends GeoEntityRenderer<DryadSpriteEntity> {
 			netHeadYaw = lerpHeadRot - lerpBodyRot;
 		}
 
-		float headPitch = MathHelper.lerp(partialTicks, entity.xRotO, entity.xRot);
+		float headPitch = Mth.lerp(partialTicks, entity.xRotO, entity.getXRot());
 
 		if (entity.getPose() == Pose.SLEEPING) {
 			Direction direction = entity.getBedOrientation();
@@ -80,7 +81,7 @@ public class DryadSpriteRenderer extends GeoEntityRenderer<DryadSpriteEntity> {
 		float limbSwing = 0;
 
 		if (!shouldSit && entity.isAlive()) {
-			limbSwingAmount = MathHelper.lerp(partialTicks, entity.animationSpeedOld, entity.animationSpeed);
+			limbSwingAmount = Mth.lerp(partialTicks, entity.animationSpeedOld, entity.animationSpeed);
 			limbSwing = entity.animationPosition - entity.animationSpeed * (1.0F - partialTicks);
 
 			if (entity.isBaby())
@@ -140,3 +141,4 @@ public class DryadSpriteRenderer extends GeoEntityRenderer<DryadSpriteEntity> {
 		return OverlayTexture.pack(OverlayTexture.u(u), OverlayTexture.v((dryad.hurtTime > 0 || dryad.deathTime > 0) && !dryad.successful));
 	}
 }
+*/

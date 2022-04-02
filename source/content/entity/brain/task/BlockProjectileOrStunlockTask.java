@@ -1,26 +1,26 @@
 package net.tslat.aoa3.content.entity.brain.task;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleStatus;
-import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
-import net.minecraft.entity.ai.brain.task.Task;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.behavior.Behavior;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.memory.MemoryStatus;
 
 import java.util.function.Predicate;
 
-public class BlockProjectileOrStunlockTask<E extends MobEntity> extends Task<E> {
+public class BlockProjectileOrStunlockTask<E extends Mob> extends Behavior<E> {
 	public BlockProjectileOrStunlockTask() {
 		this(LivingEntity::isAlive, false);
 	}
 
 	public BlockProjectileOrStunlockTask(Predicate<E> canRetaliatePredicate, boolean overrideCurrentTarget) {
-		super(ImmutableMap.of(MemoryModuleType.ATTACK_TARGET, MemoryModuleStatus.VALUE_PRESENT));
+		super(ImmutableMap.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT));
 	}
 
 	@Override
-	protected void start(ServerWorld pLevel, E entity, long pGameTime) {
+	protected void start(ServerLevel pLevel, E entity, long pGameTime) {
 		entity.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, entity.getBrain().getMemory(MemoryModuleType.HURT_BY_ENTITY));
 	}
 }

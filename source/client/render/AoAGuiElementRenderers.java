@@ -1,13 +1,12 @@
 package net.tslat.aoa3.client.render;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MainWindow;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.gui.OverlayRegistry;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.render.custom.AoAResourceRenderer;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
@@ -27,8 +26,11 @@ public final class AoAGuiElementRenderers {
 	private static final HashMap<AoASkill, AoASkillRenderer> SKILL_RENDERERS = new HashMap<AoASkill, AoASkillRenderer>();
 	private static final HashMap<AoAResource, AoAResourceRenderer> RESOURCE_RENDERERS = new HashMap<AoAResource, AoAResourceRenderer>();
 
+	public static int resourcesRenderHeightOffset = 0;
+
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGameOverlayEvent.Post.class, AoAGuiElementRenderers::onHudRender);
+		OverlayRegistry.registerOverlayTop("AoA Resources", AoAGuiElementRenderers::renderResources);
+		OverlayRegistry.registerOverlayTop("AoA Skills", AoAGuiElementRenderers::renderSkills);
 		registerResourceRenderer(AoAResources.ENERGY.get(), new EnergyResourceRenderer());
 	}
 
@@ -48,12 +50,17 @@ public final class AoAGuiElementRenderers {
 		SKILL_RENDERERS.put(skill, renderer);
 	}
 
-	private static int renderResources(Minecraft mc, MatrixStack matrix, MainWindow window, float partialTicks) {
+	private static void renderResources(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+		Minecraft mc = Minecraft.getInstance();
+		Window window = mc.getWindow();
 		int horizontalAdjuster = AoAConfig.CLIENT.hudResourcesHorizontal.get() ? 1 : 0;
 		int verticalAdjuster = horizontalAdjuster == 1 ? 0 : 1;
 		int potionRenderOffset = 0;
 		int x = 0;
 		int y = 0;
+
+		if (mc.player == null || mc.player.isSpectator())
+			return;
 
 		switch (AoAConfig.CLIENT.hudResourcesPosition.get()) {
 			case Bottom_Right:
@@ -76,8 +83,8 @@ public final class AoAGuiElementRenderers {
 				break;
 		}
 
-		matrix.pushPose();
-		matrix.translate(x, y, 0);
+		poseStack.pushPose();
+		poseStack.translate(x, y, 0);
 
 		x = 0;
 		y = 0;
@@ -91,34 +98,40 @@ public final class AoAGuiElementRenderers {
 				y += (renderer.hudRenderHeight(resource) * verticalAdjuster);
 				lastHeight = y + renderer.hudRenderHeight(resource);
 
-				matrix.pushPose();
-				matrix.translate(x, y, 0);
-				renderer.renderInHud(matrix, resource, partialTicks, null);
-				matrix.popPose();
+				poseStack.pushPose();
+				poseStack.translate(x, y, 0);
+				renderer.renderInHud(poseStack, resource, partialTick, null);
+				poseStack.popPose();
 			}
 
 			y = lastHeight;
 		}
 		else if (AoAKeybinds.statusResourceGuiMessage & AoAKeybinds.RESOURCE_GUI.getKey().getValue() != -1) {
-			matrix.scale(0.5f, 0.5f, 0);
-			TranslationTextComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", AoAKeybinds.RESOURCE_GUI.getTranslatedKeyMessage());
+			poseStack.scale(0.5f, 0.5f, 0);
+			TranslatableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", AoAKeybinds.RESOURCE_GUI.getTranslatedKeyMessage());
 
-			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)((y + 4) / 2f), 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)((y + 4) / 2f), 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			y = y + 4 + mc.font.lineHeight / 2;
 		}
 
-		matrix.popPose();
+		poseStack.popPose();
 
-		return (AoAConfig.CLIENT.hudResourcesPosition.get() == AoAResourceRenderer.HudResourcesPosition.Top_Right ? y : 0) + potionRenderOffset;
+		resourcesRenderHeightOffset = (AoAConfig.CLIENT.hudResourcesPosition.get() == AoAResourceRenderer.HudResourcesPosition.Top_Right ? y : 0) + potionRenderOffset;
 	}
 
-	private static void renderSkills(Minecraft mc, MatrixStack matrix, MainWindow window, float partialTicks) {
+	private static void renderSkills(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+		Minecraft mc = Minecraft.getInstance();
+		Window window = mc.getWindow();
 		int x = 0;
 		int y = 0;
 
-		matrix.pushPose();
-		matrix.translate(window.getGuiScaledWidth(), 0, 0);
+		if (mc.player == null || mc.player.isSpectator())
+			return;
+
+		poseStack.pushPose();
+		poseStack.translate(window.getGuiScaledWidth(), resourcesRenderHeightOffset, 0);
+		RenderSystem.disableDepthTest();
 
 		if (AoAKeybinds.statusSkillGui) {
 			int maxHeight = 0;
@@ -138,48 +151,20 @@ public final class AoAGuiElementRenderers {
 					cumulativeXOffset = 0;
 				}
 
-				matrix.pushPose();
-				matrix.translate(x, y, 0);
-				renderer.renderInHud(matrix, skill, partialTicks, AoAConfig.CLIENT.hudSkillProgressRenderType.get(), true);
-				matrix.popPose();
+				poseStack.pushPose();
+				poseStack.translate(x, y, 0);
+				renderer.renderInHud(poseStack, skill, partialTick, AoAConfig.CLIENT.hudSkillProgressRenderType.get(), true);
+				poseStack.popPose();
 			}
 		}
 		else if (AoAKeybinds.statusSkillGuiMessage & AoAKeybinds.SKILL_GUI.getKey().getValue() != -1) {
-			matrix.scale(0.5f, 0.5f, 1);
-			TranslationTextComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.skills.showtip", AoAKeybinds.SKILL_GUI.getTranslatedKeyMessage());
+			poseStack.scale(0.5f, 0.5f, 1);
+			TranslatableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.skills.showtip", AoAKeybinds.SKILL_GUI.getTranslatedKeyMessage());
 
-			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)(y / 2f) + 1, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)(y / 2f) + 1, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 		}
 
-		matrix.popPose();
-	}
-
-	private static void onHudRender(final RenderGameOverlayEvent.Post ev) {
-		if (ev.getType() == RenderGameOverlayEvent.ElementType.ALL) {
-			Minecraft mc = Minecraft.getInstance();
-
-			if (mc.player == null || mc.player.isSpectator())
-				return;
-
-			MatrixStack matrix = ev.getMatrixStack();
-
-			matrix.pushPose();
-			RenderSystem.disableDepthTest();
-			RenderSystem.enableAlphaTest();
-
-			int resourcesOffset = renderResources(mc, matrix, mc.getWindow(), ev.getPartialTicks());
-
-			if (resourcesOffset == 0)
-				resourcesOffset = RenderUtil.getPotionGuiRenderOffset();
-
-			matrix.translate(0, resourcesOffset, 0);
-
-			renderSkills(mc, matrix, mc.getWindow(), ev.getPartialTicks());
-
-			RenderSystem.enableDepthTest();
-			RenderSystem.disableAlphaTest();
-
-			matrix.popPose();
-		}
+		RenderSystem.enableDepthTest();
+		poseStack.popPose();
 	}
 }

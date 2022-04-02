@@ -1,15 +1,15 @@
 package net.tslat.aoa3.client.particle;
 
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 import javax.annotation.Nullable;
 
-public class RainbowSparklerParticle extends SpriteTexturedParticle {
-	private final IAnimatedSprite sprite;
+public class RainbowSparklerParticle extends TextureSheetParticle {
+	private final SpriteSet sprite;
 
-	public RainbowSparklerParticle(ClientWorld world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, IAnimatedSprite sprite, float scale, float ageModifier) {
+	public RainbowSparklerParticle(ClientLevel world, double posX, double posY, double posZ, double velocityX, double velocityY, double velocityZ, SpriteSet sprite, float scale, float ageModifier) {
 		super(world, posX, posY, posZ, velocityX, velocityY, velocityZ);
 
 		this.sprite = sprite;
@@ -27,8 +27,8 @@ public class RainbowSparklerParticle extends SpriteTexturedParticle {
 	}
 
 	@Override
-	public IParticleRenderType getRenderType() {
-		return IParticleRenderType.PARTICLE_SHEET_OPAQUE;
+	public ParticleRenderType getRenderType() {
+		return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
 	}
 
 	@Override
@@ -54,16 +54,16 @@ public class RainbowSparklerParticle extends SpriteTexturedParticle {
 			remove();
 	}
 
-	public static class Factory implements IParticleFactory<CustomisableParticleType.Data> {
-		private final IAnimatedSprite sprite;
+	public static class Factory implements ParticleProvider<CustomisableParticleType.Data> {
+		private final SpriteSet sprite;
 
-		public Factory(IAnimatedSprite sprite) {
+		public Factory(SpriteSet sprite) {
 			this.sprite = sprite;
 		}
 
 		@Nullable
 		@Override
-		public Particle createParticle(CustomisableParticleType.Data data, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
+		public Particle createParticle(CustomisableParticleType.Data data, ClientLevel world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
 			return new RainbowSparklerParticle(world, x, y, z, velocityX, velocityY, velocityZ, sprite, data.scale, data.ageModifier);
 		}
 	}

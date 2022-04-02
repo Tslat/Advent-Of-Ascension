@@ -1,20 +1,20 @@
 package net.tslat.aoa3.client.gui.adventgui;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.gui.IGuiEventListener;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.renderer.ItemRenderer;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.events.GuiEventListener;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -28,16 +28,17 @@ import net.tslat.aoa3.util.RenderUtil;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AdventGuiTabLore extends Screen {
 	private int adjustedMouseX;
 	private int adjustedMouseY;
 
-	private static final ConcurrentHashMap<ResourceLocation, ItemStack> loreBooks = new ConcurrentHashMap<ResourceLocation, ItemStack>();
+	private static final ConcurrentHashMap<ResourceLocation, ItemStack> loreBooks = new ConcurrentHashMap<>();
 
 	protected AdventGuiTabLore() {
-		super(new TranslationTextComponent("gui.aoa3.adventGui.lore"));
+		super(new TranslatableComponent("gui.aoa3.adventGui.lore"));
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class AdventGuiTabLore extends Screen {
 				index = 0;
 			}
 
-			addWidget(new PatchouliBook(bookEntry.getKey(), bookEntry.getValue(), AdventMainGui.scaledTabRootX + accumWidth + 25 + 25 * index, height));
+			addRenderableWidget(new PatchouliBook(bookEntry.getKey(), bookEntry.getValue(), AdventMainGui.scaledTabRootX + accumWidth + 25 + 25 * index, height));
 
 			accumWidth += width;
 			index++;
@@ -63,22 +64,22 @@ public class AdventGuiTabLore extends Screen {
 	}
 
 	@Override
-	public void render(MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
-
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
 		this.adjustedMouseX = (int)(mouseX * (1 / AdventMainGui.SCALE));
 		this.adjustedMouseY = (int)(mouseY * (1 / AdventMainGui.SCALE));
 
-		for (IGuiEventListener book : children()) {
-			((PatchouliBook)book).render(matrixStack, mouseX, mouseY, partialTicks);
-		}
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
+
+		//for (GuiEventListener book : children()) {
+		//	((PatchouliBook)book).render(matrixStack, mouseX, mouseY, partialTicks);
+		//}
 	}
 
 	@Override
 	public boolean mouseReleased(double mouseX, double mouseY, int button) {
 		setDragging(false);
 
-		for (IGuiEventListener listener : children()) {
+		for (GuiEventListener listener : children()) {
 			if (listener.mouseReleased(mouseX, mouseY, button))
 				return true;
 		}
@@ -99,7 +100,7 @@ public class AdventGuiTabLore extends Screen {
 				continue;
 
 			ItemStack book = new ItemStack(guideBook);
-			CompoundNBT tag = book.getOrCreateTag();
+			CompoundTag tag = book.getOrCreateTag();
 
 			tag.putString("patchouli:book", id.toString());
 			loreBooks.put(id, book);
@@ -111,7 +112,7 @@ public class AdventGuiTabLore extends Screen {
 			AoAPackets.messageServer(new PatchouliBookOpenPacket(id));
 	}
 
-	private static class PatchouliBook extends Widget {
+	private static class PatchouliBook extends AbstractWidget {
 		private final ResourceLocation id;
 		private final ItemStack book;
 		private final int titleWidth;
@@ -147,15 +148,15 @@ public class AdventGuiTabLore extends Screen {
 							mouseY / AdventMainGui.SCALE < AdventMainGui.scaledRootY ||
 							mouseX / AdventMainGui.SCALE > AdventMainGui.scaledRootX + AdventMainGui.BACKGROUND_TEXTURE_WIDTH ||
 							mouseY / AdventMainGui.SCALE > AdventMainGui.scaledRootY + AdventMainGui.BACKGROUND_TEXTURE_HEIGHT) {
-						PlayerEntity pl = Minecraft.getInstance().player;
+						Player pl = Minecraft.getInstance().player;
 						Item patchouliBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
 
 						if (patchouliBook == null || patchouliBook == Items.AIR)
 							return true;
 
-						for (ItemStack stack : pl.inventory.items) {
+						for (ItemStack stack : pl.getInventory().items) {
 							if (stack.getItem() == patchouliBook && stack.hasTag()) {
-								CompoundNBT bookTag = stack.getTag();
+								CompoundTag bookTag = stack.getTag();
 
 								if (bookTag.contains("patchouli:book") && bookTag.getString("patchouli:book").equals(id.toString()))
 									return true;
@@ -196,11 +197,11 @@ public class AdventGuiTabLore extends Screen {
 		}
 
 		@Override
-		public void render(MatrixStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 			if (this.visible) {
 				this.isHovered = isMouseOver(mouseX, mouseY);
 
-				FontRenderer fontRenderer = Minecraft.getInstance().font;
+				Font fontRenderer = Minecraft.getInstance().font;
 				ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 				int itemX = mouseHolding ? (int)(mouseX - 16 * AdventMainGui.SCALE) : (int)((x + titleWidth / 2f) * AdventMainGui.SCALE);
 				int itemY = mouseHolding ? (int)(mouseY - 16 * AdventMainGui.SCALE) : (int)(((y + 8 * 1.5f) + 10) * AdventMainGui.SCALE);
@@ -213,10 +214,13 @@ public class AdventGuiTabLore extends Screen {
 				if (isHovered && !mouseHolding) {
 					matrix.pushPose();
 					matrix.scale(1.5f, 1.5f, 1.5f);
-					GuiUtils.drawHoveringText(book, matrix, Collections.singletonList(new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.clickBook")), (int)(mouseX / AdventMainGui.SCALE / 1.5f), (int)(mouseY / AdventMainGui.SCALE / 1.5f), AdventMainGui.GUI_WIDTH, AdventMainGui.GUI_HEIGHT, -1, fontRenderer);
+					AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.clickBook")), Optional.empty(), (int)(mouseX / AdventMainGui.SCALE / 1.5f), (int)(mouseY / AdventMainGui.SCALE / 1.5f), fontRenderer, book);
 					matrix.popPose();
 				}
 			}
 		}
+
+		@Override
+		public void updateNarration(NarrationElementOutput pNarrationElementOutput) {}
 	}
 }

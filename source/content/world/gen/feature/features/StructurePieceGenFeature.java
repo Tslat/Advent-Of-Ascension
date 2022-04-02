@@ -1,10 +1,10 @@
 package net.tslat.aoa3.content.world.gen.feature.features;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.tslat.aoa3.content.world.gen.feature.features.config.StructureFeatureConfig;
 
 import java.util.Random;
@@ -15,7 +15,12 @@ public class StructurePieceGenFeature extends Feature<StructureFeatureConfig> {
 	}
 
 	@Override
-	public boolean place(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos, StructureFeatureConfig config) {
+	public boolean place(FeaturePlaceContext<StructureFeatureConfig> context) {
+		BlockPos pos = context.origin();
+		StructureFeatureConfig config = context.config();
+		Random rand = context.random();
+		WorldGenLevel reader = context.level();
+
 		if (!config.requireGround || !reader.getBlockState(pos.below()).getMaterial().isReplaceable())
 			config.getTemplate(rand).placeInWorld(reader, pos, pos, config.getPlacementSettings(rand), rand, 2);
 

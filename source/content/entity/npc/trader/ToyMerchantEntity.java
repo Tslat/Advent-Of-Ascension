@@ -1,19 +1,19 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.merchant.villager.VillagerTrades;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItems;
-import net.tslat.aoa3.common.registration.AoAWeapons;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
 public class ToyMerchantEntity extends AoATrader {
-	private static final Int2ObjectMap<VillagerTrades.ITrade[]> TRADES = new TradeListBuilder()
+	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
 					BuildableTrade.trade(AoAItems.BALLOON, 10).cost(AoAItems.CIRCUS_COIN, 2).xp(5).stock(32))
 			.trades(3,
@@ -24,7 +24,7 @@ public class ToyMerchantEntity extends AoATrader {
 					BuildableTrade.trade(AoAWeapons.BALLOON_BOMBER).cost(AoAItems.CIRCUS_COIN, 18).xp(40).stock(5),
 					BuildableTrade.trade(AoAItems.SMILEY_UPGRADE_KIT).cost(AoAItems.CIRCUS_COIN, 64).xp(100).stock(1)).build();
 
-	public ToyMerchantEntity(EntityType<? extends AoATrader> entityType, World world) {
+	public ToyMerchantEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -35,7 +35,7 @@ public class ToyMerchantEntity extends AoATrader {
 
 	@Nullable
 	@Override
-	public Int2ObjectMap<VillagerTrades.ITrade[]> getTradesMap() {
+	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap() {
 		return TRADES;
 	}
 }

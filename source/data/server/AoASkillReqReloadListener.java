@@ -5,14 +5,14 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
-import net.minecraft.block.Block;
-import net.minecraft.client.resources.JsonReloadListener;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.profiler.IProfiler;
-import net.minecraft.resources.IResourceManager;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.SkillRequirementDataPacket;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class AoASkillReqReloadListener extends JsonReloadListener {
+public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private static final String folder = "player/skill_reqs";
 
@@ -44,7 +44,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 
 		if (handler != null && !handler.canEquip(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())
-				handler.notifyPlayerCantEquip((ServerPlayerEntity)plData.player());
+				handler.notifyPlayerCantEquip((ServerPlayer)plData.player());
 
 			return false;
 		}
@@ -57,7 +57,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 
 		if (handler != null && !handler.canPlaceBlock(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())
-				handler.notifyPlayerCantPlaceBlock((ServerPlayerEntity)plData.player());
+				handler.notifyPlayerCantPlaceBlock((ServerPlayer)plData.player());
 
 			return false;
 		}
@@ -70,7 +70,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 
 		if (handler != null && !handler.canBreakBlock(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())
-				handler.notifyPlayerCantBreakBlock((ServerPlayerEntity)plData.player());
+				handler.notifyPlayerCantBreakBlock((ServerPlayer)plData.player());
 
 			return false;
 		}
@@ -83,7 +83,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 
 		if (handler != null && !handler.canInteractWith(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())
-				handler.notifyPlayerCantInteract((ServerPlayerEntity)plData.player());
+				handler.notifyPlayerCantInteract((ServerPlayer)plData.player());
 
 			return false;
 		}
@@ -97,7 +97,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 	}
 
 	@Override
-	protected void apply(Map<ResourceLocation, JsonElement> jsonMap, IResourceManager resourceManager, IProfiler profiler) {
+	protected void apply(Map<ResourceLocation, JsonElement> jsonMap, ResourceManager resourceManager, ProfilerFiller profiler) {
 		REQUIREMENTS_MAP.clear();
 
 		parseAll(requirementsData = prepData(jsonMap));
@@ -134,9 +134,9 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 		return handler;
 	}
 
-	private static Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> parseRequirements(List<Pair<ResourceLocation, Integer>> reqs) {
+	private static Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> parseRequirements(List<Pair<ResourceLocation, Integer>> reqs) {
 		Predicate<PlayerDataManager> predicate = plData -> true;
-		Consumer<ServerPlayerEntity> notificationHandler = plData -> {};
+		Consumer<ServerPlayer> notificationHandler = plData -> {};
 
 		for (Pair<ResourceLocation, Integer> pair : reqs) {
 			AoASkill skill = AoASkills.getSkill(pair.getFirst());
@@ -164,13 +164,13 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 				if (element.isJsonObject()) {
 					JsonObject reqEntryObj = element.getAsJsonObject();
 
-					reqList.add(Pair.of(new ResourceLocation(JSONUtils.getAsString(reqEntryObj, "skill")), JSONUtils.getAsInt(reqEntryObj, "level")));
+					reqList.add(Pair.of(new ResourceLocation(GsonHelper.getAsString(reqEntryObj, "skill")), GsonHelper.getAsInt(reqEntryObj, "level")));
 				}
 				else if (element.isJsonArray() && element.getAsJsonArray().size() > 0) {
 					for (JsonElement ele2 : element.getAsJsonArray()) {
 						JsonObject reqEntryObj = ele2.getAsJsonObject();
 
-						reqList.add(Pair.of(new ResourceLocation(JSONUtils.getAsString(reqEntryObj, "skill")), JSONUtils.getAsInt(reqEntryObj, "level")));
+						reqList.add(Pair.of(new ResourceLocation(GsonHelper.getAsString(reqEntryObj, "skill")), GsonHelper.getAsInt(reqEntryObj, "level")));
 					}
 				}
 			}
@@ -199,33 +199,33 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 		return requirementsData.get(itemId);
 	}
 
-	public static void syncNewPlayer(ServerPlayerEntity player) {
+	public static void syncNewPlayer(ServerPlayer player) {
 		AoAPackets.messagePlayer(player, new SkillRequirementDataPacket(requirementsData));
 	}
 
 	public static class SkillReqHandler {
 		@Nullable
-		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> equipPredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> equipPredicate;
 		@Nullable
-		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockPlacePredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> blockPlacePredicate;
 		@Nullable
-		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockBreakPredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> blockBreakPredicate;
 		@Nullable
-		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> interactionPredicate;
+		private Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> interactionPredicate;
 
-		private void forEquipping(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> equipPredicate) {
+		private void forEquipping(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> equipPredicate) {
 			this.equipPredicate = equipPredicate;
 		}
 
-		private void forPlacingBlocks(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockPlacePredicate) {
+		private void forPlacingBlocks(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> blockPlacePredicate) {
 			this.blockPlacePredicate = blockPlacePredicate;
 		}
 
-		private void forBreakingBlocks(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> blockBreakPredicate) {
+		private void forBreakingBlocks(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> blockBreakPredicate) {
 			this.blockBreakPredicate = blockBreakPredicate;
 		}
 
-		private void forInteracting(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayerEntity>> interactionPredicate) {
+		private void forInteracting(Pair<Predicate<PlayerDataManager>, Consumer<ServerPlayer>> interactionPredicate) {
 			this.interactionPredicate = interactionPredicate;
 		}
 
@@ -249,7 +249,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 			return !handlingEquip() || equipPredicate.getFirst().test(plData);
 		}
 
-		public void notifyPlayerCantEquip(ServerPlayerEntity player) {
+		public void notifyPlayerCantEquip(ServerPlayer player) {
 			if (handlingEquip())
 				equipPredicate.getSecond().accept(player);
 		}
@@ -258,7 +258,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 			return !handlingBlockPlacement() || blockPlacePredicate.getFirst().test(plData);
 		}
 
-		public void notifyPlayerCantPlaceBlock(ServerPlayerEntity player) {
+		public void notifyPlayerCantPlaceBlock(ServerPlayer player) {
 			if (handlingBlockPlacement())
 				blockPlacePredicate.getSecond().accept(player);
 		}
@@ -267,7 +267,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 			return !handlingBlockBreak() || blockBreakPredicate.getFirst().test(plData);
 		}
 
-		public void notifyPlayerCantBreakBlock(ServerPlayerEntity player) {
+		public void notifyPlayerCantBreakBlock(ServerPlayer player) {
 			if (handlingBlockBreak())
 				blockBreakPredicate.getSecond().accept(player);
 		}
@@ -276,7 +276,7 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 			return !handlingInteraction() || interactionPredicate.getFirst().test(plData);
 		}
 
-		public void notifyPlayerCantInteract(ServerPlayerEntity player) {
+		public void notifyPlayerCantInteract(ServerPlayer player) {
 			if (handlingInteraction())
 				interactionPredicate.getSecond().accept(player);
 		}

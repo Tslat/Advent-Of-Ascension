@@ -1,46 +1,42 @@
 package net.tslat.aoa3.common.container;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.inventory.CraftResultInventory;
-import net.minecraft.inventory.CraftingInventory;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.INamedContainerProvider;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.RecipeItemHelper;
-import net.minecraft.network.play.server.SSetSlotPacket;
-import net.minecraft.util.IWorldPosCallable;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.NonNullList;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
+import net.minecraft.world.inventory.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.hooks.BasicEventHooks;
-import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.event.custom.AoAEvents;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
+import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
+import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class InfusionTableContainer extends Container {
+public class InfusionTableContainer extends AbstractContainerMenu {
 	private final InfusionInventory inputs = new InfusionInventory(this);
-	private final CraftResultInventory output = new CraftResultInventory();
-	private final IWorldPosCallable functionCaller;
-	private final PlayerEntity player;
+	private final ResultContainer output = new ResultContainer();
+	private final ContainerLevelAccess functionCaller;
+	private final Player player;
 
-	public InfusionTableContainer(int id, PlayerInventory plInventory, IWorldPosCallable functionCaller) {
+	public InfusionTableContainer(int id, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(AoAContainers.INFUSION_TABLE.get(), id);
 
 		this.functionCaller = functionCaller;
@@ -51,14 +47,14 @@ public class InfusionTableContainer extends Container {
 			@Override
 			protected void checkTakeAchievements(ItemStack stack) {
 				if (!player.level.isClientSide) {
-					InfusionRecipe recipe = (InfusionRecipe)((CraftResultInventory)container).getRecipeUsed();
+					InfusionRecipe recipe = (InfusionRecipe)((ResultContainer)container).getRecipeUsed();
 
 					if (recipe != null && recipe.getMaxXp() > 0) {
 						if (recipe.getMinXp() == recipe.getMaxXp()) {
-							applyRecipeXp((ServerPlayerEntity)player, recipe.getMinXp());
+							applyRecipeXp((ServerPlayer)player, recipe.getMinXp());
 						}
 						else {
-							applyRecipeXp((ServerPlayerEntity)player, recipe.getMinXp() + player.getRandom().nextInt(recipe.getMaxXp() - recipe.getMinXp()));
+							applyRecipeXp((ServerPlayer)player, recipe.getMinXp() + player.getRandom().nextInt(recipe.getMaxXp() - recipe.getMinXp()));
 						}
 					}
 				}
@@ -87,20 +83,20 @@ public class InfusionTableContainer extends Container {
 	}
 
 	@Override
-	public void slotsChanged(IInventory inventory) {
+	public void slotsChanged(Container inventory) {
 		functionCaller.execute((world, pos) -> slotChangedCraftingGrid(world, player, inputs, output));
 	}
 
 	@Override
-	public boolean stillValid(PlayerEntity player) {
+	public boolean stillValid(Player player) {
 		return stillValid(functionCaller, player, AoABlocks.INFUSION_TABLE.get());
 	}
 
 	@Override
-	public void removed(PlayerEntity player) {
+	public void removed(Player player) {
 		super.removed(player);
 
-		functionCaller.execute((world, pos) -> clearContainer(player, world, inputs));
+		functionCaller.execute((world, pos) -> clearContainer(player, inputs));
 	}
 
 	@Override
@@ -109,7 +105,7 @@ public class InfusionTableContainer extends Container {
 	}
 
 	@Override
-	public ItemStack quickMoveStack(PlayerEntity player, int index) {
+	public ItemStack quickMoveStack(Player player, int index) {
 		ItemStack stack = ItemStack.EMPTY;
 		Slot slot = slots.get(index);
 
@@ -147,29 +143,31 @@ public class InfusionTableContainer extends Container {
 			if (slotStack.getCount() == stack.getCount())
 				return ItemStack.EMPTY;
 
+			slot.onTake(player, slotStack);
+
 			if (index == 0)
-				player.drop(slot.onTake(player, slotStack), false);
+				player.drop(slotStack, false);
 		}
 
 		return stack;
 	}
 
-	public static void openContainer(ServerPlayerEntity player, BlockPos pos) {
-		NetworkHooks.openGui(player, new INamedContainerProvider() {
+	public static void openContainer(ServerPlayer player, BlockPos pos) {
+		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
-			public ITextComponent getDisplayName() {
-				return new TranslationTextComponent("container.aoa3.infusion_table");
+			public Component getDisplayName() {
+				return new TranslatableComponent("container.aoa3.infusion_table");
 			}
 
 			@Nullable
 			@Override
-			public Container createMenu(int windowId, PlayerInventory inv, PlayerEntity player) {
-				return new InfusionTableContainer(windowId, inv, IWorldPosCallable.create(player.level, pos));
+			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
+				return new InfusionTableContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
 			}
 		}, pos);
 	}
 
-	protected void slotChangedCraftingGrid(World world, PlayerEntity player, InfusionInventory inv, CraftResultInventory craftResult) {
+	protected void slotChangedCraftingGrid(Level world, Player player, InfusionInventory inv, ResultContainer craftResult) {
 		if (!world.isClientSide) {
 			ItemStack resultStack = ItemStack.EMPTY;
 			Optional<InfusionRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.INFUSION.getA(), inv, world);
@@ -177,7 +175,7 @@ public class InfusionTableContainer extends Container {
 			if (recipeMatch.isPresent()) {
 				InfusionRecipe matchedRecipe = recipeMatch.get();
 
-				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)player, AoASkills.IMBUING.get(), matchedRecipe.getInfusionReq()))) {
+				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayer)player).getRecipeBook().contains(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayer)player, AoASkills.IMBUING.get(), matchedRecipe.getInfusionReq()))) {
 					craftResult.setRecipeUsed(matchedRecipe);
 
 					resultStack = matchedRecipe.assemble(inv);
@@ -189,19 +187,19 @@ public class InfusionTableContainer extends Container {
 			if (AoAEvents.firePlayerCraftingEvent(player, craftResult.getItem(0), inv, craftResult))
 				craftResult.setItem(0, ItemStack.EMPTY);
 
-			((ServerPlayerEntity)player).connection.send(new SSetSlotPacket(this.containerId, 0, resultStack));
+			((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(this.containerId, incrementStateId(), 0, resultStack));
 		}
 	}
 
-	private void applyRecipeXp(ServerPlayerEntity player, float xp) {
+	private void applyRecipeXp(ServerPlayer player, float xp) {
 		PlayerUtil.giveXpToPlayer(player, AoASkills.IMBUING.get(), xp, false);
 	}
 
-	public static class InfusionInventory extends CraftingInventory {
+	public static class InfusionInventory extends CraftingContainer {
 		private final NonNullList<ItemStack> stackList;
-		private final Container eventListener;
+		private final AbstractContainerMenu eventListener;
 
-		public InfusionInventory(Container eventHandler) {
+		public InfusionInventory(AbstractContainerMenu eventHandler) {
 			super(eventHandler, 0, 0);
 
 			stackList = NonNullList.<ItemStack>withSize(10, ItemStack.EMPTY);
@@ -230,12 +228,12 @@ public class InfusionTableContainer extends Container {
 
 		@Override
 		public ItemStack removeItemNoUpdate(int index) {
-			return ItemStackHelper.takeItem(stackList, index);
+			return ContainerHelper.takeItem(stackList, index);
 		}
 
 		@Override
 		public ItemStack removeItem(int index, int count) {
-			ItemStack stack = ItemStackHelper.removeItem(stackList, index, count);
+			ItemStack stack = ContainerHelper.removeItem(stackList, index, count);
 
 			if (!stack.isEmpty())
 				eventListener.slotsChanged(this);
@@ -255,7 +253,7 @@ public class InfusionTableContainer extends Container {
 		}
 
 		@Override
-		public void fillStackedContents(RecipeItemHelper recipeItemHelper) {
+		public void fillStackedContents(StackedContents recipeItemHelper) {
 			for (ItemStack stack : stackList) {
 				recipeItemHelper.accountStack(stack);
 			}
@@ -264,10 +262,10 @@ public class InfusionTableContainer extends Container {
 
 	public static class SlotCraftingMod extends Slot {
 		private final InfusionInventory craftInv;
-		private final PlayerEntity player;
+		private final Player player;
 		private int amountCrafted;
 
-		public SlotCraftingMod(PlayerEntity pl, InfusionInventory craftInv, CraftResultInventory inv, int slotIndex, int xPos, int yPos) {
+		public SlotCraftingMod(Player pl, InfusionInventory craftInv, ResultContainer inv, int slotIndex, int xPos, int yPos) {
 			super(inv, slotIndex, xPos, yPos);
 
 			this.player = pl;
@@ -303,15 +301,15 @@ public class InfusionTableContainer extends Container {
 		protected void checkTakeAchievements(ItemStack stack) {
 			if (amountCrafted > 0) {
 				stack.onCraftedBy(player.level, player, amountCrafted);
-				BasicEventHooks.firePlayerCraftingEvent(player, stack, craftInv);
+				ForgeEventFactory.firePlayerCraftingEvent(player, stack, craftInv);
 			}
 
 			amountCrafted = 0;
-			((CraftResultInventory)container).setRecipeUsed(null);
+			((ResultContainer)container).setRecipeUsed(null);
 		}
 
 		@Override
-		public ItemStack onTake(PlayerEntity player, ItemStack stack) {
+		public void onTake(Player player, ItemStack stack) {
 			checkTakeAchievements(stack);
 			ForgeHooks.setCraftingPlayer(player);
 			NonNullList<ItemStack> remainingItems = player.level.getRecipeManager().getRemainingItemsFor(AoARecipes.INFUSION.getA(), craftInv, player.level);
@@ -334,13 +332,11 @@ public class InfusionTableContainer extends Container {
 						remainingItem.grow(slotStack.getCount());
 						craftInv.setItem(i, remainingItem);
 					}
-					else if (!player.inventory.add(remainingItem)) {
+					else if (!player.getInventory().add(remainingItem)) {
 						player.drop(remainingItem, false);
 					}
 				}
 			}
-
-			return stack;
 		}
 	}
 }

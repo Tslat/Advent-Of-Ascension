@@ -2,14 +2,14 @@ package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.Util;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -31,17 +31,17 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
-	private final Lazy<TranslationTextComponent> name;
+	private final Lazy<TranslatableComponent> name;
 	private final BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory;
-	private final Function<CompoundNBT, Instance> clientFactory;
+	private final Function<CompoundTag, Instance> clientFactory;
 
-	public AoASkill(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundNBT, Instance> clientFactory) {
-		this.name = () -> new TranslationTextComponent(Util.makeDescriptionId("skill", getRegistryName()));
+	public AoASkill(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundTag, Instance> clientFactory) {
+		this.name = () -> new TranslatableComponent(Util.makeDescriptionId("skill", getRegistryName()));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
 	}
 
-	public TranslationTextComponent getName() {
+	public TranslatableComponent getName() {
 		return this.name.get();
 	}
 
@@ -49,7 +49,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		return jsonFactory.apply(plData, resourceData);
 	}
 
-	public Instance buildClientInstance(CompoundNBT resourceData) {
+	public Instance buildClientInstance(CompoundTag resourceData) {
 		return clientFactory.apply(resourceData);
 	}
 
@@ -72,12 +72,12 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 
 			if (instanceData != null) {
 				this.playerDataManager = plData;
-				this.xpModifier = JSONUtils.getAsFloat(instanceData, "xp_modifier", 1);
+				this.xpModifier = GsonHelper.getAsFloat(instanceData, "xp_modifier", 1);
 
 				if (instanceData.has("abilities")) {
 					for (JsonElement entry : instanceData.getAsJsonArray("abilities")) {
 						JsonObject abilityData = entry.getAsJsonObject();
-						AoAAbility ability = AoAAbilities.getAbility(new ResourceLocation(JSONUtils.getAsString(abilityData, "id")));
+						AoAAbility ability = AoAAbilities.getAbility(new ResourceLocation(GsonHelper.getAsString(abilityData, "id")));
 						AoAAbility.Instance instance = ability.create(this, abilityData);
 
 						abilities.put(instance.getUniqueIdentifier(), instance);
@@ -86,16 +86,16 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			}
 		}
 
-		protected Instance(AoASkill skill, CompoundNBT instanceData) {
+		protected Instance(AoASkill skill, CompoundTag instanceData) {
 			this.skill = skill;
 			this.xpModifier = instanceData.getFloat("xp_modifier");
 
 			if (instanceData.contains("abilities")) {
-				CompoundNBT abilityData = instanceData.getCompound("abilities");
+				CompoundTag abilityData = instanceData.getCompound("abilities");
 
 				for (String key : abilityData.getAllKeys()) {
 					AoAAbility ability = AoAAbilities.getAbility(new ResourceLocation(abilityData.getCompound(key).getString("id")));
-					AoAAbility.Instance instance = ability.loadFromNbt(this, (CompoundNBT)abilityData.get(key));
+					AoAAbility.Instance instance = ability.loadFromNbt(this, (CompoundTag)abilityData.get(key));
 
 					abilities.put(instance.getUniqueIdentifier(), instance);
 				}
@@ -110,7 +110,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			return this.skill;
 		}
 
-		public TranslationTextComponent getName() {
+		public TranslatableComponent getName() {
 			return type().getName();
 		}
 
@@ -118,7 +118,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			return this.abilities;
 		}
 
-		public PlayerEntity getPlayer() {
+		public Player getPlayer() {
 			return this.playerDataManager.player();
 		}
 
@@ -144,7 +144,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 
 		public void setLevel(int newLevel) {
 			int oldLevel = this.level;
-			this.level = MathHelper.clamp(newLevel, 0, 1000);
+			this.level = Mth.clamp(newLevel, 0, 1000);
 			this.xp = 0;
 			this.needsSync = true;
 
@@ -261,7 +261,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		}
 
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {
-			ServerPlayerEntity player = playerDataManager.player();
+			ServerPlayer player = playerDataManager.player();
 
 			new SoundBuilder(AoASounds.PLAYER_LEVEL_UP).isPlayer().notInWorld().include(player).play();
 
@@ -291,22 +291,22 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		}
 
 		public void setCycle(int cycle) {
-			this.cycle = MathHelper.clamp(cycle, 0, 10);
+			this.cycle = Mth.clamp(cycle, 0, 10);
 			this.needsSync = true;
 
 			this.playerDataManager.applyLegitimacyPenalties();
 		}
 
-		public CompoundNBT saveToNbt() {
-			CompoundNBT skillData = new CompoundNBT();
-			CompoundNBT abilityData = new CompoundNBT();
+		public CompoundTag saveToNbt() {
+			CompoundTag skillData = new CompoundTag();
+			CompoundTag abilityData = new CompoundTag();
 
 			skillData.putInt("cycle", this.cycle);
 			skillData.putInt("level", this.level);
 			skillData.putFloat("xp", this.xp);
 
 			for (Map.Entry<String, AoAAbility.Instance> ability : getAbilityMap().entrySet()) {
-				CompoundNBT abilityNbt = ability.getValue().saveToNbt();
+				CompoundTag abilityNbt = ability.getValue().saveToNbt();
 
 				if (abilityNbt != null)
 					abilityData.put(ability.getKey(), abilityNbt);
@@ -317,7 +317,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			return skillData;
 		}
 
-		public void loadFromNbt(CompoundNBT skillData) {
+		public void loadFromNbt(CompoundTag skillData) {
 			this.level = 1;
 			this.xp = 0f;
 
@@ -331,7 +331,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 				xp = skillData.getFloat("xp");
 
 			if (skillData.contains("abilities")) {
-				CompoundNBT abilityData = skillData.getCompound("abilities");
+				CompoundTag abilityData = skillData.getCompound("abilities");
 
 				for (AoAAbility.Instance ability : getAbilityMap().values()) {
 					if (abilityData.contains(ability.getUniqueIdentifier())) {
@@ -344,9 +344,9 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			}
 		}
 
-		public CompoundNBT getSyncData(boolean forClientSetup) {
-			CompoundNBT data = new CompoundNBT();
-			CompoundNBT abilityData = new CompoundNBT();
+		public CompoundTag getSyncData(boolean forClientSetup) {
+			CompoundTag data = new CompoundTag();
+			CompoundTag abilityData = new CompoundTag();
 
 			data.putInt("cycle", cycle);
 			data.putInt("level", level);
@@ -372,14 +372,14 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			return data;
 		}
 
-		public void receiveSyncData(CompoundNBT data) {
+		public void receiveSyncData(CompoundTag data) {
 			this.cycle = data.getInt("cycle");
 			this.level = data.getInt("level");
 			this.xp = data.getFloat("xp");
 			this.xpModifier = data.getFloat("xpMod");
 
 			if (data.contains("abilities")) {
-				CompoundNBT abilityData = data.getCompound("abilities");
+				CompoundTag abilityData = data.getCompound("abilities");
 
 				for (String key : abilityData.getAllKeys()) {
 					AoAAbility.Instance ability = abilities.get(key);
@@ -391,7 +391,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 		}
 
 		public boolean canGainXp(boolean naturalXpSource) {
-			PlayerEntity player = getPlayer();
+			Player player = getPlayer();
 
 			if (naturalXpSource && (player.isCreative() || player.isSpectator()))
 				return false;

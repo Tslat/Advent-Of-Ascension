@@ -1,26 +1,27 @@
+/*
 package net.tslat.aoa3.content.entity.boss;
 
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.Pose;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Direction;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.ITextComponent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.core.BlockPos;
+
 import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.server.ServerBossInfo;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
-import net.tslat.aoa3.common.registration.AoAEntities;
+
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.mob.nether.LittleBamEntity;
@@ -39,12 +40,12 @@ public class KingBambambamEntity extends AoARangedMob {
 
 	private final HashSet<LittleBamEntity> summons = new HashSet<LittleBamEntity>();
 
-	public KingBambambamEntity(EntityType<? extends MonsterEntity> entityType, World world) {
+	public KingBambambamEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 1.78125f;
 	}
 
@@ -114,7 +115,7 @@ public class KingBambambamEntity extends AoARangedMob {
 				LittleBamEntity littleBam = new LittleBamEntity(this);
 
 				level.addFreshEntity(littleBam);
-				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_LITTLE_BAM_SPAWN.get(), SoundCategory.HOSTILE, 1.0f, 1.0f);
+				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_LITTLE_BAM_SPAWN.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 				summons.add(littleBam);
 			}
 
@@ -130,10 +131,10 @@ public class KingBambambamEntity extends AoARangedMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			PlayerEntity killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
+			Player killer = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (killer != null)
-				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAEntities.Mobs.KING_BAMBAMBAM.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
+				PlayerUtil.messageAllPlayersInRange(LocaleUtil.getLocaleMessage(AoAMobs.KING_BAMBAMBAM.get().getDescriptionId() + ".kill", killer.getDisplayName()), level, blockPosition(), 50);
 
 			for (LittleBamEntity littleBam : summons) {
 				littleBam.remove();
@@ -142,7 +143,7 @@ public class KingBambambamEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void readAdditionalSaveData(CompoundNBT compound) {
+	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
 		if (hasCustomName())
@@ -150,14 +151,14 @@ public class KingBambambamEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable ITextComponent name) {
+	public void setCustomName(@Nullable TextComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));
 	}
 
 	@Override
-	public void startSeenByPlayer(ServerPlayerEntity player) {
+	public void startSeenByPlayer(ServerPlayer player) {
 		super.startSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(true, AoASounds.KING_BAMBAMBAM_MUSIC.getId()));
@@ -165,10 +166,11 @@ public class KingBambambamEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void stopSeenByPlayer(ServerPlayerEntity player) {
+	public void stopSeenByPlayer(ServerPlayer player) {
 		super.stopSeenByPlayer(player);
 
 		AoAPackets.messagePlayer(player, new MusicPacket(false, AoASounds.KING_BAMBAMBAM_MUSIC.getId()));
 		bossInfo.removePlayer(player);
 	}
 }
+*/

@@ -1,10 +1,8 @@
+/*
 package net.tslat.aoa3.content.world.gen.feature.placement.config;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.world.gen.placement.IPlacementConfig;
-
-import java.util.Random;
 
 public class IntRangeConfig implements IPlacementConfig {
 	public static final Codec<IntRangeConfig> CODEC = RecordCodecBuilder.create(builder -> builder.group(
@@ -26,3 +24,4 @@ public class IntRangeConfig implements IPlacementConfig {
 		return rand.nextInt(1 + max - min) + min;
 	}
 }
+*/

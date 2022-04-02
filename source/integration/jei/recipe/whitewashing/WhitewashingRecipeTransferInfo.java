@@ -1,18 +1,24 @@
 package net.tslat.aoa3.integration.jei.recipe.whitewashing;
 
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
-import net.minecraft.inventory.container.Slot;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.Slot;
 import net.tslat.aoa3.common.container.WhitewashingTableContainer;
+import net.tslat.aoa3.content.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.integration.jei.recipe.framebench.FrameBenchRecipeCategory;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class WhitewashingRecipeTransferInfo implements IRecipeTransferInfo<WhitewashingTableContainer> {
+public class WhitewashingRecipeTransferInfo implements IRecipeTransferInfo<WhitewashingTableContainer, WhitewashingRecipe> {
 	@Override
 	public Class<WhitewashingTableContainer> getContainerClass() {
 		return WhitewashingTableContainer.class;
+	}
+
+	@Override
+	public Class<WhitewashingRecipe> getRecipeClass() {
+		return WhitewashingRecipe.class;
 	}
 
 	@Override
@@ -21,12 +27,12 @@ public class WhitewashingRecipeTransferInfo implements IRecipeTransferInfo<White
 	}
 
 	@Override
-	public boolean canHandle(WhitewashingTableContainer container) {
+	public boolean canHandle(WhitewashingTableContainer container, WhitewashingRecipe recipe) {
 		return true;
 	}
 
 	@Override
-	public List<Slot> getRecipeSlots(WhitewashingTableContainer container) {
+	public List<Slot> getRecipeSlots(WhitewashingTableContainer container, WhitewashingRecipe recipe) {
 		List<Slot> slots = new ArrayList<>(2);
 
 		for (int i = 0; i <= 1; i++) {
@@ -37,7 +43,7 @@ public class WhitewashingRecipeTransferInfo implements IRecipeTransferInfo<White
 	}
 
 	@Override
-	public List<Slot> getInventorySlots(WhitewashingTableContainer container) {
+	public List<Slot> getInventorySlots(WhitewashingTableContainer container, WhitewashingRecipe recipe) {
 		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 3);
 
 		for (int i = 2; i < container.slots.size() - 1; i++) {

@@ -1,6 +1,6 @@
 package net.tslat.aoa3.client.render.entity.projectile.staff;
 
-import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.tslat.aoa3.client.render.entity.projectile.ParticleProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -9,7 +9,7 @@ import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
 public class LyonicShotRenderer extends ParticleProjectileRenderer<LyonicShotEntity> {
-	public LyonicShotRenderer(final EntityRendererManager manager) {
+	public LyonicShotRenderer(final EntityRendererProvider.Context manager) {
 		super(manager);
 	}
 
