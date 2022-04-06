@@ -60,7 +60,12 @@ public class AoASkillsReloadListener extends SimpleJsonResourceReloadListener {
 				continue;
 			}
 
-			SKILLS_DATA.put(skill, json.getAsJsonObject());
+			JsonObject obj = json.getAsJsonObject();
+
+			if (obj.size() == 0)
+				continue;
+
+			SKILLS_DATA.put(skill, obj);
 		}
 	}
 }

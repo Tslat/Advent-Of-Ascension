@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,7 +53,7 @@ public class EmbrakeEntity extends AoAMeleeMob {
 	protected void onAttack(Entity target) {
 		target.setSecondsOnFire(5);
 
-		if (level.getBlockState(target.blockPosition().below()) .getBlock() != Blocks.AIR)
+		if (!level.isClientSide() && level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) && level.getBlockState(target.blockPosition().below()).getBlock() != Blocks.AIR && level.getBlockState(target.blockPosition()).getMaterial().isReplaceable())
 			level.setBlockAndUpdate(target.blockPosition(), Blocks.FIRE.defaultBlockState());
 	}
 }

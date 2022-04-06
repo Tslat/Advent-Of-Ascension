@@ -8,7 +8,9 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.sounds.SoundSource;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -17,15 +19,22 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.network.NetworkDirection;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.gui.overlay.ScreenOverlayRenderer;
+import net.tslat.aoa3.client.model.armor.AoAArmourModels;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.content.entity.mob.greckon.SilencerEntity;
+import net.tslat.aoa3.data.client.AdventGuiThemeReloadListener;
+import net.tslat.aoa3.data.client.BestiaryReloadListener;
+import net.tslat.aoa3.data.client.MiscellaneousReloadListener;
+import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
@@ -47,6 +56,7 @@ public final class ClientEventHandler {
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingDeathEvent.class, ClientEventHandler::onPlayerDeath);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlaySoundEvent.class, ClientEventHandler::onSoundPlay);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemTooltipEvent.class, ClientEventHandler::onTooltip);
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterClientReloadListenersEvent.class, ClientEventHandler::onResourceListenersRegistration);
 	}
 
 	private static void onClientTick(final TickEvent.ClientTickEvent ev) {
@@ -130,5 +140,16 @@ public final class ClientEventHandler {
 				lines.add(1, LocaleUtil.getLocaleMessage("gui.tooltip.skillReq.hidden", ChatFormatting.DARK_RED));
 			}
 		}
+	}
+
+	private static void onResourceListenersRegistration(final RegisterClientReloadListenersEvent ev) {
+		ev.registerReloadListener(new BestiaryReloadListener());
+		ev.registerReloadListener(new MiscellaneousReloadListener());
+		ev.registerReloadListener(new RealmstoneInsertsReloadListener());
+		ev.registerReloadListener(new AdventGuiThemeReloadListener());
+		ev.registerReloadListener((ResourceManagerReloadListener)resourceManager -> {
+			if (ModLoader.isLoadingStateValid())
+				AoAArmourModels.generateFactories();
+		});
 	}
 }

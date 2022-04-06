@@ -1,5 +1,6 @@
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
@@ -15,14 +16,21 @@ public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBe
 		return FrameBenchContainer.class;
 	}
 
+	@Deprecated
 	@Override
 	public Class<FrameBenchRecipe> getRecipeClass() {
 		return FrameBenchRecipe.class;
 	}
 
+	@Deprecated
 	@Override
 	public ResourceLocation getRecipeCategoryUid() {
 		return FrameBenchRecipeCategory.ID;
+	}
+
+	@Override
+	public RecipeType<FrameBenchRecipe> getRecipeType() {
+		return FrameBenchRecipeCategory.RECIPE_TYPE;
 	}
 
 	@Override

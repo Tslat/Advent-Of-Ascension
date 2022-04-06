@@ -367,6 +367,7 @@ public final class AoAMobs {
 		RegistryObject<EntityType<T>> registryObject = AoARegistries.ENTITIES.register(registryName, () -> {
 			boolean dataFixers = SharedConstants.CHECK_DATA_FIXER_SCHEMA;
 			SharedConstants.CHECK_DATA_FIXER_SCHEMA = false;
+
 			EntityType<T> entityType = typeBuilder.build(registryName);
 			SharedConstants.CHECK_DATA_FIXER_SCHEMA = dataFixers;
 

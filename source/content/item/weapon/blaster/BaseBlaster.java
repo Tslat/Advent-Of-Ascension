@@ -223,7 +223,6 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 			tooltip.add(1, LocaleUtil.getLocaleMessage("items.description.damage.blaster", ChatFormatting.DARK_RED, new TextComponent(NumberUtil.roundToNthDecimalPlace((float)getDamage(), 1))));
 
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.fire", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.slowing", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.effect", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, new TextComponent(NumberUtil.roundToNthDecimalPlace(20 / (float)getFiringDelay(), 2))));
 

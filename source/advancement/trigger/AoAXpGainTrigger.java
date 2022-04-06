@@ -5,7 +5,7 @@ import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
-import net.minecraftforge.registries.RegistryManager;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nullable;
@@ -24,7 +24,7 @@ public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.In
 
 		if (json.has("skill")) {
 			ResourceLocation skillId = new ResourceLocation(GsonHelper.getAsString(json, "skill"));
-			skill = RegistryManager.ACTIVE.getRegistry(AoASkill.class).getValue(skillId);
+			skill = AoARegistries.AOA_SKILLS.forgeRegistry().get().getValue(skillId);
 
 			if (skill == null)
 				throw new IllegalArgumentException("Invalid AoASkill ID: '" + skillId + "'");

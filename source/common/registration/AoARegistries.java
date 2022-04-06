@@ -65,48 +65,29 @@ public final class AoARegistries {
 	public static final ActionableDeferredRegister<AoAAbility> AOA_ABILITIES = new ActionableDeferredRegister<AoAAbility>(ResourceKey.createRegistryKey(AdventOfAscension.id("aoaabilities")), AoAAbilities::init);
 
 	public static void init(IEventBus modEventBus) {
-		BLOCKS.setup(modEventBus);//.registry.register(modEventBus);
-		ITEMS.setup(modEventBus);//.registry.register(modEventBus);
-		FLUIDS.setup(modEventBus);//.registry.register(modEventBus);
-		ENTITIES.setup(modEventBus);//.registry.register(modEventBus);
-		BLOCK_ENTITIES.setup(modEventBus);//.registry.register(modEventBus);
-		SOUNDS.setup(modEventBus);//.registry.register(modEventBus);
-		ENCHANTMENTS.setup(modEventBus);//.registry.register(modEventBus);
-		PARTICLES.setup(modEventBus);//.registry.register(modEventBus);
-		MENUS.setup(modEventBus);//.registry.register(modEventBus);
-		RECIPES.setup(modEventBus);//.registry.register(modEventBus);
-		LOOT_MODIFIERS.setup(modEventBus);//.registry.register(modEventBus);
-		ENTITY_ATTRIBUTES.setup(modEventBus);//.registry.register(modEventBus);
-		VILLAGER_PROFESSIONS.setup(modEventBus);//.registry.register(modEventBus);
-		BRAIN_SENSORS.setup(modEventBus);//.registry.register(modEventBus);
-		BRAIN_MEMORIES.setup(modEventBus);//.registry.register(modEventBus);
-		AOA_SKILLS.setup(modEventBus);//.registry.register(modEventBus);
-		AOA_RESOURCES.setup(modEventBus);//.registry.register(modEventBus);
-		AOA_ABILITIES.setup(modEventBus);//.registry.register(modEventBus);
+		BLOCKS.setup(modEventBus);
+		ITEMS.setup(modEventBus);
+		FLUIDS.setup(modEventBus);
+		ENTITIES.setup(modEventBus);
+		BLOCK_ENTITIES.setup(modEventBus);
+		SOUNDS.setup(modEventBus);
+		ENCHANTMENTS.setup(modEventBus);
+		PARTICLES.setup(modEventBus);
+		MENUS.setup(modEventBus);
+		RECIPES.setup(modEventBus);
+		LOOT_MODIFIERS.setup(modEventBus);
+		ENTITY_ATTRIBUTES.setup(modEventBus);
+		VILLAGER_PROFESSIONS.setup(modEventBus);
+		BRAIN_SENSORS.setup(modEventBus);
+		BRAIN_MEMORIES.setup(modEventBus);
+		AOA_SKILLS.setup(modEventBus);
+		AOA_RESOURCES.setup(modEventBus);
+		AOA_ABILITIES.setup(modEventBus);
 
 		modEventBus.addGenericListener(Block.class, EventPriority.HIGHEST, true, RegistryEvent.Register.class, AoARegistries::doVanillaRegistryLinkedRegistrations);
 	}
 
 	private static void doVanillaRegistryLinkedRegistrations(final RegistryEvent.Register<Block> registry) {
-		//BLOCKS.registerContents.run();
-		//ITEMS.registerContents.run();
-		//FLUIDS.registerContents.run();
-		//ENTITIES.registerContents.run();
-		//BLOCK_ENTITIES.registerContents.run();
-		//SOUNDS.registerContents.run();
-		//ENCHANTMENTS.registerContents.run();
-		//PARTICLES.registerContents.run();
-		//MENUS.registerContents.run();
-		//RECIPES.registerContents.run();
-		//LOOT_MODIFIERS.registerContents.run();
-		//ENTITY_ATTRIBUTES.registerContents.run();
-		//VILLAGER_PROFESSIONS.registerContents.run();
-		//BRAIN_SENSORS.registerContents.run();
-		//BRAIN_MEMORIES.registerContents.run();
-		//AOA_SKILLS.registerContents.run();
-		//AOA_RESOURCES.registerContents.run();
-		//AOA_ABILITIES.registerContents.run();
-
 		AoALootOperations.init();
 		AoARecipes.init();
 	}

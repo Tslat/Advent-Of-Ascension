@@ -94,6 +94,15 @@
       "base_value": 0.001,
       "per_level_mod": 0.0,
       "level_req": 96
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "1966560183",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_treasurer"
     }
   ]
 }

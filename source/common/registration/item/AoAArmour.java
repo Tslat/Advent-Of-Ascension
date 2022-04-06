@@ -5,6 +5,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.armour.*;
 import org.apache.logging.log4j.Level;
 
@@ -73,14 +74,14 @@ public final class AoAArmour {
 
 	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_ALCHEMIST = registerArmour("helm_of_the_alchemist", () -> new SkillHelmet(AoASkills.ALCHEMY));
 	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_CREATOR = registerArmour("helm_of_the_creator", () -> new SkillHelmet(AoASkills.CREATION));
-	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_DEXTROUS = registerArmour("helm_of_the_dextrous", () -> new SkillHelmet(AoASkills.DEXTERITY));
-	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_DRYAD = registerArmour("helm_of_the_dryad", () -> new SkillHelmet(AoASkills.FARMING));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_DEXTROUS = registerArmour("helm_of_the_dextrous", () -> new SkillHelmet(AoASkills.DEXTERITY));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_DRYAD = registerArmour("helm_of_the_dryad", () -> new SkillHelmet(AoASkills.FARMING));
 	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_OCCULTIST = registerArmour("helm_of_the_occultist", () -> new SkillHelmet(AoASkills.FAUNAMANCY));
 	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_RITUALIST = registerArmour("helm_of_the_ritualist", () -> new SkillHelmet(AoASkills.IMBUING));
 	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_TINKERER = registerArmour("helm_of_the_tinkerer", () -> new SkillHelmet(AoASkills.ENGINEERING));
-	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_TRAWLER = registerArmour("helm_of_the_trawler", () -> new SkillHelmet(AoASkills.HAULING));
-	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_TREASURER = registerArmour("helm_of_the_treasurer", () -> new SkillHelmet(AoASkills.EXTRACTION));
-	//public static final RegistryObject<SkillHelmet> HELM_OF_THE_WARRIOR = registerArmour("helm_of_the_warrior", () -> new SkillHelmet(AoASkills.INNERVATION));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_TRAWLER = registerArmour("helm_of_the_trawler", () -> new SkillHelmet(AoASkills.HAULING));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_TREASURER = registerArmour("helm_of_the_treasurer", () -> new SkillHelmet(AoASkills.EXTRACTION));
+	public static final RegistryObject<SkillHelmet> HELM_OF_THE_WARRIOR = registerArmour("helm_of_the_warrior", () -> new SkillHelmet(AoASkills.INNERVATION));
 
 	private static <T extends Item> RegistryObject<T> registerArmour(String registryName, Supplier<T> item) {
 		return AoARegistries.ITEMS.register(registryName, item);

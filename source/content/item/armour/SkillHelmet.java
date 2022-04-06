@@ -1,17 +1,28 @@
 package net.tslat.aoa3.content.item.armour;
 
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.model.Model;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.client.IItemRenderProperties;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.model.armor.AoAArmourModels;
+import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SkillHelmet extends AdventArmour {
@@ -57,21 +68,22 @@ public class SkillHelmet extends AdventArmour {
 		plData.getSkill(getSkill()).removeXpModifier(0.5f);
 	}
 
-	/*@OnlyIn(Dist.CLIENT)
-	@Nullable
 	@Override
-	public <A extends HumanoidModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, A _default) {
-		return (A)AoAArmourModels.getSkillHelmetModel(getSkill(), entityLiving instanceof Player && ClientPlayerDataManager.get().getSkill(getSkill()).hasLevel(1000));
+	public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+		consumer.accept(new IItemRenderProperties() {
+			@Nonnull
+			@Override
+			public Model getBaseArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultModel) {
+				return AoAArmourModels.getSkillHelmetModel(getSkill(), entityLiving instanceof Player && ClientPlayerDataManager.get().getSkill(getSkill()).hasLevel(1000), defaultModel);
+			}
+		});
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Nullable
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		ResourceLocation texturePath = AoAArmourModels.getSkillHelmetTexture(getSkill(), entity instanceof Player && ClientPlayerDataManager.get().getSkill(getSkill()).hasLevel(1000));
-
-		return texturePath == null ? null : texturePath.toString();
-	}*/
+		return AdventOfAscension.id("textures/models/armor/custom/" + stack.getItem().getRegistryName().getPath() + (ClientPlayerDataManager.get().getSkill(getSkill()).getLevel(true) == 1000 ? "_trim" : "") + ".png").toString();
+	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level pLevel, List<Component> tooltip, TooltipFlag pFlag) {

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.integration.jei.recipe.upgradekit;
 
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
@@ -15,14 +16,21 @@ public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineS
 		return DivineStationContainer.class;
 	}
 
+	@Deprecated
 	@Override
 	public Class<UpgradeKitRecipe> getRecipeClass() {
 		return UpgradeKitRecipe.class;
 	}
 
+	@Deprecated
 	@Override
 	public ResourceLocation getRecipeCategoryUid() {
 		return UpgradeKitRecipeCategory.ID;
+	}
+
+	@Override
+	public RecipeType<UpgradeKitRecipe> getRecipeType() {
+		return UpgradeKitRecipeCategory.RECIPE_TYPE;
 	}
 
 	@Override

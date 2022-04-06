@@ -16,7 +16,6 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.resources.ReloadableResourceManager;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,10 +43,6 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.content.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.content.item.misc.WornBook;
-import net.tslat.aoa3.data.client.AdventGuiThemeReloadListener;
-import net.tslat.aoa3.data.client.BestiaryReloadListener;
-import net.tslat.aoa3.data.client.MiscellaneousReloadListener;
-import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -55,7 +50,6 @@ import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
-import software.bernie.geckolib3.resource.ResourceListener;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -88,22 +82,6 @@ public final class ClientOperations {
 
 	public static void addOccultBlocks(int renderUntil, ArrayList<Pair<BlockPos, BlockState>> blocks) {
 		OccultBlockRenderer.addOccultBlocks(renderUntil, blocks);
-	}
-
-	public static void registerResourceListeners() {
-		Minecraft mc = Minecraft.getInstance();
-
-		if (mc == null)
-			return;
-
-		ResourceListener.registerReloadListener();
-
-		ReloadableResourceManager resourceManager = (ReloadableResourceManager)mc.getResourceManager();
-
-		resourceManager.registerReloadListener(new BestiaryReloadListener());
-		resourceManager.registerReloadListener(new MiscellaneousReloadListener());
-		resourceManager.registerReloadListener(new RealmstoneInsertsReloadListener());
-		resourceManager.registerReloadListener(new AdventGuiThemeReloadListener());
 	}
 
 	public static void registerParticleFactories(ParticleFactoryRegisterEvent ev) {

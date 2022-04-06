@@ -9,13 +9,14 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.integration.tinkersconstruct.modifier.*;
 import net.tslat.aoa3.integration.tinkersconstruct.trait.*;
 import net.tslat.aoa3.util.FluidUtil;
+import slimeknights.tconstruct.TConstruct;
 import slimeknights.tconstruct.library.modifiers.Modifier;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class TinkersConstructIntegration {
-	public static final DeferredRegister<Modifier> MODIFIERS = DeferredRegister.create(Modifier.class, AdventOfAscension.MOD_ID);
+	public static final DeferredRegister<Modifier> MODIFIERS = DeferredRegister.create(new ResourceLocation(TConstruct.MOD_ID, "modifiers"), AdventOfAscension.MOD_ID);
 
 	public static final RegistryObject<Modifier> ANTI_AIR = registerModifier("anti_air", AntiAirTrait::new);
 	public static final RegistryObject<Modifier> BARON = registerModifier("baron", BaronTrait::new);

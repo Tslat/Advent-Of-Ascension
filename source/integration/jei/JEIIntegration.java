@@ -7,9 +7,7 @@ import mezz.jei.api.registration.*;
 import mezz.jei.api.runtime.IJeiRuntime;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
@@ -56,10 +54,10 @@ public class JEIIntegration implements IModPlugin {
 		if (!IntegrationManager.isJEIActive())
 			return;
 
-		registration.addRecipeCatalyst(new ItemStack(AoABlocks.DIVINE_STATION.get()), UpgradeKitRecipeCategory.ID);
-		registration.addRecipeCatalyst(new ItemStack(AoABlocks.INFUSION_TABLE.get()), InfusionRecipeCategory.ID, ImbuingRecipeCategory.ID);
-		registration.addRecipeCatalyst(new ItemStack(AoABlocks.FRAME_BENCH.get()), FrameBenchRecipeCategory.ID);
-		registration.addRecipeCatalyst(new ItemStack(AoABlocks.WHITEWASHING_TABLE.get()), WhitewashingRecipeCategory.ID);
+		registration.addRecipeCatalyst(VanillaTypes.ITEM, new ItemStack(AoABlocks.DIVINE_STATION.get()), UpgradeKitRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(VanillaTypes.ITEM, new ItemStack(AoABlocks.INFUSION_TABLE.get()), InfusionRecipeCategory.RECIPE_TYPE, ImbuingRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(VanillaTypes.ITEM, new ItemStack(AoABlocks.FRAME_BENCH.get()), FrameBenchRecipeCategory.RECIPE_TYPE);
+		registration.addRecipeCatalyst(VanillaTypes.ITEM, new ItemStack(AoABlocks.WHITEWASHING_TABLE.get()), WhitewashingRecipeCategory.RECIPE_TYPE);
 	}
 
 	@Override
@@ -81,11 +79,11 @@ public class JEIIntegration implements IModPlugin {
 
 		RecipeManager recipeManager = Minecraft.getInstance().getConnection().getRecipeManager();
 
-		registration.addRecipes(compileUpgradeKitRecipes(recipeManager), UpgradeKitRecipeCategory.ID);
-		registration.addRecipes(compileImbuingRecipes(recipeManager), ImbuingRecipeCategory.ID);
-		registration.addRecipes(compileInfusionRecipes(recipeManager), InfusionRecipeCategory.ID);
-		registration.addRecipes(compileFrameBenchRecipes(recipeManager), FrameBenchRecipeCategory.ID);
-		registration.addRecipes(compileWhitewashingRecipes(recipeManager), WhitewashingRecipeCategory.ID);
+		registration.addRecipes(UpgradeKitRecipeCategory.RECIPE_TYPE, compileUpgradeKitRecipes(recipeManager));
+		registration.addRecipes(ImbuingRecipeCategory.RECIPE_TYPE, compileImbuingRecipes(recipeManager));
+		registration.addRecipes(InfusionRecipeCategory.RECIPE_TYPE, compileInfusionRecipes(recipeManager));
+		registration.addRecipes(FrameBenchRecipeCategory.RECIPE_TYPE, compileFrameBenchRecipes(recipeManager));
+		registration.addRecipes(WhitewashingRecipeCategory.RECIPE_TYPE, compileWhitewashingRecipes(recipeManager));
 	}
 
 	@Override
@@ -117,7 +115,7 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private ArrayList<WhitewashingRecipe> compileWhitewashingRecipes(RecipeManager recipeManager) {
-		ArrayList<WhitewashingRecipe> whitewashingRecipes = new ArrayList<WhitewashingRecipe>(10);
+		ArrayList<WhitewashingRecipe> whitewashingRecipes = new ArrayList<>(10);
 
 		whitewashingRecipes.add(new WhitewashingRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "whitewashing_white"), AoAItems.WHITEWASHING_SOLUTION.get(), AoABlocks.WHITEWASH_BRICKS.get()));
 		whitewashingRecipes.add(new WhitewashingRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "whitewashing_dark"), AoAItems.DARKLY_POWDER.get(), AoABlocks.DARKWASH_BRICKS.get()));
@@ -125,8 +123,8 @@ public class JEIIntegration implements IModPlugin {
 		return whitewashingRecipes;
 	}
 
-	private ArrayList<Recipe<Inventory>> compileFrameBenchRecipes(RecipeManager recipeManager) {
-		ArrayList<Recipe<Inventory>> frameRecipes = new ArrayList<Recipe<Inventory>>(10);
+	private ArrayList<FrameBenchRecipe> compileFrameBenchRecipes(RecipeManager recipeManager) {
+		ArrayList<FrameBenchRecipe> frameRecipes = new ArrayList<>(10);
 
 		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_crossbow"), AoAItems.CROSSBOW_FRAME.get()));
 		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_blaster"), AoAItems.BLASTER_FRAME.get()));
@@ -143,7 +141,7 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private ArrayList<InfusionRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
-		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<InfusionRecipe>();
+		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<>();
 
 		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.getA())) {
 			if (recipe.isEnchanting())
@@ -154,7 +152,7 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private ArrayList<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
-		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<InfusionRecipe>();
+		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<>();
 
 		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.getA())) {
 			if (!recipe.isEnchanting())

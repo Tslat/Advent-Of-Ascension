@@ -2,11 +2,13 @@ package net.tslat.aoa3.integration.jei.recipe.framebench;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.gui.IRecipeLayout;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
+import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -18,9 +20,12 @@ import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RenderUtil;
 
 public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecipe> {
+	public static final RecipeType<FrameBenchRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "frame_bench", FrameBenchRecipe.class);
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench");
+
 	public static final ResourceLocation texture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/containers/frame_bench.png");
 	private final Component title = LocaleUtil.getLocaleMessage("recipe.aoa3.frameBench");
 	private final IDrawable background;
@@ -28,17 +33,24 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 
 	public FrameBenchRecipeCategory(IGuiHelper guiHelper) {
 		this.background = guiHelper.createDrawable(texture, 10, 12, 156, 60);
-		this.icon = guiHelper.createDrawableIngredient(new ItemStack(AoABlocks.FRAME_BENCH.get()));
+		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM, new ItemStack(AoABlocks.FRAME_BENCH.get()));
 	}
 
+	@Deprecated
 	@Override
 	public ResourceLocation getUid() {
 		return ID;
 	}
 
+	@Deprecated
 	@Override
 	public Class<FrameBenchRecipe> getRecipeClass() {
 		return FrameBenchRecipe.class;
+	}
+
+	@Override
+	public RecipeType<FrameBenchRecipe> getRecipeType() {
+		return RECIPE_TYPE;
 	}
 
 	@Override
@@ -57,7 +69,7 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	}
 
 	@Override
-	public void draw(FrameBenchRecipe recipe, PoseStack matrix, double mouseX, double mouseY) {
+	public void draw(FrameBenchRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
 		Minecraft mc = Minecraft.getInstance();
 
 		drawButton(matrix, mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
@@ -73,29 +85,21 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	}
 
 	private void drawButton(PoseStack matrix, Minecraft mc, Item frame, FrameBenchRecipe recipe, int x, int y) {
-		/*mc.getTextureManager().bind(texture);
+		RenderUtil.prepRenderTexture(texture);
 		matrix.pushPose();
-		RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
+		RenderUtil.resetShaderColour();
 		RenderUtil.renderCustomSizedTexture(matrix, x, y, 176, recipe.getResultItem().getItem() == frame ? 21 : 39, 18, 18, 256, 256);
 		matrix.translate(0, 0, 32);
 		RenderUtil.renderItemInGui(matrix, mc, new ItemStack(frame), x + 1, y + 1);
 		matrix.popPose();
-		RenderSystem.setShaderColor(1f, 1f, 1f, 1f);*/
+		RenderUtil.resetShaderColour();
 	}
 
 	@Override
-	public void setIngredients(FrameBenchRecipe recipe, IIngredients ingredients) {
-		ingredients.setInputIngredients(recipe.getIngredients());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
-	}
-
-	@Override
-	public void setRecipe(IRecipeLayout recipeLayout, FrameBenchRecipe recipe, IIngredients ingredients) {
-		IGuiItemStackGroup guiStacks = recipeLayout.getItemStacks();
-
-		guiStacks.init(0, false, 138, 21);
-		guiStacks.init(1, true, 0, 21);
-		guiStacks.set(0, ingredients.getOutputs(VanillaTypes.ITEM).get(0));
-		guiStacks.set(1, ingredients.getInputs(VanillaTypes.ITEM).get(0));
+	public void setRecipe(IRecipeLayoutBuilder builder, FrameBenchRecipe recipe, IFocusGroup focuses) {
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 139, 22)
+				.addItemStack(recipe.getResultItem());
+		builder.addSlot(RecipeIngredientRole.INPUT, 1, 22)
+				.addIngredients(recipe.getIngredients().get(0));
 	}
 }

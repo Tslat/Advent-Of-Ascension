@@ -30,6 +30,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.entity.mob.precasia.PrimitiveCarrotopEntity;
+import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
@@ -71,7 +72,7 @@ public class BlankRealmstone extends Item {
 
 	@Override
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-		if (WorldUtil.isWorld(player.level, AoADimensions.CREEPONIA.key) && target instanceof AoATrader) {
+		if (WorldUtil.isWorld(player.level, AoADimensions.CREEPONIA.key) && (target instanceof AoATrader || target instanceof AoABanker)) {
 			if (player instanceof ServerPlayer && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));

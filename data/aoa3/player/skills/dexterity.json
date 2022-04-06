@@ -75,6 +75,15 @@
       "unique_id": "1755700425",
       "energy_consumption": 20.0,
       "level_req": 90
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "unique_id": "-1978598326",
+      "restrictions": [
+        "equip"
+      ],
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_dextrous"
     }
   ]
 }

@@ -65,11 +65,17 @@ public class ElectronMaul extends BaseMaul {
 
 		if (cap.getValue() > 0.75f)
 			WorldUtil.spawnLightning((ServerLevel)attacker.level, (ServerPlayer)attacker, target.getX(), target.getY(), target.getZ(), false);
+
+		if (attacker instanceof ServerPlayer player) {
+			AoAResource.Instance spirit = PlayerUtil.getResource(player, AoAResources.SPIRIT.get());
+
+			spirit.consume(spirit.getCurrentValue(), true);
+		}
 	}
 
 	private float getKnockbackMultiplier(Entity holder) {
 		if (holder instanceof ServerPlayer) {
-			AoAResource.Instance spirit = PlayerUtil.getResource((ServerPlayer)holder, AoAResources.SPIRIT.get()); // TODO Check this
+			AoAResource.Instance spirit = PlayerUtil.getResource((ServerPlayer)holder, AoAResources.SPIRIT.get());
 
 			return 1 + spirit.getCurrentValue() / spirit.getMaxValue();
 		}

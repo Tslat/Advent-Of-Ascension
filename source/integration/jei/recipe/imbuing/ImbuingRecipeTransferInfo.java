@@ -1,5 +1,6 @@
 package net.tslat.aoa3.integration.jei.recipe.imbuing;
 
+import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.Slot;
@@ -15,14 +16,21 @@ public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTa
 		return InfusionTableContainer.class;
 	}
 
+	@Deprecated
 	@Override
 	public Class<InfusionRecipe> getRecipeClass() {
 		return InfusionRecipe.class;
 	}
 
+	@Deprecated
 	@Override
 	public ResourceLocation getRecipeCategoryUid() {
 		return ImbuingRecipeCategory.ID;
+	}
+
+	@Override
+	public RecipeType<InfusionRecipe> getRecipeType() {
+		return ImbuingRecipeCategory.RECIPE_TYPE;
 	}
 
 	@Override

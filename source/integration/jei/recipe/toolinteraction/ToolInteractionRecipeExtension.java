@@ -1,10 +1,14 @@
 package net.tslat.aoa3.integration.jei.recipe.toolinteraction;
 
-import mezz.jei.api.constants.VanillaTypes;
-import mezz.jei.api.ingredients.IIngredients;
+import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
+import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
+import mezz.jei.api.recipe.IFocusGroup;
+import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
+import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.util.Size2i;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
 
 import javax.annotation.Nullable;
@@ -17,9 +21,22 @@ public class ToolInteractionRecipeExtension implements ICraftingCategoryExtensio
 	}
 
 	@Override
-	public void setIngredients(IIngredients ingredients) {
-		ingredients.setInputIngredients(recipe.getIngredients());
-		ingredients.setOutput(VanillaTypes.ITEM, recipe.getResultItem());
+	public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
+		NonNullList<Ingredient> ingredients = recipe.getIngredients();
+
+		for (int y = 0; y < 3; y++) {
+			for (int x = 0; x < 3; x++) {
+				IRecipeSlotBuilder slotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, x * 18 + 1, y * 18 + 1);
+
+				if (x + y * 3 < ingredients.size())
+					slotBuilder.addIngredients(ingredients.get(x + y * 3));
+			}
+		}
+
+		builder.addSlot(RecipeIngredientRole.OUTPUT, 95, 19)
+				.addItemStack(recipe.getResultItem());
+
+		builder.setShapeless();
 	}
 
 	@Nullable
@@ -28,9 +45,13 @@ public class ToolInteractionRecipeExtension implements ICraftingCategoryExtensio
 		return recipe.getId();
 	}
 
-	@Nullable
 	@Override
-	public Size2i getSize() {
-		return null;
+	public int getWidth() {
+		return 0;
+	}
+
+	@Override
+	public int getHeight() {
+		return 0;
 	}
 }

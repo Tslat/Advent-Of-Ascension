@@ -140,12 +140,16 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 
 		for (Pair<ResourceLocation, Integer> pair : reqs) {
 			AoASkill skill = AoASkills.getSkill(pair.getFirst());
+			int level = pair.getSecond();
+
+			if (level <= 0 || level > 1000)
+				throw new IllegalArgumentException("Invalid skill level requirement: " + level + ", must be 1-1000");
 
 			if (skill == null)
 				throw new IllegalArgumentException("Unknown skill: '" + pair.getFirst() + "' for item skill entry.");
 
-			predicate = predicate.and(plData -> plData.getSkill(skill).hasLevel(pair.getSecond()));
-			notificationHandler = notificationHandler.andThen(player -> PlayerUtil.notifyPlayerOfInsufficientLevel(player, skill, pair.getSecond()));
+			predicate = predicate.and(plData -> plData.getSkill(skill).hasLevel(level));
+			notificationHandler = notificationHandler.andThen(player -> PlayerUtil.notifyPlayerOfInsufficientLevel(player, skill, level));
 		}
 
 		return Pair.of(predicate, notificationHandler);

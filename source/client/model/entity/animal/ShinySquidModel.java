@@ -5,8 +5,9 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.tslat.aoa3.client.model.misc.FullbrightMeshDefinition;
-import net.tslat.aoa3.client.model.misc.FullbrightPartDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.tslat.aoa3.client.model.misc.fullbright.FullbrightCubes;
 import net.tslat.aoa3.content.entity.animal.ShinySquidEntity;
 
 import java.util.Arrays;
@@ -22,11 +23,11 @@ public class ShinySquidModel extends HierarchicalModel<ShinySquidEntity> {
 	}
 
 	public static LayerDefinition createBodyLayer() {
-		FullbrightMeshDefinition meshDefinition = new FullbrightMeshDefinition();
-		FullbrightPartDefinition rootPart = meshDefinition.getRoot();
-		CubeListBuilder cubesBuilder = CubeListBuilder.create().texOffs(48, 0).addBox(-1, 0, -1, 2, 18, 2);
+		MeshDefinition meshDefinition = new MeshDefinition();
+		PartDefinition rootPart = meshDefinition.getRoot();
+		CubeListBuilder cubesBuilder = FullbrightCubes.create().texOffs(48, 0).addGlowBox(-1, 0, -1, 2, 18, 2);
 
-		rootPart.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 0).addBox(-6, -8, -6, 12, 16, 12), PartPose.offset(0, 8, 0));
+		rootPart.addOrReplaceChild("body", FullbrightCubes.create().texOffs(0, 0).addGlowBox(-6, -8, -6, 12, 16, 12), PartPose.offset(0, 8, 0));
 
 
 		for(int i = 0; i < 8; ++i) {
