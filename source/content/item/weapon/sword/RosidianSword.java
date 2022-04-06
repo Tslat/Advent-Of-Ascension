@@ -42,7 +42,7 @@ public class RosidianSword extends BaseSword {
 					motionY = (float)(player.getY() - swipeTarget.getY()) * 0.1f;
 					motionZ = (float)(player.getZ() - swipeTarget.getZ()) * 0.1f;
 
-					player.level.addParticle(ParticleTypes.END_ROD, true, swipeTarget.getX() + random.nextGaussian() * 0.2, swipeTarget.getY() + target.getBbHeight() / 2f, swipeTarget.getZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
+					player.level.addParticle(ParticleTypes.END_ROD, swipeTarget.getX() + random.nextGaussian() * 0.2, swipeTarget.getY() + target.getBbHeight() / 2f, swipeTarget.getZ() + random.nextGaussian() * 0.2, motionX, motionY, motionZ);
 				}
 			}
 		}

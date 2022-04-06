@@ -4982,7 +4982,6 @@
   "items.description.armour.set": "Full set bonus:",
   "items.description.blaster.effect": "Shots have no penetration power",
   "items.description.blaster.fire": "First shot must be charged",
-  "items.description.blaster.slowing": "Drains movement speed while firing",
   "items.description.boss_summon_item.unstable": "Unstable if thrown",
   "items.description.bow.drawSpeed": "Draw time: %1$ss",
   "items.description.cannon.damage": "Deals more damage to armoured enemies",

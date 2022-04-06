@@ -10,6 +10,7 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -52,7 +53,7 @@ public class EmbrakeEntity extends AoAMeleeMob {
 	protected void onAttack(Entity target) {
 		target.setSecondsOnFire(5);
 
-		if (level.getBlockState(target.blockPosition().below()) .getBlock() != Blocks.AIR)
+		if (!level.isClientSide() && level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) && level.getBlockState(target.blockPosition().below()).getBlock() != Blocks.AIR && level.getBlockState(target.blockPosition()).getMaterial().isReplaceable())
 			level.setBlockAndUpdate(target.blockPosition(), Blocks.FIRE.defaultBlockState());
 	}
 }

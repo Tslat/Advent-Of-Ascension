@@ -66,6 +66,18 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:stalker",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:lost_soul",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:devourer",
         "weight": 20,
         "minCount": 0,
@@ -78,19 +90,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:stalker",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:duston",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:lost_soul",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1

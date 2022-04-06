@@ -48,31 +48,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:kranky",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:snappy",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:sticky",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:tipsy",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:chocko",
+        "type": "aoa3:koko",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -90,13 +66,37 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:koko",
+        "type": "aoa3:kranky",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
         "type": "aoa3:happy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:snappy",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:sticky",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:chocko",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tipsy",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
