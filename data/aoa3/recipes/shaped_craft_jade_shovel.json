@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:jade"
+      "tag": "forge:gems/jade"
     },
     "B": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

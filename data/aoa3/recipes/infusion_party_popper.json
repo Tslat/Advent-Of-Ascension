@@ -14,13 +14,13 @@
       "item": "aoa3:hardened_confetti_ball"
     },
     {
-      "item": "aoa3:sapphire"
-    },
-    {
       "item": "minecraft:paper"
     },
     {
       "item": "minecraft:red_dye"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

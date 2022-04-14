@@ -1,25 +1,23 @@
 package net.tslat.aoa3.common.container;
 
 import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 
 public abstract class UtilityBlockContainer extends AbstractContainerMenu {
-	public Inventory inputs;
-	//public final CraftResultInventory output;
+	public Container inputs;
+	public final ResultContainer output;
 	private final ContainerLevelAccess functionCaller;
 
 	public UtilityBlockContainer(MenuType<?> type, int id, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(type, id);
 
 		this.functionCaller = functionCaller;
-		/*inputs = new Inventory(2) {
+		inputs = new SimpleContainer(2) {
 			@Override
 			public void setChanged() {
 				super.setChanged();
@@ -28,7 +26,7 @@ public abstract class UtilityBlockContainer extends AbstractContainerMenu {
 			}
 		};
 
-		output = new CraftResultInventory();
+		output = new ResultContainer();
 
 		addSlot(initFirstInputSlot());
 		addSlot(initSecondInputSlot());
@@ -42,7 +40,7 @@ public abstract class UtilityBlockContainer extends AbstractContainerMenu {
 
 		for (int x = 0; x < 9; x++) {
 			addSlot(new Slot(plInventory, x, 8 + x * 18, 118));
-		}*/
+		}
 	}
 
 	@Override

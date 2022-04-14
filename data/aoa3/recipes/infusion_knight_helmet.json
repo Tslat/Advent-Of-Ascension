@@ -5,12 +5,6 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:shyrestone_ingot"
-    },
-    {
-      "item": "aoa3:shyregem"
-    },
-    {
       "item": "aoa3:whitewashing_solution"
     },
     {
@@ -24,6 +18,12 @@
     },
     {
       "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:ingots/shyrestone"
+    },
+    {
+      "tag": "forge:gems/shyregem"
     }
   ],
   "result": {

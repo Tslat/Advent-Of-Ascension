@@ -27,14 +27,13 @@ public class UtilityBlockScreen extends AbstractContainerScreen<UtilityBlockCont
 
 	@Override
 	protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-		/*UtilityBlockContainer container = getMenu();
+		UtilityBlockContainer container = getMenu();
 
-		RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
-		Minecraft.getInstance().getTextureManager().bind(textures);
+		RenderUtil.prepRenderTexture(textures);
 		RenderUtil.renderCustomSizedTexture(matrix, leftPos, topPos, 0, 0, 175, 141, 256, 256);
 
 		if ((!container.inputs.getItem(0).isEmpty() || !container.inputs.getItem(1).isEmpty()) && container.output.getItem(0).isEmpty())
-			RenderUtil.renderCustomSizedTexture(matrix, leftPos + 99, topPos + 21, imageWidth, 0, 28, 21, 256, 256);*/
+			RenderUtil.renderCustomSizedTexture(matrix, leftPos + 99, topPos + 21, imageWidth, 0, 28, 21, 256, 256);
 	}
 
 	@Override

@@ -3,7 +3,7 @@ package net.tslat.aoa3.event;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
@@ -33,7 +33,7 @@ public final class AoAPlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, TickEvent.PlayerTickEvent.class, AoAPlayerEvents::onPlayerTick);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingEvent.LivingJumpEvent.class, AoAPlayerEvents::onPlayerJump);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingFallEvent.class, AoAPlayerEvents::onPlayerFall);
-		forgeBus.addListener(EventPriority.NORMAL, false, LivingDeathEvent.class, AoAPlayerEvents::onPlayerDeath);
+		forgeBus.addListener(EventPriority.NORMAL, false, LivingDeathEvent.class, AoAPlayerEvents::onEntityDeath);
 		forgeBus.addListener(EventPriority.NORMAL, false, BabyEntitySpawnEvent.class, AoAPlayerEvents::onAnimalBreed);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerRespawnEvent.class, AoAPlayerEvents::onPlayerRespawn);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerLoggedInEvent.class, AoAPlayerEvents::onPlayerLogin);
@@ -99,26 +99,22 @@ public final class AoAPlayerEvents {
 	}
 
 	private static void onPlayerJump(final LivingEvent.LivingJumpEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntityLiving());
-
-		if (player instanceof ServerPlayer)
-			issueEvent((ServerPlayer)player, PLAYER_JUMP, listener -> listener.handlePlayerJump(ev));
+		if (ev.getEntityLiving() instanceof ServerPlayer)
+			issueEvent((ServerPlayer)ev.getEntityLiving(), PLAYER_JUMP, listener -> listener.handlePlayerJump(ev));
 	}
 
 	private static void onPlayerFall(final LivingFallEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntityLiving());
-
-		if (player instanceof ServerPlayer)
-			issueEvent((ServerPlayer)player, PLAYER_FALL, listener -> listener.handlePlayerFall(ev));
+		if (ev.getEntityLiving() instanceof ServerPlayer)
+			issueEvent((ServerPlayer)ev.getEntityLiving(), PLAYER_FALL, listener -> listener.handlePlayerFall(ev));
 	}
 
-	private static void onPlayerDeath(final LivingDeathEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntityLiving());
+	private static void onEntityDeath(final LivingDeathEvent ev) {
+		LivingEntity target = ev.getEntityLiving();
 
-		if (player instanceof ServerPlayer)
-			issueEvent((ServerPlayer)player, PLAYER_DEATH, listener -> listener.handlePlayerDeath(ev));
+		if (target instanceof ServerPlayer)
+			issueEvent((ServerPlayer)target, PLAYER_DEATH, listener -> listener.handlePlayerDeath(ev));
 
-		for (Entity pl : EntityUtil.getAttackersForMob(ev.getEntityLiving(), entity -> entity != player && entity instanceof ServerPlayer)) {
+		for (Entity pl : EntityUtil.getAttackersForMob(ev.getEntityLiving(), entity -> entity != target && entity instanceof ServerPlayer)) {
 			issueEvent((ServerPlayer)pl, ENTITY_KILL, listener -> listener.handleEntityKill(ev));
 		}
 	}
@@ -153,10 +149,8 @@ public final class AoAPlayerEvents {
 	}
 
 	private static void onPlayerEquipmentChange(final LivingEquipmentChangeEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntityLiving());
-
-		if (player instanceof ServerPlayer)
-			issueEvent((ServerPlayer)player, EQUIPMENT_CHANGE, listener -> listener.handleArmourChange(ev));
+		if (ev.getEntityLiving() instanceof ServerPlayer)
+			issueEvent((ServerPlayer)ev.getEntityLiving(), EQUIPMENT_CHANGE, listener -> listener.handleArmourChange(ev));
 	}
 
 	private static void onDimensionChange(final PlayerEvent.PlayerChangedDimensionEvent ev) {
@@ -189,17 +183,13 @@ public final class AoAPlayerEvents {
 	}
 
 	private static void onBlockPlace(final BlockEvent.EntityPlaceEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntity());
-
-		if (player instanceof ServerPlayer)
-			issueEvent((ServerPlayer)player, BLOCK_PLACE, listener -> listener.handleBlockPlacement(ev));
+		if (ev.getEntity() instanceof ServerPlayer)
+			issueEvent((ServerPlayer)ev.getEntity(), BLOCK_PLACE, listener -> listener.handleBlockPlacement(ev));
 	}
 
 	private static void onBlockInteract(final PlayerInteractEvent.RightClickBlock ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntity());
-
-		if (player instanceof ServerPlayer)
-			issueEvent((ServerPlayer)player, BLOCK_INTERACT, listener -> listener.handleBlockInteraction(ev));
+		if (ev.getEntityLiving() instanceof ServerPlayer)
+			issueEvent((ServerPlayer)ev.getEntityLiving(), BLOCK_INTERACT, listener -> listener.handleBlockInteraction(ev));
 	}
 
 	private static void onItemThrow(final ItemTossEvent ev) {
@@ -270,47 +260,39 @@ public final class AoAPlayerEvents {
 	}
 
 	private static void onCriticalHit(final CriticalHitEvent ev) {
-		if (ev.getPlayer() instanceof ServerPlayer)
+		if (ev.isVanillaCritical() && ev.getPlayer() instanceof ServerPlayer)
 			issueEvent((ServerPlayer)ev.getPlayer(), CRITICAL_HIT, listener -> listener.handleCriticalHit(ev));
 	}
 
 	private static void onEntityTargeted(final LivingSetAttackTargetEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getTarget());
-
-		if (player instanceof ServerPlayer)
-			issueEvent((ServerPlayer)player, ENTITY_TARGET, listener -> listener.handleEntityTarget(ev));
+		if (ev.getTarget() instanceof ServerPlayer)
+			issueEvent((ServerPlayer)ev.getTarget(), ENTITY_TARGET, listener -> listener.handleEntityTarget(ev));
 	}
 
 	private static void onPreAttack(final LivingAttackEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntityLiving());
-
-		if (player instanceof ServerPlayer) {
-			issueEvent((ServerPlayer)player, INCOMING_ATTACK_BEFORE, listener -> listener.handlePreIncomingAttack(ev));
+		if (ev.getEntityLiving() instanceof ServerPlayer) {
+			issueEvent((ServerPlayer)ev.getEntityLiving(), INCOMING_ATTACK_BEFORE, listener -> listener.handlePreIncomingAttack(ev));
 		}
-		else if ((player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getSource().getEntity())) instanceof ServerPlayer) {
-			issueEvent((ServerPlayer)player, OUTGOING_ATTACK_BEFORE, listener -> listener.handlePreOutgoingAttack(ev));
+		else if (ev.getSource().getEntity() instanceof ServerPlayer) {
+			issueEvent((ServerPlayer)ev.getSource().getEntity(), OUTGOING_ATTACK_BEFORE, listener -> listener.handlePreOutgoingAttack(ev));
 		}
 	}
 
 	private static void onAttack(final LivingHurtEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntityLiving());
-
-		if (player instanceof ServerPlayer) {
-			issueEvent((ServerPlayer)player, INCOMING_ATTACK_DURING, listener -> listener.handleIncomingAttack(ev));
+		if (ev.getEntityLiving() instanceof ServerPlayer) {
+			issueEvent((ServerPlayer)ev.getEntityLiving(), INCOMING_ATTACK_DURING, listener -> listener.handleIncomingAttack(ev));
 		}
-		else if ((player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getSource().getEntity())) instanceof ServerPlayer) {
-			issueEvent((ServerPlayer)player, OUTGOING_ATTACK_DURING, listener -> listener.handleOutgoingAttack(ev));
+		else if (ev.getSource().getEntity() instanceof ServerPlayer) {
+			issueEvent((ServerPlayer)ev.getSource().getEntity(), OUTGOING_ATTACK_DURING, listener -> listener.handleOutgoingAttack(ev));
 		}
 	}
 
 	private static void onPostAttack(final LivingDamageEvent ev) {
-		Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getEntityLiving());
-
-		if (player instanceof ServerPlayer) {
-			issueEvent((ServerPlayer)player, INCOMING_ATTACK_AFTER, listener -> listener.handlePostIncomingAttack(ev));
+		if (ev.getEntityLiving() instanceof ServerPlayer) {
+			issueEvent((ServerPlayer)ev.getEntityLiving(), INCOMING_ATTACK_AFTER, listener -> listener.handlePostIncomingAttack(ev));
 		}
-		else if ((player = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getSource().getEntity())) instanceof ServerPlayer) {
-			issueEvent((ServerPlayer)player, OUTGOING_ATTACK_AFTER, listener -> listener.handlePostOutgoingAttack(ev));
+		else if (ev.getSource().getEntity() instanceof ServerPlayer) {
+			issueEvent((ServerPlayer)ev.getSource().getEntity(), OUTGOING_ATTACK_AFTER, listener -> listener.handlePostOutgoingAttack(ev));
 		}
 	}
 

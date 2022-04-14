@@ -23,10 +23,10 @@ import org.openzen.zencode.java.ZenCodeType;
 @Document("aoa3/api/InfusionRecipe")
 @ZenCodeType.Name("mods.aoa3.InfusionRecipe")
 @ZenRegister
-public class CTInfusionRecipeManager implements IRecipeManager {
+public class CTInfusionRecipeManager implements IRecipeManager<InfusionRecipe> {
 	@ZenCodeType.Method
-	public void addInfusionRecipe(String id, IItemStack input, IItemStack output, IIngredient[] infusionIngredients, @ZenCodeType.OptionalLong(value = 1) long infusionLevelReq, @ZenCodeType.OptionalInt int minXp, @ZenCodeType.OptionalInt int maxXp) {
-		ItemStack targetStack = input.getInternal();
+	public void addInfusionRecipe(String id, IIngredient input, IItemStack output, IIngredient[] infusionIngredients, @ZenCodeType.OptionalLong(value = 1) long infusionLevelReq, @ZenCodeType.OptionalInt int minXp, @ZenCodeType.OptionalInt int maxXp) {
+		Ingredient targetIngredient = input.asVanillaIngredient();
 		ItemStack outputStack = output.getInternal();
 		NonNullList<Ingredient> ingredients = NonNullList.create();
 
@@ -42,9 +42,9 @@ public class CTInfusionRecipeManager implements IRecipeManager {
 
 		minXp = Math.max(0, minXp);
 		maxXp = Math.max(minXp, maxXp);
-		InfusionRecipe recipe = new InfusionRecipe(new ResourceLocation("crafttweaker", id), "", targetStack, outputStack, ingredients, (int)infusionLevelReq, minXp, maxXp);
+		InfusionRecipe recipe = new InfusionRecipe(new ResourceLocation("crafttweaker", id), "", outputStack, targetIngredient, ingredients, (int)infusionLevelReq, minXp, maxXp);
 
-		CraftTweakerAPI.apply(new ActionAddRecipe(this, recipe));
+		CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
 	}
 
 	@ZenCodeType.Method
@@ -73,11 +73,11 @@ public class CTInfusionRecipeManager implements IRecipeManager {
 		maxXp = Math.max(minXp, maxXp);
 		InfusionRecipe recipe = new InfusionRecipe(new ResourceLocation("crafttweaker", id), "", enchantment, (int)enchantmentLevel, ingredients, (int)infusionLevelReq, minXp, maxXp);
 
-		CraftTweakerAPI.apply(new ActionAddRecipe(this, recipe));
+		CraftTweakerAPI.apply(new ActionAddRecipe<>(this, recipe));
 	}
 
 	@Override
 	public RecipeType<InfusionRecipe> getRecipeType() {
-		return AoARecipes.INFUSION.getA();
+		return AoARecipes.INFUSION.getA().get();
 	}
 }

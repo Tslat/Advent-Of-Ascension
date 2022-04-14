@@ -20,7 +20,7 @@ public class BattleVulcane extends BaseVulcane {
 	}
 
 	@Override
-	public void doAdditionalEffect(LivingEntity target, Player attacker) {
+	public void doAdditionalEffect(LivingEntity target, Player attacker, float damageDealt) {
 		EntityUtil.applyPotions(attacker, new EffectBuilder(MobEffects.DAMAGE_BOOST, 200).level(2));
 	}
 

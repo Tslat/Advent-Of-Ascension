@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:emerald"
+      "tag": "forge:gems/emerald"
     },
     "B": {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     },
     "C": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "D": {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     }
   },
   "result": {

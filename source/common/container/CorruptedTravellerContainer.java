@@ -1,6 +1,8 @@
 package net.tslat.aoa3.common.container;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,7 +18,7 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.ItemUtil;
 
 public class CorruptedTravellerContainer extends AbstractContainerMenu {
-	private Inventory input;
+	private final Container input;
 
 	public final CorruptedTravellerEntity traveller;
 	private final Player player;
@@ -33,7 +35,7 @@ public class CorruptedTravellerContainer extends AbstractContainerMenu {
 		this.traveller = traveller;
 		this.player = playerInventory.player;
 
-		/*input = new Inventory(1) {
+		input = new SimpleContainer(1) {
 			@Override
 			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem().getFoodProperties() != null;
@@ -63,7 +65,7 @@ public class CorruptedTravellerContainer extends AbstractContainerMenu {
 
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
 			addSlot(new Slot(player.getInventory(), hotbarSlot, 8 + hotbarSlot * 18, 123));
-		}*/
+		}
 	}
 
 	private void handleFoodInput() {

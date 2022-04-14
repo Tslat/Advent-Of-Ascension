@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:black_mysterium_bricks"
+  },
+  "result": "aoa3:black_mysterium_brick_stairs",
+  "count": 1
+}

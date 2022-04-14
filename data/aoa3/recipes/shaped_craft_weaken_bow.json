@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:gold_ingot"
+      "tag": "forge:ingots/gold"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:reinforced_cloth"

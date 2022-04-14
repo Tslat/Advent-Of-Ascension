@@ -5,22 +5,22 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:ghoulish_ingot"
-    },
-    {
       "item": "aoa3:ghoulasm"
     },
     {
       "item": "aoa3:ghoulasm"
     },
     {
-      "item": "aoa3:amethyst"
+      "item": "minecraft:spider_eye"
     },
     {
-      "item": "aoa3:amethyst"
+      "tag": "forge:ingots/ghoulish"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:ingots/netherite"
+    },
+    {
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

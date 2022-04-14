@@ -11,16 +11,16 @@
       "item": "aoa3:rosid_root"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     },
     {
-      "item": "minecraft:carrot"
+      "tag": "forge:crops/carrot"
     }
   ],
   "result": {

@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:skeletal_ingot"
-    },
-    {
-      "item": "aoa3:skeletal_ingot"
-    },
-    {
-      "item": "aoa3:skeletal_ingot"
-    },
-    {
       "item": "aoa3:skullbone_fragment"
     },
     {
       "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:ingots/skeletal"
+    },
+    {
+      "tag": "forge:ingots/skeletal"
+    },
+    {
+      "tag": "forge:ingots/skeletal"
     },
     {
       "tag": "forge:food"

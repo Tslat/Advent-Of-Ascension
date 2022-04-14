@@ -5,16 +5,16 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "aoa3:baronyte_ingot"
-    },
-    {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
       "item": "aoa3:grenade"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/baronyte"
+    },
+    {
+      "tag": "forge:ingots/varsium"
     }
   ],
   "result": {

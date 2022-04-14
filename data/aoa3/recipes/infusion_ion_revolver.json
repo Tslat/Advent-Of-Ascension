@@ -14,13 +14,13 @@
       "item": "aoa3:power_core"
     },
     {
-      "item": "aoa3:limonite_ingot"
-    },
-    {
       "item": "aoa3:dense_rock"
     },
     {
-      "item": "minecraft:redstone"
+      "tag": "forge:ingots/limonite"
+    },
+    {
+      "tag": "forge:dusts/redstone"
     }
   ],
   "result": {

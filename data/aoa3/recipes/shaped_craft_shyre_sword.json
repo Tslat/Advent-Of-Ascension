@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:shyrestone_ingot"
+      "tag": "forge:ingots/shyrestone"
     },
     "B": {
-      "item": "aoa3:shyregem"
+      "tag": "forge:gems/shyregem"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "D": {
       "item": "minecraft:glowstone"

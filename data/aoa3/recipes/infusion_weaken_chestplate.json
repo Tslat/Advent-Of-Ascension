@@ -11,13 +11,13 @@
       "item": "aoa3:orange_spores"
     },
     {
-      "item": "minecraft:diamond"
-    },
-    {
-      "item": "minecraft:diamond"
-    },
-    {
       "item": "minecraft:poisonous_potato"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:gems/diamond"
     }
   ],
   "result": {

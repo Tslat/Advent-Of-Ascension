@@ -5,16 +5,16 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:emberstone_ingot"
+      "tag": "forge:ingots/emberstone"
     },
     {
-      "item": "aoa3:emberstone_ingot"
+      "tag": "forge:ingots/emberstone"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     }
   ],
   "result": {

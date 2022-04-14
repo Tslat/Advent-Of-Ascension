@@ -5,7 +5,7 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:sapphire"
+      "item": "minecraft:water_bucket"
     },
     {
       "item": "aoa3:ice_crystal"
@@ -17,7 +17,7 @@
       "item": "aoa3:ice_crystal"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

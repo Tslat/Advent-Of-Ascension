@@ -49,7 +49,7 @@ public abstract class BaseVulcane extends Item {
 		if (!(player instanceof ServerPlayer))
 			return InteractionResultHolder.fail(stack);
 
-		AoAResource.Instance rage = PlayerUtil.getResource((ServerPlayer)player, AoAResources.RAGE.get());
+		AoAResource.Instance rage = PlayerUtil.getResource(player, AoAResources.RAGE.get());
 
 		if (!rage.hasAmount(50) || player.getLastHurtByMob() == null)
 			return InteractionResultHolder.fail(stack);
@@ -59,9 +59,11 @@ public abstract class BaseVulcane extends Item {
 
 	public InteractionResultHolder<ItemStack> activate(AoAResource.Instance rage, ItemStack vulcane, InteractionHand hand) {
 		Player pl = rage.getPlayerDataManager().player();
+		float targetHealth = pl.getLastHurtByMob().getHealth();
+		float damage = (float)getDamage() * (1 + ((rage.getCurrentValue() - 50) / 100));
 
-		if (DamageUtil.dealVulcaneDamage(pl.getLastHurtByMob(), pl, (float)getDamage() * (1 + ((rage.getCurrentValue() - 50) / 100)))) {
-			doAdditionalEffect(pl.getLastHurtByMob(), pl);
+		if (DamageUtil.dealVulcaneDamage(pl.getLastHurtByMob(), pl, damage)) {
+			doAdditionalEffect(pl.getLastHurtByMob(), pl, Math.min(targetHealth, damage));
 			pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 			ItemUtil.damageItem(vulcane, pl, hand);
 			rage.consume(rage.getCurrentValue(), true);
@@ -72,7 +74,7 @@ public abstract class BaseVulcane extends Item {
 		return InteractionResultHolder.fail(vulcane);
 	}
 
-	public void doAdditionalEffect(LivingEntity target, Player player) {}
+	public void doAdditionalEffect(LivingEntity target, Player player, float damageDealt) {}
 
 	@Override
 	public int getEnchantmentValue() {

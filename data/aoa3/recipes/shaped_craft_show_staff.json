@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:baronyte_ingot"
+      "tag": "forge:ingots/baronyte"
     },
     "B": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "C": {
       "item": "aoa3:green_druse"

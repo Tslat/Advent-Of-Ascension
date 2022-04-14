@@ -8,12 +8,6 @@
       "item": "minecraft:golden_apple"
     },
     {
-      "item": "aoa3:shyrestone_ingot"
-    },
-    {
-      "item": "aoa3:shyregem"
-    },
-    {
       "item": "aoa3:whitewashing_solution"
     },
     {
@@ -30,6 +24,12 @@
     },
     {
       "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:ingots/shyrestone"
+    },
+    {
+      "tag": "forge:gems/shyregem"
     }
   ],
   "result": {

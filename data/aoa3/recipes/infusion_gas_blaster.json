@@ -11,13 +11,13 @@
       "item": "aoa3:jungle_thorns"
     },
     {
-      "item": "aoa3:jade"
-    },
-    {
       "item": "aoa3:power_core"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:gems/jade"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

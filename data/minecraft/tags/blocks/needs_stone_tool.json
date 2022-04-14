@@ -1,9 +1,8 @@
 {
   "replace": false,
   "values": [
-    "aoa3:amethyst_ore",
     "aoa3:jade_ore",
-    "aoa3:rosite_ore",
+    "aoa3:deepslate_jade_ore",
     "aoa3:runium_ore"
   ]
 }

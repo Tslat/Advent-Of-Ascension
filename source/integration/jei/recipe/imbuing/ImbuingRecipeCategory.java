@@ -28,6 +28,7 @@ import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
 
+@SuppressWarnings("removal")
 public class ImbuingRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	public static final RecipeType<InfusionRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "imbuing", InfusionRecipe.class);
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "imbuing");

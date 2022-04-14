@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:rosite_ingot"
-    },
-    {
       "item": "aoa3:dense_rock"
     },
     {
       "item": "aoa3:dense_rock"
-    },
-    {
-      "item": "minecraft:iron_ingot"
     },
     {
       "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

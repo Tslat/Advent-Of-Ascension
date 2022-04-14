@@ -27,6 +27,7 @@ import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
 
+@SuppressWarnings("removal")
 public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	public static final RecipeType<InfusionRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "infusion", InfusionRecipe.class);
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "infusion");
@@ -92,7 +93,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.id", ChatFormatting.DARK_GRAY, new TextComponent(recipeId.toString())));
 				});
 		builder.addSlot(RecipeIngredientRole.INPUT, 7, 25)
-				.addItemStack(recipe.getRecipeInput());
+				.addIngredients(recipe.getRecipeInput());
 
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++) {

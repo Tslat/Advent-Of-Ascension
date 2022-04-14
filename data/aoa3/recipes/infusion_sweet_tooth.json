@@ -14,9 +14,6 @@
       "item": "aoa3:candy_cane"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:chocolate_block"
     },
     {
@@ -24,6 +21,9 @@
     },
     {
       "item": "minecraft:sugar"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

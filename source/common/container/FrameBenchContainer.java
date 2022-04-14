@@ -6,10 +6,12 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -21,8 +23,8 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import javax.annotation.Nullable;
 
 public class FrameBenchContainer extends AbstractContainerMenu {
-	private Inventory input;
-	//private final CraftResultInventory output;
+	private Container input;
+	private final ResultContainer output;
 	private ContainerLevelAccess functionCaller;
 
 	private Item currentSelection = AoAItems.HELMET_FRAME.get();
@@ -34,9 +36,9 @@ public class FrameBenchContainer extends AbstractContainerMenu {
 	public FrameBenchContainer(int screenId, Inventory plInventory, ContainerLevelAccess functionCaller) {
 		super(AoAContainers.FRAME_BENCH.get(), screenId);
 
-		/*this.functionCaller = functionCaller;
-		output = new CraftResultInventory();
-		input = new Inventory(1) {
+		this.functionCaller = functionCaller;
+		output = new ResultContainer();
+		input = new SimpleContainer(1) {
 			@Override
 			public void setChanged() {
 				super.setChanged();
@@ -62,10 +64,8 @@ public class FrameBenchContainer extends AbstractContainerMenu {
 			}
 
 			@Override
-			public ItemStack onTake(Player player, ItemStack stack) {
+			public void onTake(Player player, ItemStack stack) {
 				FrameBenchContainer.this.input.removeItem(0, 1);
-
-				return stack;
 			}
 		});
 
@@ -84,7 +84,7 @@ public class FrameBenchContainer extends AbstractContainerMenu {
 
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
 			addSlot(new Slot(plInventory, hotbarSlot, 8 + hotbarSlot * 18, 142));
-		}*/
+		}
 	}
 
 	@Override
@@ -164,14 +164,14 @@ public class FrameBenchContainer extends AbstractContainerMenu {
 	}
 
 	private void updateOutput() {
-	/*	if (input.isEmpty()) {
+		if (input.isEmpty()) {
 			output.setItem(0, ItemStack.EMPTY);
 		}
 		else {
 			output.setItem(0, new ItemStack(currentSelection, 1));
 		}
 
-		broadcastChanges();*/
+		broadcastChanges();
 	}
 
 	@Override

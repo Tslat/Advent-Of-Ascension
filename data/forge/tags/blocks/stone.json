@@ -1,6 +1,12 @@
 {
   "replace": false,
   "values": [
-    "aoa3:dense_stone"
+    "aoa3:baron_stone",
+    "aoa3:darkened_rock",
+    "aoa3:dense_stone",
+    "aoa3:hellstone",
+    "aoa3:irostone",
+    "aoa3:precasian_lower_rock",
+    "aoa3:runic_stone"
   ]
 }

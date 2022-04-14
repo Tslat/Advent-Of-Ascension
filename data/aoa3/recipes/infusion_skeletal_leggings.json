@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:legbone_fragment"
+    },
+    {
+      "item": "aoa3:legbone_fragment"
+    },
+    {
+      "tag": "forge:ingots/skeletal"
+    },
+    {
+      "tag": "forge:ingots/skeletal"
+    },
+    {
+      "tag": "forge:ingots/skeletal"
+    },
+    {
+      "tag": "forge:food"
+    },
+    {
+      "tag": "forge:food"
+    }
+  ],
+  "result": {
+    "item": "aoa3:skeletal_leggings"
+  }
+}

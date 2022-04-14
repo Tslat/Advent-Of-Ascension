@@ -65,19 +65,19 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 6.0
+                "min": 1.0,
+                "max": 3.0
               },
               "add": false
             }
           ],
-          "name": "aoa3:rosite_ingot"
+          "name": "aoa3:magic_mending_compound"
         },
         {
           "type": "minecraft:item",
@@ -118,7 +118,7 @@
         {
           "type": "minecraft:item",
           "weight": 5,
-          "name": "aoa3:utopian_legs"
+          "name": "aoa3:utopian_leggings"
         },
         {
           "type": "minecraft:item",

@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     "B": {
-      "item": "minecraft:gold_ingot"
+      "tag": "forge:ingots/gold"
     }
   },
   "result": {

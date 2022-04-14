@@ -8,13 +8,13 @@
       "item": "aoa3:magnet_shard"
     },
     {
-      "item": "aoa3:lyon_ingot"
+      "tag": "forge:ingots/lyon"
     },
     {
-      "item": "aoa3:lyon_ingot"
+      "tag": "forge:ingots/lyon"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

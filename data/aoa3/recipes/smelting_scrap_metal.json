@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "aoa3:rusted_iron_ingot"
-  },
-  "result": "aoa3:scrap_metal",
-  "experience": 1.0,
-  "cookingtime": 200
-}

@@ -14,13 +14,13 @@
       "item": "aoa3:blue_druse"
     },
     {
-      "item": "aoa3:sapphire"
-    },
-    {
       "item": "aoa3:power_core"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

@@ -28,7 +28,7 @@ public final class RenderUtil {
 		renderCustomSizedTexture(matrix, x, y, u, v, (int)width, (int)height, width, height);
 	}
 
-	public static void renderCustomSizedTexture(PoseStack matrix, int x, int y, float u, float v, int uWidth, int vHeight, float textureWidth, float textureHeight) {
+	public static void renderCustomSizedTexture(PoseStack matrix, int x, int y, float u, float v, float uWidth, float vHeight, float textureWidth, float textureHeight) {
 		renderScaledCustomSizedTexture(matrix, x, y, u, v, uWidth, vHeight, uWidth, vHeight, textureWidth, textureHeight);
 	}
 

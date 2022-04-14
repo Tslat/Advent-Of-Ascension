@@ -10,6 +10,7 @@ import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTableContainer, InfusionRecipe> {
 	@Override
 	public Class<InfusionTableContainer> getContainerClass() {

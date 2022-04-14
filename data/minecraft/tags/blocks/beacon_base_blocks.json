@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "aoa3:amethyst_block",
     "aoa3:baronyte_block",
     "aoa3:blazium_block",
     "aoa3:bloodstone_block",
@@ -17,8 +16,6 @@
     "aoa3:lyon_block",
     "aoa3:mystite_block",
     "aoa3:ornamyte_block",
-    "aoa3:rosite_block",
-    "aoa3:sapphire_block",
     "aoa3:shyregem_block",
     "aoa3:shyrestone_block",
     "aoa3:skeletal_ingot_block",

@@ -5,15 +5,6 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:string"
-    },
-    {
-      "item": "minecraft:string"
-    },
-    {
-      "item": "minecraft:string"
-    },
-    {
       "item": "aoa3:reinforced_cloth"
     },
     {
@@ -24,6 +15,15 @@
     },
     {
       "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
     }
   ],
   "result": {

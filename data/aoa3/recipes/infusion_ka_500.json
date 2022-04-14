@@ -8,19 +8,19 @@
       "item": "aoa3:small_orange_petal"
     },
     {
-      "item": "aoa3:sapphire"
+      "tag": "forge:gems/quartz"
     },
     {
-      "item": "aoa3:skeletal_ingot"
+      "tag": "forge:ingots/skeletal"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

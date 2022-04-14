@@ -42,17 +42,12 @@
         {
           "type": "minecraft:item",
           "weight": 60,
-          "name": "aoa3:amethyst"
+          "name": "minecraft:amethyst_shard"
         },
         {
           "type": "minecraft:item",
           "weight": 40,
           "name": "aoa3:jade"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:sapphire"
         }
       ]
     }

@@ -11,16 +11,16 @@
       "item": "aoa3:hardened_confetti_ball"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     },
     {
-      "item": "aoa3:sapphire"
+      "tag": "forge:gems/lapis"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AA",
+    "AA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:hellstone"
+    }
+  },
+  "result": {
+    "item": "aoa3:hellstone_bricks",
+    "count": 4
+  }
+}

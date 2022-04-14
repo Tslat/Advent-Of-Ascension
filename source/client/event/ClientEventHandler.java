@@ -4,12 +4,16 @@ import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.sounds.SoundSource;
+import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,7 +28,8 @@ import net.minecraftforge.network.NetworkDirection;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.gui.overlay.ScreenOverlayRenderer;
-import net.tslat.aoa3.client.model.armor.AoAArmourModels;
+import net.tslat.aoa3.client.model.armor.AoAMiscModels;
+import net.tslat.aoa3.client.render.entity.layer.PlayerHaloRenderLayer;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
@@ -57,6 +62,7 @@ public final class ClientEventHandler {
 		forgeBus.addListener(EventPriority.NORMAL, false, PlaySoundEvent.class, ClientEventHandler::onSoundPlay);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemTooltipEvent.class, ClientEventHandler::onTooltip);
 		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterClientReloadListenersEvent.class, ClientEventHandler::onResourceListenersRegistration);
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, EntityRenderersEvent.AddLayers.class, ClientEventHandler::onRenderLayerRegistration);
 	}
 
 	private static void onClientTick(final TickEvent.ClientTickEvent ev) {
@@ -149,7 +155,15 @@ public final class ClientEventHandler {
 		ev.registerReloadListener(new AdventGuiThemeReloadListener());
 		ev.registerReloadListener((ResourceManagerReloadListener)resourceManager -> {
 			if (ModLoader.isLoadingStateValid())
-				AoAArmourModels.generateFactories();
+				AoAMiscModels.generateFactories();
 		});
+	}
+
+	private static void onRenderLayerRegistration(final EntityRenderersEvent.AddLayers ev) {
+		for (String skin : ev.getSkins()) {
+			LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer = ev.getSkin(skin);
+
+			renderer.addLayer(new PlayerHaloRenderLayer(renderer, ev.getEntityModels()));
+		}
 	}
 }

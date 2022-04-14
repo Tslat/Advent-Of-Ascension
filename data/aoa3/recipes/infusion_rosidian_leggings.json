@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:rosid_root"
+    },
+    {
+      "item": "aoa3:rosid_root"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "tag": "forge:gems/amethyst"
+    },
+    {
+      "tag": "forge:gems/jade"
+    }
+  ],
+  "result": {
+    "item": "aoa3:rosidian_leggings"
+  }
+}

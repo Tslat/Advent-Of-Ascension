@@ -17,10 +17,10 @@
       "item": "aoa3:peppermint_candy"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:sugar"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

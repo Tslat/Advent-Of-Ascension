@@ -65,20 +65,12 @@ public class SpeedArmour extends AdventArmour {
 		}
 		else {
 			switch (slot) {
-				case FEET:
-					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, BOOTS_BONUS);
-					break;
-				case LEGS:
-					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, LEGS_BONUS);
-					break;
-				case CHEST:
-					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, CHESTPLATE_BONUS);
-					break;
-				case HEAD:
-					EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, HELMET_BONUS);
-					break;
-				default:
-					break;
+				case FEET -> EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, BOOTS_BONUS);
+				case LEGS -> EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, LEGS_BONUS);
+				case CHEST -> EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, CHESTPLATE_BONUS);
+				case HEAD -> EntityUtil.removeAttributeModifier(plData.player(), Attributes.MOVEMENT_SPEED, HELMET_BONUS);
+				default -> {
+				}
 			}
 		}
 	}

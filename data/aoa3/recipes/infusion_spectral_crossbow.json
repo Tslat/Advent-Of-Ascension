@@ -11,22 +11,22 @@
       "item": "aoa3:runic_energy"
     },
     {
-      "item": "aoa3:elecanium_ingot"
-    },
-    {
       "item": "minecraft:arrow"
     },
     {
-      "item": "aoa3:elecanium_ingot"
-    },
-    {
       "item": "aoa3:ghostly_powder"
     },
     {
       "item": "aoa3:ghostly_powder"
     },
     {
-      "item": "minecraft:netherite_ingot"
+      "tag": "forge:ingots/elecanium"
+    },
+    {
+      "tag": "forge:ingots/elecanium"
+    },
+    {
+      "tag": "forge:ingots/netherite"
     }
   ],
   "result": {

@@ -10,7 +10,7 @@
       "item": "aoa3:fire_rune"
     },
     "B": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

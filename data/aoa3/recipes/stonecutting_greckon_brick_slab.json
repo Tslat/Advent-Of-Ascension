@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:greckon_bricks"
+  },
+  "result": "aoa3:greckon_brick_slab",
+  "count": 2
+}

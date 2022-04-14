@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
       "item": "aoa3:power_core"
     },
     {
-      "item": "aoa3:lyon_ingot"
+      "tag": "forge:ingots/varsium"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:ingots/varsium"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.tslat.aoa3.client.gui.hud.HealthStatusRenderer;
 import net.tslat.aoa3.client.render.custom.AoAResourceRenderer;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.util.AoAHaloUtil;
@@ -19,7 +20,7 @@ public final class ClientConfig {
 	public final ForgeConfigSpec.BooleanValue useToasts;
 	public final ForgeConfigSpec.BooleanValue rotatingTrophies;
 	public final ForgeConfigSpec.BooleanValue partyDeaths;
-	public final ForgeConfigSpec.BooleanValue renderNumericalHealth;
+	public final ForgeConfigSpec.EnumValue<HealthStatusRenderer.HealthRenderType> healthRenderType;
 
 	ClientConfig(ForgeConfigSpec.Builder specBuilder) {
 		specBuilder.comment("AoA client-side configuration options").push("General Settings");
@@ -84,10 +85,10 @@ public final class ClientConfig {
 				.translation("config.aoa3.client.rotatingTrophies")
 				.define("rotatingTrophies", true);
 
-		renderNumericalHealth = specBuilder
-				.comment("Set this to false to use the disable AoA's replacement of the health renderer.")
-				.translation("config.aoa3.client.renderNumericalHealth")
-				.define("renderNumericalHealth", true);
+		healthRenderType = specBuilder
+				.comment("Select what type of rendering AoA replaces the vanila health bar with")
+				.translation("config.aoa3.client.healthRenderType")
+				.defineEnum("healthRenderType", HealthStatusRenderer.HealthRenderType.BAR_NUMERIC);
 
 		specBuilder.pop();
 		specBuilder.comment("Just for fun :)").push("Fun Options");

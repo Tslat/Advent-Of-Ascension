@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:blazium_ingot"
+      "tag": "forge:ingots/blazium"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:reinforced_cloth"

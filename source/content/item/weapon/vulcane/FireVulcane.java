@@ -17,7 +17,7 @@ public class FireVulcane extends BaseVulcane {
 	}
 
 	@Override
-	public void doAdditionalEffect(LivingEntity target, Player attacker) {
+	public void doAdditionalEffect(LivingEntity target, Player attacker, float damageDealt) {
 		target.setSecondsOnFire(8);
 	}
 

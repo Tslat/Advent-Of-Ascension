@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:void_scales"
+    },
+    {
+      "item": "aoa3:void_scales"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    }
+  ],
+  "result": {
+    "item": "aoa3:void_leggings"
+  }
+}

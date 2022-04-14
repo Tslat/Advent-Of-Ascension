@@ -38,8 +38,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 
 	@Override
 	protected Slot initOutputSlot() {
-		return null;
-		/*return new Slot(output, 2, 134, 23) {
+		return new Slot(output, 2, 134, 23) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return false;
@@ -51,7 +50,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 			}
 
 			@Override
-			public ItemStack onTake(Player thePlayer, ItemStack stack) {
+			public void onTake(Player thePlayer, ItemStack stack) {
 				if (totalMaterialCost > 0) {
 					ItemStack repairMaterialStack = inputs.getItem(1);
 
@@ -67,10 +66,8 @@ public class MendingTableContainer extends UtilityBlockContainer {
 				}
 
 				inputs.setItem(0, ItemStack.EMPTY);
-
-				return stack;
 			}
-		};*/
+		};
 	}
 
 	@Override
@@ -113,7 +110,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 	}
 
 	private void resetMendingContainerState() {
-		//output.setItem(0, ItemStack.EMPTY);
+		output.setItem(0, ItemStack.EMPTY);
 		totalMaterialCost = 0;
 	}
 

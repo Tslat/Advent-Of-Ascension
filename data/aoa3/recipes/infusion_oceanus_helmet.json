@@ -8,12 +8,6 @@
       "item": "aoa3:coral_stone"
     },
     {
-      "item": "aoa3:sapphire"
-    },
-    {
-      "item": "minecraft:glass_pane"
-    },
-    {
       "item": "minecraft:prismarine_crystals"
     },
     {
@@ -21,6 +15,12 @@
     },
     {
       "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:glass_panes/colorless"
     }
   ],
   "result": {

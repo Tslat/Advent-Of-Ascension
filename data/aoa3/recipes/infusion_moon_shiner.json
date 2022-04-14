@@ -5,15 +5,6 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:ghostly_powder"
     },
     {
@@ -21,6 +12,15 @@
     },
     {
       "item": "aoa3:ghostly_powder"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

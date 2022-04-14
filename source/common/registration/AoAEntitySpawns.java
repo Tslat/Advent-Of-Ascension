@@ -341,7 +341,7 @@ public final class AoAEntitySpawns {
         new SpawnEntry(AoAMobs.SKELETAL_COWMAN.get(), 45).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest")).placeMonster();
         new SpawnEntry(AoAMobs.SCRUBBY.get(), 30).groupSize(1, 3).matchBiomes(BiomeDictionary.Type.NETHER).ignoreExactBiomes(new ResourceLocation("basalt_deltas"), new ResourceLocation("warped_forest"), new ResourceLocation("soul_sand_valley")).placeMonster();
 
-        new SpawnEntry(AoANpcs.WITHERING_LOTTOMAN.get(), 1).matchBiomes(BiomeDictionary.Type.NETHER).placeNPC().specialSpawner(TraderSpawner::addSpawn);
+        new SpawnEntry(AoANpcs.LOTTOMAN.get(), 1).matchBiomes(BiomeDictionary.Type.NETHER).placeNPC().specialSpawner(TraderSpawner::addSpawn);
         new SpawnEntry(AoANpcs.UNDEAD_HERALD.get(), 1).matchBiomes(BiomeDictionary.Type.NETHER).placeNPC().specialSpawner(TraderSpawner::addSpawn);
     }
 

@@ -11,13 +11,13 @@
       "item": "aoa3:padded_cloth"
     },
     {
-      "item": "aoa3:crystallite"
-    },
-    {
-      "item": "aoa3:sapphire"
-    },
-    {
       "item": "aoa3:floating_stone"
+    },
+    {
+      "tag": "forge:gems/crystallite"
+    },
+    {
+      "tag": "forge:gems/diamond"
     }
   ],
   "result": {

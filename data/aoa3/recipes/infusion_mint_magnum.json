@@ -5,7 +5,7 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
       "item": "aoa3:sour_gummy"

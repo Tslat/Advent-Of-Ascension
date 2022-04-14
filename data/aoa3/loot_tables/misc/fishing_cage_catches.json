@@ -47,7 +47,7 @@
           "type": "minecraft:item",
           "weight": 10,
           "quality": 2,
-          "name": "aoa3:sapphire"
+          "name": "minecraft:emerald"
         },
         {
           "type": "minecraft:item",

@@ -1,7 +1,7 @@
 {
   "name": "Swords",
   "category": "aoa3:weapons",
-  "icon": "aoa3:amethyst_sword",
+  "icon": "aoa3:limonite_sword",
   "pages": [
     {
       "type": "patchouli:text",

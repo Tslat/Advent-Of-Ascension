@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:crystallite_bricks"
+    }
+  },
+  "result": {
+    "item": "aoa3:crystallite_brick_slab",
+    "count": 6
+  }
+}

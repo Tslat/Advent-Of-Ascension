@@ -27,7 +27,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
-import net.tslat.aoa3.content.entity.ai.animation.Animatable;
+import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -41,7 +41,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class DryadSpriteEntity extends AoAAmbientNPC implements Animatable {
+public class DryadSpriteEntity extends AoAAmbientNPC implements AnimatableWithStates {
 	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 

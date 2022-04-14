@@ -14,16 +14,16 @@
       "item": "minecraft:paper"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     },
     {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     }
   ],
   "result": {

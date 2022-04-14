@@ -13,7 +13,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.model.armor.AoAArmourModels;
+import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -74,7 +74,7 @@ public class SkillHelmet extends AdventArmour {
 			@Nonnull
 			@Override
 			public Model getBaseArmorModel(LivingEntity entityLiving, ItemStack itemStack, EquipmentSlot armorSlot, HumanoidModel<?> defaultModel) {
-				return AoAArmourModels.getSkillHelmetModel(getSkill(), entityLiving instanceof Player && ClientPlayerDataManager.get().getSkill(getSkill()).hasLevel(1000), defaultModel);
+				return AoAMiscModels.getSkillHelmetModel(getSkill(), entityLiving instanceof Player && ClientPlayerDataManager.get().getSkill(getSkill()).hasLevel(1000), defaultModel);
 			}
 		});
 	}

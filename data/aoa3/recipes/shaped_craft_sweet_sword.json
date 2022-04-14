@@ -13,10 +13,10 @@
       "item": "aoa3:pink_cotton_candy"
     },
     "C": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     },
     "D": {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     }
   },
   "result": {

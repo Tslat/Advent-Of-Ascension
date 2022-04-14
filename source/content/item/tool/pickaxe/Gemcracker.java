@@ -33,7 +33,7 @@ public class Gemcracker extends BasePickaxe implements LootModifyingItem {
 
 		ItemStack primaryStack = existingLoot.get(0);
 
-		if (block.asItem() != primaryStack.getItem())
+		if (block.asItem() != primaryStack.getItem() && !primaryStack.is(Tags.Items.RAW_MATERIALS))
 			existingLoot.addAll(ItemUtil.increaseStackSize(primaryStack, 1 + RandomUtil.randomNumberUpTo(primaryStack.getCount())));
 	}
 

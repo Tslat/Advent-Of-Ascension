@@ -1,0 +1,35 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:charged_runium_chunk"
+    },
+    {
+      "item": "aoa3:phantasm"
+    },
+    {
+      "item": "aoa3:phantasm"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:ingots/ghoulish"
+    }
+  ],
+  "result": {
+    "item": "aoa3:nightmare_leggings"
+  }
+}

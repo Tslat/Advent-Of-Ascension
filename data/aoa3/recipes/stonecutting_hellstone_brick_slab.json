@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:hellstone_bricks"
+  },
+  "result": "aoa3:hellstone_brick_slab",
+  "count": 2
+}

@@ -33,19 +33,21 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAEntityData;
-import net.tslat.aoa3.content.entity.ai.animation.Animatable;
+import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
 import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.UUID;
 
-public abstract class AoAMeleeMob extends Monster implements Animatable {
+public abstract class AoAMeleeMob extends Monster implements AnimatableWithStates {
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
 	protected boolean isSlipperyMovement = false;
 
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
+	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
 	protected AoAMeleeMob(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -323,5 +325,10 @@ public abstract class AoAMeleeMob extends Monster implements Animatable {
 	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
+	}
+
+	@Override
+	public HashMap<String, Integer> getAnimationStates() {
+		return animationStates;
 	}
 }

@@ -25,7 +25,6 @@ import java.util.function.Supplier;
 public final class AoAWeapons {
 	public static void init() {}
 
-	public static final RegistryObject<Item> AMETHYST_SWORD = registerWeapon("amethyst_sword", () -> new BaseSword(ItemUtil.customItemTier(1200, AttackSpeed.NORMAL, 7.5f, 4, 14, AoAItems.AMETHYST, null)));
 	public static final RegistryObject<Item> BARON_SWORD = registerWeapon("baron_sword", BaronSword::new);
 	public static final RegistryObject<Item> BLOODFURY = registerWeapon("bloodfury", () -> new BaseSword(ItemUtil.customItemTier(1770, -2.2f, 13.0f, 4, 10, null, null)));
 	public static final RegistryObject<Item> BLOODSTONE_SWORD = registerWeapon("bloodstone_sword", () -> new BaseSword(ItemUtil.customItemTier(1800, AttackSpeed.NORMAL, 14.0f, 4, 16, AoAItems.BLOODSTONE, null)));
@@ -50,9 +49,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> ROCKBASHER_SWORD = registerWeapon("rockbasher_sword", RockbasherSword::new);
 	public static final RegistryObject<Item> ROCK_PICK_SWORD = registerWeapon("rock_pick_sword", RockPickSword::new);
 	public static final RegistryObject<Item> ROSIDIAN_SWORD = registerWeapon("rosidian_sword", RosidianSword::new);
-	public static final RegistryObject<Item> ROSITE_SWORD = registerWeapon("rosite_sword", () -> new BaseSword(ItemUtil.customItemTier(700, AttackSpeed.NORMAL, 6.5f, 3, 6, AoAItems.ROSITE_INGOT, null)));
 	public static final RegistryObject<Item> RUNIC_SWORD = registerWeapon("runic_sword", RunicSword::new);
-	public static final RegistryObject<Item> SAPPHIRE_SWORD = registerWeapon("sapphire_sword", () -> new BaseSword(ItemUtil.customItemTier(1750, AttackSpeed.NORMAL, 10.0f, 4, 19, AoAItems.SAPPHIRE, null)));
 	public static final RegistryObject<Item> SHADOW_SWORD = registerWeapon("shadow_sword", () -> new BaseSword(ItemUtil.customItemTier(2300, AttackSpeed.NORMAL, 17.0f, 4, 10, null, null)));
 	public static final RegistryObject<Item> SHROOMUS_SWORD = registerWeapon("shroomus_sword", ShroomusSword::new);
 	public static final RegistryObject<Item> SKELETAL_SWORD = registerWeapon("skeletal_sword", () -> new BaseSword(ItemUtil.customItemTier(2100, -2f, 10.5f, 4, 10, null, null)));
@@ -103,7 +100,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> APOCO_ASSAULT_RIFLE = registerWeapon("apoco_assault_rifle", () -> new ApocoAssaultRifle(5.625f, 5920, 6, 0.6f));
 	public static final RegistryObject<Item> APOCO_RIFLE = registerWeapon("apoco_rifle", () -> new ApocoRifle(2.5f, 5960, 6, 1));
 	public static final RegistryObject<Item> AQUA_MAGNUM = registerWeapon("aqua_magnum", () -> new AquaMagnum(2.0625f, 6080, 2, 0.95f));
-	public static final RegistryObject<Item> ARTIFACT = registerWeapon("artifact", () -> new Artifact(4.75f, 6000, 5, 0.65f));
+	public static final RegistryObject<Item> ARTIFACT = registerWeapon("artifact", () -> new Artifact(10f, 6000, 5, 0.65f));
 	public static final RegistryObject<Item> BARONATOR = registerWeapon("baronator", () -> new Baronator(3f, 2480, 5, 0.95f));
 	public static final RegistryObject<Item> BAYONETTE_RIFLE = registerWeapon("bayonette_rifle", () -> new BayonetteRifle(3.4375f, 2520, 5, 0.85f));
 	public static final RegistryObject<Item> BIG_TOP = registerWeapon("big_top", () -> new BigTop(3.125f, 3680, 4, 0.9f));
@@ -148,7 +145,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> LUNAR_ASSAULT_RIFLE = registerWeapon("lunar_assault_rifle", () -> new LunarAssaultRifle(2.875f, 5720, 3, 0.85f));
 	public static final RegistryObject<Item> MECHANICAL_ASSAULT_RIFLE = registerWeapon("mechanical_assault_rifle", () -> new MechanicalAssaultRifle(4.625f, 3760, 6, 0.85f));
 	public static final RegistryObject<Item> MEGAGUN = registerWeapon("megagun", () -> new Megagun(1f, 6120, 1, 1.1f));
-	public static final RegistryObject<Item> MIASMA = registerWeapon("miasma", () -> new Miasma(1.8f, 3760, 3, 1));
+	public static final RegistryObject<Item> MIASMA = registerWeapon("miasma", () -> new Miasma(2.25f, 3760, 3, 1));
 	public static final RegistryObject<Item> MINIGUN = registerWeapon("minigun", () -> new Minigun(0.625f, 2680, 1, 1.5f));
 	public static final RegistryObject<Item> MINT_MAGNUM = registerWeapon("mint_magnum", () -> new MintMagnum(1.65f, 3600, 2, 1.25f));
 	public static final RegistryObject<Item> MK = registerWeapon("mk", () -> new MK(3.625f, 4960, 4, 0.75f));
@@ -165,12 +162,12 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> ROULETTE = registerWeapon("roulette", () -> new Roulette(6.1875f, 5880, 6, 0.85f));
 	public static final RegistryObject<Item> SHOE_FLINGER = registerWeapon("shoe_flinger", () -> new ShoeFlinger(6f, 1600, 6, 1f));
 	public static final RegistryObject<Item> SKULLETTE = registerWeapon("skullette", () -> new Skullette(6.4625f, 6320, 6, 0.85f));
-	public static final RegistryObject<Item> SKULLIFACT = registerWeapon("skullifact", () -> new Skullifact(4.875f, 6280, 5, 0.45f));
+	public static final RegistryObject<Item> SKULLIFACT = registerWeapon("skullifact", () -> new Skullifact(10f, 6280, 5, 0.45f));
 	public static final RegistryObject<Item> SPECTACLE = registerWeapon("spectacle", () -> new Spectacle(2.75f, 3520, 4, 0.85f));
 	public static final RegistryObject<Item> SPINE_GUN = registerWeapon("spine_gun", () -> new SpineGun(2.875f, 6040, 3, 0.85f));
 	public static final RegistryObject<Item> SQUAD_GUN = registerWeapon("squad_gun", () -> new SquadGun(2.625f, 4840, 3, 0.85f));
 	public static final RegistryObject<Item> STAMPEDE = registerWeapon("stampede", () -> new Stampede(3.3f, 1200, 6, 1f));
-	public static final RegistryObject<Item> STORMER = registerWeapon("stormer", () -> new Stormer(3.75f, 3600, 5, 0.45f));
+	public static final RegistryObject<Item> STORMER = registerWeapon("stormer", () -> new Stormer(8f, 3600, 5, 0.45f));
 	public static final RegistryObject<Item> SUBLIMUS = registerWeapon("sublimus", () -> new Sublimus(2.75f, 6120,3, 0.9f));
 	public static final RegistryObject<Item> TIGER_TOMMY = registerWeapon("tiger_tommy", () -> new TigerTommy(2.875f, 5960, 3, 0.7f));
 	public static final RegistryObject<Item> TOMMY = registerWeapon("tommy", () -> new Tommy(1.5f, 1320, 3, 1.3f));

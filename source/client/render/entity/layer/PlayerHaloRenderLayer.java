@@ -1,38 +1,38 @@
-/*
 package net.tslat.aoa3.client.render.entity.layer;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
-import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderState;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.PlayerRenderer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
-import net.minecraft.client.renderer.entity.model.PlayerModel;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormat;
 import net.minecraft.resources.ResourceLocation;
-import net.tslat.aoa3.client.model.entity.misc.PlayerHaloModel;
+import net.tslat.aoa3.client.model.misc.PlayerHaloModel;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.AoAHaloUtil;
 
-public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEntity, PlayerModel<AbstractClientPlayerEntity>> {
+public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/player/halo_texture.png");
-	private static final PlayerHaloModel MODEL = new PlayerHaloModel();
-	private final PlayerRenderer renderer;
+	private static final RenderType TSLAT_HALO_RENDER_TYPE = getTslatHaloRenderType();
 
-	public PlayerHaloRenderLayer(PlayerRenderer playerRenderer) {
-		super(playerRenderer);
+	private final PlayerHaloModel model;
 
-		this.renderer = playerRenderer;
+	public PlayerHaloRenderLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer, EntityModelSet modelSet) {
+		super(renderer);
+
+		this.model = new PlayerHaloModel(modelSet.bakeLayer(PlayerHaloModel.LAYER_LOCATION));
 	}
 
 	@Override
-	public void render(PoseStack matrix, MultiBufferSource buffer, int packedLightIn, AbstractClientPlayerEntity player, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+	public void render(PoseStack matrixStack, MultiBufferSource buffer, int pPackedLight, AbstractClientPlayer player, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
 		if (player.isCapeLoaded() && !player.isInvisible() && AoAConfig.CLIENT.showPlayerHalos.get()) {
 			AoAHaloUtil.Type chosenHalo = AoAHaloUtil.getHalo(player.getUUID());
 			float red = 0;
@@ -42,63 +42,55 @@ public class PlayerHaloRenderLayer extends LayerRenderer<AbstractClientPlayerEnt
 			if (chosenHalo == null)
 				return;
 
+			if (chosenHalo == AoAHaloUtil.Type.Tslat) {
+				VertexConsumer vertexConsumer = buffer.getBuffer(TSLAT_HALO_RENDER_TYPE);
+
+				model.root.copyFrom(getParentModel().getHead());
+				model.renderToBuffer(matrixStack, vertexConsumer, 15728880, OverlayTexture.NO_OVERLAY, 0, 0, 0, 0.1f);
+
+				return;
+			}
+
 			switch (chosenHalo) {
-				case Donator:
+				case Donator -> {
 					red = 1;
 					green = 1;
-					break;
-				case Super_Donator:
-				case Crazy_Donator:
-					red = 1;
-					break;
-				case Tslat:
-					red = 0.1647f;
-					green = 1;
-					break;
-				case Staff:
+				}
+				case Super_Donator, Crazy_Donator -> red = 1;
+				case Staff -> {
 					red = 0.6f;
 					green = 1;
 					blue = 1;
-					break;
-				case Wiki_Editor:
-					blue = 1;
-					break;
+				}
+				case Wiki_Editor -> blue = 1;
 			}
 
-			getParentModel().halo.copyFrom(renderer.getModel().head);
-			IVertexBuilder vertexBuilder = buffer.getBuffer(getRenderType(getTextureLocation(player)));
-			getParentModel().renderToBuffer(matrix, vertexBuilder, 15728640, OverlayTexture.NO_OVERLAY, red, green, blue, 1f);
+			VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(getTextureLocation(player)));
+
+			model.root.copyFrom(getParentModel().getHead());
+
+			RenderSystem.enableBlend();
+			RenderSystem.disableDepthTest();
+			model.renderToBuffer(matrixStack, vertexConsumer, 15728880, OverlayTexture.NO_OVERLAY, red, green, blue, 0.1f);
+			RenderSystem.enableDepthTest();
+			RenderSystem.disableBlend();
 		}
 	}
 
 	@Override
-	public PlayerHaloModel getParentModel() {
-		return MODEL;
-	}
-
-	@Override
-	protected ResourceLocation getTextureLocation(AbstractClientPlayerEntity entityIn) {
+	protected ResourceLocation getTextureLocation(AbstractClientPlayer entity) {
 		return TEXTURE;
 	}
 
-	private static RenderType getRenderType(ResourceLocation texture) {
-		RenderState.TextureState renderState = new RenderState.TextureState(texture, false, false);
-		RenderState.TransparencyState transparencyState = new RenderState.TransparencyState("additive_transparency", () -> {
+	private static RenderType getTslatHaloRenderType() {
+		RenderStateShard.TransparencyStateShard transparencyState = new RenderStateShard.TransparencyStateShard("additive_transparency", () -> {
 			RenderSystem.enableBlend();
-			RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ONE);
+			RenderSystem.blendFunc(GlStateManager.SourceFactor.ONE_MINUS_SRC_COLOR, GlStateManager.DestFactor.ONE_MINUS_DST_COLOR);
 		}, () -> {
 			RenderSystem.disableBlend();
 			RenderSystem.defaultBlendFunc();
 		});
-		RenderState.FogState fogState = new RenderState.FogState("black_fog", () -> {
-			RenderSystem.fog(2918, 0.0F, 0.0F, 0.0F, 1.0F);
-			RenderSystem.enableFog();
-		}, () -> {
-			FogRenderer.levelFogColor();
-			RenderSystem.disableFog();
-		});
 
-		return RenderType.create("halo", DefaultVertexFormat.NEW_ENTITY, 7, 256, false, true, RenderType.State.builder().setTextureState(renderState).setTransparencyState(transparencyState).setWriteMaskState(new RenderState.WriteMaskState(true, false)).setDepthTestState(new RenderState.DepthTestState("==", 515)).setDiffuseLightingState(new RenderState.DiffuseLightingState(true)).setFogState(fogState).createCompositeState(false));
+		return RenderType.create("halo", DefaultVertexFormat.POSITION, VertexFormat.Mode.QUADS, 256, false, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeEndGatewayShader)).setTextureState(RenderStateShard.MultiTextureStateShard.builder().add(TheEndPortalRenderer.END_PORTAL_LOCATION, true, false).add(TheEndPortalRenderer.END_SKY_LOCATION, true, false).add(TheEndPortalRenderer.END_SKY_LOCATION, true, false).build()).setTransparencyState(transparencyState).createCompositeState(false));
 	}
 }
-*/

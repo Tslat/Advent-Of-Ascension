@@ -10,7 +10,7 @@
       "item": "aoa3:void_scales"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     }
   },
   "result": {

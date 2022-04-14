@@ -16,10 +16,10 @@
       "item": "aoa3:durability_enhancer"
     },
     {
-      "item": "minecraft:diamond"
+      "item": "aoa3:gleaming_power_stone"
     },
     {
-      "item": "aoa3:gleaming_power_stone"
+      "tag": "forge:gems/diamond"
     }
   ]
 }

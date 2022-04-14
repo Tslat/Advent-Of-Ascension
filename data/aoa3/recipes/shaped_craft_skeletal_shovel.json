@@ -10,7 +10,7 @@
       "tag": "aoa3:precasian_bone"
     },
     "B": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

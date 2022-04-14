@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:ornate_redstone_ivory"
+  },
+  "result": "aoa3:ornate_redstone_ivory_wall",
+  "count": 1
+}

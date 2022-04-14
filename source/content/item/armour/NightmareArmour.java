@@ -26,5 +26,6 @@ public class NightmareArmour extends AdventArmour {
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.nightmare_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.nightmare_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

@@ -8,16 +8,16 @@
       "item": "aoa3:unstable_gunpowder"
     },
     {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:grenade"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

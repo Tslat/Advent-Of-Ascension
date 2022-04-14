@@ -20,7 +20,7 @@ public class WitherVulcane extends BaseVulcane {
 	}
 
 	@Override
-	public void doAdditionalEffect(LivingEntity target, Player attacker) {
+	public void doAdditionalEffect(LivingEntity target, Player attacker, float damageDealt) {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 70).level(2));
 	}
 

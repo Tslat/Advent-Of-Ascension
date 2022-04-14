@@ -52,8 +52,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 
 	@Override
 	protected Slot initOutputSlot() {
-		return null;
-		/*return new Slot(output, 2, 134, 23) {
+		return new Slot(output, 2, 134, 23) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
 				return false;
@@ -65,14 +64,13 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 			}
 
 			@Override
-			public ItemStack onTake(Player player, ItemStack stack) {
+			public void onTake(Player player, ItemStack stack) {
 				inputs.getItem(0).shrink(1);
 				inputs.getItem(1).shrink(1);
 
 				slotsChanged(inputs);
-				return stack;
 			}
-		};*/
+		};
 	}
 
 	@Override
@@ -80,7 +78,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 		ItemStack brickStack = inputs.getItem(0);
 		ItemStack powderStack = inputs.getItem(1);
 
-		/*if (!powderStack.isEmpty() && brickStack.getItem() == BlockItem.byBlock(Blocks.OBSIDIAN)) {
+		if (!powderStack.isEmpty() && brickStack.getItem() == BlockItem.byBlock(Blocks.OBSIDIAN)) {
 			if (powderStack.getItem() == AoAItems.DARKLY_POWDER.get()) {
 				output.setItem(0, new ItemStack(AoABlocks.DARKWASH_BRICKS.get(), 2));
 			}
@@ -93,7 +91,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 		}
 		else {
 			output.setItem(0, ItemStack.EMPTY);
-		}*/
+		}
 	}
 
 	@Override

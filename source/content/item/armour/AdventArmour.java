@@ -157,7 +157,6 @@ public abstract class AdventArmour extends ArmorItem {
 	public enum Type {
 		ALACRITY,
 		ALL,
-		AMETHIND,
 		ARCHAIC,
 		BARON,
 		BATTLEBORN,

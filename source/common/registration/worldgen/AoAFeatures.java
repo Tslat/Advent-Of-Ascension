@@ -1,179 +1,117 @@
 package net.tslat.aoa3.common.registration.worldgen;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.NonNullLazy;
 import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.content.world.gen.feature.features.*;
-import net.tslat.aoa3.content.world.gen.feature.features.config.*;
-import net.tslat.aoa3.content.world.gen.feature.features.trees.*;
-import net.tslat.aoa3.content.world.gen.feature.placement.config.BlockStatePlacementConfig;
+import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.content.world.gen.feature.VanillaJsonFeature;
+import net.tslat.aoa3.content.world.genold.feature.features.trees.*;
+import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Supplier;
 
 public final class AoAFeatures {
-	public static void preInit() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, false, BiomeLoadingEvent.class, AoAFeatures::onBiomeLoad);
+	public static final RegistryObject<Feature<?>> VANILLA_JSON_FEATURE = AoARegistries.FEATURES.register("vanilla_json", () -> new VanillaJsonFeature(VanillaJsonFeature.VanillaJsonFeatureConfig.CODEC));
+
+	public static final FeatureContainer ORE_JADE_LARGE = FeatureContainer.vanillaJsonFeature(AdventOfAscension.id("ore_jade_large"));
+	public static final FeatureContainer ORE_JADE_SMALL = FeatureContainer.vanillaJsonFeature(AdventOfAscension.id("ore_jade_small"));
+	public static final FeatureContainer ORE_LIMONITE_LARGE = FeatureContainer.vanillaJsonFeature(AdventOfAscension.id("ore_limonite_large"));
+	public static final FeatureContainer ORE_LIMONITE_SMALL = FeatureContainer.vanillaJsonFeature(AdventOfAscension.id("ore_limonite_small"));
+	public static final FeatureContainer ORE_RUNIUM_SMALL = FeatureContainer.vanillaJsonFeature(AdventOfAscension.id("ore_runium_small"));
+
+	public static final RegistryObject<AchonyTreeFeature> ACHONY_TREE = register("achony_tree", () -> new AchonyTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.ACHONY_SAPLING));
+	public static final RegistryObject<BloodtwisterTreeFeature> BLOODTWISTER_TREE = register("bloodtwister_tree", () -> new BloodtwisterTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BLOODTWISTER_SAPLING));
+	public static final RegistryObject<BlueCelevusTreeFeature> BLUE_CELEVUS_TREE = register("blue_celevus_tree", () -> new BlueCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BLUE_CELEVUS_SAPLING));
+	public static final RegistryObject<BlueHavenTreeFeature> BLUE_HAVEN_TREE = register("blue_haven_tree", () -> new BlueHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BLUE_HAVEN_SAPLING));
+	public static final RegistryObject<BrightShyreTreeFeature> BRIGHT_SHYRE_TREE = register("bright_shyre_tree", () -> new BrightShyreTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BRIGHT_SHYRE_SAPLING));
+	public static final RegistryObject<ChurryTreeFeature> CHURRY_TREE = register("churry_tree", () -> new ChurryTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.CHURRY_SAPLING));
+	public static final RegistryObject<CreepTreeFeature> CREEP_TREE = register("creep_tree", () -> new CreepTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.CREEP_SAPLING));
+	public static final RegistryObject<DawnwoodTreeFeature> DAWNWOOD_TREE = register("dawnwood_tree", () -> new DawnwoodTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.DAWNWOOD_SAPLING));
+	public static final RegistryObject<EyebushTreeFeature> EYEBUSH_TREE = register("eyebush_tree", () -> new EyebushTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.EYEBUSH_SAPLING));
+	public static final RegistryObject<EyeHangerTreeFeature> EYE_HANGER_TREE = register("eye_hanger_tree", () -> new EyeHangerTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.GREEN_CELEVUS_SAPLING));
+	public static final RegistryObject<GreenCelevusTreeFeature> GREEN_CELEVUS_TREE = register("green_celevus_tree", () -> new GreenCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.GREEN_CELEVUS_SAPLING));
+	public static final RegistryObject<HauntedTreeFeature> HAUNTED_TREE = register("haunted_tree", () -> new HauntedTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.HAUNTED_SAPLING));
+	public static final RegistryObject<InvertedAchonyTreeFeature> INVERTED_ACHONY_TREE = register("inverted_achony_tree", () -> new InvertedAchonyTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.ACHONY_SAPLING));
+	public static final RegistryObject<InvertedChurryTreeFeature> INVERTED_CHURRY_TREE = register("inverted_churry_tree", () -> new InvertedChurryTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.CHURRY_SAPLING));
+	public static final RegistryObject<IrodustTreeFeature> IRODUST_TREE = register("irodust_tree", () -> new IrodustTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.IRODUST_SAPLING));
+	public static final RegistryObject<IrogoldTreeFeature> IROGOLD_TREE = register("irogold_tree", () -> new IrogoldTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.IROGOLD_SAPLING));
+	public static final RegistryObject<LucalusTreeFeature> LUCALUS_TREE = register("lucalus_tree", () -> new LucalusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.LUCALUS_SAPLING));
+	public static final RegistryObject<LuniciaTreeFeature> LUNICIA_TREE = register("lunicia_tree", () -> new LuniciaTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.LUNICIA_SAPLING));
+	public static final RegistryObject<LunossoTreeFeature> LUNOSSO_TREE = register("lunosso_tree", () -> new LunossoTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.LUNOSSO_SAPLING));
+	public static final RegistryObject<NormalShyreTreeFeature> NORMAL_SHYRE_TREE = register("normal_shyre_tree", () -> new NormalShyreTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.SHYRE_SAPLING));
+	public static final RegistryObject<PinkHavenTreeFeature> PINK_HAVEN_TREE = register("pink_haven_tree", () -> new PinkHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.PINK_HAVEN_SAPLING));
+	public static final RegistryObject<PurpleCelevusTreeFeature> PURPLE_CELEVUS_TREE = register("purple_celevus_tree", () -> new PurpleCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.PURPLE_CELEVUS_SAPLING));
+	public static final RegistryObject<PurpleHavenTreeFeature> PURPLE_HAVEN_TREE = register("purple_haven_tree", () -> new PurpleHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.PURPLE_HAVEN_SAPLING));
+	public static final RegistryObject<RedCelevusTreeFeature> RED_CELEVUS_TREE = register("red_celevus_tree", () -> new RedCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.RED_CELEVUS_SAPLING));
+	public static final RegistryObject<RedHavenTreeFeature> RED_HAVEN_TREE = register("red_haven_tree", () -> new RedHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.RED_HAVEN_SAPLING));
+	public static final RegistryObject<RunicTreeFeature> RUNIC_TREE = register("runic_tree", () -> new RunicTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.RUNIC_SAPLING));
+	public static final RegistryObject<ShadowTreeFeature> SHADOW_TREE = register("shadow_tree", () -> new ShadowTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.SHADOW_SAPLING));
+	public static final RegistryObject<StranglewoodTreeFeature> STRANGLEWOOD_TREE = register("stranglewood_tree", () -> new StranglewoodTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.STRANGLEWOOD_SAPLING));
+	public static final RegistryObject<TurquoiseHavenTreeFeature> TURQUOISE_HAVEN_TREE = register("turquoise_haven_tree", () -> new TurquoiseHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.TURQUOISE_HAVEN_SAPLING));
+	public static final RegistryObject<YellowCelevusTreeFeature> YELLOW_CELEVUS_TREE = register("yellow_celevus_tree", () -> new YellowCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.YELLOW_CELEVUS_SAPLING));
+	public static final RegistryObject<YellowHavenTreeFeature> YELLOW_HAVEN_TREE = register("yellow_haven_tree", () -> new YellowHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.YELLOW_HAVEN_SAPLING));
+
+	public static void init() {
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, false, BiomeLoadingEvent.class, AoAFeatures::registerVanillaBiomeFeatures);
 	}
 
-	public static class Features {
-		public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, AdventOfAscension.MOD_ID);
+	public static void doVanillaRegistryRegistrations() {}
 
-		public static final RegistryObject<Feature<BlockStatePlacementConfig>> NO_CONTEXT_BLOCK = register("no_context_block", () -> new NoContextBlockFeature(BlockStatePlacementConfig.CODEC));
-		public static final RegistryObject<Feature<CappedColumnConfig>> CAPPED_COLUMN = register("capped_column", () -> new CappedColumnFeature(CappedColumnConfig.CODEC));
-		public static final RegistryObject<Feature<ColumnConfig>> COLUMN = register("column", () -> new ColumnFeature(ColumnConfig.CODEC));
-		public static final RegistryObject<Feature<LiquidDrainConfig>> LIQUID_DRAIN = register("liquid_drain", () -> new LiquidDrainFeature(LiquidDrainConfig.CODEC));
-		//public static final RegistryObject<Feature<BlockStatePlacementConfig>> BIOME_FRIENDLY_LAKE = register("biome_friendly_lake", () -> new BiomeFriendlyLake(BlockStatePlacementConfig.CODEC));
-		public static final RegistryObject<Feature<MiscStateAndVariablesConfig>> BLOCK_PILE = register("block_pile", () -> new BlockPileFeature(MiscStateAndVariablesConfig.CODEC));
-		public static final RegistryObject<Feature<MiscStateAndVariablesConfig>> CUBE = register("cube", () -> new CubeFeature(MiscStateAndVariablesConfig.CODEC));
-		public static final RegistryObject<Feature<StructureFeatureConfig>> STRUCTURE_PIECE = register("structure_piece", () -> new StructurePieceGenFeature(StructureFeatureConfig.CODEC));
-		//public static final RegistryObject<Feature<MiscStateAndVariablesConfig>> BENDY_COLUMN = register("bendy_column", () -> new BendyColumnFeature(MiscStateAndVariablesConfig.CODEC));
-		public static final RegistryObject<Feature<MiscStateAndVariablesConfig>> STALAGMITE = register("stalagmite", () -> new StalagmiteFeature(MiscStateAndVariablesConfig.CODEC));
-		public static final RegistryObject<Feature<MiscStateAndVariablesConfig>> RANDOM_BLOB = register("random_blob", () -> new RandomBlobFeature(MiscStateAndVariablesConfig.CODEC));
-
-		public static final RegistryObject<AchonyTreeFeature> ACHONY_TREE = register("achony_tree", () -> new AchonyTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.ACHONY_SAPLING));
-		public static final RegistryObject<BloodtwisterTreeFeature> BLOODTWISTER_TREE = register("bloodtwister_tree", () -> new BloodtwisterTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BLOODTWISTER_SAPLING));
-		public static final RegistryObject<BlueCelevusTreeFeature> BLUE_CELEVUS_TREE = register("blue_celevus_tree", () -> new BlueCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BLUE_CELEVUS_SAPLING));
-		public static final RegistryObject<BlueHavenTreeFeature> BLUE_HAVEN_TREE = register("blue_haven_tree", () -> new BlueHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BLUE_HAVEN_SAPLING));
-		public static final RegistryObject<BrightShyreTreeFeature> BRIGHT_SHYRE_TREE = register("bright_shyre_tree", () -> new BrightShyreTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.BRIGHT_SHYRE_SAPLING));
-		public static final RegistryObject<ChurryTreeFeature> CHURRY_TREE = register("churry_tree", () -> new ChurryTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.CHURRY_SAPLING));
-		public static final RegistryObject<CreepTreeFeature> CREEP_TREE = register("creep_tree", () -> new CreepTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.CREEP_SAPLING));
-		public static final RegistryObject<DawnwoodTreeFeature> DAWNWOOD_TREE = register("dawnwood_tree", () -> new DawnwoodTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.DAWNWOOD_SAPLING));
-		public static final RegistryObject<EyebushTreeFeature> EYEBUSH_TREE = register("eyebush_tree", () -> new EyebushTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.EYEBUSH_SAPLING));
-		public static final RegistryObject<EyeHangerTreeFeature> EYE_HANGER_TREE = register("eye_hanger_tree", () -> new EyeHangerTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.GREEN_CELEVUS_SAPLING));
-		public static final RegistryObject<GreenCelevusTreeFeature> GREEN_CELEVUS_TREE = register("green_celevus_tree", () -> new GreenCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.GREEN_CELEVUS_SAPLING));
-		public static final RegistryObject<HauntedTreeFeature> HAUNTED_TREE = register("haunted_tree", () -> new HauntedTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.HAUNTED_SAPLING));
-		public static final RegistryObject<InvertedAchonyTreeFeature> INVERTED_ACHONY_TREE = register("inverted_achony_tree", () -> new InvertedAchonyTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.ACHONY_SAPLING));
-		public static final RegistryObject<InvertedChurryTreeFeature> INVERTED_CHURRY_TREE = register("inverted_churry_tree", () -> new InvertedChurryTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.CHURRY_SAPLING));
-		public static final RegistryObject<IrodustTreeFeature> IRODUST_TREE = register("irodust_tree", () -> new IrodustTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.IRODUST_SAPLING));
-		public static final RegistryObject<IrogoldTreeFeature> IROGOLD_TREE = register("irogold_tree", () -> new IrogoldTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.IROGOLD_SAPLING));
-		public static final RegistryObject<LucalusTreeFeature> LUCALUS_TREE = register("lucalus_tree", () -> new LucalusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.LUCALUS_SAPLING));
-		public static final RegistryObject<LuniciaTreeFeature> LUNICIA_TREE = register("lunicia_tree", () -> new LuniciaTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.LUNICIA_SAPLING));
-		public static final RegistryObject<LunossoTreeFeature> LUNOSSO_TREE = register("lunosso_tree", () -> new LunossoTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.LUNOSSO_SAPLING));
-		public static final RegistryObject<NormalShyreTreeFeature> NORMAL_SHYRE_TREE = register("normal_shyre_tree", () -> new NormalShyreTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.SHYRE_SAPLING));
-		public static final RegistryObject<PinkHavenTreeFeature> PINK_HAVEN_TREE = register("pink_haven_tree", () -> new PinkHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.PINK_HAVEN_SAPLING));
-		public static final RegistryObject<PurpleCelevusTreeFeature> PURPLE_CELEVUS_TREE = register("purple_celevus_tree", () -> new PurpleCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.PURPLE_CELEVUS_SAPLING));
-		public static final RegistryObject<PurpleHavenTreeFeature> PURPLE_HAVEN_TREE = register("purple_haven_tree", () -> new PurpleHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.PURPLE_HAVEN_SAPLING));
-		public static final RegistryObject<RedCelevusTreeFeature> RED_CELEVUS_TREE = register("red_celevus_tree", () -> new RedCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.RED_CELEVUS_SAPLING));
-		public static final RegistryObject<RedHavenTreeFeature> RED_HAVEN_TREE = register("red_haven_tree", () -> new RedHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.RED_HAVEN_SAPLING));
-		public static final RegistryObject<RunicTreeFeature> RUNIC_TREE = register("runic_tree", () -> new RunicTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.RUNIC_SAPLING));
-		public static final RegistryObject<ShadowTreeFeature> SHADOW_TREE = register("shadow_tree", () -> new ShadowTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.SHADOW_SAPLING));
-		public static final RegistryObject<StranglewoodTreeFeature> STRANGLEWOOD_TREE = register("stranglewood_tree", () -> new StranglewoodTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.STRANGLEWOOD_SAPLING));
-		public static final RegistryObject<TurquoiseHavenTreeFeature> TURQUOISE_HAVEN_TREE = register("turquoise_haven_tree", () -> new TurquoiseHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.TURQUOISE_HAVEN_SAPLING));
-		public static final RegistryObject<YellowCelevusTreeFeature> YELLOW_CELEVUS_TREE = register("yellow_celevus_tree", () -> new YellowCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.YELLOW_CELEVUS_SAPLING));
-		public static final RegistryObject<YellowHavenTreeFeature> YELLOW_HAVEN_TREE = register("yellow_haven_tree", () -> new YellowHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.YELLOW_HAVEN_SAPLING));
-
-		private static <C extends FeatureConfiguration, F extends Feature<C>> RegistryObject<F> register(String id, Supplier<F> feature) {
-			return FEATURES.register(id, feature);
-		}
-	}
-
-	public static class Carvers {
-		//public static final DeferredRegister<WorldCarver<?>> CARVERS = DeferredRegister.create(ForgeRegistries.WORLD_CARVERS, AdventOfAscension.MOD_ID);
-
-		//public static final RegistryObject<WorldCarver<ConfigurableCarverConfig>> CONFIGURABLE_CARVER = register("configurable_carver", () -> new ConfigurableCarver(ConfigurableCarverConfig.CODEC));
-
-		//private static <C extends ICarverConfig> RegistryObject<WorldCarver<C>> register(String id, Supplier<WorldCarver<C>> carver) {
-		//	return CARVERS.register(id, carver);
-		//}
-	}
-
-/*	public static class Placements {
-		public static final DeferredRegister<Plac<?>> PLACEMENTS = DeferredRegister.create(ForgeRegistries., AdventOfAscension.MOD_ID);
-
-		public static final RegistryObject<Placement<NoPlacementConfig>> ALL_X = register("all_x", () -> new AllXPlacement(NoPlacementConfig.CODEC));
-		public static final RegistryObject<Placement<TopSolidRangeConfig>> Y_FILL = register("y_fill", () -> new YFillPlacement(TopSolidRangeConfig.CODEC));
-		public static final RegistryObject<Placement<TopSolidRangeConfig>> Y_FILL_CEILING = register("y_fill_ceiling", () -> new YFillCeilingPlacement(TopSolidRangeConfig.CODEC));
-		public static final RegistryObject<Placement<NoPlacementConfig>> ALL_Z = register("all_z", () -> new AllZPlacement(NoPlacementConfig.CODEC));
-		public static final RegistryObject<Placement<DepthAverageConfig>> AVERAGED_DEPTH = register("averaged_depth", () -> new AveragedDepthPlacement(DepthAverageConfig.CODEC));
-		public static final RegistryObject<Placement<IntRangeConfig>> UP_TO_SURFACE = register("up_to_surface", () -> new UpToSurfacePlacement(IntRangeConfig.CODEC));
-		public static final RegistryObject<Placement<UndergroundSurfaceConfig>> UNDERGROUND_SURFACE = register("underground_surface", () -> new UndergroundSurfacePlacement(UndergroundSurfaceConfig.CODEC));
-		public static final RegistryObject<Placement<IntRangeConfig>> N_TIMES = register("n_times", () -> new NTimesPlacement(IntRangeConfig.CODEC));
-		public static final RegistryObject<Placement<IntRangeConfig>> ABOVE_HEIGHTMAP = register("above_heightmap", () -> new AboveHeightmapPlacement(IntRangeConfig.CODEC));
-		public static final RegistryObject<Placement<CountDividedRangeConfig>> WORLD_HEIGHT_DEPENDENT = register("world_height_dependent", () -> new CountWorldHeightDependentPlacement(CountDividedRangeConfig.CODEC));
-		public static final RegistryObject<Placement<BlockStatePlacementConfig>> ONLY_ON = register("only_on", () -> new OnlyOnPlacement(BlockStatePlacementConfig.CODEC));
-		public static final RegistryObject<Placement<OffsetPlacementConfig>> OFFSET = register("offset", () -> new OffsetPlacement(OffsetPlacementConfig.CODEC));
-
-		private static <C extends IPlacementConfig> RegistryObject<Placement<C>> register(String id, Supplier<Placement<C>> feature) {
-			return PLACEMENTS.register(id, feature);
-		}
-	}
-
-	public static class Configured {
-		private static final ConfiguredFeature<?, ?> AMETHYST_ORE = register("ore_amethyst",
-				Feature.ORE.configured(
-						new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, AoABlocks.AMETHYST_ORE.get().defaultBlockState(), 7))
-						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(14, 0, 17)))
-						.squared()
-						.count(5));
-		private static final ConfiguredFeature<?, ?> ROSITE_ORE = register("ore_rosite",
-				Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, AoABlocks.ROSITE_ORE.get().defaultBlockState(), 9))
-						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(17, 0, 31)))
-						.squared()
-						.count(4));
-		private static final ConfiguredFeature<?, ?> LIMONITE_ORE = register("ore_limonite",
-				Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, AoABlocks.LIMONITE_ORE.get().defaultBlockState(), 11))
-						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(8, 0, 60)))
-						.squared()
-						.count(5));
-		private static final ConfiguredFeature<?, ?> RUNIUM_ORE = register("ore_runium",
-				Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, AoABlocks.RUNIUM_ORE.get().defaultBlockState(), 13))
-						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(5, 0, 128)))
-						.squared()
-						.count(5));
-		private static final ConfiguredFeature<?, ?> JADE_ORE = register("ore_jade",
-				Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, AoABlocks.JADE_ORE.get().defaultBlockState(), 7))
-						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(7, 0, 13)))
-						.squared()
-						.count(4));
-		private static final ConfiguredFeature<?, ?> SAPPHIRE_ORE = register("ore_sapphire",
-				Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, AoABlocks.SAPPHIRE_ORE.get().defaultBlockState(), 6))
-						.decorated(Placement.RANGE.configured(new TopSolidRangeConfig(4, 0, 8)))
-						.squared()
-						.count(2));
-		private static final ConfiguredFeature<?, ?> EMBERSTONE_ORE = register("ore_emberstone",
-				Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, AoABlocks.EMBERSTONE_ORE.get().defaultBlockState(), 7))
-						.decorated(net.minecraft.world.gen.feature.Features.Placements.RANGE_10_20_ROOFED)
-						.squared()
-						.count(15));
-
-		public static void postInit() {}
-
-		private static <C extends FeatureConfiguration, F extends Feature<C>> ConfiguredFeature<C, F> register(String id, ConfiguredFeature<C, F> feature) {
-			return WorldGenRegistries.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation(AdventOfAscension.MOD_ID, id), feature);
-		}
-	}*/
-
-	private static void onBiomeLoad(final BiomeLoadingEvent ev) {
+	private static void registerVanillaBiomeFeatures(final BiomeLoadingEvent ev) {
 		if (ev.getName() == null)
 			return;
 
-		ResourceKey<Biome> biomeKey = ResourceKey.create(Registry.BIOME_REGISTRY, ev.getName());
-		Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biomeKey);
+		ResourceKey<Biome> biome = ResourceKey.create(Registry.BIOME_REGISTRY, ev.getName());
+		Set<BiomeDictionary.Type> biomeTypes = BiomeDictionary.getTypes(biome);
 		BiomeGenerationSettingsBuilder builder = ev.getGeneration();
+		Biome.BiomeCategory category = ev.getCategory();
 
-/*		if (biomeTypes.contains(BiomeDictionary.Type.OVERWORLD)) {
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Configured.AMETHYST_ORE);
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Configured.ROSITE_ORE);
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Configured.LIMONITE_ORE);
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Configured.RUNIUM_ORE);
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Configured.JADE_ORE);
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Configured.SAPPHIRE_ORE);
+		if (biomeTypes.contains(BiomeDictionary.Type.OVERWORLD)) {
+			if (category == Biome.BiomeCategory.BEACH || category == Biome.BiomeCategory.RIVER) {
+				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_JADE_LARGE.placedFeature().get()));
+			}
+			else {
+				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_JADE_SMALL.placedFeature().get()));
+			}
+
+			if (biome == Biomes.LUSH_CAVES || biome == Biomes.DRIPSTONE_CAVES || (biomeTypes.containsAll(List.of(BiomeDictionary.Type.UNDERGROUND, BiomeDictionary.Type.WET)))) {
+				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_LIMONITE_LARGE.placedFeature.get()));
+			}
+
+			if (biomeTypes.contains(BiomeDictionary.Type.MAGICAL))
+				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_RUNIUM_SMALL.placedFeature.get()));
 		}
-		else if (biomeTypes.contains(BiomeDictionary.Type.NETHER)) {
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Configured.EMBERSTONE_ORE);
-		}*/
+	}
+
+	private static <C extends FeatureConfiguration, F extends Feature<C>> RegistryObject<F> register(String id, Supplier<F> feature) {
+		return AoARegistries.FEATURES.register(id, feature);
+	}
+
+	public record FeatureContainer(RegistryObject<? extends Feature<? extends FeatureConfiguration>> feature, NonNullLazy<ConfiguredFeature<? extends FeatureConfiguration, ? extends Feature<? extends FeatureConfiguration>>> configuredFeature, NonNullLazy<PlacedFeature> placedFeature) {
+		static FeatureContainer vanillaJsonFeature(ResourceLocation placedFeatureId) {
+			NonNullLazy<ConfiguredFeature<? extends FeatureConfiguration, ? extends Feature<? extends FeatureConfiguration>>> configuredFeature = NonNullLazy.of(() -> new ConfiguredFeature(VANILLA_JSON_FEATURE.get(), new VanillaJsonFeature.VanillaJsonFeatureConfig(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, placedFeatureId))));
+
+			return new FeatureContainer(VANILLA_JSON_FEATURE, configuredFeature, NonNullLazy.of(() -> new PlacedFeature(Holder.direct(configuredFeature.get()), List.of(BiomeFilter.biome()))));
+		}
 	}
 }

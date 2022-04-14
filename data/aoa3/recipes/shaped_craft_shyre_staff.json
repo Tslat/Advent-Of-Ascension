@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:shyrestone_ingot"
+      "tag": "forge:ingots/shyrestone"
     },
     "B": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "C": {
-      "item": "aoa3:crystallite"
+      "tag": "forge:gems/crystallite"
     },
     "D": {
-      "item": "aoa3:shyregem"
+      "tag": "forge:gems/shyregem"
     },
     "E": {
       "item": "minecraft:ender_pearl"

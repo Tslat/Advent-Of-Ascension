@@ -14,13 +14,13 @@
       "item": "aoa3:toxic_lump"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "minecraft:ink_sac"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

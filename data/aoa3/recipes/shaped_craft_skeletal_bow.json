@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:skeletal_ingot"
+      "tag": "forge:ingots/skeletal"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     }
   },
   "result": {

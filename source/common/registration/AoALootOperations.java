@@ -40,7 +40,7 @@ public final class AoALootOperations {
 		}
 	}
 
-	public static void init() {
+	public static void doVanillaRegistryRegistrations() {
 		LootFunctions.init();
 		LootConditions.init();
 	}

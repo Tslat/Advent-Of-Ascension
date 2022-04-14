@@ -16,14 +16,13 @@ import java.util.function.Supplier;
 public final class AoAArmour {
 	public static void init() {}
 
-	public static final RegistryObject<Item> ACHELOS_HELMET = registerArmour("achelos_helmet", AchelosHelmet::new);
-	public static final RegistryObject<Item> OCEANUS_HELMET = registerArmour("oceanus_helmet", OceanusHelmet::new);
-	public static final RegistryObject<Item> SEALORD_HELMET = registerArmour("sealord_helmet", SealordHelmet::new);
+	public static final RegistryObject<Item> ACHELOS_DIVING_HELMET = registerArmour("achelos_helmet", AchelosHelmet::new);
+	public static final RegistryObject<Item> OCEANUS_DIVING_HELMET = registerArmour("oceanus_helmet", OceanusHelmet::new);
+	public static final RegistryObject<Item> SEALORD_DIVING_HELMET = registerArmour("sealord_helmet", SealordHelmet::new);
 	public static final RegistryObject<Item> FACE_MASK = registerArmour("face_mask", FaceMask::new);
 	public static final RegistryObject<Item> NIGHT_VISION_GOGGLES = registerArmour("night_vision_goggles", NightVisionGoggles::new);
 	
 	public static final ArmourSet ALACRITY_ARMOUR = registerArmourSet("alacrity", AlacrityArmour.class);
-	public static final ArmourSet AMETHIND_ARMOUR = registerArmourSet("amethind", AmethindArmour.class);
 	public static final ArmourSet ARCHAIC_ARMOUR = registerArmourSet("archaic", ArchaicArmour.class);
 	public static final ArmourSet BARON_ARMOUR = registerArmourSet("baron", BaronArmour.class);
 	public static final ArmourSet BATTLEBORN_ARMOUR = registerArmourSet("battleborn", BattlebornArmour.class);
@@ -107,7 +106,7 @@ public final class AoAArmour {
 				Constructor<? extends AdventArmour> constructor = armourClass.getConstructor(EquipmentSlot.class);
 				helm = AoARegistries.ITEMS.register(registryPrefix + "_helmet", () -> construct(constructor, EquipmentSlot.HEAD));
 				chest = AoARegistries.ITEMS.register(registryPrefix + "_chestplate", () -> construct(constructor, EquipmentSlot.CHEST));
-				legs = AoARegistries.ITEMS.register(registryPrefix + "_legs", () -> construct(constructor, EquipmentSlot.LEGS));
+				legs = AoARegistries.ITEMS.register(registryPrefix + "_leggings", () -> construct(constructor, EquipmentSlot.LEGS));
 				boot = AoARegistries.ITEMS.register(registryPrefix + "_boots", () -> construct(constructor, EquipmentSlot.FEET));
 			}
 			catch (NoSuchMethodException ex) {

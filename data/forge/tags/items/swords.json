@@ -1,7 +1,6 @@
 {
   "replace": false,
   "values": [
-    "aoa3:amethyst_sword",
     "aoa3:baron_sword",
     "aoa3:bloodfury",
     "aoa3:bloodstone_sword",
@@ -26,9 +25,7 @@
     "aoa3:rockbasher_sword",
     "aoa3:rock_pick_sword",
     "aoa3:rosidian_sword",
-    "aoa3:rosite_sword",
     "aoa3:runic_sword",
-    "aoa3:sapphire_sword",
     "aoa3:shadow_sword",
     "aoa3:shroomus_sword",
     "aoa3:skeletal_sword",

@@ -20,7 +20,7 @@ public class PoisonVulcane extends BaseVulcane {
 	}
 
 	@Override
-	public void doAdditionalEffect(LivingEntity target, Player attacker) {
+	public void doAdditionalEffect(LivingEntity target, Player attacker, float damageDealt) {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.POISON, 140).level(2));
 	}
 

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:yellow_shyre_bricks"
+  },
+  "result": "aoa3:yellow_shyre_brick_wall",
+  "count": 1
+}

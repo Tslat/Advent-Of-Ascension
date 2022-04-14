@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:lyon_ingot"
+      "tag": "forge:ingots/lyon"
     },
     "B": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "C": {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     },
     "D": {
-      "item": "aoa3:blazium_ingot"
+      "tag": "forge:ingots/blazium"
     }
   },
   "result": {

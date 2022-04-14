@@ -11,13 +11,13 @@
       "item": "aoa3:blue_druse"
     },
     {
-      "item": "aoa3:sapphire"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

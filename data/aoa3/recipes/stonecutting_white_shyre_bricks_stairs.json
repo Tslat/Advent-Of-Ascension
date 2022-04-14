@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "aoa3:white_shyre_bricks"
-  },
-  "result": "aoa3:white_shyre_bricks_stairs",
-  "count": 1
-}

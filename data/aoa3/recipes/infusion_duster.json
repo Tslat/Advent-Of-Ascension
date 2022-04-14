@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     },
     {
-      "item": "minecraft:leather"
+      "tag": "forge:leather"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     },
     {
       "tag": "minecraft:planks"

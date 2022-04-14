@@ -13,10 +13,10 @@
       "item": "aoa3:chum"
     },
     "A": {
-      "item": "minecraft:carrot"
+      "tag": "forge:crops/carrot"
     },
     "P": {
-      "item": "minecraft:potato"
+      "tag": "forge:crops/potato"
     }
   },
   "result": {

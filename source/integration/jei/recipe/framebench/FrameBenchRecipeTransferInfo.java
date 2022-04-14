@@ -10,6 +10,7 @@ import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBenchContainer, FrameBenchRecipe> {
 	@Override
 	public Class<FrameBenchContainer> getContainerClass() {

@@ -14,16 +14,16 @@
       "item": "aoa3:rainbow_druse"
     },
     {
-      "item": "aoa3:amethyst"
+      "tag": "forge:gems/amethyst"
     },
     {
-      "item": "aoa3:amethyst"
+      "tag": "forge:gems/emerald"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

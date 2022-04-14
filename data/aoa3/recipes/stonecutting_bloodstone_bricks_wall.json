@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "aoa3:bloodstone_bricks"
-  },
-  "result": "aoa3:bloodstone_bricks_wall",
-  "count": 1
-}

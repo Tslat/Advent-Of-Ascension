@@ -5,9 +5,6 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:elecanium_ingot"
-    },
-    {
       "item": "aoa3:runic_energy"
     },
     {
@@ -15,15 +12,18 @@
     },
     {
       "item": "aoa3:runic_energy"
-    },
-    {
-      "item": "aoa3:sapphire"
     },
     {
       "item": "aoa3:power_core"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/elecanium"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

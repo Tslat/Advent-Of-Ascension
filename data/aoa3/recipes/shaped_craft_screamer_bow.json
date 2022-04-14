@@ -10,7 +10,7 @@
       "item": "aoa3:dense_rock"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     }
   },
   "result": {

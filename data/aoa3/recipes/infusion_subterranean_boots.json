@@ -11,7 +11,7 @@
       "item": "minecraft:golden_pickaxe"
     },
     {
-      "item": "aoa3:rosite_ingot"
+      "tag": "forge:dusts/redstone"
     }
   ],
   "result": {

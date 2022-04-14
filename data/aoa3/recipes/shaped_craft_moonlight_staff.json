@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:ghoulish_ingot"
+      "tag": "forge:ingots/ghoulish"
     },
     "B": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "C": {
-      "item": "aoa3:sapphire"
+      "tag": "forge:gems/diamond"
     },
     "D": {
       "item": "aoa3:ghoulasm"

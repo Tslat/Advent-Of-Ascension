@@ -10,10 +10,10 @@
       "item": "aoa3:runium_chunk"
     },
     "B": {
-      "item": "aoa3:baronyte_ingot"
+      "tag": "forge:ingots/baronyte"
     },
     "C": {
-      "item": "aoa3:sapphire"
+      "tag": "forge:gems/quartz"
     }
   },
   "result": {

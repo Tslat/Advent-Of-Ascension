@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:baronyte_ingot"
-    },
-    {
-      "item": "aoa3:baronyte_ingot"
-    },
-    {
-      "item": "minecraft:leather"
-    },
-    {
       "item": "minecraft:glowstone_dust"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:ingots/baronyte"
+    },
+    {
+      "tag": "forge:ingots/baronyte"
+    },
+    {
+      "tag": "forge:leather"
+    },
+    {
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

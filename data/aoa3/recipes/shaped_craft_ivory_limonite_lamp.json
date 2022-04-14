@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "RXR",
+    " R "
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "X": {
+      "tag": "forge:ingots/limonite"
+    },
+    "I": {
+      "tag": "forge:ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:ivory_limonite_lamp"
+  }
+}

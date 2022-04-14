@@ -13,10 +13,10 @@
       "item": "aoa3:damage_enhancer"
     },
     {
-      "item": "minecraft:string"
+      "item": "aoa3:glistening_power_stone"
     },
     {
-      "item": "aoa3:glistening_power_stone"
+      "tag": "forge:string"
     }
   ]
 }

@@ -14,9 +14,6 @@
       "item": "aoa3:ghoulasm"
     },
     {
-      "item": "aoa3:ghoulish_ingot"
-    },
-    {
       "item": "aoa3:armour_plating"
     },
     {
@@ -30,6 +27,9 @@
     },
     {
       "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:ingots/ghoulish"
     }
   ],
   "result": {

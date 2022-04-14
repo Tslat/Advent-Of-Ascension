@@ -11,16 +11,16 @@
       "item": "aoa3:rosid_root"
     },
     {
-      "item": "aoa3:jade"
-    },
-    {
       "item": "aoa3:jungle_thorns"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:gems/jade"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

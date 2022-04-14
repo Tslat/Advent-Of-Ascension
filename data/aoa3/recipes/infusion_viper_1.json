@@ -14,13 +14,13 @@
       "item": "aoa3:jungle_thorns"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " R ",
+    "RXR",
+    " R "
+  ],
+  "key": {
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "X": {
+      "tag": "forge:gems/lapis"
+    }
+  },
+  "result": {
+    "item": "aoa3:lapis_lamp"
+  }
+}

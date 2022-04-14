@@ -10,13 +10,13 @@
       "item": "aoa3:power_rune"
     },
     "B": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "C": {
       "item": "aoa3:hardened_confetti_ball"
     },
     "D": {
-      "item": "aoa3:sapphire"
+      "tag": "forge:gems/diamond"
     }
   },
   "result": {

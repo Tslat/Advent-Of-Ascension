@@ -126,7 +126,7 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aoa3:sapphire_pickaxe"
+          "name": "minecraft:netherite_pickaxe"
         }
       ]
     }

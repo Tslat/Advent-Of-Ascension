@@ -1,5 +1,7 @@
 package net.tslat.aoa3.client.model;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
@@ -7,8 +9,11 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.TippableArrowRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -16,7 +21,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.model.armor.AoAArmourModels;
+import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
@@ -122,6 +127,9 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> TOKEN_COLLECTOR = new EntityRendererPackage<>(AoANpcs.TOKEN_COLLECTOR).defineLayer("token_collector", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/token_collector.png");
 	public static final EntityRendererPackage<?> UNDEAD_HERALD = new EntityRendererPackage<>(AoANpcs.UNDEAD_HERALD).defineLayer("undead_herald", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/undead_herald.png");
 	public static final EntityRendererPackage<?> SKILL_MASTER = new EntityRendererPackage<>(AoANpcs.SKILL_MASTER).geckolib("npc/trader/skill_master");
+	public static final EntityRendererPackage<?> CORRUPTED_TRAVELLER = new EntityRendererPackage<>(AoANpcs.CORRUPTED_TRAVELLER).geckolib("npc/trader/corrupted_traveller", true);
+
+	public static final EntityRendererPackage<?> LOTTOMAN = new EntityRendererPackage<>(AoANpcs.LOTTOMAN).geckolib("npc/trader/lottoman", true);
 
 	public static final EntityRendererPackage<?> GRENADE = new EntityRendererPackage<>(AoAProjectiles.GRENADE).defineLayer("grenade", GrenadeModel::createLayerDefinition).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
 	public static final EntityRendererPackage<?> RUNIC_BOMB = new EntityRendererPackage<>(AoAProjectiles.RUNIC_BOMB).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/runic_bomb.png")));
@@ -604,7 +612,7 @@ public final class AoAEntityRendering {
 			rendererPackage.registerModelLayer(ev);
 		}
 
-		AoAArmourModels.init(ev);
+		AoAMiscModels.init(ev);
 	}
 
 /*	private static void initModels() {
@@ -653,11 +661,27 @@ public final class AoAEntityRendering {
 		}
 
 		private EntityRendererPackage<T> geckolib(String path) {
-			return geckolib(new EntityGeoModel<>(path));
+			return geckolib(path, false);
 		}
 
 		private EntityRendererPackage<T> geckolib(EntityGeoModel<?> model) {
-			return provider(context -> new AnimatedMobRenderer(context, model, this.shadowSize));
+			return geckolib(model, false);
+		}
+
+		private EntityRendererPackage<T> geckolib(String path, boolean transparent) {
+			return geckolib(new EntityGeoModel<>(path), transparent);
+		}
+
+		private EntityRendererPackage<T> geckolib(EntityGeoModel<?> model, boolean transparent) {
+			if (!transparent)
+				return provider(context -> new AnimatedMobRenderer(context, model, this.shadowSize));
+
+			return provider(context -> new AnimatedMobRenderer(context, model, this.shadowSize) {
+				@Override
+				public RenderType getRenderType(Object animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+					return RenderType.entityTranslucent(textureLocation);
+				}
+			});
 		}
 
 		private EntityRendererPackage<T> provider(EntityRendererProvider provider) {

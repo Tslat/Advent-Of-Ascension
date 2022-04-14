@@ -11,13 +11,13 @@
       "item": "aoa3:green_druse"
     },
     {
-      "item": "aoa3:jade"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:power_core"
+    },
+    {
+      "tag": "forge:gems/jade"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

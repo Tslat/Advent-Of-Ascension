@@ -7,19 +7,19 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:lyon_ingot"
+      "tag": "forge:ingots/lyon"
     },
     "B": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     },
     "C": {
       "item": "aoa3:enchanted_gunpowder"
     },
     "D": {
-      "item": "aoa3:blazium_ingot"
+      "tag": "forge:ingots/blazium"
     },
     "E": {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   },
   "result": {

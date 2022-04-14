@@ -10,6 +10,7 @@ import net.tslat.aoa3.integration.jei.recipe.framebench.FrameBenchRecipeCategory
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class WhitewashingRecipeTransferInfo implements IRecipeTransferInfo<WhitewashingTableContainer, WhitewashingRecipe> {
 	@Override
 	public Class<WhitewashingTableContainer> getContainerClass() {

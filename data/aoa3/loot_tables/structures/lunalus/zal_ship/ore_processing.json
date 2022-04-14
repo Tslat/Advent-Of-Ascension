@@ -180,36 +180,19 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "quality": 2,
+          "weight": 18,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 7.0
+                "min": 2.0,
+                "max": 8.0
               },
               "add": false
             }
           ],
-          "name": "aoa3:sapphire"
-        },
-        {
-          "type": "minecraft:item",
-          "quality": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
-              },
-              "add": false
-            }
-          ],
-          "name": "aoa3:sapphire_ore"
+          "name": "minecraft:amethyst_shard"
         },
         {
           "type": "minecraft:item",

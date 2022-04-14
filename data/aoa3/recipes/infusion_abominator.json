@@ -8,19 +8,19 @@
       "item": "aoa3:ghoulasm"
     },
     {
-      "item": "aoa3:ghastly_ingot"
+      "tag": "forge:ingots/ghastly"
     },
     {
-      "item": "aoa3:ghastly_ingot"
+      "tag": "forge:ingots/ghastly"
     },
     {
-      "item": "aoa3:ghoulish_ingot"
+      "tag": "forge:ingots/ghoulish"
     },
     {
-      "item": "aoa3:ghoulish_ingot"
+      "tag": "forge:ingots/ghoulish"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

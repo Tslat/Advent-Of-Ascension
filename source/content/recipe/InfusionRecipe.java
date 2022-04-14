@@ -39,13 +39,13 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInventory> {
-	private static final InfusionRecipe EMPTY_RECIPE = new InfusionRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "infusion_empty"), "", ItemStack.EMPTY, ItemStack.EMPTY, NonNullList.<Ingredient>create(), 1, 0, 0);
+	private static final InfusionRecipe EMPTY_RECIPE = new InfusionRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "infusion_empty"), "", ItemStack.EMPTY, Ingredient.EMPTY, NonNullList.<Ingredient>create(), 1, 0, 0);
 
 	private final ResourceLocation id;
 	private final String group;
 
 	private final ItemStack output;
-	private final ItemStack input;
+	private final Ingredient input;
 	protected final NonNullList<Ingredient> ingredients;
 	private final boolean isSimple;
 	private final int minXp;
@@ -57,7 +57,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 
 	private final int infusionReq;
 
-	public InfusionRecipe(ResourceLocation id, String group, ItemStack output, ItemStack input, NonNullList<Ingredient> ingredients, int infusionLevelReq, int minXp, int maxXp) {
+	public InfusionRecipe(ResourceLocation id, String group, ItemStack output, Ingredient input, NonNullList<Ingredient> ingredients, int infusionLevelReq, int minXp, int maxXp) {
 		this.id = id;
 		this.isEnchanting = false;
 		this.output = output;
@@ -102,7 +102,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 
 		this.isSimple = simple;
 		this.output = ItemStack.EMPTY;
-		this.input = ItemStack.EMPTY;
+		this.input = Ingredient.EMPTY;
 		this.minXp = minXp;
 		this.maxXp = maxXp;
 	}
@@ -115,7 +115,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 			ArrayList<ItemStack> inputIngredients = new ArrayList<ItemStack>();
 			ItemStack inputStack = inv.getItem(0);
 
-			if (inputStack.isEmpty() || (!isEnchanting && (input.getItem() != inputStack.getItem())))
+			if (inputStack.isEmpty() || (!isEnchanting && !input.test(inputStack)))
 				return false;
 
 			for (int i = 1; i < 10; i++) {
@@ -173,7 +173,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 		return isEnchanting ? ItemStack.EMPTY : output;
 	}
 
-	public ItemStack getRecipeInput() {
+	public Ingredient getRecipeInput() {
 		return input;
 	}
 
@@ -249,7 +249,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 
 	@Override
 	public RecipeType<?> getType() {
-		return AoARecipes.INFUSION.getA();
+		return AoARecipes.INFUSION.getA().get();
 	}
 
 	public ItemStack provideEmptyOrCompatibleStackForEnchanting(ItemStack inputStack) {
@@ -337,7 +337,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 			}
 			else {
 				String group = GsonHelper.getAsString(json, "group", "");
-				ItemStack input = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input"), false);
+				Ingredient input = CraftingHelper.getIngredient(GsonHelper.getAsJsonObject(json, "input"));
 				ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
 				NonNullList<Ingredient> ingredients = NonNullList.create();
 				int infusionReq = 1;
@@ -397,7 +397,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 				return new InfusionRecipe(recipeId, group, ench, lvl, ingredients, infusionReq, minXp, maxXp);
 			}
 			else {
-				ItemStack input = buffer.readItem();
+				Ingredient input = Ingredient.fromNetwork(buffer);
 				ItemStack output = buffer.readItem();
 				NonNullList<Ingredient> ingredients = NonNullList.withSize(buffer.readInt(), Ingredient.EMPTY);
 
@@ -429,7 +429,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 			}
 			else {
 				buffer.writeBoolean(false);
-				buffer.writeItemStack(recipe.getRecipeInput(), true);
+				recipe.getRecipeInput().toNetwork(buffer);
 				buffer.writeItemStack(recipe.getResultItem(), false);
 				buffer.writeInt(recipe.getIngredients().size());
 

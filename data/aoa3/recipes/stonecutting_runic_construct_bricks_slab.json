@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "aoa3:runic_construct_bricks"
-  },
-  "result": "aoa3:runic_construct_bricks_slab",
-  "count": 2
-}

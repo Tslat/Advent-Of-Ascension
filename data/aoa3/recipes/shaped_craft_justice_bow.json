@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:crystallite"
+      "tag": "forge:gems/crystallite"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:reinforced_cloth"

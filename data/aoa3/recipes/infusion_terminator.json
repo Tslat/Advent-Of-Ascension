@@ -11,22 +11,22 @@
       "item": "aoa3:darkly_powder"
     },
     {
-      "item": "minecraft:obsidian"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:unstable_gunpowder"
     },
     {
       "item": "aoa3:power_core"
     },
     {
-      "item": "aoa3:bloodstone"
+      "tag": "forge:obsidian"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
     }
   ],
   "result": {

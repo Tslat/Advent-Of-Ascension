@@ -5,25 +5,25 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "aoa3:blazium_ingot"
-    },
-    {
-      "item": "aoa3:blazium_ingot"
-    },
-    {
-      "item": "aoa3:blazium_ingot"
-    },
-    {
       "item": "aoa3:power_core"
     },
     {
       "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/blazium"
+    },
+    {
+      "tag": "forge:ingots/blazium"
+    },
+    {
+      "tag": "forge:ingots/blazium"
     }
   ],
   "result": {

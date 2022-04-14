@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:lunar_ingot"
+      "tag": "forge:ingots/lunar"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:orbulon"

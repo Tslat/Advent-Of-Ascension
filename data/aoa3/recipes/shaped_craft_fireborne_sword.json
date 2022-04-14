@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:emberstone_ingot"
+      "tag": "forge:ingots/emberstone"
     },
     "B": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     },
     "C": {
       "item": "aoa3:flammable_dust"

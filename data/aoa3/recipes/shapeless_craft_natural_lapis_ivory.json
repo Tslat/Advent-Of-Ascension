@@ -1,0 +1,36 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "tag": "forge:gems/lapis"
+    }
+  ],
+  "result": {
+    "item": "aoa3:natural_lapis_ivory",
+    "count": 4
+  }
+}

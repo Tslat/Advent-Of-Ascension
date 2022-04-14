@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.content.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 
+@SuppressWarnings("removal")
 public class WhitewashingRecipeCategory implements IRecipeCategory<WhitewashingRecipe> {
 	public static final RecipeType<WhitewashingRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "whitewashing", WhitewashingRecipe.class);
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "whitewashing");

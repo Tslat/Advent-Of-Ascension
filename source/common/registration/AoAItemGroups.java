@@ -14,11 +14,11 @@ import java.util.function.Supplier;
 public final class AoAItemGroups {
 	public static final ArrayList<AoAItemGroup> REGISTERED_ITEM_GROUPS = new ArrayList<>();
 
-	public static final CreativeModeTab MISC_ITEMS = new AoAItemGroup("AoA Miscellaneous Items", "miscellaneous", () -> new ItemStack(AoAItems.ROSITE_INGOT.get()));
+	public static final CreativeModeTab MISC_ITEMS = new AoAItemGroup("AoA Miscellaneous Items", "miscellaneous", () -> new ItemStack(AoAItems.LIMONITE_INGOT.get()));
 	public static final CreativeModeTab FOOD = new AoAItemGroup("AoA Food", "food", () -> new ItemStack(AoAItems.COOKED_RAINBOWFISH.get()));
 	public static final CreativeModeTab TOOLS = new AoAItemGroup("AoA Tools", "tools", () -> new ItemStack(AoATools.LIMONITE_PICKAXE.get()));
-	public static final CreativeModeTab ARMOUR = new AoAItemGroup("AoA Armour", "armour", () -> new ItemStack(AoAArmour.AMETHIND_ARMOUR.chestplate.get()));
-	public static final CreativeModeTab SWORDS = new AoAItemGroup("AoA Swords", "swords", () -> new ItemStack(AoAWeapons.AMETHYST_SWORD.get()));
+	public static final CreativeModeTab ARMOUR = new AoAItemGroup("AoA Armour", "armour", () -> new ItemStack(AoAArmour.ALACRITY_ARMOUR.chestplate.get()));
+	public static final CreativeModeTab SWORDS = new AoAItemGroup("AoA Swords", "swords", () -> new ItemStack(AoAWeapons.LIMONITE_SWORD.get()));
 	public static final CreativeModeTab GREATBLADES = new AoAItemGroup("AoA Greatblades", "greatblades", () -> new ItemStack(AoAWeapons.BLOODLURKER.get()));
 	public static final CreativeModeTab MAULS = new AoAItemGroup("AoA Mauls", "mauls", () -> new ItemStack(AoAWeapons.HORIZON_MAUL.get()));
 	public static final CreativeModeTab GUNS = new AoAItemGroup("AoA Guns", "guns", () -> new ItemStack(AoAWeapons.SQUAD_GUN.get()));

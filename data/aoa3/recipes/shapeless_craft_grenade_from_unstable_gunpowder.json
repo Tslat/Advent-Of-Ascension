@@ -8,7 +8,7 @@
       "item": "aoa3:scrap_metal"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

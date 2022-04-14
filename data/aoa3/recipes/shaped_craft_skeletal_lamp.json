@@ -7,10 +7,10 @@
   ],
   "key": {
     "R": {
-      "item": "minecraft:redstone"
+      "tag": "forge:dusts/redstone"
     },
     "X": {
-      "item": "aoa3:skeletal_ingot"
+      "tag": "forge:ingots/skeletal"
     }
   },
   "result": {

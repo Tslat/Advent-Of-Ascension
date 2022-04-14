@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:baronyte_ingot"
+      "tag": "forge:ingots/baronyte"
     },
     "B": {
-      "item": "minecraft:gold_ingot"
+      "tag": "forge:ingots/gold"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "D": {
-      "item": "minecraft:gold_nugget"
+      "tag": "forge:nuggets/gold"
     }
   },
   "result": {

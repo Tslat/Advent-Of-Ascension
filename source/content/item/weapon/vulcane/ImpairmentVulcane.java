@@ -20,7 +20,7 @@ public class ImpairmentVulcane extends BaseVulcane {
 	}
 
 	@Override
-	public void doAdditionalEffect(LivingEntity target, Player attacker) {
+	public void doAdditionalEffect(LivingEntity target, Player attacker, float damageDealt) {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 100).level(3));
 	}
 

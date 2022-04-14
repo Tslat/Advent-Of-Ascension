@@ -8,16 +8,16 @@
       "item": "aoa3:magnet_shard"
     },
     {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
       "item": "aoa3:mecha_gear"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/varsium"
     }
   ],
   "result": {

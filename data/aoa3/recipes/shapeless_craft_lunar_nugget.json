@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "aoa3:lunar_ingot"
+      "tag": "forge:ingots/lunar"
     }
   ],
   "result": {

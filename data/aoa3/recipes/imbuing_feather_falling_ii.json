@@ -13,10 +13,10 @@
       "item": "aoa3:resistance_enhancer"
     },
     {
-      "item": "minecraft:feather"
+      "item": "aoa3:gleaming_power_stone"
     },
     {
-      "item": "aoa3:gleaming_power_stone"
+      "tag": "forge:feathers"
     }
   ]
 }

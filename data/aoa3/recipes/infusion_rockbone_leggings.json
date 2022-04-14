@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:dense_rock"
+    },
+    {
+      "item": "aoa3:dense_rock"
+    },
+    {
+      "item": "minecraft:arrow"
+    },
+    {
+      "tag": "forge:bones"
+    },
+    {
+      "tag": "forge:bones"
+    }
+  ],
+  "result": {
+    "item": "aoa3:rockbone_leggings"
+  }
+}

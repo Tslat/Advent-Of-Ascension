@@ -8,12 +8,6 @@
       "item": "aoa3:orbulon"
     },
     {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
       "item": "aoa3:armour_plating"
     },
     {
@@ -24,6 +18,12 @@
     },
     {
       "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:ingots/lunar"
+    },
+    {
+      "tag": "forge:ingots/lunar"
     }
   ],
   "result": {

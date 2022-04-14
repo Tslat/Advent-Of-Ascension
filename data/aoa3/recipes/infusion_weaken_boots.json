@@ -11,7 +11,7 @@
       "item": "minecraft:poisonous_potato"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     }
   ],
   "result": {

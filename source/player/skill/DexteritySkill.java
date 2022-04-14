@@ -61,7 +61,7 @@ public class DexteritySkill extends AoASkill.Instance {
 
 		if (ev.player.tickCount % 200 == 0) {
 			if (cumulativeDistance > 0) {
-				cumulativeXp += PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 200) * Math.min(1.75f, (float)(cumulativeDistance / 56f));
+				cumulativeXp += PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 175) * Math.min(1.75f, (float)(cumulativeDistance / 56f));
 				cumulativeDistance = 0;
 			}
 

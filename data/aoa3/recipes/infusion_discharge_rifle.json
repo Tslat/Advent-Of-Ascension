@@ -17,10 +17,10 @@
       "item": "aoa3:discharge_capsule"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "aoa3:rosite_ingot"
+      "tag": "forge:dusts/redstone"
     }
   ],
   "result": {

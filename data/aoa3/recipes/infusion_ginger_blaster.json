@@ -17,7 +17,7 @@
       "item": "minecraft:sugar"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
       "tag": "forge:gingerbread"

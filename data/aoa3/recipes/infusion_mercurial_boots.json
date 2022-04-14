@@ -5,16 +5,16 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:diamond"
-    },
-    {
-      "item": "aoa3:jewelyte"
-    },
-    {
-      "item": "aoa3:gemenyte"
-    },
-    {
       "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:gems/jewelyte"
+    },
+    {
+      "tag": "forge:gems/gemenyte"
     }
   ],
   "result": {

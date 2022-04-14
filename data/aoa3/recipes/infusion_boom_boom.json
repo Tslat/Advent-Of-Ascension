@@ -11,19 +11,19 @@
       "item": "aoa3:unstable_gunpowder"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "aoa3:gemenyte"
-    },
-    {
       "item": "aoa3:ornamyte"
     },
     {
-      "item": "aoa3:jewelyte"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "aoa3:jewelyte"
+      "tag": "forge:gems/gemenyte"
+    },
+    {
+      "tag": "forge:gems/jewelyte"
+    },
+    {
+      "tag": "forge:gems/jewelyte"
     }
   ],
   "result": {

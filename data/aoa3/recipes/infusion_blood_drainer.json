@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:bloodstone"
-    },
-    {
-      "item": "aoa3:bloodstone"
-    },
-    {
-      "item": "aoa3:bloodstone"
-    },
-    {
       "item": "aoa3:nightmare_flakes"
     },
     {
       "item": "aoa3:nightmare_flakes"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
     }
   ],
   "result": {

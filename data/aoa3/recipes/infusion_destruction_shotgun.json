@@ -5,22 +5,22 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:emberstone_ingot"
-    },
-    {
-      "item": "aoa3:emberstone_ingot"
-    },
-    {
       "item": "aoa3:hardened_confetti_ball"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "tag": "forge:ingots/emberstone"
+    },
+    {
+      "tag": "forge:ingots/emberstone"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

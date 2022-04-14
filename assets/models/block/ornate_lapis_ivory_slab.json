@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "aoa3:block/ornate_lapis_ivory",
+    "bottom": "aoa3:block/ornate_lapis_ivory",
+    "top": "aoa3:block/ornate_lapis_ivory"
+  }
+}

@@ -7,13 +7,13 @@
   ],
   "key": {
     "R": {
-      "item": "minecraft:redstone"
+      "tag": "forge:dusts/redstone"
     },
     "X": {
-      "item": "minecraft:yellow_dye"
+      "tag": "forge:dyes/yellow"
     },
     "Q": {
-      "item": "minecraft:quartz"
+      "tag": "forge:gems/quartz"
     }
   },
   "result": {

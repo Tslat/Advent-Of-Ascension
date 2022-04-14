@@ -8,12 +8,6 @@
       "item": "aoa3:darkly_powder"
     },
     {
-      "item": "aoa3:bloodstone"
-    },
-    {
-      "item": "minecraft:redstone"
-    },
-    {
       "item": "aoa3:armour_plating"
     },
     {
@@ -24,6 +18,12 @@
     },
     {
       "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
+    },
+    {
+      "tag": "forge:dusts/redstone"
     }
   ],
   "result": {

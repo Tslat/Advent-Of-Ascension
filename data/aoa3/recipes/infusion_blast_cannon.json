@@ -14,13 +14,13 @@
       "item": "aoa3:enchanted_gunpowder"
     },
     {
-      "item": "aoa3:amethyst"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:sticky_slime"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:gems/lapis"
     }
   ],
   "result": {

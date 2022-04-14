@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "aoa3:crystallite_bricks"
-  },
-  "result": "aoa3:crystallite_bricks_stairs",
-  "count": 1
-}

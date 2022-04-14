@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:gemenyte"
+      "tag": "forge:gems/gemenyte"
     },
     "B": {
       "item": "aoa3:ornamyte"
     },
     "C": {
-      "item": "aoa3:jewelyte"
+      "tag": "forge:gems/jewelyte"
     },
     "D": {
       "item": "aoa3:unstable_gunpowder"

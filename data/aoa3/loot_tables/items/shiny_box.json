@@ -36,16 +36,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 65,
-          "name": "aoa3:rosite_ingot"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 85,
-          "name": "aoa3:rusted_iron_ingot"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 10,
           "name": "aoa3:shyrestone_ingot"
         },

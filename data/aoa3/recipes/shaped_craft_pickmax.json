@@ -3,20 +3,17 @@
   "pattern": [
     "ABA",
     " C ",
-    " D "
+    " B "
   ],
   "key": {
     "A": {
-      "item": "aoa3:shyrestone_ingot"
+      "tag": "forge:ingots/shyrestone"
     },
     "B": {
-      "item": "aoa3:shyregem"
+      "tag": "forge:gems/shyregem"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
-    },
-    "D": {
-      "item": "aoa3:sapphire"
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

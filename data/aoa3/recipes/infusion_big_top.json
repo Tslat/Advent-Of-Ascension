@@ -8,12 +8,6 @@
       "item": "aoa3:hardened_confetti_ball"
     },
     {
-      "item": "aoa3:rosite_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "minecraft:yellow_wool"
     },
     {
@@ -21,6 +15,12 @@
     },
     {
       "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

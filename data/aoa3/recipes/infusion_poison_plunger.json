@@ -11,16 +11,16 @@
       "item": "aoa3:mushroom_spores"
     },
     {
-      "item": "aoa3:mystite_ingot"
-    },
-    {
-      "item": "aoa3:jade"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "minecraft:spider_eye"
+    },
+    {
+      "tag": "forge:ingots/mystite"
+    },
+    {
+      "tag": "forge:gems/jade"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

@@ -19,10 +19,10 @@
       "item": "aoa3:resistance_enhancer"
     },
     {
-      "item": "minecraft:gunpowder"
+      "item": "aoa3:gleaming_power_stone"
     },
     {
-      "item": "aoa3:gleaming_power_stone"
+      "tag": "forge:gunpowder"
     }
   ]
 }

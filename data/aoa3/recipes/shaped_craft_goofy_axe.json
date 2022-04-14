@@ -7,7 +7,7 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     "B": {
       "item": "aoa3:balloon"
@@ -16,7 +16,7 @@
       "item": "aoa3:hardened_confetti_ball"
     },
     "D": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

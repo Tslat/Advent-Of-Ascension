@@ -18,6 +18,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 
 import javax.annotation.Nonnull;
@@ -454,8 +455,12 @@ public final class ItemUtil {
 			if (archmage > 0)
 				amount -= archmage;
 
-			if (nightmareArmour)
+			if (nightmareArmour) {
 				--amount;
+
+				if (runeEntry.getKey() == AoAItems.DISTORTION_RUNE.get())
+					continue;
+			}
 
 			if (amount <= 0)
 				amount = 1;

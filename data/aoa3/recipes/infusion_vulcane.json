@@ -1,7 +1,7 @@
 {
   "type": "aoa3:infusion",
   "input": {
-    "item": "aoa3:limonite_rod"
+    "tag": "forge:rods/metal"
   },
   "ingredients": [
     {

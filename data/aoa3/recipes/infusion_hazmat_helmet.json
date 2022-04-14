@@ -8,9 +8,6 @@
       "item": "minecraft:charcoal"
     },
     {
-      "item": "minecraft:string"
-    },
-    {
       "item": "aoa3:reinforced_cloth"
     },
     {
@@ -18,6 +15,9 @@
     },
     {
       "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:string"
     }
   ],
   "result": {

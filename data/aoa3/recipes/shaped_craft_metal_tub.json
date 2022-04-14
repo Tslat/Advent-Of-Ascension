@@ -6,13 +6,13 @@
   ],
   "key": {
     "A": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     "B": {
       "item": "minecraft:clay_ball"
     },
     "C": {
-      "item": "aoa3:emberstone_ingot"
+      "tag": "forge:ingots/emberstone"
     }
   },
   "result": {

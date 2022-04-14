@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:baron_bricks"
+    }
+  },
+  "result": {
+    "item": "aoa3:baron_brick_wall",
+    "count": 6
+  }
+}

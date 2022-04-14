@@ -5,16 +5,7 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:shyrestone_ingot"
-    },
-    {
-      "item": "aoa3:shyregem"
-    },
-    {
       "item": "aoa3:whitewashing_solution"
-    },
-    {
-      "item": "minecraft:iron_ingot"
     },
     {
       "item": "aoa3:rosid_root"
@@ -23,7 +14,16 @@
       "item": "aoa3:power_core"
     },
     {
-      "item": "minecraft:quartz"
+      "tag": "forge:ingots/shyrestone"
+    },
+    {
+      "tag": "forge:gems/shyregem"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:gems/quartz"
     }
   ],
   "result": {

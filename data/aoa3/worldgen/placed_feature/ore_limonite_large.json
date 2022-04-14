@@ -1,0 +1,56 @@
+{
+  "feature": {
+    "config": {
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "aoa3:limonite_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "aoa3:deepslate_limonite_ore"
+          }
+        }
+      ],
+      "size": 10,
+      "discard_chance_on_air_exposure": 0.0
+    },
+    "type": "minecraft:ore"
+  },
+  "placement": [
+    {
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 3,
+          "max_inclusive": 8
+        }
+      },
+      "type": "minecraft:count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "height": {
+        "min_inclusive": {
+          "above_bottom": 10
+        },
+        "max_inclusive": {
+          "below_top": 10
+        },
+        "type": "minecraft:uniform"
+      },
+      "type": "minecraft:height_range"
+    }
+  ]
+}

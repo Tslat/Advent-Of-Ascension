@@ -1,16 +1,16 @@
 package net.tslat.aoa3.content.item.weapon.sniper;
 
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -49,11 +49,13 @@ public class Crystaneer extends BaseSniper {
 	}
 
 	private static void populateGemDrops() {
-		gemDrops.add(new ItemStack(Items.DIAMOND));
-		gemDrops.add(new ItemStack(Items.EMERALD));
-		gemDrops.add(new ItemStack(AoAItems.SAPPHIRE.get()));
-		gemDrops.add(new ItemStack(AoAItems.JADE.get()));
-		gemDrops.add(new ItemStack(AoAItems.AMETHYST.get()));
+		Registry.ITEM.getTagOrEmpty(Tags.Items.GEMS).forEach(holder -> gemDrops.add(holder.unwrap().right().get().getDefaultInstance()));
+
+		//gemDrops.add(new ItemStack(Items.DIAMOND));
+		//gemDrops.add(new ItemStack(Items.EMERALD));
+		//gemDrops.add(new ItemStack(AoAItems.SAPPHIRE.get()));
+		//gemDrops.add(new ItemStack(AoAItems.JADE.get()));
+		//gemDrops.add(new ItemStack(AoAItems.AMETHYST.get()));
 
 		populated = true;
 	}

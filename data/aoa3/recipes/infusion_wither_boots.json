@@ -8,12 +8,6 @@
       "item": "aoa3:wither_rune"
     },
     {
-      "item": "aoa3:bloodstone"
-    },
-    {
-      "item": "aoa3:bloodstone"
-    },
-    {
       "item": "aoa3:armour_plating"
     },
     {
@@ -21,6 +15,12 @@
     },
     {
       "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
     }
   ],
   "result": {

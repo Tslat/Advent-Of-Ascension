@@ -5,22 +5,22 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:nether_wart"
+      "tag": "forge:crops/nether_wart"
     },
     {
-      "item": "minecraft:nether_wart"
+      "tag": "forge:crops/nether_wart"
     },
     {
-      "item": "minecraft:nether_wart"
+      "tag": "forge:crops/nether_wart"
     },
     {
-      "item": "aoa3:emberstone_ingot"
+      "tag": "forge:ingots/emberstone"
     },
     {
-      "item": "aoa3:emberstone_ingot"
+      "tag": "forge:ingots/emberstone"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

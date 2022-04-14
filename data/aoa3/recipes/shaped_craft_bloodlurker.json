@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:bloodstone"
+      "tag": "forge:gems/bloodstone"
     },
     "B": {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     },
     "D": {
       "item": "minecraft:spider_eye"

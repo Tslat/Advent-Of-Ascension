@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:ghoulish_ingot"
+      "tag": "forge:ingots/ghoulish"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:ghoulasm"

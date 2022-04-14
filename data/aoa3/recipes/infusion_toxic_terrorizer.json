@@ -11,16 +11,16 @@
       "item": "aoa3:toxic_lump"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "aoa3:jade"
+      "tag": "forge:gems/jade"
     },
     {
-      "item": "aoa3:jade"
+      "tag": "forge:gems/jade"
     }
   ],
   "result": {

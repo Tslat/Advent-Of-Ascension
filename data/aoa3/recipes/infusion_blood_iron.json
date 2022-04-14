@@ -5,22 +5,22 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:rosite_ingot"
+      "tag": "forge:ingots/netherite"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "aoa3:bloodstone"
+      "tag": "forge:gems/bloodstone"
     },
     {
-      "item": "aoa3:bloodstone"
+      "tag": "forge:gems/bloodstone"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

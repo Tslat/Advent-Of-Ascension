@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "tag": "forge:gems/diamond"
+    },
+    {
+      "tag": "forge:gems/gemenyte"
+    },
+    {
+      "tag": "forge:gems/gemenyte"
+    },
+    {
+      "tag": "forge:gems/jewelyte"
+    },
+    {
+      "tag": "forge:gems/jewelyte"
+    }
+  ],
+  "result": {
+    "item": "aoa3:mercurial_leggings"
+  }
+}

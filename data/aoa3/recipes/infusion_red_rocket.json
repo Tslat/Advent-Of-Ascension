@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:baronyte_ingot"
+      "tag": "forge:ingots/baronyte"
     },
     {
-      "item": "aoa3:baronyte_ingot"
+      "tag": "forge:ingots/baronyte"
     },
     {
-      "item": "aoa3:blazium_ingot"
+      "tag": "forge:ingots/blazium"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

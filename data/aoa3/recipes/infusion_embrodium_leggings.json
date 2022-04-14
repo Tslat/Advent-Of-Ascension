@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "tag": "forge:ingots/varsium"
+    },
+    {
+      "tag": "forge:ingots/varsium"
+    },
+    {
+      "tag": "forge:ingots/varsium"
+    },
+    {
+      "tag": "forge:ingots/blazium"
+    },
+    {
+      "tag": "forge:ingots/blazium"
+    }
+  ],
+  "result": {
+    "item": "aoa3:embrodium_leggings"
+  }
+}

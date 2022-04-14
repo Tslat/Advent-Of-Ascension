@@ -5,16 +5,16 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:leather"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:spreadshot"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:leather"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

@@ -170,7 +170,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 	protected void slotChangedCraftingGrid(Level world, Player player, InfusionInventory inv, ResultContainer craftResult) {
 		if (!world.isClientSide) {
 			ItemStack resultStack = ItemStack.EMPTY;
-			Optional<InfusionRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.INFUSION.getA(), inv, world);
+			Optional<InfusionRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.INFUSION.getA().get(), inv, world);
 
 			if (recipeMatch.isPresent()) {
 				InfusionRecipe matchedRecipe = recipeMatch.get();
@@ -312,7 +312,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 		public void onTake(Player player, ItemStack stack) {
 			checkTakeAchievements(stack);
 			ForgeHooks.setCraftingPlayer(player);
-			NonNullList<ItemStack> remainingItems = player.level.getRecipeManager().getRemainingItemsFor(AoARecipes.INFUSION.getA(), craftInv, player.level);
+			NonNullList<ItemStack> remainingItems = player.level.getRecipeManager().getRemainingItemsFor(AoARecipes.INFUSION.getA().get(), craftInv, player.level);
 			ForgeHooks.setCraftingPlayer(null);
 
 			for (int i = 0; i < remainingItems.size(); ++i) {

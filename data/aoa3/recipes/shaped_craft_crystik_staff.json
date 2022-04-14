@@ -13,7 +13,7 @@
       "item": "aoa3:blue_druse"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

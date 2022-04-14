@@ -8,15 +8,6 @@
       "item": "aoa3:darkly_powder"
     },
     {
-      "item": "aoa3:bloodstone"
-    },
-    {
-      "item": "aoa3:rosite_ingot"
-    },
-    {
-      "item": "minecraft:redstone"
-    },
-    {
       "item": "aoa3:armour_plating"
     },
     {
@@ -30,6 +21,15 @@
     },
     {
       "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
+    },
+    {
+      "tag": "forge:ingots/netherite"
+    },
+    {
+      "tag": "forge:dusts/redstone"
     }
   ],
   "result": {

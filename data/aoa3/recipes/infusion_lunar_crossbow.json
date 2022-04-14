@@ -11,16 +11,16 @@
       "item": "aoa3:floating_stone"
     },
     {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
       "item": "aoa3:orbulon"
+    },
+    {
+      "tag": "forge:ingots/lunar"
+    },
+    {
+      "tag": "forge:ingots/lunar"
+    },
+    {
+      "tag": "forge:ingots/lunar"
     }
   ],
   "result": {

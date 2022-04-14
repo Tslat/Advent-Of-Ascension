@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "minecraft:emerald"
+      "tag": "forge:gems/emerald"
     },
     {
-      "item": "minecraft:emerald"
+      "tag": "forge:gems/emerald"
     },
     {
-      "item": "aoa3:jade"
+      "tag": "forge:gems/jade"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

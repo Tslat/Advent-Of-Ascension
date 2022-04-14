@@ -5,16 +5,16 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:skeletal_ingot"
-    },
-    {
       "item": "aoa3:jungle_thorns"
     },
     {
       "item": "aoa3:jungle_thorns"
     },
     {
-      "item": "minecraft:bone"
+      "tag": "forge:bones"
+    },
+    {
+      "tag": "forge:ingots/skeletal"
     },
     {
       "tag": "aoa3:precasian_bone"

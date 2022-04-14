@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:sapphire"
+      "tag": "forge:gems/diamond"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
-      "item": "aoa3:jade"
+      "tag": "forge:gems/jade"
     }
   },
   "result": {

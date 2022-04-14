@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:shyrestone_ingot"
+      "tag": "forge:ingots/shyrestone"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
-      "item": "aoa3:shyregem"
+      "tag": "forge:gems/shyregem"
     }
   },
   "result": {

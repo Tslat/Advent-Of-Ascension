@@ -5,12 +5,6 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
       "item": "aoa3:orbulon"
     },
     {
@@ -20,10 +14,16 @@
       "item": "aoa3:ghostly_powder"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:soul_torch"
     },
     {
-      "item": "minecraft:soul_torch"
+      "tag": "forge:ingots/lunar"
+    },
+    {
+      "tag": "forge:ingots/lunar"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

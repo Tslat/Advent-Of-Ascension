@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:bloodstone"
+      "tag": "forge:gems/bloodstone"
     },
     "B": {
       "item": "aoa3:nightmare_flakes"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

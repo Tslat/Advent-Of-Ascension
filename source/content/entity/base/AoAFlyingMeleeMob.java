@@ -18,7 +18,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.content.entity.ai.animation.Animatable;
+import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
 import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.FlyingLookRandomlyGoal;
 import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
@@ -28,9 +28,11 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 
-public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, Animatable {
+public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, AnimatableWithStates {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
+	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 	protected boolean isSlipperyMovement = false;
 
 	protected AoAFlyingMeleeMob(EntityType<? extends FlyingMob> entityType, Level world) {
@@ -159,5 +161,10 @@ public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, Anim
 	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
+	}
+
+	@Override
+	public HashMap<String, Integer> getAnimationStates() {
+		return animationStates;
 	}
 }

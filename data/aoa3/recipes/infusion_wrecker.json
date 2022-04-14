@@ -11,19 +11,19 @@
       "item": "aoa3:gingerbread_cookie"
     },
     {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
-      "item": "aoa3:limonite_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "aoa3:power_core"
+    },
+    {
+      "tag": "forge:ingots/varsium"
+    },
+    {
+      "tag": "forge:ingots/limonite"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

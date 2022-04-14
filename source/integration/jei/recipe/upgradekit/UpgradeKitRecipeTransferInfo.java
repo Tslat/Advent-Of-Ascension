@@ -10,6 +10,7 @@ import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("removal")
 public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineStationContainer, UpgradeKitRecipe> {
 	@Override
 	public Class<DivineStationContainer> getContainerClass() {

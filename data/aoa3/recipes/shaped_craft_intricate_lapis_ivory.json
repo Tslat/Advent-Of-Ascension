@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X X",
+    " X ",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:ornate_lapis_ivory"
+    }
+  },
+  "result": {
+    "item": "aoa3:intricate_lapis_ivory",
+    "count": 5
+  }
+}

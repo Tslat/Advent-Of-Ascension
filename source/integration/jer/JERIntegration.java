@@ -1,11 +1,7 @@
 package net.tslat.aoa3.integration.jer;
 
 import jeresources.api.*;
-import jeresources.api.distributions.DistributionSquare;
-import jeresources.api.drop.LootDrop;
 import jeresources.api.drop.PlantDrop;
-import jeresources.api.restrictions.DimensionRestriction;
-import jeresources.api.restrictions.Restriction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.Item;
@@ -13,7 +9,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.IPlantable;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -35,40 +30,40 @@ public class JERIntegration {
 	private static void integrateWorldGen() {
 		IWorldGenRegistry worldGenRegistry = jerAPI.getWorldGenRegistry();
 
-		worldGenRegistry.register(new ItemStack(AoABlocks.AMETHYST_ORE.get()), new DistributionSquare(5, 7, 14, 30), true, new LootDrop(new ItemStack(AoAItems.AMETHYST.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.JADE_ORE.get()), new DistributionSquare(4, 7, 7, 19), true, new LootDrop(new ItemStack(AoAItems.JADE.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.LIMONITE_ORE.get()), new DistributionSquare(5, 11, 8, 67));
-		worldGenRegistry.register(new ItemStack(AoABlocks.ROSITE_ORE.get()), new DistributionSquare(4, 9, 17, 47));
-		worldGenRegistry.register(new ItemStack(AoABlocks.RUNIUM_ORE.get()), new DistributionSquare(5, 13, 5, 132));
-		worldGenRegistry.register(new ItemStack(AoABlocks.SAPPHIRE_ORE.get()), new DistributionSquare(2, 6, 4, 11), true, new LootDrop(new ItemStack(AoAItems.SAPPHIRE.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.BLOODSTONE_ORE.get()), new DistributionSquare(6, 6, 0, 63), new Restriction(new DimensionRestriction(AoADimensions.ABYSS.key)), true, new LootDrop(new ItemStack(AoAItems.BLOODSTONE.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.BARONYTE_ORE.get()), new DistributionSquare(3, 7, 25, 43), new Restriction(new DimensionRestriction(AoADimensions.BARATHOS.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.BLAZIUM_ORE.get()), new DistributionSquare(3, 6, 0, 19), new Restriction(new DimensionRestriction(AoADimensions.BARATHOS.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.VARSIUM_ORE.get()), new DistributionSquare(3, 6, 35, 73), new Restriction(new DimensionRestriction(AoADimensions.BARATHOS.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.BLUE_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.BLUE_GEMSTONES.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.GREEN_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.GREEN_GEMSTONES.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.RED_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.RED_GEMSTONES.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.PURPLE_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.PURPLE_GEMSTONES.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.WHITE_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.WHITE_GEMSTONES.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.YELLOW_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.YELLOW_GEMSTONES.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.CHARGED_RUNIUM_ORE.get()), new DistributionSquare(6, 11, 0, 119), new Restriction(new DimensionRestriction(AoADimensions.DEEPLANDS.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.DEEP_CASE.get()), new DistributionSquare(5, 1, 75, 124), new Restriction(new DimensionRestriction(AoADimensions.DEEPLANDS.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.CHESTBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.CHESTBONE_FRAGMENT.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.FOOTBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.FOOTBONE_FRAGMENT.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.LEGBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.LEGBONE_FRAGMENT.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.SKULLBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.SKULLBONE_FRAGMENT.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.CRYSTALLITE_ORE.get()), new DistributionSquare(10, 8, 30, 68), new Restriction(new DimensionRestriction(AoADimensions.HAVEN.key)), true, new LootDrop(new ItemStack(AoAItems.CRYSTALLITE.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.ELECANIUM_ORE.get()), new DistributionSquare(3, 5, 0, 35), new Restriction(new DimensionRestriction(AoADimensions.RUNANDOR.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.EMBERSTONE_ORE.get()), new DistributionSquare(15, 7, 10, 117), Restriction.NETHER);
-		worldGenRegistry.register(new ItemStack(AoABlocks.GEMENYTE_ORE.get()), new DistributionSquare(4, 5, 22, 35), new Restriction(new DimensionRestriction(AoADimensions.CREEPONIA.key)), true, new LootDrop(new ItemStack(AoAItems.GEMENYTE.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.JEWELYTE_ORE.get()), new DistributionSquare(4, 5, 22, 35), new Restriction(new DimensionRestriction(AoADimensions.CREEPONIA.key)), true, new LootDrop(new ItemStack(AoAItems.JEWELYTE.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.ORNAMYTE_ORE.get()), new DistributionSquare(4, 5, 0, 14), new Restriction(new DimensionRestriction(AoADimensions.CREEPONIA.key)), true, new LootDrop(new ItemStack(AoAItems.ORNAMYTE.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.GHASTLY_ORE.get()), new DistributionSquare(3, 6, 30, 58), new Restriction(new DimensionRestriction(AoADimensions.GRECKON.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.GHOULISH_ORE.get()), new DistributionSquare(3, 6, 0, 28), new Restriction(new DimensionRestriction(AoADimensions.GRECKON.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.LYON_ORE.get()), new DistributionSquare(4, 7, 0, 64), new Restriction(new DimensionRestriction(AoADimensions.IROMINE.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.MYSTITE_ORE.get()), new DistributionSquare(7, 4, 0, 99), new Restriction(new DimensionRestriction(AoADimensions.MYSTERIUM.key)));
-		worldGenRegistry.register(new ItemStack(AoABlocks.SHYREGEM_ORE.get()), new DistributionSquare(4, 1, 65, 104), new Restriction(new DimensionRestriction(AoADimensions.SHYRELANDS.key)), true, new LootDrop(new ItemStack(AoAItems.SHYREGEM.get())));
-		worldGenRegistry.register(new ItemStack(AoABlocks.SHYRESTONE_ORE.get()), new DistributionSquare(12, 1, 65, 104), new Restriction(new DimensionRestriction(AoADimensions.SHYRELANDS.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.AMETHYST_ORE.get()), new DistributionSquare(5, 7, 14, 30), true, new LootDrop(new ItemStack(AoAItems.AMETHYST.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.DEEPSLATE_JADE_ORE.get()), new DistributionSquare(4, 7, 7, 19), true, new LootDrop(new ItemStack(AoAItems.JADE.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.LIMONITE_ORE.get()), new DistributionSquare(5, 11, 8, 67));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.ROSITE_ORE.get()), new DistributionSquare(4, 9, 17, 47));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.RUNIUM_ORE.get()), new DistributionSquare(5, 13, 5, 132));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.SAPPHIRE_ORE.get()), new DistributionSquare(2, 6, 4, 11), true, new LootDrop(new ItemStack(AoAItems.SAPPHIRE.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.BLOODSTONE_ORE.get()), new DistributionSquare(6, 6, 0, 63), new Restriction(new DimensionRestriction(AoADimensions.ABYSS.key)), true, new LootDrop(new ItemStack(AoAItems.BLOODSTONE.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.BARONYTE_ORE.get()), new DistributionSquare(3, 7, 25, 43), new Restriction(new DimensionRestriction(AoADimensions.BARATHOS.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.BLAZIUM_ORE.get()), new DistributionSquare(3, 6, 0, 19), new Restriction(new DimensionRestriction(AoADimensions.BARATHOS.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.VARSIUM_ORE.get()), new DistributionSquare(3, 6, 35, 73), new Restriction(new DimensionRestriction(AoADimensions.BARATHOS.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.BLUE_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.BLUE_GEMSTONES.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.GREEN_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.GREEN_GEMSTONES.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.RED_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.RED_GEMSTONES.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.PURPLE_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.PURPLE_GEMSTONES.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.WHITE_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.WHITE_GEMSTONES.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.YELLOW_GEMSTONE_ORE.get()), new DistributionSquare(6, 9, 10, 116), new Restriction(new DimensionRestriction(AoADimensions.CRYSTEVIA.key)), true, new LootDrop(new ItemStack(AoAItems.YELLOW_GEMSTONES.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.CHARGED_RUNIUM_ORE.get()), new DistributionSquare(6, 11, 0, 119), new Restriction(new DimensionRestriction(AoADimensions.DEEPLANDS.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.DEEP_CASE.get()), new DistributionSquare(5, 1, 75, 124), new Restriction(new DimensionRestriction(AoADimensions.DEEPLANDS.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.CHESTBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.CHESTBONE_FRAGMENT.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.FOOTBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.FOOTBONE_FRAGMENT.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.LEGBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.LEGBONE_FRAGMENT.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.SKULLBONE_FRAGMENTS_ORE.get()), new DistributionSquare(2, 5, 0, 39), new Restriction(new DimensionRestriction(AoADimensions.PRECASIA.key)), true, new LootDrop(new ItemStack(AoAItems.SKULLBONE_FRAGMENT.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.CRYSTALLITE_ORE.get()), new DistributionSquare(10, 8, 30, 68), new Restriction(new DimensionRestriction(AoADimensions.HAVEN.key)), true, new LootDrop(new ItemStack(AoAItems.CRYSTALLITE.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.ELECANIUM_ORE.get()), new DistributionSquare(3, 5, 0, 35), new Restriction(new DimensionRestriction(AoADimensions.RUNANDOR.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.EMBERSTONE_ORE.get()), new DistributionSquare(15, 7, 10, 117), Restriction.NETHER);
+		//worldGenRegistry.register(new ItemStack(AoABlocks.GEMENYTE_ORE.get()), new DistributionSquare(4, 5, 22, 35), new Restriction(new DimensionRestriction(AoADimensions.CREEPONIA.key)), true, new LootDrop(new ItemStack(AoAItems.GEMENYTE.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.JEWELYTE_ORE.get()), new DistributionSquare(4, 5, 22, 35), new Restriction(new DimensionRestriction(AoADimensions.CREEPONIA.key)), true, new LootDrop(new ItemStack(AoAItems.JEWELYTE.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.ORNAMYTE_ORE.get()), new DistributionSquare(4, 5, 0, 14), new Restriction(new DimensionRestriction(AoADimensions.CREEPONIA.key)), true, new LootDrop(new ItemStack(AoAItems.ORNAMYTE.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.GHASTLY_ORE.get()), new DistributionSquare(3, 6, 30, 58), new Restriction(new DimensionRestriction(AoADimensions.GRECKON.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.GHOULISH_ORE.get()), new DistributionSquare(3, 6, 0, 28), new Restriction(new DimensionRestriction(AoADimensions.GRECKON.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.LYON_ORE.get()), new DistributionSquare(4, 7, 0, 64), new Restriction(new DimensionRestriction(AoADimensions.IROMINE.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.MYSTITE_ORE.get()), new DistributionSquare(7, 4, 0, 99), new Restriction(new DimensionRestriction(AoADimensions.MYSTERIUM.key)));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.SHYREGEM_ORE.get()), new DistributionSquare(4, 1, 65, 104), new Restriction(new DimensionRestriction(AoADimensions.SHYRELANDS.key)), true, new LootDrop(new ItemStack(AoAItems.SHYREGEM.get())));
+		//worldGenRegistry.register(new ItemStack(AoABlocks.SHYRESTONE_ORE.get()), new DistributionSquare(12, 1, 65, 104), new Restriction(new DimensionRestriction(AoADimensions.SHYRELANDS.key)));
 	}
 
 	private static void integrateCrops() {

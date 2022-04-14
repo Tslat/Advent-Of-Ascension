@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:crystallite"
+      "tag": "forge:gems/crystallite"
     },
     "B": {
-      "item": "aoa3:sapphire"
+      "tag": "forge:gems/diamond"
     },
     "C": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

@@ -1,0 +1,47 @@
+{
+  "feature": {
+    "config": {
+      "targets": [
+        {
+          "target": {
+            "block": "minecraft:stone",
+            "predicate_type": "minecraft:block_match"
+          },
+          "state": {
+            "Name": "aoa3:runium_ore"
+          }
+        }
+      ],
+      "size": 7,
+      "discard_chance_on_air_exposure": 0.0
+    },
+    "type": "minecraft:ore"
+  },
+  "placement": [
+    {
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "min_inclusive": 3,
+          "max_inclusive": 5
+        }
+      },
+      "type": "minecraft:count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "height": {
+        "min_inclusive": {
+          "below_top": 30
+        },
+        "max_inclusive": {
+          "below_top": 5
+        },
+        "type": "minecraft:uniform"
+      },
+      "type": "minecraft:height_range"
+    }
+  ]
+}

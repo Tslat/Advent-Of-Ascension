@@ -10,10 +10,10 @@
       "item": "aoa3:limonite_bullet"
     },
     "B": {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     },
     "C": {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     }
   },
   "result": {

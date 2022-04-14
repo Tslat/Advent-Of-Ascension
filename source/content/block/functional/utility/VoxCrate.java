@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
-import net.tslat.aoa3.content.entity.npc.lottoman.ToxicLottomanEntity;
+import net.tslat.aoa3.content.entity.npc.lottoman.LottomanEntity;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -28,12 +28,12 @@ public class VoxCrate extends Block {
 		super.playerWillDestroy(world, pos, state, player);
 
 		if (!world.isClientSide && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getItemInHand(InteractionHand.MAIN_HAND)) == 0) {
-			ToxicLottomanEntity lottoman = new ToxicLottomanEntity(AoANpcs.TOXIC_LOTTOMAN.get(), world);
+			LottomanEntity lottoman = new LottomanEntity(AoANpcs.LOTTOMAN.get(), world);
 
 			lottoman.moveTo(pos.getX(), pos.getY() + 0.5, pos.getZ(), 0, 0);
 			lottoman.finalizeSpawn((ServerLevel)world, world.getCurrentDifficultyAt(pos), MobSpawnType.EVENT, null, null);
 			world.addFreshEntity(lottoman);
-			player.sendMessage(LocaleUtil.getLocaleMessage(AoANpcs.TOXIC_LOTTOMAN.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
+			player.sendMessage(LocaleUtil.getLocaleMessage(AoANpcs.LOTTOMAN.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
 		}
 	}
 }

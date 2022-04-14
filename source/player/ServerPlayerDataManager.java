@@ -529,6 +529,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	@Override
 	public void handlePlayerDataClone(final PlayerEvent.Clone ev) {
+		ev.getOriginal().reviveCaps();
 		ServerPlayerDataManager sourceData = PlayerUtil.getAdventPlayer((ServerPlayer)ev.getOriginal());
 
 		for (Map.Entry<AoASkill, AoASkill.Instance> entry : sourceData.skills.entrySet()) {
@@ -552,6 +553,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		this.isLegitimate = sourceData.isLegitimate;
 
 		AoAScheduler.scheduleSyncronisedTask(sourceData::selfDestruct, 1);
+		ev.getOriginal().invalidateCaps();
 	}
 
 	public CompoundTag savetoNbt(boolean forClientSync) {

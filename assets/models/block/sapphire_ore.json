@@ -1,8 +1,0 @@
-{
-  "parent": "aoa3:block/overlay_cube",
-  "textures": {
-    "texture": "minecraft:block/stone",
-    "particle": "minecraft:block/stone",
-    "overlay": "aoa3:block/sapphire_ore"
-  }
-}

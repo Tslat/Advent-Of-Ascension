@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "side": "aoa3:block/patterned_rosite_ivory",
-    "bottom": "aoa3:block/patterned_rosite_ivory",
-    "top": "aoa3:block/patterned_rosite_ivory"
-  }
-}

@@ -7,13 +7,13 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:jade"
+      "tag": "forge:gems/jade"
     },
     "B": {
       "item": "aoa3:hardened_confetti_ball"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

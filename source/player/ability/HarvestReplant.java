@@ -43,7 +43,7 @@ public class HarvestReplant extends ScalableModAbility {
 			if (ItemUtil.findInventoryItem(ev.getPlayer(), crop.getCloneItemStack(world, pos, state), true, 1))
 				AoAScheduler.scheduleSyncronisedTask(() -> {
 					if (world.getBlockState(pos).isAir()) {
-						world.setBlock(pos, state.setValue(CropBlock.AGE, 0), Block.UPDATE_ALL);
+						world.setBlock(pos, state.setValue(((CropBlock)state.getBlock()).getAgeProperty(), 0), Block.UPDATE_ALL);
 
 						if (!world.isClientSide())
 							PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getPlayer(), AoASkills.FARMING.get()), 3), false);

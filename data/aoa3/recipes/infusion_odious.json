@@ -11,12 +11,6 @@
       "item": "aoa3:darkly_powder"
     },
     {
-      "item": "aoa3:bloodstone"
-    },
-    {
-      "item": "aoa3:rosite_ingot"
-    },
-    {
       "item": "aoa3:ghostly_powder"
     },
     {
@@ -24,6 +18,12 @@
     },
     {
       "item": "aoa3:magnet_shard"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
+    },
+    {
+      "tag": "forge:ingots/netherite"
     }
   ],
   "result": {

@@ -1,0 +1,35 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:runic_energy"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:ingots/mystite"
+    },
+    {
+      "tag": "forge:ingots/elecanium"
+    },
+    {
+      "tag": "forge:ingots/elecanium"
+    }
+  ],
+  "result": {
+    "item": "aoa3:elecanyte_leggings"
+  }
+}

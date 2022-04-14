@@ -1,22 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " A ",
-    "BAB",
-    "DCD"
+    "AB ",
+    "CB ",
+    "DED"
   ],
   "key": {
     "A": {
-      "item": "aoa3:dense_rock"
+      "tag": "forge:dusts/redstone"
     },
     "B": {
-      "item": "aoa3:rosite_ingot"
+      "item": "aoa3:dense_rock"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:gems/diamond"
     },
     "D": {
       "item": "minecraft:spider_eye"
+    },
+    "E": {
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

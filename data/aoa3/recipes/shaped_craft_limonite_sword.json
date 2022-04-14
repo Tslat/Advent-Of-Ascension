@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:limonite_ingot"
+      "tag": "forge:ingots/limonite"
     },
     "B": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

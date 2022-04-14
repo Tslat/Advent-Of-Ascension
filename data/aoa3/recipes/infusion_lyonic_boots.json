@@ -8,16 +8,16 @@
       "item": "aoa3:magnet_shard"
     },
     {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
       "item": "aoa3:padded_cloth"
     },
     {
       "item": "aoa3:armour_plating"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/lyon"
     }
   ],
   "result": {

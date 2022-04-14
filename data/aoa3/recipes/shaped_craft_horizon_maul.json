@@ -10,10 +10,10 @@
       "item": "aoa3:floating_stone"
     },
     "B": {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     },
     "C": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

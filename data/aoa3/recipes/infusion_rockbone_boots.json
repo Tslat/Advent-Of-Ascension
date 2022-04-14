@@ -8,10 +8,10 @@
       "item": "aoa3:dense_rock"
     },
     {
-      "item": "minecraft:bone"
+      "item": "aoa3:padded_cloth"
     },
     {
-      "item": "aoa3:padded_cloth"
+      "tag": "forge:bones"
     }
   ],
   "result": {

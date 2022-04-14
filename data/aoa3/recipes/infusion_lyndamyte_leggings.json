@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "tag": "forge:ingots/emberstone"
+    },
+    {
+      "tag": "forge:ingots/emberstone"
+    },
+    {
+      "tag": "forge:ingots/emberstone"
+    },
+    {
+      "tag": "forge:ingots/emberstone"
+    },
+    {
+      "tag": "forge:ingots/limonite"
+    },
+    {
+      "tag": "forge:ingots/limonite"
+    },
+    {
+      "tag": "forge:ingots/limonite"
+    }
+  ],
+  "result": {
+    "item": "aoa3:lyndamyte_leggings"
+  }
+}

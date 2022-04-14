@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "aoa3:deepslate_limonite_ore"
+  },
+  "result": "aoa3:limonite_ingot",
+  "experience": 3.0,
+  "cookingtime": 200
+}

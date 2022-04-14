@@ -11,13 +11,13 @@
       "item": "aoa3:darkly_powder"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     },
     {
-      "item": "aoa3:varsium_ingot"
+      "tag": "forge:ingots/varsium"
     },
     {
-      "item": "aoa3:varsium_ingot"
+      "tag": "forge:ingots/varsium"
     },
     {
       "tag": "minecraft:planks"

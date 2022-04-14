@@ -20,7 +20,7 @@ public class PowerVulcane extends BaseVulcane {
 	}
 
 	@Override
-	public void doAdditionalEffect(LivingEntity target, Player attacker) {
+	public void doAdditionalEffect(LivingEntity target, Player attacker, float damageDealt) {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WEAKNESS, 100).level(2));
 	}
 

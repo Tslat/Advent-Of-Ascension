@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:shyrestone_ingot"
+      "tag": "forge:ingots/shyrestone"
     },
     {
-      "item": "aoa3:shyrestone_ingot"
+      "tag": "forge:ingots/shyrestone"
     },
     {
-      "item": "aoa3:shyregem"
+      "tag": "forge:gems/shyregem"
     },
     {
-      "item": "aoa3:shyregem"
+      "tag": "forge:gems/shyregem"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

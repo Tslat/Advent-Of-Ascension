@@ -8,12 +8,6 @@
       "item": "aoa3:orbulon"
     },
     {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
-      "item": "aoa3:lunar_ingot"
-    },
-    {
       "item": "aoa3:enchanted_gunpowder"
     },
     {
@@ -21,6 +15,12 @@
     },
     {
       "item": "aoa3:strike_rune"
+    },
+    {
+      "tag": "forge:ingots/lunar"
+    },
+    {
+      "tag": "forge:ingots/lunar"
     }
   ],
   "result": {

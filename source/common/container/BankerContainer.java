@@ -1,5 +1,7 @@
 package net.tslat.aoa3.common.container;
 
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -12,8 +14,8 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 
 public class BankerContainer extends AbstractContainerMenu {
-	private Inventory inputs;
-	private Inventory outputs;
+	private final Container inputs;
+	private final Container outputs;
 
 	public final AoABanker banker;
 	private final Player player;
@@ -28,14 +30,14 @@ public class BankerContainer extends AbstractContainerMenu {
 		this.player = playerInventory.player;
 		this.banker = banker;
 
-		/*inputs = new Inventory(6) {
+		inputs = new SimpleContainer(6) {
 			@Override
 			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem() == getCoinForSlot(index);
 			}
 		};
 
-		outputs = new Inventory(6) {
+		outputs = new SimpleContainer(6) {
 			@Override
 			public boolean canPlaceItem(int index, ItemStack stack) {
 				return stack.getItem() == getCoinForSlot(index + 6);
@@ -71,11 +73,9 @@ public class BankerContainer extends AbstractContainerMenu {
 				}
 
 				@Override
-				public ItemStack onTake(Player thePlayer, ItemStack stack) {
+				public void onTake(Player thePlayer, ItemStack stack) {
 					inputs.getItem(getSlotIndex()).shrink(getSlotIndex() < 3 ? 20 : 1);
 					updateOutput(getSlotIndex());
-
-					return stack;
 				}
 			});
 		}
@@ -88,7 +88,7 @@ public class BankerContainer extends AbstractContainerMenu {
 
 		for (int hotbarSlot = 0; hotbarSlot < 9; hotbarSlot++) {
 			addSlot(new Slot(player.getInventory(), hotbarSlot, 8 + hotbarSlot * 18, 163));
-		}*/
+		}
 	}
 
 	@Override

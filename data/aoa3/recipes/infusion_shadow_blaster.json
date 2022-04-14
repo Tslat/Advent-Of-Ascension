@@ -11,13 +11,13 @@
       "item": "aoa3:nightmare_flakes"
     },
     {
-      "item": "aoa3:bloodstone"
+      "tag": "forge:gems/bloodstone"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

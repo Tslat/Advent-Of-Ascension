@@ -23,14 +23,12 @@ import java.util.function.Supplier;
 public final class AoAItems {
 	public static void init() {}
 
-	public static final RegistryObject<Item> AMETHYST = registerItem("amethyst", miscItem());
 	public static final RegistryObject<Item> BLOODSTONE = registerItem("bloodstone", miscItem());
 	public static final RegistryObject<Item> CRYSTALLITE = registerItem("crystallite", miscItem());
 	public static final RegistryObject<Item> GEMENYTE = registerItem("gemenyte", miscItem());
 	public static final RegistryObject<Item> JADE = registerItem("jade", miscItem());
 	public static final RegistryObject<Item> JEWELYTE = registerItem("jewelyte", miscItem());
 	public static final RegistryObject<Item> ORNAMYTE = registerItem("ornamyte", miscItem());
-	public static final RegistryObject<Item> SAPPHIRE = registerItem("sapphire", miscItem());
 	public static final RegistryObject<Item> SHYREGEM = registerItem("shyregem", miscItem());
 	public static final RegistryObject<Item> RUNIUM_CHUNK = registerItem("runium_chunk", miscItem());
 	public static final RegistryObject<Item> CHESTBONE_FRAGMENT = registerItem("chestbone_fragment", miscItem());
@@ -54,8 +52,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> LUNAR_INGOT = registerItem("lunar_ingot", miscItem());
 	public static final RegistryObject<Item> LYON_INGOT = registerItem("lyon_ingot", miscItem());
 	public static final RegistryObject<Item> MYSTITE_INGOT = registerItem("mystite_ingot", miscItem());
-	public static final RegistryObject<Item> ROSITE_INGOT = registerItem("rosite_ingot", miscItem());
-	public static final RegistryObject<Item> RUSTED_IRON_INGOT = registerItem("rusted_iron_ingot", miscItem());
 	public static final RegistryObject<Item> SHYRESTONE_INGOT = registerItem("shyrestone_ingot", miscItem());
 	public static final RegistryObject<Item> SKELETAL_INGOT = registerItem("skeletal_ingot", miscItem());
 	public static final RegistryObject<Item> VARSIUM_INGOT = registerItem("varsium_ingot", miscItem());
@@ -70,7 +66,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> LUNAR_NUGGET = registerItem("lunar_nugget", miscItem());
 	public static final RegistryObject<Item> LYON_NUGGET = registerItem("lyon_nugget", miscItem());
 	public static final RegistryObject<Item> MYSTITE_NUGGET = registerItem("mystite_nugget", miscItem());
-	public static final RegistryObject<Item> ROSITE_NUGGET = registerItem("rosite_nugget", miscItem());
 	public static final RegistryObject<Item> SHYRESTONE_NUGGET = registerItem("shyrestone_nugget", miscItem());
 	public static final RegistryObject<Item> SKELETAL_NUGGET = registerItem("skeletal_nugget", miscItem());
 	public static final RegistryObject<Item> VARSIUM_NUGGET = registerItem("varsium_nugget", miscItem());

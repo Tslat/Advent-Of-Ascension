@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:crystallite"
+      "tag": "forge:gems/crystallite"
     },
     "B": {
-      "item": "minecraft:stick"
+      "tag": "forge:rods/wooden"
     }
   },
   "result": {

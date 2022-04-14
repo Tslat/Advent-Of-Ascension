@@ -9,12 +9,12 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.content.entity.ai.animation.Animatable;
+import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.EnumSet;
 
-public class AnimatableMeleeAttackGoal<T extends Mob & Animatable> extends Goal {
+public class AnimatableMeleeAttackGoal<T extends Mob & AnimatableWithStates> extends Goal {
 	private final T entity;
 
 	protected double speedModifier = 1d;

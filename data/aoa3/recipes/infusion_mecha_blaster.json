@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "aoa3:lyon_ingot"
-    },
-    {
-      "item": "aoa3:baronyte_ingot"
-    },
-    {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
       "item": "aoa3:magnet_shard"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/lyon"
+    },
+    {
+      "tag": "forge:ingots/baronyte"
+    },
+    {
+      "tag": "forge:ingots/varsium"
     }
   ],
   "result": {

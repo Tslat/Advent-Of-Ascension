@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:string"
+    },
+    {
+      "tag": "forge:string"
+    }
+  ],
+  "result": {
+    "item": "aoa3:hazmat_leggings"
+  }
+}

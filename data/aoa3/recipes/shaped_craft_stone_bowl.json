@@ -10,7 +10,7 @@
       "item": "aoa3:ancient_rock"
     },
     "B": {
-      "item": "minecraft:gold_ingot"
+      "tag": "forge:ingots/gold"
     }
   },
   "result": {

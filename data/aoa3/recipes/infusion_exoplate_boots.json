@@ -11,10 +11,10 @@
       "item": "minecraft:ink_sac"
     },
     {
-      "item": "minecraft:quartz"
+      "tag": "forge:gems/quartz"
     },
     {
-      "item": "minecraft:diamond"
+      "tag": "forge:gems/diamond"
     }
   ],
   "result": {

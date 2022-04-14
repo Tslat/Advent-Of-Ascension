@@ -5,16 +5,16 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:varsium_ingot"
+      "tag": "forge:ingots/varsium"
     },
     {
-      "item": "aoa3:varsium_ingot"
+      "tag": "forge:ingots/varsium"
     },
     {
-      "item": "aoa3:blazium_ingot"
+      "tag": "forge:ingots/blazium"
     },
     {
-      "item": "aoa3:blazium_ingot"
+      "tag": "forge:ingots/blazium"
     }
   ],
   "result": {

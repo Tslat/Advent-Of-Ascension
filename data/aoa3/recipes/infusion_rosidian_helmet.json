@@ -20,10 +20,10 @@
       "item": "aoa3:rosid_root"
     },
     {
-      "item": "aoa3:amethyst"
+      "tag": "forge:gems/amethyst"
     },
     {
-      "item": "aoa3:jade"
+      "tag": "forge:gems/jade"
     }
   ],
   "result": {

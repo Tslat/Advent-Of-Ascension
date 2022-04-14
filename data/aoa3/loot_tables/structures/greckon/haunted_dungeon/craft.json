@@ -119,8 +119,7 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "quality": 1,
+          "weight": 19,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -132,7 +131,7 @@
               "add": false
             }
           ],
-          "name": "aoa3:sapphire"
+          "name": "aoa3:jade"
         },
         {
           "type": "minecraft:item",
@@ -148,7 +147,7 @@
               "add": false
             }
           ],
-          "name": "aoa3:amethyst"
+          "name": "minecraft:amethyst_shard"
         },
         {
           "type": "minecraft:item",

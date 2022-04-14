@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
-      "item": "aoa3:varsium_ingot"
-    },
-    {
-      "item": "aoa3:blazium_ingot"
-    },
-    {
-      "item": "aoa3:blazium_ingot"
-    },
-    {
       "item": "aoa3:padded_cloth"
+    },
+    {
+      "tag": "forge:ingots/varsium"
+    },
+    {
+      "tag": "forge:ingots/varsium"
+    },
+    {
+      "tag": "forge:ingots/blazium"
+    },
+    {
+      "tag": "forge:ingots/blazium"
     }
   ],
   "result": {

@@ -48,22 +48,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
-              },
-              "add": false
-            }
-          ],
-          "name": "aoa3:amethyst"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 15,
           "functions": [
             {
@@ -77,22 +61,6 @@
             }
           ],
           "name": "aoa3:jade"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
-              },
-              "add": false
-            }
-          ],
-          "name": "aoa3:sapphire"
         },
         {
           "type": "minecraft:item",
@@ -112,19 +80,83 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 18,
+          "weight": 17,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 5.0,
+                "max": 10.0
+              },
+              "add": false
+            }
+          ],
+          "name": "aoa3:limonite_bullet"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3.0,
+                "max": 7.0
+              },
+              "add": false
+            }
+          ],
+          "name": "aoa3:spreadshot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 9,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 3.0,
+                "max": 6.0
+              },
+              "add": false
+            }
+          ],
+          "name": "aoa3:slice_star"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 17,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0
+                "max": 4.0
               },
               "add": false
             }
           ],
-          "name": "aoa3:rosite_ingot"
+          "name": "aoa3:wind_rune"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 17,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 4.0
+              },
+              "add": false
+            }
+          ],
+          "name": "aoa3:fire_rune"
         },
         {
           "type": "minecraft:item",

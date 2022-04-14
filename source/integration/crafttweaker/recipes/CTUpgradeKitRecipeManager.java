@@ -25,6 +25,6 @@ public class CTUpgradeKitRecipeManager implements IRecipeManager {
 
 	@Override
 	public RecipeType<UpgradeKitRecipe> getRecipeType() {
-		return AoARecipes.UPGRADE_KIT.getA();
+		return AoARecipes.UPGRADE_KIT.getA().get();
 	}
 }

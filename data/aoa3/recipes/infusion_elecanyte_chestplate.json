@@ -8,15 +8,6 @@
       "item": "aoa3:runic_energy"
     },
     {
-      "item": "aoa3:mystite_ingot"
-    },
-    {
-      "item": "aoa3:elecanium_ingot"
-    },
-    {
-      "item": "aoa3:elecanium_ingot"
-    },
-    {
       "item": "aoa3:armour_plating"
     },
     {
@@ -30,6 +21,15 @@
     },
     {
       "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:ingots/mystite"
+    },
+    {
+      "tag": "forge:ingots/elecanium"
+    },
+    {
+      "tag": "forge:ingots/elecanium"
     }
   ],
   "result": {

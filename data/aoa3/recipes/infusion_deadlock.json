@@ -5,19 +5,19 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:rosite_ingot"
+      "tag": "minecraft:coals"
     },
     {
-      "item": "aoa3:rosite_ingot"
+      "tag": "forge:dusts/redstone"
     },
     {
-      "item": "minecraft:redstone"
+      "tag": "forge:dusts/redstone"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

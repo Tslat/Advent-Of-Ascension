@@ -1,0 +1,51 @@
+{
+  "feature": {
+    "config": {
+      "targets": [
+        {
+          "target": {
+            "tag": "minecraft:stone_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "aoa3:jade_ore"
+          }
+        },
+        {
+          "target": {
+            "tag": "minecraft:deepslate_ore_replaceables",
+            "predicate_type": "minecraft:tag_match"
+          },
+          "state": {
+            "Name": "aoa3:deepslate_jade_ore"
+          }
+        }
+      ],
+      "size": 5,
+      "discard_chance_on_air_exposure": 0.0
+    },
+    "type": "minecraft:ore"
+  },
+  "placement": [
+    {
+      "count": 4,
+      "type": "minecraft:count"
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "height": {
+        "min_inclusive": {
+          "absolute": -10
+        },
+        "max_inclusive": {
+          "absolute": 10
+        },
+        "plateau": 5,
+        "type": "minecraft:trapezoid"
+      },
+      "type": "minecraft:height_range"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:dense_rock"
+    },
+    {
+      "item": "minecraft:golden_pickaxe"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    },
+    {
+      "tag": "forge:dusts/redstone"
+    }
+  ],
+  "result": {
+    "item": "aoa3:subterranean_leggings"
+  }
+}

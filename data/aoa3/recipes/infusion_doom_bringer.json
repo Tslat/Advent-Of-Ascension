@@ -17,10 +17,10 @@
       "item": "aoa3:power_core"
     },
     {
-      "item": "minecraft:lapis_lazuli"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:gems/lapis"
     }
   ],
   "result": {

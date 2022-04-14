@@ -11,16 +11,16 @@
       "item": "aoa3:dense_rock"
     },
     {
-      "item": "minecraft:bone"
-    },
-    {
-      "item": "minecraft:bone"
-    },
-    {
       "item": "minecraft:arrow"
     },
     {
       "item": "minecraft:arrow"
+    },
+    {
+      "tag": "forge:bones"
+    },
+    {
+      "tag": "forge:bones"
     }
   ],
   "result": {

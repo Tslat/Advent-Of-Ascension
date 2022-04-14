@@ -11,10 +11,10 @@
       "item": "aoa3:jungle_thorns"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:grass"
     },
     {
-      "item": "minecraft:grass"
+      "tag": "forge:ingots/iron"
     },
     {
       "tag": "minecraft:leaves"

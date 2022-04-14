@@ -14,16 +14,16 @@
       "item": "aoa3:sticky_slime"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "minecraft:lily_pad"
     },
     {
-      "item": "minecraft:gunpowder"
+      "tag": "forge:ingots/iron"
     },
     {
-      "item": "aoa3:jade"
+      "tag": "forge:gunpowder"
+    },
+    {
+      "tag": "forge:gems/jade"
     }
   ],
   "result": {

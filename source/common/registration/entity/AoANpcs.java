@@ -30,28 +30,7 @@ public final class AoANpcs {
 	public static final RegistryObject<EntityType<PathfinderMob>> SHYRE_BANKER = registerNPC("shyre_banker", ShyreBankerEntity::new, 0.5625f, 2.0f, 15369239, 1101037);
 	public static final RegistryObject<EntityType<PathfinderMob>> ZAL_BANKER = registerNPC("zal_banker", ZalBankerEntity::new, 0.5625f, 1.875f, 11975695, 4144954);
 
-	public static final RegistryObject<EntityType<AoATrader>> ABYSSAL_LOTTOMAN = registerNPC("abyssal_lottoman", AbyssalLottomanEntity::new, 0.5625f, 2.0f, 15994121, 15917022);
-	public static final RegistryObject<EntityType<AoATrader>> BARON_LOTTOMAN = registerNPC("baron_lottoman", BaronLottomanEntity::new, 0.5625f, 2.0f, 15394263, 12029839);
-	public static final RegistryObject<EntityType<AoATrader>> BOREIC_LOTTOMAN = registerNPC("boreic_lottoman", BoreicLottomanEntity::new, 0.5625f, 2.0f, 1103858, 14017509);
-	public static final RegistryObject<EntityType<AoATrader>> CANDIED_LOTTOMAN = registerNPC("candied_lottoman", CandiedLottomanEntity::new, 0.5625f, 2.0f, 11538661, 15062506);
-	public static final RegistryObject<EntityType<AoATrader>> CELEVIAN_LOTTOMAN = registerNPC("celevian_lottoman", CelevianLottomanEntity::new, 0.5625f, 2.0f, 14807784, 10671799);
-	public static final RegistryObject<EntityType<AoATrader>> CREEPONIA_LOTTOMAN = registerNPC("creeponia_lottoman", CreeponiaLottomanEntity::new, 0.5625f, 2.0f, 668938, 855821);
-	public static final RegistryObject<EntityType<AoATrader>> CRYSTAL_LOTTOMAN = registerNPC("crystal_lottoman", CrystalLottomanEntity::new, 0.5625f, 2.0f, 13097927, 1814501);
-	public static final RegistryObject<EntityType<AoATrader>> DUSTOPIAN_LOTTOMAN = registerNPC("dustopian_lottoman", DustopianLottomanEntity::new, 0.5625f, 2.0f, 15065045, 4012857);
-	public static final RegistryObject<EntityType<AoATrader>> FLORO_LOTTOMAN = registerNPC("floro_lottoman", FloroLottomanEntity::new, 0.5625f, 2.0f, 16250098, 862212);
-	public static final RegistryObject<EntityType<AoATrader>> GOLDEN_LOTTOMAN = registerNPC("golden_lottoman", GoldenLottomanEntity::new, 0.5625f, 2.0f, 16051179, 986638);
-	public static final RegistryObject<EntityType<AoATrader>> HAUNTED_LOTTOMAN = registerNPC("haunted_lottoman", HauntedLottomanEntity::new, 0.5625f, 2.0f, 6430178, 16052983);
-	public static final RegistryObject<EntityType<AoATrader>> LELYETIAN_LOTTOMAN = registerNPC("lelyetian_lottoman", LelyetianLottomanEntity::new, 0.5625f, 2.0f, 16052459, 10509836);
 	public static final RegistryObject<EntityType<AoATrader>> LOTTOMAN = registerNPC("lottoman", LottomanEntity::new, 0.5625f, 2.0f, 15723491, 789515);
-	public static final RegistryObject<EntityType<AoATrader>> LUNAR_LOTTOMAN = registerNPC("lunar_lottoman", LunarLottomanEntity::new, 0.5625f, 2.0f, 11034029, 12169914);
-	public static final RegistryObject<EntityType<AoATrader>> MYSTIC_LOTTOMAN = registerNPC("mystic_lottoman", MysticLottomanEntity::new, 0.5625f, 2.0f, 15722738, 1238360);
-	public static final RegistryObject<EntityType<AoATrader>> PRECASIAN_LOTTOMAN = registerNPC("precasian_lottoman", PrecasianLottomanEntity::new, 0.5625f, 2.0f, 1330186, 15528682);
-	public static final RegistryObject<EntityType<AoATrader>> ROCKY_LOTTOMAN = registerNPC("rocky_lottoman", RockyLottomanEntity::new, 0.5625f, 2.0f, 15131631, 2763053);
-	public static final RegistryObject<EntityType<AoATrader>> RUNIC_LOTTOMAN = registerNPC("runic_lottoman", RunicLottomanEntity::new, 0.5625f, 2.0f, 1007835, 14804717);
-	public static final RegistryObject<EntityType<AoATrader>> SHYRELANDS_LOTTOMAN = registerNPC("shyrelands_lottoman", ShyrelandsLottomanEntity::new, 0.5625f, 2.0f, 14871822, 15395550);
-	public static final RegistryObject<EntityType<AoATrader>> TOXIC_LOTTOMAN = registerNPC("toxic_lottoman", ToxicLottomanEntity::new, 0.5625f, 2.0f, 479494, 9081226);
-	public static final RegistryObject<EntityType<AoATrader>> TWINKLING_LOTTOMAN = registerNPC("twinkling_lottoman", TwinklingLottomanEntity::new, 0.5625f, 2.0f, 839991, 13360079);
-	public static final RegistryObject<EntityType<AoATrader>> WITHERING_LOTTOMAN = registerNPC("withering_lottoman", WitheringLottomanEntity::new, 0.5625f, 2.0f, 15594735, 2698026);
 
 	public static final RegistryObject<EntityType<AoATrader>> ASSASSIN = registerNPC("assassin", AssassinEntity::new, 0.5625f, 2.0f, 5638000, 5393748);
 	public static final RegistryObject<EntityType<PathfinderMob>> CORRUPTED_TRAVELLER = registerNPC("corrupted_traveller", CorruptedTravellerEntity::new, 0.5625f, 2.0f, 329538, 340761);

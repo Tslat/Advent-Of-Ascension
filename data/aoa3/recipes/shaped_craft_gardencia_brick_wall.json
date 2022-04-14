@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:gardencia_bricks"
+    }
+  },
+  "result": {
+    "item": "aoa3:gardencia_brick_wall",
+    "count": 6
+  }
+}

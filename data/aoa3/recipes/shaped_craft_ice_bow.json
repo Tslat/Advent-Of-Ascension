@@ -10,7 +10,7 @@
       "item": "aoa3:ice_crystal"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:reinforced_cloth"

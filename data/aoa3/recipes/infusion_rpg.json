@@ -5,22 +5,22 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:limonite_ingot"
-    },
-    {
-      "item": "aoa3:limonite_ingot"
-    },
-    {
       "item": "aoa3:void_scales"
     },
     {
-      "item": "minecraft:iron_ingot"
-    },
-    {
-      "item": "minecraft:iron_ingot"
-    },
-    {
       "item": "minecraft:tnt"
+    },
+    {
+      "tag": "forge:ingots/limonite"
+    },
+    {
+      "tag": "forge:ingots/limonite"
+    },
+    {
+      "tag": "forge:ingots/iron"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

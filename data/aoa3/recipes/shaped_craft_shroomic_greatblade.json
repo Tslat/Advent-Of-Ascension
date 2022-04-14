@@ -10,7 +10,7 @@
       "item": "aoa3:mushroom_spores"
     },
     "B": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

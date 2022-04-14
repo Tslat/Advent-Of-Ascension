@@ -7,10 +7,10 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:elecanium_ingot"
+      "tag": "forge:ingots/elecanium"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:runic_energy"

@@ -16,10 +16,10 @@
       "item": "aoa3:wither_rune"
     },
     "D": {
-      "item": "aoa3:lyon_ingot"
+      "tag": "forge:ingots/lyon"
     },
     "E": {
-      "item": "aoa3:limonite_rod"
+      "tag": "forge:rods/metal"
     }
   },
   "result": {

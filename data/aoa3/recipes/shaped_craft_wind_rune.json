@@ -10,7 +10,7 @@
       "item": "aoa3:unpowered_rune"
     },
     "B": {
-      "item": "minecraft:feather"
+      "tag": "forge:feathers"
     }
   },
   "result": {

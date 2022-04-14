@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:darkly_powder"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:gems/bloodstone"
+    },
+    {
+      "tag": "forge:ingots/netherite"
+    }
+  ],
+  "result": {
+    "item": "aoa3:battleborn_leggings"
+  }
+}

@@ -17,7 +17,6 @@ public final class AoATags {
 		public static final TagKey<Block> GRASS = tag("grass");
 		public static final TagKey<Block> MUSHROOMS = tag("mushrooms");
 
-		public static final TagKey<Block> AMETHYST_ORE = tag("ores/amethyst");
 		public static final TagKey<Block> BARONYTE_ORE = tag("ores/baronyte");
 		public static final TagKey<Block> BLAZIUM_ORE = tag("ores/blazium");
 		public static final TagKey<Block> BLOODSTONE_ORE = tag("ores/bloodstone");
@@ -41,16 +40,13 @@ public final class AoATags {
 		public static final TagKey<Block> ORNAMYTE_ORE = tag("ores/ornamyte");
 		public static final TagKey<Block> PURPLE_GEMSTONE_ORE = tag("ores/purple_gemstone");
 		public static final TagKey<Block> RED_GEMSTONE_ORE = tag("ores/red_gemstone");
-		public static final TagKey<Block> ROSITE_ORE = tag("ores/rosite");
 		public static final TagKey<Block> RUNIUM_ORE = tag("ores/runium");
-		public static final TagKey<Block> SAPPHIRE_ORE = tag("ores/sapphire");
 		public static final TagKey<Block> SHYREGEM_ORE = tag("ores/shyregem");
 		public static final TagKey<Block> SHYRESTONE_ORE = tag("ores/shyrestone");
 		public static final TagKey<Block> SKULLBONE_FRAGMENTS_ORE = tag("ores/skullbone_fragments");
 		public static final TagKey<Block> VARSIUM_ORE = tag("ores/varsium");
 		public static final TagKey<Block> WHITE_GEMSTONE_ORE = tag("ores/white_gemstone");
 		public static final TagKey<Block> YELLOW_GEMSTONE_ORE = tag("ores/yellow_gemstone");
-		public static final TagKey<Block> STORAGE_BLOCKS_AMETHYST = tag("storage_blocks/amethyst");
 		public static final TagKey<Block> STORAGE_BLOCKS_BARONYTE = tag("storage_blocks/baronyte");
 		public static final TagKey<Block> STORAGE_BLOCKS_BLAZIUM = tag("storage_blocks/blazium");
 		public static final TagKey<Block> STORAGE_BLOCKS_BLOODSTONE = tag("storage_blocks/bloodstone");
@@ -67,8 +63,6 @@ public final class AoATags {
 		public static final TagKey<Block> STORAGE_BLOCKS_LYON = tag("storage_blocks/lyon");
 		public static final TagKey<Block> STORAGE_BLOCKS_MYSTITE = tag("storage_blocks/mystite");
 		public static final TagKey<Block> STORAGE_BLOCKS_ORNAMYTE = tag("storage_blocks/ornamyte");
-		public static final TagKey<Block> STORAGE_BLOCKS_ROSITE = tag("storage_blocks/rosite");
-		public static final TagKey<Block> STORAGE_BLOCKS_SAPPHIRE = tag("storage_blocks/sapphire");
 		public static final TagKey<Block> STORAGE_BLOCKS_SHYREGEM = tag("storage_blocks/shyregem");
 		public static final TagKey<Block> STORAGE_BLOCKS_SHYRESTONE = tag("storage_blocks/shyrestone");
 		public static final TagKey<Block> STORAGE_BLOCKS_SKELETAL = tag("storage_blocks/skeletal");
@@ -93,7 +87,6 @@ public final class AoATags {
 		public static final TagKey<Item> DIRT = tag("dirt");
 		public static final TagKey<Item> GRASS = tag("grass");
 
-		public static final TagKey<Item> AMETHYST_ORE = tag("ores/amethyst");
 		public static final TagKey<Item> BARONYTE_ORE = tag("ores/baronyte");
 		public static final TagKey<Item> BLAZIUM_ORE = tag("ores/blazium");
 		public static final TagKey<Item> BLOODSTONE_ORE = tag("ores/bloodstone");
@@ -117,17 +110,14 @@ public final class AoATags {
 		public static final TagKey<Item> ORNAMYTE_ORE = tag("ores/ornamyte");
 		public static final TagKey<Item> PURPLE_GEMSTONE_ORE = tag("ores/purple_gemstone");
 		public static final TagKey<Item> RED_GEMSTONE_ORE = tag("ores/red_gemstone");
-		public static final TagKey<Item> ROSITE_ORE = tag("ores/rosite");
 		public static final TagKey<Item> RUNIUM_ORE = tag("ores/runium");
-		public static final TagKey<Item> SAPPHIRE_ORE = tag("ores/sapphire");
 		public static final TagKey<Item> SHYREGEM_ORE = tag("ores/shyregem");
 		public static final TagKey<Item> SHYRESTONE_ORE = tag("ores/shyrestone");
 		public static final TagKey<Item> SKULLBONE_FRAGMENTS_ORE = tag("ores/skullbone_fragments");
 		public static final TagKey<Item> VARSIUM_ORE = tag("ores/varsium");
 		public static final TagKey<Item> WHITE_GEMSTONE_ORE = tag("ores/white_gemstone");
 		public static final TagKey<Item> YELLOW_GEMSTONE_ORE = tag("ores/yellow_gemstone");
-		
-		public static final TagKey<Item> STORAGE_BLOCKS_AMETHYST = tag("storage_blocks/amethyst");
+
 		public static final TagKey<Item> STORAGE_BLOCKS_BARONYTE = tag("storage_blocks/baronyte");
 		public static final TagKey<Item> STORAGE_BLOCKS_BLAZIUM = tag("storage_blocks/blazium");
 		public static final TagKey<Item> STORAGE_BLOCKS_BLOODSTONE = tag("storage_blocks/bloodstone");
@@ -144,21 +134,17 @@ public final class AoATags {
 		public static final TagKey<Item> STORAGE_BLOCKS_LYON = tag("storage_blocks/lyon");
 		public static final TagKey<Item> STORAGE_BLOCKS_MYSTITE = tag("storage_blocks/mystite");
 		public static final TagKey<Item> STORAGE_BLOCKS_ORNAMYTE = tag("storage_blocks/ornamyte");
-		public static final TagKey<Item> STORAGE_BLOCKS_ROSITE = tag("storage_blocks/rosite");
-		public static final TagKey<Item> STORAGE_BLOCKS_SAPPHIRE = tag("storage_blocks/sapphire");
 		public static final TagKey<Item> STORAGE_BLOCKS_SHYREGEM = tag("storage_blocks/shyregem");
 		public static final TagKey<Item> STORAGE_BLOCKS_SHYRESTONE = tag("storage_blocks/shyrestone");
 		public static final TagKey<Item> STORAGE_BLOCKS_SKELETAL = tag("storage_blocks/skeletal");
 		public static final TagKey<Item> STORAGE_BLOCKS_VARSIUM = tag("storage_blocks/varsium");
 
-		public static final TagKey<Item> GEMS_AMETHYST = tag("gems/amethyst");
 		public static final TagKey<Item> GEMS_BLOODSTONE = tag("gems/bloodstone");
 		public static final TagKey<Item> GEMS_CRYSTALLITE = tag("gems/crystallite");
 		public static final TagKey<Item> GEMS_GEMENYTE = tag("gems/gemenyte");
 		public static final TagKey<Item> GEMS_JADE = tag("gems/jade");
 		public static final TagKey<Item> GEMS_JEWELYTE = tag("gems/jewelyte");
 		public static final TagKey<Item> GEMS_ORNAMYTE = tag("gems/ornamyte");
-		public static final TagKey<Item> GEMS_SAPPHIRE = tag("gems/sapphire");
 		public static final TagKey<Item> GEMS_SHYREGEM = tag("gems/shyregem");
 		
 		public static final TagKey<Item> INGOTS_BARONYTE = tag("ingots/baronyte");
@@ -171,7 +157,6 @@ public final class AoATags {
 		public static final TagKey<Item> INGOTS_LUNAR = tag("ingots/lunar");
 		public static final TagKey<Item> INGOTS_LYON = tag("ingots/lyon");
 		public static final TagKey<Item> INGOTS_MYSTITE = tag("ingots/mystite");
-		public static final TagKey<Item> INGOTS_ROSITE = tag("ingots/rosite");
 		public static final TagKey<Item> INGOTS_SHYRESTONE = tag("ingots/shyrestone");
 		public static final TagKey<Item> INGOTS_SKELETAL = tag("ingots/skeletal");
 		public static final TagKey<Item> INGOTS_VARSIUM = tag("ingots/varsium");
@@ -186,7 +171,6 @@ public final class AoATags {
 		public static final TagKey<Item> NUGGETS_LUNAR = tag("nuggets/lunar");
 		public static final TagKey<Item> NUGGETS_LYON = tag("nuggets/lyon");
 		public static final TagKey<Item> NUGGETS_MYSTITE = tag("nuggets/mystite");
-		public static final TagKey<Item> NUGGETS_ROSITE = tag("nuggets/rosite");
 		public static final TagKey<Item> NUGGETS_SHYRESTONE = tag("nuggets/shyrestone");
 		public static final TagKey<Item> NUGGETS_SKELETAL = tag("nuggets/skeletal");
 		public static final TagKey<Item> NUGGETS_VARSIUM = tag("nuggets/varsium");
@@ -208,6 +192,8 @@ public final class AoATags {
 		public static final TagKey<Item> MINTS = tag("mints");
 		public static final TagKey<Item> FOOD = tag("food");
 		public static final TagKey<Item> SHULKER_BOXES = tag("shulker_boxes");
+		public static final TagKey<Item> IVORY = tag("ivory");
+		public static final TagKey<Item> RODS_METAL = tag("rods/metal");
 
 		public static final TagKey<Item> COOKIES = tag("cookies");
 		public static final TagKey<Item> RAWMEATS = tag("rawmeats");

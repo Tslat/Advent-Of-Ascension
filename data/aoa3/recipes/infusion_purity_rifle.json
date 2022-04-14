@@ -5,22 +5,22 @@
   },
   "ingredients": [
     {
-      "item": "aoa3:elecanium_ingot"
-    },
-    {
-      "item": "aoa3:elecanium_ingot"
-    },
-    {
       "item": "aoa3:runic_energy"
-    },
-    {
-      "item": "minecraft:gunpowder"
     },
     {
       "item": "aoa3:power_core"
     },
     {
       "item": "aoa3:white_druse"
+    },
+    {
+      "tag": "forge:ingots/elecanium"
+    },
+    {
+      "tag": "forge:ingots/elecanium"
+    },
+    {
+      "tag": "forge:gunpowder"
     }
   ],
   "result": {

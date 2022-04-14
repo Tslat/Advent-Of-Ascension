@@ -8,16 +8,16 @@
       "item": "aoa3:mushroom_spores"
     },
     {
-      "item": "aoa3:mystite_ingot"
-    },
-    {
-      "item": "aoa3:amethyst"
-    },
-    {
       "item": "aoa3:jungle_thorns"
     },
     {
-      "item": "minecraft:iron_ingot"
+      "tag": "forge:ingots/mystite"
+    },
+    {
+      "tag": "forge:gems/amethyst"
+    },
+    {
+      "tag": "forge:ingots/iron"
     }
   ],
   "result": {

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:blasting",
-  "ingredient": {
-    "item": "aoa3:rosite_ore"
-  },
-  "result": "aoa3:rosite_ingot",
-  "experience": 3.0,
-  "cookingtime": 100
-}

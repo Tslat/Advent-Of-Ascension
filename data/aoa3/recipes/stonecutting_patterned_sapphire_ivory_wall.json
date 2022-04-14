@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "ingredient": {
-    "item": "aoa3:patterned_sapphire_ivory"
-  },
-  "result": "aoa3:patterned_sapphire_ivory_wall",
-  "count": 1
-}

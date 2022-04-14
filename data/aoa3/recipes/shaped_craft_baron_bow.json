@@ -7,16 +7,16 @@
   ],
   "key": {
     "A": {
-      "item": "aoa3:baronyte_ingot"
+      "tag": "forge:ingots/baronyte"
     },
     "B": {
-      "item": "minecraft:string"
+      "tag": "forge:string"
     },
     "C": {
       "item": "aoa3:reinforced_cloth"
     },
     "D": {
-      "item": "aoa3:blazium_ingot"
+      "tag": "forge:ingots/blazium"
     }
   },
   "result": {

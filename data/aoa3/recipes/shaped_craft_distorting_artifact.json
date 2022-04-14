@@ -10,7 +10,7 @@
       "item": "aoa3:void_scales"
     },
     "B": {
-      "item": "aoa3:bloodstone"
+      "tag": "forge:gems/bloodstone"
     },
     "C": {
       "item": "minecraft:ender_eye"

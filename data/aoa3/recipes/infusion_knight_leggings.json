@@ -1,0 +1,35 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
+  "ingredients": [
+    {
+      "item": "minecraft:golden_apple"
+    },
+    {
+      "item": "aoa3:whitewashing_solution"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:armour_plating"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "item": "aoa3:reinforced_cloth"
+    },
+    {
+      "tag": "forge:ingots/shyrestone"
+    },
+    {
+      "tag": "forge:gems/shyregem"
+    }
+  ],
+  "result": {
+    "item": "aoa3:knight_leggings"
+  }
+}

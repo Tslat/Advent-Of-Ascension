@@ -137,29 +137,12 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 1.0,
-                "max": 3.0
+                "max": 5.0
               },
               "add": false
             }
           ],
-          "name": "aoa3:sapphire"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 35,
-          "quality": -1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
-              },
-              "add": false
-            }
-          ],
-          "name": "aoa3:rusted_iron_ingot"
+          "name": "minecraft:netherite_scrap"
         },
         {
           "type": "minecraft:item",
