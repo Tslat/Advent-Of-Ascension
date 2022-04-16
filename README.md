@@ -26,8 +26,6 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
   iii) Edit the file to your liking, then click "Propose File Change".
 
-NOTE: You are currently viewing the language files for the Minecraft-1.18.2 version of the mod. To translate the other versions, click the "Branch" button, and select which version you want to edit.
-
 You can read a tutorial on the editing process here:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
 
