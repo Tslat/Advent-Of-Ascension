@@ -25,6 +25,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
@@ -48,6 +49,8 @@ import net.tslat.aoa3.data.client.AdventGuiThemeReloadListener;
 import net.tslat.aoa3.data.client.BestiaryReloadListener;
 import net.tslat.aoa3.data.client.MiscellaneousReloadListener;
 import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
+import net.tslat.aoa3.integration.IntegrationManager;
+import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -76,7 +79,12 @@ public final class ClientOperations {
 		PlayerEntity player = Minecraft.getInstance().player;
 		ItemStack bookStack = player.getMainHandItem().getItem() == AoAItems.WORN_BOOK.get() ? player.getMainHandItem() : player.getOffhandItem();
 
-		Minecraft.getInstance().setScreen(new ReadBookScreen(new ReadBookScreen.WrittenBookInfo(WornBook.getBook(bookStack))));
+		if (IntegrationManager.isPatchouliActive()) {
+			PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
+		}
+		else {
+			Minecraft.getInstance().setScreen(new ReadBookScreen(new ReadBookScreen.WrittenBookInfo(WornBook.getBook(bookStack))));
+		}
 	}
 
 	public static void displayBlankRealmstoneGui() {

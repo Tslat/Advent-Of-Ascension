@@ -69,6 +69,12 @@
           "weight": 2,
           "quality": 1,
           "name": "aoa3:lyonic_greatblade"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 2,
+          "quality": 1,
+          "name": "aoa3:chainsaw"
         }
       ],
       "bonus_rolls": {

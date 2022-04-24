@@ -39,6 +39,13 @@ public class NethenetteRifle extends BaseGun {
 	}
 
 	@Override
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		stack.hurtAndBreak(1, attacker, user -> user.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+
+		return true;
+	}
+
+	@Override
 	public BaseBullet createProjectileEntity(LivingEntity shooter, ItemStack gunStack, Hand hand) {
 		return new FireBulletEntity(shooter, this, hand, 120, 0);
 	}

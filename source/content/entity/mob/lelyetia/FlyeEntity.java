@@ -83,7 +83,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	public void onSyncedDataUpdated(DataParameter<?> key) {
 		super.onSyncedDataUpdated(key);
 
-		if (key == ALTAR_POS) {
+		if (key.equals(ALTAR_POS)) {
 			altarPos = entityData.get(ALTAR_POS);
 
 			if (altarPos == BlockPos.ZERO)

@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.util.Direction;
@@ -134,9 +133,5 @@ public class DryadSpriteRenderer extends GeoEntityRenderer<DryadSpriteEntity> {
 	@Override
 	protected float getDeathMaxRotation(DryadSpriteEntity entityLivingBaseIn) {
 		return 0;
-	}
-
-	public static int getPackedOverlay(DryadSpriteEntity dryad, float u) {
-		return OverlayTexture.pack(OverlayTexture.u(u), OverlayTexture.v((dryad.hurtTime > 0 || dryad.deathTime > 0) && !dryad.successful));
 	}
 }

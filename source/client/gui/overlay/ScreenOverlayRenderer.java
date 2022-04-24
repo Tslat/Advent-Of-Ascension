@@ -53,7 +53,7 @@ public final class ScreenOverlayRenderer {
 			RenderSystem.enableAlphaTest();
 			RenderSystem.enableBlend();
 			mc.getTextureManager().bind(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/block/toxic_waste_overlay.png"));
-			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 0.1001f);
+			RenderSystem.color4f(1.0f, 1.0f, 1.0f, 0.3f);
 			buff.begin(7, DefaultVertexFormats.POSITION_TEX);
 			buff.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(xMod, 1f + yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
 			buff.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(1f + xMod, 1f + yMod).normal(0.0F, 1.0F, 0.0F).endVertex();

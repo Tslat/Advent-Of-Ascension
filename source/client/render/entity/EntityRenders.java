@@ -134,6 +134,7 @@ public class EntityRenders {
 		defaultAnimatedMob(AoAEntities.Mobs.VISULON.get(), "mob/lunalus/visulon");
 		defaultAnimatedMob(AoAEntities.Mobs.WOOD_GIANT.get(), "mob/overworld/wood_giant");
 		defaultAnimatedMob(AoAEntities.Misc.THORNY_PLANT_SPROUT.get(), "mob/misc/thorny_plant_sprout");
+		animatedMob(AoAEntities.NPCs.CORRUPTED_TRAVELLER.get(), shadow -> new TranslucentAnimatedMobRenderer<>(renderManager, new CorruptedTravellerModel(), shadow));
 
 		registerMobRenderer(AoAEntities.NPCs.ABYSSAL_LOTTOMAN.get(), new LottomanModel(), AdventOfAscension.id("textures/entity/npc/lottoman/abyssal_lottoman.png"));
 		registerMobRenderer(AoAEntities.Mobs.AIRHEAD.get(), new AirheadModel(), AdventOfAscension.id("textures/entity/mob/candyland/airhead.png"));
@@ -198,7 +199,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAEntities.Mobs.CONSTRUCT_OF_TERROR.get(), new ConstructOfTerrorModel(), AdventOfAscension.id("textures/entity/mob/crystevia/construct_of_terror.png"));
 		renderManager.register(AoAEntities.Mobs.CORALLUS.get(), new CorallusRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.CORNY.get(), new CornyModel(), AdventOfAscension.id("textures/entity/mob/gardencia/corny.png"));
-		registerMobRenderer(AoAEntities.NPCs.CORRUPTED_TRAVELLER.get(), new CorruptedTravellerModel(), AdventOfAscension.id("textures/entity/npc/trader/corrupted_traveller.png"));
 		renderManager.register(AoAEntities.Mobs.COTTON_CANDOR.get(), new CottonCandorRenderer(renderManager));
 		registerMobRenderer(AoAEntities.Mobs.CRAEXXEUS.get(), new CraexxeusModel(), 1.5f, AdventOfAscension.id("textures/entity/boss/craexxeus/craexxeus.png"));
 		registerMobRenderer(AoAEntities.Mobs.CREEP.get(), new CreepModel(), AdventOfAscension.id("textures/entity/boss/creep/creep.png"));

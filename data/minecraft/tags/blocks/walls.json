@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "aoa3:archaic_tiles_wall",
     "aoa3:abyssal_stone_wall",
     "aoa3:aromatic_stone_wall",
     "aoa3:baron_bricks_wall",

@@ -15,15 +15,21 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 
-public class CorruptedTravellerEntity extends CreatureEntity {
+public class CorruptedTravellerEntity extends CreatureEntity implements IAnimatable {
+	private final AnimationFactory animationFactory = new AnimationFactory(this);
+
 	public CorruptedTravellerEntity(EntityType<? extends CreatureEntity> entityType, World world) {
 		super(entityType, world);
 
@@ -79,5 +85,15 @@ public class CorruptedTravellerEntity extends CreatureEntity {
 				return new CorruptedTravellerContainer(screenId, player.inventory, CorruptedTravellerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		data.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+	}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return animationFactory;
 	}
 }

@@ -126,13 +126,13 @@ public class FishingCageEntity extends Entity {
 		if (level.isClientSide()) {
 			ItemStack stack = ItemStack.EMPTY;
 
-			if (key == CAUGHT_STACK_1) {
+			if (key.equals(CAUGHT_STACK_1)) {
 				stack = getEntityData().get(CAUGHT_STACK_1);
 			}
-			else if (key == CAUGHT_STACK_2) {
+			else if (key.equals(CAUGHT_STACK_2)) {
 				stack = getEntityData().get(CAUGHT_STACK_2);
 			}
-			else if (key == CAUGHT_STACK_3) {
+			else if (key.equals(CAUGHT_STACK_3)) {
 				stack = getEntityData().get(CAUGHT_STACK_3);
 			}
 
@@ -361,6 +361,9 @@ public class FishingCageEntity extends Entity {
 
 			if (isAlive() && tickCount > 40 && onGround && !isInWater()) {
 				ItemStack fishingCage = new ItemStack(AoATools.FISHING_CAGE.get());
+
+				if (!getLoot().isEmpty())
+					this.damage += 1;
 
 				fishingCage.setDamageValue(this.damage);
 				spawnAtLocation(fishingCage);

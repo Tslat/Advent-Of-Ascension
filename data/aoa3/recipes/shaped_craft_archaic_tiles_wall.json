@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "aoa3:archaic_tiles"
+    }
+  },
+  "result": {
+    "item": "aoa3:archaic_tiles_wall",
+    "count": 6
+  }
+}

@@ -21,7 +21,7 @@ import java.util.List;
 
 public class HauntedGreatblade extends BaseGreatblade {
 	public HauntedGreatblade() {
-		super(22.0f, AttackSpeed.GREATBLADE, 1370);
+		super(26, AttackSpeed.GREATBLADE, 1875);
 	}
 
 	@Override

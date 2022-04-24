@@ -100,11 +100,13 @@ public class AoASkillReqReloadListener extends JsonReloadListener {
 	protected void apply(Map<ResourceLocation, JsonElement> jsonMap, IResourceManager resourceManager, IProfiler profiler) {
 		REQUIREMENTS_MAP.clear();
 
-		parseAll(requirementsData = prepData(jsonMap));
+		parseAll(prepData(jsonMap));
 	}
 
 	public static void parseAll(Map<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> restrictions) {
-		for (Map.Entry<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> entry : restrictions.entrySet()) {
+		requirementsData = new HashMap<>(restrictions);
+
+		for (Map.Entry<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> entry : requirementsData.entrySet()) {
 			SkillReqHandler handler = parse(entry.getValue());
 
 			if (handler.isValid()) {

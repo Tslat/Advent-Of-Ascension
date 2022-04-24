@@ -75,6 +75,14 @@
       "level_req": 74
     },
     {
+      "id": "aoa3:xp_restricted_free_item",
+      "unique_id": "642211246",
+      "amount": 1,
+      "item": "aoa3:occult_shovel",
+      "xp_per_item": 200000.0,
+      "level_req": 78
+    },
+    {
       "id": "aoa3:bonus_smelt_result",
       "unique_id": "1290686944",
       "base_value": 0.5,
@@ -82,11 +90,27 @@
       "level_req": 82
     },
     {
+      "id": "aoa3:xp_restricted_free_item",
+      "unique_id": "-405378645",
+      "amount": 1,
+      "item": "aoa3:occult_axe",
+      "xp_per_item": 200000.0,
+      "level_req": 86
+    },
+    {
       "id": "aoa3:bonus_mining_result",
       "unique_id": "-1680951939",
       "base_value": 0.4,
       "per_level_mod": 0.0,
       "level_req": 89
+    },
+    {
+      "id": "aoa3:xp_restricted_free_item",
+      "unique_id": "-1311056095",
+      "amount": 1,
+      "item": "aoa3:occult_pickaxe",
+      "xp_per_item": 200000.0,
+      "level_req": 93
     },
     {
       "id": "aoa3:rare_table_harvesting_chance",

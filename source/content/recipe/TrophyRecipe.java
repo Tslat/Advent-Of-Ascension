@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.recipe;
 
 import com.google.gson.JsonObject;
 import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
@@ -13,20 +14,25 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 
 import javax.annotation.Nullable;
 
 public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.crafting.IShapedRecipe<CraftingInventory> {
-	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "trophy");
+	private final ResourceLocation id;
 	private final String group;
+	private final Item targetTrophy;
+	private final Item outputTrophy;
 
-	public TrophyRecipe(String group) {
+	public TrophyRecipe(ResourceLocation recipeId, String group, String inputTrophyId, String outputTrophyId) {
+		this.id = recipeId;
 		this.group = group;
+		this.targetTrophy = ForgeRegistries.ITEMS.getValue(new ResourceLocation(inputTrophyId));
+		this.outputTrophy = ForgeRegistries.ITEMS.getValue(new ResourceLocation(outputTrophyId));
 	}
 
 	@Override
@@ -46,7 +52,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 		NonNullList<Ingredient> ingredients = NonNullList.create();
 
 		for (int i = 0; i < 9; i++) {
-			ingredients.add(Ingredient.of(new ItemStack(AoABlocks.TROPHY.get())));
+			ingredients.add(Ingredient.of(new ItemStack(targetTrophy)));
 		}
 
 		return ingredients;
@@ -74,7 +80,7 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 			for(int gridY = 0; gridY < inv.getHeight(); ++gridY) {
 				ItemStack slotStack = inv.getItem(gridX + gridY * inv.getWidth());
 
-				if (slotStack.getItem() != AoABlocks.TROPHY.get().asItem() || !slotStack.hasTag())
+				if (slotStack.getItem() != targetTrophy || !slotStack.hasTag())
 					return false;
 
 				CompoundNBT tag = slotStack.getTag();
@@ -108,12 +114,12 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 
 	@Override
 	public ItemStack getResultItem() {
-		return new ItemStack(AoABlocks.GOLD_TROPHY.get());
+		return new ItemStack(outputTrophy);
 	}
 
 	@Override
 	public ResourceLocation getId() {
-		return ID;
+		return this.id;
 	}
 
 	@Override
@@ -139,18 +145,20 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 	public static class Factory extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<TrophyRecipe> {
 		@Override
 		public TrophyRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			return new TrophyRecipe(json.has("group") ? JSONUtils.getAsString(json, "group") : "");
+			return new TrophyRecipe(recipeId, json.has("group") ? JSONUtils.getAsString(json, "group") : "", JSONUtils.getAsString(json, "input_trophy"), JSONUtils.getAsString(json, "output_trophy"));
 		}
 
 		@Nullable
 		@Override
 		public TrophyRecipe fromNetwork(ResourceLocation recipeId, PacketBuffer buffer) {
-			return new TrophyRecipe(buffer.readUtf(32767));
+			return new TrophyRecipe(recipeId, buffer.readUtf(), buffer.readUtf(), buffer.readUtf());
 		}
 
 		@Override
 		public void toNetwork(PacketBuffer buffer, TrophyRecipe recipe) {
 			buffer.writeUtf(recipe.getGroup());
+			buffer.writeUtf(recipe.targetTrophy.getRegistryName().toString());
+			buffer.writeUtf(recipe.outputTrophy.getRegistryName().toString());
 		}
 	}
 }

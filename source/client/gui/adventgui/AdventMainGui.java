@@ -100,7 +100,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 		RenderUtil.drawScaledMessage(matrix, font, new StringTextComponent("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 
-		if (WebUtil.isUpdateAvailable()) {
+		if (false && WebUtil.isUpdateAvailable()) {
 			updateMessageTicker--;
 
 			if (updateMessageTicker <= -30)

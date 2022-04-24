@@ -10,15 +10,18 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootContext;
 import net.minecraft.loot.LootParameters;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.ToolType;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -60,13 +63,13 @@ public class SoulstonePickaxe extends BasePickaxe implements LootModifyingItem {
 		if (blockDrop == ItemStack.EMPTY)
 			blockDrop = existingLoot.get(0);
 
-		/*if (blockDrop != ItemStack.EMPTY && PlayerUtil.consumeResource((ServerPlayerEntity)harvestingPlayer, AoAResource.SOUL, 1, false)) {
+		if (blockDrop != ItemStack.EMPTY && PlayerUtil.consumeResource((ServerPlayerEntity)harvestingPlayer, AoAResources.SPIRIT.get(), 5, false)) {
 			blockDrop.setCount(blockDrop.getCount() * 2);
 
 			for (int i = 0; i < 5; i++) {
 				world.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat(), pos.getZ() + random.nextFloat(), 1, 0, 0, 0, 0);
 			}
-		}*/ // TODO
+		}
 	}
 
 	@Override

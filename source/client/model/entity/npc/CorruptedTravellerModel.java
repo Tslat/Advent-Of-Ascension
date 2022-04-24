@@ -1,11 +1,10 @@
 package net.tslat.aoa3.client.model.entity.npc;
 
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.entity.MobEntity;
+import net.tslat.aoa3.client.model.entity.EntityGeoModel;
+import net.tslat.aoa3.content.entity.npc.trader.CorruptedTravellerEntity;
 
-public class CorruptedTravellerModel extends BipedModel<MobEntity> {
+public class CorruptedTravellerModel extends EntityGeoModel<CorruptedTravellerEntity> {
 	public CorruptedTravellerModel() {
-		super(RenderType::entityTranslucent, 0, 0, 64, 32);
+		super("npc/trader/corrupted_traveller");
 	}
 }

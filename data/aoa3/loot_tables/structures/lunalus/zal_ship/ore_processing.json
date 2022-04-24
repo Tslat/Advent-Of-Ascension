@@ -270,6 +270,11 @@
             }
           ],
           "name": "aoa3:lunar_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "quality": 2,
+          "name": "aoa3:meteor_staff"
         }
       ],
       "bonus_rolls": {

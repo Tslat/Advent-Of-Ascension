@@ -30,7 +30,10 @@ public final class NowhereEvents {
 	}
 
 	public static void doDimensionChange(final PlayerEvent.PlayerChangedDimensionEvent ev) {
-		ItemUtil.clearInventoryOfItems(ev.getPlayer(), new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-		PlayerUtil.getAdventPlayer((ServerPlayerEntity)ev.getPlayer()).returnItemStorage();
+		ServerPlayerEntity player = (ServerPlayerEntity)ev.getPlayer();
+
+		ItemUtil.clearInventoryOfItems(player, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+		PlayerUtil.getAdventPlayer(player).returnItemStorage();
+		player.gameMode.getGameModeForPlayer().updatePlayerAbilities(player.abilities);
 	}
 }

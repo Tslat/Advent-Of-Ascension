@@ -150,6 +150,30 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 3,
+          "quality": 2,
+          "name": "aoa3:selyan_banner"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "quality": 2,
+          "name": "aoa3:luxon_banner"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "quality": 2,
+          "name": "aoa3:erebon_banner"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "quality": 2,
+          "name": "aoa3:pluton_banner"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 15,
           "functions": [
             {

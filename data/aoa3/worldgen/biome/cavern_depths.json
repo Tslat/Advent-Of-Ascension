@@ -54,6 +54,18 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:rock_crawler",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:rockbiter",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:doubler",
         "weight": 2,
         "minCount": 1,
@@ -66,19 +78,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:rock_critter",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:dweller",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:rock_crawler",
+        "type": "aoa3:rock_critter",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -86,12 +92,6 @@
       {
         "type": "aoa3:case_construct",
         "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:rockbiter",
-        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       }

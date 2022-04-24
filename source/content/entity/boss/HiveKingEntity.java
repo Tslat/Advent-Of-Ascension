@@ -69,7 +69,7 @@ public class HiveKingEntity extends AoAMeleeMob {
 	public void onSyncedDataUpdated(DataParameter<?> key) {
 		super.onSyncedDataUpdated(key);
 
-		if (key == GROWTH_PERCENT)
+		if (key.equals(GROWTH_PERCENT))
 			refreshDimensions();
 	}
 

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:waterlogged_coral_crossbow"
+    },
+    {
+      "item": "minecraft:sponge"
+    }
+  ],
+  "result": {
+    "item": "aoa3:coral_crossbow"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:waterlogged_aqua_cannon"
+    },
+    {
+      "item": "minecraft:sponge"
+    }
+  ],
+  "result": {
+    "item": "aoa3:aqua_cannon"
+  }
+}

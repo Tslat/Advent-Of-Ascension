@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "aoa3:block/archaic_tiles_slab_top"
+    },
+    "type=bottom": {
+      "model": "aoa3:block/archaic_tiles_slab"
+    },
+    "type=double": {
+      "model": "aoa3:block/archaic_tiles"
+    }
+  }
+}

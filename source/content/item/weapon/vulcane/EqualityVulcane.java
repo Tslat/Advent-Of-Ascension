@@ -13,17 +13,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class EqualityVulcane extends BaseVulcane {
-	private final double dmg;
-
 	public EqualityVulcane(double dmg, int durability) {
 		super(dmg, durability);
-
-		this.dmg = dmg;
 	}
 
 	@Override
-	public void doAdditionalEffect(LivingEntity target, PlayerEntity attacker) {
-		EntityUtil.healEntity(attacker, (float)dmg / 2f);
+	public void doAdditionalEffect(LivingEntity target, PlayerEntity attacker, float damageDealt) {
+		EntityUtil.healEntity(attacker, damageDealt / 2f);
 	}
 
 	@Override

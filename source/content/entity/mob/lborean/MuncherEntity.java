@@ -1,8 +1,10 @@
 package net.tslat.aoa3.content.entity.mob.lborean;
 
 import net.minecraft.entity.*;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.WaterMobEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
@@ -13,6 +15,7 @@ import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -42,7 +45,9 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25f, false));
+		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<>(this).ignoreLineOfSight().preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
 	}
 
 	@Override
@@ -67,6 +72,22 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return AoASounds.ENTITY_MUNCHER_HURT.get();
 	}
+
+	@Override
+	public boolean isPushable() {
+		return false;
+	}
+
+	@Override
+	public boolean isPushedByFluid() {
+		return false;
+	}
+
+	@Override
+	public void push(Entity entity) {}
+
+	@Override
+	public void push(double x, double y, double z) {}
 
 	@Override
 	public void aiStep() {

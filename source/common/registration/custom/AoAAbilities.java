@@ -55,6 +55,7 @@ public class AoAAbilities {
 	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_MAGIC = register("entity_tag_damage_bonus_magic", () -> new AoAAbility(EntityTagDamageBonusMagic::new, EntityTagDamageBonusMagic::new));
 	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_PROJECTILE = register("entity_tag_damage_bonus_projectile", () -> new AoAAbility(EntityTagDamageBonusProjectile::new, EntityTagDamageBonusProjectile::new));
 	public static final RegistryObject<AoAAbility> ENTITY_TAG_DAMAGE_BONUS_EXPLOSION = register("entity_tag_damage_bonus_explosion", () -> new AoAAbility(EntityTagDamageBonusExplosion::new, EntityTagDamageBonusExplosion::new));
+	public static final RegistryObject<AoAAbility> XP_RESTRICTED_FREE_ITEM = register("xp_restricted_free_item", () -> new AoAAbility(XpRestrictedFreeItem::new, XpRestrictedFreeItem::new));
 
 	private static RegistryObject<AoAAbility> register(String id, Supplier<AoAAbility> ability) {
 		return ABILITIES.register(id, ability);

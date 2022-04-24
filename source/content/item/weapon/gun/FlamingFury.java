@@ -50,7 +50,6 @@ public class FlamingFury extends BaseGun {
 		cloud.setOwner(shooter);
 		cloud.setParticle(ParticleTypes.DRAGON_BREATH);
 		cloud.setRadius(1f);
-		cloud.setWaitTime(0);
 		cloud.setDuration(20);
 		cloud.setRadiusPerTick((5.0F - cloud.getRadius()) / (float)cloud.getDuration());
 		cloud.addEffect(new EffectInstance(Effects.HARM, 1, 0));

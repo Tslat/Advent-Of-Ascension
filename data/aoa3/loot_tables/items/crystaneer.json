@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "name": "main",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 100,
+          "name": "minecraft:diamond"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 85,
+          "name": "minecraft:emerald"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 120,
+          "name": "aoa3:amethyst"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 110,
+          "name": "aoa3:jade"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:blue_gemstones"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:green_gemstones"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:purple_gemstones"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:red_gemstones"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:white_gemstones"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:yellow_gemstones"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:random_chance",
+          "chance": 0.2
+        }
+      ]
+    }
+  ]
+}

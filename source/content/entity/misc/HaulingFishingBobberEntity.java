@@ -524,16 +524,17 @@ public class HaulingFishingBobberEntity extends FishingBobberEntity {
 
 	@Override
 	public void onSyncedDataUpdated(DataParameter<?> param) {
-		if (param == HOOKED_ENTITY) {
+		if (param.equals(HOOKED_ENTITY)) {
 			int id = getEntityData().get(HOOKED_ENTITY);
 
 			this.hookedEntity = id == -1 ? null : this.level.getEntity(id);
 		}
-		else if (param == STATE) {
+		else if (param.equals(STATE)) {
 			this.state = State.byValue(getEntityData().get(STATE));
 		}
-
-		super.onSyncedDataUpdated(param);
+		else if (param.equals(DATA_POSE)) {
+			refreshDimensions();
+		}
 	}
 
 	protected void updateHookedEntity() {

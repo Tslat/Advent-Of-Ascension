@@ -80,6 +80,31 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:waterlogged_aqua_cannon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:waterlogged_coral_cannon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:waterlogged_coral_clogger"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:waterlogged_coral_crossbow"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "aoa3:waterlogged_reefer"
+        },
+        {
+          "type": "minecraft:item",
           "name": "aoa3:seaside_upgrade_kit"
         }
       ]

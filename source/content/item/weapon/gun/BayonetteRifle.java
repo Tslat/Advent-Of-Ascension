@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -35,11 +36,18 @@ public class BayonetteRifle extends BaseGun {
 	}
 
 	@Override
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		stack.hurtAndBreak(1, attacker, user -> user.broadcastBreakEvent(EquipmentSlotType.MAINHAND));
+
+		return true;
+	}
+
+	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot, ItemStack stack) {
 		Multimap<Attribute, AttributeModifier> multimap = super.getAttributeModifiers(equipmentSlot, stack);
 
 		if (equipmentSlot == EquipmentSlotType.MAINHAND)
-			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", 9, AttributeModifier.Operation.ADDITION));
+			multimap.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", 8, AttributeModifier.Operation.ADDITION));
 
 		return multimap;
 	}
@@ -48,6 +56,6 @@ public class BayonetteRifle extends BaseGun {
 	public void appendHoverText(ItemStack stack, @Nullable World world, List<ITextComponent> tooltip, ITooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 		tooltip.add(LocaleUtil.getLocaleMessage("item.modifiers.mainhand"));
-		tooltip.add(new StringTextComponent("10 ").append( LocaleUtil.getLocaleMessage("attribute.name.generic.attack_damage")));
+		tooltip.add(new StringTextComponent("9 ").append( LocaleUtil.getLocaleMessage("attribute.name.generic.attack_damage")));
 	}
 }

@@ -6,6 +6,8 @@
   "show_progress": false,
   "version": "0",
   "subtitle": "Corrupted Traveller",
+  "dont_generate_book": true,
+  "custom_book_item": "aoa3:worn_book",
   "macros": {
     "$(aoa)": "$(4)AoA$()"
   }

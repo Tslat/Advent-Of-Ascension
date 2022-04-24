@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.item.food;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.*;
@@ -22,7 +23,9 @@ public class MagicMarang extends BlockNamedItem {
 
 	@Override
 	protected boolean canPlace(BlockItemUseContext context, BlockState state) {
-		return context.getLevel().getBlockState(new BlockPos(context.getClickLocation())).getBlock() == AoABlocks.HAUNTED_LEAVES.get() && super.canPlace(context, state);
+		Block block = context.getLevel().getBlockState(new BlockPos(context.getClickLocation())).getBlock();
+
+		return (block == AoABlocks.HAUNTED_LEAVES.get() || block == AoABlocks.HAUNTED_EYES_LEAVES.get()) && super.canPlace(context, state);
 	}
 
 	@Override

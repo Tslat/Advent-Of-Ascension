@@ -24,6 +24,14 @@ public class PrimordialSpellbinderEntity extends AoATrader {
 					BuildableTrade.trade(AoAItems.POWER_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
 					BuildableTrade.trade(AoAItems.WITHER_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
 					BuildableTrade.trade(AoAItems.COMPASS_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64))
+			.trades(3,
+					BuildableTrade.trade(AoAItems.BATTLE_VULCANE_AUGMENT).cost(AoAItems.SILVER_COIN, 5).xp(50).stock(10),
+					BuildableTrade.trade(AoAItems.EQUALITY_VULCANE_AUGMENT).cost(AoAItems.SILVER_COIN, 5).xp(50).stock(10),
+					BuildableTrade.trade(AoAItems.FIRE_VULCANE_AUGMENT).cost(AoAItems.SILVER_COIN, 5).xp(50).stock(10),
+					BuildableTrade.trade(AoAItems.IMPAIRMENT_VULCANE_AUGMENT).cost(AoAItems.SILVER_COIN, 5).xp(50).stock(10),
+					BuildableTrade.trade(AoAItems.POWER_VULCANE_AUGMENT).cost(AoAItems.SILVER_COIN, 5).xp(50).stock(10),
+					BuildableTrade.trade(AoAItems.WITHER_VULCANE_AUGMENT).cost(AoAItems.SILVER_COIN, 5).xp(50).stock(10),
+					BuildableTrade.trade(AoAItems.POISON_VULCANE_AUGMENT).cost(AoAItems.SILVER_COIN, 5).xp(50).stock(10))
 			.trades(4,
 					BuildableTrade.trade(AoATools.ENERGISTIC_AXE).cost(AoAItems.GOLD_COIN, 8).xp(100).stock(3),
 					BuildableTrade.trade(AoATools.ENERGISTIC_PICKAXE).cost(AoAItems.GOLD_COIN, 10).xp(100).stock(3),

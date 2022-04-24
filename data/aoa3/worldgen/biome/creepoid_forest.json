@@ -51,44 +51,8 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:magical_creeper",
-        "weight": 25,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:cave_creepoid",
-        "weight": 25,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:creepuple",
-        "weight": 40,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "minecraft:creeper",
-        "weight": 40,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:bone_creeper",
         "weight": 40,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:creeperlock",
-        "weight": 25,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:creepird",
-        "weight": 15,
         "minCount": 1,
         "maxCount": 1
       },
@@ -105,8 +69,44 @@
         "maxCount": 1
       },
       {
+        "type": "aoa3:cave_creepoid",
+        "weight": 25,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "minecraft:creeper",
+        "weight": 40,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:magical_creeper",
+        "weight": 25,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:winged_creeper",
         "weight": 30,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:creeperlock",
+        "weight": 25,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:creepird",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:creepuple",
+        "weight": 40,
         "minCount": 1,
         "maxCount": 1
       }
