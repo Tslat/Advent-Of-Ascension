@@ -50,12 +50,12 @@ public class BonebackEntity extends AoAMeleeMob {
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return 17;
+		return 18;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return 9;
+		return 8;
 	}
 
 	@Override

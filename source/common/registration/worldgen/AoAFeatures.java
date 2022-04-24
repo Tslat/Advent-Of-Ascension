@@ -10,7 +10,6 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.placement.BiomeFilter;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
@@ -100,6 +99,8 @@ public final class AoAFeatures {
 
 			if (biomeTypes.contains(BiomeDictionary.Type.MAGICAL))
 				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_RUNIUM_SMALL.placedFeature.get()));
+
+			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_LIMONITE_SMALL.placedFeature.get()));
 		}
 	}
 
@@ -111,7 +112,7 @@ public final class AoAFeatures {
 		static FeatureContainer vanillaJsonFeature(ResourceLocation placedFeatureId) {
 			NonNullLazy<ConfiguredFeature<? extends FeatureConfiguration, ? extends Feature<? extends FeatureConfiguration>>> configuredFeature = NonNullLazy.of(() -> new ConfiguredFeature(VANILLA_JSON_FEATURE.get(), new VanillaJsonFeature.VanillaJsonFeatureConfig(ResourceKey.create(Registry.PLACED_FEATURE_REGISTRY, placedFeatureId))));
 
-			return new FeatureContainer(VANILLA_JSON_FEATURE, configuredFeature, NonNullLazy.of(() -> new PlacedFeature(Holder.direct(configuredFeature.get()), List.of(BiomeFilter.biome()))));
+			return new FeatureContainer(VANILLA_JSON_FEATURE, configuredFeature, NonNullLazy.of(() -> new PlacedFeature(Holder.direct(configuredFeature.get()), List.of())));
 		}
 	}
 }

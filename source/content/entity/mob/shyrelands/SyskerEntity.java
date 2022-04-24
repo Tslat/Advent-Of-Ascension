@@ -43,6 +43,16 @@ public class SyskerEntity extends AoAMeleeMob {
     }
 
     @Override
+    protected int getAttackSwingDuration() {
+        return 22;
+    }
+
+    @Override
+    protected int getPreAttackTime() {
+        return 7;
+    }
+
+    @Override
     public void registerControllers(AnimationData animationData) {
         animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
         animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SPIN));

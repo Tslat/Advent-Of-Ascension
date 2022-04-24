@@ -183,7 +183,7 @@ public class WebReaperEntity extends AoARangedMob {
 
 	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		if (key == STAGE)
+		if (key.equals(STAGE))
 			updateStage();
 	}
 

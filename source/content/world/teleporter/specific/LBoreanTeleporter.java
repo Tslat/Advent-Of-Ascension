@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.world.teleporter.specific;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.AoATeleporter;
@@ -23,6 +24,6 @@ public class LBoreanTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.PINK_CORAL.get();
+		return Blocks.BUBBLE_CORAL_BLOCK;
 	}
 }

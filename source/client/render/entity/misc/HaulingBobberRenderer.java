@@ -19,6 +19,9 @@ import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.event.RenderNameplateEvent;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.Event;
 
 public class HaulingBobberRenderer extends FishingHookRenderer {
 	private final ResourceLocation texture;
@@ -36,8 +39,8 @@ public class HaulingBobberRenderer extends FishingHookRenderer {
 	}
 
 	@Override
-	public void render(FishingHook entity, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
-		Player player = entity.getPlayerOwner();
+	public void render(FishingHook bobber, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
+		Player player = bobber.getPlayerOwner();
 
 		if (player == null)
 			return;
@@ -94,9 +97,9 @@ public class HaulingBobberRenderer extends FishingHookRenderer {
 			eyeHeight = player.isCrouching() ? -0.1875f : 0;
 		}
 
-		double bobberX = Mth.lerp(partialTicks, entity.xo, entity.getX());
-		double bobberY = Mth.lerp(partialTicks, entity.yo, entity.getY()) + 0.25D;
-		double bobberZ = Mth.lerp(partialTicks, entity.zo, entity.getZ());
+		double bobberX = Mth.lerp(partialTicks, bobber.xo, bobber.getX());
+		double bobberY = Mth.lerp(partialTicks, bobber.yo, bobber.getY()) + 0.25D;
+		double bobberZ = Mth.lerp(partialTicks, bobber.zo, bobber.getZ());
 		float distX = (float)(startX - bobberX);
 		float distY = (float)(startY - bobberY) + eyeHeight;
 		float distZ = (float)(startZ - bobberZ);
@@ -109,7 +112,12 @@ public class HaulingBobberRenderer extends FishingHookRenderer {
 
 		matrix.popPose();
 
-		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
+		RenderNameplateEvent renderNameplateEvent = new RenderNameplateEvent(bobber, bobber.getDisplayName(), this, matrix, buffer, packedLight, partialTicks);
+
+		MinecraftForge.EVENT_BUS.post(renderNameplateEvent);
+
+		if (renderNameplateEvent.getResult() != Event.Result.DENY && (renderNameplateEvent.getResult() == Event.Result.ALLOW || this.shouldShowName(bobber)))
+			this.renderNameTag(bobber, renderNameplateEvent.getContent(), matrix, buffer, packedLight);
 	}
 
 	private static void vertex(VertexConsumer vertexConsumer, Matrix4f matrixPos, Matrix3f matrixNormal, int packedLight, float x, int y, int u, int v) {

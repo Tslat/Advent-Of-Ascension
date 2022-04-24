@@ -79,7 +79,7 @@ public class ChomperEntity extends AoAMeleeMob {
 
 	@Override
 	protected int getPreAttackTime() {
-		return 6;
+		return 5;
 	}
 
 	@Override

@@ -3,6 +3,9 @@ package net.tslat.aoa3.content.entity.base;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
@@ -21,7 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoAAttributes;
-import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
 import net.tslat.aoa3.content.entity.ai.mob.FlyingLookRandomlyGoal;
 import net.tslat.aoa3.content.entity.ai.mob.FlyingRangedAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
@@ -29,6 +31,7 @@ import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementControll
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
@@ -36,7 +39,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, RangedAttackMob, AoARangedAttacker, AnimatableWithStates {
+public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, RangedAttackMob, AoARangedAttacker, IAnimatable {
+	private static final EntityDataAccessor<Integer> SHOOT_STATE = SynchedEntityData.defineId(AoAFlyingRangedMob.class, EntityDataSerializers.INT);
 	protected boolean isSlipperyMovement = false;
 
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
@@ -54,6 +58,12 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 		goalSelector.addGoal(2, new FlyingLookRandomlyGoal(this));
 		goalSelector.addGoal(3, new FlyingRangedAttackGoal(this, Math.max(getAttackSwingDuration() + 1, 40), 80));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, true, pl -> pl instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)pl)));
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		getEntityData().define(SHOOT_STATE, 0);
 	}
 
 	@Nullable
@@ -204,10 +214,5 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
-	}
-
-	@Override
-	public HashMap<String, Integer> getAnimationStates() {
-		return animationStates;
 	}
 }

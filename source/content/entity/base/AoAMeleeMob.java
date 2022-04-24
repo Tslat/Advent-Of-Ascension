@@ -2,6 +2,9 @@ package net.tslat.aoa3.content.entity.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
@@ -33,37 +36,41 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAEntityData;
-import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
-import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
+import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.UUID;
 
-public abstract class AoAMeleeMob extends Monster implements AnimatableWithStates {
+public abstract class AoAMeleeMob extends Monster implements IAnimatable {
+	private static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAMeleeMob.class, EntityDataSerializers.INT);
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
+
 	protected boolean isSlipperyMovement = false;
 
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
-	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
 	protected AoAMeleeMob(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
-
-		addAnimationState("ATTACK");
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		getEntityData().define(ATTACK_STATE, 0);
 	}
 
 	@Nullable
@@ -325,10 +332,5 @@ public abstract class AoAMeleeMob extends Monster implements AnimatableWithState
 	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
-	}
-
-	@Override
-	public HashMap<String, Integer> getAnimationStates() {
-		return animationStates;
 	}
 }

@@ -78,7 +78,7 @@ public class DexteritySkill extends AoASkill.Instance {
 		if (!canGainXp(true))
 			return;
 
-		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 12);
+		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 10);
 
 		if (ev.getEntityLiving().isSprinting())
 			xp *= 1.3f;

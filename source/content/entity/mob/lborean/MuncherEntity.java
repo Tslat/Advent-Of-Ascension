@@ -7,12 +7,15 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.WaterAnimal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -42,12 +45,14 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.25f, false));
+		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<AoAWaterMeleeMob>(this).ignoreLineOfSight().preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		targetSelector.addGoal(1, new HurtByTargetGoal(this));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return 1.96875f;
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+		return 0.5625f;
 	}
 
 	@Nullable
@@ -69,6 +74,22 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
+	public boolean isPushable() {
+		return false;
+	}
+
+	@Override
+	public boolean isPushedByFluid() {
+		return false;
+	}
+
+	@Override
+	public void push(Entity entity) {}
+
+	@Override
+	public void push(double x, double y, double z) {}
+
+	@Override
 	public void aiStep() {
 		super.aiStep();
 
@@ -78,12 +99,12 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return 20;
+		return 22;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return 6;
+		return 4;
 	}
 
 	@Override

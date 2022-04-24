@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:archaic_tile_small"
+  },
+  "result": "aoa3:archaic_tile_small_wall",
+  "count": 1
+}

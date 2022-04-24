@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:archaic_tile_small"
+    }
+  },
+  "result": {
+    "item": "aoa3:archaic_tile_small_stairs",
+    "count": 4
+  }
+}

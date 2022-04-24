@@ -44,12 +44,12 @@ public class ArcbeastEntity extends AoAMeleeMob {
 
     @Override
     protected int getAttackSwingDuration() {
-        return 11;
+        return 12;
     }
 
     @Override
     protected int getPreAttackTime() {
-        return 7;
+        return 5;
     }
 
     @Override

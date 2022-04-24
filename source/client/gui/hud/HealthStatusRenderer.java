@@ -107,13 +107,6 @@ public class HealthStatusRenderer {
 					return;
 				}
 
-				/*if (deltaHealth > 0) {
-					deltaHealth -= Math.max(0, (mc.player.tickCount - lastHealthTime - 8)) * ((12 - (mc.player.tickCount - 8 - lastHealthTime)) / (float)12) * deltaHealth;
-				}
-				else if (deltaHealth < 0) {
-					deltaHealth = 0;
-				}*/
-
 				if (deltaHealth < 0)
 					deltaHealth = 0;
 
@@ -179,25 +172,51 @@ public class HealthStatusRenderer {
 			healthColour = ColourUtil.RGB(252, 20, 0);
 		}
 
-		if (absorption > 0)
-			left -= 15;
-
 		matrix.pushPose();
-		matrix.translate(left + 15, top + 0.9, 0);
-		matrix.scale(0.9f, 0.9f, 1);
 
-		if (currentHealth > 0) {
-			renderHeart(matrix, mc, currentHealth, maxHealth, handleHealthState(mc.player, gui, (int)Math.ceil(currentHealth)), poisoned, withered, frozen, absorption);
+		if (AoAConfig.CLIENT.healthRenderType.get() == HealthRenderType.NUMERIC) {
+			if (absorption > 0)
+				left -= 15;
 
-			RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
+			matrix.translate(left + 15, top + 0.9, 0);
+			matrix.scale(0.9f, 0.9f, 1);
 
-			if (absorption > 0) {
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, "-->", 67, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 83, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+			if (currentHealth > 0) {
+				renderHeart(matrix, mc, currentHealth, maxHealth, handleHealthState(mc.player, gui, (int)Math.ceil(currentHealth)), poisoned, withered, frozen, absorption);
+
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
+
+				if (absorption > 0) {
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, "+", 67, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 83, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+				}
+			}
+			else {
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfig.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
 			}
 		}
 		else {
-			RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfig.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+			gui.left_height += 2;
+
+			if (absorption > 0)
+				left -= 8;
+
+			matrix.translate(left + 17, top + 1.2, 0);
+			matrix.scale(0.8f, 0.8f, 1);
+
+			if (currentHealth > 0) {
+				renderHeart(matrix, mc, currentHealth, maxHealth, handleHealthState(mc.player, gui, (int)Math.ceil(currentHealth)), poisoned, withered, frozen, absorption);
+
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
+
+				if (absorption > 0) {
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, "+", 62, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 70, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+				}
+			}
+			else {
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfig.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+			}
 		}
 
 		matrix.popPose();

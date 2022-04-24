@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "aoa3:archaic_tile_stairs",
+    "aoa3:archaic_tile_small_stairs",
+    "aoa3:archaic_tile_node_stairs",
+    "aoa3:archaic_tile_stream_stairs",
     "aoa3:abyssal_stone_stairs",
     "aoa3:achony_stairs",
     "aoa3:aromatic_stone_stairs",

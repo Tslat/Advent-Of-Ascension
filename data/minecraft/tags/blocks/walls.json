@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "aoa3:archaic_tile_wall",
+    "aoa3:archaic_tile_small_wall",
+    "aoa3:archaic_tile_node_wall",
+    "aoa3:archaic_tile_stream_wall",
     "aoa3:abyssal_stone_wall",
     "aoa3:aromatic_stone_wall",
     "aoa3:baron_brick_wall",

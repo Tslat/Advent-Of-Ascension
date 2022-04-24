@@ -7,11 +7,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.ItemUtil;
 
 import javax.annotation.Nullable;
 
@@ -65,11 +62,6 @@ public class GoldusEntity extends AoAMeleeMob {
 				}
 				else {
 					pl = (Player)attacker;
-				}
-
-				if (pl != null && !pl.getInventory().contains(new ItemStack(AoAItems.PURE_GOLD.get()))) {
-					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.PURE_GOLD.get()));
-					pl.inventoryMenu.broadcastChanges();
 				}
 			}
 		}

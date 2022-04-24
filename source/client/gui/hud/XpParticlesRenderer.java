@@ -110,7 +110,6 @@ public final class XpParticlesRenderer {
 			poseStack.translate(Math.min(particlesMap.size(), 5) / 2f * 12f + 12, 0, 0);
 
 		RenderSystem.disableDepthTest();
-		//RenderSystem.enableAlphaTest();
 
 		for (Map.Entry<AoASkill, CopyOnWriteArrayList<XPParticle>> entry : particlesMap.entrySet()) {
 			AoASkill.Instance skill = ClientPlayerDataManager.get().getSkill(entry.getKey());
@@ -159,7 +158,6 @@ public final class XpParticlesRenderer {
 		}
 
 		RenderSystem.enableDepthTest();
-		//RenderSystem.disableAlphaTest();
 		poseStack.popPose();
 	}
 

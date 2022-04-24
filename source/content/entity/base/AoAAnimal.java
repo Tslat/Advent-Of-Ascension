@@ -20,14 +20,14 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAAnimal extends Animal implements AnimatableWithStates {
+public abstract class AoAAnimal extends Animal implements IAnimatable {
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 
@@ -114,10 +114,5 @@ public abstract class AoAAnimal extends Animal implements AnimatableWithStates {
 	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
-	}
-
-	@Override
-	public HashMap<String, Integer> getAnimationStates() {
-		return animationStates;
 	}
 }

@@ -129,7 +129,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> HARDENED_CONFETTI_BALL = registerItem("hardened_confetti_ball", miscFuelItem(120));
 	public static final RegistryObject<Item> HIVE_CHUNK = registerItem("hive_chunk", HiveChunk::new);
 	public static final RegistryObject<Item> ICE_CRYSTAL = registerItem("ice_crystal", miscItem());
-	public static final RegistryObject<Item> IMPURE_GOLD = registerItem("impure_gold", miscItem());
 	public static final RegistryObject<Item> IVORY = registerItem("ivory", miscItem());
 	public static final RegistryObject<Item> JUNGLE_THORNS = registerItem("jungle_thorns", miscItem());
 	public static final RegistryObject<Item> LIMONITE_ROD = registerItem("limonite_rod", miscItem());
@@ -158,14 +157,11 @@ public final class AoAItems {
 	public static final RegistryObject<Item> POWER_CORE = registerItem("power_core", miscItem());
 	public static final RegistryObject<Item> PRIMED_GHOULASM = registerItem("primed_ghoulasm", miscItem());
 	public static final RegistryObject<Item> PRIMORDIAL_SKULL = registerItem("primordial_skull", miscItem());
-	public static final RegistryObject<Item> PURE_GOLD = registerItem("pure_gold", miscItem());
-	public static final RegistryObject<Item> PURE_RAIN_STONE = registerItem("pure_rain_stone", miscItem());
 	public static final RegistryObject<Item> REINFORCED_CLOTH = registerItem("reinforced_cloth", miscFuelItem(90));
 	public static final RegistryObject<Item> RETURN_CRYSTAL = registerItem("return_crystal", ReturnCrystal::new);
 	public static final RegistryObject<Item> ROCK_BONES = registerItem("rock_bones", () -> new ReservedItem("alien_orb"));
 	public static final RegistryObject<Item> ROSID_ROOT = registerItem("rosid_root", miscItem());
 	public static final RegistryObject<Item> RUNIC_ENERGY = registerItem("runic_energy", miscItem());
-	public static final RegistryObject<Item> PROGRESS_TOKEN = registerItem("progress_token", miscItem());
 	public static final RegistryObject<Item> SCRAP_METAL = registerItem("scrap_metal", miscItem());
 	public static final RegistryObject<Item> SCREAM_SHIELD = registerItem("scream_shield", miscItem());
 	public static final RegistryObject<Item> SHARP_CLAW = registerItem("sharp_claw", miscItem());

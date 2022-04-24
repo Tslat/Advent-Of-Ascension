@@ -24,7 +24,7 @@ public class BugeyeEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-		return 0.65f;
+		return 8 / 16f;
 	}
 
 	@Nullable
@@ -56,12 +56,12 @@ public class BugeyeEntity extends AoAMeleeMob {
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return 18;
+		return 19;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return 14;
+		return 12;
 	}
 
 	@Override

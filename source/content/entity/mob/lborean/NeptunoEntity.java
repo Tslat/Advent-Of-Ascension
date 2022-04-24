@@ -48,13 +48,18 @@ public class NeptunoEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
+	public void animateHurt() {
+		super.animateHurt();
+	}
+
+	@Override
 	protected int getAttackSwingDuration() {
-		return 13;
+		return 14;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return 7;
+		return 6;
 	}
 
 	@Override

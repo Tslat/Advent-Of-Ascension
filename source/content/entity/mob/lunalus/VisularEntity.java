@@ -49,7 +49,7 @@ public class VisularEntity extends AoAFlyingMeleeMob {
 
 	@Override
 	protected int getPreAttackTime() {
-		return 4;
+		return 2;
 	}
 
 	@Override

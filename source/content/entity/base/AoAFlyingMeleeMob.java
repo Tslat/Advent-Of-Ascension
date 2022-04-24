@@ -18,19 +18,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
-import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.FlyingLookRandomlyGoal;
 import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
+import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementController;
 import net.tslat.aoa3.util.PlayerUtil;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, AnimatableWithStates {
+public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, IAnimatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 	protected boolean isSlipperyMovement = false;
@@ -39,13 +39,12 @@ public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, Anim
 		super(entityType, world);
 
 		moveControl = new RoamingFlightMovementController(this);
-		addAnimationState("ATTACK");
 	}
 
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
-		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<AoAFlyingMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
 		goalSelector.addGoal(3, new FlyingLookRandomlyGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, true, pl -> pl instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)pl)));
 	}
@@ -161,10 +160,5 @@ public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, Anim
 	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
-	}
-
-	@Override
-	public HashMap<String, Integer> getAnimationStates() {
-		return animationStates;
 	}
 }

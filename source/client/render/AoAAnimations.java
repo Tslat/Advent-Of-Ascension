@@ -6,6 +6,8 @@ import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 
+import java.util.function.Supplier;
+
 public final class AoAAnimations {
 	public static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("misc.idle", true);
 	public static final AnimationBuilder RECOVER = new AnimationBuilder().addAnimation("misc.rest", false);
@@ -26,6 +28,10 @@ public final class AoAAnimations {
 	public static final AnimationBuilder ATTACK_SPIN = new AnimationBuilder().addAnimation("attack.spin", false);
 	public static final AnimationBuilder ATTACK_FLYING_BITE = new AnimationBuilder().addAnimation("attack.midair_bite", false);
 	public static final AnimationBuilder ATTACK_SHOOT = new AnimationBuilder().addAnimation("attack.shoot", false);
+
+	public static final AnimationBuilder ATTACK_SWIPE_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", false);
+	public static final AnimationBuilder ATTACK_SWIPE_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", false);
+	public static final AnimationBuilder ATTACK_SHOOT_ALTERNATE = new AnimationBuilder().addAnimation("attack.shoot_alternate", false);
 
 	public static <T extends IAnimatable> AnimationController<T> genericIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
@@ -123,6 +129,19 @@ public final class AoAAnimations {
 		return new AnimationController<T>(entity, "attacking", 0, event -> {
 			if (entity.swinging) {
 				event.getController().setAnimation(attackAnimation);
+
+				return PlayState.CONTINUE;
+			}
+
+			event.getController().markNeedsReload();
+			return PlayState.STOP;
+		});
+	}
+
+	public static <T extends LivingEntity & IAnimatable> AnimationController<T> dynamicAttackController(T entity, Supplier<AnimationBuilder> animationSupplier) {
+		return new AnimationController<T>(entity, "attacking", 0, event -> {
+			if (entity.swinging) {
+				event.getController().setAnimation(animationSupplier.get());
 
 				return PlayState.CONTINUE;
 			}

@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:archaic_tile_node"
+  },
+  "result": "aoa3:archaic_tile_node_slab",
+  "count": 2
+}

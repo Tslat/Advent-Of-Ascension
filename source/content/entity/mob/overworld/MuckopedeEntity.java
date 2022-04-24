@@ -53,7 +53,7 @@ public class MuckopedeEntity extends AoAMeleeMob {
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return 12;
+		return 15;
 	}
 
 	@Override

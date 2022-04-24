@@ -1,61 +1,63 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.server.ServerLifecycleHooks;
-import net.tslat.aoa3.client.ClientOperations;
-
-import java.util.Optional;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.ITagManager;
 
 public final class TagUtil {
-	public static Registry<Block> getBlockRegistry() {
-		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-
-		if (server != null) {
-			return server.registryAccess().registry(Registry.BLOCK_REGISTRY).get();
-		}
-		else {
-			return ClientOperations.getWorld().registryAccess().registry(Registry.BLOCK_REGISTRY).get();
-		}
-	}
-	public static Registry<Item> getItemRegistry() {
-		MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
-
-		if (server != null) {
-			return server.registryAccess().registry(Registry.ITEM_REGISTRY).get();
-		}
-		else {
-			return ClientOperations.getWorld().registryAccess().registry(Registry.ITEM_REGISTRY).get();
-		}
+	public static ITagManager<Block> blockTags() {
+		return ForgeRegistries.BLOCKS.tags();
 	}
 
-	public static Optional<HolderSet.Named<Block>> getBlockTagContents(TagKey<Block> tagKey) {
-		return getBlockRegistry().getTag(tagKey);
+	public static ITagManager<Item> itemTags() {
+		return ForgeRegistries.ITEMS.tags();
 	}
 
-	public static Optional<HolderSet.Named<Item>> getItemTagContents(TagKey<Item> tagKey) {
-		return getItemRegistry().getTag(tagKey);
+	public static ITagManager<Fluid> fluidTags() {
+		return ForgeRegistries.FLUIDS.tags();
+	}
+
+	public static ITagManager<EntityType<?>> entityTags() {
+		return ForgeRegistries.ENTITIES.tags();
 	}
 
 	public static boolean isTaggedAs(Block block, TagKey<Block> tagKey) {
-		return block.builtInRegistryHolder().is(tagKey);
+		return blockTags().getTag(tagKey).contains(block);
 	}
 
-	public static boolean isTaggedAs(BlockState block, TagKey<Block> tagKey) {
-		return block.is(tagKey);
+	public static boolean isTaggedAs(BlockState blockState, TagKey<Block> tagKey) {
+		return isTaggedAs(blockState.getBlock(), tagKey);
 	}
 
 	public static boolean isTaggedAs(Item item, TagKey<Item> tagKey) {
-		return item.builtInRegistryHolder().is(tagKey);
+		return itemTags().getTag(tagKey).contains(item);
 	}
 
-	public static boolean isTaggedAs(ItemStack block, TagKey<Item> tagKey) {
-		return block.is(tagKey);
+	public static boolean isTaggedAs(ItemStack itemStack, TagKey<Item> tagKey) {
+		return isTaggedAs(itemStack.getItem(), tagKey);
+	}
+
+	public static boolean isTaggedAs(Fluid fluid, TagKey<Fluid> tagKey) {
+		return fluidTags().getTag(tagKey).contains(fluid);
+	}
+
+	public static boolean isTaggedAs(FluidState fluidState, TagKey<Fluid> tagKey) {
+		return isTaggedAs(fluidState.getType(), tagKey);
+	}
+
+	public static boolean isTaggedAs(EntityType<?> entityType, TagKey<EntityType<?>> tagKey) {
+		return entityTags().getTag(tagKey).contains(entityType);
+	}
+
+	public static boolean isTaggedAs(Entity entity, TagKey<EntityType<?>> tagKey) {
+		return isTaggedAs(entity.getType(), tagKey);
 	}
 }

@@ -9,11 +9,13 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -24,7 +26,7 @@ public class DoublerEntity extends AoAMeleeMob {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-        return 2f;
+        return 4f;
     }
 
     @Nullable
@@ -53,5 +55,21 @@ public class DoublerEntity extends AoAMeleeMob {
 
         if (closestPlayer != null)
             EntityUtil.applyPotions(closestPlayer, new EffectBuilder(MobEffects.BLINDNESS, 30));
+    }
+
+    @Override
+    protected int getAttackSwingDuration() {
+        return 41;
+    }
+
+    @Override
+    protected int getPreAttackTime() {
+        return 23;
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));
     }
 }

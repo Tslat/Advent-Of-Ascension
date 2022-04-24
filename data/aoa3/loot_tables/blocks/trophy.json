@@ -21,7 +21,7 @@
         },
         {
           "function": "minecraft:copy_nbt",
-          "source": "this",
+          "source": "THIS",
           "ops": [
             {
               "source": "EntityID",
@@ -32,7 +32,7 @@
         },
         {
           "function": "minecraft:copy_nbt",
-          "source": "this",
+          "source": "THIS",
           "ops": [
             {
               "source": "OriginalTrophy",

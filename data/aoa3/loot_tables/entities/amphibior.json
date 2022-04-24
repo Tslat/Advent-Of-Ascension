@@ -70,7 +70,7 @@
               "add": false
             }
           ],
-          "name": "aoa3:orange_coral"
+          "name": "minecraft:horn_coral_block"
         },
         {
           "type": "minecraft:item",
@@ -86,7 +86,7 @@
               "add": false
             }
           ],
-          "name": "aoa3:pink_coral"
+          "name": "minecraft:bubble_coral_block"
         },
         {
           "type": "minecraft:item",
@@ -102,7 +102,7 @@
               "add": false
             }
           ],
-          "name": "aoa3:blue_coral"
+          "name": "minecraft:fire_coral_block"
         },
         {
           "type": "minecraft:tag",

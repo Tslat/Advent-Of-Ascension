@@ -18,10 +18,9 @@ import javax.annotation.Nullable;
 public class UndeadHeraldEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoABlocks.CREATION_BANNER).cost(AoAItems.SILVER_COIN, 4).xp(20).stock(9),
 					BuildableTrade.trade(AoABlocks.ENERGY_BANNER).cost(AoAItems.SILVER_COIN, 4).xp(20).stock(9),
-					BuildableTrade.trade(AoABlocks.SOUL_BANNER).cost(AoAItems.SILVER_COIN, 4).xp(20).stock(9),
-					BuildableTrade.trade(AoABlocks.BLOOD_BANNER).cost(AoAItems.SILVER_COIN, 4).xp(20).stock(9)).build();
+					BuildableTrade.trade(AoABlocks.SPIRIT_BANNER).cost(AoAItems.SILVER_COIN, 4).xp(20).stock(9),
+					BuildableTrade.trade(AoABlocks.RAGE_BANNER).cost(AoAItems.SILVER_COIN, 4).xp(20).stock(9)).build();
 
 	public UndeadHeraldEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);

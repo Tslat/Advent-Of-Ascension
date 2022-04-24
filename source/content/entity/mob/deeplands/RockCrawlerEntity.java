@@ -20,8 +20,10 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -116,5 +118,22 @@ public class RockCrawlerEntity extends AoAMeleeMob {
         }
 
         this.entityData.set(CLIMBING, climbingBit);
+    }
+
+    @Override
+    protected int getAttackSwingDuration() {
+        return 8;
+    }
+
+    @Override
+    protected int getPreAttackTime() {
+        return 2;
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+        // TODO strafing animation
     }
 }

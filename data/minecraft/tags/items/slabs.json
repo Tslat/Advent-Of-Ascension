@@ -2,6 +2,9 @@
   "replace": false,
   "values": [
     "aoa3:archaic_tile_slab",
+    "aoa3:archaic_tile_small_slab",
+    "aoa3:archaic_tile_node_slab",
+    "aoa3:archaic_tile_stream_slab",
     "aoa3:abyssal_stone_slab",
     "aoa3:achony_slab",
     "aoa3:aromatic_stone_slab",

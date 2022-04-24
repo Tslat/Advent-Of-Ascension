@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "side": "aoa3:block/extraction_device_filled",
-    "bottom": "aoa3:block/extraction_device_bottom",
-    "top": "aoa3:block/extraction_device_filled_top"
-  }
-}

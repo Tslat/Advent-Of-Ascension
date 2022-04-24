@@ -14,10 +14,12 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -106,5 +108,22 @@ public class ArocknidEntity extends AoAMeleeMob {
     @Override
     protected void onAttack(Entity target) {
         EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WEAKNESS, 120));
+    }
+
+    @Override
+    protected int getAttackSwingDuration() {
+        return 8;
+    }
+
+    @Override
+    protected int getPreAttackTime() {
+        return 2;
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+        // TODO ranged animation exists
     }
 }

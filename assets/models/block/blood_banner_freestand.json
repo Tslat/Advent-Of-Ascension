@@ -1,7 +1,0 @@
-{
-  "parent": "aoa3:block/banner_freestand",
-  "textures": {
-    "texture": "aoa3:block/blood_banner",
-    "particle": "aoa3:block/blood_banner"
-  }
-}

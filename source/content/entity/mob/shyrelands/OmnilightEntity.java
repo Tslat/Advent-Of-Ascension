@@ -57,12 +57,12 @@ public class OmnilightEntity extends AoAFlyingRangedMob {
 
     @Override
     public int getAttackSwingDuration() {
-        return 25;
+        return 26;
     }
 
     @Override
     public int getPreAttackTime() {
-        return 13;
+        return 11;
     }
 
     @Override

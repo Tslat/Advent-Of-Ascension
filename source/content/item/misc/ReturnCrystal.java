@@ -62,7 +62,7 @@ public class ReturnCrystal extends Item {
 			if (!((ServerPlayer)entity).isCreative())
 				stack.shrink(1);
 
-			ItemUtil.clearInventoryOfItems((ServerPlayer)entity, new ItemStack(AoAItems.PROGRESS_TOKEN.get()), new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+			ItemUtil.clearInventoryOfItems((ServerPlayer)entity, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 			entity.teleportTo(0, 212, 0);
 		}
 

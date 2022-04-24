@@ -20,17 +20,17 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, AnimatableWithStates {
+public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, IAnimatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
@@ -131,10 +131,5 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, Animat
 	@Override
 	public AnimationFactory getFactory() {
 		return animationFactory;
-	}
-
-	@Override
-	public HashMap<String, Integer> getAnimationStates() {
-		return animationStates;
 	}
 }

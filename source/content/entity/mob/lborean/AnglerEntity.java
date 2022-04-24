@@ -42,7 +42,15 @@ public class AnglerEntity extends AoAWaterMeleeMob {
 		return AoASounds.ENTITY_ANGLER_HURT.get();
 	}
 
-	// TODO Combine open mouth & bite attack, do timings
+	@Override
+	protected int getAttackSwingDuration() {
+		return 10;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 3;
+	}
 
 	@Override
 	public void registerControllers(AnimationData animationData) {

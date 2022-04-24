@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.tool.axe;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -15,9 +16,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -43,7 +47,7 @@ public class SoulstoneAxe extends BaseAxe implements LootModifyingItem {
 		ServerLevel world = lootContext.getLevel();
 		BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootContextParams.ORIGIN));
 		ItemStack blockDrop = ItemStack.EMPTY;
-		Item blockItem = Item.byBlock(block);
+		Item blockItem = block.asItem();
 
 		for (ItemStack stack : existingLoot) {
 			if (stack.getItem() == blockItem) {
@@ -56,13 +60,13 @@ public class SoulstoneAxe extends BaseAxe implements LootModifyingItem {
 		if (blockDrop == ItemStack.EMPTY)
 			blockDrop = existingLoot.get(0);
 
-		/*if (blockDrop != ItemStack.EMPTY && PlayerUtil.consumeResource((ServerPlayer)harvestingPlayer, AoAResource.SOUL, 1, false)) {
+		if (blockDrop != ItemStack.EMPTY && PlayerUtil.consumeResource((ServerPlayer)harvestingPlayer, AoAResources.SPIRIT.get(), 5, false)) {
 			blockDrop.setCount(blockDrop.getCount() * 2);
 
 			for (int i = 0; i < 5; i++) {
-				world.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + random.nextFloat(), pos.getY() + random.nextFloat(), pos.getZ() + random.nextFloat(), 1, 0, 0, 0, 0);
+				world.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + RandomUtil.randomValueUpTo(1), pos.getZ() + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
 			}
-		}*/ // TODO
+		}
 	}
 
 	@Override

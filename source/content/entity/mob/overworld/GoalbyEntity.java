@@ -9,10 +9,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -23,7 +25,7 @@ public class GoalbyEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return 1.3f;
+		return 1f;
 	}
 
 	@Nullable
@@ -47,4 +49,19 @@ public class GoalbyEntity extends AoAMeleeMob {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WEAKNESS, 45));
 	}
 
+	@Override
+	protected int getAttackSwingDuration() {
+		return 13;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 4;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+	}
 }

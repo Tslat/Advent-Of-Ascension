@@ -42,12 +42,12 @@ public class BushBabyEntity extends AoAMeleeMob {
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return 11;
+		return 13;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return 7;
+		return 6;
 	}
 
 	@Override

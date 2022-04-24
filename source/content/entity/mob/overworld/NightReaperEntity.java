@@ -22,7 +22,7 @@ public class NightReaperEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return 1.375f;
+		return 26.5f / 16f;
 	}
 
 	@Nullable
@@ -58,7 +58,7 @@ public class NightReaperEntity extends AoAMeleeMob {
 
 	@Override
 	protected int getPreAttackTime() {
-		return 8;
+		return 7;
 	}
 
 	@Override

@@ -1,7 +1,0 @@
-{
-  "parent": "aoa3:block/banner_mounted",
-  "textures": {
-    "texture": "aoa3:block/encrusted_blood_banner",
-    "particle": "aoa3:block/encrusted_blood_banner"
-  }
-}

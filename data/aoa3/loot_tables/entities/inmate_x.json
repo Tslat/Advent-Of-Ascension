@@ -27,11 +27,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:sunfire_orb"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 13,
           "name": "aoa3:lunar_ingot"
         },

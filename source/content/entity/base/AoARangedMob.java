@@ -3,18 +3,25 @@ package net.tslat.aoa3.content.entity.base;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -31,15 +38,25 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAEntityData;
+import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
 import java.util.UUID;
 
-public abstract class AoARangedMob extends Monster implements RangedAttackMob, AoARangedAttacker {
+public abstract class AoARangedMob extends Monster implements RangedAttackMob, AoARangedAttacker, IAnimatable {
+	private static final EntityDataAccessor<Integer> SHOOT_STATE = SynchedEntityData.defineId(AoARangedMob.class, EntityDataSerializers.INT);
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
+
 	protected boolean isSlipperyMovement = false;
+
+	private final AnimationFactory animationFactory = new AnimationFactory(this);
+	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
 	protected AoARangedMob(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -48,12 +65,18 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(2, new RangedAttackGoal(this, 1.0d, 20, 40, 32));
+		goalSelector.addGoal(2, new TelegraphedRangedAttackGoal(this).windUpTime(getPreAttackTime()));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		getEntityData().define(SHOOT_STATE, 0);
 	}
 
 	@Nullable
@@ -161,6 +184,27 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {}
+
+	@Override
+	public int getCurrentSwingDuration() {
+		int time = getAttackSwingDuration();
+
+		if (MobEffectUtil.hasDigSpeed(this))
+			time -= 1 + MobEffectUtil.getDigSpeedAmplification(this);
+
+		if (hasEffect(MobEffects.DIG_SLOWDOWN))
+			time += (1 + getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) * 2;
+
+		return time;
+	}
+
+	protected int getAttackSwingDuration() {
+		return 6;
+	}
+
+	protected int getPreAttackTime() {
+		return 0;
+	}
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
@@ -335,5 +379,13 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 		}
 
 		calculateEntityAnimation(this, this instanceof FlyingAnimal);
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {}
+
+	@Override
+	public AnimationFactory getFactory() {
+		return this.animationFactory;
 	}
 }

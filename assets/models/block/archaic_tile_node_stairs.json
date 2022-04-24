@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "side": "aoa3:block/archaic_tile_node",
+    "bottom": "aoa3:block/archaic_tile_node",
+    "top": "aoa3:block/archaic_tile_node"
+  }
+}

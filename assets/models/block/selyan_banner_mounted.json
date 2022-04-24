@@ -1,7 +1,0 @@
-{
-  "parent": "aoa3:block/god_banner_mounted",
-  "textures": {
-    "texture": "aoa3:block/selyan_banner",
-    "particle": "aoa3:block/selyan_banner"
-  }
-}

@@ -115,8 +115,6 @@ public class NativePatching {
 		ComposterBlock.add(0.3f, AoABlocks.MYSTIC_FERNS.get().asItem());
 		ComposterBlock.add(0.3f, AoABlocks.PINK_CANDY_GRASS.get().asItem());
 		ComposterBlock.add(0.3f, AoABlocks.RAINBOW_GRASS.get().asItem());
-		ComposterBlock.add(0.3f, AoABlocks.RAINBOW_GRASS2.get().asItem());
-		ComposterBlock.add(0.3f, AoABlocks.RAINBOW_GRASS3.get().asItem());
 		ComposterBlock.add(0.3f, AoABlocks.RED_CRYSTAL_PLANT.get().asItem());
 		ComposterBlock.add(0.3f, AoABlocks.RED_WATERWEEDS.get().asItem());
 		ComposterBlock.add(0.3f, AoABlocks.RUNE_BULBS.get().asItem());

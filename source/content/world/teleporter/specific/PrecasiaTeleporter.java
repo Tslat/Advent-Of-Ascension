@@ -23,6 +23,6 @@ public class PrecasiaTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.SKELETAL_BLOCK.get();
+		return AoABlocks.PRECASIAN_LOWER_ROCK.get();
 	}
 }

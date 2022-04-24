@@ -2,6 +2,9 @@ package net.tslat.aoa3.content.entity.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,16 +28,17 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoAEntityData;
-import net.tslat.aoa3.content.entity.ai.animation.AnimatableWithStates;
-import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
+import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, AnimatableWithStates {
+public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAnimatable {
+	private static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAWaterMeleeMob.class, EntityDataSerializers.INT);
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
@@ -42,17 +46,22 @@ public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, Ani
 		super(entityType, world);
 
 		this.moveControl = new RoamingSwimmingMovementController(this);
-		addAnimationState("ATTACK");
 	}
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<AoAWaterMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<AoAWaterMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
 		goalSelector.addGoal(5, new RandomSwimmingGoal(this, 1, 30));
 		goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 6));
 		goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		getEntityData().define(ATTACK_STATE, 0);
 	}
 
 	@Override
@@ -167,11 +176,6 @@ public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, Ani
 	@Override
 	public AnimationFactory getFactory() {
 		return this.animationFactory;
-	}
-
-	@Override
-	public HashMap<String, Integer> getAnimationStates() {
-		return animationStates;
 	}
 
 	@Override

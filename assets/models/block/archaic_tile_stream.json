@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "aoa3:block/archaic_tile_stream",
+    "end": "aoa3:block/archaic_tile_stream_top"
+  }
+}

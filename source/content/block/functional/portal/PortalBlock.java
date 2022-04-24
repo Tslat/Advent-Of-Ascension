@@ -128,6 +128,9 @@ public class PortalBlock extends Block {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
+		if (true)
+			return;
+
 		if (!world.isClientSide() && !entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
 			if (!AoAConfig.SERVER.allowNonPlayerPortalTravel.get() & !(entity instanceof Player))
 				return;

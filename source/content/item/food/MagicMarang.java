@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
@@ -26,7 +27,9 @@ public class MagicMarang extends ItemNameBlockItem {
 
 	@Override
 	protected boolean canPlace(BlockPlaceContext context, BlockState state) {
-		return context.getLevel().getBlockState(new BlockPos(context.getClickLocation())).getBlock() == AoABlocks.HAUNTED_LEAVES.get() && super.canPlace(context, state);
+		Block block = context.getLevel().getBlockState(new BlockPos(context.getClickLocation())).getBlock();
+
+		return (block == AoABlocks.HAUNTED_LEAVES.get() || block == AoABlocks.HAUNTED_EYES_LEAVES.get()) && super.canPlace(context, state);
 	}
 
 	@Override

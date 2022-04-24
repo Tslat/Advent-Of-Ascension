@@ -1,8 +1,12 @@
 package net.tslat.aoa3.content.item.food;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
@@ -36,9 +40,17 @@ public class HalyconMilk extends Item {
 		if (!world.isClientSide) {
 			EntityUtil.healEntity(entity, 2);
 			entity.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
+
+			if (entity instanceof ServerPlayer player) {
+				CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
+				player.awardStat(Stats.ITEM_USED.get(this));
+			}
 		}
 
-		return super.finishUsingItem(stack, world, entity);
+		if (entity instanceof Player player && !player.getAbilities().instabuild)
+			stack.shrink(1);
+
+		return stack.isEmpty() ? new ItemStack(Items.BUCKET) : stack;
 	}
 
 	@Override

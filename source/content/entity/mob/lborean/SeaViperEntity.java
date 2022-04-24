@@ -53,12 +53,12 @@ public class SeaViperEntity extends AoAWaterMeleeMob {
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return 20;
+		return 21;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return 15;
+		return 13;
 	}
 
 	@Override

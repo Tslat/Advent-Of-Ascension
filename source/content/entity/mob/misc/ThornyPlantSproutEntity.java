@@ -16,17 +16,13 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
-import net.tslat.aoa3.content.entity.ai.mob.AnimatableMeleeAttackGoal;
+import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public class ThornyPlantSproutEntity extends AoAMeleeMob {
-	private static final AnimationBuilder ATTACK_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", false);
-	private static final AnimationBuilder ATTACK_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", false);
-
 	public ThornyPlantSproutEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
@@ -46,12 +42,12 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(2, new AnimatableMeleeAttackGoal<AoAMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()).attackReach(2f));
+		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<AoAMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()).attackReach(2f));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Monster>(this, Monster.class, 5, true, true, entity -> entity.getType() != this.getType()));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<Player>(this, Player.class, 5, true, true, null));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 5, true, true, entity -> entity.getType() != this.getType()));
+		targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 5, true, true, null));
 	}
 
 	@Override
@@ -96,7 +92,7 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 
 	@Override
 	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<ThornyPlantSproutEntity>(this, "living", 0, event -> {
+		animationData.addAnimationController(new AnimationController<>(this, "living", 0, event -> {
 			if (tickCount < 20) {
 				event.getController().setAnimation(AoAAnimations.SPAWN);
 			}
@@ -106,9 +102,9 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 
 			return PlayState.CONTINUE;
 		}));
-		animationData.addAnimationController(new AnimationController<ThornyPlantSproutEntity>(this, "attacking", 0, event -> {
+		animationData.addAnimationController(new AnimationController<>(this, "attacking", 0, event -> {
 			if (swinging) {
-				event.getController().setAnimation(ATTACK_RIGHT);
+				event.getController().setAnimation(AoAAnimations.ATTACK_SWIPE_RIGHT);
 
 				return PlayState.CONTINUE;
 			}

@@ -1,0 +1,127 @@
+{
+  "parent": "minecraft:block/block",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        135,
+        0
+      ],
+      "scale": [
+        0.625,
+        0.625,
+        0.625
+      ]
+    },
+    "head": {
+      "rotation": [
+        0,
+        -90,
+        0
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        75,
+        -135,
+        0
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
+      ],
+      "scale": [
+        0.375,
+        0.375,
+        0.375
+      ]
+    }
+  },
+  "textures": {
+    "bottom": "aoa3:block/archaic_tile_stream",
+    "top": "aoa3:block/archaic_tile_stream_top",
+    "particle": "aoa3:block/archaic_tile_stream"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        8,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#bottom",
+          "cullface": "down",
+          "rotation": 270
+        },
+        "up": {
+          "texture": "#bottom",
+          "rotation": 90
+        },
+        "north": {
+          "texture": "#top",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#top",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#bottom",
+          "cullface": "west"
+        },
+        "east": {
+          "texture": "#bottom",
+          "cullface": "east"
+        }
+      }
+    },
+    {
+      "from": [
+        8,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "up": {
+          "texture": "#bottom",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            8.0
+          ],
+          "cullface": "up",
+          "rotation": 90
+        },
+        "north": {
+          "texture": "#top",
+          "cullface": "north"
+        },
+        "south": {
+          "texture": "#top",
+          "cullface": "south"
+        },
+        "west": {
+          "texture": "#bottom"
+        },
+        "east": {
+          "texture": "#bottom",
+          "cullface": "east"
+        }
+      }
+    }
+  ]
+}

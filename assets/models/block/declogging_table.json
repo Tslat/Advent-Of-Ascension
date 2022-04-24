@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "side": "aoa3:block/declogging_table",
-    "bottom": "aoa3:block/declogging_table_bottom",
-    "top": "aoa3:block/declogging_table_top"
-  }
-}

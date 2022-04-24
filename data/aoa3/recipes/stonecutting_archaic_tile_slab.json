@@ -1,7 +1,7 @@
 {
   "type": "minecraft:stonecutting",
   "ingredient": {
-    "item": "aoa3:archaic_tiles"
+    "item": "aoa3:archaic_tile"
   },
   "result": "aoa3:archaic_tile_slab",
   "count": 2

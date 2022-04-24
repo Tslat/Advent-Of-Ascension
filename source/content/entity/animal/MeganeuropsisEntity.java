@@ -123,7 +123,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
 
-		if (level.isClientSide && key == START_LANDING_TICKS)
+		if (level.isClientSide && key.equals(START_LANDING_TICKS))
 			clientStartLandingTicks = tickCount;
 	}
 

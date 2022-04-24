@@ -2,7 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "A",
-    "B"
+    "B",
+    "C"
   ],
   "key": {
     "A": {
@@ -10,10 +11,13 @@
     },
     "B": {
       "tag": "forge:gunpowder"
+    },
+    "C": {
+      "tag": "forge:ingots/copper"
     }
   },
   "result": {
     "item": "aoa3:limonite_bullet",
-    "count": 16
+    "count": 48
   }
 }

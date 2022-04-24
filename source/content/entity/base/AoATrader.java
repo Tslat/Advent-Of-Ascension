@@ -55,7 +55,7 @@ public abstract class AoATrader extends Villager implements IAnimatable {
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(0, new FloatGoal(this));
-		goalSelector.addGoal(1, new AvoidEntityGoal<Monster>(this, Monster.class, 8f, 0.8d, 1d));
+		goalSelector.addGoal(1, new AvoidEntityGoal<>(this, Monster.class, 8f, 0.8d, 1d));
 		goalSelector.addGoal(1, new TraderPlayerTradeGoal(this));
 		goalSelector.addGoal(1, new TraderFaceCustomerGoal(this));
 		goalSelector.addGoal(2, new OpenDoorGoal(this, true));
@@ -251,7 +251,7 @@ public abstract class AoATrader extends Villager implements IAnimatable {
 	public abstract Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap();
 
 	public static class TradeListBuilder {
-		private final HashMap<Integer, VillagerTrades.ItemListing[]> trades = new HashMap<Integer, VillagerTrades.ItemListing[]>();
+		private final HashMap<Integer, VillagerTrades.ItemListing[]> trades = new HashMap<>();
 
 		public TradeListBuilder trades(int professionLevel, BuildableTrade... offers) {
 			this.trades.put(professionLevel, offers);
@@ -260,7 +260,7 @@ public abstract class AoATrader extends Villager implements IAnimatable {
 		}
 
 		public Int2ObjectMap<VillagerTrades.ItemListing[]> build() {
-			return new Int2ObjectOpenHashMap<VillagerTrades.ItemListing[]>(trades);
+			return new Int2ObjectOpenHashMap<>(trades);
 		}
 	}
 

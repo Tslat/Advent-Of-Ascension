@@ -16,8 +16,10 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -41,7 +43,7 @@ public class RockCritterEntity extends AoAMeleeMob {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-        return 0.8125f;
+        return 6.5f / 16f;
     }
 
     @Nullable
@@ -100,5 +102,21 @@ public class RockCritterEntity extends AoAMeleeMob {
         }
 
         this.entityData.set(CLIMBING, climbingBit);
+    }
+
+    @Override
+    protected int getAttackSwingDuration() {
+        return 5;
+    }
+
+    @Override
+    protected int getPreAttackTime() {
+        return 2;
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
     }
 }
