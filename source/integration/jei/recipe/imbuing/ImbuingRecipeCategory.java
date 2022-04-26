@@ -18,7 +18,6 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoABlocks;
-import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -144,7 +143,7 @@ public class ImbuingRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		int posY;
 
 		if (recipe.getInfusionReq() > 1) {
-			message = AoASkills.IMBUING.get().getName().append(": " + recipe.getInfusionReq()).getString();
+			message = "";//AoASkills.IMBUING.get().getName().append(": " + recipe.getInfusionReq()).getString();
 			textColour = 0xFFFF6060;// AdventGuiTabPlayer.getSkillLevel(Skills.INFUSION) < recipe.getInfusionReq() ? 0xFFFF6060 : 0xFF80FF20; TODO
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
 			width = mc.font.width(message);

@@ -58,15 +58,9 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:lelyetian_caster",
+        "type": "aoa3:flye",
         "weight": 20,
         "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:tracker",
-        "weight": 20,
-        "minCount": 0,
         "maxCount": 1
       },
       {
@@ -76,9 +70,15 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:flye",
+        "type": "aoa3:lelyetian_caster",
         "weight": 20,
         "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tracker",
+        "weight": 20,
+        "minCount": 0,
         "maxCount": 1
       }
     ],

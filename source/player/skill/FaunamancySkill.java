@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
@@ -46,3 +47,4 @@ public class FaunamancySkill extends AoASkill.Instance {
 		return targetVelocity.x() == 0 && targetVelocity.z() == 0 && !NumberUtil.numberIsBetween(targetVelocity.y(), -0.08, -0.07);
 	}
 }
+*/

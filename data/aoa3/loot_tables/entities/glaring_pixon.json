@@ -8,24 +8,10 @@
         {
           "type": "minecraft:item",
           "weight": 30,
-          "functions": [
-            {
-              "function": "aoa3:grant_skill_xp",
-              "skill": "aoa3:imbuing",
-              "xp": 70.0
-            }
-          ],
           "name": "aoa3:glaring_infusion_stone"
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "aoa3:grant_skill_xp",
-              "skill": "aoa3:imbuing",
-              "xp": 105.0
-            }
-          ],
           "name": "aoa3:glaring_power_stone"
         }
       ]

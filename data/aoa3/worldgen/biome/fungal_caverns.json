@@ -58,8 +58,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:fungback",
-        "weight": 15,
+        "type": "aoa3:fungung",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -70,8 +70,8 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:fungung",
-        "weight": 1,
+        "type": "aoa3:fungback",
+        "weight": 15,
         "minCount": 1,
         "maxCount": 1
       }

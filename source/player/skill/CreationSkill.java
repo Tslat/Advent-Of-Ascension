@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
@@ -13,4 +14,4 @@ public class CreationSkill extends AoASkill.Instance {
 	public CreationSkill(CompoundNBT nbtData) {
 		super(AoASkills.CREATION.get(), nbtData);
 	}
-}
+}*/

@@ -23,13 +23,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.hooks.BasicEventHooks;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.event.custom.AoAEvents;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
-import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
+import net.tslat.aoa3.event.custom.AoAEvents;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -177,7 +175,7 @@ public class InfusionTableContainer extends Container {
 			if (recipeMatch.isPresent()) {
 				InfusionRecipe matchedRecipe = recipeMatch.get();
 
-				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe)) && player.isCreative()) {
+				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe))) {
 					craftResult.setRecipeUsed(matchedRecipe);
 
 					resultStack = matchedRecipe.assemble(inv);
@@ -194,7 +192,7 @@ public class InfusionTableContainer extends Container {
 	}
 
 	private void applyRecipeXp(ServerPlayerEntity player, float xp) {
-		PlayerUtil.giveXpToPlayer(player, AoASkills.IMBUING.get(), xp, false);
+		//PlayerUtil.giveXpToPlayer(player, AoASkills.IMBUING.get(), xp, false);
 	}
 
 	public static class InfusionInventory extends CraftingInventory {

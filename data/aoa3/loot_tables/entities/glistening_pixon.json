@@ -8,24 +8,10 @@
         {
           "type": "minecraft:item",
           "weight": 30,
-          "functions": [
-            {
-              "function": "aoa3:grant_skill_xp",
-              "skill": "aoa3:imbuing",
-              "xp": 10.0
-            }
-          ],
           "name": "aoa3:glistening_infusion_stone"
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "aoa3:grant_skill_xp",
-              "skill": "aoa3:imbuing",
-              "xp": 15.0
-            }
-          ],
           "name": "aoa3:glistening_power_stone"
         }
       ]

@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
@@ -14,3 +15,4 @@ public class AlchemySkill extends AoASkill.Instance {
 		super(AoASkills.ALCHEMY.get(), nbtData);
 	}
 }
+*/

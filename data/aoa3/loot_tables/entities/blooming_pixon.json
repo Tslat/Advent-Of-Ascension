@@ -8,24 +8,10 @@
         {
           "type": "minecraft:item",
           "weight": 30,
-          "functions": [
-            {
-              "function": "aoa3:grant_skill_xp",
-              "skill": "aoa3:imbuing",
-              "xp": 900.0
-            }
-          ],
           "name": "aoa3:blooming_infusion_stone"
         },
         {
           "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "aoa3:grant_skill_xp",
-              "skill": "aoa3:imbuing",
-              "xp": 1350.0
-            }
-          ],
           "name": "aoa3:blooming_power_stone"
         }
       ]
