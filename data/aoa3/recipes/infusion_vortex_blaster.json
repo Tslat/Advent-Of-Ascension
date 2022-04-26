@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:wind_rune"
+    },
+    {
+      "item": "aoa3:wind_rune"
+    },
+    {
+      "item": "aoa3:power_rune"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    }
+  ],
+  "result": {
+    "item": "aoa3:vortex_blaster"
+  }
+}

@@ -41,22 +41,6 @@
           "name": "minecraft:vine"
         },
         {
-          "type": "minecraft:tag",
-          "weight": 36,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 3.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "minecraft:small_flowers",
-          "expand": true
-        },
-        {
           "type": "minecraft:item",
           "weight": 30,
           "functions": [

@@ -11,22 +11,6 @@
           "quality": -1
         },
         {
-          "type": "minecraft:tag",
-          "weight": 30,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1.0,
-                "max": 6.0,
-                "type": "minecraft:uniform"
-              }
-            }
-          ],
-          "name": "minecraft:small_flowers",
-          "expand": true
-        },
-        {
           "type": "minecraft:item",
           "weight": 26,
           "functions": [

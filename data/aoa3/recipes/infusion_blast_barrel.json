@@ -1,0 +1,26 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "aoa3:lyon_ingot"
+    },
+    {
+      "item": "minecraft:gunpowder"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "minecraft:netherite_ingot"
+    }
+  ],
+  "result": {
+    "item": "aoa3:blast_barrel"
+  }
+}

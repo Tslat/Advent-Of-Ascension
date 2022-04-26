@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "name": "coralstorm_sword",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 30,
+          "name": "aoa3:coralstorm_sword"
+        }
+      ]
+    }
+  ]
+}

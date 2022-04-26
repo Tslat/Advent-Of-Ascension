@@ -2,6 +2,8 @@ package net.tslat.aoa3.event;
 
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.PlayerAdvancements;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.ComposterBlock;
 import net.minecraft.block.IGrowable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FlyingEntity;
@@ -34,26 +36,31 @@ import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoAArmour;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.common.registration.AoATools;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
 import net.tslat.aoa3.content.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.content.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
+import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.event.dimension.LelyetiaEvents;
 import net.tslat.aoa3.event.dimension.LunalusEvents;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.event.dimension.VoxPondsEvents;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
 
@@ -76,6 +83,8 @@ public class PlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerXpEvent.PickupXp.class, PlayerEvents::onPlayerPickupXp);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemFishedEvent.class, PlayerEvents::onPlayerFishing);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerChangedDimensionEvent.class, PlayerEvents::onDimensionChange);
+		forgeBus.addListener(EventPriority.NORMAL, false, PlayerInteractEvent.RightClickBlock.class, PlayerEvents::onBlockInteract);
+		forgeBus.addListener(EventPriority.NORMAL, false, PlayerLevelChangeEvent.class, PlayerEvents::onPlayerLevelUp);
 	}
 
 	private static void onPlayerTick(final TickEvent.PlayerTickEvent ev) {
@@ -172,6 +181,22 @@ public class PlayerEvents {
 					ev.getWorld().levelEvent(2005, ev.getPos(), 0);
 					pl.inventory.hurtArmor(DamageSource.GENERIC, 16);
 				}
+			}
+		}
+	}
+
+	private static void onBlockInteract(final PlayerInteractEvent.RightClickBlock ev) {
+		World world = ev.getWorld();
+
+		if (!world.isClientSide()) {
+			BlockPos pos = ev.getPos();
+			BlockState state = world.getBlockState(pos);
+
+			if (state.getBlock() instanceof ComposterBlock && state.getValue(ComposterBlock.LEVEL) == 8 && RandomUtil.oneInNChance(5)) {
+				ItemEntity item = new ItemEntity(world, (double)pos.getX() + RandomUtil.randomValueBetween(0.15, 0.85f), (double)pos.getY() + RandomUtil.randomValueBetween(0.66f, 1.36f), (double)pos.getZ() + RandomUtil.randomValueBetween(0.15, 0.85f), new ItemStack(AoAItems.GREEN_MANURE_SEEDS.get()));
+
+				item.setDefaultPickUpDelay();
+				world.addFreshEntity(item);
 			}
 		}
 	}
@@ -277,5 +302,27 @@ public class PlayerEvents {
 	private static void onDimensionChange(final PlayerEvent.PlayerChangedDimensionEvent ev) {
 		if (ev.getFrom() == AoADimensions.NOWHERE.key)
 			NowhereEvents.doDimensionChange(ev);
+	}
+
+	private static void onPlayerLevelUp(final PlayerLevelChangeEvent ev) {
+		if (!ev.getPlayer().level.isClientSide() && ev.getOldLevel() < 100 && ev.getNewLevel() == 100) {
+			AoASkill skill = ev.getSkill().type();
+
+			if (skill == AoASkills.DEXTERITY.get()) {
+				ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAArmour.HELM_OF_THE_DEXTROUS.get()));
+			}
+			else if (skill == AoASkills.INNERVATION.get()) {
+				ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAArmour.HELM_OF_THE_WARRIOR.get()));
+			}
+			else if (skill == AoASkills.FARMING.get()) {
+				ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAArmour.HELM_OF_THE_DRYAD.get()));
+			}
+			else if (skill == AoASkills.EXTRACTION.get()) {
+				ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAArmour.HELM_OF_THE_TREASURER.get()));
+			}
+			else if (skill == AoASkills.HAULING.get()) {
+				ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAArmour.HELM_OF_THE_TRAWLER.get()));
+			}
+		}
 	}
 }

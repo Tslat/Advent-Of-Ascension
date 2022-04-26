@@ -53,6 +53,18 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:ariel",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:runicorn",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:runicorn_rider",
         "weight": 1,
         "minCount": 1,
@@ -66,18 +78,6 @@
       },
       {
         "type": "aoa3:paladin",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:ariel",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:runicorn",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

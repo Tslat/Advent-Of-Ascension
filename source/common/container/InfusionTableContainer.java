@@ -177,7 +177,7 @@ public class InfusionTableContainer extends Container {
 			if (recipeMatch.isPresent()) {
 				InfusionRecipe matchedRecipe = recipeMatch.get();
 
-				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayerEntity)player, AoASkills.IMBUING.get(), matchedRecipe.getInfusionReq()))) {
+				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayerEntity)player).getRecipeBook().contains(matchedRecipe)) && player.isCreative()) {
 					craftResult.setRecipeUsed(matchedRecipe);
 
 					resultStack = matchedRecipe.assemble(inv);

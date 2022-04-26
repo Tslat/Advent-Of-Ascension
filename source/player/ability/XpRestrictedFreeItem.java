@@ -19,7 +19,6 @@ import net.tslat.aoa3.event.custom.events.PlayerChangeXpEvent;
 import net.tslat.aoa3.library.object.DynamicTextComponent;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 
 public class XpRestrictedFreeItem extends AoAAbility.Instance {
@@ -55,10 +54,10 @@ public class XpRestrictedFreeItem extends AoAAbility.Instance {
 	@Override
 	protected void updateDescription(TranslationTextComponent defaultDescription) {
 		if (this.xpRemaining <= 0) {
-			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + ".ready", this.stackSize, LocaleUtil.getItemName(this.item), NumberUtil.roundToNthDecimalPlace(this.xpPerItem, 1), new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace(this.xpRemaining, 1))));
+			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey() + ".ready", this.stackSize, item.getDefaultInstance().getHoverName(), NumberUtil.roundToNthDecimalPlace(this.xpPerItem, 1), new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace(this.xpRemaining, 1))));
 		}
 		else {
-			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), this.stackSize, LocaleUtil.getItemName(this.item), NumberUtil.roundToNthDecimalPlace(this.xpPerItem, 1), new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace(this.xpRemaining, 1))));
+			super.updateDescription(new TranslationTextComponent(defaultDescription.getKey(), this.stackSize, item.getDefaultInstance().getHoverName(), NumberUtil.roundToNthDecimalPlace(this.xpPerItem, 1), new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace(this.xpRemaining, 1))));
 		}
 	}
 

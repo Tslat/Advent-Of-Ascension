@@ -2,6 +2,26 @@
   "type": "minecraft:entity",
   "pools": [
     {
+      "name": "rares",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "aoa3:flaming_fury"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 23,
+          "name": "aoa3:nightmare_staff"
+        }
+      ]
+    },
+    {
       "name": "aoa_loot",
       "rolls": {
         "min": 1.0,
@@ -12,16 +32,6 @@
         {
           "type": "minecraft:empty",
           "weight": 50
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:flaming_fury"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 8,
-          "name": "aoa3:nightmare_staff"
         },
         {
           "type": "minecraft:item",
@@ -103,7 +113,8 @@
           "weight": 13,
           "name": "aoa3:armour_plating"
         }
-      ]
+      ],
+      "bonus_rolls": 1.0
     }
   ]
 }

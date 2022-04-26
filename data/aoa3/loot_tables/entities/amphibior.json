@@ -91,8 +91,8 @@
           "name": "aoa3:blue_coral"
         },
         {
-          "type": "minecraft:tag",
-          "weight": 21,
+          "type": "minecraft:item",
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -103,8 +103,22 @@
               }
             }
           ],
-          "name": "forge:rawfish",
-          "expand": true
+          "name": "minecraft:salmon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:cod"
         }
       ]
     }

@@ -103,20 +103,34 @@
           "name": "aoa3:sharp_claw"
         },
         {
-          "type": "minecraft:tag",
-          "weight": 36,
+          "type": "minecraft:item",
+          "weight": 18,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
-                "min": 6.0,
-                "max": 12.0,
+                "min": 10.0,
+                "max": 24.0,
                 "type": "minecraft:uniform"
               }
             }
           ],
-          "name": "forge:rawfish",
-          "expand": true
+          "name": "minecraft:salmon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 18,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 10.0,
+                "max": 24.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:cod"
         },
         {
           "type": "minecraft:item",

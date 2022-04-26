@@ -150,6 +150,11 @@
         },
         {
           "type": "minecraft:item",
+          "quality": 3,
+          "name": "aoa3:holy_sword"
+        },
+        {
+          "type": "minecraft:item",
           "weight": 3,
           "quality": 2,
           "name": "aoa3:selyan_banner"

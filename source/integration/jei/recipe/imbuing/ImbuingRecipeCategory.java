@@ -11,17 +11,15 @@ import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.ArrayList;
@@ -72,10 +70,13 @@ public class ImbuingRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		List<ItemStack> inputStackList = new ArrayList<ItemStack>(1);
 		ItemStack output = recipe.getResultItem();
 
-		if (recipe.isEnchanting())
+		if (recipe.isEnchanting()) {
 			output = recipe.getEnchantmentAsBook();
+		}
+		else {
+			recipe.getRecipeInput();
+		}
 
-		inputStackList.add(recipe.isEnchanting() ? new ItemStack(Items.BOOK) : recipe.getRecipeInput());
 		ingredientsCollection.add(inputStackList);
 
 		for (Ingredient ing : recipe.getIngredients()) {
@@ -110,11 +111,20 @@ public class ImbuingRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		if (recipeRegistryName != null) {
 			guiStacks.addTooltipCallback(((slotIndex, input, ingredient, tooltip) -> {
 				if (slotIndex == 0) {
+					for (int i = 0; i < tooltip.size(); i++) {
+						String line = tooltip.get(i).getString();
+
+						if (line.contains("Enchanted Book")) {
+							tooltip.set(i, LocaleUtil.getLocaleMessage("jei.aoa.imbuing.enchants", TextFormatting.GREEN));
+						}
+						else if (line.contains("minecraft:enchanted_book") || line.startsWith("NBT:")) {
+							tooltip.remove(i);
+							i--;
+						}
+					}
+
 					if (!recipeRegistryName.getNamespace().equals("aoa3"))
 						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.by", TextFormatting.GRAY, new StringTextComponent(recipeRegistryName.getNamespace())));
-
-					if (Minecraft.getInstance().options.advancedItemTooltips || Screen.hasShiftDown())
-						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.id", TextFormatting.DARK_GRAY, new StringTextComponent(recipeRegistryName.toString())));
 				}
 			}));
 		}

@@ -15,7 +15,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
@@ -60,7 +59,7 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 		this.input = input;
 		this.ingredients = ingredients;
 		this.group = group;
-		this.infusionReq = MathHelper.clamp(infusionLevelReq, 1, 1000);
+		this.infusionReq = 1;//MathHelper.clamp(infusionLevelReq, 1, 1000);
 		boolean simple = true;
 
 		for (Ingredient ingredient : ingredients) {
@@ -85,7 +84,7 @@ public class InfusionRecipe implements IRecipe<InfusionTableContainer.InfusionIn
 		this.enchantment = enchantment;
 		this.ingredients = ingredients;
 		this.enchantmentLevel = level;
-		this.infusionReq = MathHelper.clamp(infusionLevelReq, 1, 1000);
+		this.infusionReq = 1;//MathHelper.clamp(infusionLevelReq, 1, 1000);
 		boolean simple = true;
 
 		for (Ingredient ingredient : ingredients) {

@@ -7,7 +7,17 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 10
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 13,
+          "name": "aoa3:everfight_staff"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "name": "aoa3:evermight_staff"
         },
         {
           "type": "minecraft:item",

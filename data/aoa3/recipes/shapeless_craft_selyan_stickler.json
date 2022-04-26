@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:bomb_launcher"
+    },
+    {
+      "item": "aoa3:selyan_banner"
+    }
+  ],
+  "result": {
+    "item": "aoa3:selyan_stickler"
+  }
+}

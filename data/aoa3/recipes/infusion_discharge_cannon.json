@@ -1,0 +1,32 @@
+{
+  "type": "aoa3:infusion",
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
+  "ingredients": [
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    {
+      "item": "minecraft:redstone"
+    },
+    {
+      "item": "aoa3:gemenyte"
+    },
+    {
+      "item": "aoa3:jewelyte"
+    },
+    {
+      "item": "aoa3:ornamyte"
+    }
+  ],
+  "result": {
+    "item": "aoa3:discharge_cannon"
+  }
+}

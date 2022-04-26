@@ -5040,6 +5040,7 @@
   "items.description.unbreakable": "Unbreakable",
   "items.description.vulcane.target": "Can only be used within 5 seconds of last attack taken",
   "items.description.vulcane.use": "Usable when at least 50 Rage has been accrued",
+  "jei.aoa.imbuing.enchants": "Enchants input item with:",
   "key.aoa3.abilityAction": "Activate Skill Ability",
   "key.aoa3.adventGui": "Toggle AoA Window",
   "key.aoa3.resources": "Toggle Resources Display",

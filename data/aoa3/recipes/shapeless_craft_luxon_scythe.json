@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "aoa3:dryads_blessing"
+    },
+    {
+      "item": "aoa3:luxon_banner"
+    }
+  ],
+  "result": {
+    "item": "aoa3:luxon_scythe"
+  }
+}

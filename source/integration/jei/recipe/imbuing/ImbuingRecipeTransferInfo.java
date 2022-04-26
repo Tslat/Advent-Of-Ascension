@@ -26,7 +26,7 @@ public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTa
 
 	@Override
 	public List<Slot> getRecipeSlots(InfusionTableContainer container) {
-		List<Slot> slots = new ArrayList<>(10);
+		List<Slot> slots = new ArrayList<>(9);
 
 		for (int i = 1; i <= 11; i++) {
 			slots.add(container.getSlot(i));

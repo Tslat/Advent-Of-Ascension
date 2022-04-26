@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "predicate": {
+        "type": "minecraft:dolphin"
+      },
+      "entity": "this"
+    }
+  ],
+  "tables": [
+    "aoa3:entities/dolphin"
+  ],
+  "type": "aoa3:roll_extra_tables"
+}

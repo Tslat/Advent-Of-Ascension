@@ -37,29 +37,6 @@
             }
           ],
           "name": "minecraft:oak_log"
-        },
-        {
-          "type": "minecraft:tag",
-          "weight": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 0.0,
-                "max": 34.0,
-                "type": "minecraft:uniform"
-              }
-            },
-            {
-              "function": "minecraft:looting_enchant",
-              "count": {
-                "min": 0.0,
-                "max": 10.0
-              }
-            }
-          ],
-          "name": "minecraft:logs",
-          "expand": true
         }
       ]
     }

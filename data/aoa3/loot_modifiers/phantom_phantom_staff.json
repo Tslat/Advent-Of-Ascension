@@ -1,0 +1,15 @@
+{
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "predicate": {
+        "type": "minecraft:phantom"
+      },
+      "entity": "this"
+    }
+  ],
+  "tables": [
+    "aoa3:entities/phantom"
+  ],
+  "type": "aoa3:roll_extra_tables"
+}
