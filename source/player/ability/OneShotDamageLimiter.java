@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -50,6 +51,9 @@ public class OneShotDamageLimiter extends AoAAbility.Instance {
 
 	@Override
 	public void handlePostIncomingAttack(LivingDamageEvent ev) {
+		if (ev.getSource() == DamageSource.OUT_OF_WORLD)
+			return;
+
 		LivingEntity player = ev.getEntityLiving();
 
 		if (player instanceof ServerPlayerEntity && player.getHealth() - ev.getAmount() <= 0 && player.getHealth() >= (minActivationHealth == 0 ? player.getMaxHealth() : minActivationHealth)) {
