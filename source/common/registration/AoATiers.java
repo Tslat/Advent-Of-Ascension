@@ -73,7 +73,7 @@ public final class AoATiers {
 		private float damageBonus;
 		private int level;
 		private int enchantmentValue;
-		private Supplier<Ingredient> repairIngredient = () -> null;
+		private Supplier<Ingredient> repairIngredient = () -> Ingredient.EMPTY;
 		private TagKey<Block> toolTier;
 
 		private List<Object> betterThan;
