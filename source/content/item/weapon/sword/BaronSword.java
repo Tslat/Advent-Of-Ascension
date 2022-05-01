@@ -7,9 +7,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class BaronSword extends BaseSword {
 	public BaronSword() {
-		super(ItemUtil.customItemTier(1600, AttackSpeed.NORMAL, 12.0f, 4, 10, null, null));
+		super(AoATiers.BARON);
 	}
 
 	@Override

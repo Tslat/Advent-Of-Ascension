@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "aoa3:ghoulish_block"
+      "item": "aoa3:ghoulish_ingot_block"
     }
   ],
   "result": {

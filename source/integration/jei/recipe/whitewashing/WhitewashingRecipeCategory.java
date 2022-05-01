@@ -12,7 +12,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.recipe.WhitewashingRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 

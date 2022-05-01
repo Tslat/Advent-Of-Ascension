@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.tool.pickaxe;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -17,8 +16,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.event.GlobalEvents;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -27,8 +27,7 @@ import java.util.List;
 
 public class OccultPickaxe extends BasePickaxe {
 	public OccultPickaxe() {
-		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_PICKAXE),
-				new Item.Properties().durability(3000).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
+		super(AoATiers.OCCULT, -2, AttackSpeed.PICKAXE, new Item.Properties().durability(AoATiers.OCCULT.getUses()).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
 	}
 
 	@Override

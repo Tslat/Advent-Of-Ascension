@@ -15,7 +15,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.common.container.DivineStationContainer;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
 
 import javax.annotation.Nullable;

@@ -6,7 +6,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.registries.RegistryObject;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;

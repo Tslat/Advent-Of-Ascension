@@ -82,6 +82,7 @@ public final class ScreenOverlayRenderer {
 
 		RenderSystem.disableDepthTest();
 		RenderSystem.depthMask(false);
+		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
@@ -98,6 +99,7 @@ public final class ScreenOverlayRenderer {
 
 		RenderSystem.depthMask(true);
 		RenderSystem.enableDepthTest();
+		RenderSystem.disableBlend();
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
 }

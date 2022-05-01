@@ -5,7 +5,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,9 +16,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.common.Tags;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.item.LootModifyingItem;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class SoulstonePickaxe extends BasePickaxe implements LootModifyingItem {
 	public SoulstonePickaxe() {
-		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_PICKAXE));
+		super(AoATiers.SOULSTONE, -2, AttackSpeed.PICKAXE);
 	}
 
 	@Override

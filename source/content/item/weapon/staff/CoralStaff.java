@@ -89,7 +89,7 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 	public void cast(Level world, ItemStack staff, LivingEntity caster, ArrayList<BlockPos> args) {
 		if (!world.isClientSide && caster instanceof Player) {
 			for (BlockPos pos : args) {
-				world.setBlock(pos, Blocks.BRAIN_CORAL.defaultBlockState(), 2);
+				world.setBlock(pos, Blocks.BRAIN_CORAL_BLOCK.defaultBlockState(), 2);
 			}
 
 			world.playSound(null, caster.getX(), caster.getY(), caster.getZ(), AoASounds.ITEM_REEF_STAFF_CAST.get(), SoundSource.PLAYERS, 1.0f, 1.0f);

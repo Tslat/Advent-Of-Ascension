@@ -19,7 +19,7 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.world.gen.feature.VanillaJsonFeature;
 import net.tslat.aoa3.content.world.genold.feature.features.trees.*;

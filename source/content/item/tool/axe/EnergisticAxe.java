@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -16,11 +15,12 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.resource.AoAResource;
-import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -29,7 +29,7 @@ import java.util.List;
 
 public class EnergisticAxe extends BaseAxe {
 	public EnergisticAxe() {
-		super(ItemUtil.customItemTier(2000, 11.0f, 11.5f, 6, 10, null, BlockTags.MINEABLE_WITH_AXE));
+		super(AoATiers.ENERGISTIC, 2f, AttackSpeed.AXE);
 	}
 
 	@Override

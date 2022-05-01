@@ -4,7 +4,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -17,9 +16,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -29,7 +28,7 @@ import java.util.Optional;
 
 public class EmberstoneShovel extends BaseShovel implements LootModifyingItem {
 	public EmberstoneShovel() {
-		super(ItemUtil.customItemTier(2000, 10.0f, 5.5f, 5, 10, AoAItems.EMBERSTONE_INGOT, BlockTags.MINEABLE_WITH_SHOVEL));
+		super(AoATiers.EMBERSTONE, -4f, AttackSpeed.SHOVEL);
 	}
 
 	@Override

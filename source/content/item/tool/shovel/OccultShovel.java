@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.item.tool.shovel;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -16,8 +16,7 @@ import java.util.List;
 
 public class OccultShovel extends BaseShovel {
 	public OccultShovel() {
-		super(ItemUtil.customItemTier(3000, 11.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_SHOVEL),
-				new Properties().durability(3000).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
+		super(AoATiers.OCCULT, -3.5f, AttackSpeed.SHOVEL, new Properties().durability(AoATiers.OCCULT.getUses()).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
 	}
 
 	@Override

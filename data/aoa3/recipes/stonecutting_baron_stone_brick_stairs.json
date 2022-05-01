@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "aoa3:baron_stone_bricks"
+  },
+  "result": "aoa3:baron_stone_brick_stairs",
+  "count": 1
+}

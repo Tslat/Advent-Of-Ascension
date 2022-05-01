@@ -8,18 +8,17 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.block.generation.log.LogBlock;
 import net.tslat.aoa3.util.ItemUtil;
 
-public class Chainsaw extends AxeItem {
+public class Chainsaw extends BaseAxe {
 	public Chainsaw() {
-		super(ItemUtil.customItemTier(2500, 18.0f, 4.0f, 2, 0, null, BlockTags.MINEABLE_WITH_AXE), 4.0f, -2F, new Properties().durability(2500).tab(AoAItemGroups.TOOLS));
+		super(AoATiers.CHAINSAW);
 	}
 
 	@Override

@@ -13,7 +13,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -22,8 +23,7 @@ import java.util.List;
 
 public class OccultAxe extends BaseAxe {
 	public OccultAxe() {
-		super(ItemUtil.customItemTier(3000, 11.0f, 11.5f, 6, 10, null, BlockTags.MINEABLE_WITH_AXE),
-				new Properties().durability(3000).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
+		super(AoATiers.OCCULT, 2f, AttackSpeed.AXE, new Properties().durability(AoATiers.OCCULT.getUses()).tab(AoAItemGroups.TOOLS).rarity(Rarity.RARE));
 	}
 
 	@Override

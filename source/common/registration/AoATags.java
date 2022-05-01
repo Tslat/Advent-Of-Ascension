@@ -84,7 +84,6 @@ public final class AoATags {
 	}
 
 	public static class Items {
-		public static final TagKey<Item> DIRT = tag("dirt");
 		public static final TagKey<Item> GRASS = tag("grass");
 
 		public static final TagKey<Item> BARONYTE_ORE = tag("ores/baronyte");

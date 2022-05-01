@@ -3,6 +3,7 @@ package net.tslat.aoa3.common.registration.item;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.item.weapon.blaster.*;
 import net.tslat.aoa3.content.item.weapon.bow.*;
 import net.tslat.aoa3.content.item.weapon.cannon.*;
@@ -18,7 +19,6 @@ import net.tslat.aoa3.content.item.weapon.sword.*;
 import net.tslat.aoa3.content.item.weapon.thrown.*;
 import net.tslat.aoa3.content.item.weapon.vulcane.*;
 import net.tslat.aoa3.library.constant.AttackSpeed;
-import net.tslat.aoa3.util.ItemUtil;
 
 import java.util.function.Supplier;
 
@@ -26,33 +26,33 @@ public final class AoAWeapons {
 	public static void init() {}
 
 	public static final RegistryObject<Item> BARON_SWORD = registerWeapon("baron_sword", BaronSword::new);
-	public static final RegistryObject<Item> BLOODFURY = registerWeapon("bloodfury", () -> new BaseSword(ItemUtil.customItemTier(1770, -2.2f, 13.0f, 4, 10, null, null)));
-	public static final RegistryObject<Item> BLOODSTONE_SWORD = registerWeapon("bloodstone_sword", () -> new BaseSword(ItemUtil.customItemTier(1800, AttackSpeed.NORMAL, 14.0f, 4, 16, AoAItems.BLOODSTONE, null)));
+	public static final RegistryObject<Item> BLOODFURY = registerWeapon("bloodfury", () -> new BaseSword(AoATiers.BLOODFURY, 0, AttackSpeed.forAttacksPerSecond(1.8f)));
+	public static final RegistryObject<Item> BLOODSTONE_SWORD = registerWeapon("bloodstone_sword", () -> new BaseSword(AoATiers.BLOODSTONE));
 	public static final RegistryObject<Item> CANDLEFIRE_SWORD = registerWeapon("candlefire_sword", CandlefireSword::new);
 	public static final RegistryObject<Item> CARAMEL_CARVER = registerWeapon("caramel_carver", CaramelCarver::new);
 	public static final RegistryObject<Item> CORALSTORM_SWORD = registerWeapon("coralstorm_sword", CoralstormSword::new);
 	public static final RegistryObject<Item> CREEPIFIED_SWORD = registerWeapon("creepified_sword", CreepifiedSword::new);
-	public static final RegistryObject<Item> CRYSTALLITE_SWORD = registerWeapon("crystallite_sword", () -> new BaseSword(ItemUtil.customItemTier(1700, -2.3f, 14.0f, 4, 10, AoAItems.CRYSTALLITE, null)));
-	public static final RegistryObject<Item> EMBERSTONE_SWORD = registerWeapon("emberstone_sword", () -> new BaseSword(ItemUtil.customItemTier(1800, AttackSpeed.NORMAL, 11.0f, 4, 10, AoAItems.EMBERSTONE_INGOT, null)));
+	public static final RegistryObject<Item> CRYSTALLITE_SWORD = registerWeapon("crystallite_sword", () -> new BaseSword(AoATiers.CRYSTALLITE, 0, AttackSpeed.forAttacksPerSecond(1.7f)));
+	public static final RegistryObject<Item> EMBERSTONE_SWORD = registerWeapon("emberstone_sword", EmberstoneSword::new);
 	public static final RegistryObject<Item> EXPLOCHRON_SWORD = registerWeapon("explochron_sword", ExplochronSword::new);
 	public static final RegistryObject<Item> FIREBORNE_SWORD = registerWeapon("fireborne_sword", FireborneSword::new);
 	public static final RegistryObject<Item> GUARDIANS_SWORD = registerWeapon("guardians_sword", GuardiansSword::new);
 	public static final RegistryObject<Item> HARVESTER_SWORD = registerWeapon("harvester_sword", HarvesterSword::new);
 	public static final RegistryObject<Item> HOLY_SWORD = registerWeapon("holy_sword", HolySword::new);
 	public static final RegistryObject<Item> ILLUSION_SWORD = registerWeapon("illusion_sword", IllusionSword::new);
-	public static final RegistryObject<Item> JADE_SWORD = registerWeapon("jade_sword", () -> new BaseSword(ItemUtil.customItemTier(800, AttackSpeed.NORMAL, 7.0f, 3, 11, AoAItems.JADE, null)));
+	public static final RegistryObject<Item> JADE_SWORD = registerWeapon("jade_sword", () -> new BaseSword(AoATiers.JADE));
 	public static final RegistryObject<Item> LEGBONE_SWORD = registerWeapon("legbone_sword", LegboneSword::new);
-	public static final RegistryObject<Item> LIGHTS_WAY = registerWeapon("lights_way", () -> new BaseSword(ItemUtil.customItemTier(2700, AttackSpeed.DOUBLE, 7.5f, 4, 10, null, null)));
-	public static final RegistryObject<Item> LIMONITE_SWORD = registerWeapon("limonite_sword", () -> new BaseSword(ItemUtil.customItemTier(400, AttackSpeed.NORMAL, 5.0f, 2, 3, AoAItems.LIMONITE_INGOT, null)));
+	public static final RegistryObject<Item> LIGHTS_WAY = registerWeapon("lights_way", () -> new BaseSword(AoATiers.LIGHTS_WAY, 0, AttackSpeed.DOUBLE));
+	public static final RegistryObject<Item> LIMONITE_SWORD = registerWeapon("limonite_sword", () -> new BaseSword(AoATiers.LIMONITE));
 	public static final RegistryObject<Item> NETHENGEIC_SWORD = registerWeapon("nethengeic_sword", NethengeicSword::new);
 	public static final RegistryObject<Item> PRIMAL_SWORD = registerWeapon("primal_sword", PrimalSword::new);
 	public static final RegistryObject<Item> ROCKBASHER_SWORD = registerWeapon("rockbasher_sword", RockbasherSword::new);
 	public static final RegistryObject<Item> ROCK_PICK_SWORD = registerWeapon("rock_pick_sword", RockPickSword::new);
 	public static final RegistryObject<Item> ROSIDIAN_SWORD = registerWeapon("rosidian_sword", RosidianSword::new);
 	public static final RegistryObject<Item> RUNIC_SWORD = registerWeapon("runic_sword", RunicSword::new);
-	public static final RegistryObject<Item> SHADOW_SWORD = registerWeapon("shadow_sword", () -> new BaseSword(ItemUtil.customItemTier(2300, AttackSpeed.NORMAL, 17.0f, 4, 10, null, null)));
+	public static final RegistryObject<Item> SHADOW_SWORD = registerWeapon("shadow_sword", () -> new BaseSword(AoATiers.SHADOW));
 	public static final RegistryObject<Item> SHROOMUS_SWORD = registerWeapon("shroomus_sword", ShroomusSword::new);
-	public static final RegistryObject<Item> SKELETAL_SWORD = registerWeapon("skeletal_sword", () -> new BaseSword(ItemUtil.customItemTier(2100, -2f, 10.5f, 4, 10, null, null)));
+	public static final RegistryObject<Item> SKELETAL_SWORD = registerWeapon("skeletal_sword", () -> new BaseSword(AoATiers.SKELETAL, 1, AttackSpeed.forAttacksPerSecond(2)));
 	public static final RegistryObject<Item> SUPREMACY_SWORD = registerWeapon("supremacy_sword", SupremacySword::new);
 	public static final RegistryObject<Item> SWEET_SWORD = registerWeapon("sweet_sword", SweetSword::new);
 	public static final RegistryObject<Item> TROLL_BASHER_AXE = registerWeapon("troll_basher_axe", TrollBasherAxe::new);

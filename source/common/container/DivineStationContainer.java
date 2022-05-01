@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;

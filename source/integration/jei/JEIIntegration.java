@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraftforge.fluids.FluidAttributes;
 import net.minecraftforge.fluids.FluidStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.recipe.*;

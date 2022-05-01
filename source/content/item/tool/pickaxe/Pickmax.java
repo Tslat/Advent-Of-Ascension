@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.tool.pickaxe;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +10,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayer;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Pickmax extends BasePickaxe {
 	public Pickmax() {
-		super(ItemUtil.customItemTier(3000, 8.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_PICKAXE));
+		super(AoATiers.PICKMAX, -2, AttackSpeed.PICKAXE);
 	}
 
 	@Override

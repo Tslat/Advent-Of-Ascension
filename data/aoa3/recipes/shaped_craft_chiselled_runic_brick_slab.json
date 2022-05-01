@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA"
+  ],
+  "key": {
+    "A": {
+      "item": "aoa3:chiselled_runic_stone_bricks"
+    }
+  },
+  "result": {
+    "item": "aoa3:chiselled_runic_brick_slab",
+    "count": 6
+  }
+}

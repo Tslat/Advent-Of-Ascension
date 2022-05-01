@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_wall_side",
   "textures": {
-    "wall": "aoa3:block/runic_construct_bricks"
+    "wall": "aoa3:block/runic_stone_bricks"
   }
 }

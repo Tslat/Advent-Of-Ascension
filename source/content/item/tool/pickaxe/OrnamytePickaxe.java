@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.item.tool.pickaxe;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class OrnamytePickaxe extends BasePickaxe {
 	public OrnamytePickaxe() {
-		super(ItemUtil.customItemTier(2750, 10.0f, 6.0f, 5, 14, null, BlockTags.MINEABLE_WITH_PICKAXE));
+		super(AoATiers.ORNAMYTE, -2, AttackSpeed.PICKAXE);
 	}
 
 	@Override

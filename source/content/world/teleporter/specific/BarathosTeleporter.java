@@ -2,7 +2,7 @@ package net.tslat.aoa3.content.world.teleporter.specific;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.AoATeleporter;
 
@@ -23,6 +23,6 @@ public class BarathosTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.BARON_BRICKS.get();
+		return AoABlocks.BARON_STONE_BRICKS.get();
 	}
 }

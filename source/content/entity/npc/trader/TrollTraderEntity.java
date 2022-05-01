@@ -8,8 +8,10 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -39,5 +41,10 @@ public class TrollTraderEntity extends AoATrader {
 	@Override
 	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap() {
 		return TRADES;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
 	}
 }

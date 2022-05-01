@@ -4,7 +4,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraftforge.registries.RegistryObject;
 
-public class AoAAttributes {
+public final class AoAAttributes {
 	public static void init() {}
 
 	public static final RegistryObject<Attribute> RANGED_ATTACK_DAMAGE = register("ranged_attack_damage", "aoa3.rangedAttackDamage", 0, 0, Double.MAX_VALUE, true);

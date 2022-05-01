@@ -5,9 +5,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class HarvesterSword extends BaseSword {
 	public HarvesterSword() {
-		super(ItemUtil.customItemTier(2400, AttackSpeed.NORMAL, 17.5f, 4, 10, null, null));
+		super(AoATiers.HARVESTER);
 	}
 
 	@Override

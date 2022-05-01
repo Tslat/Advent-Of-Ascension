@@ -1,17 +1,17 @@
 package net.tslat.aoa3.common.registration.item;
 
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.item.tool.axe.*;
 import net.tslat.aoa3.content.item.tool.hoe.DryadsBlessing;
 import net.tslat.aoa3.content.item.tool.misc.*;
 import net.tslat.aoa3.content.item.tool.pickaxe.*;
 import net.tslat.aoa3.content.item.tool.shovel.*;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import java.util.function.Supplier;
 
@@ -22,8 +22,8 @@ public final class AoATools {
 	public static final RegistryObject<BasePickaxe> ENERGISTIC_PICKAXE = registerTool("energistic_pickaxe", EnergisticPickaxe::new);
 	public static final RegistryObject<BasePickaxe> GEMCRACKER = registerTool("gemcracker", Gemcracker::new);
 	public static final RegistryObject<BasePickaxe> GOOFY_PICKAXE = registerTool("goofy_pickaxe", GoofyPickaxe::new);
-	public static final RegistryObject<BasePickaxe> JADE_PICKAXE = registerTool("jade_pickaxe", () -> new BasePickaxe(ItemUtil.customItemTier(950, 7.5f, 2.5f, 3, 10, AoAItems.JADE, BlockTags.MINEABLE_WITH_PICKAXE)));
-	public static final RegistryObject<BasePickaxe> LIMONITE_PICKAXE = registerTool("limonite_pickaxe", () -> new BasePickaxe(ItemUtil.customItemTier(196, 5.0f, 1.5f, 2, 3, AoAItems.LIMONITE_INGOT, BlockTags.MINEABLE_WITH_PICKAXE)));
+	public static final RegistryObject<BasePickaxe> JADE_PICKAXE = registerTool("jade_pickaxe", () -> new BasePickaxe(AoATiers.JADE, -2, AttackSpeed.PICKAXE));
+	public static final RegistryObject<BasePickaxe> LIMONITE_PICKAXE = registerTool("limonite_pickaxe", () -> new BasePickaxe(AoATiers.LIMONITE, -2, AttackSpeed.PICKAXE));
 	public static final RegistryObject<BasePickaxe> OCCULT_PICKAXE = registerTool("occult_pickaxe", OccultPickaxe::new);
 	public static final RegistryObject<BasePickaxe> ORNAMYTE_PICKAXE = registerTool("ornamyte_pickaxe", OrnamytePickaxe::new);
 	public static final RegistryObject<BasePickaxe> PICKMAX = registerTool("pickmax", Pickmax::new);
@@ -33,8 +33,8 @@ public final class AoATools {
 	public static final RegistryObject<BaseShovel> EMBERSTONE_SHOVEL = registerTool("emberstone_shovel", EmberstoneShovel::new);
 	public static final RegistryObject<BaseShovel> ENERGISTIC_SHOVEL = registerTool("energistic_shovel", EnergisticShovel::new);
 	public static final RegistryObject<BaseShovel> GOOFY_SHOVEL = registerTool("goofy_shovel", GoofyShovel::new);
-	public static final RegistryObject<BaseShovel> JADE_SHOVEL = registerTool("jade_shovel", () -> new BaseShovel(ItemUtil.customItemTier(950, 7.5f, 2.5f, 3, 10, AoAItems.JADE, BlockTags.MINEABLE_WITH_SHOVEL)));
-	public static final RegistryObject<BaseShovel> LIMONITE_SHOVEL = registerTool("limonite_shovel", () -> new BaseShovel(ItemUtil.customItemTier(196, 5.0f, 1.5f, 2, 3, AoAItems.LIMONITE_INGOT, BlockTags.MINEABLE_WITH_SHOVEL)));
+	public static final RegistryObject<BaseShovel> JADE_SHOVEL = registerTool("jade_shovel", () -> new BaseShovel(AoATiers.JADE, -1.5f, AttackSpeed.SHOVEL));
+	public static final RegistryObject<BaseShovel> LIMONITE_SHOVEL = registerTool("limonite_shovel", () -> new BaseShovel(AoATiers.LIMONITE, -1.5f, AttackSpeed.SHOVEL));
 	public static final RegistryObject<BaseShovel> OCCULT_SHOVEL = registerTool("occult_shovel", OccultShovel::new);
 	public static final RegistryObject<BaseShovel> ORNAMYTE_SHOVEL = registerTool("ornamyte_shovel", OrnamyteShovel::new);
 	public static final RegistryObject<BaseShovel> SKELETAL_SHOVEL = registerTool("skeletal_shovel", SkeletalShovel::new);
@@ -43,8 +43,8 @@ public final class AoATools {
 	public static final RegistryObject<BaseAxe> EMBERSTONE_AXE = registerTool("emberstone_axe", EmberstoneAxe::new);
 	public static final RegistryObject<BaseAxe> ENERGISTIC_AXE = registerTool("energistic_axe", EnergisticAxe::new);
 	public static final RegistryObject<BaseAxe> GOOFY_AXE = registerTool("goofy_axe", GoofyAxe::new);
-	public static final RegistryObject<BaseAxe> JADE_AXE = registerTool("jade_axe", () -> new BaseAxe(ItemUtil.customItemTier(950, 7.5f, 6.5f, 3, 10, AoAItems.JADE, BlockTags.MINEABLE_WITH_AXE)));
-	public static final RegistryObject<BaseAxe> LIMONITE_AXE = registerTool("limonite_axe", () -> new BaseAxe(ItemUtil.customItemTier(196, 5.0f, 6.5f, 2, 3, AoAItems.LIMONITE_INGOT, BlockTags.MINEABLE_WITH_AXE)));
+	public static final RegistryObject<BaseAxe> JADE_AXE = registerTool("jade_axe", () -> new BaseAxe(AoATiers.JADE, 2f, AttackSpeed.AXE));
+	public static final RegistryObject<BaseAxe> LIMONITE_AXE = registerTool("limonite_axe", () -> new BaseAxe(AoATiers.LIMONITE, 2.5f, AttackSpeed.forAttacksPerSecond(0.95f)));
 	public static final RegistryObject<BaseAxe> OCCULT_AXE = registerTool("occult_axe", OccultAxe::new);
 	public static final RegistryObject<BaseAxe> ORNAMYTE_AXE = registerTool("ornamyte_axe", OrnamyteAxe::new);
 	public static final RegistryObject<BaseAxe> SKELETAL_AXE = registerTool("skeletal_axe", SkeletalAxe::new);

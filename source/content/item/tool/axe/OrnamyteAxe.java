@@ -7,8 +7,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.block.generation.log.LogBlock;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class OrnamyteAxe extends BaseAxe {
 	public OrnamyteAxe() {
-		super(ItemUtil.customItemTier(2750, 10.0f, 11.5f, 5, 14, null, BlockTags.MINEABLE_WITH_AXE));
+		super(AoATiers.ORNAMYTE, 4f, AttackSpeed.AXE);
 	}
 
 	@Override

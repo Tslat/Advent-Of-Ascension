@@ -4,13 +4,22 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 
 public class BaseAxe extends AxeItem {
-	public BaseAxe(Tier stats) {
-		this(stats, new Properties().durability(stats.getUses()).tab(AoAItemGroups.TOOLS));
+	public BaseAxe(Tier tier) {
+		this(tier, 0, AttackSpeed.AXE);
 	}
 
-	public BaseAxe(Tier stats, Item.Properties properties) {
-		super(stats, 1.5F, -3F, properties);
+	public BaseAxe(Tier tier, Item.Properties properties) {
+		this(tier, 0, AttackSpeed.AXE, properties);
+	}
+
+	public BaseAxe(Tier tier, float damageMod, float digSpeedMod) {
+		this(tier, damageMod, digSpeedMod, new Properties().durability(tier.getUses()).tab(AoAItemGroups.TOOLS));
+	}
+
+	public BaseAxe(Tier tier, float damageMod, float speedMod, Item.Properties properties) {
+		super(tier, damageMod, speedMod, properties);
 	}
 }

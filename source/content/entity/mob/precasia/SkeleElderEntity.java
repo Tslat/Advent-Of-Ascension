@@ -13,7 +13,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.block.functional.altar.ArmyBlock;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;

@@ -7,8 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.library.constant.AttackSpeed;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class LegboneSword extends BaseSword {
 	public LegboneSword() {
-		super(ItemUtil.customItemTier(2000, AttackSpeed.NORMAL, 12.5f, 4, 10, null, null));
+		super(AoATiers.LEGBONE);
 	}
 
 	@Override

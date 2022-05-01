@@ -20,10 +20,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -32,7 +32,7 @@ import java.util.List;
 
 public class GuardiansSword extends BaseSword {
 	public GuardiansSword() {
-		super(ItemUtil.customItemTier(2050, AttackSpeed.NORMAL, 15.0f, 4, 10, null, null));
+		super(AoATiers.GUARDIAN);
 	}
 
 	@Override
@@ -116,7 +116,7 @@ public class GuardiansSword extends BaseSword {
 			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
 			if (cap.getValue() > 0)
-				buff = 5;
+				buff = 8;
 
 			ItemUtil.setAttribute(attributeMap, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_UUID, getDamage() + buff);
 		}

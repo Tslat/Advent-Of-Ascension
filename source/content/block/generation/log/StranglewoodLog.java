@@ -8,7 +8,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 
 public class StranglewoodLog extends LogBlock {
 	public static final VoxelShape VERTICAL_AABB = Shapes.create(new AABB(0.001D, 0.0D, 0.001D, 0.999D, 1.0D, 0.999D));

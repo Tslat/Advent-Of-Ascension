@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 	public EmberstoneAxe() {
-		super(ItemUtil.customItemTier(2000, 10.0f, 11f, 5, 10, AoAItems.EMBERSTONE_INGOT, BlockTags.MINEABLE_WITH_AXE));
+		super(AoATiers.EMBERSTONE, 1.5f, AttackSpeed.AXE);
 	}
 
 	@Override

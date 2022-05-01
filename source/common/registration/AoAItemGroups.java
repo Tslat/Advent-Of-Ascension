@@ -3,6 +3,7 @@ package net.tslat.aoa3.common.registration;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoATools;
@@ -34,7 +35,7 @@ public final class AoAItemGroups {
 	public static final CreativeModeTab AMMUNITION = new AoAItemGroup("AoA Ammunition", "ammunition", () -> new ItemStack(AoAItems.LIMONITE_BULLET.get()));
 	public static final CreativeModeTab TABLETS = new AoAItemGroup("AoA Tablets", "tablets", () -> new ItemStack(AoAItems.AGILITY_TABLET.get()));
 	public static final CreativeModeTab GENERATION_BLOCKS = new AoAItemGroup("AoA Worldgen Blocks", "generation", () -> new ItemStack(AoABlocks.LELYETIAN_GRASS.get()));
-	public static final CreativeModeTab DECORATION_BLOCKS = new AoAItemGroup("AoA Decorative Blocks", "decoration", () -> new ItemStack(AoABlocks.BARON_BRICKS.get()));
+	public static final CreativeModeTab DECORATION_BLOCKS = new AoAItemGroup("AoA Decorative Blocks", "decoration", () -> new ItemStack(AoABlocks.BARON_STONE_BRICKS.get()));
 	public static final CreativeModeTab FUNCTIONAL_BLOCKS = new AoAItemGroup("AoA Functional Blocks", "functional", () -> new ItemStack(AoABlocks.SHADOW_ALTAR.get()));
 	public static final CreativeModeTab BANNERS = new AoAItemGroup("AoA Banners", "banners", () -> new ItemStack(AoABlocks.ANCIENT_BANNER.get()));
 

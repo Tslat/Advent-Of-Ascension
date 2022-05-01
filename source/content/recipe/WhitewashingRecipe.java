@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 
 public class WhitewashingRecipe implements Recipe<Inventory> {
 	private final RecipeType<WhitewashingRecipe> RECIPE_TYPE = new RecipeType<>() {

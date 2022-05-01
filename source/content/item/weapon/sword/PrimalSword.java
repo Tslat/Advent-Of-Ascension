@@ -11,9 +11,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
-import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -23,7 +23,7 @@ import java.util.List;
 
 public class PrimalSword extends BaseSword {
 	public PrimalSword() {
-		super(ItemUtil.customItemTier(1960, AttackSpeed.NORMAL, 13.0f, 4, 10, null, null));
+		super(AoATiers.PRIMAL);
 	}
 
 	@Override

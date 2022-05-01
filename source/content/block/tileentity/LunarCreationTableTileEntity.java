@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoABlockEntities;
+import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 
 import javax.annotation.Nullable;
 import java.util.List;

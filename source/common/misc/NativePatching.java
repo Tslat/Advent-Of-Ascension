@@ -3,7 +3,7 @@ package net.tslat.aoa3.common.misc;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.level.block.ComposterBlock;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
 public class NativePatching {

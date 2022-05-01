@@ -9,9 +9,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class CaramelCarver extends BaseSword {
 	public CaramelCarver() {
-		super(ItemUtil.customItemTier(1900, AttackSpeed.NORMAL, 15.5f, 4, 10, null, null));
+		super(AoATiers.CARAMEL_CARVER);
 	}
 
 	@Override

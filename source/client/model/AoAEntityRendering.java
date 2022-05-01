@@ -571,6 +571,21 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> ZHINX = new EntityRendererPackage<>(AoAMobs.ZHINX).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZORP = new EntityRendererPackage<>(AoAMobs.ZORP).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 
+	public static final EntityRendererPackage<?> GORB_ARMS_DEALER = new EntityRendererPackage<>(AoANpcs.GORB_ARMS_DEALER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> GORB_CITIZEN = new EntityRendererPackage<>(AoANpcs.GORB_CITIZEN).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> GORB_ENGINEER = new EntityRendererPackage<>(AoANpcs.GORB_ENGINEER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> LELYETIAN_BANKER = new EntityRendererPackage<>(AoANpcs.LELYETIAN_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> LELYETIAN_TRADER = new EntityRendererPackage<>(AoANpcs.LELYETIAN_TRADER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> PRIMORDIAL_BANKER = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> STORE_KEEPER = new EntityRendererPackage<>(AoANpcs.STORE_KEEPER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> ZAL_BANKER = new EntityRendererPackage<>(AoANpcs.ZAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> ZAL_CHILD = new EntityRendererPackage<>(AoANpcs.ZAL_CHILD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> ZAL_CITIZEN = new EntityRendererPackage<>(AoANpcs.ZAL_CITIZEN).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> ZAL_GROCER = new EntityRendererPackage<>(AoANpcs.ZAL_GROCER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> ZAL_HERBALIST = new EntityRendererPackage<>(AoANpcs.ZAL_HERBALIST).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> ZAL_SPELLBINDER = new EntityRendererPackage<>(AoANpcs.ZAL_SPELLBINDER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> ZAL_VENDOR = new EntityRendererPackage<>(AoANpcs.ZAL_VENDOR).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+
 	public static final EntityRendererPackage<?> CREEP_COW = new EntityRendererPackage<>(AoAAnimals.CREEP_COW).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ELKANYNE = new EntityRendererPackage<>(AoAAnimals.ELKANYNE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> HALYCON = new EntityRendererPackage<>(AoAAnimals.HALYCON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

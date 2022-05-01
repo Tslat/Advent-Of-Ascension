@@ -22,7 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.player.ClientPlayerDataManager;

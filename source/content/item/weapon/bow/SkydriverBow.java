@@ -7,7 +7,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;

@@ -27,6 +27,8 @@ import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.*;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.block.AoABlockEntities;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -67,9 +69,9 @@ public final class AoARegistries {
 
 	public static final ActionableDeferredRegister<Feature<?>> FEATURES = new ActionableDeferredRegister<>(ForgeRegistries.Keys.FEATURES, AoAFeatures::init);
 
-	public static final ActionableDeferredRegister<AoASkill> AOA_SKILLS = new ActionableDeferredRegister<AoASkill>(ResourceKey.createRegistryKey(AdventOfAscension.id("aoaskills")), AoASkills::init);
-	public static final ActionableDeferredRegister<AoAResource> AOA_RESOURCES = new ActionableDeferredRegister<AoAResource>(ResourceKey.createRegistryKey(AdventOfAscension.id("aoaresources")), AoAResources::init);
-	public static final ActionableDeferredRegister<AoAAbility> AOA_ABILITIES = new ActionableDeferredRegister<AoAAbility>(ResourceKey.createRegistryKey(AdventOfAscension.id("aoaabilities")), AoAAbilities::init);
+	public static final ActionableDeferredRegister<AoASkill> AOA_SKILLS = new ActionableDeferredRegister<AoASkill>(ResourceKey.createRegistryKey(AdventOfAscension.id("skills")), AoASkills::init);
+	public static final ActionableDeferredRegister<AoAResource> AOA_RESOURCES = new ActionableDeferredRegister<AoAResource>(ResourceKey.createRegistryKey(AdventOfAscension.id("resources")), AoAResources::init);
+	public static final ActionableDeferredRegister<AoAAbility> AOA_ABILITIES = new ActionableDeferredRegister<AoAAbility>(ResourceKey.createRegistryKey(AdventOfAscension.id("abilities")), AoAAbilities::init);
 
 	public static void init(IEventBus modEventBus) {
 		BLOCKS.setup(modEventBus);

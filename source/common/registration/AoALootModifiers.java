@@ -7,7 +7,7 @@ import net.tslat.aoa3.content.loottable.modifier.*;
 
 import java.util.function.Supplier;
 
-public class AoALootModifiers {
+public final class AoALootModifiers {
 	public static void init() {}
 
 	public static final RegistryObject<GlobalLootModifierSerializer<RollExtraTablesLootModifier>> ROLL_EXTRA_TABLES = registerSerializer("roll_extra_tables", RollExtraTablesLootModifier.Serializer::new);

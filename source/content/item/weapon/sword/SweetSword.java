@@ -9,8 +9,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.common.registration.AoATags;
-import net.tslat.aoa3.library.constant.AttackSpeed;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -23,7 +22,7 @@ public class SweetSword extends BaseSword {
 	private static boolean populated = false;
 
 	public SweetSword() {
-		super(ItemUtil.customItemTier(1850, AttackSpeed.NORMAL, 15.0f, 4, 10, null, null));
+		super(AoATiers.SWEET);
 	}
 
 	@Override

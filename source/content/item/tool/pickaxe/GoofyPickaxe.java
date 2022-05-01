@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.tool.pickaxe;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -13,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -23,7 +22,7 @@ public class GoofyPickaxe extends BasePickaxe {
 	private final Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
 
 	public GoofyPickaxe() {
-		super(ItemUtil.customItemTier(1500, 8.0f, -1f, 4, 10, null, BlockTags.MINEABLE_WITH_PICKAXE));
+		super(AoATiers.GOOFY);
 
 		attributeModifiers.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Tool modifier", -1, AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}

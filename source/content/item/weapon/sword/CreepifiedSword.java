@@ -8,8 +8,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.library.constant.AttackSpeed;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -18,7 +17,7 @@ import java.util.List;
 
 public class CreepifiedSword extends BaseSword {
 	public CreepifiedSword() {
-		super(ItemUtil.customItemTier(2000, AttackSpeed.NORMAL, 13.5f, 4, 10, null, null));
+		super(AoATiers.CREEPIFIED);
 	}
 
 	@Override

@@ -20,6 +20,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import javax.annotation.Nullable;
 import java.util.Map;
@@ -30,14 +31,22 @@ public class BaseSword extends SwordItem {
 	protected final float dmg;
 	protected final double speed;
 
-	public BaseSword(Tier itemStats) {
-		this(itemStats, new Item.Properties().durability(itemStats.getUses()).tab(AoAItemGroups.SWORDS));
+	public BaseSword(Tier tier) {
+		this(tier, 0, AttackSpeed.SWORD);
 	}
 
 	public BaseSword(Tier itemStats, Item.Properties properties) {
-		super(itemStats, 0, itemStats.getSpeed(), properties);
-		this.dmg = itemStats.getAttackDamageBonus();
-		this.speed = itemStats.getSpeed();
+		this(itemStats, 0, AttackSpeed.SWORD, properties);
+	}
+
+	public BaseSword(Tier tier, int damageMod, float attackSpeed) {
+		this(tier, damageMod, attackSpeed, new Item.Properties().durability(tier.getUses()).tab(AoAItemGroups.SWORDS));
+	}
+
+	public BaseSword(Tier tier, int damageMod, float attackSpeed, Item.Properties properties) {
+		super(tier, damageMod, attackSpeed, properties);
+		this.dmg = damageMod + tier.getAttackDamageBonus();
+		this.speed = attackSpeed;
 
 		attributeModifiers = buildDefaultAttributes();
 	}

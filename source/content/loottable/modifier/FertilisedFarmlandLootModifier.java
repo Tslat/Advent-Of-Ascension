@@ -18,7 +18,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
-import net.tslat.aoa3.common.registration.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.misc.FertilisedFarmland;
 import net.tslat.aoa3.util.ItemUtil;
 

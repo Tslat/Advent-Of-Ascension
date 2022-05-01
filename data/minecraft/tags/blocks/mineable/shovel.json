@@ -24,6 +24,7 @@
     "aoa3:faded_grass",
     "aoa3:fungal_grass",
     "aoa3:greckon_grass",
+    "aoa3:inverted_lelyetian_grass",
     "aoa3:irograss",
     "aoa3:lelyetian_grass",
     "aoa3:lunalyte_grass",
@@ -32,6 +33,7 @@
     "aoa3:precasian_grass",
     "aoa3:runic_grass",
     "aoa3:weightless_grass",
+    "aoa3:fertilised_farmland",
     "aoa3:toxic_block"
   ]
 }

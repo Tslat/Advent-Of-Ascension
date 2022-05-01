@@ -19,8 +19,10 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.item.LootModifyingItem;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
@@ -28,7 +30,7 @@ import java.util.List;
 
 public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 	public SoulstoneShovel() {
-		super(ItemUtil.customItemTier(2000, 11.0f, 6.0f, 6, 10, null, BlockTags.MINEABLE_WITH_SHOVEL));
+		super(AoATiers.SOULSTONE, -3.5f, AttackSpeed.SHOVEL);
 	}
 
 	@Override

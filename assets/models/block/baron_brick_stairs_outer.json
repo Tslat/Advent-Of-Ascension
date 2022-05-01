@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "side": "aoa3:block/baron_bricks",
-    "bottom": "aoa3:block/baron_bricks",
-    "top": "aoa3:block/baron_bricks"
-  }
-}

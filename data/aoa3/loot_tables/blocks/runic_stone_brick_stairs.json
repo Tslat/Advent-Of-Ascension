@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:survives_explosion"
+            }
+          ],
+          "name": "aoa3:runic_stone_brick_stairs"
+        }
+      ]
+    }
+  ]
+}
