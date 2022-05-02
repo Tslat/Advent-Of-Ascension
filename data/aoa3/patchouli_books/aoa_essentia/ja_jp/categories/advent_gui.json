@@ -1,0 +1,6 @@
+{
+  "name": "Advent GUI",
+  "description": " $(thing)Advent GUI$()は$(aoa)が使用する主要なGUIで、Mod自体のハブの役割を果たします。",
+  "icon": "minecraft:filled_map",
+  "parent": "aoa3:interfaces"
+}

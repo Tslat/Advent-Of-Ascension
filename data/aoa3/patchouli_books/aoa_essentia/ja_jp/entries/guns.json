@@ -1,0 +1,31 @@
+{
+  "name": "銃",
+  "category": "aoa3:weapons",
+  "icon": "aoa3:squad_gun",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "guns",
+      "text": "$(thing)銃$()は、$(l:aoa3:bows#bows)弓$(/l)の現代版です。高い弾薬コストと引き換えに、はるかに高い連射速度と、中程度のダメージを与えます。$(br2)それぞれの$(thing)銃$()は対応する弾薬があるので、使う前に必ず確認をしましょう。",
+      "title": "銃"
+    },
+    {
+      "type": "patchouli:text",
+      "text": " $(thing)銃$(), を射撃するには、必要な弾薬（ツールチップに表示されます）を少なくとも１つ持っていることを確認し、メインハンドに持ったまま右クリックします。$(br2) $(thing)銃$()にはそれぞれに発射速度や反動などの特性があるため、使用する前に試し撃ちをするとよいでしょう。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "$(thing)銃$()は弾薬を消費し、高速で正確な弾丸を放ち、急速なダメージを与える。",
+      "title": "銃",
+      "item": "aoa3:squad_gun"
+    },
+    {
+      "type": "patchouli:link",
+      "text": "$(aoa)の$(thing)銃$()のさらに詳しい情報は$(thing)公式Wiki$()を参照してください。",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Guns",
+      "link_text": "AoA Wiki"
+    }
+  ],
+  "sortnum": 5
+}

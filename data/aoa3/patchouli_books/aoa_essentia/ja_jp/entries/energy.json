@@ -1,0 +1,24 @@
+{
+  "name": "エネルギー",
+  "category": "aoa3:resources",
+  "icon": "aoa3:patchouli/images/icons/energy_icon.png",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "energy",
+      "text": "$(thing)エネルギー$()は、行動をつかさどる資源の一種です。$(br)特殊な行動には$(thing)エネルギー$()を消費します。$(br2) $(thing)エネルギー$()は、時間経過にて速いペースで自然回復します。",
+      "title": "エネルギー"
+    },
+    {
+      "type": "patchouli:text",
+      "text": " $(thing)エネルギー$()を完全に消費したり、ダメージを受けると$(thing)エネルギー$()の自然回復が停止する点に注意が必要です。$(br)特に、完全に消費した際には再生にかなりの時間を要します。"
+    },
+    {
+      "type": "patchouli:link",
+      "text": "さらに詳しい情報は公式Wikiを参照してください。",
+      "title": "AoA Wiki",
+      "url": "https://adventofascension.fandom.com/wiki/Energy",
+      "link_text": "公式Wiki"
+    }
+  ]
+}

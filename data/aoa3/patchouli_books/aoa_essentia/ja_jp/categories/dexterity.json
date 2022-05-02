@@ -1,0 +1,6 @@
+{
+  "name": "機敏スキル",
+  "description": "$(thing)機敏スキル$()はプレイヤーの移動に関するスキルです。$(br2)レベルが上がると、移動能力が向上し、敵を出し抜く力も得られます。",
+  "icon": "aoa3:textures/gui/aoaskill/dexterity.png",
+  "parent": "aoa3:skills"
+}

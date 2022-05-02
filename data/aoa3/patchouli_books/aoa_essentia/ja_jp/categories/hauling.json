@@ -1,0 +1,6 @@
+{
+  "name": "漁労スキル",
+  "description": "$(thing)漁労スキル$()は、水中の生物と戦利品を釣り上げるためのスキルです。$(br2)レベルが上がれば、より多くの漁の手段、より多くの報酬にアクセスできます。$(br2)$(l)注意：$() このガイドはModのデフォルト設定をベースにしているため、ほかのModPackやDatapackによって、情報の正確性に影響が出ることがあります。",
+  "icon": "aoa3:textures/gui/aoaskill/hauling.png",
+  "parent": "aoa3:skills"
+}

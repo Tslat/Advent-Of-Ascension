@@ -1,0 +1,6 @@
+{
+  "name": "抽出スキル",
+  "description": "$(thing)抽出スキル$()は、資源を入手することに関するスキルです。$(br2)このスキルをレベルアップさせると、資源採取の結果が良くなったり、道具の使用時間が短くなったりします。",
+  "icon": "aoa3:textures/gui/aoaskill/extraction.png",
+  "parent": "aoa3:skills"
+}

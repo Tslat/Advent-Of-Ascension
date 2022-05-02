@@ -1,0 +1,21 @@
+{
+  "name": "リソースHUD",
+  "category": "aoa3:interfaces",
+  "icon": "aoa3:patchouli/images/icons/resources_icon.png",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "resources_hud",
+      "text": " $(thing)リソースHUD$()は各種消費リソースの残量を表示するインターフェイスです。$(br2)このインターフェイスは初めは非表示になっており、$(k:aoa3.resources)で表示・非表示を切り替えることができます。",
+      "title": "リソースHUD"
+    },
+    {
+      "type": "patchouli:text",
+      "text": " デフォルトでは、$(thing)インターフェイス$() は画面の右上に表示され、水平に整列されています。$(br)これは$(thing)hudResourcesHorizontal$() オプションで並べ替えたり、 $(thing)hudResourcesPosition$() オプションで表示位置を変更することができます。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "画面右上に $(thing)インターフェイス$()が表示されていて、$(thing)「HUDの位置のオフセットを無効にする」$()オプションが$(thing)有効$()になっている場合、ポーションの効果を受けた際、HUDが自動的に下にスライドされます。"
+    }
+  ]
+}

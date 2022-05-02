@@ -1,0 +1,6 @@
+{
+  "name": "吹き込みスキル",
+  "description": "$(thing)吹き込みスキル$() は、アイテムに宿る力をコントロールするスキルです。$(br2)レベルを上げると、より強力なエンチャントや能力にアクセスできるようになります。",
+  "icon": "aoa3:textures/gui/aoaskill/imbuing.png",
+  "parent": "aoa3:skills"
+}

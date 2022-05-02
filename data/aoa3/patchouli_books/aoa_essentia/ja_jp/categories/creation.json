@@ -1,0 +1,6 @@
+{
+  "name": "創造スキル",
+  "description": "$(thing)創造スキル$()は様々な仕事を手伝ってくれる生き物を召喚し、手なずけることを中心としたスキルです。",
+  "icon": "aoa3:textures/gui/aoaskill/creation.png",
+  "parent": "aoa3:skills"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "プレイヤータブ",
+  "category": "aoa3:advent_gui",
+  "icon": "minecraft:bone",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "player_tab",
+      "text": "$(thing)プレイヤータブ$()は、$(l:aoa3:advent_gui_base)Advent GUI$(/l)を開いたときのデフォルトのタブです。$(br)これにはプレイヤーの$(l:aoa3:skills_overview)スキル$(/l)の表示が含まれています。",
+      "title": "プレイヤータブ"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "スキルをクリックすると専用ウィンドウが開き、詳細が表示されます。$(br)専用ウィンドウには、そのスキルの現在XP、次のレベルへの必要XP、そのスキルに適用される$(l:aoa3:abilities)アビリティ$(/l)のリストが表示されます。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "能力のリストに表示されているアビリティをクリックすると、その能力の有効・無効化を切り替えることができます。$(br)能力を無効にすると、与えられているボーナスがなくなったり、ゲームに影響を与えなくなります。$(br2)レベルが100に到達すると、$(l:aoa3:cycles)サイクル$(/l)ボタンが使用できるようになります。"
+    }
+  ],
+  "sortnum": 1
+}
