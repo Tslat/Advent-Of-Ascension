@@ -14,6 +14,7 @@ public final class AoAAnimations {
 	public static final AnimationBuilder EAT = new AnimationBuilder().addAnimation("misc.eat", false);
 	public static final AnimationBuilder SUCCEED = new AnimationBuilder().addAnimation("misc.succeed", false);
 	public static final AnimationBuilder SPAWN = new AnimationBuilder().addAnimation("misc.spawn", false);
+	public static final AnimationBuilder INTERACT = new AnimationBuilder().addAnimation("misc.interact", false);
 
 	public static final AnimationBuilder WALK = new AnimationBuilder().addAnimation("move.walk", true);
 	public static final AnimationBuilder RUN = new AnimationBuilder().addAnimation("move.run", true);

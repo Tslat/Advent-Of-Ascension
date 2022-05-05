@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "XXX",
+    "XXX",
     "XXX"
   ],
   "key": {
     "X": {
-      "item": "aoa3:runic_stone_bricks"
+      "tag": "forge:raw_materials/limonite"
     }
   },
   "result": {
-    "item": "aoa3:runic_construct_brick_wall",
-    "count": 6
+    "item": "aoa3:raw_limonite_block"
   }
 }

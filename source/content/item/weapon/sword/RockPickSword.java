@@ -1,15 +1,16 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.common.TierSortingRegistry;
 import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -23,9 +24,23 @@ public class RockPickSword extends BaseSword {
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
+		return state.is(BlockTags.MINEABLE_WITH_PICKAXE) ? AoATiers.ROCK_PICK.getSpeed() : 1;
+	}
 
-		return material != Material.METAL && material != Material.HEAVY_METAL && material != Material.STONE ? super.getDestroySpeed(stack, state) : AoATiers.ROCK_PICK.getSpeed();
+	@Override
+	public boolean isCorrectToolForDrops(ItemStack stack, BlockState state) {
+		if (TierSortingRegistry.isTierSorted(getTier()))
+			return TierSortingRegistry.isCorrectTierForDrops(getTier(), state) && state.is(BlockTags.MINEABLE_WITH_PICKAXE);
+
+		int tier = this.getTier().getLevel();
+
+		if (tier < 3 && state.is(BlockTags.NEEDS_DIAMOND_TOOL))
+			return false;
+
+		if (tier < 2 && state.is(BlockTags.NEEDS_IRON_TOOL))
+			return false;
+
+		return (tier >= 1 || !state.is(BlockTags.NEEDS_STONE_TOOL)) && state.is(BlockTags.MINEABLE_WITH_PICKAXE);
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -24,7 +24,7 @@ public class LunarGreatblade extends BaseGreatblade {
 	private final double maxDmg = 37.5f;
 
 	public LunarGreatblade() {
-		super(12.5f, AttackSpeed.GREATBLADE, 1850);
+		super(AoATiers.LUNAR_GREATBLADE);
 	}
 
 	@Override

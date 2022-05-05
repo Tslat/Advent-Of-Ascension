@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class NoxiousGreatblade extends BaseGreatblade {
 	public NoxiousGreatblade() {
-		super(23.0f, AttackSpeed.GREATBLADE, 1580);
+		super(AoATiers.NOXIOUS_GREATBLADE);
 	}
 
 	@Override

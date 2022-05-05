@@ -58,7 +58,7 @@ public final class AoARegistries {
 	public static final ActionableDeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = new ActionableDeferredRegister<>(() -> ForgeRegistries.BLOCK_ENTITIES, AoABlockEntities::init);
 	public static final ActionableDeferredRegister<SoundEvent> SOUNDS = new ActionableDeferredRegister<>(() -> ForgeRegistries.SOUND_EVENTS, AoASounds::init);
 	public static final ActionableDeferredRegister<Enchantment> ENCHANTMENTS = new ActionableDeferredRegister<>(() -> ForgeRegistries.ENCHANTMENTS, AoAEnchantments::init);
-	public static final ActionableDeferredRegister<ParticleType<?>> PARTICLES = new ActionableDeferredRegister<>(() -> ForgeRegistries.PARTICLE_TYPES, clientSide(AoAParticleTypes::init));
+	public static final ActionableDeferredRegister<ParticleType<?>> PARTICLES = new ActionableDeferredRegister<>(() -> ForgeRegistries.PARTICLE_TYPES, AoAParticleTypes::init);
 	public static final ActionableDeferredRegister<MenuType<?>> MENUS = new ActionableDeferredRegister<>(() -> ForgeRegistries.CONTAINERS, AoAContainers::init);
 	public static final ActionableDeferredRegister<RecipeSerializer<?>> RECIPES = new ActionableDeferredRegister<>(() -> ForgeRegistries.RECIPE_SERIALIZERS, AoARecipes::init);
 	public static final ActionableDeferredRegister<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = new ActionableDeferredRegister<>(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, AoALootModifiers::init);

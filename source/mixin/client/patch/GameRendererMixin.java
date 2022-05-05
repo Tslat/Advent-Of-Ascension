@@ -14,7 +14,8 @@ public class GameRendererMixin { // Increases client-side entity pick potential 
 					from = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/EntityHitResult;getEntity()Lnet/minecraft/world/entity/Entity;"),
 					to = @At(value = "INVOKE", target = "Lnet/minecraft/world/phys/BlockHitResult;miss(Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/core/Direction;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/world/phys/BlockHitResult;")
 			),
-			constant = @Constant(doubleValue = 9.0D))
+			constant = @Constant(doubleValue = 9.0D),
+			require = 0)
 	private static double checkMaxRange(double defaultDist) {
 		return 100;
 	}

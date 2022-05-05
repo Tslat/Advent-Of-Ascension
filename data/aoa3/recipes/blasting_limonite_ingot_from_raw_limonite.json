@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "tag": "forge:raw_materials/limonite"
+  },
+  "result": "aoa3:limonite_ingot",
+  "experience": 0.7,
+  "cookingtime": 100
+}

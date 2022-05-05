@@ -116,7 +116,7 @@ public class GuardiansSword extends BaseSword {
 			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
 			if (cap.getValue() > 0)
-				buff = 8;
+				buff = 3;
 
 			ItemUtil.setAttribute(attributeMap, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_UUID, getDamage() + buff);
 		}

@@ -6,7 +6,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class CottonCrusher extends BaseGreatblade {
 	public CottonCrusher() {
-		super(24.0f, AttackSpeed.GREATBLADE, 1600);
+		super(AoATiers.COTTON_CRUSHER_GREATBLADE);
 	}
 
 	@Override

@@ -15,7 +15,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.IForgeShearable;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -25,7 +25,7 @@ import java.util.List;
 
 public class RosidianGreatblade extends BaseGreatblade {
 	public RosidianGreatblade() {
-		super(22.5f, AttackSpeed.GREATBLADE, 1470);
+		super(AoATiers.ROSIDIAN_GREATBLADE);
 	}
 
 	@Override

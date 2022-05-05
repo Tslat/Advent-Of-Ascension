@@ -65,6 +65,36 @@ public final class AoATiers {
 	public static final CompactTier ULTRAFLAME = new CompactTier("ultraflame").durability(2350).damage(16f).enchantValue(15);
 	public static final CompactTier VOID = new CompactTier("void").durability(1750).damage(11.5f).enchantValue(11);
 
+	public static final CompactTier BARON_GREATBLADE = new CompactTier("baron_greatblade").durability(1200).damage(20.5f).enchantValue(13);
+	public static final CompactTier BLOODLURKER_GREATBLADE = new CompactTier("bloodlurker_greatblade").durability(1350).damage(22f).enchantValue(13);
+	public static final CompactTier CANDY_BLADE_GREATBLADE = new CompactTier("candy_blade_greatblade").durability(1450).damage(24f).enchantValue(13);
+	public static final CompactTier CORAL_GREATBLADE = new CompactTier("coral_greatblade").durability(1800).damage(25.5f).enchantValue(13);
+	public static final CompactTier COTTON_CRUSHER_GREATBLADE = new CompactTier("cotton_crusher_greatblade").durability(1600).damage(25.0f).enchantValue(13);
+	public static final CompactTier CREEPOID_GREATBLADE = new CompactTier("creepoid_greatblade").durability(1080).damage(20f).enchantValue(13);
+	public static final CompactTier CRYSTAL_GREATBLADE = new CompactTier("crystal_greatblade").durability(1480).damage(23f).enchantValue(13);
+	public static final CompactTier EREBON_SCYTHE = new CompactTier("erebon_scythe").durability(1750).damage(20f).enchantValue(13);
+	public static final CompactTier GODS_GREATBLADE = new CompactTier("gods_greatblade").durability(2000).damage(30.5f).enchantValue(13);
+	public static final CompactTier GOOFY_GREATBLADE = new CompactTier("goofy_greatblade").durability(1300).damage(23.0f).enchantValue(13);
+	public static final CompactTier HAUNTED_GREATBLADE = new CompactTier("haunted_greatblade").durability(1875).damage(27f).enchantValue(13);
+	public static final CompactTier KNIGHTS_GUARD_GREATBLADE = new CompactTier("knights_guard_greatblade").durability(2050).damage(27.5f).enchantValue(13);
+	public static final CompactTier LELYETIAN_GREATBLADE = new CompactTier("lelyetian_greatblade").durability(1100).damage(19.5f).enchantValue(13);
+	public static final CompactTier LUNAR_GREATBLADE = new CompactTier("lunar_greatblade").durability(1850).damage(13.5f).enchantValue(13);
+	public static final CompactTier LUXON_SCYTHE = new CompactTier("luxon_scythe").durability(1750).damage(18.5f).enchantValue(13);
+	public static final CompactTier LYONIC_GREATBLADE = new CompactTier("lyonic_greatblade").durability(1420).damage(20f).enchantValue(13);
+	public static final CompactTier MILLENNIUM_GREATBLADE = new CompactTier("millennium_greatblade").durability(2050).damage(14.25f).enchantValue(13);
+	public static final CompactTier NOXIOUS_GREATBLADE = new CompactTier("noxious_greatblade").durability(1580).damage(24f).enchantValue(13);
+	public static final CompactTier PLUTON_SCYTHE = new CompactTier("pluton_scythe").durability(1750).damage(20f).enchantValue(13);
+	public static final CompactTier PRIMORDIAL_GREATBLADE = new CompactTier("primordial_greatblade").durability(1900).damage(26.5f).enchantValue(13);
+	public static final CompactTier ROSIDIAN_GREATBLADE = new CompactTier("rosidian_greatblade").durability(1470).damage(23.5f).enchantValue(13);
+	public static final CompactTier ROYAL_GREATBLADE = new CompactTier("royal_greatblade").durability(1130).damage(20f).enchantValue(13);
+	public static final CompactTier RUNIC_GREATBLADE = new CompactTier("runic_greatblade").durability(1800).damage(25.5f).enchantValue(13);
+	public static final CompactTier SELYAN_SCYTHE = new CompactTier("selyan_scythe").durability(1750).damage(20f).enchantValue(13);
+	public static final CompactTier SHROOMIC_GREATBLADE = new CompactTier("shroomic_greatblade").durability(1300).damage(22.5f).enchantValue(13);
+	public static final CompactTier SHYRE_SWORD_GREATBLADE = new CompactTier("shyre_sword_greatblade").durability(2000).damage(27f).enchantValue(13);
+	public static final CompactTier SUBTERRANEAN_GREATBLADE = new CompactTier("subterranean_greatblade").durability(1160).damage(22.5f).enchantValue(13);
+	public static final CompactTier TIDAL_GREATBLADE = new CompactTier("tidal_greatblade").durability(1750).damage(25f).enchantValue(13);
+	public static final CompactTier UNDERWORLD_GREATBLADE = new CompactTier("underworld_greatblade").durability(1050).damage(19.5f).enchantValue(13);
+
 	public static class CompactTier implements Tier {
 		private final ResourceLocation name;
 

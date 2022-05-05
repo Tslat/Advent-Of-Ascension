@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
@@ -19,18 +20,25 @@ import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 
 import java.util.UUID;
 
 public class BaseGreatblade extends BaseSword {
-	public BaseGreatblade(final double baseDmg, final double attackSpeed, final int durability) {
-		this(baseDmg, attackSpeed, durability, Rarity.COMMON);
+	public BaseGreatblade(Tier tier) {
+		this(tier, Rarity.COMMON);
 	}
 
-	public BaseGreatblade(final double baseDmg, final double attackSpeed, final int durability, Rarity rarity) {
-		super(ItemUtil.customItemTier(durability, (float)attackSpeed, (float)baseDmg, 4, 8, null, null),
-				new Item.Properties().durability(durability).tab(AoAItemGroups.GREATBLADES).rarity(rarity));
+	public BaseGreatblade(Tier tier, Rarity rarity) {
+		this(tier, AttackSpeed.GREATBLADE, rarity);
+	}
+
+	public BaseGreatblade(Tier tier, float attackSpeed) {
+		this(tier, attackSpeed, Rarity.COMMON);
+	}
+
+	public BaseGreatblade(Tier tier, float attackSpeed, Rarity rarity) {
+		super(tier, 0, attackSpeed, new Item.Properties().durability(tier.getUses()).tab(AoAItemGroups.GREATBLADES).rarity(rarity));
 	}
 
 	@Override

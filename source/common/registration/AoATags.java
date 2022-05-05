@@ -58,6 +58,7 @@ public final class AoATags {
 		public static final TagKey<Block> STORAGE_BLOCKS_GHOULISH = tag("storage_blocks/ghoulish");
 		public static final TagKey<Block> STORAGE_BLOCKS_JADE = tag("storage_blocks/jade");
 		public static final TagKey<Block> STORAGE_BLOCKS_JEWELYTE = tag("storage_blocks/jewelyte");
+		public static final TagKey<Block> STORAGE_BLOCKS_RAW_LIMONITE = tag("storage_blocks/raw_limonite");
 		public static final TagKey<Block> STORAGE_BLOCKS_LIMONITE = tag("storage_blocks/limonite");
 		public static final TagKey<Block> STORAGE_BLOCKS_LUNAR = tag("storage_blocks/lunar");
 		public static final TagKey<Block> STORAGE_BLOCKS_LYON = tag("storage_blocks/lyon");
@@ -128,6 +129,7 @@ public final class AoATags {
 		public static final TagKey<Item> STORAGE_BLOCKS_GHOULISH = tag("storage_blocks/ghoulish");
 		public static final TagKey<Item> STORAGE_BLOCKS_JADE = tag("storage_blocks/jade");
 		public static final TagKey<Item> STORAGE_BLOCKS_JEWELYTE = tag("storage_blocks/jewelyte");
+		public static final TagKey<Item> STORAGE_BLOCKS_RAW_LIMONITE = tag("storage_blocks/raw_limonite");
 		public static final TagKey<Item> STORAGE_BLOCKS_LIMONITE = tag("storage_blocks/limonite");
 		public static final TagKey<Item> STORAGE_BLOCKS_LUNAR = tag("storage_blocks/lunar");
 		public static final TagKey<Item> STORAGE_BLOCKS_LYON = tag("storage_blocks/lyon");
@@ -159,6 +161,8 @@ public final class AoATags {
 		public static final TagKey<Item> INGOTS_SHYRESTONE = tag("ingots/shyrestone");
 		public static final TagKey<Item> INGOTS_SKELETAL = tag("ingots/skeletal");
 		public static final TagKey<Item> INGOTS_VARSIUM = tag("ingots/varsium");
+
+		public static final TagKey<Item> RAW_MATERIALS_LIMONITE = tag("raw_materials/limonite");
 
 		public static final TagKey<Item> NUGGETS_BARONYTE = tag("nuggets/baronyte");
 		public static final TagKey<Item> NUGGETS_BLAZIUM = tag("nuggets/blazium");

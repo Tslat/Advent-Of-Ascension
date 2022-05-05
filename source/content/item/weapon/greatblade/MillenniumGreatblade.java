@@ -13,7 +13,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -25,7 +25,7 @@ public class MillenniumGreatblade extends BaseGreatblade {
 	private final double maxDmg = 39.75f;
 
 	public MillenniumGreatblade() {
-		super(13.25f, AttackSpeed.GREATBLADE, 2050);
+		super(AoATiers.MILLENNIUM_GREATBLADE);
 	}
 
 	@Override

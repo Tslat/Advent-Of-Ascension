@@ -7,7 +7,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -18,7 +20,7 @@ import java.util.List;
 
 public class ErebonScythe extends BaseGreatblade {
 	public ErebonScythe() {
-		super(19.0f, -3d, 1750);
+		super(AoATiers.EREBON_SCYTHE, AttackSpeed.forAttacksPerSecond(1));
 	}
 
 	@Override

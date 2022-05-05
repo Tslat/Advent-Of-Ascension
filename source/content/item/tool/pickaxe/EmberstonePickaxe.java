@@ -52,7 +52,11 @@ public class EmberstonePickaxe extends BasePickaxe implements LootModifyingItem 
 			Optional<SmeltingRecipe> smeltRecipe = world.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(lootStack), world);
 
 			if (smeltRecipe.isPresent()) {
-				existingLoot.set(i, smeltRecipe.get().getResultItem());
+				ItemStack smeltedStack = smeltRecipe.get().getResultItem().copy();
+
+				smeltedStack.setCount(lootStack.getCount());
+
+				existingLoot.set(i, smeltedStack);
 				block.popExperience(world, pos, (int)smeltRecipe.get().getExperience());
 
 				for (int x = 0; x < 5; x++) {

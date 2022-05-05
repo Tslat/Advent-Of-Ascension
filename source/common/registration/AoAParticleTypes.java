@@ -4,8 +4,10 @@ import com.mojang.serialization.Codec;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.ClientOperations;
@@ -26,7 +28,7 @@ public final class AoAParticleTypes {
 	public static final RegistryObject<ParticleType<ItemParticleOption>> FLOATING_ITEM_FRAGMENT = registerParticle("floating_item_fragment", () -> new FloatingItemFragmentParticleType(false));
 
 	public static void init() {
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, ParticleFactoryRegisterEvent.class, ClientOperations::registerParticleFactories);
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, ParticleFactoryRegisterEvent.class, ClientOperations::registerParticleFactories));
 	}
 
 	private static <T extends ParticleOptions> RegistryObject<ParticleType<T>> registerParticle(String id, Supplier<? extends ParticleType<T>> particle) {

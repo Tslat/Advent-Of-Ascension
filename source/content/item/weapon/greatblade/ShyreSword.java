@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -15,7 +15,7 @@ import java.util.List;
 
 public class ShyreSword extends BaseGreatblade {
 	public ShyreSword() {
-		super(26.0f, AttackSpeed.GREATBLADE, 2000);
+		super(AoATiers.SHYRE_SWORD_GREATBLADE);
 	}
 
 	@Override

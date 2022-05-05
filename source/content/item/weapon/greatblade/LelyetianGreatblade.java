@@ -5,7 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -14,7 +14,7 @@ import java.util.List;
 
 public class LelyetianGreatblade extends BaseGreatblade {
 	public LelyetianGreatblade() {
-		super(18.5f, AttackSpeed.GREATBLADE, 1100);
+		super(AoATiers.LELYETIAN_GREATBLADE);
 	}
 
 	@Override

@@ -16,7 +16,7 @@
               "condition": "minecraft:survives_explosion"
             }
           ],
-          "name": "aoa3:runc_stone_button"
+          "name": "aoa3:raw_limonite_block"
         }
       ]
     }

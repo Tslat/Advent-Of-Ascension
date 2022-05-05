@@ -6,7 +6,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -16,7 +18,7 @@ import java.util.List;
 
 public class LuxonScythe extends BaseGreatblade {
 	public LuxonScythe() {
-		super(17.5f, -2.8D, 1750);
+		super(AoATiers.LUXON_SCYTHE, AttackSpeed.forAttacksPerSecond(1.2f));
 	}
 
 	@Override

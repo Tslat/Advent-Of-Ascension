@@ -9,7 +9,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ToolAction;
-import net.tslat.aoa3.library.constant.AttackSpeed;
+import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class KnightsGuard extends BaseGreatblade {
 	public KnightsGuard() {
-		super(26.5f, AttackSpeed.GREATBLADE, 2050);
+		super(AoATiers.KNIGHTS_GUARD_GREATBLADE);
 	}
 
 	@Override

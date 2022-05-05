@@ -5,7 +5,7 @@
         "up": "true"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_post"
+        "model": "aoa3:block/runic_stone_brick_wall_post"
       }
     },
     {
@@ -13,7 +13,7 @@
         "east": "low"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side",
+        "model": "aoa3:block/runic_stone_brick_wall_side",
         "y": 90,
         "uvlock": true
       }
@@ -23,7 +23,7 @@
         "east": "tall"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side_tall",
+        "model": "aoa3:block/runic_stone_brick_wall_side_tall",
         "y": 90,
         "uvlock": true
       }
@@ -33,7 +33,7 @@
         "north": "low"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side",
+        "model": "aoa3:block/runic_stone_brick_wall_side",
         "uvlock": true
       }
     },
@@ -42,7 +42,7 @@
         "north": "tall"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side_tall",
+        "model": "aoa3:block/runic_stone_brick_wall_side_tall",
         "uvlock": true
       }
     },
@@ -51,7 +51,7 @@
         "south": "low"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side",
+        "model": "aoa3:block/runic_stone_brick_wall_side",
         "y": 180,
         "uvlock": true
       }
@@ -61,7 +61,7 @@
         "south": "tall"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side_tall",
+        "model": "aoa3:block/runic_stone_brick_wall_side_tall",
         "y": 180,
         "uvlock": true
       }
@@ -71,7 +71,7 @@
         "west": "low"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side",
+        "model": "aoa3:block/runic_stone_brick_wall_side",
         "y": 270,
         "uvlock": true
       }
@@ -81,7 +81,7 @@
         "west": "tall"
       },
       "apply": {
-        "model": "aoa3:block/runic_construct_brick_wall_side_tall",
+        "model": "aoa3:block/runic_stone_brick_wall_side_tall",
         "y": 270,
         "uvlock": true
       }

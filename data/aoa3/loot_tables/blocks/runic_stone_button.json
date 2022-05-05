@@ -16,7 +16,7 @@
               "condition": "minecraft:survives_explosion"
             }
           ],
-          "name": "aoa3:runic_construct_brick_wall"
+          "name": "aoa3:runic_stone_button"
         }
       ]
     }

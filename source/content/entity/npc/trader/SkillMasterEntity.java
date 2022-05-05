@@ -1,20 +1,27 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
-import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
 public class SkillMasterEntity extends AoATrader {
+	private static final EntityDataAccessor<Boolean> TRADING = SynchedEntityData.defineId(SkillMasterEntity.class, EntityDataSerializers.BOOLEAN);
+	private static final AnimationBuilder INTERACT_END = new AnimationBuilder().addAnimation("misc.interact.end", false);
+
+	private boolean trading = false;
+
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
 					BuildableTrade.trade(AoAItems.SMALL_SKILL_CRYSTAL).cost(AoAItems.SILVER_COIN).xp(150).stock(32),
@@ -24,6 +31,13 @@ public class SkillMasterEntity extends AoATrader {
 
 	public SkillMasterEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+
+		getEntityData().define(TRADING, false);
 	}
 
 	@Override
@@ -38,16 +52,44 @@ public class SkillMasterEntity extends AoATrader {
 	}
 
 	@Override
+	public void setTradingPlayer(@Nullable Player player) {
+		super.setTradingPlayer(player);
+
+		this.trading = isTrading();
+		getEntityData().set(TRADING, this.trading);
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		if (key.equals(TRADING) && level.isClientSide()) {
+			this.trading = getEntityData().get(TRADING);
+		}
+	}
+
+	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(AoAAnimations.genericIdleController(this));
-		animationData.addAnimationController(new AnimationController<SkillMasterEntity>(this, "interaction", 0, event -> {
-			if (isTrading()) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("misc.interact", false).addAnimation("misc.interact.end", false));
+		/*animationData.addAnimationController(new AnimationController<>(this, "interaction", 0, event -> {
+			AnimationController<?> controller = event.getController();
+
+			if (this.trading) {
+				controller.setAnimation(new AnimationBuilder().addAnimation("misc.interact", false));
 
 				return PlayState.CONTINUE;
 			}
+			else if (controller.getCurrentAnimation() != null) {
+				Animation animation = controller.getCurrentAnimation();
+
+				if (animation.animationName.equals("misc.interact") || animation.animationName.equals("misc.interact.end")) {
+					controller.setAnimation(INTERACT_END);
+
+					return PlayState.CONTINUE;
+				}
+			}
 
 			return PlayState.STOP;
-		})); // TODO Implement with data params
+		}));*/
 	}
 }
