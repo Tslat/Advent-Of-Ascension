@@ -1,0 +1,31 @@
+{
+  "name": "投てき武器",
+  "category": "aoa3:weapons",
+  "icon": "aoa3:slice_star",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "throwables",
+      "text": "時に、武器を使うのでなくただ敵に物を投げつけたい、そう思うこともあるでしょう。$(br)そんな思いのために$(thing)投てき武器$()は生まれました。$(br2)$(thing)投てき武器$()は最もシンプルな遠距離武器です。 手にもって右クリックすると、狙った場所に投げつけることができます。",
+      "title": "投てき武器"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "それぞれ $(thing)投てき武器$()はそれぞれ独自の特徴を持ち、ほかの武器にはない利点があります。$(br2)何より、非常に迅速かつ便利なダメージ出力を誇り、そのコストも安価です。$(br)手っ取り早くその手を汚す必要があれば、$(thing)投てき武器$()が最適です。"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "ポケットサンド！ヒャッハー!",
+      "title": "投てき武器",
+      "item": "aoa3:grenade"
+    },
+    {
+      "type": "patchouli:link",
+      "text": "さらに詳しい情報は、公式Wikiを参照してください。",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Thrown_Weapons",
+      "link_text": "AoA Wiki"
+    }
+  ],
+  "sortnum": 10
+}

@@ -1,0 +1,103 @@
+{
+  "name": "生態",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "暗闇の中には、多くの飢えた生物が潜んでいます。それぞれに強みと能力があるので、探索時には注意しましょう。",
+      "title": "モブ"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "$(thing)アビス$()に生息する敵性Mobは、$(thing)悪夢の破片$()をドロップします。この素材はほとんどのアビス関連のクラフトと注入に使用されるので、忘れずに拾いましょう。",
+      "title": "悪夢の破片",
+      "item": "aoa3:nightmare_flakes"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "$(thing)アネミア$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Anemia)Official Wiki$(/l)",
+      "entity": "aoa3:anemia",
+      "scale": 0.692,
+      "offset": 1.2
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)アペリーション$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Apparition)Official Wiki$(/l)",
+      "entity": "aoa3:apparition"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)ブラッドサッカー$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Bloodsucker)Official Wiki$(/l)",
+      "entity": "aoa3:bloodsucker",
+      "scale": 0.52
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)ディストーター$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Distorter)Official Wiki$(/l)",
+      "entity": "aoa3:distorter"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)フィンド$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Fiend)Official Wiki$(/l)",
+      "entity": "aoa3:fiend"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)フレッシュイーター$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Flesh_Eater)Official Wiki$(/l)",
+      "entity": "aoa3:flesh_eater"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)ジャーウ$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Jawe)Official Wiki$(/l)",
+      "entity": "aoa3:jawe",
+      "scale": 0.625
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)オカレント$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Occulent)Official Wiki$(/l)",
+      "entity": "aoa3:occulent"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)ウェブリーパー$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Web_Reaper)Official Wiki$(/l)",
+      "entity": "aoa3:web_reaper",
+      "scale": 0.802
+    },
+    {
+      "type": "patchouli:text",
+      "text": "敵対的な土地である$(thing)アビス$()にはあまり魅力がありませんが、それでも友好的なな住人は存在します。",
+      "title": "NPC"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": " $(thing)ロットマン$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Abyssal_Lottoman)Official Wiki$(/l)",
+      "entity": "aoa3:lottoman",
+      "scale": 0.875
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "$(thing)アンデットの使者$()については、公式Wikiを参照してください。 $(l:https://adventofascension.fandom.com/wiki/Abyssal_Lottoman)Official Wiki$(/l)",
+      "entity": "aoa3:undead_herald"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "暗闇の真の恐怖である$(thing)アビス$()には2体の恐ろしいモンスターが住んでおり、次なる犠牲者を求めています。",
+      "title": "ボス"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": " $(thing)ウェブリーパー$()から入手できるこの暗い本は、$(l:aoa3:abyss_structures#shadowlord_platform)シャドーロードプラットフォーム$(/l)の$(thing)影の祭壇$()にて$(thing)シャドーロード$()を召喚するために使用します。",
+      "title": "影の本",
+      "item": "aoa3:book_of_shadows"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": " $(thing)アビス$()にある赤い目の触手から採れる奇妙な目。 $(l:aoa3:abyss_structures#illusion_tree)幻想の木$(/l)にある$(thing)イリュージョン祭壇$()に使うことで$(thing)エルーシブ$()を召喚できる。",
+      "title": "見つめる目",
+      "item": "aoa3:staring_eye"
+    }
+  ],
+  "advancement": "aoa3:abyss/root",
+  "sortnum": 4
+}

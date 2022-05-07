@@ -1,0 +1,18 @@
+{
+  "name": "案内タブ",
+  "category": "aoa3:advent_gui",
+  "icon": "minecraft:written_book",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "lore_tab",
+      "text": "$(thing)Patchouli$()がインストールされている場合のみ、$(thing)案内タブ$()を使用できます。",
+      "title": "案内タブ"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "デフォルトでは、タブには常に$(thing)AoA Essentia$()が表示されており、新しい本を発見するとより多くが利用できるようになります。$(br2)インベントリにない本でも、クリックすれば開くことができます。GUIからドラッグすれば、新たな本を入手できます。"
+    }
+  ],
+  "sortnum": 3
+}
