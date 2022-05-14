@@ -203,7 +203,7 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public boolean canBeCollidedWith() {
-		return true;
+		return tickCount > 1;
 	}
 
 	@Override

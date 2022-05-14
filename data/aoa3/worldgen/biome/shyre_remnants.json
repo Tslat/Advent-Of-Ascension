@@ -52,6 +52,24 @@
   "spawners": {
     "monster": [
       {
+        "type": "aoa3:soulscorne",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arc_flower",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:arcbeast",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:sysker",
         "weight": 20,
         "minCount": 1,
@@ -60,6 +78,12 @@
       {
         "type": "aoa3:shyre_knight",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:soulvyre",
+        "weight": 5,
         "minCount": 1,
         "maxCount": 1
       },
@@ -76,12 +100,6 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:soulscorne",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:omnilight",
         "weight": 20,
         "minCount": 1,
@@ -89,24 +107,6 @@
       },
       {
         "type": "aoa3:stimulo",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:arc_flower",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:soulvyre",
-        "weight": 5,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:arcbeast",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

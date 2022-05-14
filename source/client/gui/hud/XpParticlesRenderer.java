@@ -10,6 +10,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -116,6 +117,10 @@ public final class XpParticlesRenderer {
 
 		for (Map.Entry<AoASkill, CopyOnWriteArrayList<XPParticle>> entry : particlesMap.entrySet()) {
 			AoASkill.Instance skill = ClientPlayerDataManager.get().getSkill(entry.getKey());
+
+			if (skill == AoASkills.DEFAULT)
+				continue;
+
 			CopyOnWriteArrayList<XPParticle> particles = entry.getValue();
 			AoASkillRenderer skillRenderer = AoAGuiElementRenderers.getSkillRenderer(skill.type());
 			int renderWidth = skillRenderer.hudRenderWidth(skill);

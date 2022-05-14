@@ -59,8 +59,12 @@ public class EnergyResource extends AoAResource.Instance {
 	public boolean consume(float amount, boolean consumeIfInsufficient) {
 		boolean success = super.consume(amount, true);
 
-		if (getCurrentValue() <= 0)
+		if (getCurrentValue() <= 0) {
 			this.currentDelay += this.dischargeDelay;
+
+			if (this.currentDelay > 1200)
+				this.currentDelay = 1200;
+		}
 
 		return success;
 	}
@@ -92,8 +96,12 @@ public class EnergyResource extends AoAResource.Instance {
 
 	@Override
 	public void handlePostIncomingAttack(LivingDamageEvent ev) {
-		if (ev.getAmount() > 0 && currentDelay < hitDelay)
+		if (ev.getAmount() > 0) {
 			currentDelay = hitDelay;
+
+			if (this.currentDelay > 1200)
+				this.currentDelay = 1200;
+		}
 	}
 
 	@Nonnull

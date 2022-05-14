@@ -57,14 +57,14 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:polytom",
-        "weight": 20,
+        "type": "aoa3:mechachron",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:mechachron",
-        "weight": 1,
+        "type": "aoa3:mechamaton",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
@@ -75,7 +75,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:mechamaton",
+        "type": "aoa3:polytom",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

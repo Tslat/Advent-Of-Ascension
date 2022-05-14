@@ -4,6 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.entity.EntityType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
@@ -16,7 +17,7 @@ public class LeavesBlock extends net.minecraft.block.LeavesBlock {
 	private final float saplingDropChance;
 
 	public LeavesBlock(MaterialColor mapColour, float saplingChance) {
-		super(new BlockUtil.CompactProperties(Material.LEAVES, mapColour).stats(0.2f).sound(SoundType.GRASS).noOcclusion().get());
+		super(new BlockUtil.CompactProperties(Material.LEAVES, mapColour).stats(0.2f).sound(SoundType.GRASS).noOcclusion().specialSpawns((state, world, pos, entity) -> entity == EntityType.OCELOT || entity == EntityType.PARROT).breathable().noScreenCover().get());
 		// TODO Tick Randomly & decay
 
 		this.saplingDropChance = saplingChance;

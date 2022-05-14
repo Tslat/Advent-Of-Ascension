@@ -65,14 +65,14 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:terradon",
-        "weight": 1,
+        "type": "aoa3:deinotherium",
+        "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:dyrehorn",
-        "weight": 20,
+        "type": "aoa3:terradon",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       },
@@ -83,7 +83,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:deinotherium",
+        "type": "aoa3:dyrehorn",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

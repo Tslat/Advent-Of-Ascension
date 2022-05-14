@@ -174,6 +174,10 @@ public final class BlockUtil {
 			return this;
 		}
 
+		public CompactProperties noScreenCover() {
+			return coversScreen((state, world, pos) -> false);
+		}
+
 		public CompactProperties coversScreen(AbstractBlock.IPositionPredicate when) {
 			this.properties.isViewBlocking(when);
 

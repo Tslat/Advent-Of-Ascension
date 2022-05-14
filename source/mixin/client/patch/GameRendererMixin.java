@@ -14,7 +14,8 @@ public class GameRendererMixin {
 					from = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/EntityRayTraceResult;getEntity()Lnet/minecraft/entity/Entity;"),
 					to = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/BlockRayTraceResult;miss(Lnet/minecraft/util/math/vector/Vector3d;Lnet/minecraft/util/Direction;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/BlockRayTraceResult;")
 			),
-			constant = @Constant(doubleValue = 9.0D))
+			constant = @Constant(doubleValue = 9.0D),
+			require = 0)
 	private static double checkMaxRange(double defaultDist) {
 		return 100;
 	}

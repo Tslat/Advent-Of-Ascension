@@ -15,9 +15,9 @@ import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.content.item.misc.InfusionStone;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 public class InfusionTable extends Block {
 	public InfusionTable() {
@@ -31,34 +31,27 @@ public class InfusionTable extends Block {
 			Item item = stack.getItem();
 
 			if (item instanceof InfusionStone) {
-				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayerEntity)player);
 				InfusionStone stone = (InfusionStone)item;
 				int count = stack.getCount();
 
-				/*if (player.isCreative() || plData.stats().getLevel(Skills.INFUSION) >= stone.getLvl()) {
-					plData.stats().addXp(Skills.INFUSION, stone.getXp() * count, false, false);
-					world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), AoASounds.BLOCK_INFUSION_TABLE_CONVERT.get(), SoundCategory.BLOCKS, 1.0f, 1.0f);
+				int powerStoneCount = 0;
 
-					int chanceMod = plData.equipment().getCurrentFullArmourSet() == AdventArmour.Type.INFUSION ? 33 : 100;
-					int powerStoneCount = 0;
+				for (int i = 0; i < count; i++) {
+					if (RandomUtil.oneInNChance(3))
+						powerStoneCount++;
+				}
 
-					for (int i = 0; i < count; i++) {
-						if (RandomUtil.oneInNChance(chanceMod))
-							powerStoneCount++;
-					}
-
-					if (!player.isCreative()) {
-						if (powerStoneCount > 0) {
-							player.setItemInHand(hand, new ItemStack(stone.getPowerStone(), powerStoneCount));
-						}
-						else {
-							player.setItemInHand(hand, ItemStack.EMPTY);
-						}
+				if (!player.isCreative()) {
+					if (powerStoneCount > 0) {
+						player.setItemInHand(hand, new ItemStack(stone.getPowerStone(), powerStoneCount));
 					}
 					else {
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(stone.getPowerStone(), powerStoneCount));
+						player.setItemInHand(hand, ItemStack.EMPTY);
 					}
-				}*/ // TODO
+				}
+				else {
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(stone.getPowerStone(), powerStoneCount));
+				}
 			}
 			else {
 				InfusionTableContainer.openContainer((ServerPlayerEntity)player, pos);

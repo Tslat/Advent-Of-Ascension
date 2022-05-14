@@ -54,7 +54,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		this.firingDelay = fireDelayTicks;
 		this.energyCost = energyCost;
 
-		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", firingDelay < 20 ? AttackSpeed.THIRD : AttackSpeed.QUARTER, AttributeModifier.Operation.ADDITION));
+		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", AttackSpeed.forAttacksPerSecond(1.2f), AttributeModifier.Operation.ADDITION));
 	}
 
 	public BaseBlaster(final double dmg, final int durability, final int fireDelayTicks, final float energyCost) {
