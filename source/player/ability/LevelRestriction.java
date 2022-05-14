@@ -48,7 +48,7 @@ public class LevelRestriction extends AoAAbility.Instance {
 	protected void updateDescription(TranslatableComponent defaultDescription) {
 		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(this.restrictedId);
 
-		if (restrictions == null) {
+		if (restrictions.isEmpty()) {
 			super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), "??"));
 
 			return;

@@ -12,11 +12,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -27,7 +29,7 @@ public class CaseConstructEntity extends AoAMeleeMob {
 
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-        return 1.96875f;
+        return 12.5f / 16f;
     }
 
     @Nullable
@@ -62,5 +64,10 @@ public class CaseConstructEntity extends AoAMeleeMob {
         }
 
         return super.mobInteract(player, hand);
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
     }
 }

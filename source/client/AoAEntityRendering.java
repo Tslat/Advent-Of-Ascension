@@ -120,6 +120,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> VISULON = new EntityRendererPackage<>(AoAMobs.VISULON).geckolib("mob/lunalus/visulon");
 	public static final EntityRendererPackage<?> WOOD_GIANT = new EntityRendererPackage<>(AoAMobs.WOOD_GIANT).geckolib("mob/overworld/wood_giant");
 	public static final EntityRendererPackage<?> AROCKNID = new EntityRendererPackage<>(AoAMobs.AROCKNID).geckolib("mob/deeplands/arocknid");
+	public static final EntityRendererPackage<?> CASE_CONSTRUCT = new EntityRendererPackage<>(AoAMobs.CASE_CONSTRUCT).geckolib("mob/deeplands/case_construct");
 	public static final EntityRendererPackage<?> CAVE_CREEP = new EntityRendererPackage<>(AoAMobs.CAVE_CREEP).geckolib("mob/deeplands/cave_creep");
 	public static final EntityRendererPackage<?> DOUBLER = new EntityRendererPackage<>(AoAMobs.DOUBLER).geckolib("mob/deeplands/doubler");
 	public static final EntityRendererPackage<?> NIPPER = new EntityRendererPackage<>(AoAMobs.NIPPER).geckolib("mob/deeplands/nipper");
@@ -380,7 +381,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> CANDY_CORNY = new EntityRendererPackage<>(AoAMobs.CANDY_CORNY).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> CANE_BUG = new EntityRendererPackage<>(AoAMobs.CANE_BUG).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> CARROTOP = new EntityRendererPackage<>(AoAMobs.CARROTOP).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> CASE_CONSTRUCT = new EntityRendererPackage<>(AoAMobs.CASE_CONSTRUCT).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> CAVE_CREEPOID = new EntityRendererPackage<>(AoAMobs.CAVE_CREEPOID).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> CENTINEL = new EntityRendererPackage<>(AoAMobs.CENTINEL).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> CHARGER = new EntityRendererPackage<>(AoAMobs.CHARGER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

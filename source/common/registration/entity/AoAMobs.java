@@ -82,7 +82,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<Monster>> CANDY_CORNY = registerMob("candy_corny", CandyCornyEntity::new, 0.625f, 2f, 13932049, 15459377);
 	public static final RegistryObject<EntityType<Monster>> CANE_BUG = registerMob("cane_bug", CaneBugEntity::new, 1f, 1.5f, 4352288, 16119280);
 	public static final RegistryObject<EntityType<Monster>> CARROTOP = registerMob("carrotop", CarrotopEntity::new, 0.5625f, 2.375f, 16747528, 4914952);
-	public static final RegistryObject<EntityType<Monster>> CASE_CONSTRUCT = registerMob("case_construct", CaseConstructEntity::new, true, 1.2f, 2.125f, 8026483, 13615203);
+	public static final RegistryObject<EntityType<Monster>> CASE_CONSTRUCT = registerMob("case_construct", CaseConstructEntity::new, true, 1 + 1 / 16f, 1 + 4 / 16f, 8026483, 13615203);
 	public static final RegistryObject<EntityType<Monster>> CAVE_CREEP = registerMob("cave_creep", CaveCreepEntity::new, 9 / 16f, 13 / 16f, 8026483, 11579307);
 	public static final RegistryObject<EntityType<AoACreeponiaCreeper>> CAVE_CREEPOID = registerMob("cave_creepoid", CaveCreepoidEntity::new, 0.875f, 1.6875f, 3684406, 8026744);
 	public static final RegistryObject<EntityType<Monster>> CENTINEL = registerMob("centinel", CentinelEntity::new, 0.6875f, 1.625f, 3951159, 4606532);

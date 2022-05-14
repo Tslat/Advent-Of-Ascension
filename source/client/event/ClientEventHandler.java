@@ -122,7 +122,7 @@ public final class ClientEventHandler {
 	private static void onTooltip(final ItemTooltipEvent ev) {
 		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(ev.getItemStack().getItem().getRegistryName());
 
-		if (restrictions != null) {
+		if (!restrictions.isEmpty()) {
 			List<Component> lines = ev.getToolTip();
 
 			if (ev.getFlags().isAdvanced()) {
