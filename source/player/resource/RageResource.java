@@ -10,6 +10,8 @@ import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 public class RageResource extends AoAResource.Instance {
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.INCOMING_ATTACK_DURING, ListenerType.PLAYER_TICK};
+
 	private final float maxValue;
 	private final float perTickDrain;
 
@@ -31,10 +33,7 @@ public class RageResource extends AoAResource.Instance {
 
 	@Override
 	public ListenerType[] getListenerTypes() {
-		return new ListenerType[] {
-				ListenerType.INCOMING_ATTACK_DURING,
-				ListenerType.PLAYER_TICK
-		};
+		return LISTENERS;
 	}
 
 	@Override

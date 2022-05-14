@@ -108,6 +108,7 @@ public final class ClientOperations {
 		switch (type) {
 			case SKILL_REQUIREMENT -> {
 				AoASkill skill = AoASkills.getSkill((ResourceLocation)subject);
+
 				if (AoAConfig.CLIENT.useToasts.get()) {
 					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast(skill, (Integer)value));
 				}
@@ -117,6 +118,7 @@ public final class ClientOperations {
 			}
 			case RESOURCE_REQUIREMENT -> {
 				AoAResource resource = AoAResources.getResource((ResourceLocation)subject);
+
 				if (AoAConfig.CLIENT.useToasts.get()) {
 					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast(resource, (Float)value));
 				}
@@ -127,6 +129,7 @@ public final class ClientOperations {
 			case ABILITY_UNLOCK -> {
 				AoASkill skill2 = AoASkills.getSkill((ResourceLocation)subject);
 				AoAAbility ability = AoAAbilities.getAbility((ResourceLocation)value);
+
 				if (AoAConfig.CLIENT.useToasts.get()) {
 					Minecraft.getInstance().getToasts().addToast(new AbilityUnlockToast(skill2, ability));
 				}

@@ -13,13 +13,18 @@ public class BonusSmeltResult extends ScalableModAbility {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.ITEM_SMELTING};
 
 	private final Random random = new Random();
+	private final int uniqueIdHash;
 
 	public BonusSmeltResult(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.BONUS_SMELT_RESULT.get(), skill, data);
+
+		this.uniqueIdHash = this.getUniqueIdentifier().hashCode();
 	}
 
 	public BonusSmeltResult(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.BONUS_SMELT_RESULT.get(), skill, data);
+
+		this.uniqueIdHash = this.getUniqueIdentifier().hashCode();
 	}
 
 	@Override
@@ -32,7 +37,7 @@ public class BonusSmeltResult extends ScalableModAbility {
 		ItemStack smeltedStack = ev.getOutputStack();
 
 		if (smeltedStack.getItem().getFoodProperties() == null) {
-			random.setSeed(ev.getPlayer().tickCount);
+			random.setSeed(ev.getPlayer().tickCount + uniqueIdHash);
 
 			if (random.nextFloat() < getScaledValue())
 				smeltedStack.setCount(smeltedStack.getCount() + 1);

@@ -2215,6 +2215,7 @@
   "entity.aoa3.zarg": "Zarg",
   "entity.aoa3.zhinx": "Zhinx",
   "entity.aoa3.zorp": "Zorp",
+  "filled_map.aoa3.ruined_teleporter_frame": "Ruined Teleporter Frame Map",
   "gamerule.destructiveWeaponPhysics": "AoA Weapon physics break blocks",
   "gamerule.doStrongerMobGriefing": "Even more mob griefing",
   "generator.aoa3.generic": "AoA Generic",

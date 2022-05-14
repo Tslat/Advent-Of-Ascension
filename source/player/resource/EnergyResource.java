@@ -12,6 +12,8 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import javax.annotation.Nonnull;
 
 public class EnergyResource extends AoAResource.Instance {
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.PLAYER_TICK, ListenerType.INCOMING_ATTACK_AFTER};
+
 	private final float maxValue;
 	private final int dischargeDelay;
 	private final int hitDelay;
@@ -40,10 +42,7 @@ public class EnergyResource extends AoAResource.Instance {
 
 	@Override
 	public ListenerType[] getListenerTypes() {
-		return new ListenerType[] {
-				ListenerType.PLAYER_TICK,
-				ListenerType.INCOMING_ATTACK_AFTER
-		};
+		return LISTENERS;
 	}
 
 	@Override
@@ -59,8 +58,12 @@ public class EnergyResource extends AoAResource.Instance {
 	public boolean consume(float amount, boolean consumeIfInsufficient) {
 		boolean success = super.consume(amount, true);
 
-		if (getCurrentValue() <= 0)
+		if (getCurrentValue() <= 0) {
 			this.currentDelay += this.dischargeDelay;
+
+			if (this.currentDelay > 1200)
+				this.currentDelay = 1200;
+		}
 
 		return success;
 	}
@@ -92,8 +95,12 @@ public class EnergyResource extends AoAResource.Instance {
 
 	@Override
 	public void handlePostIncomingAttack(LivingDamageEvent ev) {
-		if (ev.getAmount() > 0 && currentDelay < hitDelay)
-			currentDelay = hitDelay;
+		if (ev.getAmount() > 0) {
+			currentDelay += hitDelay;
+
+			if (this.currentDelay > 1200)
+				this.currentDelay = 1200;
+		}
 	}
 
 	@Nonnull

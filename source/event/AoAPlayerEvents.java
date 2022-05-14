@@ -114,7 +114,7 @@ public final class AoAPlayerEvents {
 		if (target instanceof ServerPlayer)
 			issueEvent((ServerPlayer)target, PLAYER_DEATH, listener -> listener.handlePlayerDeath(ev));
 
-		for (Entity pl : EntityUtil.getAttackersForMob(ev.getEntityLiving(), entity -> entity != target && entity instanceof ServerPlayer)) {
+		for (Entity pl : EntityUtil.getAttackersForMob(target, entity -> entity != target && entity instanceof ServerPlayer)) {
 			issueEvent((ServerPlayer)pl, ENTITY_KILL, listener -> listener.handleEntityKill(ev));
 		}
 	}

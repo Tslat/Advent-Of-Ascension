@@ -29,6 +29,7 @@ import net.minecraftforge.common.util.ITeleporter;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.content.world.teleporter.specific.*;
@@ -128,7 +129,7 @@ public class PortalBlock extends Block {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (true)
+		if (this != AoABlocks.NETHER_PORTAL.get())
 			return;
 
 		if (!world.isClientSide() && !entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {

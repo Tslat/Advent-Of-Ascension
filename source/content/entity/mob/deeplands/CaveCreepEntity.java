@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.entity.mob.deeplands;
 
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
@@ -19,10 +19,16 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 
 public class CaveCreepEntity extends AoAMeleeMob {
-    private static final AnimationBuilder LIFT = new AnimationBuilder().addAnimation("misc.lift", true);
-    private static final AnimationBuilder LOWER = new AnimationBuilder().addAnimation("misc.lower", true);
+    private static final AnimationBuilder LIFT_HOLD_ANIM = new AnimationBuilder().addAnimation("misc.lift.hold", true);
+    private static final AnimationBuilder LIFT_ANIM = new AnimationBuilder().addAnimation("misc.lift").addAnimation("misc.lift.hold", true);
+    private static final AnimationBuilder DROP_ANIM = new AnimationBuilder().addAnimation("misc.drop");
+    private static final AnimationBuilder TRANSITION_WALK_ANIM = new AnimationBuilder().addAnimation("move.walk.transition", true);
+    private static final AnimationBuilder LIFTED_WALK_ANIM = new AnimationBuilder().addAnimation("move.walk.lifted", true);
+    private static final EntityDataAccessor<Integer> LAST_AGGRO_TIME = SynchedEntityData.defineId(CaveCreepEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> IS_AGGRO = SynchedEntityData.defineId(CaveCreepEntity.class, EntityDataSerializers.BOOLEAN);
 
-    private boolean aggro = false;
+    private int lastAggroChange = -1;
+    private boolean isAggro = false;
 
     public CaveCreepEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
@@ -31,6 +37,14 @@ public class CaveCreepEntity extends AoAMeleeMob {
     @Override
     protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
         return 1f;
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+
+        getEntityData().define(LAST_AGGRO_TIME, -1);
+        getEntityData().define(IS_AGGRO, false);
     }
 
     @Nullable
@@ -57,6 +71,40 @@ public class CaveCreepEntity extends AoAMeleeMob {
     }
 
     @Override
+    public void setTarget(@Nullable LivingEntity target) {
+        LivingEntity oldTarget = getTarget();
+
+        super.setTarget(target);
+
+        if (target != oldTarget) {
+            this.lastAggroChange = this.tickCount;
+
+            getEntityData().set(LAST_AGGRO_TIME, this.lastAggroChange);
+            getEntityData().set(IS_AGGRO, getTarget() != null);
+        }
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        super.onSyncedDataUpdated(key);
+
+        if (key.equals(LAST_AGGRO_TIME)) {
+            this.lastAggroChange = getEntityData().get(LAST_AGGRO_TIME);
+        }
+        else if (key.equals(IS_AGGRO)) {
+            this.isAggro = getEntityData().get(IS_AGGRO);
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (lastAggroChange >= 0 && tickCount - lastAggroChange > 10)
+            lastAggroChange = -1;
+    }
+
+    @Override
     protected int getAttackSwingDuration() {
         return 11;
     }
@@ -68,20 +116,43 @@ public class CaveCreepEntity extends AoAMeleeMob {
 
     @Override
     public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
         animationData.addAnimationController(new AnimationController<>(this, "movement", 0, event -> {
             if (event.isMoving()) {
-                event.getController().setAnimation(aggro ? AoAAnimations.RUN : AoAAnimations.WALK);
+                if (lastAggroChange >= 0) {
+                    event.getController().setAnimation(TRANSITION_WALK_ANIM);
+                }
+                else if (isAggro) {
+                    event.getController().setAnimation(LIFTED_WALK_ANIM);
+                }
+                else {
+                    event.getController().setAnimation(AoAAnimations.WALK);
+                }
+
+                return PlayState.CONTINUE;
+            }
+            else if (isAggro) {
+                if (lastAggroChange == -1)
+                    event.getController().setAnimation(LIFT_HOLD_ANIM);
 
                 return PlayState.CONTINUE;
             }
 
             return PlayState.STOP;
         }));
-        animationData.addAnimationController(new AnimationController<>(this, "lifting", 0, event -> {
-            //event.getController().setAnimation(aggro ? LIFT : LOWER);
+        animationData.addAnimationController(new AnimationController<>(this, "lifts", 0, event -> {
+            if (lastAggroChange >= 0) {
+                if (isAggro) {
+                    event.getController().setAnimation(LIFT_ANIM);
+                }
+                else {
+                    event.getController().setAnimation(DROP_ANIM);
+                }
 
-            return PlayState.CONTINUE;
+                return PlayState.CONTINUE;
+            }
+
+            return PlayState.STOP;
         }));
-        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE)); // TODO this will probably need some smoothing out
     }
 }

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
-import net.tslat.aoa3.client.model.AoAEntityRendering;
+import net.tslat.aoa3.client.AoAEntityRendering;
 import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
 import net.tslat.aoa3.client.render.entity.projectile.ModelledProjectileRenderer;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;

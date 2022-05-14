@@ -49,31 +49,6 @@
             }
           ],
           "name": "minecraft:oak_leaves"
-        },
-        {
-          "type": "minecraft:tag",
-          "weight": 2,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 34.0
-              },
-              "add": false
-            },
-            {
-              "function": "minecraft:looting_enchant",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 10.0
-              }
-            }
-          ],
-          "name": "minecraft:leaves",
-          "expand": true
         }
       ]
     }

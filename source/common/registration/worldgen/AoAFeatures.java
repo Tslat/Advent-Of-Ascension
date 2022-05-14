@@ -19,8 +19,8 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.world.gen.feature.VanillaJsonFeature;
 import net.tslat.aoa3.content.world.genold.feature.features.trees.*;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
@@ -74,8 +74,6 @@ public final class AoAFeatures {
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, false, BiomeLoadingEvent.class, AoAFeatures::registerVanillaBiomeFeatures);
 	}
 
-	public static void doVanillaRegistryRegistrations() {}
-
 	private static void registerVanillaBiomeFeatures(final BiomeLoadingEvent ev) {
 		if (ev.getName() == null)
 			return;
@@ -93,14 +91,14 @@ public final class AoAFeatures {
 				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_JADE_SMALL.placedFeature().get()));
 			}
 
-			if (biome == Biomes.LUSH_CAVES || biome == Biomes.DRIPSTONE_CAVES || (biomeTypes.containsAll(List.of(BiomeDictionary.Type.UNDERGROUND, BiomeDictionary.Type.WET)))) {
-				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_LIMONITE_LARGE.placedFeature.get()));
+			if (biome == Biomes.LUSH_CAVES || biome == Biomes.DRIPSTONE_CAVES || biomeTypes.containsAll(List.of(BiomeDictionary.Type.UNDERGROUND, BiomeDictionary.Type.WET))) {
+				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_LIMONITE_LARGE.placedFeature().get()));
 			}
 
 			if (biomeTypes.contains(BiomeDictionary.Type.MAGICAL))
-				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_RUNIUM_SMALL.placedFeature.get()));
+				builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_RUNIUM_SMALL.placedFeature().get()));
 
-			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_LIMONITE_SMALL.placedFeature.get()));
+			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_LIMONITE_SMALL.placedFeature().get()));
 		}
 	}
 

@@ -71,25 +71,6 @@ public class SkillMasterEntity extends AoATrader {
 	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(AoAAnimations.genericIdleController(this));
-		/*animationData.addAnimationController(new AnimationController<>(this, "interaction", 0, event -> {
-			AnimationController<?> controller = event.getController();
-
-			if (this.trading) {
-				controller.setAnimation(new AnimationBuilder().addAnimation("misc.interact", false));
-
-				return PlayState.CONTINUE;
-			}
-			else if (controller.getCurrentAnimation() != null) {
-				Animation animation = controller.getCurrentAnimation();
-
-				if (animation.animationName.equals("misc.interact") || animation.animationName.equals("misc.interact.end")) {
-					controller.setAnimation(INTERACT_END);
-
-					return PlayState.CONTINUE;
-				}
-			}
-
-			return PlayState.STOP;
-		}));*/
+		animationData.addAnimationController(AoAAnimations.genericInteractionController(this, entity -> this.trading));
 	}
 }

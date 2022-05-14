@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -59,15 +60,24 @@ public class DoubleJump extends AoAAbility.Instance {
 	public boolean shouldSendKeyPress() {
 		Player player = Minecraft.getInstance().player;
 
-		return !player.isOnGround() && !player.isCreative();
+		if (player.isOnGround() || player.jumpTriggerTime > 0)
+			return false;
+
+		if (player.getItemBySlot(EquipmentSlot.CHEST).canElytraFly(player))
+			return false;
+
+		if (!player.isCreative())
+			player.jumpTriggerTime = 7;
+
+		return true;
 	}
 
 	@Override
 	public void handleKeyInput() {
-		if (canJump) {
-			ServerPlayer player = getPlayer();
+		ServerPlayer player = getPlayer();
 
-			if (player.isOnGround() || player.isCreative())
+		if (canJump || player.isCreative()) {
+			if (player.isOnGround())
 				return;
 
 			if (consumeResource(AoAResources.ENERGY.get(), energyConsumption, true)) {

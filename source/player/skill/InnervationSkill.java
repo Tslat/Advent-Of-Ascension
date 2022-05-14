@@ -77,15 +77,15 @@ public class InnervationSkill extends AoASkill.Instance {
 	}
 
 	protected float getKillXpForEntity(LivingEntity target, float damageDealt) {
-		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), (int)((Math.min(target.getMaxHealth() * 1.5f, damageDealt) / 20f) * 20));
+		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), (int)((Math.min(target.getMaxHealth() * 1.5f, damageDealt) / 16f) * 20));
 		double armour = EntityUtil.safelyGetAttributeValue(target, Attributes.ARMOR);
 		double toughness = armour > 0 ? EntityUtil.safelyGetAttributeValue(target, Attributes.ARMOR_TOUGHNESS) : 0;
 		double speed = EntityUtil.safelyGetAttributeValue(target, Attributes.MOVEMENT_SPEED);
 
-		xp *= 1 + (Math.pow(armour / 30, 2) + Math.pow(toughness / 30, 3));
+		xp *= 1 + (Math.pow(armour / 30, 2) + Math.pow(toughness / 15, 1.5d));
 
 		if (target.getPersistentData().contains("spawned_by_spawner"))
-			xp *= 0.3f;
+			xp *= 0.25f;
 
 		if (target instanceof FlyingMob || (target instanceof Mob mob && mob.getNavigation() instanceof WaterBoundPathNavigation))
 			xp *= 1.1f;
@@ -95,6 +95,9 @@ public class InnervationSkill extends AoASkill.Instance {
 
 		if (!EntityUtil.isHostileMob(target))
 			xp *= 0.5f;
+
+		if (!target.canChangeDimensions())
+			xp *= 1.3f;
 
 		return xp;
 	}

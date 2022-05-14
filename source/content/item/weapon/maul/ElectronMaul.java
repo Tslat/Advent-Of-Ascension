@@ -64,7 +64,7 @@ public class ElectronMaul extends BaseMaul {
 		VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
 		if (cap.getValue() > 0.75f)
-			WorldUtil.spawnLightning((ServerLevel)attacker.level, (ServerPlayer)attacker, target.getX(), target.getY(), target.getZ(), false);
+			WorldUtil.spawnLightning((ServerLevel)attacker.level, (ServerPlayer)attacker, target.getX(), target.getY(), target.getZ(), false, false);
 
 		if (attacker instanceof ServerPlayer player) {
 			AoAResource.Instance spirit = PlayerUtil.getResource(player, AoAResources.SPIRIT.get());

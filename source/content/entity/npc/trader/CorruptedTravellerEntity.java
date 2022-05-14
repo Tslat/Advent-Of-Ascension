@@ -6,6 +6,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.player.Inventory;
@@ -14,6 +15,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
@@ -49,6 +51,11 @@ public class CorruptedTravellerEntity extends PathfinderMob implements IAnimatab
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return !WorldUtil.isWorld(level, AoADimensions.OVERWORLD.key);
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnReason) {
+		return super.checkSpawnRules(level, spawnReason) && level.getEntitiesOfClass(CorruptedTravellerEntity.class, getBoundingBox().inflate(16, 16, 16)).isEmpty();
 	}
 
 	@Override

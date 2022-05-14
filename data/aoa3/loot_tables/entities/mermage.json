@@ -62,23 +62,6 @@
           "name": "aoa3:water_rune"
         },
         {
-          "type": "minecraft:tag",
-          "weight": 19,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
-              },
-              "add": false
-            }
-          ],
-          "name": "forge:rawfish",
-          "expand": true
-        },
-        {
           "type": "minecraft:item",
           "weight": 13,
           "functions": [

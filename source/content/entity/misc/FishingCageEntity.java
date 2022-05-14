@@ -205,7 +205,7 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public boolean canBeCollidedWith() {
-		return true;
+		return tickCount > 1;
 	}
 
 	@Override
@@ -286,7 +286,6 @@ public class FishingCageEntity extends Entity {
 
 		if (isInWater()) {
 			double yPos = this.getY();
-			float drag = 0.8f;
 
 			if (!wasInWater) {
 				setDeltaMovement(velocity.multiply(0.1f, 0.1f, 0.1f));
@@ -297,10 +296,10 @@ public class FishingCageEntity extends Entity {
 
 			move(MoverType.SELF, getDeltaMovement());
 
-			Vec3 motion = getDeltaMovement().multiply(drag, 0.8f, drag);
+			Vec3 motion = getDeltaMovement().multiply(0.8f, 0.8f, 0.8f);
 			double yVelocity;
 
-			if (velocity.y() <= 0 && Math.abs(motion.y() - 0.005D) >= 0.003d && Math.abs(motion.y() - gravity / 16d) < 0.003d) {
+			if (false && velocity.y() <= 0 && Math.abs(motion.y() - 0.005D) >= 0.003d && Math.abs(motion.y() - gravity / 16d) < 0.003d) {
 				yVelocity = -0.003d;
 			}
 			else {

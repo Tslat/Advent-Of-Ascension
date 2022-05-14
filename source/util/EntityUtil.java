@@ -278,10 +278,10 @@ public final class EntityUtil {
 	public static Set<Entity> getAttackersForMob(LivingEntity entity, @Nullable Predicate<Entity> filter) {
 		CombatTracker tracker = entity.getCombatTracker();
 
-		if (tracker.entries.isEmpty() || !tracker.isInCombat())
+		if (tracker.entries.isEmpty() || !tracker.inCombat)
 			return Collections.emptySet();
 
-		HashSet<Entity> killers = new HashSet<Entity>(tracker.entries.size());
+		HashSet<Entity> killers = new HashSet<>(tracker.entries.size());
 
 		for (CombatEntry entry : tracker.entries) {
 			if (entry.isCombatRelated() && (filter == null || filter.test(entry.getSource().getEntity())))

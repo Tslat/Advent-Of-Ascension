@@ -105,8 +105,8 @@
           "name": "minecraft:fire_coral_block"
         },
         {
-          "type": "minecraft:tag",
-          "weight": 21,
+          "type": "minecraft:item",
+          "weight": 12,
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -118,8 +118,23 @@
               "add": false
             }
           ],
-          "name": "forge:rawfish",
-          "expand": true
+          "name": "minecraft:salmon"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 12,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            }
+          ],
+          "name": "minecraft:cod"
         }
       ]
     }

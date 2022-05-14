@@ -3,8 +3,8 @@
     "targets": [
       {
         "target": {
-          "block": "minecraft:stone",
-          "predicate_type": "minecraft:block_match"
+          "tag": "minecraft:stone_ore_replaceables",
+          "predicate_type": "minecraft:tag_match"
         },
         "state": {
           "Name": "aoa3:runium_ore"

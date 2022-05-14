@@ -68,7 +68,7 @@ public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 100).level(2));
 
 			if (RandomUtil.oneInNChance(150))
-				WorldUtil.spawnLightning((ServerLevel)target.level, shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, target.getX(), target.getY(), target.getZ(), true);
+				WorldUtil.spawnLightning((ServerLevel)target.level, shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, target.getX(), target.getY(), target.getZ(), true, false);
 
 			return true;
 		}

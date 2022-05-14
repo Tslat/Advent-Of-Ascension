@@ -41,7 +41,7 @@ public class Predator extends BaseGun {
 			if (!nearbyEntities.isEmpty() && RandomUtil.oneInNChance(5)) {
 				Mob entity = RandomUtil.getRandomSelection(nearbyEntities);
 
-				WorldUtil.spawnLightning((ServerLevel)target.level, shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, entity.getX(), entity.getY(), entity.getZ(), true);
+				WorldUtil.spawnLightning((ServerLevel)target.level, shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, entity.getX(), entity.getY(), entity.getZ(), true, false);
 			}
 		}
 	}

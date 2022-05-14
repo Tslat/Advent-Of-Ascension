@@ -50,7 +50,7 @@ public class StrikerStaff extends BaseStaff<BlockPos> {
 	@Override
 	public void cast(Level world, ItemStack staff, LivingEntity caster, BlockPos args) {
 		if (world instanceof ServerLevel)
-			WorldUtil.spawnLightning((ServerLevel)world, caster instanceof ServerPlayer ? (ServerPlayer)caster : null, args.getX(), args.getY(), args.getZ(), true);
+			WorldUtil.spawnLightning((ServerLevel)world, caster instanceof ServerPlayer ? (ServerPlayer)caster : null, args.getX(), args.getY(), args.getZ(), true, false);
 	}
 
 	@Override

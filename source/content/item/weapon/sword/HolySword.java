@@ -29,7 +29,7 @@ public class HolySword extends BaseSword {
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		if (!world.isClientSide)
-			WorldUtil.spawnLightning((ServerLevel)world, (ServerPlayer)player, player.getX(), player.getY(), player.getZ(), false);
+			WorldUtil.spawnLightning((ServerLevel)world, (ServerPlayer)player, player.getX(), player.getY(), player.getZ(), false, false);
 
 		player.getCooldowns().addCooldown(this, 100);
 

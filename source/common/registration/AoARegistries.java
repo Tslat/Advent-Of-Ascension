@@ -17,6 +17,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
@@ -39,6 +40,7 @@ import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.common.registration.worldgen.AoAFeatures;
 import net.tslat.aoa3.common.registration.worldgen.AoAPlacementModifiers;
+import net.tslat.aoa3.common.registration.worldgen.AoAStructures;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -68,6 +70,7 @@ public final class AoARegistries {
 	public static final ActionableDeferredRegister<MemoryModuleType<?>> BRAIN_MEMORIES = new ActionableDeferredRegister<>(() -> ForgeRegistries.MEMORY_MODULE_TYPES, AoABrainMemories::init);
 
 	public static final ActionableDeferredRegister<Feature<?>> FEATURES = new ActionableDeferredRegister<>(ForgeRegistries.Keys.FEATURES, AoAFeatures::init);
+	public static final ActionableDeferredRegister<StructureFeature<?>> STRUCTURES = new ActionableDeferredRegister<>(ForgeRegistries.Keys.STRUCTURE_FEATURES, AoAStructures::init);
 
 	public static final ActionableDeferredRegister<AoASkill> AOA_SKILLS = new ActionableDeferredRegister<AoASkill>(ResourceKey.createRegistryKey(AdventOfAscension.id("skills")), AoASkills::init);
 	public static final ActionableDeferredRegister<AoAResource> AOA_RESOURCES = new ActionableDeferredRegister<AoAResource>(ResourceKey.createRegistryKey(AdventOfAscension.id("resources")), AoAResources::init);
@@ -93,6 +96,7 @@ public final class AoARegistries {
 		AOA_RESOURCES.setup(modEventBus);
 		AOA_ABILITIES.setup(modEventBus);
 		FEATURES.setup(modEventBus);
+		STRUCTURES.setup(modEventBus);
 
 		modEventBus.addListener(EventPriority.NORMAL, false, FMLCommonSetupEvent.class, AoARegistries::doVanillaRegistryLinkedRegistrations);
 	}
@@ -105,7 +109,6 @@ public final class AoARegistries {
 		ev.enqueueWork(() -> {
 			AoALootOperations.doVanillaRegistryRegistrations();
 			AoARecipes.doVanillaRegistryRegistrations();
-			AoAFeatures.doVanillaRegistryRegistrations();
 			AoAPlacementModifiers.doVanillaRegistryRegistrations();
 		});
 	}

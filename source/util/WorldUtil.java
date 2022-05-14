@@ -9,8 +9,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +24,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAGameRules;
+import net.tslat.aoa3.content.entity.misc.CustomisableLightningBolt;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -102,11 +101,13 @@ public final class WorldUtil {
 		return world.getRawBrightness(position, 0);
 	}
 
-	public static void spawnLightning(ServerLevel world, @Nullable ServerPlayer caster, double x, double y, double z, boolean destructive) {
-		LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, world);
+	public static void spawnLightning(ServerLevel world, @Nullable ServerPlayer caster, double x, double y, double z, boolean destructive, boolean createFire) {
+		CustomisableLightningBolt lightning = new CustomisableLightningBolt(world, x, y, z);
 
 		lightning.setVisualOnly(!destructive);
-		lightning.moveTo(x, y, z);
+
+		if (!createFire)
+			lightning.noFire();
 
 		if (caster != null)
 			lightning.setCause(caster);

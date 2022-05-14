@@ -48,7 +48,9 @@ public final class AoAMiscEntities {
 	public static final RegistryObject<EntityType<HaulingFishingBobberEntity>> REINFORCED_BOBBER = registerMiscEntity("reinforced_bobber", EntityType.Builder.<HaulingFishingBobberEntity>createNothing(MobCategory.MISC).noSave().noSummon().sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(5).setCustomClientFactory(HaulingFishingBobberEntity::handleClientSpawn));
 	public static final RegistryObject<EntityType<ThermalFishingBobberEntity>> THERMAL_BOBBER = registerMiscEntity("thermal_bobber", EntityType.Builder.<ThermalFishingBobberEntity>createNothing(MobCategory.MISC).noSave().noSummon().sized(0.25f, 0.25f).clientTrackingRange(4).fireImmune().updateInterval(5).setCustomClientFactory(ThermalFishingBobberEntity::handleClientSpawn));
 	public static final RegistryObject<EntityType<GoldFishingBobberEntity>> GOLD_BOBBER = registerMiscEntity("gold_bobber", EntityType.Builder.<GoldFishingBobberEntity>createNothing(MobCategory.MISC).noSave().noSummon().sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(5).setCustomClientFactory(GoldFishingBobberEntity::handleClientSpawn));
-	public static final RegistryObject<EntityType<FishingCageEntity>> FISHING_CAGE = registerMiscEntity("fishing_cage", FishingCageEntity::new, 0.65f, 0.63f, EntityType.Builder::noSummon);
+	public static final RegistryObject<EntityType<FishingCageEntity>> FISHING_CAGE = registerMiscEntity("fishing_cage", FishingCageEntity::new, 0.65f, 0.63f, builder -> builder.noSummon().updateInterval(5));
+
+	public static final RegistryObject<EntityType<CustomisableLightningBolt>> CUSTOMISABLE_LIGHTNING_BOLT = registerMiscEntity("customisable_lightning_bolt", CustomisableLightningBolt::new, 0, 0, builder -> builder.noSave().clientTrackingRange(16).updateInterval(Integer.MAX_VALUE));
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerMiscEntity(String registryName, EntityType.EntityFactory<T> factory, float width, float height) {
 		return registerMiscEntity(registryName, factory, width, height, typeBuilder -> {});

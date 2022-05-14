@@ -1,7 +1,10 @@
 package net.tslat.aoa3.util;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +12,8 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public final class ObjectUtil {
@@ -47,5 +52,14 @@ public final class ObjectUtil {
 			json.add("nbt", NbtOps.INSTANCE.convertTo(JsonOps.INSTANCE, stack.getTag()).getAsJsonObject());
 
 		return json;
+	}
+
+	public static <T> JsonObject codecToJson(Codec<T> codec, T object, Function<String, String> errMsg) {
+		DataResult<JsonElement> result = codec.encodeStart(JsonOps.INSTANCE, object);
+		Optional<JsonElement> output = result.resultOrPartial(error -> {
+			throw new IllegalArgumentException(errMsg.apply(error));
+		});
+
+		return output.get().getAsJsonObject();
 	}
 }

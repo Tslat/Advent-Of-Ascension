@@ -1,4 +1,4 @@
-package net.tslat.aoa3.client.model;
+package net.tslat.aoa3.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -12,6 +12,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.TippableArrowRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -141,6 +142,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> UNDEAD_HERALD = new EntityRendererPackage<>(AoANpcs.UNDEAD_HERALD).defineLayer("undead_herald", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/undead_herald.png");
 	public static final EntityRendererPackage<?> SKILL_MASTER = new EntityRendererPackage<>(AoANpcs.SKILL_MASTER).geckolib("npc/trader/skill_master");
 	public static final EntityRendererPackage<?> CORRUPTED_TRAVELLER = new EntityRendererPackage<>(AoANpcs.CORRUPTED_TRAVELLER).geckolib("npc/trader/corrupted_traveller", true);
+	public static final EntityRendererPackage<?> STORE_KEEPER = new EntityRendererPackage<>(AoANpcs.STORE_KEEPER).geckolib("npc/trader/store_keeper");
 
 	public static final EntityRendererPackage<?> LOTTOMAN = new EntityRendererPackage<>(AoANpcs.LOTTOMAN).geckolib("npc/trader/lottoman");
 
@@ -160,6 +162,8 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> FISHING_CAGE = new EntityRendererPackage<>(AoAMiscEntities.FISHING_CAGE).defineLayer("fishing_cage", FishingCageModel::createLayerDefinition).provider(FishingCageRenderer::new);
 	public static final EntityRendererPackage<?> LOTTO_TOTEM = new EntityRendererPackage<>(AoAMiscEntities.LOTTO_TOTEM).defineLayer("lotto_totem", LottoTotemModel::createLayerDefinition).provider(LottoTotemRenderer::new);
+
+	public static final EntityRendererPackage<?> LIGHTNING = new EntityRendererPackage<>(AoAMiscEntities.CUSTOMISABLE_LIGHTNING_BOLT).provider(LightningBoltRenderer::new);
 
 	public static final EntityRendererPackage<?> ANEMIA_BOMB = new EntityRendererPackage<>(AoAProjectiles.ANEMIA_BOMB).provider(AnemiaBombRenderer::new);
 	public static final EntityRendererPackage<?> AQUABALL = new EntityRendererPackage<>(AoAProjectiles.AQUABALL).provider(AquaballRenderer::new);
@@ -577,7 +581,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> LELYETIAN_BANKER = new EntityRendererPackage<>(AoANpcs.LELYETIAN_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> LELYETIAN_TRADER = new EntityRendererPackage<>(AoANpcs.LELYETIAN_TRADER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> PRIMORDIAL_BANKER = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> STORE_KEEPER = new EntityRendererPackage<>(AoANpcs.STORE_KEEPER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZAL_BANKER = new EntityRendererPackage<>(AoANpcs.ZAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZAL_CHILD = new EntityRendererPackage<>(AoANpcs.ZAL_CHILD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZAL_CITIZEN = new EntityRendererPackage<>(AoANpcs.ZAL_CITIZEN).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

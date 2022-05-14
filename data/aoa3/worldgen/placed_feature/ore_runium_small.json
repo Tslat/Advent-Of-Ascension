@@ -1,29 +1,12 @@
 {
-  "feature": {
-    "config": {
-      "targets": [
-        {
-          "target": {
-            "block": "minecraft:stone",
-            "predicate_type": "minecraft:block_match"
-          },
-          "state": {
-            "Name": "aoa3:runium_ore"
-          }
-        }
-      ],
-      "size": 7,
-      "discard_chance_on_air_exposure": 0.0
-    },
-    "type": "minecraft:ore"
-  },
+  "feature": "aoa3:ore_runium_small",
   "placement": [
     {
       "count": {
         "type": "minecraft:uniform",
         "value": {
-          "min_inclusive": 3,
-          "max_inclusive": 5
+          "min_inclusive": 10,
+          "max_inclusive": 15
         }
       },
       "type": "minecraft:count"
@@ -34,10 +17,10 @@
     {
       "height": {
         "min_inclusive": {
-          "below_top": 30
+          "absolute": 20
         },
         "max_inclusive": {
-          "below_top": 5
+          "absolute": 60
         },
         "type": "minecraft:uniform"
       },

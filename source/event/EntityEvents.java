@@ -3,19 +3,25 @@ package net.tslat.aoa3.event;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.ItemUtil;
@@ -30,6 +36,7 @@ public final class EntityEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, EntityJoinWorldEvent.class, EntityEvents::onEntityJoinWorld);
 		forgeBus.addListener(EventPriority.LOWEST, false, LivingSpawnEvent.SpecialSpawn.class, EntityEvents::onEntitySpawn);
 		forgeBus.addListener(EventPriority.NORMAL, false, ExplosionEvent.Detonate.class, EntityEvents::onEntityExploded);
+		forgeBus.addListener(EventPriority.NORMAL, false, VillagerTradesEvent.class, EntityEvents::onTraderGenTrades);
 	}
 
 	private static void onEntityUpdate(LivingEvent.LivingUpdateEvent ev) {
@@ -61,8 +68,14 @@ public final class EntityEvents {
 			ev.getEntity().getPersistentData().putBoolean("spawned_by_spawner", true);
 	}
 
-	private static void onEntityExploded(ExplosionEvent.Detonate ev) {
+	private static void onEntityExploded(final ExplosionEvent.Detonate ev) {
 		if (AoAConfig.SERVER.saveLootFromExplosions.get())
 			ev.getAffectedEntities().removeIf(entity -> entity instanceof ItemEntity && entity.tickCount < 20);
+	}
+
+	private static void onTraderGenTrades(final VillagerTradesEvent ev) {
+		if (ev.getType() == VillagerProfession.CARTOGRAPHER) {
+			ev.getTrades().get(1).add(new VillagerTrades.TreasureMapForEmeralds(4, AoATags.ConfiguredStructures.ON_RUINED_TELEPORTER_FRAME_MAPS, "filled_map." + AdventOfAscension.MOD_ID + ".ruined_teleporter_frame", MapDecoration.Type.TARGET_POINT, 3, 7));
+		}
 	}
 }

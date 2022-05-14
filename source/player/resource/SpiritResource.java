@@ -2,58 +2,52 @@ package net.tslat.aoa3.player.resource;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 import javax.annotation.Nonnull;
 
 public class SpiritResource extends AoAResource.Instance {
-	private final float maxValue;
-	private final int rechargeDelay;
-	private final float regenAmount;
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.PLAYER_TICK, ListenerType.OUTGOING_ATTACK_AFTER};
 
-	private long lastUseTick = 0;
+	private final float maxValue;
+	private final float regenPerTick;
+	private final float regenPerDamage;
+	private final float healthModMax;
+
 	private float value = 0;
 
 	public SpiritResource(ServerPlayerDataManager plData, JsonObject jsonData) {
 		super(AoAResources.SPIRIT.get(), plData);
 
 		this.maxValue = Math.max(0, GsonHelper.getAsFloat(jsonData, "max_value"));
-		this.rechargeDelay = GsonHelper.getAsInt(jsonData, "recharge_delay");
-		this.regenAmount = GsonHelper.getAsFloat(jsonData, "regen_per_tick");
+		this.regenPerTick = GsonHelper.getAsFloat(jsonData, "regen_per_tick", 0.04f);
+		this.regenPerDamage = GsonHelper.getAsFloat(jsonData, "regen_per_damage", 0.75f);
+		this.healthModMax = GsonHelper.getAsFloat(jsonData, "inverse_health_regen_mod", 2f);
 	}
 
 	public SpiritResource(CompoundTag nbtData) {
 		super(AoAResources.SPIRIT.get(), null);
 
 		this.maxValue = nbtData.getFloat("max_value");
-		this.rechargeDelay = nbtData.getInt("recharge_delay");
-		this.regenAmount = nbtData.getFloat("regen_per_tick");
+		this.regenPerTick = nbtData.getFloat("regen_per_tick");
+		this.regenPerDamage = nbtData.getFloat("regen_per_damage");
+		this.healthModMax = nbtData.getFloat("inverse_health_regen_mod");
 	}
 
 	@Override
 	public ListenerType[] getListenerTypes() {
-		return new ListenerType[] {
-				ListenerType.PLAYER_TICK
-		};
+		return LISTENERS;
 	}
 
 	@Override
 	public float getCurrentValue() {
 		return this.value;
-	}
-
-	@Override
-	public boolean consume(float amount, boolean consumeIfInsufficient) {
-		boolean success = super.consume(amount, consumeIfInsufficient);
-
-		if (success)
-			this.lastUseTick = playerDataManager.player().level.getGameTime();
-
-		return success;
 	}
 
 	@Override
@@ -68,13 +62,25 @@ public class SpiritResource extends AoAResource.Instance {
 
 	@Override
 	public float getPerTickRegen() {
-		return regenAmount;
+		return regenPerTick;
+	}
+
+	@Override
+	public void handlePostOutgoingAttack(LivingDamageEvent ev) {
+		if (this.value < getMaxValue())
+			addValue(getHealthScaledRegen(this.regenPerDamage * ev.getAmount()));
 	}
 
 	@Override
 	public void handlePlayerTick(TickEvent.PlayerTickEvent ev) {
-		if (this.value < getMaxValue() && playerDataManager.player().level.getGameTime() - rechargeDelay > lastUseTick)
-			addValue(getPerTickRegen());
+		if (this.value < getMaxValue())
+			addValue(getHealthScaledRegen(getPerTickRegen()));
+	}
+
+	protected float getHealthScaledRegen(float regenAmount) {
+		ServerPlayer player = getPlayerDataManager().player();
+
+		return (1 + (1 - player.getHealth() / player.getMaxHealth()) * (this.healthModMax - 1)) * regenAmount;
 	}
 
 	@Nonnull
@@ -89,7 +95,8 @@ public class SpiritResource extends AoAResource.Instance {
 
 		if (forClientSetup) {
 			data.putFloat("max_value", getMaxValue());
-			data.putInt("recharge_delay", rechargeDelay);
+			data.putFloat("inverse_health_regen_mod", this.healthModMax);
+			data.putFloat("regen_per_damage", this.regenPerDamage);
 			data.putFloat("regen_per_tick", getPerTickRegen());
 		}
 		else {

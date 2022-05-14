@@ -188,7 +188,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> GINGER_BLASTER = registerWeapon("ginger_blaster", () -> new GingerBlaster(7.0f, 5, 720, 60, 0.4f, 0.75f));
 	public static final RegistryObject<Item> LONG_SHOT = registerWeapon("long_shot", () -> new LongShot(15.5f, 2, 730, 54, 0.2f, 0.3f));
 	public static final RegistryObject<Item> MECHYRO = registerWeapon("mechyro", () -> new Mechyro(13.0f, 2, 720, 46, 0.3f, 0.3f));
-	public static final RegistryObject<Item> PURITY_SHOTGUN = registerWeapon("purity_shotgun", () -> new PurityShotgun(15.0f, 3, 1090, 56, 0.4f, 0.25f));
+	public static final RegistryObject<Item> PURITY_SHOTGUN = registerWeapon("purity_shotgun", () -> new PurityShotgun(14.0f, 3, 1090, 56, 0.4f, 0.25f));
 	public static final RegistryObject<Item> PURPLE_PUNISHER = registerWeapon("purple_punisher", () -> new BaseShotgun(20.5f, 2, 1120, 52, 0.785f, 0.2f));
 	public static final RegistryObject<Item> RED_ROCKET = registerWeapon("red_rocket", () -> new BaseShotgun(11.5f, 2, 500, 52, 0.785f, 0.4f));
 	public static final RegistryObject<Item> VIVO = registerWeapon("vivo", () -> new Vivo(7.0f, 3, 710, 36, 0.3f, 0.8f));

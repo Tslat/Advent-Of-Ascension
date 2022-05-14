@@ -102,13 +102,7 @@ public class LevelRestriction extends AoAAbility.Instance {
 			reqData.put(entry.getAsJsonPrimitive().getAsString(), Collections.singletonList(Pair.of(skill.type().getRegistryName(), getLevelReq())));
 		}
 
-		AoASkillReqReloadListener.SkillReqHandler skillReqHandler = AoASkillReqReloadListener.parse(reqData);
-
-		if (!skillReqHandler.isValid())
-			throw new IllegalArgumentException("Invalid skill requirements for Level Restriction ability.");
-
-		AoASkillReqReloadListener.addRequirement(restrictedId, skillReqHandler);
-		AoASkillReqReloadListener.addParsedData(restrictedId, reqData);
+		AoASkillReqReloadListener.addRequirements(restrictedId, reqData);
 
 		return restrictedId;
 	}

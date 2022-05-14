@@ -46,6 +46,6 @@ public class VoltronEntity extends AoAMeleeMob {
 	@Override
 	protected void onAttack(Entity target) {
 		if (level instanceof ServerLevel)
-			WorldUtil.spawnLightning((ServerLevel)level, null, target.getX(), target.getY(), target.getZ(), false);
+			WorldUtil.spawnLightning((ServerLevel)level, null, target.getX(), target.getY(), target.getZ(), false, false);
 	}
 }

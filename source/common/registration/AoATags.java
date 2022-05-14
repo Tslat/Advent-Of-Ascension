@@ -8,7 +8,9 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
 import net.minecraft.world.level.material.Fluid;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
@@ -247,6 +249,38 @@ public final class AoATags {
 
 		public static TagKey<EntityType<?>> create(ResourceLocation id) {
 			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, id);
+		}
+	}
+
+	public static class Biomes {
+		public static final TagKey<Biome> HAS_RUINED_TELEPORTER = aoaTag("has_structure/ruined_teleporter");
+
+		private static TagKey<Biome> aoaTag(String id) {
+			return create(AdventOfAscension.id(id));
+		}
+
+		private static TagKey<Biome> tag(String id) {
+			return create(new ResourceLocation("forge", id));
+		}
+
+		public static TagKey<Biome> create(ResourceLocation id) {
+			return TagKey.create(Registry.BIOME_REGISTRY, id);
+		}
+	}
+
+	public static class ConfiguredStructures {
+		public static final TagKey<ConfiguredStructureFeature<?, ?>> ON_RUINED_TELEPORTER_FRAME_MAPS = aoaTag("on_ruined_teleporter_frame_maps");
+
+		private static TagKey<ConfiguredStructureFeature<?, ?>> aoaTag(String id) {
+			return create(AdventOfAscension.id(id));
+		}
+
+		private static TagKey<ConfiguredStructureFeature<?, ?>> tag(String id) {
+			return create(new ResourceLocation("forge", id));
+		}
+
+		public static TagKey<ConfiguredStructureFeature<?, ?>> create(ResourceLocation id) {
+			return TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, id);
 		}
 	}
 }

@@ -6,6 +6,7 @@ import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public final class AoAAnimations {
@@ -14,7 +15,8 @@ public final class AoAAnimations {
 	public static final AnimationBuilder EAT = new AnimationBuilder().addAnimation("misc.eat", false);
 	public static final AnimationBuilder SUCCEED = new AnimationBuilder().addAnimation("misc.succeed", false);
 	public static final AnimationBuilder SPAWN = new AnimationBuilder().addAnimation("misc.spawn", false);
-	public static final AnimationBuilder INTERACT = new AnimationBuilder().addAnimation("misc.interact", false);
+	public static final AnimationBuilder INTERACT = new AnimationBuilder().addAnimation("misc.interact", false).addAnimation("misc.interact.hold", true);
+	public static final AnimationBuilder INTERACT_END = new AnimationBuilder().addAnimation("misc.interact.end", false);
 
 	public static final AnimationBuilder WALK = new AnimationBuilder().addAnimation("move.walk", true);
 	public static final AnimationBuilder RUN = new AnimationBuilder().addAnimation("move.run", true);
@@ -29,6 +31,7 @@ public final class AoAAnimations {
 	public static final AnimationBuilder ATTACK_SPIN = new AnimationBuilder().addAnimation("attack.spin", false);
 	public static final AnimationBuilder ATTACK_FLYING_BITE = new AnimationBuilder().addAnimation("attack.midair_bite", false);
 	public static final AnimationBuilder ATTACK_SHOOT = new AnimationBuilder().addAnimation("attack.shoot", false);
+	public static final AnimationBuilder ATTACK_BLOCK = new AnimationBuilder().addAnimation("attack.block", false).addAnimation("attack.block.hold", true);
 
 	public static final AnimationBuilder ATTACK_SWIPE_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", false);
 	public static final AnimationBuilder ATTACK_SWIPE_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", false);
@@ -160,6 +163,25 @@ public final class AoAAnimations {
 		return new AnimationController<T>(entity, "spawning", 0, event -> {
 			if (entity.tickCount < spawnTicks) {
 				event.getController().setAnimation(SPAWN);
+
+				return PlayState.CONTINUE;
+			}
+
+			return PlayState.STOP;
+		});
+	}
+
+	public static <T extends LivingEntity & IAnimatable> AnimationController<T> genericInteractionController(T entity, Predicate<T> interactingPredicate) {
+		return new AnimationController<>(entity, "interacting", 0, event -> {
+			AnimationController<?> controller = event.getController();
+
+			if (interactingPredicate.test(entity)) {
+				controller.setAnimation(INTERACT);
+
+				return PlayState.CONTINUE;
+			}
+			else if (controller.getCurrentAnimation() != null) {
+				controller.setAnimation(INTERACT_END);
 
 				return PlayState.CONTINUE;
 			}
