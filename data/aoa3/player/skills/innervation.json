@@ -48,9 +48,9 @@
     },
     {
       "id": "aoa3:innervation_mob_lure",
-      "unique_id": "-1783363252",
-      "lured_damage_modifier": 0.0,
-      "per_tick_energy_drain": 0.6,
+      "unique_id": "709618598",
+      "lured_damage_modifier": 0.25,
+      "per_tick_energy_drain": 0.4,
       "level_req": 44
     },
     {

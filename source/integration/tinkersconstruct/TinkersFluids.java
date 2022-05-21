@@ -4,6 +4,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.FluidUtil;
+import slimeknights.tconstruct.TConstruct;
 
 import java.util.function.Consumer;
 
@@ -32,7 +33,7 @@ public final class TinkersFluids {
 		if (!IntegrationManager.isTinkersConstructActive())
 			return registerDummyFluid(fluidHandler, fluidBuilder);
 
-		fluidBuilder.stillTexture(new ResourceLocation("tconstruct", "block/fluid/molten/still")).flowingTexture(new ResourceLocation("tconstruct", "block/fluid/molten/flowing"));
+		fluidBuilder.stillTexture(new ResourceLocation(TConstruct.MOD_ID, "block/fluid/molten/still")).flowingTexture(new ResourceLocation(TConstruct.MOD_ID, "block/fluid/molten/flowing"));
 		fluidHandler.accept(fluidBuilder);
 
 		return fluidBuilder.registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get());

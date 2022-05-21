@@ -51,8 +51,8 @@ public class IntegrationManager {
 		if (isModPresent("patchouli") && AoAConfig.INTEGRATIONS.patchouliEnabled.get())
 			patchouliPreInit();
 
-		if (isModPresent("tconstruct") && AoAConfig.INTEGRATIONS.tinkersConstructEnabled.get())
-			tinkersConstructPreInit();
+		/*if (isModPresent("tconstruct") && AoAConfig.INTEGRATIONS.tinkersConstructEnabled.get())
+			tinkersConstructPreInit();*/
 
 		TinkersFluids.preInit();
 	}

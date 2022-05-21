@@ -2,12 +2,14 @@ package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -29,14 +31,16 @@ public class PoisonArmour extends AdventArmour {
 
 	@Override
 	public void onPreAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingAttackEvent event) {
-		if (slots == null && DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount()))
+		if (slots == null && DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
 			event.setCanceled(true);
+			plData.player().addEffect(new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 60).isAmbient().hideEffectIcon().build());
+		}
 	}
 
 	@Override
 	public void onAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
 		if (slots != null && DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount()))
-			event.setAmount(event.getAmount() * (1 - (slots.size() * 0.15f)));
+			event.setAmount(event.getAmount() * (1 - (slots.size() * 0.25f)));
 	}
 
 	@Override

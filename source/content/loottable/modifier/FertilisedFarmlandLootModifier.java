@@ -57,7 +57,7 @@ public class FertilisedFarmlandLootModifier extends LootModifier {
 					ItemUtil.increaseStackSize(itStack, increaseAmount).forEach(iterator::add);
 				}
 
-				context.getLevel().setBlock(farmlandPos, Blocks.FARMLAND.defaultBlockState().setValue(FarmBlock.MOISTURE, belowBlock.getValue(FarmBlock.MOISTURE)), Block.UPDATE_ALL);
+				context.getLevel().setBlock(farmlandPos, (increaseAmount == 2 ? AoABlocks.FERTILISED_FARMLAND.get().defaultBlockState() : Blocks.FARMLAND.defaultBlockState()).setValue(FarmBlock.MOISTURE, belowBlock.getValue(FarmBlock.MOISTURE)), Block.UPDATE_ALL);
 			}
 		}
 

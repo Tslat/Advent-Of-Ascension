@@ -84,7 +84,7 @@ public class InnervationMobLure extends AoAAbility.Instance {
 		if (!isLuring)
 			return;
 
-		if (luringEntity == null || luringEntity.isDeadOrDying() || ev.player.isDeadOrDying() || !ev.player.isCrouching() || !skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.perTickDrain, true)) {
+		if (luringEntity == null || luringEntity.isDeadOrDying() || ev.player.isDeadOrDying() || !ev.player.isCrouching() || !skill.getPlayerDataManager().getResource(AoAResources.SPIRIT.get()).consume(this.perTickDrain, true)) {
 			resetLureState();
 
 			return;

@@ -2,9 +2,11 @@ package net.tslat.aoa3.common.registration;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
+import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.BucketItem;
@@ -14,7 +16,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
+import net.tslat.aoa3.content.block.functional.misc.CarvedRuneOfPower;
 import net.tslat.aoa3.content.entity.projectile.thrown.*;
 
 public final class AoADispensables {
@@ -83,6 +87,28 @@ public final class AoADispensables {
 	}
 
 	private static void registerMiscDispensables() {
+		DispenseItemBehavior realmstoneBehaviour = (source, stack) -> {
+			Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
+			BlockPos pos = source.getPos().offset(direction.getStepX(), direction.getStepY(), direction.getStepZ());
+
+			if (source.getLevel().getBlockState(pos).getBlock() instanceof CarvedRuneOfPower) {
+				CarvedRuneOfPower.testAndActivate(source.getLevel(), pos, direction, stack.getItem(), null);
+
+				return stack;
+			}
+
+			Position position = DispenserBlock.getDispensePosition(source);
+			ItemStack itemstack = stack.split(1);
+
+			DefaultDispenseItemBehavior.spawnItem(source.getLevel(), itemstack, 6, direction, position);
+			source.getLevel().levelEvent(1000, source.getPos(), 0);
+			source.getLevel().levelEvent(2000, source.getPos(), direction.get3DDataValue());
+
+			return stack;
+		};
+
+		DispenserBlock.registerBehavior(AoAItems.NETHER_REALMSTONE.get(), realmstoneBehaviour);
+		DispenserBlock.registerBehavior(AoAItems.BLANK_REALMSTONE.get(), realmstoneBehaviour);
 	}
 
 	private static void registerFluidDispensables() {

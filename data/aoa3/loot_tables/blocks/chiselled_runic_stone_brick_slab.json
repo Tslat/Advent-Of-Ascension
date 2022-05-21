@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aoa3:chiselled_runic_brick_slab"
+          "name": "aoa3:chiselled_runic_stone_brick_slab"
         }
       ],
       "functions": [
@@ -23,7 +23,7 @@
           "conditions": [
             {
               "condition": "minecraft:block_state_property",
-              "block": "aoa3:chiselled_runic_brick_slab",
+              "block": "aoa3:chiselled_runic_stone_brick_slab",
               "properties": {
                 "type": "double"
               }

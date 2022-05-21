@@ -71,7 +71,7 @@
     },
     {
       "type": "patchouli:entity",
-      "text": "Read more about the $(thing)Lottoman$() on the $(l:https://adventofascension.fandom.com/wiki/Abyssal_Lottoman)Official Wiki$(/l).",
+      "text": "Read more about the $(thing)Lottoman$() on the $(l:https://adventofascension.fandom.com/wiki/Lottoman)Official Wiki$(/l).",
       "entity": "aoa3:lottoman",
       "scale": 0.875
     },

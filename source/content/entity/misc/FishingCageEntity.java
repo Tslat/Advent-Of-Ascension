@@ -299,7 +299,7 @@ public class FishingCageEntity extends Entity {
 			Vec3 motion = getDeltaMovement().multiply(0.8f, 0.8f, 0.8f);
 			double yVelocity;
 
-			if (false && velocity.y() <= 0 && Math.abs(motion.y() - 0.005D) >= 0.003d && Math.abs(motion.y() - gravity / 16d) < 0.003d) {
+			if (velocity.y() <= 0 && Math.abs(motion.y() - 0.005D) >= 0.003d && Math.abs(motion.y() - gravity / 16d) < 0.003d) {
 				yVelocity = -0.003d;
 			}
 			else {

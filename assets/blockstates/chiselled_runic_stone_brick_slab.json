@@ -1,10 +1,10 @@
 {
   "variants": {
     "type=top": {
-      "model": "aoa3:block/chiselled_runic_brick_slab_top"
+      "model": "aoa3:block/chiselled_runic_stone_brick_slab_top"
     },
     "type=bottom": {
-      "model": "aoa3:block/chiselled_runic_brick_slab"
+      "model": "aoa3:block/chiselled_runic_stone_brick_slab"
     },
     "type=double": {
       "model": "aoa3:block/chiselled_runic_stone_bricks"
