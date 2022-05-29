@@ -26,6 +26,8 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.CompletePanicGoal;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
@@ -207,7 +209,7 @@ public class ShikEntity extends AoAAnimal {
 
 		@Override
 		public boolean canUse() {
-			if (taskOwner.getRandom().nextFloat() <= 0.1f && !level.getEntities(taskOwner, taskOwner.getBoundingBox().inflate(5, 5, 5), entity -> entity != null && entity.getType() != taskOwner.getType()).isEmpty()) {
+			if (taskOwner.getRandom().nextFloat() <= 0.1f && !EntityRetrievalUtil.getEntities(taskOwner, 5, new EntityPredicate<>().isNot(taskOwner.getType())).isEmpty()) {
 				return getRandomPosition();
 			}
 			else {

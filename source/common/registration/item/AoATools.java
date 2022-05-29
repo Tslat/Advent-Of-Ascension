@@ -3,10 +3,12 @@ package net.tslat.aoa3.common.registration.item;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.RegistryObject;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.item.tool.axe.*;
+import net.tslat.aoa3.content.item.tool.hoe.BaseHoe;
 import net.tslat.aoa3.content.item.tool.hoe.DryadsBlessing;
 import net.tslat.aoa3.content.item.tool.misc.*;
 import net.tslat.aoa3.content.item.tool.pickaxe.*;
@@ -52,6 +54,8 @@ public final class AoATools {
 	public static final RegistryObject<Chainsaw> CHAINSAW = registerTool("chainsaw", Chainsaw::new);
 
 	public static final RegistryObject<DryadsBlessing> DRYADS_BLESSING = registerTool("dryads_blessing", DryadsBlessing::new);
+	public static final RegistryObject<BaseHoe> LIMONITE_HOE = registerTool("limonite_hoe", () -> new BaseHoe(AoATiers.LIMONITE.adjusted(AdventOfAscension.id("limonite_hoe")).damage(1f), 0, AttackSpeed.forAttacksPerSecond(3)));
+	public static final RegistryObject<BaseHoe> JADE_HOE = registerTool("jade_hoe", () -> new BaseHoe(AoATiers.JADE.adjusted(AdventOfAscension.id("jade_hoe")).damage(1f), 0, AttackSpeed.forAttacksPerSecond(4)));
 
 	public static final RegistryObject<Item> HAULING_ROD = registerTool("hauling_rod", () -> new HaulingRod(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(400)));
 	public static final RegistryObject<Item> THERMALLY_INSULATED_ROD = registerTool("thermally_insulated_rod", () -> new ThermallyInsulatedRod(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(400)));

@@ -204,7 +204,7 @@ public final class FluidUtil {
 		}
 
 		public RegistryObject<LiquidBlock> defaultRegisterAll() {
-			return registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get()).getFluidBlock();
+			return registerAll(AoARegistries.ITEMS.deferredRegister(), AoARegistries.BLOCKS.deferredRegister(), AoARegistries.FLUIDS.deferredRegister()).fluidBlock();
 		}
 
 		public RegisteredFluidHolder registerAll(DeferredRegister<Item> itemRegistry, DeferredRegister<Block> blockRegistry, DeferredRegister<Fluid> fluidRegistry) {
@@ -279,27 +279,5 @@ public final class FluidUtil {
 		}
 	}
 
-	public static final class RegisteredFluidHolder {
-		private final RegistryObject<BucketItem> bucket;
-		private final RegistryObject<LiquidBlock> fluidBlock;
-		private final RegistryObject<ForgeFlowingFluid.Source> fluid;
-
-		public RegisteredFluidHolder(RegistryObject<BucketItem> bucket, RegistryObject<LiquidBlock> fluidBlock, RegistryObject<ForgeFlowingFluid.Source> fluid) {
-			this.bucket = bucket;
-			this.fluidBlock = fluidBlock;
-			this.fluid = fluid;
-		}
-
-		public RegistryObject<BucketItem> getBucket() {
-			return bucket;
-		}
-
-		public RegistryObject<ForgeFlowingFluid.Source> getFluid() {
-			return this.fluid;
-		}
-
-		public RegistryObject<LiquidBlock> getFluidBlock() {
-			return this.fluidBlock;
-		}
-	}
+	public record RegisteredFluidHolder(RegistryObject<BucketItem> bucket, RegistryObject<LiquidBlock> fluidBlock, RegistryObject<ForgeFlowingFluid.Source> fluid) {}
 }

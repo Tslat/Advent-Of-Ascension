@@ -538,6 +538,8 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 						if (entity != null)
 							drawEntity(matrix, entity, left + 200, rowTop + 170, 50f);
 
+						matrix.pushPose();
+						matrix.translate(0, 0, 100);
 						RenderUtil.drawColouredBox(matrix, left + 40, rowTop, 0, 320, 30, 0xFF010101);
 						RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 						RenderSystem.setShaderTexture(0, iconsTextures);
@@ -547,6 +549,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 						//RenderSystem.disableAlphaTest();
 						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 60, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 320, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+						matrix.popPose();
 
 						if (i + 1 < filteredMobList.size()) {
 							entityStat = filteredMobList.get(i + 1);
@@ -558,6 +561,8 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 							if (entity != null)
 								drawEntity(matrix, entity, right - 200, rowTop + 170, 50f);
 
+							matrix.pushPose();
+							matrix.translate(0, 0, 100);
 							RenderUtil.drawColouredBox(matrix, right - 360, rowTop, 0, 320, 30, 0xFF010101);
 							RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, right - 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 							RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
@@ -568,6 +573,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 							//RenderSystem.disableAlphaTest();
 							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), right - 340, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
 							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), right - 80, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+							matrix.popPose();
 						}
 					}
 
@@ -674,8 +680,11 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 
 			int relativeMouseX = (int)mouseX - left + 2;
 
+			if (relativeMouseX < 0)
+				return false;
+
 			if (openEntryIndex < 0) {
-				if (relativeMouseX >= 0 && relativeMouseX <= 20 && mouseY - top + 2 < 20) {
+				if (relativeMouseX <= 20 && mouseY - top + 2 < 20) {
 					searchField.setVisible(!searchField.isVisible());
 
 					if (searchField.isVisible()) {

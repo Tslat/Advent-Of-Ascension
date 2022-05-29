@@ -11,6 +11,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 
@@ -46,7 +48,7 @@ public class RefluctEntity extends AoAMeleeMob {
 	public void aiStep() {
 		super.aiStep();
 
-		for (Entity e : level.getEntities(this, getBoundingBox().inflate(3), entity -> entity instanceof BaseEnergyShot)) {
+		for (Entity e : EntityRetrievalUtil.getEntities(this.level, getBoundingBox().inflate(3), new EntityPredicate<>().isSubtypeOf(BaseEnergyShot.class))) {
 			e.setDeltaMovement(e.getDeltaMovement().multiply(-1, -1, -1));
 		}
 	}

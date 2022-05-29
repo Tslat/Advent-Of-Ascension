@@ -18,6 +18,8 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;
@@ -87,7 +89,7 @@ public class PixonSpawner implements CustomSpawner {
 			Heightmap.Types heightmap = SpawnPlacements.getHeightmapType(pixon);
 			pos = new BlockPos(x, world.getRandom().nextInt(world.getHeight(heightmap, x, z) + 1), z);
 
-			if (world.getEntities(pixon, new AABB(x - 5, pos.getY() - 5, z - 5, x + 5, pos.getY() + 5, z + 5), LivingEntity::isAlive).size() > 3)
+			if (EntityRetrievalUtil.getEntities(world, new AABB(x - 5, pos.getY() - 5, z - 5, x + 5, pos.getY() + 5, z + 5), new EntityPredicate<>().is(pixon).isAlive()).size() > 3)
 				continue;
 
 			if (!NaturalSpawner.isSpawnPositionOk(placementType, world, pos, pixon))

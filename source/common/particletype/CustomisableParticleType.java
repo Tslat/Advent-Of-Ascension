@@ -21,8 +21,9 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 			Codec.FLOAT.fieldOf("red").forGetter(data -> data.red),
 			Codec.FLOAT.fieldOf("green").forGetter(data -> data.green),
 			Codec.FLOAT.fieldOf("blue").forGetter(data -> data.blue),
-			Codec.FLOAT.fieldOf("alpha").forGetter(data -> data.alpha)
-	).apply(instance, (type, scale, ageMod, red, green, blue, alpha) -> new Data((ParticleType<Data>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), scale, ageMod, red, green, blue, alpha)));
+			Codec.FLOAT.fieldOf("alpha").forGetter(data -> data.alpha),
+			Codec.INT.fieldOf("entity_id").forGetter(data -> data.entitySourceId)
+	).apply(instance, (type, scale, ageMod, red, green, blue, alpha, entityId) -> new Data((ParticleType<Data>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), scale, ageMod, red, green, blue, alpha, entityId)));
 
 	public CustomisableParticleType(boolean alwaysShow) {
 		super(alwaysShow, Data.DESERIALIZER);
@@ -42,16 +43,17 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 		public final float green;
 		public final float blue;
 		public final float alpha;
+		public final int entitySourceId;
 
 		public Data(ParticleType<Data> particleType, int colour) {
 			this(particleType, 1, 1, colour);
 		}
 
 		public Data(ParticleType<Data> particleType, float scale, float ageModifier, int colour) {
-			this(particleType, scale, ageModifier, (colour >> 16) / 255.0f, ((colour >> 8) & 0xff) / 255.0f, (colour & 0xff) / 255.0f, (colour >> 24) / 255.0f);
+			this(particleType, scale, ageModifier, (colour >> 16) / 255.0f, ((colour >> 8) & 0xff) / 255.0f, (colour & 0xff) / 255.0f, (colour >> 24) / 255.0f, -1);
 		}
 
-		public Data(ParticleType<Data> particleType, float scale, float ageModifier, float red, float green, float blue, float alpha) {
+		public Data(ParticleType<Data> particleType, float scale, float ageModifier, float red, float green, float blue, float alpha, int entityId) {
 			this.scale = scale;
 			this.ageModifier = ageModifier;
 			this.particleType = particleType;
@@ -59,6 +61,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 			this.green = green;
 			this.blue = blue;
 			this.alpha = alpha;
+			this.entitySourceId = entityId;
 		}
 
 		@Override
@@ -74,11 +77,12 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 			buffer.writeFloat(green);
 			buffer.writeFloat(blue);
 			buffer.writeFloat(alpha);
+			buffer.writeVarInt(entitySourceId);
 		}
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getKey(getType()), scale, ageModifier, red, green, blue, alpha);
+			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f %s", Registry.PARTICLE_TYPE.getKey(getType()), scale, ageModifier, red, green, blue, alpha, entitySourceId);
 		}
 
 		public static final ParticleOptions.Deserializer<Data> DESERIALIZER = new ParticleOptions.Deserializer<Data>() {
@@ -95,12 +99,14 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 				float blue = (float)reader.readDouble();
 				reader.expect(' ');
 				float alpha = (float)reader.readDouble();
+				reader.expect(' ');
+				int entityId = reader.readInt();
 
-				return new Data(particleType, scale, ageMod, red, green, blue, alpha);
+				return new Data(particleType, scale, ageMod, red, green, blue, alpha, entityId);
 			}
 
 			public Data fromNetwork(ParticleType<Data> particleType, FriendlyByteBuf buffer) {
-				return new Data(particleType, buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
+				return new Data(particleType, buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readVarInt());
 			}
 		};
 	}

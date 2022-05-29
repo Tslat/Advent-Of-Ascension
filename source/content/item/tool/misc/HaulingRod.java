@@ -89,7 +89,7 @@ public class HaulingRod extends FishingRodItem {
 	protected void reelIn(ServerPlayer player, HaulingFishingBobberEntity bobber, ItemStack stack, InteractionHand hand) {
 		if (bobber.distanceToSqr(player) <= 9) {
 			List<ItemStack> loot = landEntity(player, stack, hand, bobber);
-			int xp = RandomUtil.randomNumberBetween(1, 6);
+			int xp = RandomUtil.randomNumberBetween(2, 10);
 			HaulingItemFishedEvent event = AoAEvents.haulingItemFished(bobber.getHookedIn(), stack, loot, xp, 1, bobber);
 
 			if (!event.isCanceled()) {

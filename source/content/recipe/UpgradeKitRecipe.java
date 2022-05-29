@@ -68,12 +68,12 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 
 	@Override
 	public RecipeSerializer<UpgradeKitRecipe> getSerializer() {
-		return AoARecipes.UPGRADE_KIT.getB().get();
+		return AoARecipes.UPGRADE_KIT.serializer().get();
 	}
 
 	@Override
 	public RecipeType<UpgradeKitRecipe> getType() {
-		return AoARecipes.UPGRADE_KIT.getA().get();
+		return AoARecipes.UPGRADE_KIT.type().get();
 	}
 
 	@Override

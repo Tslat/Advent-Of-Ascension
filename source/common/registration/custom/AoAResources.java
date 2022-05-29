@@ -47,6 +47,6 @@ public class AoAResources {
 
 	@Nullable
 	public static AoAResource getResource(ResourceLocation id) {
-		return AoARegistries.AOA_RESOURCES.getObject(id);
+		return AoARegistries.AOA_RESOURCES.getEntry(id);
 	}
 }

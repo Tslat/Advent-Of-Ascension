@@ -49,7 +49,7 @@ public class HoldingItem implements LootItemCondition {
 
 	@Override
 	public LootItemConditionType getType() {
-		return AoALootOperations.LootConditions.HOLDING_ITEM;
+		return AoALootOperations.LootConditions.HOLDING_ITEM.get();
 	}
 
 	public LootContext.EntityTarget getTarget() {

@@ -40,5 +40,4 @@ public class ChargerEntity extends AoAMeleeMob {
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return AoASounds.ENTITY_CHARGER_HURT.get();
 	}
-
 }

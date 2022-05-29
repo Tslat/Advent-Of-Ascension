@@ -27,6 +27,7 @@ public final class AoAAnimations {
 	public static final AnimationBuilder ATTACK_THROW = new AnimationBuilder().addAnimation("attack.throw", false);
 	public static final AnimationBuilder ATTACK_BITE = new AnimationBuilder().addAnimation("attack.bite", false);
 	public static final AnimationBuilder ATTACK_SLAM = new AnimationBuilder().addAnimation("attack.slam", false);
+	public static final AnimationBuilder ATTACK_STOMP = new AnimationBuilder().addAnimation("attack.stomp", false);
 	public static final AnimationBuilder ATTACK_STRIKE = new AnimationBuilder().addAnimation("attack.strike", false);
 	public static final AnimationBuilder ATTACK_SPIN = new AnimationBuilder().addAnimation("attack.spin", false);
 	public static final AnimationBuilder ATTACK_FLYING_BITE = new AnimationBuilder().addAnimation("attack.midair_bite", false);

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
@@ -22,6 +23,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.*;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -58,7 +60,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return 1.375f;
+		return 1f;
 	}
 
 	@Nullable
@@ -138,9 +140,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 		super.die(cause);
 
 		if (!level.isClientSide) {
-			if (WorldUtil.isWorld(level, AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof Player) {
-				Player pl = (Player)cause.getEntity();
-
+			if (WorldUtil.isWorld(level, AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof Player pl) {
 				if (pl.getY() >= 120 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.HAVEN_REALMSTONE.get()));
 			}
@@ -148,5 +148,21 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 			if (altarPos != null && lastHurtByPlayerTime > 0)
 				spawnAtLocation(new ItemStack(AoAItems.GUARDIANS_EYE.get()), 0);
 		}
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 7;
+	}
+
+	@Override
+	protected int getAttackSwingDuration() {
+		return 14;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericFlyController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_STRIKE));
 	}
 }

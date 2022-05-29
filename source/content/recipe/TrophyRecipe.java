@@ -118,7 +118,7 @@ public class TrophyRecipe implements CraftingRecipe, net.minecraftforge.common.c
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return AoARecipes.TROPHY.getB().get();
+		return AoARecipes.TROPHY.serializer().get();
 	}
 
 	@Override

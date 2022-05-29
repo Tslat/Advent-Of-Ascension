@@ -3,12 +3,16 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.GsonHelper;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
+import net.minecraft.world.entity.ExperienceOrb;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.RandomUtil;
 
 public class FishingXpBoost extends ScalableModAbility {
-	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.GAIN_VANILLA_XP};
+	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.FISHED_ITEM};
 
 	private final boolean useAddition;
 
@@ -35,9 +39,9 @@ public class FishingXpBoost extends ScalableModAbility {
 	}
 
 	@Override
-	public void handleVanillaXpGain(PlayerXpEvent.XpChange ev) {
-		if (getPlayer().fishing != null) {
-			float xp = ev.getAmount();
+	public void handleItemFished(ItemFishedEvent ev, boolean isHauling) {
+		if (ev instanceof HaulingItemFishedEvent haulingEv) {
+			float xp = haulingEv.getXp();
 
 			if (useAddition) {
 				xp += getScaledValue();
@@ -46,7 +50,12 @@ public class FishingXpBoost extends ScalableModAbility {
 				xp *= 1 + getScaledValue();
 			}
 
-			ev.setAmount((int)xp);
+			haulingEv.setXp((int)xp);
+		}
+		else {
+			Player player = ev.getPlayer();
+
+			player.level.addFreshEntity(new ExperienceOrb(player.level, player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, RandomUtil.randomNumberBetween(1, 6)));
 		}
 	}
 

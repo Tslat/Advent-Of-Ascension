@@ -78,6 +78,6 @@ public class CTInfusionRecipeManager implements IRecipeManager<InfusionRecipe> {
 
 	@Override
 	public RecipeType<InfusionRecipe> getRecipeType() {
-		return AoARecipes.INFUSION.getA().get();
+		return AoARecipes.INFUSION.type().get();
 	}
 }

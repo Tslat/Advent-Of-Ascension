@@ -2,25 +2,33 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "rares",
+      "name": "world_table",
       "rolls": 1.0,
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
-          "type": "minecraft:empty",
-          "weight": 100
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:ice_crystal"
+          "type": "minecraft:loot_table",
+          "weight": 100,
+          "name": "aoa3:worlds/overworld"
         }
       ]
     },
     {
       "name": "ice",
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 2.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -30,8 +38,8 @@
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 34.0
+                "min": 20.0,
+                "max": 44.0
               },
               "add": false
             },
@@ -48,13 +56,14 @@
         },
         {
           "type": "minecraft:item",
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 34.0
+                "min": 20.0,
+                "max": 48.0
               },
               "add": false
             },
@@ -68,16 +77,112 @@
             }
           ],
           "name": "minecraft:packed_ice"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 20.0,
+                "max": 48.0
+              },
+              "add": false
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0.0,
+                "max": 10.0
+              }
+            }
+          ],
+          "name": "minecraft:blue_ice"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:looting_enchant",
+          "count": {
+            "type": "minecraft:uniform",
+            "min": 1.0,
+            "max": 1.0
+          }
         }
       ]
     },
     {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
+      "name": "rares",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 2.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/overworld"
+          "type": "minecraft:empty",
+          "weight": 75
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              },
+              "add": false
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0.0,
+                "max": 1.0
+              }
+            }
+          ],
+          "name": "aoa3:ice_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 2.0
+              },
+              "add": false
+            }
+          ],
+          "name": "aoa3:small_skill_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:silver_coin"
+        }
+      ],
+      "functions": [
+        {
+          "function": "minecraft:looting_enchant",
+          "count": {
+            "type": "minecraft:uniform",
+            "min": 1.0,
+            "max": 1.0
+          }
         }
       ]
     }

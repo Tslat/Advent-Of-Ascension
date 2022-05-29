@@ -17,7 +17,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.util.EntityRetrievalUtil;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -60,7 +61,6 @@ public class CustomisableLightningBolt extends LightningBolt {
 				}
 			}
 			else {
-				WorldUtil.createExplosion(this.cause, this.level, this, 10);
 				Difficulty difficulty = this.level.getDifficulty();
 
 				if ((difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) && this.doFire)
@@ -77,7 +77,7 @@ public class CustomisableLightningBolt extends LightningBolt {
 		if (this.life < 0) {
 			if (this.flashes == 0) {
 				if (this.level instanceof ServerLevel) {
-					List<Entity> entities = this.level.getEntities(this, new AABB(getX() - 15, getY() - 15, getZ() - 15, getX() + 15, getY() + 21, getZ() + 15), entity -> entity.isAlive() && !this.hitEntities.contains(entity));
+					List<Entity> entities = EntityRetrievalUtil.getEntities(this.level, new AABB(getX() - 15, getY() - 15, getZ() - 15, getX() + 15, getY() + 21, getZ() + 15), new EntityPredicate<>(this).isAlive().notInCollection(this.hitEntities));
 
 					for(ServerPlayer player : ((ServerLevel)this.level).getPlayers(player -> player.distanceTo(this) < 256)) {
 						CriteriaTriggers.LIGHTNING_STRIKE.trigger(player, this, entities);
@@ -101,12 +101,14 @@ public class CustomisableLightningBolt extends LightningBolt {
 				this.level.setSkyFlashTime(2);
 			}
 			else if (!this.visualOnly) {
-				List<Entity> entities = this.level.getEntities(this, new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 9, getZ() + 3), Entity::isAlive);
+				List<Entity> entities = EntityRetrievalUtil.getEntities(this.level, new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 9, getZ() + 3), new EntityPredicate<>(this).isAlive());
 
 				for(Entity entity : entities) {
 					if (!ForgeEventFactory.onEntityStruckByLightning(entity, this)) {
 						entity.thunderHit((ServerLevel)this.level, this);
-						this.onEntityStrike.accept(entity);
+
+						if (this.onEntityStrike != null)
+							this.onEntityStrike.accept(entity);
 					}
 				}
 

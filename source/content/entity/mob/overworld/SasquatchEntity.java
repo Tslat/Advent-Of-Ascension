@@ -7,8 +7,10 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +21,7 @@ public class SasquatchEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return 1.9375f;
+		return 1.59375f;
 	}
 
 	@Nullable
@@ -38,4 +40,19 @@ public class SasquatchEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_YETI_HURT.get();
 	}
 
+	@Override
+	protected int getPreAttackTime() {
+		return 6;
+	}
+
+	@Override
+	protected int getAttackSwingDuration() {
+		return 13;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
+	}
 }

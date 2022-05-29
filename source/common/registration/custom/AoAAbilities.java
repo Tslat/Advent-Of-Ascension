@@ -58,6 +58,6 @@ public class AoAAbilities {
 
 	@Nullable
 	public static AoAAbility getAbility(ResourceLocation id) {
-		return AoARegistries.AOA_ABILITIES.getObject(id);
+		return AoARegistries.AOA_ABILITIES.getEntry(id);
 	}
 }

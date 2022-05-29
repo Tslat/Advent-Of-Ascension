@@ -55,7 +55,7 @@ public class BlockHasTag implements LootItemCondition {
 
 	@Override
 	public LootItemConditionType getType() {
-		return AoALootOperations.LootConditions.HAS_BLOCK_TAG;
+		return AoALootOperations.LootConditions.HAS_BLOCK_TAG.get();
 	}
 
 	public TagKey<Block>[] getTags() {

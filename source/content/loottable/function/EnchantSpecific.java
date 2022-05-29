@@ -33,7 +33,7 @@ public class EnchantSpecific extends LootItemConditionalFunction {
 
 	@Override
 	public LootItemFunctionType getType() {
-		return AoALootOperations.LootFunctions.ENCHANT_SPECIFIC;
+		return AoALootOperations.LootFunctions.ENCHANT_SPECIFIC.get();
 	}
 
 	@Override

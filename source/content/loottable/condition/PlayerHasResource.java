@@ -33,7 +33,7 @@ public class PlayerHasResource implements LootItemCondition {
 
 	@Override
 	public LootItemConditionType getType() {
-		return AoALootOperations.LootConditions.PLAYER_HAS_RESOURCE;
+		return AoALootOperations.LootConditions.PLAYER_HAS_RESOURCE.get();
 	}
 
 	@Override

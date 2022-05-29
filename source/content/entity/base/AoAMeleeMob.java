@@ -47,6 +47,7 @@ import java.util.UUID;
 public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 	private static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAMeleeMob.class, EntityDataSerializers.INT);
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
+	private static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAMeleeMob.class, EntityDataSerializers.BOOLEAN);
 
 	protected boolean isSlipperyMovement = false;
 
@@ -71,6 +72,7 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		getEntityData().define(ATTACK_STATE, 0);
+		getEntityData().define(INVULNERABLE, this.isInvulnerable());
 	}
 
 	@Nullable
@@ -123,6 +125,20 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 	protected void onAttack(Entity target) {}
 
 	protected void onHit(DamageSource source, float amount) {}
+
+	@Override
+	public void setInvulnerable(boolean isInvulnerable) {
+		super.setInvulnerable(isInvulnerable);
+		getEntityData().set(INVULNERABLE, isInvulnerable);
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		if (key.equals(INVULNERABLE))
+			setInvulnerable(getEntityData().get(INVULNERABLE));
+	}
 
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {

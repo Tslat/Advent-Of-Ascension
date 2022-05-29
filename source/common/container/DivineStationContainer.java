@@ -125,7 +125,7 @@ public class DivineStationContainer extends AbstractContainerMenu { // TODO Look
 	protected void slotChangedCraftingGrid(Level world, Player player, DivineStationInventory inv, ResultContainer craftResult) {
 		if (!world.isClientSide) {
 			ItemStack resultStack = ItemStack.EMPTY;
-			Optional<UpgradeKitRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.UPGRADE_KIT.getA().get(), inv, world);
+			Optional<UpgradeKitRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.UPGRADE_KIT.type().get(), inv, world);
 
 			if (recipeMatch.isPresent()) {
 				UpgradeKitRecipe recipe = recipeMatch.get();

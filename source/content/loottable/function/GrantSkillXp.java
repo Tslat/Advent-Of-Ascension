@@ -32,7 +32,7 @@ public class GrantSkillXp extends LootItemConditionalFunction {
 
 	@Override
 	public LootItemFunctionType getType() {
-		return AoALootOperations.LootFunctions.GRANT_SKILL_XP;
+		return AoALootOperations.LootFunctions.GRANT_SKILL_XP.get();
 	}
 
 	@Override

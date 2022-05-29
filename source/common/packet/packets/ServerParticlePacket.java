@@ -92,48 +92,26 @@ public class ServerParticlePacket implements AoAPacket {
 		return particleType.getDeserializer().fromNetwork(particleType, buffer);
 	}
 
-	private static class ParticleData {
-		private final ParticleOptions particle;
-
-		private final double x;
-		private final double y;
-		private final double z;
-		private final double velX;
-		private final double velY;
-		private final double velZ;
-
-		private final int amount;
-
-		private ParticleData(ParticleOptions particle, double x, double y, double z, double velX, double velY, double velZ, int amount) {
-			this.particle = particle;
-			this.x = x;
-			this.y = y;
-			this.z = z;
-			this.velX = velX;
-			this.velY = velY;
-			this.velZ = velZ;
-			this.amount = amount;
-		}
-
+	private record ParticleData(ParticleOptions particle, double x, double y, double z, double velX, double velY, double velZ, int amount) {
 		private void toBuffer(FriendlyByteBuf buffer) {
-			buffer.writeInt(Registry.PARTICLE_TYPE.getId(this.particle.getType()));
-			this.particle.writeToNetwork(buffer);
-			buffer.writeDouble(this.x);
-			buffer.writeDouble(this.y);
-			buffer.writeDouble(this.z);
-			buffer.writeDouble(this.velX);
-			buffer.writeDouble(this.velY);
-			buffer.writeDouble(this.velZ);
-			buffer.writeInt(this.amount);
+				buffer.writeInt(Registry.PARTICLE_TYPE.getId(this.particle.getType()));
+				this.particle.writeToNetwork(buffer);
+				buffer.writeDouble(this.x);
+				buffer.writeDouble(this.y);
+				buffer.writeDouble(this.z);
+				buffer.writeDouble(this.velX);
+				buffer.writeDouble(this.velY);
+				buffer.writeDouble(this.velZ);
+				buffer.writeInt(this.amount);
+			}
+
+			private static ParticleData fromBuffer(FriendlyByteBuf buffer) {
+				ParticleType<? extends ParticleOptions> particle = Registry.PARTICLE_TYPE.byId(buffer.readInt());
+
+				if (particle == null)
+					particle = ParticleTypes.BLOCK_MARKER;
+
+				return new ParticleData(deserializeParticle(buffer, particle), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readInt());
+			}
 		}
-
-		private static ParticleData fromBuffer(FriendlyByteBuf buffer) {
-			ParticleType<? extends ParticleOptions> particle = Registry.PARTICLE_TYPE.byId(buffer.readInt());
-
-			if (particle == null)
-				particle = ParticleTypes.BLOCK_MARKER;
-
-			return new ParticleData(deserializeParticle(buffer, particle), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readDouble(), buffer.readInt());
-		}
-	}
 }

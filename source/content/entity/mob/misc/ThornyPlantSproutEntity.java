@@ -18,6 +18,8 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.util.EntityRetrievalUtil;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -86,7 +88,7 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 	public void remove(RemovalReason reason) {
 		super.remove(reason);
 
-		if (level.getBlockState(blockPosition().above()).getBlock() == AoABlocks.THORNY_PLANT_CROP.get() && level.getEntities(this, getBoundingBox(), entity -> entity.getType() == getType()).isEmpty())
+		if (level.getBlockState(blockPosition().above()).getBlock() == AoABlocks.THORNY_PLANT_CROP.get() && EntityRetrievalUtil.getEntities(this.level, getBoundingBox(), new EntityPredicate<>(this).is(getType())).isEmpty())
 			level.destroyBlock(blockPosition().above(), true);
 	}
 

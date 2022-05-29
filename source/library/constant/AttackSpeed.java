@@ -12,6 +12,7 @@ public final class AttackSpeed {
 	public static final float SHOVEL = -3.0f;
 	public static final float PICKAXE = -2.8f;
 	public static final float AXE = -3.0f;
+	public static final float HOE = -3.0f;
 	public static final float SWORD = -2.4f;
 	public static final float GREATBLADE = -3.24f;
 

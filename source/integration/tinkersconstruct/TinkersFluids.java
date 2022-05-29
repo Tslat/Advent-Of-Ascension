@@ -36,7 +36,7 @@ public final class TinkersFluids {
 		fluidBuilder.stillTexture(new ResourceLocation(TConstruct.MOD_ID, "block/fluid/molten/still")).flowingTexture(new ResourceLocation(TConstruct.MOD_ID, "block/fluid/molten/flowing"));
 		fluidHandler.accept(fluidBuilder);
 
-		return fluidBuilder.registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get());
+		return fluidBuilder.registerAll(AoARegistries.ITEMS.deferredRegister(), AoARegistries.BLOCKS.deferredRegister(), AoARegistries.FLUIDS.deferredRegister());
 	}
 
 	private static FluidUtil.RegisteredFluidHolder registerFluid(String id, Consumer<FluidUtil.Builder> fluidHandler) {
@@ -47,12 +47,12 @@ public final class TinkersFluids {
 
 		fluidHandler.accept(fluidBuilder);
 
-		return fluidBuilder.registerAll(AoARegistries.ITEMS.registry().get(), AoARegistries.BLOCKS.registry().get(), AoARegistries.FLUIDS.registry().get());
+		return fluidBuilder.registerAll(AoARegistries.ITEMS.deferredRegister(), AoARegistries.BLOCKS.deferredRegister(), AoARegistries.FLUIDS.deferredRegister());
 	}
 
 	private static FluidUtil.RegisteredFluidHolder registerDummyFluid(Consumer<FluidUtil.Builder> fluidHandler, FluidUtil.Builder fluidBuilder) {
 		fluidHandler.accept(fluidBuilder);
 
-		return new FluidUtil.RegisteredFluidHolder(null, null, fluidBuilder.registerFluid(AoARegistries.FLUIDS.registry().get()));
+		return new FluidUtil.RegisteredFluidHolder(null, null, fluidBuilder.registerFluid(AoARegistries.FLUIDS.deferredRegister()));
 	}
 }

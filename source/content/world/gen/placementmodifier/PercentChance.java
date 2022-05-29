@@ -30,6 +30,6 @@ public class PercentChance extends PlacementFilter {
 
 	@Override
 	public PlacementModifierType<?> type() {
-		return AoAPlacementModifiers.PERCENT_CHANCE;
+		return AoAPlacementModifiers.PERCENT_CHANCE.get();
 	}
 }

@@ -111,7 +111,7 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private List<UpgradeKitRecipe> compileUpgradeKitRecipes(RecipeManager recipeManager) {
-		return recipeManager.getAllRecipesFor(AoARecipes.UPGRADE_KIT.getA().get());
+		return recipeManager.getAllRecipesFor(AoARecipes.UPGRADE_KIT.type().get());
 	}
 
 	private ArrayList<WhitewashingRecipe> compileWhitewashingRecipes(RecipeManager recipeManager) {
@@ -143,7 +143,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<>();
 
-		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.getA().get())) {
+		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.type().get())) {
 			if (recipe.isEnchanting())
 				imbuingRecipes.add(recipe);
 		}
@@ -154,7 +154,7 @@ public class JEIIntegration implements IModPlugin {
 	private ArrayList<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
 		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<>();
 
-		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.getA().get())) {
+		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.type().get())) {
 			if (!recipe.isEnchanting())
 				infusionRecipes.add(recipe);
 		}
@@ -168,7 +168,7 @@ public class JEIIntegration implements IModPlugin {
 			return;
 
 		if (!IntegrationManager.isTinkersConstructActive()) {
-			Function<FluidUtil.RegisteredFluidHolder, FluidStack> fluidStackGen = holder -> new FluidStack(holder.getFluid().get(), FluidAttributes.BUCKET_VOLUME);
+			Function<FluidUtil.RegisteredFluidHolder, FluidStack> fluidStackGen = holder -> new FluidStack(holder.fluid().get(), FluidAttributes.BUCKET_VOLUME);
 
 			jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.FLUID, Arrays.asList(
 					fluidStackGen.apply(TinkersFluids.MOLTEN_BARONYTE),

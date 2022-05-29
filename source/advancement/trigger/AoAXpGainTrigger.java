@@ -24,7 +24,7 @@ public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.In
 
 		if (json.has("skill")) {
 			ResourceLocation skillId = new ResourceLocation(GsonHelper.getAsString(json, "skill"));
-			skill = AoARegistries.AOA_SKILLS.forgeRegistry().get().getValue(skillId);
+			skill = AoARegistries.AOA_SKILLS.getEntry(skillId);
 
 			if (skill == null)
 				throw new IllegalArgumentException("Invalid AoASkill ID: '" + skillId + "'");

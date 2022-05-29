@@ -244,12 +244,12 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return AoARecipes.INFUSION.getB().get();
+		return AoARecipes.INFUSION.serializer().get();
 	}
 
 	@Override
 	public RecipeType<?> getType() {
-		return AoARecipes.INFUSION.getA().get();
+		return AoARecipes.INFUSION.type().get();
 	}
 
 	public ItemStack provideEmptyOrCompatibleStackForEnchanting(ItemStack inputStack) {

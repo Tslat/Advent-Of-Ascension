@@ -99,7 +99,7 @@ public class ToolInteractionRecipe extends CustomRecipe {
 
 	@Override
 	public RecipeSerializer<?> getSerializer() {
-		return AoARecipes.TOOL_INTERACTION.getB().get();
+		return AoARecipes.TOOL_INTERACTION.serializer().get();
 	}
 
 	@Override

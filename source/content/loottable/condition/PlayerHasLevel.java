@@ -27,7 +27,7 @@ public class PlayerHasLevel implements LootItemCondition {
 
 	@Override
 	public LootItemConditionType getType() {
-		return AoALootOperations.LootConditions.PLAYER_HAS_LEVEL;
+		return AoALootOperations.LootConditions.PLAYER_HAS_LEVEL.get();
 	}
 
 	@Override

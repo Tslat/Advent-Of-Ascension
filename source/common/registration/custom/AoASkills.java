@@ -60,6 +60,6 @@ public class AoASkills {
 
 	@Nullable
 	public static AoASkill getSkill(ResourceLocation id) {
-		return AoARegistries.AOA_SKILLS.getObject(id);
+		return AoARegistries.AOA_SKILLS.getEntry(id);
 	}
 }

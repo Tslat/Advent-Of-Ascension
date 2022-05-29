@@ -84,7 +84,7 @@ public class ChumItem extends Item {
 				packet.particle(particleData, user.getX(), user.getY() + user.getEyeHeight(), user.getZ(), velocityVector.x() + (i * 2 * velocityVector.z()), velocityVector.y(), velocityVector.z() + (i * 2 * velocityVector.x()));
 			}
 
-			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, user.position(), packet.isLongRange() ? 512 : 32);
+			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, user.position(), 32);
 		}
 	}
 
