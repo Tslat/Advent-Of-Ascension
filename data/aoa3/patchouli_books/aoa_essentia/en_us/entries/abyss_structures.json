@@ -5,52 +5,85 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "As a weary traveller makes their way through the dark, foreboding plane, they should keep their eyes open for a few important landmarks.",
+      "text": "The $(thing)Abyss$() contains several structures to look out for, spread throughout the lands. Keep an eye out for them",
       "title": "Structures"
     },
     {
-      "type": "patchouli:image",
-      "anchor": "shadowlord_platform",
-      "text": "The platform houses the altar to spawn the $(thing)Shadowlord$(). $(l:https://adventofascension.fandom.com/wiki/Shadowlord_Platform)Read More$(/l)",
-      "title": "Shadowlord Platform",
-      "images": [
-        "aoa3:patchouli/images/structures/shadowlord_platform.png"
-      ]
+      "type": "patchouli:empty"
     },
     {
       "type": "patchouli:image",
-      "anchor": "illusion_tree",
-      "text": "Towering over all else in the $(thing)Abyss$(), the altar for $(thing)Elusive$() can be found here. $(l:https://adventofascension.fandom.com/wiki/Illusion_Tree)Read More$(/l)",
+      "text": "",
+      "title": "Abyssal Lotto Hut",
+      "images": [
+        "aoa3:patchouli/images/structures/abyss/abyssal_lotto_hut.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These floating platforms hold the Abyssal Lottoman"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Eye Bulb Grotto",
+      "images": [
+        "aoa3:patchouli/images/structures/abyss/eye_bulb_grotto.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These small grottoes generate underground with a small entrance exposed to the surface. Eye Bulbs can be found growing here"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Flesh Temple",
+      "images": [
+        "aoa3:patchouli/images/structures/abyss/flesh_temple.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Flesh Temples are home to Flesh Eaters"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
       "title": "Illusion Tree",
       "images": [
-        "aoa3:patchouli/images/structures/illusion_tree.png"
+        "aoa3:patchouli/images/structures/abyss/illusion_tree.png"
       ]
     },
     {
+      "type": "patchouli:text",
+      "text": "These massive trees contain an Illusion Altar at their base, which can be used to spawn Elusive"
+    },
+    {
       "type": "patchouli:image",
-      "text": "The only known home of the $(thing)Jawe$() $(l:https://adventofascension.fandom.com/wiki/Jawe Hut)Read More$(/l)",
+      "text": "",
       "title": "Jawe Hut",
       "images": [
         "aoa3:patchouli/images/structures/jawe_hut.png"
       ]
     },
     {
-      "type": "patchouli:image",
-      "text": "$(thing)Flesh Temples$() are guarded by a horrific creature - the $(thing)Flesh Eater$(). $(l:https://adventofascension.fandom.com/wiki/Flesh_Temple)Read More$(/l)",
-      "title": "Flesh Temple",
-      "images": [
-        "aoa3:patchouli/images/structures/flesh_temple.png"
-      ]
+      "type": "patchouli:text",
+      "text": "Jawe Huts are home to Jawes"
     },
     {
       "type": "patchouli:image",
-      "text": "From just an opening in the abyssal surface, these grottos house $(thing)Eye Bulbs$(). $(l:https://adventofascension.fandom.com/wiki/Abyssal_Eye_Grotto)Read More$(/l)",
-      "title": "Abyssal Eye Grotto",
+      "text": "",
+      "title": "Shadowlord Platform",
       "images": [
-        "aoa3:patchouli/images/structures/abyssal_eye_grotto.png"
+        "aoa3:patchouli/images/structures/abyss/shadowlord_platform.png"
       ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These platforms contain a Shadow Altar, which can be used to spawn Shadowlord"
     }
   ],
   "advancement": "aoa3:abyss/root",
-  "sortnum": 3
+  "sortnum": 1
 }

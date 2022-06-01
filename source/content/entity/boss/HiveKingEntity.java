@@ -8,9 +8,6 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -28,49 +25,19 @@ import net.tslat.aoa3.content.entity.mob.misc.HiveWorkerEntity;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
 public class HiveKingEntity extends AoAMeleeMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
-	public static final DataParameter<Integer> GROWTH_PERCENT = EntityDataManager.<Integer>defineId(HiveKingEntity.class, DataSerializers.INT);
-
-	public int growthPercent = 100;
 
 	public HiveKingEntity(EntityType<? extends MonsterEntity> entityType, World world) {
 		super(entityType, world);
-
-		if (!world.isClientSide) {
-			entityData.set(GROWTH_PERCENT, 100);
-			growthPercent = 100;
-			refreshDimensions();
-		}
 	}
 
-	public HiveKingEntity(World world, int growthPercent) {
-		super(AoAEntities.Mobs.HIVE_KING.get(), world);
-
-		this.growthPercent = growthPercent;
-
-		entityData.set(GROWTH_PERCENT, this.growthPercent);
-		setHealth(Math.max(1, getMaxHealth() / (100 / (float)this.growthPercent)));
-		refreshDimensions();
-		setNoAi(true);
-	}
-
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-
-		entityData.define(GROWTH_PERCENT, growthPercent);
-	}
-
-	@Override
-	public void onSyncedDataUpdated(DataParameter<?> key) {
-		super.onSyncedDataUpdated(key);
-
-		if (key.equals(GROWTH_PERCENT))
-			refreshDimensions();
+	public HiveKingEntity(World world) {
+		this(AoAEntities.Mobs.HIVE_KING.get(), world);
 	}
 
 	@Override
@@ -96,45 +63,9 @@ public class HiveKingEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_HIVE_KING_AMBIENT.get();
 	}
 
-	@Nullable
-	@Override
-	protected ResourceLocation getDefaultLootTable() {
-		return growthPercent >= 100 ? super.getDefaultLootTable() : null;
-	}
-
-	@Override
-	public boolean canChangeDimensions() {
-		return growthPercent >= 100;
-	}
-
-	public int getGrowthPercent() {
-		return growthPercent;
-	}
-
-	@Override
-	public float getScale() {
-		return growthPercent >= 100 ? super.getScale() : growthPercent / 100f;
-	}
-
 	@Override
 	public void tick() {
 		super.tick();
-
-		if (growthPercent < 100) {
-			if (!level.isClientSide) {
-				incrementGrowth();
-			}
-			else {
-				growthPercent = entityData.get(GROWTH_PERCENT);
-			}
-
-			refreshDimensions();
-
-			if (growthPercent == 100)
-				setNoAi(false);
-
-			return;
-		}
 
 		if (!level.isClientSide()) {
 			float healthPercent = getHealth() / getMaxHealth();
@@ -142,7 +73,7 @@ public class HiveKingEntity extends AoAMeleeMob {
 			if (healthPercent != bossInfo.getPercent())
 				bossInfo.setPercent(healthPercent);
 
-			if (random.nextInt(500) == 0) {
+			if (RandomUtil.oneInNChance(500)) {
 				HiveWorkerEntity worker = new HiveWorkerEntity(this);
 
 				level.addFreshEntity(worker);
@@ -151,33 +82,7 @@ public class HiveKingEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (growthPercent >= 100)
-			return super.hurt(source, amount);
-
-		return false;
-	}
-
-	private void incrementGrowth() {
-		growthPercent++;
-
-		entityData.set(GROWTH_PERCENT, growthPercent);
-		setHealth(getMaxHealth() / (100 / (float)growthPercent));
-	}
-
-	@Override
-	public void addAdditionalSaveData(CompoundNBT compound) {
-		super.addAdditionalSaveData(compound);
-
-		if (entityData.get(GROWTH_PERCENT) < 100)
-			setHealth(getMaxHealth());
-	}
-
-	@Override
 	public void die(DamageSource cause) {
-		if (growthPercent < 100)
-			return;
-
 		super.die(cause);
 
 		if (!level.isClientSide) {

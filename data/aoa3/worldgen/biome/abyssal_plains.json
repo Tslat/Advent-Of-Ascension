@@ -58,7 +58,19 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:distorter",
+        "type": "aoa3:bloodsucker",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:web_reaper",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:occulent",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -76,19 +88,7 @@
         "maxCount": 2
       },
       {
-        "type": "aoa3:web_reaper",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:bloodsucker",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:occulent",
+        "type": "aoa3:distorter",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

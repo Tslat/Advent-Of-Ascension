@@ -5,14 +5,16 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Should you wish to hide underground from the horrors of the surface in the $(thing)Abyss$(), you may take comfort in knowing of the blood-red minerals that can be found down there.",
-      "title": "Ores"
+      "anchor": "bloodstone_ore",
+      "text": "$(thing)Bloodstone Ore$() can be found anywhere beneath the surface of the $(thing)Abyss$(). They drop $(thing)Bloodstones$() when mined. You can get more by using the Fortune enchantment.",
+      "title": "Bloodstone Ore"
     },
     {
-      "type": "patchouli:text",
-      "text": "$(thing)Bloodstone Ore$() can be harvested with a pickaxe, dropping $(thing)Bloodstones$() and some xp.$(br2)$(thing)Bloodstones$() can be found almost anywhere in the abyssal underground, and can be used for a variety of purposes, such as new weapons or armour."
+      "type": "patchouli:spotlight",
+      "text": "",
+      "item": "aoa3:bloodstone_ore"
     }
   ],
   "advancement": "aoa3:abyss/root",
-  "sortnum": 2
+  "sortnum": 0
 }

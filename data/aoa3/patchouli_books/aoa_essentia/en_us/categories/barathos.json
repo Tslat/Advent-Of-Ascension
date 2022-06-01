@@ -1,0 +1,6 @@
+{
+  "name": "Barathos",
+  "description": "$(thing)Barathos$() is a Tier 1 dimension, a barren desert filled with all sorts of weird creatures",
+  "icon": "aoa3:barathos_realmstone",
+  "parent": "aoa3:worlds"
+}

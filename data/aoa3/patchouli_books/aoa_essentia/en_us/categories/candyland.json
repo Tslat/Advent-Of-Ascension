@@ -1,0 +1,6 @@
+{
+  "name": "Candyland",
+  "description": "$(thing)Candyland$() is a Tier 2 dimension made almost entirely of sweet treats",
+  "icon": "aoa3:candyland_realmstone",
+  "parent": "aoa3:worlds"
+}

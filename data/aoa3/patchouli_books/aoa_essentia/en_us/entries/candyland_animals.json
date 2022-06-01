@@ -1,0 +1,35 @@
+{
+  "name": "Animals",
+  "category": "aoa3:candyland_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Some creatures just want to live a peaceful life and stay out of trouble",
+      "title": "Animals"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:peppermint_snail"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Peppermint Snails$() are passive mobs that can be found throughout the dimension. They behave similarly to most animals, but cannot be bred"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:spearmint_snail"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Spearmint Snails$() are passive mobs that can be found throughout the dimension. They behave similarly to most animals, but cannot be bred"
+    }
+  ],
+  "advancement": "aoa3:candyland/root",
+  "sortnum": 1
+}

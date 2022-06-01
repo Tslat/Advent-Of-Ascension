@@ -54,19 +54,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:devourer",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:dusteiva",
-        "weight": 20,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:lost_soul",
+        "type": "aoa3:lurker",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
@@ -78,13 +66,25 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:lurker",
+        "type": "aoa3:basilisk",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1
       },
       {
-        "type": "aoa3:basilisk",
+        "type": "aoa3:devourer",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:lost_soul",
+        "weight": 20,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:dusteiva",
         "weight": 20,
         "minCount": 0,
         "maxCount": 1

@@ -1,0 +1,65 @@
+{
+  "name": "Structures",
+  "category": "aoa3:barathos",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Barathos$() contains several structures to look out for, spread throughout the lands. Keep an eye out for them",
+      "title": "Structures"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Baron Castle",
+      "images": [
+        "aoa3:patchouli/images/structures/barathos/baron_castle.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This large tower contains plenty of loot, as well as a Mineralization Station. However, it’s guarded by swarms of Tharaflies, which can easily become too much to handle"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Baron House",
+      "images": [
+        "aoa3:patchouli/images/structures/barathos/baron_house.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This building houses the Baron Lottoman"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Baroness Arena",
+      "images": [
+        "aoa3:patchouli/images/structures/barathos/baroness_arena.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These sprawling platforms contain a Baroness Altar, which can be used to summon the Baroness"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Hive Nest",
+      "images": [
+        "aoa3:patchouli/images/structures/barathos/hive_nest.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Hive Nests are home to the Hive King, who can be summoned at the Hive Spawner with a Hive Egg"
+    }
+  ],
+  "advancement": "aoa3:barathos/root",
+  "sortnum": 1
+}

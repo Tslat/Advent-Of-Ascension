@@ -1,0 +1,65 @@
+{
+  "name": "Structures",
+  "category": "aoa3:candyland",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Candyland$() contains several structures to look out for, spread throughout the lands. Keep an eye out for them",
+      "title": "Structures"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Candy Lotto Platform",
+      "images": [
+        "aoa3:patchouli/images/structures/candyland/candy_lotto_platform.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These platforms house the Candied Lottoman"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Gingerbread Aviary",
+      "images": [
+        "aoa3:patchouli/images/structures/candyland/gingerbird_aviary.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These gingerbread structures contain multiple Gingerbird spawners"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Gingerbread House",
+      "images": [
+        "aoa3:patchouli/images/structures/candyland/gingerbread_house.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These can be found across $(thing)Candyland$(). Naturally, they’re home to Gingerbread Men"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Infested Candy Cane",
+      "images": [
+        "aoa3:patchouli/images/structures/candyland/infested_candy_cane.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These thick candy cane clusters are swarming with Cane Bugs"
+    }
+  ],
+  "advancement": "aoa3:candyland/root",
+  "sortnum": 0
+}

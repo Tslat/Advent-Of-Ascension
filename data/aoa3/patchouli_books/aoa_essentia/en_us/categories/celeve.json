@@ -1,0 +1,6 @@
+{
+  "name": "Celeve",
+  "description": "$(thing)Celeve$() is a Tier 2 dimension inhabited by clowns",
+  "icon": "aoa3:celeve_realmstone",
+  "parent": "aoa3:worlds"
+}

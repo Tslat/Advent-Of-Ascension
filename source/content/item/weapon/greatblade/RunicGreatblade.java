@@ -25,7 +25,7 @@ public class RunicGreatblade extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (!target.level.isClientSide)
-			DamageUtil.dealMagicDamage(null, attacker, target, getDamage() * attackCooldown * 0.85f, false);
+			DamageUtil.dealMagicDamage(null, attacker, target, getDamage() * attackCooldown * 0.85f + 1, false);
 	}
 
 	@Override

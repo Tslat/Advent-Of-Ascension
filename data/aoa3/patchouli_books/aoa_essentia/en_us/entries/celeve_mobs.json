@@ -1,0 +1,107 @@
+{
+  "name": "Mobs",
+  "category": "aoa3:celeve_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Celeve$() is full of hostile creatures waiting to dine on your flesh. Let's take a look!",
+      "title": "Mobs"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:bobo"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This clown’s strong muscles allow it to throw opponents high into the air"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:chocko"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These clowns spawn throughout $(thing)Celeve$(). They don’t have any special abilities"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:happy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This clown wields a large Confetti Cannon, using it to shoot colorful projectiles at its targets"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:jumbo"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This rare clown is capable of dealing high amounts of horizontal knockback to foes. Because of the exposed void, this makes it especially dangerous"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:koko"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These clowns are capable of blinding their targets on hit"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:kranky"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This clown can turn invisible periodically"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:snappy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These clowns spawn throughout $(thing)Celeve$(). They don’t have any special abilities"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:sticky"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These clowns are covered in a sticky slime, which will slow down whatever it comes into contact with"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:stitches"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These clowns spawn throughout $(thing)Celeve$(). They don’t have any special abilities"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:tipsy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These clowns are capable of inflicting a Nausea effect on their targets"
+    }
+  ],
+  "advancement": "aoa3:celeve/root",
+  "sortnum": 0
+}

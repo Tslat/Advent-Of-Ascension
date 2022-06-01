@@ -1,0 +1,41 @@
+{
+  "name": "Structures",
+  "category": "aoa3:celeve",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Celeve$() contains several structures to look out for, spread throughout the lands. Keep an eye out for them",
+      "title": "Structures"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Celevian Lotto Balloon",
+      "images": [
+        "aoa3:patchouli/images/structures/celeve/celevian_lotto_balloon.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These floating platforms hold the Celeve Lottoman"
+    },
+    {
+      "type": "patchouli:image",
+      "text": "",
+      "title": "Toy Tower",
+      "images": [
+        "aoa3:patchouli/images/structures/celeve/toy_tower.png"
+      ]
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The Toy Merchant lives at the top of this tower"
+    }
+  ],
+  "advancement": "aoa3:celeve/root",
+  "sortnum": 0
+}

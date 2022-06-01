@@ -131,8 +131,12 @@ public abstract class AoAMeleeMob extends MonsterEntity implements Animatable {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
+		if (!level.isClientSide)
+			System.out.println(getHealth());
 		if (super.hurt(source, amount)) {
 			onHit(source, amount);
+			if (!level.isClientSide)
+				System.out.println(getHealth());
 
 			return true;
 		}

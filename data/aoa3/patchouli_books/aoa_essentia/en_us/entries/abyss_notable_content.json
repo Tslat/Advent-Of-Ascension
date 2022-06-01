@@ -1,0 +1,24 @@
+{
+  "name": "Notable Content",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "text": "$(thing)Bloodstones$() are dropped by $(l:aoa3:abyss_ores#bloodstone_ore)Bloodstone Ore$(/l). It can be used in various crafting and infusing recipes",
+      "item": "aoa3:bloodstone"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "This item can be obtained by using any Enchanted Book on an empowered $(l:aoa3:abyss_mobs#web_reaper)Web Reaper$(/l). Web Reapers can be empowered by using Nightmare Flakes on them",
+      "item": "aoa3:book_of_shadows"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "$(thing)Nightmare Flakes$() are dropped by all Abyss mobs. They are used for crafting and infusing, and can also summon $(l:aoa3:abyss_bosses#elusive)Elusive$(/l) at an Illusion Altar",
+      "item": "aoa3:nightmare_flakes"
+    }
+  ],
+  "advancement": "aoa3:abyss/root",
+  "sortnum": 2
+}

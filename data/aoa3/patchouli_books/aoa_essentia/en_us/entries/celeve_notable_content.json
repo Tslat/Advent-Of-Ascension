@@ -1,0 +1,24 @@
+{
+  "name": "Notable Content",
+  "category": "aoa3:celeve",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "text": "$(thing)Circus Coins$() are dropped by all mobs in $(thing)Celeve$(). They are used to trade with the Toy Merchant",
+      "item": "aoa3:circus_coin"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "The $(thing)Gravitator$() is an item that will slow down your fall speed when held. This makes it a useful item for exploration. It is sold by the Toy Merchant",
+      "item": "aoa3:gravitator"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "This item is sold by the Toy Merchant, and will summon Gyro when used. It can be used anywhere, including in other dimensions",
+      "item": "aoa3:toy_gyrocopter"
+    }
+  ],
+  "advancement": "aoa3:celeve/root",
+  "sortnum": 1
+}

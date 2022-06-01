@@ -1,0 +1,71 @@
+{
+  "name": "Mobs",
+  "category": "aoa3:candyland_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Hidden amongst the sweetness of $(thing)Candyland$() is the deadly. Watch out for these",
+      "title": "Mobs"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:airhead"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These lightweight creatures fly around Candyland, shooting hard pellets at their targets. They have very low health, but those pellets pack a punch"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:cane_bug"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Cane Bugs$() spawn within Infested Candy Canes. They don’t have any special abilities, although they can drop some extra stuff, including the rare Cake"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:cherry_blaster"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Despite their simple appearance, $(thing)Cherry Blasters$() are dangerous creatures that will fire barrages of explosive projectiles at nearby adventurers. They don’t actually taste like cherries"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:gingerbird"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These flying gingerbread mobs spawn in Gingerbird Aviaries. They don’t have any special abilities"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:gingerbread_man"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Gingerbread Men$() spawn in Gingerbread Houses. They don’t have any special abilities"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:lollypopper"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Lollypoppers$() spawn all around $(thing)Candyland$(). They explode on death, so try to kill from a distance if possible"
+    }
+  ],
+  "advancement": "aoa3:candyland/root",
+  "sortnum": 0
+}

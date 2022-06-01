@@ -84,14 +84,17 @@ public class HauntedDungeonStructure extends AoAStructureBase<NoFeatureConfig> {
 						@Nullable
 						@Override
 						protected Pair<JigsawPattern, JigsawPattern> getPools(Template.BlockInfo jigsawInfo, int yMin) {
-							if (yMin <= 15)
-								return null;
-
 							if (yMin > 60)
 								return super.getPools(jigsawInfo, yMin);
 
 							ResourceLocation basePool = new ResourceLocation(jigsawInfo.nbt.getString("pool"));
 							JigsawPattern newPool = null;
+
+							if (basePool.getPath().contains("large_rooms"))
+								return super.getPools(jigsawInfo, yMin);
+
+							if (yMin <= 15)
+								return null;
 
 							if (basePool.getPath().endsWith("medium_rooms")) {
 								if (yMin <= 35 || rand.nextFloat() < 5 / (float)yMin) {

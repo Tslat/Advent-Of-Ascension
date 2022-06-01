@@ -3,15 +3,17 @@ package net.tslat.aoa3.content.item.armour;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -29,14 +31,16 @@ public class PoisonArmour extends AdventArmour {
 
 	@Override
 	public void onPreAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingAttackEvent event) {
-		if (slots == null && DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount()))
+		if (slots == null && DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
 			event.setCanceled(true);
+			plData.player().addEffect(new EffectBuilder(Effects.DAMAGE_RESISTANCE, 60).isAmbient().hideEffectIcon().build());
+		}
 	}
 
 	@Override
 	public void onAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlotType> slots, LivingHurtEvent event) {
 		if (slots != null && DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount()))
-			event.setAmount(event.getAmount() * (1 - (slots.size() * 0.15f)));
+			event.setAmount(event.getAmount() * (1 - (slots.size() * 0.25f)));
 	}
 
 	@Override

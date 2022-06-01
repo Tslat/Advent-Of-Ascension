@@ -1,6 +1,0 @@
-{
-  "name": "神経スキル",
-  "description": "$(thing)神経スキル$() は、自然回復力を中心としたスキルです。$(br2)レベルが上がると、体力や抵抗力、戦闘能力が上昇します。",
-  "icon": "aoa3:textures/gui/aoaskill/innervation.png",
-  "parent": "aoa3:skills"
-}

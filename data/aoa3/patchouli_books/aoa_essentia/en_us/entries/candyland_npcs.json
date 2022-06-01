@@ -1,0 +1,20 @@
+{
+  "name": "NPCs",
+  "category": "aoa3:candyland_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Let's check out some more civilised inhabitants of the dimension",
+      "title": "NPCs"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "$(thing)Candied Lottomen$() can be found on Candy Lotto Platforms. They sell the same wares as the other lottomenn",
+      "entity": "aoa3:candied_lottoman",
+      "scale": 0.875
+    }
+  ],
+  "advancement": "aoa3:candyland/root",
+  "sortnum": 1
+}

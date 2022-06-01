@@ -1,0 +1,37 @@
+{
+  "name": "Bosses",
+  "category": "aoa3:barathos_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Barathos$() has two bosses to fight: $(thing)Baroness$(), and $(thing)Hive King$()",
+      "title": "Bosses"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "anchor": "baroness",
+      "text": "",
+      "entity": "aoa3:baroness"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This powerful witch fights by creating bombs and firing explosive projectiles. She can be summoned by using a Warlock Gem on a Baroness Altar"
+    },
+    {
+      "type": "patchouli:entity",
+      "anchor": "hive_king",
+      "text": "",
+      "entity": "aoa3:hive_king"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The king of the Hive Nests. He commands Hive Workers to assist him in battle, although he’s more than capable of taking down opponents by himself"
+    }
+  ],
+  "advancement": "aoa3:barathos/root",
+  "sortnum": 2
+}

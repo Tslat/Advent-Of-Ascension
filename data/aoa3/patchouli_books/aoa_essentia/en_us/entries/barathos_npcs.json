@@ -1,0 +1,20 @@
+{
+  "name": "NPCs",
+  "category": "aoa3:barathos_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Let's take a look at some friendlier inhabitants of the $(thing)Barathos$() desert",
+      "title": "NPCs"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "$(thing)Baron Lottomen$() can be found in Baron Houses. They sell the same wares as the other lottomen",
+      "entity": "aoa3:baron_lottoman",
+      "scale": 0.875
+    }
+  ],
+  "advancement": "aoa3:barathos/root",
+  "sortnum": 1
+}

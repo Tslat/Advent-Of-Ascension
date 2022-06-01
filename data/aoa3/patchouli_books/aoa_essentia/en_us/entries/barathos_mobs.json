@@ -1,0 +1,107 @@
+{
+  "name": "Mobs",
+  "category": "aoa3:barathos_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Barathos$()' barren lands leave plenty of hungry creatures roaming for their next meal..",
+      "title": "Mobs"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:arkback"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These giant beasts spawn on the surface. They can hit hard, but won’t attack unless provoked"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:cryptid"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Cryptids$() roam the depths of the underground. They are capable of setting the Hellstone beneath them on fire as they walk"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:echodar"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These flying bat mobs appear deep underground. They don’t do anything special"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:emperor_beast"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Emperor Beasts$() are towering creatures that roam the surface. They will not attack unless provoked, but their size makes them pack quite the punch"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:keeler"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Keelers$() appear throughout the underground. They have the ability to fully regenerate when in a pinch, which can make them dangerous if you can’t hit them hard enough to get past that range"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:nospike"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Nospikes$() are rare surface mobs. There’s not much special about them, although their movement pattern is a bit awkward"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:parasect"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Parasects$() spawn throughout the underground. Their bite inflicts Nausea, but there’s not much else to note about them"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:ramradon"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Ramradons$() live on the surface. They can heal themselves when hitting weak enemies"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:squiggler"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Squigglers$() live deep underground, and are capable of setting nearby enemies on fire if there’s nothing in their way"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:tharafly"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These flying enemies spawn throughout the dimension, and can also spawn in Baron Castles. Their mobility allows groups of them to easily swarm their targets"
+    }
+  ],
+  "advancement": "aoa3:barathos/root",
+  "sortnum": 0
+}

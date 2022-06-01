@@ -26,6 +26,7 @@ import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -86,7 +87,7 @@ public class HaulingRod extends FishingRodItem {
 	protected void reelIn(ServerPlayerEntity player, HaulingFishingBobberEntity bobber, ItemStack stack, Hand hand) {
 		if (bobber.distanceToSqr(player) <= 9) {
 			List<ItemStack> loot = landEntity(player, stack, hand, bobber);
-			int xp = random.nextInt(6) + 1;
+			int xp = RandomUtil.randomNumberBetween(2, 10);
 			HaulingItemFishedEvent event = AoAEvents.haulingItemFished(bobber.getHookedIn(), stack, loot, xp, 1, bobber);
 
 			if (!event.isCanceled()) {

@@ -1,0 +1,44 @@
+{
+  "name": "Notable Content",
+  "category": "aoa3:barathos",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "text": "These ingots can be obtained by smelting Baronyte Ore. They can be used in various crafting and infusion recipes",
+      "item": "aoa3:baronyte_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "These ingots can be obtained by smelting Blazium Ore. They can be used in various crafting and infusion recipes",
+      "item": "aoa3:blazium_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "These ingots can be obtained by smelting Varsium Ore. They can be used in various crafting and infusion recipes",
+      "item": "aoa3:varsium_ingot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "$(thing)Hive Chunks$() are dropped by certain $(thing)Barathos$() mobs. They can be used in various crafting and infusion recipes, or used on Tharaflies to make Hive Eggs",
+      "item": "aoa3:hive_chunk"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "The product of using a Hive Chunk on a Tharafly, these can be used on a Hive Spawner to summon the $(l:aoa3:barathos_bosses#hive_king)Hive King$(/l)",
+      "item": "aoa3:hive_egg"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "This magical gem can be used to summon the Baroness at a Baroness Altar",
+      "item": "aoa3:warlock_gem"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "These can be used to convert all kinds of minerals and ingots into coins, including those from other dimensions. If you find one, make sure to bring it back to your base!",
+      "item": "aoa3:mineralization_station"
+    }
+  ],
+  "advancement": "aoa3:barathos/root",
+  "sortnum": 2
+}

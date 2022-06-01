@@ -79,18 +79,6 @@
     ],
     "water_ambient": [
       {
-        "type": "minecraft:cod",
-        "weight": 13,
-        "minCount": 1,
-        "maxCount": 4
-      },
-      {
-        "type": "minecraft:salmon",
-        "weight": 15,
-        "minCount": 1,
-        "maxCount": 5
-      },
-      {
         "type": "minecraft:tropical_fish",
         "weight": 10,
         "minCount": 3,
@@ -100,6 +88,18 @@
         "type": "aoa3:coratee",
         "weight": 7,
         "minCount": 2,
+        "maxCount": 4
+      },
+      {
+        "type": "minecraft:salmon",
+        "weight": 15,
+        "minCount": 1,
+        "maxCount": 5
+      },
+      {
+        "type": "minecraft:cod",
+        "weight": 13,
+        "minCount": 1,
         "maxCount": 4
       }
     ],

@@ -167,7 +167,7 @@ public class PlayerEvents {
 		if (pl instanceof ServerPlayerEntity) {
 			BlockPos pos = ev.getPos();
 
-			if (ev.getState().is(Tags.Blocks.ORES) && pos.getY() <= 5 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (!pl.isCreative() && ev.getState().is(Tags.Blocks.ORES) && pos.getY() <= 5 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.DEEPLANDS_REALMSTONE.get()));
 		}
 	}

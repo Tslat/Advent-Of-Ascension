@@ -1,6 +1,0 @@
-{
-  "name": "農業スキル",
-  "description": "$(thing)農業スキル$()は、作物や栽培可能な植物のに関するスキルです。$(br2)レベルが上がると、植え付けから収穫まで、農業に関する様々な分野でのボーナスが得られます。",
-  "icon": "aoa3:textures/gui/aoaskill/farming.png",
-  "parent": "aoa3:skills"
-}

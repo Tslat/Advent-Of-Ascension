@@ -1,0 +1,25 @@
+{
+  "name": "NPCs",
+  "category": "aoa3:celeve_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Let's take a look at some of the more civilised inhabitants of $(thing)Celeve$()",
+      "title": "NPCs"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "$(thing)Celevian Lottomen$() can be found in Celevian Lotto Balloons. They sell the same wares as the other lottomen",
+      "entity": "aoa3:celevian_lottoman",
+      "scale": 0.875
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "$(thing)Toy Merchants$() can be found in Toy Towers. When leveled up, they sell a small selection of useful items, including the Gravitator and the Toy Gyrocopter",
+      "entity": "aoa3:toy_merchant"
+    }
+  ],
+  "advancement": "aoa3:celeve/root",
+  "sortnum": 1
+}

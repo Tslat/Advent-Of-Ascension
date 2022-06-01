@@ -1,6 +1,0 @@
-{
-  "name": "錬金スキル",
-  "description": "$(thing)錬金スキル$()は、錬金術的な調合と材料に基づいたスキルです。$(br2)レベルアップすると、より高度で強力な調合薬とそれを利用する方法を手に入れることができます。",
-  "icon": "aoa3:textures/gui/aoaskill/alchemy.png",
-  "parent": "aoa3:skills"
-}

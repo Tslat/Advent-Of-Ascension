@@ -1,0 +1,39 @@
+{
+  "name": "Bosses",
+  "category": "aoa3:abyss_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Abyss$() has two bosses to fight: $(thing)Shadowlord$(), and $(thing)Elusive$()",
+      "title": "Bosses"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "anchor": "shadowlord",
+      "text": "",
+      "entity": "aoa3:shadowlord",
+      "scale": 0.6328
+    },
+    {
+      "type": "patchouli:text",
+      "text": "This flying eye creature can be spawned by using a Book of Shadows on a Shadow Altar. It shoots powerful explosives that can apply potent Poison and Wither effects"
+    },
+    {
+      "type": "patchouli:entity",
+      "anchor": "elusive",
+      "text": "",
+      "entity": "aoa3:elusive",
+      "scale": 0.914
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Elusive$() can be summoned at Illusion Trees by using Nightmare Flakes on an Illusion Altar. It fights by creating clones of itself to assist it, often teleporting away upon making one. These clones explode on death, so killing them from a distance is probably a good idea"
+    }
+  ],
+  "advancement": "aoa3:abyss/root",
+  "sortnum": 2
+}

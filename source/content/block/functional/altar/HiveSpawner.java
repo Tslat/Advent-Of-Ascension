@@ -21,7 +21,7 @@ public class HiveSpawner extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(PlayerEntity player, Hand hand, BlockState state, BlockPos blockPos) {
-		HiveKingEntity hiveKing = new HiveKingEntity(player.level, 0);
+		HiveKingEntity hiveKing = new HiveKingEntity(player.level);
 
 		hiveKing.moveTo(blockPos.getX() + 0.99, blockPos.getY() + 1.050000001d, blockPos.getZ() + 0.99, 0, 0);
 		player.level.addFreshEntity(hiveKing);

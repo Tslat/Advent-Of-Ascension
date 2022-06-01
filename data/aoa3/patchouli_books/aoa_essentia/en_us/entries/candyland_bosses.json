@@ -1,0 +1,27 @@
+{
+  "name": "Bosses",
+  "category": "aoa3:candyland_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Candyland$() only has one boss to fight: $(thing)Cotton Candor$()",
+      "title": "Bosses"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "anchor": "cotton_candor",
+      "text": "This giant cotton candy monster can be summoned by eating a Treat Bag within $(thing)Candyland$()",
+      "entity": "aoa3:cotton_candor"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "It shoots powerful explosive projectiles to attack, and is immune to all damage except for staff damage, and even then, it is only vulnerable to specific staves. The staves that can harm it are determined by the color of its feet."
+    }
+  ],
+  "advancement": "aoa3:candyland/root",
+  "sortnum": 2
+}

@@ -1,0 +1,20 @@
+{
+  "name": "NPCs",
+  "category": "aoa3:abyss_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Not all creatures in the $(thing)Abyss$() are hostile or animalistic!",
+      "title": "NPCs"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "$(thing)Abyssal Lottomen$() can be found in Abyssal Lotto Huts. They sell the same wares as the other lottomen",
+      "entity": "aoa3:abyssal_lottoman",
+      "scale": 0.875
+    }
+  ],
+  "advancement": "aoa3:abyss/root",
+  "sortnum": 1
+}

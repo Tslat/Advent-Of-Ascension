@@ -1,6 +1,0 @@
-{
-  "name": "Faunamancy",
-  "description": "$(thing)Faunamancy$()は生き物を復活させるスキルです。生き物を罠にかけ、そのエッセンスを抽出し、全く無害なものに利用します。$(br2)$(thing)Faunamancy$()のレベルを上げると、より多くの生き物と能力にアクセスでき、クリーチャーエッセンスを抽出する能力も向上する。",
-  "icon": "aoa3:textures/gui/aoaskill/faunamancy.png",
-  "parent": "aoa3:skills"
-}

@@ -1,6 +1,0 @@
-{
-  "name": "工学スキル",
-  "description": "$(thing)工学スキル$()は、ゲームの様々な場面で役立つ装置や道具の製作を中心としたスキルです。$(br2)レベルを上げるとより多くの装置を使えるようになり、既存の装置にも恩恵を与えることができるようになります。",
-  "icon": "aoa3:textures/gui/aoaskill/engineering.png",
-  "parent": "aoa3:skills"
-}

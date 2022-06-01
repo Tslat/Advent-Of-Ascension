@@ -1,0 +1,42 @@
+{
+  "name": "Ores",
+  "category": "aoa3:barathos",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "baronyte_ore",
+      "text": "$(thing)Baronyte Ore$() generates within Baron Stone. It can be smelted to produce Baronyte Ingots, which are used in various crafting and infusion recipes",
+      "title": "Baronyte Ore"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "",
+      "item": "aoa3:baronyte_ore"
+    },
+    {
+      "type": "patchouli:text",
+      "anchor": "blazium_ore",
+      "text": "$(thing)Blazium Ore$() generates within Hellstone deep underground. It can be smelted to produce Blazium Ingots, which are used in various crafting and infusion recipes",
+      "title": "Blazium Ore"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "",
+      "item": "aoa3:blazium_ore"
+    },
+    {
+      "type": "patchouli:text",
+      "anchor": "varsium_ore",
+      "text": "$(thing)Varsium Ore$() generates within Baron Stone. It can be smelted to produce Varsium Ingots, which are used in various crafting and infusion recipes",
+      "title": "Varsium Ore"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "text": "",
+      "item": "aoa3:varsium_ore"
+    }
+  ],
+  "advancement": "aoa3:barathos/root",
+  "sortnum": 0
+}

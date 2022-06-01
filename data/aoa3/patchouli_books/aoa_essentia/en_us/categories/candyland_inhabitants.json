@@ -1,0 +1,6 @@
+{
+  "name": "Candyland Inhabitants",
+  "description": "$(thing)Candyland$() is home to a number of creatures and beings. Let's take a look at them here",
+  "icon": "minecraft:zombie_spawn_egg",
+  "parent": "aoa3:candyland"
+}

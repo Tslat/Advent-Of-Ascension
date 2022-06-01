@@ -1,0 +1,103 @@
+{
+  "name": "Mobs",
+  "category": "aoa3:abyss_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(thing)Abyss$() is full of hostile creatures waiting to dine on your flesh. Let's take a look!",
+      "title": "Mobs"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:anemia",
+      "scale": 0.692,
+      "offset": 1.2
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These ominous, flying eyeballs can be seen in the skies. They can shoot powerful explosives at players, so keep an eye out for them! (No pun intended.)"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:apparition"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These ghostly shadow mobs roam the land. They can inflict a Wither effect on hit"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:bloodsucker",
+      "scale": 0.52
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These giant arthropods suck the blood of their victims in order to rejuvenate themselves. They also inject a venom that inflicts Slowness, making it harder for their targets to escape after that first hit"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:distorter"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Distorters$() are immobile and don’t deal damage. Instead, they have the ability to give either Speed or Slowness effects to players in the surrounding area, switching regularly between the two"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:fiend"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Fiends$() are common mobs that can inflict Blindness when hitting their targets"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:flesh_eater"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Flesh Eaters$() are undead creatures that reside in Flesh Temples. They inflict a dangerous Hunger effect on hit, which can easily empty the hunger bar before it expires"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:jawe",
+      "scale": 0.625
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These mobs live in Jawe Huts. There’s nothing unique about their attacks, but they can drop Bloodstones and some other items"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:occulent"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Occulents$() are common melee attackers. Sometimes, they can create doubles of themselves. Fortunately, these doubles are illusory, so they will not deal any damage and cannot block attacks"
+    },
+    {
+      "type": "patchouli:entity",
+      "text": "",
+      "entity": "aoa3:web_reaper",
+      "scale": 0.802
+    },
+    {
+      "type": "patchouli:text",
+      "text": "These towering sorcerers carry around a wand that can shoot powerful projectiles. Nightmare Flakes can make them grow even larger"
+    }
+  ],
+  "advancement": "aoa3:abyss/root",
+  "sortnum": 0
+}

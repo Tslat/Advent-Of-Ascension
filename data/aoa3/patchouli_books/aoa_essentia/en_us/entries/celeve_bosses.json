@@ -1,0 +1,27 @@
+{
+  "name": "Bosses",
+  "category": "aoa3:celeve_inhabitants",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Celeve$() has just one boss to fight: $(thing)Gyro$()",
+      "title": "Bosses"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:entity",
+      "anchor": "gyro",
+      "text": "",
+      "entity": "aoa3:gyro"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Gyro$() can be summoned anywhere by using a Toy Gyrocopter. He attacks by shooting a barrage of bullet"
+    }
+  ],
+  "advancement": "aoa3:celeve/root",
+  "sortnum": 2
+}

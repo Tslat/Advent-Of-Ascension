@@ -1,0 +1,15 @@
+{
+  "name": "Notable Content",
+  "category": "aoa3:candyland",
+  "icon": "",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "text": "$(thing)Candyland$() mobs are capable of dropping various candies, with each type of candy corresponding to a specific mob. Some of these have specific uses in recipes. They’re also edible - although not particularly nutritious",
+      "title": "Candies",
+      "item": "aoa3:sour_gummy"
+    }
+  ],
+  "advancement": "aoa3:candyland/root",
+  "sortnum": 2
+}
