@@ -53,13 +53,7 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:terradon",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:dyrehorn",
+        "type": "aoa3:giant_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -71,20 +65,26 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:giant_snail",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:tortione",
         "weight": 3,
         "minCount": 1,
         "maxCount": 1
       },
       {
+        "type": "aoa3:dyrehorn",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:sabretooth",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:terradon",
+        "weight": 1,
         "minCount": 1,
         "maxCount": 1
       }

@@ -41,6 +41,18 @@
     "monster": [],
     "creature": [
       {
+        "type": "aoa3:halycon",
+        "weight": 3,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "type": "aoa3:angelica",
+        "weight": 1,
+        "minCount": 0,
+        "maxCount": 1
+      },
+      {
         "type": "aoa3:rainicorn",
         "weight": 3,
         "minCount": 1,
@@ -53,22 +65,10 @@
         "maxCount": 3
       },
       {
-        "type": "aoa3:angelica",
-        "weight": 1,
-        "minCount": 0,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:voliant",
         "weight": 1,
         "minCount": 0,
         "maxCount": 1
-      },
-      {
-        "type": "aoa3:halycon",
-        "weight": 3,
-        "minCount": 1,
-        "maxCount": 3
       },
       {
         "type": "aoa3:eeo",
