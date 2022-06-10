@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.loottable.modifier;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -11,11 +12,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class RollExtraTablesLootModifier extends LootModifier {
 	private final ResourceLocation[] additionalTables;
@@ -28,7 +29,7 @@ public class RollExtraTablesLootModifier extends LootModifier {
 
 	@Nonnull
 	@Override
-	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		for (ResourceLocation tableLocation : additionalTables) {
 			LootTable table = context.getLootTable(tableLocation);
 			boolean compatible = true;
@@ -73,7 +74,7 @@ public class RollExtraTablesLootModifier extends LootModifier {
 			}
 
 			json.add("tables", tables);
-			json.addProperty("type", getRegistryName().toString());
+			json.addProperty("type", ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get().getKey(this).toString());
 
 			return json;
 		}

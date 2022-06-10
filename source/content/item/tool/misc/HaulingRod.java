@@ -33,7 +33,10 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class HaulingRod extends FishingRodItem {
 	public HaulingRod(Properties itemProperties) {
@@ -180,8 +183,7 @@ public class HaulingRod extends FishingRodItem {
 
 			return loot;
 		}
-		else if (hookedEntity instanceof LivingEntity) {
-			LivingEntity livingEntity = (LivingEntity)hookedEntity;
+		else if (hookedEntity instanceof LivingEntity livingEntity) {
 			DamageSource damageSource = killHaulingEntity(bobber, player, livingEntity);
 			LootContext.Builder lootContext = new LootContext.Builder((ServerLevel)player.level)
 					.withParameter(LootContextParams.ORIGIN, bobber.position())
@@ -191,7 +193,7 @@ public class HaulingRod extends FishingRodItem {
 					.withParameter(LootContextParams.KILLER_ENTITY, player)
 					.withParameter(LootContextParams.DIRECT_KILLER_ENTITY, bobber)
 					.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
-					.withRandom(new Random())
+					.withRandom(livingEntity.getRandom())
 					.withLuck(bobber.getLuck());
 			loot.addAll(player.getServer().getLootTables().get(livingEntity.getLootTable()).getRandomItems(lootContext.create(LootContextParamSets.ENTITY)));
 

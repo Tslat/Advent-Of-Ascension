@@ -2,7 +2,9 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -33,8 +35,8 @@ public class OnKillDamageBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(postKillDuration / 20f, 2)));
+	protected void updateDescription(MutableComponent defaultDescription) {
+		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey(), NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2), NumberUtil.roundToNthDecimalPlace(postKillDuration / 20f, 2)));
 	}
 
 	@Override

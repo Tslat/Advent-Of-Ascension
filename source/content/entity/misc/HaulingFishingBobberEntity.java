@@ -7,9 +7,9 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
@@ -28,6 +28,7 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
@@ -160,9 +161,9 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		if (level.isRainingAt(blockPosition()))
 			this.fishingBonusMod *= 1.1f;
 
-		this.fishingBonusMod *= fishingBonusModForBiomeCategory(Biome.getBiomeCategory(biome));
+		this.fishingBonusMod *= fishingBonusModForBiome(biome);
 
-		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
+		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(3, 2, 3), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
 		if (nearbyFluidBlocks <=  50) {
 			this.fishingBonusMod *= 0.5f;
@@ -171,19 +172,23 @@ public class HaulingFishingBobberEntity extends FishingHook {
 				this.fishingBonusMod *= 0.5f;
 		}
 
-		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0035f);
+		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0025f);
 		this.fishingBonusMod += 0.25f * lure;
 
 		if (!WorldUtil.getAllPlayersInRegion(level, getBoundingBox().inflate(5)).isEmpty())
 			this.fishingBonusMod *= 0.2f;
 	}
 
-	protected float fishingBonusModForBiomeCategory(Biome.BiomeCategory category) {
-		return switch (category) {
-			case OCEAN, RIVER, SWAMP -> 1.25f;
-			case DESERT, THEEND, SAVANNA, MESA, NETHER -> 0.5f;
-			default -> 1;
-		};
+	protected float fishingBonusModForBiome(Holder<Biome> biome) {
+		for (TagKey<Biome> tag : biome.tags().toList()) {
+			if (tag == BiomeTags.IS_OCEAN || tag == BiomeTags.IS_RIVER || tag == Tags.Biomes.IS_SWAMP)
+				return 1.25f;
+
+			if (tag == Tags.Biomes.IS_DEAD || tag == Tags.Biomes.IS_DRY || tag == Tags.Biomes.IS_HOT)
+				return 0.5f;
+		}
+
+		return 1f;
 	}
 
 	@Override
@@ -400,15 +405,15 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		int minTime = minLureTime();
 		int maxTime = maxLureTime();
 
-		if (fishingBonusMod < 1) {
-			minTime /= fishingBonusMod * 2f;
-			maxTime /= fishingBonusMod * 3f;
+		if (fishingBonusMod < 0.9f) {
+			minTime /= fishingBonusMod / 2f;
+			maxTime /= fishingBonusMod / 3f;
 		}
 		else {
 			maxTime /= fishingBonusMod;
 		}
 
-		timeUntilFishSpawn = Mth.nextInt(random, minTime, minTime + 50 + (maxTime - minTime));
+		timeUntilFishSpawn = RandomUtil.randomNumberBetween(minTime, Math.max(minTime + 50, maxTime));
 	}
 
 	protected void stopFishing() {

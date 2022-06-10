@@ -747,6 +747,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> VARSIUM_BLOCK = registerBlock("varsium_block", () -> new Block(new BlockUtil.CompactProperties(Material.METAL, MaterialColor.COLOR_RED).needsTool().stats(5f, 6f).get()), AoAItemGroups.DECORATION_BLOCKS);
 
 	public static final RegistryObject<Block> RAW_LIMONITE_BLOCK = registerBlock("raw_limonite_block", () -> new Block(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_ORANGE).stats(5f, 6f).needsTool().get()), AoAItemGroups.DECORATION_BLOCKS);
+	public static final RegistryObject<Block> RAW_EMBERSTONE_BLOCK = registerBlock("raw_emberstone_block", () -> new Block(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_ORANGE).stats(5f, 6f).needsTool().get()), AoAItemGroups.DECORATION_BLOCKS);
 
 	public static final RegistryObject<Block> BARON_CARPET = registerBlock("baron_carpet", () -> new net.tslat.aoa3.content.block.decoration.misc.CarpetBlock(MaterialColor.COLOR_RED), AoAItemGroups.DECORATION_BLOCKS);
 	public static final RegistryObject<Block> BOREAN_CARPET = registerBlock("borean_carpet", () -> new net.tslat.aoa3.content.block.decoration.misc.CarpetBlock(MaterialColor.COLOR_RED), AoAItemGroups.DECORATION_BLOCKS);

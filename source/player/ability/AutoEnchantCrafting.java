@@ -3,7 +3,7 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
@@ -54,7 +54,7 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
+	protected void updateDescription(MutableComponent defaultDescription) {
 		boolean comma = false;
 
 		for (EnchantmentInstance enchants : enchantments) {
@@ -91,7 +91,7 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 			CompoundTag enchantMap = new CompoundTag();
 
 			for (EnchantmentInstance enchantData : enchantments) {
-				enchantMap.putInt(enchantData.enchantment.getRegistryName().toString(), enchantData.level);
+				enchantMap.putInt(ForgeRegistries.ENCHANTMENTS.getKey(enchantData.enchantment).toString(), enchantData.level);
 			}
 
 			data.put("enchantments", enchantMap);

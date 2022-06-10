@@ -8,8 +8,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.Item;
@@ -80,7 +78,7 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 		private final Item frame;
 
 		private FrameSelectButton(int x, int y, String selectionValue, Item frame) {
-			super(x, y, buttonWidth, buttonHeight, new TranslatableComponent(frame.getDescriptionId()), button -> {});
+			super(x, y, buttonWidth, buttonHeight, Component.translatable(frame.getDescriptionId()), button -> {});
 
 			this.selectionValue = selectionValue;
 			this.frame = frame;
@@ -109,7 +107,7 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 		@Override
 		public void renderToolTip(PoseStack matrix, int mouseX, int mouseY) {
 			RenderUtil.resetShaderColour();
-			instance.renderTooltip(matrix, Collections.singletonList(new TextComponent(LocaleUtil.getItemName(frame))), Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font);
+			instance.renderTooltip(matrix, Collections.singletonList(Component.literal(LocaleUtil.getItemName(frame))), Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font);
 		}
 
 		private boolean isMouseInRegion(int mouseX, int mouseY, int buttonX, int buttonY) {

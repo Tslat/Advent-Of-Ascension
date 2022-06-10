@@ -3,13 +3,13 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class EyeHangerTreeFeature extends AoATreeFeature {
@@ -18,7 +18,7 @@ public class EyeHangerTreeFeature extends AoATreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 5 + rand.nextInt(5);
 		int weaveHeight = 8 + rand.nextInt(8);
 
@@ -56,7 +56,7 @@ public class EyeHangerTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void doLeaves(WorldGenLevel reader, BlockPos pos, Random rand, int branchWidth) {
+	private void doLeaves(WorldGenLevel reader, BlockPos pos, RandomSource rand, int branchWidth) {
 		BlockState leaves = AoABlocks.SHADOWBLOOD_LEAVES.get().defaultBlockState();
 
 		for (int i = -branchWidth - 1; i <= branchWidth + 1; i++) {
@@ -99,7 +99,7 @@ public class EyeHangerTreeFeature extends AoATreeFeature {
 		}
 	}
 
-	private void doEyeHanger(WorldGenLevel reader, BlockPos leafPos, Random rand) {
+	private void doEyeHanger(WorldGenLevel reader, BlockPos leafPos, RandomSource rand) {
 		BlockState bloodStrands = AoABlocks.BLOOD_STRANDS.get().defaultBlockState();
 		BlockState eye = AoABlocks.EYE_BLOCK.get().defaultBlockState();
 		int length = 2 + rand.nextInt(3);

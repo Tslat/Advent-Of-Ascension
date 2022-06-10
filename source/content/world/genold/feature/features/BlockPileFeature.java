@@ -2,12 +2,11 @@ package net.tslat.aoa3.content.world.genold.feature.features;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.tslat.aoa3.content.world.genold.feature.features.config.MiscStateAndVariablesConfig;
-
-import java.util.Random;
 
 public class BlockPileFeature extends Feature<MiscStateAndVariablesConfig> {
 	public BlockPileFeature(Codec<MiscStateAndVariablesConfig> codec) {
@@ -18,7 +17,7 @@ public class BlockPileFeature extends Feature<MiscStateAndVariablesConfig> {
 	public boolean place(FeaturePlaceContext<MiscStateAndVariablesConfig> context) {
 		BlockPos pos = context.origin();
 		MiscStateAndVariablesConfig config = context.config();
-		Random rand = context.random();
+		RandomSource rand = context.random();
 		WorldGenLevel reader = context.level();
 		int piles = config.count.getValue(rand);
 

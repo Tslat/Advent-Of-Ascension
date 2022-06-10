@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.block.generation.grass;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -12,7 +13,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LayerLightEngine;
 import net.minecraft.world.level.material.MaterialColor;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class WaterGrassBlock extends GrassBlock {
@@ -40,7 +40,7 @@ public class WaterGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		if (!couldBeSnowy(state, world, pos)) {
 			if (!world.isAreaLoaded(pos, 3))
 				return;

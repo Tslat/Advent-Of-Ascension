@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.util.ObjectUtil;
 
 import javax.annotation.Nonnull;
@@ -30,7 +32,7 @@ public class AddItemsLootModifier extends LootModifier {
 
 	@Nonnull
 	@Override
-	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		generatedLoot.addAll(additionalStacks);
 
 		return generatedLoot;
@@ -64,7 +66,7 @@ public class AddItemsLootModifier extends LootModifier {
 			}
 
 			json.add("items", items);
-			json.addProperty("type", getRegistryName().toString());
+			json.addProperty("type", ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get().getKey(this).toString());
 
 			return json;
 		}

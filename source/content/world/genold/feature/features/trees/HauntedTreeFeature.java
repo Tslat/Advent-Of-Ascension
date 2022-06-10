@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -10,7 +11,6 @@ import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.HashMap;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class HauntedTreeFeature extends AoATreeFeature {
@@ -23,22 +23,18 @@ public class HauntedTreeFeature extends AoATreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
-		switch (rand.nextInt(4)) {
-			case 0:
-				return generateTree1(reader, rand, pos, isWorldGen);
-			case 1:
-				return generateTree2(reader, rand, pos, isWorldGen);
-			case 2:
-				return generateTree3(reader, rand, pos, isWorldGen);
-			case 3:
-				return generateTree4(reader, rand, pos, isWorldGen);
-		}
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
+		return switch (rand.nextInt(4)) {
+			case 0 -> generateTree1(reader, rand, pos, isWorldGen);
+			case 1 -> generateTree2(reader, rand, pos, isWorldGen);
+			case 2 -> generateTree3(reader, rand, pos, isWorldGen);
+			case 3 -> generateTree4(reader, rand, pos, isWorldGen);
+			default -> true;
+		};
 
-		return true;
 	}
 
-	private boolean generateTree1(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree1(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 24;
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 1, 1, isWorldGen))
@@ -71,7 +67,7 @@ public class HauntedTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree2(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree2(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 12 + rand.nextInt(5);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 1, 1, isWorldGen))
@@ -141,7 +137,7 @@ public class HauntedTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree3(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree3(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 10 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight, 1, isWorldGen))
@@ -207,7 +203,7 @@ public class HauntedTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree4(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree4(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 7 + rand.nextInt(7);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 3, 1, isWorldGen))
@@ -269,7 +265,7 @@ public class HauntedTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void generateCrossBranch(WorldGenLevel reader, Random rand, BlockPos branchPos, BlockState log, int length) {
+	private void generateCrossBranch(WorldGenLevel reader, RandomSource rand, BlockPos branchPos, BlockState log, int length) {
 		BlockState barkLog = getBarkForLog(log);
 		BlockState redEyesBarkLog = AoABlocks.HAUNTED_EYES_WOOD.get().defaultBlockState();
 		BlockState eyeBarkLog = AoABlocks.HAUNTED_EYE_WOOD.get().defaultBlockState();

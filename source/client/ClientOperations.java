@@ -3,7 +3,6 @@ package net.tslat.aoa3.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -14,9 +13,9 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
@@ -24,7 +23,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
@@ -45,7 +43,6 @@ import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.content.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.content.item.misc.WornBook;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -73,7 +70,7 @@ public final class ClientOperations {
 		ItemStack bookStack = player.getMainHandItem().getItem() == AoAItems.WORN_BOOK.get() ? player.getMainHandItem() : player.getOffhandItem();
 
 		if (IntegrationManager.isPatchouliActive()) {
-			PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
+			//PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
 		}
 		else {
 			Minecraft.getInstance().setScreen(new BookViewScreen(new BookViewScreen.WrittenBookAccess(WornBook.getBook(bookStack))));
@@ -114,7 +111,7 @@ public final class ClientOperations {
 					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast(skill, (Integer)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientLevels", ChatFormatting.RED, skill.getName(), LocaleUtil.numToComponent((Integer)value)), Util.NIL_UUID);
+					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientLevels", ChatFormatting.RED, skill.getName(), LocaleUtil.numToComponent((Integer)value)));
 				}
 			}
 			case RESOURCE_REQUIREMENT -> {
@@ -124,7 +121,7 @@ public final class ClientOperations {
 					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast(resource, (Float)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientResource", ChatFormatting.RED, resource.getName(), new TextComponent(NumberUtil.roundToNthDecimalPlace((Float)value, 2))), Util.NIL_UUID);
+					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientResource", ChatFormatting.RED, resource.getName(), Component.literal(NumberUtil.roundToNthDecimalPlace((Float)value, 2))));
 				}
 			}
 			case ABILITY_UNLOCK -> {
@@ -135,7 +132,7 @@ public final class ClientOperations {
 					Minecraft.getInstance().getToasts().addToast(new AbilityUnlockToast(skill2, ability));
 				}
 				else {
-					Minecraft.getInstance().player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.abilityUnlocked", ChatFormatting.GREEN, skill2.getName(), ability.getName()), Util.NIL_UUID);
+					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.abilityUnlocked", ChatFormatting.GREEN, skill2.getName(), ability.getName()));
 				}
 			}
 		}
@@ -209,7 +206,7 @@ public final class ClientOperations {
 		double delay = soundBuilder.getScheduledDelay() + (soundBuilder.getApplyTimeDilation() ? Math.sqrt(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition().distanceToSqr(soundBuilder.getLocation())) * 0.5d : 0);
 
 		if (soundBuilder.getFollowingEntity() != null) {
-			sound = new EntityBoundSoundInstance(soundBuilder.getSound(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), soundBuilder.getFollowingEntity()) {
+			sound = new EntityBoundSoundInstance(soundBuilder.getSound(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), soundBuilder.getFollowingEntity(), soundBuilder.getSeed()) {
 				@Override
 				public boolean isLooping() {
 					return soundBuilder.getIsLooping();
@@ -223,10 +220,10 @@ public final class ClientOperations {
 		}
 		else {
 			if (soundBuilder.getLocation() != null) {
-				sound = new SimpleSoundInstance(soundBuilder.getSound().getLocation(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), soundBuilder.getIsLooping(), (int)delay, soundBuilder.getIsInWorld() ? SoundInstance.Attenuation.LINEAR : SoundInstance.Attenuation.NONE, soundBuilder.getLocation().x(), soundBuilder.getLocation().y(), soundBuilder.getLocation().z(), false);
+				sound = new SimpleSoundInstance(soundBuilder.getSound().getLocation(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), RandomSource.create(soundBuilder.getSeed()), soundBuilder.getIsLooping(), (int)delay, soundBuilder.getIsInWorld() ? SoundInstance.Attenuation.LINEAR : SoundInstance.Attenuation.NONE, soundBuilder.getLocation().x(), soundBuilder.getLocation().y(), soundBuilder.getLocation().z(), false);
 			}
 			else {
-				sound = new SimpleSoundInstance(soundBuilder.getSound().getLocation(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), soundBuilder.getIsLooping(), (int)delay, soundBuilder.getIsInWorld() ? SoundInstance.Attenuation.LINEAR : SoundInstance.Attenuation.NONE, 0, 0, 0, false);
+				sound = new SimpleSoundInstance(soundBuilder.getSound().getLocation(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), RandomSource.create(soundBuilder.getSeed()), soundBuilder.getIsLooping(), (int)delay, soundBuilder.getIsInWorld() ? SoundInstance.Attenuation.LINEAR : SoundInstance.Attenuation.NONE, 0, 0, 0, false);
 			}
 		}
 

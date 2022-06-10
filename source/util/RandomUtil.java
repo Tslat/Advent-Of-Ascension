@@ -1,19 +1,20 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.PositionalRandomFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Predicate;
 
 public final class RandomUtil {
 	private static final char[] ALPHANUMERIC_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
-	public static final EasyRandom RANDOM = new EasyRandom(new Random());
+	public static final EasyRandom RANDOM = new EasyRandom(RandomSource.create());
 
 	public static boolean fiftyFifty() {
 		return RANDOM.fiftyFifty();
@@ -89,30 +90,30 @@ public final class RandomUtil {
 		return builder.toString();
 	}
 
-	public static final class EasyRandom {
-		private final Random RANDOM;
+	public static final class EasyRandom implements RandomSource  {
+		private final RandomSource random;
 
 		public EasyRandom() {
-			this(new Random());
+			this(RandomSource.create());
 		}
 
-		public EasyRandom(@Nonnull Random rand) {
-			this.RANDOM = rand;
+		public EasyRandom(@Nonnull RandomSource rand) {
+			this.random = rand;
 		}
 
-		public Random source() {
-			return RANDOM;
+		public RandomSource getSource() {
+			return RandomSource.create();
 		}
 
 		public boolean fiftyFifty() {
-			return RANDOM.nextBoolean();
+			return random.nextBoolean();
 		}
 
 		public boolean oneInNChance(int n) {
 			if (n <= 0)
 				return false;
 
-			return RANDOM.nextFloat() < 1 / (float)n;
+			return random.nextFloat() < 1 / (float)n;
 		}
 
 		public boolean percentChance(double percentChance) {
@@ -122,7 +123,7 @@ public final class RandomUtil {
 			if (percentChance >= 1)
 				return true;
 
-			return RANDOM.nextDouble() < percentChance;
+			return random.nextDouble() < percentChance;
 		}
 
 		public boolean percentChance(float percentChance) {
@@ -132,43 +133,43 @@ public final class RandomUtil {
 			if (percentChance >= 1)
 				return true;
 
-			return RANDOM.nextDouble() < percentChance;
+			return random.nextDouble() < percentChance;
 		}
 
 		public int randomNumberUpTo(int upperBound) {
-			return RANDOM.nextInt(upperBound);
+			return random.nextInt(upperBound);
 		}
 
 		public float randomValueUpTo(float upperBound) {
-			return RANDOM.nextFloat() * upperBound;
+			return random.nextFloat() * upperBound;
 		}
 
 		public double randomValueUpTo(double upperBound) {
-			return RANDOM.nextDouble() * upperBound;
+			return random.nextDouble() * upperBound;
 		}
 
 		public double randomGaussianValue() {
-			return RANDOM.nextGaussian();
+			return random.nextGaussian();
 		}
 
 		public double randomScaledGaussianValue(double scale) {
-			return RANDOM.nextGaussian() * scale;
+			return random.nextGaussian() * scale;
 		}
 
 		public int randomNumberBetween(int min, int max) {
-			return min + (int)Math.floor(RANDOM.nextDouble() * (1 + max - min));
+			return min + (int)Math.floor(random.nextDouble() * (1 + max - min));
 		}
 
 		public double randomValueBetween(double min, double max) {
-			return min + RANDOM.nextDouble() * (max - min);
+			return min + random.nextDouble() * (max - min);
 		}
 
 		public <T> T getRandomSelection(@Nonnull T... options) {
-			return options[RANDOM.nextInt(options.length)];
+			return options[random.nextInt(options.length)];
 		}
 
 		public <T> T getRandomSelection(@Nonnull List<T> options) {
-			return options.get(RANDOM.nextInt(options.size()));
+			return options.get(random.nextInt(options.size()));
 		}
 
 		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius) {
@@ -183,9 +184,9 @@ public final class RandomUtil {
 			BlockPos.MutableBlockPos mutablePos = centerPos.mutable();
 
 			for (int i = 0; i < tries; i++) {
-				int newX = (int)Math.floor(mutablePos.getX() + RANDOM.nextFloat() * xRadius * 2 - xRadius);
-				int newY = (int)Math.floor(mutablePos.getY() + RANDOM.nextFloat() * yRadius * 2 - yRadius);
-				int newZ = (int)Math.floor(mutablePos.getZ() + RANDOM.nextFloat() * zRadius * 2 - zRadius);
+				int newX = (int)Math.floor(mutablePos.getX() + random.nextFloat() * xRadius * 2 - xRadius);
+				int newY = (int)Math.floor(mutablePos.getY() + random.nextFloat() * yRadius * 2 - yRadius);
+				int newZ = (int)Math.floor(mutablePos.getZ() + random.nextFloat() * zRadius * 2 - zRadius);
 
 				mutablePos.set(newX, newY, newZ);
 
@@ -207,6 +208,56 @@ public final class RandomUtil {
 			}
 
 			return builder.toString();
+		}
+
+		@Override
+		public EasyRandom fork() {
+			return new EasyRandom(this.random.fork());
+		}
+
+		@Override
+		public PositionalRandomFactory forkPositional() {
+			return this.random.forkPositional();
+		}
+
+		@Override
+		public void setSeed(long seed) {
+			this.random.setSeed(seed);
+		}
+
+		@Override
+		public int nextInt() {
+			return this.random.nextInt();
+		}
+
+		@Override
+		public int nextInt(int upperLimit) {
+			return this.random.nextInt(upperLimit);
+		}
+
+		@Override
+		public long nextLong() {
+			return this.random.nextLong();
+		}
+
+		@Override
+		public boolean nextBoolean() {
+			return this.random.nextBoolean();
+		}
+
+		@Override
+		public float nextFloat() {
+			return this.random.nextFloat();
+		}
+
+		@Override
+		public double nextDouble() {
+			return this.random.nextDouble();
+		}
+
+		@Override
+		public double nextGaussian() {
+			return this.random.nextGaussian();
 		}
 	}
 }

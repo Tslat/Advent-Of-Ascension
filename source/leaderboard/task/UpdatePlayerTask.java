@@ -1,52 +1,41 @@
 package net.tslat.aoa3.leaderboard.task;
 
-import net.tslat.aoa3.leaderboard.LeaderboardTask;
+import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
-public class UpdatePlayerTask extends LeaderboardTask {
+public class UpdatePlayerTask extends InsertionTask {
 	private final String uuid;
 	private final String name;
-	private final String tableName;
-	private final int level;
+	private final AoASkill skill;
+	private final short level;
 	private int newTotal;
 
 	public UpdatePlayerTask(ServerPlayerDataManager plData, AoASkill.Instance skill) {
 		this.uuid = plData.player().getUUID().toString();
 		this.name = plData.player().getName().getString();
-		this.tableName = idToTableName(skill.type().getRegistryName());
-		this.level = skill.getLevel(true);
+		this.skill = skill.type();
+		this.level = (short)skill.getLevel(true);
 
 		for (AoASkill.Instance instance : plData.getSkills()) {
-			newTotal += skill.getLevel(true);
+			newTotal += instance.getLevel(true);
 		}
 	}
 
 	@Override
-	protected void execute(Connection connection) {
-		runFailSafeStatement(connection,
-				"IF EXISTS (SELECT 1 FROM Totals WHERE Uuid='" + uuid + "') " +
-						"BEGIN " +
-						"UPDATE Totals SET Total=" + newTotal + ", LastUpdate=CURRENT_DATE() WHERE Uuid='" + uuid + "' " +
-						"END " +
-						"ELSE " +
-						"BEGIN " +
-						"INSERT INTO Totals (Uuid, Username, Total, LastUpdate) VALUES ('" + uuid + "', '" + name + "', " + newTotal + ", CURRENT_DATE()) " +
-						"END",
-		"Error executing database update for " + this.name + ", regretfully skipping.");
-
-		runFailSafeStatement(connection,
-				"IF EXISTS (SELECT 1 FROM " + tableName + " WHERE Uuid='" + uuid + "') " +
-						"BEGIN " +
-						"UPDATE " + tableName + " SET Level=" + level + ", LastUpdate=CURRENT_DATE() WHERE Uuid='" + uuid + "' " +
-						"END " +
-						"ELSE " +
-						"BEGIN " +
-						"INSERT INTO " + tableName + " (Uuid, Username, Level, LastUpdate) VALUES ('" + uuid + "', '" + name + "', " + level + ", CURRENT_DATE()) " +
-						"END",
-		"Error executing database update for " + this.name + ", regretfully skipping.");
+	public void execute(Connection connection, InsertionConnection leaderboardConnection) {
+		try {
+			leaderboardConnection.updatePlayerTotal(connection, uuid, name, newTotal);
+			leaderboardConnection.updatePlayerLevel(connection, uuid, name, skill, level);
+		}
+		catch (SQLException ex) {
+			Logging.logMessage(Level.WARN, "Unable to prepare statement for execution to update " + name + " in skills leaderboard. This is probably not a good sign", ex);
+		}
 	}
 
 	@Override

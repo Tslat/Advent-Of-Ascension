@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Optional;
 
 public class MiscellaneousReloadListener implements ResourceManagerReloadListener {
 	public static final HashMap<Object, String> DATA = new HashMap<Object, String>();
@@ -32,9 +33,12 @@ public class MiscellaneousReloadListener implements ResourceManagerReloadListene
 			if (mc.getLanguageManager().getSelected() != null)
 				langCode = mc.getLanguageManager().getSelected().getCode();
 
-			Resource wornBook = resourceManager.getResource(new ResourceLocation(AdventOfAscension.MOD_ID, "misc/" + langCode + "/worn_book.txt"));
+			Optional<Resource> wornBook = resourceManager.getResource(new ResourceLocation(AdventOfAscension.MOD_ID, "misc/" + langCode + "/worn_book.txt"));
 
-			DATA.put(AoAItems.WORN_BOOK.get(), ObjectUtil.bufferedReaderToString(new BufferedReader(new InputStreamReader(wornBook.getInputStream(), StandardCharsets.UTF_8))));
+			if (!wornBook.isPresent())
+				return;
+
+			DATA.put(AoAItems.WORN_BOOK.get(), ObjectUtil.bufferedReaderToString(new BufferedReader(new InputStreamReader(wornBook.get().open(), StandardCharsets.UTF_8))));
 		}
 		catch (IOException ex) {
 			Logging.logMessage(Level.ERROR, "Failed to retrieve AoA3 additional resources, skipping.", ex);

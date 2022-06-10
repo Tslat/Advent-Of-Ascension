@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.food;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
@@ -27,7 +26,7 @@ public class Rosidons extends Item {
 	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
 		if (!world.isClientSide) {
 			if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
-				PlayerUtil.notifyPlayer((ServerPlayer)entity, new TranslatableComponent("message.feedback.item.rosidons.dimFail"));
+				PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable("message.feedback.item.rosidons.dimFail"));
 
 				return super.finishUsingItem(stack, world, entity);
 			}
@@ -35,7 +34,7 @@ public class Rosidons extends Item {
 			int calculatedY = WorldUtil.getTrueWorldHeight(world, (int)entity.getX(), (int)entity.getZ());
 
 			if (calculatedY == 0) {
-				PlayerUtil.notifyPlayer((ServerPlayer)entity, new TranslatableComponent("message.feedback.item.rosidons.noHeightFail"));
+				PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable("message.feedback.item.rosidons.noHeightFail"));
 
 				return super.finishUsingItem(stack, world, entity);
 			}

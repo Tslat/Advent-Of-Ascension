@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
@@ -14,7 +15,6 @@ import net.tslat.aoa3.util.RandomUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 public class StructureFeatureConfig implements FeatureConfiguration {
 	public static final Codec<StructureFeatureConfig> CODEC = RecordCodecBuilder.create(builder -> builder.group(
@@ -95,13 +95,13 @@ public class StructureFeatureConfig implements FeatureConfiguration {
 		}
 	}
 
-	public StructureTemplate getTemplate(Random rand) {
+	public StructureTemplate getTemplate(RandomSource rand) {
 		ResourceLocation templatePath = templatePaths.get(rand.nextInt(templatePaths.size()));
 
 		return ServerLifecycleHooks.getCurrentServer().getStructureManager().get(templatePath).get();
 	}
 
-	public StructurePlaceSettings getPlacementSettings(Random rand) {
+	public StructurePlaceSettings getPlacementSettings(RandomSource rand) {
 		RandomUtil.EasyRandom random = new RandomUtil.EasyRandom(rand);
 		StructurePlaceSettings settings = new StructurePlaceSettings();
 

@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.block.functional.misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -23,8 +24,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
-
-import java.util.Random;
 
 public class AcidBlock extends Block {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);
@@ -47,7 +46,7 @@ public class AcidBlock extends Block {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		if (!world.isClientSide)
 			world.removeBlock(pos, false);
 	}

@@ -5,8 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -33,6 +32,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -107,7 +107,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 			SpawnEggItem egg = (SpawnEggItem)heldStack.getItem();
 
 			if (tile instanceof TrophyTileEntity) {
-				((TrophyTileEntity)tile).setEntity(egg.getType(heldStack.getTag()).getRegistryName().toString(), true);
+				((TrophyTileEntity)tile).setEntity(ForgeRegistries.ENTITIES.getKey(egg.getType(heldStack.getTag())).toString(), true);
 
 				if (!world.isClientSide() && !player.isCreative())
 					heldStack.shrink(1);
@@ -137,7 +137,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 
 			if (trophyTile.getCachedEntity() != null) {
 				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
-				Component entityName = cachedEntity == null ? new TextComponent("") : cachedEntity.getName();
+				Component entityName = cachedEntity == null ? Component.literal("") : cachedEntity.getName();
 				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", entityName));
 			}
 		}
@@ -149,7 +149,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 		CompoundTag nbt = new CompoundTag();
 		CompoundTag dataTag = new CompoundTag();
 
-		dataTag.putString("EntityID", entity.getRegistryName().toString());
+		dataTag.putString("EntityID", ForgeRegistries.ENTITIES.getKey(entity).toString());
 		dataTag.putBoolean("OriginalTrophy", true);
 		nbt.put("BlockEntityTag", dataTag);
 
@@ -180,7 +180,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 				}
 
 				if (sourceTag.contains("BlockEntityTag")) {
-					displayTag.putString("Name", TextComponent.Serializer.toJson(new TranslatableComponent(localePrefix, new TranslatableComponent(Util.makeDescriptionId("entity", new ResourceLocation(sourceTag.getCompound("BlockEntityTag").getString("EntityID")))))));
+					displayTag.putString("Name", MutableComponent.Serializer.toJson(Component.translatable(localePrefix, Component.translatable(Util.makeDescriptionId("entity", new ResourceLocation(sourceTag.getCompound("BlockEntityTag").getString("EntityID")))))));
 				}
 				else {
 					displayTag = sourceTag.getCompound("display");
@@ -208,7 +208,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 			localePrefix = "block.aoa3.ornate_trophy.desc";
 		}
 
-		displayTag.putString("Name", TextComponent.Serializer.toJson(new TranslatableComponent(localePrefix, new TranslatableComponent(entity.getDescriptionId()))));
+		displayTag.putString("Name", MutableComponent.Serializer.toJson(Component.translatable(localePrefix, Component.translatable(entity.getDescriptionId()))));
 		tag.put("display", displayTag);
 
 		return tag;

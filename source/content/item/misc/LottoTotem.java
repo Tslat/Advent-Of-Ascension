@@ -3,7 +3,7 @@ package net.tslat.aoa3.content.item.misc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -41,7 +41,7 @@ public class LottoTotem extends Item {
 
 		if (!world.isClientSide) {
 			if (!world.getEntitiesOfClass(LottoTotemEntity.class, new AABB(pos).inflate(4)).isEmpty()) {
-				PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.lottoTotem.nearby").withStyle(ChatFormatting.RED));
+				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.lottoTotem.nearby").withStyle(ChatFormatting.RED));
 
 				return InteractionResult.FAIL;
 			}
@@ -66,10 +66,10 @@ public class LottoTotem extends Item {
 					selectedWinner--;
 				}
 
-				PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.lottoTotem.spawn").withStyle(ChatFormatting.GOLD));
+				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.lottoTotem.spawn").withStyle(ChatFormatting.GOLD));
 			}
 			else {
-				PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.lottoTotem.noSpace").withStyle(ChatFormatting.RED));
+				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.lottoTotem.noSpace").withStyle(ChatFormatting.RED));
 
 				return InteractionResult.FAIL;
 			}

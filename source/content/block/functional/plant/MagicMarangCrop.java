@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.block.functional.plant;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -16,7 +15,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class MagicMarangCrop extends HangingCropBlock {
@@ -40,11 +38,6 @@ public class MagicMarangCrop extends HangingCropBlock {
 
 		if (!player.isCreative() && state.getValue(AGE) == 7)
 			world.setBlock(pos, state.setValue(AGE, 0), Block.UPDATE_ALL);
-	}
-
-	@Override
-	public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
-		super.tick(state, level, pos, random);
 	}
 
 	@Override

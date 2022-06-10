@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.tool.shovel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -110,6 +109,6 @@ public class EnergisticShovel extends BaseShovel {
 
 		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticStorage", LocaleUtil.ItemDescriptionType.NEUTRAL, new TextComponent( Integer.toString((int)cap.getValue()))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticStorage", LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal( Integer.toString((int)cap.getValue()))));
 	}
 }

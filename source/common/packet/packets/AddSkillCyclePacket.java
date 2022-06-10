@@ -3,6 +3,7 @@ package net.tslat.aoa3.common.packet.packets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -22,7 +23,7 @@ public class AddSkillCyclePacket implements AoAPacket {
 
 	@Override
 	public void encode(FriendlyByteBuf buffer) {
-		buffer.writeResourceLocation(skill == null ? new ResourceLocation("", "") : skill.getRegistryName());
+		buffer.writeResourceLocation(skill == null ? new ResourceLocation("", "") : AoARegistries.AOA_SKILLS.getId(skill));
 	}
 
 	public static AddSkillCyclePacket decode(FriendlyByteBuf buffer) {

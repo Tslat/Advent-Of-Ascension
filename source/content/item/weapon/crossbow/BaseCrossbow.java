@@ -8,13 +8,12 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -37,7 +36,6 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Random;
 
 public class BaseCrossbow extends CrossbowItem {
 	protected double damage;
@@ -192,7 +190,7 @@ public class BaseCrossbow extends CrossbowItem {
 		if (projectiles.isEmpty())
 			return;
 
-		float[] soundPitches = getRandomSoundPitches(shooter.getRandom(), projectiles.size());
+		float[] soundPitches = getRandomSoundPitches(RandomUtil.RANDOM.getSource(), projectiles.size());
 		boolean creativeMode = shooter instanceof Player && ((Player)shooter).isCreative();
 		float spreadModifier = -10f;
 
@@ -305,7 +303,7 @@ public class BaseCrossbow extends CrossbowItem {
 		}
 	}
 
-	protected float[] getRandomSoundPitches(Random rand, int amount) {
+	protected float[] getRandomSoundPitches(RandomSource rand, int amount) {
 		float[] pitches = new float[amount];
 
 		for (int i = 0; i < amount; i++) {
@@ -348,8 +346,8 @@ public class BaseCrossbow extends CrossbowItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new TextComponent(Double.toString(getDamage()))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, new TranslatableComponent(Items.ARROW.getDescriptionId())));
+		tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(Double.toString(getDamage()))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, Component.translatable(Items.ARROW.getDescriptionId())));
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 }

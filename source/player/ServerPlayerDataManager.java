@@ -30,6 +30,7 @@ import net.tslat.aoa3.common.packet.packets.PlayerDataSyncPacket;
 import net.tslat.aoa3.common.packet.packets.PlayerDataUpdatePacket;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
@@ -144,7 +145,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag skillsNbt = baseTag.getCompound("skills");
 
 			for (AoASkill.Instance skill : skills.values()) {
-				String id = skill.type().getRegistryName().toString();
+				String id = AoARegistries.AOA_SKILLS.getId(skill.type()).toString();
 
 				if (skillsNbt.contains(id))
 					skill.loadFromNbt(skillsNbt.getCompound(id));
@@ -155,7 +156,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag resourcesNbt = baseTag.getCompound("resources");
 
 			for (AoAResource.Instance resource : resources.values()) {
-				String id = resource.type().getRegistryName().toString();
+				String id = AoARegistries.AOA_RESOURCES.getId(resource.type()).toString();
 
 				if (resourcesNbt.contains(id))
 					resource.loadFromNbt(resourcesNbt.getCompound(id));
@@ -339,7 +340,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (skillData == null)
 					skillData = new CompoundTag();
 
-				skillData.put(skill.type().getRegistryName().toString(), skill.getSyncData(false));
+				skillData.put(AoARegistries.AOA_SKILLS.getId(skill.type()).toString(), skill.getSyncData(false));
 			}
 		}
 
@@ -348,7 +349,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (resourceData == null)
 					resourceData = new CompoundTag();
 
-				resourceData.put(resource.type().getRegistryName().toString(), resource.getSyncData(false));
+				resourceData.put(AoARegistries.AOA_RESOURCES.getId(resource.type()).toString(), resource.getSyncData(false));
 			}
 		}
 
@@ -563,7 +564,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag skillsNbt = new CompoundTag();
 
 			for (AoASkill.Instance skill : skills.values()) {
-				skillsNbt.put(skill.type().getRegistryName().toString(), forClientSync ? skill.getSyncData(true) : skill.saveToNbt());
+				skillsNbt.put(AoARegistries.AOA_SKILLS.getId(skill.type()).toString(), forClientSync ? skill.getSyncData(true) : skill.saveToNbt());
 			}
 
 			if (!skillsNbt.isEmpty())
@@ -574,7 +575,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag resourcesNbt = new CompoundTag();
 
 			for (AoAResource.Instance resource : resources.values()) {
-				resourcesNbt.put(resource.type().getRegistryName().toString(), forClientSync ? resource.getSyncData(true) : resource.saveToNbt());
+				resourcesNbt.put(AoARegistries.AOA_RESOURCES.getId(resource.type()).toString(), forClientSync ? resource.getSyncData(true) : resource.saveToNbt());
 			}
 
 			if (!resourcesNbt.isEmpty())

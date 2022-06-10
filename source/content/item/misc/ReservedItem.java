@@ -18,6 +18,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
@@ -155,21 +156,21 @@ public class ReservedItem extends Item {
 		if (pl.getHealth() > 0 && !pl.level.getLevelData().isHardcore())
 			return;
 
-		if (!pl.getMainHandItem().getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))
+		if (!ForgeRegistries.ITEMS.getKey(pl.getMainHandItem().getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))
 			return;
 
 		NonNullList<ItemStack> armour = pl.getInventory().armor;
 
-		if (!armour.get(3).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("l"))
+		if (!ForgeRegistries.ITEMS.getKey(armour.get(3).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("l"))
 			return;
 
-		if (!armour.get(2).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("i"))
+		if (!ForgeRegistries.ITEMS.getKey(armour.get(2).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("i"))
 			return;
 
-		if (!armour.get(1).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("e"))
+		if (!ForgeRegistries.ITEMS.getKey(armour.get(1).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("e"))
 			return;
 
-		if (!armour.get(0).getItem().getRegistryName().getPath().toLowerCase(Locale.ENGLISH).startsWith("n"))
+		if (!ForgeRegistries.ITEMS.getKey(armour.get(0).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("n"))
 			return;
 
 		if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1))

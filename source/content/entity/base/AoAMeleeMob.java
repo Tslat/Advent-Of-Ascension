@@ -45,9 +45,9 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public abstract class AoAMeleeMob extends Monster implements IAnimatable {
-	private static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAMeleeMob.class, EntityDataSerializers.INT);
-	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
-	private static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAMeleeMob.class, EntityDataSerializers.BOOLEAN);
+	protected static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAMeleeMob.class, EntityDataSerializers.INT);
+	protected static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
+	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAMeleeMob.class, EntityDataSerializers.BOOLEAN);
 
 	protected boolean isSlipperyMovement = false;
 
@@ -140,6 +140,14 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 			setInvulnerable(getEntityData().get(INVULNERABLE));
 	}
 
+	public int getAttackState() {
+		return this.getEntityData().get(ATTACK_STATE);
+	}
+
+	public void setAttackState(int state) {
+		this.getEntityData().set(ATTACK_STATE, state);
+	}
+
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
 		SoundEvent stepSound = getStepSound(pos, blockIn);
@@ -177,8 +185,10 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 			boolean isFalling = getDeltaMovement().y <= 0.0D;
 
 			if (isFalling && hasEffect(MobEffects.SLOW_FALLING)) {
-				if (!gravity.hasModifier(SLOW_FALLING)) gravity.addTransientModifier(SLOW_FALLING);
-					fallDistance = 0.0F;
+				if (!gravity.hasModifier(SLOW_FALLING))
+					gravity.addTransientModifier(SLOW_FALLING);
+
+				fallDistance = 0.0F;
 			}
 			else if (gravity.hasModifier(SLOW_FALLING)) {
 				gravity.removeModifier(SLOW_FALLING);

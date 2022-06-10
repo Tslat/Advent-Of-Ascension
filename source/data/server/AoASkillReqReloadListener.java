@@ -10,6 +10,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.SkillRequirementDataPacket;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -38,7 +39,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canEquip(PlayerDataManager plData, Item item, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(item.getRegistryName());
+		SkillReqHandler handler = getRequirements(ForgeRegistries.ITEMS.getKey(item));
 
 		if (handler != null && !handler.canEquip(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())
@@ -51,7 +52,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canPlaceBlock(PlayerDataManager plData, Block block, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(block.getRegistryName());
+		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
 
 		if (handler != null && !handler.canPlaceBlock(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())
@@ -64,7 +65,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canBreakBlock(PlayerDataManager plData, Block block, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(block.getRegistryName());
+		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
 
 		if (handler != null && !handler.canBreakBlock(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())
@@ -77,7 +78,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canInteractWith(PlayerDataManager plData, Block block, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(block.getRegistryName());
+		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
 
 		if (handler != null && !handler.canInteractWith(plData)) {
 			if (notifyPlayer && !plData.player().level.isClientSide())

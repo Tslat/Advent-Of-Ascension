@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure;
 
 import com.google.common.collect.Lists;
@@ -298,4 +299,4 @@ public class JigsawAssembler {
 			this.depth = pieceDepth;
 		}
 	}
-}
+}*/

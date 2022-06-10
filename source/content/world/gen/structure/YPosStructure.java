@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure;
 
 import net.minecraft.core.BlockPos;
@@ -53,3 +54,4 @@ public class YPosStructure extends GenericAoAStructure<VariableHeightStructureCo
 		};
 	}
 }
+*/

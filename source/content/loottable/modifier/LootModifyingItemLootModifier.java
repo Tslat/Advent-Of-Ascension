@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -9,11 +10,11 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 
 import javax.annotation.Nonnull;
 import java.util.Iterator;
-import java.util.List;
 
 public class LootModifyingItemLootModifier extends LootModifier {
 	public LootModifyingItemLootModifier(LootItemCondition[] conditions) {
@@ -22,7 +23,7 @@ public class LootModifyingItemLootModifier extends LootModifier {
 
 	@Nonnull
 	@Override
-	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		ItemStack tool = ItemStack.EMPTY;
 
 		if (context.hasParam(LootContextParams.TOOL)) {
@@ -58,7 +59,7 @@ public class LootModifyingItemLootModifier extends LootModifier {
 		public JsonObject write(LootModifyingItemLootModifier instance) {
 			JsonObject json = makeConditions(instance.conditions);
 
-			json.addProperty("type", getRegistryName().toString());
+			json.addProperty("type", ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get().getKey(this).toString());
 
 			return json;
 		}

@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -18,7 +19,6 @@ import org.apache.commons.lang3.tuple.Triple;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> {
@@ -30,7 +30,7 @@ public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> 
 		this.sapling = sapling;
 	}
 
-	public boolean generate(ServerLevel world, Random rand, BlockPos pos) {
+	public boolean generate(ServerLevel world, RandomSource rand, BlockPos pos) {
 		return generateTree(world, rand, pos, false);
 	}
 
@@ -40,11 +40,11 @@ public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> 
 	}
 
 	@Override
-	public boolean place(BlockStatePlacementConfig config, WorldGenLevel level, ChunkGenerator chunkGen, Random rand, BlockPos pos) {
+	public boolean place(BlockStatePlacementConfig config, WorldGenLevel level, ChunkGenerator chunkGen, RandomSource rand, BlockPos pos) {
 		return generateTree(level, rand, pos, true);
 	}
 
-	protected abstract boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen);
+	protected abstract boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen);
 
 	protected void placeBlock(WorldGenLevel reader, BlockPos pos, BlockState state, boolean overwriteBlocks) {
 		if (!overwriteBlocks && !isSafeBlock(reader, pos))
@@ -110,7 +110,7 @@ public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> 
 	}
 
 	@Nullable
-	protected BlockPos findMultiSaplingPosition(WorldGenLevel reader, Random rand, BlockPos pos, int size, boolean isWorldGen) {
+	protected BlockPos findMultiSaplingPosition(WorldGenLevel reader, RandomSource rand, BlockPos pos, int size, boolean isWorldGen) {
 		if (isWorldGen)
 			return pos;
 

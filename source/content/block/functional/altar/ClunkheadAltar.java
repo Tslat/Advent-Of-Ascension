@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -34,7 +34,7 @@ public class ClunkheadAltar extends BossAltarBlock {
 		if (player instanceof ServerPlayer) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail"));
+					PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
 					return InteractionResult.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {

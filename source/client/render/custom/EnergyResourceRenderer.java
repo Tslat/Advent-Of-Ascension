@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.resource.EnergyResource;
 import net.tslat.aoa3.util.ColourUtil;
@@ -17,11 +18,13 @@ import javax.annotation.Nullable;
 public class EnergyResourceRenderer implements AoAResourceRenderer {
 	@Override
 	public void renderInHud(PoseStack matrix, AoAResource.Instance resource, float partialTicks, @Nullable String valueOverride) {
+		ResourceLocation resourceId = AoARegistries.AOA_RESOURCES.getId(resource.type());
+
 		matrix.pushPose();
 		matrix.scale(0.5f, 0.5f, 0);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.setShaderTexture(0, new ResourceLocation(resource.type().getRegistryName().getNamespace(), "textures/gui/aoaresource/" + resource.type().getRegistryName().getPath() + ".png"));
+		RenderSystem.setShaderTexture(0, new ResourceLocation(resourceId.getNamespace(), "textures/gui/aoaresource/" + resourceId.getPath() + ".png"));
 
 		int renderWidth = hudRenderWidth(resource) * 2;
 		int renderHeight = hudRenderHeight(resource) * 2;

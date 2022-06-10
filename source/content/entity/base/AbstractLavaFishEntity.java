@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -21,8 +22,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.Random;
-
 public abstract class AbstractLavaFishEntity extends LavaMobEntity {
 	public AbstractLavaFishEntity(EntityType<? extends AbstractLavaFishEntity> entityType, Level world) {
 		super(entityType, world);
@@ -38,7 +37,7 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 3.0D);
 	}
 
-	public static boolean checkFishSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor world, MobSpawnType reason, BlockPos position, Random rand) {
+	public static boolean checkFishSpawnRules(EntityType<? extends Mob> entityType, LevelAccessor world, MobSpawnType reason, BlockPos position, RandomSource rand) {
 		return world.getBlockState(position).is(Blocks.LAVA) && world.getBlockState(position.above()).is(Blocks.LAVA);
 	}
 

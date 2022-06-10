@@ -13,7 +13,7 @@ import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
@@ -51,7 +51,7 @@ public class StructuresCommand implements Command<CommandSource> {
 			BlockPos spawnPos = cmd.getArgument("position", ILocationArgument.class).getBlockPos(cmd.getSource());
 
 			if (template.isEmpty()) {
-				AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.invalidStructure", AoACommand.CommandFeedbackType.WARN, new TextComponent(id.toString()));
+				AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.invalidStructure", AoACommand.CommandFeedbackType.WARN, Component.literal(id.toString()));
 
 				return 1;
 			}
@@ -59,7 +59,7 @@ public class StructuresCommand implements Command<CommandSource> {
 				template.placeInWorldChunk(cmd.getSource().getLevel(), spawnPos, new StructurePlaceSettings().setMirror(mirror).setRotation(rotation).setIgnoreEntities(ignoreEntities).setFinalizeEntities(!ignoreEntities).setChunkPos(null), new Random());
 			}
 
-			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.spawn", AoACommand.CommandFeedbackType.SUCCESS, new TextComponent(id.toString()), new TextComponent(spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ()));
+			AoACommand.feedback(cmd.getSource(), "Structures", "command.aoa.structures.spawn", AoACommand.CommandFeedbackType.SUCCESS, Component.literal(id.toString()), Component.literal(spawnPos.getX() + ", " + spawnPos.getY() + ", " + spawnPos.getZ()));
 		}
 		catch (ResourceLocationException ex) {
 			AoACommand.error(cmd.getSource(), "Structures", ex.getLocalizedMessage());

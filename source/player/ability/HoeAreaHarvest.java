@@ -3,7 +3,9 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Player;
@@ -45,11 +47,11 @@ public class HoeAreaHarvest extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
+	protected void updateDescription(MutableComponent defaultDescription) {
 		String suffix = this.levelsPerRadiusIncrease > 0 ? "" : ".flat";
 		suffix += this.perBlockHoeDamage <= 0 ? "" : ".noDamage";
 
-		super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + suffix, this.baseRadius, this.levelsPerRadiusIncrease, this.perBlockHoeDamage));
+		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + suffix, this.baseRadius, this.levelsPerRadiusIncrease, this.perBlockHoeDamage));
 	}
 
 	@Override

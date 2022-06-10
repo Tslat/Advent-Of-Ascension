@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -12,8 +12,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.misc.DustopianLamp;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -27,7 +27,7 @@ public class PrimordialShrine extends BossAltarBlock {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (world.getDifficulty() == Difficulty.PEACEFUL && player instanceof ServerPlayer) {
-			PlayerUtil.notifyPlayer((ServerPlayer)player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail"));
+			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
 
 			return InteractionResult.FAIL;
 		}

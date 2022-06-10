@@ -2,7 +2,6 @@ package net.tslat.aoa3.common.container;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
@@ -15,8 +14,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
 import javax.annotation.Nullable;
@@ -103,7 +102,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
-				return new TranslatableComponent("container.aoa3.whitewashing_table");
+				return Component.translatable("container.aoa3.whitewashing_table");
 			}
 
 			@Nullable

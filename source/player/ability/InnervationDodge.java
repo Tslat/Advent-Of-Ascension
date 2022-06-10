@@ -5,7 +5,9 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
@@ -42,8 +44,8 @@ public class InnervationDodge extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
+	protected void updateDescription(MutableComponent defaultDescription) {
+		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey(), NumberUtil.roundToNthDecimalPlace(this.energyCost, 2)));
 	}
 
 	@Override

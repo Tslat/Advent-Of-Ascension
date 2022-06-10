@@ -11,8 +11,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -53,7 +51,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 	private static int updateMessageTicker = 0;
 
 	public AdventMainGui(Player player) {
-		super(new TranslatableComponent("gui.aoa3.adventGui.title"));
+		super(Component.translatable("gui.aoa3.adventGui.title"));
 
 		this.player = player;
 		instance = this;
@@ -100,7 +98,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 			RenderSystem.disableBlend();
 		}
 
-		RenderUtil.drawScaledMessage(matrix, font, new TextComponent("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.drawScaledMessage(matrix, font, Component.literal("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 
 		if (WebUtil.isUpdateAvailable()) {
 			updateMessageTicker--;
@@ -109,7 +107,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 				updateMessageTicker = 90;
 
 			if (updateMessageTicker > 0) {
-				Component msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", new TextComponent(WebUtil.getLatestVersion()));
+				Component msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", Component.literal(WebUtil.getLatestVersion()));
 
 				RenderUtil.drawScaledMessage(matrix, font, msg, scaledRootX + 925 - font.width(msg), scaledRootY + 105, 1.25f, ColourUtil.RGB(229, 0, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 			}
@@ -222,7 +220,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 		@Override
 		public void renderToolTip(PoseStack matrix, int mouseX, int mouseY) {
 			if (!active && this.tabID == ADVENT_WINDOW_TAB.LORE)
-				AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.patchouli")), Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font);
+				AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.patchouli")), Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font);
 		}
 	}
 

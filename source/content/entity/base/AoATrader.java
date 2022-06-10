@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -41,7 +42,6 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
-import java.util.Random;
 
 public abstract class AoATrader extends Villager implements IAnimatable {
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
@@ -231,10 +231,6 @@ public abstract class AoATrader extends Villager implements IAnimatable {
 				getCombatTracker().recheckStatus();
 
 				if (this.level instanceof ServerLevel) {
-					if (entity != null) {
-						entity.killed((ServerLevel)this.level, this);
-					}
-
 					dropAllDeathLoot(cause);
 					createWitherRose(killer);
 				}
@@ -354,7 +350,7 @@ public abstract class AoATrader extends Villager implements IAnimatable {
 
 		@Nullable
 		@Override
-		public MerchantOffer getOffer(Entity trader, Random rand) {
+		public MerchantOffer getOffer(Entity trader, RandomSource rand) {
 			MerchantOffer offer;
 
 			if (cost2 != null) {

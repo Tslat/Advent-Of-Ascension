@@ -2,7 +2,9 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -13,18 +15,18 @@ import net.tslat.aoa3.player.skill.AoASkill;
 public class DummyAbility extends AoAAbility.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.LEVEL_CHANGE};
 
-	private final TranslatableComponent displayName;
+	private final MutableComponent displayName;
 
 	public DummyAbility(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.DUMMY_ABILITY.get(), skill, data);
 
-		this.displayName = new TranslatableComponent(GsonHelper.getAsString(data, "display_name", ""));
+		this.displayName = Component.translatable(GsonHelper.getAsString(data, "display_name", ""));
 	}
 
 	public DummyAbility(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.DUMMY_ABILITY.get(), skill, data);
 
-		this.displayName = new TranslatableComponent(data.getString("display_name"));
+		this.displayName = Component.translatable(data.getString("display_name"));
 	}
 
 	@Override
@@ -39,7 +41,7 @@ public class DummyAbility extends AoAAbility.Instance {
 	}
 
 	@Override
-	public TranslatableComponent getName() {
+	public MutableComponent getName() {
 		return displayName;
 	}
 
@@ -48,7 +50,7 @@ public class DummyAbility extends AoAAbility.Instance {
 		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup)
-			data.putString("display_name", this.displayName.getKey());
+			data.putString("display_name", ((TranslatableContents)this.displayName.getContents()).getKey());
 
 		return data;
 	}

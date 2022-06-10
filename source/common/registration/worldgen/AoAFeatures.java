@@ -4,19 +4,11 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biomes;
-import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.NonNullLazy;
-import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
-import net.minecraftforge.event.world.BiomeLoadingEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoARegistries;
@@ -26,7 +18,6 @@ import net.tslat.aoa3.content.world.genold.feature.features.trees.*;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.List;
-import java.util.Set;
 import java.util.function.Supplier;
 
 public final class AoAFeatures {
@@ -70,7 +61,7 @@ public final class AoAFeatures {
 	public static final RegistryObject<YellowCelevusTreeFeature> YELLOW_CELEVUS_TREE = register("yellow_celevus_tree", () -> new YellowCelevusTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.YELLOW_CELEVUS_SAPLING));
 	public static final RegistryObject<YellowHavenTreeFeature> YELLOW_HAVEN_TREE = register("yellow_haven_tree", () -> new YellowHavenTreeFeature(BlockStatePlacementConfig.CODEC, AoABlocks.YELLOW_HAVEN_SAPLING));
 
-	public static void init() {
+	/*public static void init() {
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, false, BiomeLoadingEvent.class, AoAFeatures::registerVanillaBiomeFeatures);
 	}
 
@@ -100,7 +91,7 @@ public final class AoAFeatures {
 
 			builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, Holder.direct(ORE_LIMONITE_SMALL.placedFeature().get()));
 		}
-	}
+	}*/
 
 	private static <C extends FeatureConfiguration, F extends Feature<C>> RegistryObject<F> register(String id, Supplier<F> feature) {
 		return AoARegistries.FEATURES.register(id, feature);

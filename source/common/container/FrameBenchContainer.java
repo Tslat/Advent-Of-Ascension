@@ -2,7 +2,6 @@ package net.tslat.aoa3.common.container;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
@@ -16,8 +15,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
 import javax.annotation.Nullable;
@@ -183,7 +182,7 @@ public class FrameBenchContainer extends AbstractContainerMenu {
 		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
-				return new TranslatableComponent("container.aoa3.frame_bench");
+				return Component.translatable("container.aoa3.frame_bench");
 			}
 
 			@Nullable

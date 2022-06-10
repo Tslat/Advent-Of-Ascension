@@ -2,7 +2,7 @@ package net.tslat.aoa3.content.item.misc.summoning;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -44,7 +44,7 @@ public class AmphibiyteLung extends BossSpawningItem {
 			return false;
 
 		if (!checkSpawnArea(world, new AABB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 3d, posZ + 0.5d))) {
-			PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.noSpace"));
+			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.noSpace"));
 
 			return false;
 		}

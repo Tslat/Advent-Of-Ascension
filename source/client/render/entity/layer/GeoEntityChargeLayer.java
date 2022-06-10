@@ -30,7 +30,7 @@ public class GeoEntityChargeLayer<T extends Entity & IAnimatable> extends GeoLay
 
 		float lerpedTicks = (float)entity.tickCount + partialTicks;
 		RenderType renderType = RenderType.energySwirl(texture, adjustU(lerpedTicks) % 1, lerpedTicks * 0.005F % 1);
-		GeoModel model = getEntityModel().getModel(getEntityModel().getModelLocation(entity));
+		GeoModel model = getEntityModel().getModel(getEntityModel().getModelResource(entity));
 
 		getRenderer().render(model, entity, partialTicks, renderType, matrixStack, buffer, buffer.getBuffer(renderType), light, OverlayTexture.NO_OVERLAY, 0.5f, 0.5f, 0.5f, 0.5f);
 	}

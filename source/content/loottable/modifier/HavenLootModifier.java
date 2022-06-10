@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -15,7 +16,6 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class HavenLootModifier extends LootModifier {
 	public static final ResourceLocation HAVEN_LOOT_TABLE = new ResourceLocation(AdventOfAscension.MOD_ID, "worlds/haven_passive");
@@ -26,7 +26,7 @@ public class HavenLootModifier extends LootModifier {
 
 	@Nonnull
 	@Override
-	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (WorldUtil.isWorld((ServerLevelAccessor)context.getLevel(), AoADimensions.HAVEN.key) && context.hasParam(LootContextParams.THIS_ENTITY) && context.hasParam(LootContextParams.ORIGIN) && !context.hasParam(LootContextParams.KILLER_ENTITY) && !context.hasParam(LootContextParams.DIRECT_KILLER_ENTITY)) {
 			if (!context.hasParam(LootContextParams.BLOCK_STATE) || context.getRandom().nextInt(10) == 0) {
 				LootContext newContext = new LootContext.Builder(context.getLevel())

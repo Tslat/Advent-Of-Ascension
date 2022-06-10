@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -138,15 +138,15 @@ public abstract class AdventArmour extends ArmorItem {
 		return this.setType() == helmet.setType() || helmet.setType() == Type.ALL;
 	}
 
-	protected TranslatableComponent setEffectHeader() {
+	protected MutableComponent setEffectHeader() {
 		return LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ARMOUR_SET_HEADER, ChatFormatting.GOLD);
 	}
 
-	protected TranslatableComponent pieceEffectHeader() {
+	protected MutableComponent pieceEffectHeader() {
 		return LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ARMOUR_PIECE_HEADER, ChatFormatting.GRAY);
 	}
 
-	protected TranslatableComponent anySetEffectHeader() {
+	protected MutableComponent anySetEffectHeader() {
 		return LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ARMOUR_ANY_SET_HEADER, ChatFormatting.DARK_AQUA);
 	}
 

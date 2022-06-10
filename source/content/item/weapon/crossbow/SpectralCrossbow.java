@@ -3,8 +3,6 @@ package net.tslat.aoa3.content.item.weapon.crossbow;
 import com.google.common.collect.Lists;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -35,14 +33,14 @@ public class SpectralCrossbow extends BaseCrossbow {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flag) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, new TextComponent(Double.toString(getDamage()))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.damage.arrows", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(Double.toString(getDamage()))));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 
 		List<ItemStack> projectiles = getChargedProjectiles(stack);
 
 		if (isCharged(stack) && !projectiles.isEmpty()) {
 			ItemStack projectile = projectiles.get(0);
-			tooltip.add((new TranslatableComponent("item.minecraft.crossbow.projectile")).append(" ").append(projectile.getDisplayName()));
+			tooltip.add((Component.translatable("item.minecraft.crossbow.projectile")).append(" ").append(projectile.getDisplayName()));
 
 			if (flag.isAdvanced() && projectile.getItem() == Items.FIREWORK_ROCKET) {
 				List<Component> list1 = Lists.newArrayList();
@@ -50,7 +48,7 @@ public class SpectralCrossbow extends BaseCrossbow {
 
 				if (!list1.isEmpty()) {
 					for(int i = 0; i < list1.size(); ++i) {
-						list1.set(i, (new TextComponent("  ")).append(list1.get(i)).withStyle(ChatFormatting.GRAY));
+						list1.set(i, (Component.literal("  ")).append(list1.get(i)).withStyle(ChatFormatting.GRAY));
 					}
 
 					tooltip.addAll(list1);

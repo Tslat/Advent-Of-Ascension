@@ -26,11 +26,10 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.common.util.RecipeMatcher;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -269,7 +268,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 		return inputStack;
 	}
 
-	public static class Factory extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<InfusionRecipe> {
+	public static class Factory implements RecipeSerializer<InfusionRecipe> {
 		@Override
 		public InfusionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			if (GsonHelper.isValidNode(json, "infusion")) {
@@ -419,7 +418,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 
 			if (recipe.isEnchanting()) {
 				buffer.writeBoolean(true);
-				buffer.writeResourceLocation(recipe.getEnchantment().enchantment.getRegistryName());
+				buffer.writeResourceLocation(ForgeRegistries.ENCHANTMENTS.getKey(recipe.getEnchantment().enchantment));
 				buffer.writeInt(recipe.getEnchantment().level);
 				buffer.writeInt(recipe.getIngredients().size());
 

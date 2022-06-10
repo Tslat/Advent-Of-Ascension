@@ -3,11 +3,6 @@ package net.tslat.aoa3.integration;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.integration.immersiveengineering.ImmersiveEngineeringIntegration;
-import net.tslat.aoa3.integration.jer.JERIntegration;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
-import net.tslat.aoa3.integration.tinkersconstruct.TinkersConstructIntegration;
-import net.tslat.aoa3.integration.tinkersconstruct.TinkersFluids;
 
 public class IntegrationManager {
 	static boolean jeiActive = false;
@@ -54,15 +49,15 @@ public class IntegrationManager {
 		/*if (isModPresent("tconstruct") && AoAConfig.INTEGRATIONS.tinkersConstructEnabled.get())
 			tinkersConstructPreInit();*/
 
-		TinkersFluids.preInit();
+		//TinkersFluids.preInit();
 	}
 
 	public static void postInit() {
-		if (isJERActive())
+		/*if (isJERActive())
 			JERIntegration.postInit();
 
 		if (isImmersiveEngineeringActive())
-			ImmersiveEngineeringIntegration.postInit();
+			ImmersiveEngineeringIntegration.postInit();*/
 	}
 
 	private static void jeiPreInit() {
@@ -87,14 +82,14 @@ public class IntegrationManager {
 		Logging.logStatusMessage("Found Patchouli, Integrating");
 
 		patchouliActive = true;
-		PatchouliIntegration.preInit();
+		//PatchouliIntegration.preInit();
 	}
 
 	private static void tinkersConstructPreInit() {
 		Logging.logStatusMessage("Found Tinkers Construct, Integrating");
 
 		tinkersConstructActive = true;
-		TinkersConstructIntegration.preInit();
+		//TinkersConstructIntegration.preInit();
 	}
 
 	public static boolean isModPresent(String modId) {

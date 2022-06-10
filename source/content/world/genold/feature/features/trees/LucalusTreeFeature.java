@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -9,7 +10,6 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class LucalusTreeFeature extends AoATreeFeature {
@@ -18,7 +18,7 @@ public class LucalusTreeFeature extends AoATreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		pos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
 
 		if (pos == null)
@@ -111,7 +111,7 @@ public class LucalusTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void buildNorthSouthBranch(WorldGenLevel reader, BlockPos branchPos, Random rand, boolean north) {
+	private void buildNorthSouthBranch(WorldGenLevel reader, BlockPos branchPos, RandomSource rand, boolean north) {
 		BlockState log = AoABlocks.LUCALUS_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUCALUS_LEAVES.get().defaultBlockState();
 		int branchLength = 3 + rand.nextInt(2);
@@ -162,7 +162,7 @@ public class LucalusTreeFeature extends AoATreeFeature {
 		}
 	}
 
-	private void buildEastWestBranch(WorldGenLevel reader, BlockPos branchPos, Random rand, boolean east) {
+	private void buildEastWestBranch(WorldGenLevel reader, BlockPos branchPos, RandomSource rand, boolean east) {
 		BlockState log = AoABlocks.LUCALUS_LOG.get().defaultBlockState();
 		BlockState leaves = AoABlocks.LUCALUS_LEAVES.get().defaultBlockState();
 		int branchLength = 3 + rand.nextInt(2);

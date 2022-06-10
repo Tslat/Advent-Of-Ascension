@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "aoa3:raw_limonite",
+    "aoa3:raw_emberstone",
     "#forge:raw_materials/limonite"
   ]
 }

@@ -84,8 +84,8 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 					BlockState state = world.getBlockState(pos);
 					MushroomBlock mushroom = (MushroomBlock)state.getBlock();
 
-					if (mushroom.isBonemealSuccess(world, RandomUtil.RANDOM.source(), pos, state))
-						mushroom.performBonemeal((ServerLevel)world, RandomUtil.RANDOM.source(), pos, state);
+					if (mushroom.isBonemealSuccess(world, RandomUtil.RANDOM.getSource(), pos, state))
+						mushroom.performBonemeal((ServerLevel)world, RandomUtil.RANDOM.getSource(), pos, state);
 				}
 
 				world.levelEvent(2005, pos, 0);

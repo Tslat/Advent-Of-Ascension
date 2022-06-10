@@ -1,6 +1,6 @@
 package net.tslat.aoa3.event;
 
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -53,17 +53,17 @@ public final class RestrictionEventHandler {
 
 		handleEventIf(EntityTeleportEvent.ChorusFruit.class, ev -> {
 			cancelEvent(ev);
-			PlayerUtil.notifyPlayer((Player)ev.getEntity(), new TranslatableComponent("message.feedback.nowhere.chorusFruit"));
+			PlayerUtil.notifyPlayer((Player)ev.getEntity(), Component.translatable("message.feedback.nowhere.chorusFruit"));
 			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 
 		handleEventIf(EntityTeleportEvent.EnderPearl.class, ev -> {
 			cancelEvent(ev);
-			PlayerUtil.notifyPlayer((Player)ev.getEntity(), new TranslatableComponent("message.feedback.nowhere.enderPearl"));
+			PlayerUtil.notifyPlayer((Player)ev.getEntity(), Component.translatable("message.feedback.nowhere.enderPearl"));
 			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 
 		handleEventIf(EntityTeleportEvent.TeleportCommand.class, ev -> {
 			cancelEvent(ev);
-			PlayerUtil.notifyPlayer((Player)ev.getEntity(), new TranslatableComponent("message.feedback.nowhere.teleport"));
+			PlayerUtil.notifyPlayer((Player)ev.getEntity(), Component.translatable("message.feedback.nowhere.teleport"));
 			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 
 		handleEventIf(PlayerInteractEvent.RightClickBlock.class,

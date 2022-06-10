@@ -75,7 +75,7 @@ public final class EntityEvents {
 
 	private static void onTraderGenTrades(final VillagerTradesEvent ev) {
 		if (ev.getType() == VillagerProfession.CARTOGRAPHER) {
-			ev.getTrades().get(1).add(new VillagerTrades.TreasureMapForEmeralds(4, AoATags.ConfiguredStructures.ON_RUINED_TELEPORTER_FRAME_MAPS, "filled_map." + AdventOfAscension.MOD_ID + ".ruined_teleporter_frame", MapDecoration.Type.TARGET_POINT, 3, 7));
+			ev.getTrades().get(1).add(new VillagerTrades.TreasureMapForEmeralds(4, AoATags.Structures.ON_RUINED_TELEPORTER_FRAME_MAPS, "filled_map." + AdventOfAscension.MOD_ID + ".ruined_teleporter_frame", MapDecoration.Type.TARGET_POINT, 3, 7));
 		}
 	}
 }

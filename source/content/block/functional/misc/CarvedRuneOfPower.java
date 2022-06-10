@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.block.functional.misc;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -44,11 +43,11 @@ public class CarvedRuneOfPower extends Block {
 
 			if (facing == AoAPortalFrame.PortalDirection.EXISTING) {
 				if (player != null)
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.existing"), Util.NIL_UUID);
+					player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.existing"));
 			}
 			else if (facing == AoAPortalFrame.PortalDirection.INVALID) {
 				if (player != null)
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.fail"), Util.NIL_UUID);
+					player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.fail"));
 			}
 			else {
 				AoAPortalFrame.lightPortalFrame(world, pos, facing, portalBlock);

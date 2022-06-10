@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -18,12 +19,12 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.misc.FertilisedFarmland;
 import net.tslat.aoa3.util.ItemUtil;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.ListIterator;
 
 public class FertilisedFarmlandLootModifier extends LootModifier {
@@ -33,7 +34,7 @@ public class FertilisedFarmlandLootModifier extends LootModifier {
 
 	@Nonnull
 	@Override
-	protected List<ItemStack> doApply(List<ItemStack> generatedLoot, LootContext context) {
+	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		if (generatedLoot.isEmpty())
 			return generatedLoot;
 
@@ -74,7 +75,7 @@ public class FertilisedFarmlandLootModifier extends LootModifier {
 		public JsonObject write(FertilisedFarmlandLootModifier instance) {
 			JsonObject json = makeConditions(instance.conditions);
 
-			json.addProperty("type", getRegistryName().toString());
+			json.addProperty("type", ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get().getKey(this).toString());
 
 			return json;
 		}

@@ -63,7 +63,7 @@ public class DoppelgangerRenderer extends LivingRenderer<DoppelgangerEntity, Pla
 	}
 
 	@Override
-	protected void renderNameTag(DoppelgangerEntity entity, TextComponent displayName, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
+	protected void renderNameTag(DoppelgangerEntity entity, MutableComponent displayName, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
 		matrixStack.pushPose();
 		matrixStack.translate(0, 0.25875f, 0);
 		super.renderNameTag(entity, Minecraft.getInstance().player.getDisplayName(), matrixStack, buffer, packedLight);

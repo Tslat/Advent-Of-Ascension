@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.lighting.LayerLightEngine;
 import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class UpsideDownGrassBlock extends GrassBlock {
@@ -26,7 +26,7 @@ public class UpsideDownGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	public void performBonemeal(ServerLevel world, Random rand, BlockPos pos, BlockState state) {}
+	public void performBonemeal(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {}
 
 	public boolean hasSufficientLight(BlockState grassState, Level world, BlockPos grassPos) {
 		if (world.dimension() == ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetia")))
@@ -43,7 +43,7 @@ public class UpsideDownGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		if (!hasSufficientLight(state, world, pos)) {
 			if (!world.isAreaLoaded(pos, 3))
 				return;

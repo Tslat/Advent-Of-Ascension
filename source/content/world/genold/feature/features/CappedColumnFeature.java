@@ -3,13 +3,12 @@ package net.tslat.aoa3.content.world.genold.feature.features;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.tslat.aoa3.content.world.genold.feature.features.config.CappedColumnConfig;
-
-import java.util.Random;
 
 public class CappedColumnFeature extends Feature<CappedColumnConfig> {
 	public CappedColumnFeature(Codec<CappedColumnConfig> codec) {
@@ -18,7 +17,7 @@ public class CappedColumnFeature extends Feature<CappedColumnConfig> {
 
 	@Override
 	public boolean place(FeaturePlaceContext<CappedColumnConfig> context) {
-		Random rand = context.random();
+		RandomSource rand = context.random();
 		BlockPos pos = context.origin();
 		CappedColumnConfig config = context.config();
 		WorldGenLevel reader = context.level();

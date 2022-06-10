@@ -3,13 +3,13 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class InvertedChurryTreeFeature extends AoATreeFeature {
@@ -23,7 +23,7 @@ public class InvertedChurryTreeFeature extends AoATreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 25 + rand.nextInt(15);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 3, 1, isWorldGen))
@@ -58,7 +58,7 @@ public class InvertedChurryTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private void buildLeafBlob(WorldGenLevel reader, BlockPos pos, Random rand) {
+	private void buildLeafBlob(WorldGenLevel reader, BlockPos pos, RandomSource rand) {
 		BlockState leaves = AoABlocks.CHURRY_LEAVES.get().defaultBlockState();
 
 		placeBlock(reader, pos.north(), leaves);

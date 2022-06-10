@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -11,7 +12,6 @@ import net.tslat.aoa3.content.block.generation.plants.VinesBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class CreepTreeFeature extends AoATreeFeature {
@@ -23,7 +23,7 @@ public class CreepTreeFeature extends AoATreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		ArrayList<BlockPos> leafPositions = new ArrayList<BlockPos>();
 		int trunkHeight = 6 + rand.nextInt(10);
 
@@ -103,7 +103,7 @@ public class CreepTreeFeature extends AoATreeFeature {
 		leafPositions.add(leafPos);
 	}
 
-	private void populateVines(WorldGenLevel reader, Random rand, ArrayList<BlockPos> leafPositions) {
+	private void populateVines(WorldGenLevel reader, RandomSource rand, ArrayList<BlockPos> leafPositions) {
 		for (BlockPos pos : leafPositions) {
 			for (Direction dir : Direction.Plane.HORIZONTAL) {
 				BlockPos vinePos;

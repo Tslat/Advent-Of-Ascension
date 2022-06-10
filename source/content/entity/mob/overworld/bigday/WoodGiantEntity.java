@@ -21,6 +21,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 public class WoodGiantEntity extends AoAMeleeMob {
 	public WoodGiantEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
+
+		this.maxUpStep = 1.5f;
 	}
 
 	@Override

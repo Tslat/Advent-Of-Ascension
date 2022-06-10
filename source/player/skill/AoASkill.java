@@ -4,17 +4,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.XpGainPacket;
 import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.config.AoAConfig;
@@ -30,18 +31,18 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
-	private final Lazy<TranslatableComponent> name;
+public final class AoASkill {
+	private final Lazy<MutableComponent> name;
 	private final BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory;
 	private final Function<CompoundTag, Instance> clientFactory;
 
 	public AoASkill(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundTag, Instance> clientFactory) {
-		this.name = () -> new TranslatableComponent(Util.makeDescriptionId("skill", getRegistryName()));
+		this.name = () -> Component.translatable(Util.makeDescriptionId("skill", AoARegistries.AOA_SKILLS.getId(this)));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
 	}
 
-	public TranslatableComponent getName() {
+	public MutableComponent getName() {
 		return this.name.get();
 	}
 
@@ -110,7 +111,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			return this.skill;
 		}
 
-		public TranslatableComponent getName() {
+		public MutableComponent getName() {
 			return type().getName();
 		}
 
@@ -226,7 +227,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			this.needsSync = true;
 
 			playerDataManager.checkAndUpdateLegitimacy();
-			AoAPackets.messagePlayer(playerDataManager.player(), new XpGainPacket(skill.getRegistryName(), xp, newLevels > 0));
+			AoAPackets.messagePlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
 		}
 
 		private void subtractXp(float xp, boolean isUnnaturalSource) {
@@ -257,7 +258,7 @@ public final class AoASkill extends ForgeRegistryEntry<AoASkill> {
 			if (!isUnnaturalSource)
 				playerDataManager.applyLegitimacyPenalties();
 
-			AoAPackets.messagePlayer(playerDataManager.player(), new XpGainPacket(skill.getRegistryName(), xp, newLevels > 0));
+			AoAPackets.messagePlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
 		}
 
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {

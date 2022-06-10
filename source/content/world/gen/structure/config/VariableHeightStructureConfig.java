@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure.config;
 
 import com.mojang.serialization.Codec;
@@ -77,3 +78,4 @@ public class VariableHeightStructureConfig extends JigsawConfiguration {
 		}
 	}
 }
+*/

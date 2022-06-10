@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.food;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -45,6 +44,6 @@ public class HealingFood extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.healingFood.desc.1", LocaleUtil.ItemDescriptionType.NEUTRAL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.healingFood.desc.2", LocaleUtil.ItemDescriptionType.NEUTRAL, new TextComponent(Float.toString(healingAmount))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.healingFood.desc.2", LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(Float.toString(healingAmount))));
 	}
 }

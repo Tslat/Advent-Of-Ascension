@@ -15,8 +15,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ServerboundClientCommandPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.Stat;
@@ -86,7 +84,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 	protected EditBox searchField;
 
 	protected AdventGuiTabBestiary() {
-		super(new TranslatableComponent("gui.aoa3.adventGui.bestiary"));
+		super(Component.translatable("gui.aoa3.adventGui.bestiary"));
 	}
 
 	@Override
@@ -101,7 +99,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		if (scrollMenu == null)
 			scrollMenu = new BestiaryMenu(minecraft, AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 764, AdventMainGui.SCALE);
 
-		searchField = new EditBox(font, AdventMainGui.scaledTabRootX + 20, AdventMainGui.scaledTabRootY, (int)((width - 40) / 2d), 15, new TextComponent(""));
+		searchField = new EditBox(font, AdventMainGui.scaledTabRootX + 20, AdventMainGui.scaledTabRootY, (int)((width - 40) / 2d), 15, Component.literal(""));
 
 		searchField.setVisible(false);
 		getMinecraft().getConnection().send(new ServerboundClientCommandPacket(ServerboundClientCommandPacket.Action.REQUEST_STATS));
@@ -154,7 +152,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		for (Stat<?> stat : this.statsMap.keySet()) {
 			ResourceLocation registryName;
 
-			if (stat.getValue() instanceof EntityType && (registryName = ((EntityType<?>)stat.getValue()).getRegistryName()) != null) {
+			if (stat.getValue() instanceof EntityType && (registryName = ForgeRegistries.ENTITIES.getKey(((EntityType<?>)stat.getValue()))) != null) {
 				if (AoAConfig.CLIENT.thirdPartyBestiary.get() || registryName.getNamespace().equals(AdventOfAscension.MOD_ID)) {
 					String registryNameString = registryName.toString();
 
@@ -321,7 +319,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 					openEntryStatsLines = entityData.getA();
 
 					if (entityData.getB() != null && entityData.getB().length() > 0)
-						openEntryInfoLines = font.split(new TextComponent(entityData.getB()), (int)(734 / 1.5f));
+						openEntryInfoLines = font.split(Component.literal(entityData.getB()), (int)(734 / 1.5f));
 				}
 				catch (ClassCastException ex) {
 					Logging.logMessage(Level.WARN, "Mod '" + entityModId + "' provided invalid bestiary entry handler. Removing support. Report this to the mod author.");
@@ -430,7 +428,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 				String bestiaryInfo = BestiaryReloadListener.BESTIARY.get(registryName);
 
 				if (bestiaryInfo != null)
-					openEntryInfoLines = font.split(new TextComponent(bestiaryInfo), (int)(734 / 1.5f));
+					openEntryInfoLines = font.split(Component.literal(bestiaryInfo), (int)(734 / 1.5f));
 			}
 		}
 		else {
@@ -451,7 +449,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		private Stat<EntityType<?>> deathStat = null;
 
 		private EntityStats(Stat<EntityType<?>> stat, boolean killStat) {
-			this.registryName = stat.getValue().getRegistryName();
+			this.registryName = ForgeRegistries.ENTITIES.getKey(stat.getValue());
 
 			if (killStat) {
 				this.killStat = stat;

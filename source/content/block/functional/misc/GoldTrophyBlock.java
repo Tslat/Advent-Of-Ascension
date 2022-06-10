@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -34,7 +33,7 @@ public class GoldTrophyBlock extends TrophyBlock {
 
 			if (trophyTile.getCachedEntity() != null) {
 				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
-				Component entityName = cachedEntity == null ? new TextComponent("") : cachedEntity.getType().getDescription();
+				Component entityName = cachedEntity == null ? Component.literal("") : cachedEntity.getType().getDescription();
 				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", ChatFormatting.GOLD, entityName));
 			}
 		}

@@ -1,6 +1,5 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -30,13 +29,13 @@ public class KrorSpawnTask implements Runnable {
 	@Override
 	public void run() {
 		if (player.level != world || player.distanceToSqr(chargingTablePos.getX(), chargingTablePos.getY(), chargingTablePos.getZ()) > 100) {
-			//player.sendMessage(LocaleUtil.getLocaleMessage(AoAMobs.KROR.get().getDescriptionId() + "tooFar"), Util.NIL_UUID);
+			//player.sendSystemMessage(LocaleUtil.getLocaleMessage(AoAMobs.KROR.get().getDescriptionId() + "tooFar"));
 
 			return;
 		}
 
 		if (world.getDifficulty() == Difficulty.PEACEFUL) {
-			player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.difficultyFail"), Util.NIL_UUID);
+			player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.difficultyFail"));
 
 			return;
 		}
@@ -70,7 +69,7 @@ public class KrorSpawnTask implements Runnable {
 				kror.setPos( kror.getX() + rand.nextInt(20) - 10, kror.getY(), kror.getZ() + rand.nextInt(20) - 10);
 
 				if (i > 64) {
-					player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.noSpace"), Util.NIL_UUID);
+					player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.noSpace"));
 
 					return;
 				}

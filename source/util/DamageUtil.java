@@ -1,7 +1,6 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
@@ -249,7 +248,7 @@ public final class DamageUtil {
 				ItemStack itemstack = this.entity instanceof LivingEntity ? ((LivingEntity)this.entity).getMainHandItem() : ItemStack.EMPTY;
 				String prefix = "death.attack.player";
 
-				return !itemstack.isEmpty() && itemstack.hasCustomHoverName() ? new TranslatableComponent(prefix + ".item", entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getDisplayName()) : new TranslatableComponent(prefix, entity.getDisplayName(), this.entity.getDisplayName());
+				return !itemstack.isEmpty() && itemstack.hasCustomHoverName() ? Component.translatable(prefix + ".item", entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getDisplayName()) : Component.translatable(prefix, entity.getDisplayName(), this.entity.getDisplayName());
 			}
 		}.bypassMagic().bypassArmor();
 

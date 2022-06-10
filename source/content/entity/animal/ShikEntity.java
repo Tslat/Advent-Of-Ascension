@@ -22,8 +22,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.entity.ai.mob.CompletePanicGoal;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.library.builder.EntityPredicate;
@@ -104,7 +104,7 @@ public class ShikEntity extends AoAAnimal {
 
 	@Override
 	public float getWalkTargetValue(BlockPos pos, LevelReader world) {
-		return world.getBlockState(pos.below()).is(Tags.Blocks.STONE) ? 1f : 1 - world.getBrightness(pos);
+		return world.getBlockState(pos.below()).is(Tags.Blocks.STONE) ? 1f : 1 - world.getMaxLocalRawBrightness(pos) / 15f;
 	}
 
 	@Override

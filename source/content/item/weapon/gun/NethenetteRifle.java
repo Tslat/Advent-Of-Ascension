@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -64,6 +63,6 @@ public class NethenetteRifle extends BaseGun {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 		tooltip.add(LocaleUtil.getLocaleMessage("item.modifiers.mainhand"));
-		tooltip.add(new TextComponent("10 ").append( LocaleUtil.getLocaleMessage("attribute.name.generic.attack_damage")));
+		tooltip.add(Component.literal("10 ").append( LocaleUtil.getLocaleMessage("attribute.name.generic.attack_damage")));
 	}
 }

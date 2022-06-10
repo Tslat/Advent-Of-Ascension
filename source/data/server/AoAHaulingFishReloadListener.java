@@ -1,12 +1,14 @@
 package net.tslat.aoa3.data.server;
 
 import com.google.gson.*;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
@@ -22,9 +24,9 @@ import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.library.object.GenericEntryPool;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.TagUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -58,13 +60,13 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			JsonObject obj = entry.getValue().getAsJsonObject();
 
 			if (id.equals(AdventOfAscension.id("fish_default"))) {
-				parseEntityList(GsonHelper.getAsJsonArray(obj, "entities"), FISH_RETRIEVER.FALLBACK, false);
+				parseEntityList(GsonHelper.getAsJsonArray(obj, "entities"), FISH_RETRIEVER.WATER_FALLBACK, false);
 			}
 			else if (id.equals(AdventOfAscension.id("fish_lava_default"))) {
 				parseEntityList(GsonHelper.getAsJsonArray(obj, "entities"), FISH_RETRIEVER.LAVA_FALLBACK, true);
 			}
 			else if (id.equals(AdventOfAscension.id("traps_default"))) {
-				parseEntityList(GsonHelper.getAsJsonArray(obj, "entities"), TRAPS_RETRIEVER.FALLBACK, false);
+				parseEntityList(GsonHelper.getAsJsonArray(obj, "entities"), TRAPS_RETRIEVER.WATER_FALLBACK, false);
 			}
 			else if (id.equals(AdventOfAscension.id("traps_lava_default"))) {
 				parseEntityList(GsonHelper.getAsJsonArray(obj, "entities"), TRAPS_RETRIEVER.LAVA_FALLBACK, true);
@@ -82,16 +84,16 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 
 	private void parseEntry(JsonObject json) throws IllegalArgumentException {
 		boolean replace = GsonHelper.getAsBoolean(json, "replace", false);
-		ArrayList<Biome.BiomeCategory> categories = new ArrayList<>();
+		ArrayList<TagKey<Biome>> tags = new ArrayList<>();
 		ArrayList<ResourceKey<Biome>> biomes = new ArrayList<>();
 		boolean forLava = GsonHelper.getAsBoolean(json, "for_lava", false);
 		boolean forTraps = GsonHelper.getAsBoolean(json, "for_traps", false);
 
-		if (json.has("categories")) {
-			JsonArray categoryArray = json.getAsJsonArray("categories");
+		if (json.has("tags")) {
+			JsonArray tagArray = json.getAsJsonArray("tags");
 
-			for (JsonElement element : categoryArray) {
-				categories.add(Biome.BiomeCategory.byName(element.getAsString()));
+			for (JsonElement element : tagArray) {
+				tags.add(TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(element.getAsString())));
 			}
 		}
 
@@ -103,14 +105,14 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			}
 		}
 
-		if (categories.isEmpty() && biomes.isEmpty())
-			throw new IllegalArgumentException("No biome category or biome ids listed, must have one or the other.");
+		if (tags.isEmpty() && biomes.isEmpty())
+			throw new IllegalArgumentException("No biome tags or biome ids listed, must have one or the other.");
 
 		FishEntryRetriever retriever = forTraps ? TRAPS_RETRIEVER : FISH_RETRIEVER;
 
-		if (!categories.isEmpty()) {
-			for (Biome.BiomeCategory category : categories) {
-				GenericEntryPool<Function<Level, Entity>, ServerPlayer> list = retriever.getOrCreateCategoryPool(forLava, category);
+		if (!tags.isEmpty()) {
+			for (TagKey<Biome> tag : tags) {
+				GenericEntryPool<Function<Level, Entity>, ServerPlayer> list = retriever.getOrCreateBiomePool(forLava, tag);
 
 				if (replace)
 					list.clear();
@@ -177,41 +179,24 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 	}
 
 	private static class FishEntryRetriever {
-		private final GenericEntryPool<Function<Level, Entity>, ServerPlayer> FALLBACK = new GenericEntryPool<>();
+		private final GenericEntryPool<Function<Level, Entity>, ServerPlayer> WATER_FALLBACK = new GenericEntryPool<>();
 		private final GenericEntryPool<Function<Level, Entity>, ServerPlayer> LAVA_FALLBACK = new GenericEntryPool<>();
 
-		private HashMap<ResourceKey<Biome>, GenericEntryPool<Function<Level, Entity>, ServerPlayer>> BIOME_MAP = null;
-		private HashMap<ResourceKey<Biome>, GenericEntryPool<Function<Level, Entity>, ServerPlayer>> LAVA_BIOME_MAP = null;
-		private HashMap<Biome.BiomeCategory, GenericEntryPool<Function<Level, Entity>, ServerPlayer>> CATEGORY_MAP = null;
-		private HashMap<Biome.BiomeCategory, GenericEntryPool<Function<Level, Entity>, ServerPlayer>> LAVA_CATEGORY_MAP = null;
+		private Object2ObjectOpenHashMap<Object, GenericEntryPool<Function<Level, Entity>, ServerPlayer>> WATER_MAP = null;
+		private Object2ObjectOpenHashMap<Object, GenericEntryPool<Function<Level, Entity>, ServerPlayer>> LAVA_MAP = null;
 
-		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getOrCreateBiomePool(boolean forLava, ResourceKey<Biome> key) {
+		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getOrCreateBiomePool(boolean forLava, Object biomeOrTag) {
 			if (forLava) {
-				if (LAVA_BIOME_MAP == null)
-					LAVA_BIOME_MAP = new HashMap<>();
+				if (LAVA_MAP == null)
+					LAVA_MAP = new Object2ObjectOpenHashMap<>();
 
-				return LAVA_BIOME_MAP.computeIfAbsent(key, biome -> new GenericEntryPool<>());
+				return LAVA_MAP.computeIfAbsent(biomeOrTag, biome -> new GenericEntryPool<>());
 			}
 			else {
-				if (BIOME_MAP == null)
-					BIOME_MAP = new HashMap<>();
+				if (WATER_MAP == null)
+					WATER_MAP = new Object2ObjectOpenHashMap<>();
 
-				return BIOME_MAP.computeIfAbsent(key, biome -> new GenericEntryPool<>());
-			}
-		}
-
-		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getOrCreateCategoryPool(boolean forLava, Biome.BiomeCategory category) {
-			if (forLava) {
-				if (LAVA_CATEGORY_MAP == null)
-					LAVA_CATEGORY_MAP = new HashMap<>();
-
-				return LAVA_CATEGORY_MAP.computeIfAbsent(category, cat -> new GenericEntryPool<>());
-			}
-			else {
-				if (CATEGORY_MAP == null)
-					CATEGORY_MAP = new HashMap<>();
-
-				return CATEGORY_MAP.computeIfAbsent(category, cat -> new GenericEntryPool<>());
+				return WATER_MAP.computeIfAbsent(biomeOrTag, biome -> new GenericEntryPool<>());
 			}
 		}
 
@@ -220,36 +205,40 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getLavaEntry(Biome biome) {
-			ResourceKey<Biome> registryKey = ResourceKey.create(Registry.BIOME_REGISTRY, biome.getRegistryName());
+			ResourceKey<Biome> resourceKey = ResourceKey.create(Registry.BIOME_REGISTRY, ForgeRegistries.BIOMES.getKey(biome));
+			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = LAVA_MAP.get(resourceKey);
 
-			if (LAVA_BIOME_MAP != null && LAVA_BIOME_MAP.containsKey(registryKey))
-				return LAVA_BIOME_MAP.get(registryKey);
+			if (entry != null)
+				return entry;
 
-			if (LAVA_CATEGORY_MAP != null && LAVA_CATEGORY_MAP.containsKey(biome.getBiomeCategory()))
-				return LAVA_CATEGORY_MAP.get(biome.getBiomeCategory());
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(biome).filter(tag -> LAVA_MAP.containsKey(tag)).findFirst().orElse(null);
 
-			return LAVA_FALLBACK;
+			if (matchedTag != null)
+				return LAVA_MAP.get(matchedTag);
+
+			return null;
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getWaterEntry(Biome biome) {
-			ResourceKey<Biome> registryKey = ResourceKey.create(Registry.BIOME_REGISTRY, biome.getRegistryName());
+			ResourceKey<Biome> resourceKey = ResourceKey.create(Registry.BIOME_REGISTRY, ForgeRegistries.BIOMES.getKey(biome));
+			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = WATER_MAP.get(resourceKey);
 
-			if (BIOME_MAP != null && BIOME_MAP.containsKey(registryKey))
-				return BIOME_MAP.get(registryKey);
+			if (entry != null)
+				return entry;
 
-			if (CATEGORY_MAP != null && CATEGORY_MAP.containsKey(biome.getBiomeCategory()))
-				return CATEGORY_MAP.get(biome.getBiomeCategory());
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(biome).filter(tag -> WATER_MAP.containsKey(tag)).findFirst().orElse(null);
 
-			return FALLBACK;
+			if (matchedTag != null)
+				return WATER_MAP.get(matchedTag);
+
+			return null;
 		}
 
 		private void reset() {
-			FALLBACK.clear();
+			WATER_FALLBACK.clear();
 			LAVA_FALLBACK.clear();
-			BIOME_MAP = null;
-			LAVA_BIOME_MAP = null;
-			CATEGORY_MAP = null;
-			LAVA_CATEGORY_MAP = null;
+			WATER_MAP = null;
+			LAVA_MAP = null;
 		}
 	}
 }

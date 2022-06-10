@@ -85,7 +85,7 @@ public class TraderSpawner implements CustomSpawner {
 			if (key.isEmpty() || !SPAWNS.containsKey(key.get()))
 				continue;
 
-			EntityType<? extends Mob> trader = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.source(), SPAWNS.get(key.get())).get().type;
+			EntityType<? extends Mob> trader = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.getSource(), SPAWNS.get(key.get())).get().type;
 			SpawnPlacements.Type placementType = SpawnPlacements.getPlacementType(trader);
 			Heightmap.Types heightmap = SpawnPlacements.getHeightmapType(trader);
 			pos = new BlockPos(x, world.getHeight(heightmap, x, z), z);

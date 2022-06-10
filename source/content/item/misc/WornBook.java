@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -44,7 +43,7 @@ public class WornBook extends WrittenBookItem {
 		if (!world.isClientSide) {
 			if (!ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), false, 1)) {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()));
-				player.sendMessage(LocaleUtil.getLocaleMessage("message.feedback.wornBook.droppedRealmstone"), Util.NIL_UUID);
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.wornBook.droppedRealmstone"));
 				PlayerUtil.getAdventPlayer((ServerPlayer)player).addPatchouliBook(AdventOfAscension.id("worn_book"));
 			}
 		}

@@ -36,6 +36,8 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 
 	public IceGiantEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
+
+		this.maxUpStep = 1.5f;
 	}
 
 	@Override
@@ -50,7 +52,7 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 					return 0;
 
 				if (tickCount - lastAttackTime > 120)
-					return 1;
+					return distanceToSqr(target) < 16 ? 0 : 1;
 
 				if (distanceToSqr(target) > 100 && !target.isFullyFrozen())
 					return 1;

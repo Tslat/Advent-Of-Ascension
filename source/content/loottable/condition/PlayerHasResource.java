@@ -14,6 +14,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.tslat.aoa3.common.registration.AoALootOperations;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -65,7 +66,7 @@ public class PlayerHasResource implements LootItemCondition {
 	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<PlayerHasResource> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasResource playerHasResource, JsonSerializationContext jsonSerializationContext) {
-			json.addProperty("resource", playerHasResource.resource.getRegistryName().toString());
+			json.addProperty("resource", AoARegistries.AOA_RESOURCES.getId(playerHasResource.resource).toString());
 			json.addProperty("amount", playerHasResource.amount);
 			json.addProperty("consume", playerHasResource.consume);
 		}

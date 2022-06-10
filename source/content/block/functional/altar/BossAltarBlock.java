@@ -1,7 +1,8 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -39,7 +40,7 @@ public abstract class BossAltarBlock extends Block {
 		if (player instanceof ServerPlayer) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail"));
+					PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
 					return InteractionResult.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {
@@ -63,7 +64,7 @@ public abstract class BossAltarBlock extends Block {
 		return true;
 	}
 
-	protected void sendSpawnMessage(Player player, TranslatableComponent msg, BlockPos pos) {
+	protected void sendSpawnMessage(Player player, MutableComponent msg, BlockPos pos) {
 		PlayerUtil.messageAllPlayersInRange(msg, player.level, pos, 50);
 	}
 }

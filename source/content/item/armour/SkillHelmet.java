@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
@@ -82,7 +83,7 @@ public class SkillHelmet extends AdventArmour {
 	@Nullable
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-		return AdventOfAscension.id("textures/models/armor/custom/" + stack.getItem().getRegistryName().getPath() + (ClientPlayerDataManager.get().getSkill(getSkill()).getLevel(true) == 1000 ? "_trim" : "") + ".png").toString();
+		return AdventOfAscension.id("textures/models/armor/custom/" + ForgeRegistries.ITEMS.getKey(stack.getItem()).getPath() + (ClientPlayerDataManager.get().getSkill(getSkill()).getLevel(true) == 1000 ? "_trim" : "") + ".png").toString();
 	}
 
 	@Override

@@ -140,7 +140,7 @@ public class FlashEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable TextComponent name) {
+	public void setCustomName(@Nullable MutableComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));

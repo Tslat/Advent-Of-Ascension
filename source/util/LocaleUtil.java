@@ -5,12 +5,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -18,24 +18,24 @@ import net.tslat.aoa3.player.skill.AoASkill;
 import javax.annotation.Nullable;
 
 public final class LocaleUtil {
-	public static Component getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, TextComponent... args) {
-		return getFormattedItemDescriptionText("item." + item.getRegistryName().getNamespace() + "." + item.getRegistryName().getPath() + ".desc." + descNumber, type, args);
+	public static Component getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, Component... args) {
+		return getFormattedItemDescriptionText("item." + ForgeRegistries.ITEMS.getKey(item).getNamespace() + "." + ForgeRegistries.ITEMS.getKey(item).getPath() + ".desc." + descNumber, type, args);
 	}
 
 	public static Component getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, Component... args) {
-		return new TranslatableComponent(langKey, (Object[])args).withStyle(type.format);
+		return Component.translatable(langKey, (Object[])args).withStyle(type.format);
 	}
 
-	public static TranslatableComponent getLocaleMessage(String langKey) {
+	public static MutableComponent getLocaleMessage(String langKey) {
 		return getLocaleMessage(langKey, (ChatFormatting)null);
 	}
 
-	public static TranslatableComponent getLocaleMessage(String langKey, Component... args) {
+	public static MutableComponent getLocaleMessage(String langKey, Component... args) {
 		return getLocaleMessage(langKey, null, args);
 	}
 
-	public static TranslatableComponent getLocaleMessage(String langKey, @Nullable ChatFormatting format, Component... args) {
-		TranslatableComponent localeMessage = new TranslatableComponent(langKey, (Object[])args);
+	public static MutableComponent getLocaleMessage(String langKey, @Nullable ChatFormatting format, Component... args) {
+		MutableComponent localeMessage = Component.translatable(langKey, (Object[])args);
 
 		if (format != null)
 			localeMessage.withStyle(format);
@@ -43,8 +43,8 @@ public final class LocaleUtil {
 		return localeMessage;
 	}
 
-	public static TextComponent numToComponent(Number number) {
-		return new TextComponent(String.valueOf(number));
+	public static MutableComponent numToComponent(Number number) {
+		return Component.literal(String.valueOf(number));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -72,10 +72,10 @@ public final class LocaleUtil {
 		LocalPlayer player = Minecraft.getInstance().player;
 		boolean meetsReq = (player != null && player.isCreative()) || ClientPlayerDataManager.get().getSkill(skill).hasLevel(levelReq);
 
-		return getLocaleMessage("items.description.skillRequirement", meetsReq ? ChatFormatting.GREEN : ChatFormatting.RED, new TextComponent(Integer.toString(levelReq)), skill.getName());
+		return getLocaleMessage("items.description.skillRequirement", meetsReq ? ChatFormatting.GREEN : ChatFormatting.RED, Component.literal(Integer.toString(levelReq)), skill.getName());
 	}
 
-	public static TranslatableComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg, Object currentValueArg) {
+	public static MutableComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg, Object currentValueArg) {
 		if (flat && scaling)
 			return percent ? getPercentFlatAndScalingAbilityValueDesc(flatArg, scalingArg, currentValueArg) : getFlatAndScalingAbilityValueDesc(flatArg, scalingArg, currentValueArg);
 
@@ -85,28 +85,28 @@ public final class LocaleUtil {
 		return percent ? getPercentScalingAbilityValueDesc(scalingArg, currentValueArg) : getScalingAbilityValueDesc(scalingArg, currentValueArg);
 	}
 
-	public static TranslatableComponent getScalingAbilityValueDesc(Object... args) {
-		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling", args);
+	public static MutableComponent getScalingAbilityValueDesc(Object... args) {
+		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling", args);
 	}
 
-	public static TranslatableComponent getFlatAbilityValueDesc(Object... args) {
-		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat", args);
+	public static MutableComponent getFlatAbilityValueDesc(Object... args) {
+		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat", args);
 	}
 
-	public static TranslatableComponent getFlatAndScalingAbilityValueDesc(Object... args) {
-		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling", args);
+	public static MutableComponent getFlatAndScalingAbilityValueDesc(Object... args) {
+		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling", args);
 	}
 
-	public static TranslatableComponent getPercentScalingAbilityValueDesc(Object... args) {
-		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling.percent", args);
+	public static MutableComponent getPercentScalingAbilityValueDesc(Object... args) {
+		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.scaling.percent", args);
 	}
 
-	public static TranslatableComponent getPercentFlatAbilityValueDesc(Object... args) {
-		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat.percent", args);
+	public static MutableComponent getPercentFlatAbilityValueDesc(Object... args) {
+		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.flat.percent", args);
 	}
 
-	public static TranslatableComponent getPercentFlatAndScalingAbilityValueDesc(Object... args) {
-		return new TranslatableComponent("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling.percent", args);
+	public static MutableComponent getPercentFlatAndScalingAbilityValueDesc(Object... args) {
+		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling.percent", args);
 	}
 
 	public enum ItemDescriptionType {

@@ -1,8 +1,7 @@
 package net.tslat.aoa3.library.builder;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,7 +56,7 @@ public class PotionBuilder {
 		CompoundTag displayTag = stack.getOrCreateTagElement("display");
 
 		if (displayName != null)
-			stack.setHoverName(translatable ? new TranslatableComponent(displayName) : new TextComponent(displayName));
+			stack.setHoverName(translatable ? Component.translatable(displayName) : Component.literal(displayName));
 
 		if (dynamicColour && effects != null)
 			colour = PotionUtils.getColor(effects);

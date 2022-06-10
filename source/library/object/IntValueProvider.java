@@ -2,8 +2,7 @@ package net.tslat.aoa3.library.object;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-
-import java.util.Random;
+import net.minecraft.util.RandomSource;
 
 public class IntValueProvider {
 	public static final Codec<IntValueProvider> CODEC = RecordCodecBuilder.create(builder -> builder.group(
@@ -23,7 +22,7 @@ public class IntValueProvider {
 		this.max = Math.max(min, max);
 	}
 
-	public int getValue(Random rand) {
+	public int getValue(RandomSource rand) {
 		if (min == max)
 			return max;
 

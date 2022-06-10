@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.tablet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
@@ -89,8 +88,8 @@ public abstract class TabletItem extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		//tooltip.add(LocaleUtil.getFormattedLevelRestrictedDescriptionText(Skills.ANIMA, animaLevelReq));
-		//tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new TextComponent(String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f))))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new TextComponent(String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new TextComponent(String.valueOf(effectRadius))));
+		//tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.placementCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, Component.literal(String.valueOf(initialSoulCost * (1 - ((Math.min(100, AdventGuiTabPlayer.getSkillLevel(Skills.ANIMA)) - 1) / 200f))))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.usageCost", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, Component.literal(String.valueOf(((int)(perTickSoulCost * 2000f)) / 100f))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, Component.literal(String.valueOf(effectRadius))));
 	}
 }

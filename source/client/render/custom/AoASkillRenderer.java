@@ -7,6 +7,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.NumberUtil;
@@ -50,7 +51,7 @@ public interface AoASkillRenderer {
 
 			RenderSystem.setShaderTexture(0, SKILL_ICON_BASE);
 			RenderUtil.renderScaledCustomSizedTexture(matrix, 0, 0, 0, 0, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth * 4, renderHeight * 2);
-			RenderSystem.setShaderTexture(0, new ResourceLocation(skill.type().getRegistryName().getNamespace(), "textures/gui/aoaskill/" + skill.type().getRegistryName().getPath() + ".png"));
+			RenderSystem.setShaderTexture(0, new ResourceLocation(AoARegistries.AOA_SKILLS.getId(skill.type()).getNamespace(), "textures/gui/aoaskill/" + AoARegistries.AOA_SKILLS.getId(skill.type()).getPath() + ".png"));
 			RenderUtil.renderScaledCustomSizedTexture(matrix, 0, 0, 0, 0, renderWidth, renderHeight, renderWidth, renderHeight, renderWidth, renderHeight);
 			RenderSystem.setShaderTexture(0, SKILL_ICON_BASE);
 

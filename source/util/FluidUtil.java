@@ -16,9 +16,9 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.library.object.MutableSupplier;
 
 import javax.annotation.Nullable;
@@ -222,7 +222,7 @@ public final class FluidUtil {
 
 			makeFluidProperties();
 
-			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, Block.Properties.of(this.material).noCollission().strength(100).noDrops().lightLevel(state -> luminosity)));
+			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, Block.Properties.of(this.material).noCollission().strength(100).noLootTable().lightLevel(state -> luminosity)));
 
 			this.fluidProperties.block(block);
 

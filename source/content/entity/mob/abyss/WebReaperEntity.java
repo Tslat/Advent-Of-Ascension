@@ -22,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -241,7 +242,7 @@ public class WebReaperEntity extends AoARangedMob {
 			return getCustomName();
 		}
 		else {
-			String baseName = getType().getRegistryName().getPath();
+			String baseName = ForgeRegistries.ENTITIES.getKey(getType()).getPath();
 			String stagePrefix = (stage >= 15 ? "nightmare" : stage >= 5 ? "empowered" : null);
 
 			if (stagePrefix != null)

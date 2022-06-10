@@ -15,7 +15,7 @@ import java.util.Locale;
 
 public class CustomisableParticleType extends ParticleType<CustomisableParticleType.Data> {
 	public static final Codec<Data> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			Codec.STRING.fieldOf("particle_type").forGetter(data -> data.particleType.getRegistryName().toString()),
+			Codec.STRING.fieldOf("particle_type").forGetter(data -> ForgeRegistries.PARTICLE_TYPES.getKey(data.particleType).toString()),
 			Codec.FLOAT.fieldOf("scale").forGetter(data -> data.scale),
 			Codec.FLOAT.fieldOf("age_modifier").forGetter(data -> data.ageModifier),
 			Codec.FLOAT.fieldOf("red").forGetter(data -> data.red),

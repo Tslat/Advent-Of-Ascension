@@ -26,7 +26,7 @@ public class DryadSpriteModel extends EntityGeoModel<DryadSpriteEntity> {
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(DryadSpriteEntity entity) {
+	public ResourceLocation getTextureResource(DryadSpriteEntity entity) {
 		return switch (entity.getVariant()) {
 			case STONE -> STONE_TEXTURE;
 			case IRON -> IRON_TEXTURE;

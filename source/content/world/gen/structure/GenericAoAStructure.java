@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.world.gen.structure;
 
 import com.google.common.collect.Lists;
@@ -7,6 +8,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.chunk.ChunkGenerator;
@@ -14,17 +16,15 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.LegacyRandomSource;
 import net.minecraft.world.level.levelgen.WorldgenRandom;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.PostPlacementProcessor;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 import net.minecraft.world.level.levelgen.structure.pools.EmptyPoolElement;
 import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructurePoolElement;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public class GenericAoAStructure<T extends JigsawConfiguration> extends StructureFeature<T> {
+public class GenericAoAStructure<T extends JigsawConfiguration> extends Structure {
 	private final GenerationStep.Decoration genStage;
 	public GenericAoAStructure(Codec<T> codec) {
 		this(codec, new PieceGen<>());
@@ -151,3 +151,4 @@ public class GenericAoAStructure<T extends JigsawConfiguration> extends Structur
 		}
 	}
 }
+*/

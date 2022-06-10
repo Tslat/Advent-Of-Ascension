@@ -9,7 +9,7 @@ import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -21,7 +21,6 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.PatchouliBookOpenPacket;
 import net.tslat.aoa3.common.packet.packets.PatchouliGiveBookPacket;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
@@ -38,7 +37,7 @@ public class AdventGuiTabLore extends Screen {
 	private static final ConcurrentHashMap<ResourceLocation, ItemStack> loreBooks = new ConcurrentHashMap<>();
 
 	protected AdventGuiTabLore() {
-		super(new TranslatableComponent("gui.aoa3.adventGui.lore"));
+		super(Component.translatable("gui.aoa3.adventGui.lore"));
 	}
 
 	@Override
@@ -96,7 +95,7 @@ public class AdventGuiTabLore extends Screen {
 		Item guideBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
 
 		for (ResourceLocation id : bookIds) {
-			if (!PatchouliIntegration.isBookLoaded(id))
+			if (true /*!PatchouliIntegration.isBookLoaded(id)*/)
 				continue;
 
 			ItemStack book = new ItemStack(guideBook);
@@ -136,7 +135,7 @@ public class AdventGuiTabLore extends Screen {
 			if (isValidClickButton(button)) {
 				if (!mouseHolding) {
 					if (isHovered) {
-						PatchouliIntegration.openBook(id);
+						//PatchouliIntegration.openBook(id);
 
 						return true;
 					}
@@ -214,7 +213,7 @@ public class AdventGuiTabLore extends Screen {
 				if (isHovered && !mouseHolding) {
 					matrix.pushPose();
 					matrix.scale(1.5f, 1.5f, 1.5f);
-					AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.clickBook")), Optional.empty(), (int)(mouseX / AdventMainGui.SCALE / 1.5f), (int)(mouseY / AdventMainGui.SCALE / 1.5f), fontRenderer, book);
+					AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.clickBook")), Optional.empty(), (int)(mouseX / AdventMainGui.SCALE / 1.5f), (int)(mouseY / AdventMainGui.SCALE / 1.5f), fontRenderer, book);
 					matrix.popPose();
 				}
 			}

@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.block.functional.utility;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +26,7 @@ import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 
 public class LunarCreationTable extends Block implements EntityBlock {
-	private static final Component CONTAINER_TITLE = new TranslatableComponent("container." + AdventOfAscension.MOD_ID + ".lunar_creation_table");
+	private static final Component CONTAINER_TITLE = Component.translatable("container." + AdventOfAscension.MOD_ID + ".lunar_creation_table");
 
 	public LunarCreationTable() {
 		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).get());

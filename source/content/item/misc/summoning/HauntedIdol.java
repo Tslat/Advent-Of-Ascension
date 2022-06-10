@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.misc.summoning;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -35,13 +34,13 @@ public class HauntedIdol extends BossSpawningItem {
 	@Override
 	public boolean canSpawnHere(Level world, ServerPlayer player, double posX, double posY, double posZ) {
 		if (!WorldUtil.isWorld(world, AoADimensions.GRECKON.key)) {
-			/*PlayerUtil.notifyPlayer(player, new TranslatableComponent(AoAMobs.BANE.get().getDescriptionId() + ".wrongDimension").withStyle(ChatFormatting.RED));*/
+			/*PlayerUtil.notifyPlayer(player, Component.translatable(AoAMobs.BANE.get().getDescriptionId() + ".wrongDimension").withStyle(ChatFormatting.RED));*/
 
 			return false;
 		}
 
 		if (!world.noCollision(new AABB(posX - 0.5d, posY, posZ - 0.5d, posX + 0.5d, posY + 2.5d, posZ + 0.5d))) {
-			PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.noSpace").withStyle(ChatFormatting.RED));
+			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.noSpace").withStyle(ChatFormatting.RED));
 
 			return false;
 		}

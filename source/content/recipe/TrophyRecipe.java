@@ -13,10 +13,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 
 import javax.annotation.Nullable;
@@ -136,7 +135,7 @@ public class TrophyRecipe implements CraftingRecipe, net.minecraftforge.common.c
 		return 3;
 	}
 
-	public static class Factory extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<TrophyRecipe> {
+	public static class Factory implements RecipeSerializer<TrophyRecipe> {
 		@Override
 		public TrophyRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			return new TrophyRecipe(json.has("group") ? GsonHelper.getAsString(json, "group") : "");

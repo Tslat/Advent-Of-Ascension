@@ -4,6 +4,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -21,19 +22,19 @@ public class ToastPopupPacket implements AoAPacket {
 	public ToastPopupPacket(final AoASkill skill, final int levelReq) {
 		this.type = ToastPopupType.SKILL_REQUIREMENT;
 		this.value = levelReq;
-		this.subject = skill.getRegistryName();
+		this.subject = AoARegistries.AOA_SKILLS.getId(skill);
 	}
 
 	public ToastPopupPacket(final AoAResource resource, final float amount) {
 		this.type = ToastPopupType.RESOURCE_REQUIREMENT;
 		this.value = amount;
-		this.subject = resource.getRegistryName();
+		this.subject = AoARegistries.AOA_RESOURCES.getId(resource);
 	}
 
 	public ToastPopupPacket(final AoASkill skill, final AoAAbility ability) {
 		this.type = ToastPopupType.ABILITY_UNLOCK;
-		this.value = ability.getRegistryName();
-		this.subject = skill.getRegistryName();
+		this.value = AoARegistries.AOA_ABILITIES.getId(ability);
+		this.subject = AoARegistries.AOA_SKILLS.getId(skill);
 	}
 
 	@Override

@@ -16,7 +16,6 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.common.registration.AoARecipes;
 
 import javax.annotation.Nullable;
@@ -107,7 +106,7 @@ public class ToolInteractionRecipe extends CustomRecipe {
 		return this.result.copy();
 	}
 
-	public static class Factory extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<ToolInteractionRecipe> {
+	public static class Factory implements RecipeSerializer<ToolInteractionRecipe> {
 		@Override
 		public ToolInteractionRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			NonNullList<Ingredient> ingredients = NonNullList.create();

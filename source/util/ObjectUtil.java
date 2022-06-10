@@ -8,6 +8,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
@@ -41,7 +42,7 @@ public final class ObjectUtil {
 	public static JsonObject stackToJson(ItemStack stack) {
 		JsonObject json = new JsonObject();
 
-		json.add("item", new JsonPrimitive(stack.getItem().getRegistryName().toString()));
+		json.add("item", new JsonPrimitive(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString()));
 
 		if (stack.getCount() == 1 && !stack.hasTag())
 			return json;

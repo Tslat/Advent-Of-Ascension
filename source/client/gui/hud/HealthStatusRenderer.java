@@ -42,7 +42,7 @@ public class HealthStatusRenderer {
 			return;
 
 		LocalPlayer player = mc.player;
-		PoseStack matrix = ev.getMatrixStack();
+		PoseStack matrix = ev.getPoseStack();
 
 		int left = (mc.getWindow().getGuiScaledWidth() / 2) - 91;
 		int top = mc.getWindow().getGuiScaledHeight() - gui.left_height;

@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
@@ -15,7 +16,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public abstract class HangingCropBlock extends CropBlock {
@@ -32,7 +32,7 @@ public abstract class HangingCropBlock extends CropBlock {
 	public abstract VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context);
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random random) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
 		if (!world.isAreaLoaded(pos, 1))
 			return;
 

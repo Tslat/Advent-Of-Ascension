@@ -2,8 +2,9 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -19,8 +20,8 @@ public class EntityTagDamageBonusMagic extends EntityTagDamageBonus {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		defaultDescription = new TranslatableComponent(defaultDescription.getKey() + ".magic", getScalingDescriptionComponent(4), new TextComponent(this.tag.location().toString()));
+	protected void updateDescription(MutableComponent defaultDescription) {
+		defaultDescription = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + ".magic", getScalingDescriptionComponent(4), Component.literal(this.tag.location().toString()));
 
 		super.updateDescription(defaultDescription);
 	}

@@ -5,7 +5,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -92,7 +91,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements IAnimatable {
 				if (heldStack.getItem() == getVariant().getTool()) {
 					if (!level.isClientSide()) {
 						getEntityData().set(SUCCESS_TIMER, 44);
-						player.killed((ServerLevel)level, this);
+						player.awardKillScore(this, 1, DamageSource.playerAttack(player));
 						navigation.stop();
 						setNoAi(true);
 						setDeltaMovement(0, 0, 0);

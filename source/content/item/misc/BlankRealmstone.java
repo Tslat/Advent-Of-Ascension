@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -76,7 +75,7 @@ public class BlankRealmstone extends Item {
 			if (player instanceof ServerPlayer && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
-				PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
+				PlayerUtil.notifyPlayer(player, Component.translatable("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
 			}
 
 			return InteractionResult.SUCCESS;

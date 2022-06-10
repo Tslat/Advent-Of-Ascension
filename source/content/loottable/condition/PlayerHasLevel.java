@@ -12,6 +12,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.tslat.aoa3.common.registration.AoALootOperations;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -51,7 +52,7 @@ public class PlayerHasLevel implements LootItemCondition {
 	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<PlayerHasLevel> {
 		@Override
 		public void serialize(JsonObject json, PlayerHasLevel playerHasLevel, JsonSerializationContext jsonSerializationContext) {
-			json.addProperty("skill", playerHasLevel.skill.getRegistryName().toString());
+			json.addProperty("skill", AoARegistries.AOA_SKILLS.getId(playerHasLevel.skill).toString());
 			json.addProperty("level", playerHasLevel.level);
 		}
 

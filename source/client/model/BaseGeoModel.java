@@ -31,17 +31,17 @@ public abstract class BaseGeoModel<T extends IAnimatable> extends AnimatedGeoMod
 	protected abstract String subtype();
 
 	@Override
-	public ResourceLocation getModelLocation(T object) {
+	public ResourceLocation getModelResource(T object) {
 		return model;
 	}
 
 	@Override
-	public ResourceLocation getTextureLocation(T object) {
+	public ResourceLocation getTextureResource(T object) {
 		return texture;
 	}
 
 	@Override
-	public ResourceLocation getAnimationFileLocation(T animatable) {
+	public ResourceLocation getAnimationResource(T animatable) {
 		return animations;
 	}
 }

@@ -1,7 +1,6 @@
 package net.tslat.aoa3.util;
 
 import it.unimi.dsi.fastutil.ints.Int2FloatOpenHashMap;
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
@@ -197,7 +196,7 @@ public final class PlayerUtil {
     }
 
     public static void notifyPlayer(Player player, Component msg) {
-        player.sendMessage(msg, Util.NIL_UUID);
+        player.sendSystemMessage(msg);
     }
 
     public static void notifyPlayerOfInsufficientLevel(ServerPlayer player, AoASkill skill, int level) {
@@ -210,7 +209,7 @@ public final class PlayerUtil {
 
     public static void messageAllPlayersInRange(Component msg, Level world, BlockPos center, int radius) {
         for (Player pl : WorldUtil.getAllPlayersInRegion(world, new AABB(center).inflate(radius))) {
-            pl.sendMessage(msg, Util.NIL_UUID);
+            pl.sendSystemMessage(msg);
         }
     }
 
@@ -247,8 +246,8 @@ public final class PlayerUtil {
         return ray.getBlockPos();
     }
 
-    public static void playSoundForPlayer(ServerPlayer player, SoundEvent sound, SoundSource category, double posX, double posY, double posZ, float volume, float pitch) {
-        player.connection.send(new ClientboundSoundPacket(sound, category, posX, posY, posZ, volume, pitch));
+    public static void playSoundForPlayer(ServerPlayer player, SoundEvent sound, SoundSource category, double posX, double posY, double posZ, float volume, float pitch, long seed) {
+        player.connection.send(new ClientboundSoundPacket(sound, category, posX, posY, posZ, volume, pitch, seed));
     }
 
     @Nullable

@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -47,7 +47,7 @@ public class CrystalExtensionShrine extends Block {
 					}
 
 					if (count < 10) {
-						PlayerUtil.notifyPlayer((ServerPlayer)player, new TranslatableComponent("message.feedback.crystalExtensionShrine.crystals"));
+						PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.crystalExtensionShrine.crystals"));
 
 						return InteractionResult.PASS;
 					}

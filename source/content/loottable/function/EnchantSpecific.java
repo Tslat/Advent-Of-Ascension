@@ -61,7 +61,7 @@ public class EnchantSpecific extends LootItemConditionalFunction {
 			for (Map.Entry<Enchantment, Integer> enchantEntry : function.enchants.entrySet()) {
 				JsonObject enchantObject = new JsonObject();
 
-				enchantObject.addProperty("id", enchantEntry.getKey().getRegistryName().toString());
+				enchantObject.addProperty("id", ForgeRegistries.ENCHANTMENTS.getKey(enchantEntry.getKey()).toString());
 				enchantObject.addProperty("level", enchantEntry.getValue());
 				enchantments.add(enchantObject);
 			}

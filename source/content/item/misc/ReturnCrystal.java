@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.misc;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -54,7 +53,7 @@ public class ReturnCrystal extends Item {
 	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
 		if (entity instanceof ServerPlayer) {
 			if (!WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
-				PlayerUtil.notifyPlayer((ServerPlayer)entity, new TranslatableComponent("message.feedback.item.returnCrystal.wrongDim"));
+				PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable("message.feedback.item.returnCrystal.wrongDim"));
 
 				return stack;
 			}

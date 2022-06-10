@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -33,7 +32,7 @@ public class VoxCrate extends Block {
 			lottoman.moveTo(pos.getX(), pos.getY() + 0.5, pos.getZ(), 0, 0);
 			lottoman.finalizeSpawn((ServerLevel)world, world.getCurrentDifficultyAt(pos), MobSpawnType.EVENT, null, null);
 			world.addFreshEntity(lottoman);
-			player.sendMessage(LocaleUtil.getLocaleMessage(AoANpcs.LOTTOMAN.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
+			player.sendSystemMessage(LocaleUtil.getLocaleMessage(AoANpcs.LOTTOMAN.get().getDescriptionId() + ".spawn"));
 		}
 	}
 }

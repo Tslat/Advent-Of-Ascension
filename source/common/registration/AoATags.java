@@ -10,7 +10,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.levelgen.feature.ConfiguredStructureFeature;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
@@ -61,6 +61,7 @@ public final class AoATags {
 		public static final TagKey<Block> STORAGE_BLOCKS_JADE = tag("storage_blocks/jade");
 		public static final TagKey<Block> STORAGE_BLOCKS_JEWELYTE = tag("storage_blocks/jewelyte");
 		public static final TagKey<Block> STORAGE_BLOCKS_RAW_LIMONITE = tag("storage_blocks/raw_limonite");
+		public static final TagKey<Block> STORAGE_BLOCKS_RAW_EMBERSTONE = tag("storage_blocks/raw_emberstone");
 		public static final TagKey<Block> STORAGE_BLOCKS_LIMONITE = tag("storage_blocks/limonite");
 		public static final TagKey<Block> STORAGE_BLOCKS_LUNAR = tag("storage_blocks/lunar");
 		public static final TagKey<Block> STORAGE_BLOCKS_LYON = tag("storage_blocks/lyon");
@@ -132,6 +133,7 @@ public final class AoATags {
 		public static final TagKey<Item> STORAGE_BLOCKS_JADE = tag("storage_blocks/jade");
 		public static final TagKey<Item> STORAGE_BLOCKS_JEWELYTE = tag("storage_blocks/jewelyte");
 		public static final TagKey<Item> STORAGE_BLOCKS_RAW_LIMONITE = tag("storage_blocks/raw_limonite");
+		public static final TagKey<Item> STORAGE_BLOCKS_RAW_EMBERSTONE = tag("storage_blocks/raw_emberstone");
 		public static final TagKey<Item> STORAGE_BLOCKS_LIMONITE = tag("storage_blocks/limonite");
 		public static final TagKey<Item> STORAGE_BLOCKS_LUNAR = tag("storage_blocks/lunar");
 		public static final TagKey<Item> STORAGE_BLOCKS_LYON = tag("storage_blocks/lyon");
@@ -165,6 +167,7 @@ public final class AoATags {
 		public static final TagKey<Item> INGOTS_VARSIUM = tag("ingots/varsium");
 
 		public static final TagKey<Item> RAW_MATERIALS_LIMONITE = tag("raw_materials/limonite");
+		public static final TagKey<Item> RAW_MATERIALS_EMBERSTONE = tag("raw_materials/emberstone");
 
 		public static final TagKey<Item> NUGGETS_BARONYTE = tag("nuggets/baronyte");
 		public static final TagKey<Item> NUGGETS_BLAZIUM = tag("nuggets/blazium");
@@ -268,19 +271,19 @@ public final class AoATags {
 		}
 	}
 
-	public static class ConfiguredStructures {
-		public static final TagKey<ConfiguredStructureFeature<?, ?>> ON_RUINED_TELEPORTER_FRAME_MAPS = aoaTag("on_ruined_teleporter_frame_maps");
+	public static class Structures {
+		public static final TagKey<Structure> ON_RUINED_TELEPORTER_FRAME_MAPS = aoaTag("on_ruined_teleporter_frame_maps");
 
-		private static TagKey<ConfiguredStructureFeature<?, ?>> aoaTag(String id) {
+		private static TagKey<Structure> aoaTag(String id) {
 			return create(AdventOfAscension.id(id));
 		}
 
-		private static TagKey<ConfiguredStructureFeature<?, ?>> tag(String id) {
+		private static TagKey<Structure> tag(String id) {
 			return create(new ResourceLocation("forge", id));
 		}
 
-		public static TagKey<ConfiguredStructureFeature<?, ?>> create(ResourceLocation id) {
-			return TagKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, id);
+		public static TagKey<Structure> create(ResourceLocation id) {
+			return TagKey.create(Registry.STRUCTURE_REGISTRY, id);
 		}
 	}
 }

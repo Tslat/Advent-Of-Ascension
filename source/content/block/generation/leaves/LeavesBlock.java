@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.block.generation.leaves;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SoundType;
@@ -10,8 +11,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.util.BlockUtil;
-
-import java.util.Random;
 
 public class LeavesBlock extends net.minecraft.world.level.block.LeavesBlock {
 	private final float saplingDropChance;
@@ -24,7 +23,7 @@ public class LeavesBlock extends net.minecraft.world.level.block.LeavesBlock {
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {}
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {}
 
 	public float getSaplingDropChance() {
 		return saplingDropChance;

@@ -9,7 +9,6 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManagerReloadListener;
 import net.minecraft.sounds.SoundSource;
@@ -25,6 +24,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.ModLoader;
 import net.minecraftforge.network.NetworkDirection;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.gui.overlay.ScreenOverlayRenderer;
@@ -81,10 +81,10 @@ public final class ClientEventHandler {
 		if (ev.getPlayer().level.isClientSide()) {
 			if (AoAConfig.CLIENT.showWelcomeMessage.get()) {
 				if (AoAKeybinds.ADVENT_GUI.getKey().getValue() == GLFW.GLFW_KEY_UNKNOWN) {
-					ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", ChatFormatting.GRAY), Util.NIL_UUID);
+					ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", ChatFormatting.GRAY));
 				}
 				else {
-					ev.getPlayer().sendMessage(LocaleUtil.getLocaleMessage("message.login.welcome", ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()), Util.NIL_UUID);
+					ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome", ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()));
 				}
 			}
 
@@ -120,7 +120,7 @@ public final class ClientEventHandler {
 	}
 
 	private static void onTooltip(final ItemTooltipEvent ev) {
-		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(ev.getItemStack().getItem().getRegistryName());
+		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(ForgeRegistries.ITEMS.getKey(ev.getItemStack().getItem()));
 
 		if (!restrictions.isEmpty()) {
 			List<Component> lines = ev.getToolTip();
@@ -131,16 +131,16 @@ public final class ClientEventHandler {
 				int index = 2;
 
 				for (Map.Entry<String, List<Pair<ResourceLocation, Integer>>> reqEntry : restrictions.entrySet()) {
-					lines.add(index++, new TextComponent("  ").withStyle(ChatFormatting.RED).append(LocaleUtil.getLocaleMessage(Util.makeDescriptionId("ability", AoAAbilities.LEVEL_RESTRICTION.getId()) + ".description." + reqEntry.getKey())).append(":"));
+					lines.add(index++, Component.literal("  ").withStyle(ChatFormatting.RED).append(LocaleUtil.getLocaleMessage(Util.makeDescriptionId("ability", AoAAbilities.LEVEL_RESTRICTION.getId()) + ".description." + reqEntry.getKey())).append(":"));
 
 					for (Pair<ResourceLocation, Integer> pair : reqEntry.getValue()) {
 						AoASkill skill = AoASkills.getSkill(pair.getFirst());
 
-						lines.add(index++, new TextComponent("    ").withStyle(ChatFormatting.GOLD).append(pair.getSecond() + " ").append(skill.getName()));
+						lines.add(index++, Component.literal("    ").withStyle(ChatFormatting.GOLD).append(pair.getSecond() + " ").append(skill.getName()));
 					}
 				}
 
-				lines.add(index, new TextComponent(""));
+				lines.add(index, Component.literal(""));
 			}
 			else {
 				lines.add(1, LocaleUtil.getLocaleMessage("gui.tooltip.skillReq.hidden", ChatFormatting.DARK_RED));

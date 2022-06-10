@@ -5,7 +5,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -102,7 +102,7 @@ public class TyrosaurEntity extends AoAMeleeMob {
 			for (Player pl : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(35), PlayerUtil::shouldPlayerBeAffected)) {
 				if (pl.onGround && !level.isClientSide) {
 					if (DamageUtil.dealAoeDamage(null, this, pl, 10, false))
-						pl.sendMessage(LocaleUtil.getLocaleMessage(AoAMobs.TYROSAUR.get().getDescriptionId() + ".stomp", ChatFormatting.DARK_GREEN), Util.NIL_UUID);
+						pl.sendSystemMessage(LocaleUtil.getLocaleMessage(AoAMobs.TYROSAUR.get().getDescriptionId() + ".stomp", ChatFormatting.DARK_GREEN));
 				}
 			}
 		}
@@ -141,7 +141,7 @@ public class TyrosaurEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable TextComponent name) {
+	public void setCustomName(@Nullable MutableComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));

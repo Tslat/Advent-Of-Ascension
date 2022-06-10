@@ -47,7 +47,7 @@ public class ParryStunlockTask<E extends Mob> extends Behavior<E> {
 				if (!owner.getBrain().hasMemoryValue(MemoryModuleType.LOOK_TARGET))
 					BehaviorUtils.lookAtEntity(owner, target);
 
-				if (BehaviorUtils.isWithinMeleeAttackRange(owner, target)) {
+				if (owner.isWithinMeleeAttackRange(target)) {
 					owner.swing(InteractionHand.MAIN_HAND);
 					owner.doHurtTarget(target);
 					doStop(level, owner, gameTime);

@@ -6,13 +6,15 @@ import com.google.gson.JsonObject;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -45,11 +47,11 @@ public class LevelRestriction extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
+	protected void updateDescription(MutableComponent defaultDescription) {
 		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(this.restrictedId);
 
 		if (restrictions.isEmpty()) {
-			super.updateDescription(new TranslatableComponent(defaultDescription.getKey(), "??"));
+			super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey(), "??"));
 
 			return;
 		}
@@ -64,14 +66,14 @@ public class LevelRestriction extends AoAAbility.Instance {
 			targetName = item.getName(item.getDefaultInstance());
 		}
 
-		TranslatableComponent description = new TranslatableComponent(defaultDescription.getKey(), targetName);
+		MutableComponent description = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey(), targetName);
 		boolean comma = false;
 
 		for (Map.Entry<String, List<Pair<ResourceLocation, Integer>>> restriction : restrictions.entrySet()) {
 			if (comma)
 				description.append(", ");
 
-			description.append(new TranslatableComponent(defaultDescription.getKey() + "." + restriction.getKey()));
+			description.append(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + "." + restriction.getKey()));
 
 			comma = true;
 		}
@@ -99,7 +101,7 @@ public class LevelRestriction extends AoAAbility.Instance {
 		Map<String, List<Pair<ResourceLocation, Integer>>> reqData = new HashMap<String, List<Pair<ResourceLocation, Integer>>>();
 
 		for (JsonElement entry : reqs) {
-			reqData.put(entry.getAsJsonPrimitive().getAsString(), Collections.singletonList(Pair.of(skill.type().getRegistryName(), getLevelReq())));
+			reqData.put(entry.getAsJsonPrimitive().getAsString(), Collections.singletonList(Pair.of(AoARegistries.AOA_SKILLS.getId(skill.type()), getLevelReq())));
 		}
 
 		AoASkillReqReloadListener.addRequirements(restrictedId, reqData);

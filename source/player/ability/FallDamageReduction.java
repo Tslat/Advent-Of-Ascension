@@ -2,7 +2,9 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
@@ -30,8 +32,8 @@ public class FallDamageReduction extends ScalableModAbility {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		String key = defaultDescription.getKey();
+	protected void updateDescription(MutableComponent defaultDescription) {
+		String key = ((TranslatableContents)defaultDescription.getContents()).getKey();
 
 		if (minHeight > 0) {
 			if (maxHeight == Integer.MAX_VALUE)
@@ -41,7 +43,7 @@ public class FallDamageReduction extends ScalableModAbility {
 			key += ".max";
 		}
 
-		super.updateDescription(new TranslatableComponent(key,
+		super.updateDescription(Component.translatable(key,
 				minHeight - 1,
 				maxHeight,
 				getScalingDescriptionComponent(2)

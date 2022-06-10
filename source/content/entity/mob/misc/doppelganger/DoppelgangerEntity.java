@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -161,14 +162,14 @@ public class DoppelgangerEntity extends Monster implements SmartBrainOwner<Doppe
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance difficulty, MobSpawnType pReason, @Nullable SpawnGroupData pSpawnData, @Nullable CompoundTag pDataTag) {
 		SpawnGroupData data = super.finalizeSpawn(pLevel, difficulty, pReason, pSpawnData, pDataTag);
 
-		populateDefaultEquipmentSlots(difficulty);
-		populateDefaultEquipmentEnchantments(difficulty);
+		populateDefaultEquipmentSlots(random, difficulty);
+		populateDefaultEquipmentEnchantments(random, difficulty);
 
 		return data;
 	}
 
 	@Override
-	protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+	protected void populateDefaultEquipmentSlots(RandomSource rand, DifficultyInstance difficulty) {
 		AoAArmour.ArmourSet armourSet = AoAArmour.ALACRITY_ARMOUR;
 
 		if (difficulty.getDifficulty() == Difficulty.NORMAL || difficulty.getDifficulty() == Difficulty.HARD)

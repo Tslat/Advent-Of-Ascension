@@ -30,11 +30,11 @@ public class TreatBag extends Item {
 		if (eater instanceof ServerPlayer player) {
 
 			/*if (world.getDifficulty() == Difficulty.PEACEFUL) {
-				PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
+				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
 			}
 			else {
 				if (!WorldUtil.isWorld(world, AoADimensions.CANDYLAND.key)) {
-					PlayerUtil.notifyPlayer(player, new TranslatableComponent(AoAMobs.COTTON_CANDOR.get().getDescriptionId() + ".wrongDimension").withStyle(ChatFormatting.RED));
+					PlayerUtil.notifyPlayer(player, Component.translatable(AoAMobs.COTTON_CANDOR.get().getDescriptionId() + ".wrongDimension").withStyle(ChatFormatting.RED));
 				}
 				else {
 					CottonCandorEntity cottonCandor = new CottonCandorEntity(AoAMobs.COTTON_CANDOR.get(), world);

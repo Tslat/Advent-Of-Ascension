@@ -10,7 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
+import net.minecraftforge.event.PlayLevelSoundEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -18,6 +18,7 @@ import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.BiConsumer;
@@ -29,6 +30,8 @@ public class SoundBuilder {
 	private SoundSource category = SoundSource.MASTER;
 	private Level world = null;
 	private Vec3 location = null;
+
+	private long seed = 0l;
 
 	private Entity followingEntity = null;
 
@@ -175,9 +178,7 @@ public class SoundBuilder {
 		if (world == null)
 			world = players[0].level;
 
-		for (Player player : players) {
-			exclude.add(player);
-		}
+		Collections.addAll(exclude, players);
 
 		return this;
 	}
@@ -189,9 +190,13 @@ public class SoundBuilder {
 		if (world == null)
 			world = players[0].level;
 
-		for (Player player : players) {
-			playTo.add(player);
-		}
+		Collections.addAll(playTo, players);
+
+		return this;
+	}
+
+	public SoundBuilder seed(long seed) {
+		this.seed = seed;
 
 		return this;
 	}
@@ -240,9 +245,13 @@ public class SoundBuilder {
 		return this.loopDelay;
 	}
 
+	public long getSeed() {
+		return this.seed;
+	}
+
 	public void play() {
 		if (inWorld) {
-			PlaySoundAtEntityEvent event = ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch);
+			PlayLevelSoundEvent.AtEntity event = ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch);
 
 			if (event.isCanceled() || (sound = event.getSound()) == null)
 				return;
@@ -270,7 +279,7 @@ public class SoundBuilder {
 	}
 
 	public void toNetwork(FriendlyByteBuf buffer) {
-		buffer.writeResourceLocation(sound.getRegistryName());
+		buffer.writeResourceLocation(ForgeRegistries.SOUND_EVENTS.getKey(sound));
 
 		ArrayList<Section> sections = new ArrayList<Section>();
 

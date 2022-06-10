@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -21,7 +22,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.IPlantable;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public abstract class MultiBlockCrop extends CropBlock {
@@ -148,7 +148,7 @@ public abstract class MultiBlockCrop extends CropBlock {
 	}
 
 	@Override
-	public void performBonemeal(ServerLevel world, Random rand, BlockPos pos, BlockState state) {
+	public void performBonemeal(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {
 		while (state.getValue(getAgeProperty()) > (1 + state.getValue(getHeightProperty())) * stagesPerBlock() - 1) {
 			state = world.getBlockState(pos = pos.above());
 
@@ -186,7 +186,7 @@ public abstract class MultiBlockCrop extends CropBlock {
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		if (!world.isAreaLoaded(pos, 1))
 			return; // Forge: prevent loading unloaded chunks when checking neighbor's light
 

@@ -3,7 +3,6 @@ package net.tslat.aoa3.common.container;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -17,9 +16,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 
 import javax.annotation.Nullable;
@@ -146,7 +145,7 @@ public class DivineStationContainer extends AbstractContainerMenu { // TODO Look
 		NetworkHooks.openGui(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
-				return new TranslatableComponent("container.aoa3.divine_station");
+				return Component.translatable("container.aoa3.divine_station");
 			}
 
 			@Nullable

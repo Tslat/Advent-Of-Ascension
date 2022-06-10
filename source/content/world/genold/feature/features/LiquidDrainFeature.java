@@ -3,14 +3,13 @@ package net.tslat.aoa3.content.world.genold.feature.features;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.tslat.aoa3.content.world.genold.feature.features.config.LiquidDrainConfig;
-
-import java.util.Random;
 
 public class LiquidDrainFeature extends Feature<LiquidDrainConfig> {
 	public LiquidDrainFeature(Codec<LiquidDrainConfig> codec) {
@@ -21,7 +20,7 @@ public class LiquidDrainFeature extends Feature<LiquidDrainConfig> {
 	public boolean place(FeaturePlaceContext<LiquidDrainConfig> context) {
 		BlockPos pos = context.origin();
 		LiquidDrainConfig config = context.config();
-		Random rand = context.random();
+		RandomSource rand = context.random();
 		WorldGenLevel reader = context.level();
 		BlockPos.MutableBlockPos placementPos = new BlockPos.MutableBlockPos().set(pos);
 

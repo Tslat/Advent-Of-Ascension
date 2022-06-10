@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Map;
 
 public class BestiaryReloadListener implements ResourceManagerReloadListener {
 	public static final HashMap<ResourceLocation, String> BESTIARY = new HashMap<ResourceLocation, String>();
@@ -30,20 +31,20 @@ public class BestiaryReloadListener implements ResourceManagerReloadListener {
 			if (mc.getLanguageManager().getSelected() != null)
 				langCode = mc.getLanguageManager().getSelected().getCode();
 
-			for (ResourceLocation resourceLocation : resourceManager.listResources("bestiary/" + langCode, (path) -> path.endsWith(".txt"))) {
-				for (Resource resource : resourceManager.getResources(resourceLocation)) {
-					String relativePath = resource.getLocation().getPath().substring(15);
-					String[] pathParts = relativePath.split("/");
+			for (Map.Entry<ResourceLocation, Resource> entry : resourceManager.listResources("bestiary/" + langCode, path -> path.getPath().endsWith(".txt")).entrySet()) {
+				String relativePath = entry.getKey().getPath().substring(15);
+				String[] pathParts = relativePath.split("/");
 
-					if (pathParts.length < 2) {
-						Logging.logMessage(Level.DEBUG, "Invalid resource path for bestiary entry, skipping. " + relativePath);
+				if (pathParts.length < 2) {
+					Logging.logMessage(Level.DEBUG, "Invalid resource path for bestiary entry, skipping. " + relativePath);
 
-						continue;
-					}
+					continue;
+				}
 
-					ResourceLocation entryId = new ResourceLocation(pathParts[0], pathParts[1].substring(0, pathParts[1].length() - 4));
+				ResourceLocation entryId = new ResourceLocation(pathParts[0], pathParts[1].substring(0, pathParts[1].length() - 4));
 
-					BESTIARY.put(entryId, ObjectUtil.bufferedReaderToString(new BufferedReader(new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8))));
+				try (BufferedReader reader = new BufferedReader(new InputStreamReader(entry.getValue().open(), StandardCharsets.UTF_8)) ) {
+					BESTIARY.put(entryId, ObjectUtil.bufferedReaderToString(reader));
 				}
 			}
 		}

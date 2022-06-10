@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -61,7 +62,7 @@ public class AoACycleTrigger extends SimpleCriterionTrigger<AoACycleTrigger.Inst
 			JsonObject obj = super.serializeToJson(conditions);
 
 			if (skill != null)
-				obj.addProperty("skill", skill.getRegistryName().toString());
+				obj.addProperty("skill", AoARegistries.AOA_SKILLS.getId(skill).toString());
 
 			if (cycle > 0)
 				obj.addProperty("cycle", cycle);

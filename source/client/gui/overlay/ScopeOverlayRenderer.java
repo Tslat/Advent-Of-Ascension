@@ -30,7 +30,7 @@ public final class ScopeOverlayRenderer {
 
 	private static void onFOVUpdate(final FOVModifierEvent event) {
 		if (isScoped && Minecraft.getInstance().options.getCameraType() == CameraType.FIRST_PERSON)
-			event.setNewfov(0.2f);
+			event.setNewFov(0.2f);
 	}
 
 	private static void onHandRender(final RenderHandEvent event) {

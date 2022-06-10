@@ -2,7 +2,7 @@ package net.tslat.aoa3.content.entity.base;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -97,7 +97,7 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, IAnima
 			return true;
 		}
 		else {
-			int light = level.isThundering() ? level.getMaxLocalRawBrightness(blockpos, 10) : (int)level.getBrightness(blockpos) * 15;
+			int light = level.isThundering() ? level.getMaxLocalRawBrightness(blockpos, 10) : level.getMaxLocalRawBrightness(blockpos);
 
 			return light > random.nextInt(8);
 		}
@@ -118,7 +118,7 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, IAnima
 				String msg = getInteractMessage(heldStack);
 
 				if (msg != null)
-					PlayerUtil.notifyPlayer(player, new TranslatableComponent(msg).withStyle(ChatFormatting.GRAY));
+					PlayerUtil.notifyPlayer(player, Component.translatable(msg).withStyle(ChatFormatting.GRAY));
 			}
 		}
 

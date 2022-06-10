@@ -52,6 +52,7 @@ import net.tslat.aoa3.common.registration.entity.*;
 import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 import net.tslat.aoa3.util.ColourUtil;
+import software.bernie.geckolib3.renderers.geo.GeoProjectilesRenderer;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -356,6 +357,8 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> WRATH_SHOT = new EntityRendererPackage<>(AoAProjectiles.WRATH_SHOT).provider(WrathShotRenderer::new);
 	public static final EntityRendererPackage<?> YELLOW_BULLET = new EntityRendererPackage<>(AoAProjectiles.YELLOW_BULLET).provider(context -> new ColouredTexturedProjectileRenderer<>(context, ColourUtil.YELLOW, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> YELLOW_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.YELLOW_GUARDIAN_SHOT).provider(YellowGuardianShotRenderer::new);
+
+	public static final EntityRendererPackage<?> STONE_GIANT_ROCK = new EntityRendererPackage<>(AoAProjectiles.STONE_GIANT_ROCK).geckolibProjectile("projectile/mob/stone_giant_rock");
 
 	// Begin super jank test
 	public static final EntityRendererPackage<?> AIRHEAD = new EntityRendererPackage<>(AoAMobs.AIRHEAD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -699,6 +702,30 @@ public final class AoAEntityRendering {
 				return provider(context -> new AnimatedMobRenderer(context, model, this.shadowSize));
 
 			return provider(context -> new AnimatedMobRenderer(context, model, this.shadowSize) {
+				@Override
+				public RenderType getRenderType(Object animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
+					return RenderType.entityTranslucent(textureLocation);
+				}
+			});
+		}
+
+		private EntityRendererPackage<T> geckolibProjectile(String path) {
+			return geckolibProjectile(path, false);
+		}
+
+		private EntityRendererPackage<T> geckolibProjectile(EntityGeoModel<?> model) {
+			return geckolibProjectile(model, false);
+		}
+
+		private EntityRendererPackage<T> geckolibProjectile(String path, boolean transparent) {
+			return geckolibProjectile(new EntityGeoModel<>(path), transparent);
+		}
+
+		private EntityRendererPackage<T> geckolibProjectile(EntityGeoModel<?> model, boolean transparent) {
+			if (!transparent)
+				return provider(context -> new GeoProjectilesRenderer(context, model));
+
+			return provider(context -> new GeoProjectilesRenderer(context, model) {
 				@Override
 				public RenderType getRenderType(Object animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
 					return RenderType.entityTranslucent(textureLocation);

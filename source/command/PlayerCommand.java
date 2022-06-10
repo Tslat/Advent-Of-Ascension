@@ -8,10 +8,12 @@ import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
+import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.food.FoodData;
@@ -26,12 +28,12 @@ import net.tslat.aoa3.util.PlayerUtil;
 public class PlayerCommand implements Command<CommandSourceStack> {
 	private static final PlayerCommand CMD = new PlayerCommand();
 
-	public static ArgumentBuilder<CommandSourceStack, ?> register(CommandDispatcher<CommandSourceStack> dispatcher) {
+	public static ArgumentBuilder<CommandSourceStack, ?> register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
 		LiteralArgumentBuilder<CommandSourceStack> builder = Commands.literal("player").executes(CMD);
 
 		builder.then(Commands.argument("player", EntityArgument.player())
 			.then(Commands.literal("skills")
-				.then(Commands.argument("skill", AoASkillArgument.skill())
+				.then(Commands.argument("skill", AoASkillArgument.skill(buildContext))
 					.then(Commands.literal("level")
 						.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 							.then(Commands.argument("value", IntegerArgumentType.integer(1, 999))
@@ -66,7 +68,7 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 								.executes((context) -> adjustCycle(context, "set"))))
 						.then(Commands.literal("check").executes(PlayerCommand::checkCycle)))))
 			.then(Commands.literal("resources")
-				.then(Commands.argument("resource", AoAResourceArgument.resource())
+				.then(Commands.argument("resource", AoAResourceArgument.resource(buildContext))
 					.then(Commands.literal("add").requires(command -> command.hasPermission(4))
 						.then(Commands.argument("value", FloatArgumentType.floatArg(1, Float.MAX_VALUE))
 							.executes((context) -> adjustResources(context, "add"))))
@@ -146,11 +148,11 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 					throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 				AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getFoodData().getSaturationLevel(), 2)));
+				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getFoodData().getSaturationLevel(), 2)));
 			}
 			else {
 				AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.self", AoACommand.CommandFeedbackType.SUCCESS, new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getFoodData().getSaturationLevel(), 2)));
+				AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.food.saturation.check.self", AoACommand.CommandFeedbackType.SUCCESS, Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getFoodData().getSaturationLevel(), 2)));
 			}
 		}
 
@@ -183,11 +185,11 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
 		}
 		else {
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.self", AoACommand.CommandFeedbackType.SUCCESS, new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
+			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.check.self", AoACommand.CommandFeedbackType.SUCCESS, Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
 		}
 
 		return 1;
@@ -200,14 +202,14 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
-			AoASkill skill = context.getArgument("skill", AoASkill.class);
+			AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 			int level = PlayerUtil.getLevel(pl, skill);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
 			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.skill.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), skill.getName(), LocaleUtil.numToComponent(level));
 		}
 		else {
-			AoASkill skill = context.getArgument("skill", AoASkill.class);
+			AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 			int level = PlayerUtil.getLevel(pl, skill);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
@@ -224,14 +226,14 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
-			AoASkill skill = context.getArgument("skill", AoASkill.class);
+			AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 			float xp = PlayerUtil.getAdventPlayer(pl).getSkill(skill).getXp();
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
 			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.xp.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), skill.getName(), LocaleUtil.numToComponent(xp));
 		}
 		else {
-			AoASkill skill = context.getArgument("skill", AoASkill.class);
+			AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 			float xp = PlayerUtil.getAdventPlayer(pl).getSkill(skill).getXp();
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
@@ -248,14 +250,14 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
-			AoASkill skill = context.getArgument("skill", AoASkill.class);
+			AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 			int cycles = PlayerUtil.getAdventPlayer(pl).getSkill(skill).getCycles();
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
 			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.cycle.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), skill.getName(), LocaleUtil.numToComponent(cycles));
 		}
 		else {
-			AoASkill skill = context.getArgument("skill", AoASkill.class);
+			AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 			int cycles = PlayerUtil.getAdventPlayer(pl).getSkill(skill).getCycles();
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
@@ -272,14 +274,14 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 			if (!context.getSource().hasPermission(2))
 				throw AoACommand.NO_PERMISSION_EXCEPTION.create();
 
-			AoAResource resource = context.getArgument("resource", AoAResource.class);
+			AoAResource resource = AoAResourceArgument.getResource(context, "resource");
 			float value = PlayerUtil.getResourceValue(pl, resource);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
 			AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.resource.check.other", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), LocaleUtil.numToComponent(value), resource.getName());
 		}
 		else {
-			AoAResource resource = context.getArgument("resource", AoAResource.class);
+			AoAResource resource = AoAResourceArgument.getResource(context, "resource");
 			float value = PlayerUtil.getResourceValue(pl, resource);
 
 			AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
@@ -291,7 +293,7 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 
 	private static int adjustSkills(CommandContext<CommandSourceStack> context, String operation) throws CommandSyntaxException {
 		int value = IntegerArgumentType.getInteger(context, "value");
-		AoASkill skill = context.getArgument("skill", AoASkill.class);
+		AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 		ServerPlayer pl = EntityArgument.getPlayer(context, "player");
 		AoASkill.Instance instance = PlayerUtil.getSkill(pl, skill);
 
@@ -323,7 +325,7 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 
 	private static int adjustXp(CommandContext<CommandSourceStack> context, String operation) throws CommandSyntaxException {
 		float value = FloatArgumentType.getFloat(context, "value");
-		AoASkill skill = context.getArgument("skill", AoASkill.class);
+		AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 		ServerPlayer pl = EntityArgument.getPlayer(context, "player");
 		AoASkill.Instance instance = PlayerUtil.getSkill(pl, skill);
 		float adjustment = value;
@@ -359,7 +361,7 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 
 	private static int adjustCycle(CommandContext<CommandSourceStack> context, String operation) throws CommandSyntaxException {
 		int value = IntegerArgumentType.getInteger(context, "value");
-		AoASkill skill = context.getArgument("skill", AoASkill.class);
+		AoASkill skill = AoASkillArgument.getSkill(context, "skill");
 		ServerPlayer pl = EntityArgument.getPlayer(context, "player");
 		AoASkill.Instance instance = PlayerUtil.getSkill(pl, skill);
 		float adjustment = value;
@@ -390,7 +392,7 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 
 	private static int adjustResources(CommandContext<CommandSourceStack> context, String operation) throws CommandSyntaxException {
 		float value = FloatArgumentType.getFloat(context, "value");
-		AoAResource resource = context.getArgument("resource", AoAResource.class);
+		AoAResource resource = AoAResourceArgument.getResource(context, "resource");
 		ServerPlayer pl = EntityArgument.getPlayer(context, "player");
 		AoAResource.Instance instance = PlayerUtil.getResource(pl, resource);
 		float adjustment = 0;
@@ -435,7 +437,7 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 		}
 
 		AoACommand.feedback(context.getSource(), "Player", "--", AoACommand.CommandFeedbackType.INFO);
-		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), new TextComponent(NumberUtil.roundToNthDecimalPlace(adjustment, 2)), new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), new TextComponent(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
+		AoACommand.feedback(context.getSource(), "Player", "command.aoa.player.health.adjust", AoACommand.CommandFeedbackType.SUCCESS, pl.getDisplayName(), Component.literal(NumberUtil.roundToNthDecimalPlace(adjustment, 2)), Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getHealth(), 2)), Component.literal(NumberUtil.roundToNthDecimalPlace(pl.getMaxHealth(), 2)));
 
 		return 1;
 	}
@@ -524,4 +526,7 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 
 		return 1;
 	}
+
+	public static final DynamicCommandExceptionType ERROR_SKILL_INVALID = new DynamicCommandExceptionType(obj -> Component.translatable("argument.aoa.skill.notFound", obj));
+	public static final DynamicCommandExceptionType ERROR_RESOURCE_INVALID = new DynamicCommandExceptionType(obj -> Component.translatable("argument.aoa.resource.notFound", obj));
 }

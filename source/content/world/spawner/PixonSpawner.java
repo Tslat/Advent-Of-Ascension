@@ -7,7 +7,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.random.WeightedRandom;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -84,7 +87,7 @@ public class PixonSpawner implements CustomSpawner {
 			if (!key.isPresent() || !SPAWNS.containsKey(key.get()))
 				continue;
 
-			EntityType<? extends Mob> pixon = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.source(), SPAWNS.get(key.get())).get().type;
+			EntityType<? extends Mob> pixon = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.getSource(), SPAWNS.get(key.get())).get().type;
 			SpawnPlacements.Type placementType = SpawnPlacements.getPlacementType(pixon);
 			Heightmap.Types heightmap = SpawnPlacements.getHeightmapType(pixon);
 			pos = new BlockPos(x, world.getRandom().nextInt(world.getHeight(heightmap, x, z) + 1), z);

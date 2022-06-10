@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
@@ -31,7 +30,7 @@ public class VoxStoreCrate extends Block {
 			storeKeeper.moveTo(pos.getX(), pos.getY(), pos.getZ(), 0, 0);
 			storeKeeper.finalizeSpawn((ServerLevel)world, world.getCurrentDifficultyAt(pos), MobSpawnType.EVENT, null, null);
 			world.addFreshEntity(storeKeeper);
-			player.sendMessage(LocaleUtil.getLocaleMessage(AoANpcs.STORE_KEEPER.get().getDescriptionId() + ".spawn"), Util.NIL_UUID);
+			player.sendSystemMessage(LocaleUtil.getLocaleMessage(AoANpcs.STORE_KEEPER.get().getDescriptionId() + ".spawn"));
 		}
 	}
 }

@@ -30,7 +30,7 @@ public class AdventGuiThemeReloadListener implements PreparableReloadListener {
 
 		textures.put("default", new ResourceLocation[3]);
 
-		for (ResourceLocation resourceLocation : resourceManager.listResources("textures/gui/adventgui/themes", path -> path.endsWith(".png"))) {
+		for (ResourceLocation resourceLocation : resourceManager.listResources("textures/gui/adventgui/themes", path -> path.getPath().endsWith(".png")).keySet()) {
 			int subfolderIndexStart = resourceLocation.getPath().indexOf("themes/") + 7;
 			int subfolderIndexEnd = resourceLocation.getPath().lastIndexOf("/");
 

@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.block.functional.altar;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -19,8 +20,6 @@ import net.tslat.aoa3.content.entity.mob.precasia.*;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
-
-import java.util.Random;
 
 public class ArmyBlock extends BossAltarBlock {
 	public ArmyBlock() {
@@ -41,7 +40,7 @@ public class ArmyBlock extends BossAltarBlock {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		if (!world.isClientSide && WorldUtil.isWorld((ServerLevelAccessor)world, AoADimensions.PRECASIA.key) && rand.nextBoolean() && world.getEntitiesOfClass(SkeleElderEntity.class, new AABB(pos).inflate(100)).isEmpty())
 			world.addFreshEntity(new SkeleElderEntity(world, pos, 0));
 	}

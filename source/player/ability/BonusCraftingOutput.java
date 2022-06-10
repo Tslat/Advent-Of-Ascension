@@ -2,7 +2,9 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -50,14 +52,14 @@ public class BonusCraftingOutput extends ScalableModAbility {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		TranslatableComponent component;
+	protected void updateDescription(MutableComponent defaultDescription) {
+		MutableComponent component;
 
 		if (outputTarget != null) {
-			component = new TranslatableComponent(defaultDescription.getKey() + ".item", getScalingDescriptionComponent(2), this.outputTarget.getDefaultInstance().getHoverName());
+			component = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + ".item", getScalingDescriptionComponent(2), this.outputTarget.getDefaultInstance().getHoverName());
 		}
 		else {
-			component = new TranslatableComponent(defaultDescription.getKey() + ".tag", getScalingDescriptionComponent(2), this.outputTargetTag.location().toString());
+			component = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + ".tag", getScalingDescriptionComponent(2), this.outputTargetTag.location().toString());
 		}
 
 		super.updateDescription(component);
@@ -86,7 +88,7 @@ public class BonusCraftingOutput extends ScalableModAbility {
 
 		if (forClientSetup) {
 			if (outputTarget != null) {
-				data.putString("item", outputTarget.getRegistryName().toString());
+				data.putString("item", ForgeRegistries.ITEMS.getKey(outputTarget).toString());
 			}
 			else {
 				data.putString("tag", outputTargetTag.location().toString());

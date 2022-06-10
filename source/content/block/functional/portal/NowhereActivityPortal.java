@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.block.functional.portal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +20,6 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
-import java.util.Random;
 import java.util.function.Consumer;
 
 public class NowhereActivityPortal extends PortalBlock {
@@ -57,7 +57,7 @@ public class NowhereActivityPortal extends PortalBlock {
 	}
 
 	@Override
-	public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+	public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
 		for (int i = 0; i < 4; ++i) {
 			double posXStart = (float)pos.getX() + rand.nextFloat();
 			double posYStart = (float)pos.getY() + rand.nextFloat();

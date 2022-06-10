@@ -1,12 +1,12 @@
 package net.tslat.aoa3.content.entity.ai.mob;
 
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 import java.util.EnumSet;
-import java.util.Random;
 
 public class RandomFlyingGoal extends Goal {
 	private final Mob taskOwner;
@@ -49,7 +49,7 @@ public class RandomFlyingGoal extends Goal {
 
 	@Override
 	public void start() {
-		Random rand = this.taskOwner.getRandom();
+		RandomSource rand = this.taskOwner.getRandom();
 		float heightMod = (float)(taskOwner.getY() + 1) / (float)(taskOwner.level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)taskOwner.getX(), (int)taskOwner.getZ()) + 10);
 		double targetX = this.taskOwner.getX() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
 		double targetY = this.taskOwner.getY() + (double)((rand.nextFloat() * 2.0F - heightMod) * 16.0F);

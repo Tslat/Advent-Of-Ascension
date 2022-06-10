@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -28,7 +29,7 @@ public class MineralizationStation extends Block {
 			Item tokensItem = null;
 			int baseAmount = 5;
 
-			switch (stack.getItem().getRegistryName().getPath()) {
+			switch (ForgeRegistries.ITEMS.getKey(stack.getItem()).getPath()) {
 				case "blue_crystal", "green_crystal", "purple_crystal", "red_crystal", "white_crystal", "yellow_crystal" -> {
 					baseAmount = 4;
 					tokensItem = AoAItems.COPPER_COIN.get();

@@ -3,13 +3,13 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class IrodustTreeFeature extends AoATreeFeature {
@@ -18,7 +18,7 @@ public class IrodustTreeFeature extends AoATreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		if (rand.nextBoolean()) {
 			return generateTree1(reader, rand, pos, isWorldGen);
 		}
@@ -27,7 +27,7 @@ public class IrodustTreeFeature extends AoATreeFeature {
 		}
 	}
 
-	private boolean generateTree1(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree1(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 8 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 1, 1, isWorldGen))
@@ -62,7 +62,7 @@ public class IrodustTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree2(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree2(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 8 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 2, 1, isWorldGen))

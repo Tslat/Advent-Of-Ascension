@@ -15,6 +15,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.tslat.aoa3.common.registration.AoALootOperations;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -65,7 +66,7 @@ public class GrantSkillXp extends LootItemConditionalFunction {
 		public void serialize(JsonObject object, GrantSkillXp function, JsonSerializationContext context) {
 			super.serialize(object, function, context);
 
-			object.addProperty("skill", function.skill.getRegistryName().toString());
+			object.addProperty("skill", AoARegistries.AOA_SKILLS.getId(function.skill).toString());
 			object.addProperty("xp", function.xp);
 		}
 

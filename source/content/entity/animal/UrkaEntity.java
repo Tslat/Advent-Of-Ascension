@@ -43,7 +43,7 @@ public class UrkaEntity extends AoAAnimal {
 
 	@Override
 	public float getWalkTargetValue(BlockPos pos, LevelReader world) {
-		return world.getBlockState(pos.below()).is(Blocks.GRASS_BLOCK) ? 10 : 15 - world.getBrightness(pos) - 0.5F;
+		return world.getBlockState(pos.below()).is(Blocks.GRASS_BLOCK) ? 10 : 15 - world.getMaxLocalRawBrightness(pos) - 0.5F;
 	}
 
 	@Override

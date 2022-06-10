@@ -4,7 +4,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Player;
@@ -45,8 +47,8 @@ public class HarvestSpeedBoost extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + (costReductionPerLevel != 0 ? ".scaling" : ""),
+	protected void updateDescription(MutableComponent defaultDescription) {
+		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + (costReductionPerLevel != 0 ? ".scaling" : ""),
 				NumberUtil.roundToNthDecimalPlace(this.energyDrainPerTick * 20, 2),
 				NumberUtil.roundToNthDecimalPlace(this.costReductionPerLevel * 20, 2)));
 	}

@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.OverlayRegistry;
 import net.tslat.aoa3.client.AoAKeybinds;
@@ -108,7 +108,7 @@ public final class AoAGuiElementRenderers {
 		}
 		else if (AoAKeybinds.statusResourceGuiMessage & AoAKeybinds.RESOURCE_GUI.getKey().getValue() != -1) {
 			poseStack.scale(0.5f, 0.5f, 0);
-			TranslatableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", AoAKeybinds.RESOURCE_GUI.getTranslatedKeyMessage());
+			MutableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", AoAKeybinds.RESOURCE_GUI.getTranslatedKeyMessage());
 
 			RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)((y + 4) / 2f), 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
@@ -159,7 +159,7 @@ public final class AoAGuiElementRenderers {
 		}
 		else if (AoAKeybinds.statusSkillGuiMessage & AoAKeybinds.SKILL_GUI.getKey().getValue() != -1) {
 			poseStack.scale(0.5f, 0.5f, 1);
-			TranslatableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.skills.showtip", AoAKeybinds.SKILL_GUI.getTranslatedKeyMessage());
+			MutableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.skills.showtip", AoAKeybinds.SKILL_GUI.getTranslatedKeyMessage());
 
 			RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)(y / 2f) + 1, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 		}

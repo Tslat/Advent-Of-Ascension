@@ -64,7 +64,7 @@ public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.In
 			JsonObject obj = super.serializeToJson(conditions);
 
 			if (skill != null)
-				obj.addProperty("skill", skill.getRegistryName().toString());
+				obj.addProperty("skill", AoARegistries.AOA_SKILLS.getId(skill).toString());
 
 			if (xp > 0)
 				obj.addProperty("xp", xp);

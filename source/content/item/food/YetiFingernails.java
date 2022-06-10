@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.food;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.food.FoodProperties;
@@ -29,7 +28,7 @@ public class YetiFingernails extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entity) {
 		if (entity instanceof ServerPlayer)
-			PlayerUtil.notifyPlayer((ServerPlayer)entity, new TranslatableComponent("message.feedback.yetiFingernails.eat"));
+			PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable("message.feedback.yetiFingernails.eat"));
 
 		return super.finishUsingItem(stack, worldIn, entity);
 	}

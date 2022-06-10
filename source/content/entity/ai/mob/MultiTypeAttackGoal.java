@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class MultiTypeAttackGoal extends Goal {
 	private final List<Goal> goals;
 	private final Object2IntFunction<Goal> goalSelector;
 	private Goal currentGoal;
 	private int currentGoalIndex = 0;
+	private Consumer<Goal> goalChangeConsumer = null;
 
 	public MultiTypeAttackGoal(Object2IntFunction<Goal> goalSelector, Goal goal, Goal... otherGoals) {
 		this.goals = new ArrayList<>(otherGoals.length + 1);
@@ -21,6 +23,12 @@ public class MultiTypeAttackGoal extends Goal {
 		this.goals.add(goal);
 		this.goals.addAll(Arrays.asList(otherGoals));
 		this.currentGoal = goal;
+	}
+
+	public MultiTypeAttackGoal onChange(Consumer<Goal> goalChangeConsumer) {
+		this.goalChangeConsumer = goalChangeConsumer;
+
+		return this;
 	}
 
 	@Override
@@ -88,6 +96,8 @@ public class MultiTypeAttackGoal extends Goal {
 
 		this.currentGoal = this.goals.get(selectedGoal);
 		this.currentGoalIndex = selectedGoal;
+
+		this.goalChangeConsumer.accept(this.currentGoal);
 
 		return true;
 	}

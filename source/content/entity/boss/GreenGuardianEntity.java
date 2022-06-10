@@ -3,7 +3,7 @@ package net.tslat.aoa3.content.entity.boss;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
@@ -162,7 +162,7 @@ public class GreenGuardianEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable TextComponent name) {
+	public void setCustomName(@Nullable MutableComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));

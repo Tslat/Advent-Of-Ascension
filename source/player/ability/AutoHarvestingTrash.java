@@ -5,7 +5,9 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,6 +22,7 @@ import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.container.SelectInventoryItemScreen;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.SyncAoAAbilityDataPacket;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -44,11 +47,11 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		TranslatableComponent description = defaultDescription;
+	protected void updateDescription(MutableComponent defaultDescription) {
+		MutableComponent description = defaultDescription;
 
 		if (this.consumingItem != null)
-			description = new TranslatableComponent(defaultDescription.getKey() + ".item", new TranslatableComponent(this.consumingItem.asItem().getDescriptionId()).withStyle(ChatFormatting.GRAY));
+			description = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + ".item", Component.translatable(this.consumingItem.asItem().getDescriptionId()).withStyle(ChatFormatting.GRAY));
 
 		super.updateDescription(description);
 	}
@@ -71,7 +74,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		if (data.contains("item")) {
 			this.consumingItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("item")));
 
-			updateDescription(new TranslatableComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+			updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
 			markForClientSync();
 		}
 	}
@@ -81,7 +84,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		CompoundTag data = super.saveToNbt();
 
 		if (this.consumingItem != null)
-			data.putString("item", this.consumingItem.getRegistryName().toString());
+			data.putString("item", ForgeRegistries.ITEMS.getKey(this.consumingItem).toString());
 
 		return data;
 	}
@@ -90,7 +93,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 	public CompoundTag getSyncData(boolean forClientSetup) {
 		CompoundTag data = super.getSyncData(forClientSetup);
 
-		data.putString("item", consumingItem != null ? consumingItem.getRegistryName().toString() : "");
+		data.putString("item", this.consumingItem != null ? ForgeRegistries.ITEMS.getKey(this.consumingItem).toString() : "");
 
 		return data;
 	}
@@ -106,12 +109,12 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 			this.consumingItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("item")));
 		}
 
-		updateDescription(new TranslatableComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+		updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
 	}
 
 	@Override
 	public void receiveInteractionDataFromClient(String data) {
-		if (data.equals(Items.AIR.getRegistryName().toString())) {
+		if (data.equals(ForgeRegistries.ITEMS.getKey(Items.AIR).toString())) {
 			consumingItem = null;
 		}
 		else {
@@ -127,7 +130,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		Minecraft mc = Minecraft.getInstance();
 
 		if (ClientOperations.isPressingCrouchKey()) {
-			ForgeHooksClient.pushGuiLayer(mc, new SelectInventoryItemScreen(mc, consumingItem, item -> AoAPackets.messageServer(new SyncAoAAbilityDataPacket(this, item.getRegistryName().toString()))));
+			ForgeHooksClient.pushGuiLayer(mc, new SelectInventoryItemScreen(mc, consumingItem, item -> AoAPackets.messageServer(new SyncAoAAbilityDataPacket(this, ForgeRegistries.ITEMS.getKey(item).toString()))));
 
 			return false;
 		}

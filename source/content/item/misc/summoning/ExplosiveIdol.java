@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.misc.summoning;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.item.ItemStack;
@@ -36,19 +35,19 @@ public class ExplosiveIdol extends BossSpawningItem {
 	@Override
 	public boolean canSpawnHere(Level world, ServerPlayer player, double posX, double posY, double posZ) {
 		if (world.getDifficulty() == Difficulty.PEACEFUL) {
-			PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
+			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
 
 			return false;
 		}
 
 		if (!WorldUtil.isWorld(world, AoADimensions.NETHER.key)) {
-			/*PlayerUtil.notifyPlayer(player, new TranslatableComponent(AoAMobs.KING_BAMBAMBAM.get().getDescriptionId() + ".wrongDimension").withStyle(ChatFormatting.RED));*/
+			/*PlayerUtil.notifyPlayer(player, Component.translatable(AoAMobs.KING_BAMBAMBAM.get().getDescriptionId() + ".wrongDimension").withStyle(ChatFormatting.RED));*/
 
 			return false;
 		}
 
 		if (!world.noCollision(new AABB(posX - 1d, posY, posZ - 1d, posX + 1d, posY + 4d, posZ + 1d))) {
-			PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.noSpace").withStyle(ChatFormatting.RED));
+			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.noSpace").withStyle(ChatFormatting.RED));
 
 			return false;
 		}

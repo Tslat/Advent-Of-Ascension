@@ -2,7 +2,9 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -11,7 +13,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
-import net.tslat.aoa3.library.object.DynamicTextComponent;
+import net.tslat.aoa3.library.object.SupplierContents;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.EntityUtil;
@@ -57,7 +59,7 @@ public class AttributeModification extends ScalableModAbility {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
+	protected void updateDescription(MutableComponent defaultDescription) {
 		String amount = "";
 		String perLevel = "";
 
@@ -76,9 +78,9 @@ public class AttributeModification extends ScalableModAbility {
 			}
 		}
 
-		super.updateDescription(new TranslatableComponent(defaultDescription.getKey(),
+		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey(),
 				StringUtil.toTitleCase(attribute.getDescriptionId().substring(attribute.getDescriptionId().lastIndexOf(".") + 1)),
-				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, modifier.getOperation() != AttributeModifier.Operation.ADDITION, amount, perLevel, new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace((float)modifier.getAmount() * (modifier.getOperation() == AttributeModifier.Operation.ADDITION ? 1 : 100), 3)))));
+				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, modifier.getOperation() != AttributeModifier.Operation.ADDITION, amount, perLevel, SupplierContents.toComponent(() -> NumberUtil.roundToNthDecimalPlace((float)modifier.getAmount() * (modifier.getOperation() == AttributeModifier.Operation.ADDITION ? 1 : 100), 3)))));
 	}
 
 	@Override
@@ -111,7 +113,7 @@ public class AttributeModification extends ScalableModAbility {
 		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
-			data.putString("attribute", attribute.getRegistryName().toString());
+			data.putString("attribute", ForgeRegistries.ATTRIBUTES.getKey(attribute).toString());
 			data.putInt("operation", this.modifier.getOperation().toValue());
 			data.putUUID("uuid", this.modifier.getId());
 		}

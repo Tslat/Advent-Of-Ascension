@@ -12,6 +12,7 @@ import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.PlayerAbilityKeybindPacket;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -29,8 +30,8 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public final class ClientPlayerDataManager implements PlayerDataManager {
 	private LocalPlayer player;
 
-	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<>(Comparator.comparing(AoASkill::getRegistryName));
-	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<>(Comparator.comparing(AoAResource::getRegistryName));
+	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_SKILLS::getId));
+	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_RESOURCES::getId));
 	private final ArrayListMultimap<AoAPlayerEventListener.ListenerType, AoAPlayerEventListener> eventListeners = ArrayListMultimap.create();
 
 	private final ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>> keyListeners = new ConcurrentHashMap<>(1);

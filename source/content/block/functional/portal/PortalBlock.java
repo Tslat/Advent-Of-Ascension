@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -39,7 +40,6 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class PortalBlock extends Block {
 	private static final VoxelShape X_SHAPE = Shapes.create(new AABB(0.375, 0, 0, 0.625, 1, 1));
@@ -104,7 +104,7 @@ public class PortalBlock extends Block {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void animateTick(BlockState state, Level world, BlockPos pos, Random rand) {
+	public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
 		for (int i = 0; i < 4; ++i) {
 			double posXStart = (float)pos.getX() + rand.nextFloat();
 			double posYStart = (float)pos.getY() + rand.nextFloat();

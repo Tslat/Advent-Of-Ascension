@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,14 +25,12 @@ public final class BossBarRenderer {
 			Component nameComponent = ev.getBossEvent().getName();
 			Component name;
 			String id;
-			PoseStack matrix = ev.getMatrixStack();
+			PoseStack matrix = ev.getPoseStack();
 
-			if (nameComponent.getSiblings().isEmpty() || !(nameComponent instanceof TranslatableComponent))
+			if (nameComponent.getSiblings().isEmpty() || !(nameComponent instanceof MutableComponent))
 				return;
 
-			id = ((TranslatableComponent)nameComponent).getKey();
-
-			if (!id.startsWith("entity.aoa3."))
+			if (true)
 				return;
 
 			name = nameComponent.getSiblings().get(0);

@@ -19,6 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
@@ -136,7 +137,7 @@ public final class BlockUtil {
 		}
 
 		public CompactProperties noDrops() {
-			this.properties.noDrops();
+			this.properties.noLootTable();
 
 			return this;
 		}
@@ -324,7 +325,7 @@ public final class BlockUtil {
 		public SpawnerBuilder withSpawn(int weight, EntityType<?> entity, SpawnData.CustomSpawnRules spawnRules) {
 			CompoundTag tag = new CompoundTag();
 
-			tag.putString("id", entity.getRegistryName().toString());
+			tag.putString("id", ForgeRegistries.ENTITIES.getKey(entity).toString());
 
 			return withSpawn(weight, tag, spawnRules);
 		}

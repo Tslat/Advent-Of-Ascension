@@ -23,7 +23,10 @@ import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;

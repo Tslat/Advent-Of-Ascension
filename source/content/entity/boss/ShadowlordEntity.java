@@ -4,7 +4,7 @@ package net.tslat.aoa3.content.entity.boss;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
@@ -414,7 +414,7 @@ public class ShadowlordEntity extends Monster implements RangedAttackMob, AoARan
 	}
 
 	@Override
-	public void setCustomName(@Nullable TextComponent name) {
+	public void setCustomName(@Nullable MutableComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));

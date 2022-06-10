@@ -13,10 +13,9 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.registries.ForgeRegistryEntry;
 import net.tslat.aoa3.common.container.DivineStationContainer;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 
 import javax.annotation.Nullable;
 
@@ -104,7 +103,7 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 		return group;
 	}
 
-	public static class Factory extends ForgeRegistryEntry<RecipeSerializer<?>> implements RecipeSerializer<UpgradeKitRecipe> {
+	public static class Factory implements RecipeSerializer<UpgradeKitRecipe> {
 		@Override
 		public UpgradeKitRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
 			String group = GsonHelper.getAsString(json, "group", "");

@@ -50,7 +50,7 @@ import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class AoARangedMob extends Monster implements RangedAttackMob, AoARangedAttacker, IAnimatable {
-	private static final EntityDataAccessor<Integer> SHOOT_STATE = SynchedEntityData.defineId(AoARangedMob.class, EntityDataSerializers.INT);
+	protected static final EntityDataAccessor<Integer> SHOOT_STATE = SynchedEntityData.defineId(AoARangedMob.class, EntityDataSerializers.INT);
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
 
 	protected boolean isSlipperyMovement = false;
@@ -65,7 +65,7 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(2, new TelegraphedRangedAttackGoal(this).windUpTime(getPreAttackTime()));
+		goalSelector.addGoal(2, new TelegraphedRangedAttackGoal<>(this).windUpTime(getPreAttackTime()));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));

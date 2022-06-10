@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.misc.summoning;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
@@ -48,7 +47,7 @@ public class BoneHorn extends Item {
 			return InteractionResultHolder.success(heldItem);
 		}
 		else if (player instanceof ServerPlayer) {
-			PlayerUtil.notifyPlayer(player, new TranslatableComponent("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
+			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail").withStyle(ChatFormatting.RED));
 		}
 
 		return InteractionResultHolder.fail(heldItem);

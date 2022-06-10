@@ -2,7 +2,7 @@
 package net.tslat.aoa3.content.entity.mob.runandor.templars;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -117,7 +117,7 @@ public abstract class RuneTemplarEntity extends PathfinderMob {
 	}
 
 	@Override
-	public void setCustomName(@Nullable TextComponent name) {
+	public void setCustomName(@Nullable MutableComponent name) {
 		super.setCustomName(name);
 
 		bossInfo.setName(getType().getDescription().copy().append(getDisplayName()));

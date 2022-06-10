@@ -67,7 +67,7 @@ public class ArcFlowerEntity extends AoAMeleeMob {
     public void push(Entity entityIn) {}
 
     @Override
-    protected boolean shouldDropExperience() {
+    public boolean shouldDropExperience() {
         return false;
     }
 

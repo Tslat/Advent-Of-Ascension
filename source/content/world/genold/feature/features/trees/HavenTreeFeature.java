@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,7 +11,6 @@ import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.function.Supplier;
 
 public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
@@ -19,7 +19,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		BlockPos multiSaplingPos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
 
 		return switch (rand.nextInt(3) + (multiSaplingPos == null ? 0 : 3)) {
@@ -33,7 +33,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		};
 	}
 
-	private boolean generateTree1(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree1(WorldGenLevel reader, RandomSource rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 10 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 2, 1, isWorldGen))
@@ -114,7 +114,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree2(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree2(WorldGenLevel reader, RandomSource rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 7 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 2, 1, isWorldGen))
@@ -159,7 +159,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree3(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree3(WorldGenLevel reader, RandomSource rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 5 + rand.nextInt(4);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 8, 1, isWorldGen))
@@ -247,7 +247,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree4(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree4(WorldGenLevel reader, RandomSource rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 7 + rand.nextInt(5);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 4, 2, isWorldGen))
@@ -360,7 +360,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree5(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree5(WorldGenLevel reader, RandomSource rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 20 + rand.nextInt(15);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 2, 2, isWorldGen))
@@ -500,7 +500,7 @@ public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
 		return true;
 	}
 
-	private boolean generateTree6(WorldGenLevel reader, Random rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
+	private boolean generateTree6(WorldGenLevel reader, RandomSource rand, BlockPos pos, BlockState leafBlock, boolean isWorldGen) {
 		int trunkHeight = 15 + rand.nextInt(8);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 4, 2, isWorldGen))

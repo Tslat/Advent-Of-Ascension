@@ -13,7 +13,7 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.entity.npc.ambient.*;
 import net.tslat.aoa3.content.entity.npc.banker.*;
-import net.tslat.aoa3.content.entity.npc.lottoman.*;
+import net.tslat.aoa3.content.entity.npc.lottoman.LottomanEntity;
 import net.tslat.aoa3.content.entity.npc.trader.*;
 
 public final class AoANpcs {

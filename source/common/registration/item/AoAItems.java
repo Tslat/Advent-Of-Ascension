@@ -4,12 +4,12 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.registries.RegistryObject;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.common.registration.AoABannerPatterns;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.item.food.*;
 import net.tslat.aoa3.content.item.lootbox.*;
 import net.tslat.aoa3.content.item.misc.*;
@@ -57,6 +57,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> VARSIUM_INGOT = registerItem("varsium_ingot", miscItem());
 
 	public static final RegistryObject<Item> RAW_LIMONITE = registerItem("raw_limonite", miscItem());
+	public static final RegistryObject<Item> RAW_EMBERSTONE = registerItem("raw_emberstone", miscItem());
 
 	public static final RegistryObject<Item> BARONYTE_NUGGET = registerItem("baronyte_nugget", miscItem());
 	public static final RegistryObject<Item> BLAZIUM_NUGGET = registerItem("blazium_nugget", miscItem());
@@ -436,20 +437,20 @@ public final class AoAItems {
 	public static final RegistryObject<Item> MUSIC_DISC_OUTLAW = registerItem("music_disc_outlaw", () -> new RecordItem(15, AoASounds.OUTLAW_MUSIC_DISC, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> MUSIC_DISC_CAVERNS = registerItem("music_disc_caverns", () -> new RecordItem(15, AoASounds.CAVERNS_MUSIC_DISC, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
 
-	public static final RegistryObject<Item> COMPASS_RUNE_BANNER_PATTERN = registerItem("compass_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_COMPASS_RUNE", "compass_rune", "aoacomr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> DISTORTION_RUNE_BANNER_PATTERN = registerItem("distortion_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_DISTORTION_RUNE", "distortion_rune", "aoadisr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> ENERGY_RUNE_BANNER_PATTERN = registerItem("energy_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_ENERGY_RUNE", "energy_rune", "aoaener"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> FIRE_RUNE_BANNER_PATTERN = registerItem("fire_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_FIRE_RUNE", "fire_rune", "aoafirr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> KINETIC_RUNE_BANNER_PATTERN = registerItem("kinetic_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_KINETIC_RUNE", "kinetic_rune", "aoakinr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LIFE_RUNE_BANNER_PATTERN = registerItem("life_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_LIFE_RUNE", "life_rune", "aoalifr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> LUNAR_RUNE_BANNER_PATTERN = registerItem("lunar_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_LUNAR_RUNE", "lunar_rune", "aoalunr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> POISON_RUNE_BANNER_PATTERN = registerItem("poison_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_POISON_RUNE", "poison_rune", "aoapoir"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> POWER_RUNE_BANNER_PATTERN = registerItem("power_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_POWER_RUNE", "power_rune", "aoapowr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> STORM_RUNE_BANNER_PATTERN = registerItem("storm_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_STORM_RUNE", "storm_rune", "aoastor"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> STRIKE_RUNE_BANNER_PATTERN = registerItem("strike_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_STRIKE_RUNE", "strike_rune", "aoastrr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> WATER_RUNE_BANNER_PATTERN = registerItem("water_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WATER_RUNE", "water_rune", "aoawatr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> WIND_RUNE_BANNER_PATTERN = registerItem("wind_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WIND_RUNE", "wind_rune", "aoawinr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
-	public static final RegistryObject<Item> WITHER_RUNE_BANNER_PATTERN = registerItem("wither_rune_banner_pattern", () -> new BannerPatternItem(BannerPattern.create("AOA3_WITHER_RUNE", "wither_rune", "aoawithr"), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> COMPASS_RUNE_BANNER_PATTERN = registerItem("compass_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.COMPASS_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> DISTORTION_RUNE_BANNER_PATTERN = registerItem("distortion_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.DISTORTION_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> ENERGY_RUNE_BANNER_PATTERN = registerItem("energy_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.ENERGY_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> FIRE_RUNE_BANNER_PATTERN = registerItem("fire_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.FIRE_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> KINETIC_RUNE_BANNER_PATTERN = registerItem("kinetic_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.KINETIC_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> LIFE_RUNE_BANNER_PATTERN = registerItem("life_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.LIFE_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> LUNAR_RUNE_BANNER_PATTERN = registerItem("lunar_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.LUNAR_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> POISON_RUNE_BANNER_PATTERN = registerItem("poison_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.POISON_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> POWER_RUNE_BANNER_PATTERN = registerItem("power_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.POWER_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> STORM_RUNE_BANNER_PATTERN = registerItem("storm_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.STORM_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> STRIKE_RUNE_BANNER_PATTERN = registerItem("strike_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.STRIKE_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WATER_RUNE_BANNER_PATTERN = registerItem("water_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.WATER_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WIND_RUNE_BANNER_PATTERN = registerItem("wind_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.WIND_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
+	public static final RegistryObject<Item> WITHER_RUNE_BANNER_PATTERN = registerItem("wither_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.WITHER_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoAItemGroups.MISC_ITEMS)));
 
 	private static <T extends Item> RegistryObject<T> registerItem(String registryId, Supplier<T> item) {
 		return AoARegistries.ITEMS.register(registryId, item);

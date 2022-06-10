@@ -1,5 +1,6 @@
 package net.tslat.aoa3.common.registration;
 
+import net.minecraft.commands.synchronization.ArgumentTypeInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.resources.ResourceKey;
@@ -16,10 +17,11 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
@@ -37,7 +39,6 @@ import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.common.registration.worldgen.AoAFeatures;
 import net.tslat.aoa3.common.registration.worldgen.AoAPlacementModifiers;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructures;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -51,6 +52,10 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public final class AoARegistries {
+	public static final ResourceKey<Registry<AoASkill>> REGISTRY_KEY_SKILLS = ResourceKey.createRegistryKey(AdventOfAscension.id("skills"));
+	public static final ResourceKey<Registry<AoAResource>> REGISTRY_KEY_RESOURCES = ResourceKey.createRegistryKey(AdventOfAscension.id("resources"));
+	public static final ResourceKey<Registry<AoAAbility>> REGISTRY_KEY_ABILITIES = ResourceKey.createRegistryKey(AdventOfAscension.id("abilities"));
+
 	public static final RegistryHelper<Block> BLOCKS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.BLOCKS, AoABlocks::init);
 	public static final RegistryHelper<Item> ITEMS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ITEMS, AoAItems::init, AoAWeapons::init, AoATools::init, AoAArmour::init);
 	public static final RegistryHelper<Fluid> FLUIDS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FLUIDS);
@@ -66,18 +71,20 @@ public final class AoARegistries {
 	public static final RegistryHelper<VillagerProfession> VILLAGER_PROFESSIONS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.VILLAGER_PROFESSIONS, AoAProfessions::init);
 	public static final RegistryHelper<SensorType<?>> BRAIN_SENSORS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.SENSOR_TYPES, AoABrainSensors::init);
 	public static final RegistryHelper<MemoryModuleType<?>> BRAIN_MEMORIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MEMORY_MODULE_TYPES, AoABrainMemories::init);
+	public static final RegistryHelper<BannerPattern> BANNER_PATTERNS = new ForgeRegistryHelper<>(Registry.BANNER_PATTERN_REGISTRY, AoABannerPatterns::init);
 
 	public static final RegistryHelper<LootItemFunctionType> LOOT_FUNCTIONS = new VanillaRegistryHelper<>(Registry.LOOT_FUNCTION_REGISTRY, AoALootOperations.LootFunctions::init);
 	public static final RegistryHelper<LootItemConditionType> LOOT_CONDITIONS = new VanillaRegistryHelper<>(Registry.LOOT_ITEM_REGISTRY, AoALootOperations.LootConditions::init);
 	public static final RegistryHelper<RecipeType<?>> RECIPE_TYPES = new VanillaRegistryHelper<>(Registry.RECIPE_TYPE_REGISTRY, AoARecipes::init);
+	public static final RegistryHelper<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPES = new VanillaRegistryHelper<>(Registry.COMMAND_ARGUMENT_TYPE_REGISTRY, AoAArgumentTypes::init);
 
-	public static final RegistryHelper<Feature<?>> FEATURES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FEATURES, AoAFeatures::init);
-	public static final RegistryHelper<StructureFeature<?>> STRUCTURES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.STRUCTURE_FEATURES, AoAStructures::init);
+	public static final RegistryHelper<Feature<?>> FEATURES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FEATURES, () -> {});
+	public static final RegistryHelper<Structure> STRUCTURES = new VanillaRegistryHelper<>(Registry.STRUCTURE_REGISTRY, AoAStructures::init);
 	public static final RegistryHelper<PlacementModifierType<?>> PLACEMENT_MODIFIERS = new VanillaRegistryHelper<>(Registry.PLACEMENT_MODIFIER_REGISTRY, AoAPlacementModifiers::init);
 
-	public static final RegistryHelper<AoASkill> AOA_SKILLS = new ForgeRegistryHelper<AoASkill>(ResourceKey.createRegistryKey(AdventOfAscension.id("skills")), AoASkills::init);
-	public static final RegistryHelper<AoAResource> AOA_RESOURCES = new ForgeRegistryHelper<AoAResource>(ResourceKey.createRegistryKey(AdventOfAscension.id("resources")), AoAResources::init);
-	public static final RegistryHelper<AoAAbility> AOA_ABILITIES = new ForgeRegistryHelper<AoAAbility>(ResourceKey.createRegistryKey(AdventOfAscension.id("abilities")), AoAAbilities::init);
+	public static final RegistryHelper<AoASkill> AOA_SKILLS = new ForgeRegistryHelper<AoASkill>(REGISTRY_KEY_SKILLS, AoASkills::init);
+	public static final RegistryHelper<AoAResource> AOA_RESOURCES = new ForgeRegistryHelper<AoAResource>(REGISTRY_KEY_RESOURCES, AoAResources::init);
+	public static final RegistryHelper<AoAAbility> AOA_ABILITIES = new ForgeRegistryHelper<AoAAbility>(REGISTRY_KEY_ABILITIES, AoAAbilities::init);
 
 	public static void init() {
 		BLOCKS.doRegistrations();
@@ -102,6 +109,7 @@ public final class AoARegistries {
 		LOOT_FUNCTIONS.doRegistrations();
 		LOOT_CONDITIONS.doRegistrations();
 		RECIPE_TYPES.doRegistrations();
+		ARGUMENT_TYPES.doRegistrations();
 
 		FEATURES.doRegistrations();
 		STRUCTURES.doRegistrations();
@@ -116,9 +124,10 @@ public final class AoARegistries {
 		List<RegistryObject<T>> getAllAoARegisteredObjects();
 		T getEntry(ResourceLocation id);
 		void doRegistrations();
+		ResourceLocation getId(T object);
 	}
 
-	public record ForgeRegistryHelper<T extends IForgeRegistryEntry<T>>(Lazy<ForgeRegistry<T>> forgeRegistry, DeferredRegister<T> deferredRegister, Runnable registrationTasks) implements RegistryHelper<T> {
+	public record ForgeRegistryHelper<T>(Lazy<ForgeRegistry<T>> forgeRegistry, DeferredRegister<T> deferredRegister, Runnable registrationTasks) implements RegistryHelper<T> {
 		private ForgeRegistryHelper(ResourceKey<Registry<T>> registryKey, Runnable... registrations) {
 			this(Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(registryKey)), DeferredRegister.<T>create(registryKey, AdventOfAscension.MOD_ID), () -> Arrays.asList(registrations).forEach(Runnable::run));
 
@@ -158,6 +167,11 @@ public final class AoARegistries {
 		@Override
 		public T getEntry(ResourceLocation id) {
 			return forgeRegistry().get().getValue(id);
+		}
+
+		@Override
+		public ResourceLocation getId(T object) {
+			return forgeRegistry().get().getKey(object);
 		}
 	}
 
@@ -201,6 +215,11 @@ public final class AoARegistries {
 		@Override
 		public T getEntry(ResourceLocation id) {
 			return registry().get().get(id);
+		}
+
+		@Override
+		public ResourceLocation getId(T object) {
+			return registry().get().getKey(object);
 		}
 	}
 }

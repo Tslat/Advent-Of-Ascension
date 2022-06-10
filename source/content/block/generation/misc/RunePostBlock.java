@@ -1,8 +1,7 @@
 package net.tslat.aoa3.content.block.generation.misc;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -42,7 +41,7 @@ public class RunePostBlock extends Block {
 		if (heldItem.getItem() instanceof RuneSource) {
 			if (level.getBlockState(pos.above()).getMaterial().blocksMotion()) {
 				if (!level.isClientSide())
-					player.sendMessage(new TranslatableComponent("message.feedback.runeShrine.blocked"), Util.NIL_UUID);
+					player.sendSystemMessage(Component.translatable("message.feedback.runeShrine.blocked"));
 
 				return InteractionResult.FAIL;
 			}

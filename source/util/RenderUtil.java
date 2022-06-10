@@ -14,7 +14,6 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -44,8 +43,7 @@ public final class RenderUtil {
 		buffer.vertex(matrix, x + renderWidth, y + renderHeight, 0f).uv((u + uWidth) * widthRatio, (v + vHeight) * heightRatio).endVertex();
 		buffer.vertex(matrix, x + renderWidth, y, 0f).uv((u + uWidth) * widthRatio, v * heightRatio).endVertex();
 		buffer.vertex(matrix, x, y, 0f).uv(u * widthRatio, v * heightRatio).endVertex();
-		buffer.end();
-		BufferUploader.end(buffer);
+		BufferUploader.drawWithShader(buffer.end());
 	}
 
 	public static void renderFullscreenTexture() {
@@ -126,8 +124,7 @@ public final class RenderUtil {
 		bufferBuilder.vertex(matrix, (float)x + width, (float)y + height, z).color(red, green, blue, alpha).endVertex();
 		bufferBuilder.vertex(matrix, (float)x + width, (float)y, z).color(red, green, blue, alpha).endVertex();
 		bufferBuilder.vertex(matrix, (float)x, (float)y, z).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.end();
-		BufferUploader.end(bufferBuilder);
+		BufferUploader.drawWithShader(bufferBuilder.end());
 		RenderSystem.enableTexture();
 		RenderSystem.disableBlend();
 	}
@@ -158,7 +155,7 @@ public final class RenderUtil {
 	}
 
 	public static void drawCenteredScaledString(PoseStack matrix, Font fontRenderer, String msg, float x, float y, float scale, int colour, StringRenderType renderType) {
-		drawCenteredScaledMessage(matrix, fontRenderer, new TextComponent(msg), x, y, scale, colour, renderType);
+		drawCenteredScaledMessage(matrix, fontRenderer, Component.literal(msg), x, y, scale, colour, renderType);
 	}
 
 	public static void drawScaledMessage(PoseStack matrix, Font fontRenderer, Component msg, float x, float y, float scale, int colour, StringRenderType renderType) {
@@ -187,7 +184,7 @@ public final class RenderUtil {
 	}
 
 	public static void drawScaledString(PoseStack matrix, Font fontRenderer, String msg, int x, int y, float scale, int colour, StringRenderType renderType) {
-		drawScaledMessage(matrix, fontRenderer, new TextComponent(msg), x, y, scale, colour, renderType);
+		drawScaledMessage(matrix, fontRenderer, Component.literal(msg), x, y, scale, colour, renderType);
 	}
 
 	public static void drawOutlinedText(PoseStack matrix, Font fontRenderer, String msg, int x, int y, int colour, float currentScale) {

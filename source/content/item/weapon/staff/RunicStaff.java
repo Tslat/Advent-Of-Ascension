@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,7 +42,7 @@ public class RunicStaff extends BaseStaff<PlayerEnderChestContainer> {
 
 	@Override
 	public void cast(Level world, ItemStack staff, LivingEntity caster, PlayerEnderChestContainer args) {
-		((Player)caster).openMenu(new SimpleMenuProvider((id, player, inventory) -> ChestMenu.threeRows(id, player, args), new TranslatableComponent("container.enderchest")));
+		((Player)caster).openMenu(new SimpleMenuProvider((id, player, inventory) -> ChestMenu.threeRows(id, player, args), Component.translatable("container.enderchest")));
 	}
 
 	@Override

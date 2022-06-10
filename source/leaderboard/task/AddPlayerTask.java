@@ -1,17 +1,20 @@
 package net.tslat.aoa3.leaderboard.task;
 
 import com.mojang.datafixers.util.Pair;
-import net.tslat.aoa3.leaderboard.LeaderboardTask;
+import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AddPlayerTask extends LeaderboardTask {
+public class AddPlayerTask extends InsertionTask {
 	private final String uuid;
 	private final String name;
-	private final ArrayList<Pair<AoASkill, Integer>> skills = new ArrayList<Pair<AoASkill, Integer>>();
+	private final ArrayList<Pair<AoASkill, Short>> skills = new ArrayList<>();
 	private int totalLevel = 0;
 
 	public AddPlayerTask(ServerPlayerDataManager plData) {
@@ -22,38 +25,24 @@ public class AddPlayerTask extends LeaderboardTask {
 			int level = skill.getLevel(true);
 			totalLevel += level;
 
-			this.skills.add(Pair.of(skill.type(), level));
+			this.skills.add(Pair.of(skill.type(), (short)level));
 		}
 	}
 
 	@Override
-	protected void execute(Connection connection) {
+	public void execute(Connection connection, InsertionConnection leaderboardConnection) {
 		beginBatchUpdate(connection);
 
-		runFailSafeStatement(connection,
-				"IF EXISTS (SELECT 1 FROM Totals WHERE Uuid='" + uuid + "') " +
-						"BEGIN " +
-						"UPDATE Totals SET Total=" + totalLevel + ", LastUpdate=CURRENT_DATE() WHERE Uuid='" + uuid + "' " +
-						"END " +
-						"ELSE " +
-						"BEGIN " +
-						"INSERT INTO Totals (Uuid, Username, Total, LastUpdate) VALUES ('" + uuid + "', '" + name + "', " + totalLevel + ", CURRENT_DATE()) " +
-						"END",
-				"Error executing database update for " + this.name + ", regretfully skipping.");
+		try {
+			leaderboardConnection.updatePlayerTotal(connection, uuid, name, totalLevel);
 
-		for (Pair<AoASkill, Integer> skill : skills) {
-			String tableName = idToTableName(skill.getFirst().getRegistryName());
+			for (Pair<AoASkill, Short> skill : skills) {
+				leaderboardConnection.updatePlayerLevel(connection, uuid, name, skill.getFirst(), skill.getSecond());
+			}
 
-			runFailSafeStatement(connection,
-					"IF EXISTS (SELECT 1 FROM " + tableName + " WHERE Uuid='" + uuid + "') " +
-							"BEGIN " +
-							"UPDATE " + tableName + " SET Level=" + skill.getSecond() + ", LastUpdate=CURRENT_DATE() WHERE Uuid='" + uuid + "' " +
-							"END " +
-							"ELSE " +
-							"BEGIN " +
-							"INSERT INTO " + tableName + " (Uuid, Username, Level, LastUpdate) VALUES ('" + uuid + "', '" + name + "', " + skill.getSecond() + ", CURRENT_DATE()) " +
-							"END",
-					"Error executing database update for " + this.name + ", regretfully skipping.");
+		}
+		catch (SQLException ex) {
+			Logging.logMessage(Level.WARN, "Unable to prepare statement for execution to add " + name + " to the skills leaderboard. This is probably not a good sign", ex);
 		}
 
 		endBatchUpdate(connection);

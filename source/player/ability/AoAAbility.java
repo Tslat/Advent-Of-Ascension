@@ -3,31 +3,33 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonObject;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.registries.ForgeRegistryEntry;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.function.BiFunction;
 
-public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
-	private final Lazy<TranslatableComponent> name;
+public class AoAAbility {
+	private final Lazy<MutableComponent> name;
 	private final BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory;
 	private final BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory;
 
 	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory) {
-		this.name = Lazy.of(() -> new TranslatableComponent(Util.makeDescriptionId("ability", getRegistryName())));
+		this.name = Lazy.of(() -> Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(this))));
 		this.jsonFactory = jsonFactory;
 		this.nbtFactory = nbtFactory;
 	}
 
-	public TranslatableComponent getName() {
+	public MutableComponent getName() {
 		return this.name.get();
 	}
 
@@ -44,7 +46,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 		protected AoASkill.Instance skill;
 		private final int levelReq;
 		private final String uniqueIdentifier;
-		private TranslatableComponent description;
+		private MutableComponent description;
 
 		public boolean needsSync = true;
 		private ListenerState state;
@@ -55,7 +57,7 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			this.uniqueIdentifier = GsonHelper.getAsString(data, "unique_id");
 			this.levelReq = GsonHelper.getAsInt(data, "level_req");
 			this.state = ListenerState.fromId(GsonHelper.getAsString(data, "state", ListenerState.ACTIVE.getId()));
-			this.description = data.has("description") ? new TranslatableComponent(GsonHelper.getAsString(data, "description")) : null;
+			this.description = data.has("description") ? Component.translatable(GsonHelper.getAsString(data, "description")) : null;
 
 			checkDeactivation(true, false);
 		}
@@ -66,10 +68,10 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			this.uniqueIdentifier = data.getString("unique_identifier");
 			this.levelReq = data.getInt("level_req");
 			this.state = ListenerState.fromId(data.getString("state"));
-			this.description = data.contains("description") ? new TranslatableComponent(data.getString("description")) : null;
+			this.description = data.contains("description") ? Component.translatable(data.getString("description")) : null;
 		}
 
-		protected void updateDescription(TranslatableComponent defaultDescription) {
+		protected void updateDescription(MutableComponent defaultDescription) {
 			this.description = defaultDescription;
 		}
 
@@ -77,13 +79,13 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			return this.ability;
 		}
 
-		public TranslatableComponent getName() {
+		public MutableComponent getName() {
 			return type().getName();
 		}
 
-		public TranslatableComponent getDescription() {
+		public MutableComponent getDescription() {
 			if (this.description == null)
-				updateDescription(new TranslatableComponent(Util.makeDescriptionId("ability", type().getRegistryName()) + ".description"));
+				updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
 
 			return this.description;
 		}
@@ -195,12 +197,12 @@ public class AoAAbility extends ForgeRegistryEntry<AoAAbility> {
 			 data.putString("state", this.state.getId());
 
 			 if (forClientSetup) {
-				 data.putString("id", this.type().getRegistryName().toString());
+				 data.putString("id", AoARegistries.AOA_ABILITIES.getId(this.type()).toString());
 				 data.putString("unique_identifier", this.uniqueIdentifier);
 				 data.putInt("level_req", this.levelReq);
 
 				 if (this.description != null)
-					 data.putString("description", this.description.getKey());
+					 data.putString("description", ((TranslatableContents)this.description.getContents()).getKey());
 			 }
 
 			 return data;

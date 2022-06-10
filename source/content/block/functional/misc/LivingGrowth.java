@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.block.functional.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -21,8 +22,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.BlockUtil;
-
-import java.util.Random;
 
 public class LivingGrowth extends Block {
 	public static final IntegerProperty GROWTH_STAGE = BlockStateProperties.AGE_5;
@@ -47,7 +46,7 @@ public class LivingGrowth extends Block {
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel world, BlockPos pos, Random rand) {
+	public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		super.tick(state, world, pos, rand);
 
 		int currentAge = state.getValue(GROWTH_STAGE);

@@ -2,7 +2,9 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
@@ -35,8 +37,8 @@ public class JumpBoost extends ScalableModAbility {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + (sprintJumpBoost ? ".lateral" : ".vertical"), getScalingDescriptionComponent(2)));
+	protected void updateDescription(MutableComponent defaultDescription) {
+		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + (sprintJumpBoost ? ".lateral" : ".vertical"), getScalingDescriptionComponent(2)));
 	}
 
 	@Override

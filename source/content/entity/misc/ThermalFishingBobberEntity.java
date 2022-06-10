@@ -1,7 +1,9 @@
 package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BiomeTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -15,6 +17,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
@@ -80,8 +83,8 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 	protected void calculateFishingLureBonus() {
 		this.fishingBonusMod = 1;
 
-		Biome biome = level.getBiome(blockPosition()).value();
-		float temperature = biome.getTemperature(blockPosition());
+		Holder<Biome> biome = level.getBiome(blockPosition());
+		float temperature = biome.value().getTemperature(blockPosition());
 
 		if (temperature > 2) {
 			this.fishingBonusMod *= 1.25f;
@@ -90,7 +93,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 			this.fishingBonusMod *= 0.8f;
 		}
 
-		if (biome.getPrecipitation() == Biome.Precipitation.NONE) {
+		if (biome.value().getPrecipitation() == Biome.Precipitation.NONE) {
 			this.fishingBonusMod *= 1.1f;
 		}
 		else {
@@ -100,7 +103,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 		if (level.isRainingAt(blockPosition()))
 			this.fishingBonusMod *= 0.75f;
 
-		this.fishingBonusMod *= fishingBonusModForBiomeCategory(biome.getBiomeCategory());
+		this.fishingBonusMod *= fishingBonusModForBiome(biome);
 
 		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
@@ -134,12 +137,16 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 	}
 
 	@Override
-	protected float fishingBonusModForBiomeCategory(Biome.BiomeCategory category) {
-		return switch (category) {
-			case OCEAN, RIVER, SWAMP -> 0.5f;
-			case DESERT, SAVANNA, MESA, NETHER -> 1.25f;
-			default -> 1;
-		};
+	protected float fishingBonusModForBiome(Holder<Biome> biome) {
+		for (TagKey<Biome> tag : biome.tags().toList()) {
+			if (tag == BiomeTags.IS_OCEAN || tag == BiomeTags.IS_RIVER || tag == Tags.Biomes.IS_SWAMP)
+				return 0.5f;
+
+			if (tag == Tags.Biomes.IS_DEAD || tag == Tags.Biomes.IS_DRY || tag == Tags.Biomes.IS_HOT)
+				return 1.25f;
+		}
+
+		return 1f;
 	}
 
 	@Nullable

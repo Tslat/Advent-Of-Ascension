@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.block.generation.ore;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
@@ -34,7 +35,7 @@ public class OreBlock extends Block {
 	}
 
 	@Override
-	public int getExpDrop(BlockState state, LevelReader world, BlockPos pos, int fortune, int silktouch) {
+	public int getExpDrop(BlockState state, LevelReader world, RandomSource randomSource, BlockPos pos, int fortune, int silktouch) {
 		if (silktouch > 0 || maxXp == 0)
 			return 0;
 

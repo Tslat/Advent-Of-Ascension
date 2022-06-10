@@ -1,13 +1,11 @@
 package net.tslat.aoa3.event;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.ChatType;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerLevel;
@@ -188,7 +186,7 @@ public class PlayerEvents {
 			}
 
 			if (msg != null)
-				player.getServer().getPlayerList().broadcastMessage(new TextComponent(msg), ChatType.GAME_INFO, Util.NIL_UUID);
+				player.getServer().getPlayerList().broadcastSystemMessage(Component.literal(msg), ChatType.GAME_INFO);
 
 			AoAHaloUtil.syncWithNewClient(player);
 			ServerPlayerDataManager.syncNewPlayer(player);
@@ -225,7 +223,7 @@ public class PlayerEvents {
 				net.minecraft.world.level.Level world = ev.getPlayer().getCommandSenderWorld();
 
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					ev.getPlayer().sendMessage(new TranslatableComponent("message.feedback.spawnBoss.difficultyFail"), Util.NIL_UUID);
+					ev.getPlayer().sendSystemMessage(Component.translatable("message.feedback.spawnBoss.difficultyFail"));
 
 					return;
 				}

@@ -6,12 +6,15 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.NumberUtil;
@@ -102,15 +105,15 @@ public class PotionDurationReducer extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
+	protected void updateDescription(MutableComponent defaultDescription) {
 		String operationSuffix = useAddition ? ".addition" : ".multiply";
 		String value = useAddition ? NumberUtil.roundToNthDecimalPlace(modifier, 2) : NumberUtil.roundToNthDecimalPlace((modifier - 1) * 100, 2);
 
 		if (matchType != null) {
-			super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + operationSuffix + ".type", StringUtil.toTitleCase(matchType.toString()), value));
+			super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + operationSuffix + ".type", StringUtil.toTitleCase(matchType.toString()), value));
 		}
 		else {
-			super.updateDescription(new TranslatableComponent(defaultDescription.getKey() + operationSuffix + ".list", value));
+			super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + operationSuffix + ".list", value));
 		}
 	}
 
@@ -128,7 +131,7 @@ public class PotionDurationReducer extends AoAAbility.Instance {
 		if (matchType != null)
 			return effect.getEffect().getCategory() == matchType;
 
-		return matchEffects.contains(effect.getEffect().getRegistryName());
+		return matchEffects.contains(ForgeRegistries.MOB_EFFECTS.getKey(effect.getEffect()));
 	}
 
 	private void reduceEffectDuration(MobEffectInstance effect, Consumer<MobEffectInstance> modifier) {

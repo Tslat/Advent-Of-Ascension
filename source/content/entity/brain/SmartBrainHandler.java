@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.commons.lang3.tuple.Triple;
@@ -149,7 +150,7 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 			for (Sensor<? super T> sensor : this.brain.sensors.values()) {
 				for (MemoryModuleType<?> memoryType : sensor.requires()) {
 					if (!this.brain.memories.containsKey(memoryType))
-						Logging.logMessage(Level.ERROR, "Required memory module not present in entity brain. " + this.owner.getType().getRegistryName().toString());
+						Logging.logMessage(Level.ERROR, "Required memory module not present in entity brain. " + ForgeRegistries.ENTITIES.getKey(this.owner.getType()).toString());
 				}
 			}
 		}

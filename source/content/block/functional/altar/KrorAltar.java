@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -11,8 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.scheduling.async.KrorSpawnTask;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -38,14 +38,14 @@ public class KrorAltar extends BossAltarBlock {
 		if (player instanceof ServerPlayer) {
 			new KrorSpawnTask((ServerPlayer)player, blockPos.above()).schedule(1, TimeUnit.SECONDS);
 
-			//PlayerUtil.notifyPlayer((ServerPlayer)player, new TranslatableComponent(AoAMobs.KROR.get().getDescriptionId() + ".start"));
+			//PlayerUtil.notifyPlayer((ServerPlayer)player, Component.translatable(AoAMobs.KROR.get().getDescriptionId() + ".start"));
 		}
 	}
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
 		if (player.level.getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayer) {
-			PlayerUtil.notifyPlayer((ServerPlayer)player, new TranslatableComponent("message.feedback.krorAltar.chargingTable"));
+			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.krorAltar.chargingTable"));
 
 			return false;
 		}

@@ -8,8 +8,6 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -24,32 +22,19 @@ public class AdventGuiTabHelp extends Screen {
 	private int tipNumber;
 
 	protected AdventGuiTabHelp() {
-		super(new TranslatableComponent("gui.aoa3.adventGui.help"));
+		super(Component.translatable("gui.aoa3.adventGui.help"));
 
 		tipNumber = RandomUtil.randomNumberUpTo(IntegrationManager.isPatchouliActive() ? 12 : 13);
 	}
 
 	@Override
 	protected void init() {
-		String language = Minecraft.getInstance().getLanguageManager().getSelected().getCode();
-		String wikiLink;
-		String wikiDownloadLink;
-
-		if (language.equals("zh_cn") || language.equals("zh_tw")) {
-			wikiLink = "https://adventofascension-zh.gamepedia.com/Advent_of_Ascension_Wiki";
-			wikiDownloadLink = "https://adventofascension-zh.gamepedia.com/%E4%B8%8B%E8%BD%BD";
-		}
-		else {
-			wikiLink = "https://adventofascension.gamepedia.com/Advent_of_Ascension_Wiki";
-			wikiDownloadLink = "https://adventofascension.gamepedia.com/Download";
-		}
-
 		addRenderableWidget(new ThemeButton(640, 35, 30, 40));
 		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 130, 76, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkDiscord"), stringToURI("https://discord.gg/DNYqNNq")));
-		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 170, 108, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkWiki"), stringToURI(wikiLink)));
+		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 170, 108, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkWiki"), stringToURI("https://adventofascension.gamepedia.com/Advent_of_Ascension_Wiki")));
 		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 210, 60, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkGithub"), stringToURI("https://github.com/Tslat/Advent-Of-Ascension")));
 		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 250, 80, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkPatreon"), stringToURI("https://www.patreon.com/Tslat")));
-		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 290, 68, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkUpdate"), stringToURI(wikiDownloadLink)));
+		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 290, 68, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkUpdate"), stringToURI("https://adventofascension.gamepedia.com/Download")));
 	}
 
 	@Override
@@ -62,7 +47,7 @@ public class AdventGuiTabHelp extends Screen {
 
 		matrix.pushPose();
 		matrix.scale(1.5625f, 1.5625f, 1.5625f);
-		RenderUtil.drawWrappedMessage(matrix, font, new TextComponent(LocaleUtil.getLocaleString("gui.aoa3.adventGui.help.description").replace("<br>", "\n")), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, ColourUtil.WHITE);
+		RenderUtil.drawWrappedMessage(matrix, font, Component.literal(LocaleUtil.getLocaleString("gui.aoa3.adventGui.help.description").replace("<br>", "\n")), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, ColourUtil.WHITE);
 		matrix.popPose();
 
 		RenderUtil.drawScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip", LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip." + tipNumber)), AdventMainGui.scaledTabRootX + 30, AdventMainGui.scaledTabRootY + 310, 1.8f, ColourUtil.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
@@ -135,13 +120,13 @@ public class AdventGuiTabHelp extends Screen {
 
 	private static class ThemeButton extends Button {
 		public ThemeButton(int x, int y, int width, int height) {
-			super(x, y, width, height, new TextComponent(AdventMainGui.theme.name()), button -> {});
+			super(x, y, width, height, Component.literal(AdventMainGui.theme.name()), button -> {});
 		}
 
 		@Override
 		public void onClick(double mouseX, double mouseY) {
 			AdventMainGui.changeTheme();
-			setMessage(new TextComponent(AdventMainGui.theme.name()));
+			setMessage(Component.literal(AdventMainGui.theme.name()));
 		}
 
 		@Override

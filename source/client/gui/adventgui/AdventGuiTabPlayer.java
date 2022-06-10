@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -52,7 +52,7 @@ public class AdventGuiTabPlayer extends Screen {
 	private long addCycleLastClicked = -1;
 
 	protected AdventGuiTabPlayer() {
-		super(new TranslatableComponent("gui.aoa3.adventGui.stats"));
+		super(Component.translatable("gui.aoa3.adventGui.stats"));
 	}
 
 	@Override
@@ -143,19 +143,19 @@ public class AdventGuiTabPlayer extends Screen {
 
 			matrix.popPose();
 
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillLevel", ""), 0, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillLevel", ""), 0, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, String.valueOf(abilityPane.skill.getLevel(true)), 0, 95, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXp", ""), 0, 120, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXp", ""), 0, 120, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, NumberUtil.roundToNthDecimalPlace(abilityPane.skill.getXp(), 2), 0, 135, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXpRemaining", ""), 0, 160, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXpRemaining", ""), 0, 160, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, NumberUtil.roundToNthDecimalPlace(PlayerUtil.getXpRequiredForNextLevel(abilityPane.skill.getLevel(true)) - abilityPane.skill.getXp(), 2), 0, 175, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillProgress", ""), 0, 200, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillProgress", ""), 0, 200, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, PlayerUtil.getLevelProgressPercentage(abilityPane.skill.getLevel(true), abilityPane.skill.getXp()) + "%", 0, 215, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillCycles", ""), 0, 240, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillCycles", ""), 0, 240, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 			RenderUtil.drawCenteredScaledString(matrix, font, String.valueOf(abilityPane.skill.getCycles()), 0, 255, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			if (abilityPane.skill.getLevel(true) >= 100 && abilityPane.skill.getCycles() < 10) {
-				TranslatableComponent text = addCycleLastClicked > 0 ? new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle.confirm") : new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle");
+				MutableComponent text = addCycleLastClicked > 0 ? Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle.confirm") : Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle");
 				int buttonWidth = font.width(text);
 				hoveringAddCycle = (adjustedMouseX > AdventMainGui.scaledTabRootX + (150 - skillRenderWidth / 2f) - (buttonWidth / 2f * 1.5f) && adjustedMouseX < AdventMainGui.scaledTabRootX + (150 - skillRenderWidth / 2f) + (buttonWidth / 2f * 1.5f) && adjustedMouseY > AdventMainGui.scaledTabRootY + 315 && adjustedMouseY < AdventMainGui.scaledTabRootY + 327);
 
@@ -170,7 +170,7 @@ public class AdventGuiTabPlayer extends Screen {
 
 			matrix.popPose();
 
-			RenderUtil.drawCenteredScaledMessage(matrix, font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.abilities"), 500, 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.abilities"), 500, 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			matrix.popPose();
 
@@ -188,7 +188,7 @@ public class AdventGuiTabPlayer extends Screen {
 		int totalLevel = ClientPlayerDataManager.get().getTotalLevel();
 
 		if (totalLevel == 0) {
-			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.noSkills"), 280, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.noSkills"), 280, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 
 			return;
 		}
@@ -197,7 +197,7 @@ public class AdventGuiTabPlayer extends Screen {
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, TOTAL_LEVEL_ICON);
 		RenderUtil.renderScaledCustomSizedTexture(matrix, 10, 14, 0, 0, 48, 48, 60, 60, 48, 48);
-		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, new TranslatableComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.totalLevel"), 40, 10, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.totalLevel"), 40, 10, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 		RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf(ClientPlayerDataManager.get().getTotalLevel()), 40, 40, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 	}
 

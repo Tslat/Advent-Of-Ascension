@@ -1,8 +1,6 @@
 package net.tslat.aoa3.content.item.misc;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -50,7 +48,7 @@ public class SkillCrystal extends Item {
 					heldStack.shrink(1);
 			}
 			else {
-				PlayerUtil.notifyPlayer(plData.player(), new TranslatableComponent("message.feedback.item.skillCrystal.levelFail", Integer.toString(lowerLimit)));
+				PlayerUtil.notifyPlayer(plData.player(), Component.translatable("message.feedback.item.skillCrystal.levelFail", Integer.toString(lowerLimit)));
 			}
 		}
 
@@ -60,6 +58,6 @@ public class SkillCrystal extends Item {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.skillCrystal.desc.1", LocaleUtil.ItemDescriptionType.NEUTRAL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.skillCrystal.desc.2", LocaleUtil.ItemDescriptionType.NEUTRAL, new TextComponent(Integer.toString(lowerLimit))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.skillCrystal.desc.2", LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(Integer.toString(lowerLimit))));
 	}
 }

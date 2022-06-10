@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.block.functional.altar;
 
-import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
@@ -82,7 +81,7 @@ public class GuardianAltar extends Block {
 				yellowGuardian.setRedGuardian(redGuardian);*/
 
 				for (Player pl : world.getEntitiesOfClass(Player.class, new AABB(pos.getX() - 25, pos.getY() - 25, pos.getZ() - 25, pos.getX() + 26, pos.getY() + 26, pos.getZ() + 26))) {
-					pl.sendMessage(LocaleUtil.getLocaleMessage("message.mob.four_guardians.spawn"), Util.NIL_UUID);
+					pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.mob.four_guardians.spawn"));
 				}
 			}
 

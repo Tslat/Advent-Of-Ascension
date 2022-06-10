@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.world.genold.feature.features.trees;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -10,7 +11,6 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
-import java.util.Random;
 import java.util.function.Supplier;
 
 public class RunicTreeFeature extends AoATreeFeature {
@@ -19,26 +19,21 @@ public class RunicTreeFeature extends AoATreeFeature {
 	}
 
 	@Override
-	protected boolean generateTree(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	protected boolean generateTree(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		BlockPos multiSaplingPos = findMultiSaplingPosition(reader, rand, pos, 2, isWorldGen);
 
-		switch (rand.nextInt(multiSaplingPos != null ? 5 : 4)) {
-			case 0:
-				return generateTree1(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
-			case 1:
-				return generateTree2(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
-			case 2:
-				return generateTree3(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
-			case 3:
-				return generateTree4(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
-			case 4:
-				return generateTree5(reader, rand, multiSaplingPos, isWorldGen);
-		}
+		return switch (rand.nextInt(multiSaplingPos != null ? 5 : 4)) {
+			case 0 -> generateTree1(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
+			case 1 -> generateTree2(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
+			case 2 -> generateTree3(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
+			case 3 -> generateTree4(reader, rand, multiSaplingPos == null ? pos : multiSaplingPos, isWorldGen);
+			case 4 -> generateTree5(reader, rand, multiSaplingPos, isWorldGen);
+			default -> false;
+		};
 
-		return false;
 	}
 
-	private boolean generateTree1(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree1(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 4 + rand.nextInt(5);
 		int leafHeight = 2 + rand.nextInt(3);
 
@@ -72,7 +67,7 @@ public class RunicTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree2(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree2(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 4 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight + 3, 1, isWorldGen))
@@ -114,7 +109,7 @@ public class RunicTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree3(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree3(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 7 + rand.nextInt(6);
 		int bulbWidth = 3 + rand.nextInt(2);
 
@@ -158,7 +153,7 @@ public class RunicTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree4(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree4(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 9 + rand.nextInt(6);
 
 		if (!checkSafeHeight(reader, pos, trunkHeight, 1, isWorldGen))
@@ -206,7 +201,7 @@ public class RunicTreeFeature extends AoATreeFeature {
 		return true;
 	}
 
-	private boolean generateTree5(WorldGenLevel reader, Random rand, BlockPos pos, boolean isWorldGen) {
+	private boolean generateTree5(WorldGenLevel reader, RandomSource rand, BlockPos pos, boolean isWorldGen) {
 		int trunkHeight = 4 + rand.nextInt(5);
 		int leafHeight = 2 + rand.nextInt(5);
 

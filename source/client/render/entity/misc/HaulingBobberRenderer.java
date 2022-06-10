@@ -80,7 +80,7 @@ public class HaulingBobberRenderer extends FishingHookRenderer {
 		float eyeHeight;
 
 		if ((this.entityRenderDispatcher.options == null || this.entityRenderDispatcher.options.getCameraType().isFirstPerson()) && player == Minecraft.getInstance().player) {
-			double fovScale = 960d / this.entityRenderDispatcher.options.fov;
+			double fovScale = 960d / (float)this.entityRenderDispatcher.options.fov().get();
 			Vec3 firstPersonStartPos = this.entityRenderDispatcher.camera.getNearPlane().getPointOnPlane((float)sideMod * 0.525f, -0.1f);
 			firstPersonStartPos = firstPersonStartPos.scale(fovScale);
 			firstPersonStartPos = firstPersonStartPos.yRot(swingAngle * 0.5f);

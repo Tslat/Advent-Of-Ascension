@@ -3,7 +3,9 @@ package net.tslat.aoa3.player.ability;
 import com.google.gson.JsonObject;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
@@ -62,15 +64,15 @@ public class BlockConversion extends AoAAbility.Instance {
 	}
 
 	@Override
-	protected void updateDescription(TranslatableComponent defaultDescription) {
-		TranslatableComponent description;
+	protected void updateDescription(MutableComponent defaultDescription) {
+		MutableComponent description;
 		String suffix = radius > 0 ? "" : ".single";
 
 		if (this.interactionItem != null) {
-			description = new TranslatableComponent(defaultDescription.getKey() + suffix, this.radius, this.targetBlock.getName(), this.replacementBlock.getName(), this.interactionItem.getName(this.interactionItem.getDefaultInstance()));
+			description = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + suffix, this.radius, this.targetBlock.getName(), this.replacementBlock.getName(), this.interactionItem.getName(this.interactionItem.getDefaultInstance()));
 		}
 		else {
-			description = new TranslatableComponent(defaultDescription.getKey() + ".noItem" + suffix, this.radius, this.targetBlock.getName(), this.replacementBlock.getName());
+			description = Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey() + ".noItem" + suffix, this.radius, this.targetBlock.getName(), this.replacementBlock.getName());
 		}
 
 		super.updateDescription(description);
@@ -150,11 +152,11 @@ public class BlockConversion extends AoAAbility.Instance {
 
 		if (forClientSetup) {
 			data.putInt("radius", this.radius);
-			data.putString("target_block", this.targetBlock.getRegistryName().toString());
-			data.putString("replacement_block", this.replacementBlock.getRegistryName().toString());
+			data.putString("target_block", ForgeRegistries.BLOCKS.getKey(this.targetBlock).toString());
+			data.putString("replacement_block", ForgeRegistries.BLOCKS.getKey(this.replacementBlock).toString());
 
 			if (this.interactionItem != null)
-				data.putString("interaction_item", this.interactionItem.getRegistryName().toString());
+				data.putString("interaction_item", ForgeRegistries.ITEMS.getKey(this.interactionItem).toString());
 		}
 
 		return data;

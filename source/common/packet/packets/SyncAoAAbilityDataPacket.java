@@ -3,6 +3,7 @@ package net.tslat.aoa3.common.packet.packets;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -22,7 +23,7 @@ public class SyncAoAAbilityDataPacket implements AoAPacket {
 	}
 
 	public SyncAoAAbilityDataPacket(AoAAbility.Instance ability, String data) {
-		this.skillId = ability.getSkill().type().getRegistryName();
+		this.skillId = AoARegistries.AOA_SKILLS.getId(ability.getSkill().type());
 		this.abilityUniqueId = ability.getUniqueIdentifier();
 		this.data = data;
 	}

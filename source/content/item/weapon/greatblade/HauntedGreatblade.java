@@ -1,9 +1,8 @@
 package net.tslat.aoa3.content.item.weapon.greatblade;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -35,10 +34,10 @@ public class HauntedGreatblade extends BaseGreatblade {
 
 			((Player)entity).addEffect(new MobEffectInstance(effect, 600, 0, false, true));
 
-			TranslatableComponent component = LocaleUtil.getLocaleMessage("item.aoa3.haunted_greatblade.message." + RandomUtil.randomNumberBetween(1, 16), ChatFormatting.DARK_PURPLE);
+			MutableComponent component = LocaleUtil.getLocaleMessage("item.aoa3.haunted_greatblade.message." + RandomUtil.randomNumberBetween(1, 16), ChatFormatting.DARK_PURPLE);
 
 			component.getStyle().withItalic(true);
-			entity.sendMessage(component, Util.NIL_UUID);
+			entity.sendSystemMessage(component);
 		}
 	}
 
