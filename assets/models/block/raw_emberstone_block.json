@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "aoa3:block/emberstone_ore"
+    "all": "aoa3:block/raw_emberstone_block"
   }
 }

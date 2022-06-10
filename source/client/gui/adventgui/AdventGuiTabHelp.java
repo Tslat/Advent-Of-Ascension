@@ -31,25 +31,12 @@ public class AdventGuiTabHelp extends Screen {
 
 	@Override
 	protected void init() {
-		String language = Minecraft.getInstance().getLanguageManager().getSelected().getCode();
-		String wikiLink;
-		String wikiDownloadLink;
-
-		if (language.equals("zh_cn") || language.equals("zh_tw")) {
-			wikiLink = "https://adventofascension-zh.gamepedia.com/Advent_of_Ascension_Wiki";
-			wikiDownloadLink = "https://adventofascension-zh.gamepedia.com/%E4%B8%8B%E8%BD%BD";
-		}
-		else {
-			wikiLink = "https://adventofascension.gamepedia.com/Advent_of_Ascension_Wiki";
-			wikiDownloadLink = "https://adventofascension.gamepedia.com/Download";
-		}
-
 		addRenderableWidget(new ThemeButton(640, 35, 30, 40));
 		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 130, 76, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkDiscord"), stringToURI("https://discord.gg/DNYqNNq")));
-		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 170, 108, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkWiki"), stringToURI(wikiLink)));
+		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 170, 108, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkWiki"), stringToURI("https://adventofascension.gamepedia.com/Advent_of_Ascension_Wiki")));
 		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 210, 60, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkGithub"), stringToURI("https://github.com/Tslat/Advent-Of-Ascension")));
 		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 250, 80, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkPatreon"), stringToURI("https://www.patreon.com/Tslat")));
-		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 290, 68, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkUpdate"), stringToURI(wikiDownloadLink)));
+		addRenderableWidget(new WebLinkButton(getMinecraft(), 640, 290, 68, 18, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.linkUpdate"), stringToURI("https://adventofascension.gamepedia.com/Download")));
 	}
 
 	@Override

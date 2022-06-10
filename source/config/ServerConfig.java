@@ -63,7 +63,7 @@ public final class ServerConfig {
 		skillsLeaderboardEnabled = configBuilder
 				.comment("Set to false to disable the skills leaderboard entirely.", "NOTE: Disabling the leaderboard will prevent it from updating its data, and game data changes while the leaderboard is disabled will not be tracked if re-enabled.")
 				.translation("config.aoa3.server.skillsLeaderboardEnabled")
-				.define("skillsLeaderboardEnabled", true);
+				.define("skillsLeaderboardEnabled", false);
 
 		maxLeaderboardThreads = configBuilder
 				.comment("The amount of threads & connections to the skills database AoA will try to make. Less threads may produce a negligible memory usage improvement, and more threads may improve database performance on larger servers.", "You shouldn't need to change this unless you know what you're doing.")

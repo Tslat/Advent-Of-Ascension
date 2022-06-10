@@ -9,7 +9,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
@@ -162,7 +161,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 		this.fishingBonusMod *= fishingBonusModForBiomeCategory(Biome.getBiomeCategory(biome));
 
-		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
+		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(3, 2, 3), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
 		if (nearbyFluidBlocks <=  50) {
 			this.fishingBonusMod *= 0.5f;
@@ -171,7 +170,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 				this.fishingBonusMod *= 0.5f;
 		}
 
-		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0035f);
+		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0025f);
 		this.fishingBonusMod += 0.25f * lure;
 
 		if (!WorldUtil.getAllPlayersInRegion(level, getBoundingBox().inflate(5)).isEmpty())
@@ -400,15 +399,15 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		int minTime = minLureTime();
 		int maxTime = maxLureTime();
 
-		if (fishingBonusMod < 1) {
-			minTime /= fishingBonusMod * 2f;
-			maxTime /= fishingBonusMod * 3f;
+		if (fishingBonusMod < 0.9f) {
+			minTime /= fishingBonusMod / 2f;
+			maxTime /= fishingBonusMod / 3f;
 		}
 		else {
 			maxTime /= fishingBonusMod;
 		}
 
-		timeUntilFishSpawn = Mth.nextInt(random, minTime, minTime + 50 + (maxTime - minTime));
+		timeUntilFishSpawn = RandomUtil.randomNumberBetween(minTime, Math.max(minTime + 50, maxTime));
 	}
 
 	protected void stopFishing() {

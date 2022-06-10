@@ -16,6 +16,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 public class SandGiantEntity extends AoAMeleeMob {
 	public SandGiantEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
+
+		this.maxUpStep = 1.5f;
 	}
 
 	@Override

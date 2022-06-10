@@ -2,7 +2,7 @@ package net.tslat.aoa3.client.gui.container;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.ChestMenu;
@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.function.Consumer;
 
-public class SelectInventoryItemScreen extends AbstractContainerScreen {
+public class SelectInventoryItemScreen extends ContainerScreen {
 	@Nullable
 	private final Item currentItem;
 	private final Consumer<Item> selectionConsumer;
@@ -55,9 +55,6 @@ public class SelectInventoryItemScreen extends AbstractContainerScreen {
 			}
 		}
 	}
-
-	@Override
-	protected void renderBg(PoseStack poseStack, float partialTicks, int mouseX, int mouseY) {}
 
 	@Override
 	protected void renderTooltip(PoseStack matrixStack, int x, int y) {

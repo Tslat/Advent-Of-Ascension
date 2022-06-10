@@ -2,29 +2,44 @@
   "type": "minecraft:entity",
   "pools": [
     {
+      "name": "world_table",
       "rolls": 1.0,
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:loot_table",
+          "weight": 100,
           "name": "aoa3:worlds/overworld"
         }
       ]
     },
     {
-      "name": "stone",
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
+      "name": "ice",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 3.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 5,
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 34.0
+                "min": 20.0,
+                "max": 44.0
               },
               "add": false
             },
@@ -37,7 +52,142 @@
               }
             }
           ],
+          "name": "minecraft:flint"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 40.0,
+                "max": 64.0
+              },
+              "add": false
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 5.0,
+                "max": 15.0
+              }
+            }
+          ],
           "name": "minecraft:stone"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 40.0,
+                "max": 64.0
+              },
+              "add": false
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 5.0,
+                "max": 15.0
+              }
+            }
+          ],
+          "name": "minecraft:cobblestone"
+        }
+      ]
+    },
+    {
+      "name": "rares",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "min": 1.0,
+        "max": 2.0
+      },
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "min": 0.0,
+        "max": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 75
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 4.0,
+                "max": 8.0
+              },
+              "add": false
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 3.0
+              }
+            }
+          ],
+          "name": "minecraft:gold_ingot"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 2.0
+              },
+              "add": false
+            }
+          ],
+          "name": "aoa3:small_skill_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:silver_coin"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 5.0,
+                "max": 10.0
+              },
+              "add": false
+            },
+            {
+              "function": "minecraft:looting_enchant",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 1.0,
+                "max": 2.0
+              }
+            }
+          ],
+          "name": "minecraft:diamond"
         }
       ]
     }

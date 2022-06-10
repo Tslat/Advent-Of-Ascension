@@ -3,43 +3,43 @@ package net.tslat.aoa3.leaderboard.task;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.leaderboard.LeaderboardTask;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
+import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.player.skill.AoASkill;
 import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-public class InitializeLeaderboardTask extends LeaderboardTask {
+public class InitializeLeaderboardTask extends InsertionTask {
 	@Override
-	protected void execute(Connection connection) {
+	public void execute(Connection connection, InsertionConnection leaderboardConnection) {
+		beginBatchUpdate(connection);
+
 		try {
-			beginBatchUpdate(connection);
+			if (AoAConfig.SERVER.dontCacheDatabase.get())
+				leaderboardConnection.runStatement(connection, "SET DATABASE DEFAULT TABLE TYPE TEXT;");
+
+			leaderboardConnection.runStatement(connection, "CREATE TABLE IF NOT EXISTS Totals (Uuid NCHAR(36), Username VARCHCHAR(20), Total INT, LastUpdate DATE)");
 
 			if (AoAConfig.SERVER.dontCacheDatabase.get())
-				runStatement(connection, "SET DATABASE DEFAULT TABLE TYPE TEXT;");
-
-			runStatement(connection, "CREATE TABLE IF NOT EXISTS Totals (Uuid UUID, Username VARCHCHAR(16), Total INT, LastUpdate DATE)");
-
-			if (AoAConfig.SERVER.dontCacheDatabase.get())
-				runStatement(connection, "SET TABLE Totals TYPE TEXT");
+				leaderboardConnection.runStatement(connection, "SET TABLE Totals TYPE TEXT");
 
 			for (AoASkill skill : AoARegistries.AOA_SKILLS.getAllRegisteredObjects()) {
 				String tableName = idToTableName(skill.getRegistryName());
 
-				runStatement(connection, "CREATE TABLE IF NOT EXISTS " + tableName + " (Uuid UUID, Username VARCHCHAR(16), Level SMALLINT, LastUpdate DATE)");
+				leaderboardConnection.runStatement(connection, "CREATE TABLE IF NOT EXISTS " + tableName + " (Uuid NCHAR(36), Username VARCHCHAR(20), Level SMALLINT, LastUpdate DATE)");
 
 				if (AoAConfig.SERVER.dontCacheDatabase.get())
-					runStatement(connection, "SET TABLE " + tableName + " TYPE TEXT");
+					leaderboardConnection.runStatement(connection, "SET TABLE " + tableName + " TYPE TEXT");
 			}
-
-			endBatchUpdate(connection);
 		}
 		catch (SQLException ex) {
 			Logging.logMessage(Level.ERROR, "Error while initializing leaderboard tables. Shutting down leaderboard.", ex);
 
 			SkillsLeaderboard.shutdown();
 		}
+
+		endBatchUpdate(connection);
 	}
 }

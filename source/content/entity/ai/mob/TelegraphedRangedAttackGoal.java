@@ -19,7 +19,7 @@ public class TelegraphedRangedAttackGoal<T extends Mob & RangedAttackMob> extend
 
 	public int attackCooldownTimer;
 	private LivingEntity target = null;
-	private int attackTime = -1;
+	private int attackTime = 1;
 	private int seeTime;
 
 
@@ -80,7 +80,7 @@ public class TelegraphedRangedAttackGoal<T extends Mob & RangedAttackMob> extend
 	public void stop() {
 		this.target = null;
 		this.seeTime = 0;
-		this.attackTime = -1;
+		this.attackTime = 1;
 	}
 
 	@Override

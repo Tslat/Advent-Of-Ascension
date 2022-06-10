@@ -57,6 +57,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> VARSIUM_INGOT = registerItem("varsium_ingot", miscItem());
 
 	public static final RegistryObject<Item> RAW_LIMONITE = registerItem("raw_limonite", miscItem());
+	public static final RegistryObject<Item> RAW_EMBERSTONE = registerItem("raw_emberstone", miscItem());
 
 	public static final RegistryObject<Item> BARONYTE_NUGGET = registerItem("baronyte_nugget", miscItem());
 	public static final RegistryObject<Item> BLAZIUM_NUGGET = registerItem("blazium_nugget", miscItem());

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "EE",
+    " S",
+    " S"
+  ],
+  "key": {
+    "E": {
+      "tag": "forge:ingots/emberstone"
+    },
+    "S": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "aoa3:emberstone_hoe"
+  }
+}

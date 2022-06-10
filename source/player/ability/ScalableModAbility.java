@@ -50,7 +50,7 @@ public abstract class ScalableModAbility extends AoAAbility.Instance {
 	}
 
 	protected TranslatableComponent getScalingDescriptionComponent(int precision) {
-		return LocaleUtil.getAbilityValueDesc(baseValue > 0, perLevelMod > 0, isPercent(),
+		return LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, isPercent(),
 				NumberUtil.roundToNthDecimalPlace(baseValue * (isPercent() ? 100 : 1), precision),
 				NumberUtil.roundToNthDecimalPlace(perLevelMod * (isPercent() ? 100 : 1), precision),
 				new DynamicTextComponent(() -> NumberUtil.roundToNthDecimalPlace(getScaledValue() * (isPercent() ? 100 : 1), precision)));

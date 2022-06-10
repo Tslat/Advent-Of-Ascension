@@ -82,6 +82,7 @@ public final class AoAEntitySpawns {
     public static void populateOverworldSpawnEntries() {
         new SpawnEntry(AoAMobs.ICE_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
         new SpawnEntry(AoAMobs.LEAFY_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.CONIFEROUS).ignoreBiomes(BiomeDictionary.Type.SNOWY).placeMonster();
+        new SpawnEntry(AoAMobs.STONE_GIANT.get(), 1).groupSize(-50, 1).matchBiomes(BiomeDictionary.Type.MOUNTAIN).ignoreBiomes(BiomeDictionary.Type.SNOWY, BiomeDictionary.Type.LUSH).placeMonster();
 
         new SpawnEntry(AoAAnimals.SHINY_SQUID.get(), 1).groupSize(-1000, 1).matchBiomes(BiomeDictionary.Type.OCEAN).place(IN_WATER, MOTION_BLOCKING_NO_LEAVES, GlowSquid::checkGlowSquideSpawnRules);
 

@@ -57,10 +57,7 @@ public final class NumberUtil {
 		if (y != 0 && y < minY || y > maxY)
 			return false;
 
-		if (z != 0 && z < minZ || z > maxZ)
-			return false;
-
-		return true;
+		return (z == 0 || z >= minZ) && z <= maxZ;
 	}
 
 	public static boolean numberIsBetween(double value, double min, double max) {
