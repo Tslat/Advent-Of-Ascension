@@ -2,18 +2,11 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:pink_havendales"
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:alternative",
@@ -39,7 +32,14 @@
             }
           ]
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:pink_havendales"
+        }
+      ],
+      "rolls": 1.0
     }
   ]
 }

@@ -2,11 +2,10 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -21,27 +20,28 @@
         },
         {
           "function": "minecraft:copy_nbt",
-          "source": "this",
           "ops": [
             {
+              "op": "replace",
               "source": "EntityID",
-              "target": "BlockEntityTag.EntityID",
-              "op": "replace"
+              "target": "BlockEntityTag.EntityID"
             }
-          ]
+          ],
+          "source": "this"
         },
         {
           "function": "minecraft:copy_nbt",
-          "source": "this",
           "ops": [
             {
+              "op": "replace",
               "source": "OriginalTrophy",
-              "target": "BlockEntityTag.OriginalTrophy",
-              "op": "replace"
+              "target": "BlockEntityTag.OriginalTrophy"
             }
-          ]
+          ],
+          "source": "this"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

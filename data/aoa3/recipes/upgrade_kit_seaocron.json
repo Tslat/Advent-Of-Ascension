@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:orbocron"
   },
-  "upgrade_kit": {
-    "item": "aoa3:seaside_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:seaocron"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:seaside_upgrade_kit"
   }
 }

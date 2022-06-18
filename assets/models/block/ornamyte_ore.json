@@ -1,8 +1,8 @@
 {
   "parent": "aoa3:block/overlay_cube",
   "textures": {
-    "texture": "aoa3:block/primed_stone",
+    "overlay": "aoa3:block/ornamyte_ore",
     "particle": "aoa3:block/primed_stone",
-    "overlay": "aoa3:block/ornamyte_ore"
+    "texture": "aoa3:block/primed_stone"
   }
 }

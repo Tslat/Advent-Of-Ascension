@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/deeplands"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,10 +20,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 18,
-          "name": "aoa3:chitin"
+          "name": "aoa3:chitin",
+          "weight": 18
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

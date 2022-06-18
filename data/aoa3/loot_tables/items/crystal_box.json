@@ -2,35 +2,35 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "crystals",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:giant_skill_crystal"
+          "name": "aoa3:giant_skill_crystal",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
-          "name": "aoa3:large_skill_crystal"
+          "name": "aoa3:large_skill_crystal",
+          "weight": 40
         },
         {
           "type": "minecraft:item",
-          "weight": 130,
-          "name": "aoa3:medium_skill_crystal"
+          "name": "aoa3:medium_skill_crystal",
+          "weight": 130
         },
         {
           "type": "minecraft:item",
-          "weight": 280,
-          "name": "aoa3:small_skill_crystal"
+          "name": "aoa3:small_skill_crystal",
+          "weight": 280
         }
-      ]
+      ],
+      "name": "crystals",
+      "rolls": 1.0
     }
   ]
 }

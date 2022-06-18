@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:construct"
   },
-  "upgrade_kit": {
-    "item": "aoa3:lelyetian_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:hiver"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:lelyetian_upgrade_kit"
   }
 }

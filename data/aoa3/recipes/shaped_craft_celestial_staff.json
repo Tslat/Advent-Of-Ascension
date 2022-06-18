@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    "A A",
-    " B "
-  ],
   "key": {
     "A": {
       "tag": "forge:gems/crystallite"
@@ -13,6 +8,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    " A ",
+    "A A",
+    " B "
+  ],
   "result": {
     "item": "aoa3:celestial_staff"
   }

@@ -1,7 +1,7 @@
 {
-  "id": "mysterium",
   "gui_x": 927,
   "gui_y": 295,
+  "id": "mysterium",
   "parents": [
     "creeponia"
   ]

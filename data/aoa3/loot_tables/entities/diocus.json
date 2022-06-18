@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/precasia"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,74 +20,76 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 27,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:bone"
+          "name": "minecraft:bone",
+          "weight": 27
         },
         {
           "type": "minecraft:item",
-          "weight": 23,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:leather"
+          "name": "minecraft:leather",
+          "weight": 23
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:mini_cannon"
+          "name": "aoa3:mini_cannon",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 19,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:beef"
+          "name": "minecraft:beef",
+          "weight": 19
         },
         {
           "type": "minecraft:item",
-          "weight": 21,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:string"
+          "name": "minecraft:string",
+          "weight": 21
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

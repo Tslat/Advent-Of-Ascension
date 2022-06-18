@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX",
-    "XX"
-  ],
   "key": {
     "X": {
       "item": "aoa3:stripped_irolog"
     }
   },
+  "pattern": [
+    "XX",
+    "XX"
+  ],
   "result": {
-    "item": "aoa3:stripped_irowood",
-    "count": 3
+    "count": 3,
+    "item": "aoa3:stripped_irowood"
   }
 }

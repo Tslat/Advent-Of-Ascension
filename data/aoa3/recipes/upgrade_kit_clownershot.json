@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:overshot"
   },
-  "upgrade_kit": {
-    "item": "aoa3:clown_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:clownershot"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:clown_upgrade_kit"
   }
 }

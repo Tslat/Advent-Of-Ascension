@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XXX",
-    "XXX"
-  ],
   "key": {
     "X": {
       "item": "aoa3:patterned_redstone_ivory"
     }
   },
+  "pattern": [
+    "XXX",
+    "XXX"
+  ],
   "result": {
-    "item": "aoa3:patterned_redstone_ivory_wall",
-    "count": 6
+    "count": 6,
+    "item": "aoa3:patterned_redstone_ivory_wall"
   }
 }

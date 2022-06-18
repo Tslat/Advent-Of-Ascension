@@ -1,37 +1,37 @@
 {
-  "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:entity_tag_damage_bonus_melee",
-      "unique_id": "1599275703",
       "base_value": 0.2,
+      "id": "aoa3:entity_tag_damage_bonus_melee",
+      "level_req": 42,
       "per_level_mod": 0.0,
       "tag": "forge:weak_to_melee",
-      "level_req": 42
+      "unique_id": "1599275703"
     },
     {
-      "id": "aoa3:entity_tag_damage_bonus_projectile",
-      "unique_id": "-509260342",
       "base_value": 0.2,
+      "id": "aoa3:entity_tag_damage_bonus_projectile",
+      "level_req": 55,
       "per_level_mod": 0.0,
       "tag": "forge:weak_to_ranged",
-      "level_req": 55
+      "unique_id": "-509260342"
     },
     {
-      "id": "aoa3:entity_tag_damage_bonus_explosion",
-      "unique_id": "941273794",
       "base_value": 0.2,
+      "id": "aoa3:entity_tag_damage_bonus_explosion",
+      "level_req": 68,
       "per_level_mod": 0.0,
       "tag": "forge:weak_to_explosions",
-      "level_req": 68
+      "unique_id": "941273794"
     },
     {
-      "id": "aoa3:entity_tag_damage_bonus_magic",
-      "unique_id": "-2093520402",
       "base_value": 0.2,
+      "id": "aoa3:entity_tag_damage_bonus_magic",
+      "level_req": 83,
       "per_level_mod": 0.0,
       "tag": "forge:weak_to_magic",
-      "level_req": 83
+      "unique_id": "-2093520402"
     }
-  ]
+  ],
+  "xp_modifier": 1.0
 }

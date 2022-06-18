@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "DCD",
-    "EAE",
-    " B "
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/shyrestone"
@@ -22,6 +17,11 @@
       "item": "minecraft:ender_pearl"
     }
   },
+  "pattern": [
+    "DCD",
+    "EAE",
+    " B "
+  ],
   "result": {
     "item": "aoa3:shyre_staff"
   }

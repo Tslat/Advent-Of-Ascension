@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:mechyro"
   },
-  "upgrade_kit": {
-    "item": "aoa3:abyssal_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:abyssro"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:abyssal_upgrade_kit"
   }
 }

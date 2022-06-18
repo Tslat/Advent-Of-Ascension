@@ -1,13 +1,13 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "XX"
-  ],
   "key": {
     "X": {
       "item": "aoa3:achony_planks"
     }
   },
+  "pattern": [
+    "XX"
+  ],
   "result": {
     "item": "aoa3:achony_pressure_plate"
   }

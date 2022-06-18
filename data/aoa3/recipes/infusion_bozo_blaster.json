@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:confetti_pile"
@@ -23,6 +20,9 @@
       "tag": "forge:gunpowder"
     }
   ],
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
   "result": {
     "item": "aoa3:bozo_blaster"
   }

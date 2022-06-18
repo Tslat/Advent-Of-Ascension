@@ -1,83 +1,83 @@
 {
-  "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:fishing_xp_boost",
-      "unique_id": "-1580201954",
       "base_value": 1.0,
+      "id": "aoa3:fishing_xp_boost",
+      "level_req": 8,
       "per_level_mod": 0.0,
-      "level_req": 8
+      "unique_id": "-1580201954"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "1485830590",
-      "restrictions": [
-        "equip"
-      ],
       "level_req": 15,
-      "restricted_id": "aoa3:hauling_rod"
+      "restricted_id": "aoa3:hauling_rod",
+      "restrictions": [
+        "equip"
+      ],
+      "unique_id": "1485830590"
     },
     {
-      "id": "aoa3:fishing_trap_spawn",
-      "unique_id": "135142147",
       "base_value": 0.05,
+      "id": "aoa3:fishing_trap_spawn",
+      "level_req": 25,
       "per_level_mod": -0.0035,
-      "level_req": 25
+      "unique_id": "135142147"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "1276175481",
-      "restrictions": [
-        "equip"
-      ],
       "level_req": 31,
-      "restricted_id": "aoa3:fishing_cage"
-    },
-    {
-      "id": "aoa3:hauling_rod_pull_strength",
-      "unique_id": "1276940119",
-      "base_value": 0.0,
-      "per_level_mod": 0.0025,
-      "level_req": 45
-    },
-    {
-      "id": "aoa3:level_restriction",
-      "unique_id": "-818450273",
+      "restricted_id": "aoa3:fishing_cage",
       "restrictions": [
         "equip"
       ],
+      "unique_id": "1276175481"
+    },
+    {
+      "base_value": 0.0,
+      "id": "aoa3:hauling_rod_pull_strength",
+      "level_req": 45,
+      "per_level_mod": 0.0025,
+      "unique_id": "1276940119"
+    },
+    {
+      "id": "aoa3:level_restriction",
       "level_req": 54,
-      "restricted_id": "aoa3:thermally_insulated_rod"
+      "restricted_id": "aoa3:thermally_insulated_rod",
+      "restrictions": [
+        "equip"
+      ],
+      "unique_id": "-818450273"
     },
     {
       "id": "aoa3:hauling_glowing_fish",
-      "unique_id": "218637460",
-      "level_req": 60
+      "level_req": 60,
+      "unique_id": "218637460"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "-1363353400",
-      "restrictions": [
-        "equip"
-      ],
       "level_req": 69,
-      "restricted_id": "aoa3:light_rod"
-    },
-    {
-      "id": "aoa3:hauling_rod_pull_damage",
-      "unique_id": "-496987384",
-      "base_value": 3.0,
-      "per_level_mod": 0.0,
-      "level_req": 77
-    },
-    {
-      "id": "aoa3:level_restriction",
-      "unique_id": "1539846777",
+      "restricted_id": "aoa3:light_rod",
       "restrictions": [
         "equip"
       ],
+      "unique_id": "-1363353400"
+    },
+    {
+      "base_value": 3.0,
+      "id": "aoa3:hauling_rod_pull_damage",
+      "level_req": 77,
+      "per_level_mod": 0.0,
+      "unique_id": "-496987384"
+    },
+    {
+      "id": "aoa3:level_restriction",
       "level_req": 100,
-      "restricted_id": "aoa3:helm_of_the_trawler"
+      "restricted_id": "aoa3:helm_of_the_trawler",
+      "restrictions": [
+        "equip"
+      ],
+      "unique_id": "1539846777"
     }
-  ]
+  ],
+  "xp_modifier": 1.0
 }

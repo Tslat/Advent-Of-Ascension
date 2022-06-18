@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 1,
   "ingredient": {
     "item": "aoa3:archaic_tile_stream"
   },
-  "result": "aoa3:archaic_tile_stream_stairs",
-  "count": 1
+  "result": "aoa3:archaic_tile_stream_stairs"
 }

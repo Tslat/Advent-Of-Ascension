@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "JJ",
-    " S",
-    " S"
-  ],
   "key": {
     "J": {
       "tag": "forge:gems/jade"
@@ -13,6 +8,11 @@
       "tag": "forge:rods/wooden"
     }
   },
+  "pattern": [
+    "JJ",
+    " S",
+    " S"
+  ],
   "result": {
     "item": "aoa3:jade_hoe"
   }

@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " AB",
-    "A B",
-    " AB"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/skeletal"
@@ -13,6 +8,11 @@
       "tag": "forge:string"
     }
   },
+  "pattern": [
+    " AB",
+    "A B",
+    " AB"
+  ],
   "result": {
     "item": "aoa3:skeletal_bow"
   }

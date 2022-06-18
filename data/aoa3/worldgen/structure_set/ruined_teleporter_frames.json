@@ -1,14 +1,14 @@
 {
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 1663101028,
+    "separation": 8,
+    "spacing": 12
+  },
   "structures": [
     {
       "structure": "aoa3:ruined_teleporter_frame",
       "weight": 1
     }
-  ],
-  "placement": {
-    "salt": 1663101028,
-    "spacing": 12,
-    "separation": 8,
-    "type": "minecraft:random_spread"
-  }
+  ]
 }

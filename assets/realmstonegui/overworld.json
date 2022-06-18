@@ -1,5 +1,5 @@
 {
-  "id": "overworld",
   "gui_x": 827,
-  "gui_y": 695
+  "gui_y": 695,
+  "id": "overworld"
 }

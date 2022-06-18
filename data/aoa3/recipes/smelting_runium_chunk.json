@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 2.0,
   "ingredient": {
     "item": "aoa3:runium_ore"
   },
-  "result": "aoa3:runium_chunk",
-  "experience": 2.0,
-  "cookingtime": 200
+  "result": "aoa3:runium_chunk"
 }

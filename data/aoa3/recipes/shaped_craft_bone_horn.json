@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  E",
-    "  D",
-    "ABC"
-  ],
   "key": {
     "A": {
       "item": "aoa3:ivory"
@@ -22,6 +17,11 @@
       "item": "aoa3:skullbone_fragment"
     }
   },
+  "pattern": [
+    "  E",
+    "  D",
+    "ABC"
+  ],
   "result": {
     "item": "aoa3:bone_horn"
   }

@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A A",
-    "BCB"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/iron"
@@ -15,6 +11,10 @@
       "tag": "forge:ingots/emberstone"
     }
   },
+  "pattern": [
+    "A A",
+    "BCB"
+  ],
   "result": {
     "item": "aoa3:metal_tub"
   }

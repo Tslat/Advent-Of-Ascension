@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "golden_carrots",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,44 +10,44 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "minecraft:golden_carrot"
+          "name": "minecraft:golden_carrot",
+          "weight": 25
         }
-      ]
+      ],
+      "name": "golden_carrots",
+      "rolls": 1.0
     },
     {
-      "name": "carrots",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 0.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:looting_enchant",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 1.0
-              }
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:carrot"
         }
-      ]
+      ],
+      "name": "carrots",
+      "rolls": 1.0
     },
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -58,20 +56,22 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:small_orange_petal"
+          "name": "aoa3:small_orange_petal",
+          "weight": 20
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/gardencia"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

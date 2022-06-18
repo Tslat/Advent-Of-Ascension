@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " I ",
-    "RXR",
-    " R "
-  ],
   "key": {
+    "I": {
+      "tag": "forge:ivory"
+    },
     "R": {
       "tag": "forge:dusts/redstone"
     },
     "X": {
       "tag": "forge:dusts/redstone"
-    },
-    "I": {
-      "tag": "forge:ivory"
     }
   },
+  "pattern": [
+    " I ",
+    "RXR",
+    " R "
+  ],
   "result": {
     "item": "aoa3:ivory_redstone_lamp"
   }

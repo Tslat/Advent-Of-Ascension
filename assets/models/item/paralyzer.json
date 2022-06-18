@@ -1,22 +1,22 @@
 {
   "parent": "aoa3:item/gun",
-  "textures": {
-    "layer0": "aoa3:item/paralyzer"
-  },
   "overrides": [
     {
+      "model": "aoa3:item/paralyzer_0",
       "predicate": {
         "minecraft:firing": 1.0,
         "minecraft:firing_tick_modulo": 1.0
-      },
-      "model": "aoa3:item/paralyzer_0"
+      }
     },
     {
+      "model": "aoa3:item/paralyzer_1",
       "predicate": {
         "minecraft:firing": 1.0,
         "minecraft:firing_tick_modulo": 2.0
-      },
-      "model": "aoa3:item/paralyzer_1"
+      }
     }
-  ]
+  ],
+  "textures": {
+    "layer0": "aoa3:item/paralyzer"
+  }
 }

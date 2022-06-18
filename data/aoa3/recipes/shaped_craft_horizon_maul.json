@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ABA",
-    " C ",
-    " C "
-  ],
   "key": {
     "A": {
       "item": "aoa3:floating_stone"
@@ -16,6 +11,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    "ABA",
+    " C ",
+    " C "
+  ],
   "result": {
     "item": "aoa3:horizon_maul"
   }

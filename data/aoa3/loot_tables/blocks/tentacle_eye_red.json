@@ -1,24 +1,17 @@
 {
   "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "minecraft:explosion_decay"
+    }
+  ],
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "weight": 19,
-          "name": "aoa3:tentacle_eye_red"
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:staring_eye"
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:inverted",
@@ -36,21 +29,26 @@
             }
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aoa3:tentacle_eye_red"
+          "name": "aoa3:tentacle_eye_red",
+          "weight": 19
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:staring_eye"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:match_tool",
@@ -65,12 +63,14 @@
             ]
           }
         }
-      ]
-    }
-  ],
-  "functions": [
-    {
-      "function": "minecraft:explosion_decay"
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:tentacle_eye_red"
+        }
+      ],
+      "rolls": 1.0
     }
   ]
 }

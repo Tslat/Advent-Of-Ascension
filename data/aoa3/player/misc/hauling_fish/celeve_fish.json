@@ -4,69 +4,69 @@
   ],
   "entities": [
     {
+      "entity": "minecraft:tropical_fish",
       "weight": 200,
-      "weight_mod": -5.0,
-      "entity": "minecraft:tropical_fish"
+      "weight_mod": -5.0
     },
     {
+      "entity": "minecraft:pufferfish",
       "level": 5,
-      "weight": 180,
-      "entity": "minecraft:pufferfish"
+      "weight": 180
     },
     {
+      "entity": "aoa3:rainbowfish",
       "weight": 50,
-      "weight_mod": 10.0,
-      "entity": "aoa3:rainbowfish"
+      "weight_mod": 10.0
     },
     {
+      "entity": "aoa3:sailback",
       "weight": 140,
-      "weight_mod": 20.0,
-      "entity": "aoa3:sailback"
+      "weight_mod": 20.0
     },
     {
+      "item": "aoa3:confetti_pile",
       "weight": 90,
-      "weight_mod": 10.0,
-      "item": "aoa3:confetti_pile"
+      "weight_mod": 10.0
     },
     {
+      "item": "minecraft:name_tag",
       "level": 5,
-      "weight": 100,
-      "item": "minecraft:name_tag"
+      "weight": 100
     },
     {
+      "item": "minecraft:leather",
       "level": 14,
       "weight": 120,
-      "weight_mod": -20.0,
-      "item": "minecraft:leather"
+      "weight_mod": -20.0
     },
     {
+      "item": "aoa3:gem_bag",
       "level": 15,
       "weight": 35,
-      "weight_mod": 5.0,
-      "item": "aoa3:gem_bag"
+      "weight_mod": 5.0
     },
     {
+      "item": "aoa3:shiny_box",
       "level": 10,
       "weight": 35,
-      "weight_mod": 5.0,
-      "item": "aoa3:shiny_box"
+      "weight_mod": 5.0
     },
     {
+      "item": "aoa3:treasure_box",
       "level": 30,
       "weight": 35,
-      "weight_mod": 5.0,
-      "item": "aoa3:treasure_box"
+      "weight_mod": 5.0
     },
     {
+      "item": "aoa3:weapons_case",
       "level": 20,
       "weight": 35,
-      "weight_mod": 5.0,
-      "item": "aoa3:weapons_case"
+      "weight_mod": 5.0
     },
     {
+      "item": "aoa3:old_boot",
       "level": 50,
-      "weight_mod": 2.0,
-      "item": "aoa3:old_boot"
+      "weight_mod": 2.0
     },
     {
       "item": "minecraft:water_bucket"

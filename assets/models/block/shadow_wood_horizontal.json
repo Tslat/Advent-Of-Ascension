@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
-    "side": "aoa3:block/shadow_log",
-    "end": "aoa3:block/shadow_log"
+    "end": "aoa3:block/shadow_log",
+    "side": "aoa3:block/shadow_log"
   }
 }

@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:boulder_bomber"
   },
-  "upgrade_kit": {
-    "item": "aoa3:golden_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:golder_bomber"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:golden_upgrade_kit"
   }
 }

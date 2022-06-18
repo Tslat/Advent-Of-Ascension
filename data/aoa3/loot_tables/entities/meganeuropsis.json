@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,10 +10,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:chitin"
+          "name": "aoa3:chitin",
+          "weight": 5
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

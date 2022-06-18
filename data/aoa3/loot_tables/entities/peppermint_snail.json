@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,15 +10,17 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:sticky_slime"
+          "name": "aoa3:sticky_slime",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
-          "name": "aoa3:peppermint_candy"
+          "name": "aoa3:peppermint_candy",
+          "weight": 30
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:jungle_thorns"
@@ -23,6 +20,9 @@
       "tag": "aoa3:precasian_bone"
     }
   ],
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
   "result": {
     "item": "aoa3:bone_blaster"
   }

@@ -2,12 +2,10 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "coins",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -16,15 +14,17 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:copper_coin"
+          "name": "aoa3:copper_coin",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:silver_coin"
+          "name": "aoa3:silver_coin",
+          "weight": 10
         }
-      ]
+      ],
+      "name": "coins",
+      "rolls": 1.0
     }
   ]
 }

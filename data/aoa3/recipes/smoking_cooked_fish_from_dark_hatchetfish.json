@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smoking",
+  "cookingtime": 100,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:dark_hatchetfish"
   },
-  "result": "aoa3:cooked_fish",
-  "experience": 3.0,
-  "cookingtime": 100
+  "result": "aoa3:cooked_fish"
 }

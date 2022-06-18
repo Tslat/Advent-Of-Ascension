@@ -26,102 +26,102 @@
         -135,
         0
       ],
-      "translation": [
-        0,
-        2.5,
-        0
-      ],
       "scale": [
         0.375,
         0.375,
         0.375
+      ],
+      "translation": [
+        0,
+        2.5,
+        0
       ]
     }
   },
-  "textures": {
-    "bottom": "aoa3:block/archaic_tile_stream",
-    "top": "aoa3:block/archaic_tile_stream_top",
-    "particle": "aoa3:block/archaic_tile_stream"
-  },
   "elements": [
     {
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        8,
-        16
-      ],
       "faces": {
         "down": {
-          "texture": "#bottom",
           "cullface": "down",
-          "rotation": 270
-        },
-        "up": {
-          "texture": "#bottom",
-          "rotation": 90
-        },
-        "north": {
-          "texture": "#top",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#top",
-          "cullface": "south"
-        },
-        "west": {
-          "texture": "#bottom",
-          "cullface": "west"
+          "rotation": 270,
+          "texture": "#bottom"
         },
         "east": {
-          "texture": "#bottom",
-          "cullface": "east"
+          "cullface": "east",
+          "texture": "#bottom"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#top"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#top"
+        },
+        "up": {
+          "rotation": 90,
+          "texture": "#bottom"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#bottom"
         }
-      }
-    },
-    {
+      },
       "from": [
-        8,
-        8,
+        0,
+        0,
         0
       ],
       "to": [
         16,
-        16,
+        8,
         16
-      ],
+      ]
+    },
+    {
       "faces": {
+        "east": {
+          "cullface": "east",
+          "texture": "#bottom"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#top"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#top"
+        },
         "up": {
+          "cullface": "up",
+          "rotation": 90,
           "texture": "#bottom",
           "uv": [
             0.0,
             0.0,
             16.0,
             8.0
-          ],
-          "cullface": "up",
-          "rotation": 90
-        },
-        "north": {
-          "texture": "#top",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#top",
-          "cullface": "south"
+          ]
         },
         "west": {
           "texture": "#bottom"
-        },
-        "east": {
-          "texture": "#bottom",
-          "cullface": "east"
         }
-      }
+      },
+      "from": [
+        8,
+        8,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "bottom": "aoa3:block/archaic_tile_stream",
+    "particle": "aoa3:block/archaic_tile_stream",
+    "top": "aoa3:block/archaic_tile_stream_top"
+  }
 }

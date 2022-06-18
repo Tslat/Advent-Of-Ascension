@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.item.ItemStack;
@@ -18,6 +19,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public final class ObjectUtil {
+
 	public static String bufferedReaderToString(BufferedReader reader) {
 		final StringBuilder content = new StringBuilder();
 
@@ -56,7 +58,11 @@ public final class ObjectUtil {
 	}
 
 	public static <T> JsonObject codecToJson(Codec<T> codec, T object, Function<String, String> errMsg) {
-		DataResult<JsonElement> result = codec.encodeStart(JsonOps.INSTANCE, object);
+		return codecToJson(codec, object, JsonOps.INSTANCE, errMsg);
+	}
+
+	public static <T> JsonObject codecToJson(Codec<T> codec, T object, DynamicOps<JsonElement> ops, Function<String, String> errMsg) {
+		DataResult<JsonElement> result = codec.encodeStart(ops, object);
 		Optional<JsonElement> output = result.resultOrPartial(error -> {
 			throw new IllegalArgumentException(errMsg.apply(error));
 		});

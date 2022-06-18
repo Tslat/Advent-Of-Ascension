@@ -2,20 +2,20 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "base_drops",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "weight": 100,
-          "name": "aoa3:entities/base_trader_drops"
+          "name": "aoa3:entities/base_trader_drops",
+          "weight": 100
         }
-      ]
+      ],
+      "name": "base_drops",
+      "rolls": 1.0
     }
   ]
 }

@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:mushroom_spores"
@@ -23,6 +20,9 @@
       "tag": "forge:mushrooms"
     }
   ],
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
   "result": {
     "item": "aoa3:fungal_helmet"
   }

@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:sniper_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:small_orange_petal"
@@ -23,6 +20,9 @@
       "tag": "forge:gunpowder"
     }
   ],
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
   "result": {
     "item": "aoa3:ka_500"
   }

@@ -1,12 +1,15 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "texture": "aoa3:block/spikey_pillar",
-    "particle": "aoa3:block/spikey_pillar",
-    "end_texture": "aoa3:block/spikey_pillar_end"
-  },
   "elements": [
     {
+      "faces": {
+        "north": {
+          "texture": "#texture"
+        },
+        "south": {
+          "texture": "#texture"
+        }
+      },
       "from": [
         0,
         0,
@@ -16,7 +19,9 @@
         16,
         16,
         13
-      ],
+      ]
+    },
+    {
       "faces": {
         "north": {
           "texture": "#texture"
@@ -24,9 +29,7 @@
         "south": {
           "texture": "#texture"
         }
-      }
-    },
-    {
+      },
       "from": [
         0,
         0,
@@ -36,17 +39,17 @@
         16,
         16,
         3
-      ],
-      "faces": {
-        "north": {
-          "texture": "#texture"
-        },
-        "south": {
-          "texture": "#texture"
-        }
-      }
+      ]
     },
     {
+      "faces": {
+        "east": {
+          "texture": "#texture"
+        },
+        "west": {
+          "texture": "#texture"
+        }
+      },
       "from": [
         13,
         0,
@@ -56,17 +59,17 @@
         13,
         16,
         16
-      ],
-      "faces": {
-        "west": {
-          "texture": "#texture"
-        },
-        "east": {
-          "texture": "#texture"
-        }
-      }
+      ]
     },
     {
+      "faces": {
+        "east": {
+          "texture": "#texture"
+        },
+        "west": {
+          "texture": "#texture"
+        }
+      },
       "from": [
         3,
         0,
@@ -76,27 +79,9 @@
         3,
         16,
         16
-      ],
-      "faces": {
-        "west": {
-          "texture": "#texture"
-        },
-        "east": {
-          "texture": "#texture"
-        }
-      }
+      ]
     },
     {
-      "from": [
-        3,
-        0,
-        3
-      ],
-      "to": [
-        13,
-        16,
-        13
-      ],
       "faces": {
         "down": {
           "texture": "#end_texture",
@@ -116,7 +101,22 @@
             14.0
           ]
         }
-      }
+      },
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        16,
+        13
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "end_texture": "aoa3:block/spikey_pillar_end",
+    "particle": "aoa3:block/spikey_pillar",
+    "texture": "aoa3:block/spikey_pillar"
+  }
 }

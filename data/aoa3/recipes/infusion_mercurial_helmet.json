@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:unstable_gunpowder"
@@ -20,6 +17,9 @@
       "tag": "forge:gems/gemenyte"
     }
   ],
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
   "result": {
     "item": "aoa3:mercurial_helmet"
   }

@@ -1,55 +1,38 @@
 {
   "parent": "aoa3:item/knights_guard",
   "display": {
-    "firstperson_righthand": {
-      "rotation": [
-        30,
-        326,
-        0
-      ],
-      "translation": [
-        -0.3,
-        -0.7,
-        0
-      ],
-      "scale": [
-        1.75,
-        1.75,
-        1.75
-      ]
-    },
     "firstperson_lefthand": {
       "rotation": [
         30,
         144,
         0
       ],
+      "scale": [
+        1.75,
+        1.75,
+        1.75
+      ],
       "translation": [
         1.2,
         -0.7,
+        0
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        30,
+        326,
         0
       ],
       "scale": [
         1.75,
         1.75,
         1.75
-      ]
-    },
-    "thirdperson_righthand": {
-      "rotation": [
-        -65,
-        -90,
-        -125
       ],
       "translation": [
-        0,
-        15,
-        6
-      ],
-      "scale": [
-        2,
-        2,
-        2
+        -0.3,
+        -0.7,
+        0
       ]
     },
     "thirdperson_lefthand": {
@@ -58,15 +41,32 @@
         90,
         -125
       ],
+      "scale": [
+        2,
+        2,
+        2
+      ],
       "translation": [
         0,
         15,
         5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        -65,
+        -90,
+        -125
       ],
       "scale": [
         2,
         2,
         2
+      ],
+      "translation": [
+        0,
+        15,
+        6
       ]
     }
   },

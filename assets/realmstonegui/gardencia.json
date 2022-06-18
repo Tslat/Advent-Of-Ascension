@@ -1,7 +1,7 @@
 {
-  "id": "gardencia",
   "gui_x": 427,
   "gui_y": 795,
+  "id": "gardencia",
   "parents": [
     "precasia"
   ]

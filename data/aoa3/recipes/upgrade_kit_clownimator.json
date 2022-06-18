@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:decimator"
   },
-  "upgrade_kit": {
-    "item": "aoa3:clown_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:clownimator"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:clown_upgrade_kit"
   }
 }

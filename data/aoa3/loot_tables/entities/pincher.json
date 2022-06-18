@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/overworld"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,15 +20,17 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "aoa3:chitin"
+          "name": "aoa3:chitin",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:armour_plating"
+          "name": "aoa3:armour_plating",
+          "weight": 10
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

@@ -10,7 +10,7 @@ public final class PositionAndMotionUtil {
 		double ticksToTravel = origin.distanceTo(targetPos) / vel;
 		double accumulatedGravity = gravity * Math.ceil(ticksToTravel)  / (vel * vel);
 
-		return velocity.add(0, accumulatedGravity / Math.pow(0.99, Math.floor(ticksToTravel)), 0);
+		return velocity.add(0, accumulatedGravity / Math.pow(0.987, Math.floor(ticksToTravel)), 0);
 	}
 
 	public static void turnToFace(Entity entity, Vec3 targetPosition) {

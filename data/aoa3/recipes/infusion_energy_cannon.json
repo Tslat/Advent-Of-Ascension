@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:runic_energy"
@@ -20,6 +17,9 @@
       "tag": "forge:ingots/elecanium"
     }
   ],
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
   "result": {
     "item": "aoa3:energy_cannon"
   }

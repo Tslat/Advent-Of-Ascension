@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:crossbow_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:runic_energy"
@@ -29,6 +26,9 @@
       "tag": "forge:ingots/netherite"
     }
   ],
+  "input": {
+    "item": "aoa3:crossbow_frame"
+  },
   "result": {
     "item": "aoa3:spectral_crossbow"
   }

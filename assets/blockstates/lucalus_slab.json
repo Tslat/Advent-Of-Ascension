@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "aoa3:block/lucalus_slab_top"
-    },
     "type=bottom": {
       "model": "aoa3:block/lucalus_slab"
     },
     "type=double": {
       "model": "aoa3:block/lucalus_planks"
+    },
+    "type=top": {
+      "model": "aoa3:block/lucalus_slab_top"
     }
   }
 }

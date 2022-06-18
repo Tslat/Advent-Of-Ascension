@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AB ",
-    "CB ",
-    "DED"
-  ],
   "key": {
     "A": {
       "tag": "forge:dusts/redstone"
@@ -22,6 +17,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    "AB ",
+    "CB ",
+    "DED"
+  ],
   "result": {
     "item": "aoa3:underworld_greatblade"
   }

@@ -95,7 +95,7 @@ public final class AoAEntitySpawns {
     }
 
     private static final class SpawnPredicates {
-        private static final SpawnPlacements.SpawnPredicate<Mob> npcPredicate(boolean spawnsInDarkness) {
+        private static SpawnPlacements.SpawnPredicate<Mob> npcPredicate(boolean spawnsInDarkness) {
             return (EntityType<Mob> type, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource rand) -> {
                 if (!Mob.checkMobSpawnRules(type, world, reason, pos, rand))
                     return false;

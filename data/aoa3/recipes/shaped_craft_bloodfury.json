@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    " A ",
-    "CBC"
-  ],
   "key": {
     "A": {
       "tag": "forge:gems/bloodstone"
@@ -16,6 +11,11 @@
       "item": "aoa3:nightmare_flakes"
     }
   },
+  "pattern": [
+    " A ",
+    " A ",
+    "CBC"
+  ],
   "result": {
     "item": "aoa3:bloodfury"
   }

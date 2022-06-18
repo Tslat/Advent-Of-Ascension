@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:whimsy_winder"
   },
-  "upgrade_kit": {
-    "item": "aoa3:darkly_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:darkly_guster"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:darkly_upgrade_kit"
   }
 }

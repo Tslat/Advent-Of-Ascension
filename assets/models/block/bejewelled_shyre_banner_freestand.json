@@ -1,7 +1,7 @@
 {
   "parent": "aoa3:block/bejewelled_banner_freestand",
   "textures": {
-    "texture": "aoa3:block/bejewelled_shyre_banner",
-    "particle": "aoa3:block/bejewelled_shyre_banner"
+    "particle": "aoa3:block/bejewelled_shyre_banner",
+    "texture": "aoa3:block/bejewelled_shyre_banner"
   }
 }

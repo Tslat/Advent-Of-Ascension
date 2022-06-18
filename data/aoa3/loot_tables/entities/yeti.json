@@ -2,9 +2,20 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "yeti_fingernails",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:killed_by_player"
+        },
+        {
+          "condition": "aoa3:holding_item",
+          "hand": "main_hand",
+          "predicate": {
+            "tag": "forge:shears"
+          },
+          "target": "killer_player"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:empty",
@@ -15,23 +26,10 @@
           "name": "aoa3:yeti_fingernails"
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:killed_by_player"
-        },
-        {
-          "condition": "aoa3:holding_item",
-          "target": "killer_player",
-          "predicate": {
-            "tag": "forge:shears"
-          },
-          "hand": "main_hand"
-        }
-      ]
+      "name": "yeti_fingernails",
+      "rolls": 1.0
     },
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -40,20 +38,22 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:ice_crystal"
+          "name": "aoa3:ice_crystal",
+          "weight": 20
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/overworld"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

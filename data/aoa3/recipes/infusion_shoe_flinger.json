@@ -1,13 +1,13 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:old_boot"
     }
   ],
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
   "result": {
     "item": "aoa3:shoe_flinger"
   }

@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ACA",
-    "ABA",
-    " B "
-  ],
   "key": {
     "A": {
       "item": "aoa3:coral_stone"
@@ -16,6 +11,11 @@
       "item": "minecraft:fire_coral_block"
     }
   },
+  "pattern": [
+    "ACA",
+    "ABA",
+    " B "
+  ],
   "result": {
     "item": "aoa3:coralstone_maul"
   }

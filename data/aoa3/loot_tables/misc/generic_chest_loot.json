@@ -2,12 +2,10 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "name": "misc_aoa_loot",
-      "rolls": 2.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 1.0
+        "max": 1.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -16,152 +14,152 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:tea_seeds"
+          "name": "aoa3:tea_seeds",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 19,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:scrap_metal"
+          "name": "aoa3:scrap_metal",
+          "weight": 19
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:jade"
+          "name": "aoa3:jade",
+          "weight": 15
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:limonite_ingot"
+          "name": "aoa3:limonite_ingot",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 5.0,
-                "max": 10.0
+                "max": 10.0,
+                "min": 5.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:limonite_bullet"
+          "name": "aoa3:limonite_bullet",
+          "weight": 17
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 7.0
+                "max": 7.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:spreadshot"
+          "name": "aoa3:spreadshot",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 9,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 6.0
+                "max": 6.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:slice_star"
+          "name": "aoa3:slice_star",
+          "weight": 9
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:wind_rune"
+          "name": "aoa3:wind_rune",
+          "weight": 17
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:fire_rune"
+          "name": "aoa3:fire_rune",
+          "weight": 17
         },
         {
           "type": "minecraft:item",
-          "weight": 8,
-          "name": "aoa3:medium_skill_crystal"
+          "name": "aoa3:medium_skill_crystal",
+          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -169,42 +167,44 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:copper_coin"
+          "name": "aoa3:copper_coin",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:silver_coin"
+          "name": "aoa3:silver_coin",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:gold_coin"
+          "name": "aoa3:gold_coin",
+          "weight": 3
         }
-      ]
+      ],
+      "name": "misc_aoa_loot",
+      "rolls": 2.0
     }
   ]
 }

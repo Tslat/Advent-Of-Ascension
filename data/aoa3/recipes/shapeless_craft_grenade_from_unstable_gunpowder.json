@@ -12,7 +12,7 @@
     }
   ],
   "result": {
-    "item": "aoa3:grenade",
-    "count": 10
+    "count": 10,
+    "item": "aoa3:grenade"
   }
 }

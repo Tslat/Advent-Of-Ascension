@@ -2,6 +2,56 @@
   "parent": "aoa3:block/steel_plate",
   "elements": [
     {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#all",
+          "uv": [
+            0.0,
+            5.0,
+            16.0,
+            6.0
+          ]
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            1.0,
+            16.0
+          ]
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#all"
+        },
+        "south": {
+          "rotation": 90,
+          "texture": "#all"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#all",
+          "uv": [
+            0.0,
+            12.0,
+            16.0,
+            13.0
+          ]
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#all",
+          "uv": [
+            15.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        }
+      },
       "from": [
         0,
         0,
@@ -11,57 +61,7 @@
         16,
         16,
         1
-      ],
-      "faces": {
-        "down": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            5.0,
-            16.0,
-            6.0
-          ],
-          "cullface": "down"
-        },
-        "up": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            12.0,
-            16.0,
-            13.0
-          ],
-          "cullface": "up"
-        },
-        "north": {
-          "texture": "#all",
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#all",
-          "rotation": 90
-        },
-        "west": {
-          "texture": "#all",
-          "uv": [
-            15.0,
-            0.0,
-            16.0,
-            16.0
-          ],
-          "cullface": "west"
-        },
-        "east": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            0.0,
-            1.0,
-            16.0
-          ],
-          "cullface": "east"
-        }
-      }
+      ]
     }
   ]
 }

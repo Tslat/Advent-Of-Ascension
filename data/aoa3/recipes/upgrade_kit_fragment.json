@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:proton"
   },
-  "upgrade_kit": {
-    "item": "aoa3:rocky_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:fragment"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:rocky_upgrade_kit"
   }
 }

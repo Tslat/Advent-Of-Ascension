@@ -2,28 +2,26 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "parent_table",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "weight": 100,
-          "name": "aoa3:worlds/lborean"
+          "name": "aoa3:worlds/lborean",
+          "weight": 100
         }
-      ]
+      ],
+      "name": "parent_table",
+      "rolls": 1.0
     },
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -32,111 +30,113 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "minecraft:water_bucket"
+          "name": "minecraft:water_bucket",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:boreic_bow"
+          "name": "aoa3:boreic_bow",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 4.0,
-                "max": 8.0
+                "max": 8.0,
+                "min": 4.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:water_rune"
+          "name": "aoa3:water_rune",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 22,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 6.0,
-                "max": 13.0
+                "max": 13.0,
+                "min": 6.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:horn_coral_block"
+          "name": "minecraft:horn_coral_block",
+          "weight": 22
         },
         {
           "type": "minecraft:item",
-          "weight": 22,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 6.0,
-                "max": 13.0
+                "max": 13.0,
+                "min": 6.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:bubble_coral_block"
+          "name": "minecraft:bubble_coral_block",
+          "weight": 22
         },
         {
           "type": "minecraft:item",
-          "weight": 22,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 6.0,
-                "max": 13.0
+                "max": 13.0,
+                "min": 6.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:fire_coral_block"
+          "name": "minecraft:fire_coral_block",
+          "weight": 22
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:salmon"
+          "name": "minecraft:salmon",
+          "weight": 12
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:cod"
+          "name": "minecraft:cod",
+          "weight": 12
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     }
   ]
 }

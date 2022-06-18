@@ -1,6 +1,18 @@
 {
   "parent": "aoa3:block/gold_trophy",
   "display": {
+    "ground": {
+      "scale": [
+        0.5,
+        0.5,
+        0.5
+      ],
+      "translation": [
+        0,
+        1,
+        0
+      ]
+    },
     "gui": {
       "rotation": [
         18,
@@ -11,18 +23,6 @@
         0,
         2,
         0
-      ]
-    },
-    "ground": {
-      "translation": [
-        0,
-        1,
-        0
-      ],
-      "scale": [
-        0.5,
-        0.5,
-        0.5
       ]
     }
   }

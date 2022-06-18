@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 2,
   "ingredient": {
     "item": "aoa3:precasian_lower_rock"
   },
-  "result": "aoa3:precasian_lower_rock_slab",
-  "count": 2
+  "result": "aoa3:precasian_lower_rock_slab"
 }

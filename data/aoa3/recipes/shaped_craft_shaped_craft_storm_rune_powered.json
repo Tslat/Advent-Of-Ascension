@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
-  ],
   "key": {
     "A": {
       "item": "aoa3:charged_rune"
@@ -13,8 +8,13 @@
       "item": "minecraft:daylight_detector"
     }
   },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
   "result": {
-    "item": "aoa3:storm_rune",
-    "count": 16
+    "count": 16,
+    "item": "aoa3:storm_rune"
   }
 }

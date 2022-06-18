@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:striker_staff"
   },
-  "upgrade_kit": {
-    "item": "aoa3:predator_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:lightning_staff"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:predator_upgrade_kit"
   }
 }

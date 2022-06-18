@@ -2,134 +2,134 @@
   "type": "minecraft:fishing",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
+          "name": "minecraft:cod",
           "quality": -1,
-          "name": "minecraft:cod"
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
+          "name": "minecraft:salmon",
           "quality": -1,
-          "name": "minecraft:salmon"
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 80,
+          "name": "minecraft:tropical_fish",
           "quality": -1,
-          "name": "minecraft:tropical_fish"
+          "weight": 80
         },
         {
           "type": "minecraft:item",
-          "weight": 60,
-          "name": "minecraft:pufferfish"
+          "name": "minecraft:pufferfish",
+          "weight": 60
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "name": "minecraft:nautilus_shell",
           "quality": 1,
-          "name": "minecraft:nautilus_shell"
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
-          "name": "minecraft:diamond"
+          "name": "minecraft:diamond",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
+          "name": "minecraft:emerald",
           "quality": 2,
-          "name": "minecraft:emerald"
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "name": "aoa3:rune_box",
           "quality": 1,
-          "name": "aoa3:rune_box"
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "name": "aoa3:shiny_box",
           "quality": 1,
-          "name": "aoa3:shiny_box"
+          "weight": 20
         },
         {
           "type": "minecraft:item",
           "conditions": [
             {
               "condition": "aoa3:player_has_level",
-              "skill": "aoa3:hauling",
-              "level": 10
+              "level": 10,
+              "skill": "aoa3:hauling"
             }
           ],
-          "weight": 75,
-          "name": "aoa3:sailback"
+          "name": "aoa3:sailback",
+          "weight": 75
         },
         {
           "type": "minecraft:item",
           "conditions": [
             {
               "condition": "aoa3:player_has_level",
-              "skill": "aoa3:hauling",
-              "level": 10
+              "level": 10,
+              "skill": "aoa3:hauling"
             }
           ],
-          "weight": 75,
-          "name": "aoa3:violet_skipper"
+          "name": "aoa3:violet_skipper",
+          "weight": 75
         },
         {
           "type": "minecraft:item",
           "conditions": [
             {
               "condition": "aoa3:player_has_level",
-              "skill": "aoa3:hauling",
-              "level": 10
+              "level": 10,
+              "skill": "aoa3:hauling"
             }
           ],
-          "weight": 30,
+          "name": "aoa3:raw_rainbowfish",
           "quality": 2,
-          "name": "aoa3:raw_rainbowfish"
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
+          "name": "aoa3:armour_plating",
           "quality": 1,
-          "name": "aoa3:armour_plating"
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 45,
-          "name": "aoa3:chitin"
+          "name": "aoa3:chitin",
+          "weight": 45
         },
         {
           "type": "minecraft:item",
-          "weight": 55,
-          "name": "aoa3:chum"
+          "name": "aoa3:chum",
+          "weight": 55
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
-          "name": "minecraft:prismarine_slab"
+          "name": "minecraft:prismarine_slab",
+          "weight": 40
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
-          "name": "minecraft:prismarine_crystals"
+          "name": "minecraft:prismarine_crystals",
+          "weight": 40
         },
         {
           "type": "minecraft:item",
-          "quality": 3,
-          "name": "aoa3:tidal_greatblade"
+          "name": "aoa3:tidal_greatblade",
+          "quality": 3
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

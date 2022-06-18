@@ -1,8 +1,5 @@
 {
   "type": "aoa3:tool_interaction",
-  "tool": {
-    "tag": "forge:swords"
-  },
   "ingredients": [
     {
       "tag": "forge:rawfish"
@@ -13,5 +10,8 @@
   ],
   "result": {
     "item": "aoa3:chum"
+  },
+  "tool": {
+    "tag": "forge:swords"
   }
 }

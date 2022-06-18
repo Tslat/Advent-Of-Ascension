@@ -1,7 +1,7 @@
 {
-  "id": "vox_ponds",
   "gui_x": 727,
   "gui_y": 295,
+  "id": "vox_ponds",
   "parents": [
     "creeponia"
   ]

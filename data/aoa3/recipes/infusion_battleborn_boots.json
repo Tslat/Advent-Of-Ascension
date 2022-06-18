@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:darkly_powder"
@@ -26,6 +23,9 @@
       "tag": "forge:ingots/netherite"
     }
   ],
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
   "result": {
     "item": "aoa3:battleborn_boots"
   }

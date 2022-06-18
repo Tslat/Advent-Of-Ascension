@@ -1,0 +1,15 @@
+{
+  "biomes": {
+    "if_all": [
+      "#forge:is_overworld",
+      "#forge:is_underground"
+    ],
+    "if_any": [
+      "#forge:is_lush",
+      "#forge:is_wet",
+      "minecraft:dripstone_caves"
+    ]
+  },
+  "features": "aoa3:ore_limonite_large",
+  "gen_step": "underground_ores"
+}

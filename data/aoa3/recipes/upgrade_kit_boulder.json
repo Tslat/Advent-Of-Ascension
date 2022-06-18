@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:demolisher"
   },
-  "upgrade_kit": {
-    "item": "aoa3:rocky_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:boulder"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:rocky_upgrade_kit"
   }
 }

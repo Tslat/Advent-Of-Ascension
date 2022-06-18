@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "ingredients": [
     {
       "item": "minecraft:magma_cream"
@@ -17,6 +14,9 @@
       "tag": "forge:ingots/emberstone"
     }
   ],
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
   "result": {
     "item": "aoa3:infernal_boots"
   }

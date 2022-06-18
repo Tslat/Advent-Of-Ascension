@@ -1,4 +1,5 @@
 {
+  "type": "aoa3:roll_extra_tables",
   "conditions": [
     {
       "condition": "forge:loot_table_id",
@@ -7,6 +8,5 @@
   ],
   "tables": [
     "aoa3:misc/dispenser_loot"
-  ],
-  "type": "aoa3:roll_extra_tables"
+  ]
 }

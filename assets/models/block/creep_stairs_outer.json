@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/outer_stairs",
   "textures": {
-    "side": "aoa3:block/creep_planks",
     "bottom": "aoa3:block/creep_planks",
+    "side": "aoa3:block/creep_planks",
     "top": "aoa3:block/creep_planks"
   }
 }

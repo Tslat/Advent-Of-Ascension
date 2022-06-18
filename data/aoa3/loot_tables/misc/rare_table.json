@@ -2,12 +2,10 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "treasures",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -16,125 +14,125 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:golden_upgrade_kit"
+          "name": "aoa3:golden_upgrade_kit",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 60,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 5.0
+                "max": 5.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:magic_repair_dust"
+          "name": "aoa3:magic_repair_dust",
+          "weight": 60
         },
         {
           "type": "minecraft:item",
-          "weight": 75,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 10.0
+                "max": 10.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:small_skill_crystal"
+          "name": "aoa3:small_skill_crystal",
+          "weight": 75
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 9.0
+                "max": 9.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:medium_skill_crystal"
+          "name": "aoa3:medium_skill_crystal",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 8.0
+                "max": 8.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:large_skill_crystal"
+          "name": "aoa3:large_skill_crystal",
+          "weight": 35
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 7.0
+                "max": 7.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:giant_skill_crystal"
+          "name": "aoa3:giant_skill_crystal",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 90,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 5.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 5.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:diamond"
+          "name": "minecraft:diamond",
+          "weight": 90
         },
         {
           "type": "minecraft:item",
-          "weight": 60,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 5.0,
-                "max": 25.0
+                "max": 25.0,
+                "min": 5.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:emerald"
+          "name": "minecraft:emerald",
+          "weight": 60
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
-          "name": "minecraft:nether_star"
+          "name": "minecraft:nether_star",
+          "weight": 15
         },
         {
           "type": "minecraft:item",
@@ -142,42 +140,44 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 19,
-          "name": "minecraft:ghast_tear"
+          "name": "minecraft:ghast_tear",
+          "weight": 19
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 10.0,
-                "max": 32.0
+                "max": 32.0,
+                "min": 10.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:experience_bottle"
+          "name": "minecraft:experience_bottle",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:enchanted_golden_apple"
+          "name": "minecraft:enchanted_golden_apple",
+          "weight": 15
         }
-      ]
+      ],
+      "name": "treasures",
+      "rolls": 1.0
     }
   ]
 }

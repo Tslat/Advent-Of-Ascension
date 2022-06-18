@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:monster"
   },
-  "upgrade_kit": {
-    "item": "aoa3:darkly_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:dark_beast"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:darkly_upgrade_kit"
   }
 }

@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,52 +10,54 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:soul_spark"
+          "name": "aoa3:soul_spark",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:yellow_dye"
+          "name": "minecraft:yellow_dye",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 16,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:cyan_dye"
+          "name": "minecraft:cyan_dye",
+          "weight": 16
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/shyrelands"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

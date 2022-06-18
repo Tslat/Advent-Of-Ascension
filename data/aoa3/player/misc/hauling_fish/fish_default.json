@@ -1,99 +1,99 @@
 {
   "entities": [
     {
+      "entity": "minecraft:cod",
       "weight": 1000,
-      "weight_mod": -50.0,
-      "entity": "minecraft:cod"
+      "weight_mod": -50.0
     },
     {
+      "entity": "minecraft:salmon",
       "weight": 1000,
-      "weight_mod": -50.0,
-      "entity": "minecraft:salmon"
+      "weight_mod": -50.0
     },
     {
+      "entity": "minecraft:tropical_fish",
       "weight": 1000,
-      "weight_mod": -50.0,
-      "entity": "minecraft:tropical_fish"
+      "weight_mod": -50.0
     },
     {
+      "entity": "minecraft:pufferfish",
       "level": 5,
       "weight": 900,
-      "weight_mod": -45.0,
-      "entity": "minecraft:pufferfish"
+      "weight_mod": -45.0
     },
     {
+      "entity": "minecraft:squid",
       "level": 10,
       "weight": 300,
-      "weight_mod": 5.0,
-      "entity": "minecraft:squid"
+      "weight_mod": 5.0
     },
     {
+      "entity": "aoa3:rainbowfish",
       "weight": 350,
-      "weight_mod": 40.0,
-      "entity": "aoa3:rainbowfish"
+      "weight_mod": 40.0
     },
     {
+      "entity": "aoa3:sailback",
       "weight": 800,
-      "weight_mod": 30.0,
-      "entity": "aoa3:sailback"
+      "weight_mod": 30.0
     },
     {
+      "entity": "aoa3:violet_skipper",
       "weight": 800,
-      "weight_mod": 30.0,
-      "entity": "aoa3:violet_skipper"
+      "weight_mod": 30.0
     },
     {
+      "entity": "minecraft:dolphin",
       "level": 30,
       "weight": 200,
-      "weight_mod": 10.0,
-      "entity": "minecraft:dolphin"
+      "weight_mod": 10.0
     },
     {
+      "item": "minecraft:nautilus_shell",
       "level": 20,
       "weight": 400,
-      "weight_mod": 5.0,
-      "item": "minecraft:nautilus_shell"
+      "weight_mod": 5.0
     },
     {
+      "item": "minecraft:name_tag",
       "level": 5,
-      "weight": 600,
-      "item": "minecraft:name_tag"
+      "weight": 600
     },
     {
+      "item": "minecraft:leather",
       "level": 14,
       "weight": 900,
-      "weight_mod": -100.0,
-      "item": "minecraft:leather"
+      "weight_mod": -100.0
     },
     {
+      "item": "aoa3:crystal_box",
       "level": 25,
       "weight": 250,
-      "weight_mod": 15.0,
-      "item": "aoa3:crystal_box"
+      "weight_mod": 15.0
     },
     {
+      "item": "aoa3:gem_bag",
       "level": 15,
       "weight": 250,
-      "weight_mod": 15.0,
-      "item": "aoa3:gem_bag"
+      "weight_mod": 15.0
     },
     {
+      "item": "aoa3:treasure_box",
       "level": 30,
       "weight": 250,
-      "weight_mod": 15.0,
-      "item": "aoa3:treasure_box"
+      "weight_mod": 15.0
     },
     {
+      "item": "aoa3:weapons_case",
       "level": 20,
       "weight": 250,
-      "weight_mod": 15.0,
-      "item": "aoa3:weapons_case"
+      "weight_mod": 15.0
     },
     {
+      "item": "aoa3:old_boot",
       "level": 50,
       "weight": 5,
-      "weight_mod": 5.0,
-      "item": "aoa3:old_boot"
+      "weight_mod": 5.0
     },
     {
       "item": "minecraft:water_bucket"

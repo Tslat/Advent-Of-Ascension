@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:sniper_frame"
-  },
   "ingredients": [
     {
       "tag": "minecraft:coals"
@@ -20,6 +17,9 @@
       "tag": "forge:gunpowder"
     }
   ],
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
   "result": {
     "item": "aoa3:deadlock"
   }

@@ -33,7 +33,6 @@ import net.tslat.aoa3.content.entity.mob.mysterium.*;
 import net.tslat.aoa3.content.entity.mob.nether.*;
 import net.tslat.aoa3.content.entity.mob.nowhere.*;
 import net.tslat.aoa3.content.entity.mob.overworld.*;
-import net.tslat.aoa3.content.entity.mob.overworld.bigday.*;
 import net.tslat.aoa3.content.entity.mob.precasia.*;
 import net.tslat.aoa3.content.entity.mob.runandor.*;
 import net.tslat.aoa3.content.entity.mob.shyrelands.*;

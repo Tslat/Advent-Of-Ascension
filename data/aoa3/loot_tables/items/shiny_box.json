@@ -2,99 +2,99 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "minerals",
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 2.0,
-        "max": 5.0
-      },
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 75,
-          "name": "minecraft:iron_ingot"
+          "name": "minecraft:iron_ingot",
+          "weight": 75
         },
         {
           "type": "minecraft:item",
-          "weight": 60,
-          "name": "minecraft:gold_ingot"
+          "name": "minecraft:gold_ingot",
+          "weight": 60
         },
         {
           "type": "minecraft:item",
-          "weight": 55,
-          "name": "minecraft:netherite_ingot"
+          "name": "minecraft:netherite_ingot",
+          "weight": 55
         },
         {
           "type": "minecraft:item",
-          "weight": 80,
-          "name": "aoa3:limonite_ingot"
+          "name": "aoa3:limonite_ingot",
+          "weight": 80
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:shyrestone_ingot"
+          "name": "aoa3:shyrestone_ingot",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "aoa3:varsium_ingot"
+          "name": "aoa3:varsium_ingot",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
-          "name": "aoa3:mystite_ingot"
+          "name": "aoa3:mystite_ingot",
+          "weight": 35
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
-          "name": "aoa3:lyon_ingot"
+          "name": "aoa3:lyon_ingot",
+          "weight": 35
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:ghoulish_ingot"
+          "name": "aoa3:ghoulish_ingot",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:ghastly_ingot"
+          "name": "aoa3:ghastly_ingot",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "aoa3:emberstone_ingot"
+          "name": "aoa3:emberstone_ingot",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:elecanium_ingot"
+          "name": "aoa3:elecanium_ingot",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "aoa3:blazium_ingot"
+          "name": "aoa3:blazium_ingot",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "aoa3:baronyte_ingot"
+          "name": "aoa3:baronyte_ingot",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "aoa3:skeletal_ingot"
+          "name": "aoa3:skeletal_ingot",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:lunar_ingot"
+          "name": "aoa3:lunar_ingot",
+          "weight": 20
         }
-      ]
+      ],
+      "name": "minerals",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 5.0,
+        "min": 2.0
+      }
     }
   ]
 }

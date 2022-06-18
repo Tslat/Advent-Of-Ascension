@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A",
-    "A"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/limonite"
     }
   },
+  "pattern": [
+    "A",
+    "A"
+  ],
   "result": {
-    "item": "aoa3:limonite_rod",
-    "count": 2
+    "count": 2,
+    "item": "aoa3:limonite_rod"
   }
 }

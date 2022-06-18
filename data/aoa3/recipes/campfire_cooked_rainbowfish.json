@@ -1,9 +1,9 @@
 {
   "type": "minecraft:campfire_cooking",
+  "cookingtime": 600,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:raw_rainbowfish"
   },
-  "result": "aoa3:cooked_rainbowfish",
-  "experience": 3.0,
-  "cookingtime": 600
+  "result": "aoa3:cooked_rainbowfish"
 }

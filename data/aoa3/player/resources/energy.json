@@ -1,6 +1,6 @@
 {
   "delay_on_empty": 100,
   "delay_on_hit": 40,
-  "regen_per_tick": 0.3,
-  "max_value": 100.0
+  "max_value": 100.0,
+  "regen_per_tick": 0.3
 }

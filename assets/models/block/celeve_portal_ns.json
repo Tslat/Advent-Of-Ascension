@@ -1,7 +1,7 @@
 {
   "parent": "aoa3:block/portal_ns",
   "textures": {
-    "texture": "aoa3:block/celeve_portal",
-    "particle": "aoa3:block/celeve_portal"
+    "particle": "aoa3:block/celeve_portal",
+    "texture": "aoa3:block/celeve_portal"
   }
 }

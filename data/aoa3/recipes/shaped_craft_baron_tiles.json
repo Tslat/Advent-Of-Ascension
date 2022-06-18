@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AB",
-    "BA"
-  ],
   "key": {
     "A": {
       "item": "aoa3:hellstone"
@@ -12,8 +8,12 @@
       "item": "aoa3:baron_stone"
     }
   },
+  "pattern": [
+    "AB",
+    "BA"
+  ],
   "result": {
-    "item": "aoa3:baron_tiles",
-    "count": 4
+    "count": 4,
+    "item": "aoa3:baron_tiles"
   }
 }

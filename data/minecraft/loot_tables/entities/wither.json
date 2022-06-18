@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "rares",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,19 +10,19 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 26,
-          "name": "aoa3:wither_bow"
+          "name": "aoa3:wither_bow",
+          "weight": 26
         },
         {
           "type": "minecraft:item",
-          "weight": 23,
-          "name": "aoa3:wither_cannon"
+          "name": "aoa3:wither_cannon",
+          "weight": 23
         }
-      ]
+      ],
+      "name": "rares",
+      "rolls": 1.0
     },
     {
-      "name": "main",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -33,100 +31,102 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 4.0,
-                "max": 16.0
+                "max": 16.0,
+                "min": 4.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:wither_rune"
+          "name": "aoa3:wither_rune",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 8.0,
-                "max": 24.0
+                "max": 24.0,
+                "min": 8.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:coal"
+          "name": "minecraft:coal",
+          "weight": 35
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 8.0,
-                "max": 24.0
+                "max": 24.0,
+                "min": 8.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:flint"
+          "name": "minecraft:flint",
+          "weight": 35
         },
         {
           "type": "minecraft:item",
-          "weight": 16,
-          "name": "minecraft:wither_skeleton_skull"
+          "name": "minecraft:wither_skeleton_skull",
+          "weight": 16
         },
         {
           "type": "minecraft:item",
-          "weight": 24,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 12.0
+                "max": 12.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:glowstone"
+          "name": "minecraft:glowstone",
+          "weight": 24
         },
         {
           "type": "minecraft:item",
-          "weight": 19,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 12.0
+                "max": 12.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:quartz"
+          "name": "minecraft:quartz",
+          "weight": 19
         }
-      ]
+      ],
+      "name": "main",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/nether"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

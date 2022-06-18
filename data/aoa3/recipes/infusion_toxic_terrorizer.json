@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:toxic_lump"
@@ -23,6 +20,9 @@
       "tag": "forge:gems/jade"
     }
   ],
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
   "result": {
     "item": "aoa3:toxic_terrorizer"
   }

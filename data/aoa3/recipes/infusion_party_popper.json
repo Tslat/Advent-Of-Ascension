@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:confetti_pile"
@@ -23,6 +20,9 @@
       "tag": "forge:ingots/iron"
     }
   ],
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
   "result": {
     "item": "aoa3:party_popper"
   }

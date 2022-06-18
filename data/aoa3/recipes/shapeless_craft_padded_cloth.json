@@ -15,7 +15,7 @@
     }
   ],
   "result": {
-    "item": "aoa3:padded_cloth",
-    "count": 3
+    "count": 3,
+    "item": "aoa3:padded_cloth"
   }
 }

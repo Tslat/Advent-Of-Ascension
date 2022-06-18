@@ -1,7 +1,7 @@
 {
-  "id": "iromine",
   "gui_x": 427,
   "gui_y": 1095,
+  "id": "iromine",
   "parents": [
     "barathos"
   ]

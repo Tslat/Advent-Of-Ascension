@@ -2,11 +2,10 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -19,20 +18,21 @@
           "function": "minecraft:explosion_decay"
         },
         {
-          "function": "minecraft:set_count",
+          "add": false,
           "conditions": [
             {
-              "condition": "minecraft:block_state_property",
               "block": "aoa3:crystevia_brick_slab",
+              "condition": "minecraft:block_state_property",
               "properties": {
                 "type": "double"
               }
             }
           ],
           "count": 2.0,
-          "add": false
+          "function": "minecraft:set_count"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

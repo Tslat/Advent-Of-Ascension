@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/iromine"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,51 +20,53 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:overshot"
+          "name": "aoa3:overshot",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:armour_plating"
+          "name": "aoa3:armour_plating",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 9,
-          "name": "aoa3:scrap_metal"
+          "name": "aoa3:scrap_metal",
+          "weight": 9
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "minecraft:iron_ingot"
+          "name": "minecraft:iron_ingot",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
-          "name": "minecraft:gold_ingot"
+          "name": "minecraft:gold_ingot",
+          "weight": 7
         },
         {
           "type": "minecraft:item",
-          "weight": 13,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:redstone"
+          "name": "minecraft:redstone",
+          "weight": 13
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
-          "name": "aoa3:lyon_ingot"
+          "name": "aoa3:lyon_ingot",
+          "weight": 6
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

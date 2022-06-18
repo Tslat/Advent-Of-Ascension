@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A",
-    "B",
-    "B"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/emberstone"
@@ -13,6 +8,11 @@
       "tag": "forge:rods/wooden"
     }
   },
+  "pattern": [
+    "A",
+    "B",
+    "B"
+  ],
   "result": {
     "item": "aoa3:emberstone_shovel"
   }

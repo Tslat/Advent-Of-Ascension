@@ -1,11 +1,13 @@
 {
   "ambientocclusion": false,
-  "textures": {
-    "texture": "aoa3:block/yellow_mushroom_block_inside",
-    "particle": "aoa3:block/yellow_mushroom_block"
-  },
   "elements": [
     {
+      "faces": {
+        "north": {
+          "cullface": "north",
+          "texture": "#texture"
+        }
+      },
       "from": [
         0,
         0,
@@ -15,13 +17,11 @@
         16,
         16,
         0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#texture",
-          "cullface": "north"
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "aoa3:block/yellow_mushroom_block",
+    "texture": "aoa3:block/yellow_mushroom_block_inside"
+  }
 }

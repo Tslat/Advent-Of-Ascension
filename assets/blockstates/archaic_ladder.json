@@ -1,5 +1,9 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "aoa3:block/archaic_ladder",
+      "y": 90
+    },
     "facing=north": {
       "model": "aoa3:block/archaic_ladder"
     },
@@ -10,10 +14,6 @@
     "facing=west": {
       "model": "aoa3:block/archaic_ladder",
       "y": 270
-    },
-    "facing=east": {
-      "model": "aoa3:block/archaic_ladder",
-      "y": 90
     }
   }
 }

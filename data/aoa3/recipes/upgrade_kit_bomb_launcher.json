@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:blast_cannon"
   },
-  "upgrade_kit": {
-    "item": "aoa3:weapon_parts"
-  },
   "result": {
     "item": "aoa3:bomb_launcher"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:weapon_parts"
   }
 }

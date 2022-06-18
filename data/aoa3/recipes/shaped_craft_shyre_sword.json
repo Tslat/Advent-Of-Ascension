@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    "BDB",
-    "ACA"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/shyrestone"
@@ -19,6 +14,11 @@
       "item": "minecraft:glowstone"
     }
   },
+  "pattern": [
+    " A ",
+    "BDB",
+    "ACA"
+  ],
   "result": {
     "item": "aoa3:shyre_sword"
   }

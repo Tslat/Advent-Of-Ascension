@@ -1,0 +1,21 @@
+{
+  "biomes": {
+    "excluding": [
+      "#forge:is_snowy"
+    ],
+    "if_all": [
+      "#forge:is_overworld"
+    ],
+    "if_any": [
+      "#minecraft:is_forest"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:wood_giant",
+      "maxCount": 1,
+      "minCount": -50,
+      "weight": 1
+    }
+  ]
+}

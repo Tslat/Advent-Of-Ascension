@@ -2,207 +2,207 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 7.0,
-        "max": 12.0
-      },
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": -1.0,
-        "max": 1.0
+        "max": 1.0,
+        "min": -1.0
       },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 300,
-          "quality": -2
+          "quality": -2,
+          "weight": 300
         },
         {
           "type": "minecraft:item",
-          "quality": 1,
-          "name": "aoa3:haunted_idol"
+          "name": "aoa3:haunted_idol",
+          "quality": 1
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:haunted_eye_log"
+          "name": "aoa3:haunted_eye_log",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aoa3:haunted_flower",
           "quality": -1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 6.0
-              },
-              "add": false
-            }
-          ],
-          "name": "aoa3:haunted_flower"
+          "weight": 40
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:haunted_purpling_log"
+          "name": "aoa3:haunted_purpling_log",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aoa3:ghastly_nugget",
           "quality": 1,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 7.0
-              },
-              "add": false
-            }
-          ],
-          "name": "aoa3:ghastly_nugget"
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 7.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aoa3:ghoulish_nugget",
           "quality": 1,
+          "weight": 20
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 7.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:ghoulish_nugget"
+          "name": "minecraft:cobweb",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
+          "name": "minecraft:lava_bucket",
+          "weight": 25
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 5.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:cobweb"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 25,
-          "name": "minecraft:lava_bucket"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 15,
+          "name": "minecraft:netherite_scrap",
           "quality": 1,
+          "weight": 15
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:suspicious_stew",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 5.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:netherite_scrap"
+          "name": "minecraft:rabbit_foot",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "minecraft:suspicious_stew"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:rabbit_foot"
+          "name": "minecraft:name_tag",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 6.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:name_tag"
+          "name": "minecraft:quartz",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 6.0
-              },
-              "add": false
-            }
-          ],
-          "name": "minecraft:quartz"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 10,
-          "name": "minecraft:zombie_head"
+          "name": "minecraft:zombie_head",
+          "weight": 10
         }
-      ]
+      ],
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 12.0,
+        "min": 7.0
+      }
     }
   ]
 }

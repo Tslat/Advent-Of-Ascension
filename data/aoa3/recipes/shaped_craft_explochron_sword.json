@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "CDE",
-    " A ",
-    " B "
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/lyon"
@@ -22,6 +17,11 @@
       "tag": "forge:gunpowder"
     }
   },
+  "pattern": [
+    "CDE",
+    " A ",
+    " B "
+  ],
   "result": {
     "item": "aoa3:explochron_sword"
   }

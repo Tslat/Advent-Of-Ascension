@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:wither_cannon"
   },
-  "upgrade_kit": {
-    "item": "aoa3:abyssal_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:bulb_cannon"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:abyssal_upgrade_kit"
   }
 }

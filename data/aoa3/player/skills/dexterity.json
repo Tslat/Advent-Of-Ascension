@@ -1,89 +1,89 @@
 {
-  "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:attribute_modification",
-      "unique_id": "-555905532",
+      "attribute": "minecraft:generic.movement_speed",
       "base_value": 0.0,
+      "id": "aoa3:attribute_modification",
+      "level_req": 5,
+      "operation": 1.0,
       "per_level_mod": 0.002,
-      "attribute": "minecraft:generic.movement_speed",
-      "operation": 1.0,
-      "level_req": 5
+      "unique_id": "-555905532"
     },
     {
-      "id": "aoa3:fall_damage_reduction",
-      "unique_id": "1581623737",
       "base_value": 0.0,
-      "min_height": 0,
+      "id": "aoa3:fall_damage_reduction",
+      "level_req": 15,
       "max_height": 10,
+      "min_height": 0,
       "per_level_mod": 0.0085,
-      "level_req": 15
+      "unique_id": "1581623737"
     },
     {
-      "id": "aoa3:jump_boost",
-      "unique_id": "-93812277",
       "base_value": 0.25,
+      "id": "aoa3:jump_boost",
+      "level_req": 25,
       "per_level_mod": 0.004,
-      "level_req": 25
+      "unique_id": "-93812277"
     },
     {
-      "id": "aoa3:attribute_modification",
-      "unique_id": "-1239512341",
-      "base_value": 0.05,
-      "per_level_mod": 0.0,
       "attribute": "minecraft:generic.movement_speed",
+      "base_value": 0.05,
+      "id": "aoa3:attribute_modification",
+      "level_req": 40,
       "operation": 1.0,
-      "level_req": 40
+      "per_level_mod": 0.0,
+      "unique_id": "-1239512341"
     },
     {
-      "id": "aoa3:attribute_modification",
-      "unique_id": "-1977693736",
-      "base_value": 0.0,
-      "per_level_mod": 0.003,
       "attribute": "forge:swim_speed",
-      "operation": 1.0,
-      "level_req": 50
-    },
-    {
-      "id": "aoa3:fall_damage_reduction",
-      "unique_id": "131469337",
       "base_value": 0.0,
-      "min_height": 11,
-      "max_height": 2147483647,
-      "per_level_mod": 0.005,
-      "level_req": 60
-    },
-    {
-      "id": "aoa3:jump_boost",
-      "unique_id": "-585227644",
-      "base_value": 0.25,
-      "amplify_lateral_velocity": true,
-      "per_level_mod": 0.0,
-      "level_req": 70
-    },
-    {
       "id": "aoa3:attribute_modification",
-      "unique_id": "-1239513085",
-      "base_value": 0.05,
-      "per_level_mod": 0.0,
-      "attribute": "minecraft:generic.movement_speed",
+      "level_req": 50,
       "operation": 1.0,
-      "level_req": 80
+      "per_level_mod": 0.003,
+      "unique_id": "-1977693736"
     },
     {
-      "id": "aoa3:double_jump",
-      "unique_id": "1755700425",
+      "base_value": 0.0,
+      "id": "aoa3:fall_damage_reduction",
+      "level_req": 60,
+      "max_height": 2147483647,
+      "min_height": 11,
+      "per_level_mod": 0.005,
+      "unique_id": "131469337"
+    },
+    {
+      "amplify_lateral_velocity": true,
+      "base_value": 0.25,
+      "id": "aoa3:jump_boost",
+      "level_req": 70,
+      "per_level_mod": 0.0,
+      "unique_id": "-585227644"
+    },
+    {
+      "attribute": "minecraft:generic.movement_speed",
+      "base_value": 0.05,
+      "id": "aoa3:attribute_modification",
+      "level_req": 80,
+      "operation": 1.0,
+      "per_level_mod": 0.0,
+      "unique_id": "-1239513085"
+    },
+    {
       "energy_consumption": 20.0,
-      "level_req": 90
+      "id": "aoa3:double_jump",
+      "level_req": 90,
+      "unique_id": "1755700425"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "-1978598326",
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_dextrous",
       "restrictions": [
         "equip"
       ],
-      "level_req": 100,
-      "restricted_id": "aoa3:helm_of_the_dextrous"
+      "unique_id": "-1978598326"
     }
-  ]
+  ],
+  "xp_modifier": 1.0
 }

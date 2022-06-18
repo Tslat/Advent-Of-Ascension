@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A",
-    "B",
-    "C"
-  ],
   "key": {
     "A": {
       "item": "aoa3:balloon"
@@ -16,6 +11,11 @@
       "tag": "forge:rods/wooden"
     }
   },
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
   "result": {
     "item": "aoa3:goofy_shovel"
   }

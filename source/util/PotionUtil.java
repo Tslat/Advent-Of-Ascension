@@ -9,5 +9,4 @@ public final class PotionUtil {
 	public static boolean amplifyEffect(MobEffectInstance effect, int amplification) {
 		return effect.update(new MobEffectInstance(effect.getEffect(), effect.getDuration(), effect.getAmplifier() + amplification, effect.isAmbient(), effect.isVisible(), effect.showIcon()));
 	}
-
 }

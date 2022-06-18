@@ -2,13 +2,10 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "stones",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
               "function": "aoa3:grant_skill_xp",
@@ -16,7 +13,8 @@
               "xp": 200.0
             }
           ],
-          "name": "aoa3:glowing_infusion_stone"
+          "name": "aoa3:glowing_infusion_stone",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
@@ -29,7 +27,9 @@
           ],
           "name": "aoa3:glowing_power_stone"
         }
-      ]
+      ],
+      "name": "stones",
+      "rolls": 1.0
     }
   ]
 }

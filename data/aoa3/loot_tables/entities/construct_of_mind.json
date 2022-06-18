@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,45 +10,47 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:blue_druse"
+          "name": "aoa3:blue_druse",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:green_druse"
+          "name": "aoa3:green_druse",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:purple_druse"
+          "name": "aoa3:purple_druse",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:red_druse"
+          "name": "aoa3:red_druse",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:white_druse"
+          "name": "aoa3:white_druse",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:yellow_druse"
+          "name": "aoa3:yellow_druse",
+          "weight": 3
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/crystevia"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

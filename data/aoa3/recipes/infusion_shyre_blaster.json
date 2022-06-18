@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "ingredients": [
     {
       "tag": "forge:ingots/shyrestone"
@@ -20,6 +17,9 @@
       "tag": "forge:gunpowder"
     }
   ],
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
   "result": {
     "item": "aoa3:shyre_blaster"
   }

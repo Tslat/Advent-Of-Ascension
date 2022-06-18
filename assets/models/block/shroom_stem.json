@@ -1,21 +1,7 @@
 {
   "parent": "minecraft:block/block",
-  "textures": {
-    "texture": "aoa3:block/shroom_stem",
-    "particle": "aoa3:block/shroom_stem"
-  },
   "elements": [
     {
-      "from": [
-        5,
-        0,
-        5
-      ],
-      "to": [
-        11,
-        16,
-        11
-      ],
       "faces": {
         "down": {
           "texture": "#texture",
@@ -26,13 +12,13 @@
             3.0
           ]
         },
-        "up": {
+        "east": {
           "texture": "#texture",
           "uv": [
-            3.0,
-            0.0,
             6.0,
-            3.0
+            3.0,
+            9.0,
+            15.0
           ]
         },
         "north": {
@@ -53,6 +39,15 @@
             15.0
           ]
         },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            3.0,
+            0.0,
+            6.0,
+            3.0
+          ]
+        },
         "west": {
           "texture": "#texture",
           "uv": [
@@ -61,17 +56,22 @@
             3.0,
             15.0
           ]
-        },
-        "east": {
-          "texture": "#texture",
-          "uv": [
-            6.0,
-            3.0,
-            9.0,
-            15.0
-          ]
         }
-      }
+      },
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        16,
+        11
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "aoa3:block/shroom_stem",
+    "texture": "aoa3:block/shroom_stem"
+  }
 }

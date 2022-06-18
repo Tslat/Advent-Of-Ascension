@@ -221,7 +221,7 @@ public final class AoAProjectiles {
 	public static final RegistryObject<EntityType<YellowBulletEntity>> YELLOW_BULLET = registerProjectile("yellow_bullet", YellowBulletEntity::new);
 	public static final RegistryObject<EntityType<YellowGuardianShotEntity>> YELLOW_GUARDIAN_SHOT = registerProjectile("yellow_guardian_shot", YellowGuardianShotEntity::new);
 
-	public static final RegistryObject<EntityType<StoneGiantRock>> STONE_GIANT_ROCK = registerProjectile("stone_giant_rock", StoneGiantRock::new);
+	public static final RegistryObject<EntityType<StoneGiantRock>> STONE_GIANT_ROCK = registerProjectile("stone_giant_rock", StoneGiantRock::new, 0.5f, 0.5f);
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerProjectile(String registryName, EntityType.EntityFactory<T> factory) {
 		return registerProjectile(registryName, factory, 0.25f, 0.25f);

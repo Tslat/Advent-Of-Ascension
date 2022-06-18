@@ -1,0 +1,27 @@
+{
+  "type": "aoa3:aoa_default_structure",
+  "biomes": "#aoa3:has_structure/ruined_teleporter",
+  "spawn_overrides": {
+    "ambient": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "aoa3:corrupted_traveller",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    }
+  },
+  "start_height": {
+    "type": "minecraft:very_biased_to_bottom",
+    "max_inclusive": {
+      "absolute": 0
+    },
+    "min_inclusive": {
+      "above_bottom": 10
+    }
+  },
+  "start_pool": "aoa3:overworld/ruined_teleporter_frame/starts"
+}

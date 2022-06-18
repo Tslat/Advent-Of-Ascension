@@ -2,152 +2,152 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 10.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": -1.0,
-        "max": 1.0
+        "max": 1.0,
+        "min": -1.0
       },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 300,
-          "quality": -2
+          "quality": -2,
+          "weight": 300
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:shyregem"
+          "name": "aoa3:shyregem",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:shyrestone_ingot"
+          "name": "aoa3:shyrestone_ingot",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 6.0
+                "max": 6.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:shyrestone_nugget"
+          "name": "aoa3:shyrestone_nugget",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 45.0
+                "max": 45.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:white_shyre_bricks"
+          "name": "aoa3:white_shyre_bricks",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 45.0
+                "max": 45.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:yellow_shyre_bricks"
+          "name": "aoa3:yellow_shyre_bricks",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:magic_repair_dust"
+          "name": "aoa3:magic_repair_dust",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 27,
           "functions": [
             {
-              "function": "minecraft:enchant_randomly",
               "enchantments": [
-                "minecraft:fortune",
-                "minecraft:efficiency",
                 "minecraft:unbreaking",
-                "minecraft:silk_touch"
-              ]
+                "minecraft:fortune",
+                "minecraft:silk_touch",
+                "minecraft:efficiency"
+              ],
+              "function": "minecraft:enchant_randomly"
             }
           ],
-          "name": "minecraft:diamond_pickaxe"
+          "name": "minecraft:diamond_pickaxe",
+          "weight": 27
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 35.0
+                "max": 35.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:shyre_log"
+          "name": "aoa3:shyre_log",
+          "weight": 35
         },
         {
           "type": "minecraft:item",
-          "quality": 1,
-          "name": "aoa3:ancient_upgrade_kit"
+          "name": "aoa3:ancient_upgrade_kit",
+          "quality": 1
         }
-      ]
+      ],
+      "rolls": 10.0
     }
   ]
 }

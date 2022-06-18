@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:jack_rocker"
   },
-  "upgrade_kit": {
-    "item": "aoa3:fungal_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:jack_funger"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:fungal_upgrade_kit"
   }
 }

@@ -50,6 +50,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements IAnimatable {
 
 		entityData.set(OWNER, Optional.of(owner.getUUID()));
 		entityData.set(VARIANT, RandomUtil.randomNumberUpTo(6));
+		entityData.set(SUCCESS_TIMER, -1);
 	}
 
 	@Nullable
@@ -74,7 +75,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements IAnimatable {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source != DamageSource.OUT_OF_WORLD && getEntityData().get(SUCCESS_TIMER) >= 0)
+		if (source != DamageSource.OUT_OF_WORLD)
 			return false;
 
 		return super.hurt(source, amount);

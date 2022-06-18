@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:discharge_cannon"
   },
-  "upgrade_kit": {
-    "item": "aoa3:ancient_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:ancient_discharger"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:ancient_upgrade_kit"
   }
 }

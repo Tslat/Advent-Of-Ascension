@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "PSP",
-    "PSP"
-  ],
   "key": {
     "P": {
       "item": "aoa3:lucalus_planks"
@@ -12,8 +8,12 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    "PSP",
+    "PSP"
+  ],
   "result": {
-    "item": "aoa3:lucalus_fence",
-    "count": 3
+    "count": 3,
+    "item": "aoa3:lucalus_fence"
   }
 }

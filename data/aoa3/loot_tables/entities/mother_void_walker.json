@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,14 +10,14 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 35,
-          "name": "aoa3:void_scales"
+          "name": "aoa3:void_scales",
+          "weight": 35
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "name": "void_sword",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -28,20 +26,22 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 200,
-          "name": "aoa3:void_sword"
+          "name": "aoa3:void_sword",
+          "weight": 200
         }
-      ]
+      ],
+      "name": "void_sword",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/overworld"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

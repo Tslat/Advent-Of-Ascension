@@ -1,4 +1,4 @@
 {
-  "conditions": [],
-  "type": "aoa3:loot_modifying_items"
+  "type": "aoa3:loot_modifying_items",
+  "conditions": []
 }

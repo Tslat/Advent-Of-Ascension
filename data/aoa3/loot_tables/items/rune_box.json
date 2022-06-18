@@ -2,85 +2,85 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "runes",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:wind_rune"
+          "name": "aoa3:wind_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:fire_rune"
+          "name": "aoa3:fire_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:water_rune"
+          "name": "aoa3:water_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:wither_rune"
+          "name": "aoa3:wither_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:energy_rune"
+          "name": "aoa3:energy_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:lunar_rune"
+          "name": "aoa3:lunar_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:kinetic_rune"
+          "name": "aoa3:kinetic_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:distortion_rune"
+          "name": "aoa3:distortion_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:poison_rune"
+          "name": "aoa3:poison_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:strike_rune"
+          "name": "aoa3:strike_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:power_rune"
+          "name": "aoa3:power_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:storm_rune"
+          "name": "aoa3:storm_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:life_rune"
+          "name": "aoa3:life_rune",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:compass_rune"
+          "name": "aoa3:compass_rune",
+          "weight": 100
         }
-      ]
+      ],
+      "name": "runes",
+      "rolls": 1.0
     }
   ]
 }

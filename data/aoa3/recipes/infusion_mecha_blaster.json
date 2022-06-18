@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:magnet_shard"
@@ -20,6 +17,9 @@
       "tag": "forge:ingots/varsium"
     }
   ],
+  "input": {
+    "item": "aoa3:blaster_frame"
+  },
   "result": {
     "item": "aoa3:mecha_blaster"
   }

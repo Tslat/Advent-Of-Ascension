@@ -1,38 +1,21 @@
 {
   "parent": "minecraft:item/crossbow",
   "display": {
-    "thirdperson_righthand": {
+    "firstperson_lefthand": {
       "rotation": [
         -90,
         0,
-        -60
-      ],
-      "translation": [
-        2,
-        0.1,
-        -3
+        35
       ],
       "scale": [
-        0.9,
-        0.9,
-        0.9
-      ]
-    },
-    "thirdperson_lefthand": {
-      "rotation": [
-        -90,
-        0,
-        30
+        0.68,
+        0.68,
+        0.68
       ],
       "translation": [
-        2,
-        0.1,
-        -3
-      ],
-      "scale": [
-        0.9,
-        0.9,
-        0.9
+        1.13,
+        3.2,
+        1.13
       ]
     },
     "firstperson_righthand": {
@@ -41,71 +24,88 @@
         0,
         -55
       ],
-      "translation": [
-        1.13,
-        3.2,
-        1.13
-      ],
       "scale": [
         0.68,
         0.68,
         0.68
+      ],
+      "translation": [
+        1.13,
+        3.2,
+        1.13
       ]
     },
-    "firstperson_lefthand": {
+    "thirdperson_lefthand": {
       "rotation": [
         -90,
         0,
-        35
-      ],
-      "translation": [
-        1.13,
-        3.2,
-        1.13
+        30
       ],
       "scale": [
-        0.68,
-        0.68,
-        0.68
+        0.9,
+        0.9,
+        0.9
+      ],
+      "translation": [
+        2,
+        0.1,
+        -3
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        -90,
+        0,
+        -60
+      ],
+      "scale": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "translation": [
+        2,
+        0.1,
+        -3
       ]
     }
   },
-  "textures": {
-    "layer0": "aoa3:item/rosidian_crossbow_standby"
-  },
   "overrides": [
     {
+      "model": "aoa3:item/rosidian_crossbow_pulling_0",
       "predicate": {
         "minecraft:pulling": 1.0
-      },
-      "model": "aoa3:item/rosidian_crossbow_pulling_0"
+      }
     },
     {
+      "model": "aoa3:item/rosidian_crossbow_pulling_1",
       "predicate": {
-        "minecraft:pulling": 1.0,
-        "minecraft:pull": 0.58
-      },
-      "model": "aoa3:item/rosidian_crossbow_pulling_1"
+        "minecraft:pull": 0.58,
+        "minecraft:pulling": 1.0
+      }
     },
     {
+      "model": "aoa3:item/rosidian_crossbow_pulling_2",
       "predicate": {
-        "minecraft:pulling": 1.0,
-        "minecraft:pull": 1.0
-      },
-      "model": "aoa3:item/rosidian_crossbow_pulling_2"
+        "minecraft:pull": 1.0,
+        "minecraft:pulling": 1.0
+      }
     },
     {
+      "model": "aoa3:item/rosidian_crossbow_arrow",
       "predicate": {
         "minecraft:charged": 1.0
-      },
-      "model": "aoa3:item/rosidian_crossbow_arrow"
+      }
     },
     {
+      "model": "aoa3:item/rosidian_crossbow_firework",
       "predicate": {
         "minecraft:charged": 1.0,
         "minecraft:firework": 1.0
-      },
-      "model": "aoa3:item/rosidian_crossbow_firework"
+      }
     }
-  ]
+  ],
+  "textures": {
+    "layer0": "aoa3:item/rosidian_crossbow_standby"
+  }
 }

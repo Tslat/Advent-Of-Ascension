@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "aoa3:block/lunide_slab_top"
-    },
     "type=bottom": {
       "model": "aoa3:block/lunide_slab"
     },
     "type=double": {
       "model": "aoa3:block/lunide_planks"
+    },
+    "type=top": {
+      "model": "aoa3:block/lunide_slab_top"
     }
   }
 }

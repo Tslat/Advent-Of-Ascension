@@ -1,4 +1,4 @@
 {
-  "per_tick_drain": 0.01,
-  "max_value": 100.0
+  "max_value": 100.0,
+  "per_tick_drain": 0.01
 }

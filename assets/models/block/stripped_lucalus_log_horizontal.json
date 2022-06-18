@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column_horizontal",
   "textures": {
-    "side": "aoa3:block/stripped_lucalus_log",
-    "end": "aoa3:block/stripped_lucalus_log_top"
+    "end": "aoa3:block/stripped_lucalus_log_top",
+    "side": "aoa3:block/stripped_lucalus_log"
   }
 }

@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "tag": "forge:rods/metal"
-  },
   "ingredients": [
     {
       "item": "aoa3:damage_enhancer"
@@ -11,6 +8,9 @@
       "item": "aoa3:divine_enhancer"
     }
   ],
+  "input": {
+    "tag": "forge:rods/metal"
+  },
   "result": {
     "item": "aoa3:vulcane"
   }

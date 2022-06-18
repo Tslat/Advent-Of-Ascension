@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ABC",
-    "BDB",
-    "CBA"
-  ],
   "key": {
     "A": {
       "item": "minecraft:rabbit_foot"
@@ -19,6 +14,11 @@
       "item": "minecraft:glass"
     }
   },
+  "pattern": [
+    "ABC",
+    "BDB",
+    "CBA"
+  ],
   "result": {
     "item": "aoa3:luck_enhancer"
   }

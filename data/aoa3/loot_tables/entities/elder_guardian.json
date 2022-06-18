@@ -2,12 +2,10 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "biogenic_armour",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -16,25 +14,27 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:biogenic_helmet"
+          "name": "aoa3:biogenic_helmet",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:biogenic_chestplate"
+          "name": "aoa3:biogenic_chestplate",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:biogenic_leggings"
+          "name": "aoa3:biogenic_leggings",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:biogenic_boots"
+          "name": "aoa3:biogenic_boots",
+          "weight": 10
         }
-      ]
+      ],
+      "name": "biogenic_armour",
+      "rolls": 1.0
     }
   ]
 }

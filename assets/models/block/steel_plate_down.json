@@ -2,6 +2,62 @@
   "parent": "aoa3:block/steel_plate",
   "elements": [
     {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#all",
+          "uv": [
+            0.0,
+            16.0,
+            16.0,
+            0.0
+          ]
+        },
+        "east": {
+          "cullface": "east",
+          "rotation": 180,
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.0
+          ]
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#all",
+          "uv": [
+            0.0,
+            4.0,
+            16.0,
+            5.0
+          ]
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.0
+          ]
+        },
+        "up": {
+          "texture": "#all"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#all",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.0
+          ]
+        }
+      },
       "from": [
         0,
         0,
@@ -11,63 +67,7 @@
         16,
         1,
         16
-      ],
-      "faces": {
-        "down": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            16.0,
-            16.0,
-            0.0
-          ],
-          "cullface": "down"
-        },
-        "up": {
-          "texture": "#all"
-        },
-        "north": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            4.0,
-            16.0,
-            5.0
-          ],
-          "cullface": "north"
-        },
-        "south": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            1.0
-          ],
-          "cullface": "south"
-        },
-        "west": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            1.0
-          ],
-          "cullface": "west"
-        },
-        "east": {
-          "texture": "#all",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            1.0
-          ],
-          "cullface": "east",
-          "rotation": 180
-        }
-      }
+      ]
     }
   ]
 }

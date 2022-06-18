@@ -6,10 +6,7 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
-import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
-import net.tslat.aoa3.content.recipe.TrophyRecipe;
-import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
+import net.tslat.aoa3.content.recipe.*;
 
 import java.util.function.Supplier;
 
@@ -20,6 +17,7 @@ public final class AoARecipes {
 	public static final RecipeTypeContainer<InfusionRecipe> INFUSION = registerRecipeType("infusion", InfusionRecipe.Factory::new);
 	public static final RecipeTypeContainer<TrophyRecipe> TROPHY = registerRecipeType("trophy", TrophyRecipe.Factory::new);
 	public static final RecipeTypeContainer<ToolInteractionRecipe> TOOL_INTERACTION = registerRecipeType("tool_interaction", ToolInteractionRecipe.Factory::new);
+	public static final RecipeTypeContainer<WhitewashingRecipe> WHITEWASHING = registerRecipeType("whitewashing", WhitewashingRecipe.Factory::new);
 
 	private static <T extends Recipe<I>, I extends Container> RecipeTypeContainer<T> registerRecipeType(String id, Supplier<RecipeSerializer<T>> serializer) {
 		return new RecipeTypeContainer<T>(AoARegistries.RECIPE_TYPES.register(id, () -> new RecipeType<T>() {

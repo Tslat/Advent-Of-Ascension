@@ -1,7 +1,7 @@
 {
-  "id": "abyss",
   "gui_x": 1228,
   "gui_y": 694,
+  "id": "abyss",
   "parents": [
     "nether"
   ]

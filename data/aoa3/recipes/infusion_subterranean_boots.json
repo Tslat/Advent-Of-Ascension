@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:dense_rock"
@@ -14,6 +11,9 @@
       "tag": "forge:dusts/redstone"
     }
   ],
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
   "result": {
     "item": "aoa3:subterranean_boots"
   }

@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/stairs",
   "textures": {
-    "side": "aoa3:block/precasian_surface_rock",
     "bottom": "aoa3:block/precasian_surface_rock",
+    "side": "aoa3:block/precasian_surface_rock",
     "top": "aoa3:block/precasian_surface_rock"
   }
 }

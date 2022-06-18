@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:mk"
   },
-  "upgrade_kit": {
-    "item": "aoa3:fungal_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:mk_fung"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:fungal_upgrade_kit"
   }
 }

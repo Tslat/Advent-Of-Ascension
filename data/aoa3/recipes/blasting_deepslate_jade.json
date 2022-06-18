@@ -1,9 +1,9 @@
 {
   "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:deepslate_jade_ore"
   },
-  "result": "aoa3:jade",
-  "experience": 3.0,
-  "cookingtime": 100
+  "result": "aoa3:jade"
 }

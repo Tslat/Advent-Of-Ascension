@@ -2,46 +2,46 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
           "functions": [
             {
-              "function": "minecraft:looting_enchant",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 1.0
-              }
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "aoa3:ghostly_powder"
+          "name": "aoa3:ghostly_powder",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:torn_cloth"
+          "name": "aoa3:torn_cloth",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 40,
-          "name": "aoa3:phantasm"
+          "name": "aoa3:phantasm",
+          "weight": 40
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/greckon"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

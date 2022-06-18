@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
-  ],
   "key": {
     "A": {
       "item": "aoa3:unpowered_rune"
@@ -13,8 +8,13 @@
       "item": "minecraft:arrow"
     }
   },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
   "result": {
-    "item": "aoa3:strike_rune",
-    "count": 8
+    "count": 8,
+    "item": "aoa3:strike_rune"
   }
 }

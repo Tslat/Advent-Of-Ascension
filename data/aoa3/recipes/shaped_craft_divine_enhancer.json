@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ABC",
-    "BDB",
-    "CBE"
-  ],
   "key": {
     "A": {
       "item": "minecraft:nether_star"
@@ -22,6 +17,11 @@
       "item": "minecraft:ghast_tear"
     }
   },
+  "pattern": [
+    "ABC",
+    "BDB",
+    "CBE"
+  ],
   "result": {
     "item": "aoa3:divine_enhancer"
   }

@@ -1,112 +1,112 @@
 {
-  "xp_modifier": 1.0,
   "abilities": [
     {
       "id": "aoa3:fertilise_farmland",
-      "unique_id": "-1220019474",
-      "level_req": 8
+      "level_req": 8,
+      "unique_id": "-1220019474"
     },
     {
       "id": "aoa3:block_conversion",
-      "unique_id": "1047471040",
-      "replacement_block": "minecraft:mossy_cobblestone",
       "interaction_item": "minecraft:wheat_seeds",
-      "radius": 1,
       "level_req": 16,
-      "target_block": "minecraft:cobblestone"
+      "radius": 1,
+      "replacement_block": "minecraft:mossy_cobblestone",
+      "target_block": "minecraft:cobblestone",
+      "unique_id": "1047471040"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "-53236229",
+      "level_req": 24,
+      "restricted_id": "aoa3:green_manure",
       "restrictions": [
         "interact_with",
         "place_block"
       ],
-      "level_req": 24,
-      "restricted_id": "aoa3:green_manure"
+      "unique_id": "-53236229"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "-1900201208",
+      "level_req": 29,
+      "restricted_id": "aoa3:magic_marang_crop",
       "restrictions": [
         "place_block"
       ],
-      "level_req": 29,
-      "restricted_id": "aoa3:magic_marang_crop"
+      "unique_id": "-1900201208"
     },
     {
+      "base_value": 0.1,
       "id": "aoa3:breeding_bonus",
-      "unique_id": "1383801170",
-      "base_value": 0.1,
+      "level_req": 35,
       "per_level_mod": 0.002,
-      "level_req": 35
+      "unique_id": "1383801170"
     },
     {
-      "id": "aoa3:dryad_sprite_spawn",
-      "unique_id": "-2033215558",
       "base_value": 7.5E-4,
+      "id": "aoa3:dryad_sprite_spawn",
+      "level_req": 44,
       "per_level_mod": 8.0E-5,
-      "level_req": 44
+      "unique_id": "-2033215558"
     },
     {
-      "id": "aoa3:harvest_replant",
-      "unique_id": "2052180611",
       "base_value": 0.1,
+      "id": "aoa3:harvest_replant",
+      "level_req": 49,
       "per_level_mod": 0.003,
-      "level_req": 49
+      "unique_id": "2052180611"
     },
     {
-      "id": "aoa3:hoe_area_harvest",
-      "unique_id": "1619780961",
       "base_radius": 1,
+      "id": "aoa3:hoe_area_harvest",
+      "level_req": 57,
       "levels_per_radius_increase": 20,
       "per_block_hoe_damage": 1,
-      "level_req": 57
+      "unique_id": "1619780961"
     },
     {
       "id": "aoa3:block_conversion",
-      "unique_id": "1885647504",
-      "replacement_block": "minecraft:mycelium",
       "interaction_item": "aoa3:mushroom_spores",
-      "radius": 4,
       "level_req": 66,
-      "target_block": "minecraft:grass_block"
+      "radius": 4,
+      "replacement_block": "minecraft:mycelium",
+      "target_block": "minecraft:grass_block",
+      "unique_id": "1885647504"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "1707876746",
-      "restrictions": [
-        "place_block"
-      ],
       "level_req": 74,
-      "restricted_id": "aoa3:trilliad_crop"
-    },
-    {
-      "id": "aoa3:level_restriction",
-      "unique_id": "1780713585",
+      "restricted_id": "aoa3:trilliad_crop",
       "restrictions": [
         "place_block"
       ],
+      "unique_id": "1707876746"
+    },
+    {
+      "id": "aoa3:level_restriction",
       "level_req": 86,
-      "restricted_id": "aoa3:thorny_plant_crop"
+      "restricted_id": "aoa3:thorny_plant_crop",
+      "restrictions": [
+        "place_block"
+      ],
+      "unique_id": "1780713585"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "1453633970",
-      "restrictions": [
-        "equip"
-      ],
       "level_req": 92,
-      "restricted_id": "aoa3:dryads_blessing"
-    },
-    {
-      "id": "aoa3:level_restriction",
-      "unique_id": "-870832574",
+      "restricted_id": "aoa3:dryads_blessing",
       "restrictions": [
         "equip"
       ],
+      "unique_id": "1453633970"
+    },
+    {
+      "id": "aoa3:level_restriction",
       "level_req": 100,
-      "restricted_id": "aoa3:helm_of_the_dryad"
+      "restricted_id": "aoa3:helm_of_the_dryad",
+      "restrictions": [
+        "equip"
+      ],
+      "unique_id": "-870832574"
     }
-  ]
+  ],
+  "xp_modifier": 1.0
 }

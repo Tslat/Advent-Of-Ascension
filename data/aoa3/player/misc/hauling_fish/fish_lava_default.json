@@ -1,44 +1,44 @@
 {
   "entities": [
     {
-      "weight": 200,
-      "entity": "aoa3:crimson_skipper"
+      "entity": "aoa3:crimson_skipper",
+      "weight": 200
     },
     {
-      "weight": 200,
-      "entity": "aoa3:crimson_stripefish"
+      "entity": "aoa3:crimson_stripefish",
+      "weight": 200
     },
     {
-      "weight": 150,
-      "entity": "aoa3:charred_char"
+      "entity": "aoa3:charred_char",
+      "weight": 150
     },
     {
-      "weight": 150,
-      "entity": "aoa3:candlefish"
+      "entity": "aoa3:candlefish",
+      "weight": 150
     },
     {
-      "weight": 100,
-      "item": "minecraft:obsidian"
+      "item": "minecraft:obsidian",
+      "weight": 100
     },
     {
+      "item": "minecraft:crying_obsidian",
       "weight": 25,
-      "weight_mod": 2.0,
-      "item": "minecraft:crying_obsidian"
+      "weight_mod": 2.0
     },
     {
+      "item": "minecraft:diamond",
       "weight": 50,
-      "weight_mod": 5.0,
-      "item": "minecraft:diamond"
+      "weight_mod": 5.0
     },
     {
+      "item": "minecraft:emerald",
       "weight": 35,
-      "weight_mod": 7.0,
-      "item": "minecraft:emerald"
+      "weight_mod": 7.0
     },
     {
+      "item": "minecraft:coal",
       "weight": 120,
-      "weight_mod": -10.0,
-      "item": "minecraft:coal"
+      "weight_mod": -10.0
     },
     {
       "item": "minecraft:lava_bucket"

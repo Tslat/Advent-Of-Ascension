@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:small_green_petal"
@@ -23,6 +20,9 @@
       "tag": "forge:ingots/iron"
     }
   ],
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
   "result": {
     "item": "aoa3:miasma"
   }

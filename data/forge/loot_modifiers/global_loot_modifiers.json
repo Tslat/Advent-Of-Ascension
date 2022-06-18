@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "entries": [
     "aoa3:haven",
     "aoa3:player_event_listeners",
@@ -11,5 +10,6 @@
     "aoa3:gardener",
     "aoa3:guardian_biogenic_armour",
     "aoa3:dispenser_loot"
-  ]
+  ],
+  "replace": false
 }

@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab_top",
   "textures": {
-    "side": "aoa3:block/aromatic_stone",
     "bottom": "aoa3:block/aromatic_stone",
+    "side": "aoa3:block/aromatic_stone",
     "top": "aoa3:block/aromatic_stone"
   }
 }

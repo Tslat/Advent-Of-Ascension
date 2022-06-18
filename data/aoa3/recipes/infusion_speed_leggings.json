@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "ingredients": [
     {
       "item": "minecraft:prismarine_shard"
@@ -29,6 +26,9 @@
       "tag": "forge:ingots/elecanium"
     }
   ],
+  "input": {
+    "item": "aoa3:leggings_frame"
+  },
   "result": {
     "item": "aoa3:speed_leggings"
   }

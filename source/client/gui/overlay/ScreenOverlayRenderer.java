@@ -13,8 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.util.RenderUtil;
 
 import java.util.Map;
@@ -40,37 +38,9 @@ public final class ScreenOverlayRenderer {
 		overlays.clear();
 	}
 
-	private static void handleToxicWaste(RenderGameOverlayEvent.Post event) {
-		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL)
-			return;
-
-		Minecraft mc = Minecraft.getInstance();
-		Window window = mc.getWindow();
-
-		if (mc.player != null && mc.player.isEyeInFluid(AoATags.Fluids.TOXIC_WASTE)) {
-			final BufferBuilder buff = Tesselator.getInstance().getBuilder();
-			float yMod = mc.player.getXRot() / 512f + (mc.player.tickCount / 1800f);
-			float xMod = mc.player.getYRot() / 1024f + (mc.player.tickCount / 3600f);
-
-			RenderSystem.enableBlend();
-			RenderUtil.prepRenderTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/block/toxic_waste_overlay.png"));
-			RenderSystem.setShaderColor(1, 1, 1, 0.3f);
-			buff.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-			buff.vertex(0.0D, window.getGuiScaledHeight(), -90.0D).uv(xMod, 1f + yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
-			buff.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90.0D).uv(1f + xMod, 1f + yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
-			buff.vertex(window.getGuiScaledWidth(), 0.0, -90.0D).uv(1f + xMod, yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
-			buff.vertex(0.0D, 0.0D, -90.0D).uv(xMod, yMod).normal(0.0F, 1.0F, 0.0F).endVertex();
-			Tesselator.getInstance().end();
-			RenderSystem.depthMask(true);
-			RenderSystem.disableBlend();
-		}
-	}
-
 	private static void onOverlayRender(final RenderGameOverlayEvent.Post event) {
 		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON)
 			return;
-
-		handleToxicWaste(event);
 
 		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || overlays.isEmpty())
 			return;

@@ -1,25 +1,24 @@
 {
-  "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:attribute_modification",
-      "unique_id": "1970224826",
-      "base_value": 0.0,
-      "per_level_mod": 0.3,
       "attribute": "minecraft:generic.max_health",
+      "base_value": 0.0,
+      "id": "aoa3:attribute_modification",
+      "level_req": 1,
       "operation": 0.0,
-      "level_req": 1
+      "per_level_mod": 0.3,
+      "unique_id": "1970224826"
     },
     {
-      "id": "aoa3:one_shot_damage_limiter",
-      "unique_id": "-437214191",
-      "min_activation_health": 0.0,
       "health_restore_amount": 1.0,
-      "level_req": 10
+      "id": "aoa3:one_shot_damage_limiter",
+      "level_req": 10,
+      "min_activation_health": 0.0,
+      "unique_id": "-437214191"
     },
     {
       "id": "aoa3:potion_duration_reducer",
-      "unique_id": "-1015989968",
+      "level_req": 19,
       "match_effects": [
         "minecraft:slowness",
         "minecraft:mining_fatigue",
@@ -28,84 +27,85 @@
         "minecraft:nausea"
       ],
       "modifier": 0.5,
-      "level_req": 19
+      "unique_id": "-1015989968"
     },
     {
-      "id": "aoa3:attribute_modification",
-      "unique_id": "-2042597261",
-      "base_value": 10.0,
-      "per_level_mod": 0.0,
       "attribute": "minecraft:generic.max_health",
+      "base_value": 10.0,
+      "id": "aoa3:attribute_modification",
+      "level_req": 25,
       "operation": 0.0,
-      "level_req": 25
+      "per_level_mod": 0.0,
+      "unique_id": "-2042597261"
     },
     {
       "id": "aoa3:bow_damage_increase",
-      "unique_id": "-591168779",
-      "require_full_charge": true,
+      "level_req": 36,
       "modifier": 1.2,
-      "level_req": 36
+      "require_full_charge": true,
+      "unique_id": "-591168779"
     },
     {
       "id": "aoa3:innervation_mob_lure",
-      "unique_id": "709618598",
+      "level_req": 44,
       "lured_damage_modifier": 0.25,
       "per_tick_energy_drain": 0.4,
-      "level_req": 44
+      "unique_id": "709618598"
     },
     {
-      "id": "aoa3:attribute_modification",
-      "unique_id": "-2042598532",
-      "base_value": 10.0,
-      "per_level_mod": 0.0,
       "attribute": "minecraft:generic.max_health",
+      "base_value": 10.0,
+      "id": "aoa3:attribute_modification",
+      "level_req": 50,
       "operation": 0.0,
-      "level_req": 50
+      "per_level_mod": 0.0,
+      "unique_id": "-2042598532"
     },
     {
-      "id": "aoa3:innervation_dodge",
-      "unique_id": "-1148022055",
       "energy_cost": 30.0,
-      "level_req": 59
+      "id": "aoa3:innervation_dodge",
+      "level_req": 59,
+      "unique_id": "-1148022055"
     },
     {
       "id": "aoa3:vulcane_damage_increase",
-      "unique_id": "-1590910758",
-      "modifier": 1.5,
+      "level_req": 65,
       "min_rage": 0.0,
-      "level_req": 65
+      "modifier": 1.5,
+      "unique_id": "-1590910758"
     },
     {
-      "id": "aoa3:double_drops_chance",
-      "unique_id": "-1596895304",
       "base_value": 0.1,
+      "id": "aoa3:double_drops_chance",
+      "level_req": 77,
       "per_level_mod": 0.00147,
-      "level_req": 77
+      "unique_id": "-1596895304"
     },
     {
-      "id": "aoa3:attribute_modification",
-      "unique_id": "-2042599369",
-      "base_value": 10.0,
-      "per_level_mod": 0.0,
       "attribute": "minecraft:generic.max_health",
+      "base_value": 10.0,
+      "id": "aoa3:attribute_modification",
+      "level_req": 85,
       "operation": 0.0,
-      "level_req": 85
+      "per_level_mod": 0.0,
+      "unique_id": "-2042599369"
     },
     {
-      "id": "aoa3:stun_strike",
-      "unique_id": "-1782268962",
       "energy_cost": 30.0,
+      "id": "aoa3:stun_strike",
+      "level_req": 91,
       "stun_duration": 40,
-      "level_req": 91
+      "unique_id": "-1782268962"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "619464118",
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_warrior",
       "restrictions": [
         "equip"
       ],
-      "level_req": 100,
-      "restricted_id": "aoa3:helm_of_the_warrior"
+      "unique_id": "619464118"
     }
-  ]
+  ],
+  "xp_modifier": 1.0
 }

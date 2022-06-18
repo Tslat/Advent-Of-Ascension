@@ -1,22 +1,7 @@
 {
   "ambientocclusion": false,
-  "textures": {
-    "vine": "aoa3:block/creep_vines",
-    "particle": "aoa3:block/creep_vines"
-  },
   "elements": [
     {
-      "from": [
-        0,
-        0,
-        0.8
-      ],
-      "to": [
-        16,
-        16,
-        0.8
-      ],
-      "shade": false,
       "faces": {
         "north": {
           "texture": "#vine",
@@ -26,30 +11,45 @@
           "texture": "#vine",
           "tintindex": 0
         }
-      }
+      },
+      "from": [
+        0,
+        0,
+        0.8
+      ],
+      "shade": false,
+      "to": [
+        16,
+        16,
+        0.8
+      ]
     },
     {
+      "faces": {
+        "east": {
+          "texture": "#vine",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#vine",
+          "tintindex": 0
+        }
+      },
       "from": [
         15.2,
         0,
         0
       ],
+      "shade": false,
       "to": [
         15.2,
         16,
         16
-      ],
-      "shade": false,
-      "faces": {
-        "west": {
-          "texture": "#vine",
-          "tintindex": 0
-        },
-        "east": {
-          "texture": "#vine",
-          "tintindex": 0
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "aoa3:block/creep_vines",
+    "vine": "aoa3:block/creep_vines"
+  }
 }

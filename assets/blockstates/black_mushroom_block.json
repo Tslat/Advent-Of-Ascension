@@ -1,127 +1,127 @@
 {
   "multipart": [
     {
-      "when": {
-        "north": "true"
-      },
       "apply": {
         "model": "aoa3:block/black_mushroom_block"
+      },
+      "when": {
+        "north": "true"
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block",
+        "uvlock": true,
+        "y": 90
+      },
       "when": {
         "east": "true"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block",
-        "y": 90,
-        "uvlock": true
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block",
+        "uvlock": true,
+        "y": 180
+      },
       "when": {
         "south": "true"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block",
-        "y": 180,
-        "uvlock": true
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block",
+        "uvlock": true,
+        "y": 270
+      },
       "when": {
         "west": "true"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block",
-        "y": 270,
-        "uvlock": true
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block",
+        "uvlock": true,
+        "x": 270
+      },
       "when": {
         "up": "true"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block",
-        "x": 270,
-        "uvlock": true
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block",
+        "uvlock": true,
+        "x": 90
+      },
       "when": {
         "down": "true"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block",
-        "x": 90,
-        "uvlock": true
       }
     },
     {
-      "when": {
-        "north": "false"
-      },
       "apply": {
         "model": "aoa3:block/black_mushroom_block_inside"
-      }
-    },
-    {
+      },
       "when": {
         "north": "false"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block_inside"
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block_inside"
+      },
+      "when": {
+        "north": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block_inside",
+        "uvlock": true,
+        "y": 90
+      },
       "when": {
         "east": "false"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block_inside",
-        "y": 90,
-        "uvlock": true
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block_inside",
+        "uvlock": true,
+        "y": 180
+      },
       "when": {
         "south": "false"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block_inside",
-        "y": 180,
-        "uvlock": true
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block_inside",
+        "uvlock": true,
+        "y": 270
+      },
       "when": {
         "west": "false"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block_inside",
-        "y": 270,
-        "uvlock": true
       }
     },
     {
+      "apply": {
+        "model": "aoa3:block/black_mushroom_block_inside",
+        "uvlock": true,
+        "x": 270
+      },
       "when": {
         "up": "false"
-      },
-      "apply": {
-        "model": "aoa3:block/black_mushroom_block_inside",
-        "x": 270,
-        "uvlock": true
       }
     },
     {
-      "when": {
-        "down": "false"
-      },
       "apply": {
         "model": "aoa3:block/black_mushroom_block_inside",
-        "x": 90,
-        "uvlock": true
+        "uvlock": true,
+        "x": 90
+      },
+      "when": {
+        "down": "false"
       }
     }
   ]

@@ -2,7 +2,7 @@
   "parent": "aoa3:block/living_growth",
   "ambientocclusion": false,
   "textures": {
-    "texture": "aoa3:block/living_growth_stage3",
-    "particle": "aoa3:block/living_growth_stage3"
+    "particle": "aoa3:block/living_growth_stage3",
+    "texture": "aoa3:block/living_growth_stage3"
   }
 }

@@ -2,7 +2,6 @@ package net.tslat.aoa3.common.registration.block;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
@@ -12,11 +11,10 @@ import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.RegistryObject;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -27,7 +25,6 @@ import net.tslat.aoa3.content.block.decoration.misc.NonFullBlock;
 import net.tslat.aoa3.content.block.decoration.misc.PlankBlock;
 import net.tslat.aoa3.content.block.decoration.misc.SteelPlateBlock;
 import net.tslat.aoa3.content.block.functional.altar.*;
-import net.tslat.aoa3.content.block.functional.fluid.ClearWater;
 import net.tslat.aoa3.content.block.functional.fluid.ToxicWaste;
 import net.tslat.aoa3.content.block.functional.light.LampBlock;
 import net.tslat.aoa3.content.block.functional.light.VoxLight;
@@ -876,9 +873,8 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GIANT_SNAIL_ACID = registerItemlessBlock("giant_snail_acid", GiantSnailAcid::new);
 	public static final RegistryObject<Block> ORANGE_ACID = registerItemlessBlock("orange_acid", AcidBlock::new);
 
-	public static final RegistryObject<LiquidBlock> CANDIED_WATER = customRender(new FluidUtil.Builder("candied_water").colour(255, 105, 180, 200).viscosity(1200).density(1200).defaultRegisterAll(), TRANSLUCENT);
-	public static final RegistryObject<LiquidBlock> CLEAR_WATER = customRender(new FluidUtil.Builder("clear_water").colour(63, 118, 228, 255).customBlock((fluid, properties) -> () -> new ClearWater(fluid, properties)).defaultRegisterAll(), TRANSLUCENT);
-	public static final RegistryObject<LiquidBlock> TOXIC_WASTE = new FluidUtil.Builder("toxic_waste").colour(38, 42, 23, 255).viscosity(10000).density(5000).temperature(400).stillTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_still")).flowingTexture(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_flow")).submergedOverlay(new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_overlay")).customBlock((fluid, properties) -> () -> new ToxicWaste(fluid, properties)).customSourceFluid(properties -> {properties.tickRate(50); return () -> new ForgeFlowingFluid.Source(properties);}).defaultRegisterAll();
+	public static final RegistryObject<LiquidBlock> CANDIED_WATER = customRender(new FluidUtil.Builder("candied_water", AoAFluidTypes.CANDIED_WATER).defaultRegisterAll(), TRANSLUCENT);
+	public static final RegistryObject<LiquidBlock> TOXIC_WASTE = new FluidUtil.Builder("toxic_waste", AoAFluidTypes.TOXIC_WASTE).tickRate(50).customBlock((fluid, properties) -> () -> new ToxicWaste(fluid, properties)).defaultRegisterAll();
 
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_WITHER = registerBlock("kaiyu_temple_trap_wither", KaiyuTempleTrapWither::new, AoAItemGroups.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_DAMAGE = registerBlock("kaiyu_temple_trap_damage", KaiyuTempleTrapDamage::new, AoAItemGroups.FUNCTIONAL_BLOCKS);

@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "side": "aoa3:block/candied_dirt",
     "bottom": "aoa3:block/candied_dirt_bottom",
+    "side": "aoa3:block/candied_dirt",
     "top": "aoa3:block/candied_dirt_top"
   }
 }

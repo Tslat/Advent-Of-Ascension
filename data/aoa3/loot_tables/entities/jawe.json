@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "supplies",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,14 +10,14 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:sharp_claw"
+          "name": "aoa3:sharp_claw",
+          "weight": 20
         }
-      ]
+      ],
+      "name": "supplies",
+      "rolls": 1.0
     },
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -28,46 +26,48 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "aoa3:spirit_shower"
+          "name": "aoa3:spirit_shower",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 24,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:rotten_flesh"
+          "name": "minecraft:rotten_flesh",
+          "weight": 24
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
-          "name": "aoa3:ivory"
+          "name": "aoa3:ivory",
+          "weight": 17
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
-          "name": "aoa3:bloodstone"
+          "name": "aoa3:bloodstone",
+          "weight": 7
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/abyss"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

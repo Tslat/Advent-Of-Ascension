@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:ghoulish_ore"
   },
-  "result": "aoa3:ghoulish_ingot",
-  "experience": 3.0,
-  "cookingtime": 200
+  "result": "aoa3:ghoulish_ingot"
 }

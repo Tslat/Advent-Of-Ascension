@@ -1,51 +1,51 @@
 {
   "variants": {
-    "facing=north,type=mounted,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=south,type=mounted,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=west,type=mounted,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
     "facing=east,type=mounted,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=north,type=standing,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=south,type=standing,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=west,type=standing,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=east,type=standing,waterlogged=false": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=north,type=mounted,waterlogged=true": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=south,type=mounted,waterlogged=true": {
-      "model": "aoa3:block/banner_extension"
-    },
-    "facing=west,type=mounted,waterlogged=true": {
       "model": "aoa3:block/banner_extension"
     },
     "facing=east,type=mounted,waterlogged=true": {
       "model": "aoa3:block/banner_extension"
     },
+    "facing=east,type=standing,waterlogged=false": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=east,type=standing,waterlogged=true": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=north,type=mounted,waterlogged=false": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=north,type=mounted,waterlogged=true": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=north,type=standing,waterlogged=false": {
+      "model": "aoa3:block/banner_extension"
+    },
     "facing=north,type=standing,waterlogged=true": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=south,type=mounted,waterlogged=false": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=south,type=mounted,waterlogged=true": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=south,type=standing,waterlogged=false": {
       "model": "aoa3:block/banner_extension"
     },
     "facing=south,type=standing,waterlogged=true": {
       "model": "aoa3:block/banner_extension"
     },
-    "facing=west,type=standing,waterlogged=true": {
+    "facing=west,type=mounted,waterlogged=false": {
       "model": "aoa3:block/banner_extension"
     },
-    "facing=east,type=standing,waterlogged=true": {
+    "facing=west,type=mounted,waterlogged=true": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=west,type=standing,waterlogged=false": {
+      "model": "aoa3:block/banner_extension"
+    },
+    "facing=west,type=standing,waterlogged=true": {
       "model": "aoa3:block/banner_extension"
     }
   }

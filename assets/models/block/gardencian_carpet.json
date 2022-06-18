@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/carpet",
   "textures": {
-    "wool": "aoa3:block/gardencian_carpet",
-    "particle": "aoa3:block/gardencian_carpet"
+    "particle": "aoa3:block/gardencian_carpet",
+    "wool": "aoa3:block/gardencian_carpet"
   }
 }

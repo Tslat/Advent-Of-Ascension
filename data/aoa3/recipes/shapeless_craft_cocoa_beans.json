@@ -6,7 +6,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:cocoa_beans",
-    "count": 4
+    "count": 4,
+    "item": "minecraft:cocoa_beans"
   }
 }

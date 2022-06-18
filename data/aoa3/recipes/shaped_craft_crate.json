@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
-  ],
   "key": {
     "A": {
       "tag": "minecraft:planks"
@@ -13,6 +8,11 @@
       "item": "aoa3:reinforced_cloth"
     }
   },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
   "result": {
     "item": "aoa3:crate"
   }

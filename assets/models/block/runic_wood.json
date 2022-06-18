@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "side": "aoa3:block/runic_log",
-    "end": "aoa3:block/runic_log"
+    "end": "aoa3:block/runic_log",
+    "side": "aoa3:block/runic_log"
   }
 }

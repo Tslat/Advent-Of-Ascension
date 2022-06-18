@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "B",
-    "C",
-    "B"
-  ],
   "key": {
     "B": {
       "item": "minecraft:bread"
@@ -13,6 +8,11 @@
       "item": "aoa3:chum"
     }
   },
+  "pattern": [
+    "B",
+    "C",
+    "B"
+  ],
   "result": {
     "item": "aoa3:chum_burger"
   }

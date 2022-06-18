@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/precasia"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,62 +20,64 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 7,
-          "name": "aoa3:legbone_sword"
+          "name": "aoa3:legbone_sword",
+          "weight": 7
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 4.0
+                "max": 4.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:leather"
+          "name": "minecraft:leather",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 27,
-          "name": "aoa3:footbone_fragment"
+          "name": "aoa3:footbone_fragment",
+          "weight": 27
         },
         {
           "type": "minecraft:item",
-          "weight": 27,
-          "name": "aoa3:legbone_fragment"
+          "name": "aoa3:legbone_fragment",
+          "weight": 27
         },
         {
           "type": "minecraft:item",
-          "weight": 26,
-          "name": "aoa3:chestbone_fragment"
+          "name": "aoa3:chestbone_fragment",
+          "weight": 26
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:skullbone_fragment"
+          "name": "aoa3:skullbone_fragment",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 33,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:bone"
+          "name": "minecraft:bone",
+          "weight": 33
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

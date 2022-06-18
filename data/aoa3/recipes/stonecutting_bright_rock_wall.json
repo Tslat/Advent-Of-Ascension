@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 1,
   "ingredient": {
     "item": "aoa3:bright_rock"
   },
-  "result": "aoa3:bright_rock_wall",
-  "count": 1
+  "result": "aoa3:bright_rock_wall"
 }

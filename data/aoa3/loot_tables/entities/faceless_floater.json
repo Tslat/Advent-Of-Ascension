@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,24 +10,24 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:void_scales"
+          "name": "aoa3:void_scales",
+          "weight": 20
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/greckon"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -54,31 +52,33 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 13,
-          "name": "aoa3:ghoulish_ingot"
+          "name": "aoa3:ghoulish_ingot",
+          "weight": 13
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:silver_coin"
+          "name": "aoa3:silver_coin",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:purple_dye"
+          "name": "minecraft:purple_dye",
+          "weight": 20
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

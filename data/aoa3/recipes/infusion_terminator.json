@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:sniper_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:darkly_powder"
@@ -29,6 +26,9 @@
       "tag": "forge:gems/bloodstone"
     }
   ],
+  "input": {
+    "item": "aoa3:sniper_frame"
+  },
   "result": {
     "item": "aoa3:terminator"
   }

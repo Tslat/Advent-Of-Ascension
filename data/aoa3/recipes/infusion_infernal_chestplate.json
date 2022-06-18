@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:chestplate_frame"
-  },
   "ingredients": [
     {
       "item": "minecraft:magma_cream"
@@ -26,6 +23,9 @@
       "tag": "forge:ingots/emberstone"
     }
   ],
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
   "result": {
     "item": "aoa3:infernal_chestplate"
   }

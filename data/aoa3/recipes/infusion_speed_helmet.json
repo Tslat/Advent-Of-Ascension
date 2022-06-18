@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "ingredients": [
     {
       "item": "minecraft:prismarine_shard"
@@ -26,6 +23,9 @@
       "tag": "forge:ingots/elecanium"
     }
   ],
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
   "result": {
     "item": "aoa3:speed_helmet"
   }

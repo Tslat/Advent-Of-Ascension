@@ -4,47 +4,47 @@
   ],
   "entities": [
     {
-      "weight": 200,
-      "entity": "aoa3:skelecanth"
+      "entity": "aoa3:skelecanth",
+      "weight": 200
     },
     {
+      "item": "minecraft:dead_bush",
       "weight": 200,
-      "weight_mod": -20.0,
-      "item": "minecraft:dead_bush"
+      "weight_mod": -20.0
     },
     {
+      "item": "minecraft:bone_meal",
       "weight": 190,
-      "weight_mod": -20.0,
-      "item": "minecraft:bone_meal"
+      "weight_mod": -20.0
     },
     {
+      "item": "minecraft:bone",
       "weight": 180,
-      "weight_mod": -15.0,
-      "item": "minecraft:bone"
+      "weight_mod": -15.0
     },
     {
+      "item": "minecraft:sand",
       "weight": 160,
-      "weight_mod": -10.0,
-      "item": "minecraft:sand"
+      "weight_mod": -10.0
     },
     {
-      "weight": 140,
-      "item": "minecraft:clay_ball"
+      "item": "minecraft:clay_ball",
+      "weight": 140
     },
     {
+      "item": "minecraft:red_sand",
       "weight": 150,
-      "weight_mod": -10.0,
-      "item": "minecraft:red_sand"
+      "weight_mod": -10.0
     },
     {
+      "item": "aoa3:hive_chunk",
       "weight": 100,
-      "weight_mod": 20.0,
-      "item": "aoa3:hive_chunk"
+      "weight_mod": 20.0
     },
     {
+      "item": "aoa3:old_boot",
       "level": 50,
-      "weight_mod": 2.0,
-      "item": "aoa3:old_boot"
+      "weight_mod": 2.0
     }
   ]
 }

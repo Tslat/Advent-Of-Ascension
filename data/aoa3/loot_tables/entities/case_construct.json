@@ -2,36 +2,36 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "parent_table",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "weight": 100,
-          "name": "aoa3:worlds/deeplands"
+          "name": "aoa3:worlds/deeplands",
+          "weight": 100
         }
-      ]
+      ],
+      "name": "parent_table",
+      "rolls": 1.0
     },
     {
-      "name": "deep_case",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "aoa3:deep_case"
+          "name": "aoa3:deep_case",
+          "weight": 100
         }
-      ]
+      ],
+      "name": "deep_case",
+      "rolls": 1.0
     }
   ]
 }

@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:crossbow_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:ghostly_powder"
@@ -23,6 +20,9 @@
       "tag": "forge:ingots/lunar"
     }
   ],
+  "input": {
+    "item": "aoa3:crossbow_frame"
+  },
   "result": {
     "item": "aoa3:lunar_crossbow"
   }

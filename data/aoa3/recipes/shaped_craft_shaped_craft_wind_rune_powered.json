@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AAA",
-    "ABA",
-    "AAA"
-  ],
   "key": {
     "A": {
       "item": "aoa3:charged_rune"
@@ -13,8 +8,13 @@
       "tag": "forge:feathers"
     }
   },
+  "pattern": [
+    "AAA",
+    "ABA",
+    "AAA"
+  ],
   "result": {
-    "item": "aoa3:wind_rune",
-    "count": 16
+    "count": 16,
+    "item": "aoa3:wind_rune"
   }
 }

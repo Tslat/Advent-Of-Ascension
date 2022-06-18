@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " B ",
-    "ABA",
-    " C "
-  ],
   "key": {
     "A": {
       "item": "minecraft:brain_coral_block"
@@ -16,6 +11,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    " B ",
+    "ABA",
+    " C "
+  ],
   "result": {
     "item": "aoa3:coral_greatblade"
   }

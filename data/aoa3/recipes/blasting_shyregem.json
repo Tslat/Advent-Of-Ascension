@@ -1,9 +1,9 @@
 {
   "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 5.0,
   "ingredient": {
     "item": "aoa3:shyregem_ore"
   },
-  "result": "aoa3:shyregem",
-  "experience": 5.0,
-  "cookingtime": 100
+  "result": "aoa3:shyregem"
 }

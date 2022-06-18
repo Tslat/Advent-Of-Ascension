@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:red_gemstone_ore"
   },
-  "result": "aoa3:red_gemstones",
-  "experience": 3.0,
-  "cookingtime": 200
+  "result": "aoa3:red_gemstones"
 }

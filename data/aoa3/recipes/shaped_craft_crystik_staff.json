@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ABA",
-    " B ",
-    " C "
-  ],
   "key": {
     "A": {
       "item": "aoa3:ice_crystal"
@@ -16,6 +11,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    "ABA",
+    " B ",
+    " C "
+  ],
   "result": {
     "item": "aoa3:crystik_staff"
   }

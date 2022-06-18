@@ -1,10 +1,12 @@
 {
-  "textures": {
-    "texture": "aoa3:block/blue_mushroom_block",
-    "particle": "aoa3:block/blue_mushroom_block"
-  },
   "elements": [
     {
+      "faces": {
+        "north": {
+          "cullface": "north",
+          "texture": "#texture"
+        }
+      },
       "from": [
         0,
         0,
@@ -14,13 +16,11 @@
         16,
         16,
         0
-      ],
-      "faces": {
-        "north": {
-          "texture": "#texture",
-          "cullface": "north"
-        }
-      }
+      ]
     }
-  ]
+  ],
+  "textures": {
+    "particle": "aoa3:block/blue_mushroom_block",
+    "texture": "aoa3:block/blue_mushroom_block"
+  }
 }

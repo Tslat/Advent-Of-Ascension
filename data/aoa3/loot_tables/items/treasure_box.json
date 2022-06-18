@@ -2,130 +2,130 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "main",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 75,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 4.0,
-                "max": 10.0
+                "max": 10.0,
+                "min": 4.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:copper_coin"
+          "name": "aoa3:copper_coin",
+          "weight": 75
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
-          "name": "aoa3:silver_coin"
+          "name": "aoa3:silver_coin",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 7.0
+                "max": 7.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:limonite_ingot"
+          "name": "aoa3:limonite_ingot",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 10.0
+                "max": 10.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:experience_bottle"
+          "name": "minecraft:experience_bottle",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:magic_mending_compound"
+          "name": "aoa3:magic_mending_compound",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:magic_repair_dust"
+          "name": "aoa3:magic_repair_dust",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 6,
-          "name": "aoa3:gold_coin"
+          "name": "aoa3:gold_coin",
+          "weight": 6
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 8.0
+                "max": 8.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:diamond"
+          "name": "minecraft:diamond",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:utopian_helmet"
+          "name": "aoa3:utopian_helmet",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:utopian_chestplate"
+          "name": "aoa3:utopian_chestplate",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:utopian_leggings"
+          "name": "aoa3:utopian_leggings",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:utopian_boots"
+          "name": "aoa3:utopian_boots",
+          "weight": 5
         }
-      ]
+      ],
+      "name": "main",
+      "rolls": 1.0
     }
   ]
 }

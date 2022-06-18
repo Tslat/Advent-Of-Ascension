@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/nether"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,72 +20,74 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:nethengeic_helmet"
+          "name": "aoa3:nethengeic_helmet",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:nethengeic_chestplate"
+          "name": "aoa3:nethengeic_chestplate",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:nethengeic_leggings"
+          "name": "aoa3:nethengeic_leggings",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:nethengeic_boots"
+          "name": "aoa3:nethengeic_boots",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:nether_wart"
+          "name": "minecraft:nether_wart",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
-          "name": "aoa3:emberstone_ingot"
+          "name": "aoa3:emberstone_ingot",
+          "weight": 12
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
-          "name": "minecraft:blaze_powder"
+          "name": "minecraft:blaze_powder",
+          "weight": 15
         },
         {
           "type": "minecraft:item",
-          "weight": 16,
-          "name": "minecraft:lava_bucket"
+          "name": "minecraft:lava_bucket",
+          "weight": 16
         },
         {
           "type": "minecraft:item",
-          "weight": 13,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:quartz"
+          "name": "minecraft:quartz",
+          "weight": 13
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

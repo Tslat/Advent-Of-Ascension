@@ -1,0 +1,22 @@
+{
+  "biomes": {
+    "excluding": [
+      "#forge:is_snowy",
+      "#forge:is_lush"
+    ],
+    "if_all": [
+      "#forge:is_overworld"
+    ],
+    "if_any": [
+      "#forge:is_mountain"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:ice_giant",
+      "maxCount": 1,
+      "minCount": -50,
+      "weight": 1
+    }
+  ]
+}

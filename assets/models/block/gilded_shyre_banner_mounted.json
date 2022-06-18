@@ -1,7 +1,7 @@
 {
   "parent": "aoa3:block/banner_mounted",
   "textures": {
-    "texture": "aoa3:block/gilded_shyre_banner",
-    "particle": "aoa3:block/gilded_shyre_banner"
+    "particle": "aoa3:block/gilded_shyre_banner",
+    "texture": "aoa3:block/gilded_shyre_banner"
   }
 }

@@ -1,35 +1,35 @@
 {
   "pools": [
     {
-      "name": "fish",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:furnace_smelt",
               "conditions": [
                 {
                   "condition": "minecraft:entity_properties",
+                  "entity": "this",
                   "predicate": {
                     "flags": {
                       "is_on_fire": true
                     }
-                  },
-                  "entity": "this"
+                  }
                 }
-              ]
+              ],
+              "function": "minecraft:furnace_smelt"
             }
           ],
           "name": "aoa3:violet_skipper"
         }
-      ]
+      ],
+      "name": "fish",
+      "rolls": 1.0
     }
   ]
 }

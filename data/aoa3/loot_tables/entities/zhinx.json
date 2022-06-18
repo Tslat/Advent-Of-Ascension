@@ -2,38 +2,36 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "zhinx_dust",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": -1.0,
-                "max": 1.0
+                "max": 1.0,
+                "min": -1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:looting_enchant",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 1.0
-              }
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "aoa3:zhinx_dust"
         }
-      ]
+      ],
+      "name": "zhinx_dust",
+      "rolls": 1.0
     },
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -42,46 +40,48 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
-          "name": "aoa3:yellow_spores"
+          "name": "aoa3:yellow_spores",
+          "weight": 15
         },
         {
           "type": "minecraft:item",
-          "weight": 4,
-          "name": "aoa3:power_ray"
+          "name": "aoa3:power_ray",
+          "weight": 4
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "minecraft:light_gray_dye"
+          "name": "minecraft:light_gray_dye",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:bone"
+          "name": "minecraft:bone",
+          "weight": 17
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/lelyetia"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "aoa3:block/coral_brick_slab_top"
-    },
     "type=bottom": {
       "model": "aoa3:block/coral_brick_slab"
     },
     "type=double": {
       "model": "aoa3:block/coral_bricks"
+    },
+    "type=top": {
+      "model": "aoa3:block/coral_brick_slab_top"
     }
   }
 }

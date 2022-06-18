@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:red_rocket"
   },
-  "upgrade_kit": {
-    "item": "aoa3:haunted_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:purple_punisher"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:haunted_upgrade_kit"
   }
 }

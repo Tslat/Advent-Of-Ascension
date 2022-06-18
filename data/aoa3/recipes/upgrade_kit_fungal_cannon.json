@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:flower_cannon"
   },
-  "upgrade_kit": {
-    "item": "aoa3:fungal_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:fungal_cannon"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:fungal_upgrade_kit"
   }
 }

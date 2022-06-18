@@ -1,17 +1,14 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
-import net.minecraftforge.fluids.FluidAttributes;
+import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -25,10 +22,12 @@ import javax.annotation.Nullable;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 public final class FluidUtil {
 	public static class Builder {
 		private final String id;
+		private final Supplier<FluidType> fluidType;
 
 		private final MutableSupplier<ForgeFlowingFluid.Source> sourceFluid = new MutableSupplier<ForgeFlowingFluid.Source>(null);
 		private final MutableSupplier<ForgeFlowingFluid.Flowing> flowingFluid = new MutableSupplier<ForgeFlowingFluid.Flowing>(null);
@@ -38,99 +37,22 @@ public final class FluidUtil {
 		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Source>> sourceFluidFunction = properties -> () ->  new ForgeFlowingFluid.Source(properties);
 		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Flowing>> flowingFluidFunction = properties -> () ->  new ForgeFlowingFluid.Flowing(properties);
 
+		private ForgeFlowingFluid.Properties fluidProperties;
+
 		private Material material = Material.WATER;
-		private boolean isGas = false;
-		private int colour = 0xFFFFFFFF;
+		private int tickRate = 5;
+		private ToIntFunction<BlockState> lightFunction = state -> 0;
 
-		private int luminosity = 0;
-		private int density = 1000;
-		private int temperature = 300;
-		private int viscosity = 1000;
-
-		private Rarity rarity = Rarity.COMMON;
-
-		private ResourceLocation stillTexture = new ResourceLocation("block/water_still");
-		private ResourceLocation flowingTexture = new ResourceLocation("block/water_flow");
-		private ResourceLocation overlayTexture = new ResourceLocation("block/water_overlay");
+		public Builder(String id, Supplier<FluidType> fluidType) {
+			this.id	= id;
+			this.localeKey = "block." + AdventOfAscension.MOD_ID + "." + id;
+			this.fluidType = fluidType;
+		}
 
 		private String localeKey;
 
-		private SoundEvent fillSound = SoundEvents.BUCKET_FILL;
-		private SoundEvent emptySound = SoundEvents.BUCKET_EMPTY;
-
-		private ForgeFlowingFluid.Properties fluidProperties = null;
-
-		public Builder(String id) {
-			this.id	= id;
-			this.localeKey = "block." + AdventOfAscension.MOD_ID + "." + id;
-		}
-
 		public Builder material(Material material) {
 			this.material = material;
-
-			return this;
-		}
-
-		public Builder isGas() {
-			this.isGas = true;
-
-			return this;
-		}
-
-		public Builder colour(int colour) {
-			this.colour = colour;
-
-			return this;
-		}
-
-		public Builder colour(int red, int green, int blue, int alpha) {
-			return colour(ColourUtil.RGBA(red, green, blue, alpha));
-		}
-
-		public Builder luminosity(int luminosity) {
-			this.luminosity = luminosity;
-
-			return this;
-		}
-
-		public Builder density(int density) {
-			this.density = density;
-
-			return this;
-		}
-
-		public Builder temperature(int temperature) {
-			this.temperature = temperature;
-
-			return this;
-		}
-
-		public Builder viscosity(int viscosity) {
-			this.viscosity = viscosity;
-
-			return this;
-		}
-
-		public Builder rarity(Rarity rarity) {
-			this.rarity = rarity;
-
-			return this;
-		}
-
-		public Builder stillTexture(ResourceLocation stillTexture) {
-			this.stillTexture = stillTexture;
-
-			return this;
-		}
-
-		public Builder flowingTexture(ResourceLocation flowingTexture) {
-			this.flowingTexture = flowingTexture;
-
-			return this;
-		}
-
-		public Builder submergedOverlay(ResourceLocation overlayTexture) {
-			this.overlayTexture = overlayTexture;
 
 			return this;
 		}
@@ -141,28 +63,18 @@ public final class FluidUtil {
 			return this;
 		}
 
-		public Builder bucketFillSound(SoundEvent sound) {
-			this.fillSound = sound;
+		public Builder luminosity(int lightLevel) {
+			return luminosity(state -> lightLevel);
+		}
+
+		public Builder luminosity(ToIntFunction<BlockState> lightFunction) {
+			this.lightFunction = lightFunction;
 
 			return this;
 		}
 
-		public Builder bucketEmptySound(SoundEvent sound) {
-			this.emptySound = sound;
-
-			return this;
-		}
-
-		public Builder isMolten() {
-			material(Material.LAVA);
-			luminosity(15);
-			density(3000);
-			viscosity(6000);
-			temperature(1300);
-			bucketFillSound(SoundEvents.BUCKET_FILL_LAVA);
-			bucketEmptySound(SoundEvents.BUCKET_EMPTY_LAVA);
-			stillTexture(new ResourceLocation("block/lava_still"));
-			flowingTexture(new ResourceLocation("block/lava_flow"));
+		public Builder tickRate(int tickRate) {
+			this.tickRate = tickRate;
 
 			return this;
 		}
@@ -222,7 +134,7 @@ public final class FluidUtil {
 
 			makeFluidProperties();
 
-			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, Block.Properties.of(this.material).noCollission().strength(100).noLootTable().lightLevel(state -> luminosity)));
+			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, Block.Properties.of(this.material).noCollission().strength(100).noLootTable().lightLevel(lightFunction)));
 
 			this.fluidProperties.block(block);
 
@@ -259,23 +171,9 @@ public final class FluidUtil {
 		}
 
 		private void makeFluidProperties() {
-			if (this.fluidProperties == null) {
-				FluidAttributes.Builder attributes = FluidAttributes.builder(stillTexture, flowingTexture)
-						.overlay(overlayTexture)
-						.translationKey(localeKey)
-						.color(colour)
-						.rarity(rarity)
-						.temperature(temperature)
-						.viscosity(viscosity)
-						.density(density)
-						.luminosity(luminosity)
-						.sound(fillSound, emptySound);
-
-				if (isGas)
-					attributes.gaseous();
-
-				this.fluidProperties = new ForgeFlowingFluid.Properties(sourceFluid, flowingFluid, attributes);
-			}
+			if (this.fluidProperties == null)
+				this.fluidProperties = new ForgeFlowingFluid.Properties(fluidType, sourceFluid, flowingFluid)
+						.tickRate(tickRate);
 		}
 	}
 

@@ -1,8 +1,9 @@
 {
+  "type": "aoa3:add_items",
   "conditions": [
     {
-      "condition": "minecraft:random_chance",
-      "chance": 4.0E-4
+      "chance": 4.0E-4,
+      "condition": "minecraft:random_chance"
     },
     {
       "condition": "aoa3:has_block_tag",
@@ -14,12 +15,11 @@
   ],
   "items": [
     {
-      "item": "aoa3:gardener",
       "count": 1,
+      "item": "aoa3:gardener",
       "nbt": {
         "Damage": 0
       }
     }
-  ],
-  "type": "aoa3:add_items"
+  ]
 }

@@ -2,29 +2,29 @@
   "feature": "aoa3:ore_limonite_large",
   "placement": [
     {
+      "type": "minecraft:count",
       "count": {
         "type": "minecraft:uniform",
         "value": {
-          "min_inclusive": 5,
-          "max_inclusive": 10
+          "max_inclusive": 10,
+          "min_inclusive": 5
         }
-      },
-      "type": "minecraft:count"
+      }
     },
     {
       "type": "minecraft:in_square"
     },
     {
+      "type": "minecraft:height_range",
       "height": {
-        "min_inclusive": {
-          "above_bottom": 10
-        },
+        "type": "minecraft:uniform",
         "max_inclusive": {
           "absolute": 50
         },
-        "type": "minecraft:uniform"
-      },
-      "type": "minecraft:height_range"
+        "min_inclusive": {
+          "above_bottom": 10
+        }
+      }
     }
   ]
 }

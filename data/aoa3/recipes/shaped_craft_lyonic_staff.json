@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ABC",
-    " D ",
-    " E "
-  ],
   "key": {
     "A": {
       "item": "aoa3:energy_rune"
@@ -22,6 +17,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    "ABC",
+    " D ",
+    " E "
+  ],
   "result": {
     "item": "aoa3:lyonic_staff"
   }

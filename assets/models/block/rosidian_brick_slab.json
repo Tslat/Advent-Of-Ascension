@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/slab",
   "textures": {
-    "side": "aoa3:block/rosidian_bricks",
     "bottom": "aoa3:block/rosidian_bricks",
+    "side": "aoa3:block/rosidian_bricks",
     "top": "aoa3:block/rosidian_bricks"
   }
 }

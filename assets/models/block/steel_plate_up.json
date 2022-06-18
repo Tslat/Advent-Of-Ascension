@@ -2,16 +2,6 @@
   "parent": "aoa3:block/steel_plate",
   "elements": [
     {
-      "from": [
-        0,
-        15,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        16
-      ],
       "faces": {
         "down": {
           "texture": "#all",
@@ -22,34 +12,44 @@
             0.0
           ]
         },
-        "up": {
-          "texture": "#all",
-          "cullface": "up"
+        "east": {
+          "cullface": "east",
+          "rotation": 180,
+          "texture": "#all"
         },
         "north": {
+          "cullface": "north",
           "texture": "#all",
           "uv": [
             0.0,
             4.0,
             16.0,
             5.0
-          ],
-          "cullface": "north"
+          ]
         },
         "south": {
-          "texture": "#all",
-          "cullface": "south"
+          "cullface": "south",
+          "texture": "#all"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#all"
         },
         "west": {
-          "texture": "#all",
-          "cullface": "west"
-        },
-        "east": {
-          "texture": "#all",
-          "cullface": "east",
-          "rotation": 180
+          "cullface": "west",
+          "texture": "#all"
         }
-      }
+      },
+      "from": [
+        0,
+        15,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
     }
   ]
 }

@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A A",
-    "BCB",
-    "ABA"
-  ],
   "key": {
     "A": {
       "item": "aoa3:void_scales"
@@ -16,6 +11,11 @@
       "item": "minecraft:ender_eye"
     }
   },
+  "pattern": [
+    "A A",
+    "BCB",
+    "ABA"
+  ],
   "result": {
     "item": "aoa3:distorting_artifact"
   }

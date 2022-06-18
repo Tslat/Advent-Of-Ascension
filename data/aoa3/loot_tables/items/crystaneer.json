@@ -2,71 +2,71 @@
   "type": "minecraft:gift",
   "pools": [
     {
-      "name": "main",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
+      "conditions": [
+        {
+          "chance": 0.2,
+          "condition": "minecraft:random_chance"
+        }
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 100,
-          "name": "minecraft:diamond"
+          "name": "minecraft:diamond",
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 85,
-          "name": "minecraft:emerald"
+          "name": "minecraft:emerald",
+          "weight": 85
         },
         {
           "type": "minecraft:item",
-          "weight": 120,
-          "name": "minecraft:amethyst_shard"
+          "name": "minecraft:amethyst_shard",
+          "weight": 120
         },
         {
           "type": "minecraft:item",
-          "weight": 110,
-          "name": "aoa3:jade"
+          "name": "aoa3:jade",
+          "weight": 110
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:blue_gemstones"
+          "name": "aoa3:blue_gemstones",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:green_gemstones"
+          "name": "aoa3:green_gemstones",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:purple_gemstones"
+          "name": "aoa3:purple_gemstones",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:red_gemstones"
+          "name": "aoa3:red_gemstones",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:white_gemstones"
+          "name": "aoa3:white_gemstones",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "aoa3:yellow_gemstones"
+          "name": "aoa3:yellow_gemstones",
+          "weight": 25
         }
       ],
-      "conditions": [
-        {
-          "condition": "minecraft:random_chance",
-          "chance": 0.2
-        }
-      ]
+      "name": "main",
+      "rolls": 1.0
     }
   ]
 }

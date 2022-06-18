@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,25 +10,27 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:small_purple_petal"
+          "name": "aoa3:small_purple_petal",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:small_blue_petal"
+          "name": "aoa3:small_blue_petal",
+          "weight": 10
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/gardencia"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

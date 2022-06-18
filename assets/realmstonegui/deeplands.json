@@ -1,7 +1,7 @@
 {
-  "id": "deeplands",
   "gui_x": 827,
   "gui_y": 895,
+  "id": "deeplands",
   "parents": [
     "overworld"
   ]

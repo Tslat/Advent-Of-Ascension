@@ -78,7 +78,7 @@ public class EntityPredicate<T extends Entity> implements Predicate<T> {
 	}
 
 	public EntityPredicate<T> isSurvival() {
-		return and(entity -> !isSpectator().test(entity) && !isCreative().test(entity));
+		return and(entity -> !entity.isSpectator() && !(entity instanceof Player pl && pl.isCreative()));
 	}
 
 	public EntityPredicate<T> isHostileMob() {

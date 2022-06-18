@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AA",
-    "AA"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/limonite"
     }
   },
+  "pattern": [
+    "AA",
+    "AA"
+  ],
   "result": {
-    "item": "aoa3:cannonball",
-    "count": 12
+    "count": 12,
+    "item": "aoa3:cannonball"
   }
 }

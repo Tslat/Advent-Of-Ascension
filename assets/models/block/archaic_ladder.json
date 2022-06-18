@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/ladder",
   "textures": {
-    "texture": "aoa3:block/archaic_ladder",
-    "particle": "aoa3:block/archaic_ladder"
+    "particle": "aoa3:block/archaic_ladder",
+    "texture": "aoa3:block/archaic_ladder"
   }
 }

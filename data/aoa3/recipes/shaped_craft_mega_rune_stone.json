@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AB",
-    "CD"
-  ],
   "key": {
     "A": {
       "item": "aoa3:green_mega_rune_fragment"
@@ -18,6 +14,10 @@
       "item": "aoa3:red_mega_rune_fragment"
     }
   },
+  "pattern": [
+    "AB",
+    "CD"
+  ],
   "result": {
     "item": "aoa3:mega_rune_stone"
   }

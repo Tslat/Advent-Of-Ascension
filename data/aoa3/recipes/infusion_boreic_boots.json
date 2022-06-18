@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:void_scales"
@@ -26,6 +23,9 @@
       "item": "aoa3:padded_cloth"
     }
   ],
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
   "result": {
     "item": "aoa3:boreic_boots"
   }

@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "aoa3:block/natural_lapis_ivory_slab_top"
-    },
     "type=bottom": {
       "model": "aoa3:block/natural_lapis_ivory_slab"
     },
     "type=double": {
       "model": "aoa3:block/natural_lapis_ivory"
+    },
+    "type=top": {
+      "model": "aoa3:block/natural_lapis_ivory_slab_top"
     }
   }
 }

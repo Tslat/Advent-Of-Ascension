@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/iromine"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,20 +20,22 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:armour_plating"
+          "name": "aoa3:armour_plating",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:power_core"
+          "name": "aoa3:power_core",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:gold_spring"
+          "name": "aoa3:gold_spring",
+          "weight": 5
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

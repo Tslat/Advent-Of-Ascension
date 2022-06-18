@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,72 +10,74 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:zargonite_helmet"
+          "name": "aoa3:zargonite_helmet",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:zargonite_leggings"
+          "name": "aoa3:zargonite_leggings",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:zargonite_boots"
+          "name": "aoa3:zargonite_boots",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "aoa3:zargonite_chestplate"
+          "name": "aoa3:zargonite_chestplate",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:lunar_ingot"
+          "name": "aoa3:lunar_ingot",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:twinklestone"
+          "name": "aoa3:twinklestone",
+          "weight": 15
         },
         {
           "type": "minecraft:item",
-          "weight": 19,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 6.0
+                "max": 6.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:lunar_bricks"
+          "name": "aoa3:lunar_bricks",
+          "weight": 19
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/lunalus"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

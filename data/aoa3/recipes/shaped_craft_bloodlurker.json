@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    " A ",
-    "BCD"
-  ],
   "key": {
     "A": {
       "tag": "forge:gems/bloodstone"
@@ -19,6 +14,11 @@
       "item": "minecraft:spider_eye"
     }
   },
+  "pattern": [
+    " A ",
+    " A ",
+    "BCD"
+  ],
   "result": {
     "item": "aoa3:bloodlurker"
   }

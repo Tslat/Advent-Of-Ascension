@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A",
-    "A",
-    "B"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/limonite"
@@ -13,6 +8,11 @@
       "tag": "forge:rods/wooden"
     }
   },
+  "pattern": [
+    "A",
+    "A",
+    "B"
+  ],
   "result": {
     "item": "aoa3:limonite_sword"
   }

@@ -1,14 +1,14 @@
 {
   "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "aoa3:item/exp_flask"
-  },
   "overrides": [
     {
+      "model": "aoa3:item/exp_flask_filled",
       "predicate": {
         "minecraft:filled": 1.0
-      },
-      "model": "aoa3:item/exp_flask_filled"
+      }
     }
-  ]
+  ],
+  "textures": {
+    "layer0": "aoa3:item/exp_flask"
+  }
 }

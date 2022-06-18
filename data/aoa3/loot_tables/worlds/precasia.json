@@ -2,12 +2,10 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "rare_table",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -18,19 +16,15 @@
           "type": "minecraft:loot_table",
           "name": "aoa3:misc/rare_table"
         }
-      ]
+      ],
+      "name": "rare_table",
+      "rolls": 1.0
     },
     {
-      "name": "supplies",
-      "rolls": {
-        "type": "minecraft:uniform",
-        "min": 1.0,
-        "max": 3.0
-      },
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -39,37 +33,41 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 100,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             },
             {
-              "function": "minecraft:looting_enchant",
               "count": {
                 "type": "minecraft:uniform",
-                "min": -1.0,
-                "max": 2.0
-              }
+                "max": 2.0,
+                "min": -1.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "aoa3:copper_coin"
+          "name": "aoa3:copper_coin",
+          "weight": 100
         }
-      ]
+      ],
+      "name": "supplies",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 3.0,
+        "min": 1.0
+      }
     },
     {
-      "name": "dimension_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
       "entries": [
         {
@@ -78,24 +76,26 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:looting_enchant",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 1.0
-              }
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "aoa3:jungle_thorns"
+          "name": "aoa3:jungle_thorns",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
           "name": "aoa3:precasian_upgrade_kit"
         }
-      ]
+      ],
+      "name": "dimension_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

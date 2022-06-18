@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:chestplate_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:ghoulasm"
@@ -32,6 +29,9 @@
       "tag": "forge:ingots/ghastly"
     }
   ],
+  "input": {
+    "item": "aoa3:chestplate_frame"
+  },
   "result": {
     "item": "aoa3:ghastly_chestplate"
   }

@@ -20,7 +20,7 @@ public class ToxicWaste extends LiquidBlock {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		entity.makeStuckInBlock(state, new Vec3(0.5d, 0.1d, 0.5d));
+		entity.makeStuckInBlock(state, new Vec3(0.5d, 0.5d, 0.5d));
 		EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.POISON, 60).level(8), new EffectBuilder(MobEffects.CONFUSION, 150));
 	}
 }

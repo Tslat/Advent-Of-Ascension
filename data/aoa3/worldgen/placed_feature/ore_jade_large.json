@@ -2,30 +2,30 @@
   "feature": "aoa3:ore_jade_large",
   "placement": [
     {
+      "type": "minecraft:count",
       "count": {
         "type": "minecraft:uniform",
         "value": {
-          "min_inclusive": 6,
-          "max_inclusive": 11
+          "max_inclusive": 11,
+          "min_inclusive": 6
         }
-      },
-      "type": "minecraft:count"
+      }
     },
     {
       "type": "minecraft:in_square"
     },
     {
+      "type": "minecraft:height_range",
       "height": {
-        "min_inclusive": {
-          "above_bottom": 5
-        },
+        "type": "minecraft:trapezoid",
         "max_inclusive": {
           "absolute": 0
         },
-        "plateau": 5,
-        "type": "minecraft:trapezoid"
-      },
-      "type": "minecraft:height_range"
+        "min_inclusive": {
+          "above_bottom": 5
+        },
+        "plateau": 5
+      }
     }
   ]
 }

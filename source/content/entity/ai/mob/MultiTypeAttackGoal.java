@@ -97,7 +97,8 @@ public class MultiTypeAttackGoal extends Goal {
 		this.currentGoal = this.goals.get(selectedGoal);
 		this.currentGoalIndex = selectedGoal;
 
-		this.goalChangeConsumer.accept(this.currentGoal);
+		if (this.goalChangeConsumer != null)
+			this.goalChangeConsumer.accept(this.currentGoal);
 
 		return true;
 	}

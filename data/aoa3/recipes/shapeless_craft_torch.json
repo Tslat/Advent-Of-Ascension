@@ -6,7 +6,7 @@
     }
   ],
   "result": {
-    "item": "minecraft:torch",
-    "count": 8
+    "count": 8,
+    "item": "minecraft:torch"
   }
 }

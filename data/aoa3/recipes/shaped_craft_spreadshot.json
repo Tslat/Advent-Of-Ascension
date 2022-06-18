@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    "ABA",
-    " C "
-  ],
   "key": {
     "A": {
       "item": "aoa3:limonite_bullet"
@@ -16,8 +11,13 @@
       "tag": "forge:ingots/limonite"
     }
   },
+  "pattern": [
+    " A ",
+    "ABA",
+    " C "
+  ],
   "result": {
-    "item": "aoa3:spreadshot",
-    "count": 5
+    "count": 5,
+    "item": "aoa3:spreadshot"
   }
 }

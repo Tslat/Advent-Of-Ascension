@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:squad_gun"
   },
-  "upgrade_kit": {
-    "item": "aoa3:precasian_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:spine_gun"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:precasian_upgrade_kit"
   }
 }

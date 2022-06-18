@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:shotgun_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:spreadshot"
@@ -17,6 +14,9 @@
       "tag": "forge:gunpowder"
     }
   ],
+  "input": {
+    "item": "aoa3:shotgun_frame"
+  },
   "result": {
     "item": "aoa3:brown_blaster"
   }

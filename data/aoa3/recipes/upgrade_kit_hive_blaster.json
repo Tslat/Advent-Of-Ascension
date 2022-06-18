@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:shadow_blaster"
   },
-  "upgrade_kit": {
-    "item": "aoa3:lelyetian_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:hive_blaster"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:lelyetian_upgrade_kit"
   }
 }

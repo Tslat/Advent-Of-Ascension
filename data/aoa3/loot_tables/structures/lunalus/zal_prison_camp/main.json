@@ -2,81 +2,80 @@
   "type": "minecraft:chest",
   "pools": [
     {
-      "rolls": 10.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": -1.0,
-        "max": 1.0
+        "max": 1.0,
+        "min": -1.0
       },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 100,
-          "quality": -1
+          "quality": -1,
+          "weight": 100
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:lunar_ingot"
+          "name": "aoa3:lunar_ingot",
+          "weight": 5
         },
         {
           "type": "minecraft:item",
-          "weight": 30,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 24.0
+                "max": 24.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:torch"
+          "name": "minecraft:torch",
+          "weight": 30
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 16.0
+                "max": 16.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:coal_ore"
+          "name": "minecraft:coal_ore",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 12,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 8.0
+                "max": 8.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:gold_ore"
+          "name": "minecraft:gold_ore",
+          "weight": 12
         },
         {
           "type": "minecraft:item",
@@ -84,51 +83,52 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 6.0,
-                "max": 20.0
+                "max": 20.0,
+                "min": 6.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:pop_shot"
+          "name": "aoa3:pop_shot",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 14,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 2.0,
-                "max": 10.0
+                "max": 10.0,
+                "min": 2.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:lunalons"
+          "name": "aoa3:lunalons",
+          "weight": 14
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
-          "name": "minecraft:iron_pickaxe"
+          "name": "minecraft:iron_pickaxe",
+          "weight": 17
         },
         {
           "type": "minecraft:item",
-          "weight": 2,
-          "name": "minecraft:diamond_pickaxe"
+          "name": "minecraft:diamond_pickaxe",
+          "weight": 2
         },
         {
           "type": "minecraft:item",
           "name": "minecraft:netherite_pickaxe"
         }
-      ]
+      ],
+      "rolls": 10.0
     }
   ]
 }

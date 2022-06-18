@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:pulse_cannon"
   },
-  "upgrade_kit": {
-    "item": "aoa3:clown_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:clowno_pulse"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:clown_upgrade_kit"
   }
 }

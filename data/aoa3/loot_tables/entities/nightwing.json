@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/vox_ponds"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,36 +20,38 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 32,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 3.0
+                "max": 3.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:rotten_flesh"
+          "name": "minecraft:rotten_flesh",
+          "weight": 32
         },
         {
           "type": "minecraft:item",
-          "weight": 17,
-          "name": "minecraft:black_dye"
+          "name": "minecraft:black_dye",
+          "weight": 17
         },
         {
           "type": "minecraft:item",
-          "weight": 3,
-          "name": "aoa3:vox_cannon"
+          "name": "aoa3:vox_cannon",
+          "weight": 3
         },
         {
           "type": "minecraft:item",
-          "weight": 23,
-          "name": "minecraft:fermented_spider_eye"
+          "name": "minecraft:fermented_spider_eye",
+          "weight": 23
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

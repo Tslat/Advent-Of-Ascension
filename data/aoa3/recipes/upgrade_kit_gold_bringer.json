@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:doom_bringer"
   },
-  "upgrade_kit": {
-    "item": "aoa3:golden_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:gold_bringer"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:golden_upgrade_kit"
   }
 }

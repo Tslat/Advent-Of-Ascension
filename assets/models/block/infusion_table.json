@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "side": "aoa3:block/infusion_table",
     "bottom": "aoa3:block/infusion_table_bottom",
+    "side": "aoa3:block/infusion_table",
     "top": "aoa3:block/infusion_table_top"
   }
 }

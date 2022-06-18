@@ -1,108 +1,108 @@
 {
-  "xp_modifier": 1.0,
   "abilities": [
     {
-      "id": "aoa3:bonus_mining_result",
-      "unique_id": "-1680950606",
       "base_value": 0.4,
+      "id": "aoa3:bonus_mining_result",
+      "level_req": 6,
       "per_level_mod": 0.0,
-      "level_req": 6
+      "unique_id": "-1680950606"
     },
     {
-      "id": "aoa3:hard_block_speed_increase",
-      "unique_id": "-957387662",
       "base_value": 0.0,
+      "id": "aoa3:hard_block_speed_increase",
+      "level_req": 10,
       "per_level_mod": 0.02,
-      "level_req": 10
+      "unique_id": "-957387662"
     },
     {
+      "base_value": 0.5,
       "id": "aoa3:bonus_smelt_result",
-      "unique_id": "1290688990",
-      "base_value": 0.5,
+      "level_req": 16,
       "per_level_mod": 0.0,
-      "level_req": 16
+      "unique_id": "1290688990"
     },
     {
-      "id": "aoa3:harvest_speed_boost",
-      "unique_id": "194191539",
-      "speed_boost": 2.5,
-      "energy_drain_per_tick": 1.7,
       "cost_reduction_per_level": 0.0135,
-      "level_req": 25
+      "energy_drain_per_tick": 1.7,
+      "id": "aoa3:harvest_speed_boost",
+      "level_req": 25,
+      "speed_boost": 2.5,
+      "unique_id": "194191539"
     },
     {
-      "id": "aoa3:bonus_mining_result",
-      "unique_id": "-1680951660",
       "base_value": 0.4,
+      "id": "aoa3:bonus_mining_result",
+      "level_req": 32,
       "per_level_mod": 0.0,
-      "level_req": 32
+      "unique_id": "-1680951660"
     },
     {
-      "id": "aoa3:bonus_crafting_output",
-      "unique_id": "1051162964",
       "base_value": 0.5,
+      "id": "aoa3:bonus_crafting_output",
+      "level_req": 39,
       "per_level_mod": 0.0,
       "tag": "minecraft:planks",
-      "level_req": 39
+      "unique_id": "1051162964"
     },
     {
+      "base_value": 0.5,
       "id": "aoa3:bonus_smelt_result",
-      "unique_id": "1290687998",
-      "base_value": 0.5,
+      "level_req": 48,
       "per_level_mod": 0.0,
-      "level_req": 48
+      "unique_id": "1290687998"
     },
     {
-      "id": "aoa3:auto_enchant_crafting",
-      "unique_id": "1784233177",
       "enchantments": {
-        "minecraft:unbreaking": 3,
-        "minecraft:fortune": 3
+        "minecraft:fortune": 3,
+        "minecraft:unbreaking": 3
       },
-      "level_req": 55
+      "id": "aoa3:auto_enchant_crafting",
+      "level_req": 55,
+      "unique_id": "1784233177"
     },
     {
-      "id": "aoa3:bonus_crafting_output",
-      "unique_id": "1891831171",
-      "item": "minecraft:torch",
       "base_value": 0.5,
+      "id": "aoa3:bonus_crafting_output",
+      "item": "minecraft:torch",
+      "level_req": 62,
       "per_level_mod": 0.0,
-      "level_req": 62
+      "unique_id": "1891831171"
     },
     {
       "id": "aoa3:auto_harvesting_trash",
-      "unique_id": "1857567991",
-      "level_req": 74
+      "level_req": 74,
+      "unique_id": "1857567991"
     },
     {
-      "id": "aoa3:bonus_smelt_result",
-      "unique_id": "1290686944",
       "base_value": 0.5,
+      "id": "aoa3:bonus_smelt_result",
+      "level_req": 82,
       "per_level_mod": 0.0,
-      "level_req": 82
+      "unique_id": "1290686944"
     },
     {
-      "id": "aoa3:bonus_mining_result",
-      "unique_id": "-1680951939",
       "base_value": 0.4,
+      "id": "aoa3:bonus_mining_result",
+      "level_req": 89,
       "per_level_mod": 0.0,
-      "level_req": 89
+      "unique_id": "-1680951939"
     },
     {
-      "id": "aoa3:rare_table_harvesting_chance",
-      "unique_id": "613461728",
       "base_value": 0.001,
+      "id": "aoa3:rare_table_harvesting_chance",
+      "level_req": 96,
       "per_level_mod": 0.0,
-      "level_req": 96
+      "unique_id": "613461728"
     },
     {
       "id": "aoa3:level_restriction",
-      "unique_id": "1966560183",
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_treasurer",
       "restrictions": [
         "equip"
       ],
-      "level_req": 100,
-      "restricted_id": "aoa3:helm_of_the_treasurer"
+      "unique_id": "1966560183"
     }
-  ]
+  ],
+  "xp_modifier": 1.0
 }

@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " R ",
-    "RXR",
-    " R "
-  ],
   "key": {
     "R": {
       "tag": "forge:dusts/redstone"
@@ -13,6 +8,11 @@
       "tag": "forge:ingots/baronyte"
     }
   },
+  "pattern": [
+    " R ",
+    "RXR",
+    " R "
+  ],
   "result": {
     "item": "aoa3:baronyte_lamp"
   }

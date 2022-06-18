@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:power_core"
@@ -23,6 +20,9 @@
       "tag": "forge:ingots/iron"
     }
   ],
+  "input": {
+    "item": "aoa3:cannon_frame"
+  },
   "result": {
     "item": "aoa3:missile_maker"
   }

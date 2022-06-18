@@ -2,18 +2,16 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/celeve"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -22,41 +20,43 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:spectacle"
+          "name": "aoa3:spectacle",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 25,
-          "name": "minecraft:dandelion"
+          "name": "minecraft:dandelion",
+          "weight": 25
         },
         {
           "type": "minecraft:item",
-          "weight": 18,
-          "name": "aoa3:torn_cloth"
+          "name": "aoa3:torn_cloth",
+          "weight": 18
         },
         {
           "type": "minecraft:item",
-          "weight": 16,
-          "name": "aoa3:hardened_confetti_ball"
+          "name": "aoa3:hardened_confetti_ball",
+          "weight": 16
         },
         {
           "type": "minecraft:item",
-          "weight": 21,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 1.0,
-                "max": 2.0
+                "max": 2.0,
+                "min": 1.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "minecraft:brick"
+          "name": "minecraft:brick",
+          "weight": 21
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

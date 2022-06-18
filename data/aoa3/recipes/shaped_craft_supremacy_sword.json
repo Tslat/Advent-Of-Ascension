@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    " B ",
-    "CDE"
-  ],
   "key": {
     "A": {
       "item": "aoa3:sharp_claw"
@@ -22,6 +17,11 @@
       "item": "aoa3:confetti_pile"
     }
   },
+  "pattern": [
+    " A ",
+    " B ",
+    "CDE"
+  ],
   "result": {
     "item": "aoa3:supremacy_sword"
   }

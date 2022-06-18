@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:fireborne_sword"
   },
-  "upgrade_kit": {
-    "item": "aoa3:nether_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:candlefire_sword"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:nether_upgrade_kit"
   }
 }

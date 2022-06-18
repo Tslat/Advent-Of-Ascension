@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "ABA",
-    " C ",
-    " B "
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/shyrestone"
@@ -16,6 +11,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    "ABA",
+    " C ",
+    " B "
+  ],
   "result": {
     "item": "aoa3:pickmax"
   }

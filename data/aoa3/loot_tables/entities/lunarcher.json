@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "ghostly_powder",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,20 +10,22 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
-          "name": "aoa3:ghostly_powder"
+          "name": "aoa3:ghostly_powder",
+          "weight": 15
         }
-      ]
+      ],
+      "name": "ghostly_powder",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/lunalus"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

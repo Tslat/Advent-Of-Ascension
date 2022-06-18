@@ -1,10 +1,8 @@
 {
-  "name": "aoa3:overworld/ruined_teleporter_frame/starts",
-  "fallback": "minecraft:empty",
   "elements": [
     {
-      "weight": 1,
       "element": {
+        "element_type": "minecraft:single_pool_element",
         "location": "aoa3:overworld/ruined_teleporter_frame/ruined_teleporter_frame",
         "processors": {
           "processors": [
@@ -13,67 +11,69 @@
               "processor_type": "minecraft:block_rot"
             },
             {
+              "processor_type": "minecraft:rule",
               "rules": [
                 {
-                  "output_state": {
-                    "Name": "aoa3:ancient_rock"
-                  },
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_direction",
-                    "probability": 0.9,
-                    "predicate_type": "minecraft:random_block_match"
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.9
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:ancient_rock"
                   }
                 },
                 {
-                  "output_state": {
-                    "Name": "aoa3:ancient_rock"
-                  },
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_travel",
-                    "probability": 0.9,
-                    "predicate_type": "minecraft:random_block_match"
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.9
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:ancient_rock"
                   }
                 },
                 {
-                  "output_state": {
-                    "Name": "aoa3:ancient_rock"
-                  },
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_space",
-                    "probability": 0.9,
-                    "predicate_type": "minecraft:random_block_match"
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.9
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:ancient_rock"
                   }
                 },
                 {
-                  "output_state": {
-                    "Name": "aoa3:ancient_rock"
-                  },
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_reality",
-                    "probability": 0.9,
-                    "predicate_type": "minecraft:random_block_match"
+                    "predicate_type": "minecraft:random_block_match",
+                    "probability": 0.9
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"
+                  },
+                  "output_state": {
+                    "Name": "aoa3:ancient_rock"
                   }
                 }
-              ],
-              "processor_type": "minecraft:rule"
+              ]
             }
           ]
         },
-        "projection": "rigid",
-        "element_type": "minecraft:single_pool_element"
-      }
+        "projection": "rigid"
+      },
+      "weight": 1
     }
-  ]
+  ],
+  "fallback": "minecraft:empty",
+  "name": "aoa3:overworld/ruined_teleporter_frame/starts"
 }

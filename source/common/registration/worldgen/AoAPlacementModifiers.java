@@ -5,7 +5,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.content.world.gen.placementmodifier.PercentChance;
+import net.tslat.aoa3.content.world.genold2.placementmodifier.PercentChance;
 
 public final class AoAPlacementModifiers {
 	public static void init() {}
@@ -14,7 +14,5 @@ public final class AoAPlacementModifiers {
 
 	private static <T extends PlacementModifier> RegistryObject<PlacementModifierType<T>> register(String id, Codec<T> codec) {
 		return AoARegistries.PLACEMENT_MODIFIERS.register(id, () -> () -> codec);
-
-		//return Registry.register(Registry.PLACEMENT_MODIFIERS, AdventOfAscension.id(id), () -> codec);
 	}
 }

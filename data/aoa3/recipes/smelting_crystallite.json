@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:crystallite_ore"
   },
-  "result": "aoa3:crystallite",
-  "experience": 3.0,
-  "cookingtime": 200
+  "result": "aoa3:crystallite"
 }

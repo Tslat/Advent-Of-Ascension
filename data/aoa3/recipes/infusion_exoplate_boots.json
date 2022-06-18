@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:dense_rock"
@@ -17,6 +14,9 @@
       "tag": "forge:gems/diamond"
     }
   ],
+  "input": {
+    "item": "aoa3:boots_frame"
+  },
   "result": {
     "item": "aoa3:exoplate_boots"
   }

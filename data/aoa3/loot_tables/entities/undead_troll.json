@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,57 +10,59 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:torn_cloth"
+          "name": "aoa3:torn_cloth",
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 6.0
+                "max": 6.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:water_rune"
+          "name": "aoa3:water_rune",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 50,
           "functions": [
             {
-              "function": "minecraft:set_count",
+              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "min": 3.0,
-                "max": 6.0
+                "max": 6.0,
+                "min": 3.0
               },
-              "add": false
+              "function": "minecraft:set_count"
             }
           ],
-          "name": "aoa3:fire_rune"
+          "name": "aoa3:fire_rune",
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "aoa3:scream_shield"
+          "name": "aoa3:scream_shield",
+          "weight": 5
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/greckon"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

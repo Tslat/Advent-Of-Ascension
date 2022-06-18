@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "AAA",
-    "BCB",
-    "BBB"
-  ],
   "key": {
     "A": {
       "item": "aoa3:emberstone_ingot"
@@ -16,6 +11,11 @@
       "item": "aoa3:magic_repair_dust"
     }
   },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "BBB"
+  ],
   "result": {
     "item": "aoa3:mending_table"
   }

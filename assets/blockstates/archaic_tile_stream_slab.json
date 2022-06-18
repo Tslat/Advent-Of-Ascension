@@ -1,13 +1,13 @@
 {
   "variants": {
-    "type=top": {
-      "model": "aoa3:block/archaic_tile_stream_slab_top"
-    },
     "type=bottom": {
       "model": "aoa3:block/archaic_tile_stream_slab"
     },
     "type=double": {
       "model": "aoa3:block/archaic_tile_stream"
+    },
+    "type=top": {
+      "model": "aoa3:block/archaic_tile_stream_slab_top"
     }
   }
 }

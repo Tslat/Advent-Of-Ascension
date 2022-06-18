@@ -1,17 +1,17 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A  ",
-    "AA ",
-    "AAA"
-  ],
   "key": {
     "A": {
       "item": "aoa3:skeletal_bricks"
     }
   },
+  "pattern": [
+    "A  ",
+    "AA ",
+    "AAA"
+  ],
   "result": {
-    "item": "aoa3:skeletal_brick_stairs",
-    "count": 4
+    "count": 4,
+    "item": "aoa3:skeletal_brick_stairs"
   }
 }

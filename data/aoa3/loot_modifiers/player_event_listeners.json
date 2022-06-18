@@ -1,4 +1,4 @@
 {
-  "conditions": [],
-  "type": "aoa3:player_event_listener"
+  "type": "aoa3:player_event_listener",
+  "conditions": []
 }

@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 2,
   "ingredient": {
     "item": "aoa3:natural_limonite_ivory"
   },
-  "result": "aoa3:natural_limonite_ivory_slab",
-  "count": 2
+  "result": "aoa3:natural_limonite_ivory_slab"
 }

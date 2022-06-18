@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " Q ",
-    "RXR",
-    " R "
-  ],
   "key": {
+    "Q": {
+      "tag": "forge:gems/quartz"
+    },
     "R": {
       "tag": "forge:dusts/redstone"
     },
     "X": {
       "tag": "forge:dyes/gray"
-    },
-    "Q": {
-      "tag": "forge:gems/quartz"
     }
   },
+  "pattern": [
+    " Q ",
+    "RXR",
+    " R "
+  ],
   "result": {
     "item": "aoa3:dark_grey_stained_glass_lamp"
   }

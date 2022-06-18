@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:whitewashing",
+  "input": {
+    "item": "minecraft:obsidian"
+  },
+  "result": {
+    "item": "aoa3:whitewash_bricks"
+  },
+  "washing_material": {
+    "item": "aoa3:whitewashing_solution"
+  }
+}

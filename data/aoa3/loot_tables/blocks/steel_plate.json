@@ -2,191 +2,191 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:steel_plate"
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "aoa3:steel_plate",
+          "condition": "minecraft:block_state_property",
           "properties": {
-            "up": "false",
             "down": "false",
+            "east": "false",
             "north": "false",
             "south": "false",
-            "east": "false",
+            "up": "false",
             "west": "false"
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aoa3:steel_plate"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "aoa3:steel_plate",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "up": "true"
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aoa3:steel_plate"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "aoa3:steel_plate",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "down": "true"
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aoa3:steel_plate"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "aoa3:steel_plate",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "north": "true"
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aoa3:steel_plate"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "aoa3:steel_plate",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "south": "true"
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aoa3:steel_plate"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "aoa3:steel_plate",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "east": "true"
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
           "name": "aoa3:steel_plate"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:survives_explosion"
         },
         {
-          "condition": "minecraft:block_state_property",
           "block": "aoa3:steel_plate",
+          "condition": "minecraft:block_state_property",
           "properties": {
             "west": "true"
           }
         }
-      ]
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:steel_plate"
+        }
+      ],
+      "rolls": 1.0
     }
   ]
 }

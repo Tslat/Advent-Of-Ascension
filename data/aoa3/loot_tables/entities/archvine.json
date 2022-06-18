@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,29 +10,29 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:small_red_petal"
+          "name": "aoa3:small_red_petal",
+          "weight": 10
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:small_green_petal"
+          "name": "aoa3:small_green_petal",
+          "weight": 10
         }
-      ]
+      ],
+      "name": "loot",
+      "rolls": 1.0
     },
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:loot_table",
           "name": "aoa3:worlds/gardencia"
         }
-      ]
+      ],
+      "rolls": 1.0
     },
     {
-      "name": "mob_specific_loot",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -43,10 +41,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:sticky_slime"
+          "name": "aoa3:sticky_slime",
+          "weight": 10
         }
-      ]
+      ],
+      "name": "mob_specific_loot",
+      "rolls": 1.0
     }
   ]
 }

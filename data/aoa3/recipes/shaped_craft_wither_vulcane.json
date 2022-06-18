@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A",
-    "B"
-  ],
   "key": {
     "A": {
       "item": "aoa3:wither_vulcane_augment"
@@ -12,6 +8,10 @@
       "item": "aoa3:vulcane"
     }
   },
+  "pattern": [
+    "A",
+    "B"
+  ],
   "result": {
     "item": "aoa3:wither_vulcane"
   }

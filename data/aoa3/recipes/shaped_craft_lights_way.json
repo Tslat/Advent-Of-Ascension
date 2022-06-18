@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "A ",
-    "A ",
-    "BC"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/shyrestone"
@@ -16,6 +11,11 @@
       "tag": "forge:gems/shyregem"
     }
   },
+  "pattern": [
+    "A ",
+    "A ",
+    "BC"
+  ],
   "result": {
     "item": "aoa3:lights_way"
   }

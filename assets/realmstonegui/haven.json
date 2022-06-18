@@ -1,7 +1,7 @@
 {
-  "id": "haven",
   "gui_x": 1102,
   "gui_y": 1120,
+  "id": "haven",
   "parents": [
     "lelyetia"
   ]

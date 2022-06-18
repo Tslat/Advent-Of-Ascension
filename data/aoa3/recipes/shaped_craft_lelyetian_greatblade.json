@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    "BAB",
-    " C "
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/gold"
@@ -16,6 +11,11 @@
       "tag": "forge:rods/metal"
     }
   },
+  "pattern": [
+    " A ",
+    "BAB",
+    " C "
+  ],
   "result": {
     "item": "aoa3:lelyetian_greatblade"
   }

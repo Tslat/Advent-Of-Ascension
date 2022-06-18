@@ -2,8 +2,6 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "name": "mob_drops",
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -12,10 +10,12 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:torn_cloth"
+          "name": "aoa3:torn_cloth",
+          "weight": 20
         }
-      ]
+      ],
+      "name": "mob_drops",
+      "rolls": 1.0
     }
   ]
 }

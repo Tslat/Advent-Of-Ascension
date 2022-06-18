@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "side": "aoa3:block/mineralization_station",
     "bottom": "aoa3:block/mineralization_station_bottom",
+    "side": "aoa3:block/mineralization_station",
     "top": "aoa3:block/mineralization_station_top"
   }
 }

@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "ingredients": [
     {
       "item": "minecraft:charcoal"
@@ -20,6 +17,9 @@
       "tag": "forge:string"
     }
   ],
+  "input": {
+    "item": "aoa3:helmet_frame"
+  },
   "result": {
     "item": "aoa3:hazmat_helmet"
   }

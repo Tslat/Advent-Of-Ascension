@@ -1,0 +1,18 @@
+{
+  "biomes": {
+    "if_all": [
+      "#forge:is_overworld"
+    ],
+    "if_any": [
+      "#minecraft:is_ocean"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:shiny_squid",
+      "maxCount": 1,
+      "minCount": -1000,
+      "weight": 1
+    }
+  ]
+}

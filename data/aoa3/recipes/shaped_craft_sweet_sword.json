@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " D ",
-    "BAB",
-    " C "
-  ],
   "key": {
     "A": {
       "item": "aoa3:sour_gummy"
@@ -19,6 +14,11 @@
       "tag": "forge:gems/diamond"
     }
   },
+  "pattern": [
+    " D ",
+    "BAB",
+    " C "
+  ],
   "result": {
     "item": "aoa3:sweet_sword"
   }

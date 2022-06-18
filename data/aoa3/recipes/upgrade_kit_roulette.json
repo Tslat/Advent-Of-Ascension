@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:stampede"
   },
-  "upgrade_kit": {
-    "item": "aoa3:weapon_parts"
-  },
   "result": {
     "item": "aoa3:roulette"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:weapon_parts"
   }
 }

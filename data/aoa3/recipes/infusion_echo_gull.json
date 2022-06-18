@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "ingredients": [
     {
       "item": "minecraft:glowstone_dust"
@@ -20,6 +17,9 @@
       "tag": "forge:gunpowder"
     }
   ],
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
   "result": {
     "item": "aoa3:echo_gull"
   }

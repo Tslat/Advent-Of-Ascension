@@ -1,19 +1,17 @@
 {
   "type": "minecraft:block",
+  "functions": [
+    {
+      "function": "minecraft:explosion_decay"
+    }
+  ],
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
+        "max": 0.0,
+        "min": 0.0
       },
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:trilliad_seeds"
-        }
-      ],
       "conditions": [
         {
           "condition": "minecraft:inverted",
@@ -31,21 +29,21 @@
             }
           }
         }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "min": 0.0,
-        "max": 0.0
-      },
+      ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "aoa3:trilliad_bloom"
+          "name": "aoa3:trilliad_seeds"
         }
       ],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "conditions": [
         {
           "condition": "minecraft:match_tool",
@@ -60,12 +58,14 @@
             ]
           }
         }
-      ]
-    }
-  ],
-  "functions": [
-    {
-      "function": "minecraft:explosion_decay"
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:trilliad_bloom"
+        }
+      ],
+      "rolls": 1.0
     }
   ]
 }

@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:mark_maker"
   },
-  "upgrade_kit": {
-    "item": "aoa3:lunar_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:moon_maker"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:lunar_upgrade_kit"
   }
 }

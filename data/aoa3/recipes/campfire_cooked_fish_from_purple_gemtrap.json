@@ -1,9 +1,9 @@
 {
   "type": "minecraft:campfire_cooking",
+  "cookingtime": 600,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:purple_gemtrap"
   },
-  "result": "aoa3:cooked_fish",
-  "experience": 3.0,
-  "cookingtime": 600
+  "result": "aoa3:cooked_fish"
 }

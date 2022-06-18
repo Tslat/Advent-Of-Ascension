@@ -1,7 +1,7 @@
 {
-  "id": "lunalus",
   "gui_x": 1327,
   "gui_y": 1195,
+  "id": "lunalus",
   "parents": [
     "celeve",
     "haven"

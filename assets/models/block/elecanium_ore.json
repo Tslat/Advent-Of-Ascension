@@ -1,8 +1,8 @@
 {
   "parent": "aoa3:block/overlay_cube",
   "textures": {
-    "texture": "aoa3:block/runic_stone",
+    "overlay": "aoa3:block/elecanium_ore",
     "particle": "aoa3:block/runic_stone",
-    "overlay": "aoa3:block/elecanium_ore"
+    "texture": "aoa3:block/runic_stone"
   }
 }

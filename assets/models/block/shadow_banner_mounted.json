@@ -1,7 +1,7 @@
 {
   "parent": "aoa3:block/banner_mounted",
   "textures": {
-    "texture": "aoa3:block/shadow_banner",
-    "particle": "aoa3:block/shadow_banner"
+    "particle": "aoa3:block/shadow_banner",
+    "texture": "aoa3:block/shadow_banner"
   }
 }

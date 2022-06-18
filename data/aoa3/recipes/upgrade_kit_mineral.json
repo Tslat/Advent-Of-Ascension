@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:terminator"
   },
-  "upgrade_kit": {
-    "item": "aoa3:rocky_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:mineral"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:rocky_upgrade_kit"
   }
 }

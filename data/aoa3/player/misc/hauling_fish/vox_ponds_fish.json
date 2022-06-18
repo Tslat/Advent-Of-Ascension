@@ -4,33 +4,33 @@
   ],
   "entities": [
     {
+      "entity": "aoa3:hydrone",
       "weight": 80,
-      "weight_mod": 20.0,
-      "entity": "aoa3:hydrone"
+      "weight_mod": 20.0
     },
     {
+      "item": "minecraft:stick",
       "weight": 200,
-      "weight_mod": -20.0,
-      "item": "minecraft:stick"
+      "weight_mod": -20.0
     },
     {
+      "item": "minecraft:dead_bush",
       "weight": 200,
-      "weight_mod": -20.0,
-      "item": "minecraft:dead_bush"
+      "weight_mod": -20.0
     },
     {
-      "weight": 100,
-      "item": "minecraft:poisonous_potato"
+      "item": "minecraft:poisonous_potato",
+      "weight": 100
     },
     {
+      "item": "aoa3:toxic_lump",
       "weight": 90,
-      "weight_mod": 10.0,
-      "item": "aoa3:toxic_lump"
+      "weight_mod": 10.0
     },
     {
+      "item": "aoa3:vox_log",
       "weight": 160,
-      "weight_mod": -20.0,
-      "item": "aoa3:vox_log"
+      "weight_mod": -20.0
     },
     {
       "item": "aoa3:toxic_waste_bucket"

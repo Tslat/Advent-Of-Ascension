@@ -11,7 +11,6 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.tslat.aoa3.common.container.DivineStationContainer;
 import net.tslat.aoa3.common.registration.AoARecipes;
@@ -52,7 +51,7 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 
 	@Override
 	public boolean canCraftInDimensions(int width, int height) {
-		return width * height <= 3;
+		return width >= 3;
 	}
 
 	@Override
@@ -73,19 +72,6 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 	@Override
 	public RecipeType<UpgradeKitRecipe> getType() {
 		return AoARecipes.UPGRADE_KIT.type().get();
-	}
-
-	@Override
-	public NonNullList<ItemStack> getRemainingItems(DivineStationContainer.DivineStationInventory inv) {
-		NonNullList<ItemStack> remainingItems = NonNullList.<ItemStack>withSize(inv.getContainerSize(), ItemStack.EMPTY);
-
-		for (int i = 0; i < remainingItems.size(); i++) {
-			ItemStack stack = inv.getItem(i);
-
-			remainingItems.set(i, ForgeHooks.getContainerItem(stack));
-		}
-
-		return remainingItems;
 	}
 
 	@Override

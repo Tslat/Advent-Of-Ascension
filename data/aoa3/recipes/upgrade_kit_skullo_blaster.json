@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:luna_blaster"
   },
-  "upgrade_kit": {
-    "item": "aoa3:haunted_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:skullo_blaster"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:haunted_upgrade_kit"
   }
 }

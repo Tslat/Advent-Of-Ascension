@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    " A ",
-    " A ",
-    "CBC"
-  ],
   "key": {
     "A": {
       "tag": "forge:ingots/emberstone"
@@ -16,6 +11,11 @@
       "item": "aoa3:flammable_dust"
     }
   },
+  "pattern": [
+    " A ",
+    " A ",
+    "CBC"
+  ],
   "result": {
     "item": "aoa3:fireborne_sword"
   }

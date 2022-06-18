@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "SPS",
-    "SPS"
-  ],
   "key": {
     "P": {
       "item": "aoa3:toxicwood_planks"
@@ -12,6 +8,10 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    "SPS",
+    "SPS"
+  ],
   "result": {
     "item": "aoa3:toxicwood_fence_gate"
   }

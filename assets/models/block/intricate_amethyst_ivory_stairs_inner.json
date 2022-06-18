@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/inner_stairs",
   "textures": {
-    "side": "aoa3:block/intricate_amethyst_ivory",
     "bottom": "aoa3:block/intricate_amethyst_ivory",
+    "side": "aoa3:block/intricate_amethyst_ivory",
     "top": "aoa3:block/intricate_amethyst_ivory"
   }
 }

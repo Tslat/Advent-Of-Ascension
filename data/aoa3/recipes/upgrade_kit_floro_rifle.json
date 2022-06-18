@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:iro_rifle"
   },
-  "upgrade_kit": {
-    "item": "aoa3:floro_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:floro_rifle"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:floro_upgrade_kit"
   }
 }

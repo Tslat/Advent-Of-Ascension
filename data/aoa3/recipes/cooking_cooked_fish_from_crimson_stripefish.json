@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 3.0,
   "ingredient": {
     "item": "aoa3:crimson_stripefish"
   },
-  "result": "aoa3:cooked_fish",
-  "experience": 3.0,
-  "cookingtime": 200
+  "result": "aoa3:cooked_fish"
 }

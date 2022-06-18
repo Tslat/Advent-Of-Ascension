@@ -1,7 +1,7 @@
 {
   "parent": "aoa3:block/portal_ew",
   "textures": {
-    "texture": "aoa3:block/lborean_portal",
-    "particle": "aoa3:block/lborean_portal"
+    "particle": "aoa3:block/lborean_portal",
+    "texture": "aoa3:block/lborean_portal"
   }
 }

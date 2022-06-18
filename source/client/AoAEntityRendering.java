@@ -26,6 +26,7 @@ import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
+import net.tslat.aoa3.client.model.entity.mob.WoodGiantModel;
 import net.tslat.aoa3.client.model.entity.npc.DryadSpriteModel;
 import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
 import net.tslat.aoa3.client.model.entity.projectile.thrown.*;
@@ -119,7 +120,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> UNDEAD_TROLL = new EntityRendererPackage<>(AoAMobs.UNDEAD_TROLL).geckolib("mob/mysterium/undead_troll");
 	public static final EntityRendererPackage<?> VISULAR = new EntityRendererPackage<>(AoAMobs.VISULAR).geckolib("mob/lunalus/visular");
 	public static final EntityRendererPackage<?> VISULON = new EntityRendererPackage<>(AoAMobs.VISULON).geckolib("mob/lunalus/visulon");
-	public static final EntityRendererPackage<?> WOOD_GIANT = new EntityRendererPackage<>(AoAMobs.WOOD_GIANT).geckolib("mob/overworld/wood_giant");
+	public static final EntityRendererPackage<?> WOOD_GIANT = new EntityRendererPackage<>(AoAMobs.WOOD_GIANT).geckolib(new WoodGiantModel());
 	public static final EntityRendererPackage<?> AROCKNID = new EntityRendererPackage<>(AoAMobs.AROCKNID).geckolib("mob/deeplands/arocknid");
 	public static final EntityRendererPackage<?> CASE_CONSTRUCT = new EntityRendererPackage<>(AoAMobs.CASE_CONSTRUCT).geckolib("mob/deeplands/case_construct");
 	public static final EntityRendererPackage<?> CAVE_CREEP = new EntityRendererPackage<>(AoAMobs.CAVE_CREEP).geckolib("mob/deeplands/cave_creep");

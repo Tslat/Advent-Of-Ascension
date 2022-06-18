@@ -1,8 +1,8 @@
 {
   "parent": "minecraft:block/outer_stairs",
   "textures": {
-    "side": "aoa3:block/coral_rock",
     "bottom": "aoa3:block/coral_rock",
+    "side": "aoa3:block/coral_rock",
     "top": "aoa3:block/coral_rock"
   }
 }

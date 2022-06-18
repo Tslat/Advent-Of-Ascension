@@ -1,8 +1,5 @@
 {
   "type": "aoa3:infusion",
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "ingredients": [
     {
       "item": "aoa3:darkly_powder"
@@ -23,6 +20,9 @@
       "item": "aoa3:unstable_gunpowder"
     }
   ],
+  "input": {
+    "item": "aoa3:gun_frame"
+  },
   "result": {
     "item": "aoa3:dustometer"
   }

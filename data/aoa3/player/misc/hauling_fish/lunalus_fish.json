@@ -4,8 +4,8 @@
   ],
   "entities": [
     {
-      "weight": 200,
-      "item": "minecraft:stone"
+      "item": "minecraft:stone",
+      "weight": 200
     }
   ]
 }

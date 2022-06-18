@@ -3,10 +3,10 @@
   "input": {
     "item": "aoa3:predatious_bow"
   },
-  "upgrade_kit": {
-    "item": "aoa3:seaside_upgrade_kit"
-  },
   "result": {
     "item": "aoa3:atlantic_bow"
+  },
+  "upgrade_kit": {
+    "item": "aoa3:seaside_upgrade_kit"
   }
 }
