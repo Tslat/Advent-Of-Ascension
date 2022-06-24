@@ -23,7 +23,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.DistExecutor;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
@@ -37,7 +37,7 @@ import java.util.List;
 
 public class BlankRealmstone extends Item {
 	public BlankRealmstone() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1));
 	}
 
 	@Override

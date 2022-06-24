@@ -3,24 +3,26 @@ package net.tslat.aoa3.content.world.gen.structure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.*;
+import net.minecraft.data.worldgen.Pools;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 import net.minecraft.world.level.levelgen.heightproviders.HeightProvider;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
+import net.tslat.aoa3.common.registration.worldgen.AoAStructureTypes;
 
 import java.util.Map;
 import java.util.Optional;
@@ -40,12 +42,17 @@ public class AoAStructure extends Structure {
 
 	@Override
 	public Optional<GenerationStub> findGenerationPoint(GenerationContext genContext) {
-		return Optional.empty();
+		ChunkPos chunkpos = genContext.chunkPos();
+		int startHeight = this.settings.startHeight.sample(genContext.random(), new WorldGenerationContext(genContext.chunkGenerator(), genContext.heightAccessor()));
+		BlockPos blockpos = new BlockPos(chunkpos.getMinBlockX(), startHeight, chunkpos.getMinBlockZ());
+
+		Pools.forceBootstrap();
+		return JigsawPlacement.addPieces(genContext, this.settings.startPool, this.settings.startJigsawName, this.settings.maxPieces, blockpos, false, this.settings.startHeightmap, 128);
 	}
 
 	@Override
-	public StructureType<?> type() {
-		return null;
+	public StructureType<AoAStructure> type() {
+		return AoAStructureTypes.AOA_DEFAULT.get();
 	}
 
 	public record Settings(HolderSet<Biome> biomes, Map<MobCategory, StructureSpawnOverride> spawnOverrides, GenerationStep.Decoration step, TerrainAdjustment terrainAdaptation, Holder<StructureTemplatePool> startPool, Optional<ResourceLocation> startJigsawName, int maxPieces, HeightProvider startHeight, Optional<Heightmap.Types> startHeightmap) {

@@ -1,0 +1,17 @@
+{
+  "category": "aoa3:innervation",
+  "icon": "aoa3:small_skill_crystal",
+  "name": "Training Methods",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Training $(thing)Innervation$() is really only done in one way: kill things.$(br)Every time you successfully kill a monster or creature, you'll gain some experience from the combat. The amount gained will depend on the creature slain, and how hard it was for you to kill it.",
+      "title": "Training Methods"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "You will also gain xp by utilising the various abilities the $(thing)Innervation$() skill gives you access to, so make sure to get familiar with your new powers and put them to use!"
+    }
+  ],
+  "sortnum": 0
+}

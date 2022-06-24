@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class BoneHorn extends Item {
 	public BoneHorn() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).durability(3).rarity(Rarity.UNCOMMON));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).durability(3).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override

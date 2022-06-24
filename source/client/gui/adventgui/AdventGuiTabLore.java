@@ -21,6 +21,7 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.PatchouliBookOpenPacket;
 import net.tslat.aoa3.common.packet.packets.PatchouliGiveBookPacket;
 import net.tslat.aoa3.integration.IntegrationManager;
+import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
@@ -69,9 +70,9 @@ public class AdventGuiTabLore extends Screen {
 
 		super.render(matrixStack, mouseX, mouseY, partialTicks);
 
-		//for (GuiEventListener book : children()) {
-		//	((PatchouliBook)book).render(matrixStack, mouseX, mouseY, partialTicks);
-		//}
+		for (GuiEventListener book : children()) {
+			((PatchouliBook)book).render(matrixStack, mouseX, mouseY, partialTicks);
+		}
 	}
 
 	@Override
@@ -95,7 +96,7 @@ public class AdventGuiTabLore extends Screen {
 		Item guideBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
 
 		for (ResourceLocation id : bookIds) {
-			if (true /*!PatchouliIntegration.isBookLoaded(id)*/)
+			if (!PatchouliIntegration.isBookLoaded(id))
 				continue;
 
 			ItemStack book = new ItemStack(guideBook);
@@ -135,7 +136,7 @@ public class AdventGuiTabLore extends Screen {
 			if (isValidClickButton(button)) {
 				if (!mouseHolding) {
 					if (isHovered) {
-						//PatchouliIntegration.openBook(id);
+						PatchouliIntegration.openBook(id);
 
 						return true;
 					}

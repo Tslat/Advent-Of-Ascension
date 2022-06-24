@@ -1,0 +1,18 @@
+{
+  "advancement": "aoa3:abyss/root",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "name": "Ores",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Should you wish to hide underground from the horrors of the surface in the $(thing)Abyss$(), you may take comfort in knowing of the blood-red minerals that can be found down there.",
+      "title": "Ores"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Bloodstone Ore$() can be harvested with a pickaxe, dropping $(thing)Bloodstones$() and some xp.$(br2)$(thing)Bloodstones$() can be found almost anywhere in the abyssal underground, and can be used for a variety of purposes, such as new weapons or armour."
+    }
+  ],
+  "sortnum": 2
+}

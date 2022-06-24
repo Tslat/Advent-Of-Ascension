@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.misc.BossItemEntity;
 import net.tslat.aoa3.util.RandomUtil;
 
@@ -21,7 +21,7 @@ public abstract class BossSpawningItem extends Item {
 	private final Supplier<SoundEvent> throwingSound;
 
 	public BossSpawningItem(@Nullable Supplier<SoundEvent> throwSound, @Nonnull ParticleOptions... timerParticles) {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.UNCOMMON));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON));
 
 		this.timerParticles = timerParticles;
 		this.throwingSound = throwSound;

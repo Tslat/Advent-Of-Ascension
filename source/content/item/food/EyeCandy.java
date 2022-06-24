@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -19,7 +19,7 @@ import java.util.List;
 
 public class EyeCandy extends Item {
 	public EyeCandy() {
-		super(new Item.Properties().tab(AoAItemGroups.FOOD).food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().fast().build()));
+		super(new Item.Properties().tab(AoACreativeModeTabs.FOOD).food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().fast().build()));
 	}
 
 	@Override

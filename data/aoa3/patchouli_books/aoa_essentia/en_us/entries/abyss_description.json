@@ -1,0 +1,14 @@
+{
+  "advancement": "aoa3:abyss/root",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "name": "Description",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(thing)Abyss$() is a dark, blood-coloured world filled with nauseating horrors.",
+      "title": "Description"
+    }
+  ],
+  "sortnum": 0
+}

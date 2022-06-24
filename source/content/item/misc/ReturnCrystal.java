@@ -12,7 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class ReturnCrystal extends Item {
 	public ReturnCrystal() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS));
 	}
 
 	@Override

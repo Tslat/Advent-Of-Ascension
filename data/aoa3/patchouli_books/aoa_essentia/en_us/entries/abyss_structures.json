@@ -1,0 +1,56 @@
+{
+  "advancement": "aoa3:abyss/root",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "name": "Structures",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "As a weary traveller makes their way through the dark, foreboding plane, they should keep their eyes open for a few important landmarks.",
+      "title": "Structures"
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "shadowlord_platform",
+      "images": [
+        "aoa3:patchouli/images/structures/shadowlord_platform.png"
+      ],
+      "text": "The platform houses the altar to spawn the $(thing)Shadowlord$(). $(l:https://adventofascension.fandom.com/wiki/Shadowlord_Platform)Read More$(/l)",
+      "title": "Shadowlord Platform"
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "illusion_tree",
+      "images": [
+        "aoa3:patchouli/images/structures/illusion_tree.png"
+      ],
+      "text": "Towering over all else in the $(thing)Abyss$(), the altar for $(thing)Elusive$() can be found here. $(l:https://adventofascension.fandom.com/wiki/Illusion_Tree)Read More$(/l)",
+      "title": "Illusion Tree"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "aoa3:patchouli/images/structures/jawe_hut.png"
+      ],
+      "text": "The only known home of the $(thing)Jawe$() $(l:https://adventofascension.fandom.com/wiki/Jawe Hut)Read More$(/l)",
+      "title": "Jawe Hut"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "aoa3:patchouli/images/structures/flesh_temple.png"
+      ],
+      "text": "$(thing)Flesh Temples$() are guarded by a horrific creature - the $(thing)Flesh Eater$(). $(l:https://adventofascension.fandom.com/wiki/Flesh_Temple)Read More$(/l)",
+      "title": "Flesh Temple"
+    },
+    {
+      "type": "patchouli:image",
+      "images": [
+        "aoa3:patchouli/images/structures/abyssal_eye_grotto.png"
+      ],
+      "text": "From just an opening in the abyssal surface, these grottos house $(thing)Eye Bulbs$(). $(l:https://adventofascension.fandom.com/wiki/Abyssal_Eye_Grotto)Read More$(/l)",
+      "title": "Abyssal Eye Grotto"
+    }
+  ],
+  "sortnum": 3
+}

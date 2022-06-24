@@ -12,6 +12,7 @@ import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
 public class AbilityUnlockToast implements Toast {
@@ -37,6 +38,9 @@ public class AbilityUnlockToast implements Toast {
 
 	@Override
 	public Visibility render(PoseStack matrix, ToastComponent toastGui, long delta) {
+		if (RegistryUtil.getId(skill) == null)
+			return Visibility.HIDE;
+
 		Minecraft mc = toastGui.getMinecraft();
 
 		RenderUtil.prepRenderTexture(TEXTURE);

@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.ItemUtil;
@@ -26,7 +26,7 @@ public class DryadsBlessing extends HoeItem implements LootModifyingItem {
 		super(ItemUtil.customItemTier(3020, 10f, 3f, 5, 18, null, BlockTags.MINEABLE_WITH_HOE),
 				-4,
 				AttackSpeed.forAttacksPerSecond(4),
-				new Item.Properties().tab(AoAItemGroups.TOOLS));
+				new Item.Properties().tab(AoACreativeModeTabs.TOOLS));
 	}
 
 	@Override

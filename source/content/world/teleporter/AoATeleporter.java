@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.config.AoAConfig;
@@ -48,9 +49,7 @@ public abstract class AoATeleporter implements ITeleporter {
 				Block locationBlock = destWorld.getBlockState(locPos = loc.asBlockPos()).getBlock();
 
 				if (locationBlock == getPortalBlock()) {
-					placeInPortal(destWorld, entity, locPos);
-
-					return customPlayerPlacementFunction((ServerPlayer)entity, currentWorld, destWorld, false);
+					return positionPlayer((ServerPlayer)entity, new Vec3(locPos.getX() + 0.5f, locPos.getY() + 0.5f, locPos.getZ() + 0.5f), currentWorld, destWorld, false);
 				}
 				else if (!(locationBlock instanceof PortalBlock)) {
 					plData.removePortalReturnLocation(currentWorld.dimension());
@@ -81,8 +80,7 @@ public abstract class AoATeleporter implements ITeleporter {
 			pos = makePortal(destWorld, entity, pos);
 		}
 
-		placeInPortal(destWorld, entity, pos);
-
+		Vec3 teleportPos = new Vec3(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 		ChunkPos chunkPos = destWorld.getChunk(pos).getPos();
 
 		getCachedPortalMap().put(ChunkPos.asLong(chunkPos.x, chunkPos.z), pos);
@@ -94,33 +92,32 @@ public abstract class AoATeleporter implements ITeleporter {
 				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.level.dimension());
 
 				if (returnPortalLoc != null && returnPortalLoc.fromDim == destWorld.dimension())
-					return customPlayerPlacementFunction((ServerPlayer)entity, currentWorld, destWorld, false);
+					return positionPlayer((ServerPlayer)entity, teleportPos, currentWorld, destWorld, false);
 			}
 
 			if (portalLoc == null || entity.level.dimension() == portalLoc.fromDim || entity.distanceToSqr(BlockUtil.posToVec(portalLoc.asBlockPos())) > AoAConfig.SERVER.portalSearchRadius.get())
 				plData.setPortalReturnLocation(destWorld.dimension(), new PortalCoordinatesContainer(currentWorld.dimension(), startPos.getX(), startPos.getY(), startPos.getZ()));
 		}
 
-		return entity instanceof ServerPlayer ? customPlayerPlacementFunction((ServerPlayer)entity, currentWorld, destWorld, false) : customEntityPlacementFunction(entity, currentWorld, destWorld, false);
+		return entity instanceof ServerPlayer ? positionPlayer((ServerPlayer)entity, teleportPos, currentWorld, destWorld, false) : positionNonPlayer(entity, teleportPos, destWorld, false);
 	}
 
-	private Entity customPlayerPlacementFunction(ServerPlayer entity, ServerLevel fromWorld, ServerLevel toWorld, boolean spawnPortal) {
-		BlockPos originPos = entity.blockPosition();
-
+	private Entity positionPlayer(ServerPlayer entity, Vec3 position, ServerLevel fromWorld, ServerLevel toWorld, boolean spawnPortal) {
 		fromWorld.getProfiler().push("moving");
 
 		if (fromWorld.dimension() == Level.OVERWORLD && toWorld.dimension() == Level.NETHER) {
 			entity.enteredNetherPosition = entity.position();
 		}
 		else if (spawnPortal && toWorld.dimension() == Level.END) {
+			BlockPos originPos = new BlockPos(position);
 			BlockPos.MutableBlockPos mutablePos = originPos.mutable();
 
-			for(int x = -2; x <= 2; ++x) {
-				for(int y = -2; y <= 2; ++y) {
-					for(int z = -1; z < 3; ++z) {
-						BlockState state = z == -1 ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.AIR.defaultBlockState();
+			for(int z = -2; z <= 2; ++z) {
+				for(int x = -2; x <= 2; ++x) {
+					for(int y = -1; y < 3; ++y) {
+						BlockState state = y == -1 ? Blocks.OBSIDIAN.defaultBlockState() : Blocks.AIR.defaultBlockState();
 
-						toWorld.setBlockAndUpdate(mutablePos.set(originPos).move(y, z, x), state);
+						toWorld.setBlockAndUpdate(mutablePos.set(originPos).move(x, y, z), state);
 					}
 				}
 			}
@@ -130,21 +127,21 @@ public abstract class AoATeleporter implements ITeleporter {
 		fromWorld.getProfiler().push("placing");
 		entity.setLevel(toWorld);
 		toWorld.addDuringPortalTeleport(entity);
-		entity.moveTo(originPos.getX(), originPos.getY(), originPos.getZ());
+		entity.moveTo(position.x(), position.y(), position.z());
 		fromWorld.getProfiler().pop();
 		entity.triggerDimensionChangeTriggers(fromWorld);
 
 		return entity;
 	}
 
-	private Entity customEntityPlacementFunction(Entity entity, ServerLevel fromWorld, ServerLevel toWorld, boolean spawnPortal) {
+	private Entity positionNonPlayer(Entity entity, Vec3 position, ServerLevel toWorld, boolean spawnPortal) {
 		entity.level.getProfiler().popPush("reloading");
 
 		Entity newEntity = entity.getType().create(toWorld);
 
 		if (newEntity != null) {
 			newEntity.restoreFrom(entity);
-			newEntity.moveTo(entity.getX(),entity.getY(), entity.getZ(), entity.getYRot(), entity.getXRot());
+			newEntity.moveTo(position.x(), position.y(), position.z(), entity.getYRot(), entity.getXRot());
 			newEntity.setDeltaMovement(entity.getDeltaMovement());
 			toWorld.addDuringTeleport(newEntity);
 
@@ -683,12 +680,6 @@ public abstract class AoATeleporter implements ITeleporter {
 	
 	public void placeInPortal(Level world, Entity entity, BlockPos pos) {
 		entity.setDeltaMovement(0, 0, 0);
-
-		if (entity instanceof ServerPlayer) {
-			((ServerPlayer)entity).connection.teleport(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.getYRot(), entity.getXRot());
-		}
-		else {
-			entity.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, entity.getYRot(), entity.getXRot());
-		}
+		entity.moveTo(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 	}
 }

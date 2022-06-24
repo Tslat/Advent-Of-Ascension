@@ -9,7 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DistortingArtifact extends Item {
 	public DistortingArtifact() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).durability(10));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).durability(10));
 	}
 
 	@Override

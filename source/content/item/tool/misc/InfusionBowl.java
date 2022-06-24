@@ -19,7 +19,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.misc.pixon.PixonEntity;
 import net.tslat.aoa3.util.ItemUtil;
@@ -35,7 +35,7 @@ public class InfusionBowl extends Item {
 	private final int harvestLevelModifier;
 
 	public InfusionBowl(int durability, int harvestAmount, int harvestLevelModifier) {
-		super(new Item.Properties().tab(AoAItemGroups.TOOLS).durability(durability));
+		super(new Item.Properties().tab(AoACreativeModeTabs.TOOLS).durability(durability));
 
 		this.harvestAmount = harvestAmount;
 		this.harvestLevelModifier = harvestLevelModifier;

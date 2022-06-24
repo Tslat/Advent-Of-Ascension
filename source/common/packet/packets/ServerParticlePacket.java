@@ -8,6 +8,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.ClientOperations;
+import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
@@ -25,7 +26,29 @@ public class ServerParticlePacket implements AoAPacket {
 	}
 
 	public ServerParticlePacket particle(ParticleOptions particle, Entity entity) {
-		return particle(particle, entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		return particle(particle, entity, false);
+	}
+
+	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, boolean randomPosInBB) {
+		if (randomPosInBB) {
+			return particle(particle, entity.getX() + RandomUtil.randomValueUpTo(entity.getBbWidth()), entity.getY() + RandomUtil.randomValueUpTo(entity.getBbHeight()), entity.getZ() + RandomUtil.randomValueUpTo(entity.getBbWidth()));
+		}
+		else {
+			return particle(particle, entity, 0, 0, 0);
+		}
+	}
+
+	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, boolean randomPosInBB, double velX, double velY, double velZ) {
+		return particle(particle, entity, randomPosInBB, velX, velY, velZ, 1);
+	}
+
+	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, boolean randomPosInBB, double velX, double velY, double velZ, int amount) {
+		if (randomPosInBB) {
+			return particle(particle, entity.getX() + RandomUtil.randomValueUpTo(entity.getBbWidth()), entity.getY() + RandomUtil.randomValueUpTo(entity.getBbHeight()), entity.getZ() + RandomUtil.randomValueUpTo(entity.getBbWidth()), velX, velY, velZ);
+		}
+		else {
+			return particle(particle, entity, velX, velY, velZ);
+		}
 	}
 
 	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, double velX, double velY, double velZ) {

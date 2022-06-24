@@ -1,0 +1,101 @@
+{
+  "category": "aoa3:guides",
+  "extra_recipe_mappings": {
+    "aoa3:carved_rune_of_power": 4
+  },
+  "icon": "aoa3:abyss_portal",
+  "name": "The Portal",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "To get around to other $(aoa) dimensions, you will need to construct your own portal.$(br2)$(aoa) portals are made from $(thing)Ancient Rock$() and $(thing)Carved Runes$(), and must be constructed in a specific shape.$(br2)To make a portal frame, make a vertical, hollow rectangle out of $(thing)Ancient Rock$(), then replace the bottom center block with a $(l:aoa3:the_portal#carved_rune_of_power)Carved Rune of Power$(/l)",
+      "title": "The Portal"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "From there, you must insert $(l)one$() of each of four $(thing)Carved Runes$() anywhere into the frame:$(br2)$(thing)Carved Rune of Reality$()$(br2)$(thing)Carved Rune of Travel$()$(br2)$(thing)Carved Rune of Space$()$(br2)$(thing)Carved Rune of Direction$()"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "anchor": "portal_frame",
+      "multiblock": {
+        "mapping": {
+          "0": "aoa3:carved_rune_of_power",
+          "A": "aoa3:carved_rune_of_space",
+          "B": "aoa3:carved_rune_of_direction",
+          "C": "aoa3:carved_rune_of_reality",
+          "D": "aoa3:carved_rune_of_travel",
+          "a": "aoa3:ancient_rock"
+        },
+        "pattern": [
+          [
+            "a",
+            "a",
+            "a",
+            "a",
+            "a"
+          ],
+          [
+            "C",
+            " ",
+            " ",
+            " ",
+            "D"
+          ],
+          [
+            "a",
+            " ",
+            " ",
+            " ",
+            "a"
+          ],
+          [
+            "a",
+            " ",
+            " ",
+            " ",
+            "a"
+          ],
+          [
+            "A",
+            " ",
+            " ",
+            " ",
+            "B"
+          ],
+          [
+            "a",
+            "a",
+            "0",
+            "a",
+            "a"
+          ]
+        ]
+      },
+      "name": "Teleporter Frame",
+      "text": "The portal must contain the 5 runes and 13 rock."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Four of the carved runes can be found throughout the Overworld, stashed away in loot chests, dropped from various creatures, or through various actions.$(br2) The fifth one; the $(l:aoa3:the_portal#carved_rune_of_power)Carved Rune of Power$(/l) is crafted by you."
+    },
+    {
+      "type": "patchouli:crafting",
+      "anchor": "carved_rune_of_power",
+      "recipe": "aoa3:shaped_craft_carved_rune_of_power",
+      "text": "",
+      "title": "Carved Rune of Power"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Once the portal frame has been constructed, you can activate it by using a $(thing)Realmstone$() of some kind on it. One portal can be used to take you to many worlds."
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "More information can be found on the $(thing)official wiki$().",
+      "url": "https://adventofascension.fandom.com/wiki/Ancient_Teleportation#Creating_the_portal_frame"
+    }
+  ],
+  "sortnum": 2
+}

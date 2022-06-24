@@ -1,0 +1,19 @@
+{
+  "book_texture": "aoa3:patchouli/textures/gui/book_aoa.png",
+  "crafting_texture": "aoa3:patchouli/textures/gui/aoa_crafting.png",
+  "filler_texture": "aoa3:patchouli/textures/gui/aoa_filler.png",
+  "header_color": "c49191",
+  "landing_text": "item.aoa3.aoa_essentia.landing",
+  "link_color": "cc00",
+  "link_hover_color": "d17d0",
+  "macros": {
+    "$(aoa)": "$(4)AoA$()"
+  },
+  "model": "aoa3:aoa_essentia",
+  "name": "item.aoa3.aoa_essentia",
+  "nameplate_color": "ffffff",
+  "progress_bar_color": "4c08e",
+  "show_progress": false,
+  "text_color": "e5e5e5",
+  "version": "1"
+}

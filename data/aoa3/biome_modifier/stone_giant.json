@@ -13,7 +13,7 @@
   },
   "spawn": [
     {
-      "type": "aoa3:ice_giant",
+      "type": "aoa3:stone_giant",
       "maxCount": 1,
       "minCount": -50,
       "weight": 1

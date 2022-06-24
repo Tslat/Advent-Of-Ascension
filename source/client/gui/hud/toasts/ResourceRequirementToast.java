@@ -8,10 +8,7 @@ import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
-import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.aoa3.util.*;
 
 public class ResourceRequirementToast implements Toast {
 	private final AoAResource resource;
@@ -36,6 +33,9 @@ public class ResourceRequirementToast implements Toast {
 
 	@Override
 	public Visibility render(PoseStack matrix, ToastComponent toastGui, long delta) {
+		if (RegistryUtil.getId(resource) == null)
+			return Visibility.HIDE;
+
 		Minecraft mc = toastGui.getMinecraft();
 
 		RenderUtil.prepRenderTexture(TEXTURE);

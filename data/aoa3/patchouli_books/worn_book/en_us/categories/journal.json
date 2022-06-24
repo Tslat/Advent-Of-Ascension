@@ -1,0 +1,5 @@
+{
+  "description": "Contents of the journal given by the $(thing)Corrupted Traveller$()",
+  "icon": "aoa3:worn_book",
+  "name": "Contents"
+}

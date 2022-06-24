@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:squad_gun",
+  "name": "Guns",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "guns",
+      "text": "$(thing)Guns$() are the more modern version of $(l:aoa3:bows#bows)bows$(/l) in $(thing)Minecraft$().$(br)Offering a far higher fire rate and moderate damage, in exchange for higher ammunition cost.$(br2)Each $(thing)gun$() has its own ammunition requirement, so be sure to check before using it.",
+      "title": "Guns"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "To fire a $(thing)gun$(), ensure you have at least one of the ammo that it needs (shown in the tooltip), and right click with it in your main hand.$(br2)Each $(thing)gun$() has its own fire rate, recoil, and other characteristics, so firing off a few test shots before putting it to use might be worthwhile."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:squad_gun",
+      "text": "$(thing)Guns$() fire fast-moving, accurate projectiles that deal rapid damage at the cost of ammunition.",
+      "title": "A Gun"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)guns$() in $(aoa) on the $(thing)official wiki$().'",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Guns"
+    }
+  ],
+  "sortnum": 5
+}

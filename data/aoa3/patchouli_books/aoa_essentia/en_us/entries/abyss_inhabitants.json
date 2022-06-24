@@ -1,0 +1,103 @@
+{
+  "advancement": "aoa3:abyss/root",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "name": "Inhabitants",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Hiding in the darkness are many scary, hungry creatures. Each of them have their own strengths and abilities, so take precautions before wandering.",
+      "title": "Mobs"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:nightmare_flakes",
+      "text": "All hostile creatures in the $(thing)Abyss$() can drop $(thing)Nightmare Flakes$(). This item is used for most abyssal crafting and imbuing, so don't leave any behind!",
+      "title": "Nightmare Flakes"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:anemia",
+      "offset": 1.2,
+      "scale": 0.692,
+      "text": "Read more about the $(thing)Anemia$() on the $(l:https://adventofascension.fandom.com/wiki/Anemia)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:apparition",
+      "text": "Read more about the $(thing)Apparition$() on the $(l:https://adventofascension.fandom.com/wiki/Apparition)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:bloodsucker",
+      "scale": 0.52,
+      "text": "Read more about the $(thing)Bloodsucker$() on the $(l:https://adventofascension.fandom.com/wiki/Bloodsucker)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:distorter",
+      "text": "Read more about the $(thing)Distorter$() on the $(l:https://adventofascension.fandom.com/wiki/Distorter)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:fiend",
+      "text": "Read more about the $(thing)Fiend$() on the $(l:https://adventofascension.fandom.com/wiki/Fiend)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:flesh_eater",
+      "text": "Read more about the $(thing)Flesh Eater$() on the $(l:https://adventofascension.fandom.com/wiki/Flesh_Eater)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:jawe",
+      "scale": 0.625,
+      "text": "Read more about the $(thing)Jawe$() on the $(l:https://adventofascension.fandom.com/wiki/Jawe)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:occulent",
+      "text": "Read more about the $(thing)Occulent$() on the $(l:https://adventofascension.fandom.com/wiki/Occulent)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:web_reaper",
+      "scale": 0.802,
+      "text": "Read more about the $(thing)Web Reaper$() on the $(l:https://adventofascension.fandom.com/wiki/Web_Reaper)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The hostile $(thing)Abyss$() is not particularly inviting, but there are still some peaceful inhabitants roaming the lands.",
+      "title": "NPCs"
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:lottoman",
+      "scale": 0.875,
+      "text": "Read more about the $(thing)Lottoman$() on the $(l:https://adventofascension.fandom.com/wiki/Lottoman)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:undead_herald",
+      "text": "Read more about the $(thing)Undead Herald$() on the $(l:https://adventofascension.fandom.com/wiki/Abyssal_Lottoman)Official Wiki$(/l)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The real horrors of the darkness, the $(thing)Abyss$() is home to two fearsome monsters, ready to claim another victim.",
+      "title": "Bosses"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:book_of_shadows",
+      "text": "This dark book obtained from an empowered $(thing)Web Reaper$() can be used to summon $(thing)Shadowlord$() at a $(thing)Shadowlord Altar$() on a $(l:aoa3:abyss_structures#shadowlord_platform)Shadowlord Platform$(/l).",
+      "title": "Book of Shadows"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:staring_eye",
+      "text": "A mysterious eye harvested from the red-eyed tentacles around the $(thing)Abyss$(), it summons the $(thing)Elusive$() if used on an $(thing)Illusion Altar$() at a $(l:aoa3:abyss_structures#illusion_tree)Illusion Tree$(/l).",
+      "title": "Staring Eye"
+    }
+  ],
+  "sortnum": 4
+}

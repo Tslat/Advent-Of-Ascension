@@ -1,0 +1,24 @@
+{
+  "category": "aoa3:resources",
+  "icon": "aoa3:patchouli/images/icons/energy_icon.png",
+  "name": "Energy",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "energy",
+      "text": "$(thing)Energy$() is your body's natural resource which governs movement and action.$(br)You use $(thing)Energy$() whenever you attempt to perform a special move or attack, even if you don't have enough.$(br2)You'll recover $(thing)Energy$() naturally over time, at a fairly quick pace.",
+      "title": "Energy"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Fully draining your $(thing)energy$() reserves, or taking damage will temporarily halt your $(thing)energy$() regeneration, so be careful when using it in the field.$(br)Total depletion in particular will halt regeneration for a noticeable period of time, so try not to drain yourself completely."
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "Official Wiki",
+      "text": "Visit the official $(aoa) wiki page for more information.",
+      "title": "AoA Wiki",
+      "url": "https://adventofascension.fandom.com/wiki/Energy"
+    }
+  ]
+}

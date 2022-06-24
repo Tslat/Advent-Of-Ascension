@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.resource.AoAResource;
@@ -28,7 +28,7 @@ public abstract class BaseVulcane extends Item {
 	protected double baseDmg;
 
 	public BaseVulcane(double dmg, int durability) {
-		super(new Item.Properties().tab(AoAItemGroups.VULCANES).durability(durability));
+		super(new Item.Properties().tab(AoACreativeModeTabs.VULCANES).durability(durability));
 
 		this.baseDmg = dmg;
 	}

@@ -11,6 +11,7 @@ import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
 public class LevelRequirementToast implements Toast {
@@ -36,6 +37,9 @@ public class LevelRequirementToast implements Toast {
 
 	@Override
 	public Visibility render(PoseStack matrix, ToastComponent toastGui, long delta) {
+		if (RegistryUtil.getId(skill) == null)
+			return Visibility.HIDE;
+
 		Minecraft mc = toastGui.getMinecraft();
 
 		RenderUtil.prepRenderTexture(TEXTURE);

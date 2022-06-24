@@ -143,6 +143,18 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 	}
 
 	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (super.hurt(source, amount)) {
+			if (source.getEntity() instanceof LivingEntity attacker)
+				attacker.setTicksFrozen(attacker.getTicksFrozen() + 15);
+
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
 		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));

@@ -16,7 +16,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.DistExecutor;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.data.client.MiscellaneousReloadListener;
 import net.tslat.aoa3.util.ItemUtil;
@@ -27,7 +27,7 @@ public class WornBook extends WrittenBookItem {
 	private static final CompoundTag contents = new CompoundTag();
 
 	public WornBook() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1));
 	}
 
 	@OnlyIn(Dist.CLIENT)

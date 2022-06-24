@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.TierSortingRegistry;
-import net.tslat.aoa3.common.registration.AoATiers;
+import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;

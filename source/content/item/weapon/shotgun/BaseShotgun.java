@@ -10,7 +10,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -29,7 +29,7 @@ public class BaseShotgun extends BaseGun {
 	protected final float knockbackFactor;
 
 	public BaseShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
-		super(AoAItemGroups.SHOTGUNS, dmg, durability, fireDelayTicks, recoil);
+		super(AoACreativeModeTabs.SHOTGUNS, dmg, durability, fireDelayTicks, recoil);
 
 		this.pelletCount = pellets;
 		this.knockbackFactor = knockbackFactor;

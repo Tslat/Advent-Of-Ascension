@@ -5,7 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.blaster.RainbowShotEntity;
 
@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 
 public class ColourCannon extends BaseBlaster {
 	public ColourCannon(double dmg, int durability, int fireDelayTicks, float energyCost) {
-		super(new Item.Properties().tab(AoAItemGroups.BLASTERS).durability(durability).rarity(Rarity.EPIC), dmg, fireDelayTicks, energyCost);
+		super(new Item.Properties().tab(AoACreativeModeTabs.BLASTERS).durability(durability).rarity(Rarity.EPIC), dmg, fireDelayTicks, energyCost);
 	}
 
 	@Nullable

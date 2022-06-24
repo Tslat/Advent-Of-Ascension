@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:worlds",
+  "description": "The Abyss is a Tier-2 dimension that requires access to the $(thing)Nether$() to access",
+  "icon": "aoa3:abyss_realmstone",
+  "name": "Abyss"
+}

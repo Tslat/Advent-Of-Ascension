@@ -12,7 +12,7 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.SeedDartEntity;
@@ -25,7 +25,7 @@ public class Gardener extends BaseGun {
 	int firingDelay;
 
 	public Gardener(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(new Item.Properties().tab(AoAItemGroups.GUNS).durability(durability).rarity(Rarity.RARE), dmg, firingDelayTicks, recoil);
+		super(new Item.Properties().tab(AoACreativeModeTabs.GUNS).durability(durability).rarity(Rarity.RARE), dmg, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
 	}

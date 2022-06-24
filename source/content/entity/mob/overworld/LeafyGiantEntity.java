@@ -19,7 +19,6 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.content.entity.mob.overworld.BushBabyEntity;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -134,6 +133,7 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 		bushBaby.setPos(getX(), getBoundingBox().maxY, getZ());
 		bushBaby.setDeltaMovement(Mth.clamp((target.getX() - getX()) * 0.2f, -0.85, 0.5f), 0.7, Mth.clamp((target.getZ() - getZ()) * 0.2f, -0.85, 0.85));
 		bushBaby.setTarget(target);
+		bushBaby.fallDistance = -10;
 
 		if (isOnFire())
 			bushBaby.setSecondsOnFire(getRemainingFireTicks() / 20);

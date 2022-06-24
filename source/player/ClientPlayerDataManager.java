@@ -205,10 +205,10 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 			}
 		}
 
-		if (syncTag.contains("patchouliBooks")) {
+		if (syncTag.contains("PatchouliBooks")) {
 			ArrayList<ResourceLocation> books = new ArrayList<>();
 
-			ListTag booksNbt = syncTag.getList("patchouliBooks", Tag.TAG_STRING);
+			ListTag booksNbt = syncTag.getList("PatchouliBooks", Tag.TAG_STRING);
 
 			for (Tag book : booksNbt) {
 				books.add(new ResourceLocation(book.getAsString()));

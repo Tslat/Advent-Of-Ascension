@@ -12,7 +12,7 @@ import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
-public final class AoAItemGroups {
+public final class AoACreativeModeTabs {
 	public static final ArrayList<AoAItemGroup> REGISTERED_ITEM_GROUPS = new ArrayList<>();
 
 	public static final CreativeModeTab MISC_ITEMS = new AoAItemGroup("AoA Miscellaneous Items", "miscellaneous", () -> new ItemStack(AoAItems.LIMONITE_INGOT.get()));

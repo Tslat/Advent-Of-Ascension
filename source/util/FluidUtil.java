@@ -13,7 +13,7 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.library.object.MutableSupplier;
@@ -121,8 +121,8 @@ public final class FluidUtil {
 
 		public RegisteredFluidHolder registerAll(DeferredRegister<Item> itemRegistry, DeferredRegister<Block> blockRegistry, DeferredRegister<Fluid> fluidRegistry) {
 			final RegistryObject<BucketItem> bucket = registerBucket(itemRegistry);
-			final RegistryObject<LiquidBlock> fluidBlock = registerBlock(blockRegistry);
 			final RegistryObject<ForgeFlowingFluid.Source> fluid = registerFluid(fluidRegistry);
+			final RegistryObject<LiquidBlock> fluidBlock = registerBlock(blockRegistry);
 
 			return new RegisteredFluidHolder(bucket, fluidBlock, fluid);
 		}
@@ -151,7 +151,7 @@ public final class FluidUtil {
 
 			makeFluidProperties();
 
-			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(16).craftRemainder(Items.BUCKET)));
+			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(16).craftRemainder(Items.BUCKET)));
 
 			this.fluidProperties.bucket(bucket);
 

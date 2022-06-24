@@ -12,7 +12,7 @@ import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.tslat.aoa3.common.registration.AoATiers;
+import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;

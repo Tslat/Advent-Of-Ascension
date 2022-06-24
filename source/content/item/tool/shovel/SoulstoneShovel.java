@@ -19,7 +19,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoATags;
-import net.tslat.aoa3.common.registration.AoATiers;
+import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;

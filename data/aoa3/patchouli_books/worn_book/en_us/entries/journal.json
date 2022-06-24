@@ -1,0 +1,30 @@
+{
+  "category": "aoa3:journal",
+  "icon": "aoa3:worn_book",
+  "name": "Journal",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "They're everywhere!$(br)T-The faces, why so many eyes?$(br2)Four $(thing)carved runes$():$(br)One of $(thing)Reality.$()$(br)One of $(thing)Travel.$()$(br)One of $(thing)Space.$()$(br)Build a frame from the $(thing)blackened stone$(), six blocks high.",
+      "title": "Journal Entry"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Include the $(thing)carved runes.$()$(br)At the center in the base of the frame, insert a $(thing)Carved Rune of Power$(). this is the focus. This takes the keys.$(br)13 of the $(thing)blackened stone$(), 5 $(thing)carved runes$().$(br2)What I have opened cannot be closed."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "I have spread the first four runes in dungeons and temples everywhere, to stop anyone from re-releasing the horrors within.$(br2)I will smash this one to pieces, so that it may never be used again."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aoa3:shaped_craft_carved_rune_of_power",
+      "text": "The fifth key rune must be hand-crafted from a combination of $(thing)unpowered runes$() and an $(thing)ender eye$(), imbued into a central blackened stone. Something like this"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "May $(thing)Krasaun$() bless you, for your soul will never be the same again."
+    }
+  ],
+  "sortnum": 0
+}

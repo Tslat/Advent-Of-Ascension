@@ -21,9 +21,11 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
@@ -45,6 +47,7 @@ import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.common.registration.worldgen.AoABiomeModifiers;
 import net.tslat.aoa3.common.registration.worldgen.AoAPlacementModifiers;
+import net.tslat.aoa3.common.registration.worldgen.AoAStructurePlacements;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructureTypes;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
@@ -89,6 +92,8 @@ public final class AoARegistries {
 	public static final VanillaRegistryHelper<StructureType<?>> STRUCTURE_TYPES = new VanillaRegistryHelper<>(Registry.STRUCTURE_TYPE_REGISTRY, AoAStructureTypes::init);
 	public static final VanillaRegistryHelper<PlacementModifierType<?>> PLACEMENT_MODIFIERS = new VanillaRegistryHelper<>(Registry.PLACEMENT_MODIFIER_REGISTRY, AoAPlacementModifiers::init);
 	public static final ForgeRegistryHelper<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, AoABiomeModifiers::init);
+	public static final VanillaRegistryHelper<StructurePlacementType<?>> STRUCTURE_PLACEMENTS = new VanillaRegistryHelper<>(Registry.STRUCTURE_PLACEMENT_TYPE_REGISTRY, AoAStructurePlacements::init);
+	public static final VanillaRegistryHelper<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = new VanillaRegistryHelper<>(Registry.CHUNK_GENERATOR_REGISTRY, AoAChunkGenerators::init);
 
 	public static final ForgeRegistryHelper<AoASkill> AOA_SKILLS = new ForgeRegistryHelper<AoASkill>(REGISTRY_KEY_SKILLS, AoASkills::init);
 	public static final ForgeRegistryHelper<AoAResource> AOA_RESOURCES = new ForgeRegistryHelper<AoAResource>(REGISTRY_KEY_RESOURCES, AoAResources::init);
@@ -121,6 +126,8 @@ public final class AoARegistries {
 		STRUCTURE_TYPES.doRegistrations();
 		PLACEMENT_MODIFIERS.doRegistrations();
 		BIOME_MODIFIERS.doRegistrations();
+		STRUCTURE_PLACEMENTS.doRegistrations();
+		CHUNK_GENERATORS.doRegistrations();
 
 		AOA_SKILLS.doRegistrations();
 		AOA_RESOURCES.doRegistrations();

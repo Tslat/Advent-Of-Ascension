@@ -29,7 +29,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -41,7 +41,7 @@ public class BaseCrossbow extends CrossbowItem {
 	protected double damage;
 
 	public BaseCrossbow(double damage, int durability) {
-		super(new Item.Properties().tab(AoAItemGroups.CROSSBOWS).durability(durability));
+		super(new Item.Properties().tab(AoACreativeModeTabs.CROSSBOWS).durability(durability));
 
 		this.damage = damage;
 	}

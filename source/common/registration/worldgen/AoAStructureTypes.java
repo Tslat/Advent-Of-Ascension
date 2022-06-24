@@ -6,9 +6,11 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.world.gen.structure.AoAStructure;
+import net.tslat.aoa3.content.world.gen.structure.SinglePlacementStructure;
 
 public final class AoAStructureTypes {
 	public static final RegistryObject<StructureType<AoAStructure>> AOA_DEFAULT = register("aoa_default_structure", AoAStructure.DEFAULT_CODEC);
+	public static final RegistryObject<StructureType<SinglePlacementStructure>> SINGLE_PLACEMENT = register("single_placement", SinglePlacementStructure.CODEC);
 
 	public static void init() {}
 

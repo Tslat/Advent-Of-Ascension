@@ -1,0 +1,18 @@
+{
+  "advancement": "aoa3:abyss/root",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "name": "Tips",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Here are a few tips to help keep you alive longer in the depths of the $(thing)Abyss$()",
+      "title": "Tips"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Web Reapers$() can be empowered by using $(thing)Nightmare Flakes$() on them, causing them to grow and become more powerful. Using an $(thing)Enchanted Book$() of any kind on one will give you a $(thing)Book of Shadows$()"
+    }
+  ],
+  "sortnum": 5
+}

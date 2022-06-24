@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.content.item.weapon.blaster.BaseBlaster;
@@ -33,7 +33,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 	protected final HashMap<Item, Integer> runes = new HashMap<Item, Integer>(2);
 
 	public BaseStaff(int durability) {
-		super(new Item.Properties().tab(AoAItemGroups.STAVES).durability(durability));
+		super(new Item.Properties().tab(AoACreativeModeTabs.STAVES).durability(durability));
 	}
 
 	@Override

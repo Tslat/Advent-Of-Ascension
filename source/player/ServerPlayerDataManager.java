@@ -377,7 +377,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				booksNbt.add(StringTag.valueOf(id.toString()));
 			}
 
-			syncData.put("patchouliBooks", booksNbt);
+			syncData.put("PatchouliBooks", booksNbt);
 		}
 
 		if (syncData != null) {

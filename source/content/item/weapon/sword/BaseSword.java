@@ -18,7 +18,7 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 
@@ -40,7 +40,7 @@ public class BaseSword extends SwordItem {
 	}
 
 	public BaseSword(Tier tier, int damageMod, float attackSpeed) {
-		this(tier, damageMod, attackSpeed, new Item.Properties().durability(tier.getUses()).tab(AoAItemGroups.SWORDS));
+		this(tier, damageMod, attackSpeed, new Item.Properties().durability(tier.getUses()).tab(AoACreativeModeTabs.SWORDS));
 	}
 
 	public BaseSword(Tier tier, int damageMod, float attackSpeed, Item.Properties properties) {

@@ -1,0 +1,45 @@
+{
+  "carvers": {},
+  "creature_spawn_probability": 0.0,
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 0,
+    "grass_color_modifier": "none",
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": false,
+      "sound": "aoa3:biome.nowhere.music"
+    },
+    "sky_color": 0,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    []
+  ],
+  "precipitation": "none",
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 0.5,
+  "temperature_modifier": "none"
+}

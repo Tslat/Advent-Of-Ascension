@@ -11,7 +11,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.tablet.SoulTabletEntity;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -27,7 +27,7 @@ public abstract class TabletItem extends Item {
 	private final int effectRadius;
 
 	public TabletItem(float placementCost, float tickSoulDrain, int levelReq, int effectRadius) {
-		super(new Item.Properties().tab(AoAItemGroups.TABLETS).stacksTo(1));
+		super(new Item.Properties().tab(AoACreativeModeTabs.TABLETS).stacksTo(1));
 
 		this.initialSoulCost = placementCost;
 		this.perTickSoulCost = tickSoulDrain;

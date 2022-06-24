@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "minecraft:crossbow",
+  "name": "Crossbows",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "crossbows",
+      "text": "Like $(l:aoa3:bows#bows)bows$(/l), crossbows fire $(thing)arrows$() to deal ranged damage. $(thing)Crossbows$() operate by pre-loading the arrows, requiring a short loading time after which the $(thing)arrow$() sits ready in the rack.$(br2)Once you are ready to fire, the $(thing)crossbow$() will release its $(thing)arrow$() immediately, firing it in a similar manner to a standard $(l:aoa3:bows#bows)bow$(/l).",
+      "title": "Crossbows"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "There isn't a lot to say about $(thing)crossbows$(). They deal the same kind of damage that $(l:aoa3:bows#bows)bows$(/l) do, use the same ammunition, and are used in a similar manner.$(br2)The primary difference is that crossbows allow you to prepare your shot before it is needed, freeing you up for a rapid response to any threat."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:trolls_crossbow",
+      "text": "Feel like a true marksman with the power of a $(thing)crossbow$() at your side.",
+      "title": "A Crossbow"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)crossbows$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Crossbows"
+    }
+  ],
+  "sortnum": 4
+}

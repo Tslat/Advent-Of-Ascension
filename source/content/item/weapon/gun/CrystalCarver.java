@@ -3,14 +3,14 @@ package net.tslat.aoa3.content.item.weapon.gun;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.Tags;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;
 
 public class CrystalCarver extends BaseGun {
 	public CrystalCarver(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoAItemGroups.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(AoACreativeModeTabs.GUNS, dmg, durability, firingDelayTicks, recoil);
 	}
 
 	@Nullable

@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ToyGyrocopter extends Item {
 	public ToyGyrocopter() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).rarity(Rarity.UNCOMMON));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1).rarity(Rarity.UNCOMMON));
 	}
 
 	@Override

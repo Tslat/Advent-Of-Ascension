@@ -3,7 +3,6 @@ package net.tslat.aoa3.common.registration.item;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.common.registration.AoATiers;
 import net.tslat.aoa3.content.item.weapon.blaster.*;
 import net.tslat.aoa3.content.item.weapon.bow.*;
 import net.tslat.aoa3.content.item.weapon.cannon.*;

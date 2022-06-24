@@ -12,7 +12,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MagicMarang extends ItemNameBlockItem {
 	public MagicMarang() {
-		super(AoABlocks.MAGIC_MARANG_CROP.get(), new Item.Properties().tab(AoAItemGroups.FOOD).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.7f).effect(new EffectBuilder(MobEffects.NIGHT_VISION, 200).build(), 1).effect(new EffectBuilder(MobEffects.GLOWING, 200).build(), 1).build()));
+		super(AoABlocks.MAGIC_MARANG_CROP.get(), new Item.Properties().tab(AoACreativeModeTabs.FOOD).food(new FoodProperties.Builder().nutrition(5).saturationMod(0.7f).effect(new EffectBuilder(MobEffects.NIGHT_VISION, 200).build(), 1).effect(new EffectBuilder(MobEffects.GLOWING, 200).build(), 1).build()));
 	}
 
 	@Override

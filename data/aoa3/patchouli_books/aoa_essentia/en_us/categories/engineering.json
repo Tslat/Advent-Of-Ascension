@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Engineering$() is a skill centering around the construction of devices and tools to aid with various areas of the game.$(br2)Levelling up $(thing)Engineering$() gives access to more devices, and can give benefits for existing ones.",
+  "icon": "aoa3:textures/gui/aoaskill/engineering.png",
+  "name": "Engineering"
+}

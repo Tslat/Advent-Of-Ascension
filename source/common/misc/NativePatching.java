@@ -92,6 +92,7 @@ public class NativePatching {
 		ComposterBlock.add(0.3f, AoAItems.TEA_SEEDS.get());
 		ComposterBlock.add(0.3f, AoAItems.THORNY_PLANT_SEEDS.get());
 		ComposterBlock.add(0.3f, AoAItems.TRILLIAD_SEEDS.get());
+		ComposterBlock.add(0.3f, AoAItems.GREEN_MANURE_SEEDS.get());
 		
 		ComposterBlock.add(0.3f, AoABlocks.BLUE_CANDY_GRASS.get().asItem());
 		ComposterBlock.add(0.3f, AoABlocks.BUREAL_STOCKS.get().asItem());

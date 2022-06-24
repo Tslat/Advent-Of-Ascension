@@ -8,7 +8,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -22,7 +22,7 @@ public class DischargeRifle extends BaseGun {
 	private final int firingDelay;
 
 	public DischargeRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoAItemGroups.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(AoACreativeModeTabs.GUNS, dmg, durability, firingDelayTicks, recoil);
 		this.firingDelay = firingDelayTicks;
 	}
 

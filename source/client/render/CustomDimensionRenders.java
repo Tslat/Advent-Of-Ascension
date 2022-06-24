@@ -22,17 +22,22 @@ public final class CustomDimensionRenders {
 	 */
 
 	public static void init() {
-		DimensionSpecialEffects.EFFECTS.put(PlainSky.ID, new PlainSky());
+		DimensionSpecialEffects.EFFECTS.put(VOID_SKY.ID, new VOID_SKY());
 		DimensionSpecialEffects.EFFECTS.put(CelestialOnly.ID, new CelestialOnly());
 		DimensionSpecialEffects.EFFECTS.put(Shyrelands.ID, new Shyrelands());
 		DimensionSpecialEffects.EFFECTS.put(Lunalus.ID, new Lunalus());
 	}
 
-	public static class PlainSky extends DimensionSpecialEffects {
-		public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "plain_sky");
+	public static class VOID_SKY extends DimensionSpecialEffects {
+		public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "void_sky");
 
-		public PlainSky() {
-			super(Float.NaN, true, SkyType.NONE, false, true);
+		public VOID_SKY() {
+			super(Float.NaN, false, SkyType.NONE, false, true);
+
+			setCloudRenderHandler((ticks, partialTick, poseStack, level, minecraft, camX, camY, camZ) -> {});
+			setSkyRenderHandler((ticks, partialTick, poseStack, level, minecraft) -> {});
+			setWeatherParticleRenderHandler((ticks, level, minecraft, camera) -> {});
+			setWeatherRenderHandler((ticks, partialTick, level, minecraft, lightTexture, camX, camY, camZ) -> {});
 		}
 
 		@Override // Sky & distant fog colour - Biome fog & celestial angle

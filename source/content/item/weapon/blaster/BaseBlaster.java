@@ -27,7 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
@@ -57,7 +57,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	}
 
 	public BaseBlaster(final double dmg, final int durability, final int fireDelayTicks, final float energyCost) {
-		this(new Item.Properties().tab(AoAItemGroups.BLASTERS).durability(durability), dmg, fireDelayTicks, energyCost);
+		this(new Item.Properties().tab(AoACreativeModeTabs.BLASTERS).durability(durability), dmg, fireDelayTicks, energyCost);
 	}
 
 	public double getDamage() {

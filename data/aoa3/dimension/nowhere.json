@@ -1,0 +1,10 @@
+{
+  "type": "aoa3:full_empty_void",
+  "generator": {
+    "type": "aoa3:single_block",
+    "biome": "aoa3:nowhere",
+    "block": {
+      "Name": "minecraft:air"
+    }
+  }
+}

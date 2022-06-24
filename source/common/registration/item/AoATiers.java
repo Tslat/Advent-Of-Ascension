@@ -1,4 +1,4 @@
-package net.tslat.aoa3.common.registration;
+package net.tslat.aoa3.common.registration.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -11,6 +11,7 @@ import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoATags;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

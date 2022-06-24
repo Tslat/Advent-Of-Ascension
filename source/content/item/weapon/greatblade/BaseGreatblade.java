@@ -17,7 +17,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.common.registration.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.library.constant.AttackSpeed;
@@ -38,7 +38,7 @@ public class BaseGreatblade extends BaseSword {
 	}
 
 	public BaseGreatblade(Tier tier, float attackSpeed, Rarity rarity) {
-		super(tier, 0, attackSpeed, new Item.Properties().durability(tier.getUses()).tab(AoAItemGroups.GREATBLADES).rarity(rarity));
+		super(tier, 0, attackSpeed, new Item.Properties().durability(tier.getUses()).tab(AoACreativeModeTabs.GREATBLADES).rarity(rarity));
 	}
 
 	@Override

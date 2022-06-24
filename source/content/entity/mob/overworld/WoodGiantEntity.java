@@ -141,17 +141,11 @@ public class WoodGiantEntity extends AoAMeleeMob {
 					if (weapon.isCorrectToolForDrops(Blocks.OAK_LOG.defaultBlockState())) {
 						lastMeleeHit += 100;
 						particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, 0, 0, 0, 5);
-
-						if (random.nextInt(5) == 0 && getStage() < 3) {
-							setStage(getStage() + 1);
-							BleedingEffect.apply(attacker, new EffectBuilder(AoAEntityEffects.BLEEDING.get(), 600).hideParticles().build(), this);
-						}
 					}
-					else {
-						if (random.nextInt(10) == 0 && getStage() < 3) {
-							setStage(getStage() + 1);
-							BleedingEffect.apply(attacker, new EffectBuilder(AoAEntityEffects.BLEEDING.get(), 600).hideParticles().build(), this);
-						}
+
+					if (getStage() < 3) {
+						setStage(getStage() + 1);
+						BleedingEffect.apply(attacker, new EffectBuilder(AoAEntityEffects.BLEEDING.get(), 600).hideParticles().build(), this);
 					}
 				}
 
@@ -183,7 +177,7 @@ public class WoodGiantEntity extends AoAMeleeMob {
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 
-		if (tickCount - lastMeleeHit > 200) {
+		if (tickCount - lastMeleeHit > 600) {
 			int stage = getStage();
 			lastMeleeHit = tickCount;
 
@@ -195,11 +189,22 @@ public class WoodGiantEntity extends AoAMeleeMob {
 	}
 
 	private void setStage(int stage) {
+		int oldStage = getStage();
 		int clampedStage = Mth.clamp(stage, 0, 3);
 
 		getEntityData().set(STAGE, clampedStage);
 		EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR, STAGE_ARMOUR_MOD, false);
 		EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR_TOUGHNESS, STAGE_TOUGHNESS_MOD, false);
+
+		if (oldStage < stage) {
+			ServerParticlePacket packet = new ServerParticlePacket();
+
+			for (int i = 0; i < 10; i++) {
+				packet.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true);
+			}
+
+			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
+		}
 	}
 
 	private int getStage() {

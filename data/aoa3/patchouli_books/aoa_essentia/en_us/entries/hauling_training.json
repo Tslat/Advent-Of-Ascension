@@ -1,0 +1,52 @@
+{
+  "category": "aoa3:hauling",
+  "icon": "aoa3:small_skill_crystal",
+  "name": "Training Methods",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Hauling$() is trained in 3 main ways:$(br)1. Fishing with a standard fishing rod$(br)2. Fishing with a Hauling rod$(br)3. Fishing with a Fishing cage$(br2)Each method has its benefits and drawbacks",
+      "title": "Training Methods"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "There may also be additional supplementary sources of $(thing)Hauling$() xp, such as hunting down Shiny Squid, and certain abilities or equipment may increase the amount of xp gained from $(thing)Hauling$()-related actions."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:fishing_rod",
+      "text": "Standard fishing rods are the first step to $(thing)Hauling$() training"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The standard fishing rod is where you'll begin your $(thing)Hauling$() journey. It works just like it always has; right click to cast out your line into the water, and wait for a bubble trail to nibble onto your lure, then right click to pull in."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:hauling_rod",
+      "text": "Hauling rods are the next step in fishing technology!"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Hauling rods can be used once you have unlocked the ability to do so through the $(thing)Hauling$() skill.$(br)These rods work somewhat differently to the standard fishing rod, requiring a bit more attention and effort to properly utilise.$(br2)There may also be other variables that affect how effective your fishing is, such as local environment, temperature, nearby players, etc."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "To use a hauling rod, right click to cast out your line, then wait for a fish to become interested. Once a fish is interested, it will approach your lure before latching on and attempting to swim away with it.$(br)Once this happens, right-click as fast as you can to reel it in!$(br)Taking too long to reel in the fish may cause it to escape, and you'll have to start again"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Some fish may take more effort to reel in than others, and big fish in particular may require a rod with a bit more pull strength.$(br)Once a fish is hooked, it is recommended to stay in place and reel it in. Approaching the fish may cause it to panic and escape earlier than it otherwise would have."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:fishing_cage",
+      "text": "Fishing cages are for the lazy fisherman in us all"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Fishing cages are an alternate, and supplementary fishing method for catching fish, and may be used whilst fishing with a rod.$(br)To use a fishing cage, simply throw it into the water and let it sink to the bottom. Once in place, it will begin to passively capture fish and other items.$(br)Typically, fishing cages are a much slower method of catching fish, and also tend to catch less valuable fish & items"
+    }
+  ],
+  "sortnum": 0
+}

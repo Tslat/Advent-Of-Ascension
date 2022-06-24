@@ -1,0 +1,44 @@
+{
+  "category": "aoa3:farming",
+  "icon": "aoa3:green_manure_seeds",
+  "name": "Useful Items",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "There are some useful items that come along with farming that it's worth knowing about. You may not be able to utilise them at the start of your $(thing)Farming$() journey, but in time they will become quite useful",
+      "title": "Useful Items"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:bone_meal",
+      "text": "Bone Meal helps improve your harvest potential!"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Once you are a little more experienced, you'll be able to use $(thing)Bone Meal$() on your farmland to fertilise it, causing the next crop harvested on it to double its bounty!$(br)This is only a short-term effect however, so you'll need to re-fertilise the next time you plant"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:green_manure_seeds",
+      "text": "The ultimate in fertilisation"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Eventually you'll be able to utilise $(thing)Green Manure$(). This is an even fancier method of fertilising farmland, which involves growing this crop to full growth, then harvesting it. You won't get any special produce, but you'll find that the farmland below has become very fertile$(br)This an even more powerful effect than Bone Meal, and lasts longer!"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:golden_hoe",
+      "text": "A tool for farming? Sure, why not",
+      "title": "Hoes"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Experienced farmers will be able to use $(thing)Hoes$() to harvest large areas in a single sweep. This makes the harvesting task much quicker and easier, and will become invaluable once available to you"
+    }
+  ],
+  "sortnum": 1
+}

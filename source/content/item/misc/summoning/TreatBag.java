@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class TreatBag extends Item {
 	public TreatBag() {
-		super(new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder().alwaysEat().build()));
+		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON).food(new FoodProperties.Builder().alwaysEat().build()));
 	}
 
 	@Override

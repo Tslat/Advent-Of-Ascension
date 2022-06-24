@@ -3,7 +3,7 @@ package net.tslat.aoa3.content.item.tool.axe;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 
 public class BaseAxe extends AxeItem {
@@ -16,7 +16,7 @@ public class BaseAxe extends AxeItem {
 	}
 
 	public BaseAxe(Tier tier, float damageMod, float digSpeedMod) {
-		this(tier, damageMod, digSpeedMod, new Properties().durability(tier.getUses()).tab(AoAItemGroups.TOOLS));
+		this(tier, damageMod, digSpeedMod, new Properties().durability(tier.getUses()).tab(AoACreativeModeTabs.TOOLS));
 	}
 
 	public BaseAxe(Tier tier, float damageMod, float speedMod, Item.Properties properties) {

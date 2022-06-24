@@ -1,0 +1,14 @@
+{
+  "advancement": "aoa3:abyss/root",
+  "category": "aoa3:abyss",
+  "icon": "",
+  "name": "Landscape",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(thing)Abyssal Plains$() is a treacherous, hilly land dominated by creepy foliage that come in the form of tentacles, dark trees, and toxic plants; some of which have eyes growing in, or off of them. The land is perpetually shrouded in darkness.",
+      "title": "Landscape"
+    }
+  ],
+  "sortnum": 1
+}
