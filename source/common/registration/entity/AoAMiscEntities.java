@@ -39,10 +39,9 @@ public final class AoAMiscEntities {
 	public static final RegistryObject<EntityType<ItemEntity>> BOSS_ITEM = registerMiscEntity("boss_item", BossItemEntity::new, 0.25f, 0.25f, EntityType.Builder::noSummon);
 	public static final RegistryObject<EntityType<LottoTotemEntity>> LOTTO_TOTEM = registerMiscEntity("lotto_totem", LottoTotemEntity::new, 0.75f, 0.95f, EntityType.Builder::fireImmune);
 	public static final RegistryObject<EntityType<PrimedTnt>> FAKE_TNT = registerMiscEntity("fake_tnt", FakeTntEntity::new, 1f, 1f, typeBuilder -> typeBuilder.noSave().noSummon());
-	//public static final RegistryObject<EntityType<BaronBombEntity>> BARON_BOMB = registerMiscEntity("baron_bomb", BaronBombEntity::new, 1f, 0.8125f, EntityType.Builder::noSummon);
+	public static final RegistryObject<EntityType<SandGiantPitTrapEntity>> SAND_GIANT_PIT_TRAP = registerMiscEntity("sand_giant_pit_trap", SandGiantPitTrapEntity::new, 0.875f, 0.375f, builder -> builder.noSave().noSummon().updateInterval(1).fireImmune());
+	public static final RegistryObject<EntityType<SandGiantSpikeTrapEntity>> SAND_GIANT_SPIKE_TRAP = registerMiscEntity("sand_giant_spike_trap", SandGiantSpikeTrapEntity::new, 1.1f, 0.875f, builder -> builder.noSave().noSummon().updateInterval(1).fireImmune());
 
-	//public static final RegistryObject<EntityType<Monster>> BANE_CLONE = registerMiscEntity("bane_clone", BaneCloneEntity::new, 0.75f, 2f, typeBuilder -> typeBuilder.noSave().noSummon());
-	//public static final RegistryObject<EntityType<Monster>> BIG_BANE_CLONE = registerMiscEntity("big_bane_clone", BigBaneCloneEntity::new, 1.2f, 3.9375f, typeBuilder -> typeBuilder.noSave().noSummon());
 	public static final RegistryObject<EntityType<ThornyPlantSproutEntity>> THORNY_PLANT_SPROUT = registerMiscEntity("thorny_plant_sprout", ThornyPlantSproutEntity::new, 0.5f, 1.5f, EntityType.Builder::noSummon);
 
 	public static final RegistryObject<EntityType<HaulingFishingBobberEntity>> REINFORCED_BOBBER = registerMiscEntity("reinforced_bobber", EntityType.Builder.<HaulingFishingBobberEntity>createNothing(MobCategory.MISC).noSave().noSummon().sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(5).setCustomClientFactory(HaulingFishingBobberEntity::handleClientSpawn));

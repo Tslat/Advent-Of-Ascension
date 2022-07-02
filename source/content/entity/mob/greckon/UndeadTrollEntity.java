@@ -101,6 +101,6 @@ public class UndeadTrollEntity extends AoARangedMob {
 	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
-		animationData.addAnimationController(AoAAnimations.dynamicAttackController(this, () -> getEntityData().get(SHOT_TYPE) == 0 ? AoAAnimations.ATTACK_SHOOT : AoAAnimations.ATTACK_SHOOT_ALTERNATE));
+		animationData.addAnimationController(AoAAnimations.dynamicAttackController(this, event -> getEntityData().get(SHOT_TYPE) == 0 ? AoAAnimations.ATTACK_SHOOT : AoAAnimations.ATTACK_SHOOT_ALTERNATE));
 	}
 }

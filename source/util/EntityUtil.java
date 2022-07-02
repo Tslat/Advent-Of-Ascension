@@ -27,9 +27,6 @@ import java.util.*;
 import java.util.function.Predicate;
 
 public final class EntityUtil {
-	public static final AttributeModifier SPRINTING_SPEED_BOOST = new AttributeModifier(UUID.fromString("662A6B8D-DA3E-4C1C-8813-96EA6097278D"), "Sprinting speed boost", 0.3F, AttributeModifier.Operation.MULTIPLY_TOTAL);
-	public static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
-
 	public static boolean isVulnerableEntity(Entity entity, @Nullable DamageSource source) {
 		if (!(entity instanceof LivingEntity) || !entity.isAlive())
 			return false;

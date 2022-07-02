@@ -3,14 +3,14 @@
     "type": "aoa3:single_structure",
     "pos": [
       0,
-      1000,
+      800,
       0
     ],
     "salt": 0
   },
   "structures": [
     {
-      "structure": "aoa3:nowhere_hub",
+      "structure": "aoa3:nowhere_boss_lobby",
       "weight": 1
     }
   ]

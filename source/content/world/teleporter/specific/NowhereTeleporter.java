@@ -35,7 +35,7 @@ public class NowhereTeleporter extends AoATeleporter {
 				plData.setPortalReturnLocation(world.dimension(), portalLoc);
 			}
 
-			return new BlockPos(0, 202, 0);
+			return new BlockPos(16, 1003, 16);
 		}
 
 		return super.findExistingPortal(world, entity);

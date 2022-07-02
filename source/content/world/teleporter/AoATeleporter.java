@@ -69,7 +69,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		if (failedPortalReturn) {
 			if (WorldUtil.isWorld((Level)destWorld, AoADimensions.NOWHERE.key) && !(this instanceof NowhereTeleporter))
-				pos = new BlockPos(0, 202, 0);
+				pos = new BlockPos(16, 1003, 16);
 		}
 
 		if (pos == null)

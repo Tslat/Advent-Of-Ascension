@@ -7,17 +7,19 @@ import net.minecraft.world.entity.player.Player;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 public class EntityPredicate<T extends Entity> implements Predicate<T> {
-	public static final Predicate<Entity> TARGETABLE_HOSTILE_MOB = new EntityPredicate<>().isAlive().isHostileMob().immutable();
-	public static final Predicate<Player> SURVIVAL_PLAYER = new EntityPredicate<Player>().isAlive().isSurvival().immutable();
-	public static final Predicate<Entity> TARGETABLE_ENTITIES = new EntityPredicate<>().isAlive().and(entity -> !(entity instanceof Player pl) || (!pl.isCreative() && !pl.isSpectator())).immutable();
+	public static final Immutable<Entity> TARGETABLE_HOSTILE_MOB = new EntityPredicate<>().isAlive().isHostileMob().immutable();
+	public static final Immutable<Player> SURVIVAL_PLAYER = new EntityPredicate<Player>().isAlive().isSurvival().immutable();
+	public static final Immutable<Entity> DAMAGEABLE_ENTITIES = new EntityPredicate<>().isAlive().isDamageable().immutable();
+	public static final Immutable<Entity> TARGETABLE_ENTITIES = new EntityPredicate<>().isAlive().and(entity -> !(entity instanceof Player pl) || (!pl.isCreative() && !pl.isSpectator())).immutable();
 
 	protected Predicate<T> predicate;
 
 	public EntityPredicate() {
-		this.predicate = entity -> true;
+		this.predicate = Objects::nonNull;
 	}
 
 	public EntityPredicate(Entity excluding) {
@@ -97,6 +99,10 @@ public class EntityPredicate<T extends Entity> implements Predicate<T> {
 		return and(entity -> !(entity instanceof Player));
 	}
 
+	public EntityPredicate<T> isDamageable() {
+		return and(entity -> !entity.isInvulnerable() && (!(entity instanceof Player pl) || (!pl.isCreative() && !pl.isSpectator())));
+	}
+
 	public EntityPredicate<T> is(EntityType<?> entityType) {
 		return and(entity -> entity.getType() == entityType);
 	}
@@ -117,7 +123,7 @@ public class EntityPredicate<T extends Entity> implements Predicate<T> {
 		return new Immutable<>(this);
 	}
 
-	private static class Immutable<T extends Entity> implements Predicate<T> {
+	public static class Immutable<T extends Entity> implements Predicate<T> {
 		private final Predicate<T> predicate;
 
 		Immutable(EntityPredicate<T> predicate) {

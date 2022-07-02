@@ -40,10 +40,7 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.content.entity.base.*;
 import net.tslat.aoa3.data.client.BestiaryReloadListener;
-import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nonnull;
@@ -402,16 +399,19 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 				if (livingInstance != null) {
 					openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.health") + ChatFormatting.RESET + " " + livingInstance.getMaxHealth());
 
-					if (livingInstance.getAttribute(Attributes.ARMOR).getValue() > 0)
+					if (EntityUtil.safelyGetAttributeValue(livingInstance, Attributes.ARMOR) > 0)
 						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.armour") + ChatFormatting.RESET + " " + livingInstance.getAttribute(Attributes.ARMOR).getValue());
 
-					if (livingInstance.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue() > 0)
+					if (EntityUtil.safelyGetAttributeValue(livingInstance, Attributes.ARMOR_TOUGHNESS) > 0)
+						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.toughness") + ChatFormatting.RESET + " " + livingInstance.getAttribute(Attributes.ARMOR_TOUGHNESS).getValue());
+
+					if (EntityUtil.safelyGetAttributeValue(livingInstance, Attributes.KNOCKBACK_RESISTANCE) > 0)
 						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.knockback") + ChatFormatting.RESET + " " + (livingInstance.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue() * 100) + "%");
 
 					AttributeInstance attackAttribute = livingInstance.getAttribute(Attributes.ATTACK_DAMAGE);
 
 					if (attackAttribute != null && attackAttribute.getValue() > 0)
-						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.strength") + ChatFormatting.RESET + " " + livingInstance.getAttribute(Attributes.ATTACK_DAMAGE).getValue());
+						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.strength") + ChatFormatting.RESET + " " + attackAttribute.getValue());
 
 					if (openEntryInstance instanceof AoARangedAttacker) {
 						if (openEntryInstance instanceof AoARangedMob) {

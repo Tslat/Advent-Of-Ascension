@@ -26,6 +26,7 @@ import net.tslat.aoa3.content.entity.ai.mob.MultiTypeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -73,18 +74,18 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_GIANT_DEATH.get();
+		return AoASounds.ICE_BREAK.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_GIANT_HURT.get();
+		return AoASounds.ICE_HIT.get();
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return AoASounds.ENTITY_GENERIC_VERY_HEAVY_STEP.get();
+		return AoASounds.ENTITY_GENERIC_HEAVY_STEP.get();
 	}
 
 	@Override
@@ -145,8 +146,8 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (super.hurt(source, amount)) {
-			if (source.getEntity() instanceof LivingEntity attacker)
-				attacker.setTicksFrozen(attacker.getTicksFrozen() + 15);
+			if (source.getDirectEntity() instanceof LivingEntity attacker && DamageUtil.isMeleeDamage(source))
+				attacker.setTicksFrozen(attacker.getTicksFrozen() + 100);
 
 			return true;
 		}
@@ -177,6 +178,9 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 
 			packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.4f, 12, 0, 0, 0, 0, getId()), baseX, baseY, baseZ, (targetX - x) * 0.1, (targetY - y) * 0.1, (targetZ - z) * 0.1);
 		}
+
+		if (tickCount % 5 == 0)
+			playSound(AoASounds.ICE_WIND.get(), 1.5f, 1f);
 
 		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, getEyePosition(), 200);
 	}

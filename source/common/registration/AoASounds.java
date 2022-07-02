@@ -52,6 +52,23 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_HAPPY = registerSound("dryad_sprite_happy", "entity.dryad_sprite.happy");
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_UNHAPPY = registerSound("dryad_sprite_unhappy", "entity.dryad_sprite.unhappy");
 
+	public static final RegistryObject<SoundEvent> LEAFY_THUD = registerSound("leafy_thud", "entity.generic.leafy_thud");
+	public static final RegistryObject<SoundEvent> HEAVY_FOLIAGE_THUMP = registerSound("heavy_foliage_thump", "entity.generic.heavy_foliage_thump");
+	public static final RegistryObject<SoundEvent> BRANCHES_BREAKING = registerSound("branches_breaking", "entity.generic.branches_breaking");
+	public static final RegistryObject<SoundEvent> SANDY_THUD = registerSound("sandy_thud", "entity.generic.sandy_thud");
+	public static final RegistryObject<SoundEvent> SANDY_HIT = registerSound("sandy_hit", "entity.generic.sandy_hit");
+	public static final RegistryObject<SoundEvent> DENSE_SAND_POUR = registerSound("dense_sand_pour", "entity.generic.dense_sand_pour");
+	public static final RegistryObject<SoundEvent> SAND_WIND = registerSound("sand_wind", "entity.generic.sand_wind");
+	public static final RegistryObject<SoundEvent> WOODY_THUMP = registerSound("woody_thump", "entity.generic.woody_thump");
+	public static final RegistryObject<SoundEvent> WOODY_HIT = registerSound("woody_hit", "entity.generic.woody_hit");
+	public static final RegistryObject<SoundEvent> HEAVY_WOOD_SHATTER = registerSound("heavy_wood_shatter", "entity.generic.heavy_wood_shatter");
+	public static final RegistryObject<SoundEvent> TREE_FALL = registerSound("tree_fall", "entity.generic.tree_fall");
+	public static final RegistryObject<SoundEvent> ICE_HIT = registerSound("ice_hit", "entity.generic.ice_hit");
+	public static final RegistryObject<SoundEvent> ICE_BREAK = registerSound("ice_break", "entity.generic.ice_break");
+	public static final RegistryObject<SoundEvent> ICE_WIND = registerSound("ice_wind", "entity.generic.ice_wind");
+	public static final RegistryObject<SoundEvent> STONE_CRUMBLE = registerSound("stone_crumble", "entity.generic.stone_crumble");
+	public static final RegistryObject<SoundEvent> ROCK_SMASH = registerSound("rock_smash", "entity.generic.rock_smash");
+
 	public static final RegistryObject<SoundEvent> BIOME_BARREN_GROUNDS_MUSIC = registerSound("barren_grounds_music", "biome.barren_grounds.music");
 	public static final RegistryObject<SoundEvent> BIOME_CAVERN_DEPTHS_MUSIC = registerSound("cavern_depths_music", "biome.cavern_depths.music");
 	public static final RegistryObject<SoundEvent> BIOME_CELEVE_EXTRA = registerSound("celeve_extra", "biome.celeve.extra");
@@ -62,6 +79,11 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> BIOME_NOWHERE_MUSIC = registerSound("nowhere_music", "biome.nowhere.music");
 	public static final RegistryObject<SoundEvent> BIOME_RUNIC_CLIFFS_MUSIC = registerSound("runic_cliffs_music", "biome.runic_cliffs.music");
 	public static final RegistryObject<SoundEvent> BIOME_VOX_WASTES_MUSIC = registerSound("vox_wastes_music", "biome.vox_wastes.music");
+
+
+
+
+
 
 
 

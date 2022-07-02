@@ -1,8 +1,12 @@
 package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraftforge.network.NetworkEvent;
+import net.tslat.aoa3.library.builder.EntityPredicate;
 
 import java.util.function.Supplier;
 
@@ -31,13 +35,25 @@ public class ParticleEffectPacket implements AoAPacket {
 			case FREEZING_SNOWFLAKE -> {
 				Entity entity = context.get().getSender().getLevel().getEntity(this.entityId);
 
-				if (entity != null && entity.getTicksFrozen() <= entity.getTicksRequiredToFreeze() * 2)
+				if (entity != null && entity.getTicksFrozen() <= entity.getTicksRequiredToFreeze() * 2.5f)
 					entity.setTicksFrozen(entity.getTicksFrozen() + 14);
+			}
+			case SANDSTORM -> {
+				Entity entity = context.get().getSender().getLevel().getEntity(this.entityId);
+
+				if (entity instanceof LivingEntity) {
+					if (EntityPredicate.TARGETABLE_ENTITIES.test(entity))
+						entity.hurt(DamageSource.MAGIC, 2);
+				}
+				else if (entity instanceof Projectile) {
+					entity.setDeltaMovement(entity.getDeltaMovement().multiply(-0.5f, -0.5f, -0.5f));
+				}
 			}
 		}
 	}
 
 	public enum Type {
-		FREEZING_SNOWFLAKE
+		FREEZING_SNOWFLAKE,
+		SANDSTORM
 	}
 }

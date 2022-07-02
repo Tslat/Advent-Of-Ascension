@@ -31,7 +31,6 @@ import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.config.AoAConfig;
-import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -109,6 +108,9 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 	@Override
 	public boolean matches(InfusionTableContainer.InfusionInventory inv, Level world) {
 		if (this != EMPTY_RECIPE) {
+			if (isEnchanting && enchantment.getMaxLevel() < enchantmentLevel)
+				return false;
+
 			int ingredientCount = 0;
 			StackedContents recipeItemHelper = new StackedContents();
 			ArrayList<ItemStack> inputIngredients = new ArrayList<ItemStack>();
@@ -252,7 +254,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 	}
 
 	public ItemStack provideEmptyOrCompatibleStackForEnchanting(ItemStack inputStack) {
-		if (this == EMPTY_RECIPE || !enchantment.canEnchant(inputStack) || (!AoAConfig.SERVER.allowUnsafeInfusion.get() && enchantment.getMaxLevel() < enchantmentLevel))
+		if (this == EMPTY_RECIPE || !enchantment.canEnchant(inputStack) || (!AoAConfig.SERVER.allowUnsafeInfusion.getDefault() && enchantment.getMaxLevel() < enchantmentLevel))
 			return ItemStack.EMPTY;
 
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(inputStack);
@@ -310,9 +312,6 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 
 				if (enchantmentJson.has("level"))
 					level = GsonHelper.getAsInt(enchantmentJson, "level");
-
-				if (!AoAConfig.SERVER.allowUnsafeInfusion.get() && enchantment.getMaxLevel() < level)
-					throw new JsonParseException("Unsafe enchantment level for recipe, Enchantment: " + LocaleUtil.getLocaleString(enchantment.getDescriptionId()) + ", Lvl: " + level + ", and Allow Unsafe Infusion not enabled in config");
 
 				for (JsonElement element : GsonHelper.getAsJsonArray(json, "ingredients")) {
 					try {

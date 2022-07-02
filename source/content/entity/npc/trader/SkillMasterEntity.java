@@ -71,6 +71,6 @@ public class SkillMasterEntity extends AoATrader {
 	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(AoAAnimations.genericIdleController(this));
-		animationData.addAnimationController(AoAAnimations.genericInteractionController(this, entity -> this.trading));
+		animationData.addAnimationController(AoAAnimations.genericHeldPoseController(this, AoAAnimations.INTERACT, AoAAnimations.INTERACT_END, entity -> this.trading));
 	}
 }

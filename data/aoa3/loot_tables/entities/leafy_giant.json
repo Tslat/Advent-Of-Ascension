@@ -233,7 +233,7 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 50
+          "weight": 30
         },
         {
           "type": "minecraft:item",
@@ -274,7 +274,7 @@
       "name": "rares",
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 2.0,
+        "max": 3.0,
         "min": 1.0
       }
     }

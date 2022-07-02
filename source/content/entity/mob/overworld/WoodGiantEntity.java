@@ -100,17 +100,17 @@ public class WoodGiantEntity extends AoAMeleeMob {
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_GIANT_DEATH.get();
+		return AoASounds.TREE_FALL.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_GIANT_HURT.get();
+		return AoASounds.WOODY_HIT.get();
 	}
 
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return AoASounds.ENTITY_GENERIC_VERY_HEAVY_STEP.get();
+		return AoASounds.WOODY_THUMP.get();
 	}
 
 	@Override
@@ -133,23 +133,25 @@ public class WoodGiantEntity extends AoAMeleeMob {
 		if (super.hurt(source, amount)) {
 			if (!level.isClientSide() && DamageUtil.isMeleeDamage(source)) {
 				lastMeleeHit = tickCount;
-				ServerParticlePacket particlePacket = new ServerParticlePacket().particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, 0, 0, 0, 3);
 
 				if (source.getEntity() instanceof LivingEntity attacker) {
+					ServerParticlePacket particlePacket = new ServerParticlePacket();
 					ItemStack weapon = attacker.getItemInHand(InteractionHand.MAIN_HAND);
 
 					if (weapon.isCorrectToolForDrops(Blocks.OAK_LOG.defaultBlockState())) {
 						lastMeleeHit += 100;
-						particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, 0, 0, 0, 5);
+						particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 5);
 					}
 
 					if (getStage() < 3) {
 						setStage(getStage() + 1);
+						particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 3);
 						BleedingEffect.apply(attacker, new EffectBuilder(AoAEntityEffects.BLEEDING.get(), 600).hideParticles().build(), this);
+						playSound(AoASounds.HEAVY_WOOD_SHATTER.get());
 					}
-				}
 
-				AoAPackets.messageNearbyPlayers(particlePacket, (ServerLevel)level, position(), 20);
+					AoAPackets.messageNearbyPlayers(particlePacket, (ServerLevel)level, position(), 20);
+				}
 			}
 
 			return true;

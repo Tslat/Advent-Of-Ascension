@@ -162,7 +162,7 @@
       "name": "rares",
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 2.0,
+        "max": 3.0,
         "min": 1.0
       }
     }

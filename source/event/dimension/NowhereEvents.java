@@ -17,7 +17,7 @@ public final class NowhereEvents {
 
 		if (PlayerUtil.shouldPlayerBeAffected(pl)) {
 			if (pl.getY() < 0) {
-				pl.setPos(0, 202, 0);
+				pl.setPos(16, 1003, 16);
 				pl.fallDistance = -1;
 
 				if (pl instanceof ServerPlayer)

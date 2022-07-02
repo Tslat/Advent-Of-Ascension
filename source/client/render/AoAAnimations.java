@@ -1,13 +1,16 @@
 package net.tslat.aoa3.client.render;
 
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
+import javax.annotation.Nullable;
+import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public final class AoAAnimations {
 	public static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("misc.idle", true);
@@ -33,6 +36,8 @@ public final class AoAAnimations {
 	public static final AnimationBuilder ATTACK_FLYING_BITE = new AnimationBuilder().addAnimation("attack.midair_bite", false);
 	public static final AnimationBuilder ATTACK_SHOOT = new AnimationBuilder().addAnimation("attack.shoot", false);
 	public static final AnimationBuilder ATTACK_BLOCK = new AnimationBuilder().addAnimation("attack.block", false).addAnimation("attack.block.hold", true);
+	public static final AnimationBuilder ATTACK_CHARGE = new AnimationBuilder().addAnimation("attack.charge", false).addAnimation("attack.charge.hold", true);
+	public static final AnimationBuilder ATTACK_CHARGE_END = new AnimationBuilder().addAnimation("attack.charge.end", false);
 
 	public static final AnimationBuilder ATTACK_SWIPE_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", false);
 	public static final AnimationBuilder ATTACK_SWIPE_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", false);
@@ -143,10 +148,10 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends LivingEntity & IAnimatable> AnimationController<T> dynamicAttackController(T entity, Supplier<AnimationBuilder> animationSupplier) {
+	public static <T extends LivingEntity & IAnimatable> AnimationController<T> dynamicAttackController(T entity, Function<AnimationEvent<T>, AnimationBuilder> animationSupplier) {
 		return new AnimationController<T>(entity, "attacking", 0, event -> {
 			if (entity.swinging) {
-				event.getController().setAnimation(animationSupplier.get());
+				event.getController().setAnimation(animationSupplier.apply(event));
 
 				return PlayState.CONTINUE;
 			}
@@ -160,7 +165,7 @@ public final class AoAAnimations {
 		return new AnimationController<T>(entity, "attacking", 0, controllerPredicate);
 	}
 
-	public static <T extends LivingEntity & IAnimatable> AnimationController<T> genericSpawnController(T entity, int spawnTicks) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericSpawnController(T entity, int spawnTicks) {
 		return new AnimationController<T>(entity, "spawning", 0, event -> {
 			if (entity.tickCount < spawnTicks) {
 				event.getController().setAnimation(SPAWN);
@@ -172,17 +177,17 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends LivingEntity & IAnimatable> AnimationController<T> genericInteractionController(T entity, Predicate<T> interactingPredicate) {
-		return new AnimationController<>(entity, "interacting", 0, event -> {
+	public static <T extends LivingEntity & IAnimatable> AnimationController<T> genericHeldPoseController(T entity, AnimationBuilder poseToHold, @Nullable AnimationBuilder animOnRelease, Predicate<T> posePredicate) {
+		return new AnimationController<>(entity, "posing", 0, event -> {
 			AnimationController<?> controller = event.getController();
 
-			if (interactingPredicate.test(entity)) {
-				controller.setAnimation(INTERACT);
+			if (posePredicate.test(entity)) {
+				controller.setAnimation(poseToHold);
 
 				return PlayState.CONTINUE;
 			}
-			else if (controller.getCurrentAnimation() != null) {
-				controller.setAnimation(INTERACT_END);
+			else if (animOnRelease != null && controller.getCurrentAnimation() != null) {
+				controller.setAnimation(animOnRelease);
 
 				return PlayState.CONTINUE;
 			}

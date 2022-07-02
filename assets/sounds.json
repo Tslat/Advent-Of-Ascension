@@ -1684,11 +1684,22 @@
     ],
     "subtitle": "subtitles.entity.gadgetoid.hurt"
   },
+  "entity.generic.branches_breaking": {
+    "sounds": [
+      "aoa3:entity/generic/branches_breaking"
+    ],
+    "subtitle": "subtitles.entity.generic.branches_breaking"
+  },
   "entity.generic.candy_hurt": {
     "sounds": [
       "aoa3:entity/generic/candy_hurt"
     ],
     "subtitle": "subtitles.entity.generic.candy_hurt"
+  },
+  "entity.generic.dense_sand_pour": {
+    "sounds": [
+      "aoa3:entity/generic/dense_sand_pour"
+    ]
   },
   "entity.generic.dino_step": {
     "sounds": [
@@ -1696,11 +1707,50 @@
     ],
     "subtitle": "subtitles.entity.generic.dino_step"
   },
+  "entity.generic.heavy_foliage_thump": {
+    "sounds": [
+      "aoa3:entity/generic/heavy_foliage_thump-01",
+      "aoa3:entity/generic/heavy_foliage_thump-02",
+      "aoa3:entity/generic/heavy_foliage_thump-03",
+      "aoa3:entity/generic/heavy_foliage_thump-04"
+    ],
+    "subtitle": "subtitles.entity.generic.heavy_foliage_thump"
+  },
   "entity.generic.heavy_step": {
     "sounds": [
       "aoa3:entity/generic/heavy_step"
     ],
     "subtitle": "subtitles.entity.generic.heavy_step"
+  },
+  "entity.generic.heavy_wood_shatter": {
+    "sounds": [
+      "aoa3:entity/generic/heavy_wood_shatter"
+    ],
+    "subtitle": "subtitles.entity.generic.heavy_wood_shatter"
+  },
+  "entity.generic.ice_break": {
+    "sounds": [
+      "aoa3:entity/generic/ice_break"
+    ],
+    "subtitle": "subtitles.entity.generic.ice_break"
+  },
+  "entity.generic.ice_hit": {
+    "sounds": [
+      "aoa3:entity/generic/ice_hit"
+    ],
+    "subtitle": "subtitles.entity.generic.ice_hit"
+  },
+  "entity.generic.ice_wind": {
+    "sounds": [
+      "aoa3:entity/generic/ice_wind"
+    ],
+    "subtitle": "subtitles.entity.generic.ice_wind"
+  },
+  "entity.generic.leafy_thud": {
+    "sounds": [
+      "aoa3:entity/generic/leafy_thud"
+    ],
+    "subtitle": "subtitles.entity.generic.leafy_thud"
   },
   "entity.generic.plant_hurt": {
     "sounds": [
@@ -1708,17 +1758,66 @@
     ],
     "subtitle": "subtitles.entity.generic.plant_hurt"
   },
+  "entity.generic.rock_smash": {
+    "sounds": [
+      "aoa3:entity/generic/rock_smash"
+    ],
+    "subtitle": "subtitles.entity.generic.rock_smash"
+  },
+  "entity.generic.sand_wind": {
+    "sounds": [
+      "aoa3:entity/generic/sand_wind"
+    ],
+    "subtitle": "subtitles.entity.generic.sand_wind"
+  },
+  "entity.generic.sandy_hit": {
+    "sounds": [
+      "aoa3:entity/generic/sandy_hit"
+    ],
+    "subtitle": "subtitles.entity.generic.sandy_hit"
+  },
+  "entity.generic.sandy_thud": {
+    "sounds": [
+      "aoa3:entity/generic/sandy_thud"
+    ],
+    "subtitle": "subtitles.entity.generic.sandy_thud"
+  },
   "entity.generic.snail_step": {
     "sounds": [
       "aoa3:entity/generic/snail_step"
     ],
     "subtitle": "subtitles.entity.generic.snail_step"
   },
+  "entity.generic.stone_crumble": {
+    "sounds": [
+      "aoa3:entity/generic/stone_crumble"
+    ],
+    "subtitle": "subtitles.entity.generic.stone_crumble"
+  },
+  "entity.generic.tree_fall": {
+    "sounds": [
+      "aoa3:entity/generic/tree_fall"
+    ],
+    "subtitle": "subtitles.entity.generic.tree_fall"
+  },
   "entity.generic.very_heavy_step": {
     "sounds": [
       "aoa3:entity/generic/very_heavy_step"
     ],
     "subtitle": "subtitles.entity.generic.very_heavy_step"
+  },
+  "entity.generic.woody_hit": {
+    "sounds": [
+      "aoa3:entity/generic/woody_hit-01",
+      "aoa3:entity/generic/woody_hit-02"
+    ],
+    "subtitle": "subtitles.entity.generic.woody_hit"
+  },
+  "entity.generic.woody_thump": {
+    "sounds": [
+      "aoa3:entity/generic/woody_thump"
+    ],
+    "subtitle": "subtitles.entity.generic.woody_thump"
   },
   "entity.ghost.ambient": {
     "sounds": [

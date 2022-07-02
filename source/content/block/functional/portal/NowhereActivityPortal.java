@@ -44,7 +44,9 @@ public class NowhereActivityPortal extends PortalBlock {
 			Activity activity = state.getValue(ACTIVITY);
 			BlockPos teleportPos = activity.teleportPos;
 
+			entity.setYRot(0);
 			entity.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
+
 			activity.onUse((ServerPlayer)entity);
 		}
 	}
@@ -66,27 +68,13 @@ public class NowhereActivityPortal extends PortalBlock {
 			double motionY = ((double)rand.nextFloat() - 0.5D) * 0.5D;
 			double motionZ = ((double)rand.nextFloat() - 0.5D) * 0.5D;
 			int randomMod = rand.nextInt(2) * 2 - 1;
-			int colour;
-
-			switch (state.getValue(ACTIVITY)) {
-				case PARKOUR:
-					colour = 39103;
-					break;
-				case BOSSES:
-					colour = 12189696;
-					break;
-				case DUNGEON:
-					colour = 9502944;
-					break;
-				case UTILITY:
-					colour = 29210;
-					break;
-				case RETURN:
-				default:
-					colour = 16777215;
-					break;
-			}
-
+			int colour = switch (state.getValue(ACTIVITY)) {
+				case PARKOUR -> 39103;
+				case BOSSES -> 12189696;
+				case DUNGEON -> 9502944;
+				case UTILITY -> 29210;
+				case RETURN -> 16777215;
+			};
 
 			if (world.getBlockState(pos.west()).getBlock() != this && world.getBlockState(pos.east()).getBlock() != this) {
 				posXStart = (double)pos.getX() + 0.5D + 0.25D * (double)randomMod;
@@ -102,7 +90,7 @@ public class NowhereActivityPortal extends PortalBlock {
 	}
 
 	public enum Activity implements StringRepresentable {
-		PARKOUR(0, 202, 0, pl -> {
+		PARKOUR(16, 1002, 16, pl -> {
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
 			for (NonNullList<ItemStack> inv : pl.getInventory().compartments) {
@@ -111,10 +99,10 @@ public class NowhereActivityPortal extends PortalBlock {
 
 			pl.getInventory().clearContent();
 		}),
-		BOSSES(0, 202, 0),
-		DUNGEON(0, 202, 0),
-		UTILITY(0, 202, 0),
-		RETURN(0, 202, 0, pl -> {
+		BOSSES(17, 803, 5),
+		DUNGEON(16, 1002, 16),
+		UTILITY(16, 1002, 16),
+		RETURN(16, 1002, 16, pl -> {
 			PlayerUtil.getAdventPlayer(pl).returnItemStorage();
 		});
 

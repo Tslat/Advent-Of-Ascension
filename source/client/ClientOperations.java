@@ -102,6 +102,7 @@ public final class ClientOperations {
 		ParticleEngine.register(AoAParticleTypes.SWIRLY.get(), SwirlyParticle.Factory::new);
 		ParticleEngine.register(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), new FloatingItemFragmentParticle.Factory());
 		ParticleEngine.register(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), FreezingSnowflakeParticle.Factory::new);
+		ParticleEngine.register(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {

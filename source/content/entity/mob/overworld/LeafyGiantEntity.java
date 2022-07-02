@@ -54,18 +54,18 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_GIANT_DEATH.get();
+		return AoASounds.BRANCHES_BREAKING.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_GIANT_HURT.get();
+		return AoASounds.LEAFY_THUD.get();
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return AoASounds.ENTITY_GENERIC_VERY_HEAVY_STEP.get();
+		return AoASounds.HEAVY_FOLIAGE_THUMP.get();
 	}
 
 	@Override
@@ -100,11 +100,6 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 		}
 
 		return success;
-	}
-
-	@Override
-	public boolean isInvulnerable() {
-		return super.isInvulnerable();
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.*;
@@ -17,7 +18,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
@@ -81,17 +81,17 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_GIANT_DEATH.get();
+		return AoASounds.STONE_CRUMBLE.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_GIANT_HURT.get();
+		return AoASounds.ICE_HIT.get();
 	}
 
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return AoASounds.ENTITY_GENERIC_VERY_HEAVY_STEP.get();
+		return AoASounds.ENTITY_GENERIC_HEAVY_STEP.get();
 	}
 
 	@Override
@@ -122,6 +122,7 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 			if (!level.isClientSide()) {
 				heal(20);
 				AoAPackets.messageNearbyPlayers(new ServerParticlePacket().particle(ParticleTypes.HEART, attacker), (ServerLevel)level, attacker.position(), 50);
+				playSound(SoundEvents.SILVERFISH_AMBIENT);
 				attacker.discard();
 			}
 
@@ -139,7 +140,7 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
-		animationData.addAnimationController(AoAAnimations.dynamicAttackController(this, () -> getAttackState() == 0 ? AoAAnimations.ATTACK_SLAM : AoAAnimations.ATTACK_THROW));
+		animationData.addAnimationController(AoAAnimations.dynamicAttackController(this, event -> getAttackState() == 0 ? AoAAnimations.ATTACK_SLAM : AoAAnimations.ATTACK_THROW));
 	}
 
 	@Override
@@ -159,11 +160,11 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
 		target.hurt(DamageSource.thrown(this, projectile), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
-		Vec3 projectilePos = projectile.position();
 		ServerParticlePacket packet = new ServerParticlePacket()
-				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectilePos.x() + 0.1f, projectilePos.y() + 0.2f, projectilePos.z() + 0.1f, 3)
-				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectilePos.x() + 0.1f, projectilePos.y() + 0.2f, projectilePos.z() + 0.1f, 3);
+				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3)
+				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3);
 
+		projectile.playSound(AoASounds.ROCK_SMASH.get());
 		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
 	}
 

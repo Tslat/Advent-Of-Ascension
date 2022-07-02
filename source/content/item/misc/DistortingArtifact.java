@@ -35,7 +35,7 @@ public class DistortingArtifact extends Item {
 			return;
 
 		if (!world.isClientSide && stack.getDamageValue() < stack.getMaxDamage()) {
-			if (entity.getY() <= -50) {
+			if (entity.getY() <= world.getMinBuildHeight()) {
 				entity.teleportTo(entity.getX(), 257, entity.getZ());
 				entity.fallDistance = -255;
 

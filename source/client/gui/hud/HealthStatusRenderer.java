@@ -14,6 +14,7 @@ import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAEntityEffects;
 import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.util.*;
 
@@ -60,12 +61,13 @@ public class HealthStatusRenderer {
 		boolean withered = mc.player.hasEffect(MobEffects.WITHER);
 		boolean frozen = mc.player.isFullyFrozen();
 		float absorption = mc.player.getAbsorptionAmount();
+		boolean bleeding = mc.player.hasEffect(AoAEntityEffects.BLEEDING.get());
 
 		if (renderType == HealthRenderType.NUMERIC) {
 			renderNumeric(matrix, mc, gui, left, top, currentHealth, maxHealth, poisoned, withered, frozen, absorption);
 		}
 		else {
-			renderBar(matrix, mc, gui, left, top, currentHealth, maxHealth, poisoned, withered, frozen, absorption);
+			renderBar(matrix, mc, gui, left, top, currentHealth, maxHealth, poisoned, withered, frozen, absorption, bleeding);
 
 			if (renderType ==  HealthRenderType.BAR_NUMERIC)
 				renderNumeric(matrix, mc, gui, left, top, currentHealth, maxHealth, poisoned, withered, frozen, absorption);
@@ -76,7 +78,7 @@ public class HealthStatusRenderer {
 		MinecraftForge.EVENT_BUS.post(new RenderGameOverlayEvent.Post(matrix, ev, RenderGameOverlayEvent.ElementType.LAYER));
 	}
 
-	private static void renderBar(PoseStack matrix, Minecraft mc, ForgeIngameGui gui, int left, int top, float currentHealth, float maxHealth, boolean poisoned, boolean withered, boolean frozen, float absorption) {
+	private static void renderBar(PoseStack matrix, Minecraft mc, ForgeIngameGui gui, int left, int top, float currentHealth, float maxHealth, boolean poisoned, boolean withered, boolean frozen, float absorption, boolean bleeding) {
 		int uvY = 0;
 
 		if (absorption > 0) {
@@ -90,6 +92,9 @@ public class HealthStatusRenderer {
 		}
 		else if (poisoned) {
 			uvY = 72;
+		}
+		else if (bleeding) {
+			uvY = 120;
 		}
 		else if (mc.player.hasEffect(MobEffects.HEALTH_BOOST)) {
 			uvY = 60;
@@ -133,7 +138,7 @@ public class HealthStatusRenderer {
 		float healthWidth = 81 * (currentHealth / maxHealth);
 
 		if (currentHealth < maxHealth)
-			RenderUtil.renderCustomSizedTexture(matrix, 0, 0, 0, 12, 81, 12, 81, 120);
+			RenderUtil.renderCustomSizedTexture(matrix, 0, 0, 0, 12, 81, 12, 81, 132);
 
 		if (!mc.player.isAlive()) {
 			matrix.popPose();
@@ -141,7 +146,7 @@ public class HealthStatusRenderer {
 			return;
 		}
 
-		RenderUtil.renderCustomSizedTexture(matrix, 0, 0, 0, uvY, healthWidth, 12, 81, 120);
+		RenderUtil.renderCustomSizedTexture(matrix, 0, 0, 0, uvY, healthWidth, 12, 81, 132);
 
 		if (deltaHealth != 0) {
 			int deltaUvY = deltaHealth < 0 ? 24 : 36;
@@ -152,7 +157,7 @@ public class HealthStatusRenderer {
 			if (deltaHealth < 0 && x + width > 81)
 				width = 81 - x;
 
-			RenderUtil.renderScaledCustomSizedTexture(matrix, x, 0, x, deltaUvY, width, 12, width, 12, 81, 120);
+			RenderUtil.renderScaledCustomSizedTexture(matrix, x, 0, x, deltaUvY, width, 12, width, 12, 81, 132);
 		}
 
 		RenderUtil.drawColouredBox(matrix, 0, 0, 0, 81, 11, 0x44000000);

@@ -169,6 +169,8 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> FISHING_CAGE = new EntityRendererPackage<>(AoAMiscEntities.FISHING_CAGE).defineLayer("fishing_cage", FishingCageModel::createLayerDefinition).provider(FishingCageRenderer::new);
 	public static final EntityRendererPackage<?> LOTTO_TOTEM = new EntityRendererPackage<>(AoAMiscEntities.LOTTO_TOTEM).defineLayer("lotto_totem", LottoTotemModel::createLayerDefinition).provider(LottoTotemRenderer::new);
+	public static final EntityRendererPackage<?> SAND_GIANT_PIT_TRAP = new EntityRendererPackage<>(AoAMiscEntities.SAND_GIANT_PIT_TRAP).geckolibNonLiving("misc/sand_giant_pit_trap");
+	public static final EntityRendererPackage<?> SAND_GIANT_SPIKE_TRAP = new EntityRendererPackage<>(AoAMiscEntities.SAND_GIANT_SPIKE_TRAP).geckolibNonLiving("misc/sand_giant_spike_trap");
 
 	public static final EntityRendererPackage<?> LIGHTNING = new EntityRendererPackage<>(AoAMiscEntities.CUSTOMISABLE_LIGHTNING_BOLT).provider(LightningBoltRenderer::new);
 
@@ -359,7 +361,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> YELLOW_BULLET = new EntityRendererPackage<>(AoAProjectiles.YELLOW_BULLET).provider(context -> new ColouredTexturedProjectileRenderer<>(context, ColourUtil.YELLOW, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> YELLOW_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.YELLOW_GUARDIAN_SHOT).provider(YellowGuardianShotRenderer::new);
 
-	public static final EntityRendererPackage<?> STONE_GIANT_ROCK = new EntityRendererPackage<>(AoAProjectiles.STONE_GIANT_ROCK).geckolibProjectile("projectile/mob/stone_giant_rock");
+	public static final EntityRendererPackage<?> STONE_GIANT_ROCK = new EntityRendererPackage<>(AoAProjectiles.STONE_GIANT_ROCK).geckolibNonLiving("projectile/mob/stone_giant_rock");
 
 	// Begin super jank test
 	public static final EntityRendererPackage<?> AIRHEAD = new EntityRendererPackage<>(AoAMobs.AIRHEAD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -710,19 +712,19 @@ public final class AoAEntityRendering {
 			});
 		}
 
-		private EntityRendererPackage<T> geckolibProjectile(String path) {
-			return geckolibProjectile(path, false);
+		private EntityRendererPackage<T> geckolibNonLiving(String path) {
+			return geckolibNonLiving(path, false);
 		}
 
-		private EntityRendererPackage<T> geckolibProjectile(EntityGeoModel<?> model) {
-			return geckolibProjectile(model, false);
+		private EntityRendererPackage<T> geckolibNonLiving(EntityGeoModel<?> model) {
+			return geckolibNonLiving(model, false);
 		}
 
-		private EntityRendererPackage<T> geckolibProjectile(String path, boolean transparent) {
-			return geckolibProjectile(new EntityGeoModel<>(path), transparent);
+		private EntityRendererPackage<T> geckolibNonLiving(String path, boolean transparent) {
+			return geckolibNonLiving(new EntityGeoModel<>(path), transparent);
 		}
 
-		private EntityRendererPackage<T> geckolibProjectile(EntityGeoModel<?> model, boolean transparent) {
+		private EntityRendererPackage<T> geckolibNonLiving(EntityGeoModel<?> model, boolean transparent) {
 			if (!transparent)
 				return provider(context -> new GeoProjectilesRenderer(context, model));
 

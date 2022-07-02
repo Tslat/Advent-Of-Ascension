@@ -1,6 +1,6 @@
 package net.tslat.aoa3.util;
 
-import com.google.common.collect.Lists;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -102,7 +102,7 @@ public final class EntityRetrievalUtil {
 	}
 
 	public static List<Player> getPlayers(Level level, AABB area, Predicate<Player> predicate) {
-		List<Player> players = Lists.newArrayList();
+		List<Player> players = new ObjectArrayList<>();
 
 		for (Player player : level.players()) {
 			if (area.contains(player.position()) && predicate.test(player))
@@ -120,16 +120,17 @@ public final class EntityRetrievalUtil {
 		return getEntities(origin.level, new AABB(origin.getX() - radiusX, origin.getY() - radiusY, origin.getZ() - radiusZ, origin.getX() + radiusX, origin.getY() + radiusY, origin.getZ() + radiusZ), predicate);
 	}
 
-	public static List<Entity> getEntities(Level level, AABB area, Predicate<Entity> predicate) {
-		List<Entity> entities = Lists.newArrayList();
+	public static List<Entity> getEntities(Level level, AABB area, Predicate<? extends Entity> predicate) {
+		Predicate<Entity> typeSafePredicate = (Predicate<Entity>)predicate;
+		List<Entity> entities = new ObjectArrayList<>();
 
 		level.getEntities().get(area, entity -> {
-			if (predicate.test(entity))
+			if (typeSafePredicate.test(entity))
 				entities.add(entity);
 		});
 
 		for (PartEntity<?> part : level.getPartEntities()) {
-			if (part.getBoundingBox().intersects(area) && predicate.test(part))
+			if (part.getBoundingBox().intersects(area) && typeSafePredicate.test(part))
 				entities.add(part);
 		}
 
