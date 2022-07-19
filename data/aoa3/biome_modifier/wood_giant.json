@@ -4,7 +4,7 @@
       "#forge:is_snowy"
     ],
     "if_all": [
-      "#forge:is_overworld"
+      "#minecraft:is_overworld"
     ],
     "if_any": [
       "#minecraft:is_forest"

@@ -37,7 +37,7 @@ public class BonusSmeltResult extends ScalableModAbility {
 		ItemStack smeltedStack = ev.getOutputStack();
 
 		if (smeltedStack.getItem().getFoodProperties() == null) {
-			random.setSeed(ev.getPlayer().tickCount + uniqueIdHash);
+			random.setSeed(ev.getEntity().tickCount + uniqueIdHash);
 
 			if (random.nextFloat() < getScaledValue())
 				smeltedStack.setCount(smeltedStack.getCount() + 1);

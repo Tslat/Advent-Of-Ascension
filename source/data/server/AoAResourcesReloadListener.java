@@ -27,7 +27,7 @@ public class AoAResourcesReloadListener extends SimpleJsonResourceReloadListener
 		super(GSON, folder);
 	}
 
-	public static void populateResourceMap(ServerPlayerDataManager plData, HashMap<AoAResource, AoAResource.Instance> resourceMap) {
+	public static void populateResourceMap(ServerPlayerDataManager plData, Map<AoAResource, AoAResource.Instance> resourceMap) {
 		resourceMap.clear();
 
 		for (Map.Entry<AoAResource, JsonObject> resource : RESOURCES.entrySet()) {

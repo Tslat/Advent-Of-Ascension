@@ -34,7 +34,7 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoABrainSensors;
+import net.tslat.aoa3.common.registration.entity.AoABrainSensors;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.content.entity.brain.SmartBrainHandler;

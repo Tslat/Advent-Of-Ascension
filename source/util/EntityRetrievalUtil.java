@@ -93,6 +93,10 @@ public final class EntityRetrievalUtil {
 		return closest;
 	}
 
+	public static List<Player> getPlayers(Level level, AABB area) {
+		return getPlayers(level, area, pl -> true);
+	}
+
 	public static List<Player> getPlayers(Entity origin, double radius, Predicate<Player> predicate) {
 		return getPlayers(origin, radius, radius, radius, predicate);
 	}
@@ -117,7 +121,7 @@ public final class EntityRetrievalUtil {
 	}
 
 	public static List<Entity> getEntities(Entity origin, double radiusX, double radiusY, double radiusZ, Predicate<Entity> predicate) {
-		return getEntities(origin.level, new AABB(origin.getX() - radiusX, origin.getY() - radiusY, origin.getZ() - radiusZ, origin.getX() + radiusX, origin.getY() + radiusY, origin.getZ() + radiusZ), predicate);
+		return getEntities(origin.level, new AABB(origin.getX() - radiusX, origin.getY() - radiusY, origin.getZ() - radiusZ, origin.getX() + radiusX, origin.getY() + radiusY, origin.getZ() + radiusZ), predicate.and(entity -> entity != origin));
 	}
 
 	public static List<Entity> getEntities(Level level, AABB area, Predicate<? extends Entity> predicate) {

@@ -29,14 +29,16 @@ import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.util.Lazy;
 import net.minecraftforge.common.world.BiomeModifier;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.*;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -72,21 +74,21 @@ public final class AoARegistries {
 	public static final ForgeRegistryHelper<SoundEvent> SOUNDS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.SOUND_EVENTS, AoASounds::init);
 	public static final ForgeRegistryHelper<Enchantment> ENCHANTMENTS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ENCHANTMENTS, AoAEnchantments::init);
 	public static final ForgeRegistryHelper<ParticleType<?>> PARTICLES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.PARTICLE_TYPES, AoAParticleTypes::init);
-	public static final ForgeRegistryHelper<MenuType<?>> MENUS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.CONTAINER_TYPES, AoAContainers::init);
+	public static final ForgeRegistryHelper<MenuType<?>> MENUS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MENU_TYPES, AoAContainers::init);
 	public static final ForgeRegistryHelper<RecipeSerializer<?>> RECIPE_SERIALIZERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.RECIPE_SERIALIZERS, AoARecipes::init);
-	public static final ForgeRegistryHelper<GlobalLootModifierSerializer<?>> LOOT_MODIFIERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.LOOT_MODIFIER_SERIALIZERS, AoALootModifiers::init);
+	public static final ForgeRegistryHelper<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, AoALootModifiers::init);
 	public static final ForgeRegistryHelper<Attribute> ENTITY_ATTRIBUTES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ATTRIBUTES, AoAAttributes::init);
 	public static final ForgeRegistryHelper<VillagerProfession> VILLAGER_PROFESSIONS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.VILLAGER_PROFESSIONS, AoAProfessions::init);
 	public static final ForgeRegistryHelper<SensorType<?>> BRAIN_SENSORS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.SENSOR_TYPES, AoABrainSensors::init);
 	public static final ForgeRegistryHelper<MemoryModuleType<?>> BRAIN_MEMORIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MEMORY_MODULE_TYPES, AoABrainMemories::init);
 	public static final ForgeRegistryHelper<BannerPattern> BANNER_PATTERNS = new ForgeRegistryHelper<>(Registry.BANNER_PATTERN_REGISTRY, AoABannerPatterns::init);
 	public static final ForgeRegistryHelper<FluidType> FLUID_TYPES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FLUID_TYPES, AoAFluidTypes::init);
-	public static final ForgeRegistryHelper<MobEffect> ENTITY_EFFECTS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MOB_EFFECTS, AoAEntityEffects::init);
+	public static final ForgeRegistryHelper<MobEffect> MOB_EFFECTS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MOB_EFFECTS, AoAMobEffects::init);
 
 	public static final VanillaRegistryHelper<LootItemFunctionType> LOOT_FUNCTIONS = new VanillaRegistryHelper<>(Registry.LOOT_FUNCTION_REGISTRY, AoALootOperations.LootFunctions::init);
 	public static final VanillaRegistryHelper<LootItemConditionType> LOOT_CONDITIONS = new VanillaRegistryHelper<>(Registry.LOOT_ITEM_REGISTRY, AoALootOperations.LootConditions::init);
 	public static final VanillaRegistryHelper<RecipeType<?>> RECIPE_TYPES = new VanillaRegistryHelper<>(Registry.RECIPE_TYPE_REGISTRY, AoARecipes::init);
-	public static final VanillaRegistryHelper<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPES = new VanillaRegistryHelper<>(Registry.COMMAND_ARGUMENT_TYPE_REGISTRY, AoAArgumentTypes::init);
+	public static final VanillaRegistryHelper<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPES = new VanillaRegistryHelper<>(Registry.COMMAND_ARGUMENT_TYPE_REGISTRY, AoACommands::init);
 
 	public static final ForgeRegistryHelper<Feature<?>> FEATURES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FEATURES, () -> {});
 	public static final VanillaRegistryHelper<StructureType<?>> STRUCTURE_TYPES = new VanillaRegistryHelper<>(Registry.STRUCTURE_TYPE_REGISTRY, AoAStructureTypes::init);
@@ -115,7 +117,7 @@ public final class AoARegistries {
 		VILLAGER_PROFESSIONS.doRegistrations();
 		BRAIN_SENSORS.doRegistrations();
 		BRAIN_MEMORIES.doRegistrations();
-		ENTITY_EFFECTS.doRegistrations();
+		MOB_EFFECTS.doRegistrations();
 
 		LOOT_FUNCTIONS.doRegistrations();
 		LOOT_CONDITIONS.doRegistrations();
@@ -132,6 +134,23 @@ public final class AoARegistries {
 		AOA_SKILLS.doRegistrations();
 		AOA_RESOURCES.doRegistrations();
 		AOA_ABILITIES.doRegistrations();
+
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, NewRegistryEvent.class, AoARegistries::createCustomRegistries);
+	}
+
+	private static void createCustomRegistries(NewRegistryEvent ev) {
+		ev.create(new RegistryBuilder<AoAAbility>()
+				.setName(AdventOfAscension.id("abilities"))
+				.setMaxID(Integer.MAX_VALUE - 1)
+				.disableSaving());
+		ev.create(new RegistryBuilder<AoAResource>()
+				.setName(AdventOfAscension.id("resources"))
+				.setMaxID(Integer.MAX_VALUE - 1)
+				.disableSaving());
+		ev.create(new RegistryBuilder<AoASkill>()
+				.setName(AdventOfAscension.id("skills"))
+				.setMaxID(Integer.MAX_VALUE - 1)
+				.disableSaving());
 	}
 
 	public interface RegistryHelper<T> {

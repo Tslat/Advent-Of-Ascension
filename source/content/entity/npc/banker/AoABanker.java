@@ -57,7 +57,7 @@ public abstract class AoABanker extends PathfinderMob {
 
 		if (isAlive() && !player.isShiftKeyDown()) {
 			if (!level.isClientSide)
-				openGui(player);
+				openScreen(player);
 
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
@@ -65,5 +65,5 @@ public abstract class AoABanker extends PathfinderMob {
 		return super.mobInteract(player, hand);
 	}
 
-	protected abstract void openGui(Player player);
+	protected abstract void openScreen(Player player);
 }

@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:solid",
   "textures": {
-    "all": "aoa3:block/deep_crystal"
+    "all": "aoa3:block/deep_crystal",
+    "particle": "aoa3:block/deep_crystal"
   }
 }

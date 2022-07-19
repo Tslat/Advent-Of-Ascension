@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:solid",
   "textures": {
-    "all": "aoa3:block/polluted_soil"
+    "all": "aoa3:block/polluted_soil",
+    "particle": "aoa3:block/polluted_soil"
   }
 }

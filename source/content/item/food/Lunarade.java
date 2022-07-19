@@ -43,7 +43,7 @@ public class Lunarade extends Item {
 
 		ItemStack consumedStack = super.finishUsingItem(stack, world, user);
 
-		return user instanceof Player && ((Player)user).getAbilities().instabuild ? consumedStack : getContainerItem(stack);
+		return user instanceof Player && ((Player)user).getAbilities().instabuild ? consumedStack : getCraftingRemainingItem(stack);
 	}
 
 	@Override

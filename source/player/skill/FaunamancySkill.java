@@ -30,8 +30,8 @@ public class FaunamancySkill extends AoASkill.Instance {
 
 	@Override
 	public void handlePostOutgoingAttack(LivingDamageEvent ev) {
-		if (canGainXp(true) && isValidSacrifice(ev.getEntityLiving(), getPlayer()))
-			adjustXp(PlayerUtil.getTimeBasedXpForLevel(getLevel(true), (int)(ev.getEntityLiving().getMaxHealth() / 30f * 20)), false, false);
+		if (canGainXp(true) && isValidSacrifice(ev.getEntity(), getPlayer()))
+			adjustXp(PlayerUtil.getTimeBasedXpForLevel(getLevel(true), (int)(ev.getEntity().getMaxHealth() / 30f * 20)), false, false);
 	}
 
 	public static boolean isValidSacrifice(LivingEntity target, Player attacker) {

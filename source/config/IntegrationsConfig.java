@@ -4,18 +4,27 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 public final class IntegrationsConfig {
 	public final ForgeConfigSpec.BooleanValue jeiIntegrationEnabled;
+	public final ForgeConfigSpec.BooleanValue reiIntegrationEnabled;
 	public final ForgeConfigSpec.BooleanValue jerIntegrationEnabled;
 	public final ForgeConfigSpec.BooleanValue immersiveEngineeringEnabled;
 	public final ForgeConfigSpec.BooleanValue patchouliEnabled;
 	public final ForgeConfigSpec.BooleanValue tinkersConstructEnabled;
 
-	IntegrationsConfig(ForgeConfigSpec.Builder specBuilder) {
+	public IntegrationsConfig(ForgeConfigSpec.Builder specBuilder) {
 		specBuilder.comment("Integration options for JEI (Just Enough Items)").push("JEI Settings");
 
 		jeiIntegrationEnabled = specBuilder
 				.comment("Set this to false to disable JEI integration functionality.")
 				.translation("config.aoa3.integrations.jei")
 				.define("jei", true);
+
+		specBuilder.pop();
+		specBuilder.comment("Integration options for REI (Roughly Enough Items)").push("REI Settings");
+
+		reiIntegrationEnabled = specBuilder
+				.comment("Set this to false to disable REI integration functionality.")
+				.translation("config.aoa3.integrations.rei")
+				.define("rei", true);
 
 		specBuilder.pop();
 		specBuilder.comment("Integration options for JER (Just Enough Resources)").push("JER Settings");

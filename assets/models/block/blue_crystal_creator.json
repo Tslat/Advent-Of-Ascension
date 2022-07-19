@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:solid",
   "textures": {
-    "all": "aoa3:block/blue_crystal_creator"
+    "all": "aoa3:block/blue_crystal_creator",
+    "particle": "aoa3:block/blue_crystal_creator"
   }
 }

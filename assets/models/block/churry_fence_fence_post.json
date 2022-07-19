@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/fence_post",
+  "render_type": "minecraft:solid",
   "textures": {
     "texture": "aoa3:block/churry_planks"
   }

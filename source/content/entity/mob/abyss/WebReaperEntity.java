@@ -242,7 +242,7 @@ public class WebReaperEntity extends AoARangedMob {
 			return getCustomName();
 		}
 		else {
-			String baseName = ForgeRegistries.ENTITIES.getKey(getType()).getPath();
+			String baseName = ForgeRegistries.ENTITY_TYPES.getKey(getType()).getPath();
 			String stagePrefix = (stage >= 15 ? "nightmare" : stage >= 5 ? "empowered" : null);
 
 			if (stagePrefix != null)

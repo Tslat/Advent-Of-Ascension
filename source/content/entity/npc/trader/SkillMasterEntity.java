@@ -11,14 +11,12 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
 public class SkillMasterEntity extends AoATrader {
 	private static final EntityDataAccessor<Boolean> TRADING = SynchedEntityData.defineId(SkillMasterEntity.class, EntityDataSerializers.BOOLEAN);
-	private static final AnimationBuilder INTERACT_END = new AnimationBuilder().addAnimation("misc.interact.end", false);
 
 	private boolean trading = false;
 

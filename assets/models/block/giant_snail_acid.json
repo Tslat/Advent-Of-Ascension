@@ -39,6 +39,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:solid",
   "textures": {
     "particle": "aoa3:block/giant_snail_acid",
     "texture": "aoa3:block/giant_snail_acid"

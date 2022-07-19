@@ -119,6 +119,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/archaic_tile_stream",
     "particle": "aoa3:block/archaic_tile_stream",

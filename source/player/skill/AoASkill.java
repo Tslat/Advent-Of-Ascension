@@ -18,13 +18,15 @@ import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -164,7 +166,7 @@ public final class AoASkill {
 		}
 
 		private float applyXpBuffs(float xp) {
-			xp *= AoAConfig.SERVER.globalXpModifier.get();
+			xp *= AoAConfigs.SERVER.globalXpModifier.get();
 			xp *= xpModifier;
 
 			if (cycle > 0)
@@ -394,7 +396,7 @@ public final class AoASkill {
 		public boolean canGainXp(boolean naturalXpSource) {
 			Player player = getPlayer();
 
-			if (naturalXpSource && (player.isCreative() || player.isSpectator()))
+			if (naturalXpSource && (player.isCreative() || player.isSpectator() || WorldUtil.isWorld(player.level, AoADimensions.NOWHERE.key)))
 				return false;
 
 			return getLevel(true) < 1000;

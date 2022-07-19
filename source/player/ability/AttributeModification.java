@@ -105,7 +105,7 @@ public class AttributeModification extends ScalableModAbility {
 
 	@Override
 	public void handleLevelChange(PlayerLevelChangeEvent ev) {
-		EntityUtil.reapplyAttributeModifier(ev.getPlayer(), attribute, modifier, false);
+		EntityUtil.reapplyAttributeModifier(ev.getEntity(), attribute, modifier, false);
 	}
 
 	@Override

@@ -19,8 +19,8 @@ import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.EffectRenderer;
-import net.tslat.aoa3.config.AoAConfig;
+import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 
 public final class RenderUtil {
 	public static void renderTexture(PoseStack matrix, int x, int y, float u, float v, float width, float height) {
@@ -217,9 +217,6 @@ public final class RenderUtil {
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, InventoryMenu.BLOCK_ATLAS);
 		mc.getTextureManager().getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
-		//RenderSystem.enableRescaleNormal();
-		//RenderSystem.enableAlphaTest();
-		//RenderSystem.defaultAlphaFunc();
 		RenderSystem.enableBlend();
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
@@ -241,21 +238,19 @@ public final class RenderUtil {
 		if (useItemLight)
 			Lighting.setupFor3DItems();
 
-		//RenderSystem.disableAlphaTest();
-		//RenderSystem.disableRescaleNormal();
 		matrix.popPose();
 	}
 
 	public static int getPotionGuiRenderOffset() {
 		Minecraft mc = Minecraft.getInstance();
 
-		if (mc.player == null || mc.player.getActiveEffects().isEmpty() || AoAConfig.CLIENT.disableHudPotionOffset.get())
+		if (mc.player == null || mc.player.getActiveEffects().isEmpty() || AoAConfigs.CLIENT.disableHudPotionOffset.get())
 			return 0;
 
 		int effectRenderYOffset = 0;
 
 		for (MobEffectInstance effect : mc.player.getActiveEffects()) {
-			if (effect.getDuration() > 0 && EffectRenderer.DUMMY.shouldRenderHUD(effect) && effect.isVisible()) {
+			if (effect.getDuration() > 0 && IClientMobEffectExtensions.DEFAULT.isVisibleInGui(effect) && effect.isVisible()) {
 				if (!effect.getEffect().isBeneficial()) {
 					effectRenderYOffset = 50;
 					break;

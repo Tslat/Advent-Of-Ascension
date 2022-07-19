@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/crop",
+  "render_type": "minecraft:cutout",
   "textures": {
     "crop": "aoa3:block/floracles_crop_stage1"
   }

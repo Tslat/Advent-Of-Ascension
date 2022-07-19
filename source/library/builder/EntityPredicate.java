@@ -12,7 +12,7 @@ import java.util.function.Predicate;
 
 public class EntityPredicate<T extends Entity> implements Predicate<T> {
 	public static final Immutable<Entity> TARGETABLE_HOSTILE_MOB = new EntityPredicate<>().isAlive().isHostileMob().immutable();
-	public static final Immutable<Player> SURVIVAL_PLAYER = new EntityPredicate<Player>().isAlive().isSurvival().immutable();
+	public static final Immutable<Entity> SURVIVAL_PLAYER = new EntityPredicate<Entity>().isAlive().isSurvival().immutable();
 	public static final Immutable<Entity> DAMAGEABLE_ENTITIES = new EntityPredicate<>().isAlive().isDamageable().immutable();
 	public static final Immutable<Entity> TARGETABLE_ENTITIES = new EntityPredicate<>().isAlive().and(entity -> !(entity instanceof Player pl) || (!pl.isCreative() && !pl.isSpectator())).immutable();
 
@@ -80,7 +80,7 @@ public class EntityPredicate<T extends Entity> implements Predicate<T> {
 	}
 
 	public EntityPredicate<T> isSurvival() {
-		return and(entity -> !entity.isSpectator() && !(entity instanceof Player pl && pl.isCreative()));
+		return and(entity -> entity instanceof Player pl && !pl.isSpectator() && !pl.isCreative());
 	}
 
 	public EntityPredicate<T> isHostileMob() {

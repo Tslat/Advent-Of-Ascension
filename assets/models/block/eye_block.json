@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/eye_block_bottom",
     "side": "aoa3:block/eye_block",

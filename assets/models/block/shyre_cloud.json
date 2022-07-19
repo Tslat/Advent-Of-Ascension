@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:translucent",
   "textures": {
-    "all": "aoa3:block/shyre_cloud"
+    "all": "aoa3:block/shyre_cloud",
+    "particle": "aoa3:block/shyre_cloud"
   }
 }

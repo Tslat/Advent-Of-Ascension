@@ -4883,6 +4883,11 @@
     ],
     "subtitle": "subtitles.item.withers_wrath.fire"
   },
+  "misc.checkpoint": {
+    "sounds": [
+      "aoa3:misc/checkpoint"
+    ]
+  },
   "misc.jingle_bells": {
     "sounds": [
       "aoa3:misc/jingle_bells"
@@ -4898,8 +4903,7 @@
   "player.skills.level_up": {
     "sounds": [
       "aoa3:player/skills/level_up"
-    ],
-    "subtitle": "subtitles.player.skills.level_up"
+    ]
   },
   "portal.abyss.activate": {
     "sounds": [

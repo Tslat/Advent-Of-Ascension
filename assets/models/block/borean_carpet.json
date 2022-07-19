@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/carpet",
+  "render_type": "minecraft:solid",
   "textures": {
     "particle": "aoa3:block/borean_carpet",
     "wool": "aoa3:block/borean_carpet"

@@ -2,17 +2,15 @@ package net.tslat.aoa3.client.gui.overlay;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.RenderUtil;
 
 import java.util.Map;
@@ -22,7 +20,7 @@ public final class ScreenOverlayRenderer {
 	private static final ConcurrentHashMap<ResourceLocation, Integer> overlays = new ConcurrentHashMap<ResourceLocation, Integer>();
 
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderGameOverlayEvent.Post.class, ScreenOverlayRenderer::onOverlayRender);
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAboveAll("aoa_mob_overlays", ScreenOverlayRenderer::onOverlayRender));
 	}
 
 	public static void addOverlay(ResourceLocation overlay, int duration) {
@@ -38,11 +36,8 @@ public final class ScreenOverlayRenderer {
 		overlays.clear();
 	}
 
-	private static void onOverlayRender(final RenderGameOverlayEvent.Post event) {
-		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON)
-			return;
-
-		if (event.getType() != RenderGameOverlayEvent.ElementType.ALL || overlays.isEmpty())
+	private static void onOverlayRender(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON || overlays.isEmpty())
 			return;
 
 		Minecraft mc = Minecraft.getInstance();

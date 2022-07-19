@@ -117,6 +117,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "aoa3:block/creep_vines",
     "vine": "aoa3:block/creep_vines"

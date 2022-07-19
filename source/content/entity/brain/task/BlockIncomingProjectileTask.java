@@ -13,7 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
-import net.tslat.aoa3.common.registration.AoABrainMemories;
+import net.tslat.aoa3.common.registration.entity.AoABrainMemories;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;

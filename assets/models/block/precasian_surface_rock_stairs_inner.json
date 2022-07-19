@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/inner_stairs",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/precasian_surface_rock",
     "side": "aoa3:block/precasian_surface_rock",

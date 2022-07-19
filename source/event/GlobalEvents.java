@@ -5,13 +5,13 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.event.server.ServerStartedEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
-import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.world.spawner.PixonSpawner;
 import net.tslat.aoa3.content.world.spawner.TraderSpawner;
 import net.tslat.aoa3.content.world.spawner.VisualentSpawner;
@@ -28,7 +28,7 @@ public final class GlobalEvents {
 		final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
 		forgeBus.addListener(EventPriority.NORMAL, false, TickEvent.ServerTickEvent.class, GlobalEvents::serverTick);
-		forgeBus.addListener(EventPriority.NORMAL, false, WorldEvent.Load.class, GlobalEvents::worldLoad);
+		forgeBus.addListener(EventPriority.NORMAL, false, LevelEvent.Load.class, GlobalEvents::worldLoad);
 		forgeBus.addListener(EventPriority.NORMAL, false, ServerStartingEvent.class, GlobalEvents::serverStarting);
 		forgeBus.addListener(EventPriority.NORMAL, false, ServerStartedEvent.class, GlobalEvents::serverStarted);
 		forgeBus.addListener(EventPriority.NORMAL, false, ServerStoppingEvent.class, GlobalEvents::serverStopping);
@@ -42,8 +42,8 @@ public final class GlobalEvents {
 		}
 	}
 
-	private static void worldLoad(final WorldEvent.Load ev) {
-		if (ev.getWorld() instanceof ServerLevel world) {
+	private static void worldLoad(final LevelEvent.Load ev) {
+		if (ev.getLevel() instanceof ServerLevel world) {
 			ArrayList<CustomSpawner> spawners = new ArrayList<>(world.customSpawners);
 
 			if (PixonSpawner.isValidSpawnWorld(world))

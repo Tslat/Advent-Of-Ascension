@@ -5,7 +5,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.registries.RegistryObject;
@@ -31,7 +31,7 @@ public final class AoAParticleTypes {
 	public static final RegistryObject<ParticleType<CustomisableParticleType.Data>> SANDSTORM = registerParticle("sandstorm", () -> new CustomisableParticleType(true));
 
 	public static void init() {
-		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, ParticleFactoryRegisterEvent.class, ClientOperations::registerParticleFactories));
+		DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterParticleProvidersEvent.class, ClientOperations::registerParticleFactories));
 	}
 
 	private static <T extends ParticleOptions> RegistryObject<ParticleType<T>> registerParticle(String id, Supplier<? extends ParticleType<T>> particle) {

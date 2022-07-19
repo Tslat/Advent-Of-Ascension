@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:solid",
   "textures": {
-    "all": "aoa3:block/baroness_altar"
+    "all": "aoa3:block/baroness_altar",
+    "particle": "aoa3:block/baroness_altar"
   }
 }

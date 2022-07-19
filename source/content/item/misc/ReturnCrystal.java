@@ -11,10 +11,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -51,18 +50,17 @@ public class ReturnCrystal extends Item {
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
-		if (entity instanceof ServerPlayer) {
+		if (entity instanceof ServerPlayer pl) {
 			if (!WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
-				PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable("message.feedback.item.returnCrystal.wrongDim"));
+				PlayerUtil.notifyPlayer(pl, Component.translatable("message.feedback.item.returnCrystal.wrongDim"));
 
 				return stack;
 			}
 
-			if (!((ServerPlayer)entity).isCreative())
+			if (!pl.isCreative())
 				stack.shrink(1);
 
-			ItemUtil.clearInventoryOfItems((ServerPlayer)entity, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-			entity.teleportTo(0, 212, 0);
+			NowhereActivityPortal.Activity.RETURN.teleport(pl);
 		}
 
 		return stack;

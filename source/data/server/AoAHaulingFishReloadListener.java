@@ -165,7 +165,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 					};
 				}
 				else {
-					EntityType<?> entityType = ForgeRegistries.ENTITIES.getValue(new ResourceLocation(obj.get("entity").getAsString()));
+					EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(obj.get("entity").getAsString()));
 
 					if (entityType == null)
 						continue;
@@ -211,7 +211,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			if (entry != null)
 				return entry;
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(biome).filter(tag -> LAVA_MAP.containsKey(tag)).findFirst().orElse(null);
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(TagUtil.biomeTags(), biome).filter(tag -> LAVA_MAP.containsKey(tag)).findFirst().orElse(null);
 
 			if (matchedTag != null)
 				return LAVA_MAP.get(matchedTag);
@@ -226,7 +226,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			if (entry != null)
 				return entry;
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(biome).filter(tag -> WATER_MAP.containsKey(tag)).findFirst().orElse(null);
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(TagUtil.biomeTags(), biome).filter(tag -> WATER_MAP.containsKey(tag)).findFirst().orElse(null);
 
 			if (matchedTag != null)
 				return WATER_MAP.get(matchedTag);

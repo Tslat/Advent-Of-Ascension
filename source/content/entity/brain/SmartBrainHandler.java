@@ -150,7 +150,7 @@ public class SmartBrainHandler<T extends LivingEntity & SmartBrainOwner<T>> {
 			for (Sensor<? super T> sensor : this.brain.sensors.values()) {
 				for (MemoryModuleType<?> memoryType : sensor.requires()) {
 					if (!this.brain.memories.containsKey(memoryType))
-						Logging.logMessage(Level.ERROR, "Required memory module not present in entity brain. " + ForgeRegistries.ENTITIES.getKey(this.owner.getType()).toString());
+						Logging.logMessage(Level.ERROR, "Required memory module not present in entity brain. " + ForgeRegistries.ENTITY_TYPES.getKey(this.owner.getType()).toString());
 				}
 			}
 		}

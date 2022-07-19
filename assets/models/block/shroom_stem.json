@@ -70,6 +70,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "aoa3:block/shroom_stem",
     "texture": "aoa3:block/shroom_stem"

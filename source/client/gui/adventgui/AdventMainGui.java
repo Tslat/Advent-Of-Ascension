@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.AoAKeybinds;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.data.client.AdventGuiThemeReloadListener;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.*;
@@ -61,7 +61,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 	@Override
 	protected void init() {
-		theme = AdventGuiThemeReloadListener.setTheme(AoAConfig.CLIENT.adventGuiTheme.get());
+		theme = AdventGuiThemeReloadListener.setTheme(AoAConfigs.CLIENT.adventGuiTheme.get());
 
 		addRenderableWidget(new AdventMainGuiTabButton(11, 129, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.stats"), ADVENT_WINDOW_TAB.PLAYER));
 		addRenderableWidget(new AdventMainGuiTabButton(11, 199, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
@@ -359,6 +359,6 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 	public static void changeTheme() {
 		theme = AdventGuiThemeReloadListener.getNextTheme();
 
-		AoAConfig.CLIENT.changeAdventGuiTheme(theme.name());
+		AoAConfigs.CLIENT.changeAdventGuiTheme(theme.name());
 	}
 }

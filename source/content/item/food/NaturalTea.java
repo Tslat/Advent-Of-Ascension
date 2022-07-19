@@ -41,7 +41,7 @@ public class NaturalTea extends Item {
 	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity user) {
 		ItemStack consumedStack = super.finishUsingItem(stack, world, user);
 
-		return user instanceof Player && ((Player)user).getAbilities().instabuild ? consumedStack : getContainerItem(stack);
+		return user instanceof Player && ((Player)user).getAbilities().instabuild ? consumedStack : getCraftingRemainingItem(stack);
 	}
 
 	@Override

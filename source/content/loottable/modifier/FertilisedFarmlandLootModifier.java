@@ -1,10 +1,10 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -17,9 +17,8 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.misc.FertilisedFarmland;
 import net.tslat.aoa3.util.ItemUtil;
@@ -28,8 +27,15 @@ import javax.annotation.Nonnull;
 import java.util.ListIterator;
 
 public class FertilisedFarmlandLootModifier extends LootModifier {
+	public static final Codec<FertilisedFarmlandLootModifier> CODEC = RecordCodecBuilder.create(builder -> codecStart(builder).apply(builder, FertilisedFarmlandLootModifier::new));
+
 	public FertilisedFarmlandLootModifier(LootItemCondition[] conditions) {
 		super(conditions);
+	}
+
+	@Override
+	public Codec<? extends IGlobalLootModifier> codec() {
+		return CODEC;
 	}
 
 	@Nonnull
@@ -63,21 +69,5 @@ public class FertilisedFarmlandLootModifier extends LootModifier {
 		}
 
 		return generatedLoot;
-	}
-
-	public static class Serializer extends GlobalLootModifierSerializer<FertilisedFarmlandLootModifier> {
-		@Override
-		public FertilisedFarmlandLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] lootConditions) {
-			return new FertilisedFarmlandLootModifier(lootConditions);
-		}
-
-		@Override
-		public JsonObject write(FertilisedFarmlandLootModifier instance) {
-			JsonObject json = makeConditions(instance.conditions);
-
-			json.addProperty("type", ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get().getKey(this).toString());
-
-			return json;
-		}
 	}
 }

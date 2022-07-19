@@ -5,12 +5,15 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.Mth;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.*;
@@ -28,7 +31,7 @@ public final class XpParticlesRenderer {
 	private static AoASkill lastParticleSkill = null;
 
 	public static void init() {
-		OverlayRegistry.registerOverlayTop("AoA Xp Particles", XpParticlesRenderer::renderParticles);
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAbove(VanillaGuiOverlay.POTION_ICONS.id(), "aoa_xp_particles", XpParticlesRenderer::renderParticles));
 	}
 
 	public static void addXpParticle(AoASkill skill, float xp, boolean isLevelUp) {
@@ -65,7 +68,7 @@ public final class XpParticlesRenderer {
 	}
 
 	private static void purgeExpiredEntries() {
-		if (!AoAConfig.CLIENT.showXpParticles.get()) {
+		if (!AoAConfigs.CLIENT.showXpParticles.get()) {
 			particlesMap.clear();
 
 			return;
@@ -85,7 +88,7 @@ public final class XpParticlesRenderer {
 		}
 	}
 
-	private static void renderParticles(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void renderParticles(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
 		if (particlesMap.isEmpty())
 			return;
 

@@ -28,7 +28,7 @@ public class EntityTagDamageBonusMelee extends EntityTagDamageBonus {
 
 	@Override
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
-		if (ev.getEntityLiving().getType().is(tag) && DamageUtil.isMeleeDamage(ev.getSource()))
+		if (ev.getEntity().getType().is(tag) && DamageUtil.isMeleeDamage(ev.getSource()))
 			ev.setAmount(ev.getAmount() * (1 + getScaledValue()));
 	}
 }

@@ -1,7 +1,7 @@
 {
   "biomes": {
     "if_all": [
-      "#forge:is_overworld"
+      "#minecraft:is_overworld"
     ]
   },
   "features": "aoa3:ore_limonite_small",

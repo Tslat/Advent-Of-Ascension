@@ -20,7 +20,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;
@@ -85,7 +85,7 @@ public class TraderSpawner implements CustomSpawner {
 			if (key.isEmpty() || !SPAWNS.containsKey(key.get()))
 				continue;
 
-			EntityType<? extends Mob> trader = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.getSource(), SPAWNS.get(key.get())).get().type;
+			EntityType<? extends Mob> trader = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM, SPAWNS.get(key.get())).get().type;
 			SpawnPlacements.Type placementType = SpawnPlacements.getPlacementType(trader);
 			Heightmap.Types heightmap = SpawnPlacements.getHeightmapType(trader);
 			pos = new BlockPos(x, world.getHeight(heightmap, x, z), z);

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.food.FoodData;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
@@ -42,7 +43,7 @@ public final class PlayerUtil {
     private static final Int2FloatOpenHashMap XP_MAP = new Int2FloatOpenHashMap(1000);
     private static final Int2FloatOpenHashMap TIME_BASED_XP_MAP = new Int2FloatOpenHashMap(1000);
 
-    public static void init() {
+    static {
         for (int i = 1; i <= 99; i++) {
             XP_MAP.put(i, (float)Math.pow(1.1, i) * 50f);
             TIME_BASED_XP_MAP.put(i, XP_MAP.get(i) / (float)(20 + Math.pow(Math.pow(i, 3) / 18000d, 1.75d)));
@@ -208,7 +209,7 @@ public final class PlayerUtil {
     }
 
     public static void messageAllPlayersInRange(Component msg, Level world, BlockPos center, int radius) {
-        for (Player pl : WorldUtil.getAllPlayersInRegion(world, new AABB(center).inflate(radius))) {
+        for (Player pl : EntityRetrievalUtil.getPlayers(world, new AABB(center).inflate(radius))) {
             pl.sendSystemMessage(msg);
         }
     }
@@ -278,5 +279,15 @@ public final class PlayerUtil {
         else {
             return ClientOperations.getGameMode();
         }
+    }
+
+    public static void resetToDefaultStatus(ServerPlayer player) {
+        FoodData foodData = player.getFoodData();
+
+        player.setHealth(player.getMaxHealth());
+        player.removeAllEffects();
+        foodData.setFoodLevel(20);
+        foodData.setSaturation(5);
+        foodData.setExhaustion(0);
     }
 }

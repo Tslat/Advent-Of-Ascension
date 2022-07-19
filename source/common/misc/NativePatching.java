@@ -7,12 +7,12 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
 public class NativePatching {
-	public static void doEarlyPatches() {
+	public static void init() {
 		((RangedAttribute)Attributes.MAX_HEALTH).maxValue = Double.MAX_VALUE;
 		((RangedAttribute)Attributes.ATTACK_KNOCKBACK).maxValue = Double.MAX_VALUE;
 	}
 
-	public static void postInit() {
+	public static void lateInit() {
 		patchInComposterBlocks();
 	}
 

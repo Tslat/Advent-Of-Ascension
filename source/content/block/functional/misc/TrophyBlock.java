@@ -107,7 +107,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 			SpawnEggItem egg = (SpawnEggItem)heldStack.getItem();
 
 			if (tile instanceof TrophyTileEntity) {
-				((TrophyTileEntity)tile).setEntity(ForgeRegistries.ENTITIES.getKey(egg.getType(heldStack.getTag())).toString(), true);
+				((TrophyTileEntity)tile).setEntity(ForgeRegistries.ENTITY_TYPES.getKey(egg.getType(heldStack.getTag())).toString(), true);
 
 				if (!world.isClientSide() && !player.isCreative())
 					heldStack.shrink(1);
@@ -149,7 +149,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 		CompoundTag nbt = new CompoundTag();
 		CompoundTag dataTag = new CompoundTag();
 
-		dataTag.putString("EntityID", ForgeRegistries.ENTITIES.getKey(entity).toString());
+		dataTag.putString("EntityID", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
 		dataTag.putBoolean("OriginalTrophy", true);
 		nbt.put("BlockEntityTag", dataTag);
 

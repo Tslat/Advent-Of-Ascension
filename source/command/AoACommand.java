@@ -23,6 +23,7 @@ public class AoACommand {
 
 		LiteralArgumentBuilder<CommandSourceStack> cmd = Commands.literal("aoa")
 				.then(PortalResetCommand.register(dispatcher, buildContext))
+				.then(CheckpointResetCommand.register(dispatcher, buildContext))
 				.then(PlayerCommand.register(dispatcher, buildContext))
 				.then(WikiCommand.register(dispatcher, buildContext))
 				.then(VersionCommand.register(dispatcher, buildContext));

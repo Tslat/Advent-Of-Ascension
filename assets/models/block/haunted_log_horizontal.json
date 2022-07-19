@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/cube_column_horizontal",
+  "render_type": "minecraft:solid",
   "textures": {
     "end": "aoa3:block/haunted_log_top",
     "side": "aoa3:block/haunted_log"

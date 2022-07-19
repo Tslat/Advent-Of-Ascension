@@ -102,6 +102,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
     "end_texture": "aoa3:block/lunar_pillar_end",
     "particle": "aoa3:block/lunar_pillar",

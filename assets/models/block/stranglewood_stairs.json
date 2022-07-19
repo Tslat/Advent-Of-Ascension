@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/stairs",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/stranglewood_planks",
     "side": "aoa3:block/stranglewood_planks",

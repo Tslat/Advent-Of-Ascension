@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/outer_stairs",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/runic_planks",
     "side": "aoa3:block/runic_planks",

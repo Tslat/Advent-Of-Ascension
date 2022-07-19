@@ -773,6 +773,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "aoa3:block/charging_table",
     "texture": "aoa3:block/charging_table"

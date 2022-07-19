@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/ladder",
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "aoa3:block/archaic_ladder",
     "texture": "aoa3:block/archaic_ladder"

@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.specific.NowhereTeleporter;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -91,11 +91,11 @@ public abstract class AoATeleporter implements ITeleporter {
 			if (portalLoc != null) {
 				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.level.dimension());
 
-				if (returnPortalLoc != null && returnPortalLoc.fromDim == destWorld.dimension())
+				if (returnPortalLoc != null && returnPortalLoc.fromDim() == destWorld.dimension())
 					return positionPlayer((ServerPlayer)entity, teleportPos, currentWorld, destWorld, false);
 			}
 
-			if (portalLoc == null || entity.level.dimension() == portalLoc.fromDim || entity.distanceToSqr(BlockUtil.posToVec(portalLoc.asBlockPos())) > AoAConfig.SERVER.portalSearchRadius.get())
+			if (portalLoc == null || entity.level.dimension() == portalLoc.fromDim() || entity.distanceToSqr(BlockUtil.posToVec(portalLoc.asBlockPos())) > AoAConfigs.SERVER.portalSearchRadius.get())
 				plData.setPortalReturnLocation(destWorld.dimension(), new PortalCoordinatesContainer(currentWorld.dimension(), startPos.getX(), startPos.getY(), startPos.getZ()));
 		}
 
@@ -172,7 +172,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		}
 
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
-		int searchRadius = AoAConfig.SERVER.portalSearchRadius.get();
+		int searchRadius = AoAConfigs.SERVER.portalSearchRadius.get();
 		int worldHeight = world.dimensionType().logicalHeight();
 
 		if (posY >= worldHeight)
@@ -345,7 +345,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		int posY = (int)Math.floor(entity.getY());
 		int posZ = (int)Math.floor(entity.getZ());
 		BlockPos planBPos = null;
-		int searchRadius = AoAConfig.SERVER.portalSearchRadius.get();
+		int searchRadius = AoAConfigs.SERVER.portalSearchRadius.get();
 		int worldHeight = world.dimensionType().logicalHeight();
 
 		if (posY >= worldHeight)

@@ -22,6 +22,7 @@ import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.AoAPlayerEvents;
+import net.tslat.aoa3.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -62,7 +63,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 				return;
 
 			if (entity instanceof Mob mob) {
-				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, false, level, state -> state.getFluidState().getType() == Fluids.LAVA, 5);
+				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, state -> state.getFluidState().getType() == Fluids.LAVA);
 
 				mob.setPos(pos.getX(), pos.getY(), pos.getZ());
 				mob.getNavigation().createPath(blockPosition(), 0);
@@ -117,7 +118,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0035f);
 		this.fishingBonusMod += 0.25f * lure;
 
-		if (!WorldUtil.getAllPlayersInRegion(level, getBoundingBox().inflate(5)).isEmpty())
+		if (!EntityRetrievalUtil.getPlayers(level, getBoundingBox().inflate(5)).isEmpty())
 			this.fishingBonusMod *= 0.2f;
 	}
 

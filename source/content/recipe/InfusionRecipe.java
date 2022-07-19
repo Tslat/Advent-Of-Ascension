@@ -30,7 +30,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -222,7 +222,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 		for (int i = 1; i < remainingItems.size(); i++) {
 			ItemStack stack = inv.getItem(i);
 
-			remainingItems.set(i, ForgeHooks.getContainerItem(stack));
+			remainingItems.set(i, ForgeHooks.getCraftingRemainingItem(stack));
 		}
 
 		return remainingItems;
@@ -254,7 +254,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 	}
 
 	public ItemStack provideEmptyOrCompatibleStackForEnchanting(ItemStack inputStack) {
-		if (this == EMPTY_RECIPE || !enchantment.canEnchant(inputStack) || (!AoAConfig.SERVER.allowUnsafeInfusion.getDefault() && enchantment.getMaxLevel() < enchantmentLevel))
+		if (this == EMPTY_RECIPE || !enchantment.canEnchant(inputStack) || (!AoAConfigs.SERVER.allowUnsafeInfusion.getDefault() && enchantment.getMaxLevel() < enchantmentLevel))
 			return ItemStack.EMPTY;
 
 		Map<Enchantment, Integer> enchantments = EnchantmentHelper.getEnchantments(inputStack);

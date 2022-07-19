@@ -1,5 +1,6 @@
 {
   "parent": "aoa3:block/thorny_plant_middle",
+  "render_type": "minecraft:cutout",
   "textures": {
     "crop": "aoa3:block/thorny_plant_crop_stage1",
     "particle": "aoa3:block/thorny_plant_crop_stage1"

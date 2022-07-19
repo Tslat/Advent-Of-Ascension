@@ -48,6 +48,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_GUN_ENERGY_GUN_FIRE = registerSound("energy_gun_fire", "item.gun.energy_gun.fire");
 
 	public static final RegistryObject<SoundEvent> PLAYER_LEVEL_UP = registerSound("player_level_up", "player.skills.level_up");
+	public static final RegistryObject<SoundEvent> CHECKPOINT = registerSound("checkpoint", "misc.checkpoint");
 
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_HAPPY = registerSound("dryad_sprite_happy", "entity.dryad_sprite.happy");
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_UNHAPPY = registerSound("dryad_sprite_unhappy", "entity.dryad_sprite.unhappy");

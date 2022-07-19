@@ -5,14 +5,17 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.render.custom.AoAResourceRenderer;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.client.render.custom.EnergyResourceRenderer;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.config.AoAConfig;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -29,8 +32,13 @@ public final class AoAGuiElementRenderers {
 	public static int resourcesRenderHeightOffset = 0;
 
 	public static void init() {
-		OverlayRegistry.registerOverlayTop("AoA Resources", AoAGuiElementRenderers::renderResources);
-		OverlayRegistry.registerOverlayTop("AoA Skills", AoAGuiElementRenderers::renderSkills);
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> {
+			ev.registerAbove(VanillaGuiOverlay.POTION_ICONS.id(), "aoa_resources", AoAGuiElementRenderers::renderResources);
+			ev.registerAbove(VanillaGuiOverlay.POTION_ICONS.id(), "aoa_skills", AoAGuiElementRenderers::renderSkills);
+		});
+	}
+
+	public static void lateInit() {
 		registerResourceRenderer(AoAResources.ENERGY.get(), new EnergyResourceRenderer());
 	}
 
@@ -50,10 +58,10 @@ public final class AoAGuiElementRenderers {
 		SKILL_RENDERERS.put(skill, renderer);
 	}
 
-	private static void renderResources(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void renderResources(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
 		Minecraft mc = Minecraft.getInstance();
 		Window window = mc.getWindow();
-		int horizontalAdjuster = AoAConfig.CLIENT.hudResourcesHorizontal.get() ? 1 : 0;
+		int horizontalAdjuster = AoAConfigs.CLIENT.hudResourcesHorizontal.get() ? 1 : 0;
 		int verticalAdjuster = horizontalAdjuster == 1 ? 0 : 1;
 		int potionRenderOffset = 0;
 		int x = 0;
@@ -62,7 +70,7 @@ public final class AoAGuiElementRenderers {
 		if (mc.player == null || mc.player.isSpectator())
 			return;
 
-		switch (AoAConfig.CLIENT.hudResourcesPosition.get()) {
+		switch (AoAConfigs.CLIENT.hudResourcesPosition.get()) {
 			case Bottom_Right:
 				horizontalAdjuster *= -1;
 				verticalAdjuster *= -1;
@@ -117,10 +125,10 @@ public final class AoAGuiElementRenderers {
 
 		poseStack.popPose();
 
-		resourcesRenderHeightOffset = (AoAConfig.CLIENT.hudResourcesPosition.get() == AoAResourceRenderer.HudResourcesPosition.Top_Right ? y : 0) + potionRenderOffset;
+		resourcesRenderHeightOffset = (AoAConfigs.CLIENT.hudResourcesPosition.get() == AoAResourceRenderer.HudResourcesPosition.Top_Right ? y : 0) + potionRenderOffset;
 	}
 
-	private static void renderSkills(ForgeIngameGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void renderSkills(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
 		Minecraft mc = Minecraft.getInstance();
 		Window window = mc.getWindow();
 		int x = 0;
@@ -153,7 +161,7 @@ public final class AoAGuiElementRenderers {
 
 				poseStack.pushPose();
 				poseStack.translate(x, y, 0);
-				renderer.renderInHud(poseStack, skill, partialTick, AoAConfig.CLIENT.hudSkillProgressRenderType.get(), true);
+				renderer.renderInHud(poseStack, skill, partialTick, AoAConfigs.CLIENT.hudSkillProgressRenderType.get(), true);
 				poseStack.popPose();
 			}
 		}

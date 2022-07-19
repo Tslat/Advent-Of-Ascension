@@ -19,7 +19,7 @@ import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderNameplateEvent;
+import net.minecraftforge.client.event.RenderNameTagEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
 
@@ -112,7 +112,7 @@ public class HaulingBobberRenderer extends FishingHookRenderer {
 
 		matrix.popPose();
 
-		RenderNameplateEvent renderNameplateEvent = new RenderNameplateEvent(bobber, bobber.getDisplayName(), this, matrix, buffer, packedLight, partialTicks);
+		RenderNameTagEvent renderNameplateEvent = new RenderNameTagEvent(bobber, bobber.getDisplayName(), this, matrix, buffer, packedLight, partialTicks);
 
 		MinecraftForge.EVENT_BUS.post(renderNameplateEvent);
 

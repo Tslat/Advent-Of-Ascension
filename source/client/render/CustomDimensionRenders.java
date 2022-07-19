@@ -1,13 +1,19 @@
 package net.tslat.aoa3.client.render;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
+import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.ISkyRenderHandler;
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.util.RenderUtil;
 
 import javax.annotation.Nullable;
 
@@ -22,22 +28,39 @@ public final class CustomDimensionRenders {
 	 */
 
 	public static void init() {
-		DimensionSpecialEffects.EFFECTS.put(VOID_SKY.ID, new VOID_SKY());
-		DimensionSpecialEffects.EFFECTS.put(CelestialOnly.ID, new CelestialOnly());
-		DimensionSpecialEffects.EFFECTS.put(Shyrelands.ID, new Shyrelands());
-		DimensionSpecialEffects.EFFECTS.put(Lunalus.ID, new Lunalus());
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterDimensionSpecialEffectsEvent.class, ev -> {
+			ev.register(VoidSky.ID, new VoidSky());
+			ev.register(CelestialOnly.ID, new CelestialOnly());
+			ev.register(Shyrelands.ID, new Shyrelands());
+			ev.register(Lunalus.ID, new Lunalus());
+		});
 	}
 
-	public static class VOID_SKY extends DimensionSpecialEffects {
+	public static class VoidSky extends DimensionSpecialEffects {
 		public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "void_sky");
 
-		public VOID_SKY() {
+		public VoidSky() {
 			super(Float.NaN, false, SkyType.NONE, false, true);
+		}
 
-			setCloudRenderHandler((ticks, partialTick, poseStack, level, minecraft, camX, camY, camZ) -> {});
-			setSkyRenderHandler((ticks, partialTick, poseStack, level, minecraft) -> {});
-			setWeatherParticleRenderHandler((ticks, level, minecraft, camera) -> {});
-			setWeatherRenderHandler((ticks, partialTick, level, minecraft, lightTexture, camX, camY, camZ) -> {});
+		@Override
+		public boolean renderClouds(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, double camX, double camY, double camZ, Matrix4f projectionMatrix) {
+			return true;
+		}
+
+		@Override
+		public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+			return true;
+		}
+
+		@Override
+		public boolean renderSnowAndRain(ClientLevel level, int ticks, float partialTick, LightTexture lightTexture, double camX, double camY, double camZ) {
+			return true;
+		}
+
+		@Override
+		public boolean tickRain(ClientLevel level, int ticks, Camera camera) {
+			return true;
 		}
 
 		@Override // Sky & distant fog colour - Biome fog & celestial angle
@@ -95,11 +118,49 @@ public final class CustomDimensionRenders {
 
 	public static class Lunalus extends DimensionSpecialEffects {
 		public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus");
+		private static final ResourceLocation TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/background.png");
 
 		public Lunalus() {
 			super(Float.NaN, true, SkyType.NONE, false, true);
-			
-			setSkyRenderHandler(new StarfieldSkyRenderer());
+		}
+
+		@Override
+		public boolean renderSky(ClientLevel level, int ticks, float partialTick, PoseStack poseStack, Camera camera, Matrix4f projectionMatrix, boolean isFoggy, Runnable setupFog) {
+			RenderSystem.enableBlend();
+			RenderSystem.defaultBlendFunc();
+			RenderSystem.depthMask(false);
+			RenderUtil.prepRenderTexture(TEXTURE);
+
+			BufferBuilder buffer = Tesselator.getInstance().getBuilder();
+
+			for(int i = 0; i < 6; ++i) {
+				poseStack.pushPose();
+
+				switch (i) {
+					case 1 -> poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
+					case 2 -> poseStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
+					case 3 -> poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
+					case 4 -> poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
+					case 5 -> poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
+					default -> {}
+				}
+
+				Matrix4f matrix4f = poseStack.last().pose();
+
+				buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+				buffer.vertex(matrix4f, -100, -100, -100).uv(0, 0).color(150, 150, 150, 255).endVertex();
+				buffer.vertex(matrix4f, -100, -100, 100).uv(0, 1).color(150, 150, 150, 255).endVertex();
+				buffer.vertex(matrix4f, 100, -100, 100).uv(1, 1).color(150, 150, 150, 255).endVertex();
+				buffer.vertex(matrix4f, 100, -100, -100).uv(1, 0).color(150, 150, 150, 255).endVertex();
+				BufferUploader.drawWithShader(buffer.end());
+				poseStack.popPose();
+			}
+
+			RenderSystem.depthMask(true);
+			RenderSystem.enableTexture();
+			RenderSystem.disableBlend();
+
+			return true;
 		}
 
 		@Override // Sky & distant fog colour - Biome fog & celestial angle
@@ -116,50 +177,6 @@ public final class CustomDimensionRenders {
 		@Override // Adjust fog/sky colour for sunset/sunrise
 		public float[] getSunriseColor(float celestialAngle, float partialTicks) {
 			return null;
-		}
-
-		private static class StarfieldSkyRenderer implements ISkyRenderHandler {
-			private static final ResourceLocation TEXTURE = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/background.png");
-			
-			@Override
-			public void render(int ticks, float partialTicks, PoseStack matrix, ClientLevel world, Minecraft mc) {
-				/*RenderSystem.disableAlphaTest();
-				RenderSystem.enableBlend();
-				RenderSystem.defaultBlendFunc();
-				RenderSystem.depthMask(false);
-				mc.getTextureManager().bind(TEXTURE);
-				
-				Tesselator tesselator = Tesselator.getInstance();
-				BufferBuilder buffer = Tesselator.getBuilder();
-
-				for(int i = 0; i < 6; ++i) {
-					matrix.pushPose();
-
-					switch (i) {
-						case 1 -> matrix.mulPose(Vector3f.XP.rotationDegrees(90.0F));
-						case 2 -> matrix.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
-						case 3 -> matrix.mulPose(Vector3f.XP.rotationDegrees(180.0F));
-						case 4 -> matrix.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
-						case 5 -> matrix.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
-						default -> {}
-					}
-
-					Matrix4f matrix4f = matrix.last().pose();
-
-					buffer.begin(7, DefaultVertexFormat.POSITION_TEX_COLOR);
-					buffer.vertex(matrix4f, -100, -100, -100).uv(0, 0).color(150, 150, 150, 255).endVertex();
-					buffer.vertex(matrix4f, -100, -100, 100).uv(0, 1).color(150, 150, 150, 255).endVertex();
-					buffer.vertex(matrix4f, 100, -100, 100).uv(1, 1).color(150, 150, 150, 255).endVertex();
-					buffer.vertex(matrix4f, 100, -100, -100).uv(1, 0).color(150, 150, 150, 255).endVertex();
-					Tesselator.end();
-					matrix.popPose();
-				}
-
-				RenderSystem.depthMask(true);
-				RenderSystem.enableTexture();
-				RenderSystem.disableBlend();
-				RenderSystem.enableAlphaTest();*/
-			}
 		}
 	}
 }

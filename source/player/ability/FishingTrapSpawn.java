@@ -38,9 +38,9 @@ public class FishingTrapSpawn extends ScalableModAbility {
 
 	@Override
 	public void handleItemFished(ItemFishedEvent ev, boolean isHauling) {
-		if (ev.getPlayer() instanceof ServerPlayer && testAsChance()) {
+		if (ev.getEntity() instanceof ServerPlayer && testAsChance()) {
 			FishingHook bobber = ev.getHookEntity();
-			Player player = ev.getPlayer();
+			Player player = ev.getEntity();
 			Level world = bobber.level;
 			BlockPos pos = bobber.blockPosition();
 			float luck = bobber.luck;

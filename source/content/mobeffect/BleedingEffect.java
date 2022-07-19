@@ -11,7 +11,7 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.tslat.aoa3.common.registration.AoAEntityEffects;
+import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.util.ColourUtil;
 
 import javax.annotation.Nullable;
@@ -47,7 +47,7 @@ public class BleedingEffect extends MobEffect {
 	}
 
 	public static void apply(LivingEntity target, MobEffectInstance bleedEffect, @Nullable Entity applyingEntity) {
-		MobEffectInstance existingBleed = target.getEffect(AoAEntityEffects.BLEEDING.get());
+		MobEffectInstance existingBleed = target.getEffect(AoAMobEffects.BLEEDING.get());
 
 		if (existingBleed != null && existingBleed.getAmplifier() >= bleedEffect.getAmplifier())
 			bleedEffect = new MobEffectInstance(bleedEffect.getEffect(), Math.max(bleedEffect.getDuration(), existingBleed.getDuration()), Mth.clamp(existingBleed.getAmplifier() + 1, 0, 127), bleedEffect.isAmbient(), bleedEffect.isVisible(), bleedEffect.showIcon(), bleedEffect.hiddenEffect, bleedEffect.getFactorData());

@@ -53,7 +53,7 @@ public class EntityTagDamageBonus extends ScalableModAbility {
 
 	@Override
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
-		if (ev.getEntityLiving().getType().is(tag))
+		if (ev.getEntity().getType().is(tag))
 			ev.setAmount(ev.getAmount() * (1 + getScaledValue()));
 	}
 }

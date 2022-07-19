@@ -11,7 +11,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
@@ -350,9 +350,9 @@ public interface AoAPlayerEventListener {
 	 *
 	 * Will only trigger if {@link ListenerType#POTION_APPLIED} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
-	 * @param ev {@link PotionEvent.PotionAddedEvent} event
+	 * @param ev {@link MobEffectEvent.Added} event
 	 */
-	default void handleAppliedPotion(final PotionEvent.PotionAddedEvent ev) {}
+	default void handleAppliedPotion(final MobEffectEvent.Added ev) {}
 
 	/**
 	 * This method gets triggered when player attribute modifiers should be applied. Usually this is on login and during a clone of the player's data.
@@ -526,7 +526,8 @@ public interface AoAPlayerEventListener {
 	enum ListenerState {
 		ACTIVE("active"),
 		MANUALLY_DISABLED("disabled"),
-		DEACTIVATED("deactivated");
+		DEACTIVATED("deactivated"),
+		REGION_LOCKED("region_locked");
 
 		private final String id;
 
@@ -539,15 +540,13 @@ public interface AoAPlayerEventListener {
 		}
 
 		public static ListenerState fromId(String id) {
-			switch (id) {
-				case "disabled":
-					return MANUALLY_DISABLED;
-				case "deactivated":
-					return DEACTIVATED;
-				case "active":
-				default:
-					return ACTIVE;
-			}
+			return switch (id) {
+				case "disabled" -> MANUALLY_DISABLED;
+				case "deactivated" -> DEACTIVATED;
+				case "active" -> ACTIVE;
+				case "region_locked" -> REGION_LOCKED;
+				default -> DEACTIVATED;
+			};
 		}
 	}
 

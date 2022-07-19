@@ -22,7 +22,7 @@ import net.tslat.aoa3.content.block.functional.misc.CarvedRuneOfPower;
 import net.tslat.aoa3.content.entity.projectile.thrown.*;
 
 public final class AoADispensables {
-	public static void registerDispenseBehaviours() {
+	public static void lateInit() {
 		registerFluidDispensables();
 		registerProjectileDispensables();
 		registerMiscDispensables();

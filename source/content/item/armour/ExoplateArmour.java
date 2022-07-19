@@ -34,7 +34,7 @@ public class ExoplateArmour extends AdventArmour {
 	@Override
 	public void onAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
 		if (slots != null && !DamageUtil.isEnvironmentalDamage(event.getSource())) {
-			LivingEntity entity = event.getEntityLiving();
+			LivingEntity entity = event.getEntity();
 			BlockPos playerPos = entity.blockPosition();
 			int lightLvl = Mth.clamp(2 + WorldUtil.getLightLevel((ServerLevel)entity.level, playerPos, false, false), 2, 15);
 

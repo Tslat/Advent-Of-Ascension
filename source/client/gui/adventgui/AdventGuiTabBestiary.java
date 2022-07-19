@@ -37,7 +37,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.common.registration.AoAAttributes;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.entity.base.*;
 import net.tslat.aoa3.data.client.BestiaryReloadListener;
 import net.tslat.aoa3.util.*;
@@ -149,8 +149,8 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		for (Stat<?> stat : this.statsMap.keySet()) {
 			ResourceLocation registryName;
 
-			if (stat.getValue() instanceof EntityType && (registryName = ForgeRegistries.ENTITIES.getKey(((EntityType<?>)stat.getValue()))) != null) {
-				if (AoAConfig.CLIENT.thirdPartyBestiary.get() || registryName.getNamespace().equals(AdventOfAscension.MOD_ID)) {
+			if (stat.getValue() instanceof EntityType && (registryName = ForgeRegistries.ENTITY_TYPES.getKey(((EntityType<?>)stat.getValue()))) != null) {
+				if (AoAConfigs.CLIENT.thirdPartyBestiary.get() || registryName.getNamespace().equals(AdventOfAscension.MOD_ID)) {
 					String registryNameString = registryName.toString();
 
 					if (!statsMap.containsKey(registryNameString)) {
@@ -187,7 +187,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 			return instancesMap.get(registryName);
 
 		try {
-			Entity entity = ForgeRegistries.ENTITIES.getValue(stat.registryName).create(minecraft.player.clientLevel);
+			Entity entity = ForgeRegistries.ENTITY_TYPES.getValue(stat.registryName).create(minecraft.player.clientLevel);
 
 			instancesMap.put(registryName, entity);
 
@@ -449,7 +449,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		private Stat<EntityType<?>> deathStat = null;
 
 		private EntityStats(Stat<EntityType<?>> stat, boolean killStat) {
-			this.registryName = ForgeRegistries.ENTITIES.getKey(stat.getValue());
+			this.registryName = ForgeRegistries.ENTITY_TYPES.getKey(stat.getValue());
 
 			if (killStat) {
 				this.killStat = stat;
@@ -473,11 +473,11 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		}
 
 		private int getKills(StatsCounter statsManager) {
-			return statsManager.getValue(killStat);
+			return Math.max(0, statsManager.getValue(killStat));
 		}
 
 		private int getDeaths(StatsCounter statsManager) {
-			return deathStat != null ? statsManager.getValue(deathStat) : 0;
+			return deathStat != null ? Math.max(0, statsManager.getValue(deathStat)) : 0;
 		}
 	}
 

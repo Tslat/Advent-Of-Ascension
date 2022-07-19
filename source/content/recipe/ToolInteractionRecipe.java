@@ -78,8 +78,8 @@ public class ToolInteractionRecipe extends CustomRecipe {
 
 				hasTool = true;
 			}
-			else if (stack.hasContainerItem()) {
-				returns.set(i, stack.getContainerItem());
+			else if (stack.hasCraftingRemainingItem()) {
+				returns.set(i, stack.getCraftingRemainingItem());
 			}
 		}
 

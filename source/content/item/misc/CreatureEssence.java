@@ -34,7 +34,7 @@ public class CreatureEssence extends Item {
 
 		ResourceLocation entityId = new ResourceLocation(tag.getString("essence_entity"));
 
-		return ForgeRegistries.ENTITIES.containsKey(entityId) ? ForgeRegistries.ENTITIES.getValue(entityId) : null;
+		return ForgeRegistries.ENTITY_TYPES.containsKey(entityId) ? ForgeRegistries.ENTITY_TYPES.getValue(entityId) : null;
 	}
 
 	@Nonnull

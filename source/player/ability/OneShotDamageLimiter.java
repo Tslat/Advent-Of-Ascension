@@ -56,7 +56,7 @@ public class OneShotDamageLimiter extends AoAAbility.Instance {
 		if (ev.getSource() == DamageSource.OUT_OF_WORLD)
 			return;
 
-		LivingEntity player = ev.getEntityLiving();
+		LivingEntity player = ev.getEntity();
 
 		if (player instanceof ServerPlayer && player.getHealth() - ev.getAmount() <= 0 && player.getHealth() >= (minActivationHealth == 0 ? player.getMaxHealth() : minActivationHealth)) {
 			ev.setCanceled(true);

@@ -6,19 +6,19 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.IFluidTypeRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.ColourUtil;
 import org.jetbrains.annotations.Nullable;
 
-public class ToxicWasteRenderProperties implements IFluidTypeRenderProperties {
+public class ToxicWasteRenderProperties implements IClientFluidTypeExtensions {
 	public static final ResourceLocation OVERLAY = new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_overlay");
 	public static final ResourceLocation UNDERWATER = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/block/toxic_waste_overlay.png");
 	public static final ResourceLocation FLOWING = new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_flow");
 	public static final ResourceLocation STILL = new ResourceLocation(AdventOfAscension.MOD_ID, "block/toxic_waste_still");
 
 	@Override
-	public int getColorTint() {
+	public int getTintColor() {
 		return ColourUtil.RGBA(38, 42, 23, 255);
 	}
 

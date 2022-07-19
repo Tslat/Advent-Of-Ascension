@@ -1,8 +1,9 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/weightless_dirt",
-    "particle": "aoa3:block/weightless_grass_side",
+    "particle": "#side",
     "side": "aoa3:block/weightless_grass_side",
     "top": "aoa3:block/weightless_grass_top"
   }

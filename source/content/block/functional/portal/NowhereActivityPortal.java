@@ -14,8 +14,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
-import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
@@ -70,6 +72,12 @@ public class NowhereActivityPortal extends PortalBlock {
 			int randomMod = rand.nextInt(2) * 2 - 1;
 			int colour = switch (state.getValue(ACTIVITY)) {
 				case PARKOUR -> 39103;
+				case PARKOUR_1 -> 9175295;
+				case PARKOUR_2 -> 262388;
+				case PARKOUR_3 -> 12449536;
+				case PARKOUR_4 -> 16763904;
+				case PARKOUR_5 -> 14711552;
+				case PARKOUR_6 -> 13828096;
 				case BOSSES -> 12189696;
 				case DUNGEON -> 9502944;
 				case UTILITY -> 29210;
@@ -90,7 +98,7 @@ public class NowhereActivityPortal extends PortalBlock {
 	}
 
 	public enum Activity implements StringRepresentable {
-		PARKOUR(16, 1002, 16, pl -> {
+		PARKOUR(20, 1510, 22, pl -> {
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
 			for (NonNullList<ItemStack> inv : pl.getInventory().compartments) {
@@ -99,10 +107,17 @@ public class NowhereActivityPortal extends PortalBlock {
 
 			pl.getInventory().clearContent();
 		}),
+		PARKOUR_1(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_2(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_3(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_4(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_5(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_6(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
 		BOSSES(17, 803, 5),
 		DUNGEON(16, 1002, 16),
-		UTILITY(16, 1002, 16),
+		UTILITY(16, 2002, 16),
 		RETURN(16, 1002, 16, pl -> {
+			ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 			PlayerUtil.getAdventPlayer(pl).returnItemStorage();
 		});
 
@@ -123,9 +138,18 @@ public class NowhereActivityPortal extends PortalBlock {
 			return toString().toLowerCase(Locale.ROOT);
 		}
 
+		public BlockPos getPos() {
+			return this.teleportPos;
+		}
+
 		public void onUse(ServerPlayer pl) {
 			if (useFunction != null)
 				useFunction.accept(pl);
+		}
+
+		public void teleport(ServerPlayer pl) {
+			pl.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
+			onUse(pl);
 		}
 	}
 }

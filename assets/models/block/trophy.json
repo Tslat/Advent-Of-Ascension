@@ -233,6 +233,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:solid",
   "textures": {
     "particle": "aoa3:block/trophy",
     "texture": "aoa3:block/trophy"

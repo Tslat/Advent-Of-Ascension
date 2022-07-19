@@ -99,7 +99,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 	}
 
 	public static void openContainer(ServerPlayer player, BlockPos pos) {
-		NetworkHooks.openGui(player, new MenuProvider() {
+		NetworkHooks.openScreen(player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return Component.translatable("container.aoa3.whitewashing_table");

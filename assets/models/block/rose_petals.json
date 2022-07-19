@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:solid",
   "textures": {
-    "all": "aoa3:block/rose_petals"
+    "all": "aoa3:block/rose_petals",
+    "particle": "aoa3:block/rose_petals"
   }
 }

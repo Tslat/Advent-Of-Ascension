@@ -31,7 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.RegistryObject;
-import net.tslat.aoa3.common.registration.AoAProfessions;
+import net.tslat.aoa3.common.registration.entity.AoAProfessions;
 import net.tslat.aoa3.content.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.content.entity.ai.trader.TraderPlayerTradeGoal;
 import net.tslat.aoa3.content.entity.ai.trader.TraderRestockGoal;

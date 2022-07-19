@@ -20,7 +20,7 @@ import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
-import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.RandomUtil;
@@ -32,7 +32,6 @@ import java.util.Optional;
 
 public class PixonSpawner implements CustomSpawner {
 	private static final HashMap<ResourceKey<Biome>, List<MobSpawnSettings.SpawnerData>> SPAWNS = new HashMap<ResourceKey<Biome>, List<MobSpawnSettings.SpawnerData>>();
-
 	private int spawnCooldown = 1200;
 
 	@Override

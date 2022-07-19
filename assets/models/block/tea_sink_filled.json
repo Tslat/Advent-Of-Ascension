@@ -1571,6 +1571,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "aoa3:block/tea_sink",
     "texture": "aoa3:block/tea_sink"

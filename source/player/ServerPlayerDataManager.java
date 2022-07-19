@@ -1,7 +1,8 @@
 package net.tslat.aoa3.player;
 
 import com.google.common.collect.ArrayListMultimap;
-import io.netty.util.internal.ConcurrentSet;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
@@ -40,6 +41,7 @@ import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.data.server.AoASkillsReloadListener;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.integration.IntegrationManager;
+import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -52,30 +54,33 @@ import net.tslat.aoa3.util.RandomUtil;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.stream.Stream;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.function.Consumer;
 
-import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerState.ACTIVE;
-import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerState.DEACTIVATED;
+import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerState.*;
 
 public final class ServerPlayerDataManager implements AoAPlayerEventListener, PlayerDataManager {
 	private ServerPlayer player;
 
 	private PlayerEquipment equipment;
 
-	private final HashMap<AoASkill, AoASkill.Instance> skills = new HashMap<AoASkill, AoASkill.Instance>(10);
-	private final HashMap<AoAResource, AoAResource.Instance> resources = new HashMap<AoAResource, AoAResource.Instance>(1);
+	private final Object2ObjectOpenHashMap<AoASkill, AoASkill.Instance> skills = new Object2ObjectOpenHashMap<>(10);
+	private final Object2ObjectOpenHashMap<AoAResource, AoAResource.Instance> resources = new Object2ObjectOpenHashMap<>(1);
 
 	private final ArrayListMultimap<ListenerType, AoAPlayerEventListener> activeEventListeners = ArrayListMultimap.create();
 	private final ArrayListMultimap<ListenerType, AoAPlayerEventListener> disabledEventListeners = ArrayListMultimap.create();
-	private final HashSet<AoAPlayerEventListener> dirtyListeners = new HashSet<AoAPlayerEventListener>();
+	private final ObjectOpenHashSet<AoAPlayerEventListener> dirtyListeners = new ObjectOpenHashSet<>();
 
-	private HashMap<ResourceKey<Level>, PortalCoordinatesContainer> portalCoordinatesMap = new HashMap<ResourceKey<Level>, PortalCoordinatesContainer>();
-	private HashSet<ItemStack> itemStorage = null;
+	private Object2ObjectOpenHashMap<ResourceKey<Level>, PortalCoordinatesContainer> portalCoordinatesMap = new Object2ObjectOpenHashMap<>();
+	private ObjectOpenHashSet<ItemStack> itemStorage = null;
+	private PositionAndRotation checkpoint = null;
 
-	private ConcurrentSet<ResourceLocation> patchouliBooks = null;
+	private CopyOnWriteArraySet<ResourceLocation> patchouliBooks = null;
 	private boolean syncBooks = false;
 
 	private boolean isLegitimate = true;
+
+	private boolean abilitiesRegionLocked = false;
 
 	public ServerPlayerDataManager(ServerPlayer player) {
 		this.player = player;
@@ -164,7 +169,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (baseTag.contains("ItemStorage")) {
-			itemStorage = new HashSet<ItemStack>();
+			itemStorage = new ObjectOpenHashSet<>();
 			CompoundTag itemStorage = baseTag.getCompound("ItemStorage");
 			int i = 0;
 
@@ -195,11 +200,26 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			}
 		}
 
+		if (baseTag.contains("Checkpoint")) {
+			try {
+				CompoundTag checkpointTag = baseTag.getCompound("Checkpoint");
+				double x = checkpointTag.getDouble("x");
+				double y = checkpointTag.getDouble("y");
+				double z = checkpointTag.getDouble("z");
+				float pitch = checkpointTag.getFloat("pitch");
+				float yaw = checkpointTag.getFloat("yaw");
+
+				checkpoint = new PositionAndRotation(x, y, z, pitch, yaw);
+			} catch (NumberFormatException e) {
+				Logging.logMessage(org.apache.logging.log4j.Level.WARN, "Found invalid checkpoint data, has someone been tampering with files?");
+			}
+		}
+
 		if (baseTag.contains("PatchouliBooks")) {
 			ListTag booksNbt = baseTag.getList("PatchouliBooks", Tag.TAG_STRING);
 
 			if (patchouliBooks == null) {
-				patchouliBooks = new ConcurrentSet<ResourceLocation>();
+				patchouliBooks = new CopyOnWriteArraySet<>();
 			}
 			else if (!patchouliBooks.isEmpty()) {
 				patchouliBooks.clear();
@@ -240,6 +260,19 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 	}
 
+	public void removeListener(AoAPlayerEventListener listener, boolean active, ListenerType... types) {
+		ArrayListMultimap<ListenerType, AoAPlayerEventListener> holder = active ? this.activeEventListeners : this.disabledEventListeners;
+
+		if (types.length > 0) {
+			for (ListenerType type : types) {
+				holder.remove(type, listener);
+			}
+		}
+		else {
+			holder.remove(null, listener);
+		}
+	}
+
 	@Override
 	public List<AoAPlayerEventListener> getListeners(ListenerType eventType) {
 		return activeEventListeners.get(eventType);
@@ -258,6 +291,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		player = null;
 		equipment = null;
 		patchouliBooks = null;
+		checkpoint = null;
 
 		skills.clear();
 		resources.clear();
@@ -294,7 +328,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
 		if (plData.patchouliBooks == null && IntegrationManager.isPatchouliActive()) {
-			plData.patchouliBooks = new ConcurrentSet<ResourceLocation>();
+			plData.patchouliBooks = new CopyOnWriteArraySet<>();
 
 			plData.patchouliBooks.add(new ResourceLocation(AdventOfAscension.MOD_ID, "aoa_essentia"));
 		}
@@ -313,16 +347,12 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				AoAPlayerEventListener listener = listeners.next();
 
 				if (listener.getListenerState() == ACTIVE) {
-					for (ListenerType type : listener.getListenerTypes()) {
-						disabledEventListeners.remove(type, listener);
-						activeEventListeners.put(type, listener);
-					}
+					addListener(listener, true, listener.getListenerTypes());
+					removeListener(listener, false, listener.getListenerTypes());
 				}
 				else {
-					for (ListenerType type : listener.getListenerTypes()) {
-						activeEventListeners.remove(type, listener);
-						disabledEventListeners.put(type, listener);
-					}
+					addListener(listener, false, listener.getListenerTypes());
+					removeListener(listener, true, listener.getListenerTypes());
 				}
 
 				listeners.remove();
@@ -389,7 +419,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	private void storeInterventionItems() {
 		if (itemStorage == null)
-			itemStorage = new HashSet<ItemStack>();
+			itemStorage = new ObjectOpenHashSet<>();
 
 		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 			ItemStack stack = player.getInventory().getItem(i);
@@ -428,7 +458,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	public void storeItems(@Nonnull Collection<ItemStack> stacks) {
 		if (itemStorage == null)
-			itemStorage = new HashSet<ItemStack>();
+			itemStorage = new ObjectOpenHashSet<>();
 
 		itemStorage.addAll(stacks);
 	}
@@ -453,6 +483,19 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		return portalCoordinatesMap.get(toDim);
 	}
 
+	public void setCheckpoint(PositionAndRotation pos) {
+		this.checkpoint = pos;
+	}
+
+	public void clearCheckpoint() {
+		this.checkpoint = null;
+	}
+
+	@Nullable
+	public PositionAndRotation getCheckpoint() {
+		return this.checkpoint;
+	}
+
 	@Override
 	public void handlePlayerDeath(final LivingDeathEvent ev) {
 		storeInterventionItems();
@@ -465,7 +508,12 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	@Override
 	public void handleLevelChange(PlayerLevelChangeEvent ev) {
-		Stream.of(activeEventListeners.values(), disabledEventListeners.values()).forEach(collection -> collection.forEach(listener -> {
+		if (!abilitiesRegionLocked)
+			recheckSkills();
+	}
+
+	private void recheckSkills() {
+		Consumer<Collection<AoAPlayerEventListener>> updateHandler = collection -> collection.forEach(listener -> {
 			if (listener.getListenerState() == ACTIVE) {
 				if (!listener.meetsRequirements())
 					listener.disable(DEACTIVATED, false);
@@ -474,19 +522,38 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (listener.meetsRequirements()) {
 					listener.reenable(false);
 
-					if (listener instanceof AoAAbility.Instance) {
-						AoAAbility.Instance ability = (AoAAbility.Instance)listener;
-
+					if (listener instanceof AoAAbility.Instance ability)
 						AoAPackets.messagePlayer(player, new ToastPopupPacket(ability.getSkill().type(), ability.type()));
-					}
 				}
 			}
-		}));
+		});
+
+		updateHandler.accept(activeEventListeners.values());
+		updateHandler.accept(disabledEventListeners.values());
 	}
 
-	@Override
-	public void handleArmourChange(final LivingEquipmentChangeEvent ev) {
-		equipment().markDirty();
+	public void setInAbilityLockRegion() {
+		if (activeEventListeners.isEmpty())
+			return;
+
+		for (AoAPlayerEventListener listener : activeEventListeners.values()) {
+			listener.disable(REGION_LOCKED, false);
+		}
+
+		abilitiesRegionLocked = true;
+	}
+
+	public void leaveAbilityLockRegion() {
+		if (!abilitiesRegionLocked)
+			return;
+
+		recheckSkills();
+
+		abilitiesRegionLocked = false;
+	}
+
+	public boolean areAbilitiesRegionLocked() {
+		return this.abilitiesRegionLocked;
 	}
 
 	public void checkAndUpdateLegitimacy() {
@@ -511,6 +578,11 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	@Override
+	public void handleArmourChange(final LivingEquipmentChangeEvent ev) {
+		equipment().markDirty();
+	}
+
+	@Override
 	public boolean isLegitimate() {
 		return this.isLegitimate;
 	}
@@ -522,7 +594,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	public void addPatchouliBook(ResourceLocation book) {
 		if (patchouliBooks == null)
-			patchouliBooks = new ConcurrentSet<ResourceLocation>();
+			patchouliBooks = new CopyOnWriteArraySet<>();
 
 		patchouliBooks.add(book);
 		syncBooks = true;
@@ -549,6 +621,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 		this.equipment.cooldowns = sourceData.equipment.cooldowns;
 		this.portalCoordinatesMap = sourceData.portalCoordinatesMap;
+		this.checkpoint = sourceData.checkpoint;
 		this.itemStorage = sourceData.itemStorage;
 		this.patchouliBooks = sourceData.patchouliBooks;
 		this.isLegitimate = sourceData.isLegitimate;
@@ -612,15 +685,27 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					CompoundTag portalReturnTag = new CompoundTag();
 					PortalCoordinatesContainer container = entry.getValue();
 
-					portalReturnTag.putString("FromDim", container.fromDim.location().toString());
-					portalReturnTag.putDouble("PosX", container.x);
-					portalReturnTag.putDouble("PosY", container.y);
-					portalReturnTag.putDouble("PosZ", container.z);
+					portalReturnTag.putString("FromDim", container.fromDim().location().toString());
+					portalReturnTag.putDouble("PosX", container.x());
+					portalReturnTag.putDouble("PosY", container.y());
+					portalReturnTag.putDouble("PosZ", container.z());
 
 					portalCoordinatesNBT.put(entry.getKey().location().toString(), portalReturnTag);
 				}
 
 				baseTag.put("PortalMap", portalCoordinatesNBT);
+			}
+
+			if (checkpoint != null) {
+				CompoundTag checkpointTag = new CompoundTag();
+
+				checkpointTag.putDouble("x", this.checkpoint.x());
+				checkpointTag.putDouble("y", this.checkpoint.y());
+				checkpointTag.putDouble("z", this.checkpoint.z());
+				checkpointTag.putFloat("pitch", this.checkpoint.pitch());
+				checkpointTag.putFloat("yaw", this.checkpoint.yaw());
+
+				baseTag.put("Checkpoint", checkpointTag);
 			}
 		}
 
@@ -633,8 +718,8 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	public final class PlayerEquipment implements AoAPlayerEventListener {
 		private final ServerPlayerDataManager playerDataManager;
 
-		private HashMap<String, Integer> cooldowns = new HashMap<String, Integer>(1);
-		private HashMap<AdventArmour.Type, ArmourEffectWrapper> armourMap = new HashMap<AdventArmour.Type, ArmourEffectWrapper>(4);
+		private HashMap<String, Integer> cooldowns = new HashMap<>(1);
+		private HashMap<AdventArmour.Type, ArmourEffectWrapper> armourMap = new HashMap<>(4);
 
 		private boolean checkEquipment = true;
 
@@ -923,7 +1008,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 		private class ArmourEffectWrapper {
 			private final AdventArmour armour;
-			private final HashSet<EquipmentSlot> currentSlots = new HashSet<EquipmentSlot>(4);
+			private final HashSet<EquipmentSlot> currentSlots = new HashSet<>(4);
 
 			private ArmourEffectWrapper(AdventArmour armour, EquipmentSlot firstSlotEquipped) {
 				this.armour = armour;

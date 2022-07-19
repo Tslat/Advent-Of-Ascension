@@ -1,5 +1,6 @@
 {
   "parent": "aoa3:block/portal_ns",
+  "render_type": "minecraft:translucent",
   "textures": {
     "particle": "aoa3:block/crystevia_portal",
     "texture": "aoa3:block/crystevia_portal"

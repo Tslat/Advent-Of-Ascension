@@ -1,0 +1,15 @@
+{
+  "biomes": {
+    "if_all": [
+      "#minecraft:is_overworld"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:charger",
+      "maxCount": 3,
+      "minCount": 1,
+      "weight": 30
+    }
+  ]
+}

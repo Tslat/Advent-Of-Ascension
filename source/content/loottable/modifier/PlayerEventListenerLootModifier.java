@@ -1,8 +1,8 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -11,9 +11,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.event.AoAPlayerEvents;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -21,10 +20,16 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nonnull;
 
 public class PlayerEventListenerLootModifier extends LootModifier {
+	public static final Codec<PlayerEventListenerLootModifier> CODEC = RecordCodecBuilder.create(builder -> codecStart(builder).apply(builder, PlayerEventListenerLootModifier::new));
 	private static final LootContextParam<?>[] ENTITY_SOURCE_PARAMS = new LootContextParam<?>[] {LootContextParams.THIS_ENTITY, LootContextParams.DIRECT_KILLER_ENTITY, LootContextParams.KILLER_ENTITY, LootContextParams.LAST_DAMAGE_PLAYER};
 
 	public PlayerEventListenerLootModifier(LootItemCondition[] conditions) {
 		super(conditions);
+	}
+
+	@Override
+	public Codec<? extends IGlobalLootModifier> codec() {
+		return CODEC;
 	}
 
 	@Nonnull
@@ -43,21 +48,5 @@ public class PlayerEventListenerLootModifier extends LootModifier {
 		}
 
 		return generatedLoot;
-	}
-
-	public static class Serializer extends GlobalLootModifierSerializer<PlayerEventListenerLootModifier> {
-		@Override
-		public PlayerEventListenerLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] lootConditions) {
-			return new PlayerEventListenerLootModifier(lootConditions);
-		}
-
-		@Override
-		public JsonObject write(PlayerEventListenerLootModifier instance) {
-			JsonObject json = makeConditions(instance.conditions);
-
-			json.addProperty("type", ForgeRegistries.LOOT_MODIFIER_SERIALIZERS.get().getKey(this).toString());
-
-			return json;
-		}
 	}
 }

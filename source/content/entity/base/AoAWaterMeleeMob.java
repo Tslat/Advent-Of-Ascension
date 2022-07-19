@@ -23,11 +23,9 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoAEntityData;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -101,11 +99,6 @@ public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAn
 
 	protected int getPreAttackTime() {
 		return 0;
-	}
-
-	@Override
-	public float getWalkTargetValue(BlockPos pos, LevelReader world) {
-		return AoAEntityData.SpawnConditions.DAYLIGHT_MOBS.contains(getType()) ? 1 : super.getWalkTargetValue(pos, world);
 	}
 
 	protected void onAttack(Entity target) {}

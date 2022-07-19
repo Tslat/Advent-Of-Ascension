@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/cube_column",
+  "render_type": "minecraft:solid",
   "textures": {
     "end": "aoa3:block/stripped_blood_log_top",
     "side": "aoa3:block/stripped_haunted_eye_log"

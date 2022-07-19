@@ -2,7 +2,6 @@ package net.tslat.aoa3.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -14,15 +13,19 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.CommandBlock;
+import net.minecraft.world.level.block.JigsawBlock;
+import net.minecraft.world.level.block.StructureBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.content.entity.misc.CustomisableLightningBolt;
 
@@ -208,52 +211,36 @@ public final class WorldUtil {
 		return temp;
 	}
 
-	@Nonnull
-	public static ArrayList<Player> getAllPlayersInRegion(Level world, AABB region) {
-		ArrayList<Player> players = new ArrayList<>();
+	public static int getHighestSafeLocation(Level world, int x, int z, boolean allowFluids, int minY) {
+		if (Math.abs(x) > 30000000 || Math.abs(z) > 30000000)
+			return world.getMinBuildHeight();
 
-		for (Player player : world.players()) {
-			if (region.contains(player.position()))
-				players.add(player);
-		}
-
-		return players;
-	}
-
-	public static int getTrueWorldHeight(Level world, int x, int z) {
+		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos();
 		boolean headBlock = false;
 		boolean feetBlock = false;
 
-		try {
-			int height = Math.max(world.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z), world.dimensionType().logicalHeight());
+		for (int i = Math.min(world.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) + 2, world.dimensionType().logicalHeight()); i > minY; i--) {
+			BlockState state;
 
-			if (Math.abs(x) > 30000000 || Math.abs(z) > 30000000)
-				return 0;
-
-			for (int i = height; i > 0; i--) {
-				if (world.getBlockState(new BlockPos(x, i, z)).getBlock() == Blocks.AIR) {
-					if (headBlock) {
-						if (!feetBlock)
-							feetBlock = true;
-					}
-					else {
-						headBlock = true;
-					}
+			if ((state = world.getBlockState(testPos.set(x, i, z))).isAir() || (allowFluids && state.getMaterial().isLiquid())) {
+				if (headBlock) {
+					if (!feetBlock)
+						feetBlock = true;
 				}
 				else {
-					if (headBlock && feetBlock)
-						return i;
-
-					headBlock = false;
-					feetBlock = false;
+					headBlock = true;
 				}
 			}
-		}
-		catch (Exception e) {
-			return 0;
+			else if (!headBlock || !feetBlock) {
+				headBlock = false;
+				feetBlock = false;
+			}
+			else {
+				return i;
+			}
 		}
 
-		return 0;
+		return minY;
 	}
 
 	public static boolean canPlaceBlock(LevelAccessor world, BlockPos pos, @Nullable Entity entity, @Nullable ItemStack stack) {
@@ -278,7 +265,7 @@ public final class WorldUtil {
 				if (stack.isEmpty())
 					return false;
 
-				return stack.hasAdventureModePlaceTagForBlock(getBlockRegistry(activeWorld), new BlockInWorld(activeWorld, pos, false));
+				return stack.hasAdventureModePlaceTagForBlock(RegistryUtil.getVanillaRegistry(activeWorld, ForgeRegistries.BLOCKS), new BlockInWorld(activeWorld, pos, false));
 			}
 		}
 
@@ -307,7 +294,7 @@ public final class WorldUtil {
 				if (stack.isEmpty())
 					return false;
 
-				return stack.hasAdventureModeBreakTagForBlock(getBlockRegistry(activeWorld), new BlockInWorld(activeWorld, pos, false));
+				return stack.hasAdventureModeBreakTagForBlock(RegistryUtil.getVanillaRegistry(activeWorld, ForgeRegistries.BLOCKS), new BlockInWorld(activeWorld, pos, false));
 			}
 		}
 
@@ -343,10 +330,6 @@ public final class WorldUtil {
 		}
 
 		return matches;
-	}
-
-	public static Registry<Block> getBlockRegistry(Level level) {
-		return level.registryAccess().registryOrThrow(Registry.BLOCK_REGISTRY);
 	}
 
 	public static boolean isWorld(ServerLevelAccessor world, ResourceKey<Level>... keys) {

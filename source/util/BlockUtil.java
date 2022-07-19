@@ -325,7 +325,7 @@ public final class BlockUtil {
 		public SpawnerBuilder withSpawn(int weight, EntityType<?> entity, SpawnData.CustomSpawnRules spawnRules) {
 			CompoundTag tag = new CompoundTag();
 
-			tag.putString("id", ForgeRegistries.ENTITIES.getKey(entity).toString());
+			tag.putString("id", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
 
 			return withSpawn(weight, tag, spawnRules);
 		}

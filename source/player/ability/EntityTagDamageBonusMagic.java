@@ -28,7 +28,7 @@ public class EntityTagDamageBonusMagic extends EntityTagDamageBonus {
 
 	@Override
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
-		if (ev.getEntityLiving().getType().is(tag) && DamageUtil.isMagicDamage(ev.getSource(), ev.getEntityLiving(), ev.getAmount()))
+		if (ev.getEntity().getType().is(tag) && DamageUtil.isMagicDamage(ev.getSource(), ev.getEntity(), ev.getAmount()))
 			ev.setAmount(ev.getAmount() * (1 + getScaledValue()));
 	}
 }

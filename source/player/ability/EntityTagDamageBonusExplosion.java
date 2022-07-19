@@ -27,7 +27,7 @@ public class EntityTagDamageBonusExplosion extends EntityTagDamageBonus {
 
 	@Override
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
-		if (ev.getEntityLiving().getType().is(tag) && ev.getSource().isExplosion())
+		if (ev.getEntity().getType().is(tag) && ev.getSource().isExplosion())
 			ev.setAmount(ev.getAmount() * (1 + getScaledValue()));
 	}
 }

@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:translucent",
   "textures": {
-    "all": "aoa3:block/purple_crystal_block"
+    "all": "aoa3:block/purple_crystal_block",
+    "particle": "aoa3:block/purple_crystal_block"
   }
 }

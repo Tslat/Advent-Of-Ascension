@@ -1,6 +1,7 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.tags.TagKey;
+import net.minecraft.tags.TagManager;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -29,7 +30,7 @@ public final class TagUtil {
 	}
 
 	public static ITagManager<EntityType<?>> entityTags() {
-		return ForgeRegistries.ENTITIES.tags();
+		return ForgeRegistries.ENTITY_TYPES.tags();
 	}
 
 	public static ITagManager<Biome> biomeTags() {
@@ -72,7 +73,20 @@ public final class TagUtil {
 		return biomeTags().getTag(tagKey).contains(biome);
 	}
 
-	public static Stream<TagKey<Biome>> getAllTagsFor(Biome biome) {
-		return biomeTags().getReverseTag(biome).get().getTagKeys();
+	public static <T> Stream<TagKey<T>> getAllTagsFor(ITagManager<T> tagManager, T object) {
+		return tagManager.getReverseTag(object).get().getTagKeys();
+	}
+
+	public static <T> Stream<T> getTagContents(ITagManager<T> tagManager, TagKey<T> tag) {
+		return tagManager.getTag(tag).stream();
+	}
+
+	public static <T> boolean isTaggedAsAny(ITagManager<T> tagManager, T object, TagKey<T>... tags) {
+		for (TagKey<T> tag : tags) {
+			if (tagManager.getTag(tag).contains(object))
+				return true;
+		}
+
+		return false;
 	}
 }

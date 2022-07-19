@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.resources.sounds.EntityBoundSoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -22,7 +21,7 @@ import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
+import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
@@ -40,7 +39,7 @@ import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.content.item.misc.WornBook;
 import net.tslat.aoa3.integration.IntegrationManager;
@@ -91,18 +90,16 @@ public final class ClientOperations {
 		OccultBlockRenderer.addOccultBlocks(renderUntil, blocks);
 	}
 
-	public static void registerParticleFactories(ParticleFactoryRegisterEvent ev) {
-		final ParticleEngine ParticleEngine = Minecraft.getInstance().particleEngine;
-
-		ParticleEngine.register(AoAParticleTypes.PORTAL_FLOATER.get(), PortalFloaterParticle.Factory::new);
-		ParticleEngine.register(AoAParticleTypes.SPARKLER.get(), SparklerParticle.Factory::new);
-		ParticleEngine.register(AoAParticleTypes.FLICKERING_SPARKLER.get(), FlickeringSparklerParticle.Factory::new);
-		ParticleEngine.register(AoAParticleTypes.LINGERING_SPARKLER.get(), LingeringSparklerParticle.Factory::new);
-		ParticleEngine.register(AoAParticleTypes.RAINBOW_SPARKLER.get(), RainbowSparklerParticle.Factory::new);
-		ParticleEngine.register(AoAParticleTypes.SWIRLY.get(), SwirlyParticle.Factory::new);
-		ParticleEngine.register(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), new FloatingItemFragmentParticle.Factory());
-		ParticleEngine.register(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), FreezingSnowflakeParticle.Factory::new);
-		ParticleEngine.register(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
+	public static void registerParticleFactories(RegisterParticleProvidersEvent ev) {
+		ev.register(AoAParticleTypes.PORTAL_FLOATER.get(), PortalFloaterParticle.Factory::new);
+		ev.register(AoAParticleTypes.SPARKLER.get(), SparklerParticle.Factory::new);
+		ev.register(AoAParticleTypes.FLICKERING_SPARKLER.get(), FlickeringSparklerParticle.Factory::new);
+		ev.register(AoAParticleTypes.LINGERING_SPARKLER.get(), LingeringSparklerParticle.Factory::new);
+		ev.register(AoAParticleTypes.RAINBOW_SPARKLER.get(), RainbowSparklerParticle.Factory::new);
+		ev.register(AoAParticleTypes.SWIRLY.get(), SwirlyParticle.Factory::new);
+		ev.register(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), new FloatingItemFragmentParticle.Factory());
+		ev.register(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), FreezingSnowflakeParticle.Factory::new);
+		ev.register(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {
@@ -110,7 +107,7 @@ public final class ClientOperations {
 			case SKILL_REQUIREMENT -> {
 				AoASkill skill = AoASkills.getSkill((ResourceLocation)subject);
 
-				if (AoAConfig.CLIENT.useToasts.get()) {
+				if (AoAConfigs.CLIENT.useToasts.get()) {
 					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast(skill, (Integer)value));
 				}
 				else {
@@ -120,7 +117,7 @@ public final class ClientOperations {
 			case RESOURCE_REQUIREMENT -> {
 				AoAResource resource = AoAResources.getResource((ResourceLocation)subject);
 
-				if (AoAConfig.CLIENT.useToasts.get()) {
+				if (AoAConfigs.CLIENT.useToasts.get()) {
 					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast(resource, (Float)value));
 				}
 				else {
@@ -131,7 +128,7 @@ public final class ClientOperations {
 				AoASkill skill2 = AoASkills.getSkill((ResourceLocation)subject);
 				AoAAbility ability = AoAAbilities.getAbility((ResourceLocation)value);
 
-				if (AoAConfig.CLIENT.useToasts.get()) {
+				if (AoAConfigs.CLIENT.useToasts.get()) {
 					Minecraft.getInstance().getToasts().addToast(new AbilityUnlockToast(skill2, ability));
 				}
 				else {

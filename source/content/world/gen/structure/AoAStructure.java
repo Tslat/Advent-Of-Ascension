@@ -20,7 +20,6 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 import net.minecraft.world.level.levelgen.structure.pools.StructureTemplatePool;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructureTypes;
 
@@ -33,11 +32,17 @@ public class AoAStructure extends Structure {
 	public static final Codec<AoAStructure> DEFAULT_CODEC = RecordCodecBuilder.<AoAStructure>mapCodec(codec -> codec.group(aoaSettings()).apply(codec, AoAStructure::new)).codec();
 
 	protected final Settings settings;
+	protected final AoAJigsawAssembler assembler;
 
 	public AoAStructure(Settings settings) {
 		super(settings.toVanillaSettings());
 
 		this.settings = settings;
+		this.assembler = getJigsawAssembler();
+	}
+
+	protected AoAJigsawAssembler getJigsawAssembler() {
+		return new AoAJigsawAssembler();
 	}
 
 	@Override
@@ -47,7 +52,7 @@ public class AoAStructure extends Structure {
 		BlockPos blockpos = new BlockPos(chunkpos.getMinBlockX(), startHeight, chunkpos.getMinBlockZ());
 
 		Pools.forceBootstrap();
-		return JigsawPlacement.addPieces(genContext, this.settings.startPool, this.settings.startJigsawName, this.settings.maxPieces, blockpos, false, this.settings.startHeightmap, 128);
+		return assembler.addPieces(genContext, this.settings.startPool, this.settings.startJigsawName, this.settings.maxPieces, blockpos, this.settings.startHeightmap, 128);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/inner_stairs",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/creeponia_bricks",
     "side": "aoa3:block/creeponia_bricks",

@@ -30,14 +30,12 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.tslat.aoa3.common.registration.AoAAttributes;
-import net.tslat.aoa3.common.registration.AoAEntityData;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
@@ -126,11 +124,6 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 		else {
 			playSound(stepSound, 0.15F, 1.0F);
 		}
-	}
-
-	@Override
-	public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) {
-		return AoAEntityData.SpawnConditions.DAYLIGHT_MOBS.contains(getType()) ? 1 : super.getWalkTargetValue(pos, worldIn);
 	}
 
 	@Override

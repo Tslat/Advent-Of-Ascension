@@ -297,8 +297,9 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
-    "particle": "aoa3:block/vox_log",
+    "particle": "#texture",
     "texture": "aoa3:block/vox_log"
   }
 }

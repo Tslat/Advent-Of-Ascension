@@ -20,6 +20,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:solid",
   "textures": {
     "particle": "aoa3:block/orange_mushroom_block",
     "texture": "aoa3:block/orange_mushroom_block_inside"

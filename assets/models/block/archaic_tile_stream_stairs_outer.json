@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/outer_stairs",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/archaic_tile_stream",
     "side": "aoa3:block/archaic_tile_stream",

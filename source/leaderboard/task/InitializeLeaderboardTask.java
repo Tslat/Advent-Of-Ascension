@@ -2,7 +2,7 @@ package net.tslat.aoa3.leaderboard.task;
 
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -17,12 +17,12 @@ public class InitializeLeaderboardTask extends InsertionTask {
 		beginBatchUpdate(connection);
 
 		try {
-			if (AoAConfig.SERVER.dontCacheDatabase.get())
+			if (AoAConfigs.SERVER.dontCacheDatabase.get())
 				leaderboardConnection.runStatement(connection, "SET DATABASE DEFAULT TABLE TYPE TEXT;");
 
 			leaderboardConnection.runStatement(connection, "CREATE TABLE IF NOT EXISTS Totals (Uuid NCHAR(36), Username VARCHCHAR(20), Total INT, LastUpdate DATE)");
 
-			if (AoAConfig.SERVER.dontCacheDatabase.get())
+			if (AoAConfigs.SERVER.dontCacheDatabase.get())
 				leaderboardConnection.runStatement(connection, "SET TABLE Totals TYPE TEXT");
 
 			for (AoASkill skill : AoARegistries.AOA_SKILLS.getAllRegisteredObjects()) {
@@ -30,7 +30,7 @@ public class InitializeLeaderboardTask extends InsertionTask {
 
 				leaderboardConnection.runStatement(connection, "CREATE TABLE IF NOT EXISTS " + tableName + " (Uuid NCHAR(36), Username VARCHCHAR(20), Level SMALLINT, LastUpdate DATE)");
 
-				if (AoAConfig.SERVER.dontCacheDatabase.get())
+				if (AoAConfigs.SERVER.dontCacheDatabase.get())
 					leaderboardConnection.runStatement(connection, "SET TABLE " + tableName + " TYPE TEXT");
 			}
 		}

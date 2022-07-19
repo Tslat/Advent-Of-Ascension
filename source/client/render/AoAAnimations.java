@@ -2,6 +2,7 @@ package net.tslat.aoa3.client.render;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraftforge.common.ForgeMod;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -43,7 +44,7 @@ public final class AoAAnimations {
 	public static final AnimationBuilder ATTACK_SWIPE_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", false);
 	public static final AnimationBuilder ATTACK_SHOOT_ALTERNATE = new AnimationBuilder().addAnimation("attack.shoot_alternate", false);
 
-	public static <T extends IAnimatable> AnimationController<T> genericIdleController(T entity) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			event.getController().setAnimation(IDLE);
 
@@ -51,7 +52,7 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends IAnimatable> AnimationController<T> genericWalkController(T entity) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericWalkController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
 				event.getController().setAnimation(WALK);
@@ -63,7 +64,7 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends IAnimatable> AnimationController<T> genericSwimController(T entity) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericSwimController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
 				event.getController().setAnimation(SWIM);
@@ -75,7 +76,7 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends IAnimatable> AnimationController<T> genericSwimIdleController(T entity) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericSwimIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
 				event.getController().setAnimation(SWIM);
@@ -88,7 +89,7 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends IAnimatable> AnimationController<T> genericWalkIdleController(T entity) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericWalkIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
 				event.getController().setAnimation(WALK);
@@ -101,7 +102,7 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends IAnimatable> AnimationController<T> genericFlyController(T entity) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericFlyController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			event.getController().setAnimation(FLY);
 
@@ -109,7 +110,7 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends IAnimatable> AnimationController<T> genericFlyIdleController(T entity) {
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericFlyIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
 				event.getController().setAnimation(FLY);
@@ -122,10 +123,36 @@ public final class AoAAnimations {
 		});
 	}
 
-	public static <T extends IAnimatable> AnimationController<T> genericWalkRunIdleController(T entity) {
+	public static <T extends LivingEntity & IAnimatable> AnimationController<T> genericWalkRunIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
-				event.getController().setAnimation(WALK);
+				if (entity.isSprinting()) {
+					event.getController().setAnimation(RUN);
+				}
+				else {
+					event.getController().setAnimation(WALK);
+				}
+			}
+			else {
+				event.getController().setAnimation(IDLE);
+			}
+
+			return PlayState.CONTINUE;
+		});
+	}
+
+	public static <T extends LivingEntity & IAnimatable> AnimationController<T> genericWalkRunSwimIdleController(T entity) {
+		return new AnimationController<T>(entity, "movement", 0, event -> {
+			if (event.isMoving()) {
+				if (false && entity.isInWater() && entity.getFluidTypeHeight(ForgeMod.WATER_TYPE.get()) > entity.getFluidJumpThreshold()) { // Disable until Geckolib fixes fluid movement
+					event.getController().setAnimation(SWIM);
+				}
+				else if (entity.isSprinting()) {
+					event.getController().setAnimation(RUN);
+				}
+				else {
+					event.getController().setAnimation(WALK);
+				}
 			}
 			else {
 				event.getController().setAnimation(IDLE);

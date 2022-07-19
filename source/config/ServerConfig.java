@@ -17,7 +17,7 @@ public final class ServerConfig {
 	public final ForgeConfigSpec.ConfigValue<String> databaseUsername;
 	public final ForgeConfigSpec.ConfigValue<String> databasePassword;
 
-	ServerConfig(ForgeConfigSpec.Builder configBuilder) {
+	public ServerConfig(ForgeConfigSpec.Builder configBuilder) {
 		configBuilder.comment("AoA server-side configuration options").push("General Settings");
 
 		allowUnsafeInfusion = configBuilder

@@ -61,13 +61,13 @@ public class HoeAreaHarvest extends AoAAbility.Instance {
 
 	@Override
 	public void handleBlockInteraction(PlayerInteractEvent.RightClickBlock ev) {
-		if (ev.getWorld().getBlockState(ev.getPos()).is(BlockTags.CROPS)) {
-			Player player = ev.getPlayer();
+		if (ev.getLevel().getBlockState(ev.getPos()).is(BlockTags.CROPS)) {
+			Player player = ev.getEntity();
 			ItemStack heldStack = player.getItemInHand(ev.getHand());
 
 			if (heldStack.getItem() instanceof HoeItem) {
 				int radius = this.levelsPerRadiusIncrease > 0 ? this.baseRadius + ((skill.getLevel(false) - getLevelReq()) / this.levelsPerRadiusIncrease) : this.baseRadius;
-				Level world = ev.getWorld();
+				Level world = ev.getLevel();
 				BlockPos basePos = ev.getPos();
 				BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 
@@ -77,7 +77,7 @@ public class HoeAreaHarvest extends AoAAbility.Instance {
 
 						if (state.getBlock() instanceof CropBlock crop) {
 							if (crop.isMaxAge(state) && WorldUtil.canModifyBlock(world, pos, player, heldStack)) {
-								WorldUtil.harvestAdditionalBlock(world, ev.getPlayer(), pos, true);
+								WorldUtil.harvestAdditionalBlock(world, ev.getEntity(), pos, true);
 
 								if (this.perBlockHoeDamage > 0) {
 									ItemUtil.damageItem(heldStack, player, ev.getHand(), this.perBlockHoeDamage);

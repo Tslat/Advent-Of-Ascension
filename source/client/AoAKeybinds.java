@@ -3,8 +3,8 @@ package net.tslat.aoa3.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.ClientRegistry;
 import net.minecraftforge.client.event.InputEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -27,14 +27,14 @@ public class AoAKeybinds {
 	public static boolean statusSkillGuiMessage = true;
 
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, InputEvent.KeyInputEvent.class, AoAKeybinds::onKeyDown);
-	}
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, InputEvent.Key.class, AoAKeybinds::onKeyDown);
 
-	public static void registerKeybinds() {
-		ClientRegistry.registerKeyBinding(RESOURCE_GUI = new KeyMapping(keyName("resources"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_O), CATEGORY));
-		ClientRegistry.registerKeyBinding(SKILL_GUI = new KeyMapping(keyName("skills"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_UNKNOWN), CATEGORY));
-		ClientRegistry.registerKeyBinding(ADVENT_GUI = new KeyMapping(keyName("adventGui"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_DELETE), CATEGORY));
-		ClientRegistry.registerKeyBinding(ABILITY_ACTION = new KeyMapping(keyName("abilityAction"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_V), CATEGORY));
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterKeyMappingsEvent.class, ev -> {
+			ev.register(RESOURCE_GUI = new KeyMapping(keyName("resources"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_O), CATEGORY));
+			ev.register(SKILL_GUI = new KeyMapping(keyName("skills"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_UNKNOWN), CATEGORY));
+			ev.register(ADVENT_GUI = new KeyMapping(keyName("adventGui"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_DELETE), CATEGORY));
+			ev.register(ABILITY_ACTION = new KeyMapping(keyName("abilityAction"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_V), CATEGORY));
+		});
 	}
 
 	private static String keyName(String id) {
@@ -45,7 +45,7 @@ public class AoAKeybinds {
 		return InputConstants.Type.KEYSYM.getOrCreate(keyCode);
 	}
 
-	private static void onKeyDown(final InputEvent.KeyInputEvent ev) {
+	private static void onKeyDown(final InputEvent.Key ev) {
 		if (RESOURCE_GUI.consumeClick()) {
 			statusResourceGui = !statusResourceGui;
 			statusResourceGuiMessage = false;

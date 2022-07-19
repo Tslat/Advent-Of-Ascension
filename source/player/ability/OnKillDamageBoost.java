@@ -46,13 +46,13 @@ public class OnKillDamageBoost extends AoAAbility.Instance {
 
 	@Override
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
-		if (ev.getEntityLiving().level.getGameTime() < boostExpiry && !ev.getSource().isExplosion())
+		if (ev.getEntity().level.getGameTime() < boostExpiry && !ev.getSource().isExplosion())
 			ev.setAmount(ev.getAmount() * this.modifier);
 	}
 
 	@Override
 	public void handleEntityKill(LivingDeathEvent ev) {
-		this.boostExpiry = ev.getEntityLiving().level.getGameTime() + this.postKillDuration;
+		this.boostExpiry = ev.getEntity().level.getGameTime() + this.postKillDuration;
 	}
 
 	@Override

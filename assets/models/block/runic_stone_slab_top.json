@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/slab_top",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/runic_stone",
     "side": "aoa3:block/runic_stone",

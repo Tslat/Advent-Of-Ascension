@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "all": "aoa3:block/dawn_leaves"
+    "all": "aoa3:block/dawn_leaves",
+    "particle": "aoa3:block/dawn_leaves"
   }
 }

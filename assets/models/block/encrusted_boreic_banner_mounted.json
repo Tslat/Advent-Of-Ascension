@@ -1,5 +1,6 @@
 {
   "parent": "aoa3:block/banner_mounted",
+  "render_type": "minecraft:cutout",
   "textures": {
     "particle": "aoa3:block/encrusted_boreic_banner",
     "texture": "aoa3:block/encrusted_boreic_banner"

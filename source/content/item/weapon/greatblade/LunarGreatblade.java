@@ -28,7 +28,7 @@ public class LunarGreatblade extends BaseGreatblade {
 
 	@Override
 	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
-		return super.getDamageForAttack(target, attacker, swordStack, (float)(RandomUtil.randomValueUpTo(1) * (maxDmg - baseDamage) + baseDamage) - 1);
+		return super.getDamageForAttack(target, attacker, swordStack,  RandomUtil.randomValueBetween(Math.min(baseDamage, maxDmg), maxDmg));
 	}
 
 	@Override

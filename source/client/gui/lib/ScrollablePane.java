@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.gui.GuiUtils;
+import net.minecraftforge.client.gui.ScreenUtils;
 
 @OnlyIn(Dist.CLIENT)
 public abstract class ScrollablePane {
@@ -88,7 +88,7 @@ public abstract class ScrollablePane {
 
 		RenderSystem.enableScissor((int)((left - 1.5) * windowWidthScale), (int)((mcWindow.getScreenHeight() / windowHeightScale - bottom - 2) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale + 2));
 		drawBackground(matrix);
-		GuiUtils.drawGradientRect(matrix.last().pose(), 0, left - 1, top - 1, right + 1, bottom + 1, 0xC0101010, 0xD0101010);
+		ScreenUtils.drawGradientRect(matrix.last().pose(), 0, left - 1, top - 1, right + 1, bottom + 1, 0xC0101010, 0xD0101010);
 		int newTop = top - Math.max(0, (int)distanceScrolled);
 		drawPaneContents(matrix, newTop, left, right, bottom, distanceScrolled, partialTicks);
 		RenderSystem.disableDepthTest();

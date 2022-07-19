@@ -22,7 +22,7 @@ public final class ClientConfig {
 	public final ForgeConfigSpec.BooleanValue partyDeaths;
 	public final ForgeConfigSpec.EnumValue<HealthStatusRenderer.HealthRenderType> healthRenderType;
 
-	ClientConfig(ForgeConfigSpec.Builder specBuilder) {
+	public ClientConfig(ForgeConfigSpec.Builder specBuilder) {
 		specBuilder.comment("AoA client-side configuration options").push("General Settings");
 
 		showXpParticles = specBuilder

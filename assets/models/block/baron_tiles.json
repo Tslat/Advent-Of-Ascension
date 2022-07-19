@@ -42,8 +42,9 @@
       ]
     }
   ],
+  "render_type": "minecraft:solid",
   "textures": {
-    "particle": "aoa3:block/baron_tiles",
+    "particle": "#texture",
     "texture": "aoa3:block/baron_tiles"
   }
 }

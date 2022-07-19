@@ -1,6 +1,6 @@
 {
   "parent": "forge:item/bucket_drip",
-  "applyFluidLuminosity": false,
+  "apply_fluid_luminosity": false,
   "fluid": "aoa3:candied_water",
-  "loader": "forge:bucket"
+  "loader": "forge:fluid_container"
 }

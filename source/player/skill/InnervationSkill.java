@@ -38,7 +38,7 @@ public class InnervationSkill extends AoASkill.Instance {
 
 	@Override
 	public void handlePostOutgoingAttack(LivingDamageEvent ev) {
-		LivingEntity target = ev.getEntityLiving();
+		LivingEntity target = ev.getEntity();
 
 		attackTracker.compute(target.getId(), (id, value) -> {
 			if (value == null)
@@ -50,12 +50,12 @@ public class InnervationSkill extends AoASkill.Instance {
 
 	@Override
 	public void handleEntityKill(LivingDeathEvent ev) {
-		LivingEntity target = ev.getEntityLiving();
+		LivingEntity target = ev.getEntity();
 		Pair<Long, Float> attackEntry = attackTracker.get(target.getId());
 		float damageDealt = attackEntry == null ? 5f : attackEntry.getSecond();
 
 		if (attackEntry != null)
-			attackTracker.remove(ev.getEntityLiving().getId());
+			attackTracker.remove(ev.getEntity().getId());
 
 		if (canGainXp(true))
 			adjustXp(getKillXpForEntity(target, damageDealt), false, false);

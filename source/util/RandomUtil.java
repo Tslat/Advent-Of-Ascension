@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 
 public final class RandomUtil {
 	private static final char[] ALPHANUMERIC_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
-	public static final EasyRandom RANDOM = new EasyRandom(RandomSource.create());
+	public static final EasyRandom RANDOM = new EasyRandom(RandomSource.createThreadSafe());
 
 	public static boolean fiftyFifty() {
 		return RANDOM.fiftyFifty();
@@ -76,8 +76,8 @@ public final class RandomUtil {
 		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world);
 	}
 
-	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, Level world, @Nullable Predicate<BlockState> statePredicate, int tries) {
-		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world, statePredicate, tries);
+	public static BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, int minSpreadX, int minSpreadY, int minSpreadZ, boolean safeSurfacePlacement, Level world, int tries, @Nullable Predicate<BlockState> statePredicate) {
+		return RANDOM.getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, minSpreadX, minSpreadY, minSpreadZ, safeSurfacePlacement, world, tries, statePredicate);
 	}
 
 	public static String getRandomAlphaNumeric(int length) {
@@ -177,16 +177,23 @@ public final class RandomUtil {
 		}
 
 		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, Level world) {
-			return getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, safeSurfacePlacement, world, null, 1);
+			return getRandomPositionWithinRange(centerPos, xRadius, yRadius, zRadius, 0, 0, 0, safeSurfacePlacement, world, 1, null);
 		}
 
-		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, boolean safeSurfacePlacement, Level world, @Nullable Predicate<BlockState> statePredicate, int tries) {
-			BlockPos.MutableBlockPos mutablePos = centerPos.mutable();
+		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, int minSpreadX, int minSpreadY, int minSpreadZ, boolean safeSurfacePlacement, Level world, int tries, @Nullable Predicate<BlockState> statePredicate) {
+			BlockPos.MutableBlockPos mutablePos;
+			xRadius = Math.max(xRadius - minSpreadX, 0);
+			yRadius = Math.max(yRadius - minSpreadY, 0);
+			zRadius = Math.max(zRadius - minSpreadZ, 0);
 
 			for (int i = 0; i < tries; i++) {
-				int newX = (int)Math.floor(mutablePos.getX() + random.nextFloat() * xRadius * 2 - xRadius);
-				int newY = (int)Math.floor(mutablePos.getY() + random.nextFloat() * yRadius * 2 - yRadius);
-				int newZ = (int)Math.floor(mutablePos.getZ() + random.nextFloat() * zRadius * 2 - zRadius);
+				mutablePos = centerPos.mutable();
+				double xAdjust = random.nextFloat() * xRadius * 2 - xRadius;
+				double yAdjust = random.nextFloat() * yRadius * 2 - yRadius;
+				double zAdjust = random.nextFloat() * zRadius * 2 - zRadius;
+				int newX = (int)Math.floor(mutablePos.getX() + xAdjust + minSpreadX * Math.signum(xAdjust));
+				int newY = (int)Math.floor(mutablePos.getY() + yAdjust + minSpreadY * Math.signum(yAdjust));
+				int newZ = (int)Math.floor(mutablePos.getZ() + zAdjust + minSpreadZ * Math.signum(zAdjust));
 
 				mutablePos.set(newX, newY, newZ);
 

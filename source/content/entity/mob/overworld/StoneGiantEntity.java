@@ -120,7 +120,7 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 
 		if (attacker instanceof Silverfish) {
 			if (!level.isClientSide()) {
-				heal(20);
+				heal(level.getDifficulty().getId() * 7);
 				AoAPackets.messageNearbyPlayers(new ServerParticlePacket().particle(ParticleTypes.HEART, attacker), (ServerLevel)level, attacker.position(), 50);
 				playSound(SoundEvents.SILVERFISH_AMBIENT);
 				attacker.discard();
@@ -131,7 +131,7 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 
 		boolean success = super.hurt(source, amount);
 
-		if (success && amount > 1 && !level.isClientSide())
+		if (success && amount > 1 && !level.isClientSide() && !isNoAi())
 			level.addFreshEntity(makeSilverfish(this, attacker));
 
 		return success;
@@ -169,7 +169,13 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
+	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+		ServerParticlePacket packet = new ServerParticlePacket()
+				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3)
+				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3);
+
+		projectile.playSound(AoASounds.ROCK_SMASH.get());
+		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);}
 
 	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {}

@@ -1,4 +1,5 @@
 {
+  "render_type": "minecraft:translucent",
   "textures": {
     "texture": "aoa3:block/toxic_waste_still"
   }

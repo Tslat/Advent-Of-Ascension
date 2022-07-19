@@ -30,7 +30,7 @@ public class NethengeicArmour extends AdventArmour {
 		if (slots == null && plData.player().isOnFire())
 			event.setAmount(event.getAmount() * 1.5f);
 
-		if (slots != null && event.getEntityLiving().isOnFire())
+		if (slots != null && event.getEntity().isOnFire())
 			event.setAmount(event.getAmount() * (1 + (0.1f * slots.size())));
 	}
 

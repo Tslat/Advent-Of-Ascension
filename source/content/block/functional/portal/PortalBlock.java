@@ -29,9 +29,9 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.ITeleporter;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
-import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.content.world.teleporter.specific.*;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -133,7 +133,7 @@ public class PortalBlock extends Block {
 			return;
 
 		if (!world.isClientSide() && !entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
-			if (!AoAConfig.SERVER.allowNonPlayerPortalTravel.get() & !(entity instanceof Player))
+			if (!AoAConfigs.SERVER.allowNonPlayerPortalTravel.get() & !(entity instanceof Player))
 				return;
 
 			if (entity.portalTime > 0) {
@@ -154,7 +154,7 @@ public class PortalBlock extends Block {
 
 				((ServerPlayer)entity).connection.teleport(pos.getX(), pos.getY(), pos.getZ(), entity.getYRot(), entity.getXRot());
 
-				if (portalLoc != null && world.getServer().getLevel(portalLoc.fromDim) == null)
+				if (portalLoc != null && world.getServer().getLevel(portalLoc.fromDim()) == null)
 					portalLoc = null;
 			}
 			else {
@@ -173,7 +173,7 @@ public class PortalBlock extends Block {
 				entity = entity.changeDimension(world.getServer().getLevel(this.world), teleporter);
 			}
 			else {
-				entity = entity.changeDimension(world.getServer().getLevel(portalLoc.fromDim), teleporter);
+				entity = entity.changeDimension(world.getServer().getLevel(portalLoc.fromDim()), teleporter);
 			}
 
 			if (entity != null)

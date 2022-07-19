@@ -19,7 +19,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.model.misc.PlayerHaloModel;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.util.AoAHaloUtil;
 
 public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
@@ -36,7 +36,7 @@ public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, Pla
 
 	@Override
 	public void render(PoseStack matrixStack, MultiBufferSource buffer, int pPackedLight, AbstractClientPlayer player, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-		if (player.isCapeLoaded() && !player.isInvisible() && AoAConfig.CLIENT.showPlayerHalos.get()) {
+		if (player.isCapeLoaded() && !player.isInvisible() && AoAConfigs.CLIENT.showPlayerHalos.get()) {
 			AoAHaloUtil.Type chosenHalo = AoAHaloUtil.getHalo(player.getUUID());
 			float red = 0;
 			float green = 0;

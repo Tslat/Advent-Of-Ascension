@@ -91,7 +91,7 @@ public class StunStrike extends AoAAbility.Instance {
 
 			if (skill.getPlayerDataManager().getResource(AoAResources.ENERGY.get()).consume(this.energyCost, true)) {
 				ServerPlayer player = getPlayer();
-				LivingEntity target = ev.getEntityLiving();
+				LivingEntity target = ev.getEntity();
 
 				AoAScheduler.scheduleSyncronisedTask(() -> {
 					player.swing(InteractionHand.OFF_HAND, true);

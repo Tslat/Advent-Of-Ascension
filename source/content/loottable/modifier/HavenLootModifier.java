@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.loottable.modifier;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
@@ -9,19 +10,25 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
+import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.common.loot.LootModifier;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoADimensions;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nonnull;
 
 public class HavenLootModifier extends LootModifier {
+	public static final Codec<HavenLootModifier> CODEC = RecordCodecBuilder.create(builder -> codecStart(builder).apply(builder, HavenLootModifier::new));
 	public static final ResourceLocation HAVEN_LOOT_TABLE = new ResourceLocation(AdventOfAscension.MOD_ID, "worlds/haven_passive");
 
 	public HavenLootModifier(LootItemCondition[] conditions) {
 		super(conditions);
+	}
+
+	@Override
+	public Codec<? extends IGlobalLootModifier> codec() {
+		return CODEC;
 	}
 
 	@Nonnull
@@ -39,19 +46,5 @@ public class HavenLootModifier extends LootModifier {
 		}
 
 		return generatedLoot;
-	}
-
-	public static class Serializer extends GlobalLootModifierSerializer<HavenLootModifier> {
-		@Override
-		public HavenLootModifier read(ResourceLocation location, JsonObject object, LootItemCondition[] lootConditions) {
-			return new HavenLootModifier(lootConditions);
-		}
-
-		@Override
-		public JsonObject write(HavenLootModifier instance) {
-			JsonObject json = makeConditions(instance.conditions);
-
-			return json;
-		}
 	}
 }

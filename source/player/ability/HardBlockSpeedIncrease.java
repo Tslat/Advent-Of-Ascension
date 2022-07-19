@@ -24,7 +24,7 @@ public class HardBlockSpeedIncrease extends ScalableModAbility {
 
 	@Override
 	public void handleHarvestSpeedCheck(PlayerEvent.BreakSpeed ev) {
-		float hardness = ev.getState().getDestroySpeed(ev.getPlayer().level, ev.getPos());
+		float hardness = ev.getState().getDestroySpeed(ev.getEntity().level, ev.getPos());
 
 		if (hardness > 2)
 			ev.setNewSpeed(ev.getNewSpeed() * (1 + (getScaledValue() * ((hardness - 2) / 48f))));

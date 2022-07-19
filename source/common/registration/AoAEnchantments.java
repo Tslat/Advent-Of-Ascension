@@ -29,7 +29,7 @@ public final class AoAEnchantments {
 	public static final EnchantmentCategory AMMO_CONSUMING = EnchantmentCategory.create("AMMO_CONSUMING", item -> item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff);
 	public static final EnchantmentCategory BULLET_FIRING = EnchantmentCategory.create("BULLET_FIRING", item -> item instanceof BaseGun && !(item instanceof BaseCannon));
 	public static final EnchantmentCategory BLASTER = EnchantmentCategory.create("BLASTER", item -> item instanceof BaseBlaster);
-	public static final EnchantmentCategory UNSTACKABLE = EnchantmentCategory.create("UNSTACKABLE", item -> item != null && item.getItemStackLimit(new ItemStack(item)) == 0);
+	public static final EnchantmentCategory UNSTACKABLE = EnchantmentCategory.create("UNSTACKABLE", item -> item != null && item.getMaxStackSize(new ItemStack(item)) == 0);
 	public static final EnchantmentCategory LIGHT_GUN = EnchantmentCategory.create("DUAL_WIELDABLE_GUN", item -> item instanceof BaseGun && !(item instanceof BaseSniper) && !(item instanceof BaseCannon));
 
 	public static final RegistryObject<Enchantment> ARCHMAGE = registerEnchantment("archmage", ArchmageEnchantment::new);

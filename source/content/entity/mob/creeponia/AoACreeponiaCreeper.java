@@ -152,7 +152,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 			}
 		}
 
-		if (!net.minecraftforge.common.ForgeHooks.onLivingUpdate(this)) {
+		if (!net.minecraftforge.common.ForgeHooks.onLivingTick(this)) {
 			if (!level.isClientSide)
 				setSharedFlag(6, isCurrentlyGlowing());
 

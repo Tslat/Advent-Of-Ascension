@@ -8,7 +8,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -37,7 +37,7 @@ public class HarvestReplant extends ScalableModAbility {
 		BlockState state = ev.getState();
 
 		if (state.getBlock() instanceof CropBlock crop && testAsChance()) {
-			LevelAccessor world = ev.getWorld();
+			LevelAccessor world = ev.getLevel();
 			BlockPos pos = ev.getPos();
 
 			if (ItemUtil.findInventoryItem(ev.getPlayer(), crop.getCloneItemStack(world, pos, state), true, 1))

@@ -28,7 +28,7 @@ public class ZargoniteArmour extends AdventArmour {
 
 	@Override
 	public void onDamageDealt(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots != null && DamageUtil.isMagicDamage(event.getSource(), event.getEntityLiving(), event.getAmount()))
+		if (slots != null && DamageUtil.isMagicDamage(event.getSource(), event.getEntity(), event.getAmount()))
 			event.setAmount((float)(event.getAmount() * (1 + (0.1 * slots.size()))));
 	}
 

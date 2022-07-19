@@ -58,7 +58,7 @@ public class JumpBoost extends ScalableModAbility {
 
 	@Override
 	public void handlePlayerJump(LivingEvent.LivingJumpEvent ev) {
-		LivingEntity entity = ev.getEntityLiving();
+		LivingEntity entity = ev.getEntity();
 		Vec3 oldMotion = entity.getDeltaMovement();
 		Vec3 newMotion;
 

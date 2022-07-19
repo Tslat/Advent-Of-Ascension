@@ -6,8 +6,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.function.Consumer;
@@ -16,11 +16,9 @@ public final class AoAGameRules {
 	private static GameRules.Key<GameRules.BooleanValue> DESTRUCTIVE_WEAPON_PHYSICS = null;
 	private static GameRules.Key<GameRules.BooleanValue> STRONGER_MOB_GRIEFING = null;
 
-	public static void registerGameRules(FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			registerBooleanGameRule(key -> DESTRUCTIVE_WEAPON_PHYSICS = key, "destructiveWeaponPhysics", GameRules.Category.PLAYER, false);
-			registerBooleanGameRule(key -> STRONGER_MOB_GRIEFING = key, "doStrongerMobGriefing", GameRules.Category.MOBS, false);
-		});
+	public static void lateInit() {
+		registerBooleanGameRule(key -> DESTRUCTIVE_WEAPON_PHYSICS = key, "destructiveWeaponPhysics", GameRules.Category.PLAYER, false);
+		registerBooleanGameRule(key -> STRONGER_MOB_GRIEFING = key, "doStrongerMobGriefing", GameRules.Category.MOBS, false);
 	}
 
 	private static void registerBooleanGameRule(Consumer<GameRules.Key<GameRules.BooleanValue>> valueConsumer, String name, GameRules.Category category, boolean defaultValue) {

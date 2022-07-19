@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/pressure_plate_down",
+  "render_type": "minecraft:solid",
   "textures": {
     "texture": "aoa3:block/creep_planks"
   }

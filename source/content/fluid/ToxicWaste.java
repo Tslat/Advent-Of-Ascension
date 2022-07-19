@@ -2,7 +2,7 @@ package net.tslat.aoa3.content.fluid;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.client.IFluidTypeRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.fluid.renderproperties.ToxicWasteRenderProperties;
@@ -26,7 +26,7 @@ public final class ToxicWaste extends FluidType {
 	}
 
 	@Override
-	public void initializeClient(Consumer<IFluidTypeRenderProperties> consumer) {
+	public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
 		consumer.accept(new ToxicWasteRenderProperties());
 	}
 }

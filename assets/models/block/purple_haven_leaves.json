@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "all": "aoa3:block/purple_haven_leaves"
+    "all": "aoa3:block/purple_haven_leaves",
+    "particle": "aoa3:block/purple_haven_leaves"
   }
 }

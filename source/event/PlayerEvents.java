@@ -35,14 +35,15 @@ import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoATools;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
 import net.tslat.aoa3.content.item.misc.summoning.BossSpawningItem;
@@ -53,6 +54,7 @@ import net.tslat.aoa3.event.dimension.LelyetiaEvents;
 import net.tslat.aoa3.event.dimension.LunalusEvents;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.event.dimension.VoxPondsEvents;
+import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
@@ -67,6 +69,7 @@ public class PlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingEvent.LivingJumpEvent.class, PlayerEvents::onPlayerJump);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingAttackEvent.class, PlayerEvents::onPlayerHit);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingHurtEvent.class, PlayerEvents::onPlayerHurt);
+		forgeBus.addListener(EventPriority.LOWEST, false, LivingDamageEvent.class, PlayerEvents::onPlayerDamaged);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingFallEvent.class, PlayerEvents::onPlayerFall);
 		forgeBus.addListener(EventPriority.LOWEST, false, LivingDeathEvent.class, PlayerEvents::onEntityDeath);
 		forgeBus.addListener(EventPriority.NORMAL, false, BlockEvent.BreakEvent.class, PlayerEvents::onBlockBreak);
@@ -102,8 +105,8 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerHit(final LivingAttackEvent ev) {
-		if (ev.getEntityLiving() instanceof ServerPlayer && ev.getEntityLiving().getHealth() - ev.getAmount() <= 0 && ev.getEntityLiving().level.getLevelData().isHardcore())
-			ReservedItem.handlePlayerDeath((ServerPlayer)ev.getEntityLiving());
+		if (ev.getEntity() instanceof ServerPlayer && ev.getEntity().getHealth() - ev.getAmount() <= 0 && ev.getEntity().level.getLevelData().isHardcore())
+			ReservedItem.handlePlayerDeath((ServerPlayer)ev.getEntity());
 	}
 
 	private static void onPlayerHurt(final LivingHurtEvent ev) {
@@ -113,10 +116,10 @@ public class PlayerEvents {
 			ItemStack weapon = ((LivingEntity)attacker).getItemInHand(InteractionHand.MAIN_HAND);
 
 			if (weapon.getItem() instanceof BaseSword)
-				ev.setAmount((float)((BaseSword)weapon.getItem()).getDamageForAttack(ev.getEntityLiving(), (LivingEntity)attacker, weapon, ev.getAmount()));
+				ev.setAmount((float)((BaseSword)weapon.getItem()).getDamageForAttack(ev.getEntity(), (LivingEntity)attacker, weapon, ev.getAmount()));
 		}
 
-		if (ev.getEntityLiving() instanceof ServerPlayer pl) {
+		if (ev.getEntity() instanceof ServerPlayer pl) {
 			if (pl.getHealth() > 0 && ev.getSource().isExplosion() && ev.getSource().getDirectEntity() instanceof Creeper) {
 				if ((!pl.level.getEntitiesOfClass(PrimedTnt.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level.getEntitiesOfClass(PrimedTnt.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.CREEPONIA_REALMSTONE.get()));
@@ -124,8 +127,39 @@ public class PlayerEvents {
 		}
 	}
 
+	private static void onPlayerDamaged(final LivingDamageEvent ev) {
+		if (ev.getSource() == DamageSource.OUT_OF_WORLD)
+			return;
+
+		if (ev.getEntity() instanceof ServerPlayer pl) {
+			if (pl.getHealth() <= ev.getAmount()) {
+				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
+				PositionAndRotation checkpoint = plData.getCheckpoint();
+
+				if (checkpoint != null) {
+					if (CheckpointBlock.isValidCheckpoint(pl.level, checkpoint)) {
+						PlayerUtil.resetToDefaultStatus(pl);
+						pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN));
+						checkpoint.applyToEntity(pl);
+						ev.setCanceled(true);
+
+						return;
+					}
+					else {
+						plData.clearCheckpoint();
+						pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.invalid", ChatFormatting.RED));
+					}
+				}
+
+				if (ev.getEntity().level.dimension() == AoADimensions.NOWHERE.key) {
+					NowhereEvents.doDeathPrevention(ev, plData);
+				}
+			}
+		}
+	}
+
 	private static void onPlayerFall(final LivingFallEvent ev) {
-		if (ev.getEntityLiving() instanceof ServerPlayer player) {
+		if (ev.getEntity() instanceof ServerPlayer player) {
 			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.LELYETIA_REALMSTONE.get()));
 
@@ -141,8 +175,8 @@ public class PlayerEvents {
 			}
 			else if (ev.getSource().getEntity() instanceof ServerPlayer) {
 				if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.DEEPLANDS.key)) {
-					if (ev.getEntityLiving() instanceof FlyingMob)
-						ev.getEntityLiving().spawnAtLocation(new ItemStack(AoAItems.MUSIC_DISC_CAVERNS.get()), 0.5f);
+					if (ev.getEntity() instanceof FlyingMob)
+						ev.getEntity().spawnAtLocation(new ItemStack(AoAItems.MUSIC_DISC_CAVERNS.get()), 0.5f);
 				}
 			}
 		}
@@ -165,14 +199,14 @@ public class PlayerEvents {
 
 		if (PlayerUtil.isWearingFullSet(player, AdventArmour.Type.HYDRANGIC)) {
 			if (ev.getPlacedBlock().getBlock() instanceof BonemealableBlock && BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), ev.getEntity().level, ev.getPos(), player)) {
-				ev.getWorld().levelEvent(2005, ev.getPos(), 0);
+				ev.getLevel().levelEvent(2005, ev.getPos(), 0);
 				player.hurtArmor(DamageSource.GENERIC, 16);
 			}
 		}
 	}
 
 	private static void onPlayerLogin(final PlayerEvent.PlayerLoggedInEvent ev) {
-		if (ev.getEntityLiving() instanceof ServerPlayer player) {
+		if (ev.getEntity() instanceof ServerPlayer player) {
 			UUID uuid = player.getGameProfile().getId();
 			String msg = null;
 
@@ -207,23 +241,23 @@ public class PlayerEvents {
 
 	private static void onItemToss(final ItemTossEvent ev) {
 		if (ev.getPlayer() instanceof ServerPlayer) {
-			ItemEntity entityItem = ev.getEntityItem();
+			ItemEntity entityItem = ev.getEntity();
 			Item item = entityItem.getItem().getItem();
 
 			if (item == AoAItems.BLANK_REALMSTONE.get()) {
-				if (ev.getPlayer().isInLava()) {
+				if (ev.getEntity().isInLava()) {
 					ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAItems.NETHER_REALMSTONE.get()));
-					ev.getEntityItem().discard();
+					ev.getEntity().discard();
 				}
 			}
 			else if (item instanceof ReservedItem) {
 				ReservedItem.handlePlayerToss(ev);
 			}
 			else if (item instanceof BossSpawningItem bossItem) {
-				net.minecraft.world.level.Level world = ev.getPlayer().getCommandSenderWorld();
+				net.minecraft.world.level.Level world = ev.getEntity().getCommandSenderWorld();
 
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					ev.getPlayer().sendSystemMessage(Component.translatable("message.feedback.spawnBoss.difficultyFail"));
+					ev.getEntity().sendSystemMessage(Component.translatable("message.feedback.spawnBoss.difficultyFail"));
 
 					return;
 				}
@@ -238,8 +272,8 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerPickupXp(final PlayerXpEvent.PickupXp ev) {
-		if (!ev.getPlayer().level.isClientSide && ev.getOrb().value > 0) {
-			ItemStack stack = ItemUtil.getStackFromInventory(ev.getPlayer(), AoATools.EXP_FLASK.get());
+		if (!ev.getEntity().level.isClientSide && ev.getOrb().value > 0) {
+			ItemStack stack = ItemUtil.getStackFromInventory(ev.getEntity(), AoATools.EXP_FLASK.get());
 
 			if (stack != null) {
 				ExpFlask.addExp(stack, ev.getOrb().value);
@@ -251,9 +285,9 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerFishing(final ItemFishedEvent ev) {
-		if (WorldUtil.isWorld(ev.getEntityLiving().level, AoADimensions.LBOREAN.key) && RandomUtil.oneInNChance(10)) {
+		if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.LBOREAN.key) && RandomUtil.oneInNChance(10)) {
 			FishingHook hook = ev.getHookEntity();
-			LivingEntity fisher = ev.getEntityLiving();
+			LivingEntity fisher = ev.getEntity();
 
 			ItemEntity drop = new ItemEntity(fisher.level, hook.getX(), hook.getY(), hook.getZ(), new ItemStack(AoAItems.CALL_OF_THE_DRAKE.get()));
 			double velocityX = fisher.getX() - hook.getX();
@@ -269,5 +303,8 @@ public class PlayerEvents {
 	private static void onDimensionChange(final PlayerEvent.PlayerChangedDimensionEvent ev) {
 		if (ev.getFrom() == AoADimensions.NOWHERE.key)
 			NowhereEvents.doDimensionChange(ev);
+
+		if (ev.getEntity() instanceof ServerPlayer pl)
+			PlayerUtil.getAdventPlayer(pl).clearCheckpoint();
 	}
 }

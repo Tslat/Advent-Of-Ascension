@@ -31,7 +31,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
-import net.tslat.aoa3.common.registration.AoAEntityEffects;
+import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -146,7 +146,7 @@ public class WoodGiantEntity extends AoAMeleeMob {
 					if (getStage() < 3) {
 						setStage(getStage() + 1);
 						particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 3);
-						BleedingEffect.apply(attacker, new EffectBuilder(AoAEntityEffects.BLEEDING.get(), 600).hideParticles().build(), this);
+						BleedingEffect.apply(attacker, new EffectBuilder(AoAMobEffects.BLEEDING.get(), 600).hideParticles().build(), this);
 						playSound(AoASounds.HEAVY_WOOD_SHATTER.get());
 					}
 

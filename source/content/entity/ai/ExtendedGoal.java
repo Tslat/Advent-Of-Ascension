@@ -24,6 +24,8 @@ public abstract class ExtendedGoal<T extends Mob> extends Goal {
 	protected long nextAvailableTime = 0;
 	protected int nextActionTelegraphCompleteTime = 0;
 
+	private boolean trackingTime = false;
+
 	protected ExtendedGoal(T entity) {
 		this.entity = entity;
 	}
@@ -54,35 +56,38 @@ public abstract class ExtendedGoal<T extends Mob> extends Goal {
 
 	public ExtendedGoal<T> maxRuntime(IntProvider ticksProvider) {
 		this.maxRunningTime = ticksProvider;
+		this.trackingTime = true;
 
 		return this;
 	}
 
 	public ExtendedGoal<T> chargeUpTime(int ticks) {
 		this.chargeUpTime = ticks;
+		this.trackingTime = true;
 
 		return this;
 	}
 
 	public ExtendedGoal<T> actionTelegraphTicks(int ticks) {
 		this.actionTelegraphTicks = ticks;
+		this.trackingTime = true;
 
 		return this;
 	}
 
 	@Override
 	public boolean canUse() {
-		return this.nextAvailableTime < entity.level.getGameTime();
+		return this.nextAvailableTime < this.entity.level.getGameTime();
 	}
 
 	@Override
 	public boolean canContinueToUse() {
-		return runningTime < taskExpiresAt;
+		return this.runningTime < this.taskExpiresAt;
 	}
 
 	@Override
 	public boolean requiresUpdateEveryTick() {
-		return true;
+		return this.trackingTime;
 	}
 
 	@Override
@@ -99,7 +104,7 @@ public abstract class ExtendedGoal<T extends Mob> extends Goal {
 		super.stop();
 
 		this.onStop.accept(this);
-		this.nextAvailableTime = entity.level.getGameTime() + this.cooldownProvider.sample(RandomUtil.RANDOM);
+		this.nextAvailableTime = this.entity.level.getGameTime() + this.cooldownProvider.sample(RandomUtil.RANDOM);
 		this.nextActionTelegraphCompleteTime = 0;
 	}
 

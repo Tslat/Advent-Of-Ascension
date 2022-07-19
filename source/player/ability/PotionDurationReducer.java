@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraftforge.event.entity.living.PotionEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -118,8 +118,8 @@ public class PotionDurationReducer extends AoAAbility.Instance {
 	}
 
 	@Override
-	public void handleAppliedPotion(PotionEvent.PotionAddedEvent ev) {
-		MobEffectInstance effect = ev.getPotionEffect();
+	public void handleAppliedPotion(MobEffectEvent.Added ev) {
+		MobEffectInstance effect = ev.getEffectInstance();
 
 		if (!effectMatches(effect))
 			return;

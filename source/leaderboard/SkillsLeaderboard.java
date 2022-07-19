@@ -4,7 +4,7 @@ import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.fml.loading.FileUtils;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.leaderboard.connection.RetrievalConnection;
 import net.tslat.aoa3.leaderboard.task.InitializeLeaderboardTask;
@@ -44,7 +44,7 @@ public class SkillsLeaderboard {
 	}
 
 	public static void init() {
-		enabled.set(AoAConfig.SERVER.skillsLeaderboardEnabled.get());
+		enabled.set(AoAConfigs.SERVER.skillsLeaderboardEnabled.get());
 
 		if (!isEnabled())
 			return;
@@ -74,15 +74,15 @@ public class SkillsLeaderboard {
 
 		Logging.logMessage(Level.INFO, "Starting threads and opening connections for skills database..");
 
-		int maxThreads = AoAConfig.SERVER.maxLeaderboardThreads.get();
+		int maxThreads = AoAConfigs.SERVER.maxLeaderboardThreads.get();
 		int updateThreadCount = maxThreads / 2;
 		int retrievalThreadCount = maxThreads - updateThreadCount;
 		Properties connectionProperties = new Properties();
 		updateThreads = new InsertionConnection[updateThreadCount];
 		retrievalThreads = new RetrievalConnection[retrievalThreadCount];
 
-		connectionProperties.put("user", AoAConfig.SERVER.databaseUsername.get());
-		connectionProperties.put("password", AoAConfig.SERVER.databasePassword.get());
+		connectionProperties.put("user", AoAConfigs.SERVER.databaseUsername.get());
+		connectionProperties.put("password", AoAConfigs.SERVER.databasePassword.get());
 		connectionProperties.put("shutdown", true);
 		connectionProperties.put("hsqldb.log_size", 5);
 

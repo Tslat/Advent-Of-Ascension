@@ -2,40 +2,48 @@ package net.tslat.aoa3.integration;
 
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 
 public class IntegrationManager {
 	static boolean jeiActive = false;
+	static boolean reiActive = false;
 	static boolean jerActive = false;
 	static boolean immersiveEngineeringActive = false;
 	static boolean patchouliActive = false;
 	static boolean tinkersConstructActive = false;
 
 	public static boolean isJEIActive() {
-		return jeiActive && AoAConfig.INTEGRATIONS.jeiIntegrationEnabled.get();
+		return jeiActive && AoAConfigs.INTEGRATIONS.jeiIntegrationEnabled.get();
+	}
+
+	public static boolean isREIActive() {
+		return reiActive && AoAConfigs.INTEGRATIONS.reiIntegrationEnabled.get();
 	}
 
 	public static boolean isJERActive() {
-		return jerActive && AoAConfig.INTEGRATIONS.jerIntegrationEnabled.get();
+		return jerActive && AoAConfigs.INTEGRATIONS.jerIntegrationEnabled.get();
 	}
 
 	public static boolean isImmersiveEngineeringActive() {
-		return immersiveEngineeringActive && AoAConfig.INTEGRATIONS.immersiveEngineeringEnabled.get();
+		return immersiveEngineeringActive && AoAConfigs.INTEGRATIONS.immersiveEngineeringEnabled.get();
 	}
 
 	public static boolean isPatchouliActive() {
-		return patchouliActive && AoAConfig.INTEGRATIONS.patchouliEnabled.get();
+		return patchouliActive && AoAConfigs.INTEGRATIONS.patchouliEnabled.get();
 	}
 
 	public static boolean isTinkersConstructActive() {
-		return tinkersConstructActive && AoAConfig.INTEGRATIONS.tinkersConstructEnabled.get();
+		return tinkersConstructActive && AoAConfigs.INTEGRATIONS.tinkersConstructEnabled.get();
 	}
 
-	public static void preInit() {
+	public static void init() {
 		Logging.logStatusMessage("Checking for third-party integrations");
 
 		if (isModPresent("jei"))
+			jeiPreInit();
+
+		if (isModPresent("rei"))
 			jeiPreInit();
 
 		if (isModPresent("jeresources"))
@@ -53,7 +61,7 @@ public class IntegrationManager {
 		//TinkersFluids.preInit();
 	}
 
-	public static void postInit() {
+	public static void lateInit() {
 		/*if (isJERActive())
 			JERIntegration.postInit();
 
@@ -65,6 +73,12 @@ public class IntegrationManager {
 		Logging.logStatusMessage("Found JEI, integrating");
 
 		jeiActive = true;
+	}
+
+	private static void reiPreInit() {
+		Logging.logStatusMessage("Found REI, integrating");
+
+		reiActive = true;
 	}
 
 	private static void jerPreInit() {

@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:translucent",
   "textures": {
-    "all": "aoa3:block/abyssal_glass"
+    "all": "aoa3:block/abyssal_glass",
+    "particle": "aoa3:block/abyssal_glass"
   }
 }

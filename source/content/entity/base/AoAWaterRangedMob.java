@@ -21,12 +21,10 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoAAttributes;
-import net.tslat.aoa3.common.registration.AoAEntityData;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
@@ -93,11 +91,6 @@ public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAtt
 	protected void onAttack(Entity target) {}
 
 	protected void onHit(DamageSource source, float amount) {}
-
-	@Override
-	public float getWalkTargetValue(BlockPos pos, LevelReader worldIn) {
-		return AoAEntityData.SpawnConditions.DAYLIGHT_MOBS.contains(getType()) ? 1 : super.getWalkTargetValue(pos, worldIn);
-	}
 
 	@Override
 	public boolean doHurtTarget(Entity target) {

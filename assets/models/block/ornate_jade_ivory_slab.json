@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/slab",
+  "render_type": "minecraft:solid",
   "textures": {
     "bottom": "aoa3:block/ornate_jade_ivory",
     "side": "aoa3:block/ornate_jade_ivory",

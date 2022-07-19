@@ -37,7 +37,7 @@ public class LyndamyteArmour extends AdventArmour {
 	@Override
 	public void onDamageDealt(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
 		if (slots == null && DamageUtil.isMeleeDamage(event.getSource()))
-			event.getEntityLiving().setSecondsOnFire(5);
+			event.getEntity().setSecondsOnFire(5);
 	}
 
 	@Override

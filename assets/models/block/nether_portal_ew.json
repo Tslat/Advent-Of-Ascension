@@ -1,5 +1,6 @@
 {
   "parent": "aoa3:block/portal_ew",
+  "render_type": "minecraft:translucent",
   "textures": {
     "particle": "minecraft:block/nether_portal",
     "texture": "minecraft:block/nether_portal"

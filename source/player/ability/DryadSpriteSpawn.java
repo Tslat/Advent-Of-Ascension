@@ -6,7 +6,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.CropBlock;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.level.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -34,7 +34,7 @@ public class DryadSpriteSpawn extends ScalableModAbility {
 			if (!(ev.getState().getBlock() instanceof CropBlock) || !((CropBlock)ev.getState().getBlock()).isMaxAge(ev.getState()) || getPlayer().isCreative())
 				return;
 
-			LevelAccessor world = ev.getWorld();
+			LevelAccessor world = ev.getLevel();
 			BlockPos pos = ev.getPos();
 
 			if (world.getBlockState(pos.above()).isAir()) {

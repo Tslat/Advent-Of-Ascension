@@ -19,8 +19,8 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -35,7 +35,7 @@ public class CorruptedTravellerEntity extends PathfinderMob implements IAnimatab
 	public CorruptedTravellerEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
 
-		setGlowingTag(AoAConfig.SERVER.easyCorruptedTravellers.get());
+		setGlowingTag(AoAConfigs.SERVER.easyCorruptedTravellers.get());
 	}
 
 	@Override
@@ -71,7 +71,7 @@ public class CorruptedTravellerEntity extends PathfinderMob implements IAnimatab
 
 		if (isAlive() && !player.isShiftKeyDown()) {
 			if (!level.isClientSide)
-				openGui(player);
+				openScreen(player);
 
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
@@ -79,8 +79,8 @@ public class CorruptedTravellerEntity extends PathfinderMob implements IAnimatab
 		return super.mobInteract(player, hand);
 	}
 
-	protected void openGui(Player player) {
-		NetworkHooks.openGui((ServerPlayer)player, new MenuProvider() {
+	protected void openScreen(Player player) {
+		NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return CorruptedTravellerEntity.this.getDisplayName();

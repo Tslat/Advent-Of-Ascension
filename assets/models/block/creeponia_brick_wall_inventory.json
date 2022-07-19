@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/wall_inventory",
+  "render_type": "minecraft:solid",
   "textures": {
     "wall": "aoa3:block/creeponia_bricks"
   }

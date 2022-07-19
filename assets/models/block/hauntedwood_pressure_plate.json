@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/pressure_plate_up",
+  "render_type": "minecraft:solid",
   "textures": {
     "texture": "aoa3:block/hauntedwood_planks"
   }

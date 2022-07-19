@@ -1,5 +1,6 @@
 {
   "parent": "minecraft:block/template_fence_gate_wall_open",
+  "render_type": "minecraft:solid",
   "textures": {
     "texture": "aoa3:block/creep_planks"
   }

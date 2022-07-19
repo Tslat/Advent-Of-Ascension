@@ -85,11 +85,11 @@ public class BlockConversion extends AoAAbility.Instance {
 
 	@Override
 	public void handleBlockInteraction(PlayerInteractEvent.RightClickBlock ev) {
-		if (ev.getWorld().getBlockState(ev.getPos()).getBlock() == this.targetBlock) {
-			ItemStack heldStack = ev.getPlayer().getItemInHand(ev.getHand());
+		if (ev.getLevel().getBlockState(ev.getPos()).getBlock() == this.targetBlock) {
+			ItemStack heldStack = ev.getEntity().getItemInHand(ev.getHand());
 
 			if (this.interactionItem == null || heldStack.getItem() == this.interactionItem) {
-				Level world = ev.getWorld();
+				Level world = ev.getLevel();
 				BlockPos pos = ev.getPos();
 				BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
 				BlockState newState = replacementBlock.defaultBlockState();
@@ -102,7 +102,7 @@ public class BlockConversion extends AoAAbility.Instance {
 							for (int z = -radius; z <= radius; z++) {
 								mutablePos.set(pos.getX(), pos.getY() + y, pos.getZ() + z);
 
-								if (world.getBlockState(mutablePos).getBlock() == targetBlock && WorldUtil.canModifyBlock(world, mutablePos, ev.getPlayer(), heldStack)) {
+								if (world.getBlockState(mutablePos).getBlock() == targetBlock && WorldUtil.canModifyBlock(world, mutablePos, ev.getEntity(), heldStack)) {
 									world.setBlockAndUpdate(mutablePos, newState);
 
 									success = true;
@@ -116,7 +116,7 @@ public class BlockConversion extends AoAAbility.Instance {
 							for (int x = -radius; x <= radius; x++) {
 								mutablePos.set(pos.getX() + x, pos.getY() + y, pos.getZ());
 
-								if (world.getBlockState(mutablePos).getBlock() == targetBlock && WorldUtil.canModifyBlock(world, mutablePos, ev.getPlayer(), heldStack)) {
+								if (world.getBlockState(mutablePos).getBlock() == targetBlock && WorldUtil.canModifyBlock(world, mutablePos, ev.getEntity(), heldStack)) {
 									world.setBlockAndUpdate(mutablePos, newState);
 
 									success = true;
@@ -130,7 +130,7 @@ public class BlockConversion extends AoAAbility.Instance {
 							for (int z = -radius; z <= radius; z++) {
 								mutablePos.set(pos.getX() + x, pos.getY(), pos.getZ() + z);
 
-								if (world.getBlockState(mutablePos).getBlock() == targetBlock && WorldUtil.canModifyBlock(world, mutablePos, ev.getPlayer(), heldStack)) {
+								if (world.getBlockState(mutablePos).getBlock() == targetBlock && WorldUtil.canModifyBlock(world, mutablePos, ev.getEntity(), heldStack)) {
 									world.setBlockAndUpdate(mutablePos, newState);
 
 									success = true;
@@ -140,7 +140,7 @@ public class BlockConversion extends AoAAbility.Instance {
 						break;
 				}
 
-				if (success && this.interactionItem != null && !ev.getPlayer().isCreative())
+				if (success && this.interactionItem != null && !ev.getEntity().isCreative())
 					heldStack.shrink(1);
 			}
 		}

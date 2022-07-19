@@ -1,0 +1,18 @@
+{
+  "biomes": {
+    "excluding": [
+      "#forge:is_underground"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:cyclops",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 10
+    }
+  ]
+}

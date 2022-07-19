@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.data.worldgen.Pools;
-import net.minecraft.world.level.levelgen.structure.pools.JigsawPlacement;
 
 import java.util.Optional;
 
@@ -29,9 +28,19 @@ public class SinglePlacementStructure extends AoAStructure {
 	}
 
 	@Override
+	protected AoAJigsawAssembler getJigsawAssembler() {
+		return new AoAJigsawAssembler() {
+			@Override
+			protected boolean ignoreRotations() {
+				return true;
+			}
+		};
+	}
+
+	@Override
 	public Optional<GenerationStub> findGenerationPoint(GenerationContext genContext) {
 		Pools.forceBootstrap();
 
-		return JigsawPlacement.addPieces(genContext, this.settings.startPool(), this.settings.startJigsawName(), this.settings.maxPieces(), this.pos, false, this.settings.startHeightmap(), 128);
+		return assembler.addPieces(genContext, this.settings.startPool(), this.settings.startJigsawName(), this.settings.maxPieces(), this.pos, this.settings.startHeightmap(), 128);
 	}
 }

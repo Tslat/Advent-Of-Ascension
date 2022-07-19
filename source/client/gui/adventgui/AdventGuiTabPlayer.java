@@ -25,7 +25,7 @@ import net.tslat.aoa3.common.packet.packets.AddSkillCyclePacket;
 import net.tslat.aoa3.common.packet.packets.ToggleAoAAbilityPacket;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -271,13 +271,7 @@ public class AdventGuiTabPlayer extends Screen {
 				entityToRender = RandomUtil.getRandomSelection(
 						AoAMobs.ARCWORM,
 						AoAMobs.CHARGER,
-						AoAMobs.DESERT_CHARGER,
-						AoAMobs.HILL_CHARGER,
 						AoAMobs.OCCULENT,
-						AoAMobs.SEA_CHARGER,
-						AoAMobs.SNOW_CHARGER,
-						AoAMobs.SWAMP_CHARGER,
-						AoAMobs.VOID_CHARGER,
 						AoAMobs.CYCLOPS,
 						AoAMobs.STICKY,
 						AoAMobs.KRANKY,
@@ -475,7 +469,7 @@ public class AdventGuiTabPlayer extends Screen {
 				matrix.pushPose();
 				matrix.scale(2, 2, 1);
 				matrix.translate(x, y, 0);
-				renderer.renderInGui(matrix, skill, partialTicks, mouseX, mouseY, AoAConfig.CLIENT.hudSkillProgressRenderType.get(), true);
+				renderer.renderInGui(matrix, skill, partialTicks, mouseX, mouseY, AoAConfigs.CLIENT.hudSkillProgressRenderType.get(), true);
 				matrix.translate(0, -5, 0);
 				matrix.scale(0.5f, 0.5f, 1);
 

@@ -80,7 +80,7 @@ public class DexteritySkill extends AoASkill.Instance {
 
 		float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 10);
 
-		if (ev.getEntityLiving().isSprinting())
+		if (ev.getEntity().isSprinting())
 			xp *= 1.3f;
 
 		cumulativeXp += xp;

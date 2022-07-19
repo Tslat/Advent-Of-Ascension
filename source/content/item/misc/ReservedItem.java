@@ -134,11 +134,11 @@ public class ReservedItem extends Item {
 	}
 
 	public static void handlePlayerToss(ItemTossEvent ev) {
-		Level world = ev.getEntityItem().level;
+		Level world = ev.getEntity().level;
 
 		if (!world.isClientSide()) {
-			if (ev.getEntityItem().getItem().getItem() == AoAItems.MOLTEN_UPGRADER.get() && world.getMoonBrightness() == 1)
-				ev.getEntityItem().setItem(((ReservedItem)AoAItems.MOONSTONE.get()).newValidStack());
+			if (ev.getEntity().getItem().getItem() == AoAItems.MOLTEN_UPGRADER.get() && world.getMoonBrightness() == 1)
+				ev.getEntity().setItem(((ReservedItem)AoAItems.MOONSTONE.get()).newValidStack());
 		}
 	}
 

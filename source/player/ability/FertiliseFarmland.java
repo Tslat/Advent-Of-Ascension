@@ -39,15 +39,15 @@ public class FertiliseFarmland extends AoAAbility.Instance {
 		ItemStack stack = ev.getItemStack();
 
 		if (stack.getItem() == Items.BONE_MEAL) {
-			Level world = ev.getWorld();
+			Level world = ev.getLevel();
 			BlockState state = world.getBlockState(ev.getPos());
 
-			if (state.getBlock() == Blocks.FARMLAND && WorldUtil.canModifyBlock(world, ev.getPos(), ev.getPlayer(), stack)) {
+			if (state.getBlock() == Blocks.FARMLAND && WorldUtil.canModifyBlock(world, ev.getPos(), ev.getEntity(), stack)) {
 				world.setBlock(ev.getPos(), AoABlocks.FERTILISED_FARMLAND.get().defaultBlockState().setValue(FarmBlock.MOISTURE, state.getValue(FarmBlock.MOISTURE)), Block.UPDATE_ALL);
 
-				PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getPlayer(), AoASkills.FARMING.get()), 1), false);
+				PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getEntity(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getEntity(), AoASkills.FARMING.get()), 1), false);
 
-				if (!ev.getPlayer().isCreative())
+				if (!ev.getEntity().isCreative())
 					stack.shrink(1);
 			}
 		}

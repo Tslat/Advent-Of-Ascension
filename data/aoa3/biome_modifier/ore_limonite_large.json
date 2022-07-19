@@ -1,7 +1,7 @@
 {
   "biomes": {
     "if_all": [
-      "#forge:is_overworld",
+      "#minecraft:is_overworld",
       "#forge:is_underground"
     ],
     "if_any": [

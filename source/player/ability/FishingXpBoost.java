@@ -53,7 +53,7 @@ public class FishingXpBoost extends ScalableModAbility {
 			haulingEv.setXp((int)xp);
 		}
 		else {
-			Player player = ev.getPlayer();
+			Player player = ev.getEntity();
 
 			player.level.addFreshEntity(new ExperienceOrb(player.level, player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, RandomUtil.randomNumberBetween(1, 6)));
 		}

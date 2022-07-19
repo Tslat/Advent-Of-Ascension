@@ -9,13 +9,14 @@ import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoAEntityEffects;
-import net.tslat.aoa3.config.AoAConfig;
+import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.util.*;
 
 public class HealthStatusRenderer {
@@ -25,29 +26,29 @@ public class HealthStatusRenderer {
 	private static float lastTickHealth = 0;
 
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, RenderGameOverlayEvent.PreLayer.class, HealthStatusRenderer::onHealthRender);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, false, RenderGuiOverlayEvent.Pre.class, HealthStatusRenderer::onHealthRender);
 	}
 
-	private static void onHealthRender(RenderGameOverlayEvent.PreLayer ev) {
-		if (ev.isCanceled() || ev.getOverlay() != ForgeIngameGui.PLAYER_HEALTH_ELEMENT)
+	private static void onHealthRender(RenderGuiOverlayEvent.Pre ev) {
+		if (ev.isCanceled() || !ev.getOverlay().id().equals(VanillaGuiOverlay.PLAYER_HEALTH.id()))
 			return;
 
-		HealthRenderType renderType = AoAConfig.CLIENT.healthRenderType.get();
+		HealthRenderType renderType = AoAConfigs.CLIENT.healthRenderType.get();
 
 		if (renderType == HealthRenderType.HEARTS)
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
 
-		if (!(mc.gui instanceof ForgeIngameGui gui) || mc.options.hideGui || !gui.shouldDrawSurvivalElements())
+		if (!(mc.gui instanceof ForgeGui gui) || mc.options.hideGui || !gui.shouldDrawSurvivalElements())
 			return;
 
 		LocalPlayer player = mc.player;
 		PoseStack matrix = ev.getPoseStack();
 
 		int left = (mc.getWindow().getGuiScaledWidth() / 2) - 91;
-		int top = mc.getWindow().getGuiScaledHeight() - gui.left_height;
-		gui.left_height += 10;
+		int top = mc.getWindow().getGuiScaledHeight() - gui.leftHeight;
+		gui.leftHeight += 10;
 
 		gui.setupOverlayRenderState(true, false);
 		ev.setCanceled(true);
@@ -61,7 +62,7 @@ public class HealthStatusRenderer {
 		boolean withered = mc.player.hasEffect(MobEffects.WITHER);
 		boolean frozen = mc.player.isFullyFrozen();
 		float absorption = mc.player.getAbsorptionAmount();
-		boolean bleeding = mc.player.hasEffect(AoAEntityEffects.BLEEDING.get());
+		boolean bleeding = mc.player.hasEffect(AoAMobEffects.BLEEDING.get());
 
 		if (renderType == HealthRenderType.NUMERIC) {
 			renderNumeric(matrix, mc, gui, left, top, currentHealth, maxHealth, poisoned, withered, frozen, absorption);
@@ -75,10 +76,9 @@ public class HealthStatusRenderer {
 
 		RenderSystem.disableBlend();
 		mc.getProfiler().pop();
-		MinecraftForge.EVENT_BUS.post(new RenderGameOverlayEvent.Post(matrix, ev, RenderGameOverlayEvent.ElementType.LAYER));
 	}
 
-	private static void renderBar(PoseStack matrix, Minecraft mc, ForgeIngameGui gui, int left, int top, float currentHealth, float maxHealth, boolean poisoned, boolean withered, boolean frozen, float absorption, boolean bleeding) {
+	private static void renderBar(PoseStack matrix, Minecraft mc, ForgeGui gui, int left, int top, float currentHealth, float maxHealth, boolean poisoned, boolean withered, boolean frozen, float absorption, boolean bleeding) {
 		int uvY = 0;
 
 		if (absorption > 0) {
@@ -164,7 +164,7 @@ public class HealthStatusRenderer {
 		matrix.popPose();
 	}
 
-	private static void renderNumeric(PoseStack matrix, Minecraft mc, ForgeIngameGui gui, int left, int top, float currentHealth, float maxHealth, boolean poisoned, boolean withered, boolean frozen, float absorption) {
+	private static void renderNumeric(PoseStack matrix, Minecraft mc, ForgeGui gui, int left, int top, float currentHealth, float maxHealth, boolean poisoned, boolean withered, boolean frozen, float absorption) {
 		int healthColour;
 
 		if (poisoned) {
@@ -179,7 +179,7 @@ public class HealthStatusRenderer {
 
 		matrix.pushPose();
 
-		if (AoAConfig.CLIENT.healthRenderType.get() == HealthRenderType.NUMERIC) {
+		if (AoAConfigs.CLIENT.healthRenderType.get() == HealthRenderType.NUMERIC) {
 			if (absorption > 0)
 				left -= 15;
 
@@ -197,11 +197,11 @@ public class HealthStatusRenderer {
 				}
 			}
 			else {
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfig.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfigs.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
 			}
 		}
 		else {
-			gui.left_height += 2;
+			gui.leftHeight += 2;
 
 			if (absorption > 0)
 				left -= 8;
@@ -220,7 +220,7 @@ public class HealthStatusRenderer {
 				}
 			}
 			else {
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfig.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfigs.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
 			}
 		}
 
@@ -264,7 +264,7 @@ public class HealthStatusRenderer {
 		}
 	}
 
-	private static boolean handleHealthState(LocalPlayer player, ForgeIngameGui gui, float currentHealth) {
+	private static boolean handleHealthState(LocalPlayer player, ForgeGui gui, float currentHealth) {
 		boolean shouldFlash = gui.healthBlinkTime > (long)gui.tickCount && (gui.healthBlinkTime - (long)gui.tickCount) / 3L % 2L == 1L;
 
 		if (currentHealth < gui.lastHealth && player.invulnerableTime > 0) {

@@ -35,10 +35,7 @@ import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.item.tool.misc.HaulingRod;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.AoAPlayerEvents;
-import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -175,7 +172,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0025f);
 		this.fishingBonusMod += 0.25f * lure;
 
-		if (!WorldUtil.getAllPlayersInRegion(level, getBoundingBox().inflate(5)).isEmpty())
+		if (!EntityRetrievalUtil.getPlayers(level, getBoundingBox().inflate(5)).isEmpty())
 			this.fishingBonusMod *= 0.2f;
 	}
 
@@ -447,7 +444,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 				return;
 
 			if (entity instanceof Mob mob) {
-				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, false, level, state -> state.getFluidState().getType() == Fluids.WATER, 5);
+				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, state -> state.getFluidState().getType() == Fluids.WATER);
 
 				mob.setPos(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 				mob.getNavigation().createPath(blockPosition(), 0);

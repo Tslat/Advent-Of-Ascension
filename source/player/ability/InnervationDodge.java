@@ -96,7 +96,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 
 	@Override
 	public void handlePreIncomingAttack(LivingAttackEvent ev) {
-		if (ev.getEntityLiving().level.getGameTime() < activationTime + 5 && DamageUtil.isMeleeDamage(ev.getSource()))
+		if (ev.getEntity().level.getGameTime() < activationTime + 5 && DamageUtil.isMeleeDamage(ev.getSource()))
 			ev.setCanceled(true);
 	}
 

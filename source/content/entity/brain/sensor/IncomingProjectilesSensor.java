@@ -6,7 +6,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.tslat.aoa3.common.registration.AoABrainMemories;
+import net.tslat.aoa3.common.registration.entity.AoABrainMemories;
 
 import java.util.Comparator;
 import java.util.List;

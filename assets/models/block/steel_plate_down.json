@@ -69,5 +69,6 @@
         16
       ]
     }
-  ]
+  ],
+  "render_type": "minecraft:solid"
 }

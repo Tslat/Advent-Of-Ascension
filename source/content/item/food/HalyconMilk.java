@@ -1,9 +1,11 @@
 package net.tslat.aoa3.content.item.food;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -41,9 +43,15 @@ public class HalyconMilk extends Item {
 			EntityUtil.healEntity(entity, 2);
 			entity.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
 
+
 			if (entity instanceof ServerPlayer player) {
 				CriteriaTriggers.CONSUME_ITEM.trigger(player, stack);
 				player.awardStat(Stats.ITEM_USED.get(this));
+
+				for(Pair<MobEffectInstance, Float> pair : stack.getItem().getFoodProperties(stack, player).getEffects()) {
+					if (pair.getFirst() != null && world.random.nextFloat() < pair.getSecond())
+						player.addEffect(new MobEffectInstance(pair.getFirst()));
+				}
 			}
 		}
 

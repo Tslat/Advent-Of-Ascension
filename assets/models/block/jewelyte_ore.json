@@ -1,8 +1,8 @@
 {
-  "parent": "aoa3:block/overlay_cube",
+  "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "overlay": "aoa3:block/jewelyte_ore",
-    "particle": "aoa3:block/pressed_creep_stone",
-    "texture": "aoa3:block/pressed_creep_stone"
+    "all": "aoa3:block/jewelyte_ore",
+    "particle": "aoa3:block/jewelyte_ore"
   }
 }

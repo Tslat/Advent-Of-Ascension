@@ -216,12 +216,12 @@ public class AoAAbility {
 
 		@OnlyIn(Dist.CLIENT)
 		public boolean onGuiClick(final int mouseX, final int mouseY) {
-			return getListenerState() != ListenerState.DEACTIVATED;
+			return getListenerState() == ListenerState.ACTIVE || getListenerState() == ListenerState.MANUALLY_DISABLED;
 		}
 
 		@OnlyIn(Dist.CLIENT)
 		public boolean onGuiHover(final int mouseX, final int mouseY) {
-			return getListenerState() != ListenerState.DEACTIVATED;
+			return getListenerState() == ListenerState.ACTIVE || getListenerState() == ListenerState.MANUALLY_DISABLED;
 		}
 	}
 }

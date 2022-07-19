@@ -1,6 +1,8 @@
 {
   "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:solid",
   "textures": {
-    "all": "aoa3:block/fungal_dirt"
+    "all": "aoa3:block/fungal_dirt",
+    "particle": "aoa3:block/fungal_dirt"
   }
 }

@@ -97,7 +97,7 @@ public class DoubleJump extends AoAAbility.Instance {
 	@Override
 	public void handlePlayerFall(LivingFallEvent ev) {
 		if (!canJump)
-			ev.setDistance(ev.getDistance() - ev.getEntityLiving().getJumpPower() * 10f);
+			ev.setDistance(ev.getDistance() - ev.getEntity().getJumpPower() * 10f);
 
 		canJump = true;
 	}
