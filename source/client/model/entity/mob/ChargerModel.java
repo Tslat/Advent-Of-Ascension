@@ -14,7 +14,7 @@ public class ChargerModel extends EntityGeoModel<ChargerEntity> {
 	public ResourceLocation getModelResource(ChargerEntity charger) {
 		ChargerEntity.Type variant = charger.chargerType();
 
-		return AdventOfAscension.id("geo/entity/mob/overworld/" + (variant == ChargerEntity.Type.DEFAULT ? "charger" : variant.name + "_charger") + ".png");
+		return AdventOfAscension.id("geo/entity/mob/overworld/" + (variant == ChargerEntity.Type.DEFAULT ? "charger" : variant.name + "_charger") + ".geo.json");
 	}
 
 	@Override
