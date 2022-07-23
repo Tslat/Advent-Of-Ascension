@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:overworld/root",
+  "criteria": {
+    "legitimate": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.by_the_books.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:command_block"
+    },
+    "show_toast": false,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.by_the_books.title"
+    }
+  },
+  "requirements": [
+    [
+      "legitimate"
+    ]
+  ]
+}

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.util;
 
 import com.google.common.collect.Multimap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
@@ -276,7 +277,7 @@ public final class ItemUtil {
 			return false;
 		}
 		else {
-			ArrayList<ItemStack> matchedStacks = new ArrayList<>();
+			List<ItemStack> matchedStacks = new ObjectArrayList<>();
 			int foundCount = 0;
 			ItemStack checkStack;
 
@@ -376,7 +377,7 @@ public final class ItemUtil {
 			return false;
 		}
 		else {
-			ArrayList<ItemStack> matchedStacks = new ArrayList<>();
+			List<ItemStack> matchedStacks = new ObjectArrayList<>();
 			int foundCount = 0;
 			ItemStack checkStack;
 
@@ -667,7 +668,7 @@ public final class ItemUtil {
 			return Collections.emptyList();
 		}
 
-		ArrayList<ItemStack> newStacks = new ArrayList<>((int)((addAmount + stack.getCount()) / (float)maxCount));
+		List<ItemStack> newStacks = new ObjectArrayList<>((int)((addAmount + stack.getCount()) / (float)maxCount));
 
 		while (addAmount > 0) {
 			ItemStack copy = stack.copy();

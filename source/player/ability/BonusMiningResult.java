@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,6 @@ import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ItemUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BonusMiningResult extends ScalableModAbility {
@@ -55,7 +55,7 @@ public class BonusMiningResult extends ScalableModAbility {
 			}
 		}
 
-		List<ItemStack> extraStacks = new ArrayList<>();
+		List<ItemStack> extraStacks = new ObjectArrayList<>();
 
 		for (ItemStack stack : loot) {
 			extraStacks.addAll(ItemUtil.increaseStackSize(stack, 1));

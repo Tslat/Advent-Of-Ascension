@@ -1,0 +1,40 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_shoe_flinger": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:shoe_flinger"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.the_ultimate_weapon.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:shoe_flinger",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.the_ultimate_weapon.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_shoe_flinger"
+    ]
+  ]
+}

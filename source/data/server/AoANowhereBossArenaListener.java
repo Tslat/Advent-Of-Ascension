@@ -1,0 +1,215 @@
+package net.tslat.aoa3.data.server;
+
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.mojang.datafixers.util.Either;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.JsonOps;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureStart;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.*;
+import org.apache.logging.log4j.Level;
+
+import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Predicate;
+
+public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListener {
+	private static final List<NowhereBossArena> REGISTERED_ARENAS = new ObjectArrayList<>();
+	private static final String folder = "worldgen/nowhere_boss_arenas";
+
+	public AoANowhereBossArenaListener() {
+		super(new GsonBuilder().setPrettyPrinting().create(), folder);
+	}
+
+	@Override
+	protected void apply(Map<ResourceLocation, JsonElement> entryMap, ResourceManager resourceManager, ProfilerFiller profiler) {
+		REGISTERED_ARENAS.clear();
+
+		for (Map.Entry<ResourceLocation, JsonElement> entry : entryMap.entrySet()) {
+			Either<NowhereBossArena, DataResult.PartialResult<NowhereBossArena>> result = NowhereBossArena.CODEC.parse(JsonOps.INSTANCE, entry.getValue()).get();
+
+			if (result.right().isPresent()) {
+				Logging.logMessage(Level.ERROR, "Unable to deserialize boss arena, disabling. (" + entry.getKey() + ") " + result.right().get().message());
+
+				continue;
+			}
+
+			NowhereBossArena nowhereBossArena = result.left().get();
+
+			if (nowhereBossArena.playerSpawnPoints.isEmpty()) {
+				Logging.logMessage(Level.ERROR, "No player spawn points provided for boss arena, disabling arena. " + entry.getKey());
+
+				continue;
+			}
+
+			if (nowhereBossArena.bossSpawnPoints.isEmpty()) {
+				Logging.logMessage(Level.ERROR, "No boss spawn points provided for boss arena, disabling arena. " + entry.getKey());
+
+				continue;
+			}
+
+			REGISTERED_ARENAS.add(nowhereBossArena);
+		}
+	}
+
+	@Nullable
+	public static NowhereBossArena getFreeArena(ServerLevel level) {
+		if (RandomUtil.oneInNChance(5))
+			ObjectUtil.fastShuffleList(REGISTERED_ARENAS);
+
+		for (NowhereBossArena arena : REGISTERED_ARENAS) {
+			if (arena.checkAndClear(level))
+				return arena;
+		}
+
+		return null;
+	}
+
+	public static class NowhereBossArena {
+		public static final Codec<NowhereBossArena> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+				ResourceLocation.CODEC.fieldOf("structure_id").forGetter(arena -> arena.structureId),
+				BlockPos.CODEC.fieldOf("arena_pos").forGetter(arena -> arena.structurePos),
+				Vec3.CODEC.listOf().fieldOf("player_spawns").forGetter(arena -> arena.playerSpawnPoints),
+				Vec3.CODEC.listOf().fieldOf("boss_spawns").forGetter(arena -> arena.bossSpawnPoints)
+		).apply(builder, NowhereBossArena::new));
+
+		public final ResourceLocation structureId;
+		private final BlockPos structurePos;
+		private final List<Vec3> playerSpawnPoints;
+		private final List<Vec3> bossSpawnPoints;
+
+		private Structure structure = null;
+		private StructureStart structureStart = null;
+		private AABB structureBounds = null;
+
+		public NowhereBossArena(ResourceLocation structureId, BlockPos structurePos, List<Vec3> playerSpawnPoints, List<Vec3> bossSpawnPoints) {
+			this.structureId = structureId;
+			this.structurePos = structurePos;
+			this.playerSpawnPoints = playerSpawnPoints;
+			this.bossSpawnPoints = bossSpawnPoints;
+		}
+
+		public boolean checkAndClear(ServerLevel level) {
+			if (!getPlayersInside(level).isEmpty())
+				return false;
+
+			for (Entity entity : getEntitiesInside(level)) {
+				entity.discard();
+			}
+
+			return true;
+		}
+
+		public void placePlayersAndBoss(ServerLevel level, List<ServerPlayer> players, Predicate<ServerPlayer> playerStillValid, BiFunction<ServerLevel, Vec3, Entity> bossFunction) {
+			if (players.isEmpty())
+				return;
+
+			StructureStart structureStart = getStructureStart(level);
+
+			if (structureStart == null)
+				return;
+
+			AoAScheduler.scheduleSyncronisedTask(() -> {
+				boolean spawnBoss = false;
+
+				for (ServerPlayer player : players) {
+					if (playerStillValid.test(player)) {
+						Vec3 pos = RandomUtil.getRandomSelection(playerSpawnPoints);
+						spawnBoss = true;
+
+						player.connection.teleport(pos.x, pos.y, pos.z, 0, 0);
+						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+						player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.bossWarning"));
+					}
+				}
+
+				if (spawnBoss)
+					AoAScheduler.scheduleSyncronisedTask(() -> bossFunction.apply(level, RandomUtil.getRandomSelection(bossSpawnPoints)), 100);
+			}, 100);
+
+			for (ServerPlayer player : players) {
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.teleportWarning"));
+			}
+		}
+
+		@Nullable
+		private Structure getStructure(ServerLevel level) {
+			if (this.structure != null)
+				return this.structure;
+
+			this.structure = level.registryAccess().registry(Registry.STRUCTURE_REGISTRY).get().get(structureId);
+
+			return this.structure;
+		}
+
+		@Nullable
+		private StructureStart getStructureStart(ServerLevel level) {
+			if (this.structureStart != null)
+				return this.structureStart;
+
+			Structure structure = getStructure(level);
+
+			if (structure == null)
+				return null;
+
+			this.structureStart = level.structureManager().getStructureAt(structurePos, structure);
+
+			return this.structureStart;
+		}
+
+		@Nullable
+		public AABB getStructureBounds(ServerLevel level) {
+			if (this.structureBounds != null)
+				return this.structureBounds;
+
+			StructureStart structureStart = getStructureStart(level);
+
+			if (structureStart == null)
+				return null;
+
+			this.structureBounds = AABB.of(structureStart.getBoundingBox());
+
+			return this.structureBounds;
+		}
+
+		public List<Player> getPlayersInside(ServerLevel level) {
+			AABB bounds = getStructureBounds(level);
+
+			if (bounds == null)
+				return List.of();
+
+			return EntityRetrievalUtil.getPlayers(level, bounds);
+		}
+
+		public List<Entity> getEntitiesInside(ServerLevel level) {
+			AABB bounds = getStructureBounds(level);
+
+			if (bounds == null)
+				return List.of();
+
+			return EntityRetrievalUtil.getEntities(level, bounds, entity -> true);
+		}
+	}
+}

@@ -4,13 +4,16 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
+import net.tslat.aoa3.util.WorldUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
@@ -47,6 +50,16 @@ public class SkillMasterEntity extends AoATrader {
 	@Override
 	public Int2ObjectMap<VillagerTrades.ItemListing[]> getTradesMap() {
 		return TRADES;
+	}
+
+	@Override
+	public boolean requiresCustomPersistence() {
+		return super.requiresCustomPersistence() || WorldUtil.isWorld(level, AoADimensions.NOWHERE.key);
+	}
+
+	@Override
+	public boolean isInvulnerableTo(DamageSource source) {
+		return super.isInvulnerableTo(source) || (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key) && source != DamageSource.OUT_OF_WORLD);
 	}
 
 	@Override

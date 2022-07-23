@@ -46,6 +46,7 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
+import net.tslat.aoa3.content.item.misc.ReturnCrystal;
 import net.tslat.aoa3.content.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.content.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
@@ -267,6 +268,9 @@ public class PlayerEvents {
 
 				if (bossItem.getThrowingSound() != null)
 					world.playSound(null, entityItem.getX(), entityItem.getX(), entityItem.getZ(), bossItem.getThrowingSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
+			}
+			else if (item instanceof ReturnCrystal) {
+				ev.setCanceled(true);
 			}
 		}
 	}

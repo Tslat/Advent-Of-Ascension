@@ -53,7 +53,7 @@ public final class RestrictionEventHandler {
 		handleEventIf(EntityTeleportEvent.class, ev -> {
 				cancelEvent(ev);
 				PlayerUtil.notifyPlayer((Player)ev.getEntity(), Component.translatable("message.feedback.nowhere.teleport"));
-			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+			}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && !(ev instanceof EntityTeleportEvent.TeleportCommand) && !(ev instanceof EntityTeleportEvent.SpreadPlayersCommand));
 
 		handleEventIf(PlayerInteractEvent.RightClickBlock.class,
 				RestrictionEventHandler::handleRightClickBlock,

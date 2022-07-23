@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -10,7 +11,6 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class DoubleDropsChance extends ScalableModAbility {
@@ -49,7 +49,7 @@ public class DoubleDropsChance extends ScalableModAbility {
 					}
 					else {
 						if (extras == null)
-							extras = new ArrayList<>();
+							extras = new ObjectArrayList<>();
 
 						ItemStack newStack = stack.copy();
 
@@ -60,7 +60,7 @@ public class DoubleDropsChance extends ScalableModAbility {
 				}
 				else {
 					if (extras == null)
-						extras = new ArrayList<>();
+						extras = new ObjectArrayList<>();
 
 					extras.add(stack.copy());
 				}

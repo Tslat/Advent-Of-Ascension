@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:overworld/overkill_schmoverkill",
+  "criteria": {
+    "150_damage_hit": {
+      "conditions": {
+        "damage": {
+          "dealt": {
+            "max": 999.0,
+            "min": 150.0
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.the_almighty_touch.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:gods_greatblade",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.the_almighty_touch.title"
+    }
+  },
+  "requirements": [
+    [
+      "150_damage_hit"
+    ]
+  ]
+}

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.util;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
@@ -25,13 +26,13 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAGameRules;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.misc.CustomisableLightningBolt;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -314,9 +315,9 @@ public final class WorldUtil {
 		}
 	}
 
-	public static ArrayList<BlockPos> getBlocksWithinAABB(Level world, AABB aabb, @Nullable BiPredicate<BlockState, BlockPos.MutableBlockPos> predicate) {
+	public static List<BlockPos> getBlocksWithinAABB(Level world, AABB aabb, @Nullable BiPredicate<BlockState, BlockPos.MutableBlockPos> predicate) {
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
-		ArrayList<BlockPos> matches = new ArrayList<BlockPos>();
+		List<BlockPos> matches = new ObjectArrayList<>();
 
 		for (int x = (int)Math.floor(aabb.minX); x <= Math.ceil(aabb.maxX); x++) {
 			for (int y = (int)Math.floor(aabb.minY); y <= Math.ceil(aabb.maxY); y++) {

@@ -1,0 +1,33 @@
+{
+  "parent": "aoa3:completionist/half_way_there",
+  "criteria": {
+    "level_93": {
+      "conditions": {
+        "level": 93
+      },
+      "trigger": "aoa3:level_up"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.actually_half_way_there.description"
+    },
+    "frame": "goal",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:large_skill_crystal"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.completionist.actually_half_way_there.title"
+    }
+  },
+  "requirements": [
+    [
+      "level_93"
+    ]
+  ]
+}

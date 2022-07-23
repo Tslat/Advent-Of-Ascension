@@ -1,0 +1,882 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "consume_blue_gemtrap": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:blue_gemtrap"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_bubble_berries": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:bubble_berries"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_candlefish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:candlefish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_candy_cane": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:candy_cane"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_candy_corn": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:candy_corn"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_charred_char": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:charred_char"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_chocaw": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:chocaw"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_chum": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:chum"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_chum_and_salad_burger": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:chum_and_salad_burger"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_chum_burger": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:chum_burger"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_cooked_charger_shank": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:cooked_charger_shank"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_cooked_chimera_chop": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:cooked_chimera_chop"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_cooked_fish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:cooked_fish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_cooked_furlion_chop": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:cooked_furlion_chop"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_cooked_halycon_beef": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:cooked_halycon_beef"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_cooked_rainbowfish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:cooked_rainbowfish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_crimson_skipper": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:crimson_skipper"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_crimson_stripefish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:crimson_stripefish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_dark_hatchetfish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:dark_hatchetfish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_eye_candy": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:eye_candy"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_fiery_chops": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:fiery_chops"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_floracle_sticks": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:floracle_sticks"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_fungal_tea": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:fungal_tea"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_gingerbread_cookie": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:gingerbread_cookie"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_goldicap_petals": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:goldicap_petals"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_green_gemtrap": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:green_gemtrap"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_halycon_milk": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:halycon_milk"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_heart_fruit": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:heart_fruit"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_hot_rod": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:hot_rod"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_ironback": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:ironback"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_jamfish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:jamfish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_lunacrike": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:lunacrike"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_lunalons": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:lunalons"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_lunarade": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:lunarade"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_magic_marang": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:magic_marang"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_mystic_shrooms": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:mystic_shrooms"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_natural_tea": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:natural_tea"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_nature_melon_slice": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:nature_melon_slice"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_parapiranha": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:parapiranha"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_pearl_stripefish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:pearl_stripefish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_peppermint_candy": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:peppermint_candy"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_purple_gemtrap": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:purple_gemtrap"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_raw_charger_shank": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:raw_charger_shank"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_raw_chimera_chop": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:raw_chimera_chop"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_raw_furlion_chop": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:raw_furlion_chop"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_raw_halycon_beef": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:raw_halycon_beef"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_raw_rainbowfish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:raw_rainbowfish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_razorfish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:razorfish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_red_gemtrap": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:red_gemtrap"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_reeftooth": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:reeftooth"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_rocketfish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:rocketfish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_rosidons": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:rosidons"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_sailback": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:sailback"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_sapphire_strider": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:sapphire_strider"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_skelecanth": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:skelecanth"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_sour_candy": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:sour_candy"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_sour_gummy": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:sour_gummy"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_sour_pop": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:sour_pop"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_spearmint_candy": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:spearmint_candy"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_tea": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:tea"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_trilliad_leaves": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:trilliad_leaves"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_turquoise_stripefish": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:turquoise_stripefish"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_violet_skipper": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:violet_skipper"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_white_gemtrap": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:white_gemtrap"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_yellow_gemtrap": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:yellow_gemtrap"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
+    "consume_yeti_fingernails": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:yeti_fingernails"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.an_unbalanced_diet.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:enchanted_golden_apple"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.an_unbalanced_diet.title"
+    }
+  },
+  "requirements": [
+    [
+      "consume_sour_candy"
+    ],
+    [
+      "consume_tea"
+    ],
+    [
+      "consume_blue_gemtrap"
+    ],
+    [
+      "consume_candy_cane"
+    ],
+    [
+      "consume_lunacrike"
+    ],
+    [
+      "consume_sour_gummy"
+    ],
+    [
+      "consume_eye_candy"
+    ],
+    [
+      "consume_skelecanth"
+    ],
+    [
+      "consume_reeftooth"
+    ],
+    [
+      "consume_raw_charger_shank"
+    ],
+    [
+      "consume_cooked_fish"
+    ],
+    [
+      "consume_fungal_tea"
+    ],
+    [
+      "consume_natural_tea"
+    ],
+    [
+      "consume_razorfish"
+    ],
+    [
+      "consume_yeti_fingernails"
+    ],
+    [
+      "consume_raw_furlion_chop"
+    ],
+    [
+      "consume_cooked_chimera_chop"
+    ],
+    [
+      "consume_yellow_gemtrap"
+    ],
+    [
+      "consume_raw_rainbowfish"
+    ],
+    [
+      "consume_jamfish"
+    ],
+    [
+      "consume_pearl_stripefish"
+    ],
+    [
+      "consume_raw_chimera_chop"
+    ],
+    [
+      "consume_candy_corn"
+    ],
+    [
+      "consume_rosidons"
+    ],
+    [
+      "consume_ironback"
+    ],
+    [
+      "consume_halycon_milk"
+    ],
+    [
+      "consume_violet_skipper"
+    ],
+    [
+      "consume_red_gemtrap"
+    ],
+    [
+      "consume_charred_char"
+    ],
+    [
+      "consume_chum_burger"
+    ],
+    [
+      "consume_rocketfish"
+    ],
+    [
+      "consume_spearmint_candy"
+    ],
+    [
+      "consume_heart_fruit"
+    ],
+    [
+      "consume_chum_and_salad_burger"
+    ],
+    [
+      "consume_lunarade"
+    ],
+    [
+      "consume_cooked_halycon_beef"
+    ],
+    [
+      "consume_bubble_berries"
+    ],
+    [
+      "consume_magic_marang"
+    ],
+    [
+      "consume_sour_pop"
+    ],
+    [
+      "consume_cooked_charger_shank"
+    ],
+    [
+      "consume_trilliad_leaves"
+    ],
+    [
+      "consume_crimson_skipper"
+    ],
+    [
+      "consume_parapiranha"
+    ],
+    [
+      "consume_dark_hatchetfish"
+    ],
+    [
+      "consume_floracle_sticks"
+    ],
+    [
+      "consume_turquoise_stripefish"
+    ],
+    [
+      "consume_fiery_chops"
+    ],
+    [
+      "consume_crimson_stripefish"
+    ],
+    [
+      "consume_gingerbread_cookie"
+    ],
+    [
+      "consume_green_gemtrap"
+    ],
+    [
+      "consume_sapphire_strider"
+    ],
+    [
+      "consume_hot_rod"
+    ],
+    [
+      "consume_mystic_shrooms"
+    ],
+    [
+      "consume_cooked_furlion_chop"
+    ],
+    [
+      "consume_chocaw"
+    ],
+    [
+      "consume_goldicap_petals"
+    ],
+    [
+      "consume_nature_melon_slice"
+    ],
+    [
+      "consume_sailback"
+    ],
+    [
+      "consume_cooked_rainbowfish"
+    ],
+    [
+      "consume_candlefish"
+    ],
+    [
+      "consume_white_gemtrap"
+    ],
+    [
+      "consume_peppermint_candy"
+    ],
+    [
+      "consume_purple_gemtrap"
+    ],
+    [
+      "consume_chum"
+    ],
+    [
+      "consume_lunalons"
+    ],
+    [
+      "consume_raw_halycon_beef"
+    ]
+  ]
+}

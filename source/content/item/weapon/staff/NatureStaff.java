@@ -13,11 +13,10 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
+public class NatureStaff extends BaseStaff<List<BlockPos>> {
 	public NatureStaff(int durability) {
 		super(durability);
 	}
@@ -29,8 +28,8 @@ public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
 	}
 
 	@Override
-	public ArrayList<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		ArrayList<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level, caster.getBoundingBox().inflate(10), (state, pos) -> {
+	public List<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level, caster.getBoundingBox().inflate(10), (state, pos) -> {
 			if (!(state.getBlock() instanceof BonemealableBlock))
 				return false;
 
@@ -50,7 +49,7 @@ public class NatureStaff extends BaseStaff<ArrayList<BlockPos>> {
 	}
 
 	@Override
-	public void cast(Level world, ItemStack staff, LivingEntity caster, ArrayList<BlockPos> args) {
+	public void cast(Level world, ItemStack staff, LivingEntity caster, List<BlockPos> args) {
 		for (BlockPos pos : args) {
 			BoneMealItem.growCrop(new ItemStack(Items.BONE_MEAL), caster.level, pos);
 		}

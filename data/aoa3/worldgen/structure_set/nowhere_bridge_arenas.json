@@ -1,0 +1,17 @@
+{
+  "placement": {
+    "type": "aoa3:single_structure",
+    "pos": [
+      -1000,
+      5,
+      -1000
+    ],
+    "salt": 0
+  },
+  "structures": [
+    {
+      "structure": "aoa3:bridge_arena",
+      "weight": 1
+    }
+  ]
+}

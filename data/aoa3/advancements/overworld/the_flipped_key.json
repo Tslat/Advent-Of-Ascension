@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:overworld/the_journey_begins",
+  "criteria": {
+    "obtain_lelyetia_realmstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:lelyetia_realmstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.the_flipped_key.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:lelyetia_realmstone"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.the_flipped_key.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_lelyetia_realmstone"
+    ]
+  ]
+}

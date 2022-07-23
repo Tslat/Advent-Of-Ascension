@@ -14,7 +14,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -68,5 +70,18 @@ public final class ObjectUtil {
 		});
 
 		return output.get().getAsJsonObject();
+	}
+
+	public static <T> void fastShuffleList(List<T> list) {
+		int length = list.size();
+		Random random = RandomUtil.getRandomInstance();
+
+		for (int i = length - 1; i > 0; i--) {
+			int index = random.nextInt(i);
+			T swapElement = list.get(i);
+
+			list.set(i, list.get(index));
+			list.set(index, swapElement);
+		}
 	}
 }

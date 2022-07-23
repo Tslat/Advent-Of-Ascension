@@ -976,6 +976,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:translucent",
   "textures": {
     "particle": "aoa3:block/ornate_trophy",
     "texture": "aoa3:block/ornate_trophy"

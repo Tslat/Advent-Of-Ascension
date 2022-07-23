@@ -1,0 +1,15 @@
+{
+  "type": "aoa3:single_placement",
+  "biomes": "aoa3:nowhere",
+  "heightmap_for_start": "WORLD_SURFACE_WG",
+  "position": [
+    -3500,
+    5,
+    -1000
+  ],
+  "spawn_overrides": {},
+  "start_height": {
+    "absolute": 0
+  },
+  "start_pool": "aoa3:nowhere/boss/arena/structure/shrine/starts"
+}

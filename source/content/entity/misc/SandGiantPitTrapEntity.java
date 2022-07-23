@@ -61,7 +61,7 @@ public class SandGiantPitTrapEntity extends BasicMiscEntity {
 				return;
 			}
 
-			if (tickCount % 5 == 0) {
+			if (tickCount > 13 && tickCount % 5 == 0) {
 				for (Entity entity : EntityRetrievalUtil.getEntities(level, getBoundingBox(), damagePredicate)) {
 					entity.resetFallDistance();
 					((LivingEntity)entity).addEffect(new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 12).level(5).hideEffectIcon().hideParticles().isAmbient().build());

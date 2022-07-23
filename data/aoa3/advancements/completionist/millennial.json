@@ -1,0 +1,33 @@
+{
+  "parent": "aoa3:completionist/centenarian",
+  "criteria": {
+    "level_1000": {
+      "conditions": {
+        "level": 1000
+      },
+      "trigger": "aoa3:level_up"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.millennial.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:experience_bottle"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.millennial.title"
+    }
+  },
+  "requirements": [
+    [
+      "level_1000"
+    ]
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:overworld/root",
+  "criteria": {
+    "100_damage_hit": {
+      "conditions": {
+        "damage": {
+          "dealt": {
+            "max": 999.0,
+            "min": 100.0
+          }
+        }
+      },
+      "trigger": "minecraft:player_hurt_entity"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.overkill_schmoverkill.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:vulcammer_maul",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.overkill_schmoverkill.title"
+    }
+  },
+  "requirements": [
+    [
+      "100_damage_hit"
+    ]
+  ]
+}

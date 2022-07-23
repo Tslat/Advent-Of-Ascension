@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.tool.hoe;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.ListIterator;
 
-public class DryadsBlessing extends HoeItem implements LootModifyingItem {
+public class DryadsBlessing extends BaseHoe implements LootModifyingItem {
 	public DryadsBlessing() {
 		super(ItemUtil.customItemTier(3020, 10f, 3f, 5, 18, null, BlockTags.MINEABLE_WITH_HOE),
 				-4,

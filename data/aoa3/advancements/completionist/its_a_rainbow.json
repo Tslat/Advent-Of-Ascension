@@ -1,0 +1,40 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_colour_cannon": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:colour_cannon"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.its_a_rainbow.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:colour_cannon",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.its_a_rainbow.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_colour_cannon"
+    ]
+  ]
+}

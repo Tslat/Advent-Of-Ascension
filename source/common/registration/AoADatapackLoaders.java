@@ -3,10 +3,7 @@ package net.tslat.aoa3.common.registration;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
-import net.tslat.aoa3.data.server.AoAResourcesReloadListener;
-import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
-import net.tslat.aoa3.data.server.AoASkillsReloadListener;
+import net.tslat.aoa3.data.server.*;
 
 public final class AoADatapackLoaders {
 	public static void init(){
@@ -18,5 +15,6 @@ public final class AoADatapackLoaders {
 		ev.addListener(new AoASkillReqReloadListener());
 		ev.addListener(new AoASkillsReloadListener());
 		ev.addListener(new AoAHaulingFishReloadListener());
+		ev.addListener(new AoANowhereBossArenaListener());
 	}
 }

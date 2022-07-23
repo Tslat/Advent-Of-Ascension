@@ -4,7 +4,7 @@
   "heightmap_for_start": "WORLD_SURFACE_WG",
   "position": [
     0,
-    2000,
+    1000,
     0
   ],
   "spawn_overrides": {},

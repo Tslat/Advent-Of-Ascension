@@ -76,7 +76,7 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		getEntityData().define(ATTACK_STATE, 0);
-		getEntityData().define(INVULNERABLE, this.isInvulnerable());
+		getEntityData().define(INVULNERABLE, false);
 	}
 
 	@Nullable

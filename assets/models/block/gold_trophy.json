@@ -541,6 +541,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:solid",
   "textures": {
     "particle": "aoa3:block/gold_trophy",
     "texture": "aoa3:block/gold_trophy"

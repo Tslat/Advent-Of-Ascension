@@ -38,7 +38,7 @@ public class RunicGolemEntity extends AoAMeleeMob {
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();
-		this.entityData.define(SHIELDED, false);
+		getEntityData().define(SHIELDED, false);
 	}
 
 	@Nullable

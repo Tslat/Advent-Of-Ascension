@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:overworld/root",
+  "criteria": {
+    "obtain_frame_bench": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:frame_bench"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.armoury_prep.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:frame_bench"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.armoury_prep.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_frame_bench"
+    ]
+  ]
+}

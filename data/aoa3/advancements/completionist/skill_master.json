@@ -1,0 +1,124 @@
+{
+  "parent": "aoa3:completionist/millennial",
+  "criteria": {
+    "aoa3:dexterity_cycle10": {
+      "conditions": {
+        "cycle": 10,
+        "skill": "aoa3:dexterity"
+      },
+      "trigger": "aoa3:cycle"
+    },
+    "aoa3:dexterity_level_1000": {
+      "conditions": {
+        "level": 1000,
+        "skill": "aoa3:dexterity"
+      },
+      "trigger": "aoa3:level_up"
+    },
+    "aoa3:extraction_cycle10": {
+      "conditions": {
+        "cycle": 10,
+        "skill": "aoa3:extraction"
+      },
+      "trigger": "aoa3:cycle"
+    },
+    "aoa3:extraction_level_1000": {
+      "conditions": {
+        "level": 1000,
+        "skill": "aoa3:extraction"
+      },
+      "trigger": "aoa3:level_up"
+    },
+    "aoa3:farming_cycle10": {
+      "conditions": {
+        "cycle": 10,
+        "skill": "aoa3:farming"
+      },
+      "trigger": "aoa3:cycle"
+    },
+    "aoa3:farming_level_1000": {
+      "conditions": {
+        "level": 1000,
+        "skill": "aoa3:farming"
+      },
+      "trigger": "aoa3:level_up"
+    },
+    "aoa3:hauling_cycle10": {
+      "conditions": {
+        "cycle": 10,
+        "skill": "aoa3:hauling"
+      },
+      "trigger": "aoa3:cycle"
+    },
+    "aoa3:hauling_level_1000": {
+      "conditions": {
+        "level": 1000,
+        "skill": "aoa3:hauling"
+      },
+      "trigger": "aoa3:level_up"
+    },
+    "aoa3:innervation_cycle10": {
+      "conditions": {
+        "cycle": 10,
+        "skill": "aoa3:innervation"
+      },
+      "trigger": "aoa3:cycle"
+    },
+    "aoa3:innervation_level_1000": {
+      "conditions": {
+        "level": 1000,
+        "skill": "aoa3:innervation"
+      },
+      "trigger": "aoa3:level_up"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.skill_master.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:dragon_head"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.skill_master.title"
+    }
+  },
+  "requirements": [
+    [
+      "aoa3:farming_level_1000"
+    ],
+    [
+      "aoa3:dexterity_cycle10"
+    ],
+    [
+      "aoa3:farming_cycle10"
+    ],
+    [
+      "aoa3:hauling_level_1000"
+    ],
+    [
+      "aoa3:hauling_cycle10"
+    ],
+    [
+      "aoa3:innervation_level_1000"
+    ],
+    [
+      "aoa3:extraction_level_1000"
+    ],
+    [
+      "aoa3:innervation_cycle10"
+    ],
+    [
+      "aoa3:dexterity_level_1000"
+    ],
+    [
+      "aoa3:extraction_cycle10"
+    ]
+  ]
+}

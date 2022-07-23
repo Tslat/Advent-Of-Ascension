@@ -59,7 +59,7 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 				return;
 			}
 
-			if (tickCount % 10 == 0) {
+			if (tickCount > 28 && tickCount % 10 == 0) {
 				for (Entity entity : EntityRetrievalUtil.getEntities(level, getBoundingBox(), damagePredicate)) {
 					entity.hurt(DamageSource.STALAGMITE, 3);
 				}

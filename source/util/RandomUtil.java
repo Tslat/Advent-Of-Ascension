@@ -10,11 +10,16 @@ import net.minecraft.world.level.levelgen.PositionalRandomFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 
 public final class RandomUtil {
 	private static final char[] ALPHANUMERIC_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
 	public static final EasyRandom RANDOM = new EasyRandom(RandomSource.createThreadSafe());
+
+	public static ThreadLocalRandom getRandomInstance() {
+		return ThreadLocalRandom.current();
+	}
 
 	public static boolean fiftyFifty() {
 		return RANDOM.fiftyFifty();

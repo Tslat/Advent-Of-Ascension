@@ -15,10 +15,10 @@ import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.XpGainPacket;
 import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
-import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.library.builder.SoundBuilder;
@@ -167,6 +167,10 @@ public final class AoASkill {
 
 		private float applyXpBuffs(float xp) {
 			xp *= AoAConfigs.SERVER.globalXpModifier.get();
+
+			if (WorldUtil.isWorld(getPlayer().level, AoADimensions.NOWHERE.key))
+				xp *= 0.5f;
+
 			xp *= xpModifier;
 
 			if (cycle > 0)
@@ -396,7 +400,7 @@ public final class AoASkill {
 		public boolean canGainXp(boolean naturalXpSource) {
 			Player player = getPlayer();
 
-			if (naturalXpSource && (player.isCreative() || player.isSpectator() || WorldUtil.isWorld(player.level, AoADimensions.NOWHERE.key)))
+			if (naturalXpSource && (player.isCreative() || player.isSpectator()))
 				return false;
 
 			return getLevel(true) < 1000;

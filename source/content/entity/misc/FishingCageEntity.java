@@ -351,7 +351,7 @@ public class FishingCageEntity extends Entity {
 		updateInWaterStateAndDoFluidPushing();
 
 		if (!level.isClientSide()) {
-			if (getY() < -64.0D)
+			if (getY() < level.getMinBuildHeight() - 20)
 				outOfWorld();
 
 			if (isInLava())

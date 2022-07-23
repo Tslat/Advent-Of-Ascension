@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:overworld/root",
+  "criteria": {
+    "20_target_hellfire": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.heckfire.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:hellfire"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.heckfire.title"
+    }
+  },
+  "requirements": [
+    [
+      "20_target_hellfire"
+    ]
+  ]
+}

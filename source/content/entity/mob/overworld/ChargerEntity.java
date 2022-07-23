@@ -149,6 +149,18 @@ public class ChargerEntity extends AoAMeleeMob {
 		tag.putString("ChargerType", chargerType().name);
 	}
 
+	@Override
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+
+		if (compound.contains("ChargerType")) {
+			Type type = Type.fromString(compound.getString("ChargerType"));
+			this.type = type;
+
+			getEntityData().set(TYPE, type.name);
+		}
+	}
+
 	public enum Type implements IExtensibleEnum {
 		DEFAULT("", null),
 		DESERT("desert", level -> new BiomeMatcher.Builder(level).mustBe(Tags.Biomes.IS_HOT).atLeastOneOf(Tags.Biomes.IS_SANDY).build()),

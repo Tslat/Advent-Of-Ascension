@@ -13,10 +13,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -35,21 +37,16 @@ public class NowhereActivityPortal extends PortalBlock {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (entity.getVehicle() == null && !entity.isVehicle() && entity instanceof ServerPlayer) {
-			if (entity.portalTime > 0) {
-				entity.portalTime = 30;
+		if (entity.getVehicle() == null && !entity.isVehicle() && entity instanceof ServerPlayer pl) {
+			if (pl.portalTime > 0) {
+				pl.portalTime = 30;
 
 				return;
 			}
 
-			entity.portalTime = 100;
-			Activity activity = state.getValue(ACTIVITY);
-			BlockPos teleportPos = activity.teleportPos;
+			pl.portalTime = 100;
 
-			entity.setYRot(0);
-			entity.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
-
-			activity.onUse((ServerPlayer)entity);
+			state.getValue(ACTIVITY).teleport(pl);
 		}
 	}
 
@@ -98,7 +95,7 @@ public class NowhereActivityPortal extends PortalBlock {
 	}
 
 	public enum Activity implements StringRepresentable {
-		PARKOUR(20, 1510, 22, pl -> {
+		PARKOUR(21.5d, 10.5d, 22d, 90, pl -> {
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
 			for (NonNullList<ItemStack> inv : pl.getInventory().compartments) {
@@ -107,30 +104,32 @@ public class NowhereActivityPortal extends PortalBlock {
 
 			pl.getInventory().clearContent();
 		}),
-		PARKOUR_1(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_2(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_3(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_4(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_5(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_6(0, 0, 0, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		BOSSES(17, 803, 5),
-		DUNGEON(16, 1002, 16),
-		UTILITY(16, 2002, 16),
-		RETURN(16, 1002, 16, pl -> {
+		PARKOUR_1(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_2(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_3(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_4(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_5(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_6(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		BOSSES(17.5d, 502.5d, 3.5d, 0),
+		DUNGEON(6.5d, 1501.5d, 16.5d, -90),
+		UTILITY(25.5d, 1001.5d, 16, 90),
+		RETURN(6.5d, 1501.5d, 16.5d, -90, pl -> {
 			ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 			PlayerUtil.getAdventPlayer(pl).returnItemStorage();
 		});
 
-		private final BlockPos teleportPos;
+		private final Vec3 teleportPos;
+		private final float teleportRot;
 		private final Consumer<ServerPlayer> useFunction;
 
-		Activity(int x, int y, int z, @Nullable Consumer<ServerPlayer> useFunction) {
-			this.teleportPos = new BlockPos(x, y, z);
+		Activity(double x, double y, double z, float rot, @Nullable Consumer<ServerPlayer> useFunction) {
+			this.teleportPos = new Vec3(x, y, z);
+			this.teleportRot = rot;
 			this.useFunction = useFunction;
 		}
 
-		Activity(int x, int y, int z) {
-			this(x, y, z, null);
+		Activity(double x, double y, double z, float rot) {
+			this(x, y, z, rot, null);
 		}
 
 		@Override
@@ -138,7 +137,7 @@ public class NowhereActivityPortal extends PortalBlock {
 			return toString().toLowerCase(Locale.ROOT);
 		}
 
-		public BlockPos getPos() {
+		public Vec3 getPos() {
 			return this.teleportPos;
 		}
 
@@ -148,8 +147,13 @@ public class NowhereActivityPortal extends PortalBlock {
 		}
 
 		public void teleport(ServerPlayer pl) {
-			pl.teleportTo(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
-			onUse(pl);
+			if (teleportPos.lengthSqr() == 0)
+				return;
+
+			AoAScheduler.scheduleSyncronisedTask(() -> {
+				pl.connection.teleport(teleportPos.x, teleportPos.y, teleportPos.z, teleportRot, pl.getXRot());
+				onUse(pl);
+			}, 1);
 		}
 	}
 }

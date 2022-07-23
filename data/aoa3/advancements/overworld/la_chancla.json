@@ -1,0 +1,31 @@
+{
+  "parent": "aoa3:overworld/root",
+  "criteria": {
+    "shoe_flinger_boss_kill": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.la_chancla.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:old_boot",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.overworld.la_chancla.title"
+    }
+  },
+  "requirements": [
+    [
+      "shoe_flinger_boss_kill"
+    ]
+  ]
+}
