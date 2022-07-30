@@ -909,6 +909,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> AIR_GAP = registerItemlessBlock("air_gap", AirGap::new);
 	public static final RegistryObject<Block> CHECKPOINT = registerItemlessBlock("checkpoint", CheckpointBlock::new);
 
+	public static final RegistryObject<Block> BOSS_ALTAR = registerBlock("boss_altar", BossAltar::new, null);
 	public static final RegistryObject<Block> ARMY_BLOCK = registerBlock("army_block", ArmyBlock::new, AoACreativeModeTabs.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> BARONESS_ALTAR = registerBlock("baroness_altar", BaronessAltar::new, AoACreativeModeTabs.FUNCTIONAL_BLOCKS);
 	public static final RegistryObject<Block> CLUNKHEAD_ALTAR = registerBlock("clunkhead_altar", ClunkheadAltar::new, AoACreativeModeTabs.FUNCTIONAL_BLOCKS);

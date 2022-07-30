@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
@@ -221,7 +220,7 @@ public class PlayerEvents {
 			}
 
 			if (msg != null)
-				player.getServer().getPlayerList().broadcastSystemMessage(Component.literal(msg), ChatType.GAME_INFO);
+				player.getServer().getPlayerList().broadcastSystemMessage(Component.literal(msg), false);
 
 			AoAHaloUtil.syncWithNewClient(player);
 			ServerPlayerDataManager.syncNewPlayer(player);

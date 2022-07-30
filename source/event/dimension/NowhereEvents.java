@@ -64,6 +64,7 @@ public final class NowhereEvents {
 	}
 
 	public static void doDeathPrevention(final LivingDamageEvent ev, ServerPlayerDataManager plData) {
+		ev.setCanceled(true);
 		NowhereActivityPortal.Activity.RETURN.teleport(plData.player());
 	}
 }

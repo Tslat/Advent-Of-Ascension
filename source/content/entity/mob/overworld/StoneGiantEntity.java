@@ -189,6 +189,11 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 				if (tickCount > 200 && stoneGiant != null && stoneGiant.isAlive() && stoneGiant.getHealth() < stoneGiant.getMaxHealth())
 					setTarget(stoneGiant);
 			}
+
+			@Override
+			protected boolean shouldDropLoot() {
+				return false;
+			}
 		};
 
 		silverfish.setPos(stoneGiant.position());

@@ -1,6 +1,8 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Vec3i;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -21,6 +23,7 @@ import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -123,9 +126,14 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 	}
 
 	protected void spawnBushBaby(@Nonnull LivingEntity target) {
-		BushBabyEntity bushBaby = new BushBabyEntity(AoAMobs.BUSH_BABY.get(), level);
+		if (level.isClientSide())
+			return;
 
-		bushBaby.setPos(getX(), getBoundingBox().maxY, getZ());
+		BushBabyEntity bushBaby = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.BUSH_BABY.get(), new Vec3i(getX(), getBoundingBox().maxY, getZ()), MobSpawnType.MOB_SUMMONED);
+
+		if (bushBaby == null)
+			return;
+
 		bushBaby.setDeltaMovement(Mth.clamp((target.getX() - getX()) * 0.2f, -0.85, 0.5f), 0.7, Mth.clamp((target.getZ() - getZ()) * 0.2f, -0.85, 0.85));
 		bushBaby.setTarget(target);
 		bushBaby.fallDistance = -10;

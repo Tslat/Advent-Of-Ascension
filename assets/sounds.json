@@ -628,24 +628,6 @@
     ],
     "subtitle": "subtitles.entity.bugeye.hurt"
   },
-  "entity.bush_baby.ambient": {
-    "sounds": [
-      "aoa3:entity/bush_baby/ambient"
-    ],
-    "subtitle": "subtitles.entity.bush_baby.ambient"
-  },
-  "entity.bush_baby.death": {
-    "sounds": [
-      "aoa3:entity/bush_baby/death"
-    ],
-    "subtitle": "subtitles.entity.bush_baby.death"
-  },
-  "entity.bush_baby.hurt": {
-    "sounds": [
-      "aoa3:entity/bush_baby/hurt"
-    ],
-    "subtitle": "subtitles.entity.bush_baby.hurt"
-  },
   "entity.candy_snail.step": {
     "sounds": [
       "aoa3:entity/candy_snail/step"
@@ -782,12 +764,6 @@
       "aoa3:entity/chomper/ambient"
     ],
     "subtitle": "subtitles.entity.chomper.ambient"
-  },
-  "entity.chomper.hurt": {
-    "sounds": [
-      "aoa3:entity/chomper/hurt"
-    ],
-    "subtitle": "subtitles.entity.chomper.hurt"
   },
   "entity.clunkhead.death": {
     "sounds": [
@@ -3156,12 +3132,6 @@
     ],
     "subtitle": "subtitles.entity.sabretooth.hurt"
   },
-  "entity.sasquatch.ambient": {
-    "sounds": [
-      "aoa3:entity/sasquatch/ambient"
-    ],
-    "subtitle": "subtitles.entity.sasquatch.ambient"
-  },
   "entity.scrubby.ambient": {
     "sounds": [
       "aoa3:entity/scrubby/ambient"
@@ -3891,18 +3861,6 @@
       "aoa3:entity/visulon/ambient"
     ],
     "subtitle": "subtitles.entity.visulon.ambient"
-  },
-  "entity.void_walker.ambient": {
-    "sounds": [
-      "aoa3:entity/void_walker/ambient"
-    ],
-    "subtitle": "subtitles.entity.void_walker.ambient"
-  },
-  "entity.void_walker.death": {
-    "sounds": [
-      "aoa3:entity/void_walker/death"
-    ],
-    "subtitle": "subtitles.entity.void_walker.death"
   },
   "entity.void_walker.hurt": {
     "sounds": [

@@ -1,4 +1,5 @@
 {
+  "type": "aoa3:new_feature",
   "biomes": {
     "excluding": [
       "#minecraft:is_beach",

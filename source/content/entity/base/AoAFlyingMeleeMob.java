@@ -52,7 +52,7 @@ public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, IAni
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
-		xpReward = (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
+		xpReward = reason == MobSpawnType.MOB_SUMMONED ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
@@ -121,6 +121,11 @@ public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, IAni
 		}
 
 		return false;
+	}
+
+	@Override
+	protected boolean shouldDropLoot() {
+		return super.shouldDropLoot() && xpReward > 0;
 	}
 
 	@Override

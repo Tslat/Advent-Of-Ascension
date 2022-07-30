@@ -33,18 +33,6 @@ public class LightwalkerEntity extends AoAMeleeMob {
 
     @Nullable
     @Override
-    protected SoundEvent getAmbientSound() {
-        return AoASounds.ENTITY_VOID_WALKER_AMBIENT.get();
-    }
-
-    @Nullable
-    @Override
-    protected SoundEvent getDeathSound() {
-        return AoASounds.ENTITY_VOID_WALKER_DEATH.get();
-    }
-
-    @Nullable
-    @Override
     protected SoundEvent getHurtSound(DamageSource source) {
         return AoASounds.ENTITY_VOID_WALKER_HURT.get();
     }

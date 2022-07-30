@@ -57,14 +57,9 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 	}
 
 	@Override
-	public boolean isSprinting() {
-		return super.isSprinting();
-	}
-
-	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(2, new ExtendedMeleeAttackGoal<>(this).attackInterval(ConstantInt.of(getCurrentSwingDuration())).actionTelegraphTicks(getPreAttackTime()).onStart(goal -> setSprinting(true)).onStop(goal -> setSprinting(false)));
+		goalSelector.addGoal(2, new ExtendedMeleeAttackGoal<>(this).attackInterval(ConstantInt.of(getCurrentSwingDuration())).actionTelegraphTicks(getPreAttackTime()).onStart(goal -> setSharedFlag(3, true)).onStop(goal -> setSharedFlag(3, false)));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -82,7 +77,7 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
-		xpReward = (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
+		xpReward = reason == MobSpawnType.MOB_SUMMONED ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}
@@ -175,6 +170,11 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 		}
 
 		return false;
+	}
+
+	@Override
+	protected boolean shouldDropLoot() {
+		return super.shouldDropLoot() && xpReward > 0;
 	}
 
 	@Override

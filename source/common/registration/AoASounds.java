@@ -158,9 +158,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_BUGEYE_AMBIENT = registerSound("bugeye_ambient", "entity.bugeye.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_BUGEYE_DEATH = registerSound("bugeye_death", "entity.bugeye.death");
 	public static final RegistryObject<SoundEvent> ENTITY_BUGEYE_HURT = registerSound("bugeye_hurt", "entity.bugeye.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_BUSH_BABY_AMBIENT = registerSound("bush_baby_ambient", "entity.bush_baby.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_BUSH_BABY_DEATH = registerSound("bush_baby_death", "entity.bush_baby.death");
-	public static final RegistryObject<SoundEvent> ENTITY_BUSH_BABY_HURT = registerSound("bush_baby_hurt", "entity.bush_baby.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_CARROTOP_AMBIENT = registerSound("carrotop_ambient", "entity.carrotop.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_CARROTOP_DEATH = registerSound("carrotop_death", "entity.carrotop.death");
 	public static final RegistryObject<SoundEvent> ENTITY_CARROTOP_HURT = registerSound("carrotop_hurt", "entity.carrotop.hurt");
@@ -180,7 +177,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_CHIMERA_DEATH = registerSound("chimera_death", "entity.chimera.death");
 	public static final RegistryObject<SoundEvent> ENTITY_CHIMERA_HURT = registerSound("chimera_hurt", "entity.chimera.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_CHOMPER_AMBIENT = registerSound("chomper_ambient", "entity.chomper.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_CHOMPER_HURT = registerSound("chomper_hurt", "entity.chomper.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_CLUNKHEAD_DEATH = registerSound("clunkhead_death", "entity.clunkhead.death");
 	public static final RegistryObject<SoundEvent> ENTITY_COMPEER_AMBIENT = registerSound("compeer_ambient", "entity.compeer.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_COMPEER_DEATH = registerSound("compeer_death", "entity.compeer.death");
@@ -490,7 +486,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_SABRETOOTH_AMBIENT = registerSound("sabretooth_ambient", "entity.sabretooth.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SABRETOOTH_DEATH = registerSound("sabretooth_death", "entity.sabretooth.death");
 	public static final RegistryObject<SoundEvent> ENTITY_SABRETOOTH_HURT = registerSound("sabretooth_hurt", "entity.sabretooth.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_SASQUATCH_AMBIENT = registerSound("sasquatch_ambient", "entity.sasquatch.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SCRUBBY_AMBIENT = registerSound("scrubby_ambient", "entity.scrubby.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SCRUBBY_HURT = registerSound("scrubby_hurt", "entity.scrubby.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SEA_VIPER_AMBIENT = registerSound("sea_viper_ambient", "entity.sea_viper.ambient");
@@ -595,8 +590,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_VISULAR_DEATH = registerSound("visular_death", "entity.visular.death");
 	public static final RegistryObject<SoundEvent> ENTITY_VISULAR_HURT = registerSound("visular_hurt", "entity.visular.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_VISULON_AMBIENT = registerSound("visulon_ambient", "entity.visulon.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_VOID_WALKER_AMBIENT = registerSound("void_walker_ambient", "entity.void_walker.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_VOID_WALKER_DEATH = registerSound("void_walker_death", "entity.void_walker.death");
 	public static final RegistryObject<SoundEvent> ENTITY_VOID_WALKER_HURT = registerSound("void_walker_hurt", "entity.void_walker.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_VOLIANT_AMBIENT = registerSound("voliant_ambient", "entity.voliant.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_VOLIANT_DEATH = registerSound("voliant_death", "entity.voliant.death");

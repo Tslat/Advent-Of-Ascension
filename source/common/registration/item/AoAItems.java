@@ -192,6 +192,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> WEAPON_PARTS = registerItem("weapon_parts", miscItem());
 	public static final RegistryObject<Item> WHITEWASHING_SOLUTION = registerItem("whitewashing_solution", miscItem());
 	public static final RegistryObject<Item> WORN_BOOK = registerItem("worn_book", WornBook::new);
+	public static final RegistryObject<Item> TORN_PAGE = registerItem("torn_page", () -> new Item(new Item.Properties().tab(null)));
 	public static final RegistryObject<Item> YELLOW_SPORES = registerItem("yellow_spores", miscItem());
 	public static final RegistryObject<Item> ZHINX_DUST = registerItem("zhinx_dust", miscItem());
 	public static final RegistryObject<Item> CREATURE_ESSENCE = registerItem("creature_essence", CreatureEssence::new);
@@ -434,8 +435,8 @@ public final class AoAItems {
 	public static final RegistryObject<Item> TRILLIAD_SEEDS = registerItem("trilliad_seeds", () -> new ItemNameBlockItem(AoABlocks.TRILLIAD_CROP.get(), new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS)));
 	public static final RegistryObject<Item> GREEN_MANURE_SEEDS = registerItem("green_manure_seeds", () -> new ItemNameBlockItem(AoABlocks.GREEN_MANURE.get(), new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS)));
 
-	public static final RegistryObject<Item> MUSIC_DISC_OUTLAW = registerItem("music_disc_outlaw", () -> new RecordItem(15, AoASounds.OUTLAW_MUSIC_DISC, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
-	public static final RegistryObject<Item> MUSIC_DISC_CAVERNS = registerItem("music_disc_caverns", () -> new RecordItem(15, AoASounds.CAVERNS_MUSIC_DISC, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE)));
+	public static final RegistryObject<Item> MUSIC_DISC_OUTLAW = registerItem("music_disc_outlaw", () -> new RecordItem(15, AoASounds.OUTLAW_MUSIC_DISC, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE), 3080));
+	public static final RegistryObject<Item> MUSIC_DISC_CAVERNS = registerItem("music_disc_caverns", () -> new RecordItem(15, AoASounds.CAVERNS_MUSIC_DISC, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1).rarity(Rarity.RARE), 3300));
 
 	public static final RegistryObject<Item> COMPASS_RUNE_BANNER_PATTERN = registerItem("compass_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.COMPASS_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoACreativeModeTabs.MISC_ITEMS)));
 	public static final RegistryObject<Item> DISTORTION_RUNE_BANNER_PATTERN = registerItem("distortion_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.DISTORTION_RUNE.tag(), new Item.Properties().stacksTo(1).tab(AoACreativeModeTabs.MISC_ITEMS)));

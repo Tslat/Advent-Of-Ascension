@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 public class CoralStaffTask implements Runnable {
     private final Level world;
@@ -31,7 +30,7 @@ public class CoralStaffTask implements Runnable {
         }
     }
 
-    public void schedule(Integer time, TimeUnit units) {
-        AoAScheduler.scheduleRequiredAsyncTask(this, time, units);
+    public void schedule(int time) {
+        AoAScheduler.scheduleSyncronisedTask(this, time);
     }
 }

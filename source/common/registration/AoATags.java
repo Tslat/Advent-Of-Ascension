@@ -75,6 +75,7 @@ public final class AoATags {
 		public static final TagKey<Block> CARVED_RUNE = aoaTag("carved_rune");
 		public static final TagKey<Block> LUNAR_ORB = aoaTag("lunar_orb");
 		public static final TagKey<Block> BASE_STONE_CREEPONIA = aoaTag("base_stone_creeponia");
+		public static final TagKey<Block> NOWHERE_SAFE_GUI_BLOCK = aoaTag("nowhere_safe_gui_block");
 
 		public static final TagKey<Block> NEEDS_NETHERITE_TOOL = tag("needs_netherite_tool");
 

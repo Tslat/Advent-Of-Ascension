@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 	public CoralStaff(int durability) {
@@ -93,7 +92,7 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 			}
 
 			world.playSound(null, caster.getX(), caster.getY(), caster.getZ(), AoASounds.ITEM_REEF_STAFF_CAST.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
-			new CoralStaffTask(world, args).schedule(30, TimeUnit.SECONDS);
+			new CoralStaffTask(world, args).schedule(600);
 		}
 	}
 

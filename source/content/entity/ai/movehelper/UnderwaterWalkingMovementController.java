@@ -17,10 +17,16 @@ public class UnderwaterWalkingMovementController extends MoveControl {
 
 	@Override
 	public void tick() {
-		if (entity.isEyeInFluid(FluidTags.WATER))
-			entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.008d, 0));
+		if (!entity.isEyeInFluid(FluidTags.WATER)) {
+			super.tick();
+
+			return;
+		}
 
 		if (operation == MoveControl.Operation.MOVE_TO && !entity.getNavigation().isDone()) {
+			if (wantedY <= entity.getY())
+				entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.008d, 0));
+
 			double distanceX = wantedX - entity.getX();
 			double distanceY = wantedY - entity.getY();
 			double distanceZ = wantedZ - entity.getZ();
@@ -36,6 +42,7 @@ public class UnderwaterWalkingMovementController extends MoveControl {
 			entity.setDeltaMovement(entity.getDeltaMovement().add((double)lerpedSpeed * distanceX * 0.01d, (double)lerpedSpeed * distanceY * 0.1d, (double)lerpedSpeed * distanceZ * 0.01d));
 		}
 		else {
+			entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.008d, 0));
 			entity.setSpeed(0);
 		}
 	}

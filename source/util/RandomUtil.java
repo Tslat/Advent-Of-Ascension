@@ -186,19 +186,18 @@ public final class RandomUtil {
 		}
 
 		public BlockPos getRandomPositionWithinRange(BlockPos centerPos, int xRadius, int yRadius, int zRadius, int minSpreadX, int minSpreadY, int minSpreadZ, boolean safeSurfacePlacement, Level world, int tries, @Nullable Predicate<BlockState> statePredicate) {
-			BlockPos.MutableBlockPos mutablePos;
+			BlockPos.MutableBlockPos mutablePos = centerPos.mutable();
 			xRadius = Math.max(xRadius - minSpreadX, 0);
 			yRadius = Math.max(yRadius - minSpreadY, 0);
 			zRadius = Math.max(zRadius - minSpreadZ, 0);
 
 			for (int i = 0; i < tries; i++) {
-				mutablePos = centerPos.mutable();
 				double xAdjust = random.nextFloat() * xRadius * 2 - xRadius;
 				double yAdjust = random.nextFloat() * yRadius * 2 - yRadius;
 				double zAdjust = random.nextFloat() * zRadius * 2 - zRadius;
-				int newX = (int)Math.floor(mutablePos.getX() + xAdjust + minSpreadX * Math.signum(xAdjust));
-				int newY = (int)Math.floor(mutablePos.getY() + yAdjust + minSpreadY * Math.signum(yAdjust));
-				int newZ = (int)Math.floor(mutablePos.getZ() + zAdjust + minSpreadZ * Math.signum(zAdjust));
+				int newX = (int)Math.floor(centerPos.getX() + xAdjust + minSpreadX * Math.signum(xAdjust));
+				int newY = (int)Math.floor(centerPos.getY() + yAdjust + minSpreadY * Math.signum(yAdjust));
+				int newZ = (int)Math.floor(centerPos.getZ() + zAdjust + minSpreadZ * Math.signum(zAdjust));
 
 				mutablePos.set(newX, newY, newZ);
 

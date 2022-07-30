@@ -11,10 +11,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.util.TagUtil;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -60,7 +57,6 @@ public record BiomeMatcher(Optional<List<HolderSet<Biome>>> ifAll, Optional<List
 		return true;
 	}
 
-	// Don't use for datagen
 	public static class Builder {
 		final Registry<Biome> biomeRegistry;
 

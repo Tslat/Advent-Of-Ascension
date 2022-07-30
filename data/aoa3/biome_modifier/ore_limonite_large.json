@@ -1,4 +1,5 @@
 {
+  "type": "aoa3:new_feature",
   "biomes": {
     "if_all": [
       "#minecraft:is_overworld",

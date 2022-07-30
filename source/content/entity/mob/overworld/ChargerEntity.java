@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BiomeTags;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.IExtensibleEnum;
 import net.minecraftforge.common.Tags;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.ExtendedFindNearbyTargetGoal;
@@ -85,9 +87,6 @@ public class ChargerEntity extends AoAMeleeMob {
 			}
 		}
 
-		if (reason == MobSpawnType.MOB_SUMMONED)
-			xpReward = 0;
-
 		return spawnData;
 	}
 
@@ -132,11 +131,6 @@ public class ChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected boolean shouldDropLoot() {
-		return super.shouldDropLoot() && xpReward > 0;
-	}
-
-	@Override
 	public void registerControllers(AnimationData animationData) {
 		animationData.addAnimationController(AoAAnimations.genericWalkRunSwimIdleController(this));
 		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
@@ -159,6 +153,11 @@ public class ChargerEntity extends AoAMeleeMob {
 
 			getEntityData().set(TYPE, type.name);
 		}
+	}
+
+	@Override
+	protected ResourceLocation getDefaultLootTable() {
+		return chargerType() == Type.VOID ? AdventOfAscension.id("entities/void_charger") : super.getDefaultLootTable();
 	}
 
 	public enum Type implements IExtensibleEnum {

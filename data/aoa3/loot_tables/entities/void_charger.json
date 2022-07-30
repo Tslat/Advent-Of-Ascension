@@ -1,0 +1,57 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/overworld",
+          "weight": 100
+        }
+      ],
+      "name": "parent_table",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:entities/charger",
+          "weight": 100
+        }
+      ],
+      "name": "charger_table",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:void_scales",
+          "weight": 25
+        }
+      ],
+      "name": "void_scales",
+      "rolls": 1.0
+    }
+  ]
+}

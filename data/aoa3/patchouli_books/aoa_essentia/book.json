@@ -1,7 +1,7 @@
 {
-  "book_texture": "aoa3:patchouli/textures/gui/book_aoa.png",
-  "crafting_texture": "aoa3:patchouli/textures/gui/aoa_crafting.png",
-  "filler_texture": "aoa3:patchouli/textures/gui/aoa_filler.png",
+  "book_texture": "aoa3:patchouli/images/gui/book_aoa.png",
+  "crafting_texture": "aoa3:patchouli/images/gui/aoa_crafting.png",
+  "filler_texture": "aoa3:patchouli/images/gui/aoa_filler.png",
   "header_color": "c49191",
   "landing_text": "item.aoa3.aoa_essentia.landing",
   "link_color": "cc00",

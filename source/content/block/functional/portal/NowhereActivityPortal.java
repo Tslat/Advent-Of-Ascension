@@ -116,6 +116,7 @@ public class NowhereActivityPortal extends PortalBlock {
 		RETURN(6.5d, 1501.5d, 16.5d, -90, pl -> {
 			ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 			PlayerUtil.getAdventPlayer(pl).returnItemStorage();
+			PlayerUtil.resetToDefaultStatus(pl);
 		});
 
 		private final Vec3 teleportPos;

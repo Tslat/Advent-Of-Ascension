@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Level;
 import javax.annotation.Nullable;
 
 import static net.minecraft.world.entity.SpawnPlacements.Type.*;
+import static net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING;
 import static net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;
 
 public final class AoAEntitySpawnPlacements {
@@ -37,7 +38,11 @@ public final class AoAEntitySpawnPlacements {
         setSpawnPlacement(AoAMobs.WOOD_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
         setSpawnPlacement(AoAMobs.CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
         setSpawnPlacement(AoAMobs.KING_CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
-        setSpawnPlacement(AoAMobs.CYCLOPS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_MONSTER);
+        setSpawnPlacement(AoAMobs.CYCLOPS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 55, Integer.MAX_VALUE));
+        setSpawnPlacement(AoAMobs.CHOMPER.get(), NO_RESTRICTIONS, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
+        setSpawnPlacement(AoAMobs.SASQUATCH.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 55, Integer.MAX_VALUE));
+        setSpawnPlacement(AoAMobs.BUSH_BABY.get(), ON_GROUND, MOTION_BLOCKING, SpawnPredicates.monsterPredicate(true, 65, Integer.MAX_VALUE));
+        setSpawnPlacement(AoAMobs.VOID_WALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(false, Integer.MIN_VALUE, 0));
 
         setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, GlowSquid::checkGlowSquideSpawnRules);
 
@@ -89,8 +94,8 @@ public final class AoAEntitySpawnPlacements {
             };
         };
 
-        private static SpawnPlacements.SpawnPredicate<Mob> DEFAULT_MONSTER = monsterPredicate(false, Integer.MIN_VALUE, Integer.MAX_VALUE);
-        private static SpawnPlacements.SpawnPredicate<Mob> DEFAULT_DAY_MONSTER = monsterPredicate(true, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        private static final SpawnPlacements.SpawnPredicate<Mob> DEFAULT_MONSTER = monsterPredicate(false, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        private static final SpawnPlacements.SpawnPredicate<Mob> DEFAULT_DAY_MONSTER = monsterPredicate(true, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
         private static SpawnPlacements.SpawnPredicate<Mob> monsterPredicate(boolean daySpawn, int minSpawnHeight, int maxSpawnHeight) {
             return (EntityType<Mob> type, ServerLevelAccessor world, MobSpawnType reason, BlockPos pos, RandomSource rand) -> {

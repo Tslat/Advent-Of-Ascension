@@ -20,7 +20,7 @@ public class CyclopsEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 30.5f / 16f;
 	}
 

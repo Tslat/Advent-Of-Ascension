@@ -27,7 +27,7 @@ public class SasquatchEntity extends AoAMeleeMob {
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_SASQUATCH_AMBIENT.get();
+		return AoASounds.ENTITY_YETI_AMBIENT.get();
 	}
 
 	@Override

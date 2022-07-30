@@ -7,7 +7,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.RecordItem;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityMobGriefingEvent;
@@ -21,14 +23,19 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.content.block.functional.utility.TeaSink;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.player.PlayerDataManager;
+import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.TagUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 import java.util.function.Consumer;
@@ -65,18 +72,27 @@ public final class RestrictionEventHandler {
 	}
 
 	private static void handleNowhereRightClickBlock(PlayerInteractEvent.RightClickBlock ev) {
-		BlockState block = ev.getLevel().getBlockState(ev.getPos());
+		BlockState blockState = ev.getLevel().getBlockState(ev.getPos());
+		Block block = blockState.getBlock();
 		Item heldItem = ev.getEntity().getItemInHand(ev.getHand()).getItem();
 
-		if (block.getBlock() == Blocks.JUKEBOX) {
+		if (block == Blocks.JUKEBOX) {
 			if (heldItem == Items.AIR || heldItem instanceof RecordItem) {
 				ev.setUseItem(Event.Result.ALLOW);
 				ev.setUseBlock(Event.Result.ALLOW);
 				ev.getEntity().getAbilities().mayBuild = true;
 			}
 		}
-		else if (block.getBlock() == Blocks.SOUL_CAMPFIRE || block.getBlock() == Blocks.ENDER_CHEST) {
+		else if (TagUtil.isTaggedAs(block, AoATags.Blocks.NOWHERE_SAFE_GUI_BLOCK)) {
 			ev.setUseItem(Event.Result.DENY);
+		}
+		else if (block == Blocks.WATER_CAULDRON) {
+			ev.setUseItem(Event.Result.DENY);
+			AoAScheduler.scheduleSyncronisedTask(() -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(LayeredCauldronBlock.LEVEL, LayeredCauldronBlock.MAX_FILL_LEVEL), Block.UPDATE_CLIENTS), 1);
+		}
+		else if (block == AoABlocks.TEA_SINK.get()) {
+			ev.setUseItem(Event.Result.DENY);
+			AoAScheduler.scheduleSyncronisedTask(() -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(TeaSink.FILLED, true), Block.UPDATE_CLIENTS), 1);
 		}
 		else if (heldItem instanceof TabletItem || heldItem == AoAItems.LOTTO_TOTEM.get()) {
 			ev.setUseItem(Event.Result.ALLOW);

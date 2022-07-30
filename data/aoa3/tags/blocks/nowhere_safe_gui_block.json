@@ -1,0 +1,21 @@
+{
+  "values": [
+    "minecraft:campfire",
+    "minecraft:soul_campfire",
+    "minecraft:ender_chest",
+    "minecraft:furnace",
+    "minecraft:smoker",
+    "minecraft:blast_furnace",
+    "minecraft:grindstone",
+    "minecraft:cartography_table",
+    "minecraft:loom",
+    "minecraft:stonecutter",
+    "minecraft:crafting_table",
+    "minecraft:brewing_stand",
+    "minecraft:enchanting_table",
+    "aoa3:frame_bench",
+    "aoa3:infusion_table",
+    "aoa3:mending_table",
+    "minecraft:smithing_table"
+  ]
+}

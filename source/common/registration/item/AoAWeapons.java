@@ -57,7 +57,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> TROLL_BASHER_AXE = registerWeapon("troll_basher_axe", TrollBasherAxe::new);
 	public static final RegistryObject<Item> ULTRAFLAME = registerWeapon("ultraflame", Ultraflame::new);
 	public static final RegistryObject<Item> VOID_SWORD = registerWeapon("void_sword", VoidSword::new);
-	//public static final RegistryObject<Item> FAUNAMANCERS_BLADE = registerWeapon("faunamancers_blade", FaunamancersBlade::new);
+	public static final RegistryObject<Item> FAUNAMANCERS_BLADE = registerWeapon("faunamancers_blade", FaunamancersBlade::new);
 
 	public static final RegistryObject<Item> BARON_GREATBLADE = registerWeapon("baron_greatblade", BaronGreatblade::new);
 	public static final RegistryObject<Item> BLOODLURKER = registerWeapon("bloodlurker", () -> new BaseGreatblade(AoATiers.BLOODLURKER_GREATBLADE));

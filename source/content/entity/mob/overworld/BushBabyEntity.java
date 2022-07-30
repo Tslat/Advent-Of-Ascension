@@ -12,8 +12,6 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-import javax.annotation.Nullable;
-
 public class BushBabyEntity extends AoAMeleeMob {
 	public BushBabyEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -23,21 +21,9 @@ public class BushBabyEntity extends AoAMeleeMob {
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.46875f;
 	}
-
-	@Nullable
-	@Override
-	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_BUSH_BABY_AMBIENT.get();
-	}
-
-	@Override
-	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_BUSH_BABY_DEATH.get();
-	}
-
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_BUSH_BABY_HURT.get();
+		return AoASounds.LEAFY_THUD.get();
 	}
 
 	@Override

@@ -1,10 +1,12 @@
 {
+  "type": "aoa3:new_mob_spawn",
   "biomes": {
-    "excluding": [
-      "#forge:is_underground"
-    ],
     "if_all": [
       "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "#forge:is_dry",
+      "#forge:is_dead"
     ]
   },
   "spawn": [

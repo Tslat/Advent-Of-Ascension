@@ -5,8 +5,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 
-import java.util.concurrent.TimeUnit;
-
 public class DracyonCleanupTask implements Runnable {
     private final Level world;
     private final BlockPos waterPosition;
@@ -22,7 +20,7 @@ public class DracyonCleanupTask implements Runnable {
             world.setBlockAndUpdate(waterPosition, Blocks.AIR.defaultBlockState());
     }
 
-    public void schedule(Integer time, TimeUnit units) {
-        AoAScheduler.scheduleRequiredAsyncTask(this, time, units);
+    public void schedule(int time) {
+        AoAScheduler.scheduleSyncronisedTask(this, time);
     }
 }
