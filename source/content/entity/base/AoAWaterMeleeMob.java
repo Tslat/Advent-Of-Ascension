@@ -23,6 +23,7 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
@@ -37,6 +38,8 @@ import java.util.HashMap;
 
 public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAnimatable {
 	private static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAWaterMeleeMob.class, EntityDataSerializers.INT);
+	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAWaterMeleeMob.class, EntityDataSerializers.BOOLEAN);
+
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
@@ -60,6 +63,7 @@ public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAn
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		getEntityData().define(ATTACK_STATE, 0);
+		getEntityData().define(INVULNERABLE, false);
 	}
 
 	@Override
@@ -106,6 +110,27 @@ public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAn
 	protected void onHit(DamageSource source, float amount) {}
 
 	@Override
+	public void setInvulnerable(boolean isInvulnerable) {
+		super.setInvulnerable(isInvulnerable);
+		getEntityData().set(INVULNERABLE, isInvulnerable);
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		if (key.equals(INVULNERABLE))
+			setInvulnerable(getEntityData().get(INVULNERABLE));
+	}
+
+	@Override
+	public void load(CompoundTag compound) {
+		super.load(compound);
+
+		setInvulnerable(isInvulnerable());
+	}
+
+	@Override
 	public boolean doHurtTarget(Entity target) {
 		if (super.doHurtTarget(target)) {
 			onAttack(target);
@@ -130,6 +155,11 @@ public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAn
 	@Override
 	protected boolean shouldDropLoot() {
 		return super.shouldDropLoot() && xpReward > 0;
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnReason) {
+		return true;
 	}
 
 	@Override

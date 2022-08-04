@@ -9,6 +9,7 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.packets.*;
+import net.tslat.aoa3.util.EntityRetrievalUtil;
 
 public class AoAPackets {
 	private static final String REV = "1";

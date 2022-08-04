@@ -1,0 +1,20 @@
+{
+  "category": "aoa3:contents",
+  "icon": "aoa3:torn_pages",
+  "name": "Transcription",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "and so we begin to form an understand the underlying mechanics in which we came to be. Not everything discussed thus-far is to be understood with absolute confidence, as large portions of it are educated guesses at best, but we have some confidence in its veracity."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "At the very least we can sum up our current knowledge with the current key points:$(br)$(li)Other dimensions DO exist$(li)We don't yet know how to access them$(li)They have been accessed by humans in the past$(li)Dimensional travel is not safe"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "With that information in mind, we should begin investigations on the possibility of safe travel being the dimensions in an effort to understand as much as possible about them before the next great dimensional clash, whenever that may be.$(br2)There is growing concern however that this may not be within our reach. We've already lost one of our own, and we've only just hit the starting steps of this field of inquiry."
+    }
+  ],
+  "sortnum": 0
+}

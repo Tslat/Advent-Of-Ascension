@@ -10,5 +10,6 @@
   "name": "item.aoa3.worn_book",
   "show_progress": false,
   "subtitle": "Corrupted Traveller",
+  "use_resource_pack": true,
   "version": "0"
 }

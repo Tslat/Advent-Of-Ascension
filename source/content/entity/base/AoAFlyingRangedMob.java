@@ -41,6 +41,8 @@ import java.util.HashMap;
 
 public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, RangedAttackMob, AoARangedAttacker, IAnimatable {
 	private static final EntityDataAccessor<Integer> SHOOT_STATE = SynchedEntityData.defineId(AoAFlyingRangedMob.class, EntityDataSerializers.INT);
+	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAFlyingRangedMob.class, EntityDataSerializers.BOOLEAN);
+
 	protected boolean isSlipperyMovement = false;
 
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
@@ -64,6 +66,7 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		getEntityData().define(SHOOT_STATE, 0);
+		getEntityData().define(INVULNERABLE, false);
 	}
 
 	@Nullable
@@ -111,6 +114,27 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 	protected abstract SoundEvent getShootSound();
 
 	protected void onHit(DamageSource source, float amount) {}
+
+	@Override
+	public void setInvulnerable(boolean isInvulnerable) {
+		super.setInvulnerable(isInvulnerable);
+		getEntityData().set(INVULNERABLE, isInvulnerable);
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		if (key.equals(INVULNERABLE))
+			setInvulnerable(getEntityData().get(INVULNERABLE));
+	}
+
+	@Override
+	public void load(CompoundTag compound) {
+		super.load(compound);
+
+		setInvulnerable(isInvulnerable());
+	}
 
 	@Override
 	public void aiStep() {

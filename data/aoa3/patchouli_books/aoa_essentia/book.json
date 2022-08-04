@@ -15,5 +15,6 @@
   "progress_bar_color": "4c08e",
   "show_progress": false,
   "text_color": "e5e5e5",
+  "use_resource_pack": true,
   "version": "1"
 }

@@ -2,6 +2,9 @@ package net.tslat.aoa3.content.entity.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
@@ -28,11 +31,11 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, IAnimatable {
+	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAFlyingMeleeMob.class, EntityDataSerializers.BOOLEAN);
+
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
-	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 	protected boolean isSlipperyMovement = false;
 
 	protected AoAFlyingMeleeMob(EntityType<? extends FlyingMob> entityType, Level world) {
@@ -47,6 +50,12 @@ public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, IAni
 		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
 		goalSelector.addGoal(3, new FlyingLookRandomlyGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, 10, true, true, pl -> pl instanceof Player && PlayerUtil.shouldPlayerBeAffected((Player)pl)));
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		getEntityData().define(INVULNERABLE, false);
 	}
 
 	@Nullable
@@ -94,6 +103,27 @@ public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, IAni
 	protected void onAttack(Entity target) {}
 
 	protected void onHit(DamageSource source, float amount) {}
+
+	@Override
+	public void setInvulnerable(boolean isInvulnerable) {
+		super.setInvulnerable(isInvulnerable);
+		getEntityData().set(INVULNERABLE, isInvulnerable);
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		if (key.equals(INVULNERABLE))
+			setInvulnerable(getEntityData().get(INVULNERABLE));
+	}
+
+	@Override
+	public void load(CompoundTag compound) {
+		super.load(compound);
+
+		setInvulnerable(isInvulnerable());
+	}
 
 	@Override
 	public void aiStep() {

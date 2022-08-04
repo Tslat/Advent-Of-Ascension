@@ -22,7 +22,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
@@ -34,16 +33,14 @@ import net.tslat.aoa3.client.particle.*;
 import net.tslat.aoa3.client.render.entity.misc.OccultBlockRenderer;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.content.item.misc.WornBook;
-import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -70,12 +67,7 @@ public final class ClientOperations {
 		Player player = Minecraft.getInstance().player;
 		ItemStack bookStack = player.getMainHandItem().getItem() == AoAItems.WORN_BOOK.get() ? player.getMainHandItem() : player.getOffhandItem();
 
-		if (IntegrationManager.isPatchouliActive()) {
-			PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
-		}
-		else {
-			Minecraft.getInstance().setScreen(new BookViewScreen(new BookViewScreen.WrittenBookAccess(WornBook.getBook(bookStack))));
-		}
+		Minecraft.getInstance().setScreen(new BookViewScreen(new BookViewScreen.WrittenBookAccess(WornBook.getBook(bookStack))));
 	}
 
 	public static void displayBlankRealmstoneGui() {

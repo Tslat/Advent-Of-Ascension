@@ -17,7 +17,7 @@
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_direction",
                     "predicate_type": "minecraft:random_block_match",
-                    "probability": 0.9
+                    "probability": 0.6
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"
@@ -30,7 +30,7 @@
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_travel",
                     "predicate_type": "minecraft:random_block_match",
-                    "probability": 0.9
+                    "probability": 0.6
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"
@@ -43,7 +43,7 @@
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_space",
                     "predicate_type": "minecraft:random_block_match",
-                    "probability": 0.9
+                    "probability": 0.6
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"
@@ -56,7 +56,7 @@
                   "input_predicate": {
                     "block": "aoa3:carved_rune_of_reality",
                     "predicate_type": "minecraft:random_block_match",
-                    "probability": 0.9
+                    "probability": 0.6
                   },
                   "location_predicate": {
                     "predicate_type": "minecraft:always_true"

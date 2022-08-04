@@ -1,6 +1,7 @@
 {
   "parent": "forge:item/bucket_drip",
   "apply_fluid_luminosity": false,
+  "apply_tint": true,
   "fluid": "aoa3:toxic_waste",
   "loader": "forge:fluid_container"
 }

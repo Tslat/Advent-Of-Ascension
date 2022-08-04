@@ -20,6 +20,8 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.block.functional.misc.CarvedRuneOfPower;
 import net.tslat.aoa3.content.entity.projectile.thrown.*;
+import net.tslat.aoa3.content.item.misc.BlankRealmstone;
+import net.tslat.aoa3.content.item.misc.Realmstone;
 
 public final class AoADispensables {
 	public static void lateInit() {
@@ -92,7 +94,12 @@ public final class AoADispensables {
 			BlockPos pos = source.getPos().offset(direction.getStepX(), direction.getStepY(), direction.getStepZ());
 
 			if (source.getLevel().getBlockState(pos).getBlock() instanceof CarvedRuneOfPower) {
-				CarvedRuneOfPower.testAndActivate(source.getLevel(), pos, direction, stack.getItem(), null);
+				if (stack.getItem() instanceof Realmstone) {
+					CarvedRuneOfPower.fillPortal(source.getLevel(), pos, direction, stack, null);
+				}
+				else if (stack.getItem() instanceof BlankRealmstone) {
+					CarvedRuneOfPower.clearPortal(source.getLevel(), pos, direction, stack, null);
+				}
 
 				return stack;
 			}

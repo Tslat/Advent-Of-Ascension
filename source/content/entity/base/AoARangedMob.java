@@ -30,6 +30,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -44,17 +45,16 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class AoARangedMob extends Monster implements RangedAttackMob, AoARangedAttacker, IAnimatable {
 	protected static final EntityDataAccessor<Integer> SHOOT_STATE = SynchedEntityData.defineId(AoARangedMob.class, EntityDataSerializers.INT);
 	private static final AttributeModifier SLOW_FALLING = new AttributeModifier(UUID.fromString("A5B6CF2A-2F7C-31EF-9022-7C3E7D5E6ABA"), "Slow falling acceleration reduction", -0.07, AttributeModifier.Operation.ADDITION);
+	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoARangedMob.class, EntityDataSerializers.BOOLEAN);
 
 	protected boolean isSlipperyMovement = false;
 
 	private final AnimationFactory animationFactory = new AnimationFactory(this);
-	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
 	protected AoARangedMob(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
@@ -75,6 +75,7 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 		getEntityData().define(SHOOT_STATE, 0);
+		getEntityData().define(INVULNERABLE, false);
 	}
 
 	@Nullable
@@ -115,6 +116,27 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 	protected void onHit(DamageSource source, float amount) {}
 
 	@Override
+	public void setInvulnerable(boolean isInvulnerable) {
+		super.setInvulnerable(isInvulnerable);
+		getEntityData().set(INVULNERABLE, isInvulnerable);
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		if (key.equals(INVULNERABLE))
+			setInvulnerable(getEntityData().get(INVULNERABLE));
+	}
+
+	@Override
+	public void load(CompoundTag compound) {
+		super.load(compound);
+
+		setInvulnerable(isInvulnerable());
+	}
+
+	@Override
 	protected void playStepSound(BlockPos pos, BlockState block) {
 		SoundEvent stepSound = getStepSound(pos, block);
 
@@ -151,6 +173,11 @@ public abstract class AoARangedMob extends Monster implements RangedAttackMob, A
 	@Override
 	protected boolean shouldDropLoot() {
 		return super.shouldDropLoot() && xpReward > 0;
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnReason) {
+		return true;
 	}
 
 	@Override

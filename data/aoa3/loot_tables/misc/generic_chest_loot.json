@@ -201,6 +201,36 @@
           "type": "minecraft:item",
           "name": "aoa3:gold_coin",
           "weight": 3
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{TornPagesEntryId:\"aoa3:lessons\"}"
+            }
+          ],
+          "name": "aoa3:torn_pages"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{TornPagesEntryId:\"aoa3:the_portal\"}"
+            }
+          ],
+          "name": "aoa3:torn_pages"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{TornPagesEntryId:\"aoa3:discovery\"}"
+            }
+          ],
+          "name": "aoa3:torn_pages"
         }
       ],
       "name": "misc_aoa_loot",

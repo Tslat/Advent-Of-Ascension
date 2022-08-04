@@ -1,56 +1,81 @@
 package net.tslat.aoa3.content.item.misc.summoning;
 
-import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
-import net.tslat.aoa3.content.entity.misc.BossItemEntity;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
+import net.tslat.aoa3.content.item.misc.TooltipItem;
+import net.tslat.aoa3.util.WorldUtil;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-import java.util.function.Supplier;
-
-public abstract class BossSpawningItem extends Item {
-	private final ParticleOptions[] timerParticles;
-	private final Supplier<SoundEvent> throwingSound;
-
-	public BossSpawningItem(@Nullable Supplier<SoundEvent> throwSound, @Nonnull ParticleOptions... timerParticles) {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON));
-
-		this.timerParticles = timerParticles;
-		this.throwingSound = throwSound;
+public abstract class BossSpawningItem<T extends Entity> extends TooltipItem {
+	public BossSpawningItem() {
+		this(2, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON));
 	}
 
-	public void handleTimerParticles(ItemEntity entityItem, double posX, double posY, double posZ, int lifespan, int ticksExisted) {
-		int index = (int)(ticksExisted / (float)lifespan * timerParticles.length);
-
-		if (RandomUtil.oneInNChance(1 + (lifespan - ticksExisted) / 20))
-			entityItem.level.addParticle(timerParticles[index], posX, posY + 0.25d, posZ, 0, 0, 0);
+	public BossSpawningItem(int tooltipLines, Properties itemProperties) {
+		super(tooltipLines, itemProperties);
 	}
 
-	public abstract void spawnBoss(Level world, ServerPlayer summoner, double posX, double posY, double posZ);
+	public abstract T spawnBoss(ServerLevel level, Vec3 position);
 
-	public abstract boolean canSpawnHere(Level world, ServerPlayer player, double posX, double posY, double posZ);
+	public abstract EntityType<T> getEntityType();
 
-	@Nullable
-	public SoundEvent getThrowingSound() {
-		return throwingSound.get();
+	@Override
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.SPYGLASS;
 	}
 
-	public static BossItemEntity newBossEntityItemFromExisting(ItemEntity item, Player player) {
-		BossItemEntity bossItem = new BossItemEntity(item.level, item.getX(), item.getY(), item.getZ(), item.getItem(), player);
+	@Override
+	public int getUseDuration(ItemStack stack) {
+		return 60;
+	}
 
-		bossItem.setPickUpDelay(10);
-		bossItem.setThrower(player.getUUID());
-		bossItem.setOwner(player.getUUID());
-		bossItem.setDeltaMovement(item.getDeltaMovement());
+	@Override
+	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+		if (!WorldUtil.isWorld(level, AoADimensions.NOWHERE.key))
+			return InteractionResultHolder.pass(player.getItemInHand(hand));
 
-		return bossItem;
+		return ItemUtils.startUsingInstantly(level, player, hand);
+	}
+
+	@Override
+	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
+		if (!level.isClientSide()) {
+			ServerParticlePacket packet = new ServerParticlePacket();
+
+			for (int i = 0; i < 3; i++) {
+				packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0xB27C00), livingEntity);
+			}
+
+			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, livingEntity.position(), 20);
+		}
+	}
+
+	@Override
+	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
+		if (!WorldUtil.isWorld(level, AoADimensions.NOWHERE.key))
+			return stack;
+
+		AoABlocks.NOWHERE_PORTAL.get().entityInside(AoABlocks.NOWHERE_PORTAL.get().defaultBlockState(), level, entity.blockPosition(), entity);
+
+		if (entity instanceof ServerPlayer pl)
+			NowhereActivityPortal.Activity.BOSSES.teleport(pl);
+
+		return stack;
 	}
 }

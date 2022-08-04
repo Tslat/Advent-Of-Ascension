@@ -28,6 +28,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
@@ -134,6 +135,13 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 			setInvulnerable(getEntityData().get(INVULNERABLE));
 	}
 
+	@Override
+	public void load(CompoundTag compound) {
+		super.load(compound);
+
+		setInvulnerable(isInvulnerable());
+	}
+
 	public int getAttackState() {
 		return this.getEntityData().get(ATTACK_STATE);
 	}
@@ -175,6 +183,11 @@ public abstract class AoAMeleeMob extends Monster implements IAnimatable {
 	@Override
 	protected boolean shouldDropLoot() {
 		return super.shouldDropLoot() && xpReward > 0;
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnReason) {
+		return true;
 	}
 
 	@Override

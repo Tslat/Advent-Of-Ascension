@@ -45,10 +45,10 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
-	private static final VoxelShape BASE_SHAPE = Block.box(4, 0, 4, 12, 2, 12);
-	private static final VoxelShape MIDDLE_SHAPE = Block.box(5, 2, 5, 11, 9, 11);
-	private static final VoxelShape TOP_SHAPE = Block.box(4.5, 9, 4.5, 11.5, 11, 11.5);
-	private static final VoxelShape FULL_AABB = Shapes.or(BASE_SHAPE, MIDDLE_SHAPE, TOP_SHAPE);
+	private static final VoxelShape FULL_AABB = Shapes.or(
+			Block.box(4, 0, 4, 12, 2, 12),
+			Block.box(5, 2, 5, 11, 9, 11),
+			Block.box(4.5, 9, 4.5, 11.5, 11, 11.5));
 
 	public TrophyBlock() {
 		super(new BlockUtil.CompactProperties(new Material(MaterialColor.GOLD, false, false, true, false, false, false, PushReaction.BLOCK), MaterialColor.STONE).stats(10f, 2000f).get());

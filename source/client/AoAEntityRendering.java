@@ -55,6 +55,7 @@ import net.tslat.aoa3.client.render.entity.projectile.cannonshots.*;
 import net.tslat.aoa3.client.render.entity.projectile.misc.*;
 import net.tslat.aoa3.client.render.entity.projectile.mob.*;
 import net.tslat.aoa3.client.render.entity.projectile.staff.*;
+import net.tslat.aoa3.client.render.tileentity.BossAltarTileEntityRenderer;
 import net.tslat.aoa3.client.render.tileentity.LunarCreationTableRenderer;
 import net.tslat.aoa3.client.render.tileentity.TrophyRenderer;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
@@ -74,7 +75,7 @@ import java.util.function.Supplier;
 public final class AoAEntityRendering {
 	private static final ArrayList<EntityRendererPackage> entityRenderers = new ArrayList<>();
 
-	public static final EntityRendererPackage<?> BLUE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.BLUE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/blue_gemtrap").withModel("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> BLUE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.BLUE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/blue_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
 	public static final EntityRendererPackage<?> CANDLEFISH = new EntityRendererPackage<>(AoAAnimals.CANDLEFISH).provider(context -> new BasicLavaFishRenderer(context, new EntityGeoModel<BasicLavaFishEntity>("animal/fish/candlefish").withAnimations("animal/fish/jamfish")));
 	public static final EntityRendererPackage<?> CHARRED_CHAR = new EntityRendererPackage<>(AoAAnimals.CHARRED_CHAR).provider(context -> new BasicLavaFishRenderer(context, new EntityGeoModel<>("animal/fish/charred_char")));
 	public static final EntityRendererPackage<?> CHOCAW = new EntityRendererPackage<>(AoAAnimals.CHOCAW).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/chocaw").withAnimations("animal/fish/jamfish")));
@@ -82,16 +83,16 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> CRIMSON_SKIPPER = new EntityRendererPackage<>(AoAAnimals.CRIMSON_SKIPPER).provider(context -> new BasicLavaFishRenderer(context, new EntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
 	public static final EntityRendererPackage<?> CRIMSON_STRIPEFISH = new EntityRendererPackage<>(AoAAnimals.CRIMSON_STRIPEFISH).provider(context -> new BasicLavaFishRenderer(context, new EntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
 	public static final EntityRendererPackage<?> DARK_HATCHETFISH = new EntityRendererPackage<>(AoAAnimals.DARK_HATCHETFISH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/dark_hatchetfish")));
-	public static final EntityRendererPackage<?> GREEN_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.GREEN_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/green_gemtrap").withModel("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> GREEN_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.GREEN_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/green_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
 	public static final EntityRendererPackage<?> HYDRONE = new EntityRendererPackage<>(AoAAnimals.HYDRONE).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/hydrone")));
 	public static final EntityRendererPackage<?> IRONBACK = new EntityRendererPackage<>(AoAAnimals.IRONBACK).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/ironback")));
 	public static final EntityRendererPackage<?> JAMFISH = new EntityRendererPackage<>(AoAAnimals.JAMFISH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/jamfish")));
 	public static final EntityRendererPackage<?> PARAPIRANHA = new EntityRendererPackage<>(AoAAnimals.PARAPIRANHA).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/parapiranha")));
 	public static final EntityRendererPackage<?> PEARL_STRIPEFISH = new EntityRendererPackage<>(AoAAnimals.PEARL_STRIPEFISH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/pearl_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> PURPLE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.PURPLE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/purple_gemtrap").withModel("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> PURPLE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.PURPLE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/purple_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
 	public static final EntityRendererPackage<?> RAINBOWFISH = new EntityRendererPackage<>(AoAAnimals.RAINBOWFISH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/rainbowfish")));
 	public static final EntityRendererPackage<?> RAZORFISH = new EntityRendererPackage<>(AoAAnimals.RAZORFISH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/razorfish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> RED_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.RED_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/red_gemtrap").withModel("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> RED_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.RED_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/red_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
 	public static final EntityRendererPackage<?> REEFTOOTH = new EntityRendererPackage<>(AoAAnimals.REEFTOOTH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/reeftooth")));
 	public static final EntityRendererPackage<?> ROCKETFISH = new EntityRendererPackage<>(AoAAnimals.ROCKETFISH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<>("animal/fish/rocketfish")));
 	public static final EntityRendererPackage<?> SAILBACK = new EntityRendererPackage<>(AoAAnimals.SAILBACK).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/sailback").withAnimations("animal/fish/jamfish")));
@@ -99,8 +100,8 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SKELECANTH = new EntityRendererPackage<>(AoAAnimals.SKELECANTH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/skelecanth").withAnimations("animal/fish/jamfish")));
 	public static final EntityRendererPackage<?> TURQUOISE_STRIPEFISH = new EntityRendererPackage<>(AoAAnimals.TURQUOISE_STRIPEFISH).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/turquoise_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
 	public static final EntityRendererPackage<?> VIOLET_SKIPPER = new EntityRendererPackage<>(AoAAnimals.VIOLET_SKIPPER).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/violet_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> WHITE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.WHITE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/white_gemtrap").withModel("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> YELLOW_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.YELLOW_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/yellow_gemtrap").withModel("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> WHITE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.WHITE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/white_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> YELLOW_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.YELLOW_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new EntityGeoModel<BasicFishEntity>("animal/fish/yellow_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
 	public static final EntityRendererPackage<?> SHINY_SQUID = new EntityRendererPackage<>(AoAAnimals.SHINY_SQUID).defineLayer("shiny_squid", ShinySquidModel::createBodyLayer).provider(ShinySquidRenderer::new);
 
 	public static final EntityRendererPackage<?> THORNY_PLANT_SPROUT = new EntityRendererPackage<>(AoAMiscEntities.THORNY_PLANT_SPROUT).geckolib("mob/misc/thorny_plant_sprout");
@@ -638,6 +639,7 @@ public final class AoAEntityRendering {
 		entityRenderers.clear();
 		BlockEntityRenderers.register(AoABlockEntities.TROPHY.get(), TrophyRenderer::new);
 		BlockEntityRenderers.register(AoABlockEntities.LUNAR_CREATION_TABLE.get(), LunarCreationTableRenderer::new);
+		BlockEntityRenderers.register(AoABlockEntities.BOSS_ALTAR.get(), BossAltarTileEntityRenderer::new);
 	}
 
 	private static void registerLayerDefinitions(final EntityRenderersEvent.RegisterLayerDefinitions ev) {

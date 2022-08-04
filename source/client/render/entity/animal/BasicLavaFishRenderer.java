@@ -2,6 +2,7 @@ package net.tslat.aoa3.client.render.entity.animal;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
@@ -24,4 +25,10 @@ public class BasicLavaFishRenderer extends AnimatedMobRenderer<BasicLavaFishEnti
 			matrixStackIn.mulPose(Vector3f.ZP.rotationDegrees(90));
 		}
 	}
+
+	@Override
+	public void render(BasicLavaFishEntity entity, float entityYaw, float partialTicks, PoseStack matrixStack, MultiBufferSource buffer, int packedLight) {
+		super.render(entity, entityYaw, partialTicks, matrixStack, buffer, packedLight);
+	}
+
 }

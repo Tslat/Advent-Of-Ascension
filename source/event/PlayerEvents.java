@@ -9,8 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -46,7 +44,6 @@ import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
 import net.tslat.aoa3.content.item.misc.ReturnCrystal;
-import net.tslat.aoa3.content.item.misc.summoning.BossSpawningItem;
 import net.tslat.aoa3.content.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
@@ -253,22 +250,7 @@ public class PlayerEvents {
 			else if (item instanceof ReservedItem) {
 				ReservedItem.handlePlayerToss(ev);
 			}
-			else if (item instanceof BossSpawningItem bossItem) {
-				net.minecraft.world.level.Level world = ev.getEntity().getCommandSenderWorld();
-
-				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					ev.getEntity().sendSystemMessage(Component.translatable("message.feedback.spawnBoss.difficultyFail"));
-
-					return;
-				}
-
-				ev.setCanceled(true);
-				world.addFreshEntity(BossSpawningItem.newBossEntityItemFromExisting(entityItem, ev.getPlayer()));
-
-				if (bossItem.getThrowingSound() != null)
-					world.playSound(null, entityItem.getX(), entityItem.getX(), entityItem.getZ(), bossItem.getThrowingSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
-			}
-			else if (item instanceof ReturnCrystal) {
+			else if (item instanceof ReturnCrystal && WorldUtil.isWorld(ev.getPlayer().getLevel(), AoADimensions.NOWHERE.key)) {
 				ev.setCanceled(true);
 			}
 		}

@@ -4,7 +4,6 @@ import net.minecraft.SharedConstants;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
@@ -36,7 +35,6 @@ public final class AoAMiscEntities {
 	public static final RegistryObject<EntityType<SoulTabletEntity>> VITALITY_TABLET = registerMiscEntity("vitality_tablet", VitalityTabletEntity::new, 0.6f, 0.09375f);
 
 	public static final RegistryObject<EntityType<GyrocopterEntity>> GYROCOPTER = registerMiscEntity("gyrocopter", GyrocopterEntity::new, 1.375f, 1.625f, EntityType.Builder::noSummon);
-	public static final RegistryObject<EntityType<ItemEntity>> BOSS_ITEM = registerMiscEntity("boss_item", BossItemEntity::new, 0.25f, 0.25f, EntityType.Builder::noSummon);
 	public static final RegistryObject<EntityType<LottoTotemEntity>> LOTTO_TOTEM = registerMiscEntity("lotto_totem", LottoTotemEntity::new, 0.75f, 0.95f, EntityType.Builder::fireImmune);
 	public static final RegistryObject<EntityType<PrimedTnt>> FAKE_TNT = registerMiscEntity("fake_tnt", FakeTntEntity::new, 1f, 1f, typeBuilder -> typeBuilder.noSave().noSummon());
 	public static final RegistryObject<EntityType<SandGiantPitTrapEntity>> SAND_GIANT_PIT_TRAP = registerMiscEntity("sand_giant_pit_trap", SandGiantPitTrapEntity::new, 0.875f, 0.375f, builder -> builder.noSave().noSummon().updateInterval(1).fireImmune());

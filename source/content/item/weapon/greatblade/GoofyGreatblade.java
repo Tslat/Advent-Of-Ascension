@@ -19,11 +19,11 @@ public class GoofyGreatblade extends BaseGreatblade {
 
 	@Override
 	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
-		return super.getDamageForAttack(target, attacker, swordStack, baseDamage + (float)RandomUtil.randomScaledGaussianValue(5f));
+		return super.getDamageForAttack(target, attacker, swordStack, baseDamage + (float)RandomUtil.randomValueBetween(-5, 5));
 	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.BENEFICIAL, Component.literal(String.valueOf(getDamage() - 5)), Component.literal(String.valueOf(getDamage() + 5))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.BENEFICIAL, Component.literal(String.valueOf(getDamage() - 4)), Component.literal(String.valueOf(getDamage() + 6))));
 	}
 }

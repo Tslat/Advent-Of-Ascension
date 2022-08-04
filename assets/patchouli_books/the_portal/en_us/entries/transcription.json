@@ -1,0 +1,24 @@
+{
+  "category": "aoa3:contents",
+  "icon": "aoa3:torn_pages",
+  "name": "Transcription",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "in place today. We're quietly confident that this text will be the first successful one. When the rune slid into place it had a slight reaction, unlike all the previous attempts - as if it was resonating with the rest of the frame. The old stone panels we found seem to be the key, the magic flows through them in a way that makes it all work."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "We'll attempt to activate the frame tomorrow morning. The key's power seemed to notice the newly constructed frame, perhaps some amount of its divine power sensing a potential? This whole exercise has us all questioning the theocratic implications of the physical manifestation of a divine power.$(br)Could Krasaun be more than just a legend? Although it's easily more plausible that we just don't yet understand"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "the magic well enough to differentiate it from a divine power. Maybe we'll find out more if we can ever get this portal thing working.$(br2)I am personally curious about the impacts this may have on localised hyper-travel. The other teams working on the portal to the underworld seem to believe that a stable implementation of their designs would allow not only travel to that realm, but also a method to"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "travel vast distances of our dimension with little to no side effects. This would be a monumental breakthrough, although I remain justifiably skeptical.$(br2)Regardless, tomorrow if all things go well I will be the first person to travel inter-dimensionally (at least in modern times), though I'm not sure my excitement justifies the decision to volunteer to be first."
+    }
+  ],
+  "sortnum": 0
+}

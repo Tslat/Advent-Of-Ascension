@@ -8,6 +8,7 @@ import com.mojang.serialization.DataResult;
 import com.mojang.serialization.JsonOps;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
@@ -76,8 +77,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 
 	@Nullable
 	public static NowhereBossArena getFreeArena(ServerLevel level) {
-		if (RandomUtil.oneInNChance(5))
-			ObjectUtil.fastShuffleList(REGISTERED_ARENAS);
+		ObjectUtil.fastShuffleList(REGISTERED_ARENAS);
 
 		for (NowhereBossArena arena : REGISTERED_ARENAS) {
 			if (arena.checkAndClear(level))
@@ -122,7 +122,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			return true;
 		}
 
-		public void placePlayersAndBoss(ServerLevel level, List<ServerPlayer> players, Predicate<ServerPlayer> playerStillValid, BiFunction<ServerLevel, Vec3, Entity> bossFunction) {
+		public void placePlayersAndBoss(ServerLevel level, List<Player> players, Predicate<Player> playerStillValid, BiFunction<ServerLevel, Vec3, Entity> bossFunction) {
 			if (players.isEmpty())
 				return;
 
@@ -134,23 +134,29 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			AoAScheduler.scheduleSyncronisedTask(() -> {
 				boolean spawnBoss = false;
 
-				for (ServerPlayer player : players) {
-					if (playerStillValid.test(player)) {
+				for (Player player : players) {
+					if (!(player instanceof ServerPlayer serverPlayer))
+						continue;
+
+					if (playerStillValid.test(serverPlayer)) {
 						Vec3 pos = RandomUtil.getRandomSelection(playerSpawnPoints);
 						spawnBoss = true;
 
-						player.connection.teleport(pos.x, pos.y, pos.z, 0, 0);
-						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-						player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.bossWarning"));
+						serverPlayer.connection.teleport(pos.x, pos.y, pos.z, 0, 0);
+						ItemUtil.givePlayerItemOrDrop(serverPlayer, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+						serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.bossWarning", ChatFormatting.GREEN));
+					}
+					else {
+						serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.tooFar", ChatFormatting.RED));
 					}
 				}
 
 				if (spawnBoss)
-					AoAScheduler.scheduleSyncronisedTask(() -> bossFunction.apply(level, RandomUtil.getRandomSelection(bossSpawnPoints)), 100);
+					AoAScheduler.scheduleSyncronisedTask(() -> bossFunction.apply(level, RandomUtil.getRandomSelection(bossSpawnPoints)), 140);
 			}, 100);
 
-			for (ServerPlayer player : players) {
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.teleportWarning"));
+			for (Player player : players) {
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.teleportWarning", ChatFormatting.GOLD));
 			}
 		}
 

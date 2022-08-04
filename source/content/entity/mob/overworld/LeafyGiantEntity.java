@@ -107,6 +107,11 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 
 	@Override
 	protected void customServerAiStep() {
+		if (isInvulnerable() && tickCount % 30 == 0) {
+			if (EntityRetrievalUtil.getEntities(this, 40, new EntityPredicate<>(this).isAlive().is(AoAMobs.BUSH_BABY.get())).isEmpty())
+				setInvulnerable(false);
+		}
+
 		if (nextBushBaby <= tickCount) {
 			LivingEntity target = getTarget();
 
@@ -117,11 +122,6 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 
 			if (EntityRetrievalUtil.getEntities(this, 10, new EntityPredicate<>(this).isAlive().is(AoAMobs.BUSH_BABY.get())).size() < 5)
 				spawnBushBaby(target);
-		}
-
-		if (isInvulnerable() && tickCount % 30 == 0) {
-			if (EntityRetrievalUtil.getEntities(this, 40, new EntityPredicate<>(this).isAlive().is(AoAMobs.BUSH_BABY.get())).isEmpty())
-				setInvulnerable(false);
 		}
 	}
 
