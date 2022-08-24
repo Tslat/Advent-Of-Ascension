@@ -1,4 +1,4 @@
-Cette créature musclée quadrupède est ressemblante aux vaches de l'Overworld. C'est plutôt logique, puisque les citoyens des Shyrelands semble considérer les bêtes des arches comme telles.
+Cette créature musclée quadrupède est ressemblante aux vaches de l'Overworld. C'est plutôt logique, puisque les citoyens des Shyrelands semblent considérer les bêtes des arches comme telles.
 Comme toutes les autres créatures oculaires des Shyrelands, ses yeux ont évolués pour filtrer la lumière aveuglante de l'environnement, donnant une teinte bleue et réduisant les détails visibles.
 
 Ils sont très timides, et probablement de peur, attaquent en chargeant leur corps solides sur les entités qui les effrayent.
