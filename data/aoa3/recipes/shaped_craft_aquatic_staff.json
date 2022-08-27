@@ -17,6 +17,10 @@
     " B "
   ],
   "result": {
-    "item": "aoa3:aquatic_staff"
+    "count": 1,
+    "item": "aoa3:aquatic_staff",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

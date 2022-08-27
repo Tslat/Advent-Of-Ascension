@@ -23,6 +23,10 @@
     " B "
   ],
   "result": {
-    "item": "aoa3:explochron_sword"
+    "count": 1,
+    "item": "aoa3:explochron_sword",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

@@ -1,80 +1,66 @@
 package net.tslat.aoa3.client.gui.hud;
 
 import com.mojang.blaze3d.platform.Window;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.LerpingBossEvent;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.BossEvent;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public final class BossBarRenderer {
-	private static final HashMap<String, ResourceLocation> textureCache = new HashMap<String, ResourceLocation>();
+	public static final int STANDARD_BAR_WIDTH = 196;
+	private static final Map<ResourceLocation, ResourceLocation> BAR_ID_CACHE = new Object2ObjectOpenHashMap<>();
 
 	public static void init() {
 		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, CustomizeGuiOverlayEvent.BossEventProgress.class, BossBarRenderer::onBossInfoRender);
 	}
 
 	private static void onBossInfoRender(final CustomizeGuiOverlayEvent.BossEventProgress ev) {
-		if (!ev.isCanceled()) {
-			Component nameComponent = ev.getBossEvent().getName();
-			Component name;
-			String id;
-			PoseStack matrix = ev.getPoseStack();
+		if (ev.isCanceled() || Minecraft.getInstance().level == null)
+			return;
 
-			if (nameComponent.getSiblings().isEmpty() || !(nameComponent instanceof MutableComponent))
-				return;
+		LerpingBossEvent bossStatusInfo = ev.getBossEvent();
 
-			if (true)
-				return;
+		if (bossStatusInfo.getColor() != BossEvent.BossBarColor.GREEN || bossStatusInfo.getOverlay() != BossEvent.BossBarOverlay.NOTCHED_20)
+			return;
 
-			name = nameComponent.getSiblings().get(0);
+		Minecraft mc = Minecraft.getInstance();
+		Entity entity = mc.level.getEntities().get(bossStatusInfo.getId());
 
-			Minecraft mc = Minecraft.getInstance();
-			Window mainWindow = mc.getWindow();
-			ResourceLocation texture = getTexture(id.substring(12));
-			int textureWidth = 196;
-			int xPos = mainWindow.getGuiScaledWidth() / 2 - 100;
-			int percentPixels = (int)Math.ceil(ev.getBossEvent().getProgress() * textureWidth);
-			int stringWidth = mc.font.width(name);
-			int x = mainWindow.getGuiScaledWidth() / 2 - stringWidth / 2;
+		if (entity == null)
+			return;
 
-			matrix.pushPose();
-			RenderSystem.disableDepthTest();
-			RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-			RenderUtil.prepRenderTexture(texture);
+		RenderUtil.resetShaderColour();
+		RenderUtil.prepRenderTexture(BAR_ID_CACHE.computeIfAbsent(RegistryUtil.getId(entity.getType()), key -> new ResourceLocation(key.getNamespace(), "textures/gui/bossbars/" + key.getPath() + ".png")));
 
-			if (percentPixels < textureWidth)
-				RenderUtil.renderCustomSizedTexture(matrix, xPos, ev.getY(), 0, 12, 200, 12, 200, 36);
+		Window window = mc.getWindow();
+		PoseStack poseStack = ev.getPoseStack();
+		int xPos = window.getGuiScaledWidth() / 2 - 100;
+		int yPos = ev.getY();
+		float progressWidth = bossStatusInfo.getProgress() * STANDARD_BAR_WIDTH;
+		Component displayName = bossStatusInfo.getName();
 
-			if (percentPixels > 0)
-				RenderUtil.renderCustomSizedTexture(matrix, xPos + 2, ev.getY(), 2, 0, percentPixels, 12, 200, 36);
+		if (progressWidth < STANDARD_BAR_WIDTH)
+			RenderUtil.renderCustomSizedTexture(poseStack, xPos, yPos, 0, 12, 200, 12, 200, 36);
 
-			RenderUtil.renderCustomSizedTexture(matrix, xPos, ev.getY(), 0, 24, 200, 12, 200, 36);
-			mc.font.drawShadow(ev.getPoseStack(), name, x, ev.getY() - 9, 16777215);
-			RenderSystem.enableDepthTest();
-			matrix.popPose();
+		if (progressWidth > 0)
+			RenderUtil.renderCustomSizedTexture(poseStack, xPos + 2, yPos, 2, 0, progressWidth, 12, 200, 36);
 
-			ev.setIncrement(ev.getIncrement() + 5);
-			ev.setCanceled(true);
-		}
-	}
+		RenderUtil.renderCustomSizedTexture(poseStack, xPos, yPos, 0, 24, 200, 12, 200, 36);
+		mc.font.drawShadow(poseStack, displayName, window.getGuiScaledWidth() / 2 - mc.font.width(displayName) / 2, yPos - 9, ColourUtil.WHITE);
 
-	private static ResourceLocation getTexture(String id) {
-		if (textureCache.containsKey(id))
-			return textureCache.get(id);
-
-		ResourceLocation texture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/bossbars/" + id + ".png");
-
-		textureCache.put(id, texture);
-
-		return texture;
+		ev.setIncrement(ev.getIncrement() + 5);
+		ev.setCanceled(true);
 	}
 }

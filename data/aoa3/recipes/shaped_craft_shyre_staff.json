@@ -23,6 +23,10 @@
     " B "
   ],
   "result": {
-    "item": "aoa3:shyre_staff"
+    "count": 1,
+    "item": "aoa3:shyre_staff",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

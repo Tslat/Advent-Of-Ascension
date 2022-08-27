@@ -1,0 +1,17 @@
+{
+  "placement": {
+    "type": "aoa3:single_structure",
+    "pos": [
+      0,
+      450,
+      0
+    ],
+    "salt": 0
+  },
+  "structures": [
+    {
+      "structure": "aoa3:nowhere_disabled_boss_lobby",
+      "weight": 1
+    }
+  ]
+}

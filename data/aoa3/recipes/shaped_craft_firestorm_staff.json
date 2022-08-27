@@ -20,6 +20,10 @@
     " B "
   ],
   "result": {
-    "item": "aoa3:firestorm_staff"
+    "count": 1,
+    "item": "aoa3:firestorm_staff",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

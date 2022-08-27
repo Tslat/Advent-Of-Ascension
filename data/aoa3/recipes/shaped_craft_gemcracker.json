@@ -17,6 +17,10 @@
     " C "
   ],
   "result": {
-    "item": "aoa3:gemcracker"
+    "count": 1,
+    "item": "aoa3:gemcracker",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

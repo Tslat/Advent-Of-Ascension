@@ -19,6 +19,10 @@
     "CD"
   ],
   "result": {
-    "item": "aoa3:mega_rune_stone"
+    "count": 1,
+    "item": "aoa3:mega_rune_stone",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

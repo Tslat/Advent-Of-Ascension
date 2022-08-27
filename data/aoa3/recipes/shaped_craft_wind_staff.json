@@ -14,6 +14,10 @@
     "B"
   ],
   "result": {
-    "item": "aoa3:wind_staff"
+    "count": 1,
+    "item": "aoa3:wind_staff",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

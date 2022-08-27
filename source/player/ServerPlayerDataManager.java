@@ -558,7 +558,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	public void checkAndUpdateLegitimacy() {
 		if (player != null) {
-			Advancement adv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/by_the_books"));
+			Advancement adv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books"));
 
 			if (adv == null)
 				return;

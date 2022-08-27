@@ -17,6 +17,10 @@
     "PPP"
   ],
   "result": {
-    "item": "aoa3:fishing_cage"
+    "count": 1,
+    "item": "aoa3:fishing_cage",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

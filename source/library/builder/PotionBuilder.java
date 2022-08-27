@@ -9,7 +9,7 @@ import net.minecraft.world.item.alchemy.PotionUtils;
 
 import java.util.ArrayList;
 
-public class PotionBuilder {
+public final class PotionBuilder {
 	Item potionItem;
 	String displayName = null;
 	boolean translatable = false;

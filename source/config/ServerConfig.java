@@ -1,6 +1,7 @@
 package net.tslat.aoa3.config;
 
 import net.minecraftforge.common.ForgeConfigSpec;
+import net.tslat.aoa3.library.constant.BossDropsScheme;
 
 public final class ServerConfig {
 	public final ForgeConfigSpec.BooleanValue allowUnsafeInfusion;
@@ -10,6 +11,7 @@ public final class ServerConfig {
 	public final ForgeConfigSpec.DoubleValue globalXpModifier;
 	public final ForgeConfigSpec.BooleanValue saveLootFromExplosions;
 	public final ForgeConfigSpec.BooleanValue disableSkills;
+	public final ForgeConfigSpec.EnumValue<BossDropsScheme> bossDropsScheme;
 
 	public final ForgeConfigSpec.BooleanValue skillsLeaderboardEnabled;
 	public final ForgeConfigSpec.IntValue maxLeaderboardThreads;
@@ -56,6 +58,11 @@ public final class ServerConfig {
 				.comment("Set to false to disable all AoA Skills for the server.", "This may give a slight performance improvement.", "NOTE: This will cause any player who logs in to lose any levels & xp they may have previously stored. Only turn this on if you intend for the server to run without skills.")
 				.translation("config.aoa3.server.disableSkills")
 				.define("disableSkills", false);
+
+		bossDropsScheme = configBuilder
+				.comment("Select the method in which Nowhere boss loot should be distributed on kill.")
+				.translation("config.aoa3.server.bossDropsScheme")
+				.defineEnum("bossDropsScheme", BossDropsScheme.SPLIT_BETWEEN_PLAYERS);
 
 		configBuilder.pop();
 		configBuilder.comment("AoA Leaderboard configuration options").push("Leaderboard Settings");

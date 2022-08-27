@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
-public class NativePatching {
+public final class NativePatching {
 	public static void init() {
 		((RangedAttribute)Attributes.MAX_HEALTH).maxValue = Double.MAX_VALUE;
 		((RangedAttribute)Attributes.ATTACK_KNOCKBACK).maxValue = Double.MAX_VALUE;

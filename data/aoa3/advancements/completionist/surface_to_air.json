@@ -1,5 +1,5 @@
 {
-  "parent": "aoa3:overworld/root",
+  "parent": "aoa3:completionist/root",
   "criteria": {
     "rpg_air_kill": {
       "trigger": "minecraft:impossible"
@@ -9,7 +9,7 @@
     "announce_to_chat": true,
     "description": {
       "color": "white",
-      "translate": "advancements.aoa3.overworld.surface_to_air.description"
+      "translate": "advancements.aoa3.completionist.surface_to_air.description"
     },
     "frame": "challenge",
     "hidden": true,
@@ -20,7 +20,7 @@
     "show_toast": true,
     "title": {
       "color": "light_purple",
-      "translate": "advancements.aoa3.overworld.surface_to_air.title"
+      "translate": "advancements.aoa3.completionist.surface_to_air.title"
     }
   },
   "requirements": [

@@ -23,6 +23,10 @@
     "CDE"
   ],
   "result": {
-    "item": "aoa3:supremacy_sword"
+    "count": 1,
+    "item": "aoa3:supremacy_sword",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

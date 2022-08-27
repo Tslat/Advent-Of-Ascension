@@ -23,6 +23,10 @@
     " E "
   ],
   "result": {
-    "item": "aoa3:lyonic_staff"
+    "count": 1,
+    "item": "aoa3:lyonic_staff",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

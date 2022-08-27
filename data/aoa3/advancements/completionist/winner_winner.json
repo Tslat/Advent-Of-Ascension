@@ -1,7 +1,7 @@
 {
-  "parent": "aoa3:overworld/root",
+  "parent": "aoa3:completionist/root",
   "criteria": {
-    "20_target_hellfire": {
+    "lotto_win": {
       "trigger": "minecraft:impossible"
     }
   },
@@ -9,22 +9,22 @@
     "announce_to_chat": true,
     "description": {
       "color": "white",
-      "translate": "advancements.aoa3.overworld.heckfire.description"
+      "translate": "advancements.aoa3.completionist.winner_winner.description"
     },
     "frame": "challenge",
     "hidden": true,
     "icon": {
-      "item": "aoa3:hellfire"
+      "item": "aoa3:lotto_totem"
     },
     "show_toast": true,
     "title": {
       "color": "light_purple",
-      "translate": "advancements.aoa3.overworld.heckfire.title"
+      "translate": "advancements.aoa3.completionist.winner_winner.title"
     }
   },
   "requirements": [
     [
-      "20_target_hellfire"
+      "lotto_win"
     ]
   ]
 }

@@ -3,7 +3,8 @@
   "biomes": {
     "excluding": [
       "#forge:is_snowy",
-      "#forge:is_lush"
+      "#forge:is_lush",
+      "#forge:is_mushroom"
     ],
     "if_all": [
       "#minecraft:is_overworld"

@@ -43,7 +43,6 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
-import net.tslat.aoa3.content.item.misc.ReturnCrystal;
 import net.tslat.aoa3.content.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
@@ -125,9 +124,6 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerDamaged(final LivingDamageEvent ev) {
-		if (ev.getSource() == DamageSource.OUT_OF_WORLD)
-			return;
-
 		if (ev.getEntity() instanceof ServerPlayer pl) {
 			if (pl.getHealth() <= ev.getAmount()) {
 				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
@@ -148,9 +144,8 @@ public class PlayerEvents {
 					}
 				}
 
-				if (ev.getEntity().level.dimension() == AoADimensions.NOWHERE.key) {
+				if (ev.getEntity().level.dimension() == AoADimensions.NOWHERE.key)
 					NowhereEvents.doDeathPrevention(ev, plData);
-				}
 			}
 		}
 	}
@@ -230,7 +225,7 @@ public class PlayerEvents {
 				Logging.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things.");
 			}
 			else if (!plAdvancements.getOrStartProgress(rootAdv).isDone()) {
-				plAdvancements.award(AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/by_the_books")), "legitimate");
+				plAdvancements.award(AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books")), "legitimate");
 				plAdvancements.award(rootAdv, "playerjoin");
 			}
 		}
@@ -249,9 +244,6 @@ public class PlayerEvents {
 			}
 			else if (item instanceof ReservedItem) {
 				ReservedItem.handlePlayerToss(ev);
-			}
-			else if (item instanceof ReturnCrystal && WorldUtil.isWorld(ev.getPlayer().getLevel(), AoADimensions.NOWHERE.key)) {
-				ev.setCanceled(true);
 			}
 		}
 	}

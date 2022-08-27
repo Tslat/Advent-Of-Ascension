@@ -286,6 +286,10 @@ public final class PlayerUtil {
 
         player.setHealth(player.getMaxHealth());
         player.removeAllEffects();
+        player.clearFire();
+        player.setTicksFrozen(0);
+        player.setSharedFlagOnFire(false);
+        player.getCombatTracker().recheckStatus();
         foodData.setFoodLevel(20);
         foodData.setSaturation(5);
         foodData.setExhaustion(0);

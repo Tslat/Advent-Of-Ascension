@@ -43,6 +43,11 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 	}
 
 	@Override
+	public boolean isPickable() {
+		return false;
+	}
+
+	@Override
 	public void checkDespawn() {
 		if (level.getDifficulty() == Difficulty.PEACEFUL)
 			discard();

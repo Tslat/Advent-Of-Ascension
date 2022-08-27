@@ -17,6 +17,10 @@
     "BC"
   ],
   "result": {
-    "item": "aoa3:lights_way"
+    "count": 1,
+    "item": "aoa3:lights_way",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

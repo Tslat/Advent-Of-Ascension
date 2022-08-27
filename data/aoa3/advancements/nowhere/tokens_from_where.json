@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:nowhere/root",
+  "criteria": {
+    "obtain_dungeon_tokens": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:dungeon_tokens"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nowhere.tokens_from_where.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:dungeon_tokens"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nowhere.tokens_from_where.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_dungeon_tokens"
+    ]
+  ]
+}

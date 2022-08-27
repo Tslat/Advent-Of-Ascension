@@ -17,6 +17,10 @@
     " B "
   ],
   "result": {
-    "item": "aoa3:pickmax"
+    "count": 1,
+    "item": "aoa3:pickmax",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

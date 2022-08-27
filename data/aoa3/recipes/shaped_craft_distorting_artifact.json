@@ -17,6 +17,10 @@
     "ABA"
   ],
   "result": {
-    "item": "aoa3:distorting_artifact"
+    "count": 1,
+    "item": "aoa3:distorting_artifact",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

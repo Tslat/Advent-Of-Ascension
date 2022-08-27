@@ -198,7 +198,7 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 
 		silverfish.setPos(stoneGiant.position());
 
-		if (target instanceof LivingEntity)
+		if (target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.isCreative()))
 			silverfish.setTarget((LivingEntity)target);
 
 		return silverfish;

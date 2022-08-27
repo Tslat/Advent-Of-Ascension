@@ -12,6 +12,7 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.content.entity.boss.SmashEntity;
 import net.tslat.aoa3.content.entity.mob.abyss.*;
 import net.tslat.aoa3.content.entity.mob.barathos.*;
 import net.tslat.aoa3.content.entity.mob.candyland.*;
@@ -28,7 +29,6 @@ import net.tslat.aoa3.content.entity.mob.iromine.*;
 import net.tslat.aoa3.content.entity.mob.lborean.*;
 import net.tslat.aoa3.content.entity.mob.lelyetia.*;
 import net.tslat.aoa3.content.entity.mob.lunalus.*;
-import net.tslat.aoa3.content.entity.mob.misc.doppelganger.DoppelgangerEntity;
 import net.tslat.aoa3.content.entity.mob.mysterium.*;
 import net.tslat.aoa3.content.entity.mob.nether.*;
 import net.tslat.aoa3.content.entity.mob.nowhere.*;
@@ -37,7 +37,6 @@ import net.tslat.aoa3.content.entity.mob.precasia.*;
 import net.tslat.aoa3.content.entity.mob.runandor.*;
 import net.tslat.aoa3.content.entity.mob.shyrelands.*;
 import net.tslat.aoa3.content.entity.mob.voxponds.*;
-import net.tslat.aoa3.util.ColourUtil;
 
 public final class AoAMobs {
 	public static void init() {}
@@ -119,7 +118,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<Monster>> DISTORTER = registerMob("distorter", DistorterEntity::new, 0.6f, 2.125f, 1579066, 2841448);
 	public static final RegistryObject<EntityType<Monster>> DOUBLER = registerMob("doubler", DoublerEntity::new, 1.75f, (5 * 16 + 11) / 16f, 0x3A3A3A, 0x595959);
 	//public static final RegistryObject<EntityType<FlyingMob>> DRACYON = registerMob("dracyon", DracyonEntity::new, 1.4f, 1.3125f, 402812, 3553336);
-	public static final RegistryObject<EntityType<DoppelgangerEntity>> DOPPELGANGER = registerMob("doppelganger", DoppelgangerEntity::new, 0.6F, 1.8F, 0, ColourUtil.WHITE);
+	//public static final RegistryObject<EntityType<DoppelgangerEntity>> DOPPELGANGER = registerMob("doppelganger", DoppelgangerEntity::new, 0.6F, 1.8F, 0, ColourUtil.WHITE);
 	public static final RegistryObject<EntityType<Monster>> DUST_STRIDER = registerMob("dust_strider", DustStriderEntity::new, 0.8f, 1.25f, 986902, 8662823);
 	public static final RegistryObject<EntityType<Monster>> DUSTEIVA = registerMob("dusteiva", DusteivaEntity::new, 0.6f, 2.25f, 3150604, 10037031);
 	public static final RegistryObject<EntityType<FlyingMob>> DUSTON = registerMob("duston", DustonEntity::new, 0.6f, 1.5f, 14027274, 857601);
@@ -286,7 +285,7 @@ public final class AoAMobs {
 	//public static final RegistryObject<EntityType<Monster>> SKELETRON = registerMob("skeletron", SkeletronEntity::new, 1.2f, 1.25f, 16052195, 4802370);
 	public static final RegistryObject<EntityType<Monster>> SKULL_CREATURE = registerMob("skull_creature", SkullCreatureEntity::new, 0.6875f, 2.3125f, 2496514, 3351359);
 	public static final RegistryObject<EntityType<Monster>> SLIMER = registerMob("slimer", SlimerEntity::new, 1.7f, 3.125f, 3683898, 978238);
-	//public static final RegistryObject<EntityType<Monster>> SMASH = registerMob("smash", SmashEntity::new, 0.8f, 2.6f, 3154949, 3493661);
+	public static final RegistryObject<EntityType<SmashEntity>> SMASH = registerMob("smash", SmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 	public static final RegistryObject<EntityType<Monster>> SNAPPY = registerMob("snappy", SnappyEntity::new, 0.6f, 2.0f, 1573411, 590407);
 	public static final RegistryObject<EntityType<Monster>> SOULSCORNE = registerMob("soulscorne", SoulscorneEntity::new, 0.6f, 1.8125f, 14809348, 977903);
 	public static final RegistryObject<EntityType<Monster>> SOULVYRE = registerMob("soulvyre", SoulvyreEntity::new, 0.6f, 2.125f, 14743310, 1369563);

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.7,
+  "ingredient": {
+    "tag": "forge:raw_materials/emberstone"
+  },
+  "result": "aoa3:emberstone_ingot"
+}

@@ -20,6 +20,10 @@
     "CBD"
   ],
   "result": {
-    "item": "aoa3:shadow_sword"
+    "count": 1,
+    "item": "aoa3:shadow_sword",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

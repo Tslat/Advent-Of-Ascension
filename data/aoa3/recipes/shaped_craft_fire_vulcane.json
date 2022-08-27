@@ -13,6 +13,10 @@
     "B"
   ],
   "result": {
-    "item": "aoa3:fire_vulcane"
+    "count": 1,
+    "item": "aoa3:fire_vulcane",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

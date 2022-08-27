@@ -6,6 +6,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.tslat.aoa3.content.block.tileentity.BossAltarTileEntity;
 
@@ -33,6 +36,13 @@ public class BossAltarTileEntityRenderer implements BlockEntityRenderer<BossAlta
 
 			Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, 0, matrix, buffer, combinedLight);
 			matrix.popPose();
+
+			if (partialTicks > 0.5f) {
+				BlockPos pos = blockEntity.getBlockPos();
+				RandomSource rand = blockEntity.getLevel().getRandom();
+
+				blockEntity.getLevel().addParticle(ParticleTypes.GLOW, pos.getX() - 3 + rand.nextFloat() * 7, pos.getY() + 0.2, pos.getZ() - 3 + rand.nextFloat() * 7, 0, 0, 0);
+			}
 		}
 	}
 }

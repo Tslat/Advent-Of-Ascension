@@ -14,6 +14,10 @@
     "B"
   ],
   "result": {
-    "item": "aoa3:ornamyte_shovel"
+    "count": 1,
+    "item": "aoa3:ornamyte_shovel",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

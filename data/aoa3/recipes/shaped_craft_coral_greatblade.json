@@ -17,6 +17,10 @@
     " C "
   ],
   "result": {
-    "item": "aoa3:coral_greatblade"
+    "count": 1,
+    "item": "aoa3:coral_greatblade",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

@@ -1,0 +1,17 @@
+package net.tslat.aoa3.client.model.entity.mob;
+
+import net.minecraft.resources.ResourceLocation;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.model.entity.EntityGeoModel;
+import net.tslat.aoa3.content.entity.boss.SmashEntity;
+
+public class SmashModel extends EntityGeoModel<SmashEntity> {
+	public SmashModel() {
+		super("boss/smash/smash");
+	}
+
+	@Override
+	public ResourceLocation getTextureResource(SmashEntity entity) {
+		return AdventOfAscension.id("textures/entity/boss/smash/smash" + (entity.isEnraged() ? "_angry" : "") + ".png");
+	}
+}

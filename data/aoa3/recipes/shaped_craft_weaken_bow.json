@@ -20,6 +20,10 @@
     "DAB"
   ],
   "result": {
-    "item": "aoa3:weaken_bow"
+    "count": 1,
+    "item": "aoa3:weaken_bow",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

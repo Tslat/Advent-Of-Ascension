@@ -1,17 +1,38 @@
 package net.tslat.aoa3.event.dimension;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LayeredCauldronBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.scores.Score;
+import net.minecraft.world.scores.criteria.ObjectiveCriteria;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.Event;
+import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
+import net.tslat.aoa3.content.block.functional.utility.TeaSink;
+import net.tslat.aoa3.content.entity.boss.AoABoss;
+import net.tslat.aoa3.content.item.tablet.TabletItem;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.TagUtil;
 
 public final class NowhereEvents {
 	public static void doPlayerTick(final TickEvent.PlayerTickEvent ev) {
@@ -64,7 +85,72 @@ public final class NowhereEvents {
 	}
 
 	public static void doDeathPrevention(final LivingDamageEvent ev, ServerPlayerDataManager plData) {
-		ev.setCanceled(true);
+		ServerPlayer player = plData.player();
+		LivingEntity killer = player.getKillCredit();
+
+		player.getScoreboard().forAllObjectives(ObjectiveCriteria.DEATH_COUNT, player.getScoreboardName(), Score::increment);
+
+		if (killer != null) {
+			player.awardStat(Stats.ENTITY_KILLED_BY.get(killer.getType()));
+			killer.awardKillScore(player, 1, ev.getSource());
+		}
+
+		player.awardStat(Stats.DEATHS);
+		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH));
+		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
+
 		NowhereActivityPortal.Activity.RETURN.teleport(plData.player());
+		player.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED), true);
+		ev.setCanceled(true);
+	}
+
+	public static void handleNowhereRightClickItem(final PlayerInteractEvent.RightClickItem ev) {
+		Item item = ev.getItemStack().getItem();
+
+		if (item instanceof MinecartItem || item instanceof BoatItem)
+			ev.setCanceled(true);
+	}
+
+	public static void handleNowhereRightClickBlock(final PlayerInteractEvent.RightClickBlock ev) {
+		BlockState blockState = ev.getLevel().getBlockState(ev.getPos());
+		Block block = blockState.getBlock();
+		Item heldItem = ev.getEntity().getItemInHand(ev.getHand()).getItem();
+
+		if (block == Blocks.JUKEBOX) {
+			if (heldItem == Items.AIR || heldItem instanceof RecordItem) {
+				ev.setUseItem(Event.Result.ALLOW);
+				ev.setUseBlock(Event.Result.ALLOW);
+				ev.getEntity().getAbilities().mayBuild = true;
+			}
+		}
+		else if (TagUtil.isTaggedAs(block, AoATags.Blocks.NOWHERE_SAFE_GUI_BLOCK)) {
+			ev.setUseItem(Event.Result.DENY);
+		}
+		else if (block == Blocks.WATER_CAULDRON) {
+			ev.setUseItem(Event.Result.DENY);
+			AoAScheduler.scheduleSyncronisedTask(() -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(LayeredCauldronBlock.LEVEL, LayeredCauldronBlock.MAX_FILL_LEVEL), Block.UPDATE_CLIENTS), 1);
+		}
+		else if (block == AoABlocks.TEA_SINK.get()) {
+			ev.setUseItem(Event.Result.DENY);
+			AoAScheduler.scheduleSyncronisedTask(() -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(TeaSink.FILLED, true), Block.UPDATE_CLIENTS), 1);
+		}
+		else if (heldItem instanceof TabletItem || heldItem == AoAItems.LOTTO_TOTEM.get()) {
+			ev.setUseItem(Event.Result.ALLOW);
+			ev.setUseBlock(Event.Result.DENY);
+			ev.getEntity().getAbilities().mayBuild = true;
+		}
+		else {
+			ev.setCanceled(true);
+		}
+	}
+
+	public static void handleLoot(final LivingDropsEvent ev) {
+		if (!(ev.getEntity() instanceof AoABoss boss) || ev.isCanceled()) {
+			ev.setCanceled(true);
+
+			return;
+		}
+
+		AoAConfigs.SERVER.bossDropsScheme.get().handleDrops(ev);
 	}
 }

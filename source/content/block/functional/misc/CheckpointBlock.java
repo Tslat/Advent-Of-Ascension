@@ -81,18 +81,15 @@ public class CheckpointBlock extends Block {
 
 			if (checkpoint == null || !checkpoint.asBlockPos().equals(pos)) {
 				plData.setCheckpoint(PositionAndRotation.from(pos, entity));
-				plData.player().sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.set", ChatFormatting.GREEN));
+				plData.player().sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.set", ChatFormatting.GREEN), true);
 				new SoundBuilder(AoASounds.CHECKPOINT).notInWorld().play();
 			}
 		}
 	}
 
 	public static boolean isValidCheckpoint(Level world, PositionAndRotation checkpoint) {
-		ChunkAccess chunk = world.getChunkSource().getChunk(SectionPos.blockToSectionCoord(checkpoint.x()), SectionPos.blockToSectionCoord(checkpoint.z()), ChunkStatus.FULL, false);
+		ChunkAccess chunk = world.getChunkSource().getChunk(SectionPos.blockToSectionCoord(checkpoint.x()), SectionPos.blockToSectionCoord(checkpoint.z()), ChunkStatus.FULL, true);
 
-		if (chunk == null)
-			return false;
-
-		return chunk.getBlockState(checkpoint.asBlockPos()).getBlock() == AoABlocks.CHECKPOINT.get();
+		return chunk != null && chunk.getBlockState(checkpoint.asBlockPos()).getBlock() == AoABlocks.CHECKPOINT.get();
 	}
 }

@@ -3,13 +3,13 @@ package net.tslat.aoa3.common.packet;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.packets.*;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
 
 public class AoAPackets {
 	private static final String REV = "1";
@@ -41,6 +41,7 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, SyncAoAAbilityDataPacket.class, SyncAoAAbilityDataPacket::encode, SyncAoAAbilityDataPacket::decode, SyncAoAAbilityDataPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, AoASoundBuilderPacket.class, AoASoundBuilderPacket::encode, AoASoundBuilderPacket::decode, AoASoundBuilderPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ParticleEffectPacket.class, ParticleEffectPacket::encode, ParticleEffectPacket::decode, ParticleEffectPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, GeckolibAnimationTriggerPacket.class, GeckolibAnimationTriggerPacket::encode, GeckolibAnimationTriggerPacket::decode, GeckolibAnimationTriggerPacket::receiveMessage);
 	}
 
 	public static void messageNearbyPlayers(AoAPacket packet, ServerLevel world, Vec3 origin, double radius) {
@@ -61,5 +62,9 @@ public class AoAPackets {
 
 	public static void messageServer(AoAPacket packet) {
 		INSTANCE.sendToServer(packet);
+	}
+
+	public static void messageAllPlayersTrackingEntity(AoAPacket packet, Entity entity) {
+		INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), packet);
 	}
 }

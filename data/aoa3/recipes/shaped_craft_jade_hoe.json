@@ -14,6 +14,10 @@
     " S"
   ],
   "result": {
-    "item": "aoa3:jade_hoe"
+    "count": 1,
+    "item": "aoa3:jade_hoe",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

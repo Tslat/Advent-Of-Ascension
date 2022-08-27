@@ -10,6 +10,7 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
+import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
@@ -25,10 +26,15 @@ public class SkillMasterEntity extends AoATrader {
 
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.SMALL_SKILL_CRYSTAL).cost(AoAItems.SILVER_COIN).xp(150).stock(32),
-					BuildableTrade.trade(AoAItems.MEDIUM_SKILL_CRYSTAL).cost(AoAItems.GOLD_COIN).xp(150).stock(24),
-					BuildableTrade.trade(AoAItems.LARGE_SKILL_CRYSTAL).cost(AoAItems.GOLD_COIN, 12).xp(150).stock(16),
-					BuildableTrade.trade(AoAItems.GIANT_SKILL_CRYSTAL).cost(AoAItems.LUNAVER_COIN).xp(150).stock(12)).build();
+					BuildableTrade.trade(AoAItems.SMALL_SKILL_CRYSTAL).cost(AoAItems.DUNGEON_TOKENS, 3).xp(150).stock(32),
+					BuildableTrade.trade(AoAItems.MEDIUM_SKILL_CRYSTAL).cost(AoAItems.DUNGEON_TOKENS, 6).xp(150).stock(24),
+					BuildableTrade.trade(AoAItems.LARGE_SKILL_CRYSTAL).cost(AoAItems.DUNGEON_TOKENS, 10).xp(150).stock(16),
+					BuildableTrade.trade(AoAItems.GIANT_SKILL_CRYSTAL).cost(AoAItems.DUNGEON_TOKENS, 15).xp(150).stock(12),
+					BuildableTrade.trade(AoAArmour.HELM_OF_THE_DEXTROUS).cost(AoAItems.DUNGEON_TOKENS, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.trade(AoAArmour.HELM_OF_THE_DRYAD).cost(AoAItems.DUNGEON_TOKENS, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.trade(AoAArmour.HELM_OF_THE_TRAWLER).cost(AoAItems.DUNGEON_TOKENS, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.trade(AoAArmour.HELM_OF_THE_TREASURER).cost(AoAItems.DUNGEON_TOKENS, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.trade(AoAArmour.HELM_OF_THE_WARRIOR).cost(AoAItems.DUNGEON_TOKENS, 64).xp(200).stock(Integer.MAX_VALUE)).build();
 
 	public SkillMasterEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -43,7 +49,7 @@ public class SkillMasterEntity extends AoATrader {
 
 	@Override
 	public int getMaxTradesToUnlock(int newProfessionLevel) {
-		return 4;
+		return 9;
 	}
 
 	@Nullable

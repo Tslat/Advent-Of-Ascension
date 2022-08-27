@@ -3,7 +3,7 @@ package net.tslat.aoa3.library.builder;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 
-public class EffectBuilder {
+public final class EffectBuilder {
 	private final MobEffect effect;
 	private final int duration;
 

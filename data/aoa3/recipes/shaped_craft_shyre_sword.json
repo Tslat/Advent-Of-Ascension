@@ -20,6 +20,10 @@
     "ACA"
   ],
   "result": {
-    "item": "aoa3:shyre_sword"
+    "count": 1,
+    "item": "aoa3:shyre_sword",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

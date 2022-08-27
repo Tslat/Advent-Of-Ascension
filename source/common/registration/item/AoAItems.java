@@ -13,6 +13,7 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.item.food.*;
 import net.tslat.aoa3.content.item.lootbox.*;
 import net.tslat.aoa3.content.item.misc.*;
+import net.tslat.aoa3.content.item.misc.summoning.TrollIdol;
 import net.tslat.aoa3.content.item.tablet.*;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 
@@ -237,7 +238,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> STARING_EYE = registerItem("staring_eye", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> TOY_GYROCOPTER = registerItem("toy_gyrocopter", miscItem()); // TODO
 	public static final RegistryObject<Item> TREAT_BAG = registerItem("treat_bag", miscItem()); // TODO
-	public static final RegistryObject<Item> TROLL_IDOL = registerItem("troll_idol", miscItem()); // TODO
+	public static final RegistryObject<Item> TROLL_IDOL = registerItem("troll_idol", TrollIdol::new);
 	public static final RegistryObject<Item> VILE_STONE = registerItem("vile_stone", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> VOLIANT_HEART = registerItem("voliant_heart", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> WARLOCK_GEM = registerItem("warlock_gem", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));

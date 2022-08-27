@@ -20,6 +20,10 @@
     "BCD"
   ],
   "result": {
-    "item": "aoa3:bloodlurker"
+    "count": 1,
+    "item": "aoa3:bloodlurker",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

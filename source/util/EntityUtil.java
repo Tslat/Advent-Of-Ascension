@@ -1,15 +1,16 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.CombatEntry;
 import net.minecraft.world.damagesource.CombatTracker;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
@@ -23,7 +24,6 @@ import net.tslat.aoa3.library.builder.EffectBuilder;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public final class EntityUtil {
@@ -145,9 +145,9 @@ public final class EntityUtil {
 	public static void pushEntityAway(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
 		Vec3 targetMotion = targetEntity.getDeltaMovement();
 
-		targetEntity.setDeltaMovement((targetEntity.getX() - centralEntity.getX()) * strength + targetMotion.x(),
+		targetEntity.setDeltaMovement((targetEntity.getX(0.5f) - centralEntity.getX(0.5f)) * strength + targetMotion.x(),
 				(targetEntity.getY() - centralEntity.getY()) * strength + targetMotion.y(),
-				(targetEntity.getZ() - centralEntity.getZ()) * strength + targetMotion.z());
+				(targetEntity.getZ(0.5f) - centralEntity.getZ(0.5f)) * strength + targetMotion.z());
 		targetEntity.hurtMarked = true;
 	}
 

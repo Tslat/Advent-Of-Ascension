@@ -20,6 +20,10 @@
     " DB"
   ],
   "result": {
-    "item": "aoa3:baron_bow"
+    "count": 1,
+    "item": "aoa3:baron_bow",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

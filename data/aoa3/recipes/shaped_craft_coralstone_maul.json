@@ -17,6 +17,10 @@
     " B "
   ],
   "result": {
-    "item": "aoa3:coralstone_maul"
+    "count": 1,
+    "item": "aoa3:coralstone_maul",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

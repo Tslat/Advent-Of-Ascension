@@ -20,6 +20,10 @@
     "BCB"
   ],
   "result": {
-    "item": "aoa3:runic_greatblade"
+    "count": 1,
+    "item": "aoa3:runic_greatblade",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

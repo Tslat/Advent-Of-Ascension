@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.mob.misc.doppelganger;
 
 import com.google.common.collect.ImmutableList;
@@ -19,7 +20,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.*;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.monster.CrossbowAttackMob;
@@ -37,11 +37,15 @@ import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.entity.AoABrainSensors;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAArmour;
+import net.tslat.aoa3.content.entity.brain.BrainActivityGroup;
 import net.tslat.aoa3.content.entity.brain.SmartBrainHandler;
-import net.tslat.aoa3.content.entity.brain.SmartBrainOwner;
-import net.tslat.aoa3.content.entity.brain.task.*;
+import net.tslat.aoa3.content.entity.brain.task.BlockIncomingProjectileTask;
+import net.tslat.aoa3.content.entity.brain.task.CounterTargetWeaponTask;
+import net.tslat.aoa3.content.entity.brain.task.ParryStunlockTask;
+import net.tslat.aoa3.content.entity.brain.task.RetaliateOrTargetTask;
+import net.tslat.aoa3.content.entity.brain.task.wrapper.FirstSuccessfulTask;
 import net.tslat.aoa3.util.BrainUtils;
-import org.apache.commons.lang3.tuple.Triple;
+import net.tslat.smartbrainlib.api.SmartBrainOwner;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -79,7 +83,7 @@ public class DoppelgangerEntity extends Monster implements SmartBrainOwner<Doppe
 	}
 
 	@Override
-	public Brain.Provider<?> brainProvider() {
+	public Brain.Provider<DoppelgangerEntity> brainProvider() {
 		return getBrainHandler().getBrainCodec();
 	}
 
@@ -97,48 +101,42 @@ public class DoppelgangerEntity extends Monster implements SmartBrainOwner<Doppe
 	}
 
 	@Override
-	public Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>> getCoreTasks() {
-		return Triple.of(0,
-				ImmutableList.of(
-						new LookAtTargetSink(60, 240),
-						new MoveToTargetSink()),
-				null);
+	public BrainActivityGroup<DoppelgangerEntity> getCoreTasks() {
+		return BrainActivityGroup.coreTasks(
+				new LookAtTargetSink(60, 240),
+				new MoveToTargetSink());
 	}
 
 	@Override
-	public Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>> getIdleTasks() {
-		return Triple.of(10,
-				ImmutableList.of(
-						new FirstSuccessfulTask<>(ImmutableList.of(
-								Pair.of(new RetaliateOrTargetTask<>(this), 1),
-								Pair.of(new SetEntityLookTarget(EntityType.PLAYER, 8), 1),
-								Pair.of(new SetEntityLookTarget(8), 1),
-								Pair.of(new DoNothing(30, 60), 1))),
-						new RunOne<>(ImmutableList.of(
-								Pair.of(new RandomStroll(1f), 1),
-								Pair.of(new DoNothing(30, 60), 1)))),
-				null);
+	public BrainActivityGroup<DoppelgangerEntity> getIdleTasks() {
+		return BrainActivityGroup.idleTasks(
+				new FirstSuccessfulTask<>(ImmutableList.of(
+						Pair.of(new RetaliateOrTargetTask<>(this), 1),
+						Pair.of(new SetEntityLookTarget(EntityType.PLAYER, 8), 1),
+						Pair.of(new SetEntityLookTarget(8), 1),
+						Pair.of(new DoNothing(30, 60), 1))),
+				new RunOne<>(ImmutableList.of(
+						Pair.of(new RandomStroll(1f), 1),
+						Pair.of(new DoNothing(30, 60), 1))));
 	}
 
 	@Override
-	public Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>> getFightTasks() {
-		return Triple.of(10,
-				ImmutableList.of(
-						new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || target instanceof Player && ((Player)target).isCreative()),
-						new CounterTargetWeaponTask(),
-						new MeleeAttack(6),
-						new SetWalkTargetFromAttackTargetIfTargetOutOfReach(1.3f)),
-				MemoryModuleType.ATTACK_TARGET);
+	public BrainActivityGroup<DoppelgangerEntity> getFightTasks() {
+		return BrainActivityGroup.fightTasks(
+				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || target instanceof Player && ((Player)target).isCreative()),
+				new CounterTargetWeaponTask(),
+				new MeleeAttack(6),
+				new SetWalkTargetFromAttackTargetIfTargetOutOfReach(1.3f));
 	}
 
 	@Override
-	public Map<Activity, Triple<Integer, ImmutableList<? extends Behavior<? super DoppelgangerEntity>>, MemoryModuleType<?>>> getAdditionalTasks() {
+	public Map<Activity, BrainActivityGroup<DoppelgangerEntity>> getAdditionalTasks() {
 		return ImmutableMap.of(
 				Activity.AVOID,
-				Triple.of(0, ImmutableList.of(
-						new BlockIncomingProjectileTask(true),
-						new ParryStunlockTask<>()
-				), null));
+				new BrainActivityGroup<DoppelgangerEntity>(Activity.AVOID)
+						.behaviours(
+								new BlockIncomingProjectileTask(true),
+								new ParryStunlockTask<>()));
 	}
 
 	@Override
@@ -252,3 +250,4 @@ public class DoppelgangerEntity extends Monster implements SmartBrainOwner<Doppe
 		performCrossbowAttack(this, 1.6f);
 	}
 }
+*/

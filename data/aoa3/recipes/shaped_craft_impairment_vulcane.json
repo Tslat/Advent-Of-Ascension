@@ -13,6 +13,10 @@
     "B"
   ],
   "result": {
-    "item": "aoa3:impairment_vulcane"
+    "count": 1,
+    "item": "aoa3:impairment_vulcane",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

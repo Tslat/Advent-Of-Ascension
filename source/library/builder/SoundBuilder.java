@@ -25,7 +25,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
-public class SoundBuilder {
+public final class SoundBuilder {
 	private SoundEvent sound;
 	private SoundSource category = SoundSource.MASTER;
 	private Level world = null;

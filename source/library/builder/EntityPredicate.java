@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Predicate;
 
-public class EntityPredicate<T extends Entity> implements Predicate<T> {
+public final class EntityPredicate<T extends Entity> implements Predicate<T> {
 	public static final Immutable<Entity> TARGETABLE_HOSTILE_MOB = new EntityPredicate<>().isAlive().isHostileMob().immutable();
 	public static final Immutable<Entity> SURVIVAL_PLAYER = new EntityPredicate<Entity>().isAlive().isSurvival().immutable();
 	public static final Immutable<Entity> DAMAGEABLE_ENTITIES = new EntityPredicate<>().isAlive().isDamageable().immutable();

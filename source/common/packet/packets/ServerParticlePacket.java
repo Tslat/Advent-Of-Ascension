@@ -31,7 +31,7 @@ public class ServerParticlePacket implements AoAPacket {
 
 	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, boolean randomPosInBB) {
 		if (randomPosInBB) {
-			return particle(particle, entity.getX() + RandomUtil.randomValueUpTo(entity.getBbWidth()), entity.getY() + RandomUtil.randomValueUpTo(entity.getBbHeight()), entity.getZ() + RandomUtil.randomValueUpTo(entity.getBbWidth()));
+			return particle(particle, entity.getX() + RandomUtil.randomScaledGaussianValue(entity.getBbWidth()), entity.getY() + RandomUtil.randomScaledGaussianValue(entity.getBbHeight()), entity.getZ() + RandomUtil.randomScaledGaussianValue(entity.getBbWidth()));
 		}
 		else {
 			return particle(particle, entity, 0, 0, 0);
@@ -49,7 +49,7 @@ public class ServerParticlePacket implements AoAPacket {
 	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, boolean randomPosInBB, double velX, double velY, double velZ, int amountPerParticle, int particlesToGen) {
 		for (int i = 0; i < particlesToGen; i++) {
 			if (randomPosInBB) {
-				particle(particle, entity.getX() + RandomUtil.randomValueUpTo(entity.getBbWidth()), entity.getY() + RandomUtil.randomValueUpTo(entity.getBbHeight()), entity.getZ() + RandomUtil.randomValueUpTo(entity.getBbWidth()), velX, velY, velZ, amountPerParticle);
+				particle(particle, entity.getX() + RandomUtil.randomScaledGaussianValue(entity.getBbWidth()), entity.getY() + RandomUtil.randomScaledGaussianValue(entity.getBbHeight()), entity.getZ() + RandomUtil.randomScaledGaussianValue(entity.getBbWidth()), velX, velY, velZ, amountPerParticle);
 			}
 			else {
 				particle(particle, entity, velX, velY, velZ);

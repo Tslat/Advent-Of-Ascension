@@ -23,6 +23,10 @@
     "DED"
   ],
   "result": {
-    "item": "aoa3:underworld_greatblade"
+    "count": 1,
+    "item": "aoa3:underworld_greatblade",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "aoa3:overworld/overkill_schmoverkill",
+  "parent": "aoa3:completionist/overkill_schmoverkill",
   "criteria": {
     "150_damage_hit": {
       "conditions": {
@@ -17,7 +17,7 @@
     "announce_to_chat": true,
     "description": {
       "color": "white",
-      "translate": "advancements.aoa3.overworld.the_almighty_touch.description"
+      "translate": "advancements.aoa3.completionist.the_almighty_touch.description"
     },
     "frame": "challenge",
     "hidden": true,
@@ -28,7 +28,7 @@
     "show_toast": true,
     "title": {
       "color": "light_purple",
-      "translate": "advancements.aoa3.overworld.the_almighty_touch.title"
+      "translate": "advancements.aoa3.completionist.the_almighty_touch.title"
     }
   },
   "requirements": [

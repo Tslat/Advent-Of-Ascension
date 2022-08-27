@@ -17,6 +17,10 @@
     " AB"
   ],
   "result": {
-    "item": "aoa3:predatious_bow"
+    "count": 1,
+    "item": "aoa3:predatious_bow",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

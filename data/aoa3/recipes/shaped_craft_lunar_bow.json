@@ -20,6 +20,10 @@
     "DAB"
   ],
   "result": {
-    "item": "aoa3:lunar_bow"
+    "count": 1,
+    "item": "aoa3:lunar_bow",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

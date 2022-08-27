@@ -13,6 +13,10 @@
     "B"
   ],
   "result": {
-    "item": "aoa3:power_vulcane"
+    "count": 1,
+    "item": "aoa3:power_vulcane",
+    "nbt": {
+      "Damage": 0
+    }
   }
 }

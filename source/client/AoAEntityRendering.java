@@ -31,6 +31,7 @@ import net.tslat.aoa3.client.model.entity.EntityGeoModel;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
 import net.tslat.aoa3.client.model.entity.mob.ChargerModel;
+import net.tslat.aoa3.client.model.entity.mob.SmashModel;
 import net.tslat.aoa3.client.model.entity.mob.WoodGiantModel;
 import net.tslat.aoa3.client.model.entity.npc.DryadSpriteModel;
 import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
@@ -147,6 +148,8 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> VISULON = new EntityRendererPackage<>(AoAMobs.VISULON).geckolib("mob/lunalus/visulon");
 	public static final EntityRendererPackage<?> VOID_WALKER = new EntityRendererPackage<>(AoAMobs.VOID_WALKER).geckolib("mob/overworld/void_walker");
 	public static final EntityRendererPackage<?> WOOD_GIANT = new EntityRendererPackage<>(AoAMobs.WOOD_GIANT).geckolib(new WoodGiantModel());
+
+	public static final EntityRendererPackage<?> SMASH = new EntityRendererPackage<>(AoAMobs.SMASH).geckolib(new SmashModel());
 
 	public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
 	public static final EntityRendererPackage<?> CREEP_BANKER = new EntityRendererPackage<>(AoANpcs.CREEP_BANKER).defineLayer("creep_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/creep_banker.png");
@@ -431,7 +434,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> DEVOURER = new EntityRendererPackage<>(AoAMobs.DEVOURER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DIOCUS = new EntityRendererPackage<>(AoAMobs.DIOCUS).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DISTORTER = new EntityRendererPackage<>(AoAMobs.DISTORTER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> DOPPELGANGER = new EntityRendererPackage<>(AoAMobs.DOPPELGANGER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	//public static final EntityRendererPackage<?> DOPPELGANGER = new EntityRendererPackage<>(AoAMobs.DOPPELGANGER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DUST_STRIDER = new EntityRendererPackage<>(AoAMobs.DUST_STRIDER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DUSTEIVA = new EntityRendererPackage<>(AoAMobs.DUSTEIVA).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DUSTON = new EntityRendererPackage<>(AoAMobs.DUSTON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
