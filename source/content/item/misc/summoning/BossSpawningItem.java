@@ -20,7 +20,7 @@ import net.tslat.aoa3.content.item.misc.TooltipItem;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.WorldUtil;
 
-public abstract class BossSpawningItem<T extends Entity> extends TooltipItem implements BossTokenItem<T> {
+public abstract class BossSpawningItem<T extends Entity> extends TooltipItem implements BossTokenItem {
 	public BossSpawningItem() {
 		this(2, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON));
 	}

@@ -1,9 +1,9 @@
-package net.tslat.aoa3.client.model.entity.mob;
+package net.tslat.aoa3.client.model.entity.boss;
 
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
-import net.tslat.aoa3.content.entity.boss.SmashEntity;
+import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
 
 public class SmashModel extends EntityGeoModel<SmashEntity> {
 	public SmashModel() {

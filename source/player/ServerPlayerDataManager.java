@@ -479,6 +479,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		portalCoordinatesMap.clear();
 	}
 
+	@Nullable
 	public PortalCoordinatesContainer getPortalReturnLocation(ResourceKey<Level> toDim) {
 		return portalCoordinatesMap.get(toDim);
 	}

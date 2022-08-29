@@ -97,7 +97,7 @@ public class BossAltar extends Block implements EntityBlock {
 					AoAScheduler.scheduleSyncronisedTask(() -> bossAltar.updateEntity(null), 95);
 				}
 
-				arena.placePlayersAndBoss(serverLevel, players, pl -> pl.getLevel() == level && pl.isAlive() && teleportBounds.contains(pl.position()), bossItem::spawnBoss);
+				arena.placePlayersAndBoss(serverLevel, players, pl -> pl.getLevel() == level && pl.isAlive() && teleportBounds.contains(pl.position()), heldItem, bossItem::spawnBoss);
 			}
 		}
 

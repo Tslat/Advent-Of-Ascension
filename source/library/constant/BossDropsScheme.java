@@ -107,7 +107,6 @@ public enum BossDropsScheme {
 			Component displayName = drop.getHoverName();
 
 			if (amount == drop.getCount()) {
-
 				if (!player.getInventory().add(drop)) {
 					players.remove(player);
 					playerDropCount = 0;
@@ -166,18 +165,24 @@ public enum BossDropsScheme {
 	}
 
 	private static void giveDropsToPlayer(Player player, Iterator<ItemEntity> iterator) {
+		Object2IntOpenHashMap<Component> messages = new Object2IntOpenHashMap<>();
+
 		while (iterator.hasNext()) {
 			ItemStack item = iterator.next().getItem();
-			int count = item.getCount();
+			int amount = item.getCount();
 			Component displayName = item.getHoverName();
 
 			if (player.getInventory().add(item)) {
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.drops", ChatFormatting.GREEN, Component.literal(String.valueOf(count)), displayName));
+				messages.compute(displayName, (name, count) -> count != null ? count + amount : amount);
 				iterator.remove();
 			}
 			else {
-				return;
+				break;
 			}
+		}
+
+		for (Object2IntMap.Entry<Component> entry : messages.object2IntEntrySet()) {
+			player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.drops", ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
 		}
 	}
 }

@@ -12,7 +12,8 @@ import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.content.entity.boss.SmashEntity;
+import net.tslat.aoa3.content.entity.boss.smash.EliteSmashEntity;
+import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
 import net.tslat.aoa3.content.entity.mob.abyss.*;
 import net.tslat.aoa3.content.entity.mob.barathos.*;
 import net.tslat.aoa3.content.entity.mob.candyland.*;
@@ -285,7 +286,6 @@ public final class AoAMobs {
 	//public static final RegistryObject<EntityType<Monster>> SKELETRON = registerMob("skeletron", SkeletronEntity::new, 1.2f, 1.25f, 16052195, 4802370);
 	public static final RegistryObject<EntityType<Monster>> SKULL_CREATURE = registerMob("skull_creature", SkullCreatureEntity::new, 0.6875f, 2.3125f, 2496514, 3351359);
 	public static final RegistryObject<EntityType<Monster>> SLIMER = registerMob("slimer", SlimerEntity::new, 1.7f, 3.125f, 3683898, 978238);
-	public static final RegistryObject<EntityType<SmashEntity>> SMASH = registerMob("smash", SmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 	public static final RegistryObject<EntityType<Monster>> SNAPPY = registerMob("snappy", SnappyEntity::new, 0.6f, 2.0f, 1573411, 590407);
 	public static final RegistryObject<EntityType<Monster>> SOULSCORNE = registerMob("soulscorne", SoulscorneEntity::new, 0.6f, 1.8125f, 14809348, 977903);
 	public static final RegistryObject<EntityType<Monster>> SOULVYRE = registerMob("soulvyre", SoulvyreEntity::new, 0.6f, 2.125f, 14743310, 1369563);
@@ -343,6 +343,9 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<Monster>> ZARG = registerMob("zarg", ZargEntity::new, 0.875f, 2.0625f, 1803734, 13230578);
 	public static final RegistryObject<EntityType<Monster>> ZHINX = registerMob("zhinx", ZhinxEntity::new, 0.6f, 0.6875f, 11056831, 13029730);
 	public static final RegistryObject<EntityType<Monster>> ZORP = registerMob("zorp", ZorpEntity::new, 0.6f, 1.875f, 1093861, 14347506);
+
+	public static final RegistryObject<EntityType<SmashEntity>> SMASH = registerMob("smash", SmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
+	public static final RegistryObject<EntityType<EliteSmashEntity>> ELITE_SMASH = registerMob("elite_smash", EliteSmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 
 	private static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int primaryEggColour, int secondaryEggColour) {
 		return registerMob(registryName, factory, false, width, height, primaryEggColour, secondaryEggColour);

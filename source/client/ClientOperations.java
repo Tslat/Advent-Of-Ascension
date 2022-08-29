@@ -9,10 +9,12 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.sounds.EntityBoundSoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
+import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -194,10 +196,19 @@ public final class ClientOperations {
 	}
 
 	public static void playSoundFromBuilder(SoundBuilder soundBuilder) {
+		Minecraft minecraft = Minecraft.getInstance();
 		SoundInstance sound;
 		double delay = soundBuilder.getScheduledDelay() + (soundBuilder.getApplyTimeDilation() ? Math.sqrt(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition().distanceToSqr(soundBuilder.getLocation())) * 0.5d : 0);
 
-		if (soundBuilder.getFollowingEntity() != null) {
+		if (soundBuilder.getCategory() == SoundSource.MUSIC) {
+			Music music = new Music(soundBuilder.getSound(), soundBuilder.getScheduledDelay(), soundBuilder.getScheduledDelay(), true);
+
+			if (!minecraft.getMusicManager().isPlayingMusic(music))
+				minecraft.getMusicManager().startPlaying(music);
+
+			return;
+		}
+		else if (soundBuilder.getFollowingEntity() != null) {
 			sound = new EntityBoundSoundInstance(soundBuilder.getSound(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), soundBuilder.getFollowingEntity(), soundBuilder.getSeed()) {
 				@Override
 				public boolean isLooping() {
@@ -220,10 +231,23 @@ public final class ClientOperations {
 		}
 
 		if (delay > 0) {
-			Minecraft.getInstance().getSoundManager().playDelayed(sound, (int)delay);
+			minecraft.getSoundManager().playDelayed(sound, (int)delay);
 		}
 		else {
-			Minecraft.getInstance().getSoundManager().play(sound);
+			minecraft.getSoundManager().play(sound);
+		}
+	}
+
+	public static void stopSoundFromBuilder(SoundBuilder soundBuilder) {
+		if (soundBuilder.getCategory() == SoundSource.MUSIC) {
+			Music music = new Music(soundBuilder.getSound(), soundBuilder.getScheduledDelay(), soundBuilder.getScheduledDelay(), true);
+			MusicManager musicManager = Minecraft.getInstance().getMusicManager();
+
+			if (musicManager.isPlayingMusic(music))
+				musicManager.stopPlaying();
+		}
+		else {
+			Minecraft.getInstance().getSoundManager().stop(soundBuilder.getSound().getLocation(), soundBuilder.getCategory());
 		}
 	}
 }

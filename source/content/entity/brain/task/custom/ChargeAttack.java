@@ -24,6 +24,7 @@ import java.util.List;
  * Defaults:
  * <ul>
  *     <li>1x movespeed modifier</li>
+ *     <li>Target is fixed at time of task start</li>
  * </ul>
  * @param <E> This
  */
@@ -32,6 +33,7 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 
 	protected float speedMod = 1;
 
+	private boolean targetWhenCharging = false;
 	private Vec3 chargeVelocity;
 
 	public ChargeAttack(int delayTicks) {
@@ -54,6 +56,16 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 		return this;
 	}
 
+	/**
+	 * Recalculate the target position and vector at the time the charge starts. This makes for a more aggressive charge.
+	 * @return this
+	 */
+	public ChargeAttack<E> targetWhenCharging() {
+		this.targetWhenCharging = true;
+
+		return this;
+	}
+
 	@Override
 	protected boolean checkExtraStartConditions(ServerLevel level, E entity) {
 		return Math.abs(BrainUtils.getTargetOfEntity(entity).getY() - entity.getY()) < 2;
@@ -61,7 +73,17 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 
 	@Override
 	protected void start(E entity) {
+		calculateTarget(entity);
+		BrainUtils.clearMemories(entity, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET, MemoryModuleType.PATH);
+		entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
+	}
+
+	public void calculateTarget(E entity) {
 		LivingEntity target = BrainUtils.getTargetOfEntity(entity);
+
+		if (target == null)
+			return;
+
 		double moveSpeed = Math.max(entity.getSpeed(), entity.getAttributeValue(Attributes.MOVEMENT_SPEED)) * 2;
 		Vec3 targetPos = new Vec3(target.getX(0.5f), 0, target.getZ(0.5f));
 		Vec3 entityPos = new Vec3(entity.getX(0.5f), 0, entity.getZ(0.5f));
@@ -69,8 +91,6 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 		this.endTimestamp = this.delayFinishedAt + 1 + (Math.max(20, (int)(entityPos.distanceTo(targetPos) / (moveSpeed * 0.25))));
 
 		entity.lookAt(EntityAnchorArgument.Anchor.FEET, targetPos);
-		BrainUtils.clearMemories(entity, MemoryModuleType.WALK_TARGET, MemoryModuleType.LOOK_TARGET, MemoryModuleType.PATH);
-		entity.setDeltaMovement(0, entity.getDeltaMovement().y, 0);
 	}
 
 	@Override
@@ -90,6 +110,12 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 				EntityUtil.pushEntityAway(entity, target, 1.5f);
 			}
 		}
+	}
+
+	@Override
+	protected void doDelayedAction(E entity) {
+		if (this.targetWhenCharging)
+			calculateTarget(entity);
 	}
 
 	@Override

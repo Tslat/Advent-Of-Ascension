@@ -31,7 +31,7 @@ public final class SoundBuilder {
 	private Level world = null;
 	private Vec3 location = null;
 
-	private long seed = 0l;
+	private long seed = 0L;
 
 	private Entity followingEntity = null;
 
@@ -47,6 +47,8 @@ public final class SoundBuilder {
 
 	private Set<Player> playTo = null;
 	private Set<Player> exclude = null;
+
+	private boolean stopSound = false;
 
 	public SoundBuilder(Supplier<SoundEvent> sound) {
 		this.sound = sound.get();
@@ -107,6 +109,7 @@ public final class SoundBuilder {
 	}
 
 	public SoundBuilder isMusic() {
+		notInWorld();
 		return category(SoundSource.MUSIC);
 	}
 
@@ -201,6 +204,12 @@ public final class SoundBuilder {
 		return this;
 	}
 
+	public SoundBuilder stopSound() {
+		this.stopSound = true;
+
+		return this;
+	}
+
 	public SoundEvent getSound() {
 		return this.sound;
 	}
@@ -249,7 +258,16 @@ public final class SoundBuilder {
 		return this.seed;
 	}
 
-	public void play() {
+	public void execute() {
+		if (this.stopSound) {
+			stop();
+		}
+		else {
+			play();
+		}
+	}
+
+	private void play() {
 		if (inWorld) {
 			PlayLevelSoundEvent.AtEntity event = ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch);
 
@@ -278,8 +296,31 @@ public final class SoundBuilder {
 		}
 	}
 
+	private void stop() {
+		if (world == null || world.isClientSide()) {
+			ClientOperations.stopSoundFromBuilder(this);
+		}
+		else {
+			AoASoundBuilderPacket packet = new AoASoundBuilderPacket(this);
+
+			if (playTo != null) {
+				for (Player pl : playTo) {
+					if (exclude == null || !exclude.contains(pl))
+						AoAPackets.messagePlayer((ServerPlayer)pl, packet);
+				}
+			}
+			else {
+				for (ServerPlayer pl : world.getServer().getPlayerList().getPlayers()) {
+					if (pl.level == world && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
+						AoAPackets.messagePlayer(pl, packet);
+				}
+			}
+		}
+	}
+
 	public void toNetwork(FriendlyByteBuf buffer) {
 		buffer.writeResourceLocation(ForgeRegistries.SOUND_EVENTS.getKey(sound));
+		buffer.writeBoolean(this.stopSound);
 
 		ArrayList<Section> sections = new ArrayList<Section>();
 
@@ -299,6 +340,7 @@ public final class SoundBuilder {
 	public static SoundBuilder fromNetwork(FriendlyByteBuf buffer) {
 		SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(buffer.readResourceLocation());
 		SoundBuilder builder = new SoundBuilder(sound);
+		builder.stopSound = buffer.readBoolean();
 
 		int sections = buffer.readVarInt();
 

@@ -24,7 +24,7 @@ public class AoASoundBuilderPacket implements AoAPacket {
 
 	@Override
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		context.get().enqueueWork(soundBuilder::play);
+		context.get().enqueueWork(soundBuilder::execute);
 		context.get().setPacketHandled(true);
 	}
 }

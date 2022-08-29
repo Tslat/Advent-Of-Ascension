@@ -24,6 +24,7 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.function.Function;
 
@@ -40,22 +41,16 @@ public abstract class AoATeleporter implements ITeleporter {
 		boolean failedPortalReturn = false;
 		BlockPos startPos = entity.blockPosition();
 
-		if (entity instanceof ServerPlayer) {
-			entity.setNoGravity(false);
-			PortalCoordinatesContainer loc = (plData = PlayerUtil.getAdventPlayer((ServerPlayer)entity)).getPortalReturnLocation(currentWorld.dimension());
-			BlockPos locPos;
+		if (entity instanceof ServerPlayer pl) {
+			plData = PlayerUtil.getAdventPlayer(pl);
+			BlockPos existingReturnPos = findReturnPos(pl, currentWorld, destWorld);
+			pl.setNoGravity(false);
 
-			if (loc != null) {
-				Block locationBlock = destWorld.getBlockState(locPos = loc.asBlockPos()).getBlock();
-
-				if (locationBlock == getPortalBlock()) {
-					return positionPlayer((ServerPlayer)entity, new Vec3(locPos.getX() + 0.5f, locPos.getY() + 0.5f, locPos.getZ() + 0.5f), currentWorld, destWorld, false);
-				}
-				else if (!(locationBlock instanceof PortalBlock)) {
-					plData.removePortalReturnLocation(currentWorld.dimension());
-
-					failedPortalReturn = true;
-				}
+			if (existingReturnPos != null) {
+				return positionPlayer(pl, new Vec3(existingReturnPos.getX() + 0.5f, existingReturnPos.getY() + 0.5f, existingReturnPos.getZ() + 0.5f), currentWorld, destWorld, false);
+			}
+			else {
+				failedPortalReturn = true;
 			}
 		}
 
@@ -150,6 +145,25 @@ public abstract class AoATeleporter implements ITeleporter {
 		}
 
 		return newEntity;
+	}
+
+	@Nullable
+	protected BlockPos findReturnPos(ServerPlayer player, ServerLevel currentWorld, ServerLevel destWorld) {
+		ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
+		PortalCoordinatesContainer loc = plData.getPortalReturnLocation(currentWorld.dimension());
+		BlockPos locPos;
+
+		if (loc != null) {
+			Block locationBlock = destWorld.getBlockState(locPos = loc.asBlockPos()).getBlock();
+
+			if (locationBlock == getPortalBlock())
+				return locPos;
+
+			if (!(locationBlock instanceof PortalBlock))
+				plData.removePortalReturnLocation(currentWorld.dimension());
+		}
+
+		return null;
 	}
 
 	public BlockPos findExistingPortal(Level world, Entity entity) {

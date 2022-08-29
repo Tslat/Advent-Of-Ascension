@@ -1704,6 +1704,12 @@
     ],
     "subtitle": "subtitles.entity.generic.heavy_wood_shatter"
   },
+  "entity.generic.heavy_wooden_impact": {
+    "sounds": [
+      "aoa3:entity/generic/heavy_wooden_impact"
+    ],
+    "subtitle": "subtitles.entity.generic.heavy_wooden_impact"
+  },
   "entity.generic.ice_break": {
     "sounds": [
       "aoa3:entity/generic/ice_break"
@@ -1721,6 +1727,18 @@
       "aoa3:entity/generic/ice_wind"
     ],
     "subtitle": "subtitles.entity.generic.ice_wind"
+  },
+  "entity.generic.large_creature_groan": {
+    "sounds": [
+      "aoa3:entity/generic/large_creature_groan"
+    ],
+    "subtitle": "subtitles.entity.generic.large_creature_groan"
+  },
+  "entity.generic.large_creature_grunt": {
+    "sounds": [
+      "aoa3:entity/generic/large_creature_grunt"
+    ],
+    "subtitle": "subtitles.entity.generic.large_creature_grunt"
   },
   "entity.generic.leafy_thud": {
     "sounds": [
@@ -3329,25 +3347,11 @@
     ],
     "subtitle": "subtitles.entity.slimer.hurt"
   },
-  "entity.smash.ambient": {
+  "entity.smash.enrage": {
     "sounds": [
-      "aoa3:entity/smash/ambient1",
-      "aoa3:entity/smash/ambient2",
-      "aoa3:entity/smash/ambient3"
+      "aoa3:entity/smash/enrage"
     ],
-    "subtitle": "subtitles.entity.smash.ambient"
-  },
-  "entity.smash.death": {
-    "sounds": [
-      "aoa3:entity/smash/death"
-    ],
-    "subtitle": "subtitles.entity.smash.death"
-  },
-  "entity.smash.hurt": {
-    "sounds": [
-      "aoa3:entity/smash/hurt"
-    ],
-    "subtitle": "subtitles.entity.smash.hurt"
+    "subtitle": "subtitles.entity.smash.enrage"
   },
   "entity.smash.music": {
     "sounds": [

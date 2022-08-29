@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.block.functional.fluid;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,9 @@ public class ToxicWaste extends LiquidBlock {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		entity.makeStuckInBlock(state, new Vec3(0.5d, 0.5d, 0.5d));
+		float sizeSpeedMod = Mth.clamp(1 / (2 / (entity.getBbWidth() * entity.getBbHeight())), 0.35f, 1f);
+
+		entity.makeStuckInBlock(state, new Vec3(1, 1, 1));
 		EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.POISON, 60).level(8), new EffectBuilder(MobEffects.CONFUSION, 150));
 	}
 }

@@ -501,15 +501,15 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 			switch (subsection) {
 				case "add" -> {
 					adjustment = value;
-					food.eat(0, value);
+					food.eat(1, value / 2f);
 				}
 				case "subtract" -> {
 					adjustment = -Math.min(value, food.getSaturationLevel());
-					food.eat(0, adjustment);
+					food.eat(1, adjustment / 2f);
 				}
 				case "set" -> {
 					adjustment = value - food.getSaturationLevel();
-					food.eat(0, adjustment);
+					food.eat(1, adjustment / 2f);
 				}
 			}
 

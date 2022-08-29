@@ -1,6 +1,7 @@
 package net.tslat.aoa3.event.dimension;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,12 +36,24 @@ import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.TagUtil;
 
 public final class NowhereEvents {
+	public static boolean isInParkourRegion(BlockPos pos) {
+		return pos.getX() > 10000 && pos.getZ() > 1000;
+	}
+
+	public static boolean isInBossRegion(BlockPos pos) {
+		return pos.getX() < -500 && pos.getZ() < -500;
+	}
+
+	public static boolean isInFoodFreeRegion(BlockPos pos) {
+		return pos.getX() > 0 && pos.getZ() > 0;
+	}
+
 	public static void doPlayerTick(final TickEvent.PlayerTickEvent ev) {
 		Player pl = ev.player;
 
 		if (ev.phase == TickEvent.Phase.START) {
 			if (pl instanceof ServerPlayer serverPl) {
-				if (pl.getX() > 10000 && pl.getZ() > 10000) {
+				if (isInParkourRegion(serverPl.blockPosition())) {
 					if (PlayerUtil.shouldPlayerBeAffected(serverPl))
 						PlayerUtil.getAdventPlayer(serverPl).setInAbilityLockRegion();
 				}
@@ -63,7 +76,7 @@ public final class NowhereEvents {
 				if (pl.isFallFlying())
 					pl.stopFallFlying();
 
-				if (pl.getX() > 0 && pl.getZ() > 0) {
+				if (isInFoodFreeRegion(pl.blockPosition())) {
 					FoodData foodData = pl.getFoodData();
 
 					foodData.setFoodLevel(20);
@@ -145,7 +158,7 @@ public final class NowhereEvents {
 	}
 
 	public static void handleLoot(final LivingDropsEvent ev) {
-		if (!(ev.getEntity() instanceof AoABoss boss) || ev.isCanceled()) {
+		if (!(ev.getEntity() instanceof AoABoss) || ev.isCanceled()) {
 			ev.setCanceled(true);
 
 			return;

@@ -8,9 +8,14 @@ import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.Nullable;
 
-public interface BossTokenItem<T extends Entity> {
-	T spawnBoss(ServerLevel level, Vec3 position);
+public interface BossTokenItem {
+	Entity spawnBoss(ServerLevel level, Vec3 position, ItemStack stack);
 
 	@Nullable
-	EntityType<T> getEntityType(ItemStack stack);
+	EntityType<? extends Entity> getEntityType(ItemStack stack);
+
+	@FunctionalInterface
+	interface SpawningFunction {
+		void spawn(ServerLevel level, Vec3 position, ItemStack stack);
+	}
 }

@@ -270,7 +270,7 @@ public final class AoASkill {
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {
 			ServerPlayer player = playerDataManager.player();
 
-			new SoundBuilder(AoASounds.PLAYER_LEVEL_UP).isPlayer().notInWorld().include(player).play();
+			new SoundBuilder(AoASounds.PLAYER_LEVEL_UP).isPlayer().notInWorld().include(player).execute();
 
 			this.level = newLevel;
 			this.xp = 0f;

@@ -79,10 +79,10 @@ public class CheckpointBlock extends Block {
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayer)entity);
 			PositionAndRotation checkpoint = plData.getCheckpoint();
 
-			if (checkpoint == null || !checkpoint.asBlockPos().equals(pos)) {
+			if (checkpoint == null || checkpoint.asBlockPos().distSqr(pos) > 9) {
 				plData.setCheckpoint(PositionAndRotation.from(pos, entity));
 				plData.player().sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.set", ChatFormatting.GREEN), true);
-				new SoundBuilder(AoASounds.CHECKPOINT).notInWorld().play();
+				new SoundBuilder(AoASounds.CHECKPOINT).notInWorld().execute();
 			}
 		}
 	}

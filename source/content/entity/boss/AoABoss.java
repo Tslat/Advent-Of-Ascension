@@ -28,6 +28,10 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.misc.AoAAnimatable;
 import net.tslat.aoa3.common.misc.AoAAnimationFactory;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
+import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.util.BrainUtils;
@@ -77,6 +81,9 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 
 	@Override
 	protected abstract float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn);
+
+	@Nullable
+	protected abstract SoundEvent getMusic();
 
 	@Nullable
 	@Override
@@ -172,6 +179,7 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 		super.startSeenByPlayer(player);
 
 		this.bossStatusTracker.addPlayer(player);
+		new SoundBuilder(getMusic()).isMusic().include(player).execute();
 	}
 
 	@Override
@@ -179,6 +187,7 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 		super.stopSeenByPlayer(player);
 
 		this.bossStatusTracker.removePlayer(player);
+		new SoundBuilder(getMusic()).isMusic().stopSound().include(player).execute();
 	}
 
 	@Override
@@ -239,7 +248,22 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 		return new SmartBrainProvider<>(this);
 	}
 
-	protected record SwingData(int animLength, int warmupTicks, AnimationBuilder anim) {}
+	public record SwingData(int animLength, int warmupTicks, AnimationBuilder anim) {}
+
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (source == DamageSource.OUT_OF_WORLD && WorldUtil.isWorld(this.level, AoADimensions.NOWHERE.key) && !this.level.isClientSide() && getY() < this.level.getMinBuildHeight()) {
+			AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level, this.position());
+
+			if (arena != null) {
+				setPos(arena.getRandomBossSpawn());
+
+				return false;
+			}
+		}
+
+		return super.hurt(source, amount);
+	}
 
 	@Override
 	public void die(DamageSource cause) {

@@ -1,4 +1,4 @@
-package net.tslat.aoa3.content.entity.boss;
+package net.tslat.aoa3.content.entity.boss.smash;
 
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityDimensions;
@@ -21,15 +22,18 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.misc.AoAAnimationController;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoABrainMemories;
+import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.entity.brain.task.custom.ChargeAttack;
 import net.tslat.aoa3.content.entity.brain.task.custom.FleeTarget;
 import net.tslat.aoa3.content.entity.brain.task.custom.GroundSlamAttack;
 import net.tslat.aoa3.content.entity.brain.task.custom.WalkOrRunToWalkTarget;
 import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
@@ -59,8 +63,8 @@ import java.util.UUID;
 
 public class SmashEntity extends AoABoss {
 	protected static final EntityDataAccessor<Boolean> ENRAGED = SynchedEntityData.defineId(SmashEntity.class, EntityDataSerializers.BOOLEAN);
-	private static final AttributeModifier ENRAGED_DAMAGE_MOD = new AttributeModifier(UUID.fromString("104c09f0-28cc-43dd-81c0-10de6b3083bd"), "EnragedDamageModifier", 1.2f, AttributeModifier.Operation.MULTIPLY_TOTAL);
-	private static final AttributeModifier ENRAGED_ARMOUR_MOD = new AttributeModifier(UUID.fromString("bbbdf964-689b-4bcf-9a23-122a7bba682e"), "EnragedArmourModifier", 1.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+	private static final AttributeModifier ENRAGED_DAMAGE_MOD = new AttributeModifier(UUID.fromString("104c09f0-28cc-43dd-81c0-10de6b3083bd"), "EnragedDamageModifier", 0.95f, AttributeModifier.Operation.MULTIPLY_TOTAL);
+	private static final AttributeModifier ENRAGED_ARMOUR_MOD = new AttributeModifier(UUID.fromString("bbbdf964-689b-4bcf-9a23-122a7bba682e"), "EnragedArmourModifier", 1.1f, AttributeModifier.Operation.MULTIPLY_TOTAL);
 	private static final AttributeModifier ENRAGED_TOUGHNESS_MOD = new AttributeModifier(UUID.fromString("ac843c67-4731-4e77-85e9-6992bd92ae4b"), "EnragedToughnessModifier", 1.25f, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
 	private static final int AXE_SWING_STATE = 0;
@@ -76,26 +80,26 @@ public class SmashEntity extends AoABoss {
 	@Override
 	protected void addSwingData(Int2ObjectOpenHashMap<SwingData> states) {
 		states.put(AXE_SWING_STATE, new SwingData(20, 13, new AnimationBuilder().addAnimation("attack.axe_swing", false)));
-		states.put(AXE_SLAM_STATE, new SwingData(20, 16, new AnimationBuilder().addAnimation("attack.axe_slam", false)));
+		states.put(AXE_SLAM_STATE, new SwingData(20, 17, new AnimationBuilder().addAnimation("attack.axe_slam", false)));
 		states.put(CHARGE_STATE, new SwingData(0, 0, new AnimationBuilder().addAnimation("attack.axe_slam", false)));
 	}
 
 	@Nullable
 	@Override
-	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_SMASH_AMBIENT.get();
+	protected SoundEvent getMusic() {
+		return AoASounds.SMASH_MUSIC.get();
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_SMASH_DEATH.get();
+		return AoASounds.LARGE_CREATURE_GROAN.get();
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_SMASH_HURT.get();
+		return AoASounds.LARGE_CREATURE_GRUNT.get();
 	}
 
 	@Nullable
@@ -130,7 +134,8 @@ public class SmashEntity extends AoABoss {
 			EntityUtil.applyAttributeModifierSafely(this, Attributes.ARMOR, ENRAGED_ARMOUR_MOD, true);
 			EntityUtil.applyAttributeModifierSafely(this, Attributes.ARMOR_TOUGHNESS, ENRAGED_TOUGHNESS_MOD, true);
 			triggerAnim(this, "enrage");
-			BrainUtils.setForgettableMemory(this, MemoryModuleType.ATTACK_COOLING_DOWN, true, 50);
+			new SoundBuilder(AoASounds.ENTITY_SMASH_ENRAGE).followEntity(this).category(SoundSource.HOSTILE).execute();
+			BrainUtils.setForgettableMemory(this, MemoryModuleType.ATTACK_COOLING_DOWN, true, 100);
 		}
 	}
 
@@ -141,6 +146,11 @@ public class SmashEntity extends AoABoss {
 	@Override
 	public boolean canDisableShield() {
 		return !isAttackState(AXE_SLAM_STATE);
+	}
+
+	@Override
+	public double getFluidMotionScale(FluidType type) {
+		return Math.min(1, super.getFluidMotionScale(type) * 2);
 	}
 
 	@Override
@@ -204,16 +214,16 @@ public class SmashEntity extends AoABoss {
 								Pair.of(
 										new GroundSlamAttack<>(getSwingWarmupTicks(AXE_SLAM_STATE))
 												.requiresTarget()
+												.whenActivating(entity -> this.level.playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
 												.cooldownFor(entity -> (int)(getSwingDurationTicks(AXE_SLAM_STATE) * entity.getRandom().nextFloat() * 2))
 												.startCondition(mob -> isAttackState(AXE_SLAM_STATE))
-												.whenStarting(entity -> setAttackState(AXE_SLAM_STATE))
 												.whenStopping(entity -> setAttackState(AXE_SWING_STATE)),
 										20),
 								Pair.of(
 										new FleeTarget<>().fleeDistance(40).startCondition(entity -> BrainUtils.hasMemory(entity, SBLMemoryTypes.TARGET_UNREACHABLE.get()) && isEnraged()),
 										1)),
 						new ReactToUnreachableTarget<>()
-								.timeBeforeReacting(entity -> 100)
+								.timeBeforeReacting(entity -> 60)
 								.reaction((entity, isTowering) -> {
 									enrage();
 									setAttackState(AXE_SLAM_STATE);
@@ -223,6 +233,7 @@ public class SmashEntity extends AoABoss {
 								.startCondition(mob -> isAttackState(AXE_SWING_STATE)),
 						new OneRandomBehaviour<>(
 								new CustomBehaviour<>(entity -> {
+									BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 90);
 									triggerAnim(this, "belly_drum");
 									EntityUtil.applyPotions(entity,
 											new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 100).level(2),

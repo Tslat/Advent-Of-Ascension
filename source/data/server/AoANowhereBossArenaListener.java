@@ -26,6 +26,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
+import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
@@ -33,7 +35,6 @@ import org.apache.logging.log4j.Level;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiFunction;
 import java.util.function.Predicate;
 
 public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListener {
@@ -87,6 +88,26 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 		return null;
 	}
 
+	@Nullable
+	public static NowhereBossArena getClosestArena(ServerLevel level, Vec3 pos) {
+		if (!NowhereEvents.isInBossRegion(new BlockPos(pos)))
+			return null;
+
+		NowhereBossArena closest = null;
+		double dist = Double.MAX_VALUE;
+
+		for (NowhereBossArena arena : REGISTERED_ARENAS) {
+			double testDist = arena.structureBounds.getCenter().distanceToSqr(pos);
+
+			if (testDist < dist) {
+				dist = testDist;
+				closest = arena;
+			}
+		}
+
+		return closest;
+	}
+
 	public static class NowhereBossArena {
 		public static final Codec<NowhereBossArena> CODEC = RecordCodecBuilder.create(builder -> builder.group(
 				ResourceLocation.CODEC.fieldOf("structure_id").forGetter(arena -> arena.structureId),
@@ -122,7 +143,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			return true;
 		}
 
-		public void placePlayersAndBoss(ServerLevel level, List<Player> players, Predicate<Player> playerStillValid, BiFunction<ServerLevel, Vec3, Entity> bossFunction) {
+		public void placePlayersAndBoss(ServerLevel level, List<Player> players, Predicate<Player> playerStillValid, ItemStack stack, BossTokenItem.SpawningFunction bossFunction) {
 			if (players.isEmpty())
 				return;
 
@@ -139,7 +160,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 						continue;
 
 					if (playerStillValid.test(serverPlayer)) {
-						Vec3 pos = RandomUtil.getRandomSelection(playerSpawnPoints);
+						Vec3 pos = RandomUtil.getRandomSelection(this.playerSpawnPoints);
 						spawnBoss = true;
 
 						serverPlayer.connection.teleport(pos.x, pos.y, pos.z, 0, 0);
@@ -152,7 +173,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 				}
 
 				if (spawnBoss)
-					AoAScheduler.scheduleSyncronisedTask(() -> bossFunction.apply(level, RandomUtil.getRandomSelection(bossSpawnPoints)), 140);
+					AoAScheduler.scheduleSyncronisedTask(() -> bossFunction.spawn(level, getRandomBossSpawn(), stack), 140);
 			}, 100);
 
 			for (Player player : players) {
@@ -216,6 +237,10 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 				return List.of();
 
 			return EntityRetrievalUtil.getEntities(level, bounds, entity -> true);
+		}
+
+		public Vec3 getRandomBossSpawn() {
+			return RandomUtil.getRandomSelection(this.bossSpawnPoints);
 		}
 	}
 }

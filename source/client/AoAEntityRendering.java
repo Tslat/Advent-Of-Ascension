@@ -30,8 +30,9 @@ import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.client.model.entity.EntityGeoModel;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
+import net.tslat.aoa3.client.model.entity.boss.EliteSmashModel;
+import net.tslat.aoa3.client.model.entity.boss.SmashModel;
 import net.tslat.aoa3.client.model.entity.mob.ChargerModel;
-import net.tslat.aoa3.client.model.entity.mob.SmashModel;
 import net.tslat.aoa3.client.model.entity.mob.WoodGiantModel;
 import net.tslat.aoa3.client.model.entity.npc.DryadSpriteModel;
 import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
@@ -150,6 +151,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> WOOD_GIANT = new EntityRendererPackage<>(AoAMobs.WOOD_GIANT).geckolib(new WoodGiantModel());
 
 	public static final EntityRendererPackage<?> SMASH = new EntityRendererPackage<>(AoAMobs.SMASH).geckolib(new SmashModel());
+	public static final EntityRendererPackage<?> ELITE_SMASH = new EntityRendererPackage<>(AoAMobs.ELITE_SMASH).geckolib(new EliteSmashModel());
 
 	public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
 	public static final EntityRendererPackage<?> CREEP_BANKER = new EntityRendererPackage<>(AoANpcs.CREEP_BANKER).defineLayer("creep_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/creep_banker.png");

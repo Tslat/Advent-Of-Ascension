@@ -13,6 +13,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.BlockGetter;
@@ -212,5 +213,37 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 		tag.put("display", displayTag);
 
 		return tag;
+	}
+
+	public static boolean isOriginal(ItemStack stack) {
+		if (!(stack.getItem() instanceof BlockItem block) || !(block.getBlock() instanceof TrophyBlock))
+			return false;
+
+		CompoundTag tag = stack.getTag();
+
+		if (tag == null)
+			return false;
+
+		CompoundTag subTag = tag.getCompound("BlockEntityTag");
+
+		if (!subTag.contains("OriginalTrophy", Tag.TAG_BYTE))
+			return false;
+
+		return subTag.getBoolean("OriginalTrophy");
+	}
+
+	@Nullable
+	public static EntityType<?> getCachedEntityType(ItemStack stack) {
+		if (!(stack.getItem() instanceof BlockItem block) || !(block.getBlock() instanceof TrophyBlock))
+			return null;
+
+		CompoundTag tag = stack.getTag();
+
+		if (tag == null)
+			return null;
+
+		String entityId = tag.getCompound("BlockEntityTag").getString("EntityID");
+
+		return entityId.isEmpty() ? null : ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(entityId));
 	}
 }
