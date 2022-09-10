@@ -1,0 +1,15 @@
+{
+  "player_start": [
+    3528.0,
+    23.0,
+    1077.25
+  ],
+  "reward_table": "aoa3:tier_6_parkour_rewards",
+  "structure_id": "aoa3:nether_tourist",
+  "structure_pos": [
+    3500,
+    5,
+    1000
+  ],
+  "tier": 6
+}

@@ -19,7 +19,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.DamageUtil;

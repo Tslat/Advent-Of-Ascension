@@ -6,7 +6,7 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
+    "announce_to_chat": false,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.completionist.surface_to_air.description"

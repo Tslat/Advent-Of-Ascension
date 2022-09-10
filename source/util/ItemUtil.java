@@ -144,7 +144,8 @@ public final class ItemUtil {
 				pl.spawnAtLocation(stack, 0.5f);
 		}
 
-		pl.inventoryMenu.broadcastChanges();
+		if (!stacks.isEmpty())
+			pl.inventoryMenu.broadcastChanges();
 	}
 
 	public static void givePlayerItemOrDrop(Player player, ItemStack stack) {

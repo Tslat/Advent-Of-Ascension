@@ -4,15 +4,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -37,7 +39,7 @@ public class JokerStaff extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB);
+		List<LivingEntity> list = EntityRetrievalUtil.getEntities(caster, 10, entity -> entity instanceof LivingEntity livingEntity && entity instanceof Enemy && !EntityUtil.isImmuneToSpecialAttacks(livingEntity, caster));
 
 		if (!list.isEmpty())
 			return list;
@@ -53,6 +55,7 @@ public class JokerStaff extends BaseStaff<List<LivingEntity>> {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SPEC_IMMUNE, LocaleUtil.ItemDescriptionType.NEUTRAL));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

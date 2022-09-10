@@ -18,7 +18,7 @@ import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;

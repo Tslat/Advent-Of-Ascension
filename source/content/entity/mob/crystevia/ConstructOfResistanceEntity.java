@@ -12,7 +12,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.effectslib.api.util.EffectUtil;
 
 import javax.annotation.Nullable;
 
@@ -52,7 +52,7 @@ public class ConstructOfResistanceEntity extends AoAMeleeMob {
     @Override
     public boolean addEffect(MobEffectInstance effect, @Nullable Entity source) {
         if (effect.getEffect() == MobEffects.DAMAGE_RESISTANCE)
-            PotionUtil.amplifyEffect(effect, 1);
+            EffectUtil.amplifyEffect(effect, 1);
 
         return super.addEffect(effect);
     }

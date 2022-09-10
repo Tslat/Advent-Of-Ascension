@@ -11,11 +11,11 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.entity.AoABrainMemories;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
 import net.tslat.smartbrainlib.api.util.BrainUtils;
 import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ import java.util.List;
  * @param <E> This
  */
 public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
-	private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS = ObjectArrayList.of(Pair.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT), Pair.of(AoABrainMemories.SPECIAL_ATTACK_COOLDOWN.get(), MemoryStatus.VALUE_ABSENT), Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED));
+	private static final List<Pair<MemoryModuleType<?>, MemoryStatus>> MEMORY_REQUIREMENTS = ObjectArrayList.of(Pair.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT), Pair.of(SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), MemoryStatus.VALUE_ABSENT), Pair.of(MemoryModuleType.LOOK_TARGET, MemoryStatus.REGISTERED));
 
 	protected float speedMod = 1;
 

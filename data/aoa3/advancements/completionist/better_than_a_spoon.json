@@ -1,0 +1,40 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_occult_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:occult_shovel"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.better_than_a_spoon.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:occult_shovel",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.better_than_a_spoon.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_occult_shovel"
+    ]
+  ]
+}

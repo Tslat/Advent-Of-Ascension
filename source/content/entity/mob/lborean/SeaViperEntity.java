@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 

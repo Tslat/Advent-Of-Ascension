@@ -21,7 +21,7 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 

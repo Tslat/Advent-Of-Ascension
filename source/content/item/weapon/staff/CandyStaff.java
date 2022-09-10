@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.item.weapon.staff;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -11,6 +12,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -35,7 +37,7 @@ public class CandyStaff extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB);
+		List<LivingEntity> list = EntityRetrievalUtil.getEntities(caster, 10, entity -> entity instanceof LivingEntity livingEntity && entity instanceof Enemy);
 
 		if (!list.isEmpty())
 			return list;

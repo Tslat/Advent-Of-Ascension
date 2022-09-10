@@ -21,7 +21,7 @@
       "translate": "advancements.aoa3.completionist.basically_poseidon.description"
     },
     "frame": "challenge",
-    "hidden": true,
+    "hidden": false,
     "icon": {
       "item": "aoa3:tidal_greatblade",
       "nbt": "{Damage:0}"

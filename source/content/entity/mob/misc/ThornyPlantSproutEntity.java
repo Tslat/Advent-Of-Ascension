@@ -19,7 +19,7 @@ import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;

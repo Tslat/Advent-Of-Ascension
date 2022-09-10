@@ -13,7 +13,7 @@
       "type": "aoa3:void_walker",
       "maxCount": 1,
       "minCount": 1,
-      "weight": 5
+      "weight": 8
     }
   ]
 }

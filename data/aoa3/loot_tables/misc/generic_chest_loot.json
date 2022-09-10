@@ -206,6 +206,22 @@
           "type": "minecraft:item",
           "functions": [
             {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aoa3:glistening_infusion_stone",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
               "function": "minecraft:set_nbt",
               "tag": "{TornPagesEntryId:\"aoa3:lessons\"}"
             }

@@ -21,7 +21,7 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, PlayerDataSyncPacket.class, PlayerDataSyncPacket::encode, PlayerDataSyncPacket::decode, PlayerDataSyncPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, PlayerDataUpdatePacket.class, PlayerDataUpdatePacket::encode, PlayerDataUpdatePacket::decode, PlayerDataUpdatePacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ToastPopupPacket.class, ToastPopupPacket::encode, ToastPopupPacket::decode, ToastPopupPacket::receiveMessage);
-		INSTANCE.registerMessage(id++, ScreenOverlayPacket.class, ScreenOverlayPacket::encode, ScreenOverlayPacket::decode, ScreenOverlayPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, ScreenEffectPacket.class, ScreenEffectPacket::encode, ScreenEffectPacket::decode, ScreenEffectPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, GunRecoilPacket.class, GunRecoilPacket::encode, GunRecoilPacket::decode, GunRecoilPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, XpGainPacket.class, XpGainPacket::encode, XpGainPacket::decode, XpGainPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, HaloChangePacket.class, HaloChangePacket::encode, HaloChangePacket::decode, HaloChangePacket::receiveMessage);

@@ -103,7 +103,7 @@ public class AoAJigsawAssembler {
 						startPiece,
 						pieces,
 						Shapes.join(
-								Shapes.create(new AABB(structurePosX - maxRadius, structurePosY - maxRadius, structurePosZ - maxRadius, structurePosX + maxRadius + 1, structurePosY + maxRadius + 1, structurePosZ + maxRadius + 1)),
+								Shapes.create(new AABB(structurePosX - maxRadius, -4000, structurePosZ - maxRadius, structurePosX + maxRadius + 1, 4000, structurePosZ + maxRadius + 1)),
 								Shapes.create(AABB.of(startPieceBounds)), BooleanOp.ONLY_FIRST));
 				pieces.forEach(pieceBuilder::addPiece);
 			}

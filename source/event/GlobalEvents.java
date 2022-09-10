@@ -13,7 +13,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.world.spawner.PixonSpawner;
-import net.tslat.aoa3.content.world.spawner.TraderSpawner;
+import net.tslat.aoa3.content.world.spawner.LottomanSpawner;
 import net.tslat.aoa3.content.world.spawner.VisualentSpawner;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.scheduling.AoAScheduler;
@@ -52,8 +52,8 @@ public final class GlobalEvents {
 			if (world.dimension() == AoADimensions.LUNALUS.key)
 				spawners.add(new VisualentSpawner());
 
-			if (TraderSpawner.isValidSpawnWorld(world))
-				spawners.add(new TraderSpawner());
+			if (!world.isFlat() && world.dimensionType().respawnAnchorWorks())
+				spawners.add(new LottomanSpawner());
 
 			world.customSpawners = ImmutableList.copyOf(spawners);
 		}

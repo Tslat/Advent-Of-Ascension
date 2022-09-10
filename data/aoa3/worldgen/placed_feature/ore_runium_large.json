@@ -1,0 +1,30 @@
+{
+  "feature": "aoa3:ore_runium_large",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 4,
+          "min_inclusive": 1
+        }
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 45
+        },
+        "min_inclusive": {
+          "above_bottom": 5
+        }
+      }
+    }
+  ]
+}

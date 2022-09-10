@@ -13,8 +13,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
-import net.tslat.aoa3.common.registration.entity.AoABrainMemories;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -27,7 +27,7 @@ public class BlockIncomingProjectileTask extends Behavior<Mob> {
 	private long equipTime;
 
 	public BlockIncomingProjectileTask(boolean equipShieldIfUnequipped) {
-		super(ImmutableMap.of(AoABrainMemories.INCOMING_PROJECTILES.get(), MemoryStatus.VALUE_PRESENT));
+		super(ImmutableMap.of(SBLMemoryTypes.INCOMING_PROJECTILES.get(), MemoryStatus.VALUE_PRESENT));
 
 		this.equipShieldIfUnequipped = equipShieldIfUnequipped;
 	}
@@ -38,7 +38,7 @@ public class BlockIncomingProjectileTask extends Behavior<Mob> {
 		Item offHandItem = owner.getItemInHand(InteractionHand.OFF_HAND).getItem();
 		hand = InteractionHand.MAIN_HAND;
 
-		Projectile projectile = owner.getBrain().getMemory(AoABrainMemories.INCOMING_PROJECTILES.get()).get().get(0);
+		Projectile projectile = owner.getBrain().getMemory(SBLMemoryTypes.INCOMING_PROJECTILES.get()).get().get(0);
 
 		if (!owner.hasLineOfSight(projectile))
 			return false;
@@ -87,13 +87,13 @@ public class BlockIncomingProjectileTask extends Behavior<Mob> {
 		if (gameTime - equipTime <= 10)
 			return;
 
-		if (!owner.getBrain().getMemory(AoABrainMemories.INCOMING_PROJECTILES.get()).isPresent())
+		if (!owner.getBrain().getMemory(SBLMemoryTypes.INCOMING_PROJECTILES.get()).isPresent())
 			doStop(level, owner, gameTime);
 	}
 
 	@Override
 	protected boolean canStillUse(ServerLevel pLevel, Mob owner, long gameTime) {
-		return gameTime - equipTime <= 10 || owner.getBrain().getMemory(AoABrainMemories.INCOMING_PROJECTILES.get()).isPresent();
+		return gameTime - equipTime <= 10 || owner.getBrain().getMemory(SBLMemoryTypes.INCOMING_PROJECTILES.get()).isPresent();
 	}
 
 	@Override
@@ -105,10 +105,10 @@ public class BlockIncomingProjectileTask extends Behavior<Mob> {
 	private Entity getEntityFocus(Mob owner) {
 		Brain<?> brain = owner.getBrain();
 
-		if (!brain.hasMemoryValue(AoABrainMemories.INCOMING_PROJECTILES.get()))
+		if (!brain.hasMemoryValue(SBLMemoryTypes.INCOMING_PROJECTILES.get()))
 			return null;
 
-		List<Projectile> projectiles = brain.getMemory(AoABrainMemories.INCOMING_PROJECTILES.get()).get();
+		List<Projectile> projectiles = brain.getMemory(SBLMemoryTypes.INCOMING_PROJECTILES.get()).get();
 
 		if (projectiles.isEmpty())
 			return null;

@@ -21,8 +21,9 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.*;
+import net.tslat.effectslib.api.util.EffectUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
@@ -48,7 +49,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 		while (world.getBlockState(spawnPos).getMaterial().blocksMotion());
 
 		setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
-		EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.GLOWING, PotionUtil.MAX_POTION_DURATION).isAmbient().hideParticles());
+		EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.GLOWING, EffectUtil.MAX_POTION_DURATION).isAmbient().hideParticles());
 	}
 
 	@Override

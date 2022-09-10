@@ -2,22 +2,17 @@ package net.tslat.aoa3.content.mobeffect;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.effectslib.api.ExtendedMobEffect;
 
-import javax.annotation.Nullable;
-import java.util.List;
-
-public class BleedingEffect extends MobEffect {
+public class BleedingEffect extends ExtendedMobEffect {
 	public static final DamageSource DAMAGE_SOURCE = new DamageSource("bleeding").bypassArmor().bypassEnchantments().setScalesWithDifficulty();
 
 	public BleedingEffect() {
@@ -25,19 +20,19 @@ public class BleedingEffect extends MobEffect {
 	}
 
 	@Override
-	public List<ItemStack> getCurativeItems() {
-		return List.of(new ItemStack(Items.ENCHANTED_GOLDEN_APPLE));
+	public boolean shouldCureEffect(MobEffectInstance effectInstance, ItemStack stack, LivingEntity entity) {
+		return stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE;
 	}
 
 	@Override
-	public boolean isDurationEffectTick(int duration, int amplifier) {
+	public boolean shouldTickEffect(@org.jetbrains.annotations.Nullable MobEffectInstance effectInstance, @org.jetbrains.annotations.Nullable LivingEntity entity, int ticksRemaining, int amplifier) {
 		int interval = 100 >> amplifier;
 
-		return interval <= 0 || duration % interval == 0;
+		return interval == 0 || ticksRemaining % interval == 0;
 	}
 
 	@Override
-	public void applyEffectTick(LivingEntity entity, int amplifier) {
+	public void tick(LivingEntity entity, @org.jetbrains.annotations.Nullable MobEffectInstance effectInstance, int amplifier) {
 		if (entity.getMobType() != MobType.UNDEAD) {
 			entity.hurt(DAMAGE_SOURCE, 0.75f);
 
@@ -46,12 +41,11 @@ public class BleedingEffect extends MobEffect {
 		}
 	}
 
-	public static void apply(LivingEntity target, MobEffectInstance bleedEffect, @Nullable Entity applyingEntity) {
-		MobEffectInstance existingBleed = target.getEffect(AoAMobEffects.BLEEDING.get());
+	@Override
+	public MobEffectInstance onReapplication(MobEffectInstance existingEffectInstance, MobEffectInstance newEffectInstance, LivingEntity entity) {
+		if (existingEffectInstance.getAmplifier() >= newEffectInstance.getAmplifier())
+			return new MobEffectInstance(newEffectInstance.getEffect(), Math.max(newEffectInstance.getDuration(), existingEffectInstance.getDuration()), Mth.clamp(existingEffectInstance.getAmplifier() + 1, 0, 127), newEffectInstance.isAmbient(), newEffectInstance.isVisible(), newEffectInstance.showIcon(), newEffectInstance.hiddenEffect, newEffectInstance.getFactorData());
 
-		if (existingBleed != null && existingBleed.getAmplifier() >= bleedEffect.getAmplifier())
-			bleedEffect = new MobEffectInstance(bleedEffect.getEffect(), Math.max(bleedEffect.getDuration(), existingBleed.getDuration()), Mth.clamp(existingBleed.getAmplifier() + 1, 0, 127), bleedEffect.isAmbient(), bleedEffect.isVisible(), bleedEffect.showIcon(), bleedEffect.hiddenEffect, bleedEffect.getFactorData());
-
-		target.addEffect(bleedEffect, applyingEntity);
+		return newEffectInstance;
 	}
 }

@@ -37,9 +37,13 @@ public final class ColourUtil {
 		return alpha << 24 | colour;
 	}
 
-	public record Colour(int red, int green, int blue) {
+	public record Colour(int red, int green, int blue, int alpha) {
+		public Colour(int red, int green, int blue) {
+			this(red, green, blue, 255);
+		}
+
 		public Colour(int rgb) {
-			this((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF);
+			this((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF, (rgb >> 24) & 0xFF);
 		}
 
 		public String hex() {
@@ -47,7 +51,7 @@ public final class ColourUtil {
 		}
 
 		public int packed() {
-			return RGB(red, green, blue);
+			return addAlpha(RGB(red, green, blue), alpha);
 		}
 	}
 }

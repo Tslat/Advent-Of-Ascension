@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.entity.mob.lunalus;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
@@ -12,7 +11,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 
@@ -48,7 +47,7 @@ public class RefluctEntity extends AoAMeleeMob {
 	public void aiStep() {
 		super.aiStep();
 
-		for (Entity e : EntityRetrievalUtil.getEntities(this.level, getBoundingBox().inflate(3), new EntityPredicate<>().isSubtypeOf(BaseEnergyShot.class))) {
+		for (BaseEnergyShot e : EntityRetrievalUtil.<BaseEnergyShot>getEntities(this.level, getBoundingBox().inflate(3), new EntityPredicate<>().isSubtypeOf(BaseEnergyShot.class))) {
 			e.setDeltaMovement(e.getDeltaMovement().multiply(-1, -1, -1));
 		}
 	}

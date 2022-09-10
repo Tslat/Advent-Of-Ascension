@@ -1,0 +1,40 @@
+{
+  "type": "minecraft:gift",
+  "pools": [
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "conditions": [
+        {
+          "condition": "minecraft:location_check",
+          "predicate": {
+            "dimension": "aoa3:nowhere"
+          }
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 28.0,
+                "min": 19.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "aoa3:dungeon_tokens",
+          "weight": 100
+        }
+      ],
+      "name": "tokens",
+      "rolls": 1.0
+    }
+  ]
+}

@@ -13,10 +13,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.data.server.AoANowhereParkourCourseListener;
+import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
@@ -25,6 +26,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class NowhereActivityPortal extends PortalBlock {
 	private static final EnumProperty<Activity> ACTIVITY = EnumProperty.create("activity", Activity.class);
@@ -46,7 +48,7 @@ public class NowhereActivityPortal extends PortalBlock {
 
 			pl.portalTime = 100;
 
-			state.getValue(ACTIVITY).teleport(pl);
+			state.getValue(ACTIVITY).activate(pl);
 		}
 	}
 
@@ -104,33 +106,44 @@ public class NowhereActivityPortal extends PortalBlock {
 
 			pl.getInventory().clearContent();
 		}),
-		PARKOUR_1(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_2(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_3(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_4(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_5(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
-		PARKOUR_6(0, 0, 0, -90, pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_1(pl -> findParkourCourse(pl, 1), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_2(pl -> findParkourCourse(pl, 2), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_3(pl -> findParkourCourse(pl, 3), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_4(pl -> findParkourCourse(pl, 4), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_5(pl -> findParkourCourse(pl, 5), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
+		PARKOUR_6(pl -> findParkourCourse(pl, 6), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
 		BOSSES(17.5d, 502.5d, 3.5d, 0),
 		DUNGEON(6.5d, 1501.5d, 16.5d, -90),
 		UTILITY(25.5d, 1001.5d, 16, 90),
-		RETURN(6.5d, 1501.5d, 16.5d, -90, pl -> {
+		RETURN(pl -> doReturnPortalTeleport(pl, 16.5d, 1501.5d, 16.5d, 180), pl -> {
 			ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
 			PlayerUtil.getAdventPlayer(pl).returnItemStorage();
 			PlayerUtil.resetToDefaultStatus(pl);
 		});
 
-		private final Vec3 teleportPos;
-		private final float teleportRot;
-		private final Consumer<ServerPlayer> useFunction;
+		private final Predicate<ServerPlayer> teleportFunction;
+		private final Consumer<ServerPlayer> afterTeleportFunction;
 
-		Activity(double x, double y, double z, float rot, @Nullable Consumer<ServerPlayer> useFunction) {
-			this.teleportPos = new Vec3(x, y, z);
-			this.teleportRot = rot;
-			this.useFunction = useFunction;
+		Activity(Predicate<ServerPlayer> teleportFunction, Consumer<ServerPlayer> afterTeleportFunction) {
+			this.teleportFunction = teleportFunction;
+			this.afterTeleportFunction = afterTeleportFunction;
+		}
+
+		Activity(double x, double y, double z) {
+			this(x, y, z, 0);
 		}
 
 		Activity(double x, double y, double z, float rot) {
 			this(x, y, z, rot, null);
+		}
+
+		Activity(double x, double y, double z, float rot, @Nullable Consumer<ServerPlayer> afterTeleportFunction) {
+			this(pl -> {
+				pl.connection.teleport(x, y, z, rot, pl.getXRot());
+
+				return true;
+			},
+					afterTeleportFunction == null ? pl -> {} : afterTeleportFunction);
 		}
 
 		@Override
@@ -138,23 +151,48 @@ public class NowhereActivityPortal extends PortalBlock {
 			return toString().toLowerCase(Locale.ROOT);
 		}
 
-		public Vec3 getPos() {
-			return this.teleportPos;
-		}
-
-		public void onUse(ServerPlayer pl) {
-			if (useFunction != null)
-				useFunction.accept(pl);
-		}
-
 		public void teleport(ServerPlayer pl) {
-			if (teleportPos.lengthSqr() == 0)
-				return;
+			AoAScheduler.scheduleSyncronisedTask(() -> teleportFunction.test(pl), 1);
+		}
 
+		public void activate(ServerPlayer pl) {
 			AoAScheduler.scheduleSyncronisedTask(() -> {
-				pl.connection.teleport(teleportPos.x, teleportPos.y, teleportPos.z, teleportRot, pl.getXRot());
-				onUse(pl);
+				if (teleportFunction.test(pl))
+					afterTeleportFunction.accept(pl);
 			}, 1);
+		}
+
+		private static boolean doReturnPortalTeleport(ServerPlayer pl, double x, double y, double z, float rot) {
+			if (NowhereEvents.isInParkourRegion(pl.blockPosition())) {
+				AoANowhereParkourCourseListener.NowhereParkourCourse course = AoANowhereParkourCourseListener.getCourseForPosition(pl.getLevel(), pl.position());
+
+				if (course != null) {
+					course.grantRewards(pl);
+
+					AoANowhereParkourCourseListener.NowhereParkourCourse nextCourse = AoANowhereParkourCourseListener.getNextCourse(course);
+
+					if (nextCourse != null) {
+						nextCourse.teleportPlayerToCourse(pl);
+
+						return true;
+					}
+				}
+			}
+
+			pl.connection.teleport(x, y, z, rot, pl.getXRot());
+
+			return true;
+		}
+
+		private static boolean findParkourCourse(ServerPlayer pl, int tier) {
+			AoANowhereParkourCourseListener.NowhereParkourCourse course = AoANowhereParkourCourseListener.getFirstCourseForTier(tier);
+
+			if (course == null)
+				return false;
+
+			course.teleportPlayerToCourse(pl);
+
+			return true;
 		}
 	}
 }

@@ -52,6 +52,7 @@ import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.event.dimension.VoxPondsEvents;
 import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
 
@@ -131,9 +132,16 @@ public class PlayerEvents {
 
 				if (checkpoint != null) {
 					if (CheckpointBlock.isValidCheckpoint(pl.level, checkpoint)) {
-						PlayerUtil.resetToDefaultStatus(pl);
-						pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN));
-						checkpoint.applyToEntity(pl);
+						AoAScheduler.scheduleSyncronisedTask(() -> {
+							if (NowhereEvents.isInBossRegion(pl.blockPosition()))
+								ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+
+							PlayerUtil.resetToDefaultStatus(pl);
+							pl.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
+							pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN), true);
+							checkpoint.applyToEntity(pl);
+						}, 1);
+
 						ev.setCanceled(true);
 
 						return;

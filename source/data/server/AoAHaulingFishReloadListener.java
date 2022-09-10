@@ -24,6 +24,7 @@ import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.library.object.GenericEntryPool;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.TagUtil;
 
 import java.util.ArrayList;
@@ -216,11 +217,11 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			if (matchedTag != null)
 				return LAVA_MAP.get(matchedTag);
 
-			return null;
+			return LAVA_FALLBACK;
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getWaterEntry(Biome biome) {
-			ResourceKey<Biome> resourceKey = ResourceKey.create(Registry.BIOME_REGISTRY, ForgeRegistries.BIOMES.getKey(biome));
+			ResourceKey<Biome> resourceKey = ResourceKey.create(Registry.BIOME_REGISTRY, RegistryUtil.getId(biome));
 			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = WATER_MAP.get(resourceKey);
 
 			if (entry != null)
@@ -231,7 +232,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			if (matchedTag != null)
 				return WATER_MAP.get(matchedTag);
 
-			return null;
+			return WATER_FALLBACK;
 		}
 
 		private void reset() {

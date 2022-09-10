@@ -18,7 +18,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 
 import java.util.List;
 import java.util.function.Consumer;

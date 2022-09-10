@@ -30,7 +30,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.MagicBallEntity;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;

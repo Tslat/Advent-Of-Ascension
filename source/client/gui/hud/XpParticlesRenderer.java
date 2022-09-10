@@ -92,11 +92,6 @@ public final class XpParticlesRenderer {
 		if (particlesMap.isEmpty())
 			return;
 
-		purgeExpiredEntries();
-
-		if (particlesMap.isEmpty())
-			return;
-
 		long currentTime = System.currentTimeMillis();
 		Minecraft mc = Minecraft.getInstance();
 		Window window = mc.getWindow();
@@ -106,6 +101,7 @@ public final class XpParticlesRenderer {
 		int cumulativeXOffset = 0;
 		int x = 0;
 		int y = 0;
+		boolean hasExpiredParticles = false;
 
 		poseStack.pushPose();
 		poseStack.translate(windowWidth / 2f, 1, 0);
@@ -132,6 +128,12 @@ public final class XpParticlesRenderer {
 			poseStack.translate(renderWidth / 2d, 0, 0);
 
 			for (XPParticle particle : particles) {
+				if (particle.creationTime <= currentTime - 1800) {
+					hasExpiredParticles = true;
+
+					continue;
+				}
+
 				float lifespan = 1 - (currentTime - particle.creationTime) / 1500f;
 
 				if (lifespan >= 0.1f) {
@@ -167,6 +169,9 @@ public final class XpParticlesRenderer {
 
 		RenderSystem.enableDepthTest();
 		poseStack.popPose();
+
+		if (hasExpiredParticles)
+			purgeExpiredEntries();
 	}
 
 	static class XPParticle {

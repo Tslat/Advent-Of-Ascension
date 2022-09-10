@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:nowhere/root",
+  "criteria": {
+    "complete_course": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nowhere.tier_1_acrobat.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:feather"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nowhere.tier_1_acrobat.title"
+    }
+  },
+  "requirements": [
+    [
+      "complete_course"
+    ]
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "type": "aoa3:new_feature",
   "biomes": {
+    "excluding": [
+      "#forge:is_dead"
+    ],
     "if_all": [
       "#minecraft:is_overworld"
-    ],
-    "if_any": [
-      "#forge:is_magical"
     ]
   },
   "features": "aoa3:ore_runium_small",

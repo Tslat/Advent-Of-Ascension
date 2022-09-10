@@ -16,5 +16,6 @@ public final class AoADatapackLoaders {
 		ev.addListener(new AoASkillsReloadListener());
 		ev.addListener(new AoAHaulingFishReloadListener());
 		ev.addListener(new AoANowhereBossArenaListener());
+		ev.addListener(new AoANowhereParkourCourseListener());
 	}
 }

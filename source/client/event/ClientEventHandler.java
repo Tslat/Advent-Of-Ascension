@@ -19,7 +19,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.AoAKeybinds;
-import net.tslat.aoa3.client.gui.overlay.ScreenOverlayRenderer;
+import net.tslat.aoa3.client.gui.overlay.ScreenEffectRenderer;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
@@ -51,9 +51,6 @@ public final class ClientEventHandler {
 
 	private static void onClientTick(final TickEvent.ClientTickEvent ev) {
 		if (ev.phase == TickEvent.Phase.END) {
-			if (!Minecraft.getInstance().isPaused())
-				ScreenOverlayRenderer.tickOverlays();
-
 			if (!Minecraft.getInstance().hasSingleplayerServer()) {
 				GlobalEvents.tick++;
 				AoAScheduler.handleSyncScheduledTasks(GlobalEvents.tick);
@@ -83,7 +80,7 @@ public final class ClientEventHandler {
 
 	private static void onPlayerDeath(LivingDeathEvent ev) {
 		if (ev.getEntity() == Minecraft.getInstance().player)
-			ScreenOverlayRenderer.clearOverlays();
+			ScreenEffectRenderer.clearOverlays();
 	}
 
 	private static void onSoundPlay(PlaySoundEvent ev) {

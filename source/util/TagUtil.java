@@ -1,7 +1,6 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.tags.TagKey;
-import net.minecraft.tags.TagManager;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -12,8 +11,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.tags.IReverseTag;
 import net.minecraftforge.registries.tags.ITagManager;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class TagUtil {
@@ -74,7 +75,12 @@ public final class TagUtil {
 	}
 
 	public static <T> Stream<TagKey<T>> getAllTagsFor(ITagManager<T> tagManager, T object) {
-		return tagManager.getReverseTag(object).get().getTagKeys();
+		Optional<IReverseTag<T>> reverseTag = tagManager.getReverseTag(object);
+
+		if (reverseTag.isEmpty())
+			return Stream.empty();
+
+		return reverseTag.get().getTagKeys();
 	}
 
 	public static <T> Stream<T> getTagContents(ITagManager<T> tagManager, TagKey<T> tag) {

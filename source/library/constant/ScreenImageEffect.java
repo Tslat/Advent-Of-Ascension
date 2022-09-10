@@ -1,31 +1,32 @@
 package net.tslat.aoa3.library.constant;
 
+import com.mojang.blaze3d.platform.Window;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.ScreenEffectPacket;
+import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RandomUtil;
+
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class ScreenImageEffect {
 	private final Type type;
 
-	private float rotation = 0;
+	private boolean fullscreen = false;
 	private float scale = 1;
-	private int colour = 0;
+	private ColourUtil.Colour colour = new ColourUtil.Colour(255, 255, 255, 255);
 	private int duration = 60;
 
-	private int durationRemaining = 60;
-	private int x = 0;
-	private int y = 0;
+	private long expiredAt = 0;
+	private float posX;
+	private float posY;
+	private ResourceLocation cachedTexture = null;
 
 	public ScreenImageEffect(Type type) {
 		this.type = type;
-	}
-
-	public ScreenImageEffect rotated(float rotation) {
-		this.rotation = rotation;
-
-		return this;
-	}
-
-	public ScreenImageEffect randomRotation() {
-		return rotated((float)RandomUtil.randomValueBetween(-180, 179));
 	}
 
 	public ScreenImageEffect scaled(float scale) {
@@ -35,11 +36,17 @@ public class ScreenImageEffect {
 	}
 
 	public ScreenImageEffect randomScale() {
-		return scaled((float)RandomUtil.randomValueBetween(0.25, 1.25f));
+		return scaled((float)RandomUtil.randomValueBetween(0.25f, 1.25f));
+	}
+
+	public ScreenImageEffect coloured(int red, int green, int blue, int alpha) {
+		this.colour = new ColourUtil.Colour(red, green, blue, alpha);
+
+		return this;
 	}
 
 	public ScreenImageEffect coloured(int colour) {
-		this.colour = colour;
+		this.colour = new ColourUtil.Colour(colour);
 
 		return this;
 	}
@@ -50,52 +57,108 @@ public class ScreenImageEffect {
 		return this;
 	}
 
-	public void tickDown() {
-		this.durationRemaining--;
-	}
+	public ScreenImageEffect fullscreen(boolean fullscreen) {
+		this.fullscreen = fullscreen;
 
-	public void setPos(int x, int y) {
-		this.x = x;
-		this.y = y;
-	}
-
-	public float getRotation() {
-		return rotation;
+		return this;
 	}
 
 	public float getScale() {
-		return scale;
+		return this.scale;
 	}
 
 	public int getColour() {
-		return colour;
+		return this.colour.packed();
+	}
+
+	public float getRed() {
+		return this.colour.red() / 255f;
+	}
+
+	public float getGreen() {
+		return this.colour.green() / 255f;
+	}
+
+	public float getBlue() {
+		return this.colour.blue() / 255f;
+	}
+
+	public float getAlpha() {
+		return this.colour.alpha() / 255f;
 	}
 
 	public int getDuration() {
-		return duration;
-	}
-
-	public int x() {
-		return x;
-	}
-
-	public int y() {
-		return y;
+		return this.duration;
 	}
 
 	public Type getType() {
-		return type;
+		return this.type;
+	}
+
+	public ResourceLocation getTexture() {
+		return this.cachedTexture;
+	}
+
+	public boolean isFullscreen() {
+		return this.fullscreen;
+	}
+
+	public void sendToPlayer(ServerPlayer player) {
+		AoAPackets.messagePlayer(player, new ScreenEffectPacket(this));
+	}
+
+	public void init(Window window, long gameTime) {
+		if (this.expiredAt != 0)
+			return;
+
+		setExpiry(gameTime);
+
+		Random random = ThreadLocalRandom.current();
+
+		if (this.type.variants == 1) {
+			this.cachedTexture = this.type.texture;
+		}
+		else {
+			ResourceLocation baseTexture = this.type.texture;
+			this.cachedTexture = new ResourceLocation(baseTexture.getNamespace(), baseTexture.getPath().replace(".png", 1 + random.nextInt(this.type.variants) + ".png"));
+		}
+
+		if (!this.fullscreen) {
+			this.posX = random.nextFloat(window.getGuiScaledWidth() - 127) / this.scale;
+			this.posY = random.nextFloat(window.getGuiScaledHeight() - 127) / this.scale;
+		}
+	}
+
+	public void setExpiry(long gameTime) {
+		this.expiredAt = gameTime + this.duration;
+	}
+
+	public boolean isExpired(long gameTime) {
+		return this.expiredAt <= gameTime;
+	}
+
+	public long getExpiry() {
+		return this.expiredAt;
+	}
+
+	public float x() {
+		return this.posX;
+	}
+
+	public float y() {
+		return this.posY;
 	}
 
 	public enum Type {
-		SCRATCH("textures/gui/overlay/effect/scratch", 4),
-		BLOOD("textures/gui/overlay/effect/splat", 4);
+		SCRATCH(AdventOfAscension.id("textures/gui/overlay/effect/scratch.png"), 4),
+		BLOOD(AdventOfAscension.id("textures/gui/overlay/effect/splat.png"), 4),
+		ACTION_KEY_VIGNETTE(AdventOfAscension.id("textures/gui/overlay/misc/action_key_activation_vignette.png"), 1);
 
-		public final String path;
+		public final ResourceLocation texture;
 		public final int variants;
 
-		Type(String path, int variants) {
-			this.path = path;
+		Type(ResourceLocation texture, int variants) {
+			this.texture = texture;
 			this.variants = variants;
 		}
 	}

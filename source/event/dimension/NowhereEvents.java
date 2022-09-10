@@ -37,7 +37,7 @@ import net.tslat.aoa3.util.TagUtil;
 
 public final class NowhereEvents {
 	public static boolean isInParkourRegion(BlockPos pos) {
-		return pos.getX() > 10000 && pos.getZ() > 1000;
+		return pos.getX() > 1000 && pos.getZ() > 1000;
 	}
 
 	public static boolean isInBossRegion(BlockPos pos) {
@@ -46,6 +46,10 @@ public final class NowhereEvents {
 
 	public static boolean isInFoodFreeRegion(BlockPos pos) {
 		return pos.getX() > 0 && pos.getZ() > 0;
+	}
+
+	public static boolean isInLobbyRegion(BlockPos pos) {
+		return pos.getX() < 250 && pos.getZ() < 250 && pos.getX() > -250 && pos.getZ() > -250;
 	}
 
 	public static void doPlayerTick(final TickEvent.PlayerTickEvent ev) {
@@ -70,7 +74,7 @@ public final class NowhereEvents {
 					pl.fallDistance = -1;
 
 					if (pl instanceof ServerPlayer)
-						NowhereActivityPortal.Activity.RETURN.teleport((ServerPlayer)pl);
+						NowhereActivityPortal.Activity.RETURN.activate((ServerPlayer)pl);
 				}
 
 				if (pl.isFallFlying())
@@ -112,8 +116,8 @@ public final class NowhereEvents {
 		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH));
 		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 
-		NowhereActivityPortal.Activity.RETURN.teleport(plData.player());
-		player.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED), true);
+		NowhereActivityPortal.Activity.RETURN.activate(plData.player());
+		player.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
 		ev.setCanceled(true);
 	}
 

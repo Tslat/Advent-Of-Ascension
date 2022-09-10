@@ -12,10 +12,9 @@ import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.level.BlockEvent;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoAPackets;
-import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
 import net.tslat.aoa3.event.custom.events.*;
+import net.tslat.aoa3.library.constant.ScreenImageEffect;
+import net.tslat.aoa3.util.ColourUtil;
 
 import java.util.List;
 
@@ -508,7 +507,7 @@ public interface AoAPlayerEventListener {
 	default void handleKeyInput() {}
 
 	default void activatedActionKey(ServerPlayer player) {
-		AoAPackets.messagePlayer(player, new ScreenOverlayPacket(AdventOfAscension.id("textures/gui/overlay/misc/action_key_activation_vignette.png"), 10));
+		new ScreenImageEffect(ScreenImageEffect.Type.ACTION_KEY_VIGNETTE).coloured(ColourUtil.addAlpha(ColourUtil.WHITE, 127)).fullscreen(true).duration(10).sendToPlayer(player);
 	}
 
 	/**

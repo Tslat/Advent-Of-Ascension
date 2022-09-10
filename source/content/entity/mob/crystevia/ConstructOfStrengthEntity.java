@@ -16,7 +16,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.effectslib.api.util.EffectUtil;
 
 import javax.annotation.Nullable;
 
@@ -59,7 +59,7 @@ public class ConstructOfStrengthEntity extends AoAMeleeMob {
     @Override
     public boolean addEffect(MobEffectInstance effect, @Nullable Entity source) {
         if (effect.getEffect() == MobEffects.DAMAGE_BOOST)
-            PotionUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 4 - effect.getAmplifier());
+            EffectUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 4 - effect.getAmplifier());
 
         return super.addEffect(effect);
     }

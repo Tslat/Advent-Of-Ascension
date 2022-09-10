@@ -1,0 +1,101 @@
+package net.tslat.aoa3.client.gui.overlay;
+
+import com.mojang.blaze3d.platform.Window;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.Matrix4f;
+import net.minecraft.client.CameraType;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.gui.overlay.ForgeGui;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.library.constant.ScreenImageEffect;
+import net.tslat.aoa3.util.RenderUtil;
+
+import java.util.concurrent.CopyOnWriteArrayList;
+
+public final class ScreenEffectRenderer {
+	private static final CopyOnWriteArrayList<ScreenImageEffect> effects = new CopyOnWriteArrayList<>();
+
+	public static void init() {
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAboveAll("aoa_screen_effects", ScreenEffectRenderer::onEffectRender));
+	}
+
+	public static void addScreenEffect(ScreenImageEffect effect) {
+		effects.add(effect);
+	}
+
+	public static void clearOverlays() {
+		effects.clear();
+	}
+
+	private static void onEffectRender(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON || effects.isEmpty() || Minecraft.getInstance().level == null)
+			return;
+
+		Minecraft mc = Minecraft.getInstance();
+		Window window = mc.getWindow();
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder buffer = tesselator.getBuilder();
+
+		long gameTime = mc.level.getGameTime();
+		boolean hasExpiredEffects = false;
+
+		RenderSystem.disableDepthTest();
+		RenderSystem.depthMask(false);
+		RenderSystem.enableBlend();
+		RenderSystem.defaultBlendFunc();
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
+
+		for (ScreenImageEffect effect : effects) {
+			effect.init(window, gameTime);
+
+			if (effect.isExpired(gameTime)) {
+				hasExpiredEffects = true;
+
+				continue;
+			}
+
+			float scale = effect.getScale();
+			float fadeTime = (effect.getExpiry() - gameTime) / (float)effect.getDuration();
+
+			poseStack.pushPose();
+			RenderSystem.setShaderColor(effect.getRed(), effect.getGreen(), effect.getBlue(), effect.getAlpha() * fadeTime);
+			RenderUtil.setRenderingTexture(effect.getTexture());
+			buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+
+			if (effect.isFullscreen()) {
+				buffer.vertex(0, window.getGuiScaledHeight(), -90).uv(0, 1).endVertex();
+				buffer.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90).uv(1, 1).endVertex();
+				buffer.vertex(window.getGuiScaledWidth(), 0, -90).uv(1, 0).endVertex();
+				buffer.vertex(0, 0, -90).uv(0, 0).endVertex();
+			}
+			else {
+				poseStack.scale(scale, scale, scale);
+				poseStack.translate(effect.x(), effect.y(), 0);
+
+				Matrix4f pose = poseStack.last().pose();
+
+				buffer.vertex(pose, 0, 256, -90).uv(0, 1).endVertex();
+				buffer.vertex(pose, 256, 256, -90).uv(1, 1).endVertex();
+				buffer.vertex(pose, 256, 0, -90).uv(1, 0).endVertex();
+				buffer.vertex(pose, 0, 0, -90).uv(0, 0).endVertex();
+			}
+
+			tesselator.end();
+
+			poseStack.popPose();
+
+			RenderSystem.setShaderColor(1, 1, 1, 1);
+		}
+
+		RenderSystem.depthMask(true);
+		RenderSystem.enableDepthTest();
+		RenderSystem.disableBlend();
+
+		if (hasExpiredEffects)
+			effects.removeIf(effect -> effect.isExpired(gameTime));
+	}
+}

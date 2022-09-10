@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "350_blocks": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.super_escape_rope.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:rosidons"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.super_escape_rope.title"
+    }
+  },
+  "requirements": [
+    [
+      "350_blocks"
+    ]
+  ]
+}

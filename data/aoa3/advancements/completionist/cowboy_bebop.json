@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_music_disc_outlaw": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:music_disc_outlaw"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.cowboy_bebop.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:music_disc_outlaw"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.cowboy_bebop.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_music_disc_outlaw"
+    ]
+  ]
+}

@@ -14,7 +14,7 @@
       "color": "white",
       "translate": "advancements.aoa3.completionist.millennial.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "minecraft:experience_bottle"

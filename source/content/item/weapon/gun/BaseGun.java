@@ -165,7 +165,6 @@ public abstract class BaseGun extends Item {
 			return;
 
 		ServerPlayer player = shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null;
-		int nextFireDelay = getFiringDelay();
 
 		if (player == null || player.getCooldowns().getCooldownPercent(this, 0) == 0) {
 			InteractionHand hand = getGunHand(stack);
@@ -180,7 +179,7 @@ public abstract class BaseGun extends Item {
 
 				if (player != null) {
 					player.awardStat(Stats.ITEM_USED.get(this));
-					player.getCooldowns().addCooldown(this, nextFireDelay);
+					player.getCooldowns().addCooldown(this, getFiringDelay());
 
 					doRecoil(player, stack, hand);
 				}

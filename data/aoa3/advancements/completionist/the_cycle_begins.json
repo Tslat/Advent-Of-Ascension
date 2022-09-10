@@ -14,7 +14,7 @@
       "color": "white",
       "translate": "advancements.aoa3.completionist.the_cycle_begins.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "minecraft:totem_of_undying"

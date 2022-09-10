@@ -35,7 +35,7 @@
       "translate": "advancements.aoa3.overworld.total_troll_dominance.description"
     },
     "frame": "task",
-    "hidden": true,
+    "hidden": false,
     "icon": {
       "item": "aoa3:ornate_trophy"
     },

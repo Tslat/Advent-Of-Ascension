@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.entity.mob.greckon;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -10,9 +9,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoAPackets;
-import net.tslat.aoa3.common.packet.packets.ScreenOverlayPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
@@ -52,7 +48,6 @@ public class GrillfaceEntity extends AoAMeleeMob {
     protected void onAttack(Entity target) {
         if (target instanceof ServerPlayer && getLastHurtByMob() == null && scareCooldown <= 0) {
             playSound(AoASounds.ENTITY_GRILLFACE_SCARE.get(), 1.0f, 1.0f);
-            AoAPackets.messagePlayer((ServerPlayer)target, new ScreenOverlayPacket(new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/effect/grillface.png"), 20));
 
             scareCooldown = 100;
         }

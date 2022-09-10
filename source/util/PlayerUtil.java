@@ -35,6 +35,7 @@ import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -290,6 +291,7 @@ public final class PlayerUtil {
         player.setTicksFrozen(0);
         player.setSharedFlagOnFire(false);
         player.getCombatTracker().recheckStatus();
+        player.setDeltaMovement(Vec3.ZERO);
         foodData.setFoodLevel(20);
         foodData.setSaturation(5);
         foodData.setExhaustion(0);

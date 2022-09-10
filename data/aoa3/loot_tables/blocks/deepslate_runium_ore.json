@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:deepslate_runium_ore"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

@@ -68,8 +68,9 @@ public class ReturnCrystal extends Item {
 					return stack;
 				}
 			}
-
-			NowhereActivityPortal.Activity.RETURN.teleport(pl);
+			else if (!NowhereEvents.isInLobbyRegion(pl.blockPosition())) {
+				NowhereActivityPortal.Activity.RETURN.teleport(pl);
+			}
 		}
 
 		return stack;

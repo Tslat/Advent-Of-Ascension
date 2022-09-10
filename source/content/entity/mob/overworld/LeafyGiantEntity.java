@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -22,13 +23,15 @@ import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class LeafyGiantEntity extends AoAMeleeMob {
 	private int nextBushBaby;
@@ -108,8 +111,14 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 	@Override
 	protected void customServerAiStep() {
 		if (isInvulnerable() && tickCount % 30 == 0) {
-			if (EntityRetrievalUtil.getEntities(this, 40, new EntityPredicate<>(this).isAlive().is(AoAMobs.BUSH_BABY.get())).isEmpty())
+			List<BushBabyEntity> bushBabies = EntityRetrievalUtil.getEntities(this, 40, new EntityPredicate<>().isAlive().is(AoAMobs.BUSH_BABY.get()));
+
+			if (bushBabies.isEmpty()) {
 				setInvulnerable(false);
+			}
+			else {
+				bushBabies.forEach(bushBaby -> bushBaby.addEffect(new EffectBuilder(MobEffects.GLOWING, 35).isAmbient().build()));
+			}
 		}
 
 		if (nextBushBaby <= tickCount) {
@@ -141,8 +150,10 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 		if (isOnFire())
 			bushBaby.setSecondsOnFire(getRemainingFireTicks() / 20);
 
-		if (getHealth() < 0.5f * getMaxHealth())
+		if (getHealth() < 0.5f * getMaxHealth()) {
 			setInvulnerable(true);
+			bushBaby.addEffect(new EffectBuilder(MobEffects.GLOWING, 35).isAmbient().build());
+		}
 
 		level.addFreshEntity(bushBaby);
 	}

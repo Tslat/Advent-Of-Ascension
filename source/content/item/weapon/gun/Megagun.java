@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -9,6 +8,7 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 
 import javax.annotation.Nullable;
 
@@ -30,11 +30,11 @@ public class Megagun extends BaseGun {
 
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity shooter, int timeCharged) {
-		shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_GUN_MINIGUN_WINDDOWN.get(), SoundSource.PLAYERS, 1.0f, 1f);
+		new SoundBuilder(AoASounds.ITEM_GUN_MINIGUN_WINDDOWN).isPlayer().atEntity(shooter).followEntity(shooter).execute();
 	}
 
 	@Override
 	protected void doFiringSound(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
-		shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, getFiringSoundPitchAdjust());
+		new SoundBuilder(getFiringSound()).isPlayer().atEntity(shooter).varyPitch(getFiringSoundPitchAdjust()).execute();
 	}
 }

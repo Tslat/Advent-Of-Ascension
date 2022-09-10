@@ -3347,6 +3347,12 @@
     ],
     "subtitle": "subtitles.entity.slimer.hurt"
   },
+  "entity.smash.belly_drum": {
+    "sounds": [
+      "aoa3:entity/smash/belly_drum"
+    ],
+    "subtitle": "subtitles.entity.smash.belly_drum"
+  },
   "entity.smash.enrage": {
     "sounds": [
       "aoa3:entity/smash/enrage"

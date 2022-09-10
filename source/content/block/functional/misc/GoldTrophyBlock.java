@@ -4,6 +4,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -15,10 +16,12 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
 import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import org.jetbrains.annotations.Nullable;
 
 public class GoldTrophyBlock extends TrophyBlock implements BossTokenItem {
@@ -56,6 +59,16 @@ public class GoldTrophyBlock extends TrophyBlock implements BossTokenItem {
 	@Nullable
 	@Override
 	public EntityType<?> getEntityType(ItemStack stack) {
-		return TrophyBlock.isOriginal(stack) ? TrophyBlock.getCachedEntityType(stack) : null;
+		if (!TrophyBlock.isOriginal(stack))
+			return null;
+
+		EntityType<?> cachedEntity = TrophyBlock.getCachedEntityType(stack);
+
+		if (cachedEntity == null)
+			return null;
+
+		ResourceLocation id = RegistryUtil.getId(cachedEntity);
+
+		return ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(id.getNamespace(), "elite_" + id.getPath()));
 	}
 }

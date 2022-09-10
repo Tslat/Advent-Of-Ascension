@@ -19,7 +19,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 

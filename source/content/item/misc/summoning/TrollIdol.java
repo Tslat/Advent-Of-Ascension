@@ -13,6 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
@@ -55,6 +56,26 @@ public class TrollIdol extends BossSpawningItem<SmashEntity> {
 		stack.setDamageValue(stack.getDamageValue() - 1);
 
 		return true;
+	}
+
+	@Override
+	public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
+		return false;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
+
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		return false;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return false;
 	}
 
 	@Override

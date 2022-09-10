@@ -15,7 +15,7 @@ import net.tslat.aoa3.content.item.lootbox.*;
 import net.tslat.aoa3.content.item.misc.*;
 import net.tslat.aoa3.content.item.misc.summoning.TrollIdol;
 import net.tslat.aoa3.content.item.tablet.*;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.function.Supplier;

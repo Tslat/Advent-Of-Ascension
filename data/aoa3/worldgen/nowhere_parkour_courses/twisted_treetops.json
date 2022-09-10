@@ -1,0 +1,15 @@
+{
+  "player_start": [
+    2009.5,
+    6.0,
+    1026.5
+  ],
+  "reward_table": "aoa3:tier_3_parkour_rewards",
+  "structure_id": "aoa3:twisted_treetops",
+  "structure_pos": [
+    2000,
+    5,
+    1000
+  ],
+  "tier": 3
+}

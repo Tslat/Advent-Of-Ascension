@@ -1,6 +1,8 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,10 +10,12 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 public class GrenadeEntity extends BaseBullet implements HardProjectile {
@@ -52,6 +56,23 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 			return;
 
 		super.onHit(result);
+	}
+
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (source == DamageSource.ON_FIRE || source == DamageSource.LAVA) {
+			doImpactEffect();
+
+			if (getOwner() instanceof ServerPlayer pl) {
+				pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/darwin_award")), "fire_grenade");
+			}
+
+			discard();
+
+			return true;
+		}
+
+		return super.hurt(source, amount);
 	}
 
 	@Override

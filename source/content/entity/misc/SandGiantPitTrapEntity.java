@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -11,9 +10,9 @@ import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
-import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public class SandGiantPitTrapEntity extends BasicMiscEntity {
@@ -67,9 +66,9 @@ public class SandGiantPitTrapEntity extends BasicMiscEntity {
 			}
 
 			if (tickCount > 13 && tickCount % 5 == 0) {
-				for (Entity entity : EntityRetrievalUtil.getEntities(level, getBoundingBox(), damagePredicate)) {
+				for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(level, getBoundingBox(), damagePredicate)) {
 					entity.resetFallDistance();
-					((LivingEntity)entity).addEffect(new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 12).level(5).hideEffectIcon().hideParticles().isAmbient().build());
+					entity.addEffect(new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 12).level(5).hideEffectIcon().hideParticles().isAmbient().build());
 				}
 			}
 		}

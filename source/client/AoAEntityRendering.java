@@ -160,17 +160,16 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> EXPLOSIVES_EXPERT = new EntityRendererPackage<>(AoANpcs.EXPLOSIVES_EXPERT).defineLayer("explosives_expert", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/explosives_expert.png");
 	public static final EntityRendererPackage<?> METALLOID = new EntityRendererPackage<>(AoANpcs.METALLOID).defineLayer("metalloid", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/metalloid.png");
 	public static final EntityRendererPackage<?> NATURALIST = new EntityRendererPackage<>(AoANpcs.NATURALIST).defineLayer("naturalist", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/naturalist.png");
-	public static final EntityRendererPackage<?> REALMSHIFTER = new EntityRendererPackage<>(AoANpcs.REALMSHIFTER).defineLayer("realmshifter", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/realmshifter.png");
 	public static final EntityRendererPackage<?> SHYRE_ARCHER = new EntityRendererPackage<>(AoANpcs.SHYRE_ARCHER).defineLayer("shyre_archer", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/shyre_archer.png");
 	public static final EntityRendererPackage<?> SHYRE_BANKER = new EntityRendererPackage<>(AoANpcs.SHYRE_BANKER).defineLayer("shyre_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/shyre_banker.png");
 	public static final EntityRendererPackage<?> TOKEN_COLLECTOR = new EntityRendererPackage<>(AoANpcs.TOKEN_COLLECTOR).defineLayer("token_collector", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/token_collector.png");
 	public static final EntityRendererPackage<?> TROLL_TRADER = new EntityRendererPackage<>(AoANpcs.TROLL_TRADER).geckolib("npc/trader/troll_trader");
 	public static final EntityRendererPackage<?> UNDEAD_HERALD = new EntityRendererPackage<>(AoANpcs.UNDEAD_HERALD).defineLayer("undead_herald", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/undead_herald.png");
 	public static final EntityRendererPackage<?> SKILL_MASTER = new EntityRendererPackage<>(AoANpcs.SKILL_MASTER).geckolib("npc/trader/skill_master");
-	public static final EntityRendererPackage<?> CORRUPTED_TRAVELLER = new EntityRendererPackage<>(AoANpcs.CORRUPTED_TRAVELLER).geckolib("npc/trader/corrupted_traveller", true);
+	public static final EntityRendererPackage<?> CORRUPTED_TRAVELLER = new EntityRendererPackage<>(AoANpcs.CORRUPTED_TRAVELLER).geckolib("npc/trader/corrupted_traveller", true, true);
 	public static final EntityRendererPackage<?> STORE_KEEPER = new EntityRendererPackage<>(AoANpcs.STORE_KEEPER).geckolib("npc/trader/store_keeper");
 
-	public static final EntityRendererPackage<?> LOTTOMAN = new EntityRendererPackage<>(AoANpcs.LOTTOMAN).geckolib("npc/trader/lottoman");
+	public static final EntityRendererPackage<?> LOTTOMAN = new EntityRendererPackage<>(AoANpcs.LOTTOMAN).geckolib("npc/trader/lottoman", true);
 
 	public static final EntityRendererPackage<?> DRYAD_SPRITE = new EntityRendererPackage<>(AoANpcs.DRYAD_SPRITE).geckolib(new DryadSpriteModel());
 
@@ -699,15 +698,19 @@ public final class AoAEntityRendering {
 		}
 
 		private EntityRendererPackage<T> geckolib(String path) {
-			return geckolib(path, false);
+			return geckolib(path, false, false);
+		}
+
+		public EntityRendererPackage<T> geckolib(String path, boolean turnsHead) {
+			return geckolib(path, turnsHead, false);
 		}
 
 		private EntityRendererPackage<T> geckolib(EntityGeoModel<?> model) {
 			return geckolib(model, false);
 		}
 
-		private EntityRendererPackage<T> geckolib(String path, boolean transparent) {
-			return geckolib(new EntityGeoModel<>(path), transparent);
+		private EntityRendererPackage<T> geckolib(String path, boolean turnsHead, boolean transparent) {
+			return geckolib(new EntityGeoModel<>(path, turnsHead), transparent);
 		}
 
 		private EntityRendererPackage<T> geckolib(EntityGeoModel<?> model, boolean transparent) {

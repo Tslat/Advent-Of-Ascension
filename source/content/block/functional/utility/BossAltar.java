@@ -9,6 +9,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -24,11 +25,11 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.tileentity.BossAltarTileEntity;
-import net.tslat.aoa3.content.item.misc.summoning.BossSpawningItem;
+import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -59,9 +60,10 @@ public class BossAltar extends Block implements EntityBlock {
 			return InteractionResult.PASS;
 
 		ItemStack heldItem = player.getItemInHand(hand);
+		BossTokenItem bossItem;
 		EntityType<?> entityType;
 
-		if (!(heldItem.getItem() instanceof BossSpawningItem<?> bossItem) || (entityType = bossItem.getEntityType(heldItem)) == null) {
+		if ((bossItem = getEntityTypeFromStack(heldItem)) == null || (entityType = bossItem.getEntityType(heldItem)) == null) {
 			if (hand == InteractionHand.OFF_HAND)
 				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.badItem"));
 
@@ -102,5 +104,19 @@ public class BossAltar extends Block implements EntityBlock {
 		}
 
 		return InteractionResult.SUCCESS;
+	}
+
+	@Nullable
+	private BossTokenItem getEntityTypeFromStack(ItemStack stack) {
+		BossTokenItem token = null;
+
+		if (stack.getItem() instanceof BossTokenItem tokenItem) {
+			token = tokenItem;
+		}
+		else if (stack.getItem() instanceof BlockItem block && block.getBlock() instanceof BossTokenItem tokenItem) {
+			token = tokenItem;
+		}
+
+		return token;
 	}
 }

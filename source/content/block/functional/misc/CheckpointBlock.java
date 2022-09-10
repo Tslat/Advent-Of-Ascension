@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
@@ -88,7 +87,7 @@ public class CheckpointBlock extends Block {
 	}
 
 	public static boolean isValidCheckpoint(Level world, PositionAndRotation checkpoint) {
-		ChunkAccess chunk = world.getChunkSource().getChunk(SectionPos.blockToSectionCoord(checkpoint.x()), SectionPos.blockToSectionCoord(checkpoint.z()), ChunkStatus.FULL, true);
+		ChunkAccess chunk = world.getChunkSource().getChunk(SectionPos.blockToSectionCoord(checkpoint.x()), SectionPos.blockToSectionCoord(checkpoint.z()), true);
 
 		return chunk != null && chunk.getBlockState(checkpoint.asBlockPos()).getBlock() == AoABlocks.CHECKPOINT.get();
 	}

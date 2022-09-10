@@ -10,7 +10,7 @@ import net.minecraft.world.level.Level;
 
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.boss.VinocorneEntity;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 
 public class YellowFlowerEntity extends AoAMeleeMob {

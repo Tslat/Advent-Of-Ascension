@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
-  "render_type": "minecraft:cutout_mipped",
+  "render_type": "minecraft:solid",
   "textures": {
     "all": "aoa3:block/deepslate_jade_ore",
     "particle": "aoa3:block/deepslate_jade_ore"

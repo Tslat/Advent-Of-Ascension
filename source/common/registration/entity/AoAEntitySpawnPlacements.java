@@ -46,6 +46,8 @@ public final class AoAEntitySpawnPlacements {
 
         setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, GlowSquid::checkGlowSquideSpawnRules);
 
+        setSpawnPlacement(AoANpcs.LOTTOMAN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.npcPredicate(true));
+
         setSpawnPlacement(AoAAnimals.BLUE_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.FISH);
         setSpawnPlacement(AoAAnimals.CANDLEFISH.get(), IN_LAVA, MOTION_BLOCKING_NO_LEAVES, AbstractLavaFishEntity::checkFishSpawnRules);
         setSpawnPlacement(AoAAnimals.CHARRED_CHAR.get(), IN_LAVA, MOTION_BLOCKING_NO_LEAVES, AbstractLavaFishEntity::checkFishSpawnRules);
@@ -110,6 +112,8 @@ public final class AoAEntitySpawnPlacements {
 
                     if (blockLightLimit < 15 && world.getBrightness(LightLayer.BLOCK, pos) > blockLightLimit)
                         return false;
+
+                    return rand.nextFloat() < 0.005f;
                 }
                 else if (!Monster.isDarkEnoughToSpawn(world, pos, rand)) {
                     return false;

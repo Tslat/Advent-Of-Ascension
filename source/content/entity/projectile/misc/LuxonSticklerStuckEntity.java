@@ -10,7 +10,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
 

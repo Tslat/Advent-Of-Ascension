@@ -16,7 +16,7 @@ public final class EntityPredicate<T extends Entity> implements Predicate<T> {
 	public static final Immutable<Entity> DAMAGEABLE_ENTITIES = new EntityPredicate<>().isAlive().isDamageable().immutable();
 	public static final Immutable<Entity> TARGETABLE_ENTITIES = new EntityPredicate<>().isAlive().and(entity -> !(entity instanceof Player pl) || (!pl.isCreative() && !pl.isSpectator())).immutable();
 
-	protected Predicate<T> predicate;
+	private Predicate<T> predicate;
 
 	public EntityPredicate() {
 		this.predicate = Objects::nonNull;

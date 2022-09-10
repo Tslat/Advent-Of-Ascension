@@ -27,15 +27,12 @@ import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.misc.AoAAnimationController;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.entity.AoABrainMemories;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.entity.brain.task.custom.ChargeAttack;
-import net.tslat.aoa3.content.entity.brain.task.custom.FleeTarget;
 import net.tslat.aoa3.content.entity.brain.task.custom.GroundSlamAttack;
-import net.tslat.aoa3.content.entity.brain.task.custom.WalkOrRunToWalkTarget;
-import net.tslat.aoa3.library.builder.EffectBuilder;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -44,6 +41,8 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.CustomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.ReactToUnreachableTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FleeTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
@@ -137,6 +136,7 @@ public class EliteSmashEntity extends AoABoss {
 			triggerAnim(this, "enrage");
 			new SoundBuilder(AoASounds.ENTITY_SMASH_ENRAGE).followEntity(this).category(SoundSource.HOSTILE).execute();
 			BrainUtils.setForgettableMemory(this, MemoryModuleType.ATTACK_COOLING_DOWN, true, 100);
+			BrainUtils.setForgettableMemory(this, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 100);
 		}
 	}
 
@@ -253,14 +253,15 @@ public class EliteSmashEntity extends AoABoss {
 								new CustomBehaviour<>(entity -> {
 									BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 90);
 									triggerAnim(this, "belly_drum");
+									new SoundBuilder(AoASounds.ENTITY_SMASH_BELLY_DRUM).isMonster().followEntity(this).execute();
 									EntityUtil.applyPotions(entity,
 											new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 100).level(2),
 											new EffectBuilder(MobEffects.MOVEMENT_SPEED, 100),
 											new EffectBuilder(MobEffects.DAMAGE_BOOST, 100).level(5));
 								})
-										.startCondition(entity -> BrainUtils.hasMemory(entity, MemoryModuleType.ATTACK_TARGET) && !BrainUtils.hasMemory(entity, AoABrainMemories.SPECIAL_ATTACK_COOLDOWN.get()))
+										.startCondition(entity -> BrainUtils.hasMemory(entity, MemoryModuleType.ATTACK_TARGET) && !BrainUtils.hasMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get()))
 										.cooldownFor(entity -> 150)
-										.whenStopping(entity -> BrainUtils.setForgettableMemory(entity, AoABrainMemories.SPECIAL_ATTACK_COOLDOWN.get(), true, 150)),
+										.whenStopping(entity -> BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 150)),
 								new ChargeAttack<>(38)
 										.speedModifier(1.6f)
 										.targetWhenCharging()
@@ -270,7 +271,7 @@ public class EliteSmashEntity extends AoABoss {
 										})
 										.whenStopping(entity -> {
 											setAttackState(AXE_SWING_STATE);
-											BrainUtils.setForgettableMemory(entity, AoABrainMemories.SPECIAL_ATTACK_COOLDOWN.get(), true, 150);
+											BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 150);
 										})
 										.cooldownFor(entity -> 150)
 						)));

@@ -11,7 +11,7 @@ import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
@@ -65,7 +65,7 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 			}
 
 			if (tickCount > 28 && tickCount % 10 == 0) {
-				for (Entity entity : EntityRetrievalUtil.getEntities(level, getBoundingBox(), damagePredicate)) {
+				for (Entity entity : EntityRetrievalUtil.<Entity>getEntities(level, getBoundingBox(), damagePredicate)) {
 					entity.hurt(DamageSource.STALAGMITE, 3);
 				}
 			}

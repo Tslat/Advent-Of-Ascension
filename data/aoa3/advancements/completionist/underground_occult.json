@@ -1,0 +1,40 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_occult_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:occult_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.underground_occult.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:occult_pickaxe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.underground_occult.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_occult_pickaxe"
+    ]
+  ]
+}

@@ -29,7 +29,11 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.ObjectUtil;
+import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -97,7 +101,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 		double dist = Double.MAX_VALUE;
 
 		for (NowhereBossArena arena : REGISTERED_ARENAS) {
-			double testDist = arena.structureBounds.getCenter().distanceToSqr(pos);
+			double testDist = arena.getStructureBounds(level).getCenter().distanceToSqr(pos);
 
 			if (testDist < dist) {
 				dist = testDist;

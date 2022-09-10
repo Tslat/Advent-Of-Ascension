@@ -13,7 +13,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
+import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -33,13 +35,17 @@ public class Rosidons extends Item {
 			int calculatedY = WorldUtil.getHighestSafeLocation(world, (int)Math.floor(entity.getX()), (int)Math.floor(entity.getZ()), false, minY);
 
 			if (calculatedY <= minY) {
-				PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable("message.feedback.item.rosidons.noHeightFail"));
+				if (entity instanceof ServerPlayer pl)
+					PlayerUtil.notifyPlayer(pl, Component.translatable("message.feedback.item.rosidons.noHeightFail"));
 
 				return super.finishUsingItem(stack, world, entity);
 			}
 
 			if (MinecraftForge.EVENT_BUS.post(new EntityTeleportEvent(entity, entity.getX(), calculatedY, entity.getZ())))
 				return stack;
+
+			if (calculatedY - entity.getY() >= 350 && entity instanceof ServerPlayer pl)
+				pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/super_escape_rope")), "350_blocks");
 
 			world.gameEvent(GameEvent.TELEPORT, entity.position(), GameEvent.Context.of(entity));
 			world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1, 1);

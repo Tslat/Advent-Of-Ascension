@@ -22,7 +22,7 @@ import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.AoAPlayerEvents;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
 

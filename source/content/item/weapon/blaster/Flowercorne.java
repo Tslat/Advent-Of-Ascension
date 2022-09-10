@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.blaster.FlowerShotEntity;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 

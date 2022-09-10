@@ -49,8 +49,9 @@
       "id": "aoa3:innervation_mob_lure",
       "level_req": 44,
       "lured_damage_modifier": 0.25,
-      "per_tick_energy_drain": 0.4,
-      "unique_id": "709618598"
+      "on_hit_drain": 30.0,
+      "per_tick_spirit_drain": 0.4,
+      "unique_id": "284037887"
     },
     {
       "attribute": "minecraft:generic.max_health",

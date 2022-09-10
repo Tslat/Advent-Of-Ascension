@@ -25,7 +25,7 @@ import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.SpectralShotEntity;
-import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.scheduling.async.DracyonCleanupTask;
 import net.tslat.aoa3.util.*;
 

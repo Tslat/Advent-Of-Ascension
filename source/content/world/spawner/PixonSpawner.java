@@ -22,7 +22,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.RandomUtil;
 
 import java.util.ArrayList;

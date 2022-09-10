@@ -78,7 +78,7 @@
       "color": "white",
       "translate": "advancements.aoa3.completionist.skill_master.description"
     },
-    "frame": "challenge",
+    "frame": "goal",
     "hidden": false,
     "icon": {
       "item": "minecraft:dragon_head"

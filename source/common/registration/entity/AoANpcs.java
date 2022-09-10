@@ -46,7 +46,6 @@ public final class AoANpcs {
 	public static final RegistryObject<EntityType<AoATrader>> PRIMORDIAL_SPELLBINDER = registerNPC("primordial_spellbinder", PrimordialSpellbinderEntity::new, 0.5625f, 2.0f, 1059237, 8097765);
 	public static final RegistryObject<EntityType<AoATrader>> PRIMORDIAL_WIZARD = registerNPC("primordial_wizard", PrimordialWizardEntity::new, 0.5625f, 2.0f, 4000119, 13023446);
 	public static final RegistryObject<EntityType<AoATrader>> PROFESSOR = registerNPC("professor", ProfessorEntity::new, 0.5625f, 2.0f, 13493531, 1644822);
-	public static final RegistryObject<EntityType<AoATrader>> REALMSHIFTER = registerNPC("realmshifter", RealmshifterEntity::new, 0.5625f, 2.0f, 0x180030, 0x202020);
 	public static final RegistryObject<EntityType<AoATrader>> SHYRE_ARCHER = registerNPC("shyre_archer", ShyreArcherEntity::new, 0.5625f, 2.0f, 0x171B1F, 0x766006);
 	public static final RegistryObject<EntityType<SkillMasterEntity>> SKILL_MASTER = registerNPC("skill_master", SkillMasterEntity::new, 0.5625f, 2.0f, 0x211F1D, 0xE3A602);
 	public static final RegistryObject<EntityType<AoATrader>> STORE_KEEPER = registerNPC("store_keeper", StoreKeeperEntity::new, 0.5625f, 2.0f, 0x80935F, 0x5E7041);

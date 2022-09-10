@@ -53,6 +53,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_HAPPY = registerSound("entity.dryad_sprite.happy");
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_UNHAPPY = registerSound("entity.dryad_sprite.unhappy");
 	public static final RegistryObject<SoundEvent> ENTITY_SMASH_ENRAGE = registerSound("entity.smash.enrage");
+	public static final RegistryObject<SoundEvent> ENTITY_SMASH_BELLY_DRUM = registerSound("entity.smash.belly_drum");
 
 	public static final RegistryObject<SoundEvent> LEAFY_THUD = registerSound("entity.generic.leafy_thud");
 	public static final RegistryObject<SoundEvent> HEAVY_FOLIAGE_THUMP = registerSound("entity.generic.heavy_foliage_thump");

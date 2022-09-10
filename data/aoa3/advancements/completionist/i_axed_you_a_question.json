@@ -1,0 +1,31 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "tool_kill": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.i_axed_you_a_question.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "minecraft:diamond_axe",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.i_axed_you_a_question.title"
+    }
+  },
+  "requirements": [
+    [
+      "tool_kill"
+    ]
+  ]
+}

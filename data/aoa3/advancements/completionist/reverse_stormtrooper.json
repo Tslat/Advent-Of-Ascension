@@ -1,0 +1,31 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "max_dodge": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.reverse_stormtrooper.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:rockbone_helmet",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.reverse_stormtrooper.title"
+    }
+  },
+  "requirements": [
+    [
+      "max_dodge"
+    ]
+  ]
+}

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.event;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -22,11 +23,15 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+
+import java.util.List;
 
 public final class EntityEvents {
 	public static void preInit() {
@@ -76,6 +81,18 @@ public final class EntityEvents {
 	private static void onTraderGenTrades(final VillagerTradesEvent ev) {
 		if (ev.getType() == VillagerProfession.CARTOGRAPHER) {
 			ev.getTrades().get(1).add(new VillagerTrades.TreasureMapForEmeralds(4, AoATags.Structures.ON_RUINED_TELEPORTER_FRAME_MAPS, "filled_map." + AdventOfAscension.MOD_ID + ".ruined_teleporter_frame", MapDecoration.Type.TARGET_POINT, 3, 7));
+		}
+		else if (ev.getType() == VillagerProfession.CLERIC) {
+			Int2ObjectMap<List<VillagerTrades.ItemListing>> trades = ev.getTrades();
+
+			trades.get(1).add(AoATrader.BuildableTrade.trade(AoABlocks.ANCIENT_ROCK, 3).cost(AoAItems.COPPER_COIN).xp(1).stock(16));
+			trades.get(2).addAll(List.of(
+					AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_TRAVEL).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
+					AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_SPACE).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
+					AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_REALITY).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
+					AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_DIRECTION).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4)));
+			trades.get(4).add(AoATrader.BuildableTrade.trade(AoAItems.RUNIUM_CHUNK).cost(AoAItems.COPPER_COIN, 5).xp(9).stock(8));
+			trades.get(5).add(AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_POWER).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(1));
 		}
 	}
 }

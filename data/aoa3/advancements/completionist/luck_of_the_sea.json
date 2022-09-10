@@ -1,0 +1,40 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_golden_rod": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:golden_rod"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.luck_of_the_sea.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:golden_rod",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.luck_of_the_sea.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_golden_rod"
+    ]
+  ]
+}

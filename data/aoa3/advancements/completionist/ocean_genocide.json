@@ -1,0 +1,415 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_blue_gemtrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:blue_gemtrap"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_candlefish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:candlefish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_charred_char": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:charred_char"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_chocaw": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:chocaw"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_crimson_skipper": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:crimson_skipper"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_crimson_stripefish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:crimson_stripefish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_dark_hatchetfish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:dark_hatchetfish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_green_gemtrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:green_gemtrap"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_hydrone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:hydrone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_ironback": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:ironback"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_jamfish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:jamfish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_parapiranha": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:parapiranha"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_pearl_stripefish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:pearl_stripefish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_purple_gemtrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:purple_gemtrap"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_raw_rainbowfish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:raw_rainbowfish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_razorfish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:razorfish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_red_gemtrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:red_gemtrap"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_reeftooth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:reeftooth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_rocketfish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:rocketfish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_sailback": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:sailback"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_sapphire_strider": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:sapphire_strider"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_skelecanth": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:skelecanth"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_turquoise_stripefish": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:turquoise_stripefish"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_violet_skipper": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:violet_skipper"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_white_gemtrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:white_gemtrap"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "obtain_yellow_gemtrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:yellow_gemtrap"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.ocean_genocide.description"
+    },
+    "frame": "challenge",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:hauling_rod",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.ocean_genocide.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_hydrone"
+    ],
+    [
+      "obtain_rocketfish"
+    ],
+    [
+      "obtain_charred_char"
+    ],
+    [
+      "obtain_ironback"
+    ],
+    [
+      "obtain_candlefish"
+    ],
+    [
+      "obtain_purple_gemtrap"
+    ],
+    [
+      "obtain_pearl_stripefish"
+    ],
+    [
+      "obtain_jamfish"
+    ],
+    [
+      "obtain_dark_hatchetfish"
+    ],
+    [
+      "obtain_green_gemtrap"
+    ],
+    [
+      "obtain_sapphire_strider"
+    ],
+    [
+      "obtain_reeftooth"
+    ],
+    [
+      "obtain_violet_skipper"
+    ],
+    [
+      "obtain_sailback"
+    ],
+    [
+      "obtain_blue_gemtrap"
+    ],
+    [
+      "obtain_raw_rainbowfish"
+    ],
+    [
+      "obtain_white_gemtrap"
+    ],
+    [
+      "obtain_razorfish"
+    ],
+    [
+      "obtain_crimson_skipper"
+    ],
+    [
+      "obtain_crimson_stripefish"
+    ],
+    [
+      "obtain_yellow_gemtrap"
+    ],
+    [
+      "obtain_turquoise_stripefish"
+    ],
+    [
+      "obtain_chocaw"
+    ],
+    [
+      "obtain_red_gemtrap"
+    ],
+    [
+      "obtain_skelecanth"
+    ],
+    [
+      "obtain_parapiranha"
+    ]
+  ]
+}

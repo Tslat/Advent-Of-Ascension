@@ -1,0 +1,30 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "fire_grenade": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.darwin_award.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:grenade"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.darwin_award.title"
+    }
+  },
+  "requirements": [
+    [
+      "fire_grenade"
+    ]
+  ]
+}

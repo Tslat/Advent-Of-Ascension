@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "obtain_music_disc_caverns": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:music_disc_caverns"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.high_flying_spelunker.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:music_disc_caverns"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.high_flying_spelunker.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_music_disc_caverns"
+    ]
+  ]
+}

@@ -12,7 +12,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.util.PotionUtil;
+import net.tslat.effectslib.api.util.EffectUtil;
 
 import javax.annotation.Nullable;
 
@@ -50,7 +50,7 @@ public class ConstructOfSpeedEntity extends AoAMeleeMob {
     @Override
     public boolean addEffect(MobEffectInstance effect, @Nullable Entity source) {
         if (effect.getEffect() == MobEffects.MOVEMENT_SPEED)
-            PotionUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 2 - effect.getAmplifier());
+            EffectUtil.amplifyEffect(effect, (effect.getAmplifier() + 1) * 2 - effect.getAmplifier());
 
         return super.addEffect(effect);
     }

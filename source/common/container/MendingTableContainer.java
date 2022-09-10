@@ -30,7 +30,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 		return new Slot(inputs, 0, 27, 23) {
 			@Override
 			public boolean mayPlace(ItemStack stack) {
-				return stack.isDamageableItem();
+				return stack.isRepairable();
 			}
 		};
 	}
@@ -101,7 +101,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 						}
 
 						totalMaterialCost = repairCount;
-						//output.setItem(0, repairedStack);
+						output.setItem(0, repairedStack);
 					}
 				}
 			}

@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.GameRules;
 import net.tslat.aoa3.content.entity.ai.ExtendedTargetGoal;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 
 import java.util.function.Predicate;
 
@@ -81,8 +81,8 @@ public class ExtendedHurtByTargetGoal<T extends Mob> extends ExtendedTargetGoal<
 	}
 
 	protected void alertAllies() {
-		for (Entity entity : EntityRetrievalUtil.getEntities(this.entity, this.alertRadius, this.alertableAllyPredicate)) {
-			((Mob)entity).setTarget(this.entity.getLastHurtByMob());
+		for (Mob mob : EntityRetrievalUtil.<Mob>getEntities(this.entity, this.alertRadius, this.alertableAllyPredicate)) {
+			mob.setTarget(this.entity.getLastHurtByMob());
 		}
 	}
 }
