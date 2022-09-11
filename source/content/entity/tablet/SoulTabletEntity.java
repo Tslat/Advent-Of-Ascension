@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.tablet;
 
 import net.minecraft.entity.Entity;
@@ -177,3 +178,4 @@ public abstract class SoulTabletEntity extends Entity {
 		return level.getEntitiesOfClass(targetClass, getBoundingBox().inflate(getRelevantItem().getEffectRadius()), predicate);
 	}
 }
+*/

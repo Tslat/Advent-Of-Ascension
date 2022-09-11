@@ -28,11 +28,6 @@
           "type": "minecraft:item",
           "weight": 14,
           "name": "aoa3:baron_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 10,
-          "name": "aoa3:hive_staff"
         }
       ]
     },

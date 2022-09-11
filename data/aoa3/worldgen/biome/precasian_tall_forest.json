@@ -59,19 +59,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:deinotherium",
+        "type": "aoa3:dyrehorn",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:tortione",
-        "weight": 3,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:dyrehorn",
+        "type": "aoa3:deinotherium",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -79,6 +73,12 @@
       {
         "type": "aoa3:sabretooth",
         "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:tortione",
+        "weight": 3,
         "minCount": 1,
         "maxCount": 1
       },

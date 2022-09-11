@@ -25,7 +25,6 @@ import net.tslat.aoa3.common.registration.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.content.entity.base.AoATrader;
-import net.tslat.aoa3.content.item.tablet.TabletItem;
 import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -85,7 +84,7 @@ public final class RestrictionEventHandler {
 		else if (block.getBlock() == Blocks.SOUL_CAMPFIRE || block.getBlock() == Blocks.ENDER_CHEST) {
 			ev.setUseItem(Event.Result.DENY);
 		}
-		else if (heldItem instanceof TabletItem || heldItem == AoAItems.LOTTO_TOTEM.get()) {
+		else if (/*heldItem instanceof TabletItem || */heldItem == AoAItems.LOTTO_TOTEM.get()) {
 			ev.setUseItem(Event.Result.ALLOW);
 			ev.setUseBlock(Event.Result.DENY);
 			ev.getPlayer().abilities.mayBuild = true;

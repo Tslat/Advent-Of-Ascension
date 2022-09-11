@@ -17,7 +17,7 @@ public class WorkbenchContainerMixin {
 	@Inject(method = "slotChangedCraftingGrid",
 	at = @At(value = "INVOKE", target = "Lnet/minecraft/inventory/CraftResultInventory;setItem(ILnet/minecraft/item/ItemStack;)V", shift = At.Shift.AFTER))
 	private static void recipeEventHook(int containerId, World world, PlayerEntity player, CraftingInventory inventory, CraftResultInventory resultInventory, CallbackInfo callback) {
-		if (AoAEvents.firePlayerCraftingEvent(player, resultInventory.getItem(0), inventory, resultInventory))
+		if (!resultInventory.getItem(0).isEmpty() && AoAEvents.firePlayerCraftingEvent(player, resultInventory.getItem(0), inventory, resultInventory))
 			resultInventory.setItem(0, ItemStack.EMPTY);
 	}
 }

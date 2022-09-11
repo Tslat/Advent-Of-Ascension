@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.tablet;
 
 import net.minecraft.entity.EntityType;
@@ -35,3 +36,4 @@ public class BreedingTabletEntity extends SoulTabletEntity {
 		return (TabletItem)AoAItems.BREEDING_TABLET.get();
 	}
 }
+*/

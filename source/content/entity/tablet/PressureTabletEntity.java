@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.tablet;
 
 import net.minecraft.entity.EntityType;
@@ -30,3 +31,4 @@ public class PressureTabletEntity extends SoulTabletEntity {
 		return (TabletItem)AoAItems.PRESSURE_TABLET.get();
 	}
 }
+*/

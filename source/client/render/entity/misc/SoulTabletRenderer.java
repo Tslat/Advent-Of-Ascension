@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.client.render.entity.misc;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -67,3 +68,4 @@ public class SoulTabletRenderer extends EntityRenderer<Entity> {
 		return texture;
 	}
 }
+*/

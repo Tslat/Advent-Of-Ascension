@@ -11,11 +11,6 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "aoa3:shadowlord_staff"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 24,
           "name": "aoa3:big_blast"
         }

@@ -8,7 +8,6 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.inventory.container.Container;
-import net.minecraft.inventory.container.CraftingResultSlot;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.Slot;
 import net.minecraft.item.ItemStack;
@@ -22,10 +21,11 @@ import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
-import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
+import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
+import net.tslat.aoa3.library.object.CustomCraftingResultSlot;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
@@ -46,7 +46,7 @@ public class DivineStationContainer extends Container { // TODO Look at RecipeBo
 		this.functionCaller = functionCaller;
 		this.player = plInventory.player;
 
-		addSlot(new CraftingResultSlot(player, inputs, output, 0, 134, 23));
+		addSlot(new CustomCraftingResultSlot<>(player, inputs, output, AoARecipes.UPGRADE_KIT.getA(), 0, 134, 23));
 		addSlot(new Slot(inputs, 0, 27, 23));
 		addSlot(new Slot(inputs, 1, 76, 23));
 

@@ -10,7 +10,6 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;
@@ -50,9 +49,9 @@ public class RosidianArmour extends AdventArmour {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(pieceEffectHeader());
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.rosidian_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		tooltip.add(setEffectHeader());
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.rosidian_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		//tooltip.add(pieceEffectHeader());
+		//tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.rosidian_armour.desc.1", LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		//tooltip.add(setEffectHeader());
+		//tooltip.add(LocaleUtil.getFormattedItemDescriptionText("item.aoa3.rosidian_armour.desc.2", LocaleUtil.ItemDescriptionType.BENEFICIAL));
 	}
 }

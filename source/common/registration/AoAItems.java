@@ -12,7 +12,6 @@ import net.tslat.aoa3.content.item.food.*;
 import net.tslat.aoa3.content.item.lootbox.*;
 import net.tslat.aoa3.content.item.misc.*;
 import net.tslat.aoa3.content.item.misc.summoning.*;
-import net.tslat.aoa3.content.item.tablet.*;
 import net.tslat.aoa3.library.builder.EffectBuilder;
 
 import javax.annotation.Nullable;
@@ -93,7 +92,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> ACTIVE_RUNE_STONE = registerItem("active_rune_stone", miscItem());
 	public static final RegistryObject<Item> ALIEN_ORB = registerItem("alien_orb", () -> new ReservedItem("alien_orb"));
 	public static final RegistryObject<Item> ARMOUR_PLATING = registerItem("armour_plating", miscItem());
-	public static final RegistryObject<Item> BLANK_SLAB = registerItem("blank_slab", miscItem());
+	//public static final RegistryObject<Item> BLANK_SLAB = registerItem("blank_slab", miscItem());
 	public static final RegistryObject<Item> CHITIN = registerItem("chitin", miscItem());
 	public static final RegistryObject<Item> CIRCUS_COIN = registerItem("circus_coin", miscItem());
 	public static final RegistryObject<Item> COPPER_COIN = registerItem("copper_coin", miscItem());
@@ -303,23 +302,23 @@ public final class AoAItems {
 	public static final RegistryObject<Item> SHYRELANDS_REALMSTONE = registerItem("shyrelands_realmstone", () -> new Realmstone(AoABlocks.SHYRELANDS_PORTAL, AoASounds.SHYRELANDS_PORTAL_ACTIVATE, "shyrelands"));
 	public static final RegistryObject<Item> VOX_PONDS_REALMSTONE = registerItem("vox_ponds_realmstone", () -> new Realmstone(AoABlocks.VOX_PONDS_PORTAL, AoASounds.DARK_PORTAL_ACTIVATE, "vox_ponds"));
 
-	public static final RegistryObject<Item> AGILITY_TABLET = registerItem("agility_tablet", AgilityTablet::new);
-	public static final RegistryObject<Item> AWARENESS_TABLET = registerItem("awareness_tablet", AwarenessTablet::new);
-	public static final RegistryObject<Item> BREEDING_TABLET = registerItem("breeding_tablet", BreedingTablet::new);
-	public static final RegistryObject<Item> CLEANSING_TABLET = registerItem("cleansing_tablet", CleansingTablet::new);
-	public static final RegistryObject<Item> DISTORTION_TABLET = registerItem("distortion_tablet", DistortionTablet::new);
-	public static final RegistryObject<Item> ENERGY_TABLET = registerItem("energy_tablet", EnergyTablet::new);
-	public static final RegistryObject<Item> GRAVITY_TABLET = registerItem("gravity_tablet", GravityTablet::new);
-	public static final RegistryObject<Item> OXYGEN_TABLET = registerItem("oxygen_tablet", OxygenTablet::new);
-	public static final RegistryObject<Item> PRESSURE_TABLET = registerItem("pressure_tablet", PressureTablet::new);
-	public static final RegistryObject<Item> PROFICIENCY_TABLET = registerItem("proficiency_tablet", ProficiencyTablet::new);
-	public static final RegistryObject<Item> RESISTANCE_TABLET = registerItem("resistance_tablet", ResistanceTablet::new);
-	public static final RegistryObject<Item> SANCTITY_TABLET = registerItem("sanctity_tablet", SanctityTablet::new);
-	public static final RegistryObject<Item> SATIATION_TABLET = registerItem("satiation_tablet", SatiationTablet::new);
-	public static final RegistryObject<Item> SIGHT_TABLET = registerItem("sight_tablet", SightTablet::new);
-	public static final RegistryObject<Item> STRENGTH_TABLET = registerItem("strength_tablet", StrengthTablet::new);
-	public static final RegistryObject<Item> UNTIRING_TABLET = registerItem("untiring_tablet", UntiringTablet::new);
-	public static final RegistryObject<Item> VITALITY_TABLET = registerItem("vitality_tablet", VitalityTablet::new);
+	//public static final RegistryObject<Item> AGILITY_TABLET = registerItem("agility_tablet", AgilityTablet::new);
+	//public static final RegistryObject<Item> AWARENESS_TABLET = registerItem("awareness_tablet", AwarenessTablet::new);
+	//public static final RegistryObject<Item> BREEDING_TABLET = registerItem("breeding_tablet", BreedingTablet::new);
+	//public static final RegistryObject<Item> CLEANSING_TABLET = registerItem("cleansing_tablet", CleansingTablet::new);
+	//public static final RegistryObject<Item> DISTORTION_TABLET = registerItem("distortion_tablet", DistortionTablet::new);
+	//public static final RegistryObject<Item> ENERGY_TABLET = registerItem("energy_tablet", EnergyTablet::new);
+	//public static final RegistryObject<Item> GRAVITY_TABLET = registerItem("gravity_tablet", GravityTablet::new);
+	//public static final RegistryObject<Item> OXYGEN_TABLET = registerItem("oxygen_tablet", OxygenTablet::new);
+	//public static final RegistryObject<Item> PRESSURE_TABLET = registerItem("pressure_tablet", PressureTablet::new);
+	//public static final RegistryObject<Item> PROFICIENCY_TABLET = registerItem("proficiency_tablet", ProficiencyTablet::new);
+	//public static final RegistryObject<Item> RESISTANCE_TABLET = registerItem("resistance_tablet", ResistanceTablet::new);
+	//public static final RegistryObject<Item> SANCTITY_TABLET = registerItem("sanctity_tablet", SanctityTablet::new);
+	//public static final RegistryObject<Item> SATIATION_TABLET = registerItem("satiation_tablet", SatiationTablet::new);
+	//public static final RegistryObject<Item> SIGHT_TABLET = registerItem("sight_tablet", SightTablet::new);
+	//public static final RegistryObject<Item> STRENGTH_TABLET = registerItem("strength_tablet", StrengthTablet::new);
+	//public static final RegistryObject<Item> UNTIRING_TABLET = registerItem("untiring_tablet", UntiringTablet::new);
+	//public static final RegistryObject<Item> VITALITY_TABLET = registerItem("vitality_tablet", VitalityTablet::new);
 
 	public static final RegistryObject<Item> AMBIENT_POWER_STONE = registerItem("ambient_power_stone", miscItem());
 	public static final RegistryObject<Item> BLOOMING_POWER_STONE = registerItem("blooming_power_stone", miscItem());

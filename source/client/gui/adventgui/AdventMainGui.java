@@ -169,6 +169,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 				Minecraft mc = Minecraft.getInstance();
 
 				mc.getTextureManager().bind(theme.getMenuButtonTexture());
+				RenderSystem.enableBlend();
 				RenderSystem.color4f(1.0F, 1.0F, 1.0F, 1.0F);
 
 				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
@@ -219,7 +220,7 @@ public class AdventMainGui extends Screen implements IProgressMeter {
 
 		@Override
 		public void renderToolTip(MatrixStack matrix, int mouseX, int mouseY) {
-			if (!active && this.tabID == ADVENT_WINDOW_TAB.LORE)
+			if (/*!active && */this.tabID == ADVENT_WINDOW_TAB.LORE)
 				GuiUtils.drawHoveringText(matrix, Collections.singletonList(new TranslationTextComponent("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.patchouli")), mouseX, mouseY, AdventMainGui.GUI_WIDTH, AdventMainGui.GUI_HEIGHT, -1, Minecraft.getInstance().font);
 		}
 	}

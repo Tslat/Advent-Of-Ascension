@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.tablet;
 
 import net.minecraft.entity.EntityType;
@@ -29,3 +30,4 @@ public class GravityTabletEntity extends SoulTabletEntity {
 		return (TabletItem)AoAItems.GRAVITY_TABLET.get();
 	}
 }
+*/

@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.item.tablet;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,3 +30,4 @@ public class SatiationTablet extends TabletItem {
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
 }
+*/

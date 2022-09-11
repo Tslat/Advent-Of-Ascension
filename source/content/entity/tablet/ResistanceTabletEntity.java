@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.tablet;
 
 import net.minecraft.entity.EntityType;
@@ -29,3 +30,4 @@ public class ResistanceTabletEntity extends SoulTabletEntity {
 		return (TabletItem)AoAItems.RESISTANCE_TABLET.get();
 	}
 }
+*/

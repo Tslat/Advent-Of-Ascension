@@ -63,7 +63,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:voltron",
+        "type": "aoa3:polytom",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -75,7 +75,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:polytom",
+        "type": "aoa3:voltron",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

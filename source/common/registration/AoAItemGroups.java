@@ -28,7 +28,7 @@ public final class AoAItemGroups {
 	public static final ItemGroup STAVES = new AoAItemGroup("AoA Staves", "staves", () -> new ItemStack(AoAWeapons.CELESTIAL_STAFF.get()));
 	public static final ItemGroup VULCANES = new AoAItemGroup("AoA Vulcanes", "vulcanes", () -> new ItemStack(AoAWeapons.VULCANE.get()));
 	public static final ItemGroup AMMUNITION = new AoAItemGroup("AoA Ammunition", "ammunition", () -> new ItemStack(AoAItems.LIMONITE_BULLET.get()));
-	public static final ItemGroup TABLETS = new AoAItemGroup("AoA Tablets", "tablets", () -> new ItemStack(AoAItems.AGILITY_TABLET.get()));
+	//public static final ItemGroup TABLETS = new AoAItemGroup("AoA Tablets", "tablets", () -> new ItemStack(AoAItems.AGILITY_TABLET.get()));
 	public static final ItemGroup GENERATION_BLOCKS = new AoAItemGroup("AoA Worldgen Blocks", "generation", () -> new ItemStack(AoABlocks.LELYETIAN_GRASS.get()));
 	public static final ItemGroup DECORATION_BLOCKS = new AoAItemGroup("AoA Decorative Blocks", "decoration", () -> new ItemStack(AoABlocks.BARON_BRICKS.get()));
 	public static final ItemGroup FUNCTIONAL_BLOCKS = new AoAItemGroup("AoA Functional Blocks", "functional", () -> new ItemStack(AoABlocks.SHADOW_ALTAR.get()));

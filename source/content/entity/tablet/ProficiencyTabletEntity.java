@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.tablet;
 
 import net.minecraft.entity.EntityType;
@@ -23,3 +24,4 @@ public class ProficiencyTabletEntity extends SoulTabletEntity {
 		return (TabletItem)AoAItems.PROFICIENCY_TABLET.get();
 	}
 }
+*/

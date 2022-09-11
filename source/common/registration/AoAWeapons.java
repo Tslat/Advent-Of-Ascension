@@ -358,7 +358,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> FUNGAL_STAFF = registerWeapon("fungal_staff", () -> new FungalStaff(1130));
 	public static final RegistryObject<Item> GHOUL_STAFF = registerWeapon("ghoul_staff", () -> new GhoulStaff(400));
 	public static final RegistryObject<Item> HAUNTERS_STAFF = registerWeapon("haunters_staff", () -> new HauntersStaff(1225));
-	public static final RegistryObject<Item> HIVE_STAFF = registerWeapon("hive_staff", () -> new HiveStaff(1130));
+	//public static final RegistryObject<Item> HIVE_STAFF = registerWeapon("hive_staff", () -> new HiveStaff(1130));
 	public static final RegistryObject<Item> JOKER_STAFF = registerWeapon("joker_staff", () -> new JokerStaff(300));
 	public static final RegistryObject<Item> KAIYU_STAFF = registerWeapon("kaiyu_staff", () -> new KaiyuStaff(900));
 	public static final RegistryObject<Item> LIGHTNING_STAFF = registerWeapon("lightning_staff", () -> new LightningStaff(1070));
@@ -379,7 +379,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> REJUVENATION_STAFF = registerWeapon("rejuvenation_staff", () -> new RejuvenationStaff(870));
 	public static final RegistryObject<Item> ROSIDIAN_STAFF = registerWeapon("rosidian_staff", () -> new RosidianStaff(1180));
 	public static final RegistryObject<Item> RUNIC_STAFF = registerWeapon("runic_staff", () -> new RunicStaff(1000));
-	public static final RegistryObject<Item> SHADOWLORD_STAFF = registerWeapon("shadowlord_staff", () -> new ShadowlordStaff(1200));
+	//public static final RegistryObject<Item> SHADOWLORD_STAFF = registerWeapon("shadowlord_staff", () -> new ShadowlordStaff(1200));
 	public static final RegistryObject<Item> SHOW_STAFF = registerWeapon("show_staff", () -> new ShowStaff(900));
 	public static final RegistryObject<Item> SHYRE_STAFF = registerWeapon("shyre_staff", () -> new ShyreStaff(1380));
 	public static final RegistryObject<Item> SKY_STAFF = registerWeapon("sky_staff", () -> new SkyStaff(1480));

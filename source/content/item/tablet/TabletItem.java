@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.item.tablet;
 
 import net.minecraft.block.BlockState;
@@ -58,7 +59,8 @@ public abstract class TabletItem extends Item {
 			ServerPlayerEntity player = (ServerPlayerEntity)context.getPlayer();
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
 
-			/*if (player.isCreative() || plData.stats().getLevel(Skills.ANIMA) >= animaLevelReq) {
+			*/
+/*if (player.isCreative() || plData.stats().getLevel(Skills.ANIMA) >= animaLevelReq) {
 				float soulCost = initialSoulCost * (1 - ((plData.stats().getLevel(Skills.ANIMA) - 1) / 200f)) * (PlayerUtil.isWearingFullSet(player, AdventArmour.Type.ANIMA) ? 0.5f : 1f);
 				SoulTabletEntity tabletEntity = getTabletEntity(world, player);
 				VoxelShape blockBoundingBox = targetBlockState.getCollisionShape(world, pos);
@@ -78,7 +80,8 @@ public abstract class TabletItem extends Item {
 			}
 			else {
 				PlayerUtil.notifyPlayerOfInsufficientLevel(player, Skills.ANIMA, animaLevelReq);
-			}*/ // TODO
+			}*//*
+ // TODO
 		}
 
 		return ActionResultType.PASS;
@@ -94,3 +97,4 @@ public abstract class TabletItem extends Item {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tablet.radius", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO, new StringTextComponent(String.valueOf(effectRadius))));
 	}
 }
+*/

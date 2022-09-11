@@ -21,7 +21,7 @@ public class HighInCalciumTrait extends Modifier {
 				generatedLoot.add(new ItemStack(Items.BONE));
 			}
 			else {
-				generatedLoot.add(new ItemStack(Items.WHITE_DYE));
+				generatedLoot.add(new ItemStack(Items.BONE_MEAL));
 			}
 		}
 

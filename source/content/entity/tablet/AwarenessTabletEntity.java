@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.entity.tablet;
 
 import net.minecraft.entity.EntityType;
@@ -30,3 +31,4 @@ public class AwarenessTabletEntity extends SoulTabletEntity {
 		return (TabletItem)AoAItems.AWARENESS_TABLET.get();
 	}
 }
+*/

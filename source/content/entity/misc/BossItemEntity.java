@@ -77,7 +77,13 @@ public class BossItemEntity extends ItemEntity {
 		if (lifespan == 6000)
 			return;
 
-		if (!level.isClientSide && (player == null || !(getItem().getItem() instanceof BossSpawningItem))) {
+		if (!(getItem().getItem() instanceof BossSpawningItem)) {
+			remove();
+
+			return;
+		}
+
+		if (!level.isClientSide && player == null) {
 			remove();
 
 			return;

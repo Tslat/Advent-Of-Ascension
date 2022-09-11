@@ -61,7 +61,6 @@ import net.tslat.aoa3.content.entity.projectile.misc.*;
 import net.tslat.aoa3.content.entity.projectile.mob.*;
 import net.tslat.aoa3.content.entity.projectile.staff.*;
 import net.tslat.aoa3.content.entity.projectile.thrown.*;
-import net.tslat.aoa3.content.entity.tablet.*;
 import net.tslat.aoa3.util.ColourUtil;
 
 import java.util.function.Consumer;
@@ -597,23 +596,23 @@ public final class AoAEntities {
 	public static class Misc {
 		public static final DeferredRegister<EntityType<?>> MISC = DeferredRegister.create(ForgeRegistries.ENTITIES, AdventOfAscension.MOD_ID);
 
-		public static final RegistryObject<EntityType<SoulTabletEntity>> AGILITY_TABLET = registerMiscEntity("agility_tablet", AgilityTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> AWARENESS_TABLET = registerMiscEntity("awareness_tablet", AwarenessTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> BREEDING_TABLET = registerMiscEntity("breeding_tablet", BreedingTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> CLEANSING_TABLET = registerMiscEntity("cleansing_tablet", CleansingTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> DISTORTION_TABLET = registerMiscEntity("distortion_tablet", DistortionTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> ENERGY_TABLET = registerMiscEntity("energy_tablet", EnergyTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> GRAVITY_TABLET = registerMiscEntity("gravity_tablet", GravityTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> OXYGEN_TABLET = registerMiscEntity("oxygen_tablet", OxygenTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> PRESSURE_TABLET = registerMiscEntity("pressure_tablet", PressureTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> PROFICIENCY_TABLET = registerMiscEntity("proficiency_tablet", ProficiencyTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> RESISTANCE_TABLET = registerMiscEntity("resistance_tablet", ResistanceTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> SANCTITY_TABLET = registerMiscEntity("sanctity_tablet", SanctityTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> SATIATION_TABLET = registerMiscEntity("satiation_tablet", SatiationTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> SIGHT_TABLET = registerMiscEntity("sight_tablet", SightTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> STRENGTH_TABLET = registerMiscEntity("strength_tablet", StrengthTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> UNTIRING_TABLET = registerMiscEntity("untiring_tablet", UntiringTabletEntity::new, 0.6f, 0.09375f);
-		public static final RegistryObject<EntityType<SoulTabletEntity>> VITALITY_TABLET = registerMiscEntity("vitality_tablet", VitalityTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> AGILITY_TABLET = registerMiscEntity("agility_tablet", AgilityTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> AWARENESS_TABLET = registerMiscEntity("awareness_tablet", AwarenessTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> BREEDING_TABLET = registerMiscEntity("breeding_tablet", BreedingTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> CLEANSING_TABLET = registerMiscEntity("cleansing_tablet", CleansingTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> DISTORTION_TABLET = registerMiscEntity("distortion_tablet", DistortionTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> ENERGY_TABLET = registerMiscEntity("energy_tablet", EnergyTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> GRAVITY_TABLET = registerMiscEntity("gravity_tablet", GravityTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> OXYGEN_TABLET = registerMiscEntity("oxygen_tablet", OxygenTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> PRESSURE_TABLET = registerMiscEntity("pressure_tablet", PressureTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> PROFICIENCY_TABLET = registerMiscEntity("proficiency_tablet", ProficiencyTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> RESISTANCE_TABLET = registerMiscEntity("resistance_tablet", ResistanceTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> SANCTITY_TABLET = registerMiscEntity("sanctity_tablet", SanctityTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> SATIATION_TABLET = registerMiscEntity("satiation_tablet", SatiationTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> SIGHT_TABLET = registerMiscEntity("sight_tablet", SightTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> STRENGTH_TABLET = registerMiscEntity("strength_tablet", StrengthTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> UNTIRING_TABLET = registerMiscEntity("untiring_tablet", UntiringTabletEntity::new, 0.6f, 0.09375f);
+		//public static final RegistryObject<EntityType<SoulTabletEntity>> VITALITY_TABLET = registerMiscEntity("vitality_tablet", VitalityTabletEntity::new, 0.6f, 0.09375f);
 
 		public static final RegistryObject<EntityType<GyrocopterEntity>> GYROCOPTER = registerMiscEntity("gyrocopter", GyrocopterEntity::new, 1.375f, 1.625f, EntityType.Builder::noSummon);
 		public static final RegistryObject<EntityType<ItemEntity>> BOSS_ITEM = registerMiscEntity("boss_item", BossItemEntity::new, 0.25f, 0.25f, EntityType.Builder::noSummon);

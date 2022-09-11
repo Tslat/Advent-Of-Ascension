@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.item.tablet;
 
 import net.minecraft.client.util.ITooltipFlag;
@@ -28,4 +29,4 @@ public class AgilityTablet extends TabletItem {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
 		super.appendHoverText(stack, worldIn, tooltip, flagIn);
 	}
-}
+}*/

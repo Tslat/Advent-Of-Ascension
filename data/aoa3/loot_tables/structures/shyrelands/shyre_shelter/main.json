@@ -106,10 +106,10 @@
             {
               "function": "minecraft:enchant_randomly",
               "enchantments": [
-                "minecraft:efficiency",
                 "minecraft:unbreaking",
-                "minecraft:fortune",
-                "minecraft:silk_touch"
+                "minecraft:silk_touch",
+                "minecraft:efficiency",
+                "minecraft:fortune"
               ]
             }
           ],
