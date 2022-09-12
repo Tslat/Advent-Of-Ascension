@@ -73,6 +73,9 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 	public void handleItemCrafting(ItemCraftingEvent ev) {
 		ItemStack output = ev.getOutputStack();
 
+		if (!output.getEnchantmentTags().isEmpty())
+			return;
+
 		for (EnchantmentData data : enchantments) {
 			if (!data.enchantment.canApplyAtEnchantingTable(output))
 				return;

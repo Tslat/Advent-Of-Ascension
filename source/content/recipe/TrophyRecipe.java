@@ -16,7 +16,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
-import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 
@@ -66,8 +65,8 @@ public class TrophyRecipe implements ICraftingRecipe, net.minecraftforge.common.
 	@Override
 	public ItemStack assemble(CraftingInventory inv) {
 		for (int i = 0; i < inv.getContainerSize(); i++) {
-			if (inv.getItem(i).getItem() == AoABlocks.TROPHY.get().asItem())
-				return TrophyBlock.cloneTrophy(inv.getItem(i), AoABlocks.GOLD_TROPHY.get());
+			if (inv.getItem(i).getItem() == targetTrophy)
+				return TrophyBlock.cloneTrophy(inv.getItem(i), outputTrophy);
 		}
 
 		return ItemStack.EMPTY;
