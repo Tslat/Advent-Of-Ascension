@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:story/mine_diamond",
+  "criteria": {
+    "obtain_troll_idol": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:troll_idol"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.troll_idoliser.overworld.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:troll_idol",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.troll_idoliser.overworld.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_troll_idol"
+    ]
+  ]
+}

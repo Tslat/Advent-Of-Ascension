@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:the_journey_begins/the_flipped_key",
+  "criteria": {
+    "obtain_celeve_realmstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:celeve_realmstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.the_journey_begins.key_to_the_circus.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:celeve_realmstone"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.the_journey_begins.key_to_the_circus.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_celeve_realmstone"
+    ]
+  ]
+}

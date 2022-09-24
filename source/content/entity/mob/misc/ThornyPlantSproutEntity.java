@@ -1,14 +1,10 @@
 package net.tslat.aoa3.content.entity.mob.misc;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -16,19 +12,29 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
-import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
+import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
+
+import java.util.List;
 
 public class ThornyPlantSproutEntity extends AoAMeleeMob {
 	public ThornyPlantSproutEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
 		setPersistenceRequired();
+		this.attackReach = 2;
 	}
 
 	public ThornyPlantSproutEntity(Level world, BlockPos plantPos) {
@@ -38,18 +44,34 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-		return 1.4f;
+	public BrainActivityGroup<AoAMeleeMob> getCoreTasks() {
+		return BrainActivityGroup.coreTasks(new LookAtTarget<>());
 	}
 
 	@Override
-	protected void registerGoals() {
-		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<AoAMeleeMob>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()).attackReach(2f));
-		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
-		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Monster.class, 5, true, true, entity -> entity.getType() != this.getType()));
-		targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 5, true, true, null));
+	public BrainActivityGroup<AoAMeleeMob> getIdleTasks() {
+		return BrainActivityGroup.idleTasks(new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER));
+	}
+
+	@Override
+	public BrainActivityGroup<AoAMeleeMob> getFightTasks() {
+		return BrainActivityGroup.fightTasks(
+				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
+	}
+
+	@Override
+	public List<ExtendedSensor<AoAMeleeMob>> getSensors() {
+		return ObjectArrayList.of(
+				new NearbyPlayersSensor<>(),
+				new NearbyLivingEntitySensor<AoAMeleeMob>()
+						.setPredicate((target, entity) -> target.getType() != entity.getType() && (target instanceof Monster || (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null))).setScanRate(entity -> 20),
+				new HurtBySensor<>());
+	}
+
+	@Override
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return 1.4f;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
+import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -11,9 +12,9 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
-import net.tslat.aoa3.library.object.SupplierContents;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.EntityUtil;
@@ -33,6 +34,7 @@ public class AttributeModification extends ScalableModAbility {
 	private final AttributeModifier modifier;
 
 	private float loginHealth = -1;
+	private int lastUpdateLevel = 0;
 
 	public AttributeModification(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.ATTRIBUTE_MODIFICATION.get(), skill, data);
@@ -80,7 +82,18 @@ public class AttributeModification extends ScalableModAbility {
 
 		super.updateDescription(Component.translatable(((TranslatableContents)defaultDescription.getContents()).getKey(),
 				StringUtil.toTitleCase(attribute.getDescriptionId().substring(attribute.getDescriptionId().lastIndexOf(".") + 1)),
-				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, modifier.getOperation() != AttributeModifier.Operation.ADDITION, amount, perLevel, SupplierContents.toComponent(() -> NumberUtil.roundToNthDecimalPlace((float)modifier.getAmount() * (modifier.getOperation() == AttributeModifier.Operation.ADDITION ? 1 : 100), 3)))));
+				LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, modifier.getOperation() != AttributeModifier.Operation.ADDITION, amount, perLevel, NumberUtil.roundToNthDecimalPlace((float)modifier.getAmount() * (modifier.getOperation() == AttributeModifier.Operation.ADDITION ? 1 : 100), 3))));
+	}
+
+	@Override
+	public MutableComponent getDescription() {
+		if (this.skill.getLevel(true) != lastUpdateLevel) {
+			this.lastUpdateLevel = this.skill.getLevel(true);
+
+			updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
+		}
+
+		return super.getDescription();
 	}
 
 	@Override

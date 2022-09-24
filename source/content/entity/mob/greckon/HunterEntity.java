@@ -16,13 +16,11 @@ public class HunterEntity extends AoAMeleeMob {
     public HunterEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
 
-        isSlipperyMovement = true;
-
         setSpeed(2.7f);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return 0.875f;
     }
 

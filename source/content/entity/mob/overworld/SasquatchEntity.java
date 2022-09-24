@@ -17,10 +17,12 @@ import javax.annotation.Nullable;
 public class SasquatchEntity extends AoAMeleeMob {
 	public SasquatchEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
+
+		getNavigation().setCanFloat(true);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.59375f;
 	}
 

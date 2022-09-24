@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.block.functional.portal;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.StringRepresentable;
@@ -22,6 +21,7 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 import java.util.Locale;
@@ -39,7 +39,7 @@ public class NowhereActivityPortal extends PortalBlock {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (entity.getVehicle() == null && !entity.isVehicle() && entity instanceof ServerPlayer pl) {
+		if (entity.getVehicle() == null && !entity.isVehicle() && entity instanceof ServerPlayer pl && WorldUtil.isWorld(pl.level, AoADimensions.NOWHERE.key)) {
 			if (pl.portalTime > 0) {
 				pl.portalTime = 30;
 
@@ -100,11 +100,7 @@ public class NowhereActivityPortal extends PortalBlock {
 		PARKOUR(21.5d, 10.5d, 22d, 90, pl -> {
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 
-			for (NonNullList<ItemStack> inv : pl.getInventory().compartments) {
-				plData.storeItems(inv);
-			}
-
-			pl.getInventory().clearContent();
+			plData.storeInventoryContents();
 		}),
 		PARKOUR_1(pl -> findParkourCourse(pl, 1), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
 		PARKOUR_2(pl -> findParkourCourse(pl, 2), pl -> ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()))),
@@ -116,9 +112,11 @@ public class NowhereActivityPortal extends PortalBlock {
 		DUNGEON(6.5d, 1501.5d, 16.5d, -90),
 		UTILITY(25.5d, 1001.5d, 16, 90),
 		RETURN(pl -> doReturnPortalTeleport(pl, 16.5d, 1501.5d, 16.5d, 180), pl -> {
-			ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-			PlayerUtil.getAdventPlayer(pl).returnItemStorage();
-			PlayerUtil.resetToDefaultStatus(pl);
+			if (!NowhereEvents.isInParkourRegion(pl.blockPosition())) {
+				ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+				PlayerUtil.getAdventPlayer(pl).returnItemStorage();
+				PlayerUtil.resetToDefaultStatus(pl);
+			}
 		});
 
 		private final Predicate<ServerPlayer> teleportFunction;

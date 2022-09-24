@@ -20,12 +20,11 @@ public class ConstructOfSpeedEntity extends AoAMeleeMob {
     public ConstructOfSpeedEntity(EntityType<? extends Monster> entityType, Level world) {
         super(entityType, world);
 
-        isSlipperyMovement = true;
         setSpeed(1.6f);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return 2f;
     }
 

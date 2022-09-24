@@ -9,22 +9,6 @@
       },
       "entries": [
         {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/lborean",
-          "weight": 100
-        }
-      ],
-      "name": "parent_table",
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "max": 0.0,
-        "min": 0.0
-      },
-      "entries": [
-        {
           "type": "minecraft:empty",
           "weight": 100
         },

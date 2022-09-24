@@ -16,13 +16,11 @@ public class DyrehornEntity extends AoAMeleeMob {
 	public DyrehornEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		this.isSlipperyMovement = true;
-
 		setSpeed(1.8f);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.625f;
 	}
 

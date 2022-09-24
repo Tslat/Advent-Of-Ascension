@@ -8,11 +8,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -25,11 +21,11 @@ public class SkeleHopperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 0.9375f;
 	}
 
-	@Override
+	/*@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new LeapAtTargetGoal(this, 1));
@@ -39,7 +35,7 @@ public class SkeleHopperEntity extends AoAMeleeMob {
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
-	}
+	}*/
 
 	@Nullable
 	@Override

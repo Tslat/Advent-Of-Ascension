@@ -29,7 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.GunRecoilPacket;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.enchantment.BraceEnchantment;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;

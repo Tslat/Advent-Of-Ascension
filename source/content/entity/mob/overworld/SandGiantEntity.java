@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -9,6 +10,7 @@ import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.util.RandomPos;
@@ -44,6 +46,11 @@ public class SandGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
+	protected Brain.Provider<?> brainProvider() { // TODO
+		return Brain.provider(ImmutableList.of(), ImmutableList.of());
+	}
+
+	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new TrapChaseGoal<>(this, pos -> RandomUtil.fiftyFifty() ? new SandGiantPitTrapEntity(level, pos) : new SandGiantSpikeTrapEntity(level, pos))
@@ -63,7 +70,7 @@ public class SandGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 2.9375f;
 	}
 

@@ -21,16 +21,6 @@
       ],
       "name": "loot",
       "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/iromine"
-        }
-      ],
-      "rolls": 1.0
     }
   ]
 }

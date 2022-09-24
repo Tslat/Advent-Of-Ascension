@@ -1,0 +1,31 @@
+{
+  "feature": "aoa3:ore_nether_runium",
+  "placement": [
+    {
+      "type": "minecraft:count",
+      "count": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 10,
+          "min_inclusive": 5
+        }
+      }
+    },
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:trapezoid",
+        "max_inclusive": {
+          "above_bottom": 125
+        },
+        "min_inclusive": {
+          "above_bottom": 5
+        },
+        "plateau": 115
+      }
+    }
+  ]
+}

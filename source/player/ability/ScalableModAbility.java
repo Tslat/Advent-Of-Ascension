@@ -8,7 +8,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.library.object.SupplierContents;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
@@ -17,6 +16,8 @@ import net.tslat.aoa3.util.RandomUtil;
 public abstract class ScalableModAbility extends AoAAbility.Instance {
 	protected final float baseValue;
 	protected final float perLevelMod;
+
+	private int lastUpdateLevel = 0;
 
 	public ScalableModAbility(AoAAbility ability, AoASkill.Instance skill, JsonObject data) {
 		super(ability, skill, data);
@@ -52,11 +53,22 @@ public abstract class ScalableModAbility extends AoAAbility.Instance {
 		super.updateDescription(defaultDescription);
 	}
 
+	@Override
+	public MutableComponent getDescription() {
+		if (this.skill.getLevel(true) != lastUpdateLevel) {
+			this.lastUpdateLevel = this.skill.getLevel(true);
+
+			updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
+		}
+
+		return super.getDescription();
+	}
+
 	protected MutableComponent getScalingDescriptionComponent(int precision) {
 		return LocaleUtil.getAbilityValueDesc(baseValue != 0, perLevelMod != 0, isPercent(),
 				NumberUtil.roundToNthDecimalPlace(baseValue * (isPercent() ? 100 : 1), precision),
 				NumberUtil.roundToNthDecimalPlace(perLevelMod * (isPercent() ? 100 : 1), precision),
-				new SupplierContents(() -> NumberUtil.roundToNthDecimalPlace(getScaledValue() * (isPercent() ? 100 : 1), precision)));
+				NumberUtil.roundToNthDecimalPlace(getScaledValue() * (isPercent() ? 100 : 1), precision));
 	}
 
 	protected boolean isPercent() {

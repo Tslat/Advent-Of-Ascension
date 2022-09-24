@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -10,12 +11,11 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -55,19 +55,24 @@ public class NecroArmour extends AdventArmour {
 	public void onPlayerDeath(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingDeathEvent event) {
 		if (slots != null) {
 			int count = slots.size();
-			int inventoryIndex = 0;
+			int slotIndex = 0;
 			Inventory inv = plData.player().getInventory();
 
-			while (count > 0 && inventoryIndex < inv.getContainerSize()) {
-				ItemStack stack = inv.getItem(inventoryIndex);
+			for (NonNullList<ItemStack> compartment : inv.compartments) {
+				for (int i = 0; i < compartment.size(); i++) {
+					ItemStack stack = compartment.get(i);
 
-				if (!stack.isEmpty() && EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) == 0 && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.VANISHING_CURSE, stack) == 0) {
-					plData.storeItems(stack);
-					inv.setItem(inventoryIndex, ItemStack.EMPTY);
-					count--;
+					if (!stack.isEmpty() && stack.getEnchantmentLevel(AoAEnchantments.INTERVENTION.get()) == 0 && stack.getEnchantmentLevel(Enchantments.VANISHING_CURSE) == 0) {
+						plData.storeItem(slotIndex + i, stack);
+						compartment.set(i, ItemStack.EMPTY);
+						count--;
+
+						if (count == 0)
+							return;
+					}
 				}
 
-				inventoryIndex++;
+				slotIndex += compartment.size();
 			}
 		}
 	}

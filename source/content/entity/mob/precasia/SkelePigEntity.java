@@ -21,7 +21,7 @@ public class SkelePigEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 0.71875f;
 	}
 

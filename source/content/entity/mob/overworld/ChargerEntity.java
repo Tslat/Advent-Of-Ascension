@@ -10,15 +10,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -29,12 +24,12 @@ import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.ai.mob.ExtendedFindNearbyTargetGoal;
-import net.tslat.aoa3.content.entity.ai.mob.ExtendedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.world.gen.BiomeMatcher;
-import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.library.object.CachedFunction;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
@@ -57,14 +52,11 @@ public class ChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void registerGoals() {
-		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(2, new ExtendedMeleeAttackGoal<>(this).attackInterval(ConstantInt.of(getCurrentSwingDuration())).speedModifier(1.125f).actionTelegraphTicks(getPreAttackTime()).onStart(goal -> setSprinting(true)).onStop(goal -> setSprinting(false)));
-		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
-		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
-		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new ExtendedFindNearbyTargetGoal<>(this, true, EntityPredicate.SURVIVAL_PLAYER).searchRadius(16));
+	public BrainActivityGroup<AoAMeleeMob> getFightTasks() {
+		return BrainActivityGroup.fightTasks(
+				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+				new SetWalkTargetToAttackTarget<>().speedMod(1.125f),
+				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
 
 	@org.jetbrains.annotations.Nullable
@@ -91,8 +83,8 @@ public class ChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
-		return size.height * 0.85f;
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return dimensions.height * 0.85f;
 	}
 
 	@Nullable

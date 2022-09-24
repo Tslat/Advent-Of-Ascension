@@ -16,11 +16,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Cat;
-import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -49,7 +45,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 		super(entityType, world);
 	}
 
-	@Override
+	/*@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
 		goalSelector.addGoal(2, new CustomCreeperSwellGoal(this));
@@ -62,7 +58,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, TamableAnimal.class, 10, true, false, entity -> entity instanceof TamableAnimal && ((TamableAnimal)entity).isTame()));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
 		targetSelector.addGoal(3, new HurtByTargetGoal(this));
-	}
+	}*/
 
 	protected void defineSynchedData() {
 		super.defineSynchedData();

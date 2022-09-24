@@ -23,8 +23,8 @@ public class PrimitiveCarrotopEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return sizeIn.height * 0.85f;
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return dimensions.height * 0.85f;
 	}
 
 	@Nullable

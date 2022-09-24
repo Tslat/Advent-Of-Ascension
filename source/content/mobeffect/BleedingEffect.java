@@ -4,6 +4,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.player.Player;
@@ -11,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.effectslib.api.ExtendedMobEffect;
+import org.jetbrains.annotations.Nullable;
 
 public class BleedingEffect extends ExtendedMobEffect {
 	public static final DamageSource DAMAGE_SOURCE = new DamageSource("bleeding").bypassArmor().bypassEnchantments().setScalesWithDifficulty();
@@ -39,6 +41,12 @@ public class BleedingEffect extends ExtendedMobEffect {
 			if (entity instanceof Player player)
 				player.causeFoodExhaustion(5);
 		}
+	}
+
+	@Override
+	public void onApplication(@Nullable MobEffectInstance effectInstance, @Nullable Entity source, LivingEntity entity, int amplifier) {
+		if (effectInstance != null)
+			effectInstance.visible = false;
 	}
 
 	@Override

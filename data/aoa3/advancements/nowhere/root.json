@@ -1,8 +1,19 @@
 {
   "criteria": {
-    "enter_block_nowhere_portal": {
+    "enter_natural_nowhere_portal": {
       "conditions": {
-        "block": "aoa3:nowhere_portal"
+        "block": "aoa3:nowhere_portal",
+        "player": [
+          {
+            "condition": "minecraft:inverted",
+            "term": {
+              "condition": "minecraft:location_check",
+              "predicate": {
+                "dimension": "aoa3:nowhere"
+              }
+            }
+          }
+        ]
       },
       "trigger": "minecraft:enter_block"
     }
@@ -27,7 +38,7 @@
   },
   "requirements": [
     [
-      "enter_block_nowhere_portal"
+      "enter_natural_nowhere_portal"
     ]
   ]
 }

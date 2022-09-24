@@ -6,12 +6,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.event.custom.events.*;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public final class AoAEvents {
@@ -49,5 +51,13 @@ public final class AoAEvents {
 
 	public static boolean firePlayerSmeltingEvent(Player player, ItemStack smelting, Container outputInventory) {
 		return MinecraftForge.EVENT_BUS.post(new ItemSmeltingEvent(player, smelting, outputInventory));
+	}
+
+	public static MagicTeleportEvent magicalTeleport(Entity entity, @Nullable Entity teleportSource, @Nullable Entity indirectTeleportSource, Vec3 teleportPosition) {
+		MagicTeleportEvent event = new MagicTeleportEvent(entity, teleportSource, indirectTeleportSource, teleportPosition);
+
+		MinecraftForge.EVENT_BUS.post(event);
+
+		return event;
 	}
 }

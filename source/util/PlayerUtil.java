@@ -295,5 +295,6 @@ public final class PlayerUtil {
         foodData.setFoodLevel(20);
         foodData.setSaturation(5);
         foodData.setExhaustion(0);
+        PlayerUtil.getAdventPlayer(player).clearCheckpoint();
     }
 }

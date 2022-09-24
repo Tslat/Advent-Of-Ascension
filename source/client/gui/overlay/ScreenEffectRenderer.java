@@ -24,6 +24,12 @@ public final class ScreenEffectRenderer {
 	}
 
 	public static void addScreenEffect(ScreenImageEffect effect) {
+		Minecraft mc = Minecraft.getInstance();
+
+		if (mc.level == null)
+			return;
+
+		effect.init(mc.getWindow(), mc.level.getGameTime());
 		effects.add(effect);
 	}
 
@@ -50,8 +56,6 @@ public final class ScreenEffectRenderer {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
 		for (ScreenImageEffect effect : effects) {
-			effect.init(window, gameTime);
-
 			if (effect.isExpired(gameTime)) {
 				hasExpiredEffects = true;
 

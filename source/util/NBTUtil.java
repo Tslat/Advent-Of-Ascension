@@ -26,7 +26,7 @@ public final class NBTUtil {
 
 		public NBTBuilder<T> putString(@Nullable String key, String value) {
 			if (tag.getType() == CompoundTag.TYPE && key != null) {
-				((CompoundTag)tag).put(key, StringTag.valueOf(value));
+				((CompoundTag)tag).putString(key, value);
 			}
 			else if (tag.getType() == ListTag.TYPE) {
 				((ListTag)tag).add(StringTag.valueOf(value));
@@ -37,7 +37,7 @@ public final class NBTUtil {
 
 		public NBTBuilder<T> putInteger(@Nullable String key, int value) {
 			if (tag.getType() == CompoundTag.TYPE && key != null) {
-				((CompoundTag)tag).put(key, IntTag.valueOf(value));
+				((CompoundTag)tag).putInt(key, value);
 			}
 			else if (tag.getType() == ListTag.TYPE) {
 				((ListTag)tag).add(IntTag.valueOf(value));
@@ -48,7 +48,7 @@ public final class NBTUtil {
 
 		public NBTBuilder<T> putFloat(@Nullable String key, float value) {
 			if (tag.getType() == CompoundTag.TYPE && key != null) {
-				((CompoundTag)tag).put(key, FloatTag.valueOf(value));
+				((CompoundTag)tag).putFloat(key, value);
 			}
 			else if (tag.getType() == ListTag.TYPE) {
 				((ListTag)tag).add(FloatTag.valueOf(value));
@@ -59,13 +59,28 @@ public final class NBTUtil {
 
 		public NBTBuilder<T> putLong(@Nullable String key, long value) {
 			if (tag.getType() == CompoundTag.TYPE && key != null) {
-				((CompoundTag)tag).put(key, LongTag.valueOf(value));
+				((CompoundTag)tag).putLong(key, value);
 			}
 			else if (tag.getType() == ListTag.TYPE) {
 				((ListTag)tag).add(LongTag.valueOf(value));
 			}
 
 			return this;
+		}
+
+		public NBTBuilder<T> putByte(@Nullable String key, byte value) {
+			if (tag.getType() == CompoundTag.TYPE && key != null) {
+				((CompoundTag)tag).putByte(key, value);
+			}
+			else if (tag.getType() == ListTag.TYPE) {
+				((ListTag)tag).add(IntTag.valueOf(value));
+			}
+
+			return this;
+		}
+
+		public NBTBuilder<T> putBoolean(@Nullable String key, boolean value) {
+			return putByte(key, (value ? (byte)1: (byte)0));
 		}
 
 		public T build() {

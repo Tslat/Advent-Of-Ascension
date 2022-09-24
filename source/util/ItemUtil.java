@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
+import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
@@ -140,7 +140,7 @@ public final class ItemUtil {
 
 	public static void givePlayerMultipleItems(Player pl, Collection<ItemStack> stacks) {
 		for (ItemStack stack : stacks) {
-			if (!pl.getInventory().add(stack))
+			if (!stack.isEmpty() && !pl.getInventory().add(stack))
 				pl.spawnAtLocation(stack, 0.5f);
 		}
 

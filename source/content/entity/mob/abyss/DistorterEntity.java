@@ -7,15 +7,13 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 
@@ -26,14 +24,14 @@ public class DistorterEntity extends AoAMeleeMob {
 		super(entityType, world);
 	}
 
-	@Override
+	/*@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 15f));
 		goalSelector.addGoal(2, new RandomLookAroundGoal(this));
-	}
+	}*/
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.675f;
 	}
 

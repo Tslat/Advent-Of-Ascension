@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:roll_entity_world_table",
+  "conditions": [
+    {
+      "condition": "minecraft:killed_by_player"
+    },
+    {
+      "condition": "aoa3:is_hostile_entity"
+    },
+    {
+      "condition": "minecraft:inverted",
+      "term": {
+        "condition": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+          "nbt": "{ForgeData:{spawned_by_spawner:1b}}"
+        }
+      }
+    }
+  ],
+  "worlds": {
+    "minecraft:overworld": "aoa3:worlds/overworld",
+    "minecraft:the_nether": "aoa3:worlds/nether"
+  }
+}

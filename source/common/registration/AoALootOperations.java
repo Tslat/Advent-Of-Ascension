@@ -6,10 +6,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.registries.RegistryObject;
-import net.tslat.aoa3.content.loottable.condition.BlockHasTag;
-import net.tslat.aoa3.content.loottable.condition.HoldingItem;
-import net.tslat.aoa3.content.loottable.condition.PlayerHasLevel;
-import net.tslat.aoa3.content.loottable.condition.PlayerHasResource;
+import net.tslat.aoa3.content.loottable.condition.*;
 import net.tslat.aoa3.content.loottable.function.EnchantSpecific;
 import net.tslat.aoa3.content.loottable.function.GrantSkillXp;
 
@@ -22,8 +19,6 @@ public final class AoALootOperations {
 
 		private static RegistryObject<LootItemFunctionType> register(String id, Serializer<? extends LootItemFunction> serializer) {
 			return AoARegistries.LOOT_FUNCTIONS.register(id, () -> new LootItemFunctionType(serializer));
-
-			//return Registry.register(Registry.LOOT_FUNCTION_TYPE, new ResourceLocation(AdventOfAscension.MOD_ID, id), new LootItemFunctionType(serializer));
 		}
 	}
 
@@ -34,11 +29,10 @@ public final class AoALootOperations {
 		public static final RegistryObject<LootItemConditionType> PLAYER_HAS_LEVEL = register("player_has_level", new PlayerHasLevel.Serializer());
 		public static final RegistryObject<LootItemConditionType> PLAYER_HAS_RESOURCE = register("player_has_resource", new PlayerHasResource.Serializer());
 		public static final RegistryObject<LootItemConditionType> HAS_BLOCK_TAG = register("has_block_tag", new BlockHasTag.Serializer());
+		public static final RegistryObject<LootItemConditionType> IS_HOSTILE_ENTITY = register("is_hostile_entity", new IsHostileEntity.Serializer());
 
 		private static RegistryObject<LootItemConditionType> register(String id, Serializer<? extends LootItemCondition> serializer) {
 			return AoARegistries.LOOT_CONDITIONS.register(id, () -> new LootItemConditionType(serializer));
-
-			//return Registry.register(Registry.LOOT_CONDITION_TYPE, new ResourceLocation(AdventOfAscension.MOD_ID, id), new LootItemConditionType(serializer));
 		}
 	}
 }

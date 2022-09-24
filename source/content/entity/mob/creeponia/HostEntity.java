@@ -5,14 +5,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -26,18 +20,18 @@ public class HostEntity extends AoAMeleeMob {
 		super(entityType, world);
 	}
 
-	@Override
+	/*@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(3, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
-	}
+	}*/
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return sizeIn.height * 0.85f;
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return dimensions.height * 0.85f;
 	}
 
 	@Nullable

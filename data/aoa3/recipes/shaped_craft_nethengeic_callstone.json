@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "E": {
+      "tag": "forge:nuggets/emberstone"
+    },
+    "N": {
+      "item": "minecraft:netherite_scrap"
+    }
+  },
+  "pattern": [
+    " N ",
+    "NEN",
+    " N "
+  ],
+  "result": {
+    "count": 1,
+    "item": "aoa3:nethengeic_callstone",
+    "nbt": {
+      "Damage": 2
+    }
+  }
+}

@@ -4,6 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.advancements.Advancement;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -15,10 +16,10 @@ import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.*;
@@ -30,10 +31,10 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.PlayerDataSyncPacket;
 import net.tslat.aoa3.common.packet.packets.PlayerDataUpdatePacket;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
-import net.tslat.aoa3.common.registration.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.data.server.AoAResourcesReloadListener;
@@ -72,7 +73,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	private final ObjectOpenHashSet<AoAPlayerEventListener> dirtyListeners = new ObjectOpenHashSet<>();
 
 	private Object2ObjectOpenHashMap<ResourceKey<Level>, PortalCoordinatesContainer> portalCoordinatesMap = new Object2ObjectOpenHashMap<>();
-	private ObjectOpenHashSet<ItemStack> itemStorage = null;
+	private ItemStack[] itemStorage = null;
 	private PositionAndRotation checkpoint = null;
 
 	private CopyOnWriteArraySet<ResourceLocation> patchouliBooks = null;
@@ -169,14 +170,24 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (baseTag.contains("ItemStorage")) {
-			itemStorage = new ObjectOpenHashSet<>();
 			CompoundTag itemStorage = baseTag.getCompound("ItemStorage");
-			int i = 0;
 
-			while (itemStorage.contains(String.valueOf(i))) {
-				this.itemStorage.add(ItemStack.of(itemStorage.getCompound(String.valueOf(i))));
+			if (!itemStorage.isEmpty()) {
+				this.itemStorage = new ItemStack[player.getInventory().getContainerSize()];
 
-				i++;
+				for (String key : itemStorage.getAllKeys()) {
+					try {
+						int index = Integer.parseInt(key);
+
+						if (index >= this.itemStorage.length)
+							this.itemStorage = Arrays.copyOf(this.itemStorage, index + 1);
+
+						this.itemStorage[index] = ItemStack.of(itemStorage.getCompound(key));
+					}
+					catch (Exception ex) {
+						Logging.logMessage(org.apache.logging.log4j.Level.WARN, "Invalid key in ItemStorage NBT data for player. Stop messing with player NBT!", ex);
+					}
+				}
 			}
 		}
 
@@ -299,7 +310,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		activeEventListeners.clear();
 
 		if (itemStorage != null)
-			itemStorage.clear();
+			Arrays.fill(this.itemStorage, null);
 	}
 
 	private void populateSkillsAndResources() {
@@ -419,52 +430,117 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	private void storeInterventionItems() {
 		if (itemStorage == null)
-			itemStorage = new ObjectOpenHashSet<>();
+			itemStorage = new ItemStack[player.getInventory().getContainerSize()];
 
 		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 			ItemStack stack = player.getInventory().getItem(i);
 
-			if (EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
+			if (stack.getEnchantmentLevel(AoAEnchantments.INTERVENTION.get()) > 0) {
 				if (RandomUtil.oneInNChance(5))
 					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
 
-				itemStorage.add(stack);
+				itemStorage[i] = stack;
 				player.getInventory().setItem(i, ItemStack.EMPTY);
 			}
 		}
 
-		for (int i = 0; i < 4; i++) {
+		/*for (int i = 0; i < 4; i++) {
 			ItemStack stack = player.getInventory().armor.get(i);
 
 			if (EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
 				if (RandomUtil.oneInNChance(5))
 					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
 
+
 				itemStorage.add(stack);
 				player.getInventory().armor.set(i, ItemStack.EMPTY);
 			}
-		}
+		}*/
 	}
 
 	public void returnItemStorage() {
-		if (itemStorage != null) {
-			for (ItemStack stack : itemStorage) {
-				ItemUtil.givePlayerItemOrDrop(player, stack);
+		if (this.itemStorage != null) {
+			Inventory inventory = this.player.getInventory();
+
+			for (int i = 0; i < this.itemStorage.length; i++) {
+				ItemStack slotItem = inventory.getItem(i);
+				ItemStack storageItem = this.itemStorage[i];
+
+				if (storageItem == null) {
+					this.itemStorage[i] = ItemStack.EMPTY;
+
+					continue;
+				}
+
+				if (slotItem.isEmpty()) {
+					inventory.setItem(i, storageItem);
+
+					this.itemStorage[i] = ItemStack.EMPTY;
+				}
+				else if (ItemUtil.areStacksFunctionallyEqual(slotItem, storageItem) && ItemStack.tagMatches(slotItem, storageItem)) {
+					int growSize = Math.min(slotItem.getMaxStackSize(), slotItem.getCount() + storageItem.getCount()) - slotItem.getCount();
+
+					if (growSize > 0) {
+						slotItem.grow(growSize);
+						slotItem.setPopTime(5);
+					}
+
+					if (growSize < storageItem.getCount()) {
+						storageItem.setCount(storageItem.getCount() - growSize);
+					}
+					else {
+						this.itemStorage[i] = ItemStack.EMPTY;
+					}
+				}
 			}
 
-			itemStorage = null;
+			ItemUtil.givePlayerMultipleItems(this.player, this.itemStorage);
+
+			this.itemStorage = null;
 		}
 	}
 
-	public void storeItems(@Nonnull Collection<ItemStack> stacks) {
+	public void storeInventoryContents() {
 		if (itemStorage == null)
-			itemStorage = new ObjectOpenHashSet<>();
+			itemStorage = new ItemStack[player.getInventory().getContainerSize()];
 
-		itemStorage.addAll(stacks);
+		int slotIndex = 0;
+
+		for (NonNullList<ItemStack> compartment : player.getInventory().compartments) {
+			int compartmentIndex = 0;
+
+			for (ItemStack stack : compartment) {
+				if (!stack.isEmpty())
+					storeItem(slotIndex + compartmentIndex++, stack);
+			}
+
+			slotIndex += compartment.size();
+		}
+
+		player.getInventory().clearContent();
 	}
 
-	public void storeItems(@Nonnull ItemStack... stacks) {
-		storeItems(Arrays.asList(stacks));
+	public void storeItem(int slotIndex, ItemStack stack) {
+		if (this.itemStorage == null)
+			this.itemStorage = new ItemStack[Math.max(slotIndex, player.getInventory().getContainerSize())];
+
+		if (this.itemStorage[slotIndex] != null) {
+			slotIndex = 0;
+
+			while (true) {
+				if (this.itemStorage.length <= slotIndex++) {
+					if (slotIndex >= this.itemStorage.length)
+						this.itemStorage = Arrays.copyOf(this.itemStorage, slotIndex + 1);
+
+					break;
+				}
+				else if (this.itemStorage[slotIndex] == null) {
+					break;
+				}
+			}
+		}
+
+		this.itemStorage[slotIndex] = stack;
 	}
 
 	public void setPortalReturnLocation(ResourceKey<Level> toDim, PortalCoordinatesContainer coords) {
@@ -519,7 +595,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (!listener.meetsRequirements())
 					listener.disable(DEACTIVATED, false);
 			}
-			else if (listener.getListenerState() == DEACTIVATED) {
+			else if (listener.getListenerState() == DEACTIVATED || (listener.getListenerState() == REGION_LOCKED && !abilitiesRegionLocked)) {
 				if (listener.meetsRequirements()) {
 					listener.reenable(false);
 
@@ -667,13 +743,12 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (!forClientSync) {
-			if (itemStorage != null) {
+			if (this.itemStorage != null) {
 				CompoundTag itemStorage = new CompoundTag();
-				int i = 0;
 
-				for (ItemStack stack : this.itemStorage) {
-					itemStorage.put(String.valueOf(i), stack.serializeNBT());
-					i++;
+				for (int i = 0; i < this.itemStorage.length; i++) {
+					if (this.itemStorage[i] != null)
+						itemStorage.put(String.valueOf(i), this.itemStorage[i].serializeNBT());
 				}
 
 				baseTag.put("ItemStorage", itemStorage);

@@ -1,17 +1,22 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
-import net.tslat.aoa3.util.WorldUtil;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
@@ -27,8 +32,18 @@ public class UndeadHeraldEntity extends AoATrader {
 	}
 
 	@Override
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+		return 1.5625f;
+	}
+
+	@Override
 	public boolean canBreatheUnderwater() {
-		return WorldUtil.isWorld(level, AoADimensions.LBOREAN.key);
+		return true;
+	}
+
+	@Override
+	public MobType getMobType() {
+		return MobType.UNDEAD;
 	}
 
 	@Override
@@ -94,4 +109,13 @@ public class UndeadHeraldEntity extends AoATrader {
 			default -> null;
 		};
 	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		AnimationController<?> controller = AoAAnimations.genericWalkIdleController(this);
+
+		controller.setAnimationSpeed(1.35f);
+
+		animationData.addAnimationController(controller);
+	} // TODO Greet anim
 }

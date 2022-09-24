@@ -16,16 +16,6 @@
       ],
       "name": "ghostly_powder",
       "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/lunalus"
-        }
-      ],
-      "rolls": 1.0
     }
   ]
 }

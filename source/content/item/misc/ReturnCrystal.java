@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -9,12 +8,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
-import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
-import net.tslat.aoa3.library.object.PositionAndRotation;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -58,18 +57,15 @@ public class ReturnCrystal extends Item {
 				stack.shrink(1);
 
 			if (NowhereEvents.isInBossRegion(pl.blockPosition())) {
-				PositionAndRotation checkpoint = PlayerUtil.getAdventPlayer(pl).getCheckpoint();
-
-				if (checkpoint != null && CheckpointBlock.isValidCheckpoint(pl.level, checkpoint)) {
-					PlayerUtil.resetToDefaultStatus(pl);
-					pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN));
-					checkpoint.applyToEntity(pl);
-
-					return stack;
+				if (!pl.getAdvancements().getOrStartProgress(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/root"))).isDone()) {
+					AoAScheduler.scheduleSyncronisedTask(() -> {
+						PlayerUtil.resetToDefaultStatus(pl);
+						pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+					}, 1);
 				}
 			}
 			else if (!NowhereEvents.isInLobbyRegion(pl.blockPosition())) {
-				NowhereActivityPortal.Activity.RETURN.teleport(pl);
+				AoAScheduler.scheduleSyncronisedTask(() -> pl.connection.teleport(16.5d, 1501.5d, 16.5d, 180, pl.getXRot()), 1);
 			}
 		}
 

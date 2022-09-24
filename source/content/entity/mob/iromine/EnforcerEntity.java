@@ -18,7 +18,7 @@ public class EnforcerEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return 2.0625f;
     }
 

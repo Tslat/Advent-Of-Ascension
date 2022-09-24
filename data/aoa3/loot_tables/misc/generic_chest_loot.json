@@ -26,6 +26,7 @@
             }
           ],
           "name": "aoa3:tea_seeds",
+          "quality": -2,
           "weight": 20
         },
         {
@@ -42,6 +43,7 @@
             }
           ],
           "name": "aoa3:scrap_metal",
+          "quality": -1,
           "weight": 19
         },
         {
@@ -163,7 +165,8 @@
         },
         {
           "type": "minecraft:item",
-          "name": "aoa3:large_skill_crystal"
+          "name": "aoa3:large_skill_crystal",
+          "quality": 1
         },
         {
           "type": "minecraft:item",
@@ -217,6 +220,21 @@
           ],
           "name": "aoa3:glistening_infusion_stone",
           "weight": 10
+        }
+      ],
+      "name": "misc_aoa_loot",
+      "rolls": 2.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 300
         },
         {
           "type": "minecraft:item",
@@ -226,7 +244,23 @@
               "tag": "{TornPagesEntryId:\"aoa3:lessons\"}"
             }
           ],
-          "name": "aoa3:torn_pages"
+          "name": "aoa3:torn_pages",
+          "quality": 2
+        }
+      ],
+      "name": "lessons_torn_page",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 300
         },
         {
           "type": "minecraft:item",
@@ -236,7 +270,23 @@
               "tag": "{TornPagesEntryId:\"aoa3:the_portal\"}"
             }
           ],
-          "name": "aoa3:torn_pages"
+          "name": "aoa3:torn_pages",
+          "quality": 2
+        }
+      ],
+      "name": "the_portal_torn_page",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 300
         },
         {
           "type": "minecraft:item",
@@ -246,11 +296,12 @@
               "tag": "{TornPagesEntryId:\"aoa3:discovery\"}"
             }
           ],
-          "name": "aoa3:torn_pages"
+          "name": "aoa3:torn_pages",
+          "quality": 2
         }
       ],
-      "name": "misc_aoa_loot",
-      "rolls": 2.0
+      "name": "discovery_torn_page",
+      "rolls": 1.0
     }
   ]
 }

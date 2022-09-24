@@ -2,29 +2,28 @@ package net.tslat.aoa3.content.entity.mob.overworld;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.ai.mob.ExtendedFindNearbyTargetGoal;
-import net.tslat.aoa3.content.entity.ai.mob.ExtendedMeleeAttackGoal;
-import net.tslat.aoa3.content.entity.ai.mob.MoveToWaterGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.UnderwaterWalkingMovementController;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.content.entity.brain.task.custom.SeekRandomNearbyPosition;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
@@ -37,18 +36,18 @@ public class ChomperEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void registerGoals() {
-		goalSelector.addGoal(1, new ExtendedMeleeAttackGoal<>(this).attackInterval(ConstantInt.of(getCurrentSwingDuration())).actionTelegraphTicks(getPreAttackTime()).onStart(goal -> setSharedFlag(3, true)).onStop(goal -> setSharedFlag(3, false)));
-		goalSelector.addGoal(2, new MoveToWaterGoal<>(this, 0.8d));
-		goalSelector.addGoal(7, new RandomStrollGoal(this, 0.7d));
-		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
-		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new ExtendedFindNearbyTargetGoal<>(this, true, EntityPredicate.SURVIVAL_PLAYER));
+	public BrainActivityGroup<AoAMeleeMob> getIdleTasks() {
+		return BrainActivityGroup.idleTasks(
+				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER),
+				new OneRandomBehaviour<>(
+						new FirstApplicableBehaviour<>(
+								new SeekRandomNearbyPosition<>().speedModifier(0.8f).validPositions((entity, state) -> state.getFluidState().is(FluidTags.WATER)).startCondition(entity -> entity.level.isDay() && !entity.isInWater()),
+								new SetRandomWalkTarget<>().speedModifier(0.7f)),
+						new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))));
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 0.75f;
 	}
 

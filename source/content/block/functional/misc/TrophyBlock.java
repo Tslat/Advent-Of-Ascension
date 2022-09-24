@@ -75,7 +75,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 		if (!level.isClientSide())
 			return null;
 
-		return ((entityLevel, entityPos, entityState, blockEntity) -> TrophyTileEntity.doClientTick(entityLevel, entityPos, entityState, (TrophyTileEntity)blockEntity));
+		return (entityLevel, entityPos, entityState, blockEntity) -> TrophyTileEntity.doClientTick(entityLevel, entityPos, entityState, (TrophyTileEntity)blockEntity);
 	}
 
 	@Override

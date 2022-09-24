@@ -31,11 +31,11 @@ public class DeadTreeEntity extends AoAMeleeMob {
 		return super.finalizeSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
 	}
 
-	@Override
-	protected void registerGoals() {}
+	/*@Override
+	protected void registerGoals() {}*/
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 2.4f;
 	}
 

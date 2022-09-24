@@ -1,19 +1,35 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
+import com.mojang.datafixers.util.Pair;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
+import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class AncientGolemEntity extends AoAMeleeMob {
 	public AncientGolemEntity(EntityType<? extends Monster> entityType, Level world) {
@@ -21,8 +37,25 @@ public class AncientGolemEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return 2f;
+	public List<ExtendedSensor<AoAMeleeMob>> getSensors() {
+		return ObjectArrayList.of(
+				new NearbyPlayersSensor<AoAMeleeMob>().setRadius(16),
+				new NearbyLivingEntitySensor<AoAMeleeMob>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
+				new HurtBySensor<>());
+	}
+
+	@Override
+	public BrainActivityGroup<AoAMeleeMob> getIdleTasks() {
+		return BrainActivityGroup.idleTasks(
+				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER),
+				new OneRandomBehaviour<>(
+						Pair.of(new SetRandomWalkTarget<>().speedModifier(0.9f), 1),
+						Pair.of(new Idle<>().runFor(entity -> entity.getRandom().nextInt(60, 120)), 2)));
+	}
+
+	@Override
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return 2 + 6 / 16f;
 	}
 
 	@Nullable
@@ -49,4 +82,19 @@ public class AncientGolemEntity extends AoAMeleeMob {
 		return AoASounds.ENTITY_GOLEM_STEP.get();
 	}
 
+	@Override
+	protected int getAttackSwingDuration() {
+		return 11;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return 1;
+	}
+
+	@Override
+	public void registerControllers(AnimationData animationData) {
+		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
+		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
+	}
 }

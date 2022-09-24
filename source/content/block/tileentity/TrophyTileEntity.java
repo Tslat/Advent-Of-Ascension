@@ -19,13 +19,13 @@ import javax.annotation.Nullable;
 import java.util.function.Function;
 
 public class TrophyTileEntity extends BlockEntity implements Nameable {
+	private final Block trophyBlock;
+
 	@Nullable
 	private Entity cachedEntity = null;
 	@Nullable
 	private String entityId = null;
 	private boolean isOriginal = true;
-
-	private Block trophyBlock = null;
 
 	private float mobRotation;
 	private float prevMobRotation;
@@ -33,6 +33,8 @@ public class TrophyTileEntity extends BlockEntity implements Nameable {
 
 	public TrophyTileEntity(BlockPos pos, BlockState state) {
 		super(AoABlockEntities.TROPHY.get(), pos, state);
+
+		this.trophyBlock = state.getBlock();
 	}
 
 	public void setEntity(String entityId, boolean isEgg) {
@@ -44,9 +46,6 @@ public class TrophyTileEntity extends BlockEntity implements Nameable {
 	public static void doClientTick(Level level, BlockPos pos, BlockState state, TrophyTileEntity blockEntity) {
 		blockEntity.prevMobRotation = blockEntity.mobRotation;
 		blockEntity.mobRotation = (blockEntity.mobRotation + 0.05f) % 360;
-
-		if (blockEntity.trophyBlock == null && level != null)
-			blockEntity.trophyBlock = level.getBlockState(pos).getBlock();
 	}
 
 	public float getMobRotation() {
@@ -152,7 +151,7 @@ public class TrophyTileEntity extends BlockEntity implements Nameable {
 
 	@Override
 	public boolean hasCustomName() {
-		return trophyBlock != null && entityId != null;
+		return entityId != null;
 	}
 
 	@Nullable

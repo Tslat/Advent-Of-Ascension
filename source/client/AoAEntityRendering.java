@@ -108,6 +108,7 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> THORNY_PLANT_SPROUT = new EntityRendererPackage<>(AoAMiscEntities.THORNY_PLANT_SPROUT).geckolib("mob/misc/thorny_plant_sprout");
 
+	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new EntityRendererPackage<>(AoAMobs.ANCIENT_GOLEM).geckolib("mob/overworld/ancient_golem");
 	public static final EntityRendererPackage<?> ANGLER = new EntityRendererPackage<>(AoAMobs.ANGLER).geckolib("mob/lborean/angler");
 	public static final EntityRendererPackage<?> ARCBEAST = new EntityRendererPackage<>(AoAMobs.ARCBEAST).geckolib("mob/shyrelands/arcbeast");
 	public static final EntityRendererPackage<?> AROCKNID = new EntityRendererPackage<>(AoAMobs.AROCKNID).geckolib("mob/deeplands/arocknid");
@@ -126,6 +127,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> ICE_GIANT = new EntityRendererPackage<>(AoAMobs.ICE_GIANT).geckolib("mob/overworld/ice_giant");
 	public static final EntityRendererPackage<?> KING_CHARGER = new EntityRendererPackage<>(AoAMobs.KING_CHARGER).geckolib("mob/overworld/king_charger");
 	public static final EntityRendererPackage<?> LEAFY_GIANT = new EntityRendererPackage<>(AoAMobs.LEAFY_GIANT).geckolib("mob/overworld/leafy_giant");
+	public static final EntityRendererPackage<?> LITTLE_BAM = new EntityRendererPackage<>(AoAMobs.LITTLE_BAM).geckolib("mob/nether/little_bam");
 	public static final EntityRendererPackage<?> MUCKOPEDE = new EntityRendererPackage<>(AoAMobs.MUCKOPEDE).geckolib("mob/overworld/muckopede");
 	public static final EntityRendererPackage<?> MUNCHER = new EntityRendererPackage<>(AoAMobs.MUNCHER).geckolib("mob/lborean/muncher");
 	public static final EntityRendererPackage<?> NEPTUNO = new EntityRendererPackage<>(AoAMobs.NEPTUNO).geckolib("mob/lborean/neptuno");
@@ -153,7 +155,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SMASH = new EntityRendererPackage<>(AoAMobs.SMASH).geckolib(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new EntityRendererPackage<>(AoAMobs.ELITE_SMASH).geckolib(new EliteSmashModel());
 
-	public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
+	//public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
 	public static final EntityRendererPackage<?> CREEP_BANKER = new EntityRendererPackage<>(AoANpcs.CREEP_BANKER).defineLayer("creep_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/creep_banker.png");
 	public static final EntityRendererPackage<?> CRYSTAL_TRADER = new EntityRendererPackage<>(AoANpcs.CRYSTAL_TRADER).defineLayer("crystal_trader", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/crystal_trader.png");
 	public static final EntityRendererPackage<?> DUNGEON_KEEPER = new EntityRendererPackage<>(AoANpcs.DUNGEON_KEEPER).defineLayer("dungeon_keeper", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/dungeon_keeper.png");
@@ -164,12 +166,12 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SHYRE_BANKER = new EntityRendererPackage<>(AoANpcs.SHYRE_BANKER).defineLayer("shyre_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/shyre_banker.png");
 	public static final EntityRendererPackage<?> TOKEN_COLLECTOR = new EntityRendererPackage<>(AoANpcs.TOKEN_COLLECTOR).defineLayer("token_collector", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/token_collector.png");
 	public static final EntityRendererPackage<?> TROLL_TRADER = new EntityRendererPackage<>(AoANpcs.TROLL_TRADER).geckolib("npc/trader/troll_trader");
-	public static final EntityRendererPackage<?> UNDEAD_HERALD = new EntityRendererPackage<>(AoANpcs.UNDEAD_HERALD).defineLayer("undead_herald", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/undead_herald.png");
 	public static final EntityRendererPackage<?> SKILL_MASTER = new EntityRendererPackage<>(AoANpcs.SKILL_MASTER).geckolib("npc/trader/skill_master");
 	public static final EntityRendererPackage<?> CORRUPTED_TRAVELLER = new EntityRendererPackage<>(AoANpcs.CORRUPTED_TRAVELLER).geckolib("npc/trader/corrupted_traveller", true, true);
 	public static final EntityRendererPackage<?> STORE_KEEPER = new EntityRendererPackage<>(AoANpcs.STORE_KEEPER).geckolib("npc/trader/store_keeper");
 
 	public static final EntityRendererPackage<?> LOTTOMAN = new EntityRendererPackage<>(AoANpcs.LOTTOMAN).geckolib("npc/trader/lottoman", true);
+	public static final EntityRendererPackage<?> UNDEAD_HERALD = new EntityRendererPackage<>(AoANpcs.UNDEAD_HERALD).geckolib("npc/trader/undead_herald", true);
 
 	public static final EntityRendererPackage<?> DRYAD_SPRITE = new EntityRendererPackage<>(AoANpcs.DRYAD_SPRITE).geckolib(new DryadSpriteModel());
 
@@ -387,7 +389,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> ALARMO = new EntityRendererPackage<>(AoAMobs.ALARMO).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> AMPHIBIOR = new EntityRendererPackage<>(AoAMobs.AMPHIBIOR).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> AMPHIBIYTE = new EntityRendererPackage<>(AoAMobs.AMPHIBIYTE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new EntityRendererPackage<>(AoAMobs.ANCIENT_GOLEM).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ANEMIA = new EntityRendererPackage<>(AoAMobs.ANEMIA).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> APPARITION = new EntityRendererPackage<>(AoAMobs.APPARITION).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ARC_FLOWER = new EntityRendererPackage<>(AoAMobs.ARC_FLOWER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

@@ -13,13 +13,14 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.entity.projectile.staff.ShyreShotEntity;
+import net.tslat.aoa3.event.custom.AoAEvents;
+import net.tslat.aoa3.event.custom.events.MagicTeleportEvent;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -65,20 +66,29 @@ public class ShyreStaff extends BaseStaff<Object> {
 			tests++;
 		}
 
-		if (state.isAir() && !ForgeEventFactory.onEntityTeleportCommand(shooter, testVec.x(), testVec.y(), testVec.z()).isCanceled()) {
-			shooter.teleportTo(testVec.x(), testVec.y(), testVec.z());
+		if (state.isAir()) {
+			MagicTeleportEvent event = AoAEvents.magicalTeleport(shooter, null, null, testVec);
 
-			if (shooter instanceof ServerPlayer && WorldUtil.isWorld(shooter.level, AoADimensions.LUNALUS.key))
-				AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
+			if (event.isCanceled())
+				return;
+
+			testVec = event.getTarget();
 		}
+
+		shooter.teleportTo(testVec.x(), testVec.y(), testVec.z());
+
+		if (shooter instanceof ServerPlayer && WorldUtil.isWorld(shooter.level, AoADimensions.LUNALUS.key))
+			AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		Vec3 teleportPos = new Vec3((target.getX() + shot.getX()) / 2d, (target.getY() + shot.getY()) / 2d, (target.getZ() + shot.getZ()) / 2d);
+		MagicTeleportEvent event = AoAEvents.magicalTeleport(shooter, null, null, new Vec3((target.getX() + shot.getX()) / 2d, (target.getY() + shot.getY()) / 2d, (target.getZ() + shot.getZ()) / 2d));
 
-		if (!ForgeEventFactory.onEntityTeleportCommand(shooter, teleportPos.x(), teleportPos.y(), teleportPos.z()).isCanceled())
-			shooter.teleportTo(teleportPos.x(), teleportPos.y(), teleportPos.z());
+		if (event.isCanceled())
+			return false;
+
+		shooter.teleportTo(event.getTargetX(), event.getTargetY(), event.getTargetZ());
 
 		return true;
 	}

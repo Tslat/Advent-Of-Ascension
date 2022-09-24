@@ -2,21 +2,15 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/overworld"
-        }
-      ],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 100
+          "weight": 75
         },
         {
           "type": "minecraft:item",
@@ -51,10 +45,15 @@
           "type": "minecraft:item",
           "name": "aoa3:power_core",
           "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:poppy",
+          "weight": 40
         }
       ],
-      "name": "mob_specific_loot",
-      "rolls": 1.0
+      "name": "loot",
+      "rolls": 2.0
     }
   ]
 }

@@ -269,7 +269,7 @@ public final class SoundBuilder {
 
 	private void play() {
 		if (inWorld) {
-			PlayLevelSoundEvent.AtEntity event = ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch);
+			PlayLevelSoundEvent event = followingEntity != null ? ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch) : ForgeEventFactory.onPlaySoundAtPosition(world, location.x, location.y, location.z, sound, category, radius / 16f, pitch);
 
 			if (event.isCanceled() || (sound = event.getSound()) == null)
 				return;

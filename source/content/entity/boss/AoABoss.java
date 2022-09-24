@@ -256,6 +256,7 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 			AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level, this.position());
 
 			if (arena != null) {
+				resetFallDistance();
 				setPos(arena.getRandomBossSpawn());
 
 				return false;

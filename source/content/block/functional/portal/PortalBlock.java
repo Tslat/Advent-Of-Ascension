@@ -145,7 +145,12 @@ public class PortalBlock extends Block {
 			if (this.world == null || !world.getServer().isNetherEnabled())
 				return;
 
-			ITeleporter teleporter = this.world == Level.NETHER ? new NetherTeleporter() : getTeleporterForWorld(world.getServer().getLevel(this.world));
+			ServerLevel targetLevel = world.getServer().getLevel(this.world);
+
+			if (targetLevel == null)
+				return;
+
+			ITeleporter teleporter = this.world == Level.NETHER ? new NetherTeleporter() : getTeleporterForWorld(targetLevel);
 			PortalCoordinatesContainer portalLoc = null;
 
 			if (entity instanceof Player) {

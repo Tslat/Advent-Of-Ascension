@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:roll_extra_tables",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:chests/end_city_treasure"
+    }
+  ],
+  "tables": [
+    "aoa3:misc/end_generic_chest_loot"
+  ]
+}

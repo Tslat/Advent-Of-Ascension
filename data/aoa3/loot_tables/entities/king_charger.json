@@ -9,22 +9,6 @@
       },
       "entries": [
         {
-          "type": "minecraft:loot_table",
-          "name": "aoa3:worlds/overworld",
-          "weight": 100
-        }
-      ],
-      "name": "world_table",
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": {
-        "type": "minecraft:uniform",
-        "max": 0.0,
-        "min": 0.0
-      },
-      "entries": [
-        {
           "type": "minecraft:item",
           "functions": [
             {

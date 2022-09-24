@@ -20,7 +20,7 @@ public class HidingFungiEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 0.4f;
 	}
 
@@ -29,8 +29,8 @@ public class HidingFungiEntity extends AoAMeleeMob {
 		return true;
 	}
 
-	@Override
-	protected void registerGoals() {}
+	/*@Override
+	protected void registerGoals() {}*/
 
 	@Override
 	protected void onHit(DamageSource source, float amount) {

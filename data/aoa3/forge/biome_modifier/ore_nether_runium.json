@@ -1,0 +1,14 @@
+{
+  "type": "aoa3:new_feature",
+  "biomes": {
+    "if_all": [
+      "#minecraft:is_nether"
+    ],
+    "if_any": [
+      "#forge:is_magical",
+      "minecraft:warped_forest"
+    ]
+  },
+  "features": "aoa3:ore_nether_runium",
+  "gen_step": "underground_ores"
+}

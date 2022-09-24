@@ -28,7 +28,7 @@ public class CaseConstructEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return 12.5f / 16f;
     }
 

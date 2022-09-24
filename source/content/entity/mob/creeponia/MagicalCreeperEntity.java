@@ -27,7 +27,7 @@ public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARang
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return 1.40625f;
     }
 

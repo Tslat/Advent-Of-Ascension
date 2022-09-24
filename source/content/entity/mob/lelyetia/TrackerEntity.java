@@ -18,13 +18,11 @@ public class TrackerEntity extends AoAMeleeMob {
 	public TrackerEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		isSlipperyMovement = true;
-
 		setSpeed(1.4f);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.125f;
 	}
 

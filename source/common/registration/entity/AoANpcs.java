@@ -31,8 +31,8 @@ public final class AoANpcs {
 	public static final RegistryObject<EntityType<PathfinderMob>> ZAL_BANKER = registerNPC("zal_banker", ZalBankerEntity::new, 0.5625f, 1.875f, 11975695, 4144954);
 
 	public static final RegistryObject<EntityType<AoATrader>> LOTTOMAN = registerNPC("lottoman", LottomanEntity::new, 0.5625f, 2.0f, 0x6B2A25, 0x2E1F14);
+	public static final RegistryObject<EntityType<AoATrader>> UNDEAD_HERALD = registerNPC("undead_herald", UndeadHeraldEntity::new, 0.5625f, 2.0f, 0xA7A294, 0x212121);
 
-	public static final RegistryObject<EntityType<AoATrader>> ASSASSIN = registerNPC("assassin", AssassinEntity::new, 0.5625f, 2.0f, 0x160725, 0x4A2F62);
 	public static final RegistryObject<EntityType<PathfinderMob>> CORRUPTED_TRAVELLER = registerNPC("corrupted_traveller", CorruptedTravellerEntity::new, 0.5625f, 2.0f, 0x2D231A, 0x54A8B0);
 	public static final RegistryObject<EntityType<AoATrader>> CRYSTAL_TRADER = registerNPC("crystal_trader", CrystalTraderEntity::new, 0.5625f, 2.0f, 0x046E12, 0x881A18);
 	public static final RegistryObject<EntityType<AoATrader>> DUNGEON_KEEPER = registerNPC("dungeon_keeper", DungeonKeeperEntity::new, 0.5625f, 2.0f, 0x171410, 0x4C4231);
@@ -52,7 +52,6 @@ public final class AoANpcs {
 	public static final RegistryObject<EntityType<AoATrader>> TOKEN_COLLECTOR = registerNPC("token_collector", TokenCollectorEntity::new, 0.5625f, 2.0f, 0x675105, 0x1C1304);
 	public static final RegistryObject<EntityType<AoATrader>> TOY_MERCHANT = registerNPC("toy_merchant", ToyMerchantEntity::new, 0.5625f, 1 + 14 / 16f, 7821066, 14068552);
 	public static final RegistryObject<EntityType<AoATrader>> TROLL_TRADER = registerNPC("troll_trader", TrollTraderEntity::new, 0.5625f, 1.8125f, 0x417DB0, 0x6B2969);
-	public static final RegistryObject<EntityType<AoATrader>> UNDEAD_HERALD = registerNPC("undead_herald", UndeadHeraldEntity::new, 0.5625f, 2.0f, 0x121213, 0x715E4A);
 	public static final RegistryObject<EntityType<AoATrader>> ZAL_GROCER = registerNPC("zal_grocer", ZalGrocerEntity::new, 0.5625f, 1.875f, 2956551, 6315353);
 	public static final RegistryObject<EntityType<AoATrader>> ZAL_HERBALIST = registerNPC("zal_herbalist", ZalHerbalistEntity::new, 0.5625f, 1.875f, 997382, 6315353);
 	public static final RegistryObject<EntityType<AoATrader>> ZAL_SPELLBINDER = registerNPC("zal_spellbinder", ZalSpellbinderEntity::new, 0.5625f, 1.875f, 3475048, 6315353);

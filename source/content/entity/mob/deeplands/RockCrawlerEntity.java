@@ -11,13 +11,9 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.goal.*;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.client.render.AoAAnimations;
@@ -40,7 +36,7 @@ public class RockCrawlerEntity extends AoAMeleeMob {
         this.entityData.define(CLIMBING, (byte)0);
     }
 
-    @Override
+    /*@Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(2, new LeapAtTargetGoal(this, 0.4f));
@@ -50,7 +46,7 @@ public class RockCrawlerEntity extends AoAMeleeMob {
         goalSelector.addGoal(8, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
         targetSelector.addGoal(2, new NearestAttackableTargetGoal<Player>(this, Player.class, true));
-    }
+    }*/
 
     @Override
     protected PathNavigation createNavigation(Level world) {
@@ -58,7 +54,7 @@ public class RockCrawlerEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+    protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
         return 1.6875f;
     }
 

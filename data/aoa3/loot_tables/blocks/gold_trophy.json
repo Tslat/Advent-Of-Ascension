@@ -27,7 +27,7 @@
               "target": "BlockEntityTag.EntityID"
             }
           ],
-          "source": "this"
+          "source": "block_entity"
         },
         {
           "function": "minecraft:copy_nbt",
@@ -38,7 +38,7 @@
               "target": "BlockEntityTag.OriginalTrophy"
             }
           ],
-          "source": "this"
+          "source": "block_entity"
         }
       ],
       "rolls": 1.0

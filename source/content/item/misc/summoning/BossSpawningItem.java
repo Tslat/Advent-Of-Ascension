@@ -14,10 +14,12 @@ import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.item.misc.TooltipItem;
+import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 public abstract class BossSpawningItem<T extends Entity> extends TooltipItem implements BossTokenItem {
@@ -62,13 +64,19 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key))
+		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key) || !(level instanceof ServerLevel serverLevel) || !(entity instanceof ServerPlayer pl))
 			return stack;
 
-		AoABlocks.NOWHERE_PORTAL.get().entityInside(AoABlocks.NOWHERE_PORTAL.get().defaultBlockState(), level, entity.blockPosition(), entity);
+		ServerLevel nowhere = serverLevel.getServer().getLevel(AoADimensions.NOWHERE.key);
 
-		if (entity instanceof ServerPlayer pl)
-			AoAScheduler.scheduleSyncronisedTask(() -> pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot()), 1);
+		if (nowhere == null)
+			return stack;
+
+		AoAScheduler.scheduleSyncronisedTask(() -> {
+			PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(nowhere.dimension(), new PortalCoordinatesContainer(level.dimension(), pl.getX(), pl.getY(), pl.getZ()));
+			pl.changeDimension(nowhere, PortalBlock.getTeleporterForWorld(nowhere));
+			pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+		}, 1);
 
 		return stack;
 	}

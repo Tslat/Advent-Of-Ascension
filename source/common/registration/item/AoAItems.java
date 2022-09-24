@@ -13,6 +13,7 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.item.food.*;
 import net.tslat.aoa3.content.item.lootbox.*;
 import net.tslat.aoa3.content.item.misc.*;
+import net.tslat.aoa3.content.item.misc.summoning.NethengeicCallstone;
 import net.tslat.aoa3.content.item.misc.summoning.TrollIdol;
 import net.tslat.aoa3.content.item.tablet.*;
 import net.tslat.effectslib.api.util.EffectBuilder;
@@ -231,7 +232,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> HEAVY_BOULDER = registerItem("heavy_boulder", miscItem()); // TODO
 	public static final RegistryObject<Item> HIVE_EGG = registerItem("hive_egg", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> MEGA_RUNE_STONE = registerItem("mega_rune_stone", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON).durability(5).setNoRepair()));
-	public static final RegistryObject<Item> NETHENGEIC_CALLSTONE = registerItem("nethengeic_callstone", miscItem()); // TODO
+	public static final RegistryObject<Item> NETHENGEIC_CALLSTONE = registerItem("nethengeic_callstone", NethengeicCallstone::new);
 	public static final RegistryObject<Item> OBSERVING_EYE = registerItem("observing_eye", miscItem()); // TODO
 	public static final RegistryObject<Item> PETALS = registerItem("petals", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> SHROOM_STONE = registerItem("shroom_stone", miscItem()); // TODO
@@ -242,7 +243,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> VILE_STONE = registerItem("vile_stone", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> VOLIANT_HEART = registerItem("voliant_heart", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> WARLOCK_GEM = registerItem("warlock_gem", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> DUNGEON_TOKENS = registerItem("dungeon_tokens", miscItem());
+	public static final RegistryObject<Item> ARCHAIC_TOKEN = registerItem("archaic_token", miscItem());
 
 	public static final RegistryObject<Item> ABYSSAL_UPGRADE_KIT = registerItem("abyssal_upgrade_kit", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.RARE)));
 	public static final RegistryObject<Item> ANCIENT_UPGRADE_KIT = registerItem("ancient_upgrade_kit", () -> new Item(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.RARE))); // TODO Obtain Method

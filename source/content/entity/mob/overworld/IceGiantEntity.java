@@ -1,10 +1,12 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -42,6 +44,11 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 	}
 
 	@Override
+	protected Brain.Provider<?> brainProvider() { // TODO
+		return Brain.provider(ImmutableList.of(), ImmutableList.of());
+	}
+
+	@Override
 	protected void registerGoals() {
 		Goal meleeGoal = new TelegraphedMeleeAttackGoal<>(this).preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration());
 		Goal rangedGoal = new TelegraphedRangedAttackGoal<>(this).attackFrequency(0, 1).moveSpeedMod(0).windUpTime(1);
@@ -68,7 +75,7 @@ public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 2.65625f;
 	}
 

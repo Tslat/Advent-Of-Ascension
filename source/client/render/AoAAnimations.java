@@ -6,6 +6,7 @@ import net.minecraftforge.common.ForgeMod;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
@@ -14,35 +15,36 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public final class AoAAnimations {
-	public static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("misc.idle", true);
-	public static final AnimationBuilder RECOVER = new AnimationBuilder().addAnimation("misc.rest", false);
-	public static final AnimationBuilder EAT = new AnimationBuilder().addAnimation("misc.eat", false);
-	public static final AnimationBuilder SUCCEED = new AnimationBuilder().addAnimation("misc.succeed", false);
-	public static final AnimationBuilder SPAWN = new AnimationBuilder().addAnimation("misc.spawn", false);
-	public static final AnimationBuilder INTERACT = new AnimationBuilder().addAnimation("misc.interact", false).addAnimation("misc.interact.hold", true);
-	public static final AnimationBuilder INTERACT_END = new AnimationBuilder().addAnimation("misc.interact.end", false);
+	public static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("misc.idle", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder RECOVER = new AnimationBuilder().addAnimation("misc.rest", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder EAT = new AnimationBuilder().addAnimation("misc.eat", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder SUCCEED = new AnimationBuilder().addAnimation("misc.succeed", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder SPAWN = new AnimationBuilder().addAnimation("misc.spawn", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder INTERACT = new AnimationBuilder().addAnimation("misc.interact", ILoopType.EDefaultLoopTypes.PLAY_ONCE).addAnimation("misc.interact.hold", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder INTERACT_END = new AnimationBuilder().addAnimation("misc.interact.end", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 
-	public static final AnimationBuilder WALK = new AnimationBuilder().addAnimation("move.walk", true);
-	public static final AnimationBuilder RUN = new AnimationBuilder().addAnimation("move.run", true);
-	public static final AnimationBuilder FLY = new AnimationBuilder().addAnimation("move.fly", true);
-	public static final AnimationBuilder SWIM = new AnimationBuilder().addAnimation("move.swim", true);
+	public static final AnimationBuilder WALK = new AnimationBuilder().addAnimation("move.walk", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder RUN = new AnimationBuilder().addAnimation("move.run", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder FLY = new AnimationBuilder().addAnimation("move.fly", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder SWIM = new AnimationBuilder().addAnimation("move.swim", ILoopType.EDefaultLoopTypes.LOOP);
 
-	public static final AnimationBuilder ATTACK_SWING = new AnimationBuilder().addAnimation("attack.swing", false);
-	public static final AnimationBuilder ATTACK_THROW = new AnimationBuilder().addAnimation("attack.throw", false);
-	public static final AnimationBuilder ATTACK_BITE = new AnimationBuilder().addAnimation("attack.bite", false);
-	public static final AnimationBuilder ATTACK_SLAM = new AnimationBuilder().addAnimation("attack.slam", false);
-	public static final AnimationBuilder ATTACK_STOMP = new AnimationBuilder().addAnimation("attack.stomp", false);
-	public static final AnimationBuilder ATTACK_STRIKE = new AnimationBuilder().addAnimation("attack.strike", false);
-	public static final AnimationBuilder ATTACK_SPIN = new AnimationBuilder().addAnimation("attack.spin", false);
-	public static final AnimationBuilder ATTACK_FLYING_BITE = new AnimationBuilder().addAnimation("attack.midair_bite", false);
-	public static final AnimationBuilder ATTACK_SHOOT = new AnimationBuilder().addAnimation("attack.shoot", false);
-	public static final AnimationBuilder ATTACK_BLOCK = new AnimationBuilder().addAnimation("attack.block", false).addAnimation("attack.block.hold", true);
-	public static final AnimationBuilder ATTACK_CHARGE = new AnimationBuilder().addAnimation("attack.charge", false).addAnimation("attack.charge.hold", true);
-	public static final AnimationBuilder ATTACK_CHARGE_END = new AnimationBuilder().addAnimation("attack.charge.end", false);
+	public static final AnimationBuilder ATTACK_SWING = new AnimationBuilder().addAnimation("attack.swing", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_THROW = new AnimationBuilder().addAnimation("attack.throw", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_BITE = new AnimationBuilder().addAnimation("attack.bite", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_SLAM = new AnimationBuilder().addAnimation("attack.slam", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_STOMP = new AnimationBuilder().addAnimation("attack.stomp", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_STRIKE = new AnimationBuilder().addAnimation("attack.strike", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_SPIN = new AnimationBuilder().addAnimation("attack.spin", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_FLYING_BITE = new AnimationBuilder().addAnimation("attack.midair_bite", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_SHOOT = new AnimationBuilder().addAnimation("attack.shoot", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_BLOCK = new AnimationBuilder().addAnimation("attack.block", ILoopType.EDefaultLoopTypes.PLAY_ONCE).addAnimation("attack.block.hold", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder ATTACK_CHARGE = new AnimationBuilder().addAnimation("attack.charge", ILoopType.EDefaultLoopTypes.PLAY_ONCE).addAnimation("attack.charge.hold", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder ATTACK_CHARGE_END = new AnimationBuilder().addAnimation("attack.charge.end", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_POWERUP = new AnimationBuilder().addAnimation("attack.powerup", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 
-	public static final AnimationBuilder ATTACK_SWIPE_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", false);
-	public static final AnimationBuilder ATTACK_SWIPE_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", false);
-	public static final AnimationBuilder ATTACK_SHOOT_ALTERNATE = new AnimationBuilder().addAnimation("attack.shoot_alternate", false);
+	public static final AnimationBuilder ATTACK_SWIPE_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_SWIPE_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	public static final AnimationBuilder ATTACK_SHOOT_ALTERNATE = new AnimationBuilder().addAnimation("attack.shoot_alternate", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 
 	public static <T extends Entity & IAnimatable> AnimationController<T> genericIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {

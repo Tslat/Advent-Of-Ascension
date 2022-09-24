@@ -18,8 +18,6 @@ public class RunicornEntity extends AoAMeleeMob {
 	public RunicornEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		isSlipperyMovement = true;
-
 		setSpeed(1.6f);
 	}
 
@@ -31,7 +29,7 @@ public class RunicornEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.6875f;
 	}
 

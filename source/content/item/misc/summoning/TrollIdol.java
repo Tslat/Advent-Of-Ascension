@@ -51,7 +51,7 @@ public class TrollIdol extends BossSpawningItem<SmashEntity> {
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		if (!stack.isDamaged() || target.getMobType() != MobType.UNDEAD || target.getHealth() > 0)
-			return false;
+			return true;
 
 		stack.setDamageValue(stack.getDamageValue() - 1);
 

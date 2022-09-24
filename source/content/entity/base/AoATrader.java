@@ -61,7 +61,7 @@ public abstract class AoATrader extends Villager implements IAnimatable {
 		goalSelector.addGoal(2, new OpenDoorGoal(this, true));
 		goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 3f, 1f));
 		goalSelector.addGoal(3, new TraderRestockGoal(this));
-		goalSelector.addGoal(4, new RandomStrollGoal(this, 1d));
+		goalSelector.addGoal(4, new RandomStrollGoal(this, 0.5f));
 		goalSelector.addGoal(5, new RandomLookAroundGoal(this));
 	}
 

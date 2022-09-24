@@ -19,7 +19,7 @@ public class TipsyEntity extends AoAMeleeMob {
 
 	// TODO look at custom drunk AI
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.78125f;
 	}
 

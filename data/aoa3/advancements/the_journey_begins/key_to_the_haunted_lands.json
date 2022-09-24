@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:the_journey_begins/key_to_the_abyss",
+  "criteria": {
+    "obtain_greckon_realmstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:greckon_realmstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.the_journey_begins.key_to_the_haunted_lands.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:greckon_realmstone"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.the_journey_begins.key_to_the_haunted_lands.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_greckon_realmstone"
+    ]
+  ]
+}

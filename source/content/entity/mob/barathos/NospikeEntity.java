@@ -16,13 +16,12 @@ public class NospikeEntity extends AoAMeleeMob {
 	public NospikeEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		isSlipperyMovement = true;
 		setSpeed(3.7f);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return sizeIn.height * 0.85f;
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return dimensions.height * 0.85f;
 	}
 
 	@Nullable

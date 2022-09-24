@@ -23,8 +23,8 @@ public class UriohEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions size) {
-		return size.height * 0.6f;
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return dimensions.height * 0.6f;
 	}
 
 	@Nullable

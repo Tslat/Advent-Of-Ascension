@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:armoury_prep/framed",
+  "criteria": {
+    "obtain_infusion_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:infusion_table"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.armoury_prep.ready_to_imbue.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:infusion_table"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.armoury_prep.ready_to_imbue.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_infusion_table"
+    ]
+  ]
+}

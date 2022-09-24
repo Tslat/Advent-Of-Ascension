@@ -90,10 +90,9 @@ public class PlayerEvents {
 				LunalusEvents.doPlayerTick(ev.player);
 			}
 		}
-		else {
-			if (WorldUtil.isWorld(ev.player.level, AoADimensions.NOWHERE.key))
-				NowhereEvents.doPlayerTick(ev);
-		}
+
+		if (WorldUtil.isWorld(ev.player.level, AoADimensions.NOWHERE.key))
+			NowhereEvents.doPlayerTick(ev);
 	}
 
 	private static void onPlayerJump(final LivingEvent.LivingJumpEvent ev) {

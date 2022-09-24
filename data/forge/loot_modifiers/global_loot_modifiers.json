@@ -5,11 +5,13 @@
     "aoa3:elder_guardian_biogenic_armour",
     "aoa3:loot_modifying_items",
     "aoa3:overworld_chest_loot",
-    "aoa3:additional_generic_chest_loot",
     "aoa3:fertilised_farmland",
     "aoa3:gardener",
     "aoa3:guardian_biogenic_armour",
-    "aoa3:dispenser_loot"
+    "aoa3:end_chest_loot",
+    "aoa3:dispenser_loot",
+    "aoa3:nether_chest_loot",
+    "aoa3:world_tables"
   ],
   "replace": false
 }

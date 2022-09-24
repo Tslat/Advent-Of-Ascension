@@ -46,7 +46,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<Monster>> ALARMO = registerMob("alarmo", AlarmoEntity::new, 0.625f, 1.375f, 14555160, 6048330);
 	public static final RegistryObject<EntityType<WaterAnimal>> AMPHIBIOR = registerMob("amphibior", AmphibiorEntity::new, 0.625f, 2.1875f, 6026738, 16757504);
 	public static final RegistryObject<EntityType<WaterAnimal>> AMPHIBIYTE = registerMob("amphibiyte", AmphibiyteEntity::new, 0.95f, 1.25f, 5140613, 16744695);
-	public static final RegistryObject<EntityType<Monster>> ANCIENT_GOLEM = registerMob("ancient_golem", AncientGolemEntity::new, 0.85f, 2.25f, 3352336, 11373902);
+	public static final RegistryObject<EntityType<Monster>> ANCIENT_GOLEM = registerMob("ancient_golem", AncientGolemEntity::new, 1 + 2 / 16f, 2 + 10 / 16f, 0x221D19, 0x211C18);
 	public static final RegistryObject<EntityType<FlyingMob>> ANEMIA = registerMob("anemia", AnemiaEntity::new, 2.25f, 3f, 5179400, 16711680);
 	public static final RegistryObject<EntityType<AnglerEntity>> ANGLER = registerMob("angler", AnglerEntity::new, 0.75f, 0.875f, 0x143A4D, 0x216279);
 	public static final RegistryObject<EntityType<Monster>> APPARITION = registerMob("apparition", ApparitionEntity::new, 0.5f, 1.5625f, 7040112, 526344);
@@ -203,7 +203,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<Monster>> LELYETIAN_CASTER = registerMob("lelyetian_caster", LelyetianCasterEntity::new, 0.6f, 2.375f, 12330277, 14413608);
 	public static final RegistryObject<EntityType<Monster>> LELYETIAN_WARRIOR = registerMob("lelyetian_warrior", LelyetianWarriorEntity::new, 0.6f, 2.375f, 12330277, 13489046);
 	public static final RegistryObject<EntityType<Monster>> LIGHTWALKER = registerMob("lightwalker", LightwalkerEntity::new, 1.0f, 1.5625f, 7765779, 2895137);
-	//public static final RegistryObject<EntityType<Monster>> LITTLE_BAM = registerMob("little_bam", LittleBamEntity::new, 0.7f, 1f, 6293512, 8345864);
+	public static final RegistryObject<EntityType<Monster>> LITTLE_BAM = registerMob("little_bam", LittleBamEntity::new, true, 0.75f, 1 + 10.5f / 16f, 0x2F180E, 0xDB8702);
 	public static final RegistryObject<EntityType<Monster>> LIVING_FUNGI = registerMob("living_fungi", LivingFungiEntity::new, 1.1f, 2.4375f, 1705678, 15000557);
 	public static final RegistryObject<EntityType<Monster>> LOLLYPOPPER = registerMob("lollypopper", LollypopperEntity::new, 1.0625f, 2.4375f, 13387173, 14069706);
 	public static final RegistryObject<EntityType<Monster>> LOST_SOUL = registerMob("lost_soul", LostSoulEntity::new, 0.6f, 2.0f, 1578521, 11774647);

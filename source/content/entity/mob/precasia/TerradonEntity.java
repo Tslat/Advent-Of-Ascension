@@ -25,13 +25,11 @@ public class TerradonEntity extends AoAMeleeMob {
 	public TerradonEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		isSlipperyMovement = true;
-
 		setSpeed(1.8f);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.3125f;
 	}
 

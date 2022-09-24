@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:the_journey_begins/overworld",
+  "criteria": {
+    "obtain_creeponia_realmstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:creeponia_realmstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.the_journey_begins.the_explosive_key.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:creeponia_realmstone"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.the_journey_begins.the_explosive_key.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_creeponia_realmstone"
+    ]
+  ]
+}

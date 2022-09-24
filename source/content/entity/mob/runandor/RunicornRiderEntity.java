@@ -16,13 +16,11 @@ public class RunicornRiderEntity extends AoAMeleeMob {
 	public RunicornRiderEntity(EntityType<? extends Monster> entityType, Level world) {
 		super(entityType, world);
 
-		isSlipperyMovement = true;
-
 		setSpeed(2.3f);
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 2.34375f;
 	}
 

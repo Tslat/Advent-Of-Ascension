@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
+import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -9,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -44,8 +46,8 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-		return 4.34375f;
+	protected Brain.Provider<?> brainProvider() { // TODO
+		return Brain.provider(ImmutableList.of(), ImmutableList.of());
 	}
 
 	@Override
@@ -75,8 +77,8 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 	}
 
 	@Override
-	public float getStepHeight() {
-		return super.getStepHeight();
+	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
+		return 4.34375f;
 	}
 
 	@Override

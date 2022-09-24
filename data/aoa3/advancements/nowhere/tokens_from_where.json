@@ -1,12 +1,12 @@
 {
   "parent": "aoa3:nowhere/root",
   "criteria": {
-    "obtain_dungeon_tokens": {
+    "obtain_archaic_token": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aoa3:dungeon_tokens"
+              "aoa3:archaic_token"
             ]
           }
         ]
@@ -23,7 +23,7 @@
     "frame": "task",
     "hidden": false,
     "icon": {
-      "item": "aoa3:dungeon_tokens"
+      "item": "aoa3:archaic_token"
     },
     "show_toast": true,
     "title": {
@@ -33,7 +33,7 @@
   },
   "requirements": [
     [
-      "obtain_dungeon_tokens"
+      "obtain_archaic_token"
     ]
   ]
 }
