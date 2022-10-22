@@ -15,8 +15,8 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class InfernalEntity extends AoAMeleeMob {
-    public InfernalEntity(EntityType<? extends Monster> entityType, Level world) {
+public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
+    public InfernalEntity(EntityType<? extends InfernalEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -56,7 +56,7 @@ public class InfernalEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected void onHit(DamageSource source, float amount) {
+    protected void onHurt(DamageSource source, float amount) {
         if (DamageUtil.isMeleeDamage(source) && (!(source.getEntity() instanceof Player) || PlayerUtil.shouldPlayerBeAffected((Player)source.getEntity())))
             source.getEntity().setSecondsOnFire(5);
     }

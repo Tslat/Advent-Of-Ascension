@@ -76,8 +76,8 @@ public final class AoARegistries {
 	public static final ForgeRegistryHelper<RecipeSerializer<?>> RECIPE_SERIALIZERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.RECIPE_SERIALIZERS, AoARecipes::init);
 	public static final ForgeRegistryHelper<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, AoALootModifiers::init);
 	public static final ForgeRegistryHelper<Attribute> ENTITY_ATTRIBUTES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ATTRIBUTES, AoAAttributes::init);
-	public static final ForgeRegistryHelper<VillagerProfession> VILLAGER_PROFESSIONS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.VILLAGER_PROFESSIONS, AoAProfessions::init);
 	public static final ForgeRegistryHelper<PoiType> POI_TYPES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.POI_TYPES, AoAPoiTypes::init);
+	public static final ForgeRegistryHelper<VillagerProfession> VILLAGER_PROFESSIONS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.VILLAGER_PROFESSIONS, AoAProfessions::init);
 	public static final ForgeRegistryHelper<SensorType<?>> BRAIN_SENSORS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.SENSOR_TYPES, AoABrainSensors::init);
 	public static final ForgeRegistryHelper<MemoryModuleType<?>> BRAIN_MEMORIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MEMORY_MODULE_TYPES, AoABrainMemories::init);
 	public static final ForgeRegistryHelper<BannerPattern> BANNER_PATTERNS = new ForgeRegistryHelper<>(Registry.BANNER_PATTERN_REGISTRY, AoABannerPatterns::init);

@@ -7,8 +7,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
-public class DwellerEntity extends AoAMeleeMob {
-    public DwellerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DwellerEntity extends AoAMeleeMob<DwellerEntity> {
+    public DwellerEntity(EntityType<? extends DwellerEntity> entityType, Level world) {
         super(entityType, world);
     }
 

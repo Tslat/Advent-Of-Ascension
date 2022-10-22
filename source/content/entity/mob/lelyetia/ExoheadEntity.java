@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class ExoheadEntity extends AoAMeleeMob {
-	public ExoheadEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ExoheadEntity extends AoAMeleeMob<ExoheadEntity> {
+	public ExoheadEntity(EntityType<? extends ExoheadEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

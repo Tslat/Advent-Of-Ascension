@@ -18,8 +18,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class GoalbyEntity extends AoAMeleeMob {
-	public GoalbyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GoalbyEntity extends AoAMeleeMob<GoalbyEntity> {
+	public GoalbyEntity(EntityType<? extends GoalbyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -5,7 +5,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
@@ -14,8 +13,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.SpectralShotEntity;
 
 import javax.annotation.Nullable;
 
-public class SpectralWizardEntity extends AoARangedMob {
-	public SpectralWizardEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SpectralWizardEntity extends AoARangedMob<SpectralWizardEntity> {
+	public SpectralWizardEntity(EntityType<? extends SpectralWizardEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

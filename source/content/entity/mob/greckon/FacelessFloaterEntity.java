@@ -7,13 +7,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class FacelessFloaterEntity extends AoAMeleeMob {
-    public FacelessFloaterEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FacelessFloaterEntity extends AoAMeleeMob<FacelessFloaterEntity> {
+    public FacelessFloaterEntity(EntityType<? extends FacelessFloaterEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -25,18 +24,18 @@ public class FacelessFloaterEntity extends AoAMeleeMob {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AoASounds.ENTITY_GHOST_AMBIENT.get();
+        return null;
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return AoASounds.ENTITY_GHOST_DEATH.get();
+        return null;
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return AoASounds.ENTITY_GHOST_HURT.get();
+        return null;
     }
 }

@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.ConstructShotEntity;
 
 import javax.annotation.Nullable;
 
-public class ConstructOfRangeEntity extends AoARangedMob {
-	public ConstructOfRangeEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ConstructOfRangeEntity extends AoARangedMob<ConstructOfRangeEntity> {
+	public ConstructOfRangeEntity(EntityType<? extends ConstructOfRangeEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

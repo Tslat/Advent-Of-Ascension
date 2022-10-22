@@ -14,11 +14,9 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class SasquatchEntity extends AoAMeleeMob {
-	public SasquatchEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SasquatchEntity extends AoAMeleeMob<SasquatchEntity> {
+	public SasquatchEntity(EntityType<? extends SasquatchEntity> entityType, Level world) {
 		super(entityType, world);
-
-		getNavigation().setCanFloat(true);
 	}
 
 	@Override

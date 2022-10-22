@@ -34,7 +34,7 @@
       "color": "white",
       "translate": "advancements.aoa3.troll_idoliser.total_troll_dominance.description"
     },
-    "frame": "task",
+    "frame": "challenge",
     "hidden": false,
     "icon": {
       "item": "aoa3:ornate_trophy"

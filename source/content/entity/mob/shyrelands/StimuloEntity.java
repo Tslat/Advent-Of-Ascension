@@ -15,8 +15,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class StimuloEntity extends AoAMeleeMob {
-    public StimuloEntity(EntityType<? extends Monster> entityType, Level world) {
+public class StimuloEntity extends AoAMeleeMob<StimuloEntity> {
+    public StimuloEntity(EntityType<? extends StimuloEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "if_any": [
+      "minecraft:nether_wastes",
+      "minecraft:crimson_forest",
+      "minecraft:basalt_deltas"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:flamewalker",
+      "maxCount": 3,
+      "minCount": 2,
+      "weight": 5
+    }
+  ]
+}

@@ -29,6 +29,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 public class WikiCommand implements Command<CommandSourceStack> {
 	private static final WikiCommand CMD = new WikiCommand();
@@ -44,19 +45,23 @@ public class WikiCommand implements Command<CommandSourceStack> {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void handleSearchRequest(String search) {
-		String baseUrl = "?";
+		String targetUrl = "?";
+		String pageTitle = StringUtil.toTitleCase(search);
 
 		if (search.equalsIgnoreCase("random"))
 			search = "Special:Random";
 
 		try {
-			String testRootUrl = "https://adventofascension.gamepedia.com/" + StringUtil.toTitleCase(URLEncoder.encode(search, "UTF-8").replace("+", " ")).replace(" ", "_");
-			baseUrl = "https://adventofascension.gamepedia.com/index.php?search=" + URLEncoder.encode(search, "UTF-8") + "&title=Special:Search&go=Go";
+			targetUrl = "https://adventofascension.gamepedia.com/index.php?search=" + URLEncoder.encode(search, StandardCharsets.UTF_8) + "&title=Special:Search&go=Go";
+			HttpURLConnection connection = (HttpURLConnection)new URL("https://adventofascension.gamepedia.com/" + StringUtil.toTitleCase(URLEncoder.encode(search, StandardCharsets.UTF_8).replace("+", " ")).replace(" ", "_")).openConnection();
 
-			HttpURLConnection connection = (HttpURLConnection)new URL(testRootUrl).openConnection();
+			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+				targetUrl = connection.getURL().toString();
+				int titleIndex = targetUrl.indexOf("wiki/");
 
-			if (connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-				baseUrl = testRootUrl;
+				if (titleIndex >= 0)
+					pageTitle = StringUtil.toTitleCase(targetUrl.substring(titleIndex + 5));
+			}
 		}
 		catch (UnsupportedEncodingException | MalformedURLException e) {
 			e.printStackTrace();
@@ -66,10 +71,10 @@ public class WikiCommand implements Command<CommandSourceStack> {
 		}
 
 		if (search.equals("Special:Random"))
-			search = "???";
+			pageTitle = "???";
 
-		MutableComponent responseComponent = getComponentFromKeys("command.aoa.wiki.response", baseUrl, StringUtil.toSentenceCase(search));
-		Minecraft.getInstance().player.sendSystemMessage(AoACommand.getCmdPrefix("Wiki").append(responseComponent != null ? responseComponent.setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)) : Component.translatable("command.aoawiki.response", baseUrl)));
+		MutableComponent responseComponent = getComponentFromKeys("command.aoa.wiki.response", targetUrl, pageTitle);
+		Minecraft.getInstance().player.sendSystemMessage(AoACommand.getCmdPrefix("Wiki").append(responseComponent != null ? responseComponent.setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)) : Component.translatable("command.aoawiki.response", targetUrl)));
 	}
 
 	@Nullable

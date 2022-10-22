@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class LelyetianWarriorEntity extends AoAMeleeMob {
-	public LelyetianWarriorEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LelyetianWarriorEntity extends AoAMeleeMob<LelyetianWarriorEntity> {
+	public LelyetianWarriorEntity(EntityType<? extends LelyetianWarriorEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

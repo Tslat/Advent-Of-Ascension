@@ -18,11 +18,11 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class TerradonEntity extends AoAMeleeMob {
+public class TerradonEntity extends AoAMeleeMob<TerradonEntity> {
 	private static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.<Boolean>defineId(TerradonEntity.class, EntityDataSerializers.BOOLEAN);
 	private int invulnCooldown = 0;
 
-	public TerradonEntity(EntityType<? extends Monster> entityType, Level world) {
+	public TerradonEntity(EntityType<? extends TerradonEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setSpeed(1.8f);

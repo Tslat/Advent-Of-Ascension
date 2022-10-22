@@ -14,8 +14,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class SyskerEntity extends AoAMeleeMob {
-    public SyskerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SyskerEntity extends AoAMeleeMob<SyskerEntity> {
+    public SyskerEntity(EntityType<? extends SyskerEntity> entityType, Level world) {
         super(entityType, world);
     }
 

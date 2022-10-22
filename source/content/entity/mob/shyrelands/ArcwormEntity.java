@@ -14,9 +14,9 @@ import net.tslat.aoa3.content.item.misc.ReservedItem;
 
 import javax.annotation.Nullable;
 
-public class ArcwormEntity extends AoAMeleeMob {
+public class ArcwormEntity extends AoAMeleeMob<ArcwormEntity> {
 
-	public ArcwormEntity(EntityType<? extends Monster> entityType, Level world) {
+	public ArcwormEntity(EntityType<? extends ArcwormEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -7,7 +7,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
@@ -34,23 +33,23 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class KingChargerEntity extends AoAMeleeMob {
+public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	private int nextChargerSpawn = 0;
 
-	public KingChargerEntity(EntityType<? extends Monster> entityType, Level world) {
+	public KingChargerEntity(EntityType<? extends KingChargerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
-	public List<ExtendedSensor<AoAMeleeMob>> getSensors() {
+	public List<ExtendedSensor<KingChargerEntity>> getSensors() {
 		return ObjectArrayList.of(
-				new NearbyPlayersSensor<AoAMeleeMob>().setRadius(10),
-				new NearbyLivingEntitySensor<AoAMeleeMob>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
+				new NearbyPlayersSensor<KingChargerEntity>().setRadius(10),
+				new NearbyLivingEntitySensor<KingChargerEntity>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
 				new HurtBySensor<>());
 	}
 
 	@Override
-	public BrainActivityGroup<AoAMeleeMob> getIdleTasks() {
+	public BrainActivityGroup<KingChargerEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
 				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
 						.attackablePredicate(entity -> entity.isAlive() && (!(entity instanceof Player player) || !player.isCreative()))
@@ -62,7 +61,7 @@ public class KingChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public BrainActivityGroup<AoAMeleeMob> getFightTasks() {
+	public BrainActivityGroup<KingChargerEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
 				new SetWalkTargetToAttackTarget<>().speedMod(1.125f),
@@ -104,17 +103,17 @@ public class KingChargerEntity extends AoAMeleeMob {
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 
-		if (nextChargerSpawn < tickCount) {
+		if (this.nextChargerSpawn < this.tickCount) {
 			LivingEntity target = getTarget();
 
 			if (target != null) {
 				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.CHARGER.get(), RandomUtil.getRandomPositionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level, 2, state -> true), MobSpawnType.MOB_SUMMONED);
 
 				if (charger != null)
-					charger.setTarget(target);
+					BrainUtils.setTargetOfEntity(charger, target);
 			}
 
-			nextChargerSpawn = tickCount + RandomUtil.randomNumberBetween(80, 140);
+			this.nextChargerSpawn = this.tickCount + RandomUtil.randomNumberBetween(80, 140);
 		}
 	}
 

@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SabretoothEntity extends AoAMeleeMob {
-	public SabretoothEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SabretoothEntity extends AoAMeleeMob<SabretoothEntity> {
+	public SabretoothEntity(EntityType<? extends SabretoothEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -17,8 +17,8 @@ import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
 
-public class MerkyreEntity extends AoAMeleeMob {
-    public MerkyreEntity(EntityType<? extends Monster> entityType, Level world) {
+public class MerkyreEntity extends AoAMeleeMob<MerkyreEntity> {
+    public MerkyreEntity(EntityType<? extends MerkyreEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -46,7 +46,7 @@ public class MerkyreEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected void onHit(DamageSource source, float amount) {
+    protected void onHurt(DamageSource source, float amount) {
         if (!DamageUtil.isEnvironmentalDamage(source)) {
             AreaEffectCloud effectCloud = new AreaEffectCloud(level, getX(), getY(), getZ());
 

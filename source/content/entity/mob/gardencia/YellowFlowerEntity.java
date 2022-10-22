@@ -13,14 +13,14 @@ import net.tslat.aoa3.content.entity.boss.VinocorneEntity;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 
-public class YellowFlowerEntity extends AoAMeleeMob {
+public class YellowFlowerEntity extends AoAMeleeMob<YellowFlowerEntity> {
 	public YellowFlowerEntity(VinocorneEntity vinocorne) {
 		this(AoAMobs.YELLOW_FLOWER.get(), vinocorne.level);
 
 		moveTo(vinocorne.getX(), vinocorne.getY(), vinocorne.getZ(), random.nextFloat() * 360, 0);
 	}
 
-	public YellowFlowerEntity(EntityType<? extends Monster> entityType, Level world) {
+	public YellowFlowerEntity(EntityType<? extends YellowFlowerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

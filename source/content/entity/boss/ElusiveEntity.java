@@ -34,7 +34,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 
-public class ElusiveEntity extends AoAMeleeMob {
+public class ElusiveEntity extends AoAMeleeMob<ElusiveEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	private final HashSet<ElusiveCloneEntity> summons = new HashSet<ElusiveCloneEntity>();
@@ -42,7 +42,7 @@ public class ElusiveEntity extends AoAMeleeMob {
 	private int summonCooldown = 300;
 	private int teleportCooldown = 300;
 
-	public ElusiveEntity(EntityType<? extends Monster> entityType, Level world) {
+	public ElusiveEntity(EntityType<? extends ElusiveEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

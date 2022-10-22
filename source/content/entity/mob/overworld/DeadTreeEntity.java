@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.AdvancementUtil;
 
 import javax.annotation.Nullable;
 
-public class DeadTreeEntity extends AoAMeleeMob {
-	public DeadTreeEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DeadTreeEntity extends AoAMeleeMob<DeadTreeEntity> {
+	public DeadTreeEntity(EntityType<? extends DeadTreeEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

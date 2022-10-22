@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class HunterEntity extends AoAMeleeMob {
-    public HunterEntity(EntityType<? extends Monster> entityType, Level world) {
+public class HunterEntity extends AoAMeleeMob<HunterEntity> {
+    public HunterEntity(EntityType<? extends HunterEntity> entityType, Level world) {
         super(entityType, world);
 
         setSpeed(2.7f);

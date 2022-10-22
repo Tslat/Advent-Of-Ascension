@@ -18,8 +18,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class GiantSnailEntity extends AoAMeleeMob {
-	public GiantSnailEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GiantSnailEntity extends AoAMeleeMob<GiantSnailEntity> {
+	public GiantSnailEntity(EntityType<? extends GiantSnailEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

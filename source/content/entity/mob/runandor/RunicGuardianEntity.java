@@ -19,8 +19,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.RunicGuardianShotEntity;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class RunicGuardianEntity extends AoARangedMob {
-	public RunicGuardianEntity(EntityType<? extends Monster> entityType, Level world) {
+public class RunicGuardianEntity extends AoARangedMob<RunicGuardianEntity> {
+	public RunicGuardianEntity(EntityType<? extends RunicGuardianEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

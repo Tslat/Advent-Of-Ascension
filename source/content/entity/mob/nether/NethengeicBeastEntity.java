@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class NethengeicBeastEntity extends AoAMeleeMob {
-    public NethengeicBeastEntity(EntityType<? extends Monster> entityType, Level world) {
+public class NethengeicBeastEntity extends AoAMeleeMob<NethengeicBeastEntity> {
+    public NethengeicBeastEntity(EntityType<? extends NethengeicBeastEntity> entityType, Level world) {
         super(entityType, world);
     }
 

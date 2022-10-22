@@ -18,10 +18,10 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class VisageEntity extends AoAMeleeMob {
+public class VisageEntity extends AoAMeleeMob<VisageEntity> {
 	private VisageEntity mirageHost = null;
 
-	public VisageEntity(EntityType<? extends Monster> entityType, Level world) {
+	public VisageEntity(EntityType<? extends VisageEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

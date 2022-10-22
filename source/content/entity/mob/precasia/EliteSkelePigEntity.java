@@ -15,8 +15,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class EliteSkelePigEntity extends AoAMeleeMob {
-	public EliteSkelePigEntity(EntityType<? extends Monster> entityType, Level world) {
+public class EliteSkelePigEntity extends AoAMeleeMob<EliteSkelePigEntity> {
+	public EliteSkelePigEntity(EntityType<? extends EliteSkelePigEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

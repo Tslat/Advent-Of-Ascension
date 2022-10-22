@@ -23,10 +23,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class RockCrawlerEntity extends AoAMeleeMob {
+public class RockCrawlerEntity extends AoAMeleeMob<RockCrawlerEntity> {
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.<Byte>defineId(RockCrawlerEntity.class, EntityDataSerializers.BYTE);
 
-    public RockCrawlerEntity(EntityType<? extends Monster> entityType, Level world) {
+    public RockCrawlerEntity(EntityType<? extends RockCrawlerEntity> entityType, Level world) {
         super(entityType, world);
     }
 

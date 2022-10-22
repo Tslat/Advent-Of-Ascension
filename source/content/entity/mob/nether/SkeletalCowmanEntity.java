@@ -25,8 +25,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 
 import javax.annotation.Nullable;
 
-public class SkeletalCowmanEntity extends AoARangedMob {
-    public SkeletalCowmanEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SkeletalCowmanEntity extends AoARangedMob<SkeletalCowmanEntity> {
+    public SkeletalCowmanEntity(EntityType<? extends SkeletalCowmanEntity> entityType, Level world) {
         super(entityType, world);
     }
 

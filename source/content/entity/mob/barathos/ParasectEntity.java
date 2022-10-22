@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class ParasectEntity extends AoAMeleeMob {
-	public ParasectEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ParasectEntity extends AoAMeleeMob<ParasectEntity> {
+	public ParasectEntity(EntityType<? extends ParasectEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

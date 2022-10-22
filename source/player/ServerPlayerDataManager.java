@@ -443,19 +443,6 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				player.getInventory().setItem(i, ItemStack.EMPTY);
 			}
 		}
-
-		/*for (int i = 0; i < 4; i++) {
-			ItemStack stack = player.getInventory().armor.get(i);
-
-			if (EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.INTERVENTION.get(), stack) > 0) {
-				if (RandomUtil.oneInNChance(5))
-					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
-
-
-				itemStorage.add(stack);
-				player.getInventory().armor.set(i, ItemStack.EMPTY);
-			}
-		}*/
 	}
 
 	public void returnItemStorage() {
@@ -591,15 +578,17 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	private void recheckSkills() {
 		Consumer<Collection<AoAPlayerEventListener>> updateHandler = collection -> collection.forEach(listener -> {
-			if (listener.getListenerState() == ACTIVE) {
+			ListenerState state = listener.getListenerState();
+
+			if (state == ACTIVE) {
 				if (!listener.meetsRequirements())
 					listener.disable(DEACTIVATED, false);
 			}
-			else if (listener.getListenerState() == DEACTIVATED || (listener.getListenerState() == REGION_LOCKED && !abilitiesRegionLocked)) {
+			else if (state == DEACTIVATED || (state == REGION_LOCKED && !abilitiesRegionLocked)) {
 				if (listener.meetsRequirements()) {
 					listener.reenable(false);
 
-					if (listener instanceof AoAAbility.Instance ability)
+					if (state == DEACTIVATED && listener instanceof AoAAbility.Instance ability)
 						AoAPackets.messagePlayer(player, new ToastPopupPacket(ability.getSkill().type(), ability.type()));
 				}
 			}
@@ -624,9 +613,9 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		if (!abilitiesRegionLocked)
 			return;
 
-		recheckSkills();
-
 		abilitiesRegionLocked = false;
+
+		recheckSkills();
 	}
 
 	public boolean areAbilitiesRegionLocked() {

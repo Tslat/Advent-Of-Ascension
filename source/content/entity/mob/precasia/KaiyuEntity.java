@@ -21,8 +21,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.SpiritualShotEntity;
 
 import javax.annotation.Nullable;
 
-public class KaiyuEntity extends AoARangedMob {
-	public KaiyuEntity(EntityType<? extends Monster> entityType, Level world) {
+public class KaiyuEntity extends AoARangedMob<KaiyuEntity> {
+	public KaiyuEntity(EntityType<? extends KaiyuEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

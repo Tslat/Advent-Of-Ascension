@@ -8,7 +8,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,11 +22,11 @@ import net.tslat.aoa3.util.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class BroccoheadEntity extends AoAMeleeMob {
+public class BroccoheadEntity extends AoAMeleeMob<BroccoheadEntity> {
 	private  static final AttributeModifier CANDIED_WATER_BUFF = new AttributeModifier(UUID.fromString("d5356e33-40b6-4515-a37b-4377f911f703"), "AoAGardenciaCandiedWaterBuff", 50, AttributeModifier.Operation.ADDITION);
 	private boolean candiedWater = false;
 
-	public BroccoheadEntity(EntityType<? extends Monster> entityType, Level world) {
+	public BroccoheadEntity(EntityType<? extends BroccoheadEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

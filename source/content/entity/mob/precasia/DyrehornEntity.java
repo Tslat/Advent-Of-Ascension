@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class DyrehornEntity extends AoAMeleeMob {
-	public DyrehornEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DyrehornEntity extends AoAMeleeMob<DyrehornEntity> {
+	public DyrehornEntity(EntityType<? extends DyrehornEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setSpeed(1.8f);

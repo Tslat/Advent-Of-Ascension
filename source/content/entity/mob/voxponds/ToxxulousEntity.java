@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ToxxulousEntity extends AoAMeleeMob {
-    public ToxxulousEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ToxxulousEntity extends AoAMeleeMob<ToxxulousEntity> {
+    public ToxxulousEntity(EntityType<? extends ToxxulousEntity> entityType, Level world) {
         super(entityType, world);
     }
 

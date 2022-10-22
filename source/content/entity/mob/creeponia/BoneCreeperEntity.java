@@ -29,7 +29,7 @@ public class BoneCreeperEntity extends AoACreeponiaCreeper {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        if (random.nextBoolean()) {
+        if (rand().nextBoolean()) {
             return AoASounds.ENTITY_CREEPOID_AMBIENT.get();
         }
         else {

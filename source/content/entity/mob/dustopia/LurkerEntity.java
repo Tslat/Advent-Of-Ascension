@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class LurkerEntity extends AoAMeleeMob {
-    public LurkerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LurkerEntity extends AoAMeleeMob<LurkerEntity> {
+    public LurkerEntity(EntityType<? extends LurkerEntity> entityType, Level world) {
         super(entityType, world);
     }
 

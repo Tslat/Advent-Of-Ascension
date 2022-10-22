@@ -26,11 +26,11 @@ import net.tslat.aoa3.util.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class PodPlantEntity extends AoAMeleeMob {
+public class PodPlantEntity extends AoAMeleeMob<PodPlantEntity> {
 	private  static final AttributeModifier CANDIED_WATER_BUFF = new AttributeModifier(UUID.fromString("d5356e33-40b6-4515-a37b-4377f911f703"), "AoAGardenciaCandiedWaterBuff", 50, AttributeModifier.Operation.ADDITION);
 	private boolean candiedWater = false;
 
-	public PodPlantEntity(EntityType<? extends Monster> entityType, Level world) {
+	public PodPlantEntity(EntityType<? extends PodPlantEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

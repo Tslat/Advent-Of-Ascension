@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class FakeZorpEntity extends AoAMeleeMob {
-	public FakeZorpEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FakeZorpEntity extends AoAMeleeMob<FakeZorpEntity> {
+	public FakeZorpEntity(EntityType<? extends FakeZorpEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setInvulnerable(true);

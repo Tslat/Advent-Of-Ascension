@@ -32,13 +32,13 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class HiveKingEntity extends AoAMeleeMob {
+public class HiveKingEntity extends AoAMeleeMob<HiveKingEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	public static final EntityDataAccessor<Integer> GROWTH_PERCENT = SynchedEntityData.<Integer>defineId(HiveKingEntity.class, EntityDataSerializers.INT);
 
 	public int growthPercent = 100;
 
-	public HiveKingEntity(EntityType<? extends Monster> entityType, Level world) {
+	public HiveKingEntity(EntityType<? extends HiveKingEntity> entityType, Level world) {
 		super(entityType, world);
 
 		if (!world.isClientSide) {

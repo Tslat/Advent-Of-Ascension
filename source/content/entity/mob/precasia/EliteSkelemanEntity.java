@@ -18,8 +18,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.SpiritualShotEntity;
 
 import javax.annotation.Nullable;
 
-public class EliteSkelemanEntity extends AoARangedMob {
-	public EliteSkelemanEntity(EntityType<? extends Monster> entityType, Level world) {
+public class EliteSkelemanEntity extends AoARangedMob<EliteSkelemanEntity> {
+	public EliteSkelemanEntity(EntityType<? extends EliteSkelemanEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

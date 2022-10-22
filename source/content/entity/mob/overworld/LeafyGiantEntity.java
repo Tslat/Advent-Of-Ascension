@@ -15,7 +15,6 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -35,10 +34,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LeafyGiantEntity extends AoAMeleeMob {
+public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 	private int nextBushBaby;
 
-	public LeafyGiantEntity(EntityType<? extends Monster> entityType, Level world) {
+	public LeafyGiantEntity(EntityType<? extends LeafyGiantEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.nextBushBaby = RandomUtil.randomNumberBetween(150, 500);
@@ -46,7 +45,7 @@ public class LeafyGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected Brain.Provider<?> brainProvider() { // TODO
+	protected Brain.Provider<LeafyGiantEntity> brainProvider() { // TODO
 		return Brain.provider(ImmutableList.of(), ImmutableList.of());
 	}
 

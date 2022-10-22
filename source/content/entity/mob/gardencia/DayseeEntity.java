@@ -20,11 +20,11 @@ import net.tslat.aoa3.util.ItemUtil;
 
 import java.util.UUID;
 
-public class DayseeEntity extends AoAMeleeMob {
+public class DayseeEntity extends AoAMeleeMob<DayseeEntity> {
 	private  static final AttributeModifier CANDIED_WATER_BUFF = new AttributeModifier(UUID.fromString("d5356e33-40b6-4515-a37b-4377f911f703"), "AoAGardenciaCandiedWaterBuff", 50, AttributeModifier.Operation.ADDITION);
 	private boolean candiedWater = false;
 
-	public DayseeEntity(EntityType<? extends Monster> entityType, Level world) {
+	public DayseeEntity(EntityType<? extends DayseeEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

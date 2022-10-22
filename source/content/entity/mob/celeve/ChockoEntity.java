@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ChockoEntity extends AoAMeleeMob {
-	public ChockoEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ChockoEntity extends AoAMeleeMob<ChockoEntity> {
+	public ChockoEntity(EntityType<? extends ChockoEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

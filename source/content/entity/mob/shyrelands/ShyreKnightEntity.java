@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ShyreKnightEntity extends AoAMeleeMob {
-    public ShyreKnightEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ShyreKnightEntity extends AoAMeleeMob<ShyreKnightEntity> {
+    public ShyreKnightEntity(EntityType<? extends ShyreKnightEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -38,7 +38,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class WebReaperEntity extends AoARangedMob {
+public class WebReaperEntity extends AoARangedMob<WebReaperEntity> {
 	private static final EntityDataAccessor<Integer> STAGE = SynchedEntityData.<Integer>defineId(WebReaperEntity.class, EntityDataSerializers.INT);
 	private final AttributeModifier STAGE_HEALTH_MOD = new AttributeModifier(UUID.fromString("9c59eceb-dcd0-40e0-a608-a46d3794b1c3"), "StageHealthModifier", 1, AttributeModifier.Operation.MULTIPLY_TOTAL) {
 		@Override
@@ -63,7 +63,7 @@ public class WebReaperEntity extends AoARangedMob {
 	private float stageMod;
 	private boolean shouldHeal = false;
 
-	public WebReaperEntity(EntityType<? extends Monster> entityType, Level world) {
+	public WebReaperEntity(EntityType<? extends WebReaperEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -212,7 +212,7 @@ public class WebReaperEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		if (stage >= 15)
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 100).level(2));
 	}

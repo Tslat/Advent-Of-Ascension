@@ -23,10 +23,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class ArocknidEntity extends AoAMeleeMob {
+public class ArocknidEntity extends AoAMeleeMob<ArocknidEntity> {
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.<Byte>defineId(ArocknidEntity.class, EntityDataSerializers.BYTE);
 
-    public ArocknidEntity(EntityType<? extends Monster> entityType, Level world) {
+    public ArocknidEntity(EntityType<? extends ArocknidEntity> entityType, Level world) {
         super(entityType, world);
     }
 

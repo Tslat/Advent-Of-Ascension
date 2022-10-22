@@ -30,7 +30,7 @@ import net.tslat.aoa3.util.WorldUtil;
 import java.util.Collection;
 import java.util.EnumSet;
 
-public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
+public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreeper> {
 	private static final EntityDataAccessor<Integer> STATE = SynchedEntityData.defineId(AoACreeponiaCreeper.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Boolean> POWERED = SynchedEntityData.defineId(AoACreeponiaCreeper.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> IGNITED = SynchedEntityData.defineId(AoACreeponiaCreeper.class, EntityDataSerializers.BOOLEAN);
@@ -72,7 +72,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 
 	protected void onAttack(Entity target) {}
 
-	protected void onHit(DamageSource source, float amount) {}
+	protected void onHurt(DamageSource source, float amount) {}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
@@ -107,7 +107,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob {
 		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (itemstack.getItem() == Items.FLINT_AND_STEEL) {
-			level.playSound(player, getX(), getY(), getZ(), SoundEvents.FLINTANDSTEEL_USE, getSoundSource(), 1.0F, random.nextFloat() * 0.4F + 0.8F);
+			level.playSound(player, getX(), getY(), getZ(), SoundEvents.FLINTANDSTEEL_USE, getSoundSource(), 1.0F, rand().nextFloat() * 0.4F + 0.8F);
 
 			if (!level.isClientSide) {
 				ignite();

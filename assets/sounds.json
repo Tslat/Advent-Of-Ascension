@@ -1558,6 +1558,12 @@
     ],
     "subtitle": "subtitles.entity.flamewalker.death"
   },
+  "entity.flamewalker.flare": {
+    "sounds": [
+      "aoa3:entity/flamewalker/flare"
+    ],
+    "subtitle": "subtitles.entity.flamewalker.flare"
+  },
   "entity.flamewalker.hurt": {
     "sounds": [
       "aoa3:entity/flamewalker/hurt"
@@ -1812,24 +1818,6 @@
       "aoa3:entity/generic/woody_thump"
     ],
     "subtitle": "subtitles.entity.generic.woody_thump"
-  },
-  "entity.ghost.ambient": {
-    "sounds": [
-      "aoa3:entity/ghost/ambient"
-    ],
-    "subtitle": "subtitles.entity.ghost.ambient"
-  },
-  "entity.ghost.death": {
-    "sounds": [
-      "aoa3:entity/ghost/death"
-    ],
-    "subtitle": "subtitles.entity.ghost.death"
-  },
-  "entity.ghost.hurt": {
-    "sounds": [
-      "aoa3:entity/ghost/hurt"
-    ],
-    "subtitle": "subtitles.entity.ghost.hurt"
   },
   "entity.giant.death": {
     "sounds": [
@@ -2340,11 +2328,11 @@
     ],
     "subtitle": "subtitles.entity.lelyetian.hurt"
   },
-  "entity.little_bam.spawn": {
+  "entity.little_bam.charge": {
     "sounds": [
-      "aoa3:entity/little_bam/spawn"
+      "aoa3:entity/little_bam/charge"
     ],
-    "subtitle": "subtitles.entity.little_bam.spawn"
+    "subtitle": "subtitles.entity.little_bam.charge"
   },
   "entity.living_fungi.spawn": {
     "sounds": [

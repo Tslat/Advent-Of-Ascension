@@ -25,10 +25,10 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class FlashEntity extends AoAMeleeMob {
+public class FlashEntity extends AoAMeleeMob<FlashEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public FlashEntity(EntityType<? extends Monster> entityType, Level world) {
+	public FlashEntity(EntityType<? extends FlashEntity> entityType, Level world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;

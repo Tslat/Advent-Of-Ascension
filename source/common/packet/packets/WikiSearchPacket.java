@@ -2,6 +2,7 @@ package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
+import net.tslat.aoa3.command.WikiCommand;
 
 import java.util.function.Supplier;
 
@@ -22,7 +23,7 @@ public class WikiSearchPacket implements AoAPacket {
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
-		//WikiCommand.handleSearchRequest(searchString);
+		WikiCommand.handleSearchRequest(searchString);
 
 		context.get().setPacketHandled(true);
 	}

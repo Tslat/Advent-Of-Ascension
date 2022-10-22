@@ -75,11 +75,11 @@ public abstract class BaseMobProjectile extends ThrowableProjectile {
 					if (((EntityHitResult)result).getEntity() == shooter || shooter == null)
 						return;
 
-					shooter.doProjectileEntityImpact(this, ((EntityHitResult)result).getEntity());
+					shooter.doRangedAttackEntity(this, ((EntityHitResult)result).getEntity());
 				}
 				else if (result.getType() == HitResult.Type.BLOCK) {
 					if (shooter != null) {
-						shooter.doProjectileBlockImpact(this, level.getBlockState(new BlockPos(result.getLocation())), new BlockPos(result.getLocation()), ((BlockHitResult)result).getDirection());
+						shooter.doRangedAttackBlock(this, level.getBlockState(new BlockPos(result.getLocation())), new BlockPos(result.getLocation()), ((BlockHitResult)result).getDirection());
 					}
 				}
 

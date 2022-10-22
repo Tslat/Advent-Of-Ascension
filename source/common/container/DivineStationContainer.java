@@ -40,7 +40,7 @@ public class DivineStationContainer extends AbstractContainerMenu { // TODO Look
 		this.functionCaller = functionCaller;
 		this.player = plInventory.player;
 
-		addSlot(new ResultSlot(player, inputs, output, 0, 134, 23));
+		addSlot(new CustomResultSlot<>(player, inputs, output, AoARecipes.UPGRADE_KIT.type().get(), 0, 134, 23));
 		addSlot(new Slot(inputs, 0, 27, 23));
 		addSlot(new Slot(inputs, 1, 76, 23));
 

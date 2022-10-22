@@ -14,8 +14,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class TreeSpiritEntity extends AoAMeleeMob {
-	public TreeSpiritEntity(EntityType<? extends Monster> entityType, Level world) {
+public class TreeSpiritEntity extends AoAMeleeMob<TreeSpiritEntity> {
+	public TreeSpiritEntity(EntityType<? extends TreeSpiritEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

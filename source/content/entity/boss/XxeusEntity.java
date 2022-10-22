@@ -26,7 +26,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class XxeusEntity extends AoAMeleeMob {
+public class XxeusEntity extends AoAMeleeMob<XxeusEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int jumpCooldown = 60;
 
@@ -36,7 +36,7 @@ public class XxeusEntity extends AoAMeleeMob {
 		moveTo(craexxeus.getX(), craexxeus.getY() + 1, craexxeus.getZ(), random.nextFloat() * 360, 0);
 	}
 
-	public XxeusEntity(EntityType<? extends Monster> entityType, Level world) {
+	public XxeusEntity(EntityType<? extends XxeusEntity> entityType, Level world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;

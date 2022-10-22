@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.client.ClientOperations;
@@ -47,7 +48,7 @@ public final class WorldUtil {
 	}
 
 	public static Explosion createExplosion(@Nonnull Entity exploder, Level world, float strength) {
-		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, AoAGameRules.checkStrongerMobGriefing(world, exploder) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
+		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, ForgeEventFactory.getMobGriefingEvent(world, exploder) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, Level world, @Nonnull Entity explodingEntity, float strength) {
@@ -61,7 +62,7 @@ public final class WorldUtil {
 				exploder = explodingEntity;
 
 			if (exploder instanceof LivingEntity || explodingEntity instanceof LivingEntity) {
-				doGriefing = AoAGameRules.checkStrongerMobGriefing(world, exploder);
+				doGriefing = ForgeEventFactory.getMobGriefingEvent(world, exploder);
 			}
 			else {
 				doGriefing = AoAGameRules.checkDestructiveWeaponPhysics(world);

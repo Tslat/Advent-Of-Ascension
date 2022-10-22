@@ -14,8 +14,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class ArcbeastEntity extends AoAMeleeMob {
-    public ArcbeastEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ArcbeastEntity extends AoAMeleeMob<ArcbeastEntity> {
+    public ArcbeastEntity(EntityType<? extends ArcbeastEntity> entityType, Level world) {
         super(entityType, world);
     }
 

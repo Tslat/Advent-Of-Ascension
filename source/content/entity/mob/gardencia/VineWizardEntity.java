@@ -28,11 +28,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class VineWizardEntity extends AoARangedMob {
+public class VineWizardEntity extends AoARangedMob<VineWizardEntity> {
     private  static final AttributeModifier CANDIED_WATER_BUFF = new AttributeModifier(UUID.fromString("d5356e33-40b6-4515-a37b-4377f911f703"), "AoAGardenciaCandiedWaterBuff", 50, AttributeModifier.Operation.ADDITION);
     private boolean candiedWater = false;
 
-    public VineWizardEntity(EntityType<? extends Monster> entityType, Level world) {
+    public VineWizardEntity(EntityType<? extends VineWizardEntity> entityType, Level world) {
         super(entityType, world);
     }
 

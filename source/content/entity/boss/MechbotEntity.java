@@ -39,7 +39,7 @@ public class MechbotEntity extends AoAMeleeMob implements AoARangedAttacker {
 	private int jumpCount = 0;
 	private int jumpIntervalTimer = 0;
 
-	public MechbotEntity(EntityType<? extends Monster> entityType, Level world) {
+	public MechbotEntity(EntityType<? extends MechbotEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

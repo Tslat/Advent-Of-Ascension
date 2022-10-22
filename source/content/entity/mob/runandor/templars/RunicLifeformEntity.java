@@ -17,13 +17,13 @@ import javax.annotation.Nullable;
 public abstract class RunicLifeformEntity extends AoAMeleeMob {
 	private final RuneTemplarEntity templar;
 
-	public RunicLifeformEntity(EntityType<? extends Monster> entityType, RuneTemplarEntity templar) {
+	public RunicLifeformEntity(EntityType<? extends RunicLifeformEntity> entityType, RuneTemplarEntity templar) {
 		super(entityType, templar.level);
 
 		this.templar = templar;
 	}
 
-	public RunicLifeformEntity(EntityType<? extends Monster> entityType, Level world) {
+	public RunicLifeformEntity(EntityType<? extends RunicLifeformEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.templar = null;

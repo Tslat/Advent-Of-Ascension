@@ -20,8 +20,8 @@ import net.tslat.effectslib.api.util.EffectUtil;
 
 import javax.annotation.Nullable;
 
-public class ConstructOfStrengthEntity extends AoAMeleeMob {
-    public ConstructOfStrengthEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ConstructOfStrengthEntity extends AoAMeleeMob<ConstructOfStrengthEntity> {
+    public ConstructOfStrengthEntity(EntityType<? extends ConstructOfStrengthEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -13,7 +13,6 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Silverfish;
 import net.minecraft.world.entity.player.Player;
@@ -38,15 +37,15 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, AoARangedAttacker {
-	public StoneGiantEntity(EntityType<? extends Monster> entityType, Level world) {
+public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements RangedAttackMob, AoARangedAttacker {
+	public StoneGiantEntity(EntityType<? extends StoneGiantEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.maxUpStep = 1.5f;
 	}
 
 	@Override
-	protected Brain.Provider<?> brainProvider() { // TODO
+	protected Brain.Provider<StoneGiantEntity> brainProvider() { // TODO
 		return Brain.provider(ImmutableList.of(), ImmutableList.of());
 	}
 
@@ -159,7 +158,7 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 	}
 
 	@Override
-	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
+	public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
 		target.hurt(DamageSource.thrown(this, projectile), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
 		ServerParticlePacket packet = new ServerParticlePacket()
@@ -171,15 +170,15 @@ public class StoneGiantEntity extends AoAMeleeMob implements RangedAttackMob, Ao
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
 		ServerParticlePacket packet = new ServerParticlePacket()
 				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3)
 				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3);
 
 		projectile.playSound(AoASounds.ROCK_SMASH.get());
-		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);}
+		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
+	}
 
-	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {}
 
 	private static Silverfish makeSilverfish(StoneGiantEntity stoneGiant, @Nullable Entity target) {

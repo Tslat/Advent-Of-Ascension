@@ -14,10 +14,10 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class GrillfaceEntity extends AoAMeleeMob {
+public class GrillfaceEntity extends AoAMeleeMob<GrillfaceEntity> {
     private int scareCooldown = 0;
 
-    public GrillfaceEntity(EntityType<? extends Monster> entityType, Level world) {
+    public GrillfaceEntity(EntityType<? extends GrillfaceEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -15,8 +15,8 @@ import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 
-public class RefluctEntity extends AoAMeleeMob {
-	public RefluctEntity(EntityType<? extends Monster> entityType, Level world) {
+public class RefluctEntity extends AoAMeleeMob<RefluctEntity> {
+	public RefluctEntity(EntityType<? extends RefluctEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.SpiritualShotEntity;
 
 import javax.annotation.Nullable;
 
-public class SpiritProtectorEntity extends AoARangedMob {
-	public SpiritProtectorEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SpiritProtectorEntity extends AoARangedMob<SpiritProtectorEntity> {
+	public SpiritProtectorEntity(EntityType<? extends SpiritProtectorEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

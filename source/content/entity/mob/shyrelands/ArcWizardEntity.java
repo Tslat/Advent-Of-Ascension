@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.ShyreBeamEntity;
 
 import javax.annotation.Nullable;
 
-public class ArcWizardEntity extends AoARangedMob {
-    public ArcWizardEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ArcWizardEntity extends AoARangedMob<ArcWizardEntity> {
+    public ArcWizardEntity(EntityType<? extends ArcWizardEntity> entityType, Level world) {
         super(entityType, world);
     }
 

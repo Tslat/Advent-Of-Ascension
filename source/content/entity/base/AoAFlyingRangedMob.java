@@ -177,7 +177,7 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 	protected abstract BaseMobProjectile getNewProjectileInstance();
 
 	@Override
-	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
+	public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
 		boolean success = switch (projectile.getProjectileType()) {
 			case MAGIC -> DamageUtil.dealMagicDamage(projectile, this, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()), false);
 			case GUN -> DamageUtil.dealGunDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
@@ -186,14 +186,13 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 		};
 
 		if (success)
-			doProjectileImpactEffect(projectile, target);
+			onProjectileAttack(projectile, target);
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
 
-	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {}
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {}
 
 	@Override
 	public boolean isIgnoringBlockTriggers() {

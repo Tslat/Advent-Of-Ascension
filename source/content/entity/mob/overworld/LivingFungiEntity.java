@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class LivingFungiEntity extends AoAMeleeMob {
-	public LivingFungiEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LivingFungiEntity extends AoAMeleeMob<LivingFungiEntity> {
+	public LivingFungiEntity(EntityType<? extends LivingFungiEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setSpeed(1.8f);

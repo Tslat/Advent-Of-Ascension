@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class MechachronEntity extends AoAMeleeMob {
-    public MechachronEntity(EntityType<? extends Monster> entityType, Level world) {
+public class MechachronEntity extends AoAMeleeMob<MechachronEntity> {
+    public MechachronEntity(EntityType<? extends MechachronEntity> entityType, Level world) {
         super(entityType, world);
     }
 

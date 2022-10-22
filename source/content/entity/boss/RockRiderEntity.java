@@ -34,13 +34,13 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class RockRiderEntity extends AoAMeleeMob {
+public class RockRiderEntity extends AoAMeleeMob<RockRiderEntity> {
 	private static final EntityDataAccessor<Boolean> ALTERNATE_FORM = SynchedEntityData.<Boolean>defineId(RockRiderEntity.class, EntityDataSerializers.BOOLEAN);
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private boolean alternateForm = false;
 	private int formCooldown = 300;
 
-	public RockRiderEntity(EntityType<? extends Monster> entityType, Level world) {
+	public RockRiderEntity(EntityType<? extends RockRiderEntity> entityType, Level world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;

@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class TortioneEntity extends AoAMeleeMob {
-	public TortioneEntity(EntityType<? extends Monster> entityType, Level world) {
+public class TortioneEntity extends AoAMeleeMob<TortioneEntity> {
+	public TortioneEntity(EntityType<? extends TortioneEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

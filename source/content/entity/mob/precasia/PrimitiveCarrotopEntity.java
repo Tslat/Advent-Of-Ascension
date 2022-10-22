@@ -17,8 +17,8 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class PrimitiveCarrotopEntity extends AoAMeleeMob {
-	public PrimitiveCarrotopEntity(EntityType<? extends Monster> entityType, Level world) {
+public class PrimitiveCarrotopEntity extends AoAMeleeMob<PrimitiveCarrotopEntity> {
+	public PrimitiveCarrotopEntity(EntityType<? extends PrimitiveCarrotopEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

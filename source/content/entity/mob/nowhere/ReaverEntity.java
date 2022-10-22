@@ -15,8 +15,8 @@ import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
 
-public class ReaverEntity extends AoAMeleeMob {
-	public ReaverEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ReaverEntity extends AoAMeleeMob<ReaverEntity> {
+	public ReaverEntity(EntityType<? extends ReaverEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

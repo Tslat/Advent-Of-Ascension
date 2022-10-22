@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class LightwalkerEntity extends AoAMeleeMob {
-    public LightwalkerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LightwalkerEntity extends AoAMeleeMob<LightwalkerEntity> {
+    public LightwalkerEntity(EntityType<? extends LightwalkerEntity> entityType, Level world) {
         super(entityType, world);
     }
 

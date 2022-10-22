@@ -25,7 +25,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class OkazorEntity extends AoAMeleeMob {
+public class OkazorEntity extends AoAMeleeMob<OkazorEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int healCountdown = 0;
 	private int healCounter = 0;
@@ -36,7 +36,7 @@ public class OkazorEntity extends AoAMeleeMob {
 		moveTo(raxxan.getX(), raxxan.getY(), raxxan.getZ(), raxxan.getYRot(), raxxan.getXRot());
 	}
 
-	public OkazorEntity(EntityType<? extends Monster> entityType, Level world) {
+	public OkazorEntity(EntityType<? extends OkazorEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

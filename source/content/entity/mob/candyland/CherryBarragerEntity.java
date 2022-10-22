@@ -19,8 +19,8 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class CherryBarragerEntity extends AoARangedMob {
-	public CherryBarragerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class CherryBarragerEntity extends AoARangedMob<CherryBarragerEntity> {
+	public CherryBarragerEntity(EntityType<? extends CherryBarragerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -42,12 +42,12 @@ public class CherryBarragerEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		WorldUtil.createExplosion(this, level, projectile, 3f);
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
 		WorldUtil.createExplosion(this, level, projectile, 3f);
 	}
 

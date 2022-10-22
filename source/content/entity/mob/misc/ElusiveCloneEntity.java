@@ -20,7 +20,7 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class ElusiveCloneEntity extends AoAMeleeMob {
+public class ElusiveCloneEntity extends AoAMeleeMob<ElusiveCloneEntity> {
 	private final ElusiveEntity elusive;
 
 	public ElusiveCloneEntity(ElusiveEntity elusive) {
@@ -30,7 +30,7 @@ public class ElusiveCloneEntity extends AoAMeleeMob {
 		this.elusive = elusive;
 	}
 
-	public ElusiveCloneEntity(EntityType<? extends Monster> entityType, Level world) {
+	public ElusiveCloneEntity(EntityType<? extends ElusiveCloneEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.elusive = null;

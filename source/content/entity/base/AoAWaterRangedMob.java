@@ -158,7 +158,7 @@ public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAtt
 	}
 
 	@Override
-	public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
+	public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
 		boolean success = switch (projectile.getProjectileType()) {
 			case MAGIC -> DamageUtil.dealMagicDamage(projectile, this, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()), false);
 			case GUN -> DamageUtil.dealGunDamage(target, this, projectile, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
@@ -171,9 +171,8 @@ public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAtt
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
 
-	@Override
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {}
 
 	@Override

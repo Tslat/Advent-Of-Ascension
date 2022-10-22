@@ -312,4 +312,8 @@ public final class EntityUtil {
 
 		return velocity.x() != 0 || velocity.z() != 0 || velocity.y() > -0.07d || velocity.y() < -0.08d;
 	}
+
+	public static Vec3 getEntityCenter(Entity entity) {
+		return new Vec3(entity.getX(0.5f), entity.getY(0.5f), entity.getZ(0.5f));
+	}
 }

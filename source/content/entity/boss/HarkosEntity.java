@@ -22,7 +22,7 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class HarkosEntity extends AoAMeleeMob {
+public class HarkosEntity extends AoAMeleeMob<HarkosEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public HarkosEntity(MiskelEntity miskel) {
@@ -31,7 +31,7 @@ public class HarkosEntity extends AoAMeleeMob {
 		this.moveTo(miskel.getX(), miskel.getY(), miskel.getZ(), miskel.getYRot(), miskel.getXRot());
 	}
 
-	public HarkosEntity(EntityType<? extends Monster> entityType, Level world) {
+	public HarkosEntity(EntityType<? extends HarkosEntity> entityType, Level world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;

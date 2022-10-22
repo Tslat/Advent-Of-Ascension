@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class KokoEntity extends AoAMeleeMob {
-	public KokoEntity(EntityType<? extends Monster> entityType, Level world) {
+public class KokoEntity extends AoAMeleeMob<KokoEntity> {
+	public KokoEntity(EntityType<? extends KokoEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

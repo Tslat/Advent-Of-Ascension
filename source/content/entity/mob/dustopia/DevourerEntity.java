@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class DevourerEntity extends AoAMeleeMob {
-	public DevourerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DevourerEntity extends AoAMeleeMob<DevourerEntity> {
+	public DevourerEntity(EntityType<? extends DevourerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

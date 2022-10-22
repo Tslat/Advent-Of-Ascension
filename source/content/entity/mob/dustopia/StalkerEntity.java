@@ -17,8 +17,8 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class StalkerEntity extends AoAMeleeMob {
-    public StalkerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class StalkerEntity extends AoAMeleeMob<StalkerEntity> {
+    public StalkerEntity(EntityType<? extends StalkerEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -54,7 +54,7 @@ public class StalkerEntity extends AoAMeleeMob {
     }
 
     @Override
-    protected void onHit(DamageSource source, float amount) {
+    protected void onHurt(DamageSource source, float amount) {
         if (!level.isClientSide && getTarget() != null && getTarget().distanceToSqr(this) <= 2 * 2) {
             BlockPos teleportPos = RandomUtil.getRandomPositionWithinRange(blockPosition(), 64, 0, 64, true, level);
             randomTeleport(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ(), false);

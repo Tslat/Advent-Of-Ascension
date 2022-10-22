@@ -14,7 +14,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -35,12 +34,12 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 import java.util.function.Function;
 
-public class ChargerEntity extends AoAMeleeMob {
+public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(ChargerEntity.class, EntityDataSerializers.STRING);
 
 	private Type type = null;
 
-	public ChargerEntity(EntityType<? extends Monster> entityType, Level world) {
+	public ChargerEntity(EntityType<? extends AoAMeleeMob> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -52,7 +51,7 @@ public class ChargerEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	public BrainActivityGroup<AoAMeleeMob> getFightTasks() {
+	public BrainActivityGroup<ChargerEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
 				new SetWalkTargetToAttackTarget<>().speedMod(1.125f),
@@ -84,7 +83,7 @@ public class ChargerEntity extends AoAMeleeMob {
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-		return dimensions.height * 0.85f;
+		return 1.275f;
 	}
 
 	@Nullable

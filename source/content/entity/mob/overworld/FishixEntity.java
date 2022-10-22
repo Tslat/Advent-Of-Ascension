@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class FishixEntity extends AoAMeleeMob {
-	public FishixEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FishixEntity extends AoAMeleeMob<FishixEntity> {
+	public FishixEntity(EntityType<? extends FishixEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

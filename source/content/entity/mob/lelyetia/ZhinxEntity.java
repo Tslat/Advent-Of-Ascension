@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ZhinxEntity extends AoAMeleeMob {
-	public ZhinxEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ZhinxEntity extends AoAMeleeMob<ZhinxEntity> {
+	public ZhinxEntity(EntityType<? extends ZhinxEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -12,7 +12,6 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -34,17 +33,17 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class IceGiantEntity extends AoAMeleeMob implements RangedAttackMob {
+public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements RangedAttackMob {
 	private int lastAttackTime = 0;
 
-	public IceGiantEntity(EntityType<? extends Monster> entityType, Level world) {
+	public IceGiantEntity(EntityType<? extends IceGiantEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.maxUpStep = 1.5f;
 	}
 
 	@Override
-	protected Brain.Provider<?> brainProvider() { // TODO
+	protected Brain.Provider<IceGiantEntity> brainProvider() { // TODO
 		return Brain.provider(ImmutableList.of(), ImmutableList.of());
 	}
 

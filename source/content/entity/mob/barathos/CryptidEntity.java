@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class CryptidEntity extends AoAMeleeMob {
-	public CryptidEntity(EntityType<? extends Monster> entityType, Level world) {
+public class CryptidEntity extends AoAMeleeMob<CryptidEntity> {
+	public CryptidEntity(EntityType<? extends CryptidEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

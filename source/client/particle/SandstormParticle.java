@@ -50,7 +50,7 @@ public class SandstormParticle extends EntityAffectingParticle {
 	@Override
 	protected boolean handleCollision(Entity collidedEntity) {
 		if (EntityPredicate.DAMAGEABLE_ENTITIES.test(collidedEntity) || collidedEntity instanceof Projectile)
-			AoAPackets.messageServer(new ParticleEffectPacket(ParticleEffectPacket.Type.SANDSTORM, collidedEntity.getId()));
+			AoAPackets.messageServer(new ParticleEffectPacket(ParticleEffectPacket.Type.SANDSTORM, this.senderId, collidedEntity.getId()));
 
 		return true;
 	}

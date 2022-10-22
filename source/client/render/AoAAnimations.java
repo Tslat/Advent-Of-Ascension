@@ -16,6 +16,7 @@ import java.util.function.Predicate;
 
 public final class AoAAnimations {
 	public static final AnimationBuilder IDLE = new AnimationBuilder().addAnimation("misc.idle", ILoopType.EDefaultLoopTypes.LOOP);
+	public static final AnimationBuilder LIVING = new AnimationBuilder().addAnimation("misc.living", ILoopType.EDefaultLoopTypes.LOOP);
 	public static final AnimationBuilder RECOVER = new AnimationBuilder().addAnimation("misc.rest", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 	public static final AnimationBuilder EAT = new AnimationBuilder().addAnimation("misc.eat", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 	public static final AnimationBuilder SUCCEED = new AnimationBuilder().addAnimation("misc.succeed", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
@@ -45,6 +46,14 @@ public final class AoAAnimations {
 	public static final AnimationBuilder ATTACK_SWIPE_LEFT = new AnimationBuilder().addAnimation("attack.swipe_left", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 	public static final AnimationBuilder ATTACK_SWIPE_RIGHT = new AnimationBuilder().addAnimation("attack.swipe_right", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 	public static final AnimationBuilder ATTACK_SHOOT_ALTERNATE = new AnimationBuilder().addAnimation("attack.shoot_alternate", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+
+	public static <T extends Entity & IAnimatable> AnimationController<T> genericLivingAnimation(T entity) {
+		return new AnimationController<T>(entity, "living", 0, event -> {
+			event.getController().setAnimation(LIVING);
+
+			return PlayState.CONTINUE;
+		});
+	}
 
 	public static <T extends Entity & IAnimatable> AnimationController<T> genericIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {

@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class NospikeEntity extends AoAMeleeMob {
-	public NospikeEntity(EntityType<? extends Monster> entityType, Level world) {
+public class NospikeEntity extends AoAMeleeMob<NospikeEntity> {
+	public NospikeEntity(EntityType<? extends NospikeEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setSpeed(3.7f);

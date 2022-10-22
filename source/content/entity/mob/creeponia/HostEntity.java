@@ -6,7 +6,6 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.monster.Creeper;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -15,8 +14,8 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class HostEntity extends AoAMeleeMob {
-	public HostEntity(EntityType<? extends Monster> entityType, Level world) {
+public class HostEntity extends AoAMeleeMob<HostEntity> {
+	public HostEntity(EntityType<? extends HostEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -68,7 +67,7 @@ public class HostEntity extends AoAMeleeMob {
 		if (!level.isClientSide && getTarget() != null && RandomUtil.oneInNChance(80)) {
 			Creeper creeper = new Creeper(EntityType.CREEPER, level);
 
-			creeper.moveTo(getX(), getY(), getZ(), random.nextFloat() * 360f, 0.0f);
+			creeper.moveTo(getX(), getY(), getZ(), rand().nextFloat() * 360f, 0.0f);
 			level.addFreshEntity(creeper);
 			playSound(AoASounds.ENTITY_HOST_SUMMON.get(), 1.0f, 1.0f);
 		}

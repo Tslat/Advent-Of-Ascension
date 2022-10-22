@@ -14,8 +14,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class RockbiterEntity extends AoAMeleeMob {
-    public RockbiterEntity(EntityType<? extends Monster> entityType, Level world) {
+public class RockbiterEntity extends AoAMeleeMob<RockbiterEntity> {
+    public RockbiterEntity(EntityType<? extends RockbiterEntity> entityType, Level world) {
         super(entityType, world);
     }
 

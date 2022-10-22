@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class SlimerEntity extends AoAMeleeMob {
-	public SlimerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SlimerEntity extends AoAMeleeMob<SlimerEntity> {
+	public SlimerEntity(EntityType<? extends SlimerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ScrubbyEntity extends AoAMeleeMob {
-	public ScrubbyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ScrubbyEntity extends AoAMeleeMob<ScrubbyEntity> {
+	public ScrubbyEntity(EntityType<? extends ScrubbyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

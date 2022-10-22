@@ -60,16 +60,12 @@ public class ToastPopupPacket implements AoAPacket {
 	public static ToastPopupPacket decode(FriendlyByteBuf buffer) {
 		ToastPopupType type = ToastPopupType.valueOf(buffer.readUtf(32767));
 
-		switch (type) {
-			case SKILL_REQUIREMENT:
-				return new ToastPopupPacket(AoASkills.getSkill(new ResourceLocation(buffer.readUtf(32767))), buffer.readInt());
-			case RESOURCE_REQUIREMENT:
-				return new ToastPopupPacket(AoAResources.getResource(new ResourceLocation(buffer.readUtf(32767))), buffer.readFloat());
-			case ABILITY_UNLOCK:
-				return new ToastPopupPacket(AoASkills.getSkill(new ResourceLocation(buffer.readUtf(32767))), AoAAbilities.getAbility(new ResourceLocation(buffer.readUtf(32767))));
-		}
+		return switch (type) {
+			case SKILL_REQUIREMENT -> new ToastPopupPacket(AoASkills.getSkill(new ResourceLocation(buffer.readUtf(32767))), buffer.readInt());
+			case RESOURCE_REQUIREMENT -> new ToastPopupPacket(AoAResources.getResource(new ResourceLocation(buffer.readUtf(32767))), buffer.readFloat());
+			case ABILITY_UNLOCK -> new ToastPopupPacket(AoASkills.getSkill(new ResourceLocation(buffer.readUtf(32767))), AoAAbilities.getAbility(new ResourceLocation(buffer.readUtf(32767))));
+		};
 
-		return null;
 	}
 
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {

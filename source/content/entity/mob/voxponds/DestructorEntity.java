@@ -23,8 +23,8 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class DestructorEntity extends AoARangedMob {
-	public DestructorEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DestructorEntity extends AoARangedMob<DestructorEntity> {
+	public DestructorEntity(EntityType<? extends DestructorEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setInvulnerable(true);
@@ -61,12 +61,12 @@ public class DestructorEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		WorldUtil.createExplosion(this, level, projectile, 3);
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
 		WorldUtil.createExplosion(this, level, projectile, 3);
 	}
 

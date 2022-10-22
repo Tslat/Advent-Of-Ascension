@@ -16,8 +16,8 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 
-public class EmperorBeastEntity extends AoAMeleeMob {
-	public EmperorBeastEntity(EntityType<? extends Monster> entityType, Level world) {
+public class EmperorBeastEntity extends AoAMeleeMob<EmperorBeastEntity> {
+	public EmperorBeastEntity(EntityType<? extends EmperorBeastEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

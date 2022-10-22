@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class HorndronEntity extends AoAMeleeMob {
-	public HorndronEntity(EntityType<? extends Monster> entityType, Level world) {
+public class HorndronEntity extends AoAMeleeMob<HorndronEntity> {
+	public HorndronEntity(EntityType<? extends HorndronEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

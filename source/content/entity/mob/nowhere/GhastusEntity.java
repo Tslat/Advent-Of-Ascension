@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class GhastusEntity extends AoAMeleeMob {
-	public GhastusEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GhastusEntity extends AoAMeleeMob<GhastusEntity> {
+	public GhastusEntity(EntityType<? extends GhastusEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

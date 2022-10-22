@@ -27,10 +27,10 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-public class KrorEntity extends AoAMeleeMob {
+public class KrorEntity extends AoAMeleeMob<KrorEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public KrorEntity(EntityType<? extends Monster> entityType, Level world) {
+	public KrorEntity(EntityType<? extends KrorEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

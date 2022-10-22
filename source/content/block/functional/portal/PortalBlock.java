@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -123,7 +124,7 @@ public class PortalBlock extends Block {
 				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
 			}
 
-			world.addParticle(new PortalFloaterParticleType.Data(new BlockPos(pos.getX(), pos.getY(), pos.getZ()), particleColour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
+			world.addParticle(new PortalFloaterParticleType.Data(new Vec3(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f), particleColour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
 		}
 	}
 

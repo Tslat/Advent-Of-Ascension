@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,11 +10,12 @@ import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
+import net.tslat.aoa3.library.object.explosion.StandardExplosion;
 
 
 public class RPGEntity extends BaseBullet implements HardProjectile {
-	private LivingEntity shooter;
+	private static final ExplosionInfo RPG_EXPLOSION = new ExplosionInfo().explodeInOneTick().radius(4).penetration(10).blocksDropChance(0.85f).baseDamage(16).baseKnockbackStrength(2.5f);
 
 	public RPGEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
@@ -25,7 +27,6 @@ public class RPGEntity extends BaseBullet implements HardProjectile {
 
 	public RPGEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
 		super(AoAProjectiles.RPG.get(), shooter, gun, hand, maxAge, 1.0f, piercingValue);
-		this.shooter = shooter;
 	}
 
 	public RPGEntity(Level world, double x, double y, double z) {
@@ -35,6 +36,6 @@ public class RPGEntity extends BaseBullet implements HardProjectile {
 	@Override
 	public void doImpactEffect() {
 		if (!level.isClientSide)
-			WorldUtil.createExplosion(shooter, level, this, 2.7f);
+			new StandardExplosion(ExplosionInfo.from(RPG_EXPLOSION).radius(4.5f).penetration(15), (ServerLevel)getLevel(), this, getOwner()).explode();
 	}
 }

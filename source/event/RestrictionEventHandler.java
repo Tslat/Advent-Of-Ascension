@@ -10,6 +10,7 @@ import net.minecraftforge.event.entity.EntityMobGriefingEvent;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingConversionEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -46,6 +47,12 @@ public final class RestrictionEventHandler {
 
 		handleEventIf(PlayerInteractEvent.RightClickBlock.class,
 				NowhereEvents::handleNowhereRightClickBlock,
+				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+		handleEventIf(PlayerInteractEvent.EntityInteract.class,
+				NowhereEvents::handleNowhereRightClickEntity,
+				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+		handleEventIf(AttackEntityEvent.class,
+				NowhereEvents::handleNowhereLeftClickEntity,
 				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 		handleEventIf(PlayerInteractEvent.RightClickItem.class,
 				NowhereEvents::handleNowhereRightClickItem,

@@ -30,7 +30,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class SkeletronEntity extends AoAMeleeMob {
+public class SkeletronEntity extends AoAMeleeMob<SkeletronEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public SkeletronEntity(Level world, BlockPos armyBlockPos) {
@@ -39,7 +39,7 @@ public class SkeletronEntity extends AoAMeleeMob {
 		this.moveTo(armyBlockPos.getX(), armyBlockPos.getY() + 2, armyBlockPos.getZ(), random.nextFloat() * 360, 0);
 	}
 
-	public SkeletronEntity(EntityType<? extends Monster> entityType, Level world) {
+	public SkeletronEntity(EntityType<? extends SkeletronEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

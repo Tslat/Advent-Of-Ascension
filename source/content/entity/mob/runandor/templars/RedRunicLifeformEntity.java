@@ -11,7 +11,7 @@ public class RedRunicLifeformEntity extends RunicLifeformEntity {
 		super(AoAMobs.RED_RUNIC_LIFEFORM.get(), templar);
 	}
 
-	public RedRunicLifeformEntity(EntityType<? extends Monster> entityType, Level world) {
+	public RedRunicLifeformEntity(EntityType<? extends RedRunicLifeformEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 }

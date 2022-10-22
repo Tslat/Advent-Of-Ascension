@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class TipsyEntity extends AoAMeleeMob {
-	public TipsyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class TipsyEntity extends AoAMeleeMob<TipsyEntity> {
+	public TipsyEntity(EntityType<? extends TipsyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

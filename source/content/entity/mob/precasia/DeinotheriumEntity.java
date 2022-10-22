@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class DeinotheriumEntity extends AoAMeleeMob {
-	public DeinotheriumEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DeinotheriumEntity extends AoAMeleeMob<DeinotheriumEntity> {
+	public DeinotheriumEntity(EntityType<? extends DeinotheriumEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -16,8 +16,8 @@ import net.tslat.effectslib.api.util.EffectUtil;
 
 import javax.annotation.Nullable;
 
-public class ConstructOfSpeedEntity extends AoAMeleeMob {
-    public ConstructOfSpeedEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ConstructOfSpeedEntity extends AoAMeleeMob<ConstructOfSpeedEntity> {
+    public ConstructOfSpeedEntity(EntityType<? extends ConstructOfSpeedEntity> entityType, Level world) {
         super(entityType, world);
 
         setSpeed(1.6f);

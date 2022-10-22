@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
 
-public class JumboEntity extends AoAMeleeMob {
-	public JumboEntity(EntityType<? extends Monster> entityType, Level world) {
+public class JumboEntity extends AoAMeleeMob<JumboEntity> {
+	public JumboEntity(EntityType<? extends JumboEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -15,8 +15,8 @@ import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
 
-public class FungbackEntity extends AoAMeleeMob {
-	public FungbackEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FungbackEntity extends AoAMeleeMob<FungbackEntity> {
+	public FungbackEntity(EntityType<? extends FungbackEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -52,7 +52,7 @@ public class FungbackEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void onHit(DamageSource source, float amount) {
+	protected void onHurt(DamageSource source, float amount) {
 		if (!DamageUtil.isEnvironmentalDamage(source)) {
 			AreaEffectCloud effectCloud = new AreaEffectCloud(level, getX(), getY(), getZ());
 

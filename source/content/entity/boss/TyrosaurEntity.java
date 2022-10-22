@@ -29,11 +29,11 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class TyrosaurEntity extends AoAMeleeMob {
+public class TyrosaurEntity extends AoAMeleeMob<TyrosaurEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int stompCooldown = 100;
 
-	public TyrosaurEntity(EntityType<? extends Monster> entityType, Level world) {
+	public TyrosaurEntity(EntityType<? extends TyrosaurEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

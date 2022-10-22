@@ -32,7 +32,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class CorallusEntity extends AoAMeleeMob {
+public class CorallusEntity extends AoAMeleeMob<CorallusEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private static final EntityDataAccessor<Boolean> ENRAGED = SynchedEntityData.<Boolean>defineId(CorallusEntity.class, EntityDataSerializers.BOOLEAN);
 
@@ -41,7 +41,7 @@ public class CorallusEntity extends AoAMeleeMob {
 	private int jumpCooldown = 320;
 	private int rageStateCooldown = 200;
 
-	public CorallusEntity(EntityType<? extends Monster> entityType, Level world) {
+	public CorallusEntity(EntityType<? extends CorallusEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

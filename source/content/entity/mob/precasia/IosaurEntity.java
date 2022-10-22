@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class IosaurEntity extends AoAMeleeMob {
-	public IosaurEntity(EntityType<? extends Monster> entityType, Level world) {
+public class IosaurEntity extends AoAMeleeMob<IosaurEntity> {
+	public IosaurEntity(EntityType<? extends IosaurEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

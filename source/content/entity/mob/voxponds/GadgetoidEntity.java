@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class GadgetoidEntity extends AoAMeleeMob {
-    public GadgetoidEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GadgetoidEntity extends AoAMeleeMob<GadgetoidEntity> {
+    public GadgetoidEntity(EntityType<? extends GadgetoidEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -16,8 +16,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class GoblinEntity extends AoARangedMob {
-	public GoblinEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GoblinEntity extends AoARangedMob<GoblinEntity> {
+	public GoblinEntity(EntityType<? extends GoblinEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-public class SoulscorneEntity extends AoAMeleeMob {
-    public SoulscorneEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SoulscorneEntity extends AoAMeleeMob<SoulscorneEntity> {
+    public SoulscorneEntity(EntityType<? extends SoulscorneEntity> entityType, Level world) {
         super(entityType, world);
     }
 

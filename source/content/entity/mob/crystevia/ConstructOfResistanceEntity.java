@@ -16,8 +16,8 @@ import net.tslat.effectslib.api.util.EffectUtil;
 
 import javax.annotation.Nullable;
 
-public class ConstructOfResistanceEntity extends AoAMeleeMob {
-    public ConstructOfResistanceEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ConstructOfResistanceEntity extends AoAMeleeMob<ConstructOfResistanceEntity> {
+    public ConstructOfResistanceEntity(EntityType<? extends ConstructOfResistanceEntity> entityType, Level world) {
         super(entityType, world);
     }
 

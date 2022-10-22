@@ -16,8 +16,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ArcFlowerEntity extends AoAMeleeMob {
-    public ArcFlowerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ArcFlowerEntity extends AoAMeleeMob<ArcFlowerEntity> {
+    public ArcFlowerEntity(EntityType<? extends ArcFlowerEntity> entityType, Level world) {
         super(entityType, world);
     }
 

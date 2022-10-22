@@ -20,7 +20,7 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SkeleElderEntity extends AoAMeleeMob {
+public class SkeleElderEntity extends AoAMeleeMob<SkeleElderEntity> {
 	private BlockPos armyBlockPos;
 	private int wave;
 
@@ -33,7 +33,7 @@ public class SkeleElderEntity extends AoAMeleeMob {
 		restrictTo(armyBlockPos, 18);
 	}
 
-	public SkeleElderEntity(EntityType<? extends Monster> entityType, Level world) {
+	public SkeleElderEntity(EntityType<? extends SkeleElderEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.armyBlockPos = null;

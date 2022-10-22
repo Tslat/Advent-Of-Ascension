@@ -293,6 +293,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_FLAMEWALKER_AMBIENT = registerSound("entity.flamewalker.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_FLAMEWALKER_DEATH = registerSound("entity.flamewalker.death");
 	public static final RegistryObject<SoundEvent> ENTITY_FLAMEWALKER_HURT = registerSound("entity.flamewalker.hurt");
+	public static final RegistryObject<SoundEvent> ENTITY_FLAMEWALKER_FLARE = registerSound("entity.flamewalker.flare");
 	public static final RegistryObject<SoundEvent> ENTITY_FLESH_EATER_AMBIENT = registerSound("entity.flesh_eater.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_FLESH_EATER_DEATH = registerSound("entity.flesh_eater.death");
 	public static final RegistryObject<SoundEvent> ENTITY_FLESH_EATER_HURT = registerSound("entity.flesh_eater.hurt");
@@ -308,9 +309,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_GADGETOID_AMBIENT = registerSound("entity.gadgetoid.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_GADGETOID_DEATH = registerSound("entity.gadgetoid.death");
 	public static final RegistryObject<SoundEvent> ENTITY_GADGETOID_HURT = registerSound("entity.gadgetoid.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_GHOST_AMBIENT = registerSound("entity.ghost.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_GHOST_DEATH = registerSound("entity.ghost.death");
-	public static final RegistryObject<SoundEvent> ENTITY_GHOST_HURT = registerSound("entity.ghost.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_GIANT_DEATH = registerSound("entity.giant.death");
 	public static final RegistryObject<SoundEvent> ENTITY_GIANT_HURT = registerSound("entity.giant.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_GIANT_SNAIL_AMBIENT = registerSound("entity.giant_snail.ambient");
@@ -667,7 +665,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_HOST_SUMMON = registerSound("entity.host.summon");
 	public static final RegistryObject<SoundEvent> ENTITY_KEELER_REVIVE = registerSound("entity.keeler.revive");
 	public static final RegistryObject<SoundEvent> ENTITY_KING_SHROOMUS_HEAL = registerSound("entity.king_shroomus.heal");
-	public static final RegistryObject<SoundEvent> ENTITY_LITTLE_BAM_SPAWN = registerSound("entity.little_bam.spawn");
+	public static final RegistryObject<SoundEvent> ENTITY_LITTLE_BAM_CHARGE = registerSound("entity.little_bam.charge");
 	public static final RegistryObject<SoundEvent> ENTITY_MECHBOT_JUMP = registerSound("entity.mechbot.jump");
 	public static final RegistryObject<SoundEvent> ENTITY_MIRAGE_TELEPORT = registerSound("entity.mirage.teleport");
 	public static final RegistryObject<SoundEvent> ENTITY_PIXON_HARVEST = registerSound("entity.pixon.harvest");

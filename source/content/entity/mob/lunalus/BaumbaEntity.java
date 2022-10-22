@@ -21,8 +21,8 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class BaumbaEntity extends AoARangedMob {
-	public BaumbaEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BaumbaEntity extends AoARangedMob<BaumbaEntity> {
+	public BaumbaEntity(EntityType<? extends BaumbaEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -50,12 +50,12 @@ public class BaumbaEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
 		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 

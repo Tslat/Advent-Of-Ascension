@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class CaneBugEntity extends AoAMeleeMob {
-	public CaneBugEntity(EntityType<? extends Monster> entityType, Level world) {
+public class CaneBugEntity extends AoAMeleeMob<CaneBugEntity> {
+	public CaneBugEntity(EntityType<? extends CaneBugEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

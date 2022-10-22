@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class KeelerEntity extends AoAMeleeMob {
-	public KeelerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class KeelerEntity extends AoAMeleeMob<KeelerEntity> {
+	public KeelerEntity(EntityType<? extends KeelerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

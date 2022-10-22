@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class StickyEntity extends AoAMeleeMob {
-	public StickyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class StickyEntity extends AoAMeleeMob<StickyEntity> {
+	public StickyEntity(EntityType<? extends StickyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

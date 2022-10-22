@@ -34,13 +34,13 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 
-public class KingBambambamEntity extends AoARangedMob {
+public class KingBambambamEntity extends AoARangedMob<KingBambambamEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int minionCooldown = 60;
 
 	private final HashSet<LittleBamEntity> summons = new HashSet<LittleBamEntity>();
 
-	public KingBambambamEntity(EntityType<? extends Monster> entityType, Level world) {
+	public KingBambambamEntity(EntityType<? extends KingBambambamEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

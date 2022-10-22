@@ -69,7 +69,6 @@
             }
           ],
           "name": "minecraft:splash_potion",
-          "quality": 1,
           "weight": 5
         }
       ],

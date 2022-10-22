@@ -17,10 +17,10 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 
-public class DistorterEntity extends AoAMeleeMob {
+public class DistorterEntity extends AoAMeleeMob<DistorterEntity> {
 	private int effectTick = 60;
 
-	public DistorterEntity(EntityType<? extends Monster> entityType, Level world) {
+	public DistorterEntity(EntityType<? extends DistorterEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

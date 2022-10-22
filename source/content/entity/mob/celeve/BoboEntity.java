@@ -11,8 +11,8 @@ import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
 
-public class BoboEntity extends AoAMeleeMob {
-	public BoboEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BoboEntity extends AoAMeleeMob<BoboEntity> {
+	public BoboEntity(EntityType<? extends BoboEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

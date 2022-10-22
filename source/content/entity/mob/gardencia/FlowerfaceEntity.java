@@ -23,11 +23,11 @@ import net.tslat.aoa3.util.ItemUtil;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class FlowerfaceEntity extends AoAMeleeMob {
+public class FlowerfaceEntity extends AoAMeleeMob<FlowerfaceEntity> {
     private  static final AttributeModifier CANDIED_WATER_BUFF = new AttributeModifier(UUID.fromString("d5356e33-40b6-4515-a37b-4377f911f703"), "AoAGardenciaCandiedWaterBuff", 50, AttributeModifier.Operation.ADDITION);
     private boolean candiedWater = false;
 
-    public FlowerfaceEntity(EntityType<? extends Monster> entityType, Level world) {
+    public FlowerfaceEntity(EntityType<? extends FlowerfaceEntity> entityType, Level world) {
         super(entityType, world);
     }
 

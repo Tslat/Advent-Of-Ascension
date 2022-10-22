@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class CandyCornyEntity extends AoAMeleeMob {
-	public CandyCornyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class CandyCornyEntity extends AoAMeleeMob<CandyCornyEntity> {
+	public CandyCornyEntity(EntityType<? extends CandyCornyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

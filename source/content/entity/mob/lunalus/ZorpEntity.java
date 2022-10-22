@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ZorpEntity extends AoAMeleeMob {
-	public ZorpEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ZorpEntity extends AoAMeleeMob<ZorpEntity> {
+	public ZorpEntity(EntityType<? extends ZorpEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

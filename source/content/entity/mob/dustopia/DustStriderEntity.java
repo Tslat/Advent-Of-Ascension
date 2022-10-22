@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class DustStriderEntity extends AoAMeleeMob {
-    public DustStriderEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DustStriderEntity extends AoAMeleeMob<DustStriderEntity> {
+    public DustStriderEntity(EntityType<? extends DustStriderEntity> entityType, Level world) {
         super(entityType, world);
     }
 

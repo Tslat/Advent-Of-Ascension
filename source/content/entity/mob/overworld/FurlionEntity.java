@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class FurlionEntity extends AoAMeleeMob {
-	public FurlionEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FurlionEntity extends AoAMeleeMob<FurlionEntity> {
+	public FurlionEntity(EntityType<? extends FurlionEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

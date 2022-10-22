@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class LollypopperEntity extends AoAMeleeMob {
-	public LollypopperEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LollypopperEntity extends AoAMeleeMob<LollypopperEntity> {
+	public LollypopperEntity(EntityType<? extends LollypopperEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -15,10 +15,10 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class ShifterEntity extends AoAMeleeMob {
+public class ShifterEntity extends AoAMeleeMob<ShifterEntity> {
     private int cloakCooldown = 160;
 
-    public ShifterEntity(EntityType<? extends Monster> entityType, Level world) {
+    public ShifterEntity(EntityType<? extends ShifterEntity> entityType, Level world) {
         super(entityType, world);
     }
 

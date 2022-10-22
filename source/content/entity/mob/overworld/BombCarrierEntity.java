@@ -13,10 +13,10 @@ import net.tslat.aoa3.content.entity.misc.FakeTntEntity;
 
 import javax.annotation.Nullable;
 
-public class BombCarrierEntity extends AoAMeleeMob {
+public class BombCarrierEntity extends AoAMeleeMob<BombCarrierEntity> {
 	private int cooldown = 150;
 
-	public BombCarrierEntity(EntityType<? extends Monster> entityType, Level world) {
+	public BombCarrierEntity(EntityType<? extends BombCarrierEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

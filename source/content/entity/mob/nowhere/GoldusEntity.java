@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class GoldusEntity extends AoAMeleeMob {
-	public GoldusEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GoldusEntity extends AoAMeleeMob<GoldusEntity> {
+	public GoldusEntity(EntityType<? extends GoldusEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

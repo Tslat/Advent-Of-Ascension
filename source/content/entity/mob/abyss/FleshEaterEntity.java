@@ -14,8 +14,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class FleshEaterEntity extends AoAMeleeMob {
-	public FleshEaterEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FleshEaterEntity extends AoAMeleeMob<FleshEaterEntity> {
+	public FleshEaterEntity(EntityType<? extends FleshEaterEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

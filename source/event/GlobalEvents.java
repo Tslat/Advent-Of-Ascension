@@ -52,7 +52,7 @@ public final class GlobalEvents {
 			if (world.dimension() == AoADimensions.LUNALUS.key)
 				spawners.add(new VisualentSpawner());
 
-			if (!world.isFlat() && world.dimensionType().respawnAnchorWorks())
+			if (!world.isFlat())
 				spawners.add(new RoamingTradersSpawner());
 
 			world.customSpawners = ImmutableList.copyOf(spawners);

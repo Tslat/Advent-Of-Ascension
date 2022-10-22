@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SnappyEntity extends AoAMeleeMob {
-	public SnappyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SnappyEntity extends AoAMeleeMob<SnappyEntity> {
+	public SnappyEntity(EntityType<? extends SnappyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

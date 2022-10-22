@@ -58,7 +58,7 @@ public class AnemiaEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		if (target instanceof ServerPlayer)
 			PlayerUtil.consumeResource((ServerPlayer)target, AoAResources.SPIRIT.get(), 50f, true);
 
@@ -66,7 +66,7 @@ public class AnemiaEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
 		WorldUtil.createExplosion(this, level, projectile, 2.0f);
 	}
 

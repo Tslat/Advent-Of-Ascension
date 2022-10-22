@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class BansheeEntity extends AoAMeleeMob {
-	public BansheeEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BansheeEntity extends AoAMeleeMob<BansheeEntity> {
+	public BansheeEntity(EntityType<? extends BansheeEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

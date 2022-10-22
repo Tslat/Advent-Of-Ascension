@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class CrusiliskEntity extends AoAMeleeMob {
-    public CrusiliskEntity(EntityType<? extends Monster> entityType, Level world) {
+public class CrusiliskEntity extends AoAMeleeMob<CrusiliskEntity> {
+    public CrusiliskEntity(EntityType<? extends CrusiliskEntity> entityType, Level world) {
         super(entityType, world);
     }
 

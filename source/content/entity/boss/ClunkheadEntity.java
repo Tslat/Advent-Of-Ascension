@@ -28,11 +28,11 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class ClunkheadEntity extends AoARangedMob {
+public class ClunkheadEntity extends AoARangedMob<ClunkheadEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int stasisCountdown = 500;
 
-	public ClunkheadEntity(EntityType<? extends Monster> entityType, Level world) {
+	public ClunkheadEntity(EntityType<? extends ClunkheadEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

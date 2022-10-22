@@ -14,8 +14,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class NipperEntity extends AoAMeleeMob {
-    public NipperEntity(EntityType<? extends Monster> entityType, Level world) {
+public class NipperEntity extends AoAMeleeMob<NipperEntity> {
+    public NipperEntity(EntityType<? extends NipperEntity> entityType, Level world) {
         super(entityType, world);
     }
 

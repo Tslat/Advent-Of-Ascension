@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class BasiliskEntity extends AoAMeleeMob {
-    public BasiliskEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BasiliskEntity extends AoAMeleeMob<BasiliskEntity> {
+    public BasiliskEntity(EntityType<? extends BasiliskEntity> entityType, Level world) {
         super(entityType, world);
     }
 

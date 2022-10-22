@@ -5,12 +5,9 @@
         "block": "aoa3:nowhere_portal",
         "player": [
           {
-            "condition": "minecraft:inverted",
-            "term": {
-              "condition": "minecraft:location_check",
-              "predicate": {
-                "dimension": "aoa3:nowhere"
-              }
+            "condition": "minecraft:location_check",
+            "predicate": {
+              "dimension": "aoa3:nowhere"
             }
           }
         ]

@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ParaviteEntity extends AoAMeleeMob {
-	public ParaviteEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ParaviteEntity extends AoAMeleeMob<ParaviteEntity> {
+	public ParaviteEntity(EntityType<? extends ParaviteEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

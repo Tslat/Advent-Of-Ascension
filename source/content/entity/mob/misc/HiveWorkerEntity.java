@@ -15,14 +15,14 @@ import net.tslat.aoa3.content.entity.boss.HiveKingEntity;
 
 import javax.annotation.Nullable;
 
-public class HiveWorkerEntity extends AoAMeleeMob {
+public class HiveWorkerEntity extends AoAMeleeMob<HiveWorkerEntity> {
 	public HiveWorkerEntity(HiveKingEntity hiveKing) {
 		this(AoAMobs.HIVE_WORKER.get(), hiveKing.level);
 
 		moveTo(hiveKing.getX(), hiveKing.getY(), hiveKing.getZ(), random.nextFloat() * 360, 1);
 	}
 
-	public HiveWorkerEntity(EntityType<? extends Monster> entityType, Level world) {
+	public HiveWorkerEntity(EntityType<? extends HiveWorkerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

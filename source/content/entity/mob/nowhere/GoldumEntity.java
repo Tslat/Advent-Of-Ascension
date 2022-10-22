@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class GoldumEntity extends AoAMeleeMob {
-	public GoldumEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GoldumEntity extends AoAMeleeMob<GoldumEntity> {
+	public GoldumEntity(EntityType<? extends GoldumEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

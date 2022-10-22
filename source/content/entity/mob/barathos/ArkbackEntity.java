@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ArkbackEntity extends AoAMeleeMob {
-	public ArkbackEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ArkbackEntity extends AoAMeleeMob<ArkbackEntity> {
+	public ArkbackEntity(EntityType<? extends ArkbackEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

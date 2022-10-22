@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class RamradonEntity extends AoAMeleeMob {
-	public RamradonEntity(EntityType<? extends Monster> entityType, Level world) {
+public class RamradonEntity extends AoAMeleeMob<RamradonEntity> {
+	public RamradonEntity(EntityType<? extends RamradonEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

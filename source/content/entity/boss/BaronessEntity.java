@@ -29,13 +29,13 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class BaronessEntity extends AoARangedMob {
+public class BaronessEntity extends AoARangedMob<BaronessEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.<Boolean>defineId(BaronessEntity.class, EntityDataSerializers.BOOLEAN);
 	private int invulnerableTicks = 0;
 	private int bombCoolown = 150;
 
-	public BaronessEntity(EntityType<? extends Monster> entityType, Level world) {
+	public BaronessEntity(EntityType<? extends BaronessEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

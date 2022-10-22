@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class MotherVoidWalkerEntity extends AoAMeleeMob {
-	public MotherVoidWalkerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class MotherVoidWalkerEntity extends AoAMeleeMob<MotherVoidWalkerEntity> {
+	public MotherVoidWalkerEntity(EntityType<? extends MotherVoidWalkerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

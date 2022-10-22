@@ -14,8 +14,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class TrackerEntity extends AoAMeleeMob {
-	public TrackerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class TrackerEntity extends AoAMeleeMob<TrackerEntity> {
+	public TrackerEntity(EntityType<? extends TrackerEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setSpeed(1.4f);

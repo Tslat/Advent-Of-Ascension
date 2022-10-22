@@ -12,8 +12,8 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class VoltronEntity extends AoAMeleeMob {
-	public VoltronEntity(EntityType<? extends Monster> entityType, Level world) {
+public class VoltronEntity extends AoAMeleeMob<VoltronEntity> {
+	public VoltronEntity(EntityType<? extends VoltronEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

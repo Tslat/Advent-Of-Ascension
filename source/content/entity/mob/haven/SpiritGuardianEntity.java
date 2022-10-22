@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SpiritGuardianEntity extends AoAMeleeMob {
-	public SpiritGuardianEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SpiritGuardianEntity extends AoAMeleeMob<SpiritGuardianEntity> {
+	public SpiritGuardianEntity(EntityType<? extends SpiritGuardianEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

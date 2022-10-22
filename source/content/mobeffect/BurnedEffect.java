@@ -6,6 +6,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.effectslib.api.ExtendedMobEffect;
 import org.jetbrains.annotations.Nullable;
@@ -13,6 +15,11 @@ import org.jetbrains.annotations.Nullable;
 public class BurnedEffect extends ExtendedMobEffect {
 	public BurnedEffect() {
 		super(MobEffectCategory.HARMFUL, ColourUtil.RGB(255,63,0));
+	}
+
+	@Override
+	public boolean shouldCureEffect(MobEffectInstance effectInstance, ItemStack stack, LivingEntity entity) {
+		return stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE;
 	}
 
 	@Override

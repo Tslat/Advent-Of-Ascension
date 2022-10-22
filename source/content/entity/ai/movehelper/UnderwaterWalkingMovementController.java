@@ -28,7 +28,7 @@ public class UnderwaterWalkingMovementController extends MoveControl {
 				entity.setDeltaMovement(entity.getDeltaMovement().add(0, -0.008d, 0));
 
 			double distanceX = wantedX - entity.getX();
-			double distanceY = wantedY - entity.getY();
+			double distanceY = wantedY + 1 - entity.getY();
 			double distanceZ = wantedZ - entity.getZ();
 			double distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
 			distanceY = distanceY / distance;

@@ -6,7 +6,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.client.ClientOperations;
@@ -14,11 +13,11 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SilencerEntity extends AoAMeleeMob {
+public class SilencerEntity extends AoAMeleeMob<SilencerEntity> {
     public static boolean isClientNearby = false;
     public static float previousGain = 1;
 
-    public SilencerEntity(EntityType<? extends Monster> entityType, Level world) {
+    public SilencerEntity(EntityType<? extends SilencerEntity> entityType, Level world) {
         super(entityType, world);
     }
 

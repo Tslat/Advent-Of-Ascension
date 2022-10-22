@@ -25,14 +25,14 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.YellowGuardianShotEntity;
 import net.tslat.aoa3.util.AdvancementUtil;
 
-public class YellowGuardianEntity extends AoARangedMob {
+public class YellowGuardianEntity extends AoARangedMob<YellowGuardianEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	private RedGuardianEntity redGuardian;
 	private GreenGuardianEntity greenGuardian;
 	private BlueGuardianEntity blueGuardian;
 
-	public YellowGuardianEntity(EntityType<? extends Monster> entityType, Level world) {
+	public YellowGuardianEntity(EntityType<? extends YellowGuardianEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

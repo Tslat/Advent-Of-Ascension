@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class GingerbreadManEntity extends AoAMeleeMob {
-	public GingerbreadManEntity(EntityType<? extends Monster> entityType, Level world) {
+public class GingerbreadManEntity extends AoAMeleeMob<GingerbreadManEntity> {
+	public GingerbreadManEntity(EntityType<? extends GingerbreadManEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

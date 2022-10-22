@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SphinxEntity extends AoAMeleeMob {
-	public SphinxEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SphinxEntity extends AoAMeleeMob<SphinxEntity> {
+	public SphinxEntity(EntityType<? extends SphinxEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

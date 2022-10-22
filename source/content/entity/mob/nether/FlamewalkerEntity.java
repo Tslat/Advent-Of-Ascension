@@ -1,22 +1,51 @@
 package net.tslat.aoa3.content.entity.mob.nether;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.client.render.AoAAnimations;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
+import net.tslat.aoa3.common.particletype.CustomisableParticleType;
+import net.tslat.aoa3.common.registration.AoAAttributes;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
+import net.tslat.aoa3.content.entity.base.AoARangedMob;
+import net.tslat.aoa3.content.entity.brain.task.temp.StayWithinDistanceOfAttackTarget;
+import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
+import net.tslat.smartbrainlib.api.util.BrainUtils;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class FlamewalkerEntity extends AoAMeleeMob {
-    public FlamewalkerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
+    public FlamewalkerEntity(EntityType<? extends FlamewalkerEntity> entityType, Level world) {
         super(entityType, world);
+
+        setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0);
+        setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0);
+    }
+
+    @Override
+    public BrainActivityGroup<FlamewalkerEntity> getFightTasks() {
+        return BrainActivityGroup.fightTasks(
+                new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+                new StayWithinDistanceOfAttackTarget<>(),
+                new FlameWalkerAttack(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
     }
 
     @Override
@@ -42,11 +71,100 @@ public class FlamewalkerEntity extends AoAMeleeMob {
         return AoASounds.ENTITY_FLAMEWALKER_HURT.get();
     }
 
+    @org.jetbrains.annotations.Nullable
     @Override
-    public void aiStep() {
-        super.aiStep();
+    protected SoundEvent getShootSound() {
+        return null;
+    }
 
-        if (!level.isClientSide && level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING) && (getTarget() != null || getLastHurtByMob() != null) && level.isEmptyBlock(blockPosition()))
-            level.setBlockAndUpdate(blockPosition(), Blocks.FIRE.defaultBlockState());
+    protected int getAttackSwingDuration() {
+        return 32;
+    }
+
+    protected int getPreAttackTime() {
+        return 16;
+    }
+
+    @Override
+    public void performRangedAttack(LivingEntity target, float distanceFactor) {}
+
+    @Override
+    protected BaseMobProjectile getNewProjectileInstance() {
+        return null;
+    }
+
+    @Override
+    protected void onHurt(DamageSource source, float amount) {
+        if (DamageUtil.isMeleeDamage(source)) {
+            Entity target = source.getEntity();
+
+            target.setSecondsOnFire(3);
+
+            if (target.hurt(DamageSource.mobAttack(this).setIsFire().setMagic(), 3f) && rand().oneInNChance(15))
+                EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));
+        }
+    }
+
+    @Override
+    public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
+        target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
+
+       if (target.hurt(DamageSource.mobAttack(this).setIsFire().setMagic(), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && rand().oneInNChance(10))
+           EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));
+    }
+
+    @Override
+    public void registerControllers(AnimationData animationData) {
+        animationData.addAnimationController(AoAAnimations.genericLivingAnimation(this));
+        animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_STRIKE));
+    }
+
+    private static class FlameWalkerAttack extends AnimatableRangedAttack<FlamewalkerEntity> {
+        private Vec3 targetingPosition = null;
+
+        public FlameWalkerAttack(int delayTicks) {
+            super(delayTicks);
+        }
+
+        @Override
+        protected void start(FlamewalkerEntity entity) {
+            super.start(entity);
+
+            this.targetingPosition = this.target.position().add(this.target.getBbWidth() * 0.5f, 0, this.target.getBbWidth() * 0.5f);
+            ServerParticlePacket packet = new ServerParticlePacket();
+
+            for (int i = 0; i < 10; i++) {
+                packet.particle(ParticleTypes.SMALL_FLAME, targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().randomValueBetween(-1, 1));
+            }
+
+            entity.level.playSound(null, this.targetingPosition.x, this.targetingPosition.y, this.targetingPosition.z, AoASounds.ENTITY_FLAMEWALKER_FLARE.get(), SoundSource.HOSTILE, 1, 1);
+            AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+        }
+
+        @Override
+        protected void doDelayedAction(FlamewalkerEntity entity) {
+            if (this.target == null)
+                return;
+
+            if (!BrainUtils.canSee(entity, this.target) || entity.distanceToSqr(this.target) > this.attackRadius)
+                return;
+
+            ServerParticlePacket packet = new ServerParticlePacket();
+
+            for (int i = 0; i < 15; i++) {
+                packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.5f, 2, 1, 1, 1, 1, entity.getId()), targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y, targetingPosition.z + entity.rand().randomValueBetween(-1, 1), entity.rand().randomValueBetween(-0.05f, 0.05f), 0.5, entity.rand().randomValueBetween(-0.05f, 0.05f));
+            }
+
+            AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+            BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, this.attackIntervalSupplier.apply(entity));
+        }
+
+        @Override
+        protected void stop(FlamewalkerEntity entity) {
+            super.stop(entity);
+
+            this.targetingPosition = null;
+        }
     }
 }

@@ -57,7 +57,7 @@ public class NethengeicWitherEntity extends Monster implements RangedAttackMob, 
 
 	private int attackCooldown = 45;
 
-	public NethengeicWitherEntity(EntityType<? extends Monster> entityType, Level world) {
+	public NethengeicWitherEntity(EntityType<? extends NethengeicWitherEntity> entityType, Level world) {
 		super(entityType, world);
 
 		getNavigation().setCanFloat(true);

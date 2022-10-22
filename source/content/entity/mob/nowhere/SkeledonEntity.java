@@ -17,10 +17,10 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class SkeledonEntity extends AoAMeleeMob {
+public class SkeledonEntity extends AoAMeleeMob<SkeledonEntity> {
 	private int cloakCooldown = 80;
 
-	public SkeledonEntity(EntityType<? extends Monster> entityType, Level world) {
+	public SkeledonEntity(EntityType<? extends SkeledonEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

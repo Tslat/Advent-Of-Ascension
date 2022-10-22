@@ -27,14 +27,14 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class RedGuardianEntity extends AoARangedMob {
+public class RedGuardianEntity extends AoARangedMob<RedGuardianEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	private BlueGuardianEntity blueGuardian;
 	private GreenGuardianEntity greenGuardian;
 	private YellowGuardianEntity yellowGuardian;
 
-	public RedGuardianEntity(EntityType<? extends Monster> entityType, Level world) {
+	public RedGuardianEntity(EntityType<? extends RedGuardianEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

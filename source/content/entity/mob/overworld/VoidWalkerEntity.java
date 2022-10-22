@@ -12,8 +12,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-public class VoidWalkerEntity extends AoAMeleeMob {
-	public VoidWalkerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class VoidWalkerEntity extends AoAMeleeMob<VoidWalkerEntity> {
+	public VoidWalkerEntity(EntityType<? extends VoidWalkerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

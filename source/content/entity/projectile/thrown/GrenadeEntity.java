@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -15,10 +16,13 @@ import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
+import net.tslat.aoa3.library.object.explosion.ShrapnelExplosion;
 import net.tslat.aoa3.util.AdvancementUtil;
-import net.tslat.aoa3.util.WorldUtil;
 
 public class GrenadeEntity extends BaseBullet implements HardProjectile {
+	private static final ExplosionInfo GRENADE_EXPLOSION = new ExplosionInfo().radius(3.5f).penetration(5).baseDamage(8).explodeInOneTick().blocksDropChance(0.1f);
+
 	private float explosionStrength = 1.5f;
 
 	public GrenadeEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -63,9 +67,8 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 		if (source == DamageSource.ON_FIRE || source == DamageSource.LAVA) {
 			doImpactEffect();
 
-			if (getOwner() instanceof ServerPlayer pl) {
+			if (getOwner() instanceof ServerPlayer pl)
 				pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/darwin_award")), "fire_grenade");
-			}
 
 			discard();
 
@@ -77,11 +80,13 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doImpactEffect() {
-		WorldUtil.createExplosion(getOwner(), level, this, explosionStrength);
+		if (!this.level.isClientSide())
+			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner()).explode();
 	}
 
 	@Override
 	public void doEntityImpact(Entity target) {
-		WorldUtil.createExplosion(getOwner(), level, this, explosionStrength);
+		if (!this.level.isClientSide())
+			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner()).explode();
 	}
 }

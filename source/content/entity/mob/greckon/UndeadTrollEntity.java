@@ -10,7 +10,6 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -22,10 +21,10 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class UndeadTrollEntity extends AoARangedMob {
+public class UndeadTrollEntity extends AoARangedMob<UndeadTrollEntity> {
 	private static final EntityDataAccessor<Integer> SHOT_TYPE = SynchedEntityData.defineId(UndeadTrollEntity.class, EntityDataSerializers.INT);
 
-	public UndeadTrollEntity(EntityType<? extends Monster> entityType, Level world) {
+	public UndeadTrollEntity(EntityType<? extends UndeadTrollEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -80,7 +79,7 @@ public class UndeadTrollEntity extends AoARangedMob {
 		super.swing(hand, updateSelf);
 
 		if (!level.isClientSide())
-			getEntityData().set(SHOT_TYPE, random.nextBoolean() ? 0 : 1);
+			getEntityData().set(SHOT_TYPE, rand().nextBoolean() ? 0 : 1);
 	}
 
 	@Override

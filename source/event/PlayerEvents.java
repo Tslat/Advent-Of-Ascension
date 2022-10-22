@@ -226,7 +226,7 @@ public class PlayerEvents {
 			AoASkillReqReloadListener.syncNewPlayer(player);
 
 			PlayerAdvancements plAdvancements = player.getAdvancements();
-			Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/root"));
+			Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/root"));
 
 			if (rootAdv == null) {
 				Logging.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things.");

@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class HagEntity extends AoARangedMob {
-	public HagEntity(EntityType<? extends Monster> entityType, Level world) {
+public class HagEntity extends AoARangedMob<HagEntity> {
+	public HagEntity(EntityType<? extends HagEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -63,7 +63,7 @@ public class HagEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 120));
 	}
 

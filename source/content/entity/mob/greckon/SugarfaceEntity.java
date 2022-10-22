@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SugarfaceEntity extends AoAMeleeMob {
-    public SugarfaceEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SugarfaceEntity extends AoAMeleeMob<SugarfaceEntity> {
+    public SugarfaceEntity(EntityType<? extends SugarfaceEntity> entityType, Level world) {
         super(entityType, world);
     }
 

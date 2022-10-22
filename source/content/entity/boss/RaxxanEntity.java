@@ -26,7 +26,7 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class RaxxanEntity extends AoAMeleeMob {
+public class RaxxanEntity extends AoAMeleeMob<RaxxanEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
 	public RaxxanEntity(HarkosEntity harkos) {
@@ -35,7 +35,7 @@ public class RaxxanEntity extends AoAMeleeMob {
 		moveTo(harkos.getX(), harkos.getY(), harkos.getZ(), harkos.getYRot(), harkos.getXRot());
 	}
 
-	public RaxxanEntity(EntityType<? extends Monster> entityType, Level world) {
+	public RaxxanEntity(EntityType<? extends RaxxanEntity> entityType, Level world) {
 		super(entityType, world);
 
 		isSlipperyMovement = true;

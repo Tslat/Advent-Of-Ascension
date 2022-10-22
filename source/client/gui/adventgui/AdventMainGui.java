@@ -109,7 +109,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 			if (updateMessageTicker > 0) {
 				Component msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", Component.literal(WebUtil.getLatestVersion()));
 
-				RenderUtil.drawScaledMessage(matrix, font, msg, scaledRootX + 925 - font.width(msg), scaledRootY + 105, 1.25f, ColourUtil.RGB(229, 0, 0), RenderUtil.StringRenderType.DROP_SHADOW);
+				RenderUtil.drawScaledMessage(matrix, font, msg, scaledRootX + 915 - font.width(msg), scaledRootY + 105, 1.25f, ColourUtil.RGB(229, 0, 0), RenderUtil.StringRenderType.DROP_SHADOW);
 			}
 		}
 

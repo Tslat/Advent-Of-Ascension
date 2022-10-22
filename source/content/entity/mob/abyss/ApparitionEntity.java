@@ -14,8 +14,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class ApparitionEntity extends AoAMeleeMob {
-	public ApparitionEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ApparitionEntity extends AoAMeleeMob<ApparitionEntity> {
+	public ApparitionEntity(EntityType<? extends ApparitionEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

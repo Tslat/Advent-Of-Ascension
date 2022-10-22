@@ -17,8 +17,8 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class MechyonEntity extends AoAMeleeMob {
-	public MechyonEntity(EntityType<? extends Monster> entityType, Level world) {
+public class MechyonEntity extends AoAMeleeMob<MechyonEntity> {
+	public MechyonEntity(EntityType<? extends MechyonEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

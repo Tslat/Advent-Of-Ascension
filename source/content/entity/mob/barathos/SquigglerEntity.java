@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SquigglerEntity extends AoAMeleeMob {
-	public SquigglerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SquigglerEntity extends AoAMeleeMob<SquigglerEntity> {
+	public SquigglerEntity(EntityType<? extends SquigglerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

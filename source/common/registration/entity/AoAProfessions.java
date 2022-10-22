@@ -26,7 +26,7 @@ public final class AoAProfessions {
 	}
 
 	private static RegistryObject<VillagerProfession> register(String name, RegistryObject<PoiType> jobPoi, @Nullable SoundEvent workingSound) {
-		return register(name, holder -> holder.is(jobPoi.getKey()), workingSound);
+		return register(name, holder -> holder.is(jobPoi.getKey()), holder -> holder.is(jobPoi.getKey()), ImmutableSet::of, ImmutableSet::of, workingSound);
 	}
 
 	private static RegistryObject<VillagerProfession> register(String name, Predicate<Holder<PoiType>> jobPoi, Predicate<Holder<PoiType>> acquirablePoi, Supplier<ImmutableSet<Item>> interestedItems, Supplier<ImmutableSet<Block>> secondaryPoiBlock, @Nullable SoundEvent workingSound) {

@@ -12,8 +12,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
-public class HidingFungiEntity extends AoAMeleeMob {
-	public HidingFungiEntity(EntityType<? extends Monster> entityType, Level world) {
+public class HidingFungiEntity extends AoAMeleeMob<HidingFungiEntity> {
+	public HidingFungiEntity(EntityType<? extends HidingFungiEntity> entityType, Level world) {
 		super(entityType, world);
 
 		xpReward = 0;
@@ -33,7 +33,7 @@ public class HidingFungiEntity extends AoAMeleeMob {
 	protected void registerGoals() {}*/
 
 	@Override
-	protected void onHit(DamageSource source, float amount) {
+	protected void onHurt(DamageSource source, float amount) {
 		if (!level.isClientSide) {
 			LivingFungiEntity livingFungi = new LivingFungiEntity(AoAMobs.LIVING_FUNGI.get(), level);
 

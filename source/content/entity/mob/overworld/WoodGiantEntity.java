@@ -24,7 +24,6 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -50,7 +49,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import javax.annotation.Nullable;
 import java.util.UUID;
 
-public class WoodGiantEntity extends AoAMeleeMob {
+public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 	public static final EntityDataAccessor<Integer> STAGE = SynchedEntityData.<Integer>defineId(WoodGiantEntity.class, EntityDataSerializers.INT);
 	private final AttributeModifier STAGE_ARMOUR_MOD = new AttributeModifier(UUID.fromString("076a790a-a765-4313-b517-527b758e839f"), "StageArmourModifier", 1, AttributeModifier.Operation.ADDITION) {
 		@Override
@@ -67,14 +66,14 @@ public class WoodGiantEntity extends AoAMeleeMob {
 
 	private int lastMeleeHit = 0;
 
-	public WoodGiantEntity(EntityType<? extends Monster> entityType, Level world) {
+	public WoodGiantEntity(EntityType<? extends WoodGiantEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.maxUpStep = 1.5f;
 	}
 
 	@Override
-	protected Brain.Provider<?> brainProvider() { // TODO
+	protected Brain.Provider<WoodGiantEntity> brainProvider() { // TODO
 		return Brain.provider(ImmutableList.of(), ImmutableList.of());
 	}
 
@@ -140,7 +139,7 @@ public class WoodGiantEntity extends AoAMeleeMob {
 	}
 
 	@Override
-	protected void onHit(DamageSource source, float amount) {
+	protected void onHurt(DamageSource source, float amount) {
 		if (!level.isClientSide() && DamageUtil.isMeleeDamage(source)) {
 			lastMeleeHit = tickCount;
 

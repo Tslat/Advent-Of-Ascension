@@ -24,10 +24,10 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
-public class CreepEntity extends AoARangedMob {
+public class CreepEntity extends AoARangedMob<CreepEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public CreepEntity(EntityType<? extends Monster> entityType, Level world) {
+	public CreepEntity(EntityType<? extends CreepEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

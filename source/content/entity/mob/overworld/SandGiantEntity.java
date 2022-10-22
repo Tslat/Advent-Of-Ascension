@@ -14,7 +14,6 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.util.RandomPos;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,15 +37,15 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import java.util.EnumSet;
 import java.util.function.Function;
 
-public class SandGiantEntity extends AoAMeleeMob {
-	public SandGiantEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
+	public SandGiantEntity(EntityType<? extends SandGiantEntity> entityType, Level world) {
 		super(entityType, world);
 
 		this.maxUpStep = 1.5f;
 	}
 
 	@Override
-	protected Brain.Provider<?> brainProvider() { // TODO
+	protected Brain.Provider<SandGiantEntity> brainProvider() { // TODO
 		return Brain.provider(ImmutableList.of(), ImmutableList.of());
 	}
 

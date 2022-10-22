@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class RawboneEntity extends AoAMeleeMob {
-	public RawboneEntity(EntityType<? extends Monster> entityType, Level world) {
+public class RawboneEntity extends AoAMeleeMob<RawboneEntity> {
+	public RawboneEntity(EntityType<? extends RawboneEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

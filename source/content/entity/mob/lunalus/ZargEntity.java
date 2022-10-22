@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class ZargEntity extends AoAMeleeMob {
-	public ZargEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ZargEntity extends AoAMeleeMob<ZargEntity> {
+	public ZargEntity(EntityType<? extends ZargEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

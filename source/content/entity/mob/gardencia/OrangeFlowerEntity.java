@@ -10,14 +10,14 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.boss.VinocorneEntity;
 
-public class OrangeFlowerEntity extends AoAMeleeMob {
+public class OrangeFlowerEntity extends AoAMeleeMob<OrangeFlowerEntity> {
 	public OrangeFlowerEntity(VinocorneEntity vinocorne) {
 		this(AoAMobs.ORANGE_FLOWER.get(), vinocorne.level);
 
 		moveTo(vinocorne.getX(), vinocorne.getY(), vinocorne.getZ(), random.nextFloat() * 360, 0);
 	}
 
-	public OrangeFlowerEntity(EntityType<? extends Monster> entityType, Level world) {
+	public OrangeFlowerEntity(EntityType<? extends OrangeFlowerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -5,10 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -85,18 +82,22 @@ public class CreeperlockEntity extends AoACreeponiaCreeper implements AoARangedA
     }
 
     @Override
-    public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+    public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
         WorldUtil.createExplosion(this, level, projectile, 2f);
     }
 
-    @Override
     public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
         WorldUtil.createExplosion(this, level, projectile, 2f);
     }
 
     @Override
-    public void doProjectileEntityImpact(BaseMobProjectile projectile, Entity target) {
+    public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
         if (DamageUtil.dealBlasterDamage(this, target, projectile, 7f, false))
             doProjectileImpactEffect(projectile, target);
+    }
+
+    @Override
+    public void performRangedAttack(LivingEntity target, float distanceFactor) {
+
     }
 }

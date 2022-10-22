@@ -45,6 +45,8 @@ public final class AoAEntitySpawnPlacements {
         setSpawnPlacement(AoAMobs.VOID_WALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(false, Integer.MIN_VALUE, 0));
         setSpawnPlacement(AoAMobs.ANCIENT_GOLEM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 65, Integer.MAX_VALUE));
         setSpawnPlacement(AoAMobs.LITTLE_BAM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK));
+        setSpawnPlacement(AoAMobs.FLAMEWALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK));
+        setSpawnPlacement(AoAMobs.GHOST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(false, Integer.MIN_VALUE, 0));
 
         setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, GlowSquid::checkGlowSquideSpawnRules);
 
@@ -111,12 +113,12 @@ public final class AoAEntitySpawnPlacements {
                     if (!world.getLevel().isDay())
                         return false;
 
-                    if (rand.nextFloat() > 0.05f)
+                    if (rand.nextFloat() > 0.15f * world.getDifficulty().getId())
                         return false;
 
                     int blockLightLimit = world.dimensionType().monsterSpawnBlockLightLimit();
 
-                    return blockLightLimit >= 15 || world.getBrightness(LightLayer.BLOCK, pos) > blockLightLimit;
+                    return blockLightLimit >= 15 || world.getBrightness(LightLayer.BLOCK, pos) <= blockLightLimit;
                 }
                 else if (!Monster.isDarkEnoughToSpawn(world, pos, rand)) {
                     return false;

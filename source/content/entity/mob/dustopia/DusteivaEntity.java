@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class DusteivaEntity extends AoAMeleeMob {
-	public DusteivaEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DusteivaEntity extends AoAMeleeMob<DusteivaEntity> {
+	public DusteivaEntity(EntityType<? extends DusteivaEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

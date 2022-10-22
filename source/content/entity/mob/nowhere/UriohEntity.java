@@ -13,10 +13,10 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class UriohEntity extends AoAMeleeMob {
+public class UriohEntity extends AoAMeleeMob<UriohEntity> {
 	double lastHealth;
 
-	public UriohEntity(EntityType<? extends Monster> entityType, Level world) {
+	public UriohEntity(EntityType<? extends UriohEntity> entityType, Level world) {
 		super(entityType, world);
 
 		lastHealth = getHealth();

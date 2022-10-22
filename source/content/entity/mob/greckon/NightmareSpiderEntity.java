@@ -23,10 +23,10 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 
-public class NightmareSpiderEntity extends AoAMeleeMob {
+public class NightmareSpiderEntity extends AoAMeleeMob<NightmareSpiderEntity> {
 	private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.<Byte>defineId(NightmareSpiderEntity.class, EntityDataSerializers.BYTE);
 
-	public NightmareSpiderEntity(EntityType<? extends Monster> entityType, Level world) {
+	public NightmareSpiderEntity(EntityType<? extends NightmareSpiderEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

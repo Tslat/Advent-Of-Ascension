@@ -12,8 +12,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-public class BushBabyEntity extends AoAMeleeMob {
-	public BushBabyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BushBabyEntity extends AoAMeleeMob<BushBabyEntity> {
+	public BushBabyEntity(EntityType<? extends BushBabyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -16,8 +16,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class BonebackEntity extends AoAMeleeMob {
-	public BonebackEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BonebackEntity extends AoAMeleeMob<BonebackEntity> {
+	public BonebackEntity(EntityType<? extends BonebackEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

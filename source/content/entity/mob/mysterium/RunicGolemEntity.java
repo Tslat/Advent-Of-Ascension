@@ -21,12 +21,12 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class RunicGolemEntity extends AoAMeleeMob {
+public class RunicGolemEntity extends AoAMeleeMob<RunicGolemEntity> {
 	private static final EntityDataAccessor<Boolean> SHIELDED = SynchedEntityData.<Boolean>defineId(RunicGolemEntity.class, EntityDataSerializers.BOOLEAN);
 	private int shieldCooldown = 120;
 	private int runeStoneCooldown = 0;
 
-	public RunicGolemEntity(EntityType<? extends Monster> entityType, Level world) {
+	public RunicGolemEntity(EntityType<? extends RunicGolemEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

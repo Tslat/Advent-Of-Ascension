@@ -14,8 +14,8 @@ import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
 
-public class MechamatonEntity extends AoAMeleeMob {
-    public MechamatonEntity(EntityType<? extends Monster> entityType, Level world) {
+public class MechamatonEntity extends AoAMeleeMob<MechamatonEntity> {
+    public MechamatonEntity(EntityType<? extends MechamatonEntity> entityType, Level world) {
         super(entityType, world);
     }
 

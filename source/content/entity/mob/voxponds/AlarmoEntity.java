@@ -7,7 +7,6 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -18,8 +17,8 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class AlarmoEntity extends AoAMeleeMob {
-    public AlarmoEntity(EntityType<? extends Monster> entityType, Level world) {
+public class AlarmoEntity extends AoAMeleeMob<AlarmoEntity> {
+    public AlarmoEntity(EntityType<? extends AlarmoEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -68,7 +67,7 @@ public class AlarmoEntity extends AoAMeleeMob {
             EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN).level(20));
 
             for (LivingEntity mob : mobList) {
-                mob.setLastHurtByMob(playerList.get(random.nextInt(playerList.size())));
+                mob.setLastHurtByMob(playerList.get(rand().nextInt(playerList.size())));
             }
         }
     }

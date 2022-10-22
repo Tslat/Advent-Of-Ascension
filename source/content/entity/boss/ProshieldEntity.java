@@ -21,10 +21,10 @@ import net.tslat.aoa3.util.DamageUtil;
 
 import javax.annotation.Nullable;
 
-public class ProshieldEntity extends AoAMeleeMob {
+public class ProshieldEntity extends AoAMeleeMob<ProshieldEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public ProshieldEntity(EntityType<? extends Monster> entityType, Level world) {
+	public ProshieldEntity(EntityType<? extends ProshieldEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

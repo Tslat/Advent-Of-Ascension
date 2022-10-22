@@ -58,7 +58,7 @@ public class DoppelgangerEntity extends Monster implements SmartBrainOwner<Doppe
 
 	private SmartBrainHandler<DoppelgangerEntity> handler;
 
-	public DoppelgangerEntity(EntityType<? extends Monster> entityType, Level world) {
+	public DoppelgangerEntity(EntityType<? extends DoppelgangerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

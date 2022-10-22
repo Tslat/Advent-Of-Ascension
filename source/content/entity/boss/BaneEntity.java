@@ -31,11 +31,11 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 
-public class BaneEntity extends AoAMeleeMob {
+public class BaneEntity extends AoAMeleeMob<BaneEntity> {
 	private final HashSet<AoAMeleeMob> summons = new HashSet<AoAMeleeMob>();
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 
-	public BaneEntity(EntityType<? extends Monster> entityType, Level world) {
+	public BaneEntity(EntityType<? extends BaneEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

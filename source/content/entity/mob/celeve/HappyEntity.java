@@ -18,8 +18,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.ClownShotEntity;
 
 import javax.annotation.Nullable;
 
-public class HappyEntity extends AoARangedMob {
-	public HappyEntity(EntityType<? extends Monster> entityType, Level world) {
+public class HappyEntity extends AoARangedMob<HappyEntity> {
+	public HappyEntity(EntityType<? extends HappyEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

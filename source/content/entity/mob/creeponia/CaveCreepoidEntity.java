@@ -44,7 +44,7 @@ public class CaveCreepoidEntity extends AoACreeponiaCreeper {
     }
 
     @Override
-    protected void onHit(DamageSource source, float amount) {
+    protected void onHurt(DamageSource source, float amount) {
         if (!level.isClientSide && !source.isFire() && RandomUtil.oneInNChance(3))
             WorldUtil.createExplosion(this, level, 2f);
     }

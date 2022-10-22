@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class FungockEntity extends AoAMeleeMob {
-	public FungockEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FungockEntity extends AoAMeleeMob<FungockEntity> {
+	public FungockEntity(EntityType<? extends FungockEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

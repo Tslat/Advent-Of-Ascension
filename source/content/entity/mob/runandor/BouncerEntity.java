@@ -5,7 +5,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -13,13 +12,13 @@ import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
-public class BouncerEntity extends AoAMeleeMob {
+public class BouncerEntity extends AoAMeleeMob<BouncerEntity> {
 	private int jumpCooldown;
 
-	public BouncerEntity(EntityType<? extends Monster> entityType, Level world) {
+	public BouncerEntity(EntityType<? extends BouncerEntity> entityType, Level world) {
 		super(entityType, world);
 
-		random.setSeed(getUUID().getMostSignificantBits());
+		rand().setSeed(getUUID().getMostSignificantBits());
 		jumpCooldown = RandomUtil.randomNumberBetween(40, 120);
 	}
 

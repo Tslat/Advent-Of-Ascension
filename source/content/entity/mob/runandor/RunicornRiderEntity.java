@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class RunicornRiderEntity extends AoAMeleeMob {
-	public RunicornRiderEntity(EntityType<? extends Monster> entityType, Level world) {
+public class RunicornRiderEntity extends AoAMeleeMob<RunicornRiderEntity> {
+	public RunicornRiderEntity(EntityType<? extends RunicornRiderEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setSpeed(2.3f);

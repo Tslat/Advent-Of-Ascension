@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class LelyetianCasterEntity extends AoARangedMob {
-	public LelyetianCasterEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LelyetianCasterEntity extends AoARangedMob<LelyetianCasterEntity> {
+	public LelyetianCasterEntity(EntityType<? extends LelyetianCasterEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -47,7 +47,7 @@ public class LelyetianCasterEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		if (target instanceof ServerPlayer)
 			PlayerUtil.consumeResource((ServerPlayer)target, AoAResources.SPIRIT.get(), 50, true);
 	}

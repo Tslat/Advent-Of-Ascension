@@ -14,8 +14,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class BloodsuckerEntity extends AoAMeleeMob {
-	public BloodsuckerEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BloodsuckerEntity extends AoAMeleeMob<BloodsuckerEntity> {
+	public BloodsuckerEntity(EntityType<? extends BloodsuckerEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

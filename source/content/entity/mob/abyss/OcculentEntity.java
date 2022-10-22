@@ -6,7 +6,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -17,10 +16,10 @@ import net.tslat.aoa3.util.RandomUtil;
 import javax.annotation.Nullable;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class OcculentEntity extends AoAMeleeMob {
+public class OcculentEntity extends AoAMeleeMob<OcculentEntity> {
 	public final CopyOnWriteArrayList<Pair<Integer, Vec3>> clones = new CopyOnWriteArrayList<Pair<Integer, Vec3>>();
 
-	public OcculentEntity(EntityType<? extends Monster> entityType, Level world) {
+	public OcculentEntity(EntityType<? extends OcculentEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -50,8 +49,8 @@ public class OcculentEntity extends AoAMeleeMob {
 		super.tick();
 
 		if (level.isClientSide() && RandomUtil.oneInNChance(200)) {
-			double xPos = random.nextFloat() * 10 - 5;
-			double zPos = random.nextFloat() * 10 - 5;
+			double xPos = rand().nextFloat() * 10 - 5;
+			double zPos = rand().nextFloat() * 10 - 5;
 
 			clones.add(Pair.of(GlobalEvents.tick + 600, new Vec3(xPos, 0, zPos)));
 		}

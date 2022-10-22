@@ -22,8 +22,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class CaseConstructEntity extends AoAMeleeMob {
-    public CaseConstructEntity(EntityType<? extends Monster> entityType, Level world) {
+public class CaseConstructEntity extends AoAMeleeMob<CaseConstructEntity> {
+    public CaseConstructEntity(EntityType<? extends CaseConstructEntity> entityType, Level world) {
         super(entityType, world);
     }
 

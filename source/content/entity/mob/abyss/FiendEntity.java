@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class FiendEntity extends AoAMeleeMob {
-	public FiendEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FiendEntity extends AoAMeleeMob<FiendEntity> {
+	public FiendEntity(EntityType<? extends FiendEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

@@ -20,8 +20,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class SeaTrollEntity extends AoARangedMob {
-	public SeaTrollEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SeaTrollEntity extends AoARangedMob<SeaTrollEntity> {
+	public SeaTrollEntity(EntityType<? extends SeaTrollEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -60,7 +60,7 @@ public class SeaTrollEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 120));
 	}
 

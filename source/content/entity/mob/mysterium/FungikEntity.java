@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
 
-public class FungikEntity extends AoARangedMob {
-	public FungikEntity(EntityType<? extends Monster> entityType, Level world) {
+public class FungikEntity extends AoARangedMob<FungikEntity> {
+	public FungikEntity(EntityType<? extends FungikEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -47,7 +47,7 @@ public class FungikEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.DIG_SLOWDOWN, 90).level(2));
 	}
 

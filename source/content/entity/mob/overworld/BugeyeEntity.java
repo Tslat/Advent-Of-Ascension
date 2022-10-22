@@ -15,8 +15,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class BugeyeEntity extends AoAMeleeMob {
-	public BugeyeEntity(EntityType<? extends Monster> entityType, Level world) {
+public class BugeyeEntity extends AoAMeleeMob<BugeyeEntity> {
+	public BugeyeEntity(EntityType<? extends BugeyeEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

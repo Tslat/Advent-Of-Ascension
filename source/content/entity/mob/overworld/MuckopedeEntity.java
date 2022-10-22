@@ -15,8 +15,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class MuckopedeEntity extends AoAMeleeMob {
-	public MuckopedeEntity(EntityType<? extends Monster> entityType, Level world) {
+public class MuckopedeEntity extends AoAMeleeMob<MuckopedeEntity> {
+	public MuckopedeEntity(EntityType<? extends MuckopedeEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

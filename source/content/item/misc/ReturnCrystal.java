@@ -10,13 +10,11 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.AdvancementUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -56,16 +54,23 @@ public class ReturnCrystal extends Item {
 			if (!pl.isCreative())
 				stack.shrink(1);
 
-			if (NowhereEvents.isInBossRegion(pl.blockPosition())) {
-				if (!pl.getAdvancements().getOrStartProgress(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/root"))).isDone()) {
+			if (!NowhereEvents.isInLobbyRegion(pl.blockPosition())) {
+				if (NowhereEvents.isInBossRegion(pl.blockPosition()) && !pl.getAdvancements().getOrStartProgress(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/root"))).isDone()) {
 					AoAScheduler.scheduleSyncronisedTask(() -> {
 						PlayerUtil.resetToDefaultStatus(pl);
 						pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+						ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+						PlayerUtil.getAdventPlayer(pl).returnItemStorage();
 					}, 1);
 				}
-			}
-			else if (!NowhereEvents.isInLobbyRegion(pl.blockPosition())) {
-				AoAScheduler.scheduleSyncronisedTask(() -> pl.connection.teleport(16.5d, 1501.5d, 16.5d, 180, pl.getXRot()), 1);
+				else {
+					AoAScheduler.scheduleSyncronisedTask(() -> {
+						PlayerUtil.resetToDefaultStatus(pl);
+						pl.connection.teleport(16.5d, 1501.5d, 16.5d, 180, pl.getXRot());
+						ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+						PlayerUtil.getAdventPlayer(pl).returnItemStorage();
+					}, 1);
+				}
 			}
 		}
 

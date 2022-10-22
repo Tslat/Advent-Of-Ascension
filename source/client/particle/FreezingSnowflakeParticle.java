@@ -46,7 +46,7 @@ public class FreezingSnowflakeParticle extends EntityAffectingParticle {
 	@Override
 	protected boolean handleCollision(Entity collidedEntity) {
 		if (collidedEntity.getTicksFrozen() <= collidedEntity.getTicksRequiredToFreeze() * 2.5f && collidedEntity instanceof Player)
-			AoAPackets.messageServer(new ParticleEffectPacket(ParticleEffectPacket.Type.FREEZING_SNOWFLAKE, collidedEntity.getId()));
+			AoAPackets.messageServer(new ParticleEffectPacket(ParticleEffectPacket.Type.FREEZING_SNOWFLAKE, this.senderId, collidedEntity.getId()));
 
 		return true;
 	}

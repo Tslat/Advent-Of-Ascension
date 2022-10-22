@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.PlayerUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class AxiolightEntity extends AoAMeleeMob {
-    public AxiolightEntity(EntityType<? extends Monster> entityType, Level world) {
+public class AxiolightEntity extends AoAMeleeMob<AxiolightEntity> {
+    public AxiolightEntity(EntityType<? extends AxiolightEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class ChimeraEntity extends AoAMeleeMob {
-	public ChimeraEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ChimeraEntity extends AoAMeleeMob<ChimeraEntity> {
+	public ChimeraEntity(EntityType<? extends ChimeraEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

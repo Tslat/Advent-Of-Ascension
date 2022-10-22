@@ -21,11 +21,11 @@ import net.tslat.aoa3.content.entity.mob.gardencia.*;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
-public class VinocorneEntity extends AoAMeleeMob {
+public class VinocorneEntity extends AoAMeleeMob<VinocorneEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);
 	private int minionCountdown = 70;
 
-	public VinocorneEntity(EntityType<? extends Monster> entityType, Level world) {
+	public VinocorneEntity(EntityType<? extends VinocorneEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

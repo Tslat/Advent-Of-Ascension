@@ -20,8 +20,8 @@ import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class CentinelEntity extends AoARangedMob {
-	public CentinelEntity(EntityType<? extends Monster> entityType, Level world) {
+public class CentinelEntity extends AoARangedMob<CentinelEntity> {
+	public CentinelEntity(EntityType<? extends CentinelEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
@@ -43,12 +43,12 @@ public class CentinelEntity extends AoARangedMob {
 	}
 
 	@Override
-	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
+	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
 		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 
 	@Override
-	public void doProjectileBlockImpact(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
+	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
 		WorldUtil.createExplosion(this, level, projectile, 2f);
 	}
 

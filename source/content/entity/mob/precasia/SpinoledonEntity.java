@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class SpinoledonEntity extends AoAMeleeMob {
-	public SpinoledonEntity(EntityType<? extends Monster> entityType, Level world) {
+public class SpinoledonEntity extends AoAMeleeMob<SpinoledonEntity> {
+	public SpinoledonEntity(EntityType<? extends SpinoledonEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

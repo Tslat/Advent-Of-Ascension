@@ -23,7 +23,7 @@ import java.util.List;
 public class RoamingTradersSpawner implements CustomSpawner {
 	private static final RegistryObject<EntityType<? extends Mob>>[] ENTITIES = new RegistryObject[] {AoANpcs.LOTTOMAN, AoANpcs.UNDEAD_HERALD};
 
-	private long nextSpawn = 24000;
+	private long nextSpawn = -1;
 
 	@Override
 	public int tick(ServerLevel world, boolean spawnHostiles, boolean spawnPassives) {
@@ -32,9 +32,7 @@ public class RoamingTradersSpawner implements CustomSpawner {
 
 		this.nextSpawn = world.getGameTime() + RandomUtil.randomNumberBetween(12000, 36000);
 
-		doSpawning(world);
-
-		return 0;
+		return doSpawning(world);
 	}
 
 	private int doSpawning(ServerLevel world) {

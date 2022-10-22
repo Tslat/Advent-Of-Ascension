@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -92,7 +93,7 @@ public class NowhereActivityPortal extends PortalBlock {
 				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
 			}
 
-			world.addParticle(new PortalFloaterParticleType.Data(new BlockPos(pos.getX(), pos.getY(), pos.getZ()), colour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
+			world.addParticle(new PortalFloaterParticleType.Data(new Vec3(pos.getX(), pos.getY(), pos.getZ()), colour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
 		}
 	}
 

@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class LostSoulEntity extends AoAMeleeMob {
-    public LostSoulEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LostSoulEntity extends AoAMeleeMob<LostSoulEntity> {
+    public LostSoulEntity(EntityType<? extends LostSoulEntity> entityType, Level world) {
         super(entityType, world);
     }
 

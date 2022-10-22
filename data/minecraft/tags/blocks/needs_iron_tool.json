@@ -1,19 +1,13 @@
 {
   "values": [
-    "aoa3:baronyte_ore",
-    "aoa3:blazium_ore",
-    "aoa3:charged_runium_ore",
     "aoa3:chestbone_fragments_ore",
-    "aoa3:emberstone_ore",
     "aoa3:footbone_fragments_ore",
-    "aoa3:gemenyte_ore",
-    "aoa3:jewelyte_ore",
+    "aoa3:jade_ore",
+    "aoa3:deepslate_jade_ore",
     "aoa3:legbone_fragments_ore",
-    "aoa3:ornamyte_ore",
     "aoa3:runium_ore",
     "aoa3:deepslate_runium_ore",
     "aoa3:netherrack_runium_ore",
-    "aoa3:skullbone_fragments_ore",
-    "aoa3:varsium_ore"
+    "aoa3:skullbone_fragments_ore"
   ]
 }

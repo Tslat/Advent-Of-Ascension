@@ -18,7 +18,7 @@
   },
   "spawn": [
     {
-      "type": "aoa3:void_walker",
+      "type": "aoa3:ancient_golem",
       "maxCount": 1,
       "minCount": 1,
       "weight": 8

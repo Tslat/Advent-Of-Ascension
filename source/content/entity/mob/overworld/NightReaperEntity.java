@@ -15,8 +15,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class NightReaperEntity extends AoAMeleeMob {
-	public NightReaperEntity(EntityType<? extends Monster> entityType, Level world) {
+public class NightReaperEntity extends AoAMeleeMob<NightReaperEntity> {
+	public NightReaperEntity(EntityType<? extends NightReaperEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

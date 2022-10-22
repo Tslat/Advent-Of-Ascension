@@ -51,7 +51,7 @@ public class ShadowlordEntity extends Monster implements RangedAttackMob, AoARan
 	private final int[] nextHeadUpdate = new int[2];
 	private final int[] idleHeadUpdates = new int[2];
 
-	public ShadowlordEntity(EntityType<? extends Monster> entityType, Level world) {
+	public ShadowlordEntity(EntityType<? extends ShadowlordEntity> entityType, Level world) {
 		super(entityType, world);
 
 

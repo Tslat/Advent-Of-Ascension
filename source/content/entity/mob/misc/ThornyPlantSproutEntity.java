@@ -29,8 +29,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.List;
 
-public class ThornyPlantSproutEntity extends AoAMeleeMob {
-	public ThornyPlantSproutEntity(EntityType<? extends Monster> entityType, Level world) {
+public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity> {
+	public ThornyPlantSproutEntity(EntityType<? extends ThornyPlantSproutEntity> entityType, Level world) {
 		super(entityType, world);
 
 		setPersistenceRequired();
@@ -40,31 +40,31 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob {
 	public ThornyPlantSproutEntity(Level world, BlockPos plantPos) {
 		this(AoAMiscEntities.THORNY_PLANT_SPROUT.get(), world);
 
-		moveTo(plantPos.getX() + 0.5f + random.nextGaussian() * 0.1f, plantPos.getY() + 0.1f ,plantPos.getZ() + 0.5f + random.nextGaussian() * 0.1f, random.nextFloat() * 360, 0);
+		moveTo(plantPos.getX() + 0.5f + rand().nextGaussian() * 0.1f, plantPos.getY() + 0.1f ,plantPos.getZ() + 0.5f + rand().nextGaussian() * 0.1f, rand().nextFloat() * 360, 0);
 	}
 
 	@Override
-	public BrainActivityGroup<AoAMeleeMob> getCoreTasks() {
+	public BrainActivityGroup<ThornyPlantSproutEntity> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(new LookAtTarget<>());
 	}
 
 	@Override
-	public BrainActivityGroup<AoAMeleeMob> getIdleTasks() {
+	public BrainActivityGroup<ThornyPlantSproutEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER));
 	}
 
 	@Override
-	public BrainActivityGroup<AoAMeleeMob> getFightTasks() {
+	public BrainActivityGroup<ThornyPlantSproutEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
 
 	@Override
-	public List<ExtendedSensor<AoAMeleeMob>> getSensors() {
+	public List<ExtendedSensor<ThornyPlantSproutEntity>> getSensors() {
 		return ObjectArrayList.of(
 				new NearbyPlayersSensor<>(),
-				new NearbyLivingEntitySensor<AoAMeleeMob>()
+				new NearbyLivingEntitySensor<ThornyPlantSproutEntity>()
 						.setPredicate((target, entity) -> target.getType() != entity.getType() && (target instanceof Monster || (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null))).setScanRate(entity -> 20),
 				new HurtBySensor<>());
 	}

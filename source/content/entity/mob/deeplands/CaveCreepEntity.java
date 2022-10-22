@@ -18,7 +18,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class CaveCreepEntity extends AoAMeleeMob {
+public class CaveCreepEntity extends AoAMeleeMob<CaveCreepEntity> {
     private static final AnimationBuilder LIFT_HOLD_ANIM = new AnimationBuilder().addAnimation("misc.lift.hold", true);
     private static final AnimationBuilder LIFT_ANIM = new AnimationBuilder().addAnimation("misc.lift").addAnimation("misc.lift.hold", true);
     private static final AnimationBuilder DROP_ANIM = new AnimationBuilder().addAnimation("misc.drop");
@@ -30,7 +30,7 @@ public class CaveCreepEntity extends AoAMeleeMob {
     private int lastAggroChange = -1;
     private boolean isAggro = false;
 
-    public CaveCreepEntity(EntityType<? extends Monster> entityType, Level world) {
+    public CaveCreepEntity(EntityType<? extends CaveCreepEntity> entityType, Level world) {
         super(entityType, world);
     }
 

@@ -17,8 +17,8 @@ import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
-public class LuxocronEntity extends AoAMeleeMob {
-    public LuxocronEntity(EntityType<? extends Monster> entityType, Level world) {
+public class LuxocronEntity extends AoAMeleeMob<LuxocronEntity> {
+    public LuxocronEntity(EntityType<? extends LuxocronEntity> entityType, Level world) {
         super(entityType, world);
     }
 

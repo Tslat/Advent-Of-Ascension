@@ -93,7 +93,9 @@ public final class ClientOperations {
 		ev.register(AoAParticleTypes.SWIRLY.get(), SwirlyParticle.Factory::new);
 		ev.register(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), new FloatingItemFragmentParticle.Factory());
 		ev.register(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), FreezingSnowflakeParticle.Factory::new);
+		ev.register(AoAParticleTypes.BURNING_FLAME.get(), BurningFlameParticle.Factory::new);
 		ev.register(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
+		ev.register(AoAParticleTypes.ORB.get(), OrbParticle.Factory::new);
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {

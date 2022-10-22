@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.*;
@@ -17,9 +18,11 @@ import net.minecraft.world.scores.criteria.ObjectiveCriteria;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -30,10 +33,7 @@ import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.TagUtil;
+import net.tslat.aoa3.util.*;
 
 public final class NowhereEvents {
 	public static boolean isInParkourRegion(BlockPos pos) {
@@ -116,7 +116,18 @@ public final class NowhereEvents {
 		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH));
 		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 
-		NowhereActivityPortal.Activity.RETURN.activate(plData.player());
+		if (isInBossRegion(player.blockPosition()) && !player.getAdvancements().getOrStartProgress(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/root"))).isDone()) {
+			AoAScheduler.scheduleSyncronisedTask(() -> {
+				PlayerUtil.resetToDefaultStatus(player);
+				player.connection.teleport(17.5d, 452.5d, 3.5d, 0, player.getXRot());
+				ItemUtil.clearInventoryOfItems(player, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+				PlayerUtil.getAdventPlayer(player).returnItemStorage();
+			}, 1);
+		}
+		else {
+			NowhereActivityPortal.Activity.RETURN.activate(plData.player());
+		}
+
 		player.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
 		ev.setCanceled(true);
 	}
@@ -125,6 +136,16 @@ public final class NowhereEvents {
 		Item item = ev.getItemStack().getItem();
 
 		if (item instanceof MinecartItem || item instanceof BoatItem)
+			ev.setCanceled(true);
+	}
+
+	public static void handleNowhereRightClickEntity(final PlayerInteractEvent.EntityInteract ev) {
+		if (ev.getTarget() instanceof ItemFrame)
+			ev.setCanceled(true);
+	}
+
+	public static void handleNowhereLeftClickEntity(final AttackEntityEvent ev) {
+		if (ev.getTarget() instanceof ItemFrame)
 			ev.setCanceled(true);
 	}
 

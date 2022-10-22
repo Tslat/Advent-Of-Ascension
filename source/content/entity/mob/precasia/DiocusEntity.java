@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class DiocusEntity extends AoAMeleeMob {
-	public DiocusEntity(EntityType<? extends Monster> entityType, Level world) {
+public class DiocusEntity extends AoAMeleeMob<DiocusEntity> {
+	public DiocusEntity(EntityType<? extends DiocusEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

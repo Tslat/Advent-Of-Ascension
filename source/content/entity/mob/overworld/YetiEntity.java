@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class YetiEntity extends AoAMeleeMob {
-	public YetiEntity(EntityType<? extends Monster> entityType, Level world) {
+public class YetiEntity extends AoAMeleeMob<YetiEntity> {
+	public YetiEntity(EntityType<? extends YetiEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

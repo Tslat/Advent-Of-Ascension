@@ -9,14 +9,14 @@ import net.minecraft.world.level.Level;
 
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
-public class BaneCloneEntity extends AoAMeleeMob {
+public class BaneCloneEntity extends AoAMeleeMob<BaneCloneEntity> {
 	public BaneCloneEntity(BaneEntity bane) {
 		this(AoAMiscEntities.BANE_CLONE.get(), bane.level);
 
 		moveTo(bane.getX(), bane.getY(), bane.getZ(), random.nextFloat() * 360, 0);
 	}
 
-	public BaneCloneEntity(EntityType<? extends Monster> entityType, Level world) {
+	public BaneCloneEntity(EntityType<? extends BaneCloneEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 

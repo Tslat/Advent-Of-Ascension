@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
 import javax.annotation.Nullable;
 
-public class StitchesEntity extends AoAMeleeMob {
-	public StitchesEntity(EntityType<? extends Monster> entityType, Level world) {
+public class StitchesEntity extends AoAMeleeMob<StitchesEntity> {
+	public StitchesEntity(EntityType<? extends StitchesEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
