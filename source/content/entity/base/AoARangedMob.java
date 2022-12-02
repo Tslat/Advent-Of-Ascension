@@ -17,6 +17,7 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.brain.task.temp.StayWithinDistanceOfAttackTarget;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.PositionAndMotionUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StrafeTarget;
@@ -85,15 +86,15 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		BaseMobProjectile projectile = getNewProjectileInstance();
 
-		double distanceFactorX = target.getX() - getX();
-		double distanceFactorY = target.getBoundingBox().minY + (double)(target.getBbHeight() / 3.0f) - projectile.getY();
-		double distanceFactorZ = target.getZ() - getZ();
-		double hyp = Math.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
+		projectile.setYRot(getYHeadRot());
+		PositionAndMotionUtil.moveRelativeToFacing(projectile, 0, 0, 0);
+		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 1.6d, 4 - level.getDifficulty().getId());
+		projectile.setDeltaMovement(PositionAndMotionUtil.accountForGravity(projectile.position(), projectile.getDeltaMovement(), target.position(), projectile.getGravity()));
+		PositionAndMotionUtil.faceTowardsMotion(projectile);
 
 		if (getShootSound() != null)
 			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
-		projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - level.getDifficulty().getId()));
 		level.addFreshEntity(projectile);
 	}
 }

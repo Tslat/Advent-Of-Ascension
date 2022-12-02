@@ -1,66 +1,92 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.content.entity.misc.FakeTntEntity;
+import net.tslat.aoa3.content.entity.base.AoARangedMob;
+import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.content.entity.projectile.mob.BombCarrierDynamiteEntity;
+import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.aoa3.util.PositionAndMotionUtil;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import javax.annotation.Nullable;
 
-public class BombCarrierEntity extends AoAMeleeMob<BombCarrierEntity> {
-	private int cooldown = 150;
-
+public class BombCarrierEntity extends AoARangedMob<BombCarrierEntity> {
 	public BombCarrierEntity(EntityType<? extends BombCarrierEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-		return 1.2f;
+		return 1.53125f;
 	}
 
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_BOMB_CARRIER_AMBIENT.get();
+		return AoASounds.ENTITY_GOBLIN_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_BOMB_CARRIER_HURT.get();
+		return AoASounds.ENTITY_GOBLIN_DEATH.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_BOMB_CARRIER_HURT.get();
+		return AoASounds.ENTITY_GOBLIN_HURT.get();
 	}
 
 	@Override
-	public void aiStep() {
-		super.aiStep();
-
-		if (!isAlive())
-			return;
-
-		if (cooldown > 0)
-			--cooldown;
-
-		if (cooldown < 3 && !level.isClientSide) {
-			if (getTarget() == null && getLastHurtByMob() == null)
-				return;
-
-			cooldown = 150;
-			FakeTntEntity tnt = new FakeTntEntity(level, blockPosition(), this);
-
-			tnt.setFuse(80);
-			level.addFreshEntity(tnt);
-		}
+	protected int getPreAttackTime() {
+		return 20;
 	}
 
+	@Override
+	protected int getAttackSwingDuration() {
+		return 52;
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getShootSound() {
+		return null;
+	}
+
+	@Override
+	protected BaseMobProjectile getNewProjectileInstance() {
+		return null;
+	}
+
+	@Override
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
+		BaseMobProjectile projectile = new BombCarrierDynamiteEntity(level, position(), this);
+
+		projectile.setYRot(getYHeadRot());
+		PositionAndMotionUtil.moveRelativeToFacing(projectile, -0.2f, 0, 0.6f);
+		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 0.65d, 4 - level.getDifficulty().getId());
+		projectile.setDeltaMovement(PositionAndMotionUtil.accountForGravity(projectile.position(), projectile.getDeltaMovement(), target.position(), projectile.getGravity()));
+		PositionAndMotionUtil.faceTowardsMotion(projectile);
+
+		level.addFreshEntity(projectile);
+	}
+
+	@Override
+	public void registerControllers(AnimationData data) {
+		AnimationController<?> attackController = AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_THROW);
+
+		attackController.registerSoundListener(event -> new SoundBuilder(AoASounds.LIGHT_FUSE).followEntity(this).category(SoundSource.HOSTILE).execute());
+
+		data.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+		data.addAnimationController(attackController);
+	}
 }

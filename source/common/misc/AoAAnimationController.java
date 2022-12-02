@@ -1,5 +1,6 @@
 package net.tslat.aoa3.common.misc;
 
+import it.unimi.dsi.fastutil.doubles.Double2DoubleFunction;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -10,7 +11,6 @@ import software.bernie.geckolib3.core.easing.EasingType;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
 import java.util.Map;
-import java.util.function.Function;
 
 public class AoAAnimationController<T extends IAnimatable> extends AnimationController<T> {
 	private final Map<String, AnimationBuilder> triggerableAnimations = new Object2ObjectOpenHashMap<>(1);
@@ -25,7 +25,7 @@ public class AoAAnimationController<T extends IAnimatable> extends AnimationCont
 		super(animatable, name, transitionLengthTicks, easingtype, animationPredicate);
 	}
 
-	public AoAAnimationController(T animatable, String name, float transitionLengthTicks, Function<Double, Double> customEasingMethod, IAnimationPredicate<T> animationPredicate) {
+	public AoAAnimationController(T animatable, String name, float transitionLengthTicks, Double2DoubleFunction customEasingMethod, IAnimationPredicate<T> animationPredicate) {
 		super(animatable, name, transitionLengthTicks, customEasingMethod, animationPredicate);
 	}
 

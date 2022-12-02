@@ -6,11 +6,10 @@ import net.minecraft.world.phys.Vec3;
 
 public final class PositionAndMotionUtil {
 	public static Vec3 accountForGravity(Vec3 origin, Vec3 velocity, Vec3 targetPos, double gravity) {
-		double vel = Vec3.ZERO.distanceTo(velocity);
-		double ticksToTravel = origin.distanceTo(targetPos) / vel;
-		double accumulatedGravity = gravity * Math.ceil(ticksToTravel)  / (vel * vel);
+		double latDist = targetPos.subtract(origin).horizontalDistance();
+		double ticksToTravel = latDist / velocity.horizontalDistance();
 
-		return velocity.add(0, accumulatedGravity / Math.pow(0.987, Math.floor(ticksToTravel)), 0);
+		return velocity.add(0, 0.5 * gravity * Math.ceil(ticksToTravel), 0);
 	}
 
 	public static void turnToFace(Entity entity, Vec3 targetPosition) {

@@ -20,7 +20,11 @@ public class GhostRenderer extends AnimatedMobRenderer<GhostEntity> {
 
 	@Override
 	public void render(GeoModel model, GhostEntity ghost, float partialTicks, RenderType type, PoseStack matrixStackIn, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
-		int light = ghost.level.getMaxLocalRawBrightness(ghost.blockPosition(), 15 - (int)(((ClientLevel)ghost.level).getSkyDarken(partialTicks) * 15));
+		int light = 0;
+
+		if (ghost.level instanceof ClientLevel clientLevel)
+			light = ghost.level.getMaxLocalRawBrightness(ghost.blockPosition(), 15 - (int)(clientLevel.getSkyDarken(partialTicks) * 15));
+
 		super.render(model, ghost, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, Math.max(0.05f, 0.75f - (light / 15f)));
 	}
 

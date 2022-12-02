@@ -7,7 +7,6 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ObjectUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import org.apache.commons.lang3.mutable.MutableFloat;
@@ -36,6 +36,14 @@ public class ShrapnelExplosion extends ExtendedExplosion {
 
 	public ShrapnelExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder) {
 		super(explosionInfo, level, exploder);
+	}
+
+	public ShrapnelExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, Vec3 position) {
+		super(explosionInfo, level, exploder, position);
+	}
+
+	public ShrapnelExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, Entity indirectExploder, Vec3 position) {
+		super(explosionInfo, level, exploder, indirectExploder, position);
 	}
 
 	public ShrapnelExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, double x, double y, double z) {
@@ -211,7 +219,7 @@ public class ShrapnelExplosion extends ExtendedExplosion {
 			float distModifier;
 
 			if (!this.info.noEntityDamage) {
-				distModifier = (float)Math.pow(Mth.sqrt((float)entity.distanceToSqr(this.origin)), 0.5);
+				distModifier = (float)Math.pow(EntityUtil.getEntityCenter(entity).distanceTo(this.origin), 0.5);
 				float damage = this.info.baseDamage * (1 / distModifier);
 
 				damage *= this.info.damageModFunction.apply(this, entity);

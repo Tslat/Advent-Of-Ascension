@@ -114,6 +114,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> ANGLER = new EntityRendererPackage<>(AoAMobs.ANGLER).geckolib("mob/lborean/angler");
 	public static final EntityRendererPackage<?> ARCBEAST = new EntityRendererPackage<>(AoAMobs.ARCBEAST).geckolib("mob/shyrelands/arcbeast");
 	public static final EntityRendererPackage<?> AROCKNID = new EntityRendererPackage<>(AoAMobs.AROCKNID).geckolib("mob/deeplands/arocknid");
+	public static final EntityRendererPackage<?> BOMB_CARRIER = new EntityRendererPackage<>(AoAMobs.BOMB_CARRIER).geckolib("mob/overworld/bomb_carrier");
 	public static final EntityRendererPackage<?> BONEBACK = new EntityRendererPackage<>(AoAMobs.BONEBACK).geckolib("mob/overworld/boneback");
 	public static final EntityRendererPackage<?> BUGEYE = new EntityRendererPackage<>(AoAMobs.BUGEYE).geckolib("mob/overworld/bugeye");
 	public static final EntityRendererPackage<?> BUSH_BABY = new EntityRendererPackage<>(AoAMobs.BUSH_BABY).geckolib("mob/overworld/bush_baby");
@@ -213,6 +214,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> BLOOD_DRAINER = new EntityRendererPackage<>(AoAProjectiles.BLOOD_DRAINER).provider(BloodDrainerRenderer::new);
 	public static final EntityRendererPackage<?> BLUE_BULLET = new EntityRendererPackage<>(AoAProjectiles.BLUE_BULLET).provider(context -> new ColouredTexturedProjectileRenderer<>(context, ColourUtil.BLUE, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> BLUE_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.BLUE_GUARDIAN_SHOT).provider(BlueGuardianShotRenderer::new);
+	public static final EntityRendererPackage<?> BOMB_CARRIER_DYNAMITE = new EntityRendererPackage<>(AoAProjectiles.BOMB_CARRIER_DYNAMITE).geckolibNonLiving("projectile/mob/bomb_carrier_dynamite");
 	public static final EntityRendererPackage<?> BONE_BULLET = new EntityRendererPackage<>(AoAProjectiles.BONE_BULLET).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/bone_pellet.png")));
 	public static final EntityRendererPackage<?> BOZO_BALL = new EntityRendererPackage<>(AoAProjectiles.BOZO_BALL).provider(context -> new BozoBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> BUBBLE_SHOT = new EntityRendererPackage<>(AoAProjectiles.BUBBLE_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/misc/bubble_shot.png")));
@@ -408,7 +410,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> BAUMBA = new EntityRendererPackage<>(AoAMobs.BAUMBA).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> BLOODSUCKER = new EntityRendererPackage<>(AoAMobs.BLOODSUCKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> BOBO = new EntityRendererPackage<>(AoAMobs.BOBO).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> BOMB_CARRIER = new EntityRendererPackage<>(AoAMobs.BOMB_CARRIER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> BONE_CREEPER = new EntityRendererPackage<>(AoAMobs.BONE_CREEPER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> BOUNCER = new EntityRendererPackage<>(AoAMobs.BOUNCER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> BROCCOHEAD = new EntityRendererPackage<>(AoAMobs.BROCCOHEAD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.cannon.GigaGreenBallEntity;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -33,13 +34,13 @@ public class GigaCannon extends BaseCannon {
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
 		ItemStack gunStack = shooter.getMainHandItem();
 
 		if (!gunStack.isEmpty() && (gunStack.getTag() == null || gunStack.getEnchantmentTags().isEmpty()))
 			bulletDmgMultiplier *= 1.2f;
 
-		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
+		super.doImpactDamage(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 	}
 
 	@Override

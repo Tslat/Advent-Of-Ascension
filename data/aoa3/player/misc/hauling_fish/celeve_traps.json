@@ -4,10 +4,6 @@
   ],
   "entities": [
     {
-      "entity": "aoa3:fake_tnt",
-      "weight": 200
-    },
-    {
       "entity": "aoa3:happy",
       "weight": 150
     }

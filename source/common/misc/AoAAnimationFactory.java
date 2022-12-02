@@ -6,13 +6,13 @@ import net.tslat.aoa3.common.packet.packets.GeckolibAnimationTriggerPacket;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.core.manager.InstancedAnimationFactory;
 
-public class AoAAnimationFactory<T extends Entity & IAnimatable> extends AnimationFactory {
+public class AoAAnimationFactory<T extends Entity & IAnimatable> extends InstancedAnimationFactory {
 	private final AnimationData animationData;
 
 	public AoAAnimationFactory(final T entity) {
-		super(null);
+		super(entity);
 
 		if (entity.level.isClientSide()) {
 			this.animationData = new AnimationData();
@@ -25,7 +25,7 @@ public class AoAAnimationFactory<T extends Entity & IAnimatable> extends Animati
 	}
 
 	@Override
-	public AnimationData getOrCreateAnimationData(Integer uniqueID) {
+	public AnimationData getOrCreateAnimationData(int uniqueID) {
 		return this.animationData;
 	}
 

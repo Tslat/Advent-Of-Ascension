@@ -3,7 +3,6 @@ package net.tslat.aoa3.client.model.entity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.tslat.aoa3.client.model.BaseGeoModel;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
@@ -38,15 +37,15 @@ public class EntityGeoModel<T extends Entity & IAnimatable> extends BaseGeoModel
 	}
 
 	@Override
-	public void setLivingAnimations(T entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
-		super.setLivingAnimations(entity, uniqueID, customPredicate);
+	public void setCustomAnimations(T animatable, int instanceId, AnimationEvent animationEvent) {
+		super.setCustomAnimations(animatable, instanceId, animationEvent);
 
 		if (!this.turnsHead)
 			return;
 
 		IBone head = getAnimationProcessor().getBone("head");
 
-		EntityModelData entityData = (EntityModelData)customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+		EntityModelData entityData = (EntityModelData)animationEvent.getExtraDataOfType(EntityModelData.class).get(0);
 		head.setRotationX(entityData.headPitch * Mth.DEG_TO_RAD);
 		head.setRotationY(entityData.netHeadYaw * Mth.DEG_TO_RAD);
 	}

@@ -54,6 +54,7 @@ import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -79,9 +80,9 @@ public class EliteSmashEntity extends AoABoss {
 
 	@Override
 	protected void addSwingData(Int2ObjectOpenHashMap<SwingData> states) {
-		states.put(AXE_SWING_STATE, new SwingData(20, 13, new AnimationBuilder().addAnimation("attack.axe_swing", false)));
-		states.put(AXE_SLAM_STATE, new SwingData(20, 17, new AnimationBuilder().addAnimation("attack.axe_slam", false)));
-		states.put(CHARGE_STATE, new SwingData(0, 0, new AnimationBuilder().addAnimation("attack.axe_slam", false)));
+		states.put(AXE_SWING_STATE, new SwingData(20, 13, new AnimationBuilder().addAnimation("attack.axe_swing", ILoopType.EDefaultLoopTypes.PLAY_ONCE)));
+		states.put(AXE_SLAM_STATE, new SwingData(20, 17, new AnimationBuilder().addAnimation("attack.axe_slam", ILoopType.EDefaultLoopTypes.PLAY_ONCE)));
+		states.put(CHARGE_STATE, new SwingData(0, 0, new AnimationBuilder().addAnimation("attack.axe_slam", ILoopType.EDefaultLoopTypes.PLAY_ONCE)));
 	}
 
 	@Nullable
@@ -277,15 +278,15 @@ public class EliteSmashEntity extends AoABoss {
 						)));
 	}
 
-	private static final AnimationBuilder WALK_BOTTOM_HALF = new AnimationBuilder().addAnimation("move.walk.bottom_half", true);
-	private static final AnimationBuilder WALK_TOP_HALF = new AnimationBuilder().addAnimation("move.walk.top_half", true);
-	private static final AnimationBuilder RUN_BOTTOM_HALF = new AnimationBuilder().addAnimation("move.run.bottom_half", true);
-	private static final AnimationBuilder RUN_TOP_HALF = new AnimationBuilder().addAnimation("move.run.top_half", true);
-	private static final AnimationBuilder ENRAGE = new AnimationBuilder().addAnimation("misc.enrage", false);
-	private static final AnimationBuilder ENRAGED_IDLE = new AnimationBuilder().addAnimation("misc.idle.enraged", true);
-	private static final AnimationBuilder CHARGE_UP = new AnimationBuilder().addAnimation("misc.charge_up", false);
-	private static final AnimationBuilder CHARGE = new AnimationBuilder().addAnimation("move.charge", true);
-	private static final AnimationBuilder BELLY_DRUM = new AnimationBuilder().addAnimation("misc.belly_drum", false);
+	private static final AnimationBuilder WALK_BOTTOM_HALF = new AnimationBuilder().addAnimation("move.walk.bottom_half", ILoopType.EDefaultLoopTypes.LOOP);
+	private static final AnimationBuilder WALK_TOP_HALF = new AnimationBuilder().addAnimation("move.walk.top_half", ILoopType.EDefaultLoopTypes.LOOP);
+	private static final AnimationBuilder RUN_BOTTOM_HALF = new AnimationBuilder().addAnimation("move.run.bottom_half", ILoopType.EDefaultLoopTypes.LOOP);
+	private static final AnimationBuilder RUN_TOP_HALF = new AnimationBuilder().addAnimation("move.run.top_half", ILoopType.EDefaultLoopTypes.LOOP);
+	private static final AnimationBuilder ENRAGE = new AnimationBuilder().addAnimation("misc.enrage", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	private static final AnimationBuilder ENRAGED_IDLE = new AnimationBuilder().addAnimation("misc.idle.enraged", ILoopType.EDefaultLoopTypes.LOOP);
+	private static final AnimationBuilder CHARGE_UP = new AnimationBuilder().addAnimation("misc.charge_up", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	private static final AnimationBuilder CHARGE = new AnimationBuilder().addAnimation("move.charge", ILoopType.EDefaultLoopTypes.LOOP);
+	private static final AnimationBuilder BELLY_DRUM = new AnimationBuilder().addAnimation("misc.belly_drum", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
 
 	@Override
 	public void registerControllers(AnimationData animationData) {
@@ -311,9 +312,6 @@ public class EliteSmashEntity extends AoABoss {
 				controller.setAnimation(getSwingAnim(getAttackState()));
 
 				return PlayState.CONTINUE;
-			}
-			else if (controller.getCurrentAnimation() != null && !controller.getCurrentAnimation().animationName.startsWith("move")) {
-				controller.markNeedsReload();
 			}
 
 			if (event.isMoving()) {

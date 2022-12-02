@@ -68,7 +68,7 @@ public final class AoAMobs {
 	//public static final RegistryObject<EntityType<BlueRuneTemplarEntity>> BLUE_RUNE_TEMPLAR = registerMob("blue_rune_templar", BlueRuneTemplarEntity::new, 1.125f, 2f, 16744228, 7194313);
 	//public static final RegistryObject<EntityType<BlueRunicLifeformEntity>> BLUE_RUNIC_LIFEFORM = registerMob("blue_runic_lifeform", BlueRunicLifeformEntity::new, 0.75f, 0.99f, 496022, 463763);
 	public static final RegistryObject<EntityType<BoboEntity>> BOBO = registerMob("bobo", BoboEntity::new, 0.6f, 2.125f, 1782866, 2249377);
-	public static final RegistryObject<EntityType<BombCarrierEntity>> BOMB_CARRIER = registerMob("bomb_carrier", BombCarrierEntity::new, 0.6f, 1.5f, 11382918, 2037510);
+	public static final RegistryObject<EntityType<BombCarrierEntity>> BOMB_CARRIER = registerMob("bomb_carrier", BombCarrierEntity::new, 0.5f, 1.75f, 0x433128, 0x4C9949);
 	public static final RegistryObject<EntityType<BoneCreeperEntity>> BONE_CREEPER = registerMob("bone_creeper", BoneCreeperEntity::new, 0.5f, 1.625f, 10922149, 2915064);
 	public static final RegistryObject<EntityType<BonebackEntity>> BONEBACK = registerMob("boneback", BonebackEntity::new, 0.8125f, 1f, 0x612E2D, 0xCBD8E1);
 	public static final RegistryObject<EntityType<BouncerEntity>> BOUNCER = registerMob("bouncer", BouncerEntity::new, 0.5f, 1.4375f, 5537210, 13685462);

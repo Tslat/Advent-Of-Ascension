@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.cannon.ErebonSticklerShotEntity;
@@ -46,8 +47,8 @@ public class ErebonStickler extends BaseCannon {
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
+		super.doImpactDamage(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 
 		if (target instanceof LivingEntity)
 			target.level.addFreshEntity(new ErebonSticklerStuckEntity(shooter, this, (LivingEntity)target, bulletDmgMultiplier));

@@ -11,6 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.mob.mysterium.RunicGolemEntity;
@@ -64,12 +65,12 @@ public class RunicBombEntity extends BaseBullet implements HardProjectile, ItemS
 	}
 
 	@Override
-	public void doImpactEffect() {
+	public void doImpactEffect(Vec3 impactLocation) {
 		explode();
 	}
 
 	@Override
-	public void doEntityImpact(Entity target) {
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
 		explode();
 	}
 

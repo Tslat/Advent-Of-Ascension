@@ -1,28 +1,32 @@
 package net.tslat.aoa3.util;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public final class LocaleUtil {
 	public static Component getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, Component... args) {
 		return getFormattedItemDescriptionText("item." + ForgeRegistries.ITEMS.getKey(item).getNamespace() + "." + ForgeRegistries.ITEMS.getKey(item).getPath() + ".desc." + descNumber, type, args);
 	}
 
-	public static Component getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, Component... args) {
+	public static MutableComponent getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, Component... args) {
 		return Component.translatable(langKey, (Object[])args).withStyle(type.format);
 	}
 
@@ -107,6 +111,23 @@ public final class LocaleUtil {
 
 	public static MutableComponent getPercentFlatAndScalingAbilityValueDesc(Object... args) {
 		return Component.translatable("ability." + AdventOfAscension.MOD_ID + ".descriptions.flatAndScaling.percent", args);
+	}
+
+	public static List<MutableComponent> getExplosionInfoLocale(ExplosionInfo info, boolean extendedInfo, boolean shrapnel) {
+		if (extendedInfo) {
+			List<MutableComponent> lines = new ObjectArrayList<>();
+
+			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.penetration." + (shrapnel ? "shrapnel" : "concussive"), LocaleUtil.getLocaleMessage(NumberUtil.roundToNthDecimalPlace((float)info.getPenetrationPower(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.type." + (shrapnel ? "shrapnel" : "concussive"), ChatFormatting.GRAY));
+			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.radius", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.damage", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.heading", ChatFormatting.DARK_RED));
+
+			return lines;
+		}
+		else {
+			return List.of(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.basic", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1)), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_RED)));
+		}
 	}
 
 	public enum ItemDescriptionType {

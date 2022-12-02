@@ -3,14 +3,18 @@ package net.tslat.aoa3.content.entity.mob.nether;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
@@ -36,8 +40,11 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     public FlamewalkerEntity(EntityType<? extends FlamewalkerEntity> entityType, Level world) {
         super(entityType, world);
 
+        setPathfindingMalus(BlockPathTypes.LAVA, 4);
         setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0);
         setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0);
+        setPathfindingMalus(BlockPathTypes.WATER_BORDER, 8);
+        setPathfindingMalus(BlockPathTypes.WATER, -1);
     }
 
     @Override
@@ -77,6 +84,11 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
         return null;
     }
 
+    @Override
+    public boolean canSwimInFluidType(FluidType type) {
+        return type == ForgeMod.LAVA_TYPE.get();
+    }
+
     protected int getAttackSwingDuration() {
         return 32;
     }
@@ -111,6 +123,12 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
 
        if (target.hurt(DamageSource.mobAttack(this).setIsFire().setMagic(), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && rand().oneInNChance(10))
            EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));
+    }
+
+    @Override
+    protected void onInsideBlock(BlockState state) {
+        if (!level.isClientSide() && state.getFluidState().is(FluidTags.WATER))
+            hurt(DamageSource.DROWN, 0.25f);
     }
 
     @Override

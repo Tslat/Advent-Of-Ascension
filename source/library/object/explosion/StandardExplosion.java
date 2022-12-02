@@ -5,7 +5,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,6 +15,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.library.object.AllDirections;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.smartbrainlib.object.SquareRadius;
 import org.jetbrains.annotations.Nullable;
@@ -34,6 +34,14 @@ public class StandardExplosion extends ExtendedExplosion {
 
 	public StandardExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder) {
 		super(explosionInfo, level, exploder);
+	}
+
+	public StandardExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, Vec3 position) {
+		super(explosionInfo, level, exploder, position);
+	}
+
+	public StandardExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, Entity indirectExploder, Vec3 position) {
+		super(explosionInfo, level, exploder, indirectExploder, position);
 	}
 
 	public StandardExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, double x, double y, double z) {
@@ -157,7 +165,7 @@ public class StandardExplosion extends ExtendedExplosion {
 				double impactPercent = getSeenPercent(this.origin, entity);
 
 				if (!this.info.noEntityDamage) {
-					float distModifier = (float)Math.pow(Mth.sqrt((float)entity.distanceToSqr(this.origin)), 0.5);
+					float distModifier = (float)Math.pow(EntityUtil.getEntityCenter(entity).distanceTo(this.origin), 0.5);
 					float damage = this.info.baseDamage * (1 / distModifier);
 
 					damage *= this.info.damageModFunction.apply(this, entity);

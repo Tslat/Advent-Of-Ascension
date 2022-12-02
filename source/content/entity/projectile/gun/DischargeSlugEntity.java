@@ -5,6 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -32,7 +33,7 @@ public class DischargeSlugEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect() {
+	public void doImpactEffect(Vec3 impactLocation) {
 		WorldUtil.createExplosion(getOwner(), level, this, 1.8f);
 	}
 }

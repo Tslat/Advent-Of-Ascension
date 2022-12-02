@@ -260,7 +260,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> PLUTON_STICKLER = registerWeapon("pluton_stickler", () -> new PlutonStickler(35.0f, 750, 48, 0.09f));
 	public static final RegistryObject<Item> PREDATORIAN_BLASTER = registerWeapon("predatorian_blaster", () -> new PredatorianBlaster(23.5f, 845, 28, 0.175f));
 	public static final RegistryObject<Item> PULSE_CANNON = registerWeapon("pulse_cannon", () -> new PulseCannon(26.0f, 510, 42, 0.15f));
-	public static final RegistryObject<Item> RPG = registerWeapon("rpg", () -> new RPG(14.0f, 320, 50, 0.35f));
+	public static final RegistryObject<Item> RPG = registerWeapon("rpg", () -> new RPG(8, 320, 50, 0.35f));
 	public static final RegistryObject<Item> SELYAN_STICKLER = registerWeapon("selyan_stickler", () -> new SelyanStickler(35.0f, 750, 48, 0.09f));
 	public static final RegistryObject<Item> SHADOW_BLASTER = registerWeapon("shadow_blaster", () -> new ShadowBlaster(15.0f, 515, 24, 0.21f));
 	public static final RegistryObject<Item> SHYRE_BLASTER = registerWeapon("shyre_blaster", () -> new ShyreBlaster(25.5f, 850, 30, 0.15f));

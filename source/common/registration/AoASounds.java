@@ -152,8 +152,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_BLOODSUCKER_AMBIENT = registerSound("entity.bloodsucker.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_BLOODSUCKER_DEATH = registerSound("entity.bloodsucker.death");
 	public static final RegistryObject<SoundEvent> ENTITY_BLOODSUCKER_HURT = registerSound("entity.bloodsucker.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_BOMB_CARRIER_AMBIENT = registerSound("entity.bomb_carrier.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_BOMB_CARRIER_HURT = registerSound("entity.bomb_carrier.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_BONEBACK_AMBIENT = registerSound("entity.boneback.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_BONEBACK_DEATH = registerSound("entity.boneback.death");
 	public static final RegistryObject<SoundEvent> ENTITY_BONEBACK_HURT = registerSound("entity.boneback.hurt");
@@ -685,6 +683,8 @@ public final class AoASounds {
 
 	public static final RegistryObject<SoundEvent> LOTTO_WIN = registerSound("misc.lotto.win");
 	public static final RegistryObject<SoundEvent> JINGLE_BELLS = registerSound("misc.jingle_bells");
+	public static final RegistryObject<SoundEvent> LIT_FUSE = registerSound("misc.lit_fuse");
+	public static final RegistryObject<SoundEvent> LIGHT_FUSE = registerSound("misc.light_fuse");
 
 	public static final RegistryObject<SoundEvent> ITEM_ATLANTIC_STAFF_CAST = registerSound("item.atlantic_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_ATOMIZER_FIRE = registerSound("item.atomizer.fire");

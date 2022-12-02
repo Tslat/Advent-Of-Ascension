@@ -9,6 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -19,6 +20,7 @@ import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.item.misc.TooltipItem;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -73,9 +75,15 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 			return stack;
 
 		AoAScheduler.scheduleSyncronisedTask(() -> {
-			PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(nowhere.dimension(), new PortalCoordinatesContainer(level.dimension(), pl.getX(), pl.getY(), pl.getZ()));
-			pl.changeDimension(nowhere, PortalBlock.getTeleporterForWorld(nowhere));
-			pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+			if (AdvancementUtil.isAdvancementCompleted(pl, AdventOfAscension.id("nowhere/root"))) {
+				pl.changeDimension(nowhere, PortalBlock.getTeleporterForWorld(nowhere));
+				pl.connection.teleport(17.5d, 502.5d, 3.5d, 0, pl.getXRot());
+			}
+			else {
+				PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(nowhere.dimension(), new PortalCoordinatesContainer(level.dimension(), pl.getX(), pl.getY(), pl.getZ()));
+				pl.changeDimension(nowhere, PortalBlock.getTeleporterForWorld(nowhere));
+				pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+			}
 		}, 1);
 
 		return stack;

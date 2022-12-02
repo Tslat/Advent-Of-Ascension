@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -28,8 +29,8 @@ public class Draco extends BaseGun {
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		super.doImpactDamage(target, shooter, bullet, target.isEyeInFluid(FluidTags.WATER) ? 1.5f : 1f);
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
+		super.doImpactDamage(target, shooter, bullet, impactPosition, target.isEyeInFluid(FluidTags.WATER) ? 1.5f : 1f);
 	}
 
 	@Override

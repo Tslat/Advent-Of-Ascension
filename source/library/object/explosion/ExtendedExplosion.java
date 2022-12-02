@@ -47,6 +47,14 @@ public class ExtendedExplosion extends Explosion {
 		this(explosionInfo, level, exploder, null, null, exploder.getX(0.5), exploder.getY(0.5), exploder.getZ(0.5));
 	}
 
+	public ExtendedExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, Entity indirectExploder, Vec3 position) {
+		this(explosionInfo, level, exploder, indirectExploder, null, position.x, position.y, position.z);
+	}
+
+	public ExtendedExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, Vec3 position) {
+		this(explosionInfo, level, exploder, null, null, position.x, position.y, position.z);
+	}
+
 	public ExtendedExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, double x, double y, double z) {
 		this(explosionInfo, level, exploder, null, null, x, y, z);
 	}

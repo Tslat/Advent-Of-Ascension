@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
@@ -33,7 +34,7 @@ public class FungalRockFragmentEntity extends BaseBullet implements HardProjecti
 	}
 
 	@Override
-	public void doImpactEffect() {
+	public void doImpactEffect(Vec3 impactLocation) {
 		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition())) {
 			int i = 1;
 

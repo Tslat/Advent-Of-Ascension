@@ -103,7 +103,7 @@ public final class AoAEntityStats {
 		//AttributeBuilder.createMonster(AoAMobs.BLUE_RUNE_TEMPLAR.get()).health(400).moveSpeed(0).knockbackResist(1).armour(0).followRange(16).build(ev);
 		//AttributeBuilder.createMonster(AoAMobs.BLUE_RUNIC_LIFEFORM.get()).health(80).moveSpeed(0.2875).meleeStrength(6).knockbackResist(0.8).armour(1).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.BOBO.get()).health(95).moveSpeed(0.26).meleeStrength(9).knockbackResist(0.05).followRange(16).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.BOMB_CARRIER.get()).health(20).moveSpeed(0.2875).meleeStrength(2).followRange(16).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.BOMB_CARRIER.get()).health(23).moveSpeed(0.3).projectileDamage(2).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.BONEBACK.get()).health(40).moveSpeed(0.25).meleeStrength(4).knockbackResist(0.1).armour(3).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.BONE_CREEPER.get()).health(45).moveSpeed(0.3).meleeStrength(0).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.BOUNCER.get()).health(110).moveSpeed(0.2875).meleeStrength(11).followRange(16).build(ev);

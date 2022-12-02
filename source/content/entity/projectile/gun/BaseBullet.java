@@ -189,8 +189,8 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		if (!bl.getMaterial().blocksMotion())
 			return;
 
-		this.doImpactEffect();
-		this.discard();
+		doImpactEffect(rayTrace.getLocation());
+		discard();
 	}
 
 	@Override
@@ -199,13 +199,14 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 
 		if (entityResult != lastPierceTarget) {
 			if (weapon == null) {
-				doEntityImpact(entityResult);
+				doEntityImpact(entityResult, rayTrace.getLocation());
 			}
 			else if (getOwner() instanceof LivingEntity) {
-				weapon.doImpactDamage(entityResult, (LivingEntity)getOwner(), this, dmgMulti);
+				weapon.doImpactDamage(entityResult, (LivingEntity)getOwner(), this, rayTrace.getLocation(), dmgMulti);
 			}
 
-			this.doImpactEffect();
+			doImpactEffect(rayTrace.getLocation());
+
 			pierceCount--;
 		}
 
@@ -215,7 +216,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 			return;
 		}
 
-		this.discard();
+		discard();
 	}
 
 	@Override
@@ -231,10 +232,10 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		}
 	}
 
-	public void doEntityImpact(Entity target) {}
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {}
 
 	@Override
-	public void doImpactEffect() {}
+	public void doImpactEffect(Vec3 impactLocation) {}
 
 	@Override
 	protected void defineSynchedData() {}

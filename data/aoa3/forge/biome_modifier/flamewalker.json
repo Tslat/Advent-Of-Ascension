@@ -12,7 +12,7 @@
       "type": "aoa3:flamewalker",
       "maxCount": 3,
       "minCount": 2,
-      "weight": 5
+      "weight": 1
     }
   ]
 }

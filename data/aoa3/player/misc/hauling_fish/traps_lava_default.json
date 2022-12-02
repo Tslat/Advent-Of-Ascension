@@ -1,10 +1,6 @@
 {
   "entities": [
     {
-      "entity": "aoa3:fake_tnt",
-      "weight": 200
-    },
-    {
       "entity": "minecraft:magma_cube",
       "weight": 180
     },

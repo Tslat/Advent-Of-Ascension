@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
@@ -69,7 +70,7 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 	}
 
 	@Override
-	public void doImpactEffect() {
+	public void doImpactEffect(Vec3 impactLocation) {
 		int count = 0;
 
 		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {

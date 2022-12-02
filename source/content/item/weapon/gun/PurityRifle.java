@@ -9,6 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -29,7 +30,7 @@ public class PurityRifle extends BaseGun {
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
 		if (!shooter.getActiveEffects().isEmpty()) {
 			for (MobEffectInstance effect : shooter.getActiveEffects()) {
 				if (effect.getEffect().getCategory() == MobEffectCategory.HARMFUL)
@@ -37,7 +38,7 @@ public class PurityRifle extends BaseGun {
 			}
 		}
 
-		super.doImpactDamage(target, shooter, bullet, bulletDmgMultiplier);
+		super.doImpactDamage(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 	}
 
 	@Override

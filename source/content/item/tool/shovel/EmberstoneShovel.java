@@ -5,7 +5,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -16,6 +15,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
@@ -39,37 +41,27 @@ public class EmberstoneShovel extends BaseShovel implements LootModifyingItem {
 		if (block == Blocks.AIR || existingLoot.isEmpty() || getDestroySpeed(getToolStack(lootContext), harvestedBlock) <= 1)
 			return;
 
-		ServerLevel world = lootContext.getLevel();
+		ServerLevel level = lootContext.getLevel();
 		BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootContextParams.ORIGIN));
-		ItemStack blockDrop = ItemStack.EMPTY;
-		int blockDropIndex = -1;
-		Item blockItem = Item.byBlock(block);
 
 		for (int i = 0; i < existingLoot.size(); i++) {
 			ItemStack stack = existingLoot.get(i);
-
-			if (stack.getItem() == blockItem)  {
-				blockDrop = stack;
-				blockDropIndex = i;
-
-				break;
-			}
-		}
-
-		if (blockDrop != ItemStack.EMPTY) {
-			Optional<SmeltingRecipe> smeltRecipe = world.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(blockDrop), world);
+			Optional<SmeltingRecipe> smeltRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level);
 
 			if (smeltRecipe.isPresent()) {
-				ItemStack smeltedStack = smeltRecipe.get().getResultItem();
-				int xp = (int)smeltRecipe.get().getExperience();
+				ItemStack smeltedStack = smeltRecipe.get().getResultItem().copy();
 
-				smeltedStack.setCount(blockDrop.getCount());
-				existingLoot.set(blockDropIndex, smeltedStack.copy());
-				block.popExperience(world, pos, xp);
+				smeltedStack.setCount(smeltedStack.getCount() * stack.getCount());
+				existingLoot.set(i, smeltedStack);
+				block.popExperience(level, pos, (int)smeltRecipe.get().getExperience());
 
-				for (int i = 0; i < 5; i++) {
-					world.sendParticles(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + RandomUtil.randomValueUpTo(1), pos.getZ() + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
+				ServerParticlePacket particlePacket = new ServerParticlePacket();
+
+				for (int x = 0; x < 5; x++) {
+					particlePacket.particle(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + RandomUtil.randomValueUpTo(1), pos.getZ() + RandomUtil.randomValueUpTo(1));
 				}
+
+				AoAPackets.messageNearbyPlayers(particlePacket, level, Vec3.atCenterOf(pos), 32);
 			}
 		}
 	}

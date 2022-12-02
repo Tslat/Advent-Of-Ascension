@@ -73,7 +73,7 @@ public class HardenedParapiranhaEntity extends BaseBullet implements HardProject
 	}
 
 	@Override
-	public void doEntityImpact(Entity target) {
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
 		if (target.hurt(DamageSource.thrown(this, null), (float)AoAWeapons.HARDENED_PARAPIRANHA.get().getDamage()))
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 60).level(2));
 	}

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.thrown;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +31,10 @@ public class Grenade extends BaseThrownWeapon {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.EXPLODES_ON_HIT, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		super.appendHoverText(stack, world, tooltip, flag);
+
+		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(GrenadeEntity.GRENADE_EXPLOSION, flag.isAdvanced(), false)) {
+			tooltip.add(2, component);
+		}
 	}
 }

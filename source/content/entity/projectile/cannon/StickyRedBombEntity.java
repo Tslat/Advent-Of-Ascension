@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -86,9 +87,9 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 					Entity shooter = getOwner();
 
 					if (shooter instanceof LivingEntity)
-						weapon.doImpactDamage(((EntityHitResult)result).getEntity(), (LivingEntity)shooter, this, 1.0f);
+						weapon.doImpactDamage(((EntityHitResult)result).getEntity(), (LivingEntity)shooter, this, result.getLocation(), 1.0f);
 
-					doImpactEffect();
+					doImpactEffect(result.getLocation());
 				}
 
 				discard();
@@ -106,7 +107,7 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 			ticksInGround++;
 
 			if (ticksInGround >= 80 && !level.isClientSide) {
-				doImpactEffect();
+				doImpactEffect(position());
 				return;
 			}
 
@@ -116,7 +117,7 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect() {
+	public void doImpactEffect(Vec3 impactLocation) {
 		WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
 
 		if (!level.isClientSide)

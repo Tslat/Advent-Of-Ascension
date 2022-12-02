@@ -28,7 +28,7 @@ import java.util.function.Supplier;
 public final class SoundBuilder {
 	private SoundEvent sound;
 	private SoundSource category = SoundSource.MASTER;
-	private Level world = null;
+	private Level level = null;
 	private Vec3 location = null;
 
 	private long seed = 0L;
@@ -60,24 +60,24 @@ public final class SoundBuilder {
 
 	public SoundBuilder atEntity(Entity entity) {
 		this.location = entity.position();
-		this.world = entity.level;
+		this.level = entity.level;
 
 		return this;
 	}
 
-	public SoundBuilder atBlock(Level world, BlockPos pos) {
-		return atPos(world, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d);
+	public SoundBuilder atBlock(Level level, BlockPos pos) {
+		return atPos(level, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d);
 	}
 
-	public SoundBuilder atPos(Level world, double x, double y, double z) {
+	public SoundBuilder atPos(Level level, double x, double y, double z) {
 		this.location = new Vec3(x, y, z);
-		this.world = world;
+		this.level = level;
 
 		return this;
 	}
 
 	public SoundBuilder followEntity(Entity entity) {
-		this.world = entity.level;
+		this.level = entity.level;
 		this.followingEntity = entity;
 		this.location = entity.position();
 
@@ -178,8 +178,8 @@ public final class SoundBuilder {
 		if (exclude == null)
 			exclude = new HashSet<Player>();
 
-		if (world == null)
-			world = players[0].level;
+		if (level == null)
+			level = players[0].level;
 
 		Collections.addAll(exclude, players);
 
@@ -190,8 +190,8 @@ public final class SoundBuilder {
 		if (playTo == null)
 			playTo = new HashSet<Player>();
 
-		if (world == null)
-			world = players[0].level;
+		if (level == null)
+			level = players[0].level;
 
 		Collections.addAll(playTo, players);
 
@@ -269,13 +269,13 @@ public final class SoundBuilder {
 
 	private void play() {
 		if (inWorld) {
-			PlayLevelSoundEvent event = followingEntity != null ? ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch) : ForgeEventFactory.onPlaySoundAtPosition(world, location.x, location.y, location.z, sound, category, radius / 16f, pitch);
+			PlayLevelSoundEvent event = followingEntity != null ? ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch) : ForgeEventFactory.onPlaySoundAtPosition(level, location.x, location.y, location.z, sound, category, radius / 16f, pitch);
 
 			if (event.isCanceled() || (sound = event.getSound()) == null)
 				return;
 		}
 
-		if (world == null || world.isClientSide()) {
+		if (level == null || level.isClientSide()) {
 			ClientOperations.playSoundFromBuilder(this);
 		}
 		else {
@@ -288,8 +288,8 @@ public final class SoundBuilder {
 				}
 			}
 			else {
-				for (ServerPlayer pl : world.getServer().getPlayerList().getPlayers()) {
-					if (pl.level == world && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
+				for (ServerPlayer pl : level.getServer().getPlayerList().getPlayers()) {
+					if (pl.level == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
 						AoAPackets.messagePlayer(pl, packet);
 				}
 			}
@@ -297,7 +297,7 @@ public final class SoundBuilder {
 	}
 
 	private void stop() {
-		if (world == null || world.isClientSide()) {
+		if (level == null || level.isClientSide()) {
 			ClientOperations.stopSoundFromBuilder(this);
 		}
 		else {
@@ -310,8 +310,8 @@ public final class SoundBuilder {
 				}
 			}
 			else {
-				for (ServerPlayer pl : world.getServer().getPlayerList().getPlayers()) {
-					if (pl.level == world && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
+				for (ServerPlayer pl : level.getServer().getPlayerList().getPlayers()) {
+					if (pl.level == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
 						AoAPackets.messagePlayer(pl, packet);
 				}
 			}

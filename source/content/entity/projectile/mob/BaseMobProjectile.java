@@ -14,8 +14,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 
 public abstract class BaseMobProjectile extends ThrowableProjectile {
-	private Type projectileType;
-	private AoARangedAttacker shooter;
+	protected Type projectileType;
+	protected AoARangedAttacker shooter;
 
 	public BaseMobProjectile(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
@@ -71,15 +71,17 @@ public abstract class BaseMobProjectile extends ThrowableProjectile {
 	protected void onHit(HitResult result) {
  		if (result.getType() != HitResult.Type.BLOCK || level.getBlockState(new BlockPos(result.getLocation())).getMaterial().blocksMotion()) {
 			if (!level.isClientSide) {
-				if (result instanceof EntityHitResult) {
-					if (((EntityHitResult)result).getEntity() == shooter || shooter == null)
+				if (result instanceof EntityHitResult entityHitResult) {
+					if (entityHitResult.getEntity() == shooter || shooter == null)
 						return;
 
-					shooter.doRangedAttackEntity(this, ((EntityHitResult)result).getEntity());
+					onHitEntity(entityHitResult);
+					shooter.doRangedAttackEntity(this, entityHitResult.getEntity());
 				}
-				else if (result.getType() == HitResult.Type.BLOCK) {
+				else if (result instanceof BlockHitResult blockHitResult) {
 					if (shooter != null) {
-						shooter.doRangedAttackBlock(this, level.getBlockState(new BlockPos(result.getLocation())), new BlockPos(result.getLocation()), ((BlockHitResult)result).getDirection());
+						onHitBlock(blockHitResult);
+						shooter.doRangedAttackBlock(this, level.getBlockState(new BlockPos(result.getLocation())), new BlockPos(result.getLocation()), blockHitResult.getDirection());
 					}
 				}
 
@@ -98,6 +100,11 @@ public abstract class BaseMobProjectile extends ThrowableProjectile {
 		PHYSICAL,
 		GUN,
 		OTHER
+	}
+
+	@Override
+	public boolean canChangeDimensions() {
+		return false;
 	}
 
 	@Override

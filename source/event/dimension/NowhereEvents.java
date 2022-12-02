@@ -116,7 +116,7 @@ public final class NowhereEvents {
 		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_DEATH));
 		player.resetStat(Stats.CUSTOM.get(Stats.TIME_SINCE_REST));
 
-		if (isInBossRegion(player.blockPosition()) && !player.getAdvancements().getOrStartProgress(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/root"))).isDone()) {
+		if (isInBossRegion(player.blockPosition()) && !AdvancementUtil.isAdvancementCompleted(player, AdventOfAscension.id("nowhere/root"))) {
 			AoAScheduler.scheduleSyncronisedTask(() -> {
 				PlayerUtil.resetToDefaultStatus(player);
 				player.connection.teleport(17.5d, 452.5d, 3.5d, 0, player.getXRot());

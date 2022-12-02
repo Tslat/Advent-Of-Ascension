@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
@@ -49,7 +50,7 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 	}
 
 	@Override
-	public void doImpactEffect() {
+	public void doImpactEffect(Vec3 impactLocation) {
 		WorldUtil.createExplosion(getOwner(), level, this, 1.5f);
 
 		if (!level.isClientSide && getAge() < 10 && shooter instanceof Player && count < 5) {

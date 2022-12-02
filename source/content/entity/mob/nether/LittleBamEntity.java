@@ -63,6 +63,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 	public LittleBamEntity(EntityType<? extends LittleBamEntity> entityType, Level world) {
 		super(entityType, world);
 
+		setPathfindingMalus(BlockPathTypes.LAVA, 4);
 		setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 0);
 		setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0);
 	}
@@ -144,7 +145,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 
 	@Override
 	public boolean canSwimInFluidType(FluidType type) {
-		return type == ForgeMod.WATER_TYPE.get() || type == ForgeMod.LAVA_TYPE.get();
+		return type == ForgeMod.LAVA_TYPE.get() || super.canSwimInFluidType(type);
 	}
 
 	@Override

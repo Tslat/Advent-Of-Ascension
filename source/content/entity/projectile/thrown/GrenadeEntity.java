@@ -11,6 +11,7 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
@@ -21,9 +22,7 @@ import net.tslat.aoa3.library.object.explosion.ShrapnelExplosion;
 import net.tslat.aoa3.util.AdvancementUtil;
 
 public class GrenadeEntity extends BaseBullet implements HardProjectile {
-	private static final ExplosionInfo GRENADE_EXPLOSION = new ExplosionInfo().radius(3.5f).penetration(5).baseDamage(8).explodeInOneTick().blocksDropChance(0.1f);
-
-	private float explosionStrength = 1.5f;
+	public static final ExplosionInfo GRENADE_EXPLOSION = new ExplosionInfo().radius(2.5f).penetration(5).baseDamage(5).explodeInOneTick().blocksDropChance(0.1f);
 
 	public GrenadeEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
@@ -50,10 +49,6 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 		return 0.075f;
 	}
 
-	public void setExplosionStrength(float strength) {
-		explosionStrength = strength;
-	}
-
 	@Override
 	protected void onHit(HitResult result) {
 		if (result instanceof BlockHitResult && tickCount <= 1 && getOwner() == null)
@@ -65,7 +60,7 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (source == DamageSource.ON_FIRE || source == DamageSource.LAVA) {
-			doImpactEffect();
+			doImpactEffect(position());
 
 			if (getOwner() instanceof ServerPlayer pl)
 				pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/darwin_award")), "fire_grenade");
@@ -79,14 +74,14 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect() {
+	public void doImpactEffect(Vec3 impactLocation) {
 		if (!this.level.isClientSide())
-			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner()).explode();
+			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), impactLocation).explode();
 	}
 
 	@Override
-	public void doEntityImpact(Entity target) {
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
 		if (!this.level.isClientSide())
-			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner()).explode();
+			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), impactLocation).explode();
 	}
 }

@@ -556,18 +556,6 @@
       }
     ]
   },
-  "entity.bomb_carrier.ambient": {
-    "sounds": [
-      "aoa3:entity/bomb_carrier/ambient"
-    ],
-    "subtitle": "subtitles.entity.bomb_carrier.ambient"
-  },
-  "entity.bomb_carrier.hurt": {
-    "sounds": [
-      "aoa3:entity/bomb_carrier/hurt"
-    ],
-    "subtitle": "subtitles.entity.bomb_carrier.hurt"
-  },
   "entity.boneback.ambient": {
     "sounds": [
       "aoa3:entity/boneback/ambient"
@@ -1869,7 +1857,9 @@
   },
   "entity.goblin.ambient": {
     "sounds": [
-      "aoa3:entity/goblin/ambient"
+      "aoa3:entity/goblin/ambient-01",
+      "aoa3:entity/goblin/ambient-02",
+      "aoa3:entity/goblin/ambient-03"
     ],
     "subtitle": "subtitles.entity.goblin.ambient"
   },
@@ -4849,6 +4839,18 @@
       "aoa3:misc/jingle_bells"
     ],
     "subtitle": "subtitles.misc.jingle_bells"
+  },
+  "misc.light_fuse": {
+    "sounds": [
+      "aoa3:misc/light_fuse"
+    ],
+    "subtitle": "subtitles.misc.light_fuse"
+  },
+  "misc.lit_fuse": {
+    "sounds": [
+      "aoa3:misc/lit_fuse"
+    ],
+    "subtitle": "subtitles.misc.lit_fuse"
   },
   "misc.lotto.win": {
     "sounds": [
