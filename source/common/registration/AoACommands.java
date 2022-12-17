@@ -23,7 +23,7 @@ public final class AoACommands {
 	public static final RegistryObject<SingletonArgumentInfo<AoAResourceArgument>> AOA_RESOURCE = register("aoa_resource", AoAResourceArgument.class, () -> SingletonArgumentInfo.contextAware(AoAResourceArgument::resource));
 
 	private static void registerCommands(final RegisterCommandsEvent ev) {
-		AoACommand.registerSubCommands(ev.getDispatcher());
+		AoACommand.registerSubCommands(ev.getDispatcher(), ev.getBuildContext());
 	}
 
 	private static <A extends ArgumentType<?>, T extends ArgumentTypeInfo.Template<A>, I extends ArgumentTypeInfo<A, T>> RegistryObject<I> register(String id, Class<A> argumentClass, Supplier<I> argumentType) {

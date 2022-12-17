@@ -1,8 +1,7 @@
 package net.tslat.aoa3.client.render.entity.animal;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -29,22 +28,22 @@ public class MeganeuropsisRenderer extends MobRenderer<MeganeuropsisEntity, Enti
 
 			switch (entity.getLandingDirection()) {
 				case NORTH -> {
-					matrix.mulPose(new Quaternion(Vector3f.XP, -rotAmount, true));
+					matrix.mulPose(Axis.XP.rotationDegrees(-rotAmount));
 					matrix.translate(0, entity.getBbWidth() * 0.65f * landPercentage, 0);
 				}
 				case SOUTH -> {
-					matrix.mulPose(new Quaternion(Vector3f.XP, -rotAmount, true));
+					matrix.mulPose(Axis.XP.rotationDegrees(-rotAmount));
 					//matrix.rotate(new Quaternion(rotAmount * 2, 0, 1, 0);
 					matrix.translate(0, entity.getBbWidth() * 0.65f * landPercentage, 0);
 				}
 				case EAST -> {
-					matrix.mulPose(new Quaternion(Vector3f.XP, -rotAmount, true));
+					matrix.mulPose(Axis.XP.rotationDegrees(-rotAmount));
 					//matrix.rotate(rotAmount, 0, 0, 1);
 					matrix.translate(0, entity.getBbWidth() * 0.65f * landPercentage, 0);
 				}
 				case WEST -> {
-					matrix.mulPose(new Quaternion(Vector3f.XP, -rotAmount, true));
-					matrix.mulPose(new Quaternion(Vector3f.ZP, -rotAmount, true));
+					matrix.mulPose(Axis.XP.rotationDegrees(-rotAmount));
+					matrix.mulPose(Axis.ZP.rotationDegrees(-rotAmount));
 					matrix.translate(0, entity.getBbWidth() * 0.65f * landPercentage, 0);
 				}
 				default -> {

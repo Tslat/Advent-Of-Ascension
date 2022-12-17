@@ -7,8 +7,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 

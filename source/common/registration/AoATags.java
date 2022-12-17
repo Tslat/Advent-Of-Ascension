@@ -1,6 +1,6 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
@@ -252,7 +252,7 @@ public final class AoATags {
 		}
 
 		public static TagKey<EntityType<?>> create(ResourceLocation id) {
-			return TagKey.create(Registry.ENTITY_TYPE_REGISTRY, id);
+			return TagKey.create(Registries.ENTITY_TYPE, id);
 		}
 	}
 
@@ -268,7 +268,7 @@ public final class AoATags {
 		}
 
 		public static TagKey<Biome> create(ResourceLocation id) {
-			return TagKey.create(Registry.BIOME_REGISTRY, id);
+			return TagKey.create(Registries.BIOME, id);
 		}
 	}
 
@@ -284,7 +284,7 @@ public final class AoATags {
 		}
 
 		public static TagKey<Structure> create(ResourceLocation id) {
-			return TagKey.create(Registry.STRUCTURE_REGISTRY, id);
+			return TagKey.create(Registries.STRUCTURE, id);
 		}
 	}
 }

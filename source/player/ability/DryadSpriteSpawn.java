@@ -10,7 +10,7 @@ import net.minecraftforge.event.level.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class DryadSpriteSpawn extends ScalableModAbility {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.BLOCK_BREAK};

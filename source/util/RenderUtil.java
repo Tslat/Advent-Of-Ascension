@@ -5,10 +5,10 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -21,6 +21,7 @@ import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import org.joml.Matrix4f;
 
 public final class RenderUtil {
 	public static void renderTexture(PoseStack matrix, int x, int y, float u, float v, float width, float height) {
@@ -203,7 +204,7 @@ public final class RenderUtil {
 		for (FormattedCharSequence processor : fontRenderer.split(message, maxLength)) {
 			MultiBufferSource.BufferSource renderTypeBuffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 
-			fontRenderer.drawInBatch(processor, x, y, color, false, matrix4f, renderTypeBuffer, false, 0, 15728880);
+			fontRenderer.drawInBatch(processor, x, y, color, false, matrix4f, renderTypeBuffer, false, 0, LightTexture.FULL_BRIGHT);
 			renderTypeBuffer.endBatch();
 
 			y += fontRenderer.lineHeight;
@@ -231,7 +232,7 @@ public final class RenderUtil {
 		if (useItemLight)
 			Lighting.setupForFlatItems();
 
-		mc.getItemRenderer().render(stack, ItemTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, 15728880, OverlayTexture.NO_OVERLAY, model);
+		mc.getItemRenderer().render(stack, ItemTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
 		renderTypeBuffer.endBatch();
 		RenderSystem.enableDepthTest();
 

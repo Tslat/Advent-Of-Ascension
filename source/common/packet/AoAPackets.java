@@ -41,7 +41,6 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, SyncAoAAbilityDataPacket.class, SyncAoAAbilityDataPacket::encode, SyncAoAAbilityDataPacket::decode, SyncAoAAbilityDataPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, AoASoundBuilderPacket.class, AoASoundBuilderPacket::encode, AoASoundBuilderPacket::decode, AoASoundBuilderPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ParticleEffectPacket.class, ParticleEffectPacket::encode, ParticleEffectPacket::decode, ParticleEffectPacket::receiveMessage);
-		INSTANCE.registerMessage(id++, GeckolibAnimationTriggerPacket.class, GeckolibAnimationTriggerPacket::encode, GeckolibAnimationTriggerPacket::decode, GeckolibAnimationTriggerPacket::receiveMessage);
 	}
 
 	public static void messageNearbyPlayers(AoAPacket packet, ServerLevel world, Vec3 origin, double radius) {

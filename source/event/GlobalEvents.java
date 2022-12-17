@@ -11,6 +11,7 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.world.spawner.PixonSpawner;
 import net.tslat.aoa3.content.world.spawner.RoamingTradersSpawner;
@@ -65,8 +66,10 @@ public final class GlobalEvents {
 	}
 
 	private static void serverStarted(final ServerStartedEvent ev) {
-		if (ev.getServer().isDedicatedServer())
+		if (ev.getServer().isDedicatedServer()) {
 			SkillsLeaderboard.init();
+			AoAStartupCache.clear();
+		}
 	}
 
 	private static void serverStopping(final ServerStoppingEvent ev) {

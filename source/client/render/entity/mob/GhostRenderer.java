@@ -1,7 +1,5 @@
 package net.tslat.aoa3.client.render.entity.mob;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -10,26 +8,26 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.content.entity.mob.overworld.GhostEntity;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.core.object.Color;
+import software.bernie.geckolib.model.GeoModel;
 
 public class GhostRenderer extends AnimatedMobRenderer<GhostEntity> {
-	public GhostRenderer(EntityRendererProvider.Context renderManager, AnimatedGeoModel model, float shadowSize) {
+	public GhostRenderer(EntityRendererProvider.Context renderManager, GeoModel<GhostEntity> model, float shadowSize) {
 		super(renderManager, model, shadowSize);
 	}
 
 	@Override
-	public void render(GeoModel model, GhostEntity ghost, float partialTicks, RenderType type, PoseStack matrixStackIn, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, int packedOverlayIn, float red, float green, float blue, float alpha) {
+	public Color getRenderColor(GhostEntity ghost, float partialTick, int packedLight) {
 		int light = 0;
 
 		if (ghost.level instanceof ClientLevel clientLevel)
-			light = ghost.level.getMaxLocalRawBrightness(ghost.blockPosition(), 15 - (int)(clientLevel.getSkyDarken(partialTicks) * 15));
+			light = ghost.level.getMaxLocalRawBrightness(ghost.blockPosition(), 15 - (int)(clientLevel.getSkyDarken(partialTick) * 15));
 
-		super.render(model, ghost, partialTicks, type, matrixStackIn, renderTypeBuffer, vertexBuilder, packedLightIn, packedOverlayIn, red, green, blue, Math.max(0.05f, 0.75f - (light / 15f)));
+		return Color.ofRGBA(1, 1, 1, Math.max(0.05f, 0.75f - (light / 15f)));
 	}
 
 	@Override
-	public RenderType getRenderType(GhostEntity animatable, float partialTicks, PoseStack stack, @Nullable MultiBufferSource renderTypeBuffer, @Nullable VertexConsumer vertexBuilder, int packedLightIn, ResourceLocation textureLocation) {
-		return RenderType.entityTranslucent(textureLocation);
+	public RenderType getRenderType(GhostEntity animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
+		return RenderType.entityTranslucent(texture);
 	}
 }

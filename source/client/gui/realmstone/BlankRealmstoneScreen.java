@@ -6,7 +6,7 @@ import com.google.gson.JsonObject;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
+import com.mojang.math.Axis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.Screen;
@@ -37,7 +37,7 @@ public class BlankRealmstoneScreen extends Screen {
 	private static final int viewSpaceHeight = 166;
 	private static float scale = 0.5f;
 
-	private final HashMap<String, RealmstoneWorldInsert> worldInserts = new HashMap<String, RealmstoneWorldInsert>(23);
+	private final HashMap<String, RealmstoneWorldInsert> worldInserts = new HashMap<>(23);
 
 	private static RealmstoneWorldInsert currentlyHoveredInsert = null;
 	private boolean isPanning = false;
@@ -317,7 +317,7 @@ public class BlankRealmstoneScreen extends Screen {
 				matrix.translate(x, y, 0);
 				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 				RenderSystem.setShaderColor(rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 1);
-				matrix.mulPose(new Quaternion(0, 0, (float)angle, false));
+				matrix.mulPose(Axis.ZP.rotation((float)angle));
 				RenderUtil.renderScaledCustomSizedTexture(matrix, 40, -7.5f, u, rand.nextInt(5) * 15, uWidth, 15, renderWidth, 15, 210, 100);
 				RenderSystem.setShaderColor(1, 1, 1, 1);
 				matrix.popPose();

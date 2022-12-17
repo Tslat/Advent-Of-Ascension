@@ -5,8 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.chunk.ChunkGenerator;
-import net.minecraft.world.level.levelgen.RandomState;
+import net.minecraft.world.level.chunk.ChunkGeneratorStructureState;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacement;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructurePlacements;
@@ -39,12 +38,7 @@ public class SingleStructurePlacement extends StructurePlacement {
 	}
 
 	@Override
-	public boolean isStructureChunk(ChunkGenerator chunkGenerator, RandomState genRandState, long seed, int chunkX, int chunkZ) {
-		return isPlacementChunk(chunkGenerator, genRandState, seed, chunkX, chunkZ);
-	}
-
-	@Override
-	protected boolean isPlacementChunk(ChunkGenerator chunkGenerator, RandomState genRandState, long seed, int chunkX, int chunkZ) {
+	protected boolean isPlacementChunk(ChunkGeneratorStructureState chunkGenerator, int chunkX, int chunkZ) {
 		return chunkPos.x == chunkX && chunkPos.z == chunkZ;
 	}
 

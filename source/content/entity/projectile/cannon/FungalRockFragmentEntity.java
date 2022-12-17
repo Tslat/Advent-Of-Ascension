@@ -1,5 +1,7 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -34,7 +36,7 @@ public class FungalRockFragmentEntity extends BaseBullet implements HardProjecti
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
 		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition())) {
 			int i = 1;
 

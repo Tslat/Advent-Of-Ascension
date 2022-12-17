@@ -29,7 +29,6 @@ import net.tslat.aoa3.content.entity.projectile.mob.WitherBallEntity;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;

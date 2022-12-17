@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -15,10 +14,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -118,10 +116,5 @@ public class CustomisableLightningBolt extends LightningBolt {
 					CriteriaTriggers.CHANNELED_LIGHTNING.trigger(this.cause, entities);
 			}
 		}
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

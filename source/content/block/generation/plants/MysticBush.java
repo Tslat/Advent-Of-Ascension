@@ -8,8 +8,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 public class MysticBush extends GenericPlantBlock {
 	public MysticBush() {

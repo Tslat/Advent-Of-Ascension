@@ -13,6 +13,7 @@ import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.library.object.MutableSupplier;
@@ -147,8 +148,9 @@ public final class FluidUtil {
 
 			makeFluidProperties();
 
-			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(16).craftRemainder(Items.BUCKET)));
+			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().stacksTo(16).craftRemainder(Items.BUCKET)));
 
+			AoAStartupCache.setItemCreativeTab(bucket, () -> AoACreativeModeTabs.MISC_ITEMS);
 			this.fluidProperties.bucket(bucket);
 
 			return bucket;

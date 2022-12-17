@@ -6,13 +6,12 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 public class GhostEntity extends AoAMeleeMob<GhostEntity> {
 	public GhostEntity(EntityType<? extends GhostEntity> entityType, Level world) {
@@ -51,8 +50,9 @@ public class GhostEntity extends AoAMeleeMob<GhostEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericIdleController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericIdleController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
 	}
 }

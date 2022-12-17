@@ -9,7 +9,6 @@ import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -17,9 +16,9 @@ import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.effectslib.api.util.PotionBuilder;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
 
 import javax.annotation.Nullable;
 
@@ -57,22 +56,12 @@ public class StoreKeeperEntity extends AoATrader {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<>(this, "movement", 0, event -> {
-			if (tickCount < 80)
-				return PlayState.STOP;
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(new AnimationController<>(this, state -> {
+			if (this.tickCount < 80)
+				return state.setAndContinue(DefaultAnimations.SPAWN);
 
-			if (event.isMoving()) {
-				event.getController().setAnimation(AoAAnimations.WALK);
-			}
-			else {
-				event.getController().setAnimation(AoAAnimations.IDLE);
-			}
-
-			return PlayState.CONTINUE;
+			return state.setAndContinue(state.isMoving() ? DefaultAnimations.WALK : DefaultAnimations.IDLE);
 		}));
-
-		if (tickCount < 10)
-			animationData.addAnimationController(AoAAnimations.genericSpawnController(this, 80));
 	}
 }

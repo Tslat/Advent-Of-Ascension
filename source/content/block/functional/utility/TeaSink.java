@@ -28,7 +28,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 

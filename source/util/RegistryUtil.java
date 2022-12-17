@@ -1,16 +1,20 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.tslat.aoa3.common.registration.AoARegistries;
@@ -61,6 +65,18 @@ public final class RegistryUtil {
 
 	public static ResourceLocation getId(AoAResource resource) {
 		return AoARegistries.AOA_RESOURCES.getId(resource);
+	}
+
+	public static ResourceLocation getId(ParticleType<?> particleType) {
+		return ForgeRegistries.PARTICLE_TYPES.getKey(particleType);
+	}
+
+	public static ResourceLocation getId(RecipeType<?> recipeType) {
+		return ForgeRegistries.RECIPE_TYPES.getKey(recipeType);
+	}
+
+	public static ResourceLocation getId(StructurePlacementType<?> structurePlacementType) {
+		return BuiltInRegistries.STRUCTURE_PLACEMENT.getKey(structurePlacementType);
 	}
 
 	public static <T> Registry<T> getVanillaRegistry(Level level, IForgeRegistry<T> forgeRegistry) {

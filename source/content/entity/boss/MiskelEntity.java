@@ -24,7 +24,6 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.WhiteBallEntity;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 

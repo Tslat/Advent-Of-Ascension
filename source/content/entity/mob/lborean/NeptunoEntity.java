@@ -5,11 +5,11 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -63,8 +63,9 @@ public class NeptunoEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericSwimIdleController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericSwimIdleController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
 	}
 }

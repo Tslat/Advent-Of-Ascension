@@ -2,16 +2,118 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 100
+          "weight": 50
         },
         {
           "type": "minecraft:item",
-          "name": "aoa3:sharp_claw",
+          "functions": [
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "minecraft:blaze_powder",
+          "weight": 14
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "minecraft:flint",
           "weight": 20
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "aoa3:hellfire",
+          "weight": 7
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 1.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "aoa3:chitin",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "aoa3:armour_plating",
+          "weight": 5
         }
       ],
       "name": "loot",

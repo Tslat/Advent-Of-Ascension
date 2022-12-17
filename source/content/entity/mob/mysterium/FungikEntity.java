@@ -7,14 +7,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.WitherBallEntity;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 

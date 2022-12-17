@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.infusion;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -136,3 +137,4 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		}
 	}
 }
+*/

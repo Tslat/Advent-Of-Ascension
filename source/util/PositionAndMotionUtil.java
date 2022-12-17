@@ -3,6 +3,7 @@ package net.tslat.aoa3.util;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public final class PositionAndMotionUtil {
 	public static Vec3 accountForGravity(Vec3 origin, Vec3 velocity, Vec3 targetPos, double gravity) {

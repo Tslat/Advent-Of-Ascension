@@ -3,9 +3,8 @@ package net.tslat.aoa3.client.gui.container;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.Widget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -18,9 +17,6 @@ import net.tslat.aoa3.common.packet.packets.GuiDataPacket;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RenderUtil;
-
-import java.util.Collections;
-import java.util.Optional;
 
 public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContainer> {
 	private static final ResourceLocation textures = new ResourceLocation("aoa3", "textures/gui/containers/frame_bench.png");
@@ -56,11 +52,6 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 		renderBackground(matrix);
 		super.render(matrix, mouseX, mouseY, partialTicks);
 		renderTooltip(matrix, mouseX, mouseY);
-
-		for (Widget button : renderables) {
-			if (button instanceof AbstractWidget widget && widget.isHoveredOrFocused())
-				widget.renderToolTip(matrix, mouseX, mouseY);
-		}
 	}
 
 	@Override
@@ -78,10 +69,12 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 		private final Item frame;
 
 		private FrameSelectButton(int x, int y, String selectionValue, Item frame) {
-			super(x, y, buttonWidth, buttonHeight, Component.translatable(frame.getDescriptionId()), button -> {});
+			super(x, y, buttonWidth, buttonHeight, Component.translatable(frame.getDescriptionId()), button -> {}, DEFAULT_NARRATION);
 
 			this.selectionValue = selectionValue;
 			this.frame = frame;
+
+			setTooltip(Tooltip.create(Component.literal(LocaleUtil.getItemName(this.frame))));
 		}
 
 		@Override
@@ -93,21 +86,15 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 			RenderUtil.prepRenderTexture(textures);
 			RenderUtil.resetShaderColour();
 
-			isHovered = isMouseInRegion(mouseX, mouseY, x, y);
+			isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 			int textureX = 176;
 			int textureY = 21 + buttonHeight * (selectionValue.equals(currentSelection) ? 0 : (getYImage(this.isHovered) == 2) ? 2 : 1);
 
-			RenderUtil.renderCustomSizedTexture(matrix, x, y, textureX, textureY, buttonWidth, buttonHeight, 256, 256);
+			RenderUtil.renderCustomSizedTexture(matrix, getX(), getY(), textureX, textureY, buttonWidth, buttonHeight, 256, 256);
 			matrix.translate(0, 0, 32);
-			mc.getItemRenderer().renderGuiItem(new ItemStack(frame), x + 1, y + 1);
+			mc.getItemRenderer().renderGuiItem(new ItemStack(frame), getX() + 1, getY() + 1);
 			RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 			matrix.popPose();
-		}
-
-		@Override
-		public void renderToolTip(PoseStack matrix, int mouseX, int mouseY) {
-			RenderUtil.resetShaderColour();
-			instance.renderTooltip(matrix, Collections.singletonList(Component.literal(LocaleUtil.getItemName(frame))), Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font);
 		}
 
 		private boolean isMouseInRegion(int mouseX, int mouseY, int buttonX, int buttonY) {

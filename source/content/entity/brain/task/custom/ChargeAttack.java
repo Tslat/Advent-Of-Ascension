@@ -13,9 +13,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
-import net.tslat.smartbrainlib.api.util.BrainUtils;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
+import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import java.util.List;
 

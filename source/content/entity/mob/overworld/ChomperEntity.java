@@ -8,14 +8,11 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.movehelper.UnderwaterWalkingMovementController;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -30,12 +27,14 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTar
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SeekRandomNearbyPosition;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -83,7 +82,7 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 	@Override
 	public BrainActivityGroup<ChomperEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>().speedMod(1.05f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
@@ -131,8 +130,9 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkRunIdleController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkRunIdleController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
 	}
 }

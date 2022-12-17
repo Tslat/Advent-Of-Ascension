@@ -12,17 +12,16 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.misc.LottoTotemEntity;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class LottoTotem extends Item {
 	public LottoTotem() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS));
+		super(new Item.Properties());
 	}
 
 	@Override

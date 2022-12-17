@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.upgradekit;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -61,3 +62,4 @@ public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecip
 				.addItemStack(recipe.getResultItem());
 	}
 }
+*/

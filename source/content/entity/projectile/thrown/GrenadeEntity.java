@@ -1,5 +1,7 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -60,7 +62,7 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (source == DamageSource.ON_FIRE || source == DamageSource.LAVA) {
-			doImpactEffect(position());
+			explode(position());
 
 			if (getOwner() instanceof ServerPlayer pl)
 				pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/darwin_award")), "fire_grenade");
@@ -74,14 +76,17 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
-		if (!this.level.isClientSide())
-			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), impactLocation).explode();
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
+		explode(impactLocation);
 	}
 
 	@Override
 	public void doEntityImpact(Entity target, Vec3 impactLocation) {
+		explode(impactLocation);
+	}
+
+	protected void explode(Vec3 position) {
 		if (!this.level.isClientSide())
-			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), impactLocation).explode();
+			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), position).explode();
 	}
 }

@@ -7,9 +7,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.monster.piglin.PiglinAi;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -17,7 +15,6 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -30,12 +27,14 @@ import net.tslat.aoa3.library.object.explosion.StandardExplosion;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.api.util.BrainUtils;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.BrainUtils;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -107,7 +106,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 	@Override
 	public BrainActivityGroup<LittleBamEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>(),
 				new ConditionlessAttack<LittleBamEntity>(getAttackSwingDuration())
 						.attack(mob -> {
@@ -154,8 +153,9 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_POWERUP));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkIdleController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_POWERUP));
 	}
 }

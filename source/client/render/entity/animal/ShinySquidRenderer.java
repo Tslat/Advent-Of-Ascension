@@ -1,7 +1,7 @@
 package net.tslat.aoa3.client.render.entity.animal;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -21,9 +21,9 @@ public class ShinySquidRenderer extends MobRenderer<ShinySquidEntity, ShinySquid
 	@Override
 	protected void setupRotations(ShinySquidEntity squid, PoseStack matrixStack, float pAgeInTicks, float pRotationYaw, float partialTicks) {
 		matrixStack.translate(0, 0.5d, 0);
-		matrixStack.mulPose(Vector3f.YP.rotationDegrees(180 - pRotationYaw));
-		matrixStack.mulPose(Vector3f.XP.rotationDegrees(Mth.lerp(partialTicks, squid.xBodyRotO, squid.xBodyRot)));
-		matrixStack.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, squid.zBodyRotO, squid.zBodyRot)));
+		matrixStack.mulPose(Axis.YP.rotationDegrees(180 - pRotationYaw));
+		matrixStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, squid.xBodyRotO, squid.xBodyRot)));
+		matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, squid.zBodyRotO, squid.zBodyRot)));
 		matrixStack.translate(0, -1.2f, 0);
 	}
 

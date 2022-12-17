@@ -1,9 +1,12 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -70,7 +73,16 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
+		explode(impactLocation);
+	}
+
+	@Override
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
+		explode(impactLocation);
+	}
+
+	protected void explode(Vec3 position) {
 		int count = 0;
 
 		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {

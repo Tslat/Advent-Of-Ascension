@@ -1,7 +1,7 @@
 package net.tslat.aoa3.client.render.tileentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -9,11 +9,11 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class TrophyRenderer implements BlockEntityRenderer<TrophyTileEntity> {
 	public TrophyRenderer(BlockEntityRendererProvider.Context context) {
@@ -43,7 +43,7 @@ public class TrophyRenderer implements BlockEntityRenderer<TrophyTileEntity> {
 				entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.005f, 10, ColourUtil.RGB(255, 200, 0)), blockEntity.getBlockPos().getX() + 0.5f, blockEntity.getBlockPos().getY() + 0.9 + ((entity.getBbHeight() / 2f) * scale), blockEntity.getBlockPos().getZ() + 0.5f, RandomUtil.randomGaussianValue() * 0.5f, RandomUtil.randomGaussianValue() * 0.5f, RandomUtil.randomGaussianValue() * 0.5f);
 
 			if (AoAConfigs.CLIENT.rotatingTrophies.get())
-				matrix.mulPose(Vector3f.YP.rotationDegrees(Mth.lerp(partialTicks, blockEntity.getPrevMobRotation(), blockEntity.getMobRotation()) * 30.0F));
+				matrix.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, blockEntity.getPrevMobRotation(), blockEntity.getMobRotation()) * 30.0F));
 
 			Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, 0, matrix, buffer, combinedLight);
 			matrix.popPose();

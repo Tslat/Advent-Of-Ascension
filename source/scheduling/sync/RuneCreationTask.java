@@ -7,7 +7,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.UUID;
 

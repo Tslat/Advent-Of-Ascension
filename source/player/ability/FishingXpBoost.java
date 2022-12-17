@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class FishingXpBoost extends ScalableModAbility {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.FISHED_ITEM};

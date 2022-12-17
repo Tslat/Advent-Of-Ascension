@@ -13,7 +13,7 @@ import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.animal.ShikEntity;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class DenseStone extends Block {
 	public DenseStone() {

@@ -13,7 +13,7 @@ import net.minecraft.world.item.*;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class CounterTargetWeaponTask extends Behavior<Mob> {
 	private final int minSwitchTime;

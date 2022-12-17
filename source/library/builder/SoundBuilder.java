@@ -1,6 +1,7 @@
 package net.tslat.aoa3.library.builder;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -15,7 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -269,10 +270,12 @@ public final class SoundBuilder {
 
 	private void play() {
 		if (inWorld) {
-			PlayLevelSoundEvent event = followingEntity != null ? ForgeEventFactory.onPlaySoundAtEntity(followingEntity, sound, category, radius / 16f, pitch) : ForgeEventFactory.onPlaySoundAtPosition(level, location.x, location.y, location.z, sound, category, radius / 16f, pitch);
+			PlayLevelSoundEvent event = followingEntity != null ? ForgeEventFactory.onPlaySoundAtEntity(followingEntity, Holder.direct(sound), category, radius / 16f, pitch) : ForgeEventFactory.onPlaySoundAtPosition(level, location.x, location.y, location.z, Holder.direct(sound), category, radius / 16f, pitch);
 
-			if (event.isCanceled() || (sound = event.getSound()) == null)
+			if (event.isCanceled() || event.getSound() == null)
 				return;
+
+			this.sound = event.getSound().get();
 		}
 
 		if (level == null || level.isClientSide()) {

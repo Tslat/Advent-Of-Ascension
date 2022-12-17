@@ -11,8 +11,8 @@ import net.minecraft.network.chat.Component;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.net.URI;
@@ -73,7 +73,7 @@ public class AdventGuiTabHelp extends Screen {
 		private final URI url;
 
 		public WebLinkButton(Minecraft mc, int x, int y, int width, int height, Component name, URI link) {
-			super(x, y, width, height, name, button -> {});
+			super(x, y, width, height, name, button -> {}, DEFAULT_NARRATION);
 
 			this.url = link;
 
@@ -98,13 +98,13 @@ public class AdventGuiTabHelp extends Screen {
 
 				RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
-				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
+				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 				int stringColour = ColourUtil.RGB(239, 137, 119);
 
 				if (isHovered)
 					stringColour = ColourUtil.RGB(247, 239, 0);
 
-				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), (int)(AdventMainGui.scaledTabRootX + x + width / 2f), AdventMainGui.scaledTabRootY + y, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), (int)(AdventMainGui.scaledTabRootX + getX() + width / 2f), AdventMainGui.scaledTabRootY + getY(), 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
 			}
 		}
 
@@ -120,7 +120,7 @@ public class AdventGuiTabHelp extends Screen {
 
 	private static class ThemeButton extends Button {
 		public ThemeButton(int x, int y, int width, int height) {
-			super(x, y, width, height, Component.literal(AdventMainGui.theme.name()), button -> {});
+			super(x, y, width, height, Component.literal(AdventMainGui.theme.name()), button -> {}, DEFAULT_NARRATION);
 		}
 
 		@Override
@@ -133,14 +133,14 @@ public class AdventGuiTabHelp extends Screen {
 		public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
-				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
+				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 				width = (int)(10 + Minecraft.getInstance().font.width(getMessage()) * 1.5f);
 
 				RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 				RenderSystem.setShaderTexture(0, AdventMainGui.theme.menuButtonTexture());
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-				RenderUtil.renderScaledCustomSizedTexture(matrix, AdventMainGui.scaledTabRootX + x, AdventMainGui.scaledTabRootY + y, 0, (getYImage(isHovered) == 2 ? 60 : 120), 180, 60, width, height, 180, 180);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, AdventMainGui.scaledTabRootX + getX(), AdventMainGui.scaledTabRootY + getY(), 0, (getYImage(isHovered) == 2 ? 60 : 120), 180, 60, width, height, 180, 180);
 
 				int stringColour = 14737632;
 
@@ -154,7 +154,7 @@ public class AdventGuiTabHelp extends Screen {
 					stringColour = 16777120;
 				}
 
-				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), (int)(AdventMainGui.scaledTabRootX + x + width / 2f), (int)(AdventMainGui.scaledTabRootY + y + height / 2.5), 1.5f, stringColour, RenderUtil.StringRenderType.DROP_SHADOW);
+				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), (int)(AdventMainGui.scaledTabRootX + getX() + width / 2f), (int)(AdventMainGui.scaledTabRootY + getY() + height / 2.5), 1.5f, stringColour, RenderUtil.StringRenderType.DROP_SHADOW);
 			}
 		}
 

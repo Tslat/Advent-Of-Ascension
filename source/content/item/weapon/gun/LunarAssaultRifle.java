@@ -5,10 +5,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -18,7 +17,7 @@ public class LunarAssaultRifle extends BaseGun {
 	private final double maxDmg;
 
 	public LunarAssaultRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoACreativeModeTabs.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(dmg, durability, firingDelayTicks, recoil);
 
 		this.baseDmg = dmg - (dmg / 2d);
 		this.maxDmg = dmg + (dmg / 2d);

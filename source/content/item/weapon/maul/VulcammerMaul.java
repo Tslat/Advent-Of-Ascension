@@ -5,7 +5,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.library.constant.AttackSpeed;
@@ -26,7 +25,7 @@ public class VulcammerMaul extends BaseMaul {
 		if (attackCooldown > 0.85f) {
 			boolean doWorldDamage = AoAGameRules.checkDestructiveWeaponPhysics(attacker.level);
 
-			WorldUtil.createExplosion(attacker, attacker.level, (attacker.getX() + target.getX()) / 2d, (attacker.getY() + target.getY()) / 2d, (attacker.getZ() + target.getZ()) / 2d, 2f, doWorldDamage ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, doWorldDamage);
+			WorldUtil.createExplosion(attacker, attacker.level, (attacker.getX() + target.getX()) / 2d, (attacker.getY() + target.getY()) / 2d, (attacker.getZ() + target.getZ()) / 2d, 2f, doWorldDamage ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, doWorldDamage);
 
 			if (!doWorldDamage) {
 				for (LivingEntity entity : attacker.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(2), EntityUtil.Predicates.HOSTILE_MOB)) {

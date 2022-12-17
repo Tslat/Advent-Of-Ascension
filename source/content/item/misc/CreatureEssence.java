@@ -19,7 +19,7 @@ import java.util.List;
 
 public class CreatureEssence extends Item {
 	public CreatureEssence() {
-		super(new Item.Properties().rarity(Rarity.RARE).tab(null).fireResistant());
+		super(new Item.Properties().rarity(Rarity.RARE).fireResistant());
 	}
 
 	@Nullable

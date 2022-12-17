@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.ingredient.subtype;
 
 import mezz.jei.api.ingredients.subtypes.IIngredientSubtypeInterpreter;
@@ -26,3 +27,4 @@ public class TrophySubtypeInterpreter implements IIngredientSubtypeInterpreter<I
 		return blockEntityTag.getString("EntityID");
 	}
 }
+*/

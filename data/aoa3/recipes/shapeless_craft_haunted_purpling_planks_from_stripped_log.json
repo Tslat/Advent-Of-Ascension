@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "misc",
   "ingredients": [
     {
       "item": "aoa3:stripped_haunted_purpling_log"

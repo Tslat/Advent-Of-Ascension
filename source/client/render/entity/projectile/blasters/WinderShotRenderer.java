@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.blaster.WinderShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class WinderShotRenderer extends ParticleProjectileRenderer<WinderShotEntity> {
 	public WinderShotRenderer(final EntityRendererProvider.Context manager) {

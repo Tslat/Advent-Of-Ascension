@@ -22,9 +22,9 @@ import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.AoAPlayerEvents;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -63,7 +63,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 				return;
 
 			if (entity instanceof Mob mob) {
-				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, state -> state.getFluidState().getType() == Fluids.LAVA);
+				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, (state, statePos) -> state.getFluidState().getType() == Fluids.LAVA);
 
 				mob.setPos(pos.getX(), pos.getY(), pos.getZ());
 				mob.getNavigation().createPath(blockPosition(), 0);

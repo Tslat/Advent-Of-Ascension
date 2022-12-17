@@ -31,8 +31,9 @@ import net.tslat.aoa3.content.entity.misc.SandGiantPitTrapEntity;
 import net.tslat.aoa3.content.entity.misc.SandGiantSpikeTrapEntity;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import java.util.EnumSet;
 import java.util.function.Function;
@@ -104,10 +105,11 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));
-		animationData.addAnimationController(AoAAnimations.genericHeldPoseController(this, AoAAnimations.ATTACK_CHARGE, AoAAnimations.ATTACK_CHARGE_END, entity -> entity.getAttackState() == 1));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM),
+				AoAAnimations.genericHeldPoseController(this, AoAAnimations.ATTACK_CHARGE, AoAAnimations.ATTACK_CHARGE_END, entity -> entity.getAttackState() == 1));
 	}
 
 	@Override

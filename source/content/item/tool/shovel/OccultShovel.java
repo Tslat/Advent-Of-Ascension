@@ -6,7 +6,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class OccultShovel extends BaseShovel {
 	public OccultShovel() {
-		super(AoATiers.OCCULT, -3.5f, AttackSpeed.SHOVEL, new Properties().durability(AoATiers.OCCULT.getUses()).tab(AoACreativeModeTabs.TOOLS).rarity(Rarity.RARE));
+		super(AoATiers.OCCULT, -3.5f, AttackSpeed.SHOVEL, new Properties().durability(AoATiers.OCCULT.getUses()).rarity(Rarity.RARE));
 	}
 
 	@Override

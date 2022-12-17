@@ -33,7 +33,8 @@ import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.StoneGiantRock;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -139,9 +140,10 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
-		animationData.addAnimationController(AoAAnimations.dynamicAttackController(this, event -> getAttackState() == 0 ? AoAAnimations.ATTACK_SLAM : AoAAnimations.ATTACK_THROW));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkIdleController(this),
+				AoAAnimations.dynamicAttackController(this, state -> getAttackState() == 0 ? DefaultAnimations.ATTACK_SLAM : DefaultAnimations.ATTACK_THROW));
 	}
 
 	@Override

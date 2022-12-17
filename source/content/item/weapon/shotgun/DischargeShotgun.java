@@ -11,24 +11,21 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.DischargeShotEntity;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class DischargeShotgun extends BaseShotgun {
-	private int firingDelay;
-
 	public DischargeShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
 		super(dmg, pellets, durability, fireDelayTicks, knockbackFactor, recoil);
-		firingDelay = fireDelayTicks;
 	}
 
 	@Nullable
@@ -44,9 +41,6 @@ public class DischargeShotgun extends BaseShotgun {
 
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
-		if (target != null)
-			bullet.doImpactEffect(impactPosition);
-
 		WorldUtil.createExplosion(shooter, bullet.level, bullet, 2.5f);
 	}
 

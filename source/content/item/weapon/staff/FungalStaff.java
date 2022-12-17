@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;

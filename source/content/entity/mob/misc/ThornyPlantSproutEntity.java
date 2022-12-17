@@ -3,10 +3,8 @@ package net.tslat.aoa3.content.entity.mob.misc;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
@@ -17,15 +15,16 @@ import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
 
 import java.util.List;
 
@@ -56,7 +55,7 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 	@Override
 	public BrainActivityGroup<ThornyPlantSproutEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+				new InvalidateAttackTarget<>(),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
 
@@ -115,26 +114,9 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<>(this, "living", 0, event -> {
-			if (tickCount < 20) {
-				event.getController().setAnimation(AoAAnimations.SPAWN);
-			}
-			else {
-				event.getController().setAnimation(AoAAnimations.IDLE);
-			}
-
-			return PlayState.CONTINUE;
-		}));
-		animationData.addAnimationController(new AnimationController<>(this, "attacking", 0, event -> {
-			if (swinging) {
-				event.getController().setAnimation(AoAAnimations.ATTACK_SWIPE_RIGHT);
-
-				return PlayState.CONTINUE;
-			}
-
-			event.getController().markNeedsReload();
-			return PlayState.STOP;
-		}));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				new AnimationController<>(this, "living", 0, event -> event.setAndContinue(this.tickCount < 20 ? DefaultAnimations.SPAWN : DefaultAnimations.IDLE)),
+				DefaultAnimations.genericAttackAnimation(this, AoAAnimations.ATTACK_SWIPE_RIGHT));
 	}
 }

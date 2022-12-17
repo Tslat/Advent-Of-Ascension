@@ -4,7 +4,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.tslat.aoa3.content.entity.ai.ExtendedTargetGoal;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import java.util.EnumSet;
 import java.util.function.Predicate;

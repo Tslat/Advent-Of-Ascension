@@ -6,16 +6,13 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -24,15 +21,17 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
-import net.tslat.aoa3.content.entity.brain.task.temp.StayWithinDistanceOfAttackTarget;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
-import net.tslat.smartbrainlib.api.util.BrainUtils;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StayWithinDistanceOfAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import net.tslat.smartbrainlib.util.BrainUtils;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -50,7 +49,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     @Override
     public BrainActivityGroup<FlamewalkerEntity> getFightTasks() {
         return BrainActivityGroup.fightTasks(
-                new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+                new InvalidateAttackTarget<>(),
                 new StayWithinDistanceOfAttackTarget<>(),
                 new FlameWalkerAttack(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
     }
@@ -132,10 +131,10 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     }
 
     @Override
-    public void registerControllers(AnimationData animationData) {
-        animationData.addAnimationController(AoAAnimations.genericLivingAnimation(this));
-        animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
-        animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_STRIKE));
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(DefaultAnimations.genericLivingController(this),
+                DefaultAnimations.genericWalkController(this),
+                DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
     }
 
     private static class FlameWalkerAttack extends AnimatableRangedAttack<FlamewalkerEntity> {

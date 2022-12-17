@@ -1,8 +1,8 @@
 package net.tslat.aoa3.leaderboard.task;
 
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.player.skill.AoASkill;

@@ -31,7 +31,6 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -44,7 +43,8 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -229,8 +229,8 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(DefaultAnimations.genericWalkController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
 	}
 }

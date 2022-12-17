@@ -3,12 +3,11 @@ package net.tslat.aoa3.content.item.misc;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
 public class FloatingStone extends Item {
 	public FloatingStone() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS));
+		super(new Item.Properties());
 	}
 
 	@Override

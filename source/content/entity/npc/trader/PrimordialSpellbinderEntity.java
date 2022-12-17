@@ -9,9 +9,9 @@ import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoATools;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 

@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
   "ingredients": [
     {
       "item": "aoa3:incomplete_mecha_cannon"

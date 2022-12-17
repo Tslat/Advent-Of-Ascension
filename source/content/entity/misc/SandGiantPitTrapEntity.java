@@ -12,8 +12,8 @@ import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 public class SandGiantPitTrapEntity extends BasicMiscEntity {
 	private static final EntityPredicate<LivingEntity> damagePredicate = new EntityPredicate<LivingEntity>().isAlive().isSubtypeOf(LivingEntity.class).isNot(AoAMobs.SAND_GIANT.get()).isDamageable();
@@ -75,7 +75,7 @@ public class SandGiantPitTrapEntity extends BasicMiscEntity {
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(AoAAnimations.genericSpawnController(this, 41));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(AoAAnimations.genericSpawnController(this, 41));
 	}
 }

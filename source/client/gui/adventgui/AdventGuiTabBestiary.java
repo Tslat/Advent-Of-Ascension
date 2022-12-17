@@ -2,8 +2,7 @@ package net.tslat.aoa3.client.gui.adventgui;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -12,6 +11,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
@@ -508,8 +508,8 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
 
 					if (searchField.isVisible()) {
-						searchField.x = (int)((left + 20) / 2d);
-						searchField.y = (int)(AdventMainGui.scaledTabRootY / 2d);
+						searchField.setX((int)((left + 20) / 2d));
+						searchField.setY((int)(AdventMainGui.scaledTabRootY / 2d));
 						searchField.setWidth((int)((right - left - 40) / 2d));
 						matrix.scale(2, 2, 2);
 						searchField.render(matrix, adjustedMouseX, adjustedMouseX, partialTicks);
@@ -583,8 +583,8 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
 
 					if (searchField.isVisible()) {
-						searchField.x = (int)((left + 20) / 2d);
-						searchField.y = (int)(AdventMainGui.scaledTabRootY / 2d);
+						searchField.setX((int)((left + 20) / 2d));
+						searchField.setY((int)(AdventMainGui.scaledTabRootY / 2d));
 						searchField.setWidth((int)((right - left - 40) / 2d));
 						matrix.scale(2, 2, 2);
 						searchField.render(matrix, adjustedMouseX, adjustedMouseX, partialTicks);
@@ -649,10 +649,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 
 			matrix.translate(0.0D, 0.0D, 1000.0D);
 			matrix.scale(scale, scale, scale);
-
-			Quaternion quaternion = Vector3f.XP.rotationDegrees(180f);
-
-			matrix.mulPose(quaternion);
+			matrix.mulPose(Axis.XP.rotationDegrees(180f));
 
 			entity.tickCount = mc.player.tickCount;
 			entity.setYRot(0);
@@ -663,7 +660,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 
 			MultiBufferSource.BufferSource renderBuffer = mc.renderBuffers().bufferSource();
 
-			renderManager.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrix, renderBuffer, 15728880);
+			renderManager.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrix, renderBuffer, LightTexture.FULL_BRIGHT);
 			renderBuffer.endBatch();
 			renderManager.setRenderShadow(true);
 			matrix.popPose();

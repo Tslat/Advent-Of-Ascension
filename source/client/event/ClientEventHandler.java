@@ -8,6 +8,7 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
@@ -42,7 +43,7 @@ public final class ClientEventHandler {
 		final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
 
 		forgeBus.addListener(EventPriority.NORMAL, false, TickEvent.ClientTickEvent.class, ClientEventHandler::onClientTick);
-		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerLoggedInEvent.class, ClientEventHandler::onPlayerJoin);
+		forgeBus.addListener(EventPriority.NORMAL, false, ClientPlayerNetworkEvent.LoggingIn.class, ClientEventHandler::onPlayerJoin);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerLoggedOutEvent.class, ClientEventHandler::onPlayerLogout);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingDeathEvent.class, ClientEventHandler::onPlayerDeath);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlaySoundEvent.class, ClientEventHandler::onSoundPlay);
@@ -58,20 +59,18 @@ public final class ClientEventHandler {
 		}
 	}
 
-	private static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent ev) {
-		if (ev.getEntity().level.isClientSide()) {
-			if (AoAConfigs.CLIENT.showWelcomeMessage.get()) {
-				if (AoAKeybinds.ADVENT_GUI.getKey().getValue() == GLFW.GLFW_KEY_UNKNOWN) {
-					ev.getEntity().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", ChatFormatting.GRAY));
-				}
-				else {
-					ev.getEntity().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome", ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()));
-				}
+	private static void onPlayerJoin(ClientPlayerNetworkEvent.LoggingIn ev) {
+		if (AoAConfigs.CLIENT.showWelcomeMessage.get()) {
+			if (AoAKeybinds.ADVENT_GUI.getKey().getValue() == GLFW.GLFW_KEY_UNKNOWN) {
+				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", ChatFormatting.GRAY));
 			}
-
-			AoAPackets.INSTANCE.sendTo(new HaloChangePacket(AoAConfigs.CLIENT.personalHaloPreference.get()), ((LocalPlayer)ev.getEntity()).connection.getConnection(), NetworkDirection.PLAY_TO_SERVER);
-			ClientPlayerDataManager.get().updatePlayerInstance(ev.getEntity());
+			else {
+				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome", ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()));
+			}
 		}
+
+		AoAPackets.INSTANCE.sendTo(new HaloChangePacket(AoAConfigs.CLIENT.personalHaloPreference.get()), ev.getConnection(), NetworkDirection.PLAY_TO_SERVER);
+		ClientPlayerDataManager.get().updatePlayerInstance(ev.getPlayer());
 	}
 
 	private static void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent ev) {

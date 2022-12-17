@@ -4,9 +4,9 @@ import net.minecraft.util.Tuple;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import java.util.ArrayList;
 import java.util.Iterator;

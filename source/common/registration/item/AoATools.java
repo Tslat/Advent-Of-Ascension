@@ -5,7 +5,6 @@ import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
-import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.item.tool.axe.*;
 import net.tslat.aoa3.content.item.tool.hoe.BaseHoe;
 import net.tslat.aoa3.content.item.tool.hoe.DryadsBlessing;
@@ -57,17 +56,17 @@ public final class AoATools {
 	public static final RegistryObject<BaseHoe> JADE_HOE = registerTool("jade_hoe", () -> new BaseHoe(AoATiers.JADE.adjusted(AdventOfAscension.id("jade_hoe")).damage(1f), 0, AttackSpeed.forAttacksPerSecond(4)));
 	public static final RegistryObject<BaseHoe> EMBERSTONE_HOE = registerTool("emberstone_hoe", () -> new BaseHoe(AoATiers.EMBERSTONE.adjusted(AdventOfAscension.id("emberstone_hoe")).damage(1f), 0, AttackSpeed.forAttacksPerSecond(4)));
 
-	public static final RegistryObject<Item> HAULING_ROD = registerTool("hauling_rod", () -> new HaulingRod(new Item.Properties().tab(AoACreativeModeTabs.TOOLS).durability(400)));
-	public static final RegistryObject<Item> THERMALLY_INSULATED_ROD = registerTool("thermally_insulated_rod", () -> new ThermallyInsulatedRod(new Item.Properties().tab(AoACreativeModeTabs.TOOLS).durability(400)));
-	public static final RegistryObject<Item> LIGHT_ROD = registerTool("light_rod", () -> new LightRod(new Item.Properties().tab(AoACreativeModeTabs.TOOLS).durability(160)));
-	public static final RegistryObject<Item> GOLDEN_ROD = registerTool("golden_rod", () -> new GoldenRod(new Item.Properties().tab(AoACreativeModeTabs.TOOLS).durability(280).rarity(Rarity.EPIC)));
-	public static final RegistryObject<Item> FISHING_CAGE = registerTool("fishing_cage", () -> new FishingCage(new Item.Properties().tab(AoACreativeModeTabs.TOOLS).durability(10)));
+	public static final RegistryObject<Item> HAULING_ROD = registerTool("hauling_rod", () -> new HaulingRod(new Item.Properties().durability(400)));
+	public static final RegistryObject<Item> THERMALLY_INSULATED_ROD = registerTool("thermally_insulated_rod", () -> new ThermallyInsulatedRod(new Item.Properties().durability(400)));
+	public static final RegistryObject<Item> LIGHT_ROD = registerTool("light_rod", () -> new LightRod(new Item.Properties().durability(160)));
+	public static final RegistryObject<Item> GOLDEN_ROD = registerTool("golden_rod", () -> new GoldenRod(new Item.Properties().durability(280).rarity(Rarity.EPIC)));
+	public static final RegistryObject<Item> FISHING_CAGE = registerTool("fishing_cage", () -> new FishingCage(new Item.Properties().durability(10)));
 
 	public static final RegistryObject<Item> STONE_BOWL = registerTool("stone_bowl", () -> new InfusionBowl(100, 1, 0));
 	public static final RegistryObject<Item> DIAMOND_BOWL = registerTool("diamond_bowl", () -> new InfusionBowl(750, 5, 10));
 	public static final RegistryObject<Item> EXP_FLASK = registerTool("exp_flask", ExpFlask::new);
 
 	private static <T extends Item> RegistryObject<T> registerTool(String registryName, Supplier<T> item) {
-		return AoARegistries.ITEMS.register(registryName, item);
+		return AoAItems.registerItem(registryName, item, () -> AoACreativeModeTabs.TOOLS);
 	}
 }

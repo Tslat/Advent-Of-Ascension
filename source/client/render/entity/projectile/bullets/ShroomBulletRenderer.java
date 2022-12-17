@@ -9,7 +9,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.gun.ShroomBulletEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class ShroomBulletRenderer extends TexturedProjectileRenderer<ShroomBulletEntity> {
 	public ShroomBulletRenderer(final EntityRendererProvider.Context manager, final ResourceLocation textureResource) {

@@ -1,9 +1,9 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.data.loading.DatagenModLoader;
 import net.minecraftforge.registries.RegistryObject;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.HolidayUtil;
 
 public final class AoASounds {
@@ -833,6 +833,6 @@ public final class AoASounds {
 		if (HolidayUtil.isChristmas() && soundPath.endsWith(".fire") && !DatagenModLoader.isRunningDataGen())
 			soundPath = "misc.jingle_bells";
 
-		return new SoundEvent(new ResourceLocation("aoa3", soundPath));
+		return SoundEvent.createVariableRangeEvent(AdventOfAscension.id(soundPath));
 	}
 }

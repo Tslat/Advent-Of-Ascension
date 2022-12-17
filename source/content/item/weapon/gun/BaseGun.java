@@ -20,7 +20,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -70,8 +69,8 @@ public abstract class BaseGun extends Item {
 		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MAINHAND, "AoAGunMainHand", -getHolsterSpeed(), AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}
 
-	public BaseGun(CreativeModeTab itemGroup, final double dmg, final int durability, final int fireDelayTicks, final float recoilMod) {
-		this(new Item.Properties().tab(itemGroup).durability(durability), dmg, fireDelayTicks, recoilMod);
+	public BaseGun(final double dmg, final int durability, final int fireDelayTicks, final float recoilMod) {
+		this(new Item.Properties().durability(durability), dmg, fireDelayTicks, recoilMod);
 	}
 
 	public double getDamage() {

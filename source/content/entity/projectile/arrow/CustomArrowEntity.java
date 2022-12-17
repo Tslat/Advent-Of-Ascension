@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.entity.projectile.arrow;
 import com.google.common.collect.Lists;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -21,7 +20,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.content.item.weapon.crossbow.BaseCrossbow;
@@ -313,10 +311,5 @@ public class CustomArrowEntity extends Arrow {
 				discard();
 			}
 		}
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

@@ -7,14 +7,15 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.content.entity.base.AbstractLavaFishEntity;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class BasicLavaFishEntity extends AbstractLavaFishEntity implements IAnimatable {
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+public class BasicLavaFishEntity extends AbstractLavaFishEntity implements GeoEntity {
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public BasicLavaFishEntity(EntityType<? extends BasicLavaFishEntity> entityType, Level world) {
 		super(entityType, world);
@@ -31,12 +32,12 @@ public class BasicLavaFishEntity extends AbstractLavaFishEntity implements IAnim
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(AoAAnimations.genericSwimController(this));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(DefaultAnimations.genericSwimController(this));
 	}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

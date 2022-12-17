@@ -7,11 +7,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MaterialColor;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.scheduling.async.CreepSpawnTask;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.concurrent.TimeUnit;
 

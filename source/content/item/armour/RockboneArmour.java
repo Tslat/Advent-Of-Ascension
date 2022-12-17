@@ -11,7 +11,11 @@ import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.AdvancementUtil;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;

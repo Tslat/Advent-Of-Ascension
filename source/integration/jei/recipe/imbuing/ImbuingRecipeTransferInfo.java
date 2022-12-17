@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.imbuing;
 
 import mezz.jei.api.recipe.RecipeType;
@@ -56,3 +57,4 @@ public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTa
 		return inventorySlots;
 	}
 }
+*/

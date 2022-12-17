@@ -24,13 +24,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -38,7 +37,6 @@ import java.util.List;
 public class ChumItem extends Item {
 	public ChumItem() {
 		super(new Item.Properties()
-				.tab(AoACreativeModeTabs.FOOD)
 				.food(new FoodProperties.Builder()
 						.nutrition(1)
 						.saturationMod(0.1f)

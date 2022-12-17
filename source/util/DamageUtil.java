@@ -22,6 +22,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 

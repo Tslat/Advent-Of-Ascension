@@ -4,11 +4,11 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 
 import java.util.Locale;
@@ -70,7 +70,7 @@ public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticl
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", Registry.PARTICLE_TYPE.getKey(getType()), red, green, blue, alpha);
+			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", ForgeRegistries.PARTICLE_TYPES.getKey(getType()), red, green, blue, alpha);
 		}
 
 		public static final Deserializer<Data> DESERIALIZER = new Deserializer<Data>() {

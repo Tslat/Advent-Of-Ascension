@@ -2,6 +2,7 @@ package net.tslat.aoa3.util;
 
 import it.unimi.dsi.fastutil.ints.Int2FloatOpenHashMap;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -35,7 +36,7 @@ import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -249,7 +250,7 @@ public final class PlayerUtil {
     }
 
     public static void playSoundForPlayer(ServerPlayer player, SoundEvent sound, SoundSource category, double posX, double posY, double posZ, float volume, float pitch, long seed) {
-        player.connection.send(new ClientboundSoundPacket(sound, category, posX, posY, posZ, volume, pitch, seed));
+        player.connection.send(new ClientboundSoundPacket(Holder.direct(sound), category, posX, posY, posZ, volume, pitch, seed));
     }
 
     @Nullable

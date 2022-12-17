@@ -20,7 +20,6 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.RandomUtil;
 
 import javax.annotation.Nullable;
 

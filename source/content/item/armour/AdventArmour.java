@@ -7,7 +7,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.event.entity.living.*;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -20,7 +19,7 @@ public abstract class AdventArmour extends ArmorItem {
 	}
 
 	public AdventArmour(ArmorMaterial material, EquipmentSlot slot, Rarity rarity) {
-		this(material, slot, new Item.Properties().tab(AoACreativeModeTabs.ARMOUR).durability(material.getDurabilityForSlot(slot)).rarity(rarity));
+		this(material, slot, new Item.Properties().durability(material.getDurabilityForSlot(slot)).rarity(rarity));
 	}
 
 	public AdventArmour(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {

@@ -26,26 +26,27 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeHooks;
-import net.tslat.aoa3.common.misc.AoAAnimatable;
-import net.tslat.aoa3.common.misc.AoAAnimationFactory;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
-import net.tslat.smartbrainlib.api.util.BrainUtils;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.BrainUtils;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>, SmartBrainOwner<AoABoss> {
+public abstract class AoABoss extends Monster implements GeoEntity, SmartBrainOwner<AoABoss> {
 	protected static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoABoss.class, EntityDataSerializers.INT);
 	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoABoss.class, EntityDataSerializers.BOOLEAN);
 
 	private final ServerBossEvent bossStatusTracker = (ServerBossEvent)new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.NOTCHED_20).setDarkenScreen(false).setCreateWorldFog(false);
-	private final AoAAnimationFactory<AoABoss> animationFactory = new AoAAnimationFactory<>(this);
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 	private Int2ObjectOpenHashMap<SwingData> attackStates;
 
 	protected AoABoss(EntityType<? extends Monster> entityType, Level level) {
@@ -151,7 +152,7 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 		tickBrain(this);
 	}
 
-	protected AnimationBuilder getSwingAnim(int state) {
+	protected RawAnimation getSwingAnim(int state) {
 		checkAndPrepAttackStates();
 
 		return this.attackStates.get(state).anim;
@@ -236,11 +237,11 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 	}
 
 	@Override
-	public abstract void registerControllers(AnimationData data);
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
-	public AoAAnimationFactory<AoABoss> getFactory() {
-		return this.animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 
 	@Override
@@ -248,7 +249,7 @@ public abstract class AoABoss extends Monster implements AoAAnimatable<AoABoss>,
 		return new SmartBrainProvider<>(this);
 	}
 
-	public record SwingData(int animLength, int warmupTicks, AnimationBuilder anim) {}
+	public record SwingData(int animLength, int warmupTicks, RawAnimation anim) {}
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {

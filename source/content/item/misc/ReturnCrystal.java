@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class ReturnCrystal extends Item {
 	public ReturnCrystal() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS));
+		super(new Item.Properties());
 	}
 
 	@Override

@@ -8,15 +8,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.BombCarrierDynamiteEntity;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -81,12 +80,10 @@ public class BombCarrierEntity extends AoARangedMob<BombCarrierEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {
-		AnimationController<?> attackController = AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_THROW);
-
-		attackController.registerSoundListener(event -> new SoundBuilder(AoASounds.LIGHT_FUSE).followEntity(this).category(SoundSource.HOSTILE).execute());
-
-		data.addAnimationController(AoAAnimations.genericWalkIdleController(this));
-		data.addAnimationController(attackController);
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkIdleController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_THROW)
+						.setSoundKeyframeHandler(event -> new SoundBuilder(AoASounds.LIGHT_FUSE).followEntity(this).category(SoundSource.HOSTILE).execute()));
 	}
 }

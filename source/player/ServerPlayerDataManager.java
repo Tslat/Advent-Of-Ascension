@@ -5,7 +5,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
@@ -50,7 +50,7 @@ import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -201,8 +201,8 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					double x = portalReturnTag.getDouble("PosX");
 					double y = portalReturnTag.getDouble("PosY");
 					double z = portalReturnTag.getDouble("PosZ");
-					ResourceKey<Level> toDimKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(s));
-					ResourceKey<Level> fromDimKey = ResourceKey.create(Registry.DIMENSION_REGISTRY, fromDim);
+					ResourceKey<Level> toDimKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(s));
+					ResourceKey<Level> fromDimKey = ResourceKey.create(Registries.DIMENSION, fromDim);
 
 					portalCoordinatesMap.put(toDimKey, new PortalCoordinatesContainer(fromDimKey, x, y, z));
 				} catch (NumberFormatException e) {

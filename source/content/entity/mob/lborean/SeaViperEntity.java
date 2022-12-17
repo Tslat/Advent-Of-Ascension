@@ -9,12 +9,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.effectslib.api.util.EffectBuilder;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -62,8 +62,9 @@ public class SeaViperEntity extends AoAWaterMeleeMob {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericSwimController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericSwimController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
 	}
 }

@@ -5,7 +5,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -48,10 +47,10 @@ public class CreepupleEntity extends AoACreeponiaCreeper {
     protected void explode() {
         if (!level.isClientSide) {
             for (int i = 0; i < 3; i++) {
-                WorldUtil.createExplosion(this, level, getX() + (rand().nextDouble() * 3) - 1, getY() + (rand().nextDouble() * 3) - 1, getZ() + (rand().nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE);
+                WorldUtil.createExplosion(this, level, getX() + (rand().nextDouble() * 3) - 1, getY() + (rand().nextDouble() * 3) - 1, getZ() + (rand().nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
             }
 
-            level.explode(this, getX(), getY(), getZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level, this) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE);
+            level.explode(this, getX(), getY(), getZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
             discard();
             spawnLingeringCloud();
         }

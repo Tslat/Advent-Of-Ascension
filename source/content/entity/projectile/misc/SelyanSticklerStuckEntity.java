@@ -1,12 +1,10 @@
 package net.tslat.aoa3.content.entity.projectile.misc;
 
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.EntityUtil;
@@ -75,9 +73,4 @@ public class SelyanSticklerStuckEntity extends ThrowableProjectile {
 
 	@Override
 	protected void defineSynchedData() {}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
 }

@@ -15,9 +15,13 @@ import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.common.registration.AoAConfigs;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
+import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class HealthStatusRenderer {
 	private static final ResourceLocation HEALTH_BAR = AdventOfAscension.id("textures/gui/overlay/misc/health_bar.png");

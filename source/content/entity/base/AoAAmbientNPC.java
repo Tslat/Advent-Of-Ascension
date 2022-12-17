@@ -23,15 +23,16 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, IAnimatable {
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEntity {
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
 	public AoAAmbientNPC(EntityType<? extends PathfinderMob> entityType, Level world) {
@@ -126,10 +127,10 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, IAnima
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

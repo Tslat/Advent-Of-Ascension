@@ -12,7 +12,7 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.content.entity.mob.misc.ThornyPlantSproutEntity;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.function.Supplier;
 

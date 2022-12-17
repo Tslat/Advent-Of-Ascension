@@ -19,14 +19,14 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoATags;
-import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;

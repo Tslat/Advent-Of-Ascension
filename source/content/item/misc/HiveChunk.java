@@ -5,14 +5,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 
 public class HiveChunk extends Item {
 	public HiveChunk() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS));
+		super(new Item.Properties());
 	}
 
 	@Override

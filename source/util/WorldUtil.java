@@ -44,11 +44,11 @@ public final class WorldUtil {
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, Level world, BlockPos pos, float strength) {
-		return createExplosion(exploder, world, pos.getX(), pos.getY(), pos.getZ(), strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
+		return createExplosion(exploder, world, pos.getX(), pos.getY(), pos.getZ(), strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nonnull Entity exploder, Level world, float strength) {
-		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, ForgeEventFactory.getMobGriefingEvent(world, exploder) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
+		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, ForgeEventFactory.getMobGriefingEvent(world, exploder) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, Level world, @Nonnull Entity explodingEntity, float strength) {
@@ -69,18 +69,18 @@ public final class WorldUtil {
 			}
 		}
 
-		return createExplosion(exploder, world, explodingEntity.getX(), explodingEntity.getY(), explodingEntity.getZ(), strength, doGriefing ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
+		return createExplosion(exploder, world, explodingEntity.getX(), explodingEntity.getY(), explodingEntity.getZ(), strength, doGriefing ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength) {
-		return createExplosion(exploder, world, posX, posY, posZ, strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE, false);
+		return createExplosion(exploder, world, posX, posY, posZ, strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, false);
 	}
 
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength, Explosion.BlockInteraction explosionType) {
+	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength, Level.ExplosionInteraction explosionType) {
 		return createExplosion(exploder, world, posX, posY, posZ, strength, explosionType, false);
 	}
 
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength, Explosion.BlockInteraction explosionType, boolean fieryExplosion) {
+	public static Explosion createExplosion(@Nullable Entity exploder, Level world, double posX, double posY, double posZ, float strength, Level.ExplosionInteraction explosionType, boolean fieryExplosion) {
 		return world.explode(exploder, posX, posY, posZ, strength, fieryExplosion, explosionType);
 	}
 

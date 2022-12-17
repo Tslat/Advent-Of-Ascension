@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.upgradekit;
 
 import mezz.jei.api.recipe.RecipeType;
@@ -56,3 +57,4 @@ public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineS
 		return inventorySlots;
 	}
 }
+*/

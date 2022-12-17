@@ -2,7 +2,7 @@ package net.tslat.aoa3.client.render.entity.misc;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -33,8 +33,8 @@ public class FishingCageRenderer extends EntityRenderer<FishingCageEntity> {
 	public void render(FishingCageEntity entity, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		matrix.pushPose();
 		matrix.translate(0, 1.5d, 0);
-		matrix.mulPose(Vector3f.XP.rotationDegrees(180));
-		matrix.mulPose(Vector3f.YP.rotationDegrees(entityYaw));
+		matrix.mulPose(Axis.XP.rotationDegrees(180));
+		matrix.mulPose(Axis.YP.rotationDegrees(entityYaw));
 		matrix.scale(-1, 1, -1);
 
 		VertexConsumer vertexBuilder = buffer.getBuffer(RenderType.entityCutoutNoCull(texture));
@@ -42,7 +42,7 @@ public class FishingCageRenderer extends EntityRenderer<FishingCageEntity> {
 		model.renderToBuffer(matrix, vertexBuilder, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
 
 		matrix.translate(0, 1.4d, 0.1d);
-		matrix.mulPose(Vector3f.XP.rotationDegrees(90));
+		matrix.mulPose(Axis.XP.rotationDegrees(90));
 
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 

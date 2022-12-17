@@ -1,6 +1,5 @@
 package net.tslat.aoa3.scheduling.async;
 
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.WorldUtil;
@@ -47,7 +46,7 @@ public class CreepSpawnTask implements Runnable {
             }
         }
 
-        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, Explosion.BlockInteraction.DESTROY);
+        WorldUtil.createExplosion(null, world, x, centerY, z, 1.5f, Level.ExplosionInteraction.MOB);
 
         count++;
 

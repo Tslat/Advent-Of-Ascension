@@ -16,7 +16,6 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.GunRecoilPacket;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.SniperSlugEntity;
@@ -33,7 +32,7 @@ public abstract class BaseSniper extends BaseGun {
 	protected static final ResourceLocation SCOPE_4 = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/scope4.png");
 
 	public BaseSniper(double dmg, int durability, int fireDelayTicks, float recoil) {
-		super(AoACreativeModeTabs.SNIPERS, dmg, durability, fireDelayTicks, recoil);
+		super(dmg, durability, fireDelayTicks, recoil);
 	}
 
 	@Override

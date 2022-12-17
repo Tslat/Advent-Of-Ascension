@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.staff.SunShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class SunShotRenderer extends ParticleProjectileRenderer<SunShotEntity> {
 	public SunShotRenderer(final EntityRendererProvider.Context manager) {

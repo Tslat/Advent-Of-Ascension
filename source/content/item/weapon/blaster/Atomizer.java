@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.projectile.blaster.AtomizerBounceEntity;
 import net.tslat.aoa3.content.entity.projectile.blaster.AtomizerShotEntity;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;

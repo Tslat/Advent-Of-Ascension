@@ -23,8 +23,9 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.misc.AoAAnimatable;
-import net.tslat.aoa3.common.misc.AoAAnimationFactory;
+import net.tslat.aoa3.common.registration.AoAAttributes;
+import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
+import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
@@ -37,20 +38,21 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarge
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.api.util.RandomUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implements AoAAnimatable<T>, SmartBrainOwner<T> {
+public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implements GeoEntity, SmartBrainOwner<T> {
 	protected static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAMonster.class, EntityDataSerializers.INT);
 	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAMonster.class, EntityDataSerializers.BOOLEAN);
 	protected static final EntityDataAccessor<Boolean> IMMOBILE = SynchedEntityData.defineId(AoAMonster.class, EntityDataSerializers.BOOLEAN);
 
-	private final AoAAnimationFactory<T> animationFactory = new AoAAnimationFactory(this);
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 	protected boolean hasDrops = true;
 
 	private RandomUtil.EasyRandom random;
@@ -76,18 +78,18 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public AoAAnimationFactory<T> getFactory() {
-		return animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
 	public List<ExtendedSensor<T>> getSensors() {
 		return ObjectArrayList.of(
-				new NearbyPlayersSensor<>(),
-				new NearbyLivingEntitySensor<T>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
+				new AggroBasedNearbyPlayersSensor<T>(),
+				new AggroBasedNearbyLivingEntitySensor<T>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
 				new HurtBySensor<>());
 	}
 
@@ -121,11 +123,11 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	public int calculateKillXp() {
-		return !this.hasDrops ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 1.5f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
+		return !this.hasDrops ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 1.5f) / 10f);
 	}
 
 	public static AttributeSupplier.Builder getDefaultAttributes() {
-		return Mob.createMobAttributes().add(Attributes.ATTACK_DAMAGE).add(Attributes.ATTACK_KNOCKBACK);
+		return Mob.createMobAttributes().add(Attributes.ATTACK_DAMAGE).add(Attributes.ATTACK_KNOCKBACK).add(AoAAttributes.AGGRO_RANGE.get());
 	}
 
 	@Override

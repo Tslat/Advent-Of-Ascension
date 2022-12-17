@@ -10,13 +10,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.item.trading.MerchantOffers;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -111,11 +110,8 @@ public class UndeadHeraldEntity extends AoATrader {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		AnimationController<?> controller = AoAAnimations.genericWalkIdleController(this);
-
-		controller.setAnimationSpeed(1.35f);
-
-		animationData.addAnimationController(controller);
-	} // TODO Greet anim
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(DefaultAnimations.genericWalkIdleController(this).setAnimationSpeed(1.35f));
+		// TODO Greet anim
+	}
 }

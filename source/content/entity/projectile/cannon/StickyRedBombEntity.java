@@ -1,5 +1,7 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -83,13 +85,13 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 		}
 		else {
 			if (!level.isClientSide()) {
-				if (result.getType() == HitResult.Type.ENTITY) {
+				if (result instanceof EntityHitResult entityResult) {
 					Entity shooter = getOwner();
 
 					if (shooter instanceof LivingEntity)
-						weapon.doImpactDamage(((EntityHitResult)result).getEntity(), (LivingEntity)shooter, this, result.getLocation(), 1.0f);
+						weapon.doImpactDamage(entityResult.getEntity(), (LivingEntity)shooter, this, result.getLocation(), 1.0f);
 
-					doImpactEffect(result.getLocation());
+					doEntityImpact(entityResult.getEntity(), entityResult.getLocation());
 				}
 
 				discard();
@@ -107,7 +109,8 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 			ticksInGround++;
 
 			if (ticksInGround >= 80 && !level.isClientSide) {
-				doImpactEffect(position());
+				explode(position());
+
 				return;
 			}
 
@@ -117,7 +120,16 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
+		explode(impactLocation);
+	}
+
+	@Override
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
+		explode(impactLocation);
+	}
+
+	protected void explode(Vec3 position) {
 		WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
 
 		if (!level.isClientSide)

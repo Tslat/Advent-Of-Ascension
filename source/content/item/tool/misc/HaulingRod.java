@@ -31,7 +31,7 @@ import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;

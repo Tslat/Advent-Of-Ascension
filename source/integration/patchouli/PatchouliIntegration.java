@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.patchouli;
 
 import net.minecraft.resources.ResourceLocation;
@@ -25,3 +26,4 @@ public class PatchouliIntegration {
 		PatchouliAPI.get().openBookGUI(id);
 	}
 }
+*/

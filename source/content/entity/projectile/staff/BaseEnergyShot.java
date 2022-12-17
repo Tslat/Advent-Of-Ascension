@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.entity.projectile.staff;
 
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +15,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 
 import javax.annotation.Nullable;
@@ -220,10 +218,5 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 
 	public int getAge() {
 		return age;
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

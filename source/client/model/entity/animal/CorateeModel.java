@@ -1,24 +1,22 @@
 package net.tslat.aoa3.client.model.entity.animal;
 
-import net.tslat.aoa3.client.model.entity.EntityGeoModel;
+import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.content.entity.animal.CorateeEntity;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 
-import javax.annotation.Nullable;
-
-public class CorateeModel extends EntityGeoModel<CorateeEntity> {
+public class CorateeModel extends AoAEntityGeoModel<CorateeEntity> {
 	public CorateeModel() {
 		super("animal/lborean/coratee");
 	}
 
 	@Override
-	public void setLivingAnimations(CorateeEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
-		super.setLivingAnimations(entity, uniqueID, customPredicate);
+	public void setCustomAnimations(CorateeEntity coratee, long instanceId, AnimationState<CorateeEntity> animationState) {
+		super.setCustomAnimations(coratee, instanceId, animationState);
 
-		if (entity.isBaby()) {
-			IBone root = getAnimationProcessor().getBone("bone");
-			IBone head = getAnimationProcessor().getBone("head");
+		if (coratee.isBaby()) {
+			CoreGeoBone root = getAnimationProcessor().getBone("bone");
+			CoreGeoBone head = getAnimationProcessor().getBone("head");
 
 			root.setScaleX(0.5f);
 			root.setScaleY(0.5f);

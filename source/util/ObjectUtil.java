@@ -10,6 +10,7 @@ import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;

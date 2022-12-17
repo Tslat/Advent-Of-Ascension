@@ -1,7 +1,7 @@
 package net.tslat.aoa3.common.registration.worldgen;
 
 import com.google.common.collect.HashBiMap;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -63,7 +63,7 @@ public final class AoADimensions {
 		}
 
 		private DimensionContainer(String dimId, AoADimension dim) {
-			this(ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, dimId)), dim);
+			this(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(AdventOfAscension.MOD_ID, dimId)), dim);
 		}
 
 		@Nullable

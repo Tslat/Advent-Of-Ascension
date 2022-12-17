@@ -10,9 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraftforge.common.Tags;
-import net.tslat.aoa3.common.registration.item.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.SeedDartEntity;
 import net.tslat.aoa3.util.ItemUtil;
@@ -24,7 +23,7 @@ public class DartGun extends BaseGun {
 	int firingDelay;
 
 	public DartGun(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoACreativeModeTabs.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
 	}

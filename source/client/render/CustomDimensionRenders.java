@@ -2,8 +2,7 @@ package net.tslat.aoa3.client.render;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -16,6 +15,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.util.RenderUtil;
+import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
 
@@ -143,11 +143,11 @@ public final class CustomDimensionRenders {
 				poseStack.pushPose();
 
 				switch (i) {
-					case 1 -> poseStack.mulPose(Vector3f.XP.rotationDegrees(90.0F));
-					case 2 -> poseStack.mulPose(Vector3f.XP.rotationDegrees(-90.0F));
-					case 3 -> poseStack.mulPose(Vector3f.XP.rotationDegrees(180.0F));
-					case 4 -> poseStack.mulPose(Vector3f.ZP.rotationDegrees(90.0F));
-					case 5 -> poseStack.mulPose(Vector3f.ZP.rotationDegrees(-90.0F));
+					case 1 -> poseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+					case 2 -> poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
+					case 3 -> poseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
+					case 4 -> poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+					case 5 -> poseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
 					default -> {}
 				}
 

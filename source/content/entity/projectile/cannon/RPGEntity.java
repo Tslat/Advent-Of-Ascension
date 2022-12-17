@@ -1,7 +1,10 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
@@ -16,7 +19,7 @@ import net.tslat.aoa3.library.object.explosion.StandardExplosion;
 
 
 public class RPGEntity extends BaseBullet implements HardProjectile {
-	public static final ExplosionInfo RPG_EXPLOSION = new ExplosionInfo().explodeInOneTick().radius(4).penetration(15).blocksDropChance(0.85f).baseDamage(12).baseKnockbackStrength(2.5f);
+	public static final ExplosionInfo RPG_EXPLOSION = new ExplosionInfo().explodeInOneTick().radius(4).penetration(20).blocksDropChance(0.55f).baseDamage(12).baseKnockbackStrength(2.5f);
 
 	public RPGEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
@@ -35,8 +38,17 @@ public class RPGEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
+		explode(impactLocation);
+	}
+
+	@Override
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
+		explode(impactLocation);
+	}
+
+	protected void explode(Vec3 position) {
 		if (!level.isClientSide)
-			new StandardExplosion(RPG_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), impactLocation).explode();
+			new StandardExplosion(RPG_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), position).explode();
 	}
 }

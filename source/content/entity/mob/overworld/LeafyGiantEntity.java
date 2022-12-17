@@ -18,17 +18,17 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.EntitySpawningUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -171,8 +171,9 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
 	}
 }

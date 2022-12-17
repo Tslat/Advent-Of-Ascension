@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.entity.projectile.mob;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,7 +9,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 
 public abstract class BaseMobProjectile extends ThrowableProjectile {
@@ -105,10 +103,5 @@ public abstract class BaseMobProjectile extends ThrowableProjectile {
 	@Override
 	public boolean canChangeDimensions() {
 		return false;
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

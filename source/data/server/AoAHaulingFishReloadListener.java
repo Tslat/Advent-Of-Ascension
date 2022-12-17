@@ -2,7 +2,7 @@ package net.tslat.aoa3.data.server;
 
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -94,7 +94,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			JsonArray tagArray = json.getAsJsonArray("tags");
 
 			for (JsonElement element : tagArray) {
-				tags.add(TagKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(element.getAsString())));
+				tags.add(TagKey.create(Registries.BIOME, new ResourceLocation(element.getAsString())));
 			}
 		}
 
@@ -102,7 +102,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			JsonArray biomeArray = json.getAsJsonArray("biomes");
 
 			for (JsonElement element : biomeArray) {
-				biomes.add(ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(element.getAsString())));
+				biomes.add(ResourceKey.create(Registries.BIOME, new ResourceLocation(element.getAsString())));
 			}
 		}
 
@@ -206,7 +206,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getLavaEntry(Biome biome) {
-			ResourceKey<Biome> resourceKey = ResourceKey.create(Registry.BIOME_REGISTRY, ForgeRegistries.BIOMES.getKey(biome));
+			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, ForgeRegistries.BIOMES.getKey(biome));
 			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = LAVA_MAP.get(resourceKey);
 
 			if (entry != null)
@@ -221,7 +221,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getWaterEntry(Biome biome) {
-			ResourceKey<Biome> resourceKey = ResourceKey.create(Registry.BIOME_REGISTRY, RegistryUtil.getId(biome));
+			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, RegistryUtil.getId(biome));
 			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = WATER_MAP.get(resourceKey);
 
 			if (entry != null)

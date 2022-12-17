@@ -2,7 +2,7 @@ package net.tslat.aoa3.content.world.spawner;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -22,8 +22,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,7 +54,7 @@ public class PixonSpawner implements CustomSpawner {
 		for (ServerPlayer pl : world.getPlayers(pl -> !pl.isSpectator() && pl.isAlive())) {
 			for (Pair<EntityType<? extends Mob>, BlockPos> spawn : findNearbySpawnPositions(world, pl.blockPosition(), 64, 10)) {
 				BlockPos pos = spawn.getSecond();
-				Mob entity = spawn.getFirst().create(world, null, null, null, pos, MobSpawnType.NATURAL, false, false);
+				Mob entity = spawn.getFirst().create(world, null, null, pos, MobSpawnType.NATURAL, false, false);
 
 				if (entity == null)
 					continue;
@@ -81,7 +81,7 @@ public class PixonSpawner implements CustomSpawner {
 			int z = centerPos.getZ() + RandomUtil.randomNumberBetween(-radius, radius);
 			BlockPos pos = new BlockPos(x, centerPos.getY(), z);
 			Biome biome = world.getBiome(pos).value();
-			Optional<ResourceKey<Biome>> key = world.getServer().registryAccess().registry(Registry.BIOME_REGISTRY).get().getResourceKey(biome);
+			Optional<ResourceKey<Biome>> key = world.getServer().registryAccess().registry(Registries.BIOME).get().getResourceKey(biome);
 
 			if (!key.isPresent() || !SPAWNS.containsKey(key.get()))
 				continue;

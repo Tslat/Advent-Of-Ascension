@@ -27,8 +27,8 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.entity.ai.mob.CompletePanicGoal;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;

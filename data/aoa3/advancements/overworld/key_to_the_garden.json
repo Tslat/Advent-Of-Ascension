@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:overworld/the_fossilised_key",
+  "criteria": {
+    "obtain_gardencia_realmstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:gardencia_realmstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.key_to_the_garden.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:gardencia_realmstone"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.key_to_the_garden.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gardencia_realmstone"
+    ]
+  ]
+}

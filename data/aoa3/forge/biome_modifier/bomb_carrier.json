@@ -13,7 +13,7 @@
     {
       "type": "aoa3:bomb_carrier",
       "maxCount": 1,
-      "minCount": 0,
+      "minCount": -50,
       "weight": 3
     }
   ]

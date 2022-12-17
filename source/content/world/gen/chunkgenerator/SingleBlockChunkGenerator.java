@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.Registry;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
@@ -20,25 +19,23 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
-import net.minecraft.world.level.levelgen.structure.StructureSet;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
 public class SingleBlockChunkGenerator extends ChunkGenerator {
-	public static final Codec<SingleBlockChunkGenerator> CODEC = RecordCodecBuilder.create(codec -> commonCodec(codec).and(codec.group(
+	public static final Codec<SingleBlockChunkGenerator> CODEC = RecordCodecBuilder.create(codec -> codec.group(
 			BlockState.CODEC.fieldOf("block").forGetter(instance -> instance.block),
 			Biome.CODEC.fieldOf("biome").forGetter(instance -> instance.biome)
-	)).apply(codec, SingleBlockChunkGenerator::new));
+	).apply(codec, SingleBlockChunkGenerator::new));
 
 	private final BlockState block;
 	private final Holder<Biome> biome;
 
-	public SingleBlockChunkGenerator(Registry<StructureSet> structureSetsRegistry, BlockState block, Holder<Biome> biome) {
-		super(structureSetsRegistry, Optional.empty(), new FixedBiomeSource(biome));
+	public SingleBlockChunkGenerator(BlockState block, Holder<Biome> biome) {
+		super(new FixedBiomeSource(biome));
 
 		this.block = block;
 		this.biome = biome;

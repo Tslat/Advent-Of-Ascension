@@ -5,7 +5,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.content.entity.ai.ExtendedGoal;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 

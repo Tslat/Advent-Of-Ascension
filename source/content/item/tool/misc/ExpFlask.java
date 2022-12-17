@@ -13,7 +13,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -25,7 +24,7 @@ import java.util.List;
 
 public class ExpFlask extends Item {
 	public ExpFlask() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.TOOLS).stacksTo(1));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override

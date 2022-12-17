@@ -8,8 +8,8 @@ import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 public class AwarenessTabletEntity extends SoulTabletEntity {
 	public AwarenessTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world) {

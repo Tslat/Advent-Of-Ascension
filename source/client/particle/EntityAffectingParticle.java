@@ -5,7 +5,7 @@ import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;

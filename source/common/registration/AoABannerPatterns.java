@@ -1,6 +1,6 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraftforge.registries.RegistryObject;
@@ -25,7 +25,7 @@ public final class AoABannerPatterns {
 	public static final BannerPatternHolder WITHER_RUNE = register("wither_rune", "aoawithr");
 
 	public static BannerPatternHolder register(String id, String pattern) {
-		return new BannerPatternHolder(AoARegistries.BANNER_PATTERNS.register(id, () -> new BannerPattern(pattern)), TagKey.create(Registry.BANNER_PATTERN_REGISTRY, AdventOfAscension.id("pattern_item/" + id)));
+		return new BannerPatternHolder(AoARegistries.BANNER_PATTERNS.register(id, () -> new BannerPattern(pattern)), TagKey.create(Registries.BANNER_PATTERN, AdventOfAscension.id("pattern_item/" + id)));
 	}
 
 	public record BannerPatternHolder(RegistryObject<BannerPattern> pattern, TagKey<BannerPattern> tag) {}

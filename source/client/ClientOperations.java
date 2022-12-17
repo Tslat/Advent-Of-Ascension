@@ -12,6 +12,7 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
@@ -25,7 +26,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
 import net.tslat.aoa3.client.gui.hud.toasts.AbilityUnlockToast;
 import net.tslat.aoa3.client.gui.hud.toasts.LevelRequirementToast;
@@ -150,7 +150,7 @@ public final class ClientOperations {
 	}
 
 	public static void syncPatchouliBooks(ArrayList<ResourceLocation> books) {
-		AdventGuiTabLore.syncBooks(books);
+		//AdventGuiTabLore.syncBooks(books);
 	}
 
 	public static void adjustPlayerMovement(@Nullable Float x, @Nullable Float y, @Nullable Float z, UpdateClientMovementPacket.Operation operation) {
@@ -203,7 +203,7 @@ public final class ClientOperations {
 		double delay = soundBuilder.getScheduledDelay() + (soundBuilder.getApplyTimeDilation() ? Math.sqrt(Minecraft.getInstance().gameRenderer.getMainCamera().getPosition().distanceToSqr(soundBuilder.getLocation())) * 0.5d : 0);
 
 		if (soundBuilder.getCategory() == SoundSource.MUSIC) {
-			Music music = new Music(soundBuilder.getSound(), soundBuilder.getScheduledDelay(), soundBuilder.getScheduledDelay(), true);
+			Music music = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundBuilder.getSound()), soundBuilder.getScheduledDelay(), soundBuilder.getScheduledDelay(), true);
 
 			if (!minecraft.getMusicManager().isPlayingMusic(music))
 				minecraft.getMusicManager().startPlaying(music);
@@ -242,7 +242,7 @@ public final class ClientOperations {
 
 	public static void stopSoundFromBuilder(SoundBuilder soundBuilder) {
 		if (soundBuilder.getCategory() == SoundSource.MUSIC) {
-			Music music = new Music(soundBuilder.getSound(), soundBuilder.getScheduledDelay(), soundBuilder.getScheduledDelay(), true);
+			Music music = new Music(BuiltInRegistries.SOUND_EVENT.wrapAsHolder(soundBuilder.getSound()), soundBuilder.getScheduledDelay(), soundBuilder.getScheduledDelay(), true);
 			MusicManager musicManager = Minecraft.getInstance().getMusicManager();
 
 			if (musicManager.isPlayingMusic(music))

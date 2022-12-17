@@ -2,20 +2,19 @@ package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.network.NetworkHooks;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public abstract class BasicMiscEntity extends Entity implements IAnimatable {
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+public abstract class BasicMiscEntity extends Entity implements GeoEntity {
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public BasicMiscEntity(EntityType<?> entityType, Level level) {
 		super(entityType, level);
@@ -74,15 +73,10 @@ public abstract class BasicMiscEntity extends Entity implements IAnimatable {
 	protected void addAdditionalSaveData(CompoundTag compound) {}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
-	public void registerControllers(AnimationData data) {}
-
-	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

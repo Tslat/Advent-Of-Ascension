@@ -13,8 +13,6 @@ import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.biome.Biome;
@@ -29,7 +27,9 @@ import net.tslat.aoa3.library.object.CachedFunction;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -53,7 +53,7 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	@Override
 	public BrainActivityGroup<ChargerEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>().speedMod(1.125f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
@@ -122,9 +122,9 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkRunSwimIdleController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(AoAAnimations.genericWalkRunSwimIdleController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
 	}
 
 	@Override

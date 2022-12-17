@@ -25,7 +25,6 @@ import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -43,7 +42,7 @@ public class BaseMaul extends Item {
 	protected final double knockback;
 
 	public BaseMaul(float baseDmg, double attackSpeed, double knockback, final int durability) {
-		super(new Item.Properties().durability(durability).tab(AoACreativeModeTabs.MAULS));
+		super(new Item.Properties().durability(durability));
 
 		this.baseDamage = baseDmg;
 		this.attackSpeed = attackSpeed;

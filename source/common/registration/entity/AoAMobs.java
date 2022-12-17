@@ -4,11 +4,12 @@ import net.minecraft.SharedConstants;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.boss.smash.EliteSmashEntity;
 import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
 import net.tslat.aoa3.content.entity.mob.abyss.*;
@@ -128,7 +129,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<EliteSkelemanEntity>> ELITE_SKELEMAN = registerMob("elite_skeleman", EliteSkelemanEntity::new, 0.8f, 1.75f, 11446967, 5133390);
 	//public static final RegistryObject<EntityType<ElusiveEntity>> ELUSIVE = registerMob("elusive", ElusiveEntity::new, 0.7f, 1.625f, 1121630, 1711428);
 	//public static final RegistryObject<EntityType<ElusiveCloneEntity>> ELUSIVE_CLONE = registerMob("elusive_clone", ElusiveCloneEntity::new, 0.7f, 1.625f);
-	public static final RegistryObject<EntityType<EmbrakeEntity>> EMBRAKE = registerMob("embrake", EmbrakeEntity::new, true, 0.75f, 1f, 986632, 5967104);
+	public static final RegistryObject<EntityType<EmbrakeEntity>> EMBRAKE = registerMob("embrake", EmbrakeEntity::new, true, 0.875f, 1.125f, 0x261B18, 0xDD8701);
 	public static final RegistryObject<EntityType<EmperorBeastEntity>> EMPEROR_BEAST = registerMob("emperor_beast", EmperorBeastEntity::new, 1.7f, 6.8f, 3540548, 7480842);
 	public static final RegistryObject<EntityType<EnforcerEntity>> ENFORCER = registerMob("enforcer", EnforcerEntity::new, 0.75f, 2.25f, 1646128, 3949091);
 	public static final RegistryObject<EntityType<EverbeastEntity>> EVERBEAST = registerMob("everbeast", EverbeastEntity::new, 1.4f, 1.75f, 8874602, 8987427);
@@ -222,7 +223,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<MuncherEntity>> MUNCHER = registerMob("muncher", MuncherEntity::new, 1.0f, 0.5625f, 0x1E2A48, 0xC5A1CF);
 	public static final RegistryObject<EntityType<MushroomSpiderEntity>> MUSHROOM_SPIDER = registerMob("mushroom_spider", MushroomSpiderEntity::new, 1.4f, 0.8125f, 1739049, 12827332);
 	public static final RegistryObject<EntityType<NeptunoEntity>> NEPTUNO = registerMob("neptuno", NeptunoEntity::new, 0.85f, 2.875f, 0x1D4D68, 0xEBB332);
-	public static final RegistryObject<EntityType<NethengeicBeastEntity>> NETHENGEIC_BEAST = registerMob("nethengeic_beast", NethengeicBeastEntity::new, true, 1.0f, 1.125f, 3343364, 13834007);
+	public static final RegistryObject<EntityType<NethengeicBeastEntity>> NETHENGEIC_BEAST = registerMob("nethengeic_beast", NethengeicBeastEntity::new, true, 1.25f, 3.75f, 0x1A1513, 0xD43D10);
 	//public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, true, 1.3f, 3.28125f, 5506309, 11385897);
 	public static final RegistryObject<EntityType<NightReaperEntity>> NIGHT_REAPER = registerMob("night_reaper", NightReaperEntity::new, 0.6875f, 2f, 0x2C3137, 0xE7E0D2);
 	public static final RegistryObject<EntityType<NightflyEntity>> NIGHTFLY = registerMob("nightfly", NightflyEntity::new, 0.8125f, 0.8125f, 0x251E2C, 0x64534F);
@@ -364,7 +365,7 @@ public final class AoAMobs {
 			return entityType;
 		});
 
-		AoARegistries.ITEMS.register(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+		AoAItems.registerItem(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties()), () -> CreativeModeTabs.SPAWN_EGGS);
 
 		return registryObject;
 	}

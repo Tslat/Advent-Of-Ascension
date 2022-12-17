@@ -11,7 +11,7 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.event.GlobalEvents;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.CopyOnWriteArrayList;

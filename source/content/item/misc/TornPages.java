@@ -11,9 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import org.jetbrains.annotations.Nullable;
@@ -22,7 +20,7 @@ import java.util.List;
 
 public class TornPages extends Item {
 	public TornPages() {
-		super(new Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1));
+		super(new Properties().stacksTo(1));
 	}
 
 	@Override
@@ -39,15 +37,15 @@ public class TornPages extends Item {
 
 		ResourceLocation bookId = new ResourceLocation(tag.getString("TornPagesEntryId"));
 
-		if (!PatchouliIntegration.isBookLoaded(bookId))
-			return InteractionResultHolder.pass(bookStack);
+		/*if (!PatchouliIntegration.isBookLoaded(bookId))
+			return InteractionResultHolder.pass(bookStack);*/
 
 		if (!world.isClientSide) {
 			PlayerUtil.getAdventPlayer((ServerPlayer)player).addPatchouliBook(bookId);
 		}
 		else {
-			if (IntegrationManager.isPatchouliActive())
-				PatchouliIntegration.openBook(bookId);
+			/*if (IntegrationManager.isPatchouliActive())
+				PatchouliIntegration.openBook(bookId);*/
 		}
 
 		return InteractionResultHolder.success(bookStack);

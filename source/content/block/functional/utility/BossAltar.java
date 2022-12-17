@@ -29,9 +29,9 @@ import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;

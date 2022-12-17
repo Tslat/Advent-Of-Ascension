@@ -20,16 +20,17 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAAnimal extends Animal implements IAnimatable {
+public abstract class AoAAnimal extends Animal implements GeoEntity {
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public AoAAnimal(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
@@ -109,10 +110,10 @@ public abstract class AoAAnimal extends Animal implements IAnimatable {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

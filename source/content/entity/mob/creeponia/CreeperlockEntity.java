@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.CreeperShotEntity;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 

@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.world.genold.feature.features.trees;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
@@ -21,7 +21,7 @@ public class AoATree extends AbstractTreeGrower {
 
 	@Nullable
 	@Override
-	protected Holder<? extends ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource randomIn, boolean largeHive) {
+	protected ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource random, boolean largeHive) {
 		return null;
 	}
 

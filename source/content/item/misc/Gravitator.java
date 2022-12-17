@@ -10,20 +10,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class Gravitator extends Item {
 	public Gravitator() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).durability(1500));
+		super(new Item.Properties().durability(1500));
 	}
 
 	@Override

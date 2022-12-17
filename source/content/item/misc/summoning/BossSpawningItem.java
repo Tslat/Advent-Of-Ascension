@@ -13,12 +13,12 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.item.misc.TooltipItem;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
+import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -26,7 +26,7 @@ import net.tslat.aoa3.util.WorldUtil;
 
 public abstract class BossSpawningItem<T extends Entity> extends TooltipItem implements BossTokenItem {
 	public BossSpawningItem() {
-		this(2, new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.UNCOMMON));
+		this(2, new Item.Properties().rarity(Rarity.UNCOMMON));
 	}
 
 	public BossSpawningItem(int tooltipLines, Properties itemProperties) {
@@ -76,8 +76,14 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 
 		AoAScheduler.scheduleSyncronisedTask(() -> {
 			if (AdvancementUtil.isAdvancementCompleted(pl, AdventOfAscension.id("nowhere/root"))) {
+				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
+				PortalCoordinatesContainer returnLoc = plData.getPortalReturnLocation(nowhere.dimension());
+
 				pl.changeDimension(nowhere, PortalBlock.getTeleporterForWorld(nowhere));
 				pl.connection.teleport(17.5d, 502.5d, 3.5d, 0, pl.getXRot());
+
+				if (returnLoc != null)
+					plData.setPortalReturnLocation(nowhere.dimension(), returnLoc);
 			}
 			else {
 				PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(nowhere.dimension(), new PortalCoordinatesContainer(level.dimension(), pl.getX(), pl.getY(), pl.getZ()));

@@ -5,12 +5,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class StoneGiantRock extends BaseMobProjectile implements IAnimatable {
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+public class StoneGiantRock extends BaseMobProjectile implements GeoEntity {
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public StoneGiantRock(EntityType<? extends ThrowableProjectile> entityType, Level level) {
 		super(entityType, level);
@@ -34,10 +35,10 @@ public class StoneGiantRock extends BaseMobProjectile implements IAnimatable {
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.client.gui.adventgui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,7 +22,6 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.PatchouliBookOpenPacket;
 import net.tslat.aoa3.common.packet.packets.PatchouliGiveBookPacket;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
@@ -224,3 +224,4 @@ public class AdventGuiTabLore extends Screen {
 		public void updateNarration(NarrationElementOutput pNarrationElementOutput) {}
 	}
 }
+*/

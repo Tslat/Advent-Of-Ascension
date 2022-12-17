@@ -15,7 +15,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
 import net.tslat.aoa3.content.entity.mob.nether.NethengeicBeastEntity;
@@ -27,7 +26,7 @@ import java.util.List;
 
 public class NethengeicCallstone extends BossSpawningItem<SmashEntity> {
 	public NethengeicCallstone() {
-		super(0, new Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(Rarity.RARE).durability(3).setNoRepair());
+		super(0, new Properties().rarity(Rarity.RARE).durability(3).setNoRepair());
 	}
 
 	@Override

@@ -1,29 +1,34 @@
 package net.tslat.aoa3.client.model.entity.mob;
 
-import net.tslat.aoa3.client.model.entity.EntityGeoModel;
+import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.content.entity.mob.nether.FlamewalkerEntity;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
+import software.bernie.geckolib.core.animation.AnimationState;
 
-public class FlamewalkerModel extends EntityGeoModel<FlamewalkerEntity> {
-	private IBone rock1;
-	private IBone rock2;
-	private IBone rock3;
-	private IBone rock4;
-	private IBone rock5;
+public class FlamewalkerModel extends AoAEntityGeoModel<FlamewalkerEntity> {
+	private CoreGeoBone rock1;
+	private CoreGeoBone rock2;
+	private CoreGeoBone rock3;
+	private CoreGeoBone rock4;
+	private CoreGeoBone rock5;
 
 	public FlamewalkerModel() {
 		super("mob/nether/flamewalker");
 	}
 
 	@Override
-	public void setLivingAnimations(FlamewalkerEntity entity, Integer uniqueID, @Nullable AnimationEvent customPredicate) {
-		super.setLivingAnimations(entity, uniqueID, customPredicate);
+	public void setCustomAnimations(FlamewalkerEntity flamewalker, long instanceId, AnimationState<FlamewalkerEntity> animationState) {
+		super.setCustomAnimations(flamewalker, instanceId, animationState);
 
-		findBones();
+		if (this.rock1 == null) {
+			this.rock1 = getBone("rock_1").get();
+			this.rock2 = getBone("rock_2").get();
+			this.rock3 = getBone("rock_3").get();
+			this.rock4 = getBone("rock_4").get();
+			this.rock5 = getBone("rock_5").get();
+		}
 
-		if (entity.isOnGround() && (customPredicate == null || customPredicate.isMoving())) {
+		if (flamewalker.isOnGround() && animationState.isMoving()) {
 			this.rock1.setHidden(false);
 			this.rock2.setHidden(false);
 			this.rock3.setHidden(false);
@@ -37,16 +42,5 @@ public class FlamewalkerModel extends EntityGeoModel<FlamewalkerEntity> {
 			this.rock4.setHidden(true);
 			this.rock5.setHidden(true);
 		}
-	}
-
-	protected void findBones() {
-		if (this.rock1 != null)
-			return;
-
-		this.rock1 = getBone("rock_1");
-		this.rock2 = getBone("rock_2");
-		this.rock3 = getBone("rock_3");
-		this.rock4 = getBone("rock_4");
-		this.rock5 = getBone("rock_5");
 	}
 }

@@ -7,6 +7,7 @@ import com.mojang.bridge.game.Language;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
 import net.minecraft.client.renderer.GameRenderer;
@@ -21,8 +22,6 @@ import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.*;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.Optional;
 
 public class AdventMainGui extends Screen implements StatsUpdateListener {	
 	private static final ResourceLocation TITLE = HolidayUtil.isAprilFools() ? new ResourceLocation("aoa3", "textures/gui/adventgui/aoa_title_alt.png") : new ResourceLocation("aoa3", "textures/gui/adventgui/aoa_title.png");
@@ -65,7 +64,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 		addRenderableWidget(new AdventMainGuiTabButton(11, 129, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.stats"), ADVENT_WINDOW_TAB.PLAYER));
 		addRenderableWidget(new AdventMainGuiTabButton(11, 199, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
-		addRenderableWidget(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.lore"), ADVENT_WINDOW_TAB.LORE));
+		//addRenderableWidget(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.lore"), ADVENT_WINDOW_TAB.LORE));
 		addRenderableWidget(new AdventMainGuiTabButton(11, 339, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.leaderboards"), ADVENT_WINDOW_TAB.LEADERBOARDS));
 		addRenderableWidget(new AdventMainGuiTabButton(11, 409, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help"), ADVENT_WINDOW_TAB.HELP));
 
@@ -151,7 +150,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 		private final ADVENT_WINDOW_TAB tabID;
 
 		private AdventMainGuiTabButton(int x, int y, Component buttonText, ADVENT_WINDOW_TAB tab) {
-			super(x, y, buttonWidth, buttonHeight, buttonText, button -> {});
+			super(x, y, buttonWidth, buttonHeight, buttonText, button -> {}, DEFAULT_NARRATION);
 
 			this.tabID = tab;
 
@@ -171,11 +170,11 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 				RenderSystem.setShaderTexture(0, theme.menuButtonTexture());
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-				isHovered = isMouseInRegion(mouseX, mouseY, x, y);
+				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 				int textureX = 0;
 				int textureY = buttonHeight * (tabID == selectedTab ? 0 : (getYImage(this.isHovered) == 2) ? 1 : 2);
 
-				RenderUtil.renderScaledCustomSizedTexture(matrix, scaledRootX + x, scaledRootY + y, textureX, textureY, 180, 60, 180, 60, 180, 180);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, scaledRootX + getX(), scaledRootY + getY(), textureX, textureY, 180, 60, 180, 60, 180, 180);
 
 				int stringColour = ColourUtil.RGB(239, 137, 119);
 
@@ -189,13 +188,22 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 					stringColour = ColourUtil.RGB(247, 239, 0);
 				}
 
-				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), scaledRootX + x + 90, scaledRootY + y + 25, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), scaledRootX + getX() + 90, scaledRootY + getY() + 25, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
 
 				matrix.pushPose();
 				matrix.scale(2f, 2f, 2f);
 
-				if (isHovered)
-					renderToolTip(matrix, (int)(mouseX / SCALE / 2), (int)(mouseY / SCALE / 2));
+				if (isHovered) {
+					if (!active && this.tabID == ADVENT_WINDOW_TAB.LORE) {
+						setTooltip(Tooltip.create(Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.patchouli")));
+					}
+					else {
+						setTooltip(null);
+					}
+				}
+
+				//if (isHovered)
+					//renderToolTip(matrix, (int)(mouseX / SCALE / 2), (int)(mouseY / SCALE / 2));
 
 				matrix.popPose();
 			}
@@ -215,12 +223,6 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 		private boolean isMouseInRegion(int mouseX, int mouseY, int buttonX, int buttonY) {
 			return mouseX >= (int)((scaledRootX + buttonX) * SCALE) && mouseX <= (int)((scaledRootX + buttonX + buttonWidth) * SCALE) && mouseY >= (int)((scaledRootY + buttonY) * SCALE) && mouseY <= (int)((scaledRootY + buttonY + buttonHeight) * SCALE);
-		}
-
-		@Override
-		public void renderToolTip(PoseStack matrix, int mouseX, int mouseY) {
-			if (!active && this.tabID == ADVENT_WINDOW_TAB.LORE)
-				AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.patchouli")), Optional.empty(), mouseX, mouseY, Minecraft.getInstance().font);
 		}
 	}
 
@@ -315,8 +317,8 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 					tabScreen.resize(mc, tabWidth, tabHeight);
 				}
 				case LORE -> {
-					tabScreen = new AdventGuiTabLore();
-					tabScreen.resize(mc, tabWidth, tabHeight);
+					//tabScreen = new AdventGuiTabLore();
+					//tabScreen.resize(mc, tabWidth, tabHeight);
 				}
 				default -> {
 				}

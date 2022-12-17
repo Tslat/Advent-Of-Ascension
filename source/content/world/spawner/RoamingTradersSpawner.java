@@ -15,7 +15,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +41,7 @@ public class RoamingTradersSpawner implements CustomSpawner {
 		for (ServerPlayer pl : world.getPlayers(pl -> !pl.isSpectator() && pl.isAlive())) {
 			for (Pair<EntityType<? extends Mob>, BlockPos> spawn : findNearbySpawnPositions(world, pl.blockPosition(), 64, 1)) {
 				BlockPos pos = spawn.getSecond();
-				Mob entity = spawn.getFirst().create(world, null, null, null, pos, MobSpawnType.NATURAL, false, false);
+				Mob entity = spawn.getFirst().create(world, null, null, pos, MobSpawnType.NATURAL, false, false);
 
 				if (entity == null)
 					continue;

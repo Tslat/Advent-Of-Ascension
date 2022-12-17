@@ -1,9 +1,10 @@
 package net.tslat.aoa3.client.render.tileentity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -34,14 +35,14 @@ public class LunarCreationTableRenderer implements BlockEntityRenderer<LunarCrea
 			combinedLight = LevelRenderer.getLightColor(world, abovePos);
 		}
 		else {
-			combinedLight = 15728880;
+			combinedLight = LightTexture.FULL_BRIGHT;
 		}
 
 		matrix.pushPose();
 
 		matrix.scale(0.25f, 0.25f, 0.25f);
 		matrix.translate(1.25f, 4.25f, 1.25f);
-		matrix.mulPose(Vector3f.YP.rotationDegrees(180f));
+		matrix.mulPose(Axis.YP.rotationDegrees(180f));
 
 		for (int i = 0; i < 9; i++) {
 			ItemStack stack = contents.get(i);

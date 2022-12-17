@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.GameRules;
 import net.tslat.aoa3.content.entity.ai.ExtendedTargetGoal;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import java.util.function.Predicate;
 

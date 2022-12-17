@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.List;
 

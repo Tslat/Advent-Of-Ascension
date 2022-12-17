@@ -36,15 +36,16 @@ import net.tslat.aoa3.content.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.content.entity.ai.trader.TraderPlayerTradeGoal;
 import net.tslat.aoa3.content.entity.ai.trader.TraderRestockGoal;
 import net.tslat.aoa3.util.WorldUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoATrader extends Villager implements IAnimatable {
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+public abstract class AoATrader extends Villager implements GeoEntity {
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public AoATrader(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -371,10 +372,10 @@ public abstract class AoATrader extends Villager implements IAnimatable {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

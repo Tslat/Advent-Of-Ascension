@@ -24,10 +24,10 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.mob.shyrelands.ArcwormEntity;
 import net.tslat.aoa3.content.item.weapon.blaster.ExperimentW801;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;

@@ -11,7 +11,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.cannon.CannonballEntity;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -24,7 +23,7 @@ import java.util.List;
 
 public abstract class BaseCannon extends BaseGun {
 	public BaseCannon(double dmg, int durability, int fireDelayTicks, float recoil) {
-		super(AoACreativeModeTabs.CANNONS, dmg, durability, fireDelayTicks, recoil);
+		super(dmg, durability, fireDelayTicks, recoil);
 	}
 
 	@Override

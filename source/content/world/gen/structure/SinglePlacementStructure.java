@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.world.gen.structure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
-import net.minecraft.data.worldgen.Pools;
 
 import java.util.Optional;
 
@@ -39,8 +38,6 @@ public class SinglePlacementStructure extends AoAStructure {
 
 	@Override
 	public Optional<GenerationStub> findGenerationPoint(GenerationContext genContext) {
-		Pools.forceBootstrap();
-
 		return assembler.addPieces(genContext, this.settings.startPool(), this.settings.startJigsawName(), this.settings.maxPieces(), this.pos, this.settings.startHeightmap(), 128);
 	}
 }

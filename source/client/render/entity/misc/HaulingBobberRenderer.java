@@ -2,9 +2,7 @@ package net.tslat.aoa3.client.render.entity.misc;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -22,6 +20,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RenderNameTagEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.Event;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 public class HaulingBobberRenderer extends FishingHookRenderer {
 	private final ResourceLocation texture;
@@ -49,7 +49,7 @@ public class HaulingBobberRenderer extends FishingHookRenderer {
 		matrix.pushPose();
 		matrix.scale(0.5f, 0.5f, 0.5f);
 		matrix.mulPose(this.entityRenderDispatcher.cameraOrientation());
-		matrix.mulPose(Vector3f.YP.rotationDegrees(180f));
+		matrix.mulPose(Axis.YP.rotationDegrees(180f));
 
 		PoseStack.Pose lastPose = matrix.last();
 		Matrix4f lastPose4f = lastPose.pose();

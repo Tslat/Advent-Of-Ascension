@@ -8,7 +8,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.scheduling.AoAScheduler;
@@ -22,7 +21,7 @@ import java.util.List;
 
 public class EchoGull extends BaseGun {
 	public EchoGull(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoACreativeModeTabs.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(dmg, durability, firingDelayTicks, recoil);
 	}
 
 	@Nullable

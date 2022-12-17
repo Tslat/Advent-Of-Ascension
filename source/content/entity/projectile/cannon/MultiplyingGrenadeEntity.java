@@ -1,8 +1,11 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -50,10 +53,10 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
-		WorldUtil.createExplosion(getOwner(), level, this, 1.5f);
+	public void tick() {
+		super.tick();
 
-		if (!level.isClientSide && getAge() < 10 && shooter instanceof Player && count < 5) {
+		if (!level.isClientSide && count < 5 && getAge() == 10 && shooter instanceof Player) {
 			if (gun != null)
 				gun.doRecoil((ServerPlayer)shooter, new ItemStack(gun), hand);
 
@@ -63,10 +66,19 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 	}
 
 	@Override
-	public void tick() {
-		super.tick();
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
+		explode(impactLocation);
+	}
 
-		if (!level.isClientSide && count < 5 && getAge() == 10 && shooter instanceof Player) {
+	@Override
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
+		explode(impactLocation);
+	}
+
+	protected void explode(Vec3 position) {
+		WorldUtil.createExplosion(getOwner(), level, this, 1.5f);
+
+		if (!level.isClientSide && getAge() < 10 && shooter instanceof Player && count < 5) {
 			if (gun != null)
 				gun.doRecoil((ServerPlayer)shooter, new ItemStack(gun), hand);
 

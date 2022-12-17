@@ -21,9 +21,9 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 public class AcidBlock extends Block {
 	private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 2, 16);

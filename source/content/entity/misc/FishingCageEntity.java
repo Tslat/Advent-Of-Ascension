@@ -5,7 +5,6 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -29,14 +28,13 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.event.AoAPlayerEvents;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -109,11 +107,6 @@ public class FishingCageEntity extends Entity {
 	@Override
 	public boolean canChangeDimensions() {
 		return false;
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override

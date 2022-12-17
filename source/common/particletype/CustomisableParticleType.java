@@ -4,7 +4,6 @@ import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
@@ -82,7 +81,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f %s", Registry.PARTICLE_TYPE.getKey(getType()), scale, ageModifier, red, green, blue, alpha, entitySourceId);
+			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f %s", ForgeRegistries.PARTICLE_TYPES.getKey(getType()), scale, ageModifier, red, green, blue, alpha, entitySourceId);
 		}
 
 		public static final ParticleOptions.Deserializer<Data> DESERIALIZER = new ParticleOptions.Deserializer<Data>() {

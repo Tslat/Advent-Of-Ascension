@@ -1,0 +1,39 @@
+{
+  "parent": "aoa3:overworld/the_journey_begins",
+  "criteria": {
+    "obtain_nowhere_realmstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:nowhere_realmstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.the_key_to_nowhere.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:nowhere_realmstone"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.the_key_to_nowhere.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_nowhere_realmstone"
+    ]
+  ]
+}

@@ -12,7 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.LootUtil;
@@ -22,7 +21,7 @@ import java.util.List;
 
 public class CrystalBox extends Item {
 	public CrystalBox() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS));
+		super(new Item.Properties());
 	}
 
 	@Override

@@ -2,9 +2,7 @@ package net.tslat.aoa3.client.render.entity.projectile.bullets;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
@@ -12,6 +10,8 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.content.entity.projectile.gun.ShoeShotEntity;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
 
@@ -31,8 +31,8 @@ public class ShoeShotRenderer extends EntityRenderer<ShoeShotEntity> {
 		matrix.pushPose();
 		matrix.scale(0.5f, 0.5f, 0.5f);
 		matrix.mulPose(this.entityRenderDispatcher.cameraOrientation());
-		matrix.mulPose(Vector3f.YP.rotationDegrees(180.0F));
-		matrix.mulPose(Vector3f.XP.rotationDegrees(((entity.tickCount + partialTicks) / 0.3f) * (180f / (float)Math.PI)));
+		matrix.mulPose(Axis.YP.rotationDegrees(180.0F));
+		matrix.mulPose(Axis.XP.rotationDegrees(((entity.tickCount + partialTicks) / 0.3f) * (180f / (float)Math.PI)));
 
 		PoseStack.Pose matrixEntry = matrix.last();
 		Matrix4f matrix4f = matrixEntry.pose();

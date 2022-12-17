@@ -12,7 +12,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -23,7 +22,7 @@ import java.util.List;
 
 public class OccultAxe extends BaseAxe {
 	public OccultAxe() {
-		super(AoATiers.OCCULT, 2f, AttackSpeed.AXE, new Properties().durability(AoATiers.OCCULT.getUses()).tab(AoACreativeModeTabs.TOOLS).rarity(Rarity.RARE));
+		super(AoATiers.OCCULT, 2f, AttackSpeed.AXE, new Properties().durability(AoATiers.OCCULT.getUses()).rarity(Rarity.RARE));
 	}
 
 	@Override

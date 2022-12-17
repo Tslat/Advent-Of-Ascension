@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.projectile.staff.UltimatumShotEntity;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class UltimatumShotRenderer extends ParticleProjectileRenderer<UltimatumShotEntity> {
 	public UltimatumShotRenderer(final EntityRendererProvider.Context manager) {

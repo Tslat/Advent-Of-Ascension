@@ -32,16 +32,17 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAttackMob, AoARangedAttacker, Enemy, IAnimatable {
+public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAttackMob, AoARangedAttacker, Enemy, GeoEntity {
 	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAWaterRangedMob.class, EntityDataSerializers.BOOLEAN);
 
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	protected AoAWaterRangedMob(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
@@ -218,10 +219,10 @@ public abstract class AoAWaterRangedMob extends WaterAnimal implements RangedAtt
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {}
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
+	}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
-	}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 }

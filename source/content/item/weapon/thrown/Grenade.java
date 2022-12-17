@@ -33,7 +33,7 @@ public class Grenade extends BaseThrownWeapon {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
-		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(GrenadeEntity.GRENADE_EXPLOSION, flag.isAdvanced(), false)) {
+		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(GrenadeEntity.GRENADE_EXPLOSION, flag.isAdvanced(), true)) {
 			tooltip.add(2, component);
 		}
 	}

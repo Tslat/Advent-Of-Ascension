@@ -11,22 +11,21 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.MetalSlugEntity;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class CoralClogger extends BaseGun {
 	public CoralClogger(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoACreativeModeTabs.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(dmg, durability, firingDelayTicks, recoil);
 	}
 
 	@Nullable

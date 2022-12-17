@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessAttack;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.object.SquareRadius;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 /**
  * Special attack that performs a ground-slam attack that damages nearby standing targets and throws them back.

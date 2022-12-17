@@ -8,10 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoARecipes;
@@ -123,6 +120,11 @@ public class TrophyRecipe implements CraftingRecipe, net.minecraftforge.common.c
 	@Override
 	public RecipeType<?> getType() {
 		return RecipeType.CRAFTING;
+	}
+
+	@Override
+	public CraftingBookCategory category() {
+		return CraftingBookCategory.MISC;
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -140,7 +140,7 @@ public class AoANowhereParkourCourseListener extends SimpleJsonResourceReloadLis
 			if (this.structure != null)
 				return this.structure;
 
-			this.structure = level.registryAccess().registry(Registry.STRUCTURE_REGISTRY).get().get(structureId);
+			this.structure = level.registryAccess().registry(Registries.STRUCTURE).get().get(structureId);
 
 			return this.structure;
 		}

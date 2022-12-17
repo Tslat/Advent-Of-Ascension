@@ -1,8 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.crossbow;
 
 import com.google.common.collect.Lists;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Constants;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -29,10 +28,11 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -41,7 +41,7 @@ public class BaseCrossbow extends CrossbowItem {
 	protected double damage;
 
 	public BaseCrossbow(double damage, int durability) {
-		super(new Item.Properties().tab(AoACreativeModeTabs.CROSSBOWS).durability(durability));
+		super(new Item.Properties().durability(durability));
 
 		this.damage = damage;
 	}
@@ -235,11 +235,10 @@ public class BaseCrossbow extends CrossbowItem {
 				crossbowUser.shootCrossbowProjectile(crossbowUser.getTarget(), crossbowStack, projectile, projectileAngle);
 			}
 			else {
-				Vec3 vecUp = shooter.getUpVector(1.0F);
-				Quaternion angle = new Quaternion(new Vector3f(vecUp), projectileAngle, true);
-				Vector3f lookVec = new Vector3f(shooter.getViewVector(1.0F));
+				Vec3 vecUp = shooter.getUpVector(1);
+				Quaternionf angle = new Quaternionf().setAngleAxis(projectileAngle * Constants.DEG_TO_RAD, vecUp.x, vecUp.y, vecUp.z);
+				Vector3f lookVec = shooter.getViewVector(1).toVector3f().rotate(angle);
 
-				lookVec.transform(angle);
 				projectile.shoot(lookVec.x(), lookVec.y(), lookVec.z(), velocity, inaccuracy);
 			}
 

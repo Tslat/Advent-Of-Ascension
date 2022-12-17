@@ -14,12 +14,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.mob.precasia.*;
 import net.tslat.aoa3.util.BlockUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class ArmyBlock extends BossAltarBlock {
 	public ArmyBlock() {

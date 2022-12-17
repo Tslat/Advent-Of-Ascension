@@ -4,7 +4,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.FireBulletEntity;
@@ -13,7 +12,7 @@ import javax.annotation.Nullable;
 
 public class FlameWrecker extends BaseGun {
 	public FlameWrecker(double dmg, int durability, int firingDelayTicks, float recoil) {
-		super(AoACreativeModeTabs.GUNS, dmg, durability, firingDelayTicks, recoil);
+		super(dmg, durability, firingDelayTicks, recoil);
 	}
 
 	@Nullable

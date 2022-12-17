@@ -4,7 +4,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.armour.*;
 import org.apache.logging.log4j.Level;
@@ -83,7 +83,7 @@ public final class AoAArmour {
 	public static final RegistryObject<SkillHelmet> HELM_OF_THE_WARRIOR = registerArmour("helm_of_the_warrior", () -> new SkillHelmet(AoASkills.INNERVATION));
 
 	private static <T extends Item> RegistryObject<T> registerArmour(String registryName, Supplier<T> item) {
-		return AoARegistries.ITEMS.register(registryName, item);
+		return AoAItems.registerItem(registryName, item, () -> AoACreativeModeTabs.ARMOUR);
 	}
 	
 	private static ArmourSet registerArmourSet(String registryPrefix, Class<? extends AdventArmour> armourClass) {
@@ -104,10 +104,10 @@ public final class AoAArmour {
 
 			try {
 				Constructor<? extends AdventArmour> constructor = armourClass.getConstructor(EquipmentSlot.class);
-				helm = AoARegistries.ITEMS.register(registryPrefix + "_helmet", () -> construct(constructor, EquipmentSlot.HEAD));
-				chest = AoARegistries.ITEMS.register(registryPrefix + "_chestplate", () -> construct(constructor, EquipmentSlot.CHEST));
-				legs = AoARegistries.ITEMS.register(registryPrefix + "_leggings", () -> construct(constructor, EquipmentSlot.LEGS));
-				boot = AoARegistries.ITEMS.register(registryPrefix + "_boots", () -> construct(constructor, EquipmentSlot.FEET));
+				helm = AoAItems.registerItem(registryPrefix + "_helmet", () -> construct(constructor, EquipmentSlot.HEAD), () -> AoACreativeModeTabs.ARMOUR);
+				chest = AoAItems.registerItem(registryPrefix + "_chestplate", () -> construct(constructor, EquipmentSlot.CHEST), () -> AoACreativeModeTabs.ARMOUR);
+				legs = AoAItems.registerItem(registryPrefix + "_leggings", () -> construct(constructor, EquipmentSlot.LEGS), () -> AoACreativeModeTabs.ARMOUR);
+				boot = AoAItems.registerItem(registryPrefix + "_boots", () -> construct(constructor, EquipmentSlot.FEET), () -> AoACreativeModeTabs.ARMOUR);
 			}
 			catch (NoSuchMethodException ex) {
 				Logging.logMessage(Level.ERROR, "Somehow we've managed to throw an error while registering armours. I'm really not even sure how this is possible.", ex);

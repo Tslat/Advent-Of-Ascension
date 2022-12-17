@@ -28,9 +28,9 @@ import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
+import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.common.registration.AoAConfigs;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

@@ -17,7 +17,8 @@ import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.AquaballEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.BloodballEntity;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -98,8 +99,9 @@ public class UndeadTrollEntity extends AoARangedMob<UndeadTrollEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkIdleController(this));
-		animationData.addAnimationController(AoAAnimations.dynamicAttackController(this, event -> getEntityData().get(SHOT_TYPE) == 0 ? AoAAnimations.ATTACK_SHOOT : AoAAnimations.ATTACK_SHOOT_ALTERNATE));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkIdleController(this),
+				AoAAnimations.dynamicAttackController(this, state -> getEntityData().get(SHOT_TYPE) == 0 ? DefaultAnimations.ATTACK_SHOOT : AoAAnimations.ATTACK_SHOOT_ALTERNATE));
 	}
 }

@@ -7,6 +7,7 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,6 +25,8 @@ import static net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING
 import static net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;
 
 public final class AoAEntitySpawnPlacements {
+    private static final SpawnPlacements.Type AMPHIBIOUS = SpawnPlacements.Type.create("AMPHIBIOUS", ((level, pos, entityType) -> NaturalSpawner.canSpawnAtBody((level.getFluidState(pos).isEmpty() ? ON_GROUND : IN_WATER), level, pos, entityType)));
+
     public static void lateInit() {
         Logging.logStatusMessage("Setting entity spawn placements");
 
@@ -39,7 +42,7 @@ public final class AoAEntitySpawnPlacements {
         setSpawnPlacement(AoAMobs.CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
         setSpawnPlacement(AoAMobs.KING_CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
         setSpawnPlacement(AoAMobs.CYCLOPS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 55, Integer.MAX_VALUE));
-        setSpawnPlacement(AoAMobs.CHOMPER.get(), NO_RESTRICTIONS, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
+        setSpawnPlacement(AoAMobs.CHOMPER.get(), AMPHIBIOUS, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.DEFAULT_DAY_MONSTER);
         setSpawnPlacement(AoAMobs.SASQUATCH.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 55, Integer.MAX_VALUE));
         setSpawnPlacement(AoAMobs.BUSH_BABY.get(), ON_GROUND, MOTION_BLOCKING, SpawnPredicates.monsterPredicate(true, 65, Integer.MAX_VALUE));
         setSpawnPlacement(AoAMobs.VOID_WALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(false, Integer.MIN_VALUE, 0));

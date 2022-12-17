@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -28,7 +27,7 @@ public class SkillCrystal extends Item {
 	}
 
 	public SkillCrystal(float denominator, Rarity rarity) {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).rarity(rarity));
+		super(new Item.Properties().rarity(rarity));
 
 		this.denominator = denominator;
 	}

@@ -4,9 +4,9 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
@@ -58,23 +58,23 @@ public record BiomeMatcher(Optional<List<HolderSet<Biome>>> ifAll, Optional<List
 	}
 
 	public static class Builder {
-		final Registry<Biome> biomeRegistry;
+		final HolderLookup.RegistryLookup<Biome> holderLookup;
 
 		List<HolderSet<Biome>> ifAll = new ObjectArrayList<>(1);
 		List<HolderSet<Biome>> ifAny = new ObjectArrayList<>(1);
 		List<HolderSet<Biome>> excluding = new ObjectArrayList<>(1);
 
 		public Builder(ServerLevel level) {
-			this(level.registryAccess());
+			this(level.registryAccess().lookupOrThrow(Registries.BIOME));
 		}
 
-		public Builder(RegistryAccess registryAccess) {
-			this.biomeRegistry = registryAccess.registry(Registry.BIOME_REGISTRY).get();
+		public Builder(HolderLookup.RegistryLookup<Biome> registryLookup) {
+			this.holderLookup = registryLookup;
 		}
 
 		public Builder mustBe(TagKey<Biome>... tags) {
 			for (TagKey<Biome> tag : tags) {
-				ifAll.add(new HolderSet.Named<>(biomeRegistry, tag));
+				ifAll.add(HolderSet.emptyNamed(this.holderLookup, tag));
 			}
 
 			return this;
@@ -82,7 +82,7 @@ public record BiomeMatcher(Optional<List<HolderSet<Biome>>> ifAll, Optional<List
 
 		public Builder mustBe(ResourceKey<Biome>... biomes) {
 			for (ResourceKey<Biome> biome : biomes) {
-				ifAll.add(HolderSet.direct(biomeRegistry.getOrCreateHolderOrThrow(biome)));
+				ifAll.add(HolderSet.direct(Holder.Reference.createStandAlone(this.holderLookup, biome)));
 			}
 
 			return this;
@@ -98,7 +98,7 @@ public record BiomeMatcher(Optional<List<HolderSet<Biome>>> ifAll, Optional<List
 
 		public Builder atLeastOneOf(TagKey<Biome>... tags) {
 			for (TagKey<Biome> tag : tags) {
-				ifAny.add(new HolderSet.Named<>(biomeRegistry, tag));
+				ifAny.add(HolderSet.emptyNamed(this.holderLookup, tag));
 			}
 
 			return this;
@@ -106,7 +106,7 @@ public record BiomeMatcher(Optional<List<HolderSet<Biome>>> ifAll, Optional<List
 
 		public Builder atLeastOneOf(ResourceKey<Biome>... biomes) {
 			for (ResourceKey<Biome> biome : biomes) {
-				ifAny.add(HolderSet.direct(biomeRegistry.getOrCreateHolderOrThrow(biome)));
+				ifAny.add(HolderSet.direct(Holder.Reference.createStandAlone(this.holderLookup, biome)));
 			}
 
 			return this;
@@ -122,7 +122,7 @@ public record BiomeMatcher(Optional<List<HolderSet<Biome>>> ifAll, Optional<List
 
 		public Builder cannotBe(TagKey<Biome>... tags) {
 			for (TagKey<Biome> tag : tags) {
-				excluding.add(new HolderSet.Named<>(biomeRegistry, tag));
+				excluding.add(HolderSet.emptyNamed(this.holderLookup, tag));
 			}
 
 			return this;
@@ -130,7 +130,7 @@ public record BiomeMatcher(Optional<List<HolderSet<Biome>>> ifAll, Optional<List
 
 		public Builder cannotBe(ResourceKey<Biome>... biomes) {
 			for (ResourceKey<Biome> biome : biomes) {
-				excluding.add(HolderSet.direct(biomeRegistry.getOrCreateHolderOrThrow(biome)));
+				excluding.add(HolderSet.direct(Holder.Reference.createStandAlone(this.holderLookup, biome)));
 			}
 
 			return this;

@@ -11,10 +11,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.item.AoAArmour;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 

@@ -1,5 +1,7 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -18,9 +20,9 @@ import net.tslat.aoa3.content.entity.mob.mysterium.RunicGolemEntity;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 public class RunicBombEntity extends BaseBullet implements HardProjectile, ItemSupplier {
 	private float explosionStrength = 1.5f;
@@ -65,7 +67,7 @@ public class RunicBombEntity extends BaseBullet implements HardProjectile, ItemS
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
 		explode();
 	}
 

@@ -18,7 +18,7 @@ import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;

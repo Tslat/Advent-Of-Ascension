@@ -2,7 +2,7 @@ package net.tslat.aoa3.content.block.generation.grass;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -29,7 +29,7 @@ public class UpsideDownGrassBlock extends GrassBlock {
 	public void performBonemeal(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {}
 
 	public boolean hasSufficientLight(BlockState grassState, Level world, BlockPos grassPos) {
-		if (world.dimension() == ResourceKey.create(Registry.DIMENSION_REGISTRY, new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetia")))
+		if (world.dimension() == ResourceKey.create(Registries.DIMENSION, new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetia")))
 			return true;
 
 		BlockPos bottomPos = grassPos.below();

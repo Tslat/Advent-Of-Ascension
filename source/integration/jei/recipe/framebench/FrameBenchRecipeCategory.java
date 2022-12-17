@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -92,3 +93,4 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 				.addIngredients(recipe.getIngredients().get(0));
 	}
 }
+*/

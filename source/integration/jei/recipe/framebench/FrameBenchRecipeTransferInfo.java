@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
 import mezz.jei.api.recipe.RecipeType;
@@ -54,3 +55,4 @@ public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBe
 		return true;
 	}
 }
+*/

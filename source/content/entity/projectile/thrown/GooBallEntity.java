@@ -20,8 +20,8 @@ import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 public class GooBallEntity extends BaseBullet implements HardProjectile, ItemSupplier {
 	public GooBallEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {

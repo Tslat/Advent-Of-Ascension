@@ -1,6 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -11,7 +11,7 @@ import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class SweetSword extends BaseSword {
 	private static void populateCandyList() {
 		candyList.add(new ItemStack(Items.SUGAR, 3));
 
-		ServerLifecycleHooks.getCurrentServer().registryAccess().registry(Registry.ITEM_REGISTRY).get().getTag(AoATags.Items.CANDY).ifPresent(tag -> tag.forEach(item -> candyList.add(new ItemStack(item))));
+		ServerLifecycleHooks.getCurrentServer().registryAccess().registry(Registries.ITEM).get().getTag(AoATags.Items.CANDY).ifPresent(tag -> tag.forEach(item -> candyList.add(new ItemStack(item))));
 
 		populated = true;
 	}

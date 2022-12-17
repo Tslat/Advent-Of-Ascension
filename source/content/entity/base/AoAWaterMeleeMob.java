@@ -29,18 +29,19 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAnimatable {
+public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, GeoEntity {
 	private static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAWaterMeleeMob.class, EntityDataSerializers.INT);
 	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAWaterMeleeMob.class, EntityDataSerializers.BOOLEAN);
 
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
 	protected AoAWaterMeleeMob(EntityType<? extends WaterAnimal> entityType, Level world) {
@@ -202,10 +203,10 @@ public abstract class AoAWaterMeleeMob extends WaterAnimal implements Enemy, IAn
 	}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 }

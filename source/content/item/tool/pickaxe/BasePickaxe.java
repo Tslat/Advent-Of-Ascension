@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.tool.pickaxe;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Tier;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 
 public class BasePickaxe extends PickaxeItem {
@@ -16,7 +15,7 @@ public class BasePickaxe extends PickaxeItem {
 	}
 
 	public BasePickaxe(Tier tier, int damageMod, float digSpeed) {
-		this(tier, damageMod, digSpeed, new Item.Properties().durability(tier.getUses()).tab(AoACreativeModeTabs.TOOLS));
+		this(tier, damageMod, digSpeed, new Item.Properties().durability(tier.getUses()));
 	}
 
 	public BasePickaxe(Tier tier, int damageMod, float digSpeed, Item.Properties properties) {

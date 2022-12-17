@@ -19,8 +19,8 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public final class EntityEvents {
 	public static void preInit() {

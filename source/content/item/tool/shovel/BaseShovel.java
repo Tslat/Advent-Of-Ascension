@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.tool.shovel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ShovelItem;
 import net.minecraft.world.item.Tier;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 
 public class BaseShovel extends ShovelItem {
@@ -16,7 +15,7 @@ public class BaseShovel extends ShovelItem {
 	}
 
 	public BaseShovel(Tier tier, float damageMod, float digSpeed) {
-		this(tier, damageMod, digSpeed, new Properties().durability(tier.getUses()).tab(AoACreativeModeTabs.TOOLS));
+		this(tier, damageMod, digSpeed, new Properties().durability(tier.getUses()));
 	}
 
 	public BaseShovel(Tier tier, float damageMod, float speedMod, Item.Properties properties) {

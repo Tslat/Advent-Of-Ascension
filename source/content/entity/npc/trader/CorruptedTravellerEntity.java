@@ -17,20 +17,21 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.network.NetworkHooks;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
 
-public class CorruptedTravellerEntity extends PathfinderMob implements IAnimatable {
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity {
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public CorruptedTravellerEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
@@ -95,12 +96,12 @@ public class CorruptedTravellerEntity extends PathfinderMob implements IAnimatab
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(AoAAnimations.genericWalkIdleController(this));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(DefaultAnimations.genericWalkIdleController(this));
 	}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return animationFactory;
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

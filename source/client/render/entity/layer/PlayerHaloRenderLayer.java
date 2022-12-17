@@ -9,10 +9,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.EntityModelSet;
 import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
@@ -49,7 +46,7 @@ public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, Pla
 				VertexConsumer vertexConsumer = buffer.getBuffer(TSLAT_HALO_RENDER_TYPE);
 
 				model.root.copyFrom(getParentModel().getHead());
-				model.renderToBuffer(matrixStack, vertexConsumer, 15728880, OverlayTexture.NO_OVERLAY, 0, 0, 0, 0.1f);
+				model.renderToBuffer(matrixStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0, 0, 0, 0.1f);
 
 				return;
 			}
@@ -74,7 +71,7 @@ public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, Pla
 
 			RenderSystem.enableBlend();
 			RenderSystem.disableDepthTest();
-			model.renderToBuffer(matrixStack, vertexConsumer, 15728880, OverlayTexture.NO_OVERLAY, red, green, blue, 0.1f);
+			model.renderToBuffer(matrixStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, red, green, blue, 0.1f);
 			RenderSystem.enableDepthTest();
 			RenderSystem.disableBlend();
 		}

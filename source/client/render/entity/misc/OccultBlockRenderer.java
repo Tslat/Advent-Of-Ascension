@@ -4,8 +4,6 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.datafixers.util.Pair;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -13,11 +11,13 @@ import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraftforge.client.event.RenderLevelLastEvent;
+import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.TierSortingRegistry;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.tslat.aoa3.event.GlobalEvents;
+import org.joml.Matrix4f;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 
 import java.util.ArrayList;
@@ -29,15 +29,15 @@ public final class OccultBlockRenderer {
 	private static final ConcurrentHashMap<Integer, ArrayList<Pair<BlockPos, BlockState>>> occultBlockMap = new ConcurrentHashMap<>();
 
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderLevelLastEvent.class, OccultBlockRenderer::onWorldRender);
+		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderLevelStageEvent.class, OccultBlockRenderer::onWorldRender);
 	}
 
 	public static void addOccultBlocks(int renderUntil, ArrayList<Pair<BlockPos, BlockState>> blocks) {
 		occultBlockMap.put(renderUntil, blocks);
 	}
 
-	private static void onWorldRender(final RenderLevelLastEvent ev) {
-		if (occultBlockMap.isEmpty())
+	private static void onWorldRender(final RenderLevelStageEvent ev) {
+		if (ev.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES || occultBlockMap.isEmpty())
 			return;
 
 		ArrayList<Integer> expiredBlocks = null;

@@ -7,8 +7,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 public class DistortionTabletEntity extends SoulTabletEntity {
 	public DistortionTabletEntity(EntityType<? extends SoulTabletEntity> entityType, Level world) {

@@ -18,20 +18,17 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidType;
-import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.misc.AoAAnimationController;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.entity.brain.task.custom.ChargeAttack;
 import net.tslat.aoa3.content.entity.brain.task.custom.GroundSlamAttack;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -44,19 +41,19 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FleeTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.custom.UnreachableTargetSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.api.util.BrainUtils;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
-import net.tslat.effectslib.api.util.EffectBuilder;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.BrainUtils;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -80,9 +77,9 @@ public class EliteSmashEntity extends AoABoss {
 
 	@Override
 	protected void addSwingData(Int2ObjectOpenHashMap<SwingData> states) {
-		states.put(AXE_SWING_STATE, new SwingData(20, 13, new AnimationBuilder().addAnimation("attack.axe_swing", ILoopType.EDefaultLoopTypes.PLAY_ONCE)));
-		states.put(AXE_SLAM_STATE, new SwingData(20, 17, new AnimationBuilder().addAnimation("attack.axe_slam", ILoopType.EDefaultLoopTypes.PLAY_ONCE)));
-		states.put(CHARGE_STATE, new SwingData(0, 0, new AnimationBuilder().addAnimation("attack.axe_slam", ILoopType.EDefaultLoopTypes.PLAY_ONCE)));
+		states.put(AXE_SWING_STATE, new SwingData(20, 13, RawAnimation.begin().thenPlay("attack.axe_swing")));
+		states.put(AXE_SLAM_STATE, new SwingData(20, 17, RawAnimation.begin().thenPlay("attack.axe_slam")));
+		states.put(CHARGE_STATE, new SwingData(0, 0, RawAnimation.begin().thenPlay("attack.axe_slam")));
 	}
 
 	@Nullable
@@ -134,7 +131,7 @@ public class EliteSmashEntity extends AoABoss {
 			EntityUtil.applyAttributeModifierSafely(this, Attributes.ATTACK_DAMAGE, ENRAGED_DAMAGE_MOD, true);
 			EntityUtil.applyAttributeModifierSafely(this, Attributes.ARMOR, ENRAGED_ARMOUR_MOD, true);
 			EntityUtil.applyAttributeModifierSafely(this, Attributes.ARMOR_TOUGHNESS, ENRAGED_TOUGHNESS_MOD, true);
-			triggerAnim(this, "enrage");
+			triggerAnim("arms_controller", "enrage");
 			new SoundBuilder(AoASounds.ENTITY_SMASH_ENRAGE).followEntity(this).category(SoundSource.HOSTILE).execute();
 			BrainUtils.setForgettableMemory(this, MemoryModuleType.ATTACK_COOLING_DOWN, true, 100);
 			BrainUtils.setForgettableMemory(this, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 100);
@@ -204,7 +201,7 @@ public class EliteSmashEntity extends AoABoss {
 	@Override
 	public BrainActivityGroup<AoABoss> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || target instanceof Player && ((Player)target).isCreative()),
+				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>()
 						.speedMod(1.1f)
 						.startCondition(entity -> !isAttackState(CHARGE_STATE)),
@@ -253,7 +250,7 @@ public class EliteSmashEntity extends AoABoss {
 						new OneRandomBehaviour<>(
 								new CustomBehaviour<>(entity -> {
 									BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 90);
-									triggerAnim(this, "belly_drum");
+									triggerAnim("arms_controller", "belly_drum");
 									new SoundBuilder(AoASounds.ENTITY_SMASH_BELLY_DRUM).isMonster().followEntity(this).execute();
 									EntityUtil.applyPotions(entity,
 											new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 100).level(2),
@@ -267,7 +264,7 @@ public class EliteSmashEntity extends AoABoss {
 										.speedModifier(1.6f)
 										.targetWhenCharging()
 										.whenStarting(entity -> {
-											triggerAnim(this, "charge_up");
+											triggerAnim("arms_controller", "charge_up");
 											setAttackState(CHARGE_STATE);
 										})
 										.whenStopping(entity -> {
@@ -278,50 +275,37 @@ public class EliteSmashEntity extends AoABoss {
 						)));
 	}
 
-	private static final AnimationBuilder WALK_BOTTOM_HALF = new AnimationBuilder().addAnimation("move.walk.bottom_half", ILoopType.EDefaultLoopTypes.LOOP);
-	private static final AnimationBuilder WALK_TOP_HALF = new AnimationBuilder().addAnimation("move.walk.top_half", ILoopType.EDefaultLoopTypes.LOOP);
-	private static final AnimationBuilder RUN_BOTTOM_HALF = new AnimationBuilder().addAnimation("move.run.bottom_half", ILoopType.EDefaultLoopTypes.LOOP);
-	private static final AnimationBuilder RUN_TOP_HALF = new AnimationBuilder().addAnimation("move.run.top_half", ILoopType.EDefaultLoopTypes.LOOP);
-	private static final AnimationBuilder ENRAGE = new AnimationBuilder().addAnimation("misc.enrage", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
-	private static final AnimationBuilder ENRAGED_IDLE = new AnimationBuilder().addAnimation("misc.idle.enraged", ILoopType.EDefaultLoopTypes.LOOP);
-	private static final AnimationBuilder CHARGE_UP = new AnimationBuilder().addAnimation("misc.charge_up", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
-	private static final AnimationBuilder CHARGE = new AnimationBuilder().addAnimation("move.charge", ILoopType.EDefaultLoopTypes.LOOP);
-	private static final AnimationBuilder BELLY_DRUM = new AnimationBuilder().addAnimation("misc.belly_drum", ILoopType.EDefaultLoopTypes.PLAY_ONCE);
+	private static final RawAnimation WALK_BOTTOM_HALF = RawAnimation.begin().thenPlay("move.walk.bottom_half");
+	private static final RawAnimation WALK_TOP_HALF = RawAnimation.begin().thenPlay("move.walk.top_half");
+	private static final RawAnimation RUN_BOTTOM_HALF = RawAnimation.begin().thenPlay("move.run.bottom_half");
+	private static final RawAnimation RUN_TOP_HALF = RawAnimation.begin().thenPlay("move.run.top_half");
+	private static final RawAnimation ENRAGE = RawAnimation.begin().thenPlay("misc.enrage");
+	private static final RawAnimation ENRAGED_IDLE = RawAnimation.begin().thenPlay("misc.idle.enraged");
+	private static final RawAnimation CHARGE_UP = RawAnimation.begin().thenPlay("misc.charge_up");
+	private static final RawAnimation CHARGE = RawAnimation.begin().thenPlay("move.charge");
+	private static final RawAnimation BELLY_DRUM = RawAnimation.begin().thenPlay("misc.belly_drum");
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(new AnimationController<>(this, "legs_controller", 0, event -> {
-			if (event.isMoving()) {
-				event.getController().setAnimation(isSprinting() ? RUN_BOTTOM_HALF : WALK_BOTTOM_HALF);
-
-				return PlayState.CONTINUE;
-			}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(new AnimationController<>(this, "legs_controller", 0, state -> {
+			if (state.isMoving())
+				return state.setAndContinue(isSprinting() ? RUN_BOTTOM_HALF : WALK_BOTTOM_HALF);
 
 			return PlayState.STOP;
 		}));
-		animationData.addAnimationController(new AoAAnimationController<>(this, "arms_controller", 3, event -> {
-			AnimationController<?> controller = event.getController();
+		controllers.add(new AnimationController<>(this, "arms_controller", 3, state -> {
+			if (isAttackState(CHARGE_STATE))
+				return state.setAndContinue(CHARGE);
 
-			if (isAttackState(CHARGE_STATE)) {
-				controller.setAnimation(CHARGE);
+			if (this.swinging)
+				return state.setAndContinue(getSwingAnim(getAttackState()));
 
-				return PlayState.CONTINUE;
-			}
-
-			if (this.swinging) {
-				controller.setAnimation(getSwingAnim(getAttackState()));
-
-				return PlayState.CONTINUE;
-			}
-
-			if (event.isMoving()) {
-				controller.setAnimation(isSprinting() ? RUN_TOP_HALF : WALK_TOP_HALF);
+			if (state.isMoving()) {
+				return state.setAndContinue(isSprinting() ? RUN_TOP_HALF : WALK_TOP_HALF);
 			}
 			else {
-				controller.setAnimation(isEnraged() ? ENRAGED_IDLE : AoAAnimations.IDLE);
+				return state.setAndContinue(isEnraged() ? ENRAGED_IDLE : DefaultAnimations.IDLE);
 			}
-
-			return PlayState.CONTINUE;
-		}).triggerable("enrage", ENRAGE).triggerable("belly_drum", BELLY_DRUM).triggerable("charge_up", CHARGE_UP));
+		}).triggerableAnim("enrage", ENRAGE).triggerableAnim("belly_drum", BELLY_DRUM).triggerableAnim("charge_up", CHARGE_UP));
 	}
 }

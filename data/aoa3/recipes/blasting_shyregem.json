@@ -1,5 +1,6 @@
 {
   "type": "minecraft:blasting",
+  "category": "misc",
   "cookingtime": 100,
   "experience": 5.0,
   "ingredient": {

@@ -11,10 +11,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoARecipes;
 
@@ -26,7 +23,7 @@ public class ToolInteractionRecipe extends CustomRecipe {
 	private final ItemStack result;
 
 	public ToolInteractionRecipe(ResourceLocation id, Ingredient toolItem, ItemStack result, NonNullList<Ingredient> ingredients) {
-		super(id);
+		super(id, CraftingBookCategory.MISC);
 
 		this.ingredients = ingredients;
 		this.toolItem = toolItem;

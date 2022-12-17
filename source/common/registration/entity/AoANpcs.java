@@ -5,11 +5,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.PathfinderMob;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.entity.npc.ambient.*;
 import net.tslat.aoa3.content.entity.npc.banker.*;
@@ -78,7 +79,7 @@ public final class AoANpcs {
 			return entityType;
 		});
 
-		AoARegistries.ITEMS.register(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+		AoAItems.registerItem(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties()), () -> CreativeModeTabs.SPAWN_EGGS);
 
 		return registryObject;
 	}

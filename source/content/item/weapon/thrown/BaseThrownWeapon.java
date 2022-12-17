@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.DamageUtil;
@@ -32,7 +31,7 @@ public abstract class BaseThrownWeapon extends BaseGun {
 	int firingDelay;
 
 	public BaseThrownWeapon(double dmg, int fireDelayTicks) {
-		super(new Item.Properties().tab(AoACreativeModeTabs.THROWN_WEAPONS).stacksTo(64), dmg, fireDelayTicks, 0);
+		super(new Item.Properties().stacksTo(64), dmg, fireDelayTicks, 0);
 
 		this.dmg = dmg;
 		this.firingDelay = fireDelayTicks;

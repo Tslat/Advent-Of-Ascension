@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.entity.misc;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -29,7 +30,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.network.NetworkHooks;
 import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.item.tool.misc.HaulingRod;
@@ -37,9 +37,9 @@ import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.AoAPlayerEvents;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.WorldUtil;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.function.Function;
@@ -448,7 +448,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 				return;
 
 			if (entity instanceof Mob mob) {
-				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, state -> state.getFluidState().getType() == Fluids.WATER);
+				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, (state, statePos) -> state.getFluidState().getType() == Fluids.WATER);
 
 				mob.setPos(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 				mob.getNavigation().createPath(blockPosition(), 0);
@@ -594,12 +594,12 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	@Override
-	public Packet<?> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		double y = getY();
 
 		setPosRaw(getX(), ownerId, getZ());
 
-		Packet<?> spawnPacket = NetworkHooks.getEntitySpawningPacket(this);
+		Packet<ClientGamePacketListener> spawnPacket = super.getAddEntityPacket();
 
 		setPosRaw(getX(), y, getZ());
 

@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.whitewashing;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -61,3 +62,4 @@ public class WhitewashingRecipeCategory implements IRecipeCategory<WhitewashingR
 				.addItemStack(recipe.getResultItem());
 	}
 }
+*/

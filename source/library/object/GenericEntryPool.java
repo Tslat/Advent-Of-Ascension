@@ -2,7 +2,7 @@ package net.tslat.aoa3.library.object;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 import org.apache.commons.lang3.mutable.MutableInt;
 
 import javax.annotation.Nullable;

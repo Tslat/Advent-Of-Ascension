@@ -7,10 +7,10 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.event.GlobalEvents;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import java.util.Arrays;
 

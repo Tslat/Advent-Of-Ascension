@@ -1,5 +1,7 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -31,7 +33,7 @@ public class RockFragmentEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
 		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition())) {
 			int i = 1;
 
@@ -41,9 +43,6 @@ public class RockFragmentEntity extends BaseBullet implements HardProjectile {
 
 			if (blockPosition().getY() - i <= 0)
 				return;
-
-			/*if (world.provider instanceof AoAWorldProvider && !((AoAWorldProvider)world.provider).canPlaceBlock(owner instanceof Player ? (Player)owner : null, getPosition(), Blocks.COBBLESTONE.getDefaultState()))
-				return;*/
 
 			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.COBBLESTONE.defaultBlockState());
 		}

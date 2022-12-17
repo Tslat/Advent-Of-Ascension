@@ -7,6 +7,10 @@ public class MutableSupplier<T> implements Supplier<T> {
 	@Nullable
 	private Supplier<T> supplier;
 
+	public MutableSupplier() {
+		this(null);
+	}
+
 	public MutableSupplier (@Nullable Supplier<T> supplier) {
 		this.supplier = supplier;
 	}

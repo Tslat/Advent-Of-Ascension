@@ -26,9 +26,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.tslat.aoa3.common.registration.item.AoAEnchantments;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
@@ -57,7 +56,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	}
 
 	public BaseBlaster(final double dmg, final int durability, final int fireDelayTicks, final float energyCost) {
-		this(new Item.Properties().tab(AoACreativeModeTabs.BLASTERS).durability(durability), dmg, fireDelayTicks, energyCost);
+		this(new Item.Properties().durability(durability), dmg, fireDelayTicks, energyCost);
 	}
 
 	public double getDamage() {

@@ -19,13 +19,13 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.util.EntityUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -154,7 +154,7 @@ public class CorateeEntity extends AoAAnimal {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericSwimIdleController(this));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(DefaultAnimations.genericSwimIdleController(this));
 	}
 }

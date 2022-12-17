@@ -5,11 +5,12 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.animal.*;
 import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
@@ -101,7 +102,8 @@ public final class AoAAnimals {
 		});
 
 		if (primaryEggColour != -1)
-			AoARegistries.ITEMS.register(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties().tab(CreativeModeTab.TAB_MISC)));
+			AoAItems.registerItem(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties()), () -> CreativeModeTabs.SPAWN_EGGS);
+
 
 		return registryObject;
 	}

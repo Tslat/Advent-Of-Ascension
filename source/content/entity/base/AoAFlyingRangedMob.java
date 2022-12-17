@@ -31,21 +31,22 @@ import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementControll
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.PlayerUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, RangedAttackMob, AoARangedAttacker, IAnimatable {
+public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, RangedAttackMob, AoARangedAttacker, GeoEntity {
 	private static final EntityDataAccessor<Integer> SHOOT_STATE = SynchedEntityData.defineId(AoAFlyingRangedMob.class, EntityDataSerializers.INT);
 	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAFlyingRangedMob.class, EntityDataSerializers.BOOLEAN);
 
 	protected boolean isSlipperyMovement = false;
 
-	private final AnimationFactory animationFactory = new AnimationFactory(this);
+	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
 
 	protected AoAFlyingRangedMob(EntityType<? extends FlyingMob> entityType, Level world) {
@@ -226,10 +227,10 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {}
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
+	}
 
 	@Override
-	public AnimationFactory getFactory() {
-		return this.animationFactory;
-	}
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 }

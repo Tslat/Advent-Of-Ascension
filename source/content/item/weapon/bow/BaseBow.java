@@ -16,10 +16,9 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -29,7 +28,7 @@ public class BaseBow extends BowItem {
 	protected double dmg;
 
 	public BaseBow(double damage, float drawSpeedMultiplier, int durability) {
-		super(new Item.Properties().tab(AoACreativeModeTabs.BOWS).durability(durability));
+		super(new Item.Properties().durability(durability));
 
 		this.dmg = damage;
 		this.drawSpeedMultiplier = drawSpeedMultiplier;

@@ -25,18 +25,17 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-public class DryadSpriteEntity extends AoAAmbientNPC implements IAnimatable {
+public class DryadSpriteEntity extends AoAAmbientNPC {
 	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.OPTIONAL_UUID);
 	private static final EntityDataAccessor<Integer> SUCCESS_TIMER = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.INT);
@@ -174,29 +173,12 @@ public class DryadSpriteEntity extends AoAAmbientNPC implements IAnimatable {
 	}
 
 	@Override
-	public void registerControllers(AnimationData data) {
-		data.addAnimationController(new AnimationController<>(this, "movement", 0, event -> {
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(new AnimationController<>(this, state -> {
 			if (getEntityData().get(SUCCESS_TIMER) >= 0)
-				return PlayState.STOP;
+				return state.setAndContinue(AoAAnimations.SUCCEED);
 
-			if (event.isMoving()) {
-				event.getController().setAnimation(AoAAnimations.WALK);
-			}
-			else {
-				event.getController().setAnimation(AoAAnimations.IDLE);
-			}
-
-			return PlayState.CONTINUE;
-		}));
-
-		data.addAnimationController(new AnimationController<>(this, "collection", 0, event -> {
-			if (getEntityData().get(SUCCESS_TIMER) >= 0) {
-				event.getController().setAnimation(AoAAnimations.SUCCEED);
-
-				return PlayState.CONTINUE;
-			}
-
-			return PlayState.STOP;
+			return state.setAndContinue(state.isMoving() ? DefaultAnimations.WALK : DefaultAnimations.IDLE);
 		}));
 	}
 

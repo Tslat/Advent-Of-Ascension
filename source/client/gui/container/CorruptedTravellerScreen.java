@@ -22,8 +22,8 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;

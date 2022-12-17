@@ -7,7 +7,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ScreenEffectPacket;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;

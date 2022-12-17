@@ -1,20 +1,17 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
 import com.mojang.datafixers.util.Pair;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidType;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -24,26 +21,14 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
-import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class AncientGolemEntity extends AoAMeleeMob<AncientGolemEntity> {
 	public AncientGolemEntity(EntityType<? extends AncientGolemEntity> entityType, Level world) {
 		super(entityType, world);
-	}
-
-	@Override
-	public List<ExtendedSensor<AncientGolemEntity>> getSensors() {
-		return ObjectArrayList.of(
-				new NearbyPlayersSensor<AncientGolemEntity>().setRadius(16),
-				new NearbyLivingEntitySensor<AncientGolemEntity>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
-				new HurtBySensor<>());
 	}
 
 	@Override
@@ -107,8 +92,9 @@ public class AncientGolemEntity extends AoAMeleeMob<AncientGolemEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SWING));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
 	}
 }

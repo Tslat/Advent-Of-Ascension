@@ -1,14 +1,15 @@
 package net.tslat.aoa3.client.gui.adventgui;
 
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
@@ -30,7 +31,12 @@ import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.RenderUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import org.joml.Vector3f;
 
 import java.util.Comparator;
 import java.util.List;
@@ -201,56 +207,54 @@ public class AdventGuiTabPlayer extends Screen {
 		RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf(ClientPlayerDataManager.get().getTotalLevel()), 40, 40, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
 	}
 
-	private void drawPlayerBox(PoseStack matrix, int mouseX, int mouseY, int scale, float partialTicks) {
-		matrix.pushPose();
+	private void drawPlayerBox(PoseStack poseStack, int mouseX, int mouseY, int scale, float partialTicks) {
+		poseStack.pushPose();
 
 		if (entityToRender == null)
 			setRenderEntity();
 
 		Minecraft mc = Minecraft.getInstance();
-		
 		Component name = mc.player.getDisplayName();
+		float mouseAngleX = (float)Math.atan((((AdventMainGui.scaledRootX + 264) - mouseX) / 40.0F));
+		float mouseAngleY = (float)Math.atan((((AdventMainGui.scaledRootY + 465) - 111 - mouseY) / 40.0F));
 
-		matrix.translate(40, 206, 1050.0F);
-		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, name, 0, 206 - 310, 1.0f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-		matrix.scale(0.625f, 0.625f, 0.625f);
-
-		matrix.scale(1.0F, 1.0F, -1.0F);
-
-		matrix.translate(0.0D, 0.0D, 1000.0D);
-		matrix.scale((float)scale, (float)scale, (float)scale);
-
-		Quaternion quaternion = Vector3f.XP.rotationDegrees(180f);
-
-		matrix.mulPose(quaternion);
+		poseStack.translate(40, 206, 1050.0F);
+		RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, name, 0, 206 - 310, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+		poseStack.scale(1.0F, 1.0F, -1.0F);
+		poseStack.translate(0.0D, 0.0D, 1000.0D);
+		poseStack.scale((float)scale * 0.625f, (float)scale * 0.625f, (float)scale * 0.625f);
+		poseStack.mulPose(Axis.XP.rotationDegrees(180f));
 
 		float yawOffset = entityToRender.yBodyRot;
+		float prevYawOffset = entityToRender.yBodyRotO;
 		float rotYaw = entityToRender.getYRot();
 		float rotPitch = entityToRender.getXRot();
 		float prevYawHead = entityToRender.yHeadRotO;
 		float rotYawHead = entityToRender.yHeadRot;
 		entityToRender.yBodyRot = 0;
-		entityToRender.setYRot((float)Math.atan((((AdventMainGui.scaledRootX + 264) - mouseX) / 40.0F)) * 40.0F);
-		entityToRender.setXRot(-((float)Math.atan((((AdventMainGui.scaledRootY + 465) - 111 - mouseY) / 40.0F))) * 20.0F);
+		entityToRender.yBodyRotO = 0;
+		entityToRender.setYRot(mouseAngleX * 40.0F);
+		entityToRender.setXRot(-mouseAngleY * 20.0F);
 		entityToRender.yHeadRot = entityToRender.getYRot();
 		entityToRender.yHeadRotO = entityToRender.getYRot();
 		EntityRenderDispatcher renderManager = Minecraft.getInstance().getEntityRenderDispatcher();
-
-		renderManager.setRenderShadow(false);
-
 		MultiBufferSource.BufferSource renderBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
 
-		renderManager.render(entityToRender, 0, 0, 0, 0, 1, matrix, renderBuffer, 15728880);
-		renderBuffer.endBatch();
+		RenderSystem.setShaderLights(new Vector3f(0.2f, 0.5f, 1).normalize(), new Vector3f(-0.2f, -1, -0.3f));
+		renderManager.setRenderShadow(false);
+		RenderSystem.runAsFancy(() -> renderManager.render(entityToRender, 0, 0, 0, 0, 1, poseStack, renderBuffer, LightTexture.FULL_BRIGHT));
 		renderManager.setRenderShadow(true);
+		renderBuffer.endBatch();
+		Lighting.setupFor3DItems();
 
 		entityToRender.yBodyRot = yawOffset;
+		entityToRender.yBodyRotO = prevYawOffset;
 		entityToRender.setYRot(rotYaw);
 		entityToRender.setXRot(rotPitch);
 		entityToRender.yHeadRotO = prevYawHead;
 		entityToRender.yHeadRot = rotYawHead;
 
-		matrix.popPose();
+		poseStack.popPose();
 	}
 
 	@Override
@@ -453,7 +457,7 @@ public class AdventGuiTabPlayer extends Screen {
 		private final float scale;
 
 		private SkillEntry(AdventGuiTabPlayer tab, float posX, float posY, AoASkillRenderer renderer, AoASkill.Instance instance, float scale) {
-			super((int)posX, (int)posY, renderer.guiRenderHeight(instance), renderer.guiRenderWidth(instance), instance.getName(), button -> {});
+			super((int)posX, (int)posY, renderer.guiRenderHeight(instance), renderer.guiRenderWidth(instance), instance.getName(), button -> {}, DEFAULT_NARRATION);
 
 			this.tab = tab;
 			this.renderer = renderer;
@@ -468,7 +472,7 @@ public class AdventGuiTabPlayer extends Screen {
 
 				poseStack.pushPose();
 				poseStack.scale(2, 2, 1);
-				poseStack.translate(x, y, 0);
+				poseStack.translate(getX(), getY(), 0);
 				renderer.renderInGui(poseStack, skill, partialTicks, mouseX, mouseY, AoAConfigs.CLIENT.hudSkillProgressRenderType.get(), true);
 				poseStack.translate(0, -5, 0);
 				poseStack.scale(0.5f, 0.5f, 1);
@@ -494,16 +498,16 @@ public class AdventGuiTabPlayer extends Screen {
 			if (!active || !visible)
 				return false;
 
-			if (mouseX <= x * scale)
+			if (mouseX <= getX() * scale)
 				return false;
 
-			if (mouseX >= x * scale + width * scale)
+			if (mouseX >= getX() * scale + width * scale)
 				return false;
 
-			if (mouseY <= y * 2 * 1.6f)
+			if (mouseY <= getY() * 2 * 1.6f)
 				return false;
 
-			return mouseY < y * scale + height * scale;
+			return mouseY < getY() * scale + height * scale;
 		}
 	}
 }

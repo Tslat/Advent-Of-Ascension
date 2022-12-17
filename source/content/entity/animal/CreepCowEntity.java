@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
@@ -35,7 +34,7 @@ public class CreepCowEntity extends AoAAnimal {
 			if (!player.isCreative())
 				heldStack.shrink(1);
 
-			WorldUtil.createExplosion(this, level, getX(), getY(), getZ(), 1.5f, Explosion.BlockInteraction.NONE);
+			WorldUtil.createExplosion(this, level, getX(), getY(), getZ(), 1.5f, Level.ExplosionInteraction.NONE);
 
 			if (player instanceof ServerPlayer)
 				AdvancementUtil.completeAdvancement((ServerPlayer)player, new ResourceLocation(AdventOfAscension.MOD_ID, "creeponia/worst_farmer_ever"), "creep_cow_milk");

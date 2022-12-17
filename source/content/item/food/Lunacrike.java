@@ -8,16 +8,15 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class Lunacrike extends Item {
 	public Lunacrike() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.FOOD).food(
+		super(new Item.Properties().food(
 				new FoodProperties.Builder()
 						.nutrition(0)
 						.saturationMod(0)

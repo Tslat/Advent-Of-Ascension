@@ -3,7 +3,6 @@ package net.tslat.aoa3.integration;
 import net.minecraftforge.fml.loading.FMLLoader;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoAConfigs;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 
 public class IntegrationManager {
 	static boolean jeiActive = false;
@@ -97,7 +96,7 @@ public class IntegrationManager {
 		Logging.logStatusMessage("Found Patchouli, Integrating");
 
 		patchouliActive = true;
-		PatchouliIntegration.preInit();
+		//PatchouliIntegration.preInit();
 	}
 
 	private static void tinkersConstructPreInit() {

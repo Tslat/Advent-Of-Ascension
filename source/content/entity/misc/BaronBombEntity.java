@@ -208,10 +208,5 @@ public class BaronBombEntity extends Entity {
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag compound) {}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
-	}
 }
 */

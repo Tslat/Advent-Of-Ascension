@@ -5,13 +5,14 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ParticleEffectPacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 
@@ -40,6 +41,18 @@ public class BurningFlameParticle extends EntityAffectingParticle {
 	@Override
 	public ParticleRenderType getRenderType() {
 		return ParticleRenderType.PARTICLE_SHEET_LIT;
+	}
+
+	@Override
+	public int getLightColor(float partialTick) {
+		float lerpAge = Mth.clamp((this.age + partialTick) / (float)this.lifetime, 0, 1) * 240;
+		int baseColour = super.getLightColor(partialTick);
+		int colourMod = (baseColour & 255) + (int)lerpAge;
+
+		if (colourMod > 240)
+			colourMod = 240;
+
+		return colourMod | (baseColour >> 16 & 255) << 16;
 	}
 
 	@Override

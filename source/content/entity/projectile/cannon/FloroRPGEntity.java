@@ -1,6 +1,9 @@
 package net.tslat.aoa3.content.entity.projectile.cannon;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
@@ -34,7 +37,17 @@ public class FloroRPGEntity extends BaseBullet implements HardProjectile {
 	}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {
-		WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
+		explode(impactLocation);
+	}
+
+	@Override
+	public void doEntityImpact(Entity target, Vec3 impactLocation) {
+		explode(impactLocation);
+	}
+
+	protected void explode(Vec3 position) {
+		if (!level.isClientSide())
+			WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
 	}
 }

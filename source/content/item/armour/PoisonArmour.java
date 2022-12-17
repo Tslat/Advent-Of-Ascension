@@ -9,11 +9,11 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.HashSet;

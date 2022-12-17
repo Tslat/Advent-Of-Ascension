@@ -11,7 +11,7 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public abstract class ScalableModAbility extends AoAAbility.Instance {
 	protected final float baseValue;

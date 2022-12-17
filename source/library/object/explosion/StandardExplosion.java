@@ -16,8 +16,8 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.library.object.AllDirections;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.smartbrainlib.object.SquareRadius;
+import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;

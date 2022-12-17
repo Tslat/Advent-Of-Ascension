@@ -15,11 +15,9 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.data.client.MiscellaneousReloadListener;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -28,7 +26,7 @@ public class WornBook extends WrittenBookItem {
 	private static final CompoundTag contents = new CompoundTag();
 
 	public WornBook() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@OnlyIn(Dist.CLIENT)
@@ -50,7 +48,7 @@ public class WornBook extends WrittenBookItem {
 		}
 		else {
 			if (IntegrationManager.isPatchouliActive()) {
-				PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
+				//PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
 			}
 			else {
 				ClientOperations.displayWornBookGui();

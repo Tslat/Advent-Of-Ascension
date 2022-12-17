@@ -14,7 +14,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -25,7 +24,7 @@ import java.util.List;
 
 public class Rosidons extends Item {
 	public Rosidons() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.FOOD).food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
+		super(new Item.Properties().food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
 	}
 
 	@Override

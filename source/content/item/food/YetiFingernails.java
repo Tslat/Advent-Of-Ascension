@@ -17,7 +17,7 @@ import java.util.List;
 
 public class YetiFingernails extends Item {
 	public YetiFingernails() {
-		super(new Item.Properties().tab(null).rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
+		super(new Item.Properties().rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
 	}
 
 	@Override

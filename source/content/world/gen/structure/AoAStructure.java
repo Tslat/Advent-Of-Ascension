@@ -3,8 +3,11 @@ package net.tslat.aoa3.content.world.gen.structure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.*;
-import net.minecraft.data.worldgen.Pools;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.RegistryCodecs;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.MobCategory;
@@ -51,7 +54,6 @@ public class AoAStructure extends Structure {
 		int startHeight = this.settings.startHeight.sample(genContext.random(), new WorldGenerationContext(genContext.chunkGenerator(), genContext.heightAccessor()));
 		BlockPos blockpos = new BlockPos(chunkpos.getMinBlockX(), startHeight, chunkpos.getMinBlockZ());
 
-		Pools.forceBootstrap();
 		return assembler.addPieces(genContext, this.settings.startPool, this.settings.startJigsawName, this.settings.maxPieces, blockpos, this.settings.startHeightmap, 128);
 	}
 
@@ -62,7 +64,7 @@ public class AoAStructure extends Structure {
 
 	public record Settings(HolderSet<Biome> biomes, Map<MobCategory, StructureSpawnOverride> spawnOverrides, GenerationStep.Decoration step, TerrainAdjustment terrainAdaptation, Holder<StructureTemplatePool> startPool, Optional<ResourceLocation> startJigsawName, int maxPieces, HeightProvider startHeight, Optional<Heightmap.Types> startHeightmap) {
 		private static final MapCodec<Settings> CODEC = RecordCodecBuilder.mapCodec(codec -> codec.group(
-				RegistryCodecs.homogeneousList(Registry.BIOME_REGISTRY).fieldOf("biomes").forGetter(Settings::biomes),
+				RegistryCodecs.homogeneousList(Registries.BIOME).fieldOf("biomes").forGetter(Settings::biomes),
 				Codec.simpleMap(MobCategory.CODEC, StructureSpawnOverride.CODEC, StringRepresentable.keys(MobCategory.values())).fieldOf("spawn_overrides").forGetter(Settings::spawnOverrides),
 				GenerationStep.Decoration.CODEC.optionalFieldOf("step", GenerationStep.Decoration.SURFACE_STRUCTURES).forGetter(Settings::step),
 				TerrainAdjustment.CODEC.optionalFieldOf("terrain_adaptation", TerrainAdjustment.NONE).forGetter(Settings::terrainAdaptation),

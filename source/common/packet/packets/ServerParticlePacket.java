@@ -1,14 +1,15 @@
 package net.tslat.aoa3.common.packet.packets;
 
-import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.network.NetworkEvent;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.aoa3.util.RegistryUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
 import java.util.function.Supplier;
@@ -125,7 +126,7 @@ public class ServerParticlePacket implements AoAPacket {
 
 	private record ParticleData(ParticleOptions particle, double x, double y, double z, double velX, double velY, double velZ, int amount) {
 		private void toBuffer(FriendlyByteBuf buffer) {
-				buffer.writeInt(Registry.PARTICLE_TYPE.getId(this.particle.getType()));
+				buffer.writeResourceLocation(RegistryUtil.getId(this.particle.getType()));
 				this.particle.writeToNetwork(buffer);
 				buffer.writeDouble(this.x);
 				buffer.writeDouble(this.y);
@@ -137,7 +138,7 @@ public class ServerParticlePacket implements AoAPacket {
 			}
 
 			private static ParticleData fromBuffer(FriendlyByteBuf buffer) {
-				ParticleType<? extends ParticleOptions> particle = Registry.PARTICLE_TYPE.byId(buffer.readInt());
+				ParticleType<? extends ParticleOptions> particle = ForgeRegistries.PARTICLE_TYPES.getValue(buffer.readResourceLocation());
 
 				if (particle == null)
 					particle = ParticleTypes.BLOCK_MARKER;

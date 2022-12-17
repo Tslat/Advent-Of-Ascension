@@ -10,7 +10,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -32,8 +32,8 @@ import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.ObjectUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -190,7 +190,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			if (this.structure != null)
 				return this.structure;
 
-			this.structure = level.registryAccess().registry(Registry.STRUCTURE_REGISTRY).get().get(structureId);
+			this.structure = level.registryAccess().registry(Registries.STRUCTURE).get().get(structureId);
 
 			return this.structure;
 		}

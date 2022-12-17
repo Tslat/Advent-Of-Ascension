@@ -1,51 +1,37 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.behavior.StopAttackingIfTargetInvalid;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntitySpawningUtil;
-import net.tslat.aoa3.util.RandomUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
-import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.api.util.BrainUtils;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.BrainUtils;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	private int nextChargerSpawn = 0;
 
 	public KingChargerEntity(EntityType<? extends KingChargerEntity> entityType, Level world) {
 		super(entityType, world);
-	}
-
-	@Override
-	public List<ExtendedSensor<KingChargerEntity>> getSensors() {
-		return ObjectArrayList.of(
-				new NearbyPlayersSensor<KingChargerEntity>().setRadius(10),
-				new NearbyLivingEntitySensor<KingChargerEntity>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
-				new HurtBySensor<>());
 	}
 
 	@Override
@@ -63,7 +49,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	@Override
 	public BrainActivityGroup<KingChargerEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new StopAttackingIfTargetInvalid<>(target -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator()))),
+				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>().speedMod(1.125f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
@@ -107,7 +93,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 			LivingEntity target = getTarget();
 
 			if (target != null) {
-				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.CHARGER.get(), RandomUtil.getRandomPositionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level, 2, state -> true), MobSpawnType.MOB_SUMMONED);
+				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.CHARGER.get(), RandomUtil.getRandomPositionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level, 2, (state, statePos) -> true), MobSpawnType.MOB_SUMMONED);
 
 				if (charger != null)
 					BrainUtils.setTargetOfEntity(charger, target);
@@ -118,8 +104,9 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkRunIdleController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_BITE));
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkRunIdleController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
 	}
 }

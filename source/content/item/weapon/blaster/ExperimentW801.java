@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 
 public class ExperimentW801 extends BaseBlaster {
 	public ExperimentW801(double dmg, int durability, int fireDelayTicks, float energyCost) {
-		super(new Item.Properties().tab(null).durability(durability).rarity(Rarity.EPIC), dmg, fireDelayTicks, energyCost);
+		super(new Item.Properties().durability(durability).rarity(Rarity.EPIC), dmg, fireDelayTicks, energyCost);
 	}
 
 	@Nullable

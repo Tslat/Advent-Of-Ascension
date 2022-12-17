@@ -7,7 +7,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
-import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
@@ -16,11 +15,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 public class AoACommand {
 	protected static final SimpleCommandExceptionType NO_PERMISSION_EXCEPTION = new SimpleCommandExceptionType(Component.translatable("command.context.noPermission"));
 
-	public static void registerSubCommands(CommandDispatcher<CommandSourceStack> dispatcher) {
-		CommandBuildContext buildContext = new CommandBuildContext(RegistryAccess.BUILTIN.get());
-
-		buildContext.missingTagAccessPolicy(CommandBuildContext.MissingTagAccessPolicy.RETURN_EMPTY);
-
+	public static void registerSubCommands(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext buildContext) {
 		LiteralArgumentBuilder<CommandSourceStack> cmd = Commands.literal("aoa")
 				.then(PortalResetCommand.register(dispatcher, buildContext))
 				.then(CheckpointResetCommand.register(dispatcher, buildContext))

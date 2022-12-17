@@ -22,22 +22,22 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.DistExecutor;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.entity.mob.precasia.PrimitiveCarrotopEntity;
 import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 import net.tslat.aoa3.util.*;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlankRealmstone extends Item {
 	public BlankRealmstone() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.MISC_ITEMS).stacksTo(1));
+		super(new Item.Properties().stacksTo(1));
 	}
 
 	@Override

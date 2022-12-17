@@ -10,17 +10,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class NaturalTea extends Item {
 	public NaturalTea() {
-		super(new Item.Properties().tab(AoACreativeModeTabs.FOOD)
+		super(new Item.Properties()
 				.craftRemainder(AoAItems.CUP.get())
 				.stacksTo(1)
 				.food(new FoodProperties.Builder()

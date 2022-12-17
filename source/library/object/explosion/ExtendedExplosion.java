@@ -22,8 +22,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.common.registration.AoAGameRules;
-import net.tslat.aoa3.util.RandomUtil;
-import net.tslat.smartbrainlib.api.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -68,7 +68,7 @@ public class ExtendedExplosion extends Explosion {
 	}
 
 	public ExtendedExplosion(ExplosionInfo explosionInfo, ServerLevel level, @Nullable Entity exploder, @Nullable Entity indirectExploder, @Nullable DamageSource damageSource, double x, double y, double z) {
-		super(level, exploder, damageSource, null, x, y, z, 0, false, BlockInteraction.NONE);
+		super(level, exploder, damageSource, null, x, y, z, 0, false, BlockInteraction.KEEP);
 
 		this.info = explosionInfo;
 		this.origin = getPosition();

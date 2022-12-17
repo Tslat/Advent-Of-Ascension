@@ -2,8 +2,8 @@
   "values": [
     "aoa3:circus_coin",
     "aoa3:copper_coin",
+    "aoa3:silver_coin",
     "aoa3:gold_coin",
-    "aoa3:lunaver_coin",
-    "aoa3:silver_coin"
+    "aoa3:lunaver_coin"
   ]
 }

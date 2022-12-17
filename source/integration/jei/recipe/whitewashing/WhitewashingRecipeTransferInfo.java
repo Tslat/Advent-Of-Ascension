@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei.recipe.whitewashing;
 
 import mezz.jei.api.recipe.RecipeType;
@@ -55,3 +56,4 @@ public class WhitewashingRecipeTransferInfo implements IRecipeTransferInfo<White
 		return inventorySlots;
 	}
 }
+*/

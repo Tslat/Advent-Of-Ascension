@@ -17,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
-import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -28,8 +27,9 @@ import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.RandomUtil;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import net.tslat.smartbrainlib.util.RandomUtil;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
@@ -99,7 +99,6 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements Range
 		return false;
 	}
 
-	@Override
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 
@@ -162,12 +161,6 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements Range
 	}
 
 	@Override
-	public void registerControllers(AnimationData animationData) {
-		animationData.addAnimationController(AoAAnimations.genericWalkController(this));
-		animationData.addAnimationController(AoAAnimations.genericAttackController(this, AoAAnimations.ATTACK_SLAM));
-	}
-
-	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		double baseX = getX();
 		double baseY = getEyeY();
@@ -189,5 +182,12 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements Range
 			playSound(AoASounds.ICE_WIND.get(), 1.5f, 1f);
 
 		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, getEyePosition(), 200);
+	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkController(this),
+				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
 	}
 }

@@ -2,6 +2,7 @@ package net.tslat.aoa3.client.particle;
 
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.LightTexture;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 
 import javax.annotation.Nullable;
@@ -58,7 +59,7 @@ public class OrbParticle extends TextureSheetParticle {
 
 	@Override
 	protected int getLightColor(float partialTick) {
-		return 15728880;
+		return LightTexture.FULL_BRIGHT;
 	}
 
 	public static class Factory implements ParticleProvider<CustomisableParticleType.Data> {

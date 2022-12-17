@@ -1,7 +1,7 @@
 package net.tslat.aoa3.content.entity.projectile.gun;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -189,7 +188,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		if (!bl.getMaterial().blocksMotion())
 			return;
 
-		doImpactEffect(rayTrace.getLocation());
+		doBlockImpact(rayTrace.getLocation(), rayTrace.getDirection(), rayTrace.getBlockPos());
 		discard();
 	}
 
@@ -198,14 +197,10 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		Entity entityResult = rayTrace.getEntity();
 
 		if (entityResult != lastPierceTarget) {
-			if (weapon == null) {
-				doEntityImpact(entityResult, rayTrace.getLocation());
-			}
-			else if (getOwner() instanceof LivingEntity) {
+			if (getOwner() instanceof LivingEntity)
 				weapon.doImpactDamage(entityResult, (LivingEntity)getOwner(), this, rayTrace.getLocation(), dmgMulti);
-			}
 
-			doImpactEffect(rayTrace.getLocation());
+			doEntityImpact(entityResult, rayTrace.getLocation());
 
 			pierceCount--;
 		}
@@ -235,7 +230,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	public void doEntityImpact(Entity target, Vec3 impactLocation) {}
 
 	@Override
-	public void doImpactEffect(Vec3 impactLocation) {}
+	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {}
 
 	@Override
 	protected void defineSynchedData() {}
@@ -329,10 +324,5 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	@Nullable
 	public BaseGun getWeapon() {
 		return weapon;
-	}
-
-	@Override
-	public Packet<?> getAddEntityPacket() {
-		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

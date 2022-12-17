@@ -11,7 +11,7 @@ import net.tslat.aoa3.client.render.entity.projectile.ModelledProjectileRenderer
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.util.ColourUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class FungalRockFragmentRenderer extends ModelledProjectileRenderer<Entity> {
 	public FungalRockFragmentRenderer(final EntityRendererProvider.Context context, final ResourceLocation textureResource) {

@@ -20,7 +20,7 @@ import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.entity.projectile.staff.LyonicShotEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;

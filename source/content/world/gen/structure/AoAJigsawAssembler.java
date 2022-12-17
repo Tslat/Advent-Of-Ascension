@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.Pools;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -99,7 +100,7 @@ public class AoAJigsawAssembler {
 						templateManager,
 						heightAccessor,
 						rand,
-						genContext.registryAccess().registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY),
+						genContext.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL),
 						startPiece,
 						pieces,
 						Shapes.join(
@@ -202,11 +203,11 @@ public class AoAJigsawAssembler {
 					return;
 				}
 
-				ResourceLocation fallbackPoolPath = pool.get().getFallback();
-				Optional<StructureTemplatePool> fallbackPool = this.pools.getOptional(fallbackPoolPath);
+				Holder<StructureTemplatePool> fallback = pool.get().getFallback();
+				StructureTemplatePool fallbackPool = fallback.get();
 
-				if (fallbackPool.isEmpty() || (fallbackPool.get().size() == 0 && !fallbackPoolPath.equals(Pools.EMPTY.location()))) {
-					Logging.logMessage(Level.WARN, "Empty or non-existent fallback pool: " + fallbackPoolPath);
+				if (fallbackPool.size() == 0 && !fallback.is(Pools.EMPTY)) {
+					Logging.logMessage(Level.WARN, "Empty or non-existent fallback pool: " + fallback.unwrapKey().get().location());
 
 					return;
 				}
@@ -228,7 +229,7 @@ public class AoAJigsawAssembler {
 				if (pieceDepth != this.maxPieces)
 					piecesToGen.addAll(pool.get().getShuffledTemplates(this.random));
 
-				piecesToGen.addAll(fallbackPool.get().getShuffledTemplates(this.random));
+				piecesToGen.addAll(fallbackPool.getShuffledTemplates(this.random));
 
 				placeChildren(jigsawBlockInfo, heightAccessor, genState, parentPiece, jigsawFacingPos, placementBounds, jigsawPos.getY() - minY, projection == StructureTemplatePool.Projection.RIGID, minY, pieceDepth, projection, jigsawPos, piecesToGen);
 			}

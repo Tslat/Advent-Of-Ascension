@@ -18,7 +18,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ObjectUtil;
-import net.tslat.aoa3.util.RandomUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 import org.apache.commons.lang3.mutable.MutableFloat;
 import org.jetbrains.annotations.Nullable;
 

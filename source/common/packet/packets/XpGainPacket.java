@@ -4,8 +4,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.client.gui.hud.XpParticlesRenderer;
-import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.function.Supplier;

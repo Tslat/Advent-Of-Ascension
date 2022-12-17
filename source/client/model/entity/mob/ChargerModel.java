@@ -2,10 +2,10 @@ package net.tslat.aoa3.client.model.entity.mob;
 
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.model.entity.EntityGeoModel;
+import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.content.entity.mob.overworld.ChargerEntity;
 
-public class ChargerModel extends EntityGeoModel<ChargerEntity> {
+public class ChargerModel extends AoAEntityGeoModel<ChargerEntity> {
 	public ChargerModel() {
 		super("mob/overworld/charger");
 	}

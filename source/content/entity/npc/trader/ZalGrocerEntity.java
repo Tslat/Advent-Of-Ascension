@@ -7,8 +7,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 

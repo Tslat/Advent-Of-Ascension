@@ -130,14 +130,14 @@ public abstract class MultiBlockCrop extends CropBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(BlockGetter world, BlockPos pos, BlockState state, boolean pIsClient) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClientSide) {
 		if (isMaxAge(state))
 			return false;
 
 		if (!isMaxAgeForPart(state))
 			return true;
 
-		while ((state = world.getBlockState(pos = pos.above())).getBlock() == this) {}
+		while ((state = level.getBlockState(pos = pos.above())).getBlock() == this) {}
 
 		return state.isAir();
 	}

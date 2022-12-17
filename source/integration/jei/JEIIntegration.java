@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.integration.jei;
 
 import mezz.jei.api.IModPlugin;
@@ -156,7 +157,8 @@ public class JEIIntegration implements IModPlugin {
 		if (!IntegrationManager.isJEIActive())
 			return;
 
-		/*if (!IntegrationManager.isTinkersConstructActive()) {
+		*/
+/*if (!IntegrationManager.isTinkersConstructActive()) {
 			Function<FluidUtil.RegisteredFluidHolder, FluidStack> fluidStackGen = holder -> new FluidStack(holder.fluid().get(), FluidAttributes.BUCKET_VOLUME);
 
 			jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.FLUID, Arrays.asList(
@@ -175,6 +177,8 @@ public class JEIIntegration implements IModPlugin {
 					fluidStackGen.apply(TinkersFluids.MOLTEN_SKELETAL),
 					fluidStackGen.apply(TinkersFluids.MOLTEN_VARSIUM),
 					fluidStackGen.apply(TinkersFluids.MOLTEN_CHARGER)));
-		}*/
+		}*//*
+
 	}
 }
+*/
