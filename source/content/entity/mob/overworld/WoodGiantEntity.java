@@ -31,6 +31,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -231,6 +232,6 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(DefaultAnimations.genericWalkController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
 	}
 }

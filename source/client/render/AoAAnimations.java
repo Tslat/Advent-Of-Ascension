@@ -5,6 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.ForgeMod;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
@@ -48,6 +49,17 @@ public final class AoAAnimations {
 			}
 
 			return PlayState.CONTINUE;
+		});
+	}
+
+	public static <T extends LivingEntity & GeoAnimatable> AnimationController<T> genericAttackAnimation(T animatable, RawAnimation attackAnimation) {
+		return new AnimationController<>(animatable, "Attack", 0, state -> {
+			if (animatable.swinging)
+				return state.setAndContinue(attackAnimation);
+
+			state.getController().forceAnimationReset();
+
+			return PlayState.STOP;
 		});
 	}
 

@@ -7,6 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -56,6 +57,6 @@ public class VisulonEntity extends AoAFlyingMeleeMob {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericFlyIdleController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
 	}
 }

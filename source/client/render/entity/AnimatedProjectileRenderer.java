@@ -12,10 +12,8 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.util.RenderUtils;
 
 public class AnimatedProjectileRenderer<T extends Entity & GeoEntity> extends GeoEntityRenderer<T> {
-	public AnimatedProjectileRenderer(EntityRendererProvider.Context renderManager, GeoModel<T> model, float shadowSize) {
+	public AnimatedProjectileRenderer(EntityRendererProvider.Context renderManager, GeoModel<T> model) {
 		super(renderManager, model);
-
-		this.shadowRadius = shadowSize;
 	}
 
 	@Override

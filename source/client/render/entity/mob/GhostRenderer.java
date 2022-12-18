@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.content.entity.mob.overworld.GhostEntity;
 import org.jetbrains.annotations.Nullable;
@@ -12,8 +13,8 @@ import software.bernie.geckolib.core.object.Color;
 import software.bernie.geckolib.model.GeoModel;
 
 public class GhostRenderer extends AnimatedMobRenderer<GhostEntity> {
-	public GhostRenderer(EntityRendererProvider.Context renderManager, GeoModel<GhostEntity> model, float shadowSize) {
-		super(renderManager, model, shadowSize);
+	public GhostRenderer(EntityRendererProvider.Context renderManager) {
+		super(renderManager, new AoAEntityGeoModel<>("mob/overworld/ghost", true), -1);
 	}
 
 	@Override

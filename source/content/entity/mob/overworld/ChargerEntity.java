@@ -124,7 +124,7 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(AoAAnimations.genericWalkRunSwimIdleController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
 	}
 
 	@Override

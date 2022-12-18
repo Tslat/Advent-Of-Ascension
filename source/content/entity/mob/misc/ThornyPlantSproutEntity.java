@@ -117,6 +117,6 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				new AnimationController<>(this, "living", 0, event -> event.setAndContinue(this.tickCount < 20 ? DefaultAnimations.SPAWN : DefaultAnimations.IDLE)),
-				DefaultAnimations.genericAttackAnimation(this, AoAAnimations.ATTACK_SWIPE_RIGHT));
+				AoAAnimations.genericAttackAnimation(this, AoAAnimations.ATTACK_SWIPE_RIGHT));
 	}
 }

@@ -108,7 +108,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM),
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM),
 				AoAAnimations.genericHeldPoseController(this, AoAAnimations.ATTACK_CHARGE, AoAAnimations.ATTACK_CHARGE_END, entity -> entity.getAttackState() == 1));
 	}
 

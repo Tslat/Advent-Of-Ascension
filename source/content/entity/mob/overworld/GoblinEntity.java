@@ -6,6 +6,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -68,6 +69,6 @@ public class GoblinEntity extends AoARangedMob<GoblinEntity> {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkIdleController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SHOOT));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SHOOT));
 	}
 }

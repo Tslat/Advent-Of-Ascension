@@ -5,6 +5,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
@@ -64,6 +65,6 @@ public class NightReaperEntity extends AoAMeleeMob<NightReaperEntity> {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkIdleController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
 	}
 }

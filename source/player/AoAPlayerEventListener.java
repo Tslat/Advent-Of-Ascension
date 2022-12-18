@@ -389,9 +389,9 @@ public interface AoAPlayerEventListener {
 	 *
 	 * Will only trigger if {@link ListenerType#ENTITY_TARGET} is included in the returned event listener types in {@link AoAPlayerEventListener#getListenerTypes}
 	 *
-	 * @param ev {@link LivingSetAttackTargetEvent} event
+	 * @param ev {@link LivingChangeTargetEvent} event
 	 */
-	default void handleEntityTarget(final LivingSetAttackTargetEvent ev) {}
+	default void handleEntityTarget(final LivingChangeTargetEvent ev) {}
 
 	/**
 	 * This method gets triggered when the player is about to be attacked by another entity.

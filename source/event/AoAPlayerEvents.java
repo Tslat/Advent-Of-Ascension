@@ -59,7 +59,7 @@ public final class AoAPlayerEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, HaulingRodPullEntityEvent.class, AoAPlayerEvents::onHaulingRodPullEntity);
 		forgeBus.addListener(EventPriority.NORMAL, false, MobEffectEvent.Added.class, AoAPlayerEvents::onPotionApplied);
 		forgeBus.addListener(EventPriority.NORMAL, false, CriticalHitEvent.class, AoAPlayerEvents::onCriticalHit);
-		forgeBus.addListener(EventPriority.NORMAL, false, LivingSetAttackTargetEvent.class, AoAPlayerEvents::onEntityTargeted);
+		forgeBus.addListener(EventPriority.NORMAL, false, LivingChangeTargetEvent.class, AoAPlayerEvents::onEntityTargeted);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingAttackEvent.class, AoAPlayerEvents::onPreAttack);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingHurtEvent.class, AoAPlayerEvents::onAttack);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingDamageEvent.class, AoAPlayerEvents::onPostAttack);
@@ -264,9 +264,9 @@ public final class AoAPlayerEvents {
 			issueEvent((ServerPlayer)ev.getEntity(), CRITICAL_HIT, listener -> listener.handleCriticalHit(ev));
 	}
 
-	private static void onEntityTargeted(final LivingSetAttackTargetEvent ev) {
-		if (ev.getTarget() instanceof ServerPlayer)
-			issueEvent((ServerPlayer)ev.getTarget(), ENTITY_TARGET, listener -> listener.handleEntityTarget(ev));
+	private static void onEntityTargeted(final LivingChangeTargetEvent ev) {
+		if (ev.getNewTarget() instanceof ServerPlayer)
+			issueEvent((ServerPlayer)ev.getNewTarget(), ENTITY_TARGET, listener -> listener.handleEntityTarget(ev));
 	}
 
 	private static void onPreAttack(final LivingAttackEvent ev) {

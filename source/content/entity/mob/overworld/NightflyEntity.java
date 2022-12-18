@@ -4,6 +4,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -70,6 +71,6 @@ public class NightflyEntity extends AoAFlyingMeleeMob {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericFlyIdleController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_FLYING_ATTACK));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_FLYING_ATTACK));
 	}
 }

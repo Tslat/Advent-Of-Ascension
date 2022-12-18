@@ -1,6 +1,7 @@
 package net.tslat.aoa3.client;
 
 import com.mojang.datafixers.util.Pair;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.PlayerModel;
@@ -40,6 +41,7 @@ import net.tslat.aoa3.client.model.entity.projectile.thrown.*;
 import net.tslat.aoa3.client.model.misc.FishingCageModel;
 import net.tslat.aoa3.client.model.misc.LottoTotemModel;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
+import net.tslat.aoa3.client.render.entity.AnimatedProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.client.render.entity.JankyJankTempRendererToPreventCrashesWhileInDev;
 import net.tslat.aoa3.client.render.entity.animal.BasicLavaFishRenderer;
@@ -68,101 +70,102 @@ import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 import net.tslat.aoa3.util.ColourUtil;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
 @SuppressWarnings({"unused", "rawtypes"})
 public final class AoAEntityRendering {
-	private static final ArrayList<EntityRendererPackage> entityRenderers = new ArrayList<>();
+	private static List<EntityRendererPackage> RENDERER_PACKAGES = new ObjectArrayList<>();
 
-	public static final EntityRendererPackage<?> BLUE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.BLUE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/blue_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> CANDLEFISH = new EntityRendererPackage<>(AoAAnimals.CANDLEFISH).provider(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/candlefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> CHARRED_CHAR = new EntityRendererPackage<>(AoAAnimals.CHARRED_CHAR).provider(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/charred_char")));
-	public static final EntityRendererPackage<?> CHOCAW = new EntityRendererPackage<>(AoAAnimals.CHOCAW).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/chocaw").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> CORATEE = new EntityRendererPackage<>(AoAAnimals.CORATEE).geckolib(new CorateeModel());
-	public static final EntityRendererPackage<?> CRIMSON_SKIPPER = new EntityRendererPackage<>(AoAAnimals.CRIMSON_SKIPPER).provider(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> CRIMSON_STRIPEFISH = new EntityRendererPackage<>(AoAAnimals.CRIMSON_STRIPEFISH).provider(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> DARK_HATCHETFISH = new EntityRendererPackage<>(AoAAnimals.DARK_HATCHETFISH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/dark_hatchetfish")));
-	public static final EntityRendererPackage<?> GREEN_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.GREEN_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/green_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> HYDRONE = new EntityRendererPackage<>(AoAAnimals.HYDRONE).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/hydrone")));
-	public static final EntityRendererPackage<?> IRONBACK = new EntityRendererPackage<>(AoAAnimals.IRONBACK).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/ironback")));
-	public static final EntityRendererPackage<?> JAMFISH = new EntityRendererPackage<>(AoAAnimals.JAMFISH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> PARAPIRANHA = new EntityRendererPackage<>(AoAAnimals.PARAPIRANHA).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/parapiranha")));
-	public static final EntityRendererPackage<?> PEARL_STRIPEFISH = new EntityRendererPackage<>(AoAAnimals.PEARL_STRIPEFISH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/pearl_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> PURPLE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.PURPLE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/purple_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> RAINBOWFISH = new EntityRendererPackage<>(AoAAnimals.RAINBOWFISH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/rainbowfish")));
-	public static final EntityRendererPackage<?> RAZORFISH = new EntityRendererPackage<>(AoAAnimals.RAZORFISH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/razorfish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> RED_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.RED_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/red_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> REEFTOOTH = new EntityRendererPackage<>(AoAAnimals.REEFTOOTH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/reeftooth")));
-	public static final EntityRendererPackage<?> ROCKETFISH = new EntityRendererPackage<>(AoAAnimals.ROCKETFISH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/rocketfish")));
-	public static final EntityRendererPackage<?> SAILBACK = new EntityRendererPackage<>(AoAAnimals.SAILBACK).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/sailback").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> SAPPHIRE_STRIDER = new EntityRendererPackage<>(AoAAnimals.SAPPHIRE_STRIDER).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/sapphire_strider")));
-	public static final EntityRendererPackage<?> SKELECANTH = new EntityRendererPackage<>(AoAAnimals.SKELECANTH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/skelecanth").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> TURQUOISE_STRIPEFISH = new EntityRendererPackage<>(AoAAnimals.TURQUOISE_STRIPEFISH).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/turquoise_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> VIOLET_SKIPPER = new EntityRendererPackage<>(AoAAnimals.VIOLET_SKIPPER).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/violet_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> WHITE_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.WHITE_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/white_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> YELLOW_GEMTRAP = new EntityRendererPackage<>(AoAAnimals.YELLOW_GEMTRAP).provider(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/yellow_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> BLUE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.BLUE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/blue_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> CANDLEFISH = new GeckoLibRendererPackage<>(AoAAnimals.CANDLEFISH).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/candlefish").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> CHARRED_CHAR = new GeckoLibRendererPackage<>(AoAAnimals.CHARRED_CHAR).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/charred_char")));
+	public static final EntityRendererPackage<?> CHOCAW = new GeckoLibRendererPackage<>(AoAAnimals.CHOCAW).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/chocaw").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> CORATEE = new GeckoLibRendererPackage<>(AoAAnimals.CORATEE).model(new CorateeModel());
+	public static final EntityRendererPackage<?> CRIMSON_SKIPPER = new GeckoLibRendererPackage<>(AoAAnimals.CRIMSON_SKIPPER).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> CRIMSON_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.CRIMSON_STRIPEFISH).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> DARK_HATCHETFISH = new GeckoLibRendererPackage<>(AoAAnimals.DARK_HATCHETFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/dark_hatchetfish")));
+	public static final EntityRendererPackage<?> GREEN_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.GREEN_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/green_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> HYDRONE = new GeckoLibRendererPackage<>(AoAAnimals.HYDRONE).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/hydrone")));
+	public static final EntityRendererPackage<?> IRONBACK = new GeckoLibRendererPackage<>(AoAAnimals.IRONBACK).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/ironback")));
+	public static final EntityRendererPackage<?> JAMFISH = new GeckoLibRendererPackage<>(AoAAnimals.JAMFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> PARAPIRANHA = new GeckoLibRendererPackage<>(AoAAnimals.PARAPIRANHA).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/parapiranha")));
+	public static final EntityRendererPackage<?> PEARL_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.PEARL_STRIPEFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/pearl_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> PURPLE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.PURPLE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/purple_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> RAINBOWFISH = new GeckoLibRendererPackage<>(AoAAnimals.RAINBOWFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/rainbowfish")));
+	public static final EntityRendererPackage<?> RAZORFISH = new GeckoLibRendererPackage<>(AoAAnimals.RAZORFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/razorfish").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> RED_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.RED_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/red_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> REEFTOOTH = new GeckoLibRendererPackage<>(AoAAnimals.REEFTOOTH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/reeftooth")));
+	public static final EntityRendererPackage<?> ROCKETFISH = new GeckoLibRendererPackage<>(AoAAnimals.ROCKETFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/rocketfish")));
+	public static final EntityRendererPackage<?> SAILBACK = new GeckoLibRendererPackage<>(AoAAnimals.SAILBACK).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/sailback").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> SAPPHIRE_STRIDER = new GeckoLibRendererPackage<>(AoAAnimals.SAPPHIRE_STRIDER).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/sapphire_strider")));
+	public static final EntityRendererPackage<?> SKELECANTH = new GeckoLibRendererPackage<>(AoAAnimals.SKELECANTH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/skelecanth").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> TURQUOISE_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.TURQUOISE_STRIPEFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/turquoise_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> VIOLET_SKIPPER = new GeckoLibRendererPackage<>(AoAAnimals.VIOLET_SKIPPER).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/violet_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> WHITE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.WHITE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/white_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> YELLOW_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.YELLOW_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/yellow_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
 	public static final EntityRendererPackage<?> SHINY_SQUID = new EntityRendererPackage<>(AoAAnimals.SHINY_SQUID).defineLayer("shiny_squid", ShinySquidModel::createBodyLayer).provider(ShinySquidRenderer::new);
 
-	public static final EntityRendererPackage<?> THORNY_PLANT_SPROUT = new EntityRendererPackage<>(AoAMiscEntities.THORNY_PLANT_SPROUT).geckolib("mob/misc/thorny_plant_sprout");
+	public static final EntityRendererPackage<?> THORNY_PLANT_SPROUT = new GeckoLibRendererPackage<>(AoAMiscEntities.THORNY_PLANT_SPROUT).path("mob/misc/thorny_plant_sprout");
 
-	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new EntityRendererPackage<>(AoAMobs.ANCIENT_GOLEM).geckolib("mob/overworld/ancient_golem");
-	public static final EntityRendererPackage<?> ANGLER = new EntityRendererPackage<>(AoAMobs.ANGLER).geckolib("mob/lborean/angler");
-	public static final EntityRendererPackage<?> ARCBEAST = new EntityRendererPackage<>(AoAMobs.ARCBEAST).geckolib("mob/shyrelands/arcbeast");
-	public static final EntityRendererPackage<?> AROCKNID = new EntityRendererPackage<>(AoAMobs.AROCKNID).geckolib("mob/deeplands/arocknid");
-	public static final EntityRendererPackage<?> BOMB_CARRIER = new EntityRendererPackage<>(AoAMobs.BOMB_CARRIER).geckolib("mob/overworld/bomb_carrier");
-	public static final EntityRendererPackage<?> BONEBACK = new EntityRendererPackage<>(AoAMobs.BONEBACK).geckolib("mob/overworld/boneback");
-	public static final EntityRendererPackage<?> BUGEYE = new EntityRendererPackage<>(AoAMobs.BUGEYE).geckolib("mob/overworld/bugeye");
-	public static final EntityRendererPackage<?> BUSH_BABY = new EntityRendererPackage<>(AoAMobs.BUSH_BABY).geckolib("mob/overworld/bush_baby");
-	public static final EntityRendererPackage<?> CASE_CONSTRUCT = new EntityRendererPackage<>(AoAMobs.CASE_CONSTRUCT).geckolib("mob/deeplands/case_construct");
-	public static final EntityRendererPackage<?> CAVE_CREEP = new EntityRendererPackage<>(AoAMobs.CAVE_CREEP).geckolib("mob/deeplands/cave_creep");
-	public static final EntityRendererPackage<?> CHARGER = new EntityRendererPackage<>(AoAMobs.CHARGER).geckolib(new ChargerModel());
-	public static final EntityRendererPackage<?> CHOMPER = new EntityRendererPackage<>(AoAMobs.CHOMPER).geckolib("mob/overworld/chomper");
-	public static final EntityRendererPackage<?> CYCLOPS = new EntityRendererPackage<>(AoAMobs.CYCLOPS).geckolib("mob/overworld/cyclops");
-	public static final EntityRendererPackage<?> DOUBLER = new EntityRendererPackage<>(AoAMobs.DOUBLER).geckolib("mob/deeplands/doubler");
-	public static final EntityRendererPackage<?> EMBRAKE = new EntityRendererPackage<>(AoAMobs.EMBRAKE).geckolib("mob/nether/embrake", true);
-	public static final EntityRendererPackage<?> FLAMEWALKER = new EntityRendererPackage<>(AoAMobs.FLAMEWALKER).geckolib(new FlamewalkerModel());
-	public static final EntityRendererPackage<?> FLYE = new EntityRendererPackage<>(AoAMobs.FLYE).geckolib("mob/lelyetia/flye");
-	public static final EntityRendererPackage<?> GHOST = new EntityRendererPackage<>(AoAMobs.GHOST).provider(context -> new GhostRenderer(context, new AoAEntityGeoModel("mob/overworld/ghost", true), -1));
-	public static final EntityRendererPackage<?> GOALBY = new EntityRendererPackage<>(AoAMobs.GOALBY).geckolib("mob/overworld/goalby");
-	public static final EntityRendererPackage<?> GOBLIN = new EntityRendererPackage<>(AoAMobs.GOBLIN).geckolib("mob/overworld/goblin");
-	public static final EntityRendererPackage<?> ICE_GIANT = new EntityRendererPackage<>(AoAMobs.ICE_GIANT).geckolib("mob/overworld/ice_giant");
-	public static final EntityRendererPackage<?> KING_CHARGER = new EntityRendererPackage<>(AoAMobs.KING_CHARGER).geckolib("mob/overworld/king_charger");
-	public static final EntityRendererPackage<?> LEAFY_GIANT = new EntityRendererPackage<>(AoAMobs.LEAFY_GIANT).geckolib("mob/overworld/leafy_giant");
-	public static final EntityRendererPackage<?> LITTLE_BAM = new EntityRendererPackage<>(AoAMobs.LITTLE_BAM).geckolib("mob/nether/little_bam");
-	public static final EntityRendererPackage<?> MUCKOPEDE = new EntityRendererPackage<>(AoAMobs.MUCKOPEDE).geckolib("mob/overworld/muckopede");
-	public static final EntityRendererPackage<?> MUNCHER = new EntityRendererPackage<>(AoAMobs.MUNCHER).geckolib("mob/lborean/muncher");
-	public static final EntityRendererPackage<?> NEPTUNO = new EntityRendererPackage<>(AoAMobs.NEPTUNO).geckolib("mob/lborean/neptuno");
-	public static final EntityRendererPackage<?> NETHENGEIC_BEAST = new EntityRendererPackage<>(AoAMobs.NETHENGEIC_BEAST).provider(NethengeicBeastRenderer::new);
-	public static final EntityRendererPackage<?> NIGHTFLY = new EntityRendererPackage<>(AoAMobs.NIGHTFLY).geckolib("mob/overworld/nightfly");
-	public static final EntityRendererPackage<?> NIGHT_REAPER = new EntityRendererPackage<>(AoAMobs.NIGHT_REAPER).geckolib("mob/overworld/night_reaper");
-	public static final EntityRendererPackage<?> NIPPER = new EntityRendererPackage<>(AoAMobs.NIPPER).geckolib("mob/deeplands/nipper");
-	public static final EntityRendererPackage<?> OMNILIGHT = new EntityRendererPackage<>(AoAMobs.OMNILIGHT).geckolib("mob/shyrelands/omnilight");
-	public static final EntityRendererPackage<?> ROCKBITER = new EntityRendererPackage<>(AoAMobs.ROCKBITER).geckolib("mob/deeplands/rockbiter");
-	public static final EntityRendererPackage<?> ROCK_CRAWLER = new EntityRendererPackage<>(AoAMobs.ROCK_CRAWLER).geckolib("mob/deeplands/rock_crawler");
-	public static final EntityRendererPackage<?> ROCK_CRITTER = new EntityRendererPackage<>(AoAMobs.ROCK_CRITTER).geckolib("mob/deeplands/rock_critter");
-	public static final EntityRendererPackage<?> SAND_GIANT = new EntityRendererPackage<>(AoAMobs.SAND_GIANT).geckolib("mob/overworld/sand_giant");
-	public static final EntityRendererPackage<?> SASQUATCH = new EntityRendererPackage<>(AoAMobs.SASQUATCH).geckolib("mob/overworld/sasquatch");
-	public static final EntityRendererPackage<?> SEA_TROLL = new EntityRendererPackage<>(AoAMobs.SEA_TROLL).geckolib("mob/overworld/sea_troll");
-	public static final EntityRendererPackage<?> SEA_VIPER = new EntityRendererPackage<>(AoAMobs.SEA_VIPER).geckolib("mob/lborean/sea_viper");
-	public static final EntityRendererPackage<?> STONE_GIANT = new EntityRendererPackage<>(AoAMobs.STONE_GIANT).geckolib("mob/overworld/stone_giant");
-	public static final EntityRendererPackage<?> SYSKER = new EntityRendererPackage<>(AoAMobs.SYSKER).geckolib("mob/shyrelands/sysker");
-	public static final EntityRendererPackage<?> TRACKER = new EntityRendererPackage<>(AoAMobs.TRACKER).geckolib("mob/lelyetia/tracker");
-	public static final EntityRendererPackage<?> TRICKSTER = new EntityRendererPackage<>(AoAMobs.TRICKSTER).geckolib("mob/overworld/trickster");
-	public static final EntityRendererPackage<?> UNDEAD_TROLL = new EntityRendererPackage<>(AoAMobs.UNDEAD_TROLL).geckolib("mob/mysterium/undead_troll");
-	public static final EntityRendererPackage<?> VISULAR = new EntityRendererPackage<>(AoAMobs.VISULAR).geckolib("mob/lunalus/visular");
-	public static final EntityRendererPackage<?> VISULON = new EntityRendererPackage<>(AoAMobs.VISULON).geckolib("mob/lunalus/visulon");
-	public static final EntityRendererPackage<?> VOID_WALKER = new EntityRendererPackage<>(AoAMobs.VOID_WALKER).geckolib("mob/overworld/void_walker");
-	public static final EntityRendererPackage<?> WOOD_GIANT = new EntityRendererPackage<>(AoAMobs.WOOD_GIANT).geckolib(new WoodGiantModel());
+	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new GeckoLibRendererPackage<>(AoAMobs.ANCIENT_GOLEM).path("mob/overworld/ancient_golem");
+	public static final EntityRendererPackage<?> ANGLER = new GeckoLibRendererPackage<>(AoAMobs.ANGLER).path("mob/lborean/angler");
+	public static final EntityRendererPackage<?> ARCBEAST = new GeckoLibRendererPackage<>(AoAMobs.ARCBEAST).path("mob/shyrelands/arcbeast");
+	public static final EntityRendererPackage<?> AROCKNID = new GeckoLibRendererPackage<>(AoAMobs.AROCKNID).path("mob/deeplands/arocknid");
+	public static final EntityRendererPackage<?> BOMB_CARRIER = new GeckoLibRendererPackage<>(AoAMobs.BOMB_CARRIER).path("mob/overworld/bomb_carrier");
+	public static final EntityRendererPackage<?> BONEBACK = new GeckoLibRendererPackage<>(AoAMobs.BONEBACK).path("mob/overworld/boneback");
+	public static final EntityRendererPackage<?> BUGEYE = new GeckoLibRendererPackage<>(AoAMobs.BUGEYE).path("mob/overworld/bugeye");
+	public static final EntityRendererPackage<?> BUSH_BABY = new GeckoLibRendererPackage<>(AoAMobs.BUSH_BABY).path("mob/overworld/bush_baby");
+	public static final EntityRendererPackage<?> CASE_CONSTRUCT = new GeckoLibRendererPackage<>(AoAMobs.CASE_CONSTRUCT).path("mob/deeplands/case_construct");
+	public static final EntityRendererPackage<?> CAVE_CREEP = new GeckoLibRendererPackage<>(AoAMobs.CAVE_CREEP).path("mob/deeplands/cave_creep");
+	public static final EntityRendererPackage<?> CHARGER = new GeckoLibRendererPackage<>(AoAMobs.CHARGER).model(new ChargerModel());
+	public static final EntityRendererPackage<?> CHOMPER = new GeckoLibRendererPackage<>(AoAMobs.CHOMPER).path("mob/overworld/chomper");
+	public static final EntityRendererPackage<?> CYCLOPS = new GeckoLibRendererPackage<>(AoAMobs.CYCLOPS).path("mob/overworld/cyclops");
+	public static final EntityRendererPackage<?> DOUBLER = new GeckoLibRendererPackage<>(AoAMobs.DOUBLER).path("mob/deeplands/doubler");
+	public static final EntityRendererPackage<?> EMBRAKE = new GeckoLibRendererPackage<>(AoAMobs.EMBRAKE).path("mob/nether/embrake", true).emissive();
+	public static final EntityRendererPackage<?> FLAMEWALKER = new GeckoLibRendererPackage<>(AoAMobs.FLAMEWALKER).model(new FlamewalkerModel()).emissive();
+	public static final EntityRendererPackage<?> FLYE = new GeckoLibRendererPackage<>(AoAMobs.FLYE).path("mob/lelyetia/flye");
+	public static final EntityRendererPackage<?> GHOST = new GeckoLibRendererPackage<>(AoAMobs.GHOST).renderer(GhostRenderer::new);
+	public static final EntityRendererPackage<?> GOALBY = new GeckoLibRendererPackage<>(AoAMobs.GOALBY).path("mob/overworld/goalby");
+	public static final EntityRendererPackage<?> GOBLIN = new GeckoLibRendererPackage<>(AoAMobs.GOBLIN).path("mob/overworld/goblin");
+	public static final EntityRendererPackage<?> ICE_GIANT = new GeckoLibRendererPackage<>(AoAMobs.ICE_GIANT).path("mob/overworld/ice_giant");
+	public static final EntityRendererPackage<?> KING_CHARGER = new GeckoLibRendererPackage<>(AoAMobs.KING_CHARGER).path("mob/overworld/king_charger");
+	public static final EntityRendererPackage<?> LEAFY_GIANT = new GeckoLibRendererPackage<>(AoAMobs.LEAFY_GIANT).path("mob/overworld/leafy_giant");
+	public static final EntityRendererPackage<?> LITTLE_BAM = new GeckoLibRendererPackage<>(AoAMobs.LITTLE_BAM).path("mob/nether/little_bam").emissive();
+	public static final EntityRendererPackage<?> MUCKOPEDE = new GeckoLibRendererPackage<>(AoAMobs.MUCKOPEDE).path("mob/overworld/muckopede");
+	public static final EntityRendererPackage<?> MUNCHER = new GeckoLibRendererPackage<>(AoAMobs.MUNCHER).path("mob/lborean/muncher");
+	public static final EntityRendererPackage<?> NEPTUNO = new GeckoLibRendererPackage<>(AoAMobs.NEPTUNO).path("mob/lborean/neptuno");
+	public static final EntityRendererPackage<?> NETHENGEIC_BEAST = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_BEAST).renderer(NethengeicBeastRenderer::new);
+	public static final EntityRendererPackage<?> NIGHTFLY = new GeckoLibRendererPackage<>(AoAMobs.NIGHTFLY).path("mob/overworld/nightfly");
+	public static final EntityRendererPackage<?> NIGHT_REAPER = new GeckoLibRendererPackage<>(AoAMobs.NIGHT_REAPER).path("mob/overworld/night_reaper");
+	public static final EntityRendererPackage<?> NIPPER = new GeckoLibRendererPackage<>(AoAMobs.NIPPER).path("mob/deeplands/nipper");
+	public static final EntityRendererPackage<?> OMNILIGHT = new GeckoLibRendererPackage<>(AoAMobs.OMNILIGHT).path("mob/shyrelands/omnilight");
+	public static final EntityRendererPackage<?> ROCKBITER = new GeckoLibRendererPackage<>(AoAMobs.ROCKBITER).path("mob/deeplands/rockbiter");
+	public static final EntityRendererPackage<?> ROCK_CRAWLER = new GeckoLibRendererPackage<>(AoAMobs.ROCK_CRAWLER).path("mob/deeplands/rock_crawler");
+	public static final EntityRendererPackage<?> ROCK_CRITTER = new GeckoLibRendererPackage<>(AoAMobs.ROCK_CRITTER).path("mob/deeplands/rock_critter");
+	public static final EntityRendererPackage<?> SAND_GIANT = new GeckoLibRendererPackage<>(AoAMobs.SAND_GIANT).path("mob/overworld/sand_giant");
+	public static final EntityRendererPackage<?> SASQUATCH = new GeckoLibRendererPackage<>(AoAMobs.SASQUATCH).path("mob/overworld/sasquatch");
+	public static final EntityRendererPackage<?> SEA_TROLL = new GeckoLibRendererPackage<>(AoAMobs.SEA_TROLL).path("mob/overworld/sea_troll");
+	public static final EntityRendererPackage<?> SEA_VIPER = new GeckoLibRendererPackage<>(AoAMobs.SEA_VIPER).path("mob/lborean/sea_viper");
+	public static final EntityRendererPackage<?> STONE_GIANT = new GeckoLibRendererPackage<>(AoAMobs.STONE_GIANT).path("mob/overworld/stone_giant");
+	public static final EntityRendererPackage<?> SYSKER = new GeckoLibRendererPackage<>(AoAMobs.SYSKER).path("mob/shyrelands/sysker");
+	public static final EntityRendererPackage<?> TRACKER = new GeckoLibRendererPackage<>(AoAMobs.TRACKER).path("mob/lelyetia/tracker");
+	public static final EntityRendererPackage<?> TRICKSTER = new GeckoLibRendererPackage<>(AoAMobs.TRICKSTER).path("mob/overworld/trickster");
+	public static final EntityRendererPackage<?> UNDEAD_TROLL = new GeckoLibRendererPackage<>(AoAMobs.UNDEAD_TROLL).path("mob/mysterium/undead_troll");
+	public static final EntityRendererPackage<?> VISULAR = new GeckoLibRendererPackage<>(AoAMobs.VISULAR).path("mob/lunalus/visular");
+	public static final EntityRendererPackage<?> VISULON = new GeckoLibRendererPackage<>(AoAMobs.VISULON).path("mob/lunalus/visulon");
+	public static final EntityRendererPackage<?> VOID_WALKER = new GeckoLibRendererPackage<>(AoAMobs.VOID_WALKER).path("mob/overworld/void_walker");
+	public static final EntityRendererPackage<?> WOOD_GIANT = new GeckoLibRendererPackage<>(AoAMobs.WOOD_GIANT).model(new WoodGiantModel());
 
-	public static final EntityRendererPackage<?> SMASH = new EntityRendererPackage<>(AoAMobs.SMASH).geckolib(new SmashModel());
-	public static final EntityRendererPackage<?> ELITE_SMASH = new EntityRendererPackage<>(AoAMobs.ELITE_SMASH).geckolib(new EliteSmashModel());
+	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMobs.SMASH).model(new SmashModel());
+	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMobs.ELITE_SMASH).model(new EliteSmashModel());
 
 	//public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
 	public static final EntityRendererPackage<?> CREEP_BANKER = new EntityRendererPackage<>(AoANpcs.CREEP_BANKER).defineLayer("creep_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/creep_banker.png");
@@ -174,15 +177,15 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SHYRE_ARCHER = new EntityRendererPackage<>(AoANpcs.SHYRE_ARCHER).defineLayer("shyre_archer", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/shyre_archer.png");
 	public static final EntityRendererPackage<?> SHYRE_BANKER = new EntityRendererPackage<>(AoANpcs.SHYRE_BANKER).defineLayer("shyre_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/shyre_banker.png");
 	public static final EntityRendererPackage<?> TOKEN_COLLECTOR = new EntityRendererPackage<>(AoANpcs.TOKEN_COLLECTOR).defineLayer("token_collector", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/token_collector.png");
-	public static final EntityRendererPackage<?> TROLL_TRADER = new EntityRendererPackage<>(AoANpcs.TROLL_TRADER).geckolib("npc/trader/troll_trader");
-	public static final EntityRendererPackage<?> SKILL_MASTER = new EntityRendererPackage<>(AoANpcs.SKILL_MASTER).geckolib("npc/trader/skill_master");
-	public static final EntityRendererPackage<?> CORRUPTED_TRAVELLER = new EntityRendererPackage<>(AoANpcs.CORRUPTED_TRAVELLER).geckolib("npc/trader/corrupted_traveller", true, true);
-	public static final EntityRendererPackage<?> STORE_KEEPER = new EntityRendererPackage<>(AoANpcs.STORE_KEEPER).geckolib("npc/trader/store_keeper");
+	public static final EntityRendererPackage<?> TROLL_TRADER = new GeckoLibRendererPackage<>(AoANpcs.TROLL_TRADER).path("npc/trader/troll_trader");
+	public static final EntityRendererPackage<?> SKILL_MASTER = new GeckoLibRendererPackage<>(AoANpcs.SKILL_MASTER).path("npc/trader/skill_master");
+	public static final EntityRendererPackage<?> CORRUPTED_TRAVELLER = new GeckoLibRendererPackage<>(AoANpcs.CORRUPTED_TRAVELLER).path("npc/trader/corrupted_traveller", true).transparent();
+	public static final EntityRendererPackage<?> STORE_KEEPER = new GeckoLibRendererPackage<>(AoANpcs.STORE_KEEPER).path("npc/trader/store_keeper");
 
-	public static final EntityRendererPackage<?> LOTTOMAN = new EntityRendererPackage<>(AoANpcs.LOTTOMAN).geckolib("npc/trader/lottoman", true);
-	public static final EntityRendererPackage<?> UNDEAD_HERALD = new EntityRendererPackage<>(AoANpcs.UNDEAD_HERALD).geckolib("npc/trader/undead_herald", true);
+	public static final EntityRendererPackage<?> LOTTOMAN = new GeckoLibRendererPackage<>(AoANpcs.LOTTOMAN).path("npc/trader/lottoman", true);
+	public static final EntityRendererPackage<?> UNDEAD_HERALD = new GeckoLibRendererPackage<>(AoANpcs.UNDEAD_HERALD).path("npc/trader/undead_herald", true);
 
-	public static final EntityRendererPackage<?> DRYAD_SPRITE = new EntityRendererPackage<>(AoANpcs.DRYAD_SPRITE).geckolib(new DryadSpriteModel());
+	public static final EntityRendererPackage<?> DRYAD_SPRITE = new GeckoLibRendererPackage<>(AoANpcs.DRYAD_SPRITE).model(new DryadSpriteModel());
 
 	public static final EntityRendererPackage<?> GRENADE = new EntityRendererPackage<>(AoAProjectiles.GRENADE).defineLayer("grenade", GrenadeModel::createLayerDefinition).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/grenade.png")));
 	public static final EntityRendererPackage<?> RUNIC_BOMB = new EntityRendererPackage<>(AoAProjectiles.RUNIC_BOMB).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GRENADE.getMainLayerLocation(), GrenadeModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/runic_bomb.png")));
@@ -191,7 +194,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SLICE_STAR = new EntityRendererPackage<>(AoAProjectiles.SLICE_STAR).defineLayer("slice_star", SliceStarModel::createLayerDefinition).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.SLICE_STAR.getMainLayerLocation(), SliceStarModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/slice_star.png")));
 	public static final EntityRendererPackage<?> GOO_BALL = new EntityRendererPackage<>(AoAProjectiles.GOO_BALL).defineLayer("goo_ball", GooBallModel::createLayerDefinition).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.GOO_BALL.getMainLayerLocation(), GooBallModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/goo_ball.png")));
 	public static final EntityRendererPackage<?> HELLFIRE = new EntityRendererPackage<>(AoAProjectiles.HELLFIRE).defineLayer("hellfire", HellfireModel::createLayerDefinition).provider(context -> new ModelledProjectileRenderer<>(context, AoAEntityRendering.HELLFIRE.getMainLayerLocation(), HellfireModel::new, AdventOfAscension.id("textures/entity/projectile/thrown/hellfire.png")));
-	public static final EntityRendererPackage<?> HARDENED_PARAPIRANHA = new EntityRendererPackage<>(AoAProjectiles.HARDENED_PARAPIRANHA).geckolibNonLiving("projectile/thrown/hardened_parapiranha");
+	public static final EntityRendererPackage<?> HARDENED_PARAPIRANHA = new GeckoLibRendererPackage<>(AoAProjectiles.HARDENED_PARAPIRANHA).path("projectile/thrown/hardened_parapiranha").projectile();
 
 	public static final EntityRendererPackage<?> REINFORCED_BOBBER = new EntityRendererPackage<>(AoAMiscEntities.REINFORCED_BOBBER).provider(HaulingBobberRenderer::new);
 	public static final EntityRendererPackage<?> GOLD_BOBBER = new EntityRendererPackage<>(AoAMiscEntities.GOLD_BOBBER).provider(context -> new HaulingBobberRenderer(context, AdventOfAscension.id("textures/entity/misc/gold_bobber.png")));
@@ -199,8 +202,8 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> FISHING_CAGE = new EntityRendererPackage<>(AoAMiscEntities.FISHING_CAGE).defineLayer("fishing_cage", FishingCageModel::createLayerDefinition).provider(FishingCageRenderer::new);
 	public static final EntityRendererPackage<?> LOTTO_TOTEM = new EntityRendererPackage<>(AoAMiscEntities.LOTTO_TOTEM).defineLayer("lotto_totem", LottoTotemModel::createLayerDefinition).provider(LottoTotemRenderer::new);
-	public static final EntityRendererPackage<?> SAND_GIANT_PIT_TRAP = new EntityRendererPackage<>(AoAMiscEntities.SAND_GIANT_PIT_TRAP).geckolibNonLiving("misc/sand_giant_pit_trap");
-	public static final EntityRendererPackage<?> SAND_GIANT_SPIKE_TRAP = new EntityRendererPackage<>(AoAMiscEntities.SAND_GIANT_SPIKE_TRAP).geckolibNonLiving("misc/sand_giant_spike_trap");
+	public static final EntityRendererPackage<?> SAND_GIANT_PIT_TRAP = new GeckoLibRendererPackage<>(AoAMiscEntities.SAND_GIANT_PIT_TRAP).path("misc/sand_giant_pit_trap").nonLiving();
+	public static final EntityRendererPackage<?> SAND_GIANT_SPIKE_TRAP = new GeckoLibRendererPackage<>(AoAMiscEntities.SAND_GIANT_SPIKE_TRAP).path("misc/sand_giant_spike_trap").nonLiving();
 
 	public static final EntityRendererPackage<?> LIGHTNING = new EntityRendererPackage<>(AoAMiscEntities.CUSTOMISABLE_LIGHTNING_BOLT).provider(LightningBoltRenderer::new);
 
@@ -218,7 +221,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> BLOOD_DRAINER = new EntityRendererPackage<>(AoAProjectiles.BLOOD_DRAINER).provider(BloodDrainerRenderer::new);
 	public static final EntityRendererPackage<?> BLUE_BULLET = new EntityRendererPackage<>(AoAProjectiles.BLUE_BULLET).provider(context -> new ColouredTexturedProjectileRenderer<>(context, ColourUtil.BLUE, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> BLUE_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.BLUE_GUARDIAN_SHOT).provider(BlueGuardianShotRenderer::new);
-	public static final EntityRendererPackage<?> BOMB_CARRIER_DYNAMITE = new EntityRendererPackage<>(AoAProjectiles.BOMB_CARRIER_DYNAMITE).geckolibNonLiving("projectile/mob/bomb_carrier_dynamite");
+	public static final EntityRendererPackage<?> BOMB_CARRIER_DYNAMITE = new GeckoLibRendererPackage<>(AoAProjectiles.BOMB_CARRIER_DYNAMITE).path("projectile/mob/bomb_carrier_dynamite").projectile();
 	public static final EntityRendererPackage<?> BONE_BULLET = new EntityRendererPackage<>(AoAProjectiles.BONE_BULLET).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/bullets/bone_pellet.png")));
 	public static final EntityRendererPackage<?> BOZO_BALL = new EntityRendererPackage<>(AoAProjectiles.BOZO_BALL).provider(context -> new BozoBallRenderer(context, AdventOfAscension.id("textures/entity/projectile/cannonshots/cannonball.png")));
 	public static final EntityRendererPackage<?> BUBBLE_SHOT = new EntityRendererPackage<>(AoAProjectiles.BUBBLE_SHOT).provider(context -> new TexturedProjectileRenderer<>(context, AdventOfAscension.id("textures/entity/projectile/misc/bubble_shot.png")));
@@ -392,7 +395,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> YELLOW_BULLET = new EntityRendererPackage<>(AoAProjectiles.YELLOW_BULLET).provider(context -> new ColouredTexturedProjectileRenderer<>(context, ColourUtil.YELLOW, AdventOfAscension.id("textures/entity/projectile/bullets/limonite_bullet.png")));
 	public static final EntityRendererPackage<?> YELLOW_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.YELLOW_GUARDIAN_SHOT).provider(YellowGuardianShotRenderer::new);
 
-	public static final EntityRendererPackage<?> STONE_GIANT_ROCK = new EntityRendererPackage<>(AoAProjectiles.STONE_GIANT_ROCK).geckolibNonLiving("projectile/mob/stone_giant_rock");
+	public static final EntityRendererPackage<?> STONE_GIANT_ROCK = new GeckoLibRendererPackage<>(AoAProjectiles.STONE_GIANT_ROCK).path("projectile/mob/stone_giant_rock").projectile();
 
 	// Begin super jank test
 	public static final EntityRendererPackage<?> AIRHEAD = new EntityRendererPackage<>(AoAMobs.AIRHEAD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -642,18 +645,18 @@ public final class AoAEntityRendering {
 	}
 
 	private static void registerEntityRenderers(final EntityRenderersEvent.RegisterRenderers ev) {
-		for (EntityRendererPackage<Entity> rendererPackage : entityRenderers) {
+		for (EntityRendererPackage<Entity> rendererPackage : RENDERER_PACKAGES) {
 			ev.registerEntityRenderer(rendererPackage.entityType.get(), rendererPackage.build());
 		}
 
-		entityRenderers.clear();
+		RENDERER_PACKAGES = null;
 		BlockEntityRenderers.register(AoABlockEntities.TROPHY.get(), TrophyRenderer::new);
 		BlockEntityRenderers.register(AoABlockEntities.LUNAR_CREATION_TABLE.get(), LunarCreationTableRenderer::new);
 		BlockEntityRenderers.register(AoABlockEntities.BOSS_ALTAR.get(), BossAltarTileEntityRenderer::new);
 	}
 
 	private static void registerLayerDefinitions(final EntityRenderersEvent.RegisterLayerDefinitions ev) {
-		for (EntityRendererPackage<?> rendererPackage : entityRenderers) {
+		for (EntityRendererPackage<?> rendererPackage : RENDERER_PACKAGES) {
 			rendererPackage.registerModelLayer(ev);
 		}
 
@@ -672,22 +675,152 @@ public final class AoAEntityRendering {
 		}
 	}
 
+	private static class GeckoLibRendererPackage<T extends Entity & GeoEntity> extends EntityRendererPackage<T> {
+		private AoAEntityGeoModel<T> model = null;
+		private boolean emissive = false;
+		private boolean transparent = false;
+		private Type type = Type.LIVING;
+		private EntityRendererProvider<T> provider;
+
+		private GeckoLibRendererPackage(RegistryObject<EntityType<T>> entityType) {
+			super(entityType);
+		}
+
+		private GeckoLibRendererPackage<T> path(String path) {
+			return path(path, false);
+		}
+
+		private GeckoLibRendererPackage<T> path(String path, boolean turnsHead) {
+			return model(new AoAEntityGeoModel<>(path, turnsHead));
+		}
+
+		private GeckoLibRendererPackage<T> model(AoAEntityGeoModel<T> model) {
+			this.model = model;
+
+			return this;
+		}
+
+		private GeckoLibRendererPackage<T> renderer(EntityRendererProvider<T> provider) {
+			this.provider = provider;
+
+			return this;
+		}
+
+		@Override
+		protected GeckoLibRendererPackage<T> shadowSize(float shadow) {
+			super.shadowSize(shadow);
+
+			return this;
+		}
+
+		private GeckoLibRendererPackage<T> emissive() {
+			this.emissive = true;
+
+			return this;
+		}
+
+		private GeckoLibRendererPackage<T> transparent() {
+			this.transparent = true;
+
+			return this;
+		}
+
+		private GeckoLibRendererPackage<T> projectile() {
+			this.type = Type.PROJECTILE;
+
+			return this;
+		}
+
+		private GeckoLibRendererPackage<T> nonLiving() {
+			this.type = Type.NON_LIVING;
+
+			return this;
+		}
+
+		private static <E extends LivingEntity & GeoEntity> GeoEntityRenderer<E> buildLivingRenderer(EntityRendererProvider.Context context, GeoModel<E> model, float shadowSize, boolean transparent) {
+			if (transparent) {
+				return new AnimatedMobRenderer<E>(context, model, shadowSize) {
+					@Override
+					public RenderType getRenderType(E animatable, ResourceLocation texture, @org.jetbrains.annotations.Nullable MultiBufferSource bufferSource, float partialTick) {
+						return RenderType.entityTranslucent(texture);
+					}
+				};
+			}
+			else {
+				return new AnimatedMobRenderer<E>(context, model, shadowSize);
+			}
+		}
+
+		@Override
+		protected EntityRendererProvider<T> build() {
+			if (this.model == null && this.provider == null)
+				throw new IllegalStateException("No provided model or renderer for GeckoLib model for " + this.entityType.getId().toString());
+
+			if (this.shadowSize == -1)
+				this.shadowSize = this.entityType.get().getWidth() / 3f;
+
+			if (this.provider != null)
+				return this.provider;
+
+			return context -> {
+				GeoEntityRenderer renderer = switch (this.type) {
+					case LIVING -> buildLivingRenderer(context, (GeoModel)this.model, this.shadowSize, this.transparent);
+					case PROJECTILE -> {
+						if (this.transparent) {
+							yield new AnimatedProjectileRenderer<>(context, this.model) {
+								@Override
+								public RenderType getRenderType(T animatable, ResourceLocation texture, @org.jetbrains.annotations.Nullable MultiBufferSource bufferSource, float partialTick) {
+									return RenderType.entityTranslucent(texture);
+								}
+							};
+						}
+						else {
+							yield new AnimatedProjectileRenderer<>(context, this.model);
+						}
+					}
+					case NON_LIVING -> {
+						if (this.transparent) {
+							yield new GeoEntityRenderer<>(context, this.model) {
+								@Override
+								public RenderType getRenderType(T animatable, ResourceLocation texture, @org.jetbrains.annotations.Nullable MultiBufferSource bufferSource, float partialTick) {
+									return RenderType.entityTranslucent(texture);
+								}
+							};
+						}
+						else {
+							yield new GeoEntityRenderer<>(context, this.model);
+						}
+					}
+				};
+
+				if (this.emissive)
+					renderer.addRenderLayer(new AutoGlowingGeoLayer(renderer));
+
+				return renderer;
+			};
+		}
+
+		private enum Type {
+			LIVING,
+			PROJECTILE,
+			NON_LIVING
+		}
+	}
+
 	public static class EntityRendererPackage<T extends Entity> {
-		private final RegistryObject<EntityType<T>> entityType;
+		protected final RegistryObject<EntityType<T>> entityType;
+		protected final HashMap<String, Pair<ModelLayerLocation, Supplier<LayerDefinition>>> layerDefinitions = new HashMap<>();
 
-		private EntityRendererProvider<T> rendererProvider = null;
-
-		private final HashMap<String, Pair<ModelLayerLocation, Supplier<LayerDefinition>>> layerDefinitions = new HashMap<>();
-
-		private float shadowSize = -1;
+		protected EntityRendererProvider<T> rendererProvider = null;
+		protected float shadowSize = -1;
 
 		private EntityRendererPackage(RegistryObject<EntityType<T>> entityType) {
 			this.entityType = entityType;
 
-			entityRenderers.add(this);
+			RENDERER_PACKAGES.add(this);
 		}
 
-		private EntityRendererPackage<T> shadowSize(float shadow) {
+		protected EntityRendererPackage<T> shadowSize(float shadow) {
 			this.shadowSize = shadow;
 
 			return this;
@@ -701,59 +834,6 @@ public final class AoAEntityRendering {
 			this.layerDefinitions.put(layerName, Pair.of(new ModelLayerLocation(AdventOfAscension.id(path), layerName), definition));
 
 			return this;
-		}
-
-		private EntityRendererPackage<T> geckolib(String path) {
-			return geckolib(path, false, false);
-		}
-
-		public EntityRendererPackage<T> geckolib(String path, boolean turnsHead) {
-			return geckolib(path, turnsHead, false);
-		}
-
-		private <E extends LivingEntity & GeoEntity> EntityRendererPackage<T> geckolib(AoAEntityGeoModel<E> model) {
-			return geckolib(model, false);
-		}
-
-		private <E extends LivingEntity & GeoEntity> EntityRendererPackage<T> geckolib(String path, boolean turnsHead, boolean transparent) {
-			return geckolib(new AoAEntityGeoModel<E>(path, turnsHead), transparent);
-		}
-
-		private <E extends LivingEntity & GeoEntity> EntityRendererPackage<T> geckolib(AoAEntityGeoModel<E> model, boolean transparent) {
-			if (!transparent)
-				return provider(context -> new AnimatedMobRenderer<E>(context, model, this.shadowSize));
-
-			return provider(context -> new AnimatedMobRenderer<E>(context, model, this.shadowSize) {
-
-				@Override
-				public RenderType getRenderType(E animatable, ResourceLocation texture, @Nullable MultiBufferSource bufferSource, float partialTick) {
-					return RenderType.entityTranslucent(texture);
-				}
-			});
-		}
-
-		private EntityRendererPackage<T> geckolibNonLiving(String path) {
-			return geckolibNonLiving(path, false);
-		}
-
-		private EntityRendererPackage<T> geckolibNonLiving(AoAEntityGeoModel<?> model) {
-			return geckolibNonLiving(model, false);
-		}
-
-		private <E extends Entity & GeoEntity> EntityRendererPackage<T> geckolibNonLiving(String path, boolean transparent) {
-			return geckolibNonLiving(new AoAEntityGeoModel<E>(path), transparent);
-		}
-
-		private <E extends Entity & GeoEntity> EntityRendererPackage<T> geckolibNonLiving(AoAEntityGeoModel<E> model, boolean transparent) {
-			if (!transparent)
-				return provider(context -> new GeoEntityRenderer<E>(context, model) {});
-
-			return provider(context -> new GeoEntityRenderer<E>(context, model) {
-				@Override
-				public RenderType getRenderType(E animatable, ResourceLocation texture, @org.jetbrains.annotations.Nullable MultiBufferSource bufferSource, float partialTick) {
-					return RenderType.entityTranslucent(texture);
-				}
-			});
 		}
 
 		private EntityRendererPackage<T> provider(EntityRendererProvider provider) {
@@ -785,7 +865,7 @@ public final class AoAEntityRendering {
 			return this.layerDefinitions.get(layerName).getFirst();
 		}
 
-		private EntityRendererProvider<T> build() {
+		protected EntityRendererProvider<T> build() {
 			if (this.rendererProvider == null)
 				throw new IllegalStateException("No registered renderer provider for entity: " + this.entityType.getId());
 

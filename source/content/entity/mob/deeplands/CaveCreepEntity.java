@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -115,7 +116,7 @@ public class CaveCreepEntity extends AoAMeleeMob<CaveCreepEntity> {
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
+        controllers.add(AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
         controllers.add(new AnimationController<>(this, "movement", 0, state -> {
             if (state.isMoving()) {
                 if (lastAggroChange >= 0)

@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -166,6 +167,6 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericFlyController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
 	}
 }

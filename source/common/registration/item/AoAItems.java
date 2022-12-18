@@ -106,7 +106,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> CORAL_STONE = registerItem("coral_stone", miscItem());
 	public static final RegistryObject<Item> COSMIC_DUST = registerItem("cosmic_dust", miscItem());
 	public static final RegistryObject<Item> CUP = registerItem("cup", miscItem());
-	public static final RegistryObject<Item> DARK_BONES = registerItem("dark_bones", () -> new ReservedItem("alien_orb"), null);
+	public static final RegistryObject<Item> DARK_BONES = registerItem("dark_bones", () -> new ReservedItem("alien_orb"), (Supplier<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> DARKLY_POWDER = registerItem("darkly_powder", miscItem());
 	public static final RegistryObject<Item> DENSE_ROCK = registerItem("dense_rock", miscItem());
 	public static final RegistryObject<Item> DISTORTING_ARTIFACT = registerItem("distorting_artifact", DistortingArtifact::new);
@@ -120,7 +120,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> ENCHANTED_GUNPOWDER = registerItem("enchanted_gunpowder", miscItem());
 	public static final RegistryObject<Item> EYE_BULB = registerItem("eye_bulb", () -> new ItemNameBlockItem(AoABlocks.EYE_BULB_CROP.get(), new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4f).build())));
 	public static final RegistryObject<Item> FLAMMABLE_DUST = registerItem("flammable_dust", miscFuelItem(100));
-	public static final RegistryObject<Item> FLESHY_BONES = registerItem("fleshy_bones", () -> new ReservedItem("alien_orb"), null);
+	public static final RegistryObject<Item> FLESHY_BONES = registerItem("fleshy_bones", () -> new ReservedItem("alien_orb"), (Supplier<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> FLOATING_STONE = registerItem("floating_stone", FloatingStone::new);
 	public static final RegistryObject<Item> BLUE_GEMSTONES = registerItem("blue_gemstones", miscItem());
 	public static final RegistryObject<Item> GREEN_GEMSTONES = registerItem("green_gemstones", miscItem());
@@ -194,10 +194,10 @@ public final class AoAItems {
 	public static final RegistryObject<Item> WEAPON_PARTS = registerItem("weapon_parts", miscItem());
 	public static final RegistryObject<Item> WHITEWASHING_SOLUTION = registerItem("whitewashing_solution", miscItem());
 	public static final RegistryObject<Item> WORN_BOOK = registerItem("worn_book", WornBook::new);
-	public static final RegistryObject<Item> TORN_PAGES = registerItem("torn_pages", TornPages::new, null);
+	public static final RegistryObject<Item> TORN_PAGES = registerItem("torn_pages", TornPages::new, (Supplier<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> YELLOW_SPORES = registerItem("yellow_spores", miscItem());
 	public static final RegistryObject<Item> ZHINX_DUST = registerItem("zhinx_dust", miscItem());
-	public static final RegistryObject<Item> CREATURE_ESSENCE = registerItem("creature_essence", CreatureEssence::new, null);
+	public static final RegistryObject<Item> CREATURE_ESSENCE = registerItem("creature_essence", CreatureEssence::new, (Supplier<CreativeModeTab>[])null);
 
 	public static final RegistryObject<Item> BALLOON = registerItem("balloon", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
 	public static final RegistryObject<Item> CANNONBALL = registerItem("cannonball", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
@@ -412,7 +412,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> SOUR_POP = registerItem("sour_pop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.18f).build())), () -> AoACreativeModeTabs.FOOD);
 	public static final RegistryObject<Item> SPEARMINT_CANDY = registerItem("spearmint_candy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.25f).build())), () -> AoACreativeModeTabs.FOOD);
 	public static final RegistryObject<Item> TRILLIAD_LEAVES = registerItem("trilliad_leaves", TrilliadLeaves::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> YETI_FINGERNAILS = registerItem("yeti_fingernails", YetiFingernails::new, null);
+	public static final RegistryObject<Item> YETI_FINGERNAILS = registerItem("yeti_fingernails", YetiFingernails::new, (Supplier<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> HALYCON_MILK = registerItem("halycon_milk", HalyconMilk::new, () -> AoACreativeModeTabs.FOOD);
 	public static final RegistryObject<Item> LUNARADE = registerItem("lunarade", Lunarade::new, () -> AoACreativeModeTabs.FOOD);
 	public static final RegistryObject<Item> TEA = registerItem("tea", Tea::new, () -> AoACreativeModeTabs.FOOD);

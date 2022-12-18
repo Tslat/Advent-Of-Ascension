@@ -56,6 +56,6 @@ public class SyskerEntity extends AoAMeleeMob<SyskerEntity> {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(
                 DefaultAnimations.genericWalkIdleController(this),
-                DefaultAnimations.genericAttackAnimation(this, AoAAnimations.ATTACK_SPIN));
+                AoAAnimations.genericAttackAnimation(this, AoAAnimations.ATTACK_SPIN));
     }
 }

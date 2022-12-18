@@ -7,6 +7,11 @@
     ],
     "if_all": [
       "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "minecraft:badlands",
+      "minecraft:eroded_badlands",
+      "#forge:is_cave"
     ]
   },
   "spawn": [

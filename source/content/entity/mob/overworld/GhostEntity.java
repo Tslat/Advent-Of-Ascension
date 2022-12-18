@@ -8,6 +8,7 @@ import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -53,6 +54,6 @@ public class GhostEntity extends AoAMeleeMob<GhostEntity> {
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericIdleController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
 	}
 }

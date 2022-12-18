@@ -17,6 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -188,6 +189,6 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements Range
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
 	}
 }

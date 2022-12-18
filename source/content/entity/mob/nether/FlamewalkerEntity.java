@@ -13,6 +13,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -134,7 +135,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(DefaultAnimations.genericLivingController(this),
                 DefaultAnimations.genericWalkController(this),
-                DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
+                AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
     }
 
     private static class FlameWalkerAttack extends AnimatableRangedAttack<FlamewalkerEntity> {

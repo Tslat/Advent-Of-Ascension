@@ -23,6 +23,7 @@ import net.tslat.aoa3.library.constant.AttackSpeed;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
+@SuppressWarnings("ConfusingArgumentToVarargsMethod")
 public final class AoAWeapons {
 	public static void init() {}
 
@@ -408,7 +409,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> DEATH_RAY = registerWeapon("death_ray", () -> new DeathRay(19f, 3840, 12, 17f), () -> AoACreativeModeTabs.BLASTERS);
 	public static final RegistryObject<Item> DOOM_BRINGER = registerWeapon("doom_bringer", () -> new DoomBringer(0.0f, 2820, 3, 15.5f), () -> AoACreativeModeTabs.BLASTERS);
 	public static final RegistryObject<Item> ERADICATOR = registerWeapon("eradicator", () -> new Eradicator(1.0f, 2790, 1, 2f), () -> AoACreativeModeTabs.BLASTERS);
-	public static final RegistryObject<Item> EXPERIMENT_W_801 = registerWeapon("experiment_w_801", () -> new ExperimentW801(37.0f, 5000, 50, 90.0f), null);
+	public static final RegistryObject<Item> EXPERIMENT_W_801 = registerWeapon("experiment_w_801", () -> new ExperimentW801(37.0f, 5000, 50, 90.0f), (Supplier<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> FLOWERCORNE = registerWeapon("flowercorne", () -> new Flowercorne(2.5f, 2910, 4, 20f), () -> AoACreativeModeTabs.BLASTERS);
 	public static final RegistryObject<Item> FRAGMENT = registerWeapon("fragment", () -> new Fragment(3.0f, 3830,2, 2.5f), () -> AoACreativeModeTabs.BLASTERS);
 	public static final RegistryObject<Item> FROSTER = registerWeapon("froster", () -> new Froster(3.5f, 2800, 3, 7.5f), () -> AoACreativeModeTabs.BLASTERS);

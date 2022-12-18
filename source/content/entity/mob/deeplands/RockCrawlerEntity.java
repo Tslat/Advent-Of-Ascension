@@ -15,6 +15,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -129,7 +130,7 @@ public class RockCrawlerEntity extends AoAMeleeMob<RockCrawlerEntity> {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(
                 DefaultAnimations.genericWalkController(this),
-                DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
+                AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE));
         // TODO strafing animation
     }
 }

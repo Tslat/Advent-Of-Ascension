@@ -24,7 +24,7 @@ import java.util.function.Consumer;
 public final class AoAAnimals {
 	public static void init() {}
 
-	public static final RegistryObject<EntityType<Animal>> CORATEE = registerAnimal("coratee", CorateeEntity::new, MobCategory.WATER_AMBIENT, 1f, 1f,  0x325156, 0x55797E);
+	public static final RegistryObject<EntityType<CorateeEntity>> CORATEE = registerAnimal("coratee", CorateeEntity::new, MobCategory.WATER_AMBIENT, 1f, 1f,  0x325156, 0x55797E);
 	public static final RegistryObject<EntityType<Animal>> CREEP_COW = registerAnimal("creep_cow", CreepCowEntity::new, 0.9f, 1.4f, 0x0CAB1A, 0xE0E9DB);
 	public static final RegistryObject<EntityType<Animal>> ELKANYNE = registerAnimal("elkanyne", ElkanyneEntity::new, 0.85f, 1.1875f, 0x6D5439, 0xDFC693);
 	public static final RegistryObject<EntityType<Animal>> HALYCON = registerAnimal("halycon", HalyconEntity::new, 0.9f, 1.4f, 0x2B5019, 0x82A94F);

@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -15,9 +16,11 @@ import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
+import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -64,7 +67,9 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 	@Override
 	public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
 		target.hurt(DamageSource.IN_FIRE, 2);
-		target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
+
+		if (RandomUtil.oneInNChance(5))
+			target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
 	}
 
 	@Override
@@ -121,8 +126,9 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 					return false;
 
 				double dist = target.distanceToSqr(entity);
+				double aggroRange = entity.getAttributeValue(AoAAttributes.AGGRO_RANGE.get());
 
-				return dist <= 64 && !entity.isWithinMeleeAttackRange(target) && BrainUtils.canSee(entity, target);
+				return dist <= aggroRange * aggroRange && !entity.isWithinMeleeAttackRange(target) && BrainUtils.canSee(entity, target);
 			});
 			stopIf(entity -> {
 				LivingEntity target = BrainUtils.getMemory(entity, MemoryModuleType.ATTACK_TARGET);
@@ -131,8 +137,9 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 					return false;
 
 				double dist = target.distanceToSqr(entity);
+				double followRange = entity.getAttributeValue(Attributes.FOLLOW_RANGE);
 
-				return dist <= 64 && !entity.isWithinMeleeAttackRange(target) && BrainUtils.canSee(entity, target);
+				return dist <= followRange * followRange && !entity.isWithinMeleeAttackRange(target) && BrainUtils.canSee(entity, target);
 			});
 			cooldownFor(entity -> 10);
 			whenStarting(entity -> {
@@ -191,7 +198,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(DefaultAnimations.genericWalkIdleController(this),
-				DefaultAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE)
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_BITE)
 						.triggerableAnim("breath_start", BREATH_ATTACK)
 						.triggerableAnim("breath_stop", BREATH_ATTACK_END));
 	}
