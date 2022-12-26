@@ -13,13 +13,16 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.animal.FlyingAnimal;
-import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayer;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -71,7 +74,7 @@ public final class EntityUtil {
 	}
 
 	public static boolean isImmuneToSpecialAttacks(Entity target, LivingEntity attacker) {
-		return target instanceof Player || target instanceof WitherBoss || target instanceof EnderDragon || !target.canChangeDimensions() || target.isInvulnerable() || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
+		return target instanceof Player || !target.canChangeDimensions() || target.isInvulnerable() || TagUtil.isTaggedAs(target, Tags.EntityTypes.BOSSES) || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
 	}
 
 	public static float getAttackCooldown(LivingEntity entity) {
@@ -315,5 +318,31 @@ public final class EntityUtil {
 
 	public static Vec3 getEntityCenter(Entity entity) {
 		return new Vec3(entity.getX(0.5f), entity.getY(0.5f), entity.getZ(0.5f));
+	}
+
+	@Nullable
+	public static <T extends Entity> EntityHitResult getEntityCollisionWithPrecision(Level level, Entity projectile, Vec3 startVec, Vec3 endVec, AABB bounds, Predicate<T> filter, float tolerance) {
+		double closestDist = Double.MAX_VALUE;
+		Entity impactEntity = null;
+		Vec3 position = null;
+
+		for(T target : EntityRetrievalUtil.<T>getEntities(level, bounds, entity -> entity != projectile && filter.test((T)entity))) {
+			AABB targetBounds = target.getBoundingBox().inflate(tolerance);
+			Optional<Vec3> boundsClip = targetBounds.clip(startVec, endVec);
+
+			if (boundsClip.isPresent()) {
+				Vec3 pos = boundsClip.get();
+
+				double dist = startVec.distanceToSqr(pos);
+
+				if (dist < closestDist) {
+					impactEntity = target;
+					closestDist = dist;
+					position = pos;
+				}
+			}
+		}
+
+		return impactEntity == null ? null : new EntityHitResult(impactEntity, position);
 	}
 }

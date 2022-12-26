@@ -66,7 +66,7 @@ public abstract class BaseThrownWeapon extends BaseGun {
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
 		if (target != null && dmg > 0.0f && DamageUtil.dealRangedDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier))
-			doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
+			doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 	}
 
 	@Override

@@ -37,7 +37,7 @@ import net.tslat.aoa3.util.*;
 
 public final class NowhereEvents {
 	public static boolean isInParkourRegion(BlockPos pos) {
-		return pos.getX() > 1000 && pos.getZ() > 1000;
+		return pos.getX() > 900 && pos.getZ() > 900;
 	}
 
 	public static boolean isInBossRegion(BlockPos pos) {

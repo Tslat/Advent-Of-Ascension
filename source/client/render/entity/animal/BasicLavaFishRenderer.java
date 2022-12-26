@@ -5,12 +5,12 @@ import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
+import software.bernie.geckolib.model.GeoModel;
 
 public class BasicLavaFishRenderer extends AnimatedMobRenderer<BasicLavaFishEntity> {
-	public BasicLavaFishRenderer(EntityRendererProvider.Context renderManager, AoAEntityGeoModel<BasicLavaFishEntity> model) {
+	public BasicLavaFishRenderer(EntityRendererProvider.Context renderManager, GeoModel<BasicLavaFishEntity> model) {
 		super(renderManager, model, 0.23f);
 	}
 

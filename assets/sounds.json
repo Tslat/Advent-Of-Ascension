@@ -1734,6 +1734,12 @@
     ],
     "subtitle": "subtitles.entity.generic.large_creature_grunt"
   },
+  "entity.generic.large_lizard_hiss": {
+    "sounds": [
+      "aoa3:entity/generic/large_lizard_hiss"
+    ],
+    "subtitle": "subtitles.entity.generic.large_lizard_hiss"
+  },
   "entity.generic.leafy_thud": {
     "sounds": [
       "aoa3:entity/generic/leafy_thud"
@@ -2629,17 +2635,17 @@
     ],
     "subtitle": "subtitles.entity.neptuno.hurt"
   },
-  "entity.nethengeic_beast.ambient": {
+  "entity.nethengeic_beast.flame_aura_activate": {
     "sounds": [
-      "aoa3:entity/nethengeic_beast/ambient"
+      "aoa3:entity/nethengeic_beast/flame_aura_activate"
     ],
-    "subtitle": "subtitles.entity.nethengeic_beast.ambient"
+    "subtitle": "subtitles.entity.nethengeic_beast.flame_aura_activate"
   },
-  "entity.nethengeic_beast.death": {
+  "entity.nethengeic_beast.flamethrower_open": {
     "sounds": [
-      "aoa3:entity/nethengeic_beast/death"
+      "aoa3:entity/nethengeic_beast/flamethrower_open"
     ],
-    "subtitle": "subtitles.entity.nethengeic_beast.death"
+    "subtitle": "subtitles.entity.nethengeic_beast.flamethrower_open"
   },
   "entity.nethengeic_beast.hurt": {
     "sounds": [
@@ -3657,23 +3663,17 @@
     ],
     "subtitle": "subtitles.entity.tracker.hurt"
   },
-  "entity.tree_spirit.ambient": {
+  "entity.tree_spirit.shoot": {
     "sounds": [
-      "aoa3:entity/tree_spirit/ambient"
+      "aoa3:entity/tree_spirit/shoot"
     ],
-    "subtitle": "subtitles.entity.tree_spirit.ambient"
+    "subtitle": "subtitles.entity.tree_spirit.shoot"
   },
-  "entity.tree_spirit.death": {
+  "entity.tree_spirit_sprite.impact": {
     "sounds": [
-      "aoa3:entity/tree_spirit/death"
+      "aoa3:entity/tree_spirit_sprite/impact"
     ],
-    "subtitle": "subtitles.entity.tree_spirit.death"
-  },
-  "entity.tree_spirit.hurt": {
-    "sounds": [
-      "aoa3:entity/tree_spirit/hurt"
-    ],
-    "subtitle": "subtitles.entity.tree_spirit.hurt"
+    "subtitle": "subtitles.entity.tree_spirit_sprite.impact"
   },
   "entity.trickster.ambient": {
     "sounds": [
@@ -4832,6 +4832,11 @@
   "misc.checkpoint": {
     "sounds": [
       "aoa3:misc/checkpoint"
+    ]
+  },
+  "misc.flamethrower": {
+    "sounds": [
+      "aoa3:misc/flamethrower"
     ]
   },
   "misc.jingle_bells": {

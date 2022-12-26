@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#forge:is_mushroom"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "minecraft:forest",
+      "minecraft:flower_forest",
+      "minecraft:dark_forest",
+      "minecraft:swamp"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:tree_spirit",
+      "maxCount": 1,
+      "minCount": -20,
+      "weight": 5
+    }
+  ]
+}

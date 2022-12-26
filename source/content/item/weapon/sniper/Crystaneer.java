@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
@@ -36,7 +37,7 @@ public class Crystaneer extends BaseSniper {
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
 		if (!shooter.level.isClientSide() && target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0) {
 			for (ItemStack drop : LootUtil.generateLoot((ServerLevel)shooter.level, AdventOfAscension.id("items/crystaneer"), LootUtil.getGiftContext((ServerLevel)shooter.level, target.position(), (shooter instanceof Player ? ((Player)shooter).getLuck() : 0), shooter))) {
 				target.spawnAtLocation(drop, 0f);

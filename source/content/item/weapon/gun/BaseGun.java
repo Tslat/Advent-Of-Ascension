@@ -233,7 +233,7 @@ public abstract class BaseGun extends Item {
 				shellMod += 0.1 * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), shooter.getItemInHand(bullet.getHand()));
 
 			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * shellMod)) {
-				doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
+				doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}
 			else if (!(target instanceof LivingEntity)) {
 				target.hurt(new IndirectEntityDamageSource("gun", bullet, shooter).setProjectile(), (float)getDamage() * bulletDmgMultiplier * shellMod);
@@ -241,7 +241,7 @@ public abstract class BaseGun extends Item {
 		}
 	}
 
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {}
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {}
 
 	protected void doFiringSound(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
 		//if (getFiringSound() != null)

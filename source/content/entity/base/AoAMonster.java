@@ -145,6 +145,11 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		return null;
 	}
 
+	@Override
+	public int getAmbientSoundInterval() {
+		return 240;
+	}
+
 	@Nullable
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
 		if (!blockState.getMaterial().isLiquid()) {

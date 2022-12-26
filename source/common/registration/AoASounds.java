@@ -54,6 +54,8 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_UNHAPPY = registerSound("entity.dryad_sprite.unhappy");
 	public static final RegistryObject<SoundEvent> ENTITY_SMASH_ENRAGE = registerSound("entity.smash.enrage");
 	public static final RegistryObject<SoundEvent> ENTITY_SMASH_BELLY_DRUM = registerSound("entity.smash.belly_drum");
+	public static final RegistryObject<SoundEvent> ENTITY_TREE_SPIRIT_SHOOT = registerSound("entity.tree_spirit.shoot");
+	public static final RegistryObject<SoundEvent> ENTITY_TREE_SPIRIT_SPRITE_IMPACT = registerSound("entity.tree_spirit_sprite.impact");
 
 	public static final RegistryObject<SoundEvent> LEAFY_THUD = registerSound("entity.generic.leafy_thud");
 	public static final RegistryObject<SoundEvent> HEAVY_FOLIAGE_THUMP = registerSound("entity.generic.heavy_foliage_thump");
@@ -74,6 +76,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> LARGE_CREATURE_GRUNT = registerSound("entity.generic.large_creature_grunt");
 	public static final RegistryObject<SoundEvent> LARGE_CREATURE_GROAN = registerSound("entity.generic.large_creature_groan");
 	public static final RegistryObject<SoundEvent> HEAVY_WOODEN_IMPACT = registerSound("entity.generic.heavy_wooden_impact");
+	public static final RegistryObject<SoundEvent> LARGE_LIZARD_HISS = registerSound("entity.generic.large_lizard_hiss");
 
 	public static final RegistryObject<SoundEvent> BIOME_BARREN_GROUNDS_MUSIC = registerSound("biome.barren_grounds.music");
 	public static final RegistryObject<SoundEvent> BIOME_CAVERN_DEPTHS_MUSIC = registerSound("biome.cavern_depths.music");
@@ -413,9 +416,9 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_NEPTUNO_AMBIENT = registerSound("entity.neptuno.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_NEPTUNO_DEATH = registerSound("entity.neptuno.death");
 	public static final RegistryObject<SoundEvent> ENTITY_NEPTUNO_HURT = registerSound("entity.neptuno.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_AMBIENT = registerSound("entity.nethengeic_beast.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_DEATH = registerSound("entity.nethengeic_beast.death");
 	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_HURT = registerSound("entity.nethengeic_beast.hurt");
+	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_FLAME_AURA_ACTIVATE = registerSound("entity.nethengeic_beast.flame_aura_activate");
+	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_FLAMETHROWER_OPEN = registerSound("entity.nethengeic_beast.flamethrower_open");
 	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_WITHER_AMBIENT = registerSound("entity.nethengeic_wither.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_WITHER_DEATH = registerSound("entity.nethengeic_wither.death");
 	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_WITHER_HURT = registerSound("entity.nethengeic_wither.hurt");
@@ -567,9 +570,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_TRACKER_AMBIENT = registerSound("entity.tracker.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_TRACKER_DEATH = registerSound("entity.tracker.death");
 	public static final RegistryObject<SoundEvent> ENTITY_TRACKER_HURT = registerSound("entity.tracker.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_TREE_SPIRIT_AMBIENT = registerSound("entity.tree_spirit.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_TREE_SPIRIT_DEATH = registerSound("entity.tree_spirit.death");
-	public static final RegistryObject<SoundEvent> ENTITY_TREE_SPIRIT_HURT = registerSound("entity.tree_spirit.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_TRICKSTER_AMBIENT = registerSound("entity.trickster.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_TRICKSTER_HURT = registerSound("entity.trickster.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_TROTTER_AMBIENT = registerSound("entity.trotter.ambient");
@@ -685,6 +685,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> JINGLE_BELLS = registerSound("misc.jingle_bells");
 	public static final RegistryObject<SoundEvent> LIT_FUSE = registerSound("misc.lit_fuse");
 	public static final RegistryObject<SoundEvent> LIGHT_FUSE = registerSound("misc.light_fuse");
+	public static final RegistryObject<SoundEvent> FLAMETHROWER = registerSound("misc.flamethrower");
 
 	public static final RegistryObject<SoundEvent> ITEM_ATLANTIC_STAFF_CAST = registerSound("item.atlantic_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_ATOMIZER_FIRE = registerSound("item.atomizer.fire");
@@ -830,7 +831,7 @@ public final class AoASounds {
 	}
 
 	private static SoundEvent createSoundEvent(String soundPath) {
-		if (HolidayUtil.isChristmas() && soundPath.endsWith(".fire") && !DatagenModLoader.isRunningDataGen())
+		if (HolidayUtil.isChristmas() && soundPath.startsWith("item.") && (soundPath.endsWith(".fire") || soundPath.contains(".gun")) && !DatagenModLoader.isRunningDataGen())
 			soundPath = "misc.jingle_bells";
 
 		return SoundEvent.createVariableRangeEvent(AdventOfAscension.id(soundPath));

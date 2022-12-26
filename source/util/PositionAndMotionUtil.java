@@ -21,6 +21,7 @@ public final class PositionAndMotionUtil {
 
 		entity.setXRot((float)Math.toDegrees(Mth.atan2(lengthZ, lengthX)) - 90f);
 		entity.setYRot((float)Math.toDegrees(-Mth.atan2(lengthY, Math.sqrt(lengthX * lengthX + lengthZ * lengthZ))));
+
 		entity.xRotO = entity.getXRot();
 		entity.yRotO = entity.getYRot();
 	}

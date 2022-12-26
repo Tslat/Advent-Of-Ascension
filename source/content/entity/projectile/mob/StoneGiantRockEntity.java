@@ -10,22 +10,22 @@ import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class StoneGiantRock extends BaseMobProjectile implements GeoEntity {
+public class StoneGiantRockEntity extends BaseMobProjectile implements GeoEntity {
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
-	public StoneGiantRock(EntityType<? extends ThrowableProjectile> entityType, Level level) {
+	public StoneGiantRockEntity(EntityType<? extends ThrowableProjectile> entityType, Level level) {
 		super(entityType, level);
 	}
 
-	public StoneGiantRock(EntityType<? extends ThrowableProjectile> entityType, Level world, AoARangedAttacker shooter, double posX, double posY, double posZ, Type projectileType) {
+	public StoneGiantRockEntity(EntityType<? extends ThrowableProjectile> entityType, Level world, AoARangedAttacker shooter, double posX, double posY, double posZ, Type projectileType) {
 		super(entityType, world, shooter, posX, posY, posZ, projectileType);
 	}
 
-	public StoneGiantRock(EntityType<? extends ThrowableProjectile> entityType, Level world, AoARangedAttacker shooter, Entity target, Type projectileType) {
+	public StoneGiantRockEntity(EntityType<? extends ThrowableProjectile> entityType, Level world, AoARangedAttacker shooter, Entity target, Type projectileType) {
 		super(entityType, world, shooter, target, projectileType);
 	}
 
-	public StoneGiantRock(EntityType<? extends ThrowableProjectile> entityType, Level world, AoARangedAttacker shooter, Type projectileType) {
+	public StoneGiantRockEntity(EntityType<? extends ThrowableProjectile> entityType, Level world, AoARangedAttacker shooter, Type projectileType) {
 		super(entityType, world, shooter, projectileType);
 	}
 

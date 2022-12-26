@@ -4,12 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.util.Mth;
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
+import software.bernie.geckolib.model.GeoModel;
 
 public class BasicWaterFishRenderer extends AnimatedMobRenderer<BasicFishEntity> {
-	public BasicWaterFishRenderer(EntityRendererProvider.Context renderManager, AoAEntityGeoModel<BasicFishEntity> model) {
+	public BasicWaterFishRenderer(EntityRendererProvider.Context renderManager, GeoModel<BasicFishEntity> model) {
 		super(renderManager, model, 0.23f);
 	}
 

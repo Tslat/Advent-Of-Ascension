@@ -2,12 +2,12 @@ package net.tslat.aoa3.client.model.entity.mob;
 
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.content.entity.mob.overworld.WoodGiantEntity;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class WoodGiantModel extends AoAEntityGeoModel<WoodGiantEntity> {
+public class WoodGiantModel extends DefaultedEntityGeoModel<WoodGiantEntity> {
 	public WoodGiantModel() {
-		super("mob/overworld/wood_giant");
+		super(AdventOfAscension.id("mob/overworld/wood_giant"));
 	}
 
 	@Override

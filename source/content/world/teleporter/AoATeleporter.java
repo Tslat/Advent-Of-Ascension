@@ -97,11 +97,11 @@ public abstract class AoATeleporter implements ITeleporter {
 		return entity instanceof ServerPlayer ? positionPlayer((ServerPlayer)entity, teleportPos, currentWorld, destWorld, false) : positionNonPlayer(entity, teleportPos, destWorld, false);
 	}
 
-	private Entity positionPlayer(ServerPlayer entity, Vec3 position, ServerLevel fromWorld, ServerLevel toWorld, boolean spawnPortal) {
+	private Entity positionPlayer(ServerPlayer player, Vec3 position, ServerLevel fromWorld, ServerLevel toWorld, boolean spawnPortal) {
 		fromWorld.getProfiler().push("moving");
 
 		if (fromWorld.dimension() == Level.OVERWORLD && toWorld.dimension() == Level.NETHER) {
-			entity.enteredNetherPosition = entity.position();
+			player.enteredNetherPosition = player.position();
 		}
 		else if (spawnPortal && toWorld.dimension() == Level.END) {
 			BlockPos originPos = new BlockPos(position);
@@ -120,13 +120,14 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		fromWorld.getProfiler().pop();
 		fromWorld.getProfiler().push("placing");
-		entity.setLevel(toWorld);
-		toWorld.addDuringPortalTeleport(entity);
-		entity.moveTo(position.x(), position.y(), position.z());
+		player.setLevel(toWorld);
+		player.connection.teleport(position.x(), position.y(), position.z(), player.getYRot(), player.getXRot());
+		player.connection.resetPosition();
+		toWorld.addDuringPortalTeleport(player);
 		fromWorld.getProfiler().pop();
-		entity.triggerDimensionChangeTriggers(fromWorld);
+		player.triggerDimensionChangeTriggers(fromWorld);
 
-		return entity;
+		return player;
 	}
 
 	private Entity positionNonPlayer(Entity entity, Vec3 position, ServerLevel toWorld, boolean spawnPortal) {

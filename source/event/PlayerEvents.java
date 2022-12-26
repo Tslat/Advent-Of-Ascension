@@ -24,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent;
@@ -240,13 +241,13 @@ public class PlayerEvents {
 	}
 
 	private static void onItemToss(final ItemTossEvent ev) {
-		if (ev.getPlayer() instanceof ServerPlayer) {
+		if (ev.getPlayer() instanceof ServerPlayer player) {
 			ItemEntity entityItem = ev.getEntity();
 			Item item = entityItem.getItem().getItem();
 
-			if (item == AoAItems.BLANK_REALMSTONE.get()) {
-				if (ev.getEntity().isInLava()) {
-					ItemUtil.givePlayerItemOrDrop(ev.getPlayer(), new ItemStack(AoAItems.NETHER_REALMSTONE.get()));
+			if (item == AoAItems.BLANK_REALMSTONE.get() && entityItem.getThrower() != null && entityItem.getThrower().equals(player.getUUID())) {
+				if (player.isEyeInFluidType(ForgeMod.LAVA_TYPE.get())) {
+					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.NETHER_REALMSTONE.get()));
 					ev.getEntity().discard();
 				}
 			}

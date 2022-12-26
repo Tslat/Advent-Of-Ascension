@@ -31,7 +31,7 @@ import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
-import net.tslat.aoa3.content.entity.projectile.mob.StoneGiantRock;
+import net.tslat.aoa3.content.entity.projectile.mob.StoneGiantRockEntity;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -142,13 +142,13 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
-				DefaultAnimations.genericWalkIdleController(this),
+				DefaultAnimations.genericWalkController(this),
 				AoAAnimations.dynamicAttackController(this, state -> getAttackState() == 0 ? DefaultAnimations.ATTACK_SLAM : DefaultAnimations.ATTACK_THROW));
 	}
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		BaseMobProjectile projectile = new StoneGiantRock(AoAProjectiles.STONE_GIANT_ROCK.get(), level, this, BaseMobProjectile.Type.PHYSICAL);
+		BaseMobProjectile projectile = new StoneGiantRockEntity(AoAProjectiles.STONE_GIANT_ROCK.get(), level, this, BaseMobProjectile.Type.PHYSICAL);
 
 		projectile.setYRot(getYHeadRot());
 		PositionAndMotionUtil.moveRelativeToFacing(projectile, -1, 0, 1.5f);

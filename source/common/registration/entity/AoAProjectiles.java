@@ -222,14 +222,20 @@ public final class AoAProjectiles {
 	public static final RegistryObject<EntityType<YellowBulletEntity>> YELLOW_BULLET = registerProjectile("yellow_bullet", YellowBulletEntity::new);
 	public static final RegistryObject<EntityType<YellowGuardianShotEntity>> YELLOW_GUARDIAN_SHOT = registerProjectile("yellow_guardian_shot", YellowGuardianShotEntity::new);
 
-	public static final RegistryObject<EntityType<StoneGiantRock>> STONE_GIANT_ROCK = registerProjectile("stone_giant_rock", StoneGiantRock::new, 0.5f, 0.5f);
+	public static final RegistryObject<EntityType<StoneGiantRockEntity>> STONE_GIANT_ROCK = registerProjectile("stone_giant_rock", StoneGiantRockEntity::new, 0.5f, 0.5f);
+	public static final RegistryObject<EntityType<TreeSpiritSpriteEntity>> TREE_SPIRIT_SPRITE = registerProjectile("tree_spirit_sprite", TreeSpiritSpriteEntity::new, 0.375f, 0.375f, 1);
+	public static final RegistryObject<EntityType<FireballEntity>> FIREBALL = registerProjectile("fireball", FireballEntity::new, 0.25f, 0.25f);
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerProjectile(String registryName, EntityType.EntityFactory<T> factory) {
 		return registerProjectile(registryName, factory, 0.25f, 0.25f);
 	}
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerProjectile(String registryName, EntityType.EntityFactory<T> factory, float width, float height) {
-		EntityType.Builder<T> typeBuilder = EntityType.Builder.of(factory, MobCategory.MISC).sized(width, height).setTrackingRange(120).setUpdateInterval(20);
+		return registerProjectile(registryName, factory, width, height, 3);
+	}
+
+	private static <T extends Entity> RegistryObject<EntityType<T>> registerProjectile(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int updateInterval) {
+		EntityType.Builder<T> typeBuilder = EntityType.Builder.of(factory, MobCategory.MISC).sized(width, height).clientTrackingRange(8).setTrackingRange(120).setUpdateInterval(updateInterval);
 
 		return AoARegistries.ENTITIES.register(registryName, () -> {
 			boolean dataFixers = SharedConstants.CHECK_DATA_FIXER_SCHEMA;

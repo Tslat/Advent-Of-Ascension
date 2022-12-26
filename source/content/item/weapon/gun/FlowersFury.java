@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.EntityUtil;
@@ -28,7 +29,7 @@ public class FlowersFury extends BaseGun {
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
 		if (EntityUtil.isHostileMob(target) && RandomUtil.oneInNChance(20)) {
 			/*RosidEntity rosid = new RosidEntity(AoAEntities.Minions.ROSID.get(), shooter.level);
 

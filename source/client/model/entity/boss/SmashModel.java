@@ -2,12 +2,12 @@ package net.tslat.aoa3.client.model.entity.boss;
 
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class SmashModel extends AoAEntityGeoModel<SmashEntity> {
+public class SmashModel extends DefaultedEntityGeoModel<SmashEntity> {
 	public SmashModel() {
-		super("boss/smash/smash");
+		super(AdventOfAscension.id("boss/smash/smash"));
 	}
 
 	@Override

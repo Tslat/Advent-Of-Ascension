@@ -2,10 +2,10 @@ package net.tslat.aoa3.client.model.entity.npc;
 
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class DryadSpriteModel extends AoAEntityGeoModel<DryadSpriteEntity> {
+public class DryadSpriteModel extends DefaultedEntityGeoModel<DryadSpriteEntity> {
 	private static final ResourceLocation WOOD_TEXTURE = AdventOfAscension.id("textures/entity/npc/ambient/dryad_sprite_wood.png");
 	private static final ResourceLocation STONE_TEXTURE = AdventOfAscension.id("textures/entity/npc/ambient/dryad_sprite_stone.png");
 	private static final ResourceLocation IRON_TEXTURE = AdventOfAscension.id("textures/entity/npc/ambient/dryad_sprite_iron.png");
@@ -14,10 +14,10 @@ public class DryadSpriteModel extends AoAEntityGeoModel<DryadSpriteEntity> {
 	private static final ResourceLocation NETHERITE_TEXTURE = AdventOfAscension.id("textures/entity/npc/ambient/dryad_sprite_netherite.png");
 
 	public DryadSpriteModel() {
-		super("npc/ambient/dryad_sprite_wood");
+		super(AdventOfAscension.id("npc/ambient/dryad_sprite_wood"));
 
-		withAnimations("npc/ambient/dryad_sprite");
-		withModel("npc/ambient/dryad_sprite");
+		withAltAnimations(AdventOfAscension.id("npc/ambient/dryad_sprite"));
+		withAltModel(AdventOfAscension.id("npc/ambient/dryad_sprite"));
 	}
 
 	@Override

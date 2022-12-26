@@ -109,7 +109,6 @@ public final class AoAMobs {
 	//public static final RegistryObject<EntityType<CrystocoreEntity>> CRYSTOCORE = registerMob("crystocore", CrystocoreEntity::new, 2.5f, 4.875f, 1315589, 3812640);
 	public static final RegistryObject<EntityType<CyclopsEntity>> CYCLOPS = registerMob("cyclops", CyclopsEntity::new, 0.6f, 34 / 16f, 0x664D3D, 0x7B6354);
 	public static final RegistryObject<EntityType<DayseeEntity>> DAYSEE = registerMob("daysee", DayseeEntity::new, 0.5f, 2.0625f, 11913662, 6272881);
-	public static final RegistryObject<EntityType<DeadTreeEntity>> DEAD_TREE = registerMob("dead_tree", DeadTreeEntity::new, 0.875f, 3f, 4470537, 5192459);
 	public static final RegistryObject<EntityType<DeinotheriumEntity>> DEINOTHERIUM = registerMob("deinotherium", DeinotheriumEntity::new, 1.7f, 3f, 12040114, 10855832);
 	public static final RegistryObject<EntityType<DestructorEntity>> DESTRUCTOR = registerMob("destructor", DestructorEntity::new, 2.2f, 8.53125f, 2895664, 10696493);
 	public static final RegistryObject<EntityType<DevourerEntity>> DEVOURER = registerMob("devourer", DevourerEntity::new, 0.875f, 1.1875f, 1249827, 3750461);
@@ -313,7 +312,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<TortioneEntity>> TORTIONE = registerMob("tortione", TortioneEntity::new, 1.75f, 1.875f, 4415509, 8691731);
 	public static final RegistryObject<EntityType<ToxxulousEntity>> TOXXULOUS = registerMob("toxxulous", ToxxulousEntity::new, 0.75f, 1.125f, 3165970, 2041878);
 	public static final RegistryObject<EntityType<TrackerEntity>> TRACKER = registerMob("tracker", TrackerEntity::new, 10 / 16f, 14 / 16f, 0x884154, 0xF1785C);
-	public static final RegistryObject<EntityType<TreeSpiritEntity>> TREE_SPIRIT = registerMob("tree_spirit", TreeSpiritEntity::new, 1.0f, 3.5f, 4470537, 2505992);
+	public static final RegistryObject<EntityType<TreeSpiritEntity>> TREE_SPIRIT = registerMob("tree_spirit", TreeSpiritEntity::new, 1f, 3f, 0x60502C, 0x9A8448);
 	public static final RegistryObject<EntityType<TricksterEntity>> TRICKSTER = registerMob("trickster", TricksterEntity::new, 0.6f, 30.5f / 16f, 0x44464B, 0x292B31);
 	//public static final RegistryObject<EntityType<TyrosaurEntity>> TYROSAUR = registerMob("tyrosaur", TyrosaurEntity::new, 0.8f, 1.3125f, 5530376, 13356729);
 	public static final RegistryObject<EntityType<UndeadTrollEntity>> UNDEAD_TROLL = registerMob("undead_troll", UndeadTrollEntity::new, 0.6f, 1.8125f, 0xD8D2C6, 0x44576C);

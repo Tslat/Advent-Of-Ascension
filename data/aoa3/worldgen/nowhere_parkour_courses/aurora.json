@@ -1,0 +1,15 @@
+{
+  "player_start": [
+    2531.5,
+    5.0,
+    1018.5
+  ],
+  "reward_table": "aoa3:tier_4_parkour_rewards",
+  "structure_id": "aoa3:aurora",
+  "structure_pos": [
+    2500,
+    5,
+    1000
+  ],
+  "tier": 4
+}

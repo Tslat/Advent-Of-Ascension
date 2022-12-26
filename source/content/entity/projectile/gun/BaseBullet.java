@@ -9,7 +9,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -266,7 +265,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		}
 
 		Entity shooter = getOwner();
-		EntityHitResult entityTrace = ProjectileUtil.getEntityHitResult(level, this, position, velocityAdjustedPosition, boundingBox.expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.5d), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter);
+		EntityHitResult entityTrace = EntityUtil.getEntityCollisionWithPrecision(level, this, position, velocityAdjustedPosition, boundingBox.expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.5d), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter, 0.3f);
 
 		if (entityTrace != null)
 			intersectedBlocksTrace = entityTrace;

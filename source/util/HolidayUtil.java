@@ -1,22 +1,29 @@
 package net.tslat.aoa3.util;
 
+import com.google.common.base.Suppliers;
+
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.function.Supplier;
 
 public final class HolidayUtil {
-	public static Holiday getCurrentHoliday() {
+	private static final Supplier<Holiday> CURRENT_HOLIDAY = Suppliers.memoize(() -> {
 		LocalDate date = LocalDate.now();
 
-		if (date.compareTo(LocalDate.of(date.getYear(), Month.APRIL, 1)) == 0)
+		if (date.isEqual(LocalDate.of(date.getYear(), Month.APRIL, 1)))
 			return Holiday.APRIL_FOOLS;
 
-		if (date.compareTo(LocalDate.of(date.getYear(), Month.DECEMBER, 25)) == 0)
+		if (date.isEqual(LocalDate.of(date.getYear(), Month.DECEMBER, 25)))
 			return Holiday.CHRISTMAS;
 
-		if (date.compareTo(LocalDate.of(date.getYear(), Month.OCTOBER, 31)) == 0)
+		if (date.isEqual(LocalDate.of(date.getYear(), Month.OCTOBER, 31)))
 			return Holiday.HALLOWEEN;
 
 		return Holiday.NONE;
+	});
+
+	public static Holiday getCurrentHoliday() {
+		return CURRENT_HOLIDAY.get();
 	}
 
 	public static boolean isChristmas() {

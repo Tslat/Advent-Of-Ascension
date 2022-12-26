@@ -27,7 +27,6 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.armor.AoAMiscModels;
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
 import net.tslat.aoa3.client.model.entity.boss.EliteSmashModel;
@@ -52,7 +51,6 @@ import net.tslat.aoa3.client.render.entity.misc.FishingCageRenderer;
 import net.tslat.aoa3.client.render.entity.misc.HaulingBobberRenderer;
 import net.tslat.aoa3.client.render.entity.misc.LottoTotemRenderer;
 import net.tslat.aoa3.client.render.entity.mob.GhostRenderer;
-import net.tslat.aoa3.client.render.entity.mob.NethengeicBeastRenderer;
 import net.tslat.aoa3.client.render.entity.projectile.ModelledProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.projectile.TexturedProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.projectile.blasters.*;
@@ -70,6 +68,7 @@ import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 import net.tslat.aoa3.util.ColourUtil;
 import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
@@ -84,33 +83,33 @@ import java.util.function.Supplier;
 public final class AoAEntityRendering {
 	private static List<EntityRendererPackage> RENDERER_PACKAGES = new ObjectArrayList<>();
 
-	public static final EntityRendererPackage<?> BLUE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.BLUE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/blue_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> CANDLEFISH = new GeckoLibRendererPackage<>(AoAAnimals.CANDLEFISH).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/candlefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> CHARRED_CHAR = new GeckoLibRendererPackage<>(AoAAnimals.CHARRED_CHAR).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/charred_char")));
-	public static final EntityRendererPackage<?> CHOCAW = new GeckoLibRendererPackage<>(AoAAnimals.CHOCAW).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/chocaw").withAnimations("animal/fish/jamfish")));
+	public static final EntityRendererPackage<?> BLUE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.BLUE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/blue_gemtrap")).withAltModel(AdventOfAscension.id("animal/fish/gemtrap")).withAltAnimations(AdventOfAscension.id("animal/fish/gemtrap"))));
+	public static final EntityRendererPackage<?> CANDLEFISH = new GeckoLibRendererPackage<>(AoAAnimals.CANDLEFISH).renderer(context -> new BasicLavaFishRenderer(context, new DefaultedEntityGeoModel<BasicLavaFishEntity>(AdventOfAscension.id("animal/fish/candlefish")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> CHARRED_CHAR = new GeckoLibRendererPackage<>(AoAAnimals.CHARRED_CHAR).renderer(context -> new BasicLavaFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/charred_char"))));
+	public static final EntityRendererPackage<?> CHOCAW = new GeckoLibRendererPackage<>(AoAAnimals.CHOCAW).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/chocaw")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
 	public static final EntityRendererPackage<?> CORATEE = new GeckoLibRendererPackage<>(AoAAnimals.CORATEE).model(new CorateeModel());
-	public static final EntityRendererPackage<?> CRIMSON_SKIPPER = new GeckoLibRendererPackage<>(AoAAnimals.CRIMSON_SKIPPER).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> CRIMSON_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.CRIMSON_STRIPEFISH).renderer(context -> new BasicLavaFishRenderer(context, new AoAEntityGeoModel<BasicLavaFishEntity>("animal/fish/crimson_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> DARK_HATCHETFISH = new GeckoLibRendererPackage<>(AoAAnimals.DARK_HATCHETFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/dark_hatchetfish")));
-	public static final EntityRendererPackage<?> GREEN_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.GREEN_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/green_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> HYDRONE = new GeckoLibRendererPackage<>(AoAAnimals.HYDRONE).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/hydrone")));
-	public static final EntityRendererPackage<?> IRONBACK = new GeckoLibRendererPackage<>(AoAAnimals.IRONBACK).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/ironback")));
-	public static final EntityRendererPackage<?> JAMFISH = new GeckoLibRendererPackage<>(AoAAnimals.JAMFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> PARAPIRANHA = new GeckoLibRendererPackage<>(AoAAnimals.PARAPIRANHA).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/parapiranha")));
-	public static final EntityRendererPackage<?> PEARL_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.PEARL_STRIPEFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/pearl_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> PURPLE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.PURPLE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/purple_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> RAINBOWFISH = new GeckoLibRendererPackage<>(AoAAnimals.RAINBOWFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/rainbowfish")));
-	public static final EntityRendererPackage<?> RAZORFISH = new GeckoLibRendererPackage<>(AoAAnimals.RAZORFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/razorfish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> RED_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.RED_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/red_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> REEFTOOTH = new GeckoLibRendererPackage<>(AoAAnimals.REEFTOOTH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/reeftooth")));
-	public static final EntityRendererPackage<?> ROCKETFISH = new GeckoLibRendererPackage<>(AoAAnimals.ROCKETFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/rocketfish")));
-	public static final EntityRendererPackage<?> SAILBACK = new GeckoLibRendererPackage<>(AoAAnimals.SAILBACK).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/sailback").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> SAPPHIRE_STRIDER = new GeckoLibRendererPackage<>(AoAAnimals.SAPPHIRE_STRIDER).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<>("animal/fish/sapphire_strider")));
-	public static final EntityRendererPackage<?> SKELECANTH = new GeckoLibRendererPackage<>(AoAAnimals.SKELECANTH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/skelecanth").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> TURQUOISE_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.TURQUOISE_STRIPEFISH).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/turquoise_stripefish").withModel("animal/fish/stripefish").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> VIOLET_SKIPPER = new GeckoLibRendererPackage<>(AoAAnimals.VIOLET_SKIPPER).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/violet_skipper").withModel("animal/fish/skipper").withAnimations("animal/fish/jamfish")));
-	public static final EntityRendererPackage<?> WHITE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.WHITE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/white_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
-	public static final EntityRendererPackage<?> YELLOW_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.YELLOW_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new AoAEntityGeoModel<BasicFishEntity>("animal/fish/yellow_gemtrap").withModel("animal/fish/gemtrap").withAnimations("animal/fish/gemtrap")));
+	public static final EntityRendererPackage<?> CRIMSON_SKIPPER = new GeckoLibRendererPackage<>(AoAAnimals.CRIMSON_SKIPPER).renderer(context -> new BasicLavaFishRenderer(context, new DefaultedEntityGeoModel<BasicLavaFishEntity>(AdventOfAscension.id("animal/fish/crimson_skipper")).withAltModel(AdventOfAscension.id("animal/fish/skipper")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> CRIMSON_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.CRIMSON_STRIPEFISH).renderer(context -> new BasicLavaFishRenderer(context, new DefaultedEntityGeoModel<BasicLavaFishEntity>(AdventOfAscension.id("animal/fish/crimson_stripefish")).withAltModel(AdventOfAscension.id("animal/fish/stripefish")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> DARK_HATCHETFISH = new GeckoLibRendererPackage<>(AoAAnimals.DARK_HATCHETFISH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/dark_hatchetfish"))));
+	public static final EntityRendererPackage<?> GREEN_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.GREEN_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/green_gemtrap")).withAltModel(AdventOfAscension.id("animal/fish/gemtrap")).withAltAnimations(AdventOfAscension.id("animal/fish/gemtrap"))));
+	public static final EntityRendererPackage<?> HYDRONE = new GeckoLibRendererPackage<>(AoAAnimals.HYDRONE).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/hydrone"))));
+	public static final EntityRendererPackage<?> IRONBACK = new GeckoLibRendererPackage<>(AoAAnimals.IRONBACK).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/ironback"))));
+	public static final EntityRendererPackage<?> JAMFISH = new GeckoLibRendererPackage<>(AoAAnimals.JAMFISH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> PARAPIRANHA = new GeckoLibRendererPackage<>(AoAAnimals.PARAPIRANHA).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/parapiranha"))));
+	public static final EntityRendererPackage<?> PEARL_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.PEARL_STRIPEFISH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/pearl_stripefish")).withAltModel(AdventOfAscension.id("animal/fish/stripefish")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> PURPLE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.PURPLE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/purple_gemtrap")).withAltModel(AdventOfAscension.id("animal/fish/gemtrap")).withAltAnimations(AdventOfAscension.id("animal/fish/gemtrap"))));
+	public static final EntityRendererPackage<?> RAINBOWFISH = new GeckoLibRendererPackage<>(AoAAnimals.RAINBOWFISH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/rainbowfish"))));
+	public static final EntityRendererPackage<?> RAZORFISH = new GeckoLibRendererPackage<>(AoAAnimals.RAZORFISH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/razorfish")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> RED_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.RED_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/red_gemtrap")).withAltModel(AdventOfAscension.id("animal/fish/gemtrap")).withAltAnimations(AdventOfAscension.id("animal/fish/gemtrap"))));
+	public static final EntityRendererPackage<?> REEFTOOTH = new GeckoLibRendererPackage<>(AoAAnimals.REEFTOOTH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/reeftooth"))));
+	public static final EntityRendererPackage<?> ROCKETFISH = new GeckoLibRendererPackage<>(AoAAnimals.ROCKETFISH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/rocketfish"))));
+	public static final EntityRendererPackage<?> SAILBACK = new GeckoLibRendererPackage<>(AoAAnimals.SAILBACK).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/sailback")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> SAPPHIRE_STRIDER = new GeckoLibRendererPackage<>(AoAAnimals.SAPPHIRE_STRIDER).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<>(AdventOfAscension.id("animal/fish/sapphire_strider"))));
+	public static final EntityRendererPackage<?> SKELECANTH = new GeckoLibRendererPackage<>(AoAAnimals.SKELECANTH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/skelecanth")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> TURQUOISE_STRIPEFISH = new GeckoLibRendererPackage<>(AoAAnimals.TURQUOISE_STRIPEFISH).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/turquoise_stripefish")).withAltModel(AdventOfAscension.id("animal/fish/stripefish")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> VIOLET_SKIPPER = new GeckoLibRendererPackage<>(AoAAnimals.VIOLET_SKIPPER).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/violet_skipper")).withAltModel(AdventOfAscension.id("animal/fish/skipper")).withAltAnimations(AdventOfAscension.id("animal/fish/jamfish"))));
+	public static final EntityRendererPackage<?> WHITE_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.WHITE_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/white_gemtrap")).withAltModel(AdventOfAscension.id("animal/fish/gemtrap")).withAltAnimations(AdventOfAscension.id("animal/fish/gemtrap"))));
+	public static final EntityRendererPackage<?> YELLOW_GEMTRAP = new GeckoLibRendererPackage<>(AoAAnimals.YELLOW_GEMTRAP).renderer(context -> new BasicWaterFishRenderer(context, new DefaultedEntityGeoModel<BasicFishEntity>(AdventOfAscension.id("animal/fish/yellow_gemtrap")).withAltModel(AdventOfAscension.id("animal/fish/gemtrap")).withAltAnimations(AdventOfAscension.id("animal/fish/gemtrap"))));
 	public static final EntityRendererPackage<?> SHINY_SQUID = new EntityRendererPackage<>(AoAAnimals.SHINY_SQUID).defineLayer("shiny_squid", ShinySquidModel::createBodyLayer).provider(ShinySquidRenderer::new);
 
 	public static final EntityRendererPackage<?> THORNY_PLANT_SPROUT = new GeckoLibRendererPackage<>(AoAMiscEntities.THORNY_PLANT_SPROUT).path("mob/misc/thorny_plant_sprout");
@@ -142,7 +141,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> MUCKOPEDE = new GeckoLibRendererPackage<>(AoAMobs.MUCKOPEDE).path("mob/overworld/muckopede");
 	public static final EntityRendererPackage<?> MUNCHER = new GeckoLibRendererPackage<>(AoAMobs.MUNCHER).path("mob/lborean/muncher");
 	public static final EntityRendererPackage<?> NEPTUNO = new GeckoLibRendererPackage<>(AoAMobs.NEPTUNO).path("mob/lborean/neptuno");
-	public static final EntityRendererPackage<?> NETHENGEIC_BEAST = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_BEAST).renderer(NethengeicBeastRenderer::new);
+	public static final EntityRendererPackage<?> NETHENGEIC_BEAST = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_BEAST).path("mob/nether/nethengeic_beast", true).emissive();
 	public static final EntityRendererPackage<?> NIGHTFLY = new GeckoLibRendererPackage<>(AoAMobs.NIGHTFLY).path("mob/overworld/nightfly");
 	public static final EntityRendererPackage<?> NIGHT_REAPER = new GeckoLibRendererPackage<>(AoAMobs.NIGHT_REAPER).path("mob/overworld/night_reaper");
 	public static final EntityRendererPackage<?> NIPPER = new GeckoLibRendererPackage<>(AoAMobs.NIPPER).path("mob/deeplands/nipper");
@@ -163,6 +162,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> VISULON = new GeckoLibRendererPackage<>(AoAMobs.VISULON).path("mob/lunalus/visulon");
 	public static final EntityRendererPackage<?> VOID_WALKER = new GeckoLibRendererPackage<>(AoAMobs.VOID_WALKER).path("mob/overworld/void_walker");
 	public static final EntityRendererPackage<?> WOOD_GIANT = new GeckoLibRendererPackage<>(AoAMobs.WOOD_GIANT).model(new WoodGiantModel());
+	public static final EntityRendererPackage<?> TREE_SPIRIT = new GeckoLibRendererPackage<>(AoAMobs.TREE_SPIRIT).path("mob/overworld/tree_spirit").emissive();
 
 	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMobs.SMASH).model(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMobs.ELITE_SMASH).model(new EliteSmashModel());
@@ -396,6 +396,8 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> YELLOW_GUARDIAN_SHOT = new EntityRendererPackage<>(AoAProjectiles.YELLOW_GUARDIAN_SHOT).provider(YellowGuardianShotRenderer::new);
 
 	public static final EntityRendererPackage<?> STONE_GIANT_ROCK = new GeckoLibRendererPackage<>(AoAProjectiles.STONE_GIANT_ROCK).path("projectile/mob/stone_giant_rock").projectile();
+	public static final EntityRendererPackage<?> TREE_SPIRIT_SPRITE = new GeckoLibRendererPackage<>(AoAProjectiles.TREE_SPIRIT_SPRITE).path("projectile/mob/tree_spirit_sprite").projectile().emissive();
+	public static final EntityRendererPackage<?> FIREBALL = new GeckoLibRendererPackage<>(AoAProjectiles.FIREBALL).path("projectile/mob/fireball").nonLiving().emissive();
 
 	// Begin super jank test
 	public static final EntityRendererPackage<?> AIRHEAD = new EntityRendererPackage<>(AoAMobs.AIRHEAD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -442,7 +444,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> CRUSILISK = new EntityRendererPackage<>(AoAMobs.CRUSILISK).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> CRYPTID = new EntityRendererPackage<>(AoAMobs.CRYPTID).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DAYSEE = new EntityRendererPackage<>(AoAMobs.DAYSEE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> DEAD_TREE = new EntityRendererPackage<>(AoAMobs.DEAD_TREE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DEINOTHERIUM = new EntityRendererPackage<>(AoAMobs.DEINOTHERIUM).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DESTRUCTOR = new EntityRendererPackage<>(AoAMobs.DESTRUCTOR).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DEVOURER = new EntityRendererPackage<>(AoAMobs.DEVOURER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -584,7 +585,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> TIPSY = new EntityRendererPackage<>(AoAMobs.TIPSY).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> TORTIONE = new EntityRendererPackage<>(AoAMobs.TORTIONE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> TOXXULOUS = new EntityRendererPackage<>(AoAMobs.TOXXULOUS).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> TREE_SPIRIT = new EntityRendererPackage<>(AoAMobs.TREE_SPIRIT).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> URIOH = new EntityRendererPackage<>(AoAMobs.URIOH).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> URV = new EntityRendererPackage<>(AoAMobs.URV).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> VALKYRIE = new EntityRendererPackage<>(AoAMobs.VALKYRIE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -676,7 +676,7 @@ public final class AoAEntityRendering {
 	}
 
 	private static class GeckoLibRendererPackage<T extends Entity & GeoEntity> extends EntityRendererPackage<T> {
-		private AoAEntityGeoModel<T> model = null;
+		private GeoModel<T> model = null;
 		private boolean emissive = false;
 		private boolean transparent = false;
 		private Type type = Type.LIVING;
@@ -691,10 +691,10 @@ public final class AoAEntityRendering {
 		}
 
 		private GeckoLibRendererPackage<T> path(String path, boolean turnsHead) {
-			return model(new AoAEntityGeoModel<>(path, turnsHead));
+			return model(new DefaultedEntityGeoModel<>(AdventOfAscension.id(path), turnsHead));
 		}
 
-		private GeckoLibRendererPackage<T> model(AoAEntityGeoModel<T> model) {
+		private GeckoLibRendererPackage<T> model(GeoModel<T> model) {
 			this.model = model;
 
 			return this;

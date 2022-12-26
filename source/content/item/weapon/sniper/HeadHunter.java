@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
-import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
@@ -33,24 +32,23 @@ public class HeadHunter extends BaseSniper {
 	}
 
 	@Override
-	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity && target.level instanceof ServerLevel) {
-			Vec3 preciseImpactSpot = EntityUtil.preciseEntityInterceptCalculation(target, bullet, 20);
+	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
+		if (target instanceof LivingEntity && target.level instanceof ServerLevel serverLevel) {
 
-			if (preciseImpactSpot != null) {
+			if (impactPos != null) {
 				double headMinRange = (target.getBoundingBox().minY + target.getEyeHeight()) - target.getBbHeight() * 0.105f;
 				double headMaxRange = headMinRange + target.getBbHeight() * 0.225f;
 
-				if (preciseImpactSpot.y > headMinRange && preciseImpactSpot.y < headMaxRange) {
+				if (impactPos.y > headMinRange && impactPos.y < headMaxRange) {
 					for (int i = 0; i < 5; i++) {
-						((ServerLevel)target.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, preciseImpactSpot.x + RandomUtil.randomValueBetween(-0.5d, 0.5d), preciseImpactSpot.y + RandomUtil.randomValueBetween(-0.5d, 0.5d), preciseImpactSpot.z + RandomUtil.randomValueBetween(-0.5d, 0.5d), 3, 0, 0, 0, 0);
+						serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR, impactPos.x + RandomUtil.randomValueBetween(-0.5d, 0.5d), impactPos.y + RandomUtil.randomValueBetween(-0.5d, 0.5d), impactPos.z + RandomUtil.randomValueBetween(-0.5d, 0.5d), 3, 0, 0, 0, 0);
 					}
 
 					if (shooter.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this && shooter.getItemInHand(InteractionHand.OFF_HAND).getItem() != this)
 						return;
 
-					if (shooter instanceof Player)
-						((Player)shooter).getCooldowns().addCooldown(this, (int)(getFiringDelay() / 2f));
+					if (shooter instanceof Player player)
+						player.getCooldowns().addCooldown(this, (int)(getFiringDelay() / 2f));
 				}
 			}
 		}

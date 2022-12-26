@@ -1,13 +1,14 @@
 package net.tslat.aoa3.client.model.entity.animal;
 
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.content.entity.animal.CorateeEntity;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class CorateeModel extends AoAEntityGeoModel<CorateeEntity> {
+public class CorateeModel extends DefaultedEntityGeoModel<CorateeEntity> {
 	public CorateeModel() {
-		super("animal/lborean/coratee");
+		super(AdventOfAscension.id("animal/lborean/coratee"));
 	}
 
 	@Override

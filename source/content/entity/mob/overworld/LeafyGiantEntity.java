@@ -26,6 +26,7 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -151,7 +152,7 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 			return;
 
 		bushBaby.setDeltaMovement(Mth.clamp((target.getX() - getX()) * 0.2f, -0.85, 0.5f), 0.7, Mth.clamp((target.getZ() - getZ()) * 0.2f, -0.85, 0.85));
-		bushBaby.setTarget(target);
+		BrainUtils.setTargetOfEntity(bushBaby, target);
 		bushBaby.fallDistance = -10;
 
 		if (isOnFire())

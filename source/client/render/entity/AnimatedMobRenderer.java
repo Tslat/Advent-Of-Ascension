@@ -15,4 +15,9 @@ public class AnimatedMobRenderer<T extends LivingEntity & GeoEntity> extends Geo
 
 		addRenderLayer(new GeoEntityChargeLayer<>(this));
 	}
+
+	@Override
+	public float getMotionAnimThreshold(T animatable) {
+		return 0.013f;//super.getMotionAnimThreshold(animatable);
+	}
 }

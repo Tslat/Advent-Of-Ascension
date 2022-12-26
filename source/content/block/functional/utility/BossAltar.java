@@ -64,8 +64,8 @@ public class BossAltar extends Block implements EntityBlock {
 		EntityType<?> entityType;
 
 		if ((bossItem = getEntityTypeFromStack(heldItem)) == null || (entityType = bossItem.getEntityType(heldItem)) == null) {
-			if (hand == InteractionHand.OFF_HAND)
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.badItem"));
+			if (hand == InteractionHand.OFF_HAND && !level.isClientSide())
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.badItem", ChatFormatting.RED));
 
 			return InteractionResult.FAIL;
 		}

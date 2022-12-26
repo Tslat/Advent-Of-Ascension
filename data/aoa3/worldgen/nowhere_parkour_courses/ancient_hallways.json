@@ -1,0 +1,15 @@
+{
+  "player_start": [
+    1005.5,
+    6.0,
+    1047.5
+  ],
+  "reward_table": "aoa3:tier_1_parkour_rewards",
+  "structure_id": "aoa3:ancient_hallways",
+  "structure_pos": [
+    1000,
+    5,
+    1000
+  ],
+  "tier": 1
+}

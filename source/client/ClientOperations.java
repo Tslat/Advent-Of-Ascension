@@ -96,6 +96,7 @@ public final class ClientOperations {
 		ev.register(AoAParticleTypes.BURNING_FLAME.get(), BurningFlameParticle.Factory::new);
 		ev.register(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
 		ev.register(AoAParticleTypes.ORB.get(), OrbParticle.Factory::new);
+		ev.register(AoAParticleTypes.FIRE_AURA.get(), FireAuraParticle.Factory::new);
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {

@@ -1,11 +1,12 @@
 package net.tslat.aoa3.client.model.entity.mob;
 
-import net.tslat.aoa3.client.model.entity.AoAEntityGeoModel;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.content.entity.mob.nether.FlamewalkerEntity;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
 import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
-public class FlamewalkerModel extends AoAEntityGeoModel<FlamewalkerEntity> {
+public class FlamewalkerModel extends DefaultedEntityGeoModel<FlamewalkerEntity> {
 	private CoreGeoBone rock1;
 	private CoreGeoBone rock2;
 	private CoreGeoBone rock3;
@@ -13,7 +14,7 @@ public class FlamewalkerModel extends AoAEntityGeoModel<FlamewalkerEntity> {
 	private CoreGeoBone rock5;
 
 	public FlamewalkerModel() {
-		super("mob/nether/flamewalker");
+		super(AdventOfAscension.id("mob/nether/flamewalker"));
 	}
 
 	@Override

@@ -49,7 +49,7 @@ public abstract class BaseCannon extends BaseGun {
 				if (target instanceof LivingEntity)
 					DamageUtil.doScaledKnockback((LivingEntity)target, shooter, ((float)getDamage() * bulletDmgMultiplier) / 10f, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
 
-				doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
+				doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}
 		}
 	}

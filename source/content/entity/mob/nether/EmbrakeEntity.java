@@ -25,11 +25,11 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
-import net.tslat.aoa3.content.entity.brain.task.temp.ConditionlessHeldAttack;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessHeldAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
@@ -66,7 +66,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 
 	@Override
 	public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
-		target.hurt(DamageSource.IN_FIRE, 2);
+		target.hurt(DamageSource.mobAttack(this).setIsFire(), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
 		if (RandomUtil.oneInNChance(5))
 			target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
@@ -116,6 +116,9 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 
 				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, entity.getEyePosition(), 64);
 
+				if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
+					entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
+
 				return true;
 			});
 			requiresTarget();
@@ -134,12 +137,12 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 				LivingEntity target = BrainUtils.getMemory(entity, MemoryModuleType.ATTACK_TARGET);
 
 				if (target == null)
-					return false;
+					return true;
 
 				double dist = target.distanceToSqr(entity);
-				double followRange = entity.getAttributeValue(Attributes.FOLLOW_RANGE);
+				double distanceCutoff = entity.getAttributeValue(Attributes.FOLLOW_RANGE) * 0.75f;
 
-				return dist <= followRange * followRange && !entity.isWithinMeleeAttackRange(target) && BrainUtils.canSee(entity, target);
+				return dist > distanceCutoff * distanceCutoff || !entity.isWithinMeleeAttackRange(target) || !BrainUtils.canSee(entity, target);
 			});
 			cooldownFor(entity -> 10);
 			whenStarting(entity -> {
@@ -166,7 +169,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return AoASounds.ENTITY_EMBRAKE_AMBIENT.get();
+		return AoASounds.LARGE_LIZARD_HISS.get();
 	}
 
 	@Override
@@ -182,7 +185,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 	@Nullable
 	@Override
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		return AoASounds.ENTITY_GENERIC_HEAVY_STEP.get();
+		return AoASounds.ENTITY_GENERIC_DINO_STEP.get();
 	}
 
 	@Override
