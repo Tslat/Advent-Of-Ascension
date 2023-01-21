@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.entity.projectile.mob;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -43,7 +44,7 @@ public class TreeSpiritSpriteEntity extends BaseMobProjectile implements GeoEnti
 		super.tick();
 
 		if (!this.level.isClientSide()) {
-			if (this.target == null || this.target.level != this.level || !this.target.isAlive()) {
+			if (this.target == null || this.target.level != this.level || !this.target.isAlive() || this.level.getDifficulty() == Difficulty.PEACEFUL) {
 				kill();
 
 				return;

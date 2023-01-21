@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#forge:is_mushroom",
+      "minecraft:deep_dark"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "#forge:is_snowy"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:yeti",
+      "maxCount": 1,
+      "minCount": 0,
+      "weight": 10
+    }
+  ]
+}

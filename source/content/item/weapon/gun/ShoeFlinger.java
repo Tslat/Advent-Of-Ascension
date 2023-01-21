@@ -64,7 +64,7 @@ public class ShoeFlinger extends BaseGun {
 		if (target instanceof LivingEntity) {
 			LivingEntity livingTarget = (LivingEntity)target;
 
-			DamageUtil.doScaledKnockback(livingTarget, shooter, 1.35f, shooter.getX() - target.getX(), shooter.getZ() - target.getZ());
+			DamageUtil.doScaledKnockback(livingTarget, shooter, 1.35f, shooter.getX() - target.getX(), 1, shooter.getZ() - target.getZ());
 
 			if (shooter instanceof ServerPlayer && livingTarget.getHealth() == 0 && !target.canChangeDimensions())
 				AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/la_chancla"), "shoe_flinger_boss_kill");

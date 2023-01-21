@@ -21,10 +21,10 @@ public class NethengeicCurseEffect extends ExtendedMobEffect {
 	}
 
 	@Override
-	public float modifyIncomingAttackDamage(LivingEntity entity, MobEffectInstance effectInstance, DamageSource source, float baseAmount) {
+	public boolean beforeIncomingAttack(LivingEntity entity, MobEffectInstance effectInstance, DamageSource source, float amount) {
 		if (source.isFire() && entity.hasEffect(MobEffects.FIRE_RESISTANCE))
-			entity.hurt(DamageSource.MAGIC, baseAmount * (float)(Math.min(effectInstance.getAmplifier(), 8) * 0.5 + 0.5f));
+			entity.hurt(DamageSource.MAGIC, amount * (float)(Math.min(effectInstance.getAmplifier(), 8) * 0.5 + 0.5f));
 
-		return baseAmount;
+		return true;
 	}
 }

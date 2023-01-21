@@ -48,10 +48,12 @@ public class AoAJigsawAssembler {
 		return false;
 	}
 
+	protected BlockPos getStartPos(PoolElementStructurePiece startPiece, int x, int y, int z) {
+		return new BlockPos(x, y, z);
+	}
+
 	public Optional<Structure.GenerationStub> addPieces(Structure.GenerationContext genContext, Holder<StructureTemplatePool> templatePoolHolder, Optional<ResourceLocation> startJigsawName, int maxPieces, BlockPos startPos, Optional<Heightmap.Types> heightmap, int maxRadius) {
-		ChunkGenerator chunkGen = genContext.chunkGenerator();
 		StructureTemplateManager templateManager = genContext.structureTemplateManager();
-		LevelHeightAccessor heightAccessor = genContext.heightAccessor();
 		WorldgenRandom rand = genContext.random();
 		Rotation rotation = ignoreRotations() ? Rotation.NONE : Rotation.getRandom(rand);
 		StructurePoolElement poolElement = templatePoolHolder.value().getRandomTemplate(rand);
@@ -81,13 +83,15 @@ public class AoAJigsawAssembler {
 		int startY = finalStartPos.getY();
 
 		if (heightmap.isPresent())
-			startY = startPos.getY() + chunkGen.getFirstFreeHeight(structurePosX, structurePosZ, heightmap.get(), heightAccessor, genContext.randomState());
+			startY = startPos.getY() + genContext.chunkGenerator().getFirstFreeHeight(structurePosX, structurePosZ, heightmap.get(), genContext.heightAccessor(), genContext.randomState());
 
 		startPiece.move(0, startY - (startPieceBounds.minY() + startPiece.getGroundLevelDelta()), 0);
 
-		int structurePosY = startY + startOffset.getY();
+		return buildGenerationStub(startPiece, startPieceBounds, genContext, structurePosX, startY + startOffset.getY(), structurePosZ, maxPieces, maxRadius);
+	}
 
-		return Optional.of(new Structure.GenerationStub(new BlockPos(structurePosX, structurePosY, structurePosZ), pieceBuilder -> {
+	protected Optional<Structure.GenerationStub> buildGenerationStub(PoolElementStructurePiece startPiece, BoundingBox startPieceBounds, Structure.GenerationContext genContext, int startX, int startY, int startZ, int maxPieces, int maxRadius) {
+		return Optional.of(new Structure.GenerationStub(getStartPos(startPiece, startX, startY, startZ), pieceBuilder -> {
 			List<PoolElementStructurePiece> pieces = new ObjectArrayList<>();
 
 			pieces.add(startPiece);
@@ -96,22 +100,22 @@ public class AoAJigsawAssembler {
 				addPieces(
 						genContext.randomState(),
 						maxPieces,
-						chunkGen,
-						templateManager,
-						heightAccessor,
-						rand,
+						genContext.chunkGenerator(),
+						genContext.structureTemplateManager(),
+						genContext.heightAccessor(),
+						genContext.random(),
 						genContext.registryAccess().registryOrThrow(Registries.TEMPLATE_POOL),
 						startPiece,
 						pieces,
 						Shapes.join(
-								Shapes.create(new AABB(structurePosX - maxRadius, -4000, structurePosZ - maxRadius, structurePosX + maxRadius + 1, 4000, structurePosZ + maxRadius + 1)),
+								Shapes.create(new AABB(startX - maxRadius, -4000, startZ - maxRadius, startX + maxRadius + 1, 4000, startZ + maxRadius + 1)),
 								Shapes.create(AABB.of(startPieceBounds)), BooleanOp.ONLY_FIRST));
 				pieces.forEach(pieceBuilder::addPiece);
 			}
 		}));
 	}
 
-	private Optional<BlockPos> getRandomNamedJigsaw(StructurePoolElement poolElement, ResourceLocation jigsawName, BlockPos startPos, Rotation rotation, StructureTemplateManager templateManager, WorldgenRandom rand) {
+	protected Optional<BlockPos> getRandomNamedJigsaw(StructurePoolElement poolElement, ResourceLocation jigsawName, BlockPos startPos, Rotation rotation, StructureTemplateManager templateManager, WorldgenRandom rand) {
 		for(StructureTemplate.StructureBlockInfo jigsawBlockInfo : poolElement.getShuffledJigsawBlocks(templateManager, startPos, rotation, rand)) {
 			if (jigsawName.equals(ResourceLocation.tryParse(jigsawBlockInfo.nbt.getString("name"))))
 				return Optional.of(jigsawBlockInfo.pos);
@@ -120,7 +124,7 @@ public class AoAJigsawAssembler {
 		return Optional.empty();
 	}
 
-	private void addPieces(RandomState genState, int maxPieces, ChunkGenerator chunkGen, StructureTemplateManager templateManager, LevelHeightAccessor heightAccessor, RandomSource rand, Registry<StructureTemplatePool> templatePool, PoolElementStructurePiece parentPiece, List<PoolElementStructurePiece> childPieces, VoxelShape bounds) {
+	protected void addPieces(RandomState genState, int maxPieces, ChunkGenerator chunkGen, StructureTemplateManager templateManager, LevelHeightAccessor heightAccessor, RandomSource rand, Registry<StructureTemplatePool> templatePool, PoolElementStructurePiece parentPiece, List<PoolElementStructurePiece> childPieces, VoxelShape bounds) {
 		PiecePlacer piecePlacer = new PiecePlacer(templatePool, maxPieces, chunkGen, templateManager, childPieces, rand);
 
 		piecePlacer.placing.addLast(new PieceState(parentPiece, new MutableObject<>(bounds), 0));
@@ -154,7 +158,7 @@ public class AoAJigsawAssembler {
 		return true;
 	}
 
-	private static final class PieceState {
+	protected static final class PieceState {
 		private final PoolElementStructurePiece piece;
 		private final MutableObject<VoxelShape> bounds;
 		private final int depth;
@@ -166,7 +170,7 @@ public class AoAJigsawAssembler {
 		}
 	}
 
-	private static final class PiecePlacer {
+	protected static final class PiecePlacer {
 		private final Registry<StructureTemplatePool> pools;
 		private final int maxPieces;
 		private final ChunkGenerator chunkGenerator;

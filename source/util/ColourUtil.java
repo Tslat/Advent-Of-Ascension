@@ -37,7 +37,7 @@ public final class ColourUtil {
 		return alpha << 24 | colour;
 	}
 
-	public record Colour(int red, int green, int blue, int alpha) {
+	public record Colour(float red, float green, float blue, float alpha) {
 		public Colour(int red, int green, int blue) {
 			this(red, green, blue, 255);
 		}
@@ -47,11 +47,11 @@ public final class ColourUtil {
 		}
 
 		public String hex() {
-			return Integer.toHexString(red) + Integer.toHexString(green) + Integer.toHexString(blue);
+			return Integer.toHexString((int)(red * 255f)) + Integer.toHexString((int)(green * 255f)) + Integer.toHexString((int)(blue * 255f));
 		}
 
 		public int packed() {
-			return addAlpha(RGB(red, green, blue), alpha);
+			return addAlpha(RGB(red, green, blue), (int)(alpha * 255f));
 		}
 	}
 }

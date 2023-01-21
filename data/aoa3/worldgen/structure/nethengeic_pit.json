@@ -1,0 +1,21 @@
+{
+  "type": "aoa3:nethengeic_pit",
+  "biomes": "minecraft:nether_wastes",
+  "spawn_overrides": {
+    "monster": {
+      "bounding_box": "piece",
+      "spawns": [
+        {
+          "type": "aoa3:nethengeic_beast",
+          "maxCount": 1,
+          "minCount": 1,
+          "weight": 1
+        }
+      ]
+    }
+  },
+  "start_height": {
+    "absolute": 31
+  },
+  "start_pool": "aoa3:nether/nethengeic_pit/starts"
+}

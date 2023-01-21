@@ -1,6 +1,9 @@
 {
   "type": "aoa3:new_mob_spawn",
   "biomes": {
+    "excluding": [
+      "minecraft:deep_dark"
+    ],
     "if_all": [
       "#minecraft:is_overworld"
     ],

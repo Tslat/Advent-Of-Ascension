@@ -15,6 +15,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.content.entity.base.AbstractLavaFishEntity;
+import net.tslat.aoa3.content.entity.mob.nether.NethengeicBeastEntity;
 import net.tslat.aoa3.util.WorldUtil;
 import org.apache.logging.log4j.Level;
 
@@ -47,12 +48,14 @@ public final class AoAEntitySpawnPlacements {
         setSpawnPlacement(AoAMobs.BUSH_BABY.get(), ON_GROUND, MOTION_BLOCKING, SpawnPredicates.monsterPredicate(true, 65, Integer.MAX_VALUE));
         setSpawnPlacement(AoAMobs.VOID_WALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(false, Integer.MIN_VALUE, 0));
         setSpawnPlacement(AoAMobs.ANCIENT_GOLEM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 65, Integer.MAX_VALUE));
-        setSpawnPlacement(AoAMobs.LITTLE_BAM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK));
-        setSpawnPlacement(AoAMobs.FLAMEWALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK));
-        setSpawnPlacement(AoAMobs.EMBRAKE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK));
+        setSpawnPlacement(AoAMobs.LITTLE_BAM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK) && Mob.checkMobSpawnRules(entityType, level, spawnType, pos, rand));
+        setSpawnPlacement(AoAMobs.FLAMEWALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK) && Mob.checkMobSpawnRules(entityType, level, spawnType, pos, rand));
+        setSpawnPlacement(AoAMobs.EMBRAKE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK) && Mob.checkMobSpawnRules(entityType, level, spawnType, pos, rand));
+        setSpawnPlacement(AoAMobs.NETHENGEIC_BEAST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, (entityType, level, spawnType, pos, rand) -> level.getDifficulty() != Difficulty.PEACEFUL && !level.getBlockState(pos.below()).is(Blocks.NETHER_WART_BLOCK) && NethengeicBeastEntity.checkSpawnConditions(level, spawnType, pos, rand));
         setSpawnPlacement(AoAMobs.GHOST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(false, Integer.MIN_VALUE, 0));
         setSpawnPlacement(AoAMobs.BOMB_CARRIER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 55, Integer.MAX_VALUE));
         setSpawnPlacement(AoAMobs.TREE_SPIRIT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 55, Integer.MAX_VALUE));
+        setSpawnPlacement(AoAMobs.YETI.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnPredicates.monsterPredicate(true, 45, Integer.MAX_VALUE));
 
         setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, GlowSquid::checkGlowSquideSpawnRules);
 

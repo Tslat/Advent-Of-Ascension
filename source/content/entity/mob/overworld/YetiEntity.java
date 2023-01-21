@@ -1,26 +1,38 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import net.tslat.smartbrainlib.util.BrainUtils;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
 public class YetiEntity extends AoAMeleeMob<YetiEntity> {
+	private static final int STRIKE = 0;
+	private static final int SWING = 1;
+
 	public YetiEntity(EntityType<? extends YetiEntity> entityType, Level world) {
 		super(entityType, world);
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-		return 2.875f;
+		return 1 + 15 / 16f;
 	}
 
 	@Nullable
@@ -40,17 +52,44 @@ public class YetiEntity extends AoAMeleeMob<YetiEntity> {
 	}
 
 	@Override
+	public BrainActivityGroup<YetiEntity> getFightTasks() {
+		return BrainActivityGroup.fightTasks(
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new SetWalkTargetToAttackTarget<>(),
+				new OneRandomBehaviour<>(
+						Pair.of(new AnimatableMeleeAttack<>(7).attackInterval(entity -> 16)
+								.whenStarting(entity -> setAttackState(STRIKE))
+								.whenStopping(entity -> BrainUtils.setSpecialCooldown(this, 16)), 3),
+						Pair.of(new AnimatableMeleeAttack<>(4).attackInterval(entity -> 14)
+								.whenStarting(entity -> setAttackState(SWING))
+								.whenStopping(entity -> BrainUtils.setSpecialCooldown(this, 14)), 1)
+				).startCondition(entity -> !BrainUtils.isOnSpecialCooldown(this))
+		);
+	}
+
+	@Override
 	protected void onAttack(Entity target) {
-		if (target instanceof LivingEntity) {
-			double resist = 1;
-			AttributeInstance attrib = ((LivingEntity)target).getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+		super.onAttack(target);
 
-			if (attrib != null)
-				resist -= attrib.getValue();
+		if (getAttackState() == SWING && target instanceof LivingEntity livingTarget)
+			DamageUtil.doScaledKnockback(livingTarget, this, 1.1f, 1, 1.25f, 1);
+	}
 
-			((LivingEntity)target).addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 50, 0, true, true));
-			target.push(getDeltaMovement().x() * 5.5 * resist, 0.5 * resist, getDeltaMovement().z() * 5.5 * resist);
-			target.hurtMarked = true;
-		}
+	@Override
+	protected int getAttackSwingDuration() {
+		return getAttackState() == STRIKE ? 16 : 14;
+	}
+
+	@Override
+	protected int getPreAttackTime() {
+		return getAttackState() == STRIKE ? 7 : 4;
+	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+		controllers.add(
+				DefaultAnimations.genericWalkController(this),
+				AoAAnimations.dynamicAttackController(this, state -> getAttackState() == STRIKE ? DefaultAnimations.ATTACK_STRIKE : DefaultAnimations.ATTACK_SWING)
+		);
 	}
 }

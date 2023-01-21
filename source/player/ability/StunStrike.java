@@ -98,7 +98,7 @@ public class StunStrike extends AoAAbility.Instance {
 
 					if (target != null && target.isAlive()) {
 						if (player.distanceToSqr(target) < 36 && player.hasLineOfSight(target)) {
-							DamageUtil.doScaledKnockback(target, player, 0.5f, player.getX() - target.getX(), player.getZ() - target.getZ());
+							DamageUtil.doScaledKnockback(target, player, 0.5f, player.getX() - target.getX(), 1, player.getZ() - target.getZ());
 							EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, this.stunDuration).level(127), new EffectBuilder(MobEffects.DIG_SLOWDOWN, this.stunDuration).level(127));
 							activatedActionKey(player);
 

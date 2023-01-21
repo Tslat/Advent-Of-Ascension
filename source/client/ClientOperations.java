@@ -1,7 +1,6 @@
 package net.tslat.aoa3.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
@@ -22,7 +21,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.tslat.aoa3.advent.Logging;
@@ -53,6 +51,7 @@ import net.tslat.aoa3.util.NumberUtil;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.List;
 
 public final class ClientOperations {
 	public static final ClientPlayerDataManager CLIENT_PLAYER_DATA = new ClientPlayerDataManager();
@@ -80,7 +79,7 @@ public final class ClientOperations {
 		RecoilRenderer.addRecoil(recoil);
 	}
 
-	public static void addOccultBlocks(int renderUntil, ArrayList<Pair<BlockPos, BlockState>> blocks) {
+	public static void addOccultBlocks(int renderUntil, List<OccultBlockRenderer.OccultBlock> blocks) {
 		OccultBlockRenderer.addOccultBlocks(renderUntil, blocks);
 	}
 

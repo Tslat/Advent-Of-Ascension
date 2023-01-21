@@ -29,9 +29,10 @@ public class GeoEntityChargeLayer<T extends Entity & GeoEntity> extends GeoRende
 			return;
 
 		float lerpedTicks = (float)animatable.tickCount + partialTick;
-		RenderType layerRenderType = RenderType.energySwirl(texture, adjustU(lerpedTicks) % 1, lerpedTicks * 0.005F % 1);
+		renderType = RenderType.energySwirl(texture, adjustU(lerpedTicks) % 1, lerpedTicks * 0.005F % 1);
+		buffer = bufferSource.getBuffer(renderType);
 
-		this.renderer.reRender(bakedModel, poseStack, bufferSource, animatable, layerRenderType, buffer, partialTick, packedLight, packedOverlay, 0.5f, 0.5f, 0.5f, 0.5f);
+		this.renderer.reRender(bakedModel, poseStack, bufferSource, animatable, renderType, buffer, partialTick, packedLight, packedOverlay, 0.5f, 0.5f, 0.5f, 0.5f);
 	}
 
 	@Nullable

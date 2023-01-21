@@ -163,9 +163,13 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> VOID_WALKER = new GeckoLibRendererPackage<>(AoAMobs.VOID_WALKER).path("mob/overworld/void_walker");
 	public static final EntityRendererPackage<?> WOOD_GIANT = new GeckoLibRendererPackage<>(AoAMobs.WOOD_GIANT).model(new WoodGiantModel());
 	public static final EntityRendererPackage<?> TREE_SPIRIT = new GeckoLibRendererPackage<>(AoAMobs.TREE_SPIRIT).path("mob/overworld/tree_spirit").emissive();
+	public static final EntityRendererPackage<?> YETI = new GeckoLibRendererPackage<>(AoAMobs.YETI).path("mob/overworld/yeti");
 
 	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMobs.SMASH).model(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMobs.ELITE_SMASH).model(new EliteSmashModel());
+
+	public static final EntityRendererPackage<?> NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_WITHER).path("boss/nethengeic_wither/nethengeic_wither");
+	public static final EntityRendererPackage<?> ELITE_NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.ELITE_NETHENGEIC_WITHER).path("boss/nethengeic_wither/elite_nethengeic_wither");
 
 	//public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
 	public static final EntityRendererPackage<?> CREEP_BANKER = new EntityRendererPackage<>(AoANpcs.CREEP_BANKER).defineLayer("creep_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/creep_banker.png");
@@ -543,7 +547,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> RUNICORN = new EntityRendererPackage<>(AoAMobs.RUNICORN).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> RUNICORN_RIDER = new EntityRendererPackage<>(AoAMobs.RUNICORN_RIDER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SABRETOOTH = new EntityRendererPackage<>(AoAMobs.SABRETOOTH).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> SCRUBBY = new EntityRendererPackage<>(AoAMobs.SCRUBBY).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SHADE = new EntityRendererPackage<>(AoAMobs.SHADE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SHADOW = new EntityRendererPackage<>(AoAMobs.SHADOW).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SHAVO = new EntityRendererPackage<>(AoAMobs.SHAVO).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -592,7 +595,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> VOLTRON = new EntityRendererPackage<>(AoAMobs.VOLTRON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> WEB_REAPER = new EntityRendererPackage<>(AoAMobs.WEB_REAPER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> WINGED_CREEPER = new EntityRendererPackage<>(AoAMobs.WINGED_CREEPER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> YETI = new EntityRendererPackage<>(AoAMobs.YETI).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZARG = new EntityRendererPackage<>(AoAMobs.ZARG).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZHINX = new EntityRendererPackage<>(AoAMobs.ZHINX).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZORP = new EntityRendererPackage<>(AoAMobs.ZORP).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

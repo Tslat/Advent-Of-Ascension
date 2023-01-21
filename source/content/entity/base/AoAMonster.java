@@ -23,6 +23,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.entity.PartEntity;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
@@ -54,8 +55,8 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 	protected boolean hasDrops = true;
-
 	private RandomUtil.EasyRandom random;
+	protected AoAEntityPart<?>[] parts = null;
 
 	protected AoAMonster(EntityType<? extends AoAMonster> entityType, Level level) {
 		super(entityType, level);
@@ -267,6 +268,17 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
+	public void aiStep() {
+		super.aiStep();
+
+		if (getParts() != null) {
+			for (AoAEntityPart<?> part : getParts()) {
+				part.updatePosition();
+			}
+		}
+	}
+
+	@Override
 	protected boolean shouldDropLoot() {
 		return super.shouldDropLoot() && this.hasDrops;
 	}
@@ -281,5 +293,38 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 			this.random = new RandomUtil.EasyRandom();
 
 		return this.random;
+	}
+
+	@Override
+	public void setId(int id) {
+		super.setId(id);
+
+		if (getParts() != null) {
+			int newId = id + 1;
+
+			for (PartEntity<?> part : getParts()) {
+				part.setId(newId++);
+			}
+		}
+	}
+
+	@Override
+	public boolean isMultipartEntity() {
+		return getParts() != null;
+	}
+
+	@org.jetbrains.annotations.Nullable
+	@Override
+	public AoAEntityPart<?>[] getParts() {
+		return this.parts;
+	}
+
+	protected void setParts(AoAEntityPart<?>... parts) {
+		if (this.parts != null)
+			throw new IllegalStateException("Cannot add more parts after having already done so!");
+
+		this.parts = parts;
+
+		setId(ENTITY_COUNTER.getAndAdd(getParts().length + 1) + 1);
 	}
 }

@@ -46,7 +46,7 @@ public class RunicSword extends BaseSword {
 					target.setSecondsOnFire(5);
 				}
 				else if (rune == AoAItems.WIND_RUNE.get()) {
-					DamageUtil.doScaledKnockback(target, attacker, 0.5f, attacker.getX() - target.getX(), attacker.getZ() - target.getZ());
+					DamageUtil.doScaledKnockback(target, attacker, 0.5f, attacker.getX() - target.getX(), 1, attacker.getZ() - target.getZ());
 				}
 				else if (rune == AoAItems.WATER_RUNE.get()) {
 					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0, false, true));

@@ -175,7 +175,7 @@ public class StandardExplosion extends ExtendedExplosion {
 					entity.hurt(this.damageSource, damage);
 				}
 
-				if (!this.info.noEntityKnockback) {
+				if (!this.info.noEntityKnockback && entity.isPushable()) {
 					Vec3 dist = entity.position().subtract(this.origin).normalize();
 					double knockback = this.info.baseKnockback * impactPercent;
 					knockback *= this.info.knockbackVelocityFunction.apply(this, entity);

@@ -27,7 +27,7 @@ import net.tslat.smartbrainlib.util.RandomUtil;
 import javax.annotation.Nullable;
 
 public final class DamageUtil {
-	public static void doScaledKnockback(LivingEntity target, Entity attacker, float strength, double xRatio, double zRatio) {
+	public static void doScaledKnockback(LivingEntity target, LivingEntity attacker, float strength, double xRatio, double yRatio, double zRatio) {
 		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
 
@@ -36,26 +36,31 @@ public final class DamageUtil {
 		if(event.isCanceled())
 			return;
 
-		strength = event.getStrength() * (float)(1 - target.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue());
-		xRatio = event.getRatioX();
-		zRatio = event.getRatioZ();
+		strength = event.getStrength();
+		AttributeInstance knockbackResist = target.getAttribute(Attributes.KNOCKBACK_RESISTANCE);
+		AttributeInstance knockbackStrength = attacker.getAttribute(Attributes.ATTACK_KNOCKBACK);
+
+		if (knockbackStrength != null)
+			strength *= Math.max(0, 1 + knockbackStrength.getValue());
+
+		if (knockbackResist != null)
+			strength *= Math.max(0, 1 - knockbackResist.getValue());
+
+		Vec3 vec = target.position().subtract(attacker.position());
+
+		if (vec.y == 0 && (yRatio != xRatio || yRatio != zRatio))
+			vec = vec.add(0, 1, 0);
+
+		vec = vec.normalize()
+				.multiply(event.getRatioX(), yRatio, event.getRatioZ())
+				.add(attacker.getDeltaMovement().scale(0.5f))
+				.multiply(strength, strength, strength);
+
+		if (target.isOnGround())
+			vec.multiply(0.5f, 0.75f, 0.5f);
+
+		target.setDeltaMovement(vec);
 		target.hasImpulse = true;
-		target.hurtMarked = true;
-		double vec = Math.sqrt((xRatio * xRatio + zRatio * zRatio));
-		Vec3 targetMotion = target.getDeltaMovement();
-		double motionX = targetMotion.x() / 2d - xRatio / (double)vec * (double)strength;
-		double motionZ = targetMotion.z() / 2d - zRatio / (double)vec * (double)strength;
-		double motionY = targetMotion.y();
-
-		if (target.isOnGround()) {
-			motionY /= 2.0D;
-			motionY += strength;
-
-			if (motionY > 0.4000000059604645D)
-				motionY = 0.4000000059604645D;
-		}
-
-		target.setDeltaMovement(new Vec3(motionX, motionY, motionZ));
 		target.hurtMarked = true;
 	}
 
@@ -63,7 +68,8 @@ public final class DamageUtil {
 		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
 
-		Vec3 attackerVelocity = attacker.getDeltaMovement();
+		Vec3 attackerVelocity = attacker.getDeltaMovement()
+				.multiply(xModifier, yModifier, zModifier);
 		double xVelocity = attackerVelocity.x() * xModifier;
 		double yVelocity = attackerVelocity.y() * yModifier;
 		double zVelocity = attackerVelocity.z() * zModifier;
@@ -173,7 +179,7 @@ public final class DamageUtil {
 		DamageSource damageSource;
 
 		if (indirectSource != null) {
-			damageSource = new IndirectEntityDamageSource("magic", indirectSource, attacker);
+			damageSource = new IndirectEntityDamageSource("magic", attacker, indirectSource);
 		}
 		else {
 			damageSource = attacker instanceof Player ? DamageSource.playerAttack((Player)attacker) : DamageSource.mobAttack(attacker);

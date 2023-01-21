@@ -180,7 +180,9 @@ public abstract class AoABoss extends Monster implements GeoEntity, SmartBrainOw
 		super.startSeenByPlayer(player);
 
 		this.bossStatusTracker.addPlayer(player);
-		new SoundBuilder(getMusic()).isMusic().include(player).execute();
+
+		if (getMusic() != null)
+			new SoundBuilder(getMusic()).isMusic().include(player).execute();
 	}
 
 	@Override
@@ -188,7 +190,9 @@ public abstract class AoABoss extends Monster implements GeoEntity, SmartBrainOw
 		super.stopSeenByPlayer(player);
 
 		this.bossStatusTracker.removePlayer(player);
-		new SoundBuilder(getMusic()).isMusic().stopSound().include(player).execute();
+
+		if (getMusic() != null)
+			new SoundBuilder(getMusic()).isMusic().stopSound().include(player).execute();
 	}
 
 	@Override

@@ -72,19 +72,19 @@ public class ScreenImageEffect {
 	}
 
 	public float getRed() {
-		return this.colour.red() / 255f;
+		return this.colour.red();
 	}
 
 	public float getGreen() {
-		return this.colour.green() / 255f;
+		return this.colour.green();
 	}
 
 	public float getBlue() {
-		return this.colour.blue() / 255f;
+		return this.colour.blue();
 	}
 
 	public float getAlpha() {
-		return this.colour.alpha() / 255f;
+		return this.colour.alpha();
 	}
 
 	public int getDuration() {

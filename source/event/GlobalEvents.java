@@ -11,6 +11,7 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.world.spawner.PixonSpawner;
@@ -53,7 +54,7 @@ public final class GlobalEvents {
 			if (world.dimension() == AoADimensions.LUNALUS.key)
 				spawners.add(new VisualentSpawner());
 
-			if (!world.isFlat())
+			if (!world.isFlat() && !world.dimensionTypeRegistration().is(AdventOfAscension.id("nowhere")))
 				spawners.add(new RoamingTradersSpawner());
 
 			world.customSpawners = ImmutableList.copyOf(spawners);

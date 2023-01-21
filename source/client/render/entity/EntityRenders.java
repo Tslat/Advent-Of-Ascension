@@ -328,7 +328,6 @@ public class EntityRenders {
 		registerMobRenderer(AoAMobs.SABRETOOTH.get(), new SabretoothModel(), 1.5f, AdventOfAscension.id("textures/entity/mob/precasia/sabretooth.png"));
 		registerMobRenderer(AoAMobs.SAND_GOLEM.get(), new SandGolemModel(), AdventOfAscension.id("textures/entity/mob/overworld/sand_golem.png"));
 		registerMobRenderer(AoAMobs.SASQUATCH.get(), new YetiModel(), AdventOfAscension.id("textures/entity/mob/overworld/sasquatch.png"));
-		registerMobRenderer(AoAMobs.SCRUBBY.get(), new ScrubbyModel(), AdventOfAscension.id("textures/entity/mob/nether/scrubby.png"));
 		renderManager.register(AoAMobs.SEA_CHARGER.get(), new ChargerRenderer(renderManager, AdventOfAscension.id("textures/entity/mob/overworld/sea_charger.png")));
 		registerMobRenderer(AoAMobs.SEA_TROLL.get(), new SeaTrollModel(), AdventOfAscension.id("textures/entity/mob/overworld/sea_troll.png"));
 		registerMobRenderer(AoAMobs.SHADE.get(), new ShadeModel(), AdventOfAscension.id("textures/entity/mob/overworld/shade.png"));

@@ -27,10 +27,12 @@ import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
 import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
 import net.tslat.aoa3.content.block.functional.utility.TeaSink;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
+import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
@@ -73,8 +75,38 @@ public final class NowhereEvents {
 				if (pl.getY() < pl.level.getMinBuildHeight()) {
 					pl.fallDistance = -1;
 
-					if (pl instanceof ServerPlayer)
-						NowhereActivityPortal.Activity.RETURN.activate((ServerPlayer)pl);
+					if (pl instanceof ServerPlayer serverPlayer) {
+						ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(serverPlayer);
+						PositionAndRotation checkpoint = plData.getCheckpoint();
+
+						if (checkpoint != null) {
+							if (CheckpointBlock.isValidCheckpoint(serverPlayer.level, checkpoint)) {
+								AoAScheduler.scheduleSyncronisedTask(() -> {
+									if (NowhereEvents.isInBossRegion(serverPlayer.blockPosition()))
+										ItemUtil.clearInventoryOfItems(serverPlayer, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+
+									PlayerUtil.resetToDefaultStatus(serverPlayer);
+
+									if (!NowhereEvents.isInParkourRegion(serverPlayer.blockPosition()))
+										serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
+
+									serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN), true);
+									checkpoint.applyToEntity(serverPlayer);
+								}, 1);
+
+								ev.setCanceled(true);
+
+								return;
+							}
+							else {
+								plData.clearCheckpoint();
+								serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.invalid", ChatFormatting.RED));
+							}
+						}
+						else {
+							NowhereActivityPortal.Activity.RETURN.activate((ServerPlayer)pl);
+						}
+					}
 				}
 
 				if (pl.isFallFlying())

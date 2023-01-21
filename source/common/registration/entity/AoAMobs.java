@@ -10,6 +10,8 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.entity.boss.nethengeic_wither.EliteNethengeicWitherEntity;
+import net.tslat.aoa3.content.entity.boss.nethengeic_wither.NethengeicWitherEntity;
 import net.tslat.aoa3.content.entity.boss.smash.EliteSmashEntity;
 import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
 import net.tslat.aoa3.content.entity.mob.abyss.*;
@@ -263,7 +265,6 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<SabretoothEntity>> SABRETOOTH = registerMob("sabretooth", SabretoothEntity::new, 1.125f, 1.59375f, 13403404, 1446670);
 	public static final RegistryObject<EntityType<SandGiantEntity>> SAND_GIANT = registerMob("sand_giant", SandGiantEntity::new, 1.5f, 3.46875f, 0xC5B996, 0xAC9974);
 	public static final RegistryObject<EntityType<SasquatchEntity>> SASQUATCH = registerMob("sasquatch", SasquatchEntity::new, 9 / 16f, 29 / 16f, 0x80605C, 0x45293E);
-	public static final RegistryObject<EntityType<ScrubbyEntity>> SCRUBBY = registerMob("scrubby", ScrubbyEntity::new, 0.6875f, 1.125f, 14364720, 12027161);
 	public static final RegistryObject<EntityType<SeaTrollEntity>> SEA_TROLL = registerMob("sea_troll", SeaTrollEntity::new, 0.6f, 1.8125f, 0x4F5293, 0xCEB9D9);
 	public static final RegistryObject<EntityType<SeaViperEntity>> SEA_VIPER = registerMob("sea_viper", SeaViperEntity::new, 0.4375f, 0.59375f, 0x2D6773, 0x69C8C1);
 	public static final RegistryObject<EntityType<ShadeEntity>> SHADE = registerMob("shade", ShadeEntity::new, 0.6f, 1.75f, 4333857, 13549760);
@@ -336,13 +337,15 @@ public final class AoAMobs {
 	//public static final RegistryObject<EntityType<YellowGuardianEntity>> YELLOW_GUARDIAN = registerMob("yellow_guardian", YellowGuardianEntity::new, 1.5f, 2.625f, 7105891, 14347529);
 	//public static final RegistryObject<EntityType<YellowRuneTemplarEntity>> YELLOW_RUNE_TEMPLAR = registerMob("yellow_rune_templar", YellowRuneTemplarEntity::new, 1.125f, 2f, 2302754, 986892);
 	//public static final RegistryObject<EntityType<YellowRunicLifeformEntity>> YELLOW_RUNIC_LIFEFORM = registerMob("yellow_runic_lifeform", YellowRunicLifeformEntity::new, 0.75f, 0.99f, 1083877, 14152204);
-	public static final RegistryObject<EntityType<YetiEntity>> YETI = registerMob("yeti", YetiEntity::new, 1.0f, 3.01375f, 15987944, 13816774);
+	public static final RegistryObject<EntityType<YetiEntity>> YETI = registerMob("yeti", YetiEntity::new, 11 / 16f, 2.25f, 0xE0E2E2, 0x393D3D);
 	public static final RegistryObject<EntityType<ZargEntity>> ZARG = registerMob("zarg", ZargEntity::new, 0.875f, 2.0625f, 1803734, 13230578);
 	public static final RegistryObject<EntityType<ZhinxEntity>> ZHINX = registerMob("zhinx", ZhinxEntity::new, 0.6f, 0.6875f, 11056831, 13029730);
 	public static final RegistryObject<EntityType<ZorpEntity>> ZORP = registerMob("zorp", ZorpEntity::new, 0.6f, 1.875f, 1093861, 14347506);
 
 	public static final RegistryObject<EntityType<SmashEntity>> SMASH = registerMob("smash", SmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 	public static final RegistryObject<EntityType<EliteSmashEntity>> ELITE_SMASH = registerMob("elite_smash", EliteSmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
+	public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
+	public static final RegistryObject<EntityType<EliteNethengeicWitherEntity>> ELITE_NETHENGEIC_WITHER = registerMob("elite_nethengeic_wither", EliteNethengeicWitherEntity::new, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
 
 	private static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int primaryEggColour, int secondaryEggColour) {
 		return registerMob(registryName, factory, false, width, height, primaryEggColour, secondaryEggColour);

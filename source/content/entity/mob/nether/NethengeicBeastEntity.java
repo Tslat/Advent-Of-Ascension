@@ -11,17 +11,22 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
@@ -31,6 +36,7 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.brain.task.temp.CustomDelayedBehaviour;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -166,6 +172,9 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
                 Entity target = BrainUtils.getTargetOfEntity(entity);
 
+                if (target == null)
+                    return false;
+
                 return entity.distanceToSqr(target) < 25 || !EntityRetrievalUtil.getEntities(entity, 5, entity2 -> PlayerUtil.getPlayerOrOwnerIfApplicable(entity2) != null).isEmpty();
             });
             cooldownFor(entity -> entity.getRandom().nextIntBetweenInclusive(100, 140));
@@ -299,6 +308,11 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     }
 
     @Override
+    public boolean canSwimInFluidType(FluidType type) {
+        return type != ForgeMod.EMPTY_TYPE.get();
+    }
+
+    @Override
     public void tick() {
         super.tick();
 
@@ -324,6 +338,9 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     ClientOperations.addParticle(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ(), 0, 0, 0, 1);
             }
         }
+        else if (hasAura() && BrainUtils.getTargetOfEntity(this) == null) {
+            toggleAura();
+        }
     }
 
     @Override
@@ -340,8 +357,18 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
     @Override
     public void doRangedAttackBlock(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-        if (ForgeEventFactory.getMobGriefingEvent(level, projectile.getOwner()) && projectile instanceof FireballEntity)
-            level.setBlock(pos.offset(sideHit.getNormal()), Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
+        if (ForgeEventFactory.getMobGriefingEvent(level, projectile.getOwner()) && projectile instanceof FireballEntity) {
+            BlockPos firePos = pos.offset(sideHit.getNormal());
+
+            if (!this.level.getBlockState(firePos).getMaterial().isReplaceable()) { // Because vanilla collision detection is stupid
+                firePos = pos.relative(Direction.UP);
+
+                if (!this.level.getBlockState(firePos).getMaterial().isReplaceable())
+                    return;
+            }
+
+            this.level.setBlock(firePos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
+        }
     }
 
     @Override
@@ -349,19 +376,28 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         if (hasAura()) {
             if (DamageUtil.isPhysicalDamage(source, this, amount)) {
                 if (source.getDirectEntity() instanceof LivingEntity attacker) {
-                    attacker.hurt(DamageSource.mobAttack(this).setIsFire(), 2);
+                    attacker.hurt(DamageSource.mobAttack(this).setIsFire(), 3);
                     attacker.setSecondsOnFire((int)Math.ceil(attacker.getRemainingFireTicks() / 20f) + 1);
                     attacker.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE.get(), 200));
                 }
             }
             else if (DamageUtil.isBlasterDamage(source)) {
                 heal(amount);
-            }
 
-            return false;
+                return false;
+            }
         }
 
         return super.hurt(source, amount);
+    }
+
+    public static boolean checkSpawnConditions(LevelAccessor levelAccessor, MobSpawnType spawnReason, BlockPos blockPos, RandomSource rand) {
+        if (!(levelAccessor instanceof Level level) || (spawnReason != MobSpawnType.STRUCTURE && spawnReason != MobSpawnType.NATURAL))
+            return true;
+
+        return EntityRetrievalUtil.getEntities(level,
+                new AABB(blockPos.getX() - 15, blockPos.getY() - 2, blockPos.getZ() - 15, blockPos.getX() + 15, blockPos.getY() + 2, blockPos.getZ() + 15),
+                entity -> entity.getType() == AoAMobs.NETHENGEIC_BEAST.get()).isEmpty();
     }
 
     @Override

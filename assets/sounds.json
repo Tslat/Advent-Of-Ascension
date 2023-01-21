@@ -3134,18 +3134,6 @@
     ],
     "subtitle": "subtitles.entity.sabretooth.hurt"
   },
-  "entity.scrubby.ambient": {
-    "sounds": [
-      "aoa3:entity/scrubby/ambient"
-    ],
-    "subtitle": "subtitles.entity.scrubby.ambient"
-  },
-  "entity.scrubby.hurt": {
-    "sounds": [
-      "aoa3:entity/scrubby/hurt"
-    ],
-    "subtitle": "subtitles.entity.scrubby.hurt"
-  },
   "entity.sea_viper.ambient": {
     "sounds": [
       "aoa3:entity/sea_viper/ambient"

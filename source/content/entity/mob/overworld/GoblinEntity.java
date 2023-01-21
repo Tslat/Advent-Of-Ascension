@@ -8,15 +8,13 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoARangedMob;
-import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
-import net.tslat.aoa3.content.entity.projectile.mob.MagicBallEntity;
+import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
-public class GoblinEntity extends AoARangedMob<GoblinEntity> {
+public class GoblinEntity extends AoAMeleeMob<GoblinEntity> {
 	public GoblinEntity(EntityType<? extends GoblinEntity> entityType, Level world) {
 		super(entityType, world);
 	}
@@ -44,31 +42,20 @@ public class GoblinEntity extends AoARangedMob<GoblinEntity> {
 		return AoASounds.ENTITY_GOBLIN_HURT.get();
 	}
 
-	@Nullable
-	@Override
-	protected SoundEvent getShootSound() {
-		return AoASounds.ENTITY_WIZARD_SHOOT.get();
-	}
-
-	@Override
-	protected BaseMobProjectile getNewProjectileInstance() {
-		return new MagicBallEntity(this, BaseMobProjectile.Type.MAGIC);
-	}
-
 	@Override
 	protected int getAttackSwingDuration() {
-		return 16;
+		return 28;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return 6;
+		return 13;
 	}
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
-				DefaultAnimations.genericWalkIdleController(this),
-				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SHOOT));
+				DefaultAnimations.genericWalkController(this),
+				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SWING));
 	}
 }

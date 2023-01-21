@@ -23,6 +23,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -46,6 +47,12 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 
 	public EmbrakeEntity(EntityType<? extends EmbrakeEntity> entityType, Level world) {
 		super(entityType, world);
+
+		setParts(
+				new AoAEntityPart<>(this, getBbWidth(), getBbHeight(), 0, 0, getBbWidth()).setDamageMultiplier(1.25f),
+				new AoAEntityPart<>(this, getBbWidth(), getBbHeight(), 0, 0, -getBbWidth()),
+				new AoAEntityPart<>(this, getBbWidth() * 0.75f, getBbHeight() * 0.75f, 0, 0, -getBbWidth() * 1.875f).setDamageMultiplier(0.75f)
+		);
 	}
 
 	@Override
@@ -142,7 +149,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 				double dist = target.distanceToSqr(entity);
 				double distanceCutoff = entity.getAttributeValue(Attributes.FOLLOW_RANGE) * 0.75f;
 
-				return dist > distanceCutoff * distanceCutoff || !entity.isWithinMeleeAttackRange(target) || !BrainUtils.canSee(entity, target);
+				return dist > distanceCutoff * distanceCutoff || entity.isWithinMeleeAttackRange(target) || !BrainUtils.canSee(entity, target);
 			});
 			cooldownFor(entity -> 10);
 			whenStarting(entity -> {

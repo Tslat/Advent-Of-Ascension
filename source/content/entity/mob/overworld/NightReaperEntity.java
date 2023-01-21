@@ -58,7 +58,7 @@ public class NightReaperEntity extends AoAMeleeMob<NightReaperEntity> {
 
 	@Override
 	protected int getPreAttackTime() {
-		return 7;
+		return 8;
 	}
 
 	@Override

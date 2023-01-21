@@ -490,8 +490,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_SABRETOOTH_AMBIENT = registerSound("entity.sabretooth.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SABRETOOTH_DEATH = registerSound("entity.sabretooth.death");
 	public static final RegistryObject<SoundEvent> ENTITY_SABRETOOTH_HURT = registerSound("entity.sabretooth.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_SCRUBBY_AMBIENT = registerSound("entity.scrubby.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_SCRUBBY_HURT = registerSound("entity.scrubby.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SEA_VIPER_AMBIENT = registerSound("entity.sea_viper.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SEA_VIPER_DEATH = registerSound("entity.sea_viper.death");
 	public static final RegistryObject<SoundEvent> ENTITY_SEA_VIPER_HURT = registerSound("entity.sea_viper.hurt");

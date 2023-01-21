@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 845278832,
+    "separation": 24,
+    "spacing": 48
+  },
+  "structures": [
+    {
+      "structure": "aoa3:nethengeic_pit",
+      "weight": 1
+    }
+  ]
+}

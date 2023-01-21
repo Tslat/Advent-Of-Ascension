@@ -16,6 +16,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
@@ -322,7 +323,7 @@ public final class SoundBuilder {
 	}
 
 	public void toNetwork(FriendlyByteBuf buffer) {
-		buffer.writeResourceLocation(ForgeRegistries.SOUND_EVENTS.getKey(sound));
+		buffer.writeResourceLocation(RegistryUtil.getId(sound));
 		buffer.writeBoolean(this.stopSound);
 
 		ArrayList<Section> sections = new ArrayList<Section>();
