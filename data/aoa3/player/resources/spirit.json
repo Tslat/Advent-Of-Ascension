@@ -2,5 +2,5 @@
   "inverse_health_regen_mod": 3.0,
   "regen_per_tick": 0.04,
   "max_value": 200.0,
-  "regen_per_damage": 0.75
+  "regen_per_damage": 1.5
 }

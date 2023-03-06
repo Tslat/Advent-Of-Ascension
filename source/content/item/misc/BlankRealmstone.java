@@ -5,13 +5,16 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.monster.HuskEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemUseContext;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
@@ -19,16 +22,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.DistExecutor;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoADimensions;
-import net.tslat.aoa3.common.registration.AoAEntities;
-import net.tslat.aoa3.common.registration.AoAItemGroups;
-import net.tslat.aoa3.common.registration.AoAItems;
+import net.tslat.aoa3.common.registration.*;
+import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.entity.base.AoATrader;
+import net.tslat.aoa3.content.entity.mob.misc.doppelganger.DoppelgangerEntity;
 import net.tslat.aoa3.content.entity.mob.precasia.PrimitiveCarrotopEntity;
 import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 import net.tslat.aoa3.util.*;
@@ -68,6 +70,42 @@ public class BlankRealmstone extends Item {
 		}
 
 		return false;
+	}
+
+	@Override
+	public ActionResultType useOn(ItemUseContext context) {
+		World level = context.getLevel();
+		BlockPos pos = context.getClickedPos();
+
+		if (level.getBlockState(context.getClickedPos()).getBlock() == AoABlocks.CRAEXXEUS_ALTAR.get()) {
+			if (level instanceof ServerWorld) {
+				for (int x = -3; x <= 3; x++) {
+					for (int y = 1; y <= 3; y++) {
+						for (int z = -3; z <= 3; z++) {
+							if (level.getBlockState(pos.offset(x, y, z)).getMaterial().blocksMotion())
+								return ActionResultType.SUCCESS;
+						}
+					}
+				}
+
+				DoppelgangerEntity doppelganger = new DoppelgangerEntity(level);
+
+				doppelganger.setPos(pos.getX() + 0.5f, pos.getY() + 1, pos.getZ() + 0.5f);
+				doppelganger.finalizeSpawn((ServerWorld)level, level.getCurrentDifficultyAt(pos), SpawnReason.TRIGGERED, null, null);
+				level.addFreshEntity(doppelganger);
+
+				for (int i = 0; i < 5; i++) {
+					level.addAlwaysVisibleParticle(ParticleTypes.SOUL, doppelganger.getX() + random.nextGaussian() * 0.25f, doppelganger.getY(), doppelganger.getZ() + random.nextGaussian() * 0.25f, 0, 0.5f, 0);
+				}
+
+				if (!context.getPlayer().abilities.instabuild)
+					context.getItemInHand().shrink(1);
+			}
+
+			return ActionResultType.SUCCESS;
+		}
+
+		return super.useOn(context);
 	}
 
 	@Override

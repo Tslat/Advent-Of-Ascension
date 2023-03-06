@@ -45,7 +45,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These can be found across $(thing)Candyland$(). Naturally, they’re home to Gingerbread Men"
+      "text": "These can be found across $(thing)Candyland$(). Naturally, theyâ€™re home to Gingerbread Men"
     },
     {
       "type": "patchouli:image",

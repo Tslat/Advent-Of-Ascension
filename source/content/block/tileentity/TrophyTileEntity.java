@@ -120,7 +120,9 @@ public class TrophyTileEntity extends TileEntity implements ITickableTileEntity,
 
 			if (cachedEntity == null) {
 				entityNBT = new CompoundNBT();
-				entityId = "minecraft:end_crystal";
+
+				if (!"minecraft:player".equals(entityId))
+					entityId = "minecraft:end_crystal";
 
 				entityNBT.putString("id", entityId);
 

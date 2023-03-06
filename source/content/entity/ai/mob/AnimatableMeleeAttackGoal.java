@@ -176,11 +176,12 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 
 	protected void checkAndPerformAttack(LivingEntity target, double sqrDistToTarget) {
 		int animState = this.entity.getAnimationState(animKey);
+		boolean withinReach = sqrDistToTarget <= getAttackReachSqr(target);
 
 		if (animState > 0 && attackCooldown > 0)
 			this.entity.setAnimationState(animKey, 0);
 
-		if (sqrDistToTarget <= getAttackReachSqr(target) || (animState > 0 && !this.stopAttackIfOutOfRange)) {
+		if (withinReach || (animState > 0 && !this.stopAttackIfOutOfRange)) {
 			if (attackCooldown <= 0) {
 				this.attackCooldown = this.attackInterval;
 				this.entity.swing(Hand.MAIN_HAND);
@@ -190,7 +191,9 @@ public class AnimatableMeleeAttackGoal<T extends MobEntity & Animatable> extends
 			}
 
 			if (this.attackDamageTick >= 0 && this.entity.level.getGameTime() >= attackDamageTick) {
-				this.entity.doHurtTarget(target);
+				if (withinReach)
+					this.entity.doHurtTarget(target);
+
 				this.entity.setAnimationState(animKey, 2);
 
 				this.attackDamageTick = -1;

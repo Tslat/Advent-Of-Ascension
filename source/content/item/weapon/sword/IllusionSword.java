@@ -31,8 +31,11 @@ public class IllusionSword extends BaseSword {
 				LivingEntity newTarget = null;
 
 				for (LivingEntity nearbyMob : nearbyMobs) {
-					if ((newTarget = nearbyMob) != target)
+					if (nearbyMob != attacker && nearbyMob != target) {
+						newTarget = nearbyMob;
+
 						break;
+					}
 				}
 
 				if (newTarget == null)

@@ -16,6 +16,7 @@ public class CottonCandorRenderer extends MobRenderer<CottonCandorEntity, Entity
 	private static final ResourceLocation FIRE_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_fire.png");
 	private static final ResourceLocation WITHER_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_wither.png");
 	private static final ResourceLocation POISON_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_poison.png");
+	private static final ResourceLocation LUNAR_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_lunar.png");
 
 	public CottonCandorRenderer(EntityRendererManager renderManager) {
 		super(renderManager, new CottonCandorModel(), AoAEntities.Mobs.COTTON_CANDOR.get().getWidth() / 3);
@@ -34,8 +35,11 @@ public class CottonCandorRenderer extends MobRenderer<CottonCandorEntity, Entity
 			case 3:
 				return POISON_PHASE_TEXTURE;
 			case 4:
-			default:
 				return WITHER_PHASE_TEXTURE;
+			case 5:
+				return LUNAR_PHASE_TEXTURE;
+			default:
+				return WIND_PHASE_TEXTURE;
 		}
 	}
 }

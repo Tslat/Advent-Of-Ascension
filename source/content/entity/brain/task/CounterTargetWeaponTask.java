@@ -9,6 +9,7 @@ import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.entity.ai.brain.task.Task;
 import net.minecraft.item.*;
 import net.minecraft.util.Hand;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.server.ServerWorld;
 import net.tslat.aoa3.common.registration.AoAWeapons;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -57,6 +58,8 @@ public class CounterTargetWeaponTask extends Task<MobEntity> {
 				handleShieldThreat(owner, target);
 				break;
 			case NONE:
+				handleUnknownThreat(owner, target);
+				break;
 			default:
 		}
 
@@ -76,7 +79,7 @@ public class CounterTargetWeaponTask extends Task<MobEntity> {
 			return ThreatType.NONE;
 		}
 
-		if (mainHandItem.getItem() instanceof BowItem || mainHandItem.getItem() instanceof BaseGun) {
+		if (mainHandItem.getItem() instanceof BowItem || mainHandItem.getItem() instanceof BaseGun || mainHandItem.getItem() instanceof CrossbowItem) {
 			if (!(owner.getItemInHand(Hand.OFF_HAND).getItem() instanceof ShieldItem))
 				return ThreatType.RANGED;
 
@@ -97,8 +100,13 @@ public class CounterTargetWeaponTask extends Task<MobEntity> {
 	}
 
 	protected void handleShieldThreat(LivingEntity owner, LivingEntity target) {
-		owner.setItemInHand(Hand.MAIN_HAND, new ItemStack(AoAWeapons.HORIZON_MAUL.get()));
+		owner.setItemInHand(Hand.MAIN_HAND, new ItemStack(AoAWeapons.VULCAMMER_MAUL.get()));
 		owner.setItemInHand(Hand.OFF_HAND, new ItemStack(Items.SHIELD));
+	}
+
+	protected void handleUnknownThreat(LivingEntity owner, LivingEntity target) {
+		if (owner.level.getDifficulty() == Difficulty.HARD)
+			owner.setItemInHand(Hand.MAIN_HAND, new ItemStack(AoAWeapons.GODS_GREATBLADE.get()));
 	}
 
 	private enum ThreatType {

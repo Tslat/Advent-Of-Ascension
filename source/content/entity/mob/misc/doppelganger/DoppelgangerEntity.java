@@ -6,6 +6,8 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
 import net.minecraft.entity.ai.brain.schedule.Activity;
@@ -33,9 +35,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.AoAArmour;
-import net.tslat.aoa3.common.registration.AoABrainSensors;
-import net.tslat.aoa3.common.registration.AoAEntities;
+import net.tslat.aoa3.common.registration.*;
+import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 import net.tslat.aoa3.content.entity.brain.SmartBrainHandler;
 import net.tslat.aoa3.content.entity.brain.SmartBrainOwner;
 import net.tslat.aoa3.content.entity.brain.task.*;
@@ -164,6 +165,9 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 		populateDefaultEquipmentSlots(difficulty);
 		populateDefaultEquipmentEnchantments(difficulty);
 
+		if (difficulty.getDifficulty() == Difficulty.HARD)
+			getAttribute(Attributes.MOVEMENT_SPEED).addPermanentModifier(new AttributeModifier("spawn_buff", 0.05f, AttributeModifier.Operation.MULTIPLY_TOTAL));
+
 		return data;
 	}
 
@@ -249,5 +253,22 @@ public class DoppelgangerEntity extends MonsterEntity implements SmartBrainOwner
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		performCrossbowAttack(this, 1.6f);
+	}
+
+	@Override
+	protected boolean shouldDropLoot() {
+		return level.getDifficulty() == Difficulty.HARD;
+	}
+
+	@Override
+	protected void dropCustomDeathLoot(DamageSource source, int pLooting, boolean pRecentlyHit) {
+		if (level.getDifficulty() == Difficulty.HARD && lastHurtByPlayer != null) {
+			spawnAtLocation(new ItemStack(AoAWeapons.VULCAMMER_MAUL.get()));
+
+			ItemStack trophy = new ItemStack(AoABlocks.TROPHY.get());
+
+			trophy.setTag(TrophyBlock.getOriginalTrophyTag(getType(), AoABlocks.TROPHY.get()));
+			spawnAtLocation(trophy);
+		}
 	}
 }

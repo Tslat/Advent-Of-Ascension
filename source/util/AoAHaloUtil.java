@@ -178,7 +178,7 @@ public final class AoAHaloUtil {
 		}
 
 		public boolean hasHalo(Type halo) {
-			return unlockedHalos.contains(halo);
+			return unlockedHalos != null && unlockedHalos.contains(halo);
 		}
 	}
 

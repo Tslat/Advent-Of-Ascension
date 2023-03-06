@@ -44,9 +44,6 @@ public class ParryStunlockTask<E extends MobEntity> extends Task<E> {
 			LivingEntity target = owner.getLastHurtByMob();
 
 			if (blockTime >= 5) {
-				if (!owner.getBrain().hasMemoryValue(MemoryModuleType.LOOK_TARGET))
-					BrainUtil.lookAtEntity(owner, target);
-
 				if (BrainUtil.isWithinMeleeAttackRange(owner, target)) {
 					owner.swing(Hand.MAIN_HAND);
 					owner.doHurtTarget(target);

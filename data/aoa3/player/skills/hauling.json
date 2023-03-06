@@ -19,9 +19,9 @@
     },
     {
       "id": "aoa3:fishing_trap_spawn",
-      "unique_id": "135142147",
-      "base_value": 0.05,
-      "per_level_mod": -0.0035,
+      "unique_id": "1674158120",
+      "base_value": 0.1,
+      "per_level_mod": -5.0E-4,
       "level_req": 25
     },
     {

@@ -21,16 +21,15 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.common.util.Constants;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.content.block.WaterloggableBlock;
 import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
-import net.tslat.aoa3.common.registration.AoABlocks;
 import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -127,9 +126,9 @@ public class TrophyBlock extends WaterloggableBlock {
 
 			stack.setTag(nbt);
 
-			if (trophyTile.getCachedEntity() != null) {
-				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
-				ITextComponent entityName = cachedEntity == null ? new StringTextComponent("") : cachedEntity.getName();
+			if (trophyTile.getCachedEntity() != null || dataTag.getString("EntityID").equals("minecraft:player")) {
+				Entity cachedEntity = trophyTile.getCachedEntity();
+				ITextComponent entityName = cachedEntity == null ? new TranslationTextComponent("entity.minecraft.player") : cachedEntity.getName();
 				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", entityName));
 			}
 		}

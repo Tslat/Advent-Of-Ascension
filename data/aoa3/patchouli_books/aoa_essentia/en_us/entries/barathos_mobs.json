@@ -18,7 +18,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These giant beasts spawn on the surface. They can hit hard, but won’t attack unless provoked"
+      "text": "These giant beasts spawn on the surface. They can hit hard, but wonâ€™t attack unless provoked"
     },
     {
       "type": "patchouli:entity",
@@ -36,7 +36,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These flying bat mobs appear deep underground. They don’t do anything special"
+      "text": "These flying bat mobs appear deep underground. They donâ€™t do anything special"
     },
     {
       "type": "patchouli:entity",
@@ -54,7 +54,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(thing)Keelers$() appear throughout the underground. They have the ability to fully regenerate when in a pinch, which can make them dangerous if you can’t hit them hard enough to get past that range"
+      "text": "$(thing)Keelers$() appear throughout the underground. They have the ability to fully regenerate when in a pinch, which can make them dangerous if you canâ€™t hit them hard enough to get past that range"
     },
     {
       "type": "patchouli:entity",
@@ -63,7 +63,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(thing)Nospikes$() are rare surface mobs. There’s not much special about them, although their movement pattern is a bit awkward"
+      "text": "$(thing)Nospikes$() are rare surface mobs. Thereâ€™s not much special about them, although their movement pattern is a bit awkward"
     },
     {
       "type": "patchouli:entity",
@@ -72,7 +72,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(thing)Parasects$() spawn throughout the underground. Their bite inflicts Nausea, but there’s not much else to note about them"
+      "text": "$(thing)Parasects$() spawn throughout the underground. Their bite inflicts Nausea, but thereâ€™s not much else to note about them"
     },
     {
       "type": "patchouli:entity",
@@ -90,7 +90,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(thing)Squigglers$() live deep underground, and are capable of setting nearby enemies on fire if there’s nothing in their way"
+      "text": "$(thing)Squigglers$() live deep underground, and are capable of setting nearby enemies on fire if thereâ€™s nothing in their way"
     },
     {
       "type": "patchouli:entity",

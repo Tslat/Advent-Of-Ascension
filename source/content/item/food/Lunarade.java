@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.tslat.aoa3.common.registration.AoAItemGroups;
 import net.tslat.aoa3.common.registration.AoAItems;
 import net.tslat.aoa3.library.builder.EffectBuilder;
+import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -41,9 +42,20 @@ public class Lunarade extends Item {
 		if (!world.isClientSide)
 			user.removeEffect(Effects.BLINDNESS);
 
+		ItemStack mug = getContainerItem(stack);
 		ItemStack consumedStack = super.finishUsingItem(stack, world, user);
 
-		return user instanceof PlayerEntity && ((PlayerEntity)user).abilities.instabuild ? consumedStack : getContainerItem(stack);
+		if (consumedStack.isEmpty()) {
+			consumedStack = mug;
+		}
+		else if (user instanceof PlayerEntity) {
+			PlayerEntity player = (PlayerEntity)user;
+
+			if (!player.abilities.instabuild)
+				ItemUtil.givePlayerItemOrDrop((PlayerEntity)user, mug);
+		}
+
+		return consumedStack;
 	}
 
 	@Override

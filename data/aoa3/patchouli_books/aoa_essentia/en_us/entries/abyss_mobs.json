@@ -48,7 +48,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(thing)Distorters$() are immobile and don’t deal damage. Instead, they have the ability to give either Speed or Slowness effects to players in the surrounding area, switching regularly between the two"
+      "text": "$(thing)Distorters$() are immobile and donâ€™t deal damage. Instead, they have the ability to give either Speed or Slowness effects to players in the surrounding area, switching regularly between the two"
     },
     {
       "type": "patchouli:entity",
@@ -76,7 +76,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These mobs live in Jawe Huts. There’s nothing unique about their attacks, but they can drop Bloodstones and some other items"
+      "text": "These mobs live in Jawe Huts. Thereâ€™s nothing unique about their attacks, but they can drop Bloodstones and some other items"
     },
     {
       "type": "patchouli:entity",

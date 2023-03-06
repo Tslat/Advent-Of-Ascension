@@ -23,6 +23,8 @@ public class StoreKeeperEntity extends AoATrader {
 					BuildableTrade.trade(AoABlocks.VOX_GLASS, 32).cost(AoAItems.GOLD_COIN).xp(25),
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 16).cost(Items.POISONOUS_POTATO).xp(10),
 					BuildableTrade.trade(AoAItems.COPPER_COIN, 8).cost(AoAItems.TOXIC_LUMP).xp(5))
+			.trades(2,
+					BuildableTrade.trade(AoABlocks.TOXIC_WOOD, 6).cost(AoAItems.COPPER_COIN, 20).xp(12))
 			.trades(3,
 					BuildableTrade.trade(poisonPotionStack()).cost(AoAItems.SILVER_COIN, 4).xp(20)).build();
 

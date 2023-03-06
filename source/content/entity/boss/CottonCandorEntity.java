@@ -116,12 +116,56 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 					if (projectile instanceof WitherShotEntity)
 						return false;
 					break;
+				case 5:
+					if (projectile instanceof LunarFallEntity)
+						return false;
+					break;
 				default:
 					return true;
 			}
 		}
 
 		return true;
+	}
+
+	@Override
+	protected void actuallyHurt(DamageSource source, float amount) {
+		float mod = 0.25f;
+
+		if (source.getDirectEntity() instanceof ProjectileEntity) {
+			ProjectileEntity projectile = (ProjectileEntity)source.getDirectEntity();
+
+			switch (getStage()) {
+				case 0:
+					if (projectile instanceof PrimordialShotEntity)
+						mod = 1.25f;
+					break;
+				case 1:
+					if (projectile instanceof WaterShotEntity)
+						mod = 1.25f;
+					break;
+				case 2:
+					if (projectile instanceof FirestormFallEntity || projectile instanceof FireflyShotEntity || projectile instanceof BaronShotEntity)
+						mod = 1.25f;
+					break;
+				case 3:
+					if (projectile instanceof PoisonShotEntity || projectile instanceof NoxiousShotEntity)
+						mod = 1.25f;
+					break;
+				case 4:
+					if (projectile instanceof WitherShotEntity)
+						mod = 1.25f;
+					break;
+				case 5:
+					if (projectile instanceof LunarFallEntity)
+						mod = 1.25f;
+					break;
+				default:
+					break;
+			}
+		}
+
+		super.actuallyHurt(source, amount * mod);
 	}
 
 	@Nullable

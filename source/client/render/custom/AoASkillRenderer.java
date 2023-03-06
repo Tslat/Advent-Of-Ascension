@@ -7,6 +7,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.NumberUtil;
@@ -38,6 +39,9 @@ public interface AoASkillRenderer {
 	AoASkillRenderer DEFAULT = new AoASkillRenderer() {
 		@Override
 		public void renderInHud(MatrixStack matrix, AoASkill.Instance skill, float partialTicks, ProgressRenderType progressRenderType, boolean renderLevel) {
+			if (skill == AoASkills.DEFAULT)
+				return;
+
 			matrix.pushPose();
 			matrix.scale(0.5f, 0.5f, 0);
 			RenderSystem.color4f(1, 1, 1, 1);

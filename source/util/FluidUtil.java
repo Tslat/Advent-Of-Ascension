@@ -240,7 +240,7 @@ public final class FluidUtil {
 
 			makeFluidProperties();
 
-			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(16).craftRemainder(Items.BUCKET)));
+			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().tab(AoAItemGroups.MISC_ITEMS).stacksTo(1).craftRemainder(Items.BUCKET)));
 
 			this.fluidProperties.bucket(bucket);
 
