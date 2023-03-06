@@ -88,47 +88,6 @@ public class CottonCandorEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public boolean isInvulnerableTo(DamageSource source) {
-		if (source == DamageSource.OUT_OF_WORLD)
-			return false;
-
-		if (source.getDirectEntity() instanceof ProjectileEntity) {
-			ProjectileEntity projectile = (ProjectileEntity)source.getDirectEntity();
-
-			switch (getStage()) {
-				case 0:
-					if (projectile instanceof PrimordialShotEntity)
-						return false;
-					break;
-				case 1:
-					if (projectile instanceof WaterShotEntity)
-						return false;
-					break;
-				case 2:
-					if (projectile instanceof FirestormFallEntity || projectile instanceof FireflyShotEntity || projectile instanceof BaronShotEntity)
-						return false;
-					break;
-				case 3:
-					if (projectile instanceof PoisonShotEntity || projectile instanceof NoxiousShotEntity)
-						return false;
-					break;
-				case 4:
-					if (projectile instanceof WitherShotEntity)
-						return false;
-					break;
-				case 5:
-					if (projectile instanceof LunarFallEntity)
-						return false;
-					break;
-				default:
-					return true;
-			}
-		}
-
-		return true;
-	}
-
-	@Override
 	protected void actuallyHurt(DamageSource source, float amount) {
 		float mod = 0.25f;
 

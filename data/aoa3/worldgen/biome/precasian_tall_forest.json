@@ -53,13 +53,19 @@
   "spawners": {
     "monster": [
       {
-        "type": "aoa3:giant_snail",
+        "type": "aoa3:deinotherium",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:sabretooth",
+        "type": "aoa3:terradon",
+        "weight": 1,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:giant_snail",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -77,13 +83,7 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:terradon",
-        "weight": 1,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
-        "type": "aoa3:deinotherium",
+        "type": "aoa3:sabretooth",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1

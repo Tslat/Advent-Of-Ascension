@@ -27,7 +27,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(thing)Cane Bugs$() spawn within Infested Candy Canes. They donâ€™t have any special abilities, although they can drop some extra stuff, including the rare Cake"
+      "text": "$(thing)Cane Bugs$() spawn within Infested Candy Canes. They don't have any special abilities, although they can drop some extra stuff, including the rare Cake"
     },
     {
       "type": "patchouli:entity",
@@ -36,7 +36,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Despite their simple appearance, $(thing)Cherry Blasters$() are dangerous creatures that will fire barrages of explosive projectiles at nearby adventurers. They donâ€™t actually taste like cherries"
+      "text": "Despite their simple appearance, $(thing)Cherry Blasters$() are dangerous creatures that will fire barrages of explosive projectiles at nearby adventurers. They don't actually taste like cherries"
     },
     {
       "type": "patchouli:entity",
@@ -45,7 +45,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These flying gingerbread mobs spawn in Gingerbird Aviaries. They donâ€™t have any special abilities"
+      "text": "These flying gingerbread mobs spawn in Gingerbird Aviaries. They don't have any special abilities"
     },
     {
       "type": "patchouli:entity",
@@ -54,7 +54,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "$(thing)Gingerbread Men$() spawn in Gingerbread Houses. They donâ€™t have any special abilities"
+      "text": "$(thing)Gingerbread Men$() spawn in Gingerbread Houses. They don't have any special abilities"
     },
     {
       "type": "patchouli:entity",

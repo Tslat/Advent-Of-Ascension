@@ -1,6 +1,6 @@
 {
   "name": "Abyss",
-  "description": "The $(thing)Abyss$() is a Tier 2 dimension. Itâ€™s a dark, blood-colored world filled with nauseating horrors and sanguine foliage.",
+  "description": "The $(thing)Abyss$() is a Tier 2 dimension. It's a dark, blood-colored world filled with nauseating horrors and sanguine foliage.",
   "icon": "aoa3:abyss_realmstone",
   "parent": "aoa3:worlds"
 }

@@ -18,7 +18,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "This clownâ€™s strong muscles allow it to throw opponents high into the air"
+      "text": "This clown's strong muscles allow it to throw opponents high into the air"
     },
     {
       "type": "patchouli:entity",
@@ -27,7 +27,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These clowns spawn throughout $(thing)Celeve$(). They donâ€™t have any special abilities"
+      "text": "These clowns spawn throughout $(thing)Celeve$(). They don't have any special abilities"
     },
     {
       "type": "patchouli:entity",
@@ -72,7 +72,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These clowns spawn throughout $(thing)Celeve$(). They donâ€™t have any special abilities"
+      "text": "These clowns spawn throughout $(thing)Celeve$(). They don't have any special abilities"
     },
     {
       "type": "patchouli:entity",
@@ -90,7 +90,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "These clowns spawn throughout $(thing)Celeve$(). They donâ€™t have any special abilities"
+      "text": "These clowns spawn throughout $(thing)Celeve$(). They don't have any special abilities"
     },
     {
       "type": "patchouli:entity",
