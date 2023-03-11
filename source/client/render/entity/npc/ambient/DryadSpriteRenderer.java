@@ -110,7 +110,7 @@ public class DryadSpriteRenderer extends GeoEntityRenderer<DryadSpriteEntity> {
 		float blue = renderColor.getBlue() / 255f;
 		float alpha = entity.isInvisibleTo(Minecraft.getInstance().player) ? 0 : renderColor.getAlpha() / 255f;
 
-		render(model, entity, partialTicks, renderType, stack, bufferIn, null, packedLightIn, getPackedOverlay(entity, 0), red, green, blue, alpha);
+		render(model, entity, partialTicks, renderType, stack, bufferIn, null, packedLightIn, getOverlay(entity, 0), red, green, blue, alpha);
 
 		if (!entity.isSpectator()) {
 			for (GeoLayerRenderer<DryadSpriteEntity> layerRenderer : this.layerRenderers) {

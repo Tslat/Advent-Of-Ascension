@@ -70,13 +70,13 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_terror",
+        "type": "aoa3:construct_of_flight",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_resistance",
+        "type": "aoa3:construct_of_terror",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
@@ -88,19 +88,19 @@
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_strength",
-        "weight": 20,
-        "minCount": 1,
-        "maxCount": 1
-      },
-      {
         "type": "aoa3:construct_of_mind",
         "weight": 2,
         "minCount": 1,
         "maxCount": 1
       },
       {
-        "type": "aoa3:construct_of_flight",
+        "type": "aoa3:construct_of_strength",
+        "weight": 20,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "type": "aoa3:construct_of_resistance",
         "weight": 20,
         "minCount": 1,
         "maxCount": 1
