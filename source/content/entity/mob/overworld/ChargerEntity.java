@@ -3,9 +3,7 @@ package net.tslat.aoa3.content.entity.mob.overworld;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -24,6 +22,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.world.gen.BiomeMatcher;
 import net.tslat.aoa3.library.object.CachedFunction;
+import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
@@ -35,9 +34,9 @@ import javax.annotation.Nullable;
 import java.util.function.Function;
 
 public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
-	private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(ChargerEntity.class, EntityDataSerializers.STRING);
+	private static final EntityDataHolder<String> TYPE = EntityDataHolder.register(ChargerEntity.class, EntityDataSerializers.STRING, Type.DEFAULT.name, entity -> entity.type.name, (entity, value) -> entity.type = Type.fromString(value));
 
-	private Type type = null;
+	private Type type = Type.DEFAULT;
 
 	public ChargerEntity(EntityType<? extends AoAMeleeMob> entityType, Level world) {
 		super(entityType, world);
@@ -47,7 +46,7 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 
-		getEntityData().define(TYPE, Type.DEFAULT.name);
+		registerDataParams(TYPE);
 	}
 
 	@Override
@@ -64,14 +63,14 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 
 		if (world.getLightEngine().getRawBrightness(blockPosition(), 0) == 0) {
-			getEntityData().set(TYPE, Type.VOID.name);
+			TYPE.set(this, Type.VOID.name);
 		}
 		else {
 			Holder<Biome> biome = world.getBiome(blockPosition());
 
 			for (Type type : Type.values()) {
 				if (type != Type.DEFAULT && type.canSpawnType(world.getLevel(), blockPosition(), biome)) {
-					getEntityData().set(TYPE, type.name);
+					TYPE.set(this, type.name);
 
 					break;
 				}
@@ -112,12 +111,7 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 		return 7;
 	}
 
-	public Type chargerType() {
-		if (this.type != null)
-			return this.type;
-
-		this.type = Type.fromString(getEntityData().get(TYPE));
-
+	public Type getVariant() {
 		return this.type;
 	}
 
@@ -131,24 +125,20 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 
-		tag.putString("ChargerType", chargerType().name);
+		tag.putString("ChargerType", TYPE.get(this));
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
-		if (compound.contains("ChargerType")) {
-			Type type = Type.fromString(compound.getString("ChargerType"));
-			this.type = type;
-
-			getEntityData().set(TYPE, type.name);
-		}
+		if (compound.contains("ChargerType"))
+			TYPE.set(this, compound.getString("ChargerType"));
 	}
 
 	@Override
 	protected ResourceLocation getDefaultLootTable() {
-		return chargerType() == Type.VOID ? AdventOfAscension.id("entities/void_charger") : super.getDefaultLootTable();
+		return getVariant() == Type.VOID ? AdventOfAscension.id("entities/void_charger") : super.getDefaultLootTable();
 	}
 
 	public enum Type implements IExtensibleEnum {

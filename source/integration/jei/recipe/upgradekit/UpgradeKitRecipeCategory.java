@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.jei.recipe.upgradekit;
 
 import mezz.jei.api.constants.VanillaTypes;
@@ -17,7 +16,6 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 
-@SuppressWarnings("removal")
 public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecipe> {
 	public static final RecipeType<UpgradeKitRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "upgrade_kit", UpgradeKitRecipe.class);
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "upgrade_kit");
@@ -62,4 +60,3 @@ public class UpgradeKitRecipeCategory implements IRecipeCategory<UpgradeKitRecip
 				.addItemStack(recipe.getResultItem());
 	}
 }
-*/

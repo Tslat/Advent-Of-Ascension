@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.jei.recipe.toolinteraction;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -56,4 +55,3 @@ public class ToolInteractionRecipeExtension implements ICraftingCategoryExtensio
 		return 0;
 	}
 }
-*/

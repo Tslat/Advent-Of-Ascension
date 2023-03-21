@@ -2,9 +2,7 @@ package net.tslat.aoa3.content.entity.npc.ambient;
 
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -21,9 +19,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.render.AoAAnimations;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
+import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -36,9 +37,13 @@ import java.util.UUID;
 import java.util.function.Supplier;
 
 public class DryadSpriteEntity extends AoAAmbientNPC {
-	private static final EntityDataAccessor<Integer> VARIANT = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Optional<UUID>> OWNER = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-	private static final EntityDataAccessor<Integer> SUCCESS_TIMER = SynchedEntityData.defineId(DryadSpriteEntity.class, EntityDataSerializers.INT);
+	private static final EntityDataHolder<Integer> VARIANT = EntityDataHolder.register(DryadSpriteEntity.class, EntityDataSerializers.INT, 0, entity -> entity.variant, (entity, value) -> entity.variant = value);
+	private static final EntityDataHolder<Optional<UUID>> OWNER = EntityDataHolder.register(DryadSpriteEntity.class, EntityDataSerializers.OPTIONAL_UUID, Optional.empty(), entity -> entity.owner, (entity, uuid) -> entity.owner = uuid);
+	private static final EntityDataHolder<Integer> SUCCESS_TIMER = EntityDataHolder.register(DryadSpriteEntity.class, EntityDataSerializers.INT, -1, entity -> entity.successTimer, (entity, value) -> entity.successTimer = value);
+
+	private int variant = 0;
+	private Optional<UUID> owner = Optional.empty();
+	private int successTimer = -1;
 
 	public DryadSpriteEntity(EntityType<? extends DryadSpriteEntity> entityType, Level world) {
 		super(entityType, world);
@@ -47,15 +52,21 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 	public DryadSpriteEntity(Player owner) {
 		super(AoANpcs.DRYAD_SPRITE.get(), owner.level);
 
-		entityData.set(OWNER, Optional.of(owner.getUUID()));
-		entityData.set(VARIANT, RandomUtil.randomNumberUpTo(6));
-		entityData.set(SUCCESS_TIMER, -1);
+		OWNER.set(this, Optional.of(owner.getUUID()));
+		VARIANT.set(this, rand().randomNumberUpTo(6));
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+
+		registerDataParams(VARIANT, OWNER, SUCCESS_TIMER);
 	}
 
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag nbt) {
-		entityData.set(VARIANT, RandomUtil.randomNumberUpTo(6));
+		VARIANT.set(this, rand().randomNumberUpTo(6));
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, nbt);
 	}
@@ -82,15 +93,16 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		if (isAlive() && isOwner(player) && getEntityData().get(SUCCESS_TIMER) == -1) {
+		if (isAlive() && isOwner(player) && SUCCESS_TIMER.is(this, -1)) {
 			ItemStack heldStack = player.getItemInHand(hand);
-			if (!getEntityData().get(OWNER).isPresent())
-				getEntityData().set(OWNER, Optional.of(player.getUUID()));
+
+			if (OWNER.get(this).isEmpty())
+				OWNER.set(this, Optional.of(player.getUUID()));
 
 			if (ItemUtil.isHoe(heldStack.getItem())) {
 				if (heldStack.getItem() == getVariant().getTool()) {
 					if (!level.isClientSide()) {
-						getEntityData().set(SUCCESS_TIMER, 44);
+						SUCCESS_TIMER.set(this, 44);
 						player.awardKillScore(this, 1, DamageSource.playerAttack(player));
 						navigation.stop();
 						setNoAi(true);
@@ -114,59 +126,41 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 		return super.mobInteract(player, hand);
 	}
 
-	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-
-		entityData.define(VARIANT, 0);
-		entityData.define(OWNER, Optional.empty());
-		entityData.define(SUCCESS_TIMER, -1);
-	}
-
 	public Variant getVariant() {
-		return Variant.byNumber(entityData.get(VARIANT));
+		return Variant.byNumber(VARIANT.get(this));
 	}
 
 	@Override
 	public void checkDespawn() {
 		super.checkDespawn();
 
-		if (!isRemoved() && tickCount > 100 && getEntityData().get(SUCCESS_TIMER) == -1)
+		if (!isRemoved() && tickCount > 100 && SUCCESS_TIMER.is(this, -1))
 			discard();
 	}
 
 	@Override
-	public void aiStep() {
-		super.aiStep();
-
-		int successTimer = getEntityData().get(SUCCESS_TIMER);
-
-		if (successTimer == -1)
-			return;
-
+	protected void customServerAiStep() {
 		if (successTimer > 0) {
-			getEntityData().set(SUCCESS_TIMER, successTimer - 1);
-
-			return;
+			SUCCESS_TIMER.set(this, successTimer - 1);
 		}
+		else if (successTimer == 0) {
+			ServerParticlePacket packet = new ServerParticlePacket();
 
-		for (int i = 0; i < 20; ++i) {
-			this.level.addParticle(ParticleTypes.HAPPY_VILLAGER, this.getRandomX(1), this.getRandomY(), this.getRandomZ(1), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d));
-		}
+			for (int i = 0; i < 20; ++i) {
+				packet.particle(ParticleTypes.HAPPY_VILLAGER, getRandomX(1), getRandomY(), getRandomZ(1), rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d));
+			}
 
-		if (!level.isClientSide()) {
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundSource.PLAYERS, 1, 1);
+			AoAPackets.messageAllPlayersTrackingEntity(packet, this);
+			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundSource.NEUTRAL, 1, 1);
 
-			UUID ownerUuid = getEntityData().get(OWNER).orElse(null);
-
-			if (ownerUuid != null) {
-				Player player = level.getPlayerByUUID(ownerUuid);
+			OWNER.get(this).ifPresent(ownerId -> {
+				Player player = level.getPlayerByUUID(ownerId);
 
 				setHealth(0);
 
 				if (player != null)
 					dropAllDeathLoot(DamageSource.playerAttack(player));
-			}
+			});
 
 			remove(RemovalReason.KILLED);
 		}
@@ -175,7 +169,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(new AnimationController<>(this, state -> {
-			if (getEntityData().get(SUCCESS_TIMER) >= 0)
+			if (SUCCESS_TIMER.get(this) >= 0)
 				return state.setAndContinue(AoAAnimations.SUCCEED);
 
 			return state.setAndContinue(state.isMoving() ? DefaultAnimations.WALK : DefaultAnimations.IDLE);
@@ -183,7 +177,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 	}
 
 	public boolean isOwner(Entity entity) {
-		return entityData.get(OWNER).map(value -> value.equals(entity.getUUID())).orElse(false);
+		return OWNER.get(this).map(value -> value.equals(entity.getUUID())).orElse(false);
 	}
 
 	public enum Variant {

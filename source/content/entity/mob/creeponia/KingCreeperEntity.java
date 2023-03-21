@@ -5,11 +5,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.mob.nether.SkeletalCowmanEntity;
 
 import javax.annotation.Nullable;
 
@@ -44,13 +41,5 @@ public class KingCreeperEntity extends AoACreeponiaCreeper {
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return AoASounds.ENTITY_CREEPOID_HURT.get();
-    }
-
-    @Override
-    public void die(DamageSource cause) {
-        super.die(cause);
-
-        if (level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT) && cause.getEntity() instanceof SkeletalCowmanEntity)
-            spawnAtLocation(AoAItems.MUSIC_DISC_OUTLAW.get(), 1);
     }
 }

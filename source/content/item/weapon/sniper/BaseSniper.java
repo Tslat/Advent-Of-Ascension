@@ -20,6 +20,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.SniperSlugEntity;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -77,6 +78,9 @@ public abstract class BaseSniper extends BaseGun {
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
 		super.doImpactDamage(target, shooter, bullet, impactPosition, bullet.getAge() <= 0 ? bulletDmgMultiplier * 0.5f : bulletDmgMultiplier);
+
+		if (!target.isAlive() && shooter instanceof ServerPlayer pl)
+			AdvancementUtil.completeAdvancement(pl, AdventOfAscension.id("completionist/skeet"), "phantom_sniper_kill");
 	}
 
 	@Override

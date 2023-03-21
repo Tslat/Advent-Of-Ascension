@@ -217,11 +217,11 @@ public class WebReaperEntity extends AoARangedMob<WebReaperEntity> {
 	}
 
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 
-		if (cause.getEntity() instanceof ServerPlayer && stage >= 15)
-			AdvancementUtil.completeAdvancement((ServerPlayer)cause.getEntity(), new ResourceLocation(AdventOfAscension.MOD_ID, "abyss/reaper_reaper"), "nightmare_web_reaper_kill");
+		if (source.getEntity() instanceof ServerPlayer && stage >= 15)
+			AdvancementUtil.completeAdvancement((ServerPlayer)source.getEntity(), new ResourceLocation(AdventOfAscension.MOD_ID, "abyss/reaper_reaper"), "nightmare_web_reaper_kill");
 	}
 
 	@Override

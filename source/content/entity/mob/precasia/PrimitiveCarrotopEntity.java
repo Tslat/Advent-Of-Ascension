@@ -45,8 +45,8 @@ public class PrimitiveCarrotopEntity extends AoAMeleeMob<PrimitiveCarrotopEntity
 	}
 
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 
 		if (!level.isClientSide && WorldUtil.isWorld(level, AoADimensions.PRECASIA.key))
 			spawnAtLocation(new ItemStack(AoAItems.GARDENCIA_REALMSTONE.get()), 0f);

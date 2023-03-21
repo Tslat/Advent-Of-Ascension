@@ -70,25 +70,14 @@ public final class AoAGuiElementRenderers {
 		if (mc.player == null || mc.player.isSpectator())
 			return;
 
-		switch (AoAConfigs.CLIENT.hudResourcesPosition.get()) {
-			case Bottom_Right:
-				horizontalAdjuster *= -1;
-				verticalAdjuster *= -1;
-				x = window.getGuiScaledWidth();
-				y = window.getGuiScaledHeight();
-				break;
-			case Bottom_Left:
-				verticalAdjuster *= -1;
-				y = window.getGuiScaledHeight();
-				break;
-			case Top_Right:
-				horizontalAdjuster *= -1;
-				x = window.getGuiScaledWidth();
-				potionRenderOffset = RenderUtil.getPotionGuiRenderOffset();
-				y = potionRenderOffset;
-			case Top_Left:
-			default:
-				break;
+		if (AoAConfigs.CLIENT.hudResourcesPosition.get() == AoAResourceRenderer.HudResourcesPosition.Top_Right) {
+			horizontalAdjuster *= -1;
+			x = window.getGuiScaledWidth();
+			potionRenderOffset = RenderUtil.getPotionGuiRenderOffset();
+			y = potionRenderOffset;
+
+			if (horizontalAdjuster == 0)
+				x -= 25;
 		}
 
 		poseStack.pushPose();

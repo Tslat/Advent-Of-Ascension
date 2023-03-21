@@ -1,0 +1,25 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#forge:no_mob_spawns",
+      "#forge:is_snowy"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "#forge:is_plains",
+      "#minecraft:is_forest",
+      "#forge:is_mountain"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:goblin",
+      "maxCount": 2,
+      "minCount": 1,
+      "weight": 10
+    }
+  ]
+}

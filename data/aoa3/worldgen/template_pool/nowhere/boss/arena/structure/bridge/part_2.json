@@ -12,6 +12,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:nowhere/boss/arena/structure/bridge/part_2"
+  "fallback": "minecraft:empty"
 }

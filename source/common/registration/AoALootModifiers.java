@@ -10,6 +10,7 @@ public final class AoALootModifiers {
 
 	public static final RegistryObject<Codec<RollExtraTablesLootModifier>> ROLL_EXTRA_TABLES = registerSerializer("roll_extra_tables", RollExtraTablesLootModifier.CODEC);
 	public static final RegistryObject<Codec<AddItemsLootModifier>> ADD_ITEMS = registerSerializer("add_items", AddItemsLootModifier.CODEC);
+	public static final RegistryObject<Codec<ReplaceItemsLootModifier>> REPLACE_ITEMS = registerSerializer("replace_items", ReplaceItemsLootModifier.CODEC);
 	public static final RegistryObject<Codec<LootModifyingItemLootModifier>> LOOT_MODIFYING_ITEM = registerSerializer("loot_modifying_items", LootModifyingItemLootModifier.CODEC);
 	public static final RegistryObject<Codec<PlayerEventListenerLootModifier>> PLAYER_EVENT_LISTENER = registerSerializer("player_event_listener", PlayerEventListenerLootModifier.CODEC);
 	public static final RegistryObject<Codec<HavenLootModifier>> HAVEN = registerSerializer("haven", HavenLootModifier.CODEC);

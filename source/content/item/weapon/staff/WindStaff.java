@@ -43,8 +43,8 @@ public class WindStaff extends BaseStaff<Object> {
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
-			if (target instanceof LivingEntity)
-				DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 1.3f, shooter.getX() - target.getX(), 1, shooter.getZ() - target.getZ());
+			if (target instanceof LivingEntity livingTarget)
+				DamageUtil.doScaledKnockback(livingTarget, shooter, 1.3f, 1, 1, 1);
 
 			return true;
 		}

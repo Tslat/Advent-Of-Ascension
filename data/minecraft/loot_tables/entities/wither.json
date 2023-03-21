@@ -2,32 +2,15 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 100
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:wither_bow",
-          "weight": 26
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:wither_cannon",
-          "weight": 23
-        }
-      ],
-      "name": "rares",
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:empty",
-          "weight": 50
+          "weight": 10
         },
         {
           "type": "minecraft:item",
@@ -40,6 +23,14 @@
                 "min": 4.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 10.0,
+                "min": 4.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "aoa3:wither_rune",
@@ -56,6 +47,14 @@
                 "min": 8.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 13.0,
+                "min": 5.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:coal",
@@ -65,20 +64,14 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 24.0,
-                "min": 8.0
+                "max": 1.0,
+                "min": 0.0
               },
-              "function": "minecraft:set_count"
+              "function": "minecraft:looting_enchant"
             }
           ],
-          "name": "minecraft:flint",
-          "weight": 35
-        },
-        {
-          "type": "minecraft:item",
           "name": "minecraft:wither_skeleton_skull",
           "weight": 16
         },
@@ -93,6 +86,14 @@
                 "min": 2.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 2.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:glowstone",
@@ -109,13 +110,70 @@
                 "min": 2.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 2.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:quartz",
           "weight": 19
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "minecraft:netherite_scrap",
+          "weight": 10
         }
       ],
-      "name": "main",
+      "name": "loot",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:wither_bow",
+          "weight": 26
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:wither_cannon",
+          "weight": 23
+        }
+      ],
+      "name": "weapons",
       "rolls": 1.0
     }
   ]

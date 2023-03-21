@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:scute"
+    },
+    {
+      "item": "minecraft:scute"
+    },
+    {
+      "item": "minecraft:scute"
+    }
+  ],
+  "result": {
+    "item": "aoa3:armour_plating"
+  }
+}

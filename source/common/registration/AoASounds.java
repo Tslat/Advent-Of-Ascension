@@ -350,7 +350,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_HUNTER_HURT = registerSound("entity.hunter.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_IMMORTAL_AMBIENT = registerSound("entity.immortal.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_IMMORTAL_DEATH = registerSound("entity.immortal.death");
-	public static final RegistryObject<SoundEvent> ENTITY_INFERNAL_AMBIENT = registerSound("entity.infernal.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_INFERNAL_HURT = registerSound("entity.infernal.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_IOSAUR_AMBIENT = registerSound("entity.iosaur.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_IOSAUR_DEATH = registerSound("entity.iosaur.death");
@@ -506,8 +505,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_SHIFTER_HURT = registerSound("entity.shifter.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SHIK_DEATH = registerSound("entity.shik.death");
 	public static final RegistryObject<SoundEvent> ENTITY_SHIK_HURT = registerSound("entity.shik.hurt");
-	public static final RegistryObject<SoundEvent> ENTITY_SKELETAL_COWMAN_AMBIENT = registerSound("entity.skeletal_cowman.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_SKELETAL_COWMAN_HURT = registerSound("entity.skeletal_cowman.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_SKELETRON_AMBIENT = registerSound("entity.skeletron.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_SKELETRON_DEATH = registerSound("entity.skeletron.death");
 	public static final RegistryObject<SoundEvent> ENTITY_SKELETRON_HURT = registerSound("entity.skeletron.hurt");

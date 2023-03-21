@@ -1,6 +1,9 @@
 {
   "type": "aoa3:new_mob_spawn",
   "biomes": {
+    "excluding": [
+      "#forge:no_mob_spawns"
+    ],
     "if_any": [
       "minecraft:nether_wastes",
       "minecraft:crimson_forest"
@@ -11,7 +14,7 @@
       "type": "aoa3:embrake",
       "maxCount": 1,
       "minCount": 0,
-      "weight": 1
+      "weight": 10
     }
   ]
 }

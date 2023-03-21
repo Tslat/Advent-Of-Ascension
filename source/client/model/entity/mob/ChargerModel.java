@@ -12,14 +12,14 @@ public class ChargerModel extends DefaultedEntityGeoModel<ChargerEntity> {
 
 	@Override
 	public ResourceLocation getModelResource(ChargerEntity charger) {
-		ChargerEntity.Type variant = charger.chargerType();
+		ChargerEntity.Type variant = charger.getVariant();
 
 		return AdventOfAscension.id("geo/entity/mob/overworld/" + (variant == ChargerEntity.Type.DEFAULT ? "charger" : variant.name + "_charger") + ".geo.json");
 	}
 
 	@Override
 	public ResourceLocation getTextureResource(ChargerEntity charger) {
-		ChargerEntity.Type variant = charger.chargerType();
+		ChargerEntity.Type variant = charger.getVariant();
 
 		return AdventOfAscension.id("textures/entity/mob/overworld/" + (variant == ChargerEntity.Type.DEFAULT ? "charger" : variant.name + "_charger") + ".png");
 	}

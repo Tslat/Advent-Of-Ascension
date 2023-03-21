@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.entity.boss.smash;
 
 import com.mojang.datafixers.util.Pair;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -75,10 +74,10 @@ public class SmashEntity extends AoABoss {
 	}
 
 	@Override
-	protected void addSwingData(Int2ObjectOpenHashMap<SwingData> states) {
-		states.put(AXE_SWING_STATE, new SwingData(20, 13, RawAnimation.begin().thenPlay("attack.axe_swing")));
-		states.put(AXE_SLAM_STATE, new SwingData(20, 17, RawAnimation.begin().thenPlay("attack.axe_slam")));
-		states.put(CHARGE_STATE, new SwingData(0, 0, RawAnimation.begin().thenPlay("attack.axe_slam")));
+	protected void addSwingData(SwingData swings) {
+		swings.put(AXE_SWING_STATE, new SwingData.Swing(20, 13, RawAnimation.begin().thenPlay("attack.axe_swing")));
+		swings.put(AXE_SLAM_STATE, new SwingData.Swing(20, 17, RawAnimation.begin().thenPlay("attack.axe_slam")));
+		swings.put(CHARGE_STATE, new SwingData.Swing(0, 0, RawAnimation.begin().thenPlay("attack.axe_slam")));
 	}
 
 	@Nullable
@@ -142,7 +141,7 @@ public class SmashEntity extends AoABoss {
 
 	@Override
 	public boolean canDisableShield() {
-		return !isAttackState(AXE_SLAM_STATE);
+		return !ATTACK_STATE.is(this, AXE_SLAM_STATE);
 	}
 
 	@Override
@@ -171,8 +170,8 @@ public class SmashEntity extends AoABoss {
 				new NearbyPlayersSensor<>(),
 				new HurtBySensor<>(),
 				new UnreachableTargetSensor<AoABoss>().afterScanning(entity -> {
-					if (!BrainUtils.hasMemory(entity, SBLMemoryTypes.TARGET_UNREACHABLE.get()) && !isAttackState(CHARGE_STATE))
-						setAttackState(AXE_SWING_STATE);
+					if (!BrainUtils.hasMemory(entity, SBLMemoryTypes.TARGET_UNREACHABLE.get()) && !ATTACK_STATE.is(this, CHARGE_STATE))
+						ATTACK_STATE.set(this, AXE_SWING_STATE);
 				})
 		);
 	}
@@ -181,9 +180,9 @@ public class SmashEntity extends AoABoss {
 	public BrainActivityGroup<AoABoss> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(
 				new LookAtTarget<>()
-						.startCondition(entity -> !isAttackState(CHARGE_STATE)),
+						.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
 				new WalkOrRunToWalkTarget<>()
-						.startCondition(entity -> !isAttackState(CHARGE_STATE)));
+						.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)));
 	}
 
 	@Override
@@ -192,7 +191,7 @@ public class SmashEntity extends AoABoss {
 				new FirstApplicableBehaviour<AoABoss>(
 						new TargetOrRetaliate<>()
 								.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
-								.startCondition(entity -> !isAttackState(CHARGE_STATE)),
+								.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
 						new Idle<>().runFor(entity -> entity.getRandom().nextInt(15, 45))),
 				new OneRandomBehaviour<>(
 						new SetRandomWalkTarget<>().speedModifier(0.9f),
@@ -205,7 +204,7 @@ public class SmashEntity extends AoABoss {
 				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>()
 						.speedMod(1.1f)
-						.startCondition(entity -> !isAttackState(CHARGE_STATE)),
+						.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
 				new FirstApplicableBehaviour<>(
 						new OneRandomBehaviour<>(
 								Pair.of(
@@ -213,8 +212,8 @@ public class SmashEntity extends AoABoss {
 												.requiresTarget()
 												.whenActivating(entity -> this.level.playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
 												.cooldownFor(entity -> (int)(getSwingDurationTicks(AXE_SLAM_STATE) * entity.getRandom().nextFloat() * 2))
-												.startCondition(mob -> isAttackState(AXE_SLAM_STATE))
-												.whenStopping(entity -> setAttackState(AXE_SWING_STATE)),
+												.startCondition(mob -> ATTACK_STATE.is(this, AXE_SLAM_STATE))
+												.whenStopping(entity -> ATTACK_STATE.set(this, AXE_SWING_STATE)),
 										20),
 								Pair.of(
 										new FleeTarget<>().fleeDistance(40).startCondition(entity -> BrainUtils.hasMemory(entity, SBLMemoryTypes.TARGET_UNREACHABLE.get()) && isEnraged()),
@@ -223,11 +222,11 @@ public class SmashEntity extends AoABoss {
 								.timeBeforeReacting(entity -> 60)
 								.reaction((entity, isTowering) -> {
 									enrage();
-									setAttackState(AXE_SLAM_STATE);
+									ATTACK_STATE.set(this, AXE_SLAM_STATE);
 								}),
 						new AnimatableMeleeAttack<>(getSwingWarmupTicks(AXE_SWING_STATE))
 								.attackInterval(entity -> getSwingDurationTicks(AXE_SWING_STATE) + entity.getRandom().nextInt(15, 25))
-								.startCondition(mob -> isAttackState(AXE_SWING_STATE)),
+								.startCondition(mob -> ATTACK_STATE.is(this, AXE_SWING_STATE)),
 						new OneRandomBehaviour<>(
 								new CustomBehaviour<>(entity -> {
 									BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, 90);
@@ -245,10 +244,10 @@ public class SmashEntity extends AoABoss {
 										.speedModifier(1.5f)
 										.whenStarting(entity -> {
 											triggerAnim("arms_controller", "charge_up");
-											setAttackState(CHARGE_STATE);
+											ATTACK_STATE.set(this, CHARGE_STATE);
 										})
 										.whenStopping(entity -> {
-											setAttackState(AXE_SWING_STATE);
+											ATTACK_STATE.set(this, AXE_SWING_STATE);
 											BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 150);
 										})
 										.cooldownFor(entity -> entity.getRandom().nextInt(200, 400))
@@ -274,11 +273,11 @@ public class SmashEntity extends AoABoss {
 			return PlayState.STOP;
 		}));
 		controllers.add(new AnimationController<>(this, "arms_controller", 3, state -> {
-			if (isAttackState(CHARGE_STATE))
+			if (ATTACK_STATE.is(this, CHARGE_STATE))
 				return state.setAndContinue(CHARGE);
 
 			if (this.swinging)
-				return state.setAndContinue(getSwingAnim(getAttackState()));
+				return state.setAndContinue(getSwingAnimation(ATTACK_STATE.get(this)));
 
 			if (state.isMoving()) {
 				return state.setAndContinue(isSprinting() ? RUN_TOP_HALF : WALK_TOP_HALF);

@@ -23,5 +23,6 @@
       "above_bottom": 10
     }
   },
-  "start_pool": "aoa3:overworld/ruined_teleporter_frame/starts"
+  "start_pool": "aoa3:overworld/ruined_teleporter_frame/starts",
+  "terrain_adaptation": "beard_thin"
 }

@@ -35,8 +35,8 @@ public class LollypopperEntity extends AoAMeleeMob<LollypopperEntity> {
 	}
 
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 
 		if (!level.isClientSide)
 			WorldUtil.createExplosion(this, level, 3);

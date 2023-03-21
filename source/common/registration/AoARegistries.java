@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.SensorType;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.VillagerProfession;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -80,6 +81,7 @@ public final class AoARegistries {
 	public static final ForgeRegistryHelper<Attribute> ENTITY_ATTRIBUTES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ATTRIBUTES, AoAAttributes::init);
 	public static final ForgeRegistryHelper<PoiType> POI_TYPES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.POI_TYPES, AoAPoiTypes::init);
 	public static final ForgeRegistryHelper<VillagerProfession> VILLAGER_PROFESSIONS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.VILLAGER_PROFESSIONS, AoAProfessions::init);
+	public static final ForgeRegistryHelper<Activity> BRAIN_ACTIVITIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ACTIVITIES, AoABrainActivities::init);
 	public static final ForgeRegistryHelper<SensorType<?>> BRAIN_SENSORS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.SENSOR_TYPES, AoABrainSensors::init);
 	public static final ForgeRegistryHelper<MemoryModuleType<?>> BRAIN_MEMORIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MEMORY_MODULE_TYPES, AoABrainMemories::init);
 	public static final ForgeRegistryHelper<BannerPattern> BANNER_PATTERNS = new ForgeRegistryHelper<>(Registries.BANNER_PATTERN, AoABannerPatterns::init);
@@ -117,6 +119,7 @@ public final class AoARegistries {
 		ENTITY_ATTRIBUTES.doRegistrations();
 		VILLAGER_PROFESSIONS.doRegistrations();
 		POI_TYPES.doRegistrations();
+		BRAIN_ACTIVITIES.doRegistrations();
 		BRAIN_SENSORS.doRegistrations();
 		BRAIN_MEMORIES.doRegistrations();
 		MOB_EFFECTS.doRegistrations();

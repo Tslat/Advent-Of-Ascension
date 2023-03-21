@@ -16,6 +16,7 @@ import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.movehelper.UnderwaterWalkingMovementController;
+import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
@@ -45,6 +46,12 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 		super(entityType, world);
 
 		moveControl = new UnderwaterWalkingMovementController(this);
+
+		setParts(
+				new AoAEntityPart<>(this, getBbWidth(), 0.65f, 0, 0.2f, getBbWidth()).setDamageMultiplier(1.25f),
+				new AoAEntityPart<>(this, getBbWidth(), 7 / 16f, 0, 0.225f, -getBbWidth()).setDamageMultiplier(0.9f),
+				new AoAEntityPart<>(this, 7 / 16f, 5 / 16f, 0, 0.25f, -getBbWidth() * 1.775f).setDamageMultiplier(0.75f)
+		);
 	}
 
 	@Override

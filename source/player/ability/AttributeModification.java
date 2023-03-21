@@ -105,6 +105,9 @@ public class AttributeModification extends ScalableModAbility {
 	public void applyAttributeModifiers(ServerPlayerDataManager plData) {
 		EntityUtil.reapplyAttributeModifier(plData.player(), attribute, modifier, false);
 
+		if (plData.player().tickCount == 0)
+			loginHealth = plData.player().getMaxHealth();
+
 		if (loginHealth > 0) {
 			plData.player().setHealth(loginHealth);
 			loginHealth = -1;

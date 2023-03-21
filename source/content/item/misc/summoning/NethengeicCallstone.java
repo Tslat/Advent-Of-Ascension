@@ -16,7 +16,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
-import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
+import net.tslat.aoa3.content.entity.boss.nethengeic_wither.NethengeicWitherEntity;
 import net.tslat.aoa3.content.entity.mob.nether.NethengeicBeastEntity;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -24,20 +24,20 @@ import net.tslat.aoa3.util.LocaleUtil;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class NethengeicCallstone extends BossSpawningItem<SmashEntity> {
+public class NethengeicCallstone extends BossSpawningItem<NethengeicWitherEntity> {
 	public NethengeicCallstone() {
 		super(0, new Properties().rarity(Rarity.RARE).durability(3).setNoRepair());
 	}
 
 	@Override
-	public SmashEntity spawnBoss(ServerLevel level, Vec3 position, ItemStack stack) {
-		return EntitySpawningUtil.spawnEntity(level, AoAMobs.SMASH.get(), position, MobSpawnType.TRIGGERED);
+	public NethengeicWitherEntity spawnBoss(ServerLevel level, Vec3 position, ItemStack stack) {
+		return EntitySpawningUtil.spawnEntity(level, AoAMobs.NETHENGEIC_WITHER.get(), position, MobSpawnType.TRIGGERED);
 	}
 
 	@Override
 	@Nullable
-	public EntityType<SmashEntity> getEntityType(ItemStack stack) {
-		return null;//stack.isDamaged() ? null : AoAMobs.NETHENGEIC_WITHER.get();
+	public EntityType<NethengeicWitherEntity> getEntityType(ItemStack stack) {
+		return AoAMobs.NETHENGEIC_WITHER.get();
 	}
 
 	@Override

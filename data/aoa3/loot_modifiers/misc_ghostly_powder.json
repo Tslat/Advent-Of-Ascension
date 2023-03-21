@@ -1,0 +1,27 @@
+{
+  "type": "aoa3:add_items",
+  "conditions": [
+    {
+      "chance": 0.1,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:vex"
+          }
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "Count": 1,
+      "id": "aoa3:ghostly_powder"
+    }
+  ]
+}

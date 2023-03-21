@@ -85,7 +85,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     public BrainActivityGroup<NethengeicBeastEntity> getCoreTasks() {
         return BrainActivityGroup.coreTasks(
                 new LookAtTarget<>(),
-                new WalkOrRunToWalkTarget<>().startCondition(entity -> !getEntityData().get(IMMOBILE)),
+                new WalkOrRunToWalkTarget<>().startCondition(entity -> !IMMOBILE.get(this)),
                 new FloatToSurfaceOfFluid<>());
     }
 
@@ -107,7 +107,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                                 new AnimatableRangedAttack<>(0)
                                         .attackInterval(entity -> entity.getRandom().nextIntBetweenInclusive(10, 20))
                                         .attackRadius(24)
-                                        .whenStarting(entity -> setAttackState(FIREBALL))
+                                        .whenStarting(entity -> ATTACK_STATE.set(this, FIREBALL))
                                         .whenStopping(entity -> BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 10)),
                                 30
                         ),
@@ -190,11 +190,9 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                 if (getRunningTime() <= 24)
                     return true;
 
-                if (entity.getAttackState() != FLAMETHROWER)
-                    entity.setAttackState(FLAMETHROWER);
+                ATTACK_STATE.set(entity, FLAMETHROWER);
 
                 Vec3 position = entity.position();
-
                 double baseX = position.x;
                 double baseY = entity.getEyeY() - 1;
                 double baseZ = position.z;
@@ -241,9 +239,9 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
             cooldownFor(entity -> 160);
             whenStopping(entity -> {
                 BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 20);
-                entity.setAttackState(FIREBALL);
+                ATTACK_STATE.set(entity, FIREBALL);
             });
-            whenStarting(entity -> entity.setAttackState(FLAMETHROWER_OPEN));
+            whenStarting(entity -> ATTACK_STATE.set(entity, FLAMETHROWER_OPEN));
         }
     }
 
@@ -313,8 +311,8 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void aiStep() {
+        super.aiStep();
 
         if (level.isClientSide()) {
             if (hasAura()) {
@@ -351,8 +349,13 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
             target.hurt(DamageSource.mobAttack(this).setIsFire(), 3);
 
             if (RandomUtil.oneInNChance(4))
-                target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
+                target.setSecondsOnFire(Math.min(30, (int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1));
         }
+    }
+
+    @Override
+    public void onProjectileAttack(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
+        target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 3);
     }
 
     @Override
@@ -377,7 +380,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
             if (DamageUtil.isPhysicalDamage(source, this, amount)) {
                 if (source.getDirectEntity() instanceof LivingEntity attacker) {
                     attacker.hurt(DamageSource.mobAttack(this).setIsFire(), 3);
-                    attacker.setSecondsOnFire((int)Math.ceil(attacker.getRemainingFireTicks() / 20f) + 1);
+                    attacker.setSecondsOnFire((int)Math.ceil(Math.max(0, attacker.getRemainingFireTicks()) / 20f) + 2);
                     attacker.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE.get(), 200));
                 }
             }
@@ -404,7 +407,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(DefaultAnimations.genericWalkIdleController(this));
         controllers.add(new AnimationController<>(this, "living", 0, event -> {
-            if (getAttackState() != FLAMETHROWER) {
+            if (!ATTACK_STATE.is(this, FLAMETHROWER)) {
                 event.getController().setAnimationSpeed(1 + (1 - (getHealth() / getMaxHealth())) * 5);
                 event.getController().setAnimation(DefaultAnimations.LIVING);
 
@@ -413,7 +416,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
             return PlayState.STOP;
         }));
-        controllers.add(AoAAnimations.genericHeldPoseController(this, FLAMETHROWER_ANIM, FLAMETHROWER_RELEASE_ANIM, entity -> entity.getAttackState() == FLAMETHROWER_OPEN || entity.getAttackState() == FLAMETHROWER)
+        controllers.add(AoAAnimations.genericHeldPoseController(this, FLAMETHROWER_ANIM, FLAMETHROWER_RELEASE_ANIM, entity -> ATTACK_STATE.isAny(entity, FLAMETHROWER_OPEN, FLAMETHROWER))
                 .triggerableAnim("fire_aura", FIRE_AURA_ANIM)
                 .triggerableAnim("fire_spin", FIRE_SPIN_ANIM));
     }

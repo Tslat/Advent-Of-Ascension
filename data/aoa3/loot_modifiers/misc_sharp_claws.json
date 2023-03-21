@@ -1,0 +1,34 @@
+{
+  "type": "aoa3:add_items",
+  "conditions": [
+    {
+      "chance": 0.16666667,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:polar_bear"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:panda"
+          }
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "Count": 1,
+      "id": "aoa3:sharp_claw"
+    }
+  ]
+}

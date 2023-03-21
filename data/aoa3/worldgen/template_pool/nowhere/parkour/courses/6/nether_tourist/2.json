@@ -12,6 +12,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:nowhere/parkour/courses/6/nether_tourist/2"
+  "fallback": "minecraft:empty"
 }

@@ -89,12 +89,12 @@ public class FlowerfaceEntity extends AoAMeleeMob<FlowerfaceEntity> {
     }
 
     @Override
-    public void die(DamageSource cause) {
-        super.die(cause);
+    public void die(DamageSource source) {
+        super.die(source);
 
         if (!level.isClientSide) {
-            if (candiedWater && cause.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)cause.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
-                ItemUtil.givePlayerItemOrDrop((Player)cause.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
+            if (candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+                ItemUtil.givePlayerItemOrDrop((Player)source.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
         }
     }
 }

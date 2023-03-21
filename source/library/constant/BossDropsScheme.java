@@ -13,7 +13,9 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -40,6 +42,16 @@ public enum BossDropsScheme {
 	private static void lastPlayerToHitDistributor(final LivingDropsEvent ev) {
 		List<CombatEntry> combatEntries = ev.getEntity().getCombatTracker().entries;
 
+		if (combatEntries.isEmpty()) {
+			Entity attacker = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getSource().getEntity());
+
+			if (attacker instanceof Player player) {
+				giveDropsToPlayer(player, ev.getDrops().iterator());
+
+				return;
+			}
+		}
+
 		for (int i = combatEntries.size() - 1; i >= 0; i--) {
 			Entity attacker = combatEntries.get(i).getSource().getEntity();
 
@@ -54,6 +66,9 @@ public enum BossDropsScheme {
 	private static void mostDamagingPlayerDistributor(final LivingDropsEvent ev) {
 		LivingEntity killer = ev.getEntity().getCombatTracker().getKiller();
 
+		if (killer == null)
+			killer = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getSource().getEntity());
+
 		if (killer instanceof Player player)
 			giveDropsToPlayer(player, ev.getDrops().iterator());
 	}
@@ -61,9 +76,11 @@ public enum BossDropsScheme {
 	private static void splitBetweenPlayersDistributor(final LivingDropsEvent ev) {
 		Set<Player> players = new ObjectOpenHashSet<>();
 
-		for (CombatEntry entry : ev.getEntity().getCombatTracker().entries) {
-			if (entry.getSource().getEntity() instanceof Player player)
-				players.add(player);
+		for (Entity attacker : EntityUtil.getAttackersForMob(ev.getEntity(), null)) {
+			Player pl = PlayerUtil.getPlayerOrOwnerIfApplicable(attacker);
+
+			if (pl != null)
+				players.add(pl);
 		}
 
 		if (players.size() == 0) {

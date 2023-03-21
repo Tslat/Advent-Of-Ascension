@@ -1,0 +1,48 @@
+{
+  "type": "aoa3:add_items",
+  "conditions": [
+    {
+      "chance": 0.33333334,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:hoglin"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:zoglin"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:ravager"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:goat"
+          }
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "Count": 1,
+      "id": "aoa3:ivory"
+    }
+  ]
+}

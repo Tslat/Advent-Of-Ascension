@@ -15,12 +15,14 @@ public class AoAScheduler {
 	private static ScheduledExecutorService scheduler = null;
 	private static final HashMultimap<Integer, Runnable> scheduledSynchTasks = HashMultimap.<Integer, Runnable>create();
 
+	private static boolean running = true;
+
 	public static void scheduleSyncronisedTask(Runnable run, int ticks) {
 		scheduledSynchTasks.put(GlobalEvents.tick + ticks, run);
 	}
 
 	public static void scheduleAsyncTask(Runnable run, int time, TimeUnit unit) {
-		if (scheduler == null)
+		if (scheduler == null && running)
 			serverStartupTasks();
 
 		scheduler.schedule(run, time, unit);
@@ -40,6 +42,7 @@ public class AoAScheduler {
 
 		scheduler.shutdownNow();
 		scheduler = null;
+		running = false;
 	}
 
 	public static void handleSyncScheduledTasks(@Nullable Integer tick) {

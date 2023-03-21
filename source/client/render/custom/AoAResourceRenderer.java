@@ -72,8 +72,6 @@ public interface AoAResourceRenderer {
 
 	enum HudResourcesPosition {
 		Top_Right,
-		Top_Left,
-		Bottom_Right,
-		Bottom_Left
+		Top_Left
 	}
 }

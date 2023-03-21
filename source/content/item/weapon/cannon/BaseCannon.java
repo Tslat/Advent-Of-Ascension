@@ -46,8 +46,8 @@ public abstract class BaseCannon extends BaseGun {
 				if (target instanceof Player && ((Player)target).isBlocking())
 					((Player)target).disableShield(true);
 
-				if (target instanceof LivingEntity)
-					DamageUtil.doScaledKnockback((LivingEntity)target, shooter, ((float)getDamage() * bulletDmgMultiplier) / 10f, shooter.getX() - target.getX(), 1, shooter.getZ() - target.getZ());
+				if (target instanceof LivingEntity livingTarget)
+					DamageUtil.doScaledKnockback(livingTarget, shooter, ((float)getDamage() * bulletDmgMultiplier) / 15f, 1, 1, 1);
 
 				doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}

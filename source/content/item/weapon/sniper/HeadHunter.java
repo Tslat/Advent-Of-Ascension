@@ -4,6 +4,8 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,6 +45,8 @@ public class HeadHunter extends BaseSniper {
 					for (int i = 0; i < 5; i++) {
 						serverLevel.sendParticles(ParticleTypes.DAMAGE_INDICATOR, impactPos.x + RandomUtil.randomValueBetween(-0.5d, 0.5d), impactPos.y + RandomUtil.randomValueBetween(-0.5d, 0.5d), impactPos.z + RandomUtil.randomValueBetween(-0.5d, 0.5d), 3, 0, 0, 0, 0);
 					}
+
+					serverLevel.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1, 1.5f);
 
 					if (shooter.getItemInHand(InteractionHand.MAIN_HAND).getItem() != this && shooter.getItemInHand(InteractionHand.OFF_HAND).getItem() != this)
 						return;

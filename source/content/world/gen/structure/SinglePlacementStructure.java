@@ -3,6 +3,8 @@ package net.tslat.aoa3.content.world.gen.structure;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.levelgen.structure.StructureType;
+import net.tslat.aoa3.common.registration.worldgen.AoAStructureTypes;
 
 import java.util.Optional;
 
@@ -20,6 +22,11 @@ public class SinglePlacementStructure extends AoAStructure {
 		super(settings);
 
 		this.pos = pos;
+	}
+
+	@Override
+	public StructureType<? extends AoAStructure> type() {
+		return AoAStructureTypes.SINGLE_PLACEMENT.get();
 	}
 
 	public BlockPos pos() {

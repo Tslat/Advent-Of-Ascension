@@ -4,7 +4,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -53,7 +52,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	public TreeSpiritEntity(EntityType<? extends TreeSpiritEntity> entityType, Level world) {
 		super(entityType, world);
 
-		setImmobile(true);
+		IMMOBILE.set(this, true);
 	}
 
 	@org.jetbrains.annotations.Nullable
@@ -87,8 +86,8 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	public BrainActivityGroup<TreeSpiritEntity> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(
 				new CustomHeldBehaviour<>(owner -> {
-					if (owner.getAttackState() == 1 && BrainUtils.getTargetOfEntity(owner) == null)
-						owner.setAttackState(0);
+					if (ATTACK_STATE.is(owner, 1) && BrainUtils.getTargetOfEntity(owner) == null)
+						ATTACK_STATE.set(owner, 0);
 				})
 		);
 	}
@@ -98,7 +97,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 		return BrainActivityGroup.idleTasks(
 				new SetRetaliateTarget<>()
 						.attackablePredicate(entity -> entity.isAlive() && (!(entity instanceof Player player) || !player.isCreative()) && distanceToSqr(entity.position()) < Math.pow(getAttributeValue(AoAAttributes.AGGRO_RANGE.get()), 2))
-						.whenStarting(owner -> setAttackState(1))
+						.whenStarting(owner -> ATTACK_STATE.set(owner, 1))
 						.startCondition(entity -> level.getDifficulty() != Difficulty.PEACEFUL));
 	}
 
@@ -115,7 +114,8 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag nbt) {
-		absMoveTo(((int)getX()) + 0.5d, getY(), ((int)getZ()) + 0.5d, 0, 0);
+		absMoveTo(Math.floor(getX()) + 0.5d, getY(), Math.floor(getZ()) + 0.5d, 0, 0);
+		setOldPosAndRot();
 
 		return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData, nbt);
 	}
@@ -127,7 +127,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 
 	@Override
 	public Component getName() {
-		if (getAttackState() == 0)
+		if (ATTACK_STATE.is(this, 0))
 			return Component.translatable("entity." + AdventOfAscension.MOD_ID + ".dead_tree");
 
 		return super.getName();
@@ -146,7 +146,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 		if (super.hurt(source, amount)) {
 			if (!level.isClientSide && wasMaxHealth && PlayerUtil.getPlayerOrOwnerIfApplicable(source.getEntity()) instanceof ServerPlayer pl) {
 				if (getHealth() <= 0)
-					AdvancementUtil.completeAdvancement(pl, new ResourceLocation("aoa3", "overworld/mightiest_tree_in_the_forest"), "tree_spirit_instakill");
+					AdvancementUtil.completeAdvancement(pl, AdventOfAscension.id("overworld/mightiest_tree_in_the_forest"), "tree_spirit_instakill");
 			}
 
 			return true;
@@ -184,7 +184,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(new AnimationController<>(this, "Living", 1, state -> {
-			if (getAttackState() == 1)
+			if (ATTACK_STATE.is(this, 1))
 				return state.setAndContinue(ACTIVATE);
 
 			if (state.getController().getCurrentRawAnimation() != null)

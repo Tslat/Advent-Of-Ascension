@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.jei.recipe.infusion;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -27,7 +26,6 @@ import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
 
-@SuppressWarnings("removal")
 public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	public static final RecipeType<InfusionRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "infusion", InfusionRecipe.class);
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "infusion");
@@ -137,4 +135,3 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		}
 	}
 }
-*/

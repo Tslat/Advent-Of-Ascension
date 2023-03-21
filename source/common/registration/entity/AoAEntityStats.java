@@ -27,7 +27,7 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.CHOMPER.get()).health(30).moveSpeed(0.3).meleeStrength(7).knockbackResist(0.3).followRange(14).aggroRange(8).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.CYCLOPS.get()).health(25).moveSpeed(0.2875).meleeStrength(4).followRange(14).aggroRange(14).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.GHOST.get()).health(15).moveSpeed(0.2875).meleeStrength(4).knockbackResist(1).followRange(10).aggroRange(8).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.GOBLIN.get()).health(20).moveSpeed(0.207).projectileDamage(5).followRange(12).aggroRange(14).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.GOBLIN.get()).health(20).moveSpeed(0.29).meleeSpeed(4).followRange(12).aggroRange(8).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.MUCKOPEDE.get()).health(30).moveSpeed(0.3).meleeStrength(4).knockbackResist(0.7).followRange(16).aggroRange(10).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.NIGHTFLY.get()).health(15).flyingSpeed(0.3544).meleeStrength(3.5).followRange(20).aggroRange(14).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.NIGHT_REAPER.get()).health(35).moveSpeed(0.23).meleeStrength(5).knockbackResist(0.9).followRange(14).aggroRange(12).build(ev);
@@ -51,13 +51,14 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.FLAMEWALKER.get()).health(45).moveSpeed(0.3).projectileDamage(7).followRange(10).aggroRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.LITTLE_BAM.get()).health(10).moveSpeed(0.32).followRange(14).aggroRange(8).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.NETHENGEIC_BEAST.get()).health(120).moveSpeed(0.25).projectileDamage(10).aggroRange(16).followRange(24).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.INFERNAL.get()).health(100).armour(15, 10).moveSpeed(0.23).meleeStrength(14).aggroRange(16).knockbackResist(1f).followRange(24).build(ev);
 	}
 
 	private static void doBossEntityStats(final EntityAttributeCreationEvent ev) {
-		AttributeBuilder.createMonster(AoAMobs.SMASH.get()).health(275).moveSpeed(0.31).meleeStrength(15).knockbackResist(0.9).followRange(40).aggroRange(40).armour(10, 10).knockback(1f).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.ELITE_SMASH.get()).health(600).moveSpeed(0.315).meleeStrength(30).knockbackResist(1).followRange(40).aggroRange(40).armour(15, 25).knockback(1f).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.NETHENGEIC_WITHER.get()).health(275).moveSpeed(0.31).meleeStrength(15).knockbackResist(0.9).followRange(40).aggroRange(40).armour(10, 10).knockback(1f).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.ELITE_NETHENGEIC_WITHER.get()).health(600).moveSpeed(0.315).meleeStrength(30).knockbackResist(1).followRange(40).aggroRange(40).armour(15, 25).knockback(1f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.SMASH.get()).health(275).moveSpeed(0.31).meleeStrength(15).knockbackResist(0.9).followRange(60).aggroRange(40).armour(10, 10).knockback(1f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.ELITE_SMASH.get()).health(600).moveSpeed(0.315).meleeStrength(30).knockbackResist(1).followRange(60).aggroRange(40).armour(15, 25).knockback(1f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.NETHENGEIC_WITHER.get()).health(420).moveSpeed(0.31).flyingSpeed(0.6).projectileDamage(6).knockbackResist(0.9).followRange(60).aggroRange(40).knockback(1f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.ELITE_NETHENGEIC_WITHER.get()).health(600).moveSpeed(0.315).flyingSpeed(0.6).projectileDamage(30).knockbackResist(1).followRange(60).aggroRange(40).knockback(1f).build(ev);
 	}
 
 	private static void registerStats(final EntityAttributeCreationEvent ev) {
@@ -258,7 +259,6 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.HORNDRON.get()).health(40).moveSpeed(0.25).meleeStrength(5).knockbackResist(0.3).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.HOST.get()).health(180).moveSpeed(0.23).meleeStrength(0).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.HUNTER.get()).health(123).moveSpeed(0.3).meleeStrength(13.5).knockbackResist(0.25).followRange(16).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.INFERNAL.get()).health(95).moveSpeed(0.25).meleeStrength(8.5).knockbackResist(1).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.INMATE_X.get()).health(138).moveSpeed(0.2875).meleeStrength(13.5).knockbackResist(0.1).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.INMATE_Y.get()).health(145).moveSpeed(0.27).meleeStrength(15).knockbackResist(0.2).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.IOSAUR.get()).health(78).moveSpeed(0.2875).meleeStrength(7.5).knockbackResist(0.15).followRange(16).build(ev);
@@ -343,7 +343,6 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.SKELEDON.get()).health(120).moveSpeed(0.2875).meleeStrength(11.5).knockbackResist(0.1).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.SKELEKYTE.get()).health(115).moveSpeed(0.2875).meleeStrength(11).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.SKELEMAN.get()).health(30).moveSpeed(0.207).projectileDamage(2).followRange(24).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.SKELETAL_COWMAN.get()).health(58).moveSpeed(0.207).projectileDamage(5).followRange(24).build(ev);
 		//AttributeBuilder.createMonster(AoAMobs.SKELETRON.get()).health(1100).moveSpeed(0.2875).meleeStrength(70).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.SKELE_ELDER.get()).health(60).moveSpeed(0.25).meleeStrength(3).knockbackResist(0.1).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.SKELE_HOPPER.get()).health(16).moveSpeed(0.2875).meleeStrength(5).knockbackResist(0.1).followRange(16).build(ev);

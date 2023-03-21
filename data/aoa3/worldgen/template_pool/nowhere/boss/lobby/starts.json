@@ -12,6 +12,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:nowhere/boss/lobby/starts"
+  "fallback": "minecraft:empty"
 }

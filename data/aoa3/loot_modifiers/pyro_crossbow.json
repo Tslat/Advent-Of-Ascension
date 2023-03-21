@@ -1,0 +1,27 @@
+{
+  "type": "aoa3:replace_items",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {
+        "type": "minecraft:piglin",
+        "flags": {
+          "is_on_fire": true
+        }
+      }
+    }
+  ],
+  "replacements": [
+    {
+      "item": "minecraft:crossbow",
+      "replace_with": {
+        "Count": 1,
+        "id": "aoa3:pyro_crossbow",
+        "tag": {
+          "Damage": 0
+        }
+      }
+    }
+  ]
+}

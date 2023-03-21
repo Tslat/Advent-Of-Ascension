@@ -11,14 +11,15 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.boss.EnderDragonPart;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.entity.PartEntity;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
@@ -127,6 +128,9 @@ public final class DamageUtil {
 	}
 
 	public static boolean dealBlasterDamage(LivingEntity attacker, Entity target, Entity shot, float dmg, boolean bypassProtections) {
+		if (target instanceof PartEntity<?> part && part.getParent() instanceof LivingEntity parent)
+			return dealBlasterDamage(attacker, parent, shot, dmg, bypassProtections);
+
 		DamageSource damageSource = new IndirectEntityDamageSource("blaster", shot, attacker);
 
 		damageSource.setMagic();
@@ -139,10 +143,13 @@ public final class DamageUtil {
 			damageSource.bypassArmor();
 		}
 
+		if (attacker instanceof Enemy)
+			damageSource.setScalesWithDifficulty();
+
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
-		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
+		if (target instanceof EndCrystal)
 			return target.hurt(damageSource, dmg);
 
 		if (!(target instanceof LivingEntity))
@@ -176,6 +183,9 @@ public final class DamageUtil {
 	}
 
 	public static boolean dealMagicDamage(@Nullable Entity indirectSource, LivingEntity attacker, Entity target, float dmg, boolean bypassProtections) {
+		if (target instanceof PartEntity<?> part && part.getParent() instanceof LivingEntity parent)
+			return dealMagicDamage(indirectSource, attacker, parent, dmg, bypassProtections);
+
 		DamageSource damageSource;
 
 		if (indirectSource != null) {
@@ -193,10 +203,13 @@ public final class DamageUtil {
 		if (bypassProtections)
 			damageSource.bypassMagic();
 
+		if (attacker instanceof Enemy)
+			damageSource.setScalesWithDifficulty();
+
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
-		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
+		if (target instanceof EndCrystal)
 			return target.hurt(damageSource, dmg);
 
 		if (!(target instanceof LivingEntity))
@@ -220,12 +233,18 @@ public final class DamageUtil {
 	}
 
 	public static boolean dealGunDamage(Entity target, LivingEntity attacker, ThrowableProjectile bullet, float dmg) {
+		if (target instanceof PartEntity<?> part && part.getParent() instanceof LivingEntity parent)
+			return dealGunDamage(parent, attacker, bullet, dmg);
+
 		DamageSource source = new IndirectEntityDamageSource("gun", bullet, attacker).setProjectile();
+
+		if (attacker instanceof Enemy)
+			source.setScalesWithDifficulty();
 
 		if (target.isInvulnerableTo(source))
 			return false;
 
-		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
+		if (target instanceof EndCrystal)
 			return target.hurt(source, dmg);
 
 		if (!(target instanceof LivingEntity))
@@ -269,10 +288,13 @@ public final class DamageUtil {
 	public static boolean dealRangedDamage(Entity target, LivingEntity attacker, Entity projectile, float dmg) {
 		DamageSource source = DamageSource.thrown(projectile, attacker);
 
+		if (attacker instanceof Enemy)
+			source.setScalesWithDifficulty();
+
 		if (target.isInvulnerableTo(source))
 			return false;
 
-		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
+		if (target instanceof PartEntity<?> || target instanceof EndCrystal)
 			return target.hurt(source, dmg);
 
 		if (!(target instanceof LivingEntity))
@@ -289,7 +311,7 @@ public final class DamageUtil {
 		if (target.isInvulnerableTo(damageSource))
 			return false;
 
-		if (target instanceof EnderDragonPart || target instanceof EndCrystal)
+		if (target instanceof PartEntity<?> || target instanceof EndCrystal)
 			return target.hurt(damageSource, dmg);
 
 		return target instanceof LivingEntity && target.hurt(damageSource, dmg);

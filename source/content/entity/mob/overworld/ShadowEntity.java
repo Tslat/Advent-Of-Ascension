@@ -40,8 +40,8 @@ public class ShadowEntity extends AoAMeleeMob<ShadowEntity> {
 	}
 
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 		transform();
 	}
 

@@ -43,7 +43,7 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 	@Override
 	public BrainActivityGroup<T> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !target.isAlive() || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !target.isAlive() || (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
 				(isStrafingMob() ? new StrafeTarget<>() : new StayWithinDistanceOfAttackTarget<>()),
 				new AnimatableRangedAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}

@@ -12,6 +12,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:nowhere/parkour/courses/4/aurora/starts"
+  "fallback": "minecraft:empty"
 }

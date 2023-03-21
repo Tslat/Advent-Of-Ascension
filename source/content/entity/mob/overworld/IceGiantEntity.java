@@ -12,6 +12,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -33,6 +34,7 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements RangedAttackMob {
 	private int lastAttackTime = 0;
@@ -45,7 +47,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements Range
 
 	@Override
 	protected Brain.Provider<IceGiantEntity> brainProvider() { // TODO
-		return Brain.provider(ImmutableList.of(), ImmutableList.of());
+		return Brain.provider(List.of(MemoryModuleType.ATTACK_TARGET), ImmutableList.of());
 	}
 
 	@Override

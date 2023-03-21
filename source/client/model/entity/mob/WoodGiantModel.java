@@ -12,7 +12,7 @@ public class WoodGiantModel extends DefaultedEntityGeoModel<WoodGiantEntity> {
 
 	@Override
 	public ResourceLocation getTextureResource(WoodGiantEntity entity) {
-		int stage = entity.getEntityData().get(WoodGiantEntity.STAGE);
+		int stage = entity.getStage();
 
 		if (stage == 0)
 			return super.getTextureResource(entity);

@@ -46,11 +46,11 @@ public class GoldusEntity extends AoAMeleeMob<GoldusEntity> {
 	}
 
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 
 		if (!level.isClientSide) {
-			Entity attacker = cause.getEntity();
+			Entity attacker = source.getEntity();
 
 			if (attacker instanceof Player || attacker instanceof TamableAnimal) {
 				Player pl = null;

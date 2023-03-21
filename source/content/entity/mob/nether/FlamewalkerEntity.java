@@ -134,7 +134,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
         controllers.add(DefaultAnimations.genericLivingController(this),
-                DefaultAnimations.genericWalkController(this),
+                DefaultAnimations.genericWalkIdleController(this),
                 AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_STRIKE));
     }
 

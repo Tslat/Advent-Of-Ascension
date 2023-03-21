@@ -61,6 +61,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:nether/nethengeic_pit/starts"
+  "fallback": "minecraft:empty"
 }

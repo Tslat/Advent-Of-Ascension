@@ -89,7 +89,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<CherryBlasterEntity>> CHERRY_BLASTER = registerMob("cherry_blaster", CherryBlasterEntity::new, 0.875f, 1.0625f, 14032414, 5400890);
 	public static final RegistryObject<EntityType<ChimeraEntity>> CHIMERA = registerMob("chimera", ChimeraEntity::new, 1f, 1.375f, 14736043, 4206102);
 	public static final RegistryObject<EntityType<ChockoEntity>> CHOCKO = registerMob("chocko", ChockoEntity::new, 0.6f, 2.0f, 8004884, 3346956);
-	public static final RegistryObject<EntityType<ChomperEntity>> CHOMPER = registerMob("chomper", ChomperEntity::new, 0.8f, 0.875f, 0x1F3F31, 0x337056);
+	public static final RegistryObject<EntityType<ChomperEntity>> CHOMPER = registerMob("chomper", ChomperEntity::new, 0.8f, 0.85f, 0x1F3F31, 0x337056);
 	//public static final RegistryObject<EntityType<ClunkheadEntity>> CLUNKHEAD = registerMob("clunkhead", ClunkheadEntity::new, 1f, 2.0625f, 1393533, 6322068);
 	public static final RegistryObject<EntityType<ConstructOfFlightEntity>> CONSTRUCT_OF_FLIGHT = registerMob("construct_of_flight", ConstructOfFlightEntity::new, 0.7f, 0.84375f, 5033917, 1382167);
 	public static final RegistryObject<EntityType<ConstructOfMindEntity>> CONSTRUCT_OF_MIND = registerMob("construct_of_mind", ConstructOfMindEntity::new, 2f, 2f, 1711130, 4298362);
@@ -181,7 +181,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<HostEntity>> HOST = registerMob("host", HostEntity::new, 2.1875f, 2.0625f, 4629316, 11321260);
 	public static final RegistryObject<EntityType<HunterEntity>> HUNTER = registerMob("hunter", HunterEntity::new, 1.3f, 1.3f, 3152742, 4007949);
 	public static final RegistryObject<EntityType<IceGiantEntity>> ICE_GIANT = registerMob("ice_giant", IceGiantEntity::new, 1.25f, 3.59375f, 0x8AB5C7, 0x54819A);
-	public static final RegistryObject<EntityType<InfernalEntity>> INFERNAL = registerMob("infernal", InfernalEntity::new, true, 1.125f, 1.875f, 7151133, 14848287);
+	public static final RegistryObject<EntityType<InfernalEntity>> INFERNAL = registerMob("infernal", InfernalEntity::new, true, 1.25f, 3.75f, 0x1C1B1B, 0xE38700);
 	public static final RegistryObject<EntityType<InmateXEntity>> INMATE_X = registerMob("inmate_x", InmateXEntity::new, 0.6f, 2f, 14165970, 15138567);
 	public static final RegistryObject<EntityType<InmateYEntity>> INMATE_Y = registerMob("inmate_y", InmateYEntity::new, 0.75f, 1.75f, 792825, 10513678);
 	public static final RegistryObject<EntityType<IosaurEntity>> IOSAUR = registerMob("iosaur", IosaurEntity::new, 1f, 1.75f, 1071378, 3919422);
@@ -280,7 +280,6 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<SkeledonEntity>> SKELEDON = registerMob("skeledon", SkeledonEntity::new, 0.625f, 1.3125f, 14403243, 16249322);
 	public static final RegistryObject<EntityType<SkelekyteEntity>> SKELEKYTE = registerMob("skelekyte", SkelekyteEntity::new, 0.5625f, 2f, 14403243, 13881807);
 	public static final RegistryObject<EntityType<SkelemanEntity>> SKELEMAN = registerMob("skeleman", SkelemanEntity::new, 0.7f, 1.6875f, 14012143, 4605004);
-	public static final RegistryObject<EntityType<SkeletalCowmanEntity>> SKELETAL_COWMAN = registerMob("skeletal_cowman", SkeletalCowmanEntity::new, 0.6f, 1.95f, 2958092, 14077888);
 	//public static final RegistryObject<EntityType<SkeletronEntity>> SKELETRON = registerMob("skeletron", SkeletronEntity::new, 1.2f, 1.25f, 16052195, 4802370);
 	public static final RegistryObject<EntityType<SkullCreatureEntity>> SKULL_CREATURE = registerMob("skull_creature", SkullCreatureEntity::new, 0.6875f, 2.3125f, 2496514, 3351359);
 	public static final RegistryObject<EntityType<SlimerEntity>> SLIMER = registerMob("slimer", SlimerEntity::new, 1.7f, 3.125f, 3683898, 978238);
@@ -344,8 +343,8 @@ public final class AoAMobs {
 
 	public static final RegistryObject<EntityType<SmashEntity>> SMASH = registerMob("smash", SmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 	public static final RegistryObject<EntityType<EliteSmashEntity>> ELITE_SMASH = registerMob("elite_smash", EliteSmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
-	public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
-	public static final RegistryObject<EntityType<EliteNethengeicWitherEntity>> ELITE_NETHENGEIC_WITHER = registerMob("elite_nethengeic_wither", EliteNethengeicWitherEntity::new, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
+	public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, true, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
+	public static final RegistryObject<EntityType<EliteNethengeicWitherEntity>> ELITE_NETHENGEIC_WITHER = registerMob("elite_nethengeic_wither", EliteNethengeicWitherEntity::new, true, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
 
 	private static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int primaryEggColour, int secondaryEggColour) {
 		return registerMob(registryName, factory, false, width, height, primaryEggColour, secondaryEggColour);

@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.jei.recipe.upgradekit;
 
 import mezz.jei.api.recipe.RecipeType;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("removal")
 public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineStationContainer, UpgradeKitRecipe> {
 	@Override
 	public Class<DivineStationContainer> getContainerClass() {
@@ -57,4 +55,3 @@ public class UpgradeKitRecipeTransferInfo implements IRecipeTransferInfo<DivineS
 		return inventorySlots;
 	}
 }
-*/

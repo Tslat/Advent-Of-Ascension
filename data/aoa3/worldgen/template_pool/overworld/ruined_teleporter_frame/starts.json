@@ -74,6 +74,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:overworld/ruined_teleporter_frame/starts"
+  "fallback": "minecraft:empty"
 }

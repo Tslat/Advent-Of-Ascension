@@ -13,6 +13,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.util.RandomPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -36,6 +37,7 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.function.Function;
 
 public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
@@ -47,7 +49,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 
 	@Override
 	protected Brain.Provider<SandGiantEntity> brainProvider() { // TODO
-		return Brain.provider(ImmutableList.of(), ImmutableList.of());
+		return Brain.provider(List.of(MemoryModuleType.ATTACK_TARGET), ImmutableList.of());
 	}
 
 	@Override
@@ -60,8 +62,8 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 				.maxRuntime(UniformInt.of(160, 240))
 				.cooldown(UniformInt.of(300, 500))
 				.chargeUpTime(15)
-				.onStart(goal -> setAttackState(1))
-				.onStop(goal -> setAttackState(0)));
+				.onStart(goal -> ATTACK_STATE.set(this, 1))
+				.onStop(goal -> ATTACK_STATE.set(this, 0)));
 		goalSelector.addGoal(3, new ExtendedMeleeAttackGoal<>(this).attackInterval(ConstantInt.of(getCurrentSwingDuration())).actionTelegraphTicks(getPreAttackTime()).maxRuntime(UniformInt.of(500, 700)));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
@@ -109,14 +111,14 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
 				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM),
-				AoAAnimations.genericHeldPoseController(this, AoAAnimations.ATTACK_CHARGE, AoAAnimations.ATTACK_CHARGE_END, entity -> entity.getAttackState() == 1));
+				AoAAnimations.genericHeldPoseController(this, AoAAnimations.ATTACK_CHARGE, AoAAnimations.ATTACK_CHARGE_END, entity -> ATTACK_STATE.is(entity, 1)));
 	}
 
 	@Override
 	protected void customServerAiStep() {
 		super.customServerAiStep();
 
-		if (tickCount % 30 == 0 && getAttackState() == 0 && EntityUtil.getCurrentHealthPercent(this) < 0.5f)
+		if (tickCount % 30 == 0 && ATTACK_STATE.is(this, 0) && EntityUtil.getCurrentHealthPercent(this) < 0.5f)
 			spawnTrap();
 	}
 

@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
 import mezz.jei.api.recipe.RecipeType;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("removal")
 public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBenchContainer, FrameBenchRecipe> {
 	@Override
 	public Class<FrameBenchContainer> getContainerClass() {
@@ -55,4 +53,3 @@ public class FrameBenchRecipeTransferInfo implements IRecipeTransferInfo<FrameBe
 		return true;
 	}
 }
-*/

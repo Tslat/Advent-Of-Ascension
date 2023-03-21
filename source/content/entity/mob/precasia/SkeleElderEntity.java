@@ -100,8 +100,8 @@ public class SkeleElderEntity extends AoAMeleeMob<SkeleElderEntity> {
 	}
 
 	@Override
-	public void die(DamageSource cause) {
-		super.die(cause);
+	public void die(DamageSource source) {
+		super.die(source);
 
 		if (wave >= 0 && armyBlockPos != null && distanceToSqr(armyBlockPos.getX(), armyBlockPos.getY(), armyBlockPos.getZ()) < 50 * 50) {
 			Block bl = level.getBlockState(armyBlockPos).getBlock();

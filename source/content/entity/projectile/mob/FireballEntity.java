@@ -9,6 +9,7 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class FireballEntity extends BaseMobProjectile implements GeoEntity {
@@ -24,17 +25,20 @@ public class FireballEntity extends BaseMobProjectile implements GeoEntity {
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(DefaultAnimations.genericLivingController(this).setAnimationSpeed(1.5f));
+		controllers.add(new AnimationController<>(this, "Living", 0, state -> state.setAndContinue(DefaultAnimations.LIVING)));
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (this.level.isClientSide()) {
+		if (this.level.isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0)) {
 			level.addParticle(ParticleTypes.LARGE_SMOKE, getX(0.5f), getY(0.5f), getZ(0.5f), 0, 0, 0);
 			level.addParticle(ParticleTypes.FLAME, getRandomX(0.25f), getRandomY(), getRandomZ(0.25f), 0, 0, 0);
 			level.addParticle(ParticleTypes.FLAME, getRandomX(0.25f), getRandomY(), getRandomZ(0.25f), 0, 0, 0);
+		}
+		else if (this.tickCount > 100) {
+			discard();
 		}
 	}
 

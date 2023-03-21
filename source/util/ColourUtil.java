@@ -39,11 +39,11 @@ public final class ColourUtil {
 
 	public record Colour(float red, float green, float blue, float alpha) {
 		public Colour(int red, int green, int blue) {
-			this(red, green, blue, 255);
+			this(red / 255f, green / 255f, blue / 255f, 1f);
 		}
 
 		public Colour(int rgb) {
-			this((rgb >> 16) & 0xFF, (rgb >> 8) & 0xFF, rgb & 0xFF, (rgb >> 24) & 0xFF);
+			this(((rgb >> 16) & 0xFF) / 255f, ((rgb >> 8) & 0xFF) / 255f, (rgb & 0xFF) / 255f, ((rgb >> 24) & 0xFF) / 255f);
 		}
 
 		public String hex() {
@@ -51,7 +51,7 @@ public final class ColourUtil {
 		}
 
 		public int packed() {
-			return addAlpha(RGB(red, green, blue), (int)(alpha * 255f));
+			return RGBA(red, green, blue, alpha);
 		}
 	}
 }

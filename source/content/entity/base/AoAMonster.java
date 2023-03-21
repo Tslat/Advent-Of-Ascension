@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,10 +23,13 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.entity.PartEntity;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
+import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
@@ -39,6 +42,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarge
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -49,14 +53,17 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implements GeoEntity, SmartBrainOwner<T> {
-	protected static final EntityDataAccessor<Integer> ATTACK_STATE = SynchedEntityData.defineId(AoAMonster.class, EntityDataSerializers.INT);
-	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAMonster.class, EntityDataSerializers.BOOLEAN);
-	protected static final EntityDataAccessor<Boolean> IMMOBILE = SynchedEntityData.defineId(AoAMonster.class, EntityDataSerializers.BOOLEAN);
+	public static final EntityDataHolder<Integer> ATTACK_STATE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.INT, 0, monster -> monster.attackState, (monster, value) -> monster.attackState = value);
+	public static final EntityDataHolder<Boolean> INVULNERABLE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.BOOLEAN, false, Entity::isInvulnerable, AoAMonster::setInvulnerable);
+	public static final EntityDataHolder<Boolean> IMMOBILE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.BOOLEAN, false, monster -> monster.immobile, (monster, value) -> monster.immobile = value);
 
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+	protected AoAEntityPart<?>[] parts = new AoAEntityPart[0];
+	private EntityDataHolder<?>[] dataParams;
+
 	protected boolean hasDrops = true;
-	private RandomUtil.EasyRandom random;
-	protected AoAEntityPart<?>[] parts = null;
+	private int attackState = 0;
+	private boolean immobile = false;
 
 	protected AoAMonster(EntityType<? extends AoAMonster> entityType, Level level) {
 		super(entityType, level);
@@ -68,23 +75,66 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 
-		getEntityData().define(ATTACK_STATE, 0);
-		getEntityData().define(INVULNERABLE, false);
-		getEntityData().define(IMMOBILE, false);
+		this.dataParams = new EntityDataHolder<?>[] {ATTACK_STATE, INVULNERABLE, IMMOBILE};
+
+		for (EntityDataHolder<?> dataHolder : this.dataParams) {
+			dataHolder.defineDefault(this);
+		}
+	}
+
+	protected final void registerDataParams(EntityDataHolder<?>... params) {
+		EntityDataHolder<?>[] newArray = new EntityDataHolder[this.dataParams.length + params.length];
+
+		System.arraycopy(this.dataParams, 0, newArray, 0, this.dataParams.length);
+		System.arraycopy(params, 0, newArray, this.dataParams.length, params.length);
+
+		for (EntityDataHolder<?> param : params) {
+			param.defineDefault(this);
+		}
+
+		this.dataParams = newArray;
+	}
+
+	@Override
+	protected abstract float getStandingEyeHeight(Pose pose, EntityDimensions size);
+
+	@Nullable
+	@Override
+	protected SoundEvent getDeathSound() {
+		return null;
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return null;
+	}
+
+	@Nullable
+	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
+		if (!blockState.getMaterial().isLiquid()) {
+			BlockState state = this.level.getBlockState(pos.above());
+			SoundType blockSound = state.getBlock() == Blocks.SNOW ? state.getSoundType(this.level, pos, this) : blockState.getSoundType(this.level, pos, this);
+
+			return blockSound.getStepSound();
+		}
+
+		return null;
+	}
+
+	@Override
+	public int getAmbientSoundInterval() {
+		return 240;
+	}
+
+	public final RandomUtil.EasyRandom rand() {
+		return new RandomUtil.EasyRandom(getRandom());
 	}
 
 	@Override
 	protected Brain.Provider<T> brainProvider() {
 		return new SmartBrainProvider(this);
 	}
-
-	@Override
-	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return this.geoCache;
-	}
-
-	@Override
-	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
 	@Override
 	public List<ExtendedSensor<T>> getSensors() {
@@ -98,7 +148,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	public BrainActivityGroup<T> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(
 				new LookAtTarget<>(),
-				new WalkOrRunToWalkTarget<>().startCondition(entity -> !getEntityData().get(IMMOBILE)),
+				new WalkOrRunToWalkTarget<>().startCondition(entity -> !IMMOBILE.get(this)),
 				new FloatToSurfaceOfFluid<>());
 	}
 
@@ -109,6 +159,23 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 				new OneRandomBehaviour<>(
 						new SetRandomWalkTarget<>().speedModifier(0.9f),
 						new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))));
+	}
+
+	protected int getAttackSwingDuration() {
+		return 6;
+	}
+
+	protected int getPreAttackTime() {
+		return 0;
+	}
+
+	public static AttributeSupplier.Builder getDefaultAttributes() {
+		return Mob.createMobAttributes().add(Attributes.ATTACK_DAMAGE).add(Attributes.ATTACK_KNOCKBACK).add(AoAAttributes.AGGRO_RANGE.get());
+	}
+
+	@Override
+	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnReason) {
+		return true;
 	}
 
 	@Nullable
@@ -127,56 +194,12 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		return !this.hasDrops ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 1.5f) / 10f);
 	}
 
-	public static AttributeSupplier.Builder getDefaultAttributes() {
-		return Mob.createMobAttributes().add(Attributes.ATTACK_DAMAGE).add(Attributes.ATTACK_KNOCKBACK).add(AoAAttributes.AGGRO_RANGE.get());
-	}
-
-	@Override
-	protected abstract float getStandingEyeHeight(Pose pose, EntityDimensions size);
-
-	@Nullable
-	@Override
-	protected SoundEvent getDeathSound() {
-		return null;
-	}
-
-	@Nullable
-	@Override
-	protected SoundEvent getHurtSound(DamageSource source) {
-		return null;
-	}
-
-	@Override
-	public int getAmbientSoundInterval() {
-		return 240;
-	}
-
-	@Nullable
-	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		if (!blockState.getMaterial().isLiquid()) {
-			BlockState state = this.level.getBlockState(pos.above());
-			SoundType blockSound = state.getBlock() == Blocks.SNOW ? state.getSoundType(this.level, pos, this) : blockState.getSoundType(this.level, pos, this);
-
-			return blockSound.getStepSound();
-		}
-
-		return null;
-	}
-
 	@Override
 	protected void playStepSound(BlockPos pos, BlockState blockIn) {
 		SoundEvent stepSound = getStepSound(pos, blockIn);
 
 		if (stepSound != null)
 			playSound(stepSound, 0.15F, 1.0F);
-	}
-
-	protected int getAttackSwingDuration() {
-		return 6;
-	}
-
-	protected int getPreAttackTime() {
-		return 0;
 	}
 
 	@Override
@@ -190,6 +213,17 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 			time += (1 + getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) * 2;
 
 		return time;
+	}
+
+	@Override
+	protected void customServerAiStep() {
+		tickBrain((T)this);
+	}
+
+	@Nullable
+	@Override
+	public LivingEntity getTarget() {
+		return BrainUtils.getTargetOfEntity(this, super.getTarget());
 	}
 
 	@Override
@@ -218,38 +252,60 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 	protected void onHurt(DamageSource source, float amount) {}
 
-	public int getAttackState() {
-		return getEntityData().get(ATTACK_STATE);
-	}
+	@Override
+	public void die(DamageSource source) {
+		if (ForgeHooks.onLivingDeath(this, source))
+			return;
 
-	public void setAttackState(int state) {
-		getEntityData().set(ATTACK_STATE, state);
-	}
+		if (!isRemoved() && !this.dead) {
+			Entity lastAttacker = source.getEntity();
+			LivingEntity killer = getKillCredit();
 
-	protected void setImmobile(boolean immobile) {
-		getEntityData().set(IMMOBILE, immobile);
+			if (this.deathScore >= 0 && killer != null)
+				killer.awardKillScore(this, this.deathScore, source);
+
+			if (isSleeping())
+				stopSleeping();
+
+			this.dead = true;
+
+			if (this.level instanceof ServerLevel) {
+				if (lastAttacker == null || lastAttacker.wasKilled((ServerLevel)this.level, this)) {
+					gameEvent(GameEvent.ENTITY_DIE);
+					dropAllDeathLoot(source);
+					createWitherRose(killer);
+				}
+
+				this.level.broadcastEntityEvent(this, (byte)3);
+			}
+
+			getCombatTracker().recheckStatus();
+			setPose(Pose.DYING);
+		}
 	}
 
 	@Override
 	public void setInvulnerable(boolean isInvulnerable) {
 		super.setInvulnerable(isInvulnerable);
 
-		getEntityData().set(INVULNERABLE, isInvulnerable);
+		if (!INVULNERABLE.is(this, isInvulnerable))
+			INVULNERABLE.set(this, isInvulnerable);
 	}
 
 	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
 
-		if (key.equals(INVULNERABLE))
-			setInvulnerable(getEntityData().get(INVULNERABLE));
+		for (EntityDataHolder<?> dataHolder : this.dataParams) {
+			if (dataHolder.checkSync(this, key))
+				break;
+		}
 	}
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
-		setInvulnerable(isInvulnerable());
 		compound.putBoolean("DropsLoot", this.hasDrops);
 	}
 
@@ -258,23 +314,16 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		super.readAdditionalSaveData(compound);
 
 		this.hasDrops = compound.getBoolean("DropsLoot");
-	}
 
-	@Override
-	protected void customServerAiStep() {
-		super.customServerAiStep();
-
-		tickBrain((T)this);
+		INVULNERABLE.set(this, isInvulnerable());
 	}
 
 	@Override
 	public void aiStep() {
 		super.aiStep();
 
-		if (getParts() != null) {
-			for (AoAEntityPart<?> part : getParts()) {
-				part.updatePosition();
-			}
+		for (AoAEntityPart<?> part : getParts()) {
+			part.updatePosition();
 		}
 	}
 
@@ -284,47 +333,40 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnReason) {
-		return true;
-	}
-
-	protected RandomUtil.EasyRandom rand() {
-		if (this.random == null)
-			this.random = new RandomUtil.EasyRandom();
-
-		return this.random;
-	}
-
-	@Override
-	public void setId(int id) {
-		super.setId(id);
-
-		if (getParts() != null) {
-			int newId = id + 1;
-
-			for (PartEntity<?> part : getParts()) {
-				part.setId(newId++);
-			}
-		}
-	}
-
-	@Override
 	public boolean isMultipartEntity() {
-		return getParts() != null;
+		return getParts().length > 0;
 	}
 
-	@org.jetbrains.annotations.Nullable
 	@Override
 	public AoAEntityPart<?>[] getParts() {
 		return this.parts;
 	}
 
 	protected void setParts(AoAEntityPart<?>... parts) {
-		if (this.parts != null)
+		if (this.parts.length > 0)
 			throw new IllegalStateException("Cannot add more parts after having already done so!");
 
 		this.parts = parts;
 
 		setId(ENTITY_COUNTER.getAndAdd(getParts().length + 1) + 1);
 	}
+
+	@Override
+	public void setId(int id) {
+		super.setId(id);
+
+		int newId = id + 1;
+
+		for (PartEntity<?> part : getParts()) {
+			part.setId(newId++);
+		}
+	}
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
+	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 }

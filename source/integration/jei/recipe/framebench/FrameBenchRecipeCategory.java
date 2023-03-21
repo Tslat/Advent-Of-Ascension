@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.jei.recipe.framebench;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -23,7 +22,6 @@ import net.tslat.aoa3.content.recipe.FrameBenchRecipe;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
-@SuppressWarnings("removal")
 public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecipe> {
 	public static final RecipeType<FrameBenchRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "frame_bench", FrameBenchRecipe.class);
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench");
@@ -93,4 +91,3 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 				.addIngredients(recipe.getIngredients().get(0));
 	}
 }
-*/

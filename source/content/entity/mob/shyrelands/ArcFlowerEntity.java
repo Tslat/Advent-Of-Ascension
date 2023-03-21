@@ -67,8 +67,8 @@ public class ArcFlowerEntity extends AoAMeleeMob<ArcFlowerEntity> {
     }
 
     @Override
-    public void die(DamageSource cause) {
-        super.die(cause);
+    public void die(DamageSource source) {
+        super.die(source);
 
         if (!level.isClientSide) {
             ArcwormEntity arcworm = new ArcwormEntity(AoAMobs.ARCWORM.get(), level);

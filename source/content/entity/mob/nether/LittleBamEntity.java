@@ -122,7 +122,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 						})
 						.whenStarting(entity -> {
 							getNavigation().stop();
-							setImmobile(true);
+							IMMOBILE.set(entity, true);
 
 							ServerParticlePacket packet = new ServerParticlePacket();
 							double targetX = getX(0.5f);

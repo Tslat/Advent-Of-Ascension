@@ -22,7 +22,6 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public final class ObjectUtil {
-
 	public static String bufferedReaderToString(BufferedReader reader) {
 		final StringBuilder content = new StringBuilder();
 

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -35,8 +36,6 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 
 	public CorruptedTravellerEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
-
-		setGlowingTag(AoAConfigs.SERVER.easyCorruptedTravellers.get());
 	}
 
 	@Override
@@ -57,6 +56,14 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 	@Override
 	public boolean checkSpawnRules(LevelAccessor level, MobSpawnType spawnReason) {
 		return super.checkSpawnRules(level, spawnReason) && level.getEntitiesOfClass(CorruptedTravellerEntity.class, getBoundingBox().inflate(16, 16, 16)).isEmpty();
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag pCompound) {
+		super.readAdditionalSaveData(pCompound);
+
+		if (tickCount == 0)
+			setGlowingTag(AoAConfigs.SERVER.easyCorruptedTravellers.get());
 	}
 
 	@Override

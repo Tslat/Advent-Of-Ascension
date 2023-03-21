@@ -73,10 +73,14 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 
 	@Override
 	public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
+		Vec3 velocity = target.getDeltaMovement();
+
 		target.hurt(DamageSource.mobAttack(this).setIsFire(), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
+		target.setDeltaMovement(velocity);
+
 		if (RandomUtil.oneInNChance(5))
-			target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
+			target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1);
 	}
 
 	@Override
@@ -154,11 +158,11 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 			cooldownFor(entity -> 10);
 			whenStarting(entity -> {
 				entity.triggerAnim("Attack", "breath_start");
-				entity.setImmobile(true);
+				IMMOBILE.set(entity, true);
 			});
 			whenStopping(entity -> {
 				entity.triggerAnim("Attack", "breath_stop");
-				entity.setImmobile(false);
+				IMMOBILE.set(entity, false);
 			});
 		}
 	}

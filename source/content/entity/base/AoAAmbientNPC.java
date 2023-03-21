@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.entity.base;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -20,23 +21,55 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 
 public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEntity {
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
-	private final HashMap<String, Integer> animationStates = new HashMap<>(1);
+	private EntityDataHolder<?>[] dataParams;
 
 	public AoAAmbientNPC(EntityType<? extends PathfinderMob> entityType, Level world) {
 		super(entityType, world);
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+
+		if (this.dataParams == null)
+			this.dataParams = new EntityDataHolder<?>[0];
+	}
+
+	@Override
+	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+		super.onSyncedDataUpdated(key);
+
+		for (EntityDataHolder<?> dataHolder : this.dataParams) {
+			if (dataHolder.checkSync(this, key))
+				break;
+		}
+	}
+
+	protected final void registerDataParams(EntityDataHolder<?>... params) {
+		EntityDataHolder<?>[] newArray = new EntityDataHolder[this.dataParams.length + params.length];
+
+		System.arraycopy(this.dataParams, 0, newArray, 0, this.dataParams.length);
+		System.arraycopy(params, 0, newArray, this.dataParams.length, params.length);
+
+		for (EntityDataHolder<?> param : params) {
+			param.defineDefault(this);
+		}
+
+		this.dataParams = newArray;
 	}
 
 	@Override
@@ -66,6 +99,10 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
 		return null;
+	}
+
+	public RandomUtil.EasyRandom rand() {
+		return new RandomUtil.EasyRandom(this.random);
 	}
 
 	@Nullable
@@ -127,10 +164,10 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 	}
 
 	@Override
-	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
-
-	@Override
 	public AnimatableInstanceCache getAnimatableInstanceCache() {
 		return this.geoCache;
 	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 }

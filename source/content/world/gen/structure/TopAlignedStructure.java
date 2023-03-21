@@ -10,9 +10,11 @@ import net.minecraft.world.level.levelgen.WorldGenerationContext;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.tslat.aoa3.common.registration.worldgen.AoAStructureTypes;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,11 @@ public class TopAlignedStructure extends AoAStructure {
 
 	public TopAlignedStructure(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public StructureType<? extends AoAStructure> type() {
+		return AoAStructureTypes.TOP_ALIGNED.get();
 	}
 
 	@Override

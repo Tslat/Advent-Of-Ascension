@@ -58,10 +58,10 @@ public class YetiEntity extends AoAMeleeMob<YetiEntity> {
 				new SetWalkTargetToAttackTarget<>(),
 				new OneRandomBehaviour<>(
 						Pair.of(new AnimatableMeleeAttack<>(7).attackInterval(entity -> 16)
-								.whenStarting(entity -> setAttackState(STRIKE))
+								.whenStarting(entity -> ATTACK_STATE.set(entity, STRIKE))
 								.whenStopping(entity -> BrainUtils.setSpecialCooldown(this, 16)), 3),
 						Pair.of(new AnimatableMeleeAttack<>(4).attackInterval(entity -> 14)
-								.whenStarting(entity -> setAttackState(SWING))
+								.whenStarting(entity -> ATTACK_STATE.set(entity, SWING))
 								.whenStopping(entity -> BrainUtils.setSpecialCooldown(this, 14)), 1)
 				).startCondition(entity -> !BrainUtils.isOnSpecialCooldown(this))
 		);
@@ -71,25 +71,25 @@ public class YetiEntity extends AoAMeleeMob<YetiEntity> {
 	protected void onAttack(Entity target) {
 		super.onAttack(target);
 
-		if (getAttackState() == SWING && target instanceof LivingEntity livingTarget)
+		if (ATTACK_STATE.is(this, SWING) && target instanceof LivingEntity livingTarget)
 			DamageUtil.doScaledKnockback(livingTarget, this, 1.1f, 1, 1.25f, 1);
 	}
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return getAttackState() == STRIKE ? 16 : 14;
+		return ATTACK_STATE.is(this, STRIKE) ? 16 : 14;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return getAttackState() == STRIKE ? 7 : 4;
+		return ATTACK_STATE.is(this, STRIKE) ? 7 : 4;
 	}
 
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
-				AoAAnimations.dynamicAttackController(this, state -> getAttackState() == STRIKE ? DefaultAnimations.ATTACK_STRIKE : DefaultAnimations.ATTACK_SWING)
+				AoAAnimations.dynamicAttackController(this, state -> ATTACK_STATE.is(this, STRIKE) ? DefaultAnimations.ATTACK_STRIKE : DefaultAnimations.ATTACK_SWING)
 		);
 	}
 }

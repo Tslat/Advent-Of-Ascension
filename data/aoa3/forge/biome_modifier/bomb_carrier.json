@@ -2,9 +2,8 @@
   "type": "aoa3:new_mob_spawn",
   "biomes": {
     "excluding": [
-      "#forge:is_mushroom",
-      "#forge:is_snowy",
-      "minecraft:deep_dark"
+      "#forge:no_mob_spawns",
+      "#forge:is_snowy"
     ],
     "if_all": [
       "#minecraft:is_overworld"

@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.item.tablet;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -15,6 +16,7 @@ import net.tslat.aoa3.content.entity.tablet.SoulTabletEntity;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -25,6 +27,10 @@ public abstract class TabletItem extends Item {
 	private final int animaLevelReq;
 	private final int effectRadius;
 
+	/**
+	 * Scales the {@link PoseStack} in preparation for rendering the model, excluding when re-rendering the model as part of a {@link GeoRenderLayer} or external render call.<br>
+	 * Override and call super with modified scale values as needed to further modify the scale of the model (E.G. child entities)
+	 */
 	public TabletItem(float placementCost, float tickSoulDrain, int levelReq, int effectRadius) {
 		super(new Item.Properties().stacksTo(1));
 

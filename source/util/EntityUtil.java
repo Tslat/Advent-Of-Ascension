@@ -278,8 +278,16 @@ public final class EntityUtil {
 	public static Set<Entity> getAttackersForMob(LivingEntity entity, @Nullable Predicate<Entity> filter) {
 		CombatTracker tracker = entity.getCombatTracker();
 
-		if (tracker.entries.isEmpty() || !tracker.inCombat)
+		if (tracker.entries.isEmpty()) {
+			if (entity.getLastDamageSource() != null) {
+				Entity attacker = entity.getLastDamageSource().getEntity();
+
+				if (attacker != null && (filter == null || filter.test(attacker)))
+					return Set.of(entity.getLastDamageSource().getEntity());
+			}
+
 			return Collections.emptySet();
+		}
 
 		HashSet<Entity> killers = new HashSet<>(tracker.entries.size());
 
@@ -339,6 +347,25 @@ public final class EntityUtil {
 					impactEntity = target;
 					closestDist = dist;
 					position = pos;
+				}
+			}
+
+			if (target.isMultipartEntity()) {
+				for (Entity part : target.getParts()) {
+					targetBounds = part.getBoundingBox().inflate(tolerance);
+					boundsClip = targetBounds.clip(startVec, endVec);
+
+					if (boundsClip.isPresent()) {
+						Vec3 pos = boundsClip.get();
+
+						double dist = startVec.distanceToSqr(pos);
+
+						if (dist < closestDist) {
+							impactEntity = target;
+							closestDist = dist;
+							position = pos;
+						}
+					}
 				}
 			}
 		}

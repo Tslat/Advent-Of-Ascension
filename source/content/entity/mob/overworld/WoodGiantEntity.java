@@ -5,13 +5,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +21,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -40,6 +38,7 @@ import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.constant.ScreenImageEffect;
+import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
@@ -48,10 +47,11 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 
 public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
-	public static final EntityDataAccessor<Integer> STAGE = SynchedEntityData.<Integer>defineId(WoodGiantEntity.class, EntityDataSerializers.INT);
+	public static final EntityDataHolder<Integer> STAGE = EntityDataHolder.register(WoodGiantEntity.class, EntityDataSerializers.INT, 0, WoodGiantEntity::getStage, WoodGiantEntity::setStage);
 	private final AttributeModifier STAGE_ARMOUR_MOD = new AttributeModifier(UUID.fromString("076a790a-a765-4313-b517-527b758e839f"), "StageArmourModifier", 1, AttributeModifier.Operation.ADDITION) {
 		@Override
 		public double getAmount() {
@@ -66,6 +66,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 	};
 
 	private int lastMeleeHit = 0;
+	private int stage = 0;
 
 	public WoodGiantEntity(EntityType<? extends WoodGiantEntity> entityType, Level world) {
 		super(entityType, world);
@@ -75,7 +76,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 	@Override
 	protected Brain.Provider<WoodGiantEntity> brainProvider() { // TODO
-		return Brain.provider(ImmutableList.of(), ImmutableList.of());
+		return Brain.provider(List.of(MemoryModuleType.ATTACK_TARGET), ImmutableList.of());
 	}
 
 	@Override
@@ -92,7 +93,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 
-		getEntityData().define(STAGE, 0);
+		registerDataParams(STAGE);
 	}
 
 	@Nullable
@@ -158,7 +159,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 				}
 
 				if (getStage() < 3) {
-					setStage(getStage() + 1);
+					STAGE.set(this, getStage() + 1);
 					particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 3);
 
 					if (!(attacker instanceof ServerPlayer pl) || !pl.isCreative()) {
@@ -181,14 +182,14 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 		super.readAdditionalSaveData(compound);
 
 		if (compound.contains("WoodStage"))
-			setStage(compound.getInt("WoodStage"));
+			STAGE.set(this, compound.getInt("WoodStage"));
 	}
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
-		compound.putInt("WoodStage", getEntityData().get(STAGE));
+		compound.putInt("WoodStage", STAGE.get(this));
 	}
 
 	@Override
@@ -200,33 +201,35 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 			lastMeleeHit = tickCount;
 
 			if (stage > 0 && stage <= 3) {
-				setStage(stage - 1);
+				STAGE.set(this, stage - 1);
 				heal(20);
 			}
 		}
 	}
 
 	private void setStage(int stage) {
-		int oldStage = getStage();
-		int clampedStage = Mth.clamp(stage, 0, 3);
+		this.stage = stage;
 
-		getEntityData().set(STAGE, clampedStage);
-		EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR, STAGE_ARMOUR_MOD, false);
-		EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR_TOUGHNESS, STAGE_TOUGHNESS_MOD, false);
+		if (!level.isClientSide()) {
+			int oldStage = getStage();
 
-		if (oldStage < stage) {
-			ServerParticlePacket packet = new ServerParticlePacket();
+			EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR, STAGE_ARMOUR_MOD, false);
+			EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR_TOUGHNESS, STAGE_TOUGHNESS_MOD, false);
 
-			for (int i = 0; i < 10; i++) {
-				packet.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true);
+			if (oldStage < stage) {
+				ServerParticlePacket packet = new ServerParticlePacket();
+
+				for (int i = 0; i < 10; i++) {
+					packet.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true);
+				}
+
+				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
 			}
-
-			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
 		}
 	}
 
-	private int getStage() {
-		return getEntityData().get(STAGE);
+	public int getStage() {
+		return this.stage;
 	}
 
 	@Override

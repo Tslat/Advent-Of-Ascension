@@ -12,6 +12,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:nowhere/parkour/courses/3/twisted_treetops/starts"
+  "fallback": "minecraft:empty"
 }

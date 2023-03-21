@@ -2,14 +2,17 @@ package net.tslat.aoa3.player.ability;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraftforge.event.entity.living.BabyEntitySpawnEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class BreedingBonus extends ScalableModAbility {
@@ -32,11 +35,8 @@ public class BreedingBonus extends ScalableModAbility {
 	public void handleAnimalBreed(BabyEntitySpawnEvent ev) {
 		if (testAsChance()) {
 			Mob parentA = ev.getParentA();
-			AgeableMob childB = (AgeableMob)ev.getChild().getType().create(parentA.level);
+			EntitySpawningUtil.spawnEntity((ServerLevel)parentA.getLevel(), (EntityType<AgeableMob>)ev.getChild().getType(), parentA.position(), MobSpawnType.BREEDING, child -> child.setBaby(true));
 
-			childB.setBaby(true);
-			childB.moveTo(parentA.getX(), parentA.getY(), parentA.getZ(), 0, 0);
-			((ServerLevelAccessor)parentA.level).addFreshEntityWithPassengers(childB);
 			PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getCausedByPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getCausedByPlayer(), AoASkills.FARMING.get()), 3), false);
 		}
 	}

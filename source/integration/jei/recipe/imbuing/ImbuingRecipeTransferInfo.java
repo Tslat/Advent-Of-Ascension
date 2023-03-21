@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.jei.recipe.imbuing;
 
 import mezz.jei.api.recipe.RecipeType;
@@ -13,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@SuppressWarnings("removal")
 public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTableContainer, InfusionRecipe> {
 	@Override
 	public Class<InfusionTableContainer> getContainerClass() {
@@ -57,4 +55,3 @@ public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTa
 		return inventorySlots;
 	}
 }
-*/

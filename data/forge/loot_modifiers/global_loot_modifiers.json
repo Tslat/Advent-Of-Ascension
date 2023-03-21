@@ -1,16 +1,24 @@
 {
   "entries": [
     "aoa3:haven",
-    "aoa3:player_event_listeners",
     "aoa3:elder_guardian_biogenic_armour",
-    "aoa3:loot_modifying_items",
-    "aoa3:overworld_chest_loot",
-    "aoa3:fertilised_farmland",
+    "aoa3:misc_void_scales",
     "aoa3:gardener",
     "aoa3:guardian_biogenic_armour",
     "aoa3:end_chest_loot",
+    "aoa3:pyro_crossbow",
+    "aoa3:player_event_listeners",
+    "aoa3:misc_ivory",
+    "aoa3:misc_armour_plating",
+    "aoa3:misc_sharp_claws",
+    "aoa3:loot_modifying_items",
+    "aoa3:overworld_chest_loot",
+    "aoa3:misc_ghostly_powder",
+    "aoa3:fertilised_farmland",
+    "aoa3:outlaw_music_disc",
     "aoa3:dispenser_loot",
     "aoa3:nether_chest_loot",
+    "aoa3:misc_torn_cloth",
     "aoa3:world_tables"
   ],
   "replace": false

@@ -10,8 +10,14 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public abstract class BaseMobProjectile extends ThrowableProjectile {
+public class BaseMobProjectile extends ThrowableProjectile implements GeoEntity {
+	private final AnimatableInstanceCache animatableCache = GeckoLibUtil.createInstanceCache(this);
 	protected Type projectileType;
 	protected AoARangedAttacker shooter;
 
@@ -91,6 +97,16 @@ public abstract class BaseMobProjectile extends ThrowableProjectile {
 	@Override
 	public boolean ignoreExplosion() {
 		return true;
+	}
+
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+		controllerRegistrar.add(DefaultAnimations.genericLivingController(this));
+	}
+
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.animatableCache;
 	}
 
 	public enum Type {

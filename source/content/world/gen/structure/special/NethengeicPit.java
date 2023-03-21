@@ -9,10 +9,13 @@ import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.PoolElementStructurePiece;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.Shapes;
+import net.tslat.aoa3.common.registration.worldgen.AoAStructureTypes;
 import net.tslat.aoa3.content.world.gen.structure.AoAJigsawAssembler;
+import net.tslat.aoa3.content.world.gen.structure.AoAStructure;
 import net.tslat.aoa3.content.world.gen.structure.TopAlignedStructure;
 
 import java.util.List;
@@ -27,6 +30,11 @@ public class NethengeicPit extends TopAlignedStructure {
 
 	public NethengeicPit(Settings settings) {
 		super(settings);
+	}
+
+	@Override
+	public StructureType<? extends AoAStructure> type() {
+		return AoAStructureTypes.NETHENGEIC_PIT.get();
 	}
 
 	@Override

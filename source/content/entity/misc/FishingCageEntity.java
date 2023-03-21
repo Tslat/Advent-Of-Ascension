@@ -7,7 +7,6 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -32,24 +31,23 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.event.AoAPlayerEvents;
+import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 public class FishingCageEntity extends Entity {
-	private static final EntityDataAccessor<ItemStack> CAUGHT_STACK_1 = SynchedEntityData.defineId(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
-	private static final EntityDataAccessor<ItemStack> CAUGHT_STACK_2 = SynchedEntityData.defineId(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
-	private static final EntityDataAccessor<ItemStack> CAUGHT_STACK_3 = SynchedEntityData.defineId(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK);
+	public static final EntityDataHolder<ItemStack> CAUGHT_STACK_1 = EntityDataHolder.register(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK, ItemStack.EMPTY, cage -> cage.loot[0], (cage, stack) -> cage.loot[0] = stack);
+	public static final EntityDataHolder<ItemStack> CAUGHT_STACK_2 = EntityDataHolder.register(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK, ItemStack.EMPTY, cage -> cage.loot[1], (cage, stack) -> cage.loot[1] = stack);
+	public static final EntityDataHolder<ItemStack> CAUGHT_STACK_3 = EntityDataHolder.register(FishingCageEntity.class, EntityDataSerializers.ITEM_STACK, ItemStack.EMPTY, cage -> cage.loot[2], (cage, stack) -> cage.loot[2] = stack);
 
 	private UUID ownerUUID = null;
 	private int damage;
-	private List<ItemStack> loot = null;
+	private final ItemStack[] loot = new ItemStack[] {ItemStack.EMPTY, ItemStack.EMPTY, ItemStack.EMPTY};
 
 	public FishingCageEntity(Level world, Player player, ItemStack stack) {
 		this(AoAMiscEntities.FISHING_CAGE.get(), world);
@@ -66,7 +64,7 @@ public class FishingCageEntity extends Entity {
 	public FishingCageEntity(EntityType<? extends Entity> entityType, Level world) {
 		super(entityType, world);
 
-		blocksBuilding = true;
+		this.blocksBuilding = true;
 	}
 
 	@Override
@@ -82,9 +80,7 @@ public class FishingCageEntity extends Entity {
 					ItemUtil.givePlayerItemOrDrop(player, fishingCage);
 			}
 
-			List<ItemStack> loot = getLoot();
-
-			if (!loot.isEmpty()) {
+			if (hasCatches()) {
 				AoAPlayerEvents.handleCustomInteraction((ServerPlayer)player, "fishing_cage_harvest", loot);
 
 				for (ItemStack drop : loot) {
@@ -111,33 +107,17 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	protected void defineSynchedData() {
-		getEntityData().define(CAUGHT_STACK_1, ItemStack.EMPTY);
-		getEntityData().define(CAUGHT_STACK_2, ItemStack.EMPTY);
-		getEntityData().define(CAUGHT_STACK_3, ItemStack.EMPTY);
+		CAUGHT_STACK_1.defineDefault(this);
+		CAUGHT_STACK_2.defineDefault(this);
+		CAUGHT_STACK_3.defineDefault(this);
 	}
 
 	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		if (level.isClientSide()) {
-			ItemStack stack = ItemStack.EMPTY;
+		super.onSyncedDataUpdated(key);
 
-			if (key.equals(CAUGHT_STACK_1)) {
-				stack = getEntityData().get(CAUGHT_STACK_1);
-			}
-			else if (key.equals(CAUGHT_STACK_2)) {
-				stack = getEntityData().get(CAUGHT_STACK_2);
-			}
-			else if (key.equals(CAUGHT_STACK_3)) {
-				stack = getEntityData().get(CAUGHT_STACK_3);
-			}
-
-			if (stack != ItemStack.EMPTY) {
-				if (loot == null)
-					loot = new ArrayList<>(3);
-
-				loot.add(stack);
-			}
-		}
+		if (!CAUGHT_STACK_1.checkSync(this, key) && !CAUGHT_STACK_2.checkSync(this, key))
+			CAUGHT_STACK_3.checkSync(this, key);
 	}
 
 	@Override
@@ -145,7 +125,7 @@ public class FishingCageEntity extends Entity {
 		if (compound.hasUUID("OwnerUUID"))
 			ownerUUID = compound.getUUID("OwnerUUID");
 
-		if (!loot.isEmpty()) {
+		if (loot[0] != ItemStack.EMPTY) {
 			ListTag lootList = new ListTag();
 
 			for (ItemStack stack : loot) {
@@ -163,22 +143,20 @@ public class FishingCageEntity extends Entity {
 
 		if (compound.contains("loot")) {
 			ListTag lootList = compound.getList("loot", Tag.TAG_COMPOUND);
-			this.loot = new ArrayList<>(Math.min(lootList.size(), 3));
 
-			for (Tag nbt : lootList) {
-				try {
-					this.loot.add(ItemStack.of((CompoundTag)nbt));
-				}
-				catch (Exception ignored) {}
-			}
+			if (lootList.size() > 2)
+				CAUGHT_STACK_3.set(this, ItemStack.of(lootList.getCompound(2)));
 
-			updateLootData();
+			if (lootList.size() > 1)
+				CAUGHT_STACK_2.set(this, ItemStack.of(lootList.getCompound(1)));
+
+			CAUGHT_STACK_1.set(this, ItemStack.of(lootList.getCompound(0)));
 		}
 	}
 
 	@Nonnull
-	public List<ItemStack> getLoot() {
-		return this.loot == null ? Collections.emptyList() : loot;
+	public ItemStack[] getLoot() {
+		return this.loot;
 	}
 
 	@Override
@@ -210,7 +188,7 @@ public class FishingCageEntity extends Entity {
 		if (level.isClientSide() || ownerUUID == null)
 			return;
 
-		if (loot != null && loot.size() >= 3)
+		if (!CAUGHT_STACK_3.is(this, ItemStack.EMPTY))
 			return;
 
 		if (!onGround || !isInWater())
@@ -237,32 +215,19 @@ public class FishingCageEntity extends Entity {
 						.withParameter(LootContextParams.KILLER_ENTITY, owner)
 						.withRandom(random).withLuck(2 + owner.getLuck());
 				LootTable lootTable = level.getServer().getLootTables().get(AdventOfAscension.id("misc/fishing_cage_catches"));
+				List<ItemStack> loot = lootTable.getRandomItems(lootContext.create(LootContextParamSets.FISHING));
 
-				if (loot == null)
-					loot = new ArrayList<>(3);
-
-				this.loot.addAll(lootTable.getRandomItems(lootContext.create(LootContextParamSets.FISHING)));
-				updateLootData();
-			}
-		}
-	}
-
-	protected void updateLootData() {
-		SynchedEntityData data = getEntityData();
-
-		if (loot == null || loot.isEmpty()) {
-			data.set(CAUGHT_STACK_1, ItemStack.EMPTY);
-			data.set(CAUGHT_STACK_2, ItemStack.EMPTY);
-			data.set(CAUGHT_STACK_3, ItemStack.EMPTY);
-		}
-		else {
-			data.set(CAUGHT_STACK_1, loot.get(0));
-
-			if (loot.size() > 1) {
-				data.set(CAUGHT_STACK_2, loot.get(1));
-
-				if (loot.size() > 2)
-					data.set(CAUGHT_STACK_3, loot.get(2));
+				for (int i = 0; i < 3 && i < loot.size(); i++) {
+					if (CAUGHT_STACK_1.is(this, ItemStack.EMPTY)) {
+						CAUGHT_STACK_1.set(this, loot.get(i));
+					}
+					else if (CAUGHT_STACK_2.is(this, ItemStack.EMPTY)) {
+						CAUGHT_STACK_2.set(this, loot.get(i));
+					}
+					else {
+						CAUGHT_STACK_3.set(this, loot.get(i));
+					}
+				}
 			}
 		}
 	}
@@ -353,7 +318,7 @@ public class FishingCageEntity extends Entity {
 			if (isAlive() && tickCount > 40 && onGround && !isInWater()) {
 				ItemStack fishingCage = new ItemStack(AoATools.FISHING_CAGE.get());
 
-				if (!getLoot().isEmpty())
+				if (hasCatches())
 					this.damage += 1;
 
 				fishingCage.setDamageValue(this.damage);
@@ -380,12 +345,16 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public void remove(RemovalReason reason) {
-		if (!level.isClientSide() && loot != null) {
+		if (!level.isClientSide() && hasCatches()) {
 			for (ItemStack stack : loot) {
 				spawnAtLocation(stack);
 			}
 		}
 
 		super.remove(reason);
+	}
+
+	public boolean hasCatches() {
+		return !CAUGHT_STACK_1.is(this, ItemStack.EMPTY);
 	}
 }

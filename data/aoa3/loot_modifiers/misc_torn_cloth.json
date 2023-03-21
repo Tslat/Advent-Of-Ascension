@@ -1,0 +1,55 @@
+{
+  "type": "aoa3:add_items",
+  "conditions": [
+    {
+      "chance": 0.2,
+      "condition": "minecraft:random_chance"
+    },
+    {
+      "condition": "minecraft:alternative",
+      "terms": [
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:stray"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:witch"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:evoker"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:illusioner"
+          }
+        },
+        {
+          "condition": "minecraft:entity_properties",
+          "entity": "this",
+          "predicate": {
+            "type": "minecraft:wandering_trader"
+          }
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "Count": 1,
+      "id": "aoa3:torn_cloth"
+    }
+  ]
+}

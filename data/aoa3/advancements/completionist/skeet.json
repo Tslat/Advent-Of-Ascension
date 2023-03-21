@@ -1,0 +1,31 @@
+{
+  "parent": "aoa3:completionist/root",
+  "criteria": {
+    "phantom_sniper_kill": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.completionist.skeet.description"
+    },
+    "frame": "challenge",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:head_hunter",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "light_purple",
+      "translate": "advancements.aoa3.completionist.skeet.title"
+    }
+  },
+  "requirements": [
+    [
+      "phantom_sniper_kill"
+    ]
+  ]
+}

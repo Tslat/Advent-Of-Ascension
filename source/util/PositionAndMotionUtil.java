@@ -51,8 +51,26 @@ public final class PositionAndMotionUtil {
 	}
 
 	public static void moveRelativeToFacing(Entity entity, double moveLeft, double moveForward, double moveUp) {
-		double radians = Math.toRadians(entity.getYRot() - 180);
+		entity.setPos(moveRelativeToFacing(entity.position(), entity.getYRot(), moveLeft, moveForward, moveUp));
+	}
 
-		entity.setPos(entity.getX() + moveLeft * -Math.cos(radians), entity.getY() + moveUp, entity.getZ() + moveLeft * -Math.sin(radians));
+	public static Vec3 moveRelativeToFacing(Vec3 position, float yRot, double moveLeft, double moveForward, double moveUp) {
+		double x = 0;
+		double z = 0;
+
+		if (moveLeft != 0) {
+			double radians = Math.toRadians(yRot - 180);
+			x += moveLeft * -Math.cos(radians);
+			z += moveLeft * -Math.sin(radians);
+		}
+
+		if (moveForward != 0) {
+			double radians = Math.toRadians(yRot - 90);
+			x += moveForward * -Math.cos(radians);
+			z += moveForward * -Math.sin(radians);
+		}
+
+
+		return position.add(x, moveUp, z);
 	}
 }

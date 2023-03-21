@@ -24,7 +24,7 @@ public class Megagun extends BaseGun {
 
 	@Override
 	protected float getFiringSoundPitchAdjust() {
-		return 0.85f;
+		return 0.95f;
 	}
 
 	@Override

@@ -257,6 +257,7 @@ public final class AoATags {
 	}
 
 	public static class Biomes {
+		public static final TagKey<Biome> NO_MOB_SPAWNS = tag("no_mob_spawns");
 		public static final TagKey<Biome> HAS_RUINED_TELEPORTER = aoaTag("has_structure/ruined_teleporter");
 
 		private static TagKey<Biome> aoaTag(String id) {

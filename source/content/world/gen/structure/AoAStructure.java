@@ -58,7 +58,7 @@ public class AoAStructure extends Structure {
 	}
 
 	@Override
-	public StructureType<AoAStructure> type() {
+	public StructureType<? extends AoAStructure> type() {
 		return AoAStructureTypes.AOA_DEFAULT.get();
 	}
 

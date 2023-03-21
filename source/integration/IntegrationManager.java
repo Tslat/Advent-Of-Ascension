@@ -1,6 +1,6 @@
 package net.tslat.aoa3.integration;
 
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.ModList;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 
@@ -107,6 +107,6 @@ public class IntegrationManager {
 	}
 
 	public static boolean isModPresent(String modId) {
-		return FMLLoader.getLoadingModList().getModFileById(modId) != null;
+		return ModList.get().isLoaded(modId);
 	}
 }

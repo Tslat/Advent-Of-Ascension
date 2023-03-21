@@ -2137,12 +2137,6 @@
     ],
     "subtitle": "subtitles.entity.immortal.death"
   },
-  "entity.infernal.ambient": {
-    "sounds": [
-      "aoa3:entity/infernal/ambient"
-    ],
-    "subtitle": "subtitles.entity.infernal.ambient"
-  },
   "entity.infernal.hurt": {
     "sounds": [
       "aoa3:entity/infernal/hurt"
@@ -3244,18 +3238,6 @@
       "aoa3:entity/skeleman/shoot"
     ],
     "subtitle": "subtitles.entity.skeleman.shoot"
-  },
-  "entity.skeletal_cowman.ambient": {
-    "sounds": [
-      "aoa3:entity/skeletal_cowman/ambient"
-    ],
-    "subtitle": "subtitles.entity.skeletal_cowman.ambient"
-  },
-  "entity.skeletal_cowman.hurt": {
-    "sounds": [
-      "aoa3:entity/skeletal_cowman/hurt"
-    ],
-    "subtitle": "subtitles.entity.skeletal_cowman.hurt"
   },
   "entity.skeletron.ambient": {
     "sounds": [

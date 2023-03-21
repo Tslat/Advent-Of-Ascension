@@ -13,6 +13,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.Silverfish;
 import net.minecraft.world.entity.player.Player;
@@ -37,6 +38,7 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
+import java.util.List;
 
 public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements RangedAttackMob, AoARangedAttacker {
 	public StoneGiantEntity(EntityType<? extends StoneGiantEntity> entityType, Level world) {
@@ -47,7 +49,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 
 	@Override
 	protected Brain.Provider<StoneGiantEntity> brainProvider() { // TODO
-		return Brain.provider(ImmutableList.of(), ImmutableList.of());
+		return Brain.provider(List.of(MemoryModuleType.ATTACK_TARGET), ImmutableList.of());
 	}
 
 	@Override
@@ -69,7 +71,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 				return 1;
 
 			return getNavigation().createPath(target, 0) == null ? 1 : 0;
-		}, meleeGoal, rangedGoal).onChange(goal -> setAttackState(goal == meleeGoal ? 0 : 1)));
+		}, meleeGoal, rangedGoal).onChange(goal -> ATTACK_STATE.set(this, goal == meleeGoal ? 0 : 1)));
 		goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
 		goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
 		goalSelector.addGoal(8, new RandomLookAroundGoal(this));
@@ -108,12 +110,12 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 
 	@Override
 	protected int getAttackSwingDuration() {
-		return getAttackState() == 0 ? 13 : 41;
+		return ATTACK_STATE.is(this, 0) ? 13 : 41;
 	}
 
 	@Override
 	protected int getPreAttackTime() {
-		return getAttackState() == 0 ? 7 : 32;
+		return ATTACK_STATE.is(this, 0) ? 7 : 32;
 	}
 
 	@Override
@@ -143,7 +145,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 		controllers.add(
 				DefaultAnimations.genericWalkController(this),
-				AoAAnimations.dynamicAttackController(this, state -> getAttackState() == 0 ? DefaultAnimations.ATTACK_SLAM : DefaultAnimations.ATTACK_THROW));
+				AoAAnimations.dynamicAttackController(this, state -> ATTACK_STATE.is(this, 0) ? DefaultAnimations.ATTACK_SLAM : DefaultAnimations.ATTACK_THROW));
 	}
 
 	@Override

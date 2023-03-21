@@ -1,3 +1,55 @@
 {
-  "type": "minecraft:empty"
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 50
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "aoa3:torn_cloth",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "aoa3:ghostly_powder",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:armour_plating",
+          "weight": 5
+        }
+      ],
+      "name": "loot",
+      "rolls": 1.0
+    }
+  ]
 }

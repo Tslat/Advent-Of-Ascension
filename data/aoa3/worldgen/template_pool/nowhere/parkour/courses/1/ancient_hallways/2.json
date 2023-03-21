@@ -12,6 +12,5 @@
       "weight": 1
     }
   ],
-  "fallback": "minecraft:empty",
-  "name": "aoa3:nowhere/parkour/courses/1/ancient_hallways/2"
+  "fallback": "minecraft:empty"
 }

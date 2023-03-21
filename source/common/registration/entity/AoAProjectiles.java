@@ -137,7 +137,6 @@ public final class AoAProjectiles {
 	public static final RegistryObject<EntityType<MoonShinerEntity>> MOON_SHINER_SHOT = registerProjectile("moon_shiner_shot", MoonShinerEntity::new);
 	public static final RegistryObject<EntityType<MoonShotEntity>> MOON_SHOT = registerProjectile("moon_shot", MoonShotEntity::new);
 	public static final RegistryObject<EntityType<MultiplyingGrenadeEntity>> MULTIPLYING_GRENADE = registerProjectile("multiplying_grenade", MultiplyingGrenadeEntity::new);
-	//public static final RegistryObject<EntityType<NethengeicWitherShotEntity>> NETHENGEIC_WITHER_SHOT = registerProjectile("nethengeic_wither_shot", NethengeicWitherShotEntity::new);
 	public static final RegistryObject<EntityType<NightmareFallEntity>> NIGHTMARE_FALL = registerProjectile("nightmare_fall", NightmareFallEntity::new);
 	public static final RegistryObject<EntityType<NoxiousShotEntity>> NOXIOUS_SHOT = registerProjectile("noxious_shot", NoxiousShotEntity::new);
 	public static final RegistryObject<EntityType<OdiousEntity>> ODIOUS_SHOT = registerProjectile("odious_shot", OdiousEntity::new);
