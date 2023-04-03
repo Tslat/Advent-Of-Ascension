@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.recipe;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -54,7 +55,7 @@ public class TrophyRecipe implements CraftingRecipe, net.minecraftforge.common.c
 	}
 
 	@Override
-	public ItemStack assemble(CraftingContainer inv) {
+	public ItemStack assemble(CraftingContainer inv, RegistryAccess registryAccess) {
 		for (int i = 0; i < inv.getContainerSize(); i++) {
 			if (inv.getItem(i).getItem() == AoABlocks.TROPHY.get().asItem())
 				return TrophyBlock.cloneTrophy(inv.getItem(i), AoABlocks.GOLD_TROPHY.get());
@@ -103,7 +104,7 @@ public class TrophyRecipe implements CraftingRecipe, net.minecraftforge.common.c
 	}
 
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return new ItemStack(AoABlocks.GOLD_TROPHY.get());
 	}
 

@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.entity.projectile.thrown;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +16,7 @@ import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -75,7 +75,7 @@ public class HardenedParapiranhaEntity extends BaseBullet implements HardProject
 
 	@Override
 	public void doEntityImpact(Entity target, Vec3 impactLocation) {
-		if (target.hurt(DamageSource.thrown(this, null), (float)AoAWeapons.HARDENED_PARAPIRANHA.get().getDamage()))
+		if (DamageUtil.doProjectileAttack(getOwner(), this, target, AoAWeapons.HARDENED_PARAPIRANHA.get().getDamage()))
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 60).level(2));
 	}
 

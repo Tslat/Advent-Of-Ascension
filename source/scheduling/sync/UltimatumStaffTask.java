@@ -69,9 +69,15 @@ public class UltimatumStaffTask implements Runnable {
 
 			if (targetPostHealth <= 0) {
 				resetStates();
-				DamageUtil.dealMagicDamage(null, shooter, target, target.getHealth() - targetPostHealth, true);
-
+				DamageUtil.doRecoilAttack(target, target.getHealth() - targetPostHealth);
 				target.setDeltaMovement(0, 0, 0);
+
+				if (shooter instanceof Player pl) {
+					target.setLastHurtByPlayer(pl);
+				}
+				else {
+					target.setLastHurtByMob(shooter);
+				}
 			}
 			else {
 				target.setHealth(targetPostHealth);
@@ -83,7 +89,7 @@ public class UltimatumStaffTask implements Runnable {
 			if (!(shooter instanceof Player) || !((Player)shooter).isCreative()) {
 				if (shooterPostHealth <= 0) {
 					resetStates();
-					DamageUtil.dealSelfHarmDamage(shooter, shooter.getHealth() - shooterPostHealth);
+					DamageUtil.doRecoilAttack(shooter, shooter.getHealth() - shooterPostHealth);
 				}
 				else {
 					shooter.setHealth(shooterPostHealth);

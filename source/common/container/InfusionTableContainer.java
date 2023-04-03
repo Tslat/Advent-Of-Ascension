@@ -177,7 +177,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 				if ((matchedRecipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayer)player).getRecipeBook().contains(matchedRecipe)) && (player.isCreative() || PlayerUtil.doesPlayerHaveLevel((ServerPlayer)player, AoASkills.IMBUING.get(), matchedRecipe.getInfusionReq()))) {
 					craftResult.setRecipeUsed(matchedRecipe);
 
-					resultStack = matchedRecipe.assemble(inv);
+					resultStack = matchedRecipe.assemble(inv, world.registryAccess());
 				}
 			}
 

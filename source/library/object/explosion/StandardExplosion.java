@@ -64,7 +64,7 @@ public class StandardExplosion extends ExtendedExplosion {
 	public void explode() {
 		super.explode();
 
-		this.originPos = new BlockPos(this.origin);
+		this.originPos = BlockPos.containing(this.origin);
 		boolean blockDamage = shouldDamageBlocks();
 
 		if (blockDamage) {
@@ -114,7 +114,7 @@ public class StandardExplosion extends ExtendedExplosion {
 				for (int y = -(int)Math.floor(this.info.radius); y <= (int)Math.ceil(this.info.radius); y++) {
 					for (int z = -(int)Math.floor(this.info.radius); z <= (int)Math.ceil(this.info.radius); z++) {
 						if ((x + 0.5f) * (x + 0.5f) + (y + 0.5f) * (y + 0.5f) + (z + 0.5f) * (z + 0.5f) < this.info.radius * this.info.radius) {
-							BlockPos pos = new BlockPos(x + this.origin.x, y + this.origin.y, z + this.origin.z);
+							BlockPos pos = BlockPos.containing(x + this.origin.x, y + this.origin.y, z + this.origin.z);
 
 							if (this.level.isInWorldBounds(pos))
 								this.blockPositions.add(pos);
@@ -127,7 +127,7 @@ public class StandardExplosion extends ExtendedExplosion {
 			SquareRadius radius = this.info.squareRadius;
 			BlockPos originPos = this.originPos;
 
-			for (BlockPos pos : BlockPos.betweenClosed(originPos.offset(-radius.xzRadius(), -radius.yRadius(), -radius.xzRadius()), originPos.offset(radius.xzRadius(), radius.yRadius(), radius.xzRadius()))) {
+			for (BlockPos pos : BlockPos.betweenClosed(originPos.offset((int)Math.floor(-radius.xzRadius()), (int)Math.floor(-radius.yRadius()), (int)Math.floor(-radius.xzRadius())), originPos.offset((int)Math.floor(radius.xzRadius()), (int)Math.floor(radius.yRadius()), (int)Math.floor(radius.xzRadius())))) {
 				if (this.level.isInWorldBounds(pos))
 					this.blockPositions.add(pos);
 			}

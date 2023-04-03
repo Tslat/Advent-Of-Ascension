@@ -2,6 +2,7 @@ package net.tslat.aoa3.data.server;
 
 import com.google.gson.*;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +28,7 @@ import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.TagUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -43,12 +44,12 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 		super(GSON, folder);
 	}
 
-	public static GenericEntryPool<Function<Level, Entity>, ServerPlayer> getFishListForBiome(Biome biome, boolean isLava) {
-		return FISH_RETRIEVER.getEntityList(biome, isLava);
+	public static GenericEntryPool<Function<Level, Entity>, ServerPlayer> getFishListForBiome(Biome biome, boolean isLava, Level level) {
+		return FISH_RETRIEVER.getEntityList(biome, isLava, level);
 	}
 
-	public static GenericEntryPool<Function<Level, Entity>, ServerPlayer> getTrapListForBiome(Biome biome, boolean isLava) {
-		return TRAPS_RETRIEVER.getEntityList(biome, isLava);
+	public static GenericEntryPool<Function<Level, Entity>, ServerPlayer> getTrapListForBiome(Biome biome, boolean isLava, Level level) {
+		return TRAPS_RETRIEVER.getEntityList(biome, isLava, level);
 	}
 
 	@Override
@@ -85,8 +86,8 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 
 	private void parseEntry(JsonObject json) throws IllegalArgumentException {
 		boolean replace = GsonHelper.getAsBoolean(json, "replace", false);
-		ArrayList<TagKey<Biome>> tags = new ArrayList<>();
-		ArrayList<ResourceKey<Biome>> biomes = new ArrayList<>();
+		List<TagKey<Biome>> tags = new ObjectArrayList<>();
+		List<ResourceKey<Biome>> biomes = new ObjectArrayList<>();
 		boolean forLava = GsonHelper.getAsBoolean(json, "for_lava", false);
 		boolean forTraps = GsonHelper.getAsBoolean(json, "for_traps", false);
 
@@ -201,18 +202,18 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			}
 		}
 
-		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getEntityList(Biome biome, boolean isLava) {
-			return isLava ? getLavaEntry(biome) : getWaterEntry(biome);
+		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getEntityList(Biome biome, boolean isLava, Level level) {
+			return isLava ? getLavaEntry(biome, level) : getWaterEntry(biome, level);
 		}
 
-		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getLavaEntry(Biome biome) {
+		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getLavaEntry(Biome biome, Level level) {
 			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, ForgeRegistries.BIOMES.getKey(biome));
 			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = LAVA_MAP.get(resourceKey);
 
 			if (entry != null)
 				return entry;
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(TagUtil.biomeTags(), biome).filter(tag -> LAVA_MAP.containsKey(tag)).findFirst().orElse(null);
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(tag -> LAVA_MAP.containsKey(tag)).findFirst().orElse(null);
 
 			if (matchedTag != null)
 				return LAVA_MAP.get(matchedTag);
@@ -220,14 +221,14 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			return LAVA_FALLBACK;
 		}
 
-		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getWaterEntry(Biome biome) {
+		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getWaterEntry(Biome biome, Level level) {
 			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, RegistryUtil.getId(biome));
 			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = WATER_MAP.get(resourceKey);
 
 			if (entry != null)
 				return entry;
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(TagUtil.biomeTags(), biome).filter(tag -> WATER_MAP.containsKey(tag)).findFirst().orElse(null);
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(tag -> WATER_MAP.containsKey(tag)).findFirst().orElse(null);
 
 			if (matchedTag != null)
 				return WATER_MAP.get(matchedTag);

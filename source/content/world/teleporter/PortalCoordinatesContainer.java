@@ -6,6 +6,6 @@ import net.minecraft.world.level.Level;
 
 public record PortalCoordinatesContainer(ResourceKey<Level> fromDim, double x, double y, double z) {
 	public BlockPos asBlockPos() {
-		return new BlockPos(x, y, z);
+		return BlockPos.containing(x, y, z);
 	}
 }

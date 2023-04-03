@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import javax.annotation.Nullable;
 
 public class BozoBlaster extends BaseCannon {
-	public BozoBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BozoBlaster(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

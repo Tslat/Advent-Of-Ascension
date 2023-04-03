@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Overshot extends BaseGun {
-	public Overshot(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Overshot(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

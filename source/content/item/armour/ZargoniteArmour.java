@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.item.armour;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -17,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class ZargoniteArmour extends AdventArmour {
-	public ZargoniteArmour(EquipmentSlot slot) {
+	public ZargoniteArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:zargonite", 64, new int[] {5, 8, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

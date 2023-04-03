@@ -53,7 +53,7 @@ public class ExtractionSkill extends AoASkill.Instance {
 			return;
 
 		ServerLevel world = context.getLevel();
-		BlockPos pos = new BlockPos(origin);
+		BlockPos pos = BlockPos.containing(origin);
 		Block block = state.getBlock();
 
 		if (!Block.isShapeFullBlock(state.getCollisionShape(context.getLevel(), pos)))

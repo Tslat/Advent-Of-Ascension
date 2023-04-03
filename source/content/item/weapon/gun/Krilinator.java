@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Krilinator extends BaseGun {
-	public Krilinator(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Krilinator(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

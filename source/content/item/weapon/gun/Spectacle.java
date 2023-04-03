@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Spectacle extends BaseGun {
-	public Spectacle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Spectacle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

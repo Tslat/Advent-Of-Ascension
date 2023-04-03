@@ -22,7 +22,7 @@ public class DartGun extends BaseGun {
 	double dmg;
 	int firingDelay;
 
-	public DartGun(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public DartGun(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

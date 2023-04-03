@@ -4,6 +4,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -17,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class HazmatArmour extends AdventArmour {
-	public HazmatArmour(EquipmentSlot slot) {
+	public HazmatArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:hazmat", 30, new int[] {2, 5, 6, 2}, 10, SoundEvents.ARMOR_EQUIP_LEATHER, 0), slot);
 	}
 

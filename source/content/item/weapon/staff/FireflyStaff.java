@@ -46,7 +46,7 @@ public class FireflyStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			target.setSecondsOnFire(5);
 
 			UUID targetUUID = target.getUUID();

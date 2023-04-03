@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -111,7 +112,7 @@ public abstract class PixonEntity extends PathfinderMob {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return source != DamageSource.OUT_OF_WORLD;
+        return !source.is(DamageTypes.OUT_OF_WORLD);
     }
 
     @Override

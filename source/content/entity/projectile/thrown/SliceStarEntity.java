@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.entity.projectile.thrown;
 
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,11 +11,15 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class SliceStarEntity extends BaseBullet implements HardProjectile, ItemSupplier {
 	public SliceStarEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -46,7 +49,8 @@ public class SliceStarEntity extends BaseBullet implements HardProjectile, ItemS
 
 	@Override
 	public void doEntityImpact(Entity target, Vec3 impactLocation) {
-		target.hurt(DamageSource.thrown(this, null), (float)AoAWeapons.SLICE_STAR.get().getDamage());
+		if (DamageUtil.doProjectileAttack(getOwner(), this, target, AoAWeapons.SLICE_STAR.get().getDamage()) && target instanceof LivingEntity livingEntity && RandomUtil.oneInNChance(10))
+			livingEntity.addEffect(new EffectBuilder(AoAMobEffects.BLEEDING.get(), 80).hideParticles().build());
 	}
 
 	@Override

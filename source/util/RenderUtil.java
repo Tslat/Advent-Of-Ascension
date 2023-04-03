@@ -7,10 +7,10 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
 import net.tslat.aoa3.common.registration.AoAConfigs;
@@ -83,7 +84,6 @@ public final class RenderUtil {
 		float blueBottom = (float)(bottomColour & 255) / 255.0F;
 
 		//RenderSystem.pushTextureAttributes();
-		RenderSystem.disableTexture();
 		RenderSystem.enableBlend();
 		//RenderSystem.disableAlphaTest();
 		RenderSystem.defaultBlendFunc();
@@ -103,7 +103,6 @@ public final class RenderUtil {
 		//RenderSystem.shadeModel(7424);
 		RenderSystem.disableBlend();
 		//RenderSystem.enableAlphaTest();
-		RenderSystem.enableTexture();
 		//RenderSystem.popAttributes();
 	}
 
@@ -118,7 +117,6 @@ public final class RenderUtil {
 		Matrix4f matrix = matrixStack.last().pose();
 
 		RenderSystem.enableBlend();
-		RenderSystem.disableTexture();
 		RenderSystem.defaultBlendFunc();
 		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 		bufferBuilder.vertex(matrix, (float)x, (float)y + height, z).color(red, green, blue, alpha).endVertex();
@@ -126,7 +124,6 @@ public final class RenderUtil {
 		bufferBuilder.vertex(matrix, (float)x + width, (float)y, z).color(red, green, blue, alpha).endVertex();
 		bufferBuilder.vertex(matrix, (float)x, (float)y, z).color(red, green, blue, alpha).endVertex();
 		BufferUploader.drawWithShader(bufferBuilder.end());
-		RenderSystem.enableTexture();
 		RenderSystem.disableBlend();
 	}
 
@@ -204,7 +201,7 @@ public final class RenderUtil {
 		for (FormattedCharSequence processor : fontRenderer.split(message, maxLength)) {
 			MultiBufferSource.BufferSource renderTypeBuffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 
-			fontRenderer.drawInBatch(processor, x, y, color, false, matrix4f, renderTypeBuffer, false, 0, LightTexture.FULL_BRIGHT);
+			fontRenderer.drawInBatch(processor, x, y, color, false, matrix4f, renderTypeBuffer, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
 			renderTypeBuffer.endBatch();
 
 			y += fontRenderer.lineHeight;
@@ -221,7 +218,7 @@ public final class RenderUtil {
 		RenderSystem.enableBlend();
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		matrix.translate((float)x, (float)y, 100.0F + mc.getItemRenderer().blitOffset);
+		matrix.translate((float)x, (float)y, 100.0);
 		matrix.translate(8, 8, 0);
 		matrix.scale(1, -1, 1);
 		matrix.scale(16, 16, 16);
@@ -232,7 +229,7 @@ public final class RenderUtil {
 		if (useItemLight)
 			Lighting.setupForFlatItems();
 
-		mc.getItemRenderer().render(stack, ItemTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
+		mc.getItemRenderer().render(stack, ItemDisplayContext.GUI, false, matrix, renderTypeBuffer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, model);
 		renderTypeBuffer.endBatch();
 		RenderSystem.enableDepthTest();
 
@@ -280,6 +277,10 @@ public final class RenderUtil {
 
 	public static void setDefaultAlphaBlend() {
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+	}
+
+	public static int selectVForWidgetState(AbstractWidget widget, int disabledV, int activeV, int focussedV) {
+		return widget.isActive() ? widget.isHoveredOrFocused() ? focussedV : activeV : disabledV;
 	}
 
 	public enum StringRenderType {

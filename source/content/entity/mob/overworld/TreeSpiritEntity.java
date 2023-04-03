@@ -8,9 +8,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -135,10 +137,10 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source == DamageSource.OUT_OF_WORLD)
+		if (source.is(DamageTypes.OUT_OF_WORLD))
 			return super.hurt(source, amount);
 
-		if (source.isFire())
+		if (source.is(DamageTypeTags.IS_FIRE))
 			amount *= 1.25f;
 
 		boolean wasMaxHealth = isAlive() && getHealth() == getMaxHealth();

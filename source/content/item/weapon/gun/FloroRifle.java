@@ -5,7 +5,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 
 import javax.annotation.Nullable;
 public class FloroRifle extends BaseGun {
-	public FloroRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public FloroRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

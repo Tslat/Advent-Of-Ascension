@@ -3,13 +3,14 @@ package net.tslat.aoa3.content.item.weapon.bow;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.DamageUtil;
-import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -22,8 +23,8 @@ public class RunicBow extends BaseBow {
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
 		if (target != null && arrow.isCritArrow() && shooter instanceof LivingEntity) {
-			for (LivingEntity entity : arrow.level.getEntitiesOfClass(LivingEntity.class, arrow.getBoundingBox().inflate(3), EntityUtil.Predicates.HOSTILE_MOB)) {
-				DamageUtil.dealMagicDamage(null, (LivingEntity)shooter, entity, 2, false);
+			for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(arrow, 3, entity -> entity instanceof Enemy && entity instanceof LivingEntity)) {
+				DamageUtil.doMiscMagicAttack(shooter, entity, 2, target.position());
 			}
 		}
 	}

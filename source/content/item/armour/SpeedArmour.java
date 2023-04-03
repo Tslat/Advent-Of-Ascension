@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -24,7 +25,7 @@ public class SpeedArmour extends AdventArmour {
 	private static final AttributeModifier CHESTPLATE_BONUS = new AttributeModifier(UUID.fromString("0f20e0f4-a909-409d-99cf-65fd80f516c7"), "AoASpeedArmourBody", 0.1d, AttributeModifier.Operation.MULTIPLY_TOTAL);
 	private static final AttributeModifier HELMET_BONUS = new AttributeModifier(UUID.fromString("6d13cd91-39d8-4e68-8c25-b9b45bb729d9"), "AoASpeedArmourHelmet", 0.1d, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
-	public SpeedArmour(EquipmentSlot slot) {
+	public SpeedArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:speed", 63, new int[] {4, 9, 9, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

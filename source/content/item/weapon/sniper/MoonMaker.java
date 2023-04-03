@@ -12,7 +12,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.MoonMakerEntity;
 import javax.annotation.Nullable;
 
 public class MoonMaker extends BaseSniper {
-	public MoonMaker(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public MoonMaker(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

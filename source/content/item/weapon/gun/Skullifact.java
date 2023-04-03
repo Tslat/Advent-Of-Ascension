@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Skullifact extends BaseGun {
-	public Skullifact(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Skullifact(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

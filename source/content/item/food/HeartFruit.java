@@ -26,7 +26,7 @@ public class HeartFruit extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
 		if (!world.isClientSide) {
-			DamageUtil.dealSelfHarmDamage(entity, 7.0f);
+			DamageUtil.doRecoilAttack(entity, 7);
 
 			if (entity.getHealth() > 0 && WorldUtil.isWorld(world, AoADimensions.PRECASIA.key) && entity instanceof ServerPlayer && ItemUtil.findInventoryItem((ServerPlayer)entity, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop((ServerPlayer)entity, new ItemStack(AoAItems.CANDYLAND_REALMSTONE.get()));

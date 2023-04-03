@@ -43,7 +43,7 @@ public class EmberstoneSword extends BaseSword implements LootModifyingItem {
 			Optional<SmeltingRecipe> smeltRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(lootStack), level);
 
 			if (smeltRecipe.isPresent()) {
-				existingLoot.set(i, smeltRecipe.get().getResultItem());
+				existingLoot.set(i, smeltRecipe.get().getResultItem(lootContext.getLevel().registryAccess()));
 
 				for (int x = 0; x < 5; x++) {
 					level.sendParticles(ParticleTypes.FLAME, posX + RandomUtil.randomValueUpTo(1), posY + RandomUtil.randomValueUpTo(1), posZ + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);

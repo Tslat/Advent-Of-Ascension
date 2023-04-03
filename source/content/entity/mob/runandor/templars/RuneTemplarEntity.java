@@ -78,7 +78,7 @@ public abstract class RuneTemplarEntity extends PathfinderMob {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source != DamageSource.OUT_OF_WORLD;
+		return !source.is(DamageTypes.OUT_OF_WORLD);
 	}
 
 	@Override

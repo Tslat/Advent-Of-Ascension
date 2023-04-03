@@ -33,6 +33,7 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.StoneGiantRockEntity;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -163,7 +164,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 
 	@Override
 	public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
-		target.hurt(DamageSource.thrown(this, projectile), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
+		DamageUtil.doProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
 		ServerParticlePacket packet = new ServerParticlePacket()
 				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3)

@@ -47,7 +47,7 @@ public class Lightshine extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public void cast(Level world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
-		args.removeIf(entity -> !DamageUtil.dealMagicDamage(null, caster, entity, 1.0f, true));
+		args.removeIf(entity -> !DamageUtil.doMiscMagicAttack(caster, entity, 1, null));
 		EntityUtil.healEntity(caster, Math.min(15, args.size()));
 	}
 

@@ -57,7 +57,7 @@ public class LightningStaff extends BaseStaff<BlockPos> {
 				double posX = args.getX() + Math.cos(i) * 4;
 				double posZ = args.getZ() + Math.sin(i) * 4;
 
-				WorldUtil.spawnLightning((ServerLevel)world, caster instanceof ServerPlayer ? (ServerPlayer)caster : null, posX, world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, new BlockPos(posX, 0, posZ)).getY(), posZ, true, false);
+				WorldUtil.spawnLightning((ServerLevel)world, caster instanceof ServerPlayer ? (ServerPlayer)caster : null, posX, world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(posX, 0, posZ)).getY(), posZ, true, false);
 			}
 		}
 	}

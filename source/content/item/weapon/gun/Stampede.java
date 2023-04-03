@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class Stampede extends BaseGun {
-	public Stampede(final double dmg, final int durability, final int firingDelayTicks, final float recoil) {
+	public Stampede(final float dmg, final int durability, final int firingDelayTicks, final float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

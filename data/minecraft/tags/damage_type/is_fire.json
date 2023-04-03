@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "aoa3:burn",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_fire_melee_attack",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_fire_ranged_attack",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_fire_recoil",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_flamethrower",
+      "required": false
+    }
+  ]
+}

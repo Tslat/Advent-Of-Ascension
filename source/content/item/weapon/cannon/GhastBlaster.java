@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class GhastBlaster extends BaseCannon {
-	public GhastBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public GhastBlaster(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

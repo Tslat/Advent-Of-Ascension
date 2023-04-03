@@ -1,10 +1,11 @@
 package net.tslat.aoa3.util;
 
-import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.EntityDamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -12,22 +13,80 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.boss.enderdragon.EndCrystal;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.entity.PartEntity;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
-import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
+import net.tslat.aoa3.common.registration.AoATags;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
-import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 
 public final class DamageUtil {
+	public static DamageSource miscDamage(ResourceKey<DamageType> damageType, Level level) {
+		return new DamageSource(level.damageSources().damageTypes.getHolderOrThrow(damageType));
+	}
+
+	public static DamageSource miscPositionedDamage(ResourceKey<DamageType> damageType, Level level, Vec3 position) {
+		return new DamageSource(level.damageSources().damageTypes.getHolderOrThrow(damageType), position);
+	}
+
+	public static DamageSource entityDamage(ResourceKey<DamageType> damageType, Entity attacker) {
+		return new DamageSource(attacker.level.damageSources().damageTypes.getHolderOrThrow(damageType), attacker);
+	}
+
+	public static DamageSource positionedEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, Vec3 position) {
+		return new DamageSource(attacker.level.damageSources().damageTypes.getHolderOrThrow(damageType), attacker, null, position);
+	}
+
+	public static DamageSource indirectEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, @Nullable Entity projectile) {
+		return new DamageSource(attacker.level.damageSources().damageTypes.getHolderOrThrow(damageType), projectile, attacker);
+	}
+
+	public static boolean doMobMeleeAttack(Entity attacker, Entity target, float dmg) {
+		return safelyDealDamage(entityDamage(AoADamageTypes.MOB_MELEE_ATTACK, attacker), target, dmg);
+	}
+
+	public static boolean doProjectileAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {
+		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.RANGED_ATTACK, attacker, projectile), target, dmg);
+	}
+
+	public static boolean doVulcaneAttack(@Nullable Entity attacker, Entity target, float dmg) {
+		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.VULCANE, attacker, null), target, dmg);
+	}
+
+	public static boolean doGunAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {
+		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.GUN, attacker, projectile), target, dmg);
+	}
+
+	public static boolean doHeavyGunAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {
+		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.HEAVY_GUN, attacker, projectile), target, dmg);
+	}
+
+	public static boolean doEnergyProjectileAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {
+		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.ENERGY_PROJECTILE, attacker, projectile), target, dmg);
+	}
+
+	public static boolean doMagicProjectileAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {
+		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.MAGIC_PROJECTILE, attacker, projectile), target, dmg);
+	}
+
+	public static boolean doRecoilAttack(Entity target, float dmg) {
+		return safelyDealDamage(miscDamage(AoADamageTypes.RECOIL, target.level), target, dmg);
+	}
+
+	public static boolean doMiscMagicAttack(Entity attacker, Entity target, float dmg, @Nullable Vec3 position) {
+		return safelyDealDamage(position == null ? entityDamage(AoADamageTypes.MAGIC_ATTACK, attacker) : positionedEntityDamage(AoADamageTypes.MAGIC_ATTACK, attacker, position), target, dmg);
+	}
+
+	public static boolean doMiscEnergyAttack(Entity attacker, Entity target, float dmg, @Nullable Vec3 position) {
+		return safelyDealDamage(position == null ? entityDamage(AoADamageTypes.ENERGY_ATTACK, attacker) : positionedEntityDamage(AoADamageTypes.ENERGY_ATTACK, attacker, position), target, dmg);
+	}
+
 	public static void doScaledKnockback(LivingEntity target, LivingEntity attacker, float strength, double xRatio, double yRatio, double zRatio) {
 		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
@@ -90,273 +149,67 @@ public final class DamageUtil {
 	}
 
 	public static void killEntityCleanly(Entity entity) {
-		if (!(entity instanceof LivingEntity)) {
-			entity.hurt(DamageSource.OUT_OF_WORLD, Float.MAX_VALUE);
+		if (!(entity instanceof LivingEntity livingEntity)) {
+			entity.hurt(entity.level.damageSources().outOfWorld(), Float.MAX_VALUE);
 			entity.discard();
 
 			return;
 		}
 
-		LivingEntity target = (LivingEntity)entity;
+		safelyDealDamage(livingEntity.level.damageSources().outOfWorld(), livingEntity, livingEntity.getHealth());
 
-		target.hurt(new DamageSource("magic").bypassArmor().bypassMagic().setMagic(), ((LivingEntity)entity).getHealth());
-
-		if (target.getHealth() > 0)
-			target.setHealth(0);
+		if (livingEntity.getHealth() > 0)
+			livingEntity.setHealth(0);
 	}
 
-	public static boolean dealAoeDamage(@Nullable Entity indirectSource, LivingEntity attacker, Entity target, float dmg, boolean bypassProtections) {
-		DamageSource damageSource;
+	public static boolean safelyDealDamage(DamageSource damageSource, Entity target, float dmg) {
+		return safelyDealDamage(damageSource, target, dmg, true);
+	}
 
-		if (indirectSource != null) {
-			damageSource = new IndirectEntityDamageSource("aoe", indirectSource, attacker).setMagic();
-		}
-		else {
-			damageSource = attacker instanceof Player ? DamageSource.playerAttack((Player)attacker) : DamageSource.mobAttack(attacker);
-		}
-
-		if (bypassProtections) {
-			damageSource.bypassArmor();
-			damageSource.bypassMagic();
-		}
-
-		if (target.isInvulnerableTo(damageSource))
+	public static boolean safelyDealDamage(DamageSource damageSource, Entity target, float dmg, boolean ignoreMiscEntities) {
+		if (!ignoreMiscEntities && !(target instanceof LivingEntity) && !(target instanceof PartEntity<?>) && !(target instanceof EndCrystal))
 			return false;
 
-		target.invulnerableTime = 0;
 		return target.hurt(damageSource, dmg);
-	}
-
-	public static boolean dealBlasterDamage(LivingEntity attacker, Entity target, Entity shot, float dmg, boolean bypassProtections) {
-		if (target instanceof PartEntity<?> part && part.getParent() instanceof LivingEntity parent)
-			return dealBlasterDamage(attacker, parent, shot, dmg, bypassProtections);
-
-		DamageSource damageSource = new IndirectEntityDamageSource("blaster", shot, attacker);
-
-		damageSource.setMagic();
-
-		if (!(target instanceof Player))
-			damageSource.bypassArmor();
-
-		if (bypassProtections) {
-			damageSource.bypassMagic();
-			damageSource.bypassArmor();
-		}
-
-		if (attacker instanceof Enemy)
-			damageSource.setScalesWithDifficulty();
-
-		if (target.isInvulnerableTo(damageSource))
-			return false;
-
-		if (target instanceof EndCrystal)
-			return target.hurt(damageSource, dmg);
-
-		if (!(target instanceof LivingEntity))
-			return false;
-
-		target.invulnerableTime = 0;
-		Vec3 targetMotion = target.getDeltaMovement();
-		boolean success = target.hurt(damageSource, dmg);
-		target.setDeltaMovement(targetMotion);
-		target.hurtMarked = false;
-		return success;
-	}
-
-	public static boolean dealMeleeDamage(LivingEntity attacker, Entity target, float dmg, boolean bypassProtections) {
-		DamageSource damageSource = attacker instanceof Player ? DamageSource.playerAttack((Player)attacker) : DamageSource.mobAttack(attacker);
-
-		if (target.isInvulnerableTo(damageSource))
-			return false;
-
-		if (bypassProtections) {
-			damageSource.bypassArmor();
-			damageSource.bypassMagic();
-		}
-
-		target.invulnerableTime = 0;
-
-		boolean success = target.hurt(damageSource, dmg);
-
-		target.invulnerableTime = 0;
-		return success;
-	}
-
-	public static boolean dealMagicDamage(@Nullable Entity indirectSource, LivingEntity attacker, Entity target, float dmg, boolean bypassProtections) {
-		if (target instanceof PartEntity<?> part && part.getParent() instanceof LivingEntity parent)
-			return dealMagicDamage(indirectSource, attacker, parent, dmg, bypassProtections);
-
-		DamageSource damageSource;
-
-		if (indirectSource != null) {
-			damageSource = new IndirectEntityDamageSource("magic", attacker, indirectSource);
-		}
-		else {
-			damageSource = attacker instanceof Player ? DamageSource.playerAttack((Player)attacker) : DamageSource.mobAttack(attacker);
-		}
-
-		damageSource.setMagic();
-
-		if (!(target instanceof Player))
-			damageSource.bypassArmor();
-
-		if (bypassProtections)
-			damageSource.bypassMagic();
-
-		if (attacker instanceof Enemy)
-			damageSource.setScalesWithDifficulty();
-
-		if (target.isInvulnerableTo(damageSource))
-			return false;
-
-		if (target instanceof EndCrystal)
-			return target.hurt(damageSource, dmg);
-
-		if (!(target instanceof LivingEntity))
-			return false;
-
-		target.invulnerableTime = 0;
-		return target.hurt(damageSource, dmg);
-	}
-
-	public static void dealSelfHarmDamage(LivingEntity target, float dmg) {
-		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
-			return;
-
-		if (target.getHealth() - dmg > 0.0f) {
-			target.setHealth(target.getHealth() - dmg);
-		}
-		else {
-			target.invulnerableTime = 0;
-			target.hurt(new DamageSource("selfharm").bypassMagic().bypassArmor(), dmg);
-		}
-	}
-
-	public static boolean dealGunDamage(Entity target, LivingEntity attacker, ThrowableProjectile bullet, float dmg) {
-		if (target instanceof PartEntity<?> part && part.getParent() instanceof LivingEntity parent)
-			return dealGunDamage(parent, attacker, bullet, dmg);
-
-		DamageSource source = new IndirectEntityDamageSource("gun", bullet, attacker).setProjectile();
-
-		if (attacker instanceof Enemy)
-			source.setScalesWithDifficulty();
-
-		if (target.isInvulnerableTo(source))
-			return false;
-
-		if (target instanceof EndCrystal)
-			return target.hurt(source, dmg);
-
-		if (!(target instanceof LivingEntity))
-			return false;
-
-		target.invulnerableTime = 0;
-		boolean success;
-
-		if (RandomUtil.percentChance(0.6f)) {
-			Vec3 targetMotion = target.getDeltaMovement();
-			success = target.hurt(source, dmg);
-			target.setDeltaMovement(targetMotion);
-			target.hurtMarked = false;
-		}
-		else {
-			success = target.hurt(source, dmg);
-			target.hurtMarked = true;
-		}
-
-		return success;
-	}
-
-	public static boolean dealVulcaneDamage(LivingEntity target, Player attacker, float dmg) {
-		DamageSource source = new EntityDamageSource("vulcane", attacker) {
-			@Override
-			public Component getLocalizedDeathMessage(LivingEntity livingEntity) {
-				ItemStack itemstack = this.entity instanceof LivingEntity ? ((LivingEntity)this.entity).getMainHandItem() : ItemStack.EMPTY;
-				String prefix = "death.attack.player";
-
-				return !itemstack.isEmpty() && itemstack.hasCustomHoverName() ? Component.translatable(prefix + ".item", entity.getDisplayName(), this.entity.getDisplayName(), itemstack.getDisplayName()) : Component.translatable(prefix, entity.getDisplayName(), this.entity.getDisplayName());
-			}
-		}.bypassMagic().bypassArmor();
-
-		if (target.isInvulnerableTo(source))
-			return false;
-
-		target.invulnerableTime = 0;
-		return target.hurt(source, dmg);
-	}
-
-	public static boolean dealRangedDamage(Entity target, LivingEntity attacker, Entity projectile, float dmg) {
-		DamageSource source = DamageSource.thrown(projectile, attacker);
-
-		if (attacker instanceof Enemy)
-			source.setScalesWithDifficulty();
-
-		if (target.isInvulnerableTo(source))
-			return false;
-
-		if (target instanceof PartEntity<?> || target instanceof EndCrystal)
-			return target.hurt(source, dmg);
-
-		if (!(target instanceof LivingEntity))
-			return false;
-
-		target.invulnerableTime = 0;
-		target.hurtMarked = true;
-		return target.hurt(source, dmg);
-	}
-
-	public static boolean dealHaulingDamage(Player player, HaulingFishingBobberEntity bobber, Entity target, float dmg) {
-		DamageSource damageSource = new IndirectEntityDamageSource("hauling", bobber, player).bypassArmor().bypassMagic().bypassInvul();
-
-		if (target.isInvulnerableTo(damageSource))
-			return false;
-
-		if (target instanceof PartEntity<?> || target instanceof EndCrystal)
-			return target.hurt(damageSource, dmg);
-
-		return target instanceof LivingEntity && target.hurt(damageSource, dmg);
 	}
 
 	public static boolean isMeleeDamage(DamageSource source) {
-		return source.getEntity() != null && !source.isProjectile() && !source.getMsgId().equals("thrown") && !source.isMagic() && !source.isExplosion() && !source.isFire() && source.getDirectEntity() == source.getEntity();
+		return source.getEntity() != null && source.getDirectEntity() == source.getEntity() && isPhysicalDamage(source);
 	}
 
-	public static boolean isBlasterDamage(DamageSource source) {
-		return source.getMsgId().equals("blaster") && source.isMagic();
+	public static boolean isEnergyDamage(DamageSource source) {
+		return source.is(AoATags.DamageTypes.ENERGY);
 	}
 
 	public static boolean isMagicDamage(DamageSource source, Entity target, float dmg) {
-		return source.isMagic() && !source.getMsgId().equals("blaster") && !source.getMsgId().equals("thorns") && !(target instanceof LivingEntity && isPoisonDamage(source, target, dmg));
+		return source.is(AoATags.DamageTypes.MAGIC) && !isPoisonDamage(source, target, dmg);
 	}
 
 	public static boolean isRangedDamage(DamageSource source, Entity target, float dmg) {
-		return ((source.isProjectile() && !source.getMsgId().equals("gun")) || source.getMsgId().equals("thrown")) && !isMagicDamage(source, target, dmg);
+		return source.is(DamageTypeTags.IS_PROJECTILE) && !isMagicDamage(source, target, dmg) && !source.is(AoATags.DamageTypes.GUN);
 	}
 
 	public static boolean isGunDamage(DamageSource source) {
-		return source.getMsgId().equals("gun") && source.isProjectile();
+		return source.is(AoATags.DamageTypes.GUN);
 	}
 
 	public static boolean isPoisonDamage(DamageSource source, Entity target, float dmg) {
-		return source.isMagic() && source.getEntity() == null && !source.getMsgId().equals("thorns") && target instanceof LivingEntity && ((LivingEntity)target).hasEffect(MobEffects.POISON) && dmg == 1.0f;
+		return source.is(DamageTypes.MAGIC) && source.getEntity() == null && target instanceof LivingEntity livingEntity && livingEntity.hasEffect(MobEffects.POISON) && dmg == 1;
 	}
 
-	public static boolean isPhysicalDamage(DamageSource source, Entity target, float dmg) {
-		return !isPoisonDamage(source, target, dmg) && !source.isMagic() && !source.isExplosion() && source != DamageSource.WITHER && source != DamageSource.OUT_OF_WORLD && !source.isFire() && source != DamageSource.STARVE;
+	public static boolean isPhysicalDamage(DamageSource source) {
+		return !source.is(DamageTypeTags.BYPASSES_ARMOR) && !source.is(DamageTypeTags.IS_EXPLOSION) && !isEnvironmentalDamage(source);
 	}
 
 	public static boolean isVulcaneDamage(DamageSource source) {
-		return source.getMsgId().equals("vulcane");
+		return source.is(AoADamageTypes.VULCANE);
 	}
 
 	public static boolean isEnvironmentalDamage(DamageSource source) {
-		if (source.getEntity() != null || source.isExplosion())
+		if (source.getEntity() != null || source.is(DamageTypeTags.IS_EXPLOSION))
 			return false;
 
-		return switch (source.getMsgId()) {
-			case "onFire", "inFire", "cactus", "acid", "lightningBolt", "lava", "cramming", "inWall", "fallingBlock", "starve", "anvil", "outOfWorld" -> true;
-			default -> false;
-		};
+		return source.is(AoATags.DamageTypes.ENVIRONMENTAL);
 	}
 
 	public static boolean isPlayerEnvironmentallyProtected(ServerPlayer player) {

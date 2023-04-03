@@ -13,7 +13,7 @@ public class IntegrationManager {
 	static boolean tinkersConstructActive = false;
 
 	public static boolean isJEIActive() {
-		return jeiActive && AoAConfigs.INTEGRATIONS.jeiIntegrationEnabled.get();
+		return false;// jeiActive && AoAConfigs.INTEGRATIONS.jeiIntegrationEnabled.get();
 	}
 
 	public static boolean isREIActive() {

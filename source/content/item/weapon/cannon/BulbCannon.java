@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BulbCannon extends BaseCannon {
-	public BulbCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BulbCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

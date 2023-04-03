@@ -78,23 +78,22 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 		}
 
 		@Override
-		public void renderButton(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
 			Minecraft mc = Minecraft.getInstance();
 
-
-			matrix.pushPose();
+			poseStack.pushPose();
 			RenderUtil.prepRenderTexture(textures);
 			RenderUtil.resetShaderColour();
 
 			isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 			int textureX = 176;
-			int textureY = 21 + buttonHeight * (selectionValue.equals(currentSelection) ? 0 : (getYImage(this.isHovered) == 2) ? 2 : 1);
+			int textureY = 21 + buttonHeight * (selectionValue.equals(currentSelection) ? 0 : RenderUtil.selectVForWidgetState(this, 1, 1, 2));
 
-			RenderUtil.renderCustomSizedTexture(matrix, getX(), getY(), textureX, textureY, buttonWidth, buttonHeight, 256, 256);
-			matrix.translate(0, 0, 32);
-			mc.getItemRenderer().renderGuiItem(new ItemStack(frame), getX() + 1, getY() + 1);
+			RenderUtil.renderCustomSizedTexture(poseStack, getX(), getY(), textureX, textureY, buttonWidth, buttonHeight, 256, 256);
+			poseStack.translate(0, 0, 32);
+			mc.getItemRenderer().renderGuiItem(poseStack, new ItemStack(frame), getX() + 1, getY() + 1);
 			RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
-			matrix.popPose();
+			poseStack.popPose();
 		}
 
 		private boolean isMouseInRegion(int mouseX, int mouseY, int buttonX, int buttonY) {

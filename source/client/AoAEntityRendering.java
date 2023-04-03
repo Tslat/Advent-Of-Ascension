@@ -169,7 +169,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMobs.SMASH).model(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMobs.ELITE_SMASH).model(new EliteSmashModel());
 
-	public static final EntityRendererPackage<?> NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_WITHER).model(new NethengeicWitherModel());
+	public static final EntityRendererPackage<?> NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_WITHER).model(new NethengeicWitherModel()).emissive();
 	public static final EntityRendererPackage<?> ELITE_NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.ELITE_NETHENGEIC_WITHER).path("boss/nethengeic_wither/elite_nethengeic_wither").emissive();
 
 	//public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");

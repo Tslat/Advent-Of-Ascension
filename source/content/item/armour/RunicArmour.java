@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class RunicArmour extends AdventArmour {
-	public RunicArmour(EquipmentSlot slot) {
+	public RunicArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:runic", 67, new int[] {5, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

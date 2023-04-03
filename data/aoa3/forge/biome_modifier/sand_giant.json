@@ -15,7 +15,7 @@
     {
       "type": "aoa3:sand_giant",
       "maxCount": 1,
-      "minCount": -50,
+      "minCount": 1,
       "weight": 1
     }
   ]

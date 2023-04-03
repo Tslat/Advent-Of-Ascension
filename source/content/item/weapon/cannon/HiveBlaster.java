@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import javax.annotation.Nullable;
 
 public class HiveBlaster extends BaseCannon {
-	public HiveBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public HiveBlaster(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

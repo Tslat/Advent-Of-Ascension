@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import javax.annotation.Nullable;
 
 public class SuperCannon extends BaseCannon {
-	public SuperCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public SuperCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

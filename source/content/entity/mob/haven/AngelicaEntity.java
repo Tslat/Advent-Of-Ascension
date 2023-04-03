@@ -87,7 +87,7 @@ public class AngelicaEntity extends AoAAnimal {
 			setDeltaMovement(getDeltaMovement().scale(friction));
 		}
 
-		calculateEntityAnimation(this, false);
+		calculateEntityAnimation(false);
 	}
 
 	@Override

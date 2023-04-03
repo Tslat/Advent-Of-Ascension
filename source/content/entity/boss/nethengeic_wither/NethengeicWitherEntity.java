@@ -36,6 +36,7 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoABrainActivities;
 import net.tslat.aoa3.common.registration.entity.AoABrainMemories;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.ai.movehelper.AirborneMoveControl;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
@@ -186,7 +187,8 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	@Override
 	public BrainActivityGroup<AoABoss> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<AoABoss>().invalidateIf((entity, target) -> !target.isAlive() || (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+				new InvalidateAttackTarget<AoABoss>()
+						.invalidateIf((entity, target) -> !target.isAlive() || (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
 				new SetAdditionalAttackTargets<>()
 						.withMemories(AoABrainMemories.SECOND_ATTACK_TARGET.get(), AoABrainMemories.THIRD_ATTACK_TARGET.get())
 						.allowDuplicateTargeting()
@@ -326,7 +328,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	@Override
 	public void doRangedAttackEntity(@Nullable BaseMobProjectile projectile, Entity target) {
 		if (projectile == null) {
-			target.hurt(DamageSource.mobAttack(this).setIsFire(), 3);
+			DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, null), target, 1);
 
 			if (RandomUtil.oneInNChance(4))
 				target.setSecondsOnFire(Math.min(30, (int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1));
@@ -340,7 +342,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 			if (ATTACK_STATE.is(this, FIRE_BOMB_STATE))
 				dmg *= 1.5f;
 
-			if (DamageUtil.dealRangedDamage(target, this, projectile, dmg)) {
+			if (DamageUtil.doProjectileAttack(this, projectile, target, dmg)) {
 				target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 3);
 
 				if (target instanceof LivingEntity livingEntity)
@@ -360,14 +362,14 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (hasAura()) {
-			if (DamageUtil.isPhysicalDamage(source, this, amount)) {
+			if (DamageUtil.isMeleeDamage(source)) {
 				if (source.getDirectEntity() instanceof LivingEntity attacker) {
-					attacker.hurt(DamageSource.mobAttack(this).setIsFire(), 3);
+					DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.MOB_FIRE_RECOIL, this), attacker, 5);
 					attacker.setSecondsOnFire((int)Math.ceil(Math.max(0, attacker.getRemainingFireTicks()) / 20f) + 2);
 					attacker.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE.get(), 200, 2));
 				}
 			}
-			else if (DamageUtil.isBlasterDamage(source)) {
+			else if (DamageUtil.isEnergyDamage(source)) {
 				heal(amount);
 
 				return false;
@@ -375,6 +377,11 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 		}
 
 		return super.hurt(source, amount);
+	}
+
+	@Override
+	public boolean canBeAffected(MobEffectInstance effect) {
+		return effect.getEffect() != MobEffects.WITHER && effect.getEffect() != AoAMobEffects.NETHENGEIC_CURSE.get() && super.canBeAffected(effect);
 	}
 
 	@Override

@@ -13,7 +13,7 @@
     {
       "type": "aoa3:little_bam",
       "maxCount": 1,
-      "minCount": 0,
+      "minCount": 1,
       "weight": 20
     }
   ]

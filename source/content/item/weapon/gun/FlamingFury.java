@@ -24,7 +24,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class FlamingFury extends BaseGun {
-	public FlamingFury(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public FlamingFury(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class ChainWrecker extends BaseGun {
-	public ChainWrecker(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public ChainWrecker(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

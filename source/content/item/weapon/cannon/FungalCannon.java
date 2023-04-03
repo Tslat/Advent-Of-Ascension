@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class FungalCannon extends BaseCannon {
-	public FungalCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public FungalCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

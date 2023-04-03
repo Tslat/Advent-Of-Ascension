@@ -27,7 +27,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RPG extends BaseCannon {
-	public RPG(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public RPG(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 
@@ -53,7 +53,7 @@ public class RPG extends BaseCannon {
 			if (target instanceof LivingEntity)
 				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(Attributes.ARMOR).getValue() * 6.66) / 100;
 
-			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier) && shooter instanceof ServerPlayer) {
+			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, (float)getDamage() * bulletDmgMultiplier) && shooter instanceof ServerPlayer) {
 				if (target instanceof LivingEntity && ((LivingEntity)target).getHealth() == 0 && target.hasImpulse) {
 					if (target.level.isEmptyBlock(target.blockPosition().below()) && target.level.isEmptyBlock(target.blockPosition().below(2)))
 						AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/surface_to_air"), "rpg_air_kill");

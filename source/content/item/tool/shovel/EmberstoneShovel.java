@@ -42,26 +42,26 @@ public class EmberstoneShovel extends BaseShovel implements LootModifyingItem {
 			return;
 
 		ServerLevel level = lootContext.getLevel();
-		BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootContextParams.ORIGIN));
+		Vec3 pos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
 
 		for (int i = 0; i < existingLoot.size(); i++) {
 			ItemStack stack = existingLoot.get(i);
 			Optional<SmeltingRecipe> smeltRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level);
 
 			if (smeltRecipe.isPresent()) {
-				ItemStack smeltedStack = smeltRecipe.get().getResultItem().copy();
+				ItemStack smeltedStack = smeltRecipe.get().getResultItem(level.registryAccess()).copy();
 
 				smeltedStack.setCount(smeltedStack.getCount() * stack.getCount());
 				existingLoot.set(i, smeltedStack);
-				block.popExperience(level, pos, (int)smeltRecipe.get().getExperience());
+				block.popExperience(level, BlockPos.containing(pos), (int)smeltRecipe.get().getExperience());
 
 				ServerParticlePacket particlePacket = new ServerParticlePacket();
 
 				for (int x = 0; x < 5; x++) {
-					particlePacket.particle(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + RandomUtil.randomValueUpTo(1), pos.getZ() + RandomUtil.randomValueUpTo(1));
+					particlePacket.particle(ParticleTypes.FLAME, pos.x + RandomUtil.randomValueUpTo(1), pos.y + RandomUtil.randomValueUpTo(1), pos.z + RandomUtil.randomValueUpTo(1));
 				}
 
-				AoAPackets.messageNearbyPlayers(particlePacket, level, Vec3.atCenterOf(pos), 32);
+				AoAPackets.messageNearbyPlayers(particlePacket, level, pos.add(0.5f, 0.5f, 0.5f), 32);
 			}
 		}
 	}

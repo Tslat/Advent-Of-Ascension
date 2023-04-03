@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import javax.annotation.Nullable;
 
 public class MiniCannon extends BaseCannon {
-	public MiniCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public MiniCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

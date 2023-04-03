@@ -3,7 +3,6 @@ package net.tslat.aoa3.client.gui.adventgui;
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.bridge.game.Language;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -32,8 +31,6 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 	protected static final float SCALE = 0.45f;
 
 	protected static AdventMainGui instance;
-
-	public static Language currentLanguage = Minecraft.getInstance().getLanguageManager().getSelected();
 	protected static AdventGuiThemeReloadListener.AdventGuiTheme theme = null;
 
 	private static ADVENT_WINDOW_TAB selectedTab = ADVENT_WINDOW_TAB.PLAYER;
@@ -55,7 +52,6 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 		this.player = player;
 		instance = this;
 		tabScreen = null;
-		currentLanguage = Minecraft.getInstance().getLanguageManager().getSelected();
 	}
 
 	@Override
@@ -163,7 +159,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 		}
 
 		@Override
-		public void renderButton(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void renderWidget(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
 
@@ -172,7 +168,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 				int textureX = 0;
-				int textureY = buttonHeight * (tabID == selectedTab ? 0 : (getYImage(this.isHovered) == 2) ? 1 : 2);
+				int textureY = buttonHeight * (tabID == selectedTab ? 0 : RenderUtil.selectVForWidgetState(this, 2, 0, 1));
 
 				RenderUtil.renderScaledCustomSizedTexture(matrix, scaledRootX + getX(), scaledRootY + getY(), textureX, textureY, 180, 60, 180, 60, 180, 180);
 
@@ -304,24 +300,18 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 		}
 		else {
 			switch (selectedTab) {
-				case PLAYER -> {
-					tabScreen = new AdventGuiTabPlayer();
-					tabScreen.resize(mc, tabWidth, tabHeight);
-				}
-				case HELP -> {
-					tabScreen = new AdventGuiTabHelp();
-					tabScreen.resize(mc, tabWidth, tabHeight);
-				}
-				case BESTIARY -> {
-					tabScreen = new AdventGuiTabBestiary();
-					tabScreen.resize(mc, tabWidth, tabHeight);
-				}
+				case PLAYER -> tabScreen = new AdventGuiTabPlayer();
+				case HELP -> tabScreen = new AdventGuiTabHelp();
+				case BESTIARY -> tabScreen = new AdventGuiTabBestiary();
 				case LORE -> {
 					//tabScreen = new AdventGuiTabLore();
-					//tabScreen.resize(mc, tabWidth, tabHeight);
 				}
-				default -> {
-				}
+				default -> {}
+			}
+
+			if (tabScreen != null) {
+				tabScreen.init(mc, tabWidth, tabHeight);
+				tabScreen.resize(mc, tabWidth, tabHeight);
 			}
 		}
 	}

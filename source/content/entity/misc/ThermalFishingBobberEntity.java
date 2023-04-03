@@ -54,7 +54,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 
 	@Override
 	protected void spawnFish(ServerPlayer player) {
-		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()).value(), true).getRandomElement(player, getLuck());
+		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()).value(), true, this.level).getRandomElement(player, getLuck());
 
 		if (fishFunction != null) {
 			Entity entity = fishFunction.apply(player.level);
@@ -94,7 +94,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 			this.fishingBonusMod *= 0.8f;
 		}
 
-		if (biome.value().getPrecipitation() == Biome.Precipitation.NONE) {
+		if (biome.value().getPrecipitationAt(blockPosition()) == Biome.Precipitation.NONE) {
 			this.fishingBonusMod *= 1.1f;
 		}
 		else {

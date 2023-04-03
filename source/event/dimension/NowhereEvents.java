@@ -193,7 +193,7 @@ public final class NowhereEvents {
 				ev.getEntity().getAbilities().mayBuild = true;
 			}
 		}
-		else if (TagUtil.isTaggedAs(block, AoATags.Blocks.NOWHERE_SAFE_GUI_BLOCK)) {
+		else if (TagUtil.isTaggedAs(block, AoATags.Blocks.NOWHERE_SAFE_GUI_BLOCK, ev.getLevel())) {
 			ev.setUseItem(Event.Result.DENY);
 		}
 		else if (block == Blocks.WATER_CAULDRON) {

@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class GaugeRifle extends BaseGun {
-	public GaugeRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public GaugeRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

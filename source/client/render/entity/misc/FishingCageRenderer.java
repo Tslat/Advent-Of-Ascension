@@ -6,12 +6,12 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.client.AoAEntityRendering;
 import net.tslat.aoa3.client.model.misc.FishingCageModel;
@@ -47,7 +47,7 @@ public class FishingCageRenderer extends EntityRenderer<FishingCageEntity> {
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
 		for (ItemStack stack : entity.getLoot()) {
-			itemRenderer.renderStatic(stack, ItemTransforms.TransformType.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrix, buffer, 0);
+			itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrix, buffer, entity.level, 0);
 			matrix.translate(0, -0.15d, 0);
 		}
 

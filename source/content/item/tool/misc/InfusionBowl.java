@@ -7,7 +7,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -68,7 +67,7 @@ public class InfusionBowl extends Item {
 
 			int harvestCount = 0;
 			List<ItemStack> harvestStacks = new ArrayList<>();
-			LootContext lootContext = (new LootContext.Builder((ServerLevel)player.level).withParameter(LootContextParams.KILLER_ENTITY, player).withParameter(LootContextParams.THIS_ENTITY, pixon).withParameter(LootContextParams.ORIGIN, pixon.position())).withParameter(LootContextParams.DAMAGE_SOURCE, DamageSource.GENERIC).create(LootContextParamSets.ENTITY);
+			LootContext lootContext = (new LootContext.Builder((ServerLevel)player.level).withParameter(LootContextParams.KILLER_ENTITY, player).withParameter(LootContextParams.THIS_ENTITY, pixon).withParameter(LootContextParams.ORIGIN, pixon.position())).withParameter(LootContextParams.DAMAGE_SOURCE, pixon.level.damageSources().generic()).create(LootContextParamSets.ENTITY);
 
 			while (harvestCount < getHarvestAmount() && pixon.getHealth() > 0) {
 				if (!player.isCreative())

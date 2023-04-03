@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class MissileMaker extends BaseCannon {
-	public MissileMaker(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public MissileMaker(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

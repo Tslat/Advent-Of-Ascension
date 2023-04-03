@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BombLauncher extends BaseCannon {
-	public BombLauncher(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BombLauncher(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

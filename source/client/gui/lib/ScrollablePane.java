@@ -100,7 +100,6 @@ public abstract class ScrollablePane {
 			BufferBuilder buff = tess.getBuilder();
 			Matrix4f matrix4f = matrix.last().pose();
 
-			RenderSystem.disableTexture();
 			RenderSystem.setShader(GameRenderer::getPositionColorShader);
 			buff.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
 			buff.vertex(matrix4f, barLeft, bottom, 0).uv(0, 1).color(0, 0, 0, 255).endVertex();
@@ -122,7 +121,6 @@ public abstract class ScrollablePane {
 			tess.end();
 		}
 
-		RenderSystem.enableTexture();
 		//RenderSystem.shadeModel(GL11.GL_FLAT);
 		///RenderSystem.enableAlphaTest();
 		RenderSystem.disableBlend();

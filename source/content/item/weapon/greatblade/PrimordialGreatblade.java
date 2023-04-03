@@ -17,7 +17,7 @@ public class PrimordialGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		float extraDmg;
 		float maxHealth = target.getMaxHealth();
 

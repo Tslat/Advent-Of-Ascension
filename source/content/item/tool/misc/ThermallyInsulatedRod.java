@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.item.tool.misc;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,7 +45,7 @@ public class ThermallyInsulatedRod extends HaulingRod {
 					ItemEntity entity = new ItemEntity(player.level, bobber.getX(), bobber.getY(), bobber.getZ(), lootStack) {
 						@Override
 						public boolean isInvulnerableTo(DamageSource source) {
-							return source == DamageSource.LAVA || source == DamageSource.ON_FIRE && super.isInvulnerableTo(source);
+							return source.is(DamageTypeTags.IS_FIRE) || super.isInvulnerableTo(source);
 						}
 					};
 

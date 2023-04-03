@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.recipe;
 
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -49,7 +50,7 @@ public class FrameBenchRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack assemble(Inventory inv) {
+	public ItemStack assemble(Inventory inv, RegistryAccess registryAccess) {
 		return output.copy();
 	}
 
@@ -59,7 +60,7 @@ public class FrameBenchRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return output.copy();
 	}
 

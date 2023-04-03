@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class AquaMagnum extends BaseGun {
-	public AquaMagnum(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public AquaMagnum(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

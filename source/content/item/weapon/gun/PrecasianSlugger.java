@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PrecasianSlugger extends BaseGun {
-	public PrecasianSlugger(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public PrecasianSlugger(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

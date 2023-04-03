@@ -12,7 +12,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import javax.annotation.Nullable;
 
 public class Minigun extends BaseGun {
-	public Minigun(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Minigun(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

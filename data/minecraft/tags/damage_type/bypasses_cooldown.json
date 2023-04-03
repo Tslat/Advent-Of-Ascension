@@ -1,0 +1,76 @@
+{
+  "values": [
+    {
+      "id": "aoa3:recoil",
+      "required": false
+    },
+    {
+      "id": "aoa3:burn",
+      "required": false
+    },
+    {
+      "id": "aoa3:freeze",
+      "required": false
+    },
+    {
+      "id": "aoa3:bleed",
+      "required": false
+    },
+    {
+      "id": "aoa3:ranged_attack",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_melee_attack",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_fire_melee_attack",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_fire_ranged_attack",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_ice_ranged_attack",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_fire_recoil",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_flamethrower",
+      "required": false
+    },
+    {
+      "id": "aoa3:vulcane",
+      "required": false
+    },
+    {
+      "id": "aoa3:gun",
+      "required": false
+    },
+    {
+      "id": "aoa3:heavy_gun",
+      "required": false
+    },
+    {
+      "id": "aoa3:energy_projectile",
+      "required": false
+    },
+    {
+      "id": "aoa3:magic_projectile",
+      "required": false
+    },
+    {
+      "id": "aoa3:magic_effect",
+      "required": false
+    },
+    {
+      "id": "aoa3:energy_effect",
+      "required": false
+    }
+  ]
+}

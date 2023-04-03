@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Baronator extends BaseGun {
-	public Baronator(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Baronator(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

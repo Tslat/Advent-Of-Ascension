@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class ClownoPulse extends BaseCannon {
-	public ClownoPulse(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public ClownoPulse(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

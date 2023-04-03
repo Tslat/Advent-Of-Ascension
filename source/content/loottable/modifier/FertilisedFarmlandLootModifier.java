@@ -48,12 +48,12 @@ public class FertilisedFarmlandLootModifier extends LootModifier {
 		Vec3 pos = context.getParamOrNull(LootContextParams.ORIGIN);
 
 		if (state != null && pos != null && state.getBlock() instanceof CropBlock && state.getBlock() != AoABlocks.GREEN_MANURE.get()) {
-			BlockPos farmlandPos = new BlockPos(pos).below();
+			BlockPos farmlandPos = BlockPos.containing(pos).below();
 			BlockState belowBlock = context.getLevel().getBlockState(farmlandPos);
 
 			if (belowBlock.getBlock() instanceof FertilisedFarmland && belowBlock.getBlock().canSustainPlant(belowBlock, context.getLevel(), farmlandPos, Direction.UP, (IPlantable)state.getBlock())) {
 				int increaseAmount = belowBlock.getValue(FertilisedFarmland.WELL_FERTILISED) ? 2 : 1;
-				Item seeds = ((CropBlock)state.getBlock()).getCloneItemStack(context.getLevel(), new BlockPos(pos), state).getItem();
+				Item seeds = ((CropBlock)state.getBlock()).getCloneItemStack(context.getLevel(), BlockPos.containing(pos), state).getItem();
 
 				for (ListIterator<ItemStack> iterator = generatedLoot.listIterator(); iterator.hasNext();) {
 					ItemStack itStack = iterator.next();

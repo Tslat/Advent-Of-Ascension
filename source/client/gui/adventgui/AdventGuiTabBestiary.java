@@ -176,7 +176,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 	@Override
 	public void removed() {
 		if (searchField != null && searchField.isFocused())
-			searchField.setFocus(false);
+			searchField.setFocused(false);
 	}
 
 	@Nullable
@@ -230,7 +230,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 			if (!searchField.isVisible())
 				searchField.setVisible(true);
 
-			searchField.setFocus(true);
+			searchField.setFocused(true);
 
 			return true;
 		}
@@ -683,7 +683,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 					searchField.setVisible(!searchField.isVisible());
 
 					if (searchField.isVisible()) {
-						searchField.setFocus(true);
+						searchField.setFocused(true);
 					}
 					else {
 						searchField.setValue("");

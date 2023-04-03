@@ -7,7 +7,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
@@ -17,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -91,7 +91,7 @@ public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedT
 			PoseStack modelViewPose = RenderSystem.getModelViewStack();
 
 			modelViewPose.pushPose();
-			modelViewPose.translate(slot.x + centerX, slot.y + centerY, 100f + itemRenderer.blitOffset);
+			modelViewPose.translate(slot.x + centerX, slot.y + centerY, 100f);
 			modelViewPose.translate(8, 8, 0);
 			modelViewPose.scale(1, -1, 1);
 			modelViewPose.scale(16, 16, 16);
@@ -104,7 +104,7 @@ public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedT
 			if (changeLighting)
 				Lighting.setupForFlatItems();
 
-			itemRenderer.render(stack, ItemTransforms.TransformType.GUI, false, poseStack, bufferSource, 40, OverlayTexture.NO_OVERLAY, model);
+			itemRenderer.render(stack, ItemDisplayContext.GUI, false, poseStack, bufferSource, 40, OverlayTexture.NO_OVERLAY, model);
 			bufferSource.endBatch();
 			RenderSystem.enableDepthTest();
 

@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CommanderArmour extends AdventArmour {
-	public CommanderArmour(EquipmentSlot slot) {
+	public CommanderArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:commander", 62, new int[] {4, 9, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

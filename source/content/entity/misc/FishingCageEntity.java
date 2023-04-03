@@ -14,6 +14,7 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
@@ -181,7 +182,7 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source == DamageSource.OUT_OF_WORLD;
+		return source.is(DamageTypes.OUT_OF_WORLD);
 	}
 
 	protected void doFishingCheckTick() {

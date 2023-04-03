@@ -45,7 +45,7 @@ public class RosidianStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			EntityUtil.healEntity(shooter, 1f);
 
 			return true;

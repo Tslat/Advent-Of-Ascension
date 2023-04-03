@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class NethengeicSlugger extends BaseGun {
-	public NethengeicSlugger(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public NethengeicSlugger(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

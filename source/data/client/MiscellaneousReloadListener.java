@@ -31,7 +31,7 @@ public class MiscellaneousReloadListener implements ResourceManagerReloadListene
 			String langCode = mc.options.languageCode;
 
 			if (mc.getLanguageManager().getSelected() != null)
-				langCode = mc.getLanguageManager().getSelected().getCode();
+				langCode = mc.getLanguageManager().getSelected();
 
 			Optional<Resource> wornBook = resourceManager.getResource(new ResourceLocation(AdventOfAscension.MOD_ID, "misc/" + langCode + "/worn_book.txt"));
 

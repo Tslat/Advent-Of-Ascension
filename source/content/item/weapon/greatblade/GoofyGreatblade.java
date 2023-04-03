@@ -18,7 +18,7 @@ public class GoofyGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		return super.getDamageForAttack(target, attacker, swordStack, baseDamage + (float)RandomUtil.randomValueBetween(-5, 5));
 	}
 

@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class MK extends BaseGun {
-	public MK(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public MK(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

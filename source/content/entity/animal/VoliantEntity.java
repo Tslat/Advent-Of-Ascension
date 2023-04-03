@@ -91,7 +91,7 @@ public class VoliantEntity extends AoAAnimal {
 			setDeltaMovement(getDeltaMovement().scale(friction));
 		}
 
-		calculateEntityAnimation(this, false);
+		calculateEntityAnimation(false);
 	}
 
 	@Override

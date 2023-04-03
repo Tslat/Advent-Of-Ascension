@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.base;
 
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -38,7 +39,7 @@ public abstract class LavaMobEntity extends PathfinderMob {
 
 			if (this.getAirSupply() == -20) {
 				this.setAirSupply(0);
-				this.hurt(DamageSource.DROWN, 2.0F);
+				this.hurt(level.damageSources().drown(), 2.0F);
 			}
 		}
 		else {
@@ -48,7 +49,7 @@ public abstract class LavaMobEntity extends PathfinderMob {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source == DamageSource.LAVA || source == DamageSource.ON_FIRE || super.isInvulnerableTo(source);
+		return source.is(DamageTypeTags.IS_FIRE) || super.isInvulnerableTo(source);
 	}
 
 	public void baseTick() {

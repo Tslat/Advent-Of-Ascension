@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import javax.annotation.Nullable;
 
 public class GhoulCannon extends BaseCannon {
-	public GhoulCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public GhoulCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

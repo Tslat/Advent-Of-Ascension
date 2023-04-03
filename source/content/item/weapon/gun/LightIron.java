@@ -13,7 +13,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.LightIronShotEntity;
 import javax.annotation.Nullable;
 
 public class LightIron extends BaseGun {
-	public LightIron(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public LightIron(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -79,7 +79,7 @@ public class IrodustTreeFeature extends AoATreeFeature {
 			placeBlock(reader, movablePos.move(Direction.UP), log);
 		}
 
-		buildLeafRing(reader, movablePos.offset(0, -(trunkHeight / 1.75), 0), 3, false);
+		buildLeafRing(reader, movablePos.offset(0, (int)Math.floor(-(trunkHeight / 1.75)), 0), 3, false);
 		buildLeafRing(reader, movablePos.offset(0, -(trunkHeight / 4), 0), 2, true);
 
 		for (int x = -1; x <= 1; x++) {

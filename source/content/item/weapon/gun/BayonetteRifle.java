@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BayonetteRifle extends BaseGun {
-	public BayonetteRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BayonetteRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

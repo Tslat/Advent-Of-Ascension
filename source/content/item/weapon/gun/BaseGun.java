@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -42,6 +41,7 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -53,12 +53,12 @@ public abstract class BaseGun extends Item {
 	protected static final UUID ATTACK_SPEED_MAINHAND = UUID.fromString("99fdc256-279e-4c8e-b1c6-9209571f134e");
 	protected static final UUID ATTACK_SPEED_OFFHAND = UUID.fromString("63f030a6-7269-444d-b26c-ae3514b36e1b");
 
-	protected final double dmg;
+	protected final float dmg;
 	protected final int firingDelay;
 	protected final float recoilMod;
 	protected double holsterMod;
 
-	public BaseGun(Item.Properties properties, final double dmg, final int fireDelayTicks, final float recoilMod) {
+	public BaseGun(Properties properties, final float dmg, final int fireDelayTicks, final float recoilMod) {
 		super(properties);
 
 		this.dmg = dmg;
@@ -69,12 +69,12 @@ public abstract class BaseGun extends Item {
 		attributeModifiers.put(Attributes.ATTACK_SPEED, new AttributeModifier(ATTACK_SPEED_MAINHAND, "AoAGunMainHand", -getHolsterSpeed(), AttributeModifier.Operation.MULTIPLY_TOTAL));
 	}
 
-	public BaseGun(final double dmg, final int durability, final int fireDelayTicks, final float recoilMod) {
+	public BaseGun(final float dmg, final int durability, final int fireDelayTicks, final float recoilMod) {
 		this(new Item.Properties().durability(durability), dmg, fireDelayTicks, recoilMod);
 	}
 
-	public double getDamage() {
-		return dmg;
+	public float getDamage() {
+		return this.dmg;
 	}
 
 	public float getRecoilModifier() {
@@ -160,7 +160,7 @@ public abstract class BaseGun extends Item {
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, LivingEntity shooter, int count) {
+	public void onUseTick(Level level, LivingEntity shooter, ItemStack stack, int count) {
 		if (!isFullAutomatic() && count < getUseDuration(stack))
 			return;
 
@@ -173,7 +173,7 @@ public abstract class BaseGun extends Item {
 				ItemStack offhand;
 
 				if (hand == InteractionHand.MAIN_HAND && EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.BRACE.get(), (offhand = shooter.getItemInHand(InteractionHand.OFF_HAND))) > 0)
-					offhand.onUsingTick(shooter, count);
+					offhand.onUseTick(shooter.level, shooter, count);
 
 				ItemUtil.damageItem(stack, shooter, 1, hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
 
@@ -232,11 +232,13 @@ public abstract class BaseGun extends Item {
 			if (bullet.getHand() != null)
 				shellMod += 0.1 * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), shooter.getItemInHand(bullet.getHand()));
 
-			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * shellMod)) {
-				doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
+			if (RandomUtil.percentChance(this.firingDelay / 10f)) {
+				if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier * shellMod))
+					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}
-			else if (!(target instanceof LivingEntity)) {
-				target.hurt(new IndirectEntityDamageSource("gun", bullet, shooter).setProjectile(), (float)getDamage() * bulletDmgMultiplier * shellMod);
+			else {
+				if (DamageUtil.doGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier * shellMod))
+					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}
 		}
 	}

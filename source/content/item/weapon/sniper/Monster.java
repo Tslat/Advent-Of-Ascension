@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class Monster extends BaseSniper {
-	public Monster(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Monster(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

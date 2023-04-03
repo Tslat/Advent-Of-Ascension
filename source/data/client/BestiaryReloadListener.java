@@ -29,7 +29,7 @@ public class BestiaryReloadListener implements ResourceManagerReloadListener {
 			String langCode = mc.options.languageCode;
 
 			if (mc.getLanguageManager().getSelected() != null)
-				langCode = mc.getLanguageManager().getSelected().getCode();
+				langCode = mc.getLanguageManager().getSelected();
 
 			for (Map.Entry<ResourceLocation, Resource> entry : resourceManager.listResources("bestiary/" + langCode, path -> path.getPath().endsWith(".txt")).entrySet()) {
 				String relativePath = entry.getKey().getPath().substring(15);

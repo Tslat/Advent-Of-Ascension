@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class AquaCannon extends BaseCannon {
-	public AquaCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public AquaCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -18,14 +18,14 @@ public class RunicGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		return super.getDamageForAttack(target, attacker, swordStack, baseDamage * 0.15f);
 	}
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (!target.level.isClientSide)
-			DamageUtil.dealMagicDamage(null, attacker, target, getDamage() * attackCooldown * 0.85f, false);
+			DamageUtil.doMiscMagicAttack(attacker, target, getDamage() * attackCooldown * 0.85f, null);
 	}
 
 	@Override

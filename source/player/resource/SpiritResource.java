@@ -3,6 +3,7 @@ package net.tslat.aoa3.player.resource;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraftforge.event.TickEvent;
@@ -67,7 +68,7 @@ public class SpiritResource extends AoAResource.Instance {
 
 	@Override
 	public void handlePostOutgoingAttack(LivingDamageEvent ev) {
-		if (this.value < getMaxValue() && !ev.getSource().getMsgId().equals("blaster") && !ev.getSource().isExplosion())
+		if (this.value < getMaxValue() && !ev.getSource().getMsgId().equals("blaster") && !ev.getSource().is(DamageTypeTags.IS_EXPLOSION))
 			addValue(getHealthScaledRegen(this.regenPerDamage * ev.getAmount()));
 	}
 

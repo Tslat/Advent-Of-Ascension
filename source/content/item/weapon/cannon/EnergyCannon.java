@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergyCannon extends BaseCannon {
-	public EnergyCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public EnergyCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 
@@ -42,7 +42,7 @@ public class EnergyCannon extends BaseCannon {
 			if (target instanceof LivingEntity)
 				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(Attributes.ARMOR).getValue() * 1.50) / 100;
 
-			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * 0.75f)) {
+			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, (float)getDamage() * bulletDmgMultiplier * 0.75f)) {
 				if (target instanceof Player && ((Player)target).isBlocking())
 					((Player)target).disableShield(true);
 
@@ -50,7 +50,7 @@ public class EnergyCannon extends BaseCannon {
 					DamageUtil.doScaledKnockback(livingTarget, shooter, ((float)getDamage() * 0.75f * bulletDmgMultiplier) / 20f, 1, 1, 1);
 			}
 
-			DamageUtil.dealMagicDamage(bullet, shooter, target, (float)getDamage() * bulletDmgMultiplier * 0.25f, false);
+			DamageUtil.doEnergyProjectileAttack(shooter, bullet, target, (float)getDamage() * bulletDmgMultiplier * 0.25f);
 		}
 	}
 

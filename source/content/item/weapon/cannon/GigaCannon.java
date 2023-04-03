@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class GigaCannon extends BaseCannon {
-	public GigaCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public GigaCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

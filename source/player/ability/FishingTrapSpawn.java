@@ -41,7 +41,7 @@ public class FishingTrapSpawn extends ScalableModAbility {
 		if (ev.getEntity() instanceof ServerPlayer && testAsChance()) {
 			FishingHook bobber = ev.getHookEntity();
 			Player player = ev.getEntity();
-			Level world = bobber.level;
+			Level level = bobber.level;
 			BlockPos pos = bobber.blockPosition();
 			float luck = bobber.luck;
 			boolean isLava = false;
@@ -51,17 +51,17 @@ public class FishingTrapSpawn extends ScalableModAbility {
 				isLava = Fluids.LAVA.is(((HaulingFishingBobberEntity)ev.getHookEntity()).getApplicableFluid());
 			}
 
-			Function<Level, Entity> trapEntityFunction = AoAHaulingFishReloadListener.getTrapListForBiome(world.getBiome(pos).value(), isLava).getRandomElement((ServerPlayer)player, luck);
+			Function<Level, Entity> trapEntityFunction = AoAHaulingFishReloadListener.getTrapListForBiome(level.getBiome(pos).value(), isLava, level).getRandomElement((ServerPlayer)player, luck);
 
 			if (trapEntityFunction != null) {
-				Entity trapEntity = trapEntityFunction.apply(world);
+				Entity trapEntity = trapEntityFunction.apply(level);
 				double velX = player.getX() - bobber.getX();
 				double velY = player.getY() - bobber.getY();
 				double velZ = player.getZ() - bobber.getZ();
 
 				trapEntity.setDeltaMovement(velX * 0.1d, velY * 0.1d + Math.sqrt(Math.sqrt(velX * velX + velY * velY + velZ * velZ)) * 0.15d, velZ * 0.1d);
 				trapEntity.setPos(bobber.getX(), bobber.getY(), bobber.getZ());
-				world.addFreshEntity(trapEntity);
+				level.addFreshEntity(trapEntity);
 			}
 		}
 	}

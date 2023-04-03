@@ -20,7 +20,7 @@ import java.util.List;
 public class DischargeRifle extends BaseGun {
 	private final int firingDelay;
 
-	public DischargeRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public DischargeRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.firingDelay = firingDelayTicks;
 	}

@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Frosticator extends BaseGun {
-	public Frosticator(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Frosticator(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

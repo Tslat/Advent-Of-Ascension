@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class HeadHunter extends BaseSniper {
-	public HeadHunter(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public HeadHunter(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

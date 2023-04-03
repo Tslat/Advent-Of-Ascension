@@ -18,7 +18,7 @@ public class LelyetianGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		return super.getDamageForAttack(target, attacker, swordStack, EntityUtil.isFlyingCreature(target) ? baseDamage * 1.25f : baseDamage);
 	}
 

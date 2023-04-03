@@ -9,8 +9,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.PlayerAdvancements;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
@@ -24,6 +24,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.Tags;
@@ -113,12 +114,12 @@ public class PlayerEvents {
 		if (DamageUtil.isMeleeDamage(ev.getSource()) && attacker instanceof LivingEntity) {
 			ItemStack weapon = ((LivingEntity)attacker).getItemInHand(InteractionHand.MAIN_HAND);
 
-			if (weapon.getItem() instanceof BaseSword)
-				ev.setAmount((float)((BaseSword)weapon.getItem()).getDamageForAttack(ev.getEntity(), (LivingEntity)attacker, weapon, ev.getAmount()));
+			if (weapon.getItem() instanceof BaseSword baseSword) // TODO chck swing progress reduction on getDamageForAttack usage
+				ev.setAmount((float)baseSword.getDamageForAttack(ev.getEntity(), (LivingEntity)attacker, weapon, ev.getAmount()));
 		}
 
 		if (ev.getEntity() instanceof ServerPlayer pl) {
-			if (pl.getHealth() > 0 && ev.getSource().isExplosion() && ev.getSource().getDirectEntity() instanceof Creeper) {
+			if (pl.getHealth() > 0 && ev.getSource().is(DamageTypeTags.IS_EXPLOSION) && ev.getSource().getDirectEntity() instanceof Creeper) {
 				if ((!pl.level.getEntitiesOfClass(PrimedTnt.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level.getEntitiesOfClass(PrimedTnt.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.CREEPONIA_REALMSTONE.get()));
 			}
@@ -200,8 +201,8 @@ public class PlayerEvents {
 
 		if (PlayerUtil.isWearingFullSet(player, AdventArmour.Type.HYDRANGIC)) {
 			if (ev.getPlacedBlock().getBlock() instanceof BonemealableBlock && BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), ev.getEntity().level, ev.getPos(), player)) {
-				ev.getLevel().levelEvent(2005, ev.getPos(), 0);
-				player.hurtArmor(DamageSource.GENERIC, 16);
+				ev.getLevel().levelEvent(LevelEvent.PARTICLES_PLANT_GROWTH, ev.getPos(), 0);
+				player.hurtArmor(player.level.damageSources().generic(), 16);
 			}
 		}
 	}
@@ -245,7 +246,7 @@ public class PlayerEvents {
 			ItemEntity entityItem = ev.getEntity();
 			Item item = entityItem.getItem().getItem();
 
-			if (item == AoAItems.BLANK_REALMSTONE.get() && entityItem.getThrower() != null && entityItem.getThrower().equals(player.getUUID())) {
+			if (item == AoAItems.BLANK_REALMSTONE.get() && entityItem.getOwner() == player) {
 				if (player.isEyeInFluidType(ForgeMod.LAVA_TYPE.get())) {
 					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.NETHER_REALMSTONE.get()));
 					ev.getEntity().discard();

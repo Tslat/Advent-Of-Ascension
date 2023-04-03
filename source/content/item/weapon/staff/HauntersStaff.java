@@ -43,7 +43,7 @@ public class HauntersStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		return DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false);
+		return DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg());
 	}
 
 	@Override

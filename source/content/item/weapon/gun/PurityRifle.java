@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PurityRifle extends BaseGun {
-	public PurityRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public PurityRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

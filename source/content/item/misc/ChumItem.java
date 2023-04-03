@@ -85,9 +85,9 @@ public class ChumItem extends Item {
 		}
 	}
 
-	private Entity getFishEntity(LivingEntity user, Level world, BlockPos pos) {
+	private Entity getFishEntity(LivingEntity user, Level level, BlockPos pos) {
 		if (user instanceof ServerPlayer player) {
-			Entity entity = AoAHaulingFishReloadListener.getFishListForBiome(user.level.getBiome(pos).value(), false).getRandomElement(player, player.getLuck()).apply(user.level);
+			Entity entity = AoAHaulingFishReloadListener.getFishListForBiome(user.level.getBiome(pos).value(), false, level).getRandomElement(player, player.getLuck()).apply(user.level);
 
 			if (!(entity instanceof ItemEntity))
 				return entity;
@@ -96,21 +96,21 @@ public class ChumItem extends Item {
 		int selection = RandomUtil.randomNumberUpTo(66);
 
 		if (selection == 0)
-			return new Dolphin(EntityType.DOLPHIN, world);
+			return new Dolphin(EntityType.DOLPHIN, level);
 
 		if (selection <= 5)
-			return new Squid(EntityType.SQUID, world);
+			return new Squid(EntityType.SQUID, level);
 
 		if (selection <= 15)
-			return new Pufferfish(EntityType.PUFFERFISH, world);
+			return new Pufferfish(EntityType.PUFFERFISH, level);
 
 		if (selection <= 30)
-			return new Cod(EntityType.COD, world);
+			return new Cod(EntityType.COD, level);
 
 		if (selection <= 45)
-			return new Salmon(EntityType.SALMON, world);
+			return new Salmon(EntityType.SALMON, level);
 
-		return new TropicalFish(EntityType.TROPICAL_FISH, world);
+		return new TropicalFish(EntityType.TROPICAL_FISH, level);
 	}
 
 	@Override

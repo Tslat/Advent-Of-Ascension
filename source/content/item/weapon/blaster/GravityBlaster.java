@@ -2,12 +2,12 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -29,7 +29,7 @@ public class GravityBlaster extends BaseBlaster {
 	public void fire(ItemStack blaster, LivingEntity shooter) {
 		for (LivingEntity mob : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2, 0, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
 			EntityUtil.pushEntityAway(shooter, mob, 0.5f);
-			mob.hurt(new DamageSource("blaster").setMagic(), (float)getDamage());
+			DamageUtil.doMiscEnergyAttack(shooter, mob, (float)getDamage(), null);
 		}
 
 		shooter.hurtMarked = true;

@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import javax.annotation.Nullable;
 
 public class HiveHowitzer extends BaseCannon {
-	public HiveHowitzer(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public HiveHowitzer(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

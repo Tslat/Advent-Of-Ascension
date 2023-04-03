@@ -12,7 +12,6 @@ import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -46,7 +45,7 @@ public class RoamingTradersSpawner implements CustomSpawner {
 				if (entity == null)
 					continue;
 
-				int eventResult = ForgeHooks.canEntitySpawn(entity, world, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.NATURAL);
+				int eventResult = 0;//ForgeHooks.canEntitySpawn(entity, world, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.NATURAL); TODO when forge catches up?
 
 				if (eventResult != -1 && (eventResult == 1 || (entity.checkSpawnRules(world, MobSpawnType.NATURAL) && entity.checkSpawnObstruction(world)))) {
 					world.addFreshEntity(entity);

@@ -13,7 +13,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.MetalSlugEntity;
 import javax.annotation.Nullable;
 
 public class BloodIron extends BaseGun {
-	public BloodIron(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BloodIron(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -65,7 +65,7 @@ public class TangleStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 60).level(50));
 
 			return true;

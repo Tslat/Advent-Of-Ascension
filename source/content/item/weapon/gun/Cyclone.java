@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Cyclone extends BaseGun {
-	public Cyclone(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Cyclone(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -65,7 +65,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:\"5149489\",CustomPotionEffects:[{Ambient:0b,Amplifier:0b,CurativeItems:[{Count:1b,id:\"minecraft:milk_bucket\"}],Duration:30,Id:19,ShowIcon:1b,ShowParticles:1b,\"forge:id\":\"minecraft:poison\"}],display:{}}"
+              "tag": "{CustomPotionColor:\"8889187\",CustomPotionEffects:[{Ambient:0b,Amplifier:0b,CurativeItems:[{Count:1b,id:\"minecraft:milk_bucket\"}],Duration:30,Id:19,ShowIcon:1b,ShowParticles:1b,\"forge:id\":\"minecraft:poison\"}],display:{}}"
             }
           ],
           "name": "minecraft:splash_potion",

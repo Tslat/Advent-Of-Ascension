@@ -35,6 +35,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
@@ -311,6 +312,11 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     }
 
     @Override
+    public boolean canBeAffected(MobEffectInstance effect) {
+        return effect.getEffect() != AoAMobEffects.NETHENGEIC_CURSE.get() && super.canBeAffected(effect);
+    }
+
+    @Override
     public void aiStep() {
         super.aiStep();
 
@@ -346,7 +352,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         super.doRangedAttackEntity(projectile, target);
 
         if (projectile == null) {
-            target.hurt(DamageSource.mobAttack(this).setIsFire(), 3);
+            DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, null), target, 1);
 
             if (RandomUtil.oneInNChance(4))
                 target.setSecondsOnFire(Math.min(30, (int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1));
@@ -377,14 +383,14 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (hasAura()) {
-            if (DamageUtil.isPhysicalDamage(source, this, amount)) {
+            if (DamageUtil.isMeleeDamage(source)) {
                 if (source.getDirectEntity() instanceof LivingEntity attacker) {
-                    attacker.hurt(DamageSource.mobAttack(this).setIsFire(), 3);
+                    DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.MOB_FIRE_RECOIL, this), attacker, 3);
                     attacker.setSecondsOnFire((int)Math.ceil(Math.max(0, attacker.getRemainingFireTicks()) / 20f) + 2);
                     attacker.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE.get(), 200));
                 }
             }
-            else if (DamageUtil.isBlasterDamage(source)) {
+            else if (DamageUtil.isEnergyDamage(source)) {
                 heal(amount);
 
                 return false;
@@ -394,7 +400,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         return super.hurt(source, amount);
     }
 
-    public static boolean checkSpawnConditions(LevelAccessor levelAccessor, MobSpawnType spawnReason, BlockPos blockPos, RandomSource rand) {
+    public static boolean checkSpawnConditions(EntityType<?> entityType, LevelAccessor levelAccessor, MobSpawnType spawnReason, BlockPos blockPos, RandomSource rand) {
         if (!(levelAccessor instanceof Level level) || (spawnReason != MobSpawnType.STRUCTURE && spawnReason != MobSpawnType.NATURAL))
             return true;
 

@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class HaunterRifle extends BaseGun {
-	public HaunterRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public HaunterRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

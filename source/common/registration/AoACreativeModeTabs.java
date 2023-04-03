@@ -77,7 +77,7 @@ public final class AoACreativeModeTabs {
 		return ev.registerCreativeModeTab(AdventOfAscension.id(id), List.of(), List.of(afterTab), builder -> {
 			builder.title(LocaleUtil.getLocaleMessage("itemGroup." + AdventOfAscension.MOD_ID + "." + id))
 					.icon(icon)
-					.displayItems((featureFlags, display, hasOpPerms) -> display.acceptAll(AoAStartupCache.getItemsForTab(tab.get())));
+					.displayItems((displayParams, output) -> output.acceptAll(AoAStartupCache.getItemsForTab(tab.get())));
 		});
 	}
 

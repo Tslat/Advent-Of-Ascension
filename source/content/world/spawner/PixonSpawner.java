@@ -19,7 +19,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.ForgeHooks;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
@@ -59,7 +58,7 @@ public class PixonSpawner implements CustomSpawner {
 				if (entity == null)
 					continue;
 
-				int eventResult = ForgeHooks.canEntitySpawn(entity, world, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.NATURAL);
+				int eventResult = 0;//ForgeHooks.canEntitySpawn(entity, world, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.NATURAL); TODO when forge catches up?
 
 				if (eventResult != -1 && (eventResult == 1 || (entity.checkSpawnRules(world, MobSpawnType.NATURAL) && entity.checkSpawnObstruction(world)))) {
 					world.addFreshEntity(entity);

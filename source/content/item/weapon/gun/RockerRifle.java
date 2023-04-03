@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class RockerRifle extends BaseGun {
-	public RockerRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public RockerRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

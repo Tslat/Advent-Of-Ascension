@@ -6,7 +6,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoATiers;
-import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -20,7 +19,7 @@ public class SupremacySword extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (target.getHealth() <= 5 * attackCooldown)
-			DamageUtil.dealMeleeDamage(attacker, target, target.getHealth(), true);
+			target.setHealth(0);
 	}
 
 	@Override

@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class Floro500 extends BaseSniper {
-	public Floro500(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Floro500(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

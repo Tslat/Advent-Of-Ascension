@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlissfulBlast extends BaseCannon {
-	public BlissfulBlast(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BlissfulBlast(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

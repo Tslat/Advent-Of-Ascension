@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -61,7 +62,7 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source == DamageSource.ON_FIRE || source == DamageSource.LAVA) {
+		if (source.is(DamageTypeTags.IS_FIRE)) {
 			explode(position());
 
 			if (getOwner() instanceof ServerPlayer pl)

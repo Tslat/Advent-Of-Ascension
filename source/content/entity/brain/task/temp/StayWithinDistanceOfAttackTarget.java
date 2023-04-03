@@ -133,7 +133,7 @@ public class StayWithinDistanceOfAttackTarget<E extends PathfinderMob> extends E
 				Vec3 runPos = DefaultRandomPos.getPosAway(entity, (int)maxDist, 5, target.position());
 
 				if (runPos != null)
-					navigation.moveTo(navigation.createPath(new BlockPos(runPos), 1), this.repositionSpeedMod);
+					navigation.moveTo(navigation.createPath(BlockPos.containing(runPos), 1), this.repositionSpeedMod);
 			}
 
 			return;

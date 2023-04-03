@@ -16,7 +16,7 @@ public class JackRocker extends BaseCannon {
 	double dmg;
 	int firingDelay;
 
-	public JackRocker(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public JackRocker(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

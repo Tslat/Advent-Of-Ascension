@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class Roulette extends BaseGun {
-	public Roulette(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Roulette(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

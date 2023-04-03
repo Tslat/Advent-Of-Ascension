@@ -29,7 +29,7 @@ public class FloroRPG extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
-	public FloroRPG(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public FloroRPG(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;
@@ -57,7 +57,7 @@ public class FloroRPG extends BaseCannon {
 			if (target instanceof LivingEntity)
 				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(Attributes.ARMOR).getValue() * 6.66) / 100;
 
-			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)dmg * bulletDmgMultiplier) && shooter instanceof ServerPlayer) {
+			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, (float)dmg * bulletDmgMultiplier) && shooter instanceof ServerPlayer) {
 				if (target instanceof LivingEntity && ((LivingEntity)target).getHealth() == 0 && target.hasImpulse) {
 					if (target.level.isEmptyBlock(target.blockPosition().below()) && target.level.isEmptyBlock(target.blockPosition().below(2)))
 						AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/surface_to_air"), "rpg_air_kill");

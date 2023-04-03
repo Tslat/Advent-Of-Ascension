@@ -129,7 +129,7 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 		if (!WorldUtil.isWorld(level, AoADimensions.OVERWORLD.key))
 			return true;
 
-		BlockPos blockpos = new BlockPos(getX(), getBoundingBox().minY, getZ());
+		BlockPos blockpos = BlockPos.containing(getX(), getBoundingBox().minY, getZ());
 
 		if (level.getBrightness(LightLayer.SKY, blockpos) > random.nextInt(32)) {
 			return true;

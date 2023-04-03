@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -79,7 +80,7 @@ public class GyrocopterEntity extends Entity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return source != DamageSource.OUT_OF_WORLD;
+        return !source.is(DamageTypes.OUT_OF_WORLD);
     }
 
     @Override

@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.recipe;
 
 import com.google.gson.JsonObject;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -45,7 +46,7 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 	}
 
 	@Override
-	public ItemStack assemble(DivineStationContainer.DivineStationInventory inv) {
+	public ItemStack assemble(DivineStationContainer.DivineStationInventory inv, RegistryAccess registryAccess) {
 		return output.copy();
 	}
 
@@ -55,7 +56,7 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 	}
 
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return output.copy();
 	}
 

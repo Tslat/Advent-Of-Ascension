@@ -4,23 +4,13 @@
     {
       "bonus_rolls": {
         "type": "minecraft:uniform",
-        "max": 1.0,
+        "max": 0.0,
         "min": 0.0
       },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 50
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:flaming_fury",
           "weight": 10
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:nightmare_staff",
-          "weight": 8
         },
         {
           "type": "minecraft:item",
@@ -33,6 +23,14 @@
                 "min": 3.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 5.0,
+                "min": 3.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:ender_pearl",
@@ -49,6 +47,14 @@
                 "min": 1.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "aoa3:void_scales",
@@ -65,6 +71,14 @@
                 "min": 1.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:dragon_breath",
@@ -81,6 +95,14 @@
                 "min": 1.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "aoa3:sharp_claw",
@@ -97,6 +119,14 @@
                 "min": 5.0
               },
               "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "minecraft:obsidian",
@@ -104,16 +134,47 @@
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
           "name": "aoa3:armour_plating",
           "weight": 13
         }
       ],
-      "name": "aoa_loot",
+      "name": "loot",
       "rolls": {
         "type": "minecraft:uniform",
-        "max": 2.0,
+        "max": 3.0,
         "min": 1.0
       }
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:flaming_fury",
+          "weight": 10
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:nightmare_staff",
+          "weight": 8
+        }
+      ],
+      "name": "weapons",
+      "rolls": 1.0
     }
   ]
 }

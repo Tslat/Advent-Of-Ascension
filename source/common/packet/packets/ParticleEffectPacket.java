@@ -2,13 +2,15 @@ package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraftforge.network.NetworkEvent;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.util.DamageUtil;
 
 import java.util.function.Supplier;
 
@@ -40,15 +42,17 @@ public class ParticleEffectPacket implements AoAPacket {
 			case FREEZING_SNOWFLAKE -> {
 				Entity entity = context.get().getSender().getLevel().getEntity(this.entityId);
 
-				if (entity != null && entity.getTicksFrozen() <= entity.getTicksRequiredToFreeze() * 2.5f)
+				if (entity != null && entity.getTicksFrozen() <= entity.getTicksRequiredToFreeze() * 2.5f) {
+					DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(AoADamageTypes.FREEZE, entity.level, entity.position()), entity, 1);
 					entity.setTicksFrozen(entity.getTicksFrozen() + 14);
+				}
 			}
 			case SANDSTORM -> {
 				Entity entity = context.get().getSender().getLevel().getEntity(this.entityId);
 
 				if (entity instanceof LivingEntity) {
 					if (EntityPredicate.TARGETABLE_ENTITIES.test(entity))
-						entity.hurt(DamageSource.MAGIC, 2);
+						DamageUtil.safelyDealDamage(DamageUtil.miscDamage(DamageTypes.GENERIC, entity.level), entity, 2);
 				}
 				else if (entity instanceof Projectile) {
 					entity.setDeltaMovement(entity.getDeltaMovement().multiply(-0.5f, -0.5f, -0.5f));
@@ -68,7 +72,7 @@ public class ParticleEffectPacket implements AoAPacket {
 						rangedAttacker.doRangedAttackEntity(null, entity);
 					}
 					else {
-						entity.hurt(DamageSource.IN_FIRE, 1);
+						DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(AoADamageTypes.BURN, entity.level, entity.position()), entity, 1);
 						entity.setSecondsOnFire((int)Math.ceil(entity.getRemainingFireTicks() / 20f) + 1);
 					}
 				}

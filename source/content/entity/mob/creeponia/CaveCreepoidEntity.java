@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.entity.mob.creeponia;
 
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -45,7 +46,7 @@ public class CaveCreepoidEntity extends AoACreeponiaCreeper {
 
     @Override
     protected void onHurt(DamageSource source, float amount) {
-        if (!level.isClientSide && !source.isFire() && RandomUtil.oneInNChance(3))
+        if (!level.isClientSide && !source.is(DamageTypeTags.IS_FIRE) && RandomUtil.oneInNChance(3))
             WorldUtil.createExplosion(this, level, 2f);
     }
 }

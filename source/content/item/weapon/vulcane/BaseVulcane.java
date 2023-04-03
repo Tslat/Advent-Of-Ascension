@@ -61,7 +61,7 @@ public abstract class BaseVulcane extends Item {
 		float targetHealth = pl.getLastHurtByMob().getHealth();
 		float damage = (float)getDamage() * (1 + ((rage.getCurrentValue() - 50) / 100));
 
-		if (DamageUtil.dealVulcaneDamage(pl.getLastHurtByMob(), pl, damage)) {
+		if (DamageUtil.doVulcaneAttack(pl, pl.getLastHurtByMob(), damage)) {
 			doAdditionalEffect(pl.getLastHurtByMob(), pl, Math.min(targetHealth, damage));
 			pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 			ItemUtil.damageItem(vulcane, pl, hand);

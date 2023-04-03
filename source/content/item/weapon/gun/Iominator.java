@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.ToxicBulletEntity;
 import javax.annotation.Nullable;
 
 public class Iominator extends BaseGun {
-	public Iominator(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Iominator(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

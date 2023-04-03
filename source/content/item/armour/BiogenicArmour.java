@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -21,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class BiogenicArmour extends AdventArmour {
-	public BiogenicArmour(EquipmentSlot slot) {
+	public BiogenicArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:biogenic", 38, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 

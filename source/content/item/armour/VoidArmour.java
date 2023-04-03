@@ -6,6 +6,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -21,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class VoidArmour extends AdventArmour {
-	public VoidArmour(EquipmentSlot slot) {
+	public VoidArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:void", 25, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 2), slot);
 	}
 

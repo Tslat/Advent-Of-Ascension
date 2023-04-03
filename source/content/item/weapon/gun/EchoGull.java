@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EchoGull extends BaseGun {
-	public EchoGull(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public EchoGull(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Dustometer extends BaseGun {
-	public Dustometer(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Dustometer(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

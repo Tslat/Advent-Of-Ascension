@@ -3,6 +3,8 @@ package net.tslat.aoa3.content.loottable.condition;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -13,7 +15,9 @@ import net.tslat.aoa3.common.registration.AoALootOperations;
 public class IsHostileEntity implements LootItemCondition {
 	@Override
 	public boolean test(LootContext lootContext) {
-		return lootContext.getParamOrNull(LootContextParams.THIS_ENTITY) instanceof Enemy;
+		Entity entity = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);
+
+		return entity instanceof Enemy || (entity instanceof NeutralMob neutralMob && neutralMob.isAngry());
 	}
 
 	@Override

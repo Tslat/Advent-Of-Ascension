@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Viper1 extends BaseSniper {
-	public Viper1(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Viper1(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

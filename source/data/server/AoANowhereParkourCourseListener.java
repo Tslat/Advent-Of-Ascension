@@ -71,7 +71,7 @@ public class AoANowhereParkourCourseListener extends SimpleJsonResourceReloadLis
 
 	@Nullable
 	public static NowhereParkourCourse getCourseForPosition(ServerLevel level, Vec3 pos) {
-		if (!NowhereEvents.isInParkourRegion(new BlockPos(pos)))
+		if (!NowhereEvents.isInParkourRegion(BlockPos.containing(pos)))
 			return null;
 
 		int tier = ((int)pos.x - 500) / 500;

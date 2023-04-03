@@ -14,15 +14,15 @@ import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public abstract class AdventArmour extends ArmorItem {
-	public AdventArmour(ArmorMaterial material, EquipmentSlot slot) {
+	public AdventArmour(ArmorMaterial material, ArmorItem.Type slot) {
 		this(material, slot, Rarity.COMMON);
 	}
 
-	public AdventArmour(ArmorMaterial material, EquipmentSlot slot, Rarity rarity) {
-		this(material, slot, new Item.Properties().durability(material.getDurabilityForSlot(slot)).rarity(rarity));
+	public AdventArmour(ArmorMaterial material, ArmorItem.Type slot, Rarity rarity) {
+		this(material, slot, new Item.Properties().durability(material.getDurabilityForType(slot)).rarity(rarity));
 	}
 
-	public AdventArmour(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {
+	public AdventArmour(ArmorMaterial material, ArmorItem.Type slot, Properties properties) {
 		super(material, slot, properties);
 	}
 

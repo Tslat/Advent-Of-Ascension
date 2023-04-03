@@ -13,7 +13,7 @@ import net.tslat.aoa3.content.entity.projectile.thrown.GrenadeEntity;
 import javax.annotation.Nullable;
 
 public class AncientBomber extends BaseCannon {
-	public AncientBomber(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public AncientBomber(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

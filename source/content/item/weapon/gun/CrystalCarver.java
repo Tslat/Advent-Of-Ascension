@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class CrystalCarver extends BaseGun {
-	public CrystalCarver(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public CrystalCarver(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

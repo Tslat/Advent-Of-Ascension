@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "aoa3:energy_projectile",
+      "required": false
+    },
+    {
+      "id": "aoa3:energy_effect",
+      "required": false
+    }
+  ]
+}

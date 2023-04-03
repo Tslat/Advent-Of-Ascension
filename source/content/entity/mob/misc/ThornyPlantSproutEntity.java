@@ -75,7 +75,7 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 
 	@Override
 	protected void customServerAiStep() {
-		if (tickCount % 5 == 0 && level.getBlockState(new BlockPos(getX(), getY() + 0.25f, getZ())).getBlock() != AoABlocks.THORNY_PLANT_CROP.get())
+		if (tickCount % 5 == 0 && level.getBlockState(BlockPos.containing(getX(), getY() + 0.25f, getZ())).getBlock() != AoABlocks.THORNY_PLANT_CROP.get())
 			discard();
 	}
 

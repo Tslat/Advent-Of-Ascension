@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Sabbath extends BaseSniper {
-	public Sabbath(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Sabbath(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

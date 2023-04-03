@@ -13,7 +13,7 @@ import net.tslat.aoa3.content.entity.projectile.thrown.GrenadeEntity;
 import javax.annotation.Nullable;
 
 public class BoomCannon extends BaseCannon {
-	public BoomCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BoomCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

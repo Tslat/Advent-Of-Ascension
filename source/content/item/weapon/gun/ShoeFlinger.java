@@ -31,7 +31,7 @@ public class ShoeFlinger extends BaseGun {
 	double dmg;
 	int firingDelay;
 
-	public ShoeFlinger(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public ShoeFlinger(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 
 		this.dmg = dmg;

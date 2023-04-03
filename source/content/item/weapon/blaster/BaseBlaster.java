@@ -125,7 +125,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+	public void onUseTick(Level level, LivingEntity player, ItemStack stack, int count) {
 		if (player instanceof ServerPlayer) {
 			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayer)player);
 			int recharge = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.RECHARGE.get(), stack);
@@ -191,7 +191,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealBlasterDamage(shooter, target, shot, (float)baseDmg, false)) {
+		if (DamageUtil.doEnergyProjectileAttack(shooter, shooter, target, (float)baseDmg)) {
 			doImpactEffect(shot, target, shooter);
 
 			return true;

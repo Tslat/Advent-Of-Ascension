@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class ShyreBlaster extends BaseCannon {
-	public ShyreBlaster(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public ShyreBlaster(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

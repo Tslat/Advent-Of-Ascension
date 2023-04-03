@@ -24,7 +24,7 @@ public class LuxonStickler extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
-	public LuxonStickler(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public LuxonStickler(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

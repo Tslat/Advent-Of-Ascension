@@ -68,7 +68,7 @@ public class CelestialStaff extends BaseStaff<BlockPos> {
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		WorldUtil.createExplosion(shooter, shot.level, shot, 2.5f);
 
-		return DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false);
+		return DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg());
 	}
 
 	@Override

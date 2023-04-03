@@ -2,7 +2,9 @@ package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -19,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class OmniArmour extends AdventArmour {
-	public OmniArmour(EquipmentSlot slot) {
+	public OmniArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:omni", 50, new int[] {3, 6, 8, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
@@ -30,7 +32,7 @@ public class OmniArmour extends AdventArmour {
 
 	@Override
 	public void onDamageDealt(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots != null && event.getSource().isExplosion())
+		if (slots != null && event.getSource().is(DamageTypeTags.IS_EXPLOSION))
 			event.setAmount(event.getAmount() * (1 + (0.1f * slots.size())));
 	}
 

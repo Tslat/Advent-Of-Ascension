@@ -1,10 +1,10 @@
 package net.tslat.aoa3.event.dimension;
 
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -19,14 +19,14 @@ public class LunalusEvents {
 				pl.teleportTo(pl.getX(), 350, pl.getZ());
 
 			if (!DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)pl))
-				pl.hurt(new DamageSource("suffocation").bypassArmor().bypassMagic(), 1f);
+				pl.hurt(DamageUtil.miscDamage(AoADamageTypes.SUFFOCATION, pl.level), 1f);
 		}
 
 		if (hasDistortingArtifact)
 			return;
 
-		if (pl.flyingSpeed < 0.05f)
-			pl.flyingSpeed = Math.min(0.05f, pl.flyingSpeed + 0.05f);
+		//if (pl.flyingSpeed < 0.05f) TODO test what might need to replace this
+		//	pl.flyingSpeed = Math.min(0.05f, pl.flyingSpeed + 0.05f);
 
 		Vec3 motion = pl.getDeltaMovement();
 

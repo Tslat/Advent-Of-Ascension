@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.FireBulletEntity;
 import javax.annotation.Nullable;
 
 public class FlameWrecker extends BaseGun {
-	public FlameWrecker(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public FlameWrecker(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

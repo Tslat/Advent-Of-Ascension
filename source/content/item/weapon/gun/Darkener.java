@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Darkener extends BaseGun {
-	public Darkener(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Darkener(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

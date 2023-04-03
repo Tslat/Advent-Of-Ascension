@@ -6,6 +6,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.biome.Biome;
@@ -286,6 +287,25 @@ public final class AoATags {
 
 		public static TagKey<Structure> create(ResourceLocation id) {
 			return TagKey.create(Registries.STRUCTURE, id);
+		}
+	}
+
+	public static class DamageTypes {
+		public static final TagKey<DamageType> GUN = aoaTag("gun");
+		public static final TagKey<DamageType> ENERGY = aoaTag("energy");
+		public static final TagKey<DamageType> MAGIC = tag("magic");
+		public static final TagKey<DamageType> ENVIRONMENTAL = tag("environmental");
+
+		private static TagKey<DamageType> aoaTag(String id) {
+			return create(AdventOfAscension.id(id));
+		}
+
+		private static TagKey<DamageType> tag(String id) {
+			return create(new ResourceLocation("forge", id));
+		}
+
+		public static TagKey<DamageType> create(ResourceLocation id) {
+			return TagKey.create(Registries.DAMAGE_TYPE, id);
 		}
 	}
 }

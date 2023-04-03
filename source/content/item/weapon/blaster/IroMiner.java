@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.entity.PartEntity;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityHandles;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
@@ -19,6 +20,7 @@ import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.UUID;
 
 public class IroMiner extends BaseBlaster {
 	public IroMiner(double dmg, int durability, int fireDelayTicks, float energyCost) {
@@ -43,18 +45,19 @@ public class IroMiner extends BaseBlaster {
 
 		if (heldStack.getItem() == this) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(heldStack, null);
+			UUID targetUUID = target instanceof PartEntity<?> partEntity ? partEntity.getParent().getUUID() : target.getUUID();
 
-			if (cap.getObject() != null &&target.getUUID().equals(cap.getObject())) {
+			if (cap.getObject() != null && targetUUID.equals(cap.getObject())) {
 				damageMod = cap.getValue() + 0.02f;
 				cap.setValue(damageMod);
 			}
 			else {
-				cap.setObject(target.getUUID());
+				cap.setObject(targetUUID);
 				cap.setValue(1.0f);
 			}
 		}
 
-		return DamageUtil.dealBlasterDamage(shooter, target, shot, (float)getDamage() * damageMod, false);
+		return DamageUtil.doEnergyProjectileAttack(shooter, shot, target, (float)getDamage() * damageMod);
 	}
 
 	@Nullable

@@ -20,7 +20,7 @@ import java.util.List;
 public class AncientDischarger extends BaseCannon {
 	int firingDelay;
 
-	public AncientDischarger(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public AncientDischarger(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.firingDelay = firingDelayTicks;
 	}

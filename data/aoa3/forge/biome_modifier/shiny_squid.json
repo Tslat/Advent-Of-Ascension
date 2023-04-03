@@ -15,7 +15,7 @@
     {
       "type": "aoa3:shiny_squid",
       "maxCount": 1,
-      "minCount": -1000,
+      "minCount": 1,
       "weight": 1
     }
   ]

@@ -43,7 +43,7 @@ public class FireStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			target.setSecondsOnFire(11);
 
 			return true;

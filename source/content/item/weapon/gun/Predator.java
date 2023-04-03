@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Predator extends BaseGun {
-	public Predator(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Predator(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

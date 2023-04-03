@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.block.generation.misc;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -34,7 +33,7 @@ public class KaiyuTempleTrapDamage extends Block {
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof Player && !((Player)entity).isCreative()) {
-			entity.hurt(new DamageSource("temple_trap").bypassArmor(), 3.0f);
+			//entity.hurt(new DamageSource("temple_trap").bypassArmor(), 3.0f);
 			EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.BLINDNESS, 40).level(4).isAmbient());
 		}
 	}

@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class MarkMaker extends BaseSniper {
-	public MarkMaker(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public MarkMaker(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

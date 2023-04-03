@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -47,7 +48,7 @@ public class BowDamageIncrease extends AoAAbility.Instance {
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
 		DamageSource source = ev.getSource();
 
-		if (source.isProjectile() && source.getDirectEntity() instanceof AbstractArrow && (!requireFullyCharged || ((AbstractArrow)source.getDirectEntity()).isCritArrow()))
+		if (source.is(DamageTypeTags.IS_PROJECTILE) && source.getDirectEntity() instanceof AbstractArrow && (!requireFullyCharged || ((AbstractArrow)source.getDirectEntity()).isCritArrow()))
 			ev.setAmount(ev.getAmount() * modifier);
 	}
 

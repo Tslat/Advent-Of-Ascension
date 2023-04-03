@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.entity.mob.overworld;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
@@ -147,7 +146,7 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 		if (level.isClientSide())
 			return;
 
-		BushBabyEntity bushBaby = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.BUSH_BABY.get(), new Vec3i(getX(), getBoundingBox().maxY, getZ()), MobSpawnType.MOB_SUMMONED);
+		BushBabyEntity bushBaby = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.BUSH_BABY.get(), BlockPos.containing(getX(), getBoundingBox().maxY, getZ()), MobSpawnType.MOB_SUMMONED);
 
 		if (bushBaby == null)
 			return;

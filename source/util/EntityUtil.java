@@ -74,7 +74,7 @@ public final class EntityUtil {
 	}
 
 	public static boolean isImmuneToSpecialAttacks(Entity target, LivingEntity attacker) {
-		return target instanceof Player || !target.canChangeDimensions() || target.isInvulnerable() || TagUtil.isTaggedAs(target, Tags.EntityTypes.BOSSES) || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
+		return target instanceof Player || !target.canChangeDimensions() || target.isInvulnerable() || target.getType().is(Tags.EntityTypes.BOSSES) || (target instanceof LivingEntity && ((LivingEntity)target).getMaxHealth() > 500);
 	}
 
 	public static float getAttackCooldown(LivingEntity entity) {
@@ -299,7 +299,8 @@ public final class EntityUtil {
 		return killers;
 	}
 
-	public static Vec3 getDirectionForFacing(Entity entity) {
+	public static Vec3
+	getDirectionForFacing(Entity entity) {
 		return new Vec3(
 				-Mth.sin(entity.getYRot() * (float)Math.PI / 180f),
 				-Mth.sin(entity.getXRot() * (float)Math.PI / 180f),

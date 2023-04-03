@@ -11,6 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -155,7 +156,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source == DamageSource.OUT_OF_WORLD && WorldUtil.isWorld(this.level, AoADimensions.NOWHERE.key) && !this.level.isClientSide() && getY() < this.level.getMinBuildHeight()) {
+		if (source.is(DamageTypes.OUT_OF_WORLD) && WorldUtil.isWorld(this.level, AoADimensions.NOWHERE.key) && !this.level.isClientSide() && getY() < this.level.getMinBuildHeight()) {
 			AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level, this.position());
 
 			if (arena != null) {

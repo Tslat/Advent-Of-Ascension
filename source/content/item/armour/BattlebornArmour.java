@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -23,7 +24,7 @@ import java.util.UUID;
 public class BattlebornArmour extends AdventArmour {
 	private static final UUID BATTLEBORN_ARMOUR_BUFF = UUID.fromString("5cf50cfa-4298-46d1-b7ec-c648f8e8d5c9");
 
-	public BattlebornArmour(EquipmentSlot slot) {
+	public BattlebornArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:battleborn", 65, new int[] {4, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

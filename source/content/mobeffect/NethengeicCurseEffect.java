@@ -1,13 +1,17 @@
 package net.tslat.aoa3.content.mobeffect;
 
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.util.ColourUtil;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.effectslib.api.ExtendedMobEffect;
 
 public class NethengeicCurseEffect extends ExtendedMobEffect {
@@ -22,8 +26,11 @@ public class NethengeicCurseEffect extends ExtendedMobEffect {
 
 	@Override
 	public boolean beforeIncomingAttack(LivingEntity entity, MobEffectInstance effectInstance, DamageSource source, float amount) {
-		if (source.isFire() && entity.hasEffect(MobEffects.FIRE_RESISTANCE))
-			entity.hurt(DamageSource.MAGIC, amount * (float)(Math.min(effectInstance.getAmplifier(), 8) * 0.5 + 1f));
+		if (source.is(DamageTypeTags.IS_FIRE) && entity.hasEffect(MobEffects.FIRE_RESISTANCE)) {
+			Vec3 position = source.getSourcePosition();
+
+			DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(DamageTypes.MAGIC, entity.level, position != null ? position : entity.position()), entity, amount * (float)(Math.min(Math.max(effectInstance.getAmplifier(), 1), 8) * 0.5 + 1f));
+		}
 
 		return true;
 	}

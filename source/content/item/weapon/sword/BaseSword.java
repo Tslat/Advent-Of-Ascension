@@ -65,20 +65,20 @@ public class BaseSword extends SwordItem {
 				Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION)));
 	}
 
-	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		return baseDamage;
 	}
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getAttackStrengthScale(0.0f));
+		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getAttackStrengthScale(0));
 
 		return false;
 	}
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		doMeleeEffect(stack, target, attacker, VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).getValue());
+		doMeleeEffect(stack, target, attacker, getSwingEffectiveness(stack));
 
 		return super.hurtEnemy(stack, target, attacker);
 	}
@@ -89,6 +89,10 @@ public class BaseSword extends SwordItem {
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
 		return new VolatileStackCapabilityProvider();
+	}
+
+	protected static float getSwingEffectiveness(ItemStack stack) {
+		return VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).getValue();
 	}
 
 	@Override

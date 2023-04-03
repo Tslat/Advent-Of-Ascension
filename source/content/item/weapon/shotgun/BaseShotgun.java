@@ -27,7 +27,7 @@ public class BaseShotgun extends BaseGun {
 	protected final int pelletCount;
 	protected final float knockbackFactor;
 
-	public BaseShotgun(final double dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
+	public BaseShotgun(final float dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {
 		super(dmg, durability, fireDelayTicks, recoil);
 
 		this.pelletCount = pellets;

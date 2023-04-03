@@ -7,6 +7,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -26,7 +27,7 @@ public class KnightArmour extends AdventArmour {
 	public static final AttributeModifier KNIGHT_CHESTPLATE_BUFF = new AttributeModifier(UUID.fromString("8ecbc122-563a-4de5-8f27-3f461ad2fb5c"), "AoAKnightArmourBody", 1.5d, AttributeModifier.Operation.ADDITION);
 	public static final AttributeModifier KNIGHT_HELMET_BUFF = new AttributeModifier(UUID.fromString("673ef5d8-9df5-4dbb-84f0-1da677d59f05"), "AoAKnightArmourHelmet", 1.5d, AttributeModifier.Operation.ADDITION);
 
-	public KnightArmour(EquipmentSlot slot) {
+	public KnightArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:knight", 70, new int[] {4, 8, 9, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

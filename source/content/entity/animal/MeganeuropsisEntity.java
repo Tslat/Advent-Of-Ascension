@@ -187,16 +187,10 @@ public class MeganeuropsisEntity extends AoAAnimal {
 			setDeltaMovement(getDeltaMovement().scale(friction));
 		}
 
-		animationSpeedOld = animationSpeed;
 		double movedX = getZ() - xo;
 		double movedZ = getZ() - zo;
-		double totalMotion = Math.sqrt((movedX * movedX + movedZ * movedZ)) * 4.0F;
 
-		if (totalMotion > 1.0F)
-			totalMotion = 1.0F;
-
-		animationSpeed += (totalMotion - animationSpeed) * 0.4F;
-		animationPosition += animationSpeed;
+		this.walkAnimation.update((float)Math.min(1, Math.sqrt((movedX * movedX + movedZ * movedZ)) * 4f), 0.4f);
 	}
 
 	private class EntityAIMeganeuropsisLand extends Goal {
@@ -231,7 +225,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 					for (int i = 0; i < 3; i ++) {
 						int x = (int)(taskOwner.getX() + taskOwner.getRandom().nextGaussian() * 10);
 						int z = (int)(taskOwner.getZ() + taskOwner.getRandom().nextGaussian() * 10);
-						int y = taskOwner.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, new BlockPos(x, taskOwner.getY(), z)).getY();
+						int y = taskOwner.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(x, taskOwner.getY(), z)).getY();
 
 						if (taskOwner.getY() - y > 10)
 							continue;
@@ -295,7 +289,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 					taskOwner.getNavigation().stop();
 
 					Vec3 actualLandingLocation = getActualLandingLocation();
-					BlockPos actualLandingBlockPos = new BlockPos(actualLandingLocation);
+					BlockPos actualLandingBlockPos = BlockPos.containing(actualLandingLocation);
 
 					if (taskOwner.level.getBlockState(actualLandingBlockPos).getCollisionShape(taskOwner.level, actualLandingBlockPos) != Shapes.empty()) {
 						landingPos = null;

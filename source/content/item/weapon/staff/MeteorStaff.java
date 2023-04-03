@@ -67,7 +67,7 @@ public class MeteorStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			WorldUtil.createExplosion(shooter, shot.level, shot, 1.4f);
 
 			return true;

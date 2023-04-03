@@ -2,7 +2,9 @@ package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -17,19 +19,19 @@ import java.util.HashSet;
 import java.util.List;
 
 public class ExplosiveArmour extends AdventArmour {
-	public ExplosiveArmour(EquipmentSlot slot) {
+	public ExplosiveArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:explosive", 48, new int[] {4, 7, 9, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 
 	@Override
 	public void onPreAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingAttackEvent event) {
-		if (slots == null && event.getSource().isExplosion())
+		if (slots == null && event.getSource().is(DamageTypeTags.IS_EXPLOSION))
 			event.setCanceled(true);
 	}
 
 	@Override
 	public void onAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots != null && event.getSource().isExplosion())
+		if (slots != null && event.getSource().is(DamageTypeTags.IS_EXPLOSION))
 			event.setAmount(event.getAmount() * (1 - 0.15f * slots.size()));
 	}
 

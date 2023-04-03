@@ -18,7 +18,7 @@ public class ShroomicGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	public double getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, double baseDamage) {
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		return super.getDamageForAttack(target, attacker, swordStack, (float)(attacker.hasEffect(MobEffects.POISON) ? baseDamage * 1.3f : baseDamage));
 	}
 

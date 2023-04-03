@@ -231,10 +231,10 @@ public class CustomArrowEntity extends Arrow {
 		DamageSource source;
 
 		if (shooter == null) {
-			source = DamageSource.arrow(this, this);
+			source = damageSources().arrow(this, this);
 		}
 		else {
-			source = DamageSource.arrow(this, shooter);
+			source = damageSources().arrow(this, shooter);
 
 			if (shooter instanceof LivingEntity)
 				((LivingEntity)shooter).setLastHurtMob(target);

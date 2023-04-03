@@ -85,16 +85,11 @@ public final class WorldUtil {
 	}
 
 	public static int getLightLevel(ServerLevelAccessor world, BlockPos position, boolean ignoreSkyLight, boolean ignoreBlockLight) {
-		if (ignoreBlockLight && ignoreSkyLight) {
-			ignoreBlockLight = false;
-			ignoreSkyLight = false;
+		if (position.getY() > world.getMaxBuildHeight()) {
+			position = new BlockPos(position.getX(), world.getMaxBuildHeight(), position.getZ());
 		}
-
-		if (position.getY() > 255) {
-			position = new BlockPos(position.getX(), 255, position.getZ());
-		}
-		else if (position.getY() < 0) {
-			position = new BlockPos(position.getX(), 0, position.getZ());
+		else if (position.getY() < world.getMinBuildHeight()) {
+			position = new BlockPos(position.getX(), world.getMinBuildHeight(), position.getZ());
 		}
 
 		if (ignoreSkyLight)
@@ -201,10 +196,12 @@ public final class WorldUtil {
 			}
 
 			if (world.isRaining()) {
-				if (biome.value().getPrecipitation() == Biome.Precipitation.SNOW) {
+				Biome.Precipitation rainType = biome.value().getPrecipitationAt(pos);
+
+				if (rainType == Biome.Precipitation.SNOW) {
 					temp /= 1.5f;
 				}
-				else if (biome.value().getPrecipitation() == Biome.Precipitation.RAIN) {
+				else if (rainType == Biome.Precipitation.RAIN) {
 					temp /= 1.25f;
 				}
 			}

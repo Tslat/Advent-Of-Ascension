@@ -265,7 +265,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		}
 
 		Entity shooter = getOwner();
-		EntityHitResult entityTrace = EntityUtil.getEntityCollisionWithPrecision(level, this, position, velocityAdjustedPosition, boundingBox.expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.5d), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter, 0.3f);
+		EntityHitResult entityTrace = EntityUtil.getEntityCollisionWithPrecision(level, this, position, velocityAdjustedPosition, boundingBox.expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.1d), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter, 0.3f);
 
 		if (entityTrace != null)
 			intersectedBlocksTrace = entityTrace;

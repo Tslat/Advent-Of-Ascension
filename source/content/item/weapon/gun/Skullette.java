@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class Skullette extends BaseGun {
-	public Skullette(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Skullette(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -2,9 +2,10 @@ package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -20,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class WitherArmour extends AdventArmour {
-	public WitherArmour(EquipmentSlot slot) {
+	public WitherArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:wither", 53, new int[] {4, 8, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
@@ -31,7 +32,7 @@ public class WitherArmour extends AdventArmour {
 
 	@Override
 	public void onPreAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingAttackEvent event) {
-		if (slots == null && event.getSource() == DamageSource.WITHER) {
+		if (slots == null && event.getSource().is(DamageTypes.WITHER)) {
 			event.setCanceled(true);
 			plData.player().addEffect(new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, 60).isAmbient().hideEffectIcon().build());
 		}
@@ -39,7 +40,7 @@ public class WitherArmour extends AdventArmour {
 
 	@Override
 	public void onAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots != null && event.getSource() == DamageSource.WITHER)
+		if (slots != null && event.getSource().is(DamageTypes.WITHER))
 			event.setAmount(event.getAmount() * (1 - (slots.size() * 0.25f)));
 	}
 

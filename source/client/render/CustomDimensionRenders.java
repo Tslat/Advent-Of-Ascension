@@ -163,7 +163,6 @@ public final class CustomDimensionRenders {
 			}
 
 			RenderSystem.depthMask(true);
-			RenderSystem.enableTexture();
 			RenderSystem.disableBlend();
 
 			return true;

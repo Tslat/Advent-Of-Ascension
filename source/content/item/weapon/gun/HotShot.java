@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class HotShot extends BaseGun {
-	public HotShot(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public HotShot(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

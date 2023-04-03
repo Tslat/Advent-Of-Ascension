@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.tool.axe;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -16,6 +15,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
@@ -46,7 +46,7 @@ public class SoulstoneAxe extends BaseAxe implements LootModifyingItem {
 			return;
 
 		ServerLevel world = lootContext.getLevel();
-		BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootContextParams.ORIGIN));
+		Vec3 pos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
 		ItemStack blockDrop = ItemStack.EMPTY;
 		Item blockItem = block.asItem();
 
@@ -65,7 +65,7 @@ public class SoulstoneAxe extends BaseAxe implements LootModifyingItem {
 			blockDrop.setCount(blockDrop.getCount() * 2);
 
 			for (int i = 0; i < 5; i++) {
-				world.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + RandomUtil.randomValueUpTo(1), pos.getZ() + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
+				world.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, pos.x + RandomUtil.randomValueUpTo(1), pos.y + RandomUtil.randomValueUpTo(1), pos.z + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
 			}
 		}
 	}

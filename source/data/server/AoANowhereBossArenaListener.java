@@ -94,7 +94,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 
 	@Nullable
 	public static NowhereBossArena getClosestArena(ServerLevel level, Vec3 pos) {
-		if (!NowhereEvents.isInBossRegion(new BlockPos(pos)))
+		if (!NowhereEvents.isInBossRegion(BlockPos.containing(pos)))
 			return null;
 
 		NowhereBossArena closest = null;
@@ -177,7 +177,10 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 				}
 
 				if (spawnBoss)
-					AoAScheduler.scheduleSyncronisedTask(() -> bossFunction.spawn(level, getRandomBossSpawn(), stack), 140);
+					AoAScheduler.scheduleSyncronisedTask(() -> {
+						if (!getPlayersInside(level).isEmpty())
+							bossFunction.spawn(level, getRandomBossSpawn(), stack);
+					}, 140);
 			}, 100);
 
 			for (Player player : players) {

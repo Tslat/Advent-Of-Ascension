@@ -211,7 +211,7 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 		if (getRemainingFireTicks() == 0)
 			setSecondsOnFire(8);
 
-		hurt(DamageSource.LIGHTNING_BOLT, 5.0F);
+		hurt(level.damageSources().lightningBolt(), 5.0F);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class SweetTooth extends BaseSniper {
-	public SweetTooth(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public SweetTooth(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

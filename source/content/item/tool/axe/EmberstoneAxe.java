@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
@@ -39,7 +40,7 @@ public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 
 		if (harvestedBlock.is(BlockTags.LOGS) && getDestroySpeed(getToolStack(lootContext), harvestedBlock) > 1) {
 			ServerLevel world = lootContext.getLevel();
-			BlockPos pos = new BlockPos(lootContext.getParamOrNull(LootContextParams.ORIGIN));
+			Vec3 pos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
 			ItemStack blockDrop = ItemStack.EMPTY;
 			Item blockItem = Item.byBlock(block);
 			Iterator<ItemStack> stackIterator = existingLoot.iterator();
@@ -56,10 +57,10 @@ public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 			}
 
 			if (blockDrop != ItemStack.EMPTY) {
-				block.popExperience(world, pos, RandomUtil.randomNumberBetween(1, 3) * blockDrop.getCount());
+				block.popExperience(world, BlockPos.containing(pos), RandomUtil.randomNumberBetween(1, 3) * blockDrop.getCount());
 
 				for (int i = 0; i < 5; i++) {
-					world.sendParticles(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + RandomUtil.randomValueUpTo(1), pos.getZ() + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
+					world.sendParticles(ParticleTypes.FLAME, pos.x + RandomUtil.randomValueUpTo(1), pos.y + RandomUtil.randomValueUpTo(1), pos.z + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
 				}
 			}
 		}

@@ -127,6 +127,7 @@ public class AdventGuiTabHelp extends Screen {
 		public void onClick(double mouseX, double mouseY) {
 			AdventMainGui.changeTheme();
 			setMessage(Component.literal(AdventMainGui.theme.name()));
+			setFocused(false);
 		}
 
 		@Override
@@ -140,7 +141,7 @@ public class AdventGuiTabHelp extends Screen {
 				RenderSystem.setShaderTexture(0, AdventMainGui.theme.menuButtonTexture());
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-				RenderUtil.renderScaledCustomSizedTexture(matrix, AdventMainGui.scaledTabRootX + getX(), AdventMainGui.scaledTabRootY + getY(), 0, (getYImage(isHovered) == 2 ? 60 : 120), 180, 60, width, height, 180, 180);
+				RenderUtil.renderScaledCustomSizedTexture(matrix, AdventMainGui.scaledTabRootX + getX(), AdventMainGui.scaledTabRootY + getY(), 0, isHovered ? 60 : 0, 180, 60, width, height, 180, 180);
 
 				int stringColour = 14737632;
 

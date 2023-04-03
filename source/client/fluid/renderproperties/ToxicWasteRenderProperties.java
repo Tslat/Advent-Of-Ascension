@@ -46,7 +46,6 @@ public class ToxicWasteRenderProperties implements IClientFluidTypeExtensions {
 	@Override
 	public void renderOverlay(Minecraft mc, PoseStack stack) {
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		RenderSystem.enableTexture();
 		RenderSystem.setShaderTexture(0, getRenderOverlayTexture(mc));
 
 		BufferBuilder buffer = Tesselator.getInstance().getBuilder();

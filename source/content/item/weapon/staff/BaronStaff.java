@@ -47,7 +47,7 @@ public class BaronStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			if (target instanceof LivingEntity && RandomUtil.oneInNChance(5))
 				EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WEAKNESS, 120).level(2));
 

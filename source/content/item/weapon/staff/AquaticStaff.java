@@ -44,7 +44,7 @@ public class AquaticStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		return DamageUtil.dealMagicDamage(shot, shooter, target, shooter.isInWater() ? getDmg() * 1.4f : getDmg(), false);
+		return DamageUtil.doMagicProjectileAttack(shooter, shot, target, shooter.isInWater() ? getDmg() * 1.4f : getDmg());
 	}
 
 	@Override

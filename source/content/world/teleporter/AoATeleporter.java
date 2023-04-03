@@ -104,7 +104,7 @@ public abstract class AoATeleporter implements ITeleporter {
 			player.enteredNetherPosition = player.position();
 		}
 		else if (spawnPortal && toWorld.dimension() == Level.END) {
-			BlockPos originPos = new BlockPos(position);
+			BlockPos originPos = BlockPos.containing(position);
 			BlockPos.MutableBlockPos mutablePos = originPos.mutable();
 
 			for(int z = -2; z <= 2; ++z) {

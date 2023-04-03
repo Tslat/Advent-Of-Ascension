@@ -1,0 +1,23 @@
+{
+  "values": [
+    {
+      "id": "aoa3:suffocation",
+      "required": false
+    },
+    "minecraft:in_fire",
+    "minecraft:lightning_bolt",
+    "minecraft:on_fire",
+    "minecraft:lava",
+    "minecraft:hot_floor",
+    "minecraft:drown",
+    "minecraft:starve",
+    "minecraft:cactus",
+    "minecraft:out_of_world",
+    "minecraft:dry_out",
+    "minecraft:freeze",
+    "minecraft:stalagmite",
+    "minecraft:falling_block",
+    "minecraft:falling_anvil",
+    "minecraft:falling_stalactite"
+  ]
+}

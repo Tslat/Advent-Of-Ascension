@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
@@ -101,7 +102,7 @@ public abstract class SoulTabletEntity extends Entity {
 					ItemEntity itemDrop = spawnAtLocation(new ItemStack(getRelevantItem()), 0f);
 
 					if (owner != null && itemDrop != null)
-						itemDrop.setOwner(ownerUUID);
+						itemDrop.setThrower(ownerUUID);
 
 					discard();
 
@@ -140,7 +141,7 @@ public abstract class SoulTabletEntity extends Entity {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source != DamageSource.OUT_OF_WORLD;
+		return !source.is(DamageTypes.OUT_OF_WORLD);
 	}
 
 	@Override

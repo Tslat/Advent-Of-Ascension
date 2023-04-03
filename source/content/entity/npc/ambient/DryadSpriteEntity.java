@@ -8,6 +8,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -85,7 +86,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source != DamageSource.OUT_OF_WORLD)
+		if (!source.is(DamageTypes.OUT_OF_WORLD))
 			return false;
 
 		return super.hurt(source, amount);
@@ -103,7 +104,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 				if (heldStack.getItem() == getVariant().getTool()) {
 					if (!level.isClientSide()) {
 						SUCCESS_TIMER.set(this, 44);
-						player.awardKillScore(this, 1, DamageSource.playerAttack(player));
+						player.awardKillScore(this, 1, this.level.damageSources().playerAttack(player));
 						navigation.stop();
 						setNoAi(true);
 						setDeltaMovement(0, 0, 0);
@@ -159,7 +160,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 				setHealth(0);
 
 				if (player != null)
-					dropAllDeathLoot(DamageSource.playerAttack(player));
+					dropAllDeathLoot(this.level.damageSources().playerAttack(player));
 			});
 
 			remove(RemovalReason.KILLED);

@@ -20,6 +20,7 @@ import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
@@ -112,7 +113,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
 
             target.setSecondsOnFire(3);
 
-            if (target.hurt(DamageSource.mobAttack(this).setIsFire().setMagic(), 3f) && rand().oneInNChance(15))
+            if (DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.BURN, this), target, 3) && rand().oneInNChance(15))
                 EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));
         }
     }
@@ -121,14 +122,14 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
         target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
 
-       if (target.hurt(DamageSource.mobAttack(this).setIsFire().setMagic(), (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && rand().oneInNChance(10))
+       if (DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.BURN, this, null), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && rand().oneInNChance(10))
            EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));
     }
 
     @Override
     protected void onInsideBlock(BlockState state) {
         if (!level.isClientSide() && state.getFluidState().is(FluidTags.WATER))
-            hurt(DamageSource.DROWN, 0.25f);
+            hurt(level.damageSources().drown(), 0.25f);
     }
 
     @Override

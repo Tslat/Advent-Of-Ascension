@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -32,7 +33,7 @@ public abstract class BaseSniper extends BaseGun {
 	protected static final ResourceLocation SCOPE_3 = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/scope3.png");
 	protected static final ResourceLocation SCOPE_4 = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/overlay/scope/scope4.png");
 
-	public BaseSniper(double dmg, int durability, int fireDelayTicks, float recoil) {
+	public BaseSniper(float dmg, int durability, int fireDelayTicks, float recoil) {
 		super(dmg, durability, fireDelayTicks, recoil);
 	}
 
@@ -79,7 +80,7 @@ public abstract class BaseSniper extends BaseGun {
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
 		super.doImpactDamage(target, shooter, bullet, impactPosition, bullet.getAge() <= 0 ? bulletDmgMultiplier * 0.5f : bulletDmgMultiplier);
 
-		if (!target.isAlive() && shooter instanceof ServerPlayer pl)
+		if (!target.isAlive() && target instanceof Phantom && shooter instanceof ServerPlayer pl)
 			AdvancementUtil.completeAdvancement(pl, AdventOfAscension.id("completionist/skeet"), "phantom_sniper_kill");
 	}
 

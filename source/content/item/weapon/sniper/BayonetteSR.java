@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BayonetteSR extends BaseSniper {
-	public BayonetteSR(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BayonetteSR(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

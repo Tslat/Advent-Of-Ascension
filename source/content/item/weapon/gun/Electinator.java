@@ -15,12 +15,13 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.YellowBulletEntity;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class Electinator extends BaseGun {
-	public Electinator(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Electinator(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 
@@ -37,8 +38,8 @@ public class Electinator extends BaseGun {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		for (LivingEntity mob : target.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(3), entity -> entity != target && entity instanceof Enemy)) {
-			DamageUtil.dealMagicDamage(null, shooter, mob, 0.25f, false);
+		for (Entity entity : EntityRetrievalUtil.<Entity>getEntities(target, 3, entity -> entity instanceof Enemy)) {
+			DamageUtil.doMiscEnergyAttack(shooter, entity, getDamage() * 0.15f * bulletDmgMultiplier, target.position());
 		}
 	}
 

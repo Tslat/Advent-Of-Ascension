@@ -325,7 +325,7 @@ public class ShadowlordEntity extends Monster implements RangedAttackMob, AoARan
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source.getEntity() instanceof ShadowlordEntity || DamageUtil.isMagicDamage(source, this, 1) || source.isExplosion() || source.isFire() || super.isInvulnerableTo(source);
+		return source.getEntity() instanceof ShadowlordEntity || DamageUtil.isMagicDamage(source, this, 1) || source.isExplosion() || source.is(DamageTypeTags.IS_FIRE) || super.isInvulnerableTo(source);
 	}
 
 	@OnlyIn(Dist.CLIENT)

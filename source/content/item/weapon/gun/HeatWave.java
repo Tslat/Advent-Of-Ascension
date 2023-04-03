@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class HeatWave extends BaseGun {
-	public HeatWave(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public HeatWave(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.ShroomBulletEntity;
 import javax.annotation.Nullable;
 
 public class MKFung extends BaseGun {
-	public MKFung(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public MKFung(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

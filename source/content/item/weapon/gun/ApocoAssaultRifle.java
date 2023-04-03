@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.entity.projectile.gun.RedBulletEntity;
 import javax.annotation.Nullable;
 
 public class ApocoAssaultRifle extends BaseGun {
-	public ApocoAssaultRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public ApocoAssaultRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

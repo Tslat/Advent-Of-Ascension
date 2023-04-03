@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class GoldenFury extends BaseGun {
-	public GoldenFury(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public GoldenFury(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -19,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class PrimordialArmour extends AdventArmour {
-	public PrimordialArmour(EquipmentSlot slot) {
+	public PrimordialArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:primordial", 62, new int[] {5, 8, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

@@ -24,7 +24,7 @@ public class SelyanStickler extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
-	public SelyanStickler(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public SelyanStickler(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

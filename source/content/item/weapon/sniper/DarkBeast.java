@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class DarkBeast extends BaseSniper {
-	public DarkBeast(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public DarkBeast(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

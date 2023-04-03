@@ -21,7 +21,7 @@ public class WaterBalloonBomber extends BaseCannon {
 	double dmg;
 	int firingDelay;
 
-	public WaterBalloonBomber(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public WaterBalloonBomber(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

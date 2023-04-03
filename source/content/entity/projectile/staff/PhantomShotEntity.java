@@ -43,11 +43,12 @@ public class PhantomShotEntity extends BaseEnergyShot {
 
 					discard();
 				}
-				else if (result.getType() == HitResult.Type.ENTITY && !((EntityHitResult)result).getEntity().getUUID().equals(lastHit)) {
+				else if (result instanceof EntityHitResult entityResult && !entityResult.getEntity().getUUID().equals(lastHit)) {
 					Entity shooter = getOwner();
+					this.lastHit = entityResult.getEntity().getUUID();
 
 					if (shooter instanceof LivingEntity)
-						weapon.doEntityImpact(this, ((EntityHitResult)result).getEntity(), (LivingEntity)shooter);
+						weapon.doEntityImpact(this, entityResult.getEntity(), (LivingEntity)shooter);
 				}
 			}
 		}

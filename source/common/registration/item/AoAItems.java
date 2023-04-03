@@ -455,6 +455,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> WIND_RUNE_BANNER_PATTERN = registerItem("wind_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.WIND_RUNE.tag(), new Item.Properties().stacksTo(1)));
 	public static final RegistryObject<Item> WITHER_RUNE_BANNER_PATTERN = registerItem("wither_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.WITHER_RUNE.tag(), new Item.Properties().stacksTo(1)));
 
+	@SafeVarargs
 	public static <T extends Item> RegistryObject<T> registerItem(String registryId, Supplier<T> item, @Nullable Supplier<CreativeModeTab>... tabs) {
 		RegistryObject<T> registryObject = AoARegistries.ITEMS.register(registryId, item);
 

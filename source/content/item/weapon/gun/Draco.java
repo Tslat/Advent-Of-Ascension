@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Draco extends BaseGun {
-	public Draco(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Draco(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

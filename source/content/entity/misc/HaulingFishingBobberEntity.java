@@ -156,7 +156,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 			this.fishingBonusMod *= 0.8f;
 		}
 
-		if (biome.value().getPrecipitation() == Biome.Precipitation.RAIN)
+		if (biome.value().getPrecipitationAt(blockPosition()) == Biome.Precipitation.RAIN)
 			this.fishingBonusMod *= 1.1f;
 
 		if (level.isRainingAt(blockPosition()))
@@ -253,7 +253,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 									Vec3 targetPos = DefaultRandomPos.getPosAway(creature, 30, 5, player.position());
 
 									if (targetPos != null)
-										creature.getNavigation().moveTo(creature.getNavigation().createPath(new BlockPos(targetPos), 0), 5);
+										creature.getNavigation().moveTo(creature.getNavigation().createPath(BlockPos.containing(targetPos), 0), 5);
 								}
 							}
 						}
@@ -439,7 +439,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	protected void spawnFish(ServerPlayer player) {
-		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()).value(), false).getRandomElement(player, getLuck());
+		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()).value(), false, this.level).getRandomElement(player, getLuck());
 
 		if (fishFunction != null) {
 			Entity entity = fishFunction.apply(player.level);

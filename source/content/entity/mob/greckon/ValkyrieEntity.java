@@ -50,6 +50,6 @@ public class ValkyrieEntity extends AoAFlyingRangedMob {
 
     @Override
     protected BaseMobProjectile getNewProjectileInstance() {
-        return new ValkyrieShotEntity(this, BaseMobProjectile.Type.OTHER);
+        return new ValkyrieShotEntity(this, BaseMobProjectile.Type.PHYSICAL);
     }
 }

@@ -5,6 +5,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -17,7 +18,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class LunarArmour extends AdventArmour {
-	public LunarArmour(EquipmentSlot slot) {
+	public LunarArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:lunar", 63, new int[] {4, 7, 10, 5}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 

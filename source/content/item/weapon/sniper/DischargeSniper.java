@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class DischargeSniper extends BaseSniper {
-	public DischargeSniper(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public DischargeSniper(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

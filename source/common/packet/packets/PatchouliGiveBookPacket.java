@@ -60,7 +60,7 @@ public class PatchouliGiveBookPacket implements AoAPacket {
 
 					if (itemEntity != null) {
 						itemEntity.setNoPickUpDelay();
-						itemEntity.setOwner(pl.getUUID());
+						itemEntity.setThrower(pl.getUUID());
 					}
 				}
 			}

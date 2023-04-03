@@ -26,7 +26,7 @@ public class MagicMarang extends ItemNameBlockItem {
 
 	@Override
 	protected boolean canPlace(BlockPlaceContext context, BlockState state) {
-		Block block = context.getLevel().getBlockState(new BlockPos(context.getClickLocation())).getBlock();
+		Block block = context.getLevel().getBlockState(BlockPos.containing(context.getClickLocation())).getBlock();
 
 		return (block == AoABlocks.HAUNTED_LEAVES.get() || block == AoABlocks.HAUNTED_EYES_LEAVES.get()) && super.canPlace(context, state);
 	}

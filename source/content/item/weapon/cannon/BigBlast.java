@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class BigBlast extends BaseCannon {
-	public BigBlast(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BigBlast(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

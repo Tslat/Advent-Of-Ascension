@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "aoa3:gun",
+      "required": false
+    },
+    {
+      "id": "aoa3:heavy_gun",
+      "required": false
+    }
+  ]
+}

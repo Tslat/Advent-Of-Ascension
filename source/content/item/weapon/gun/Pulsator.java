@@ -23,7 +23,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Pulsator extends BaseGun {
-	public Pulsator(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Pulsator(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

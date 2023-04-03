@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class IonRevolver extends BaseGun {
-	public IonRevolver(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public IonRevolver(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

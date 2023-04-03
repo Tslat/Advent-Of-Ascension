@@ -59,7 +59,7 @@ public class ExpFlask extends Item {
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, LivingEntity entity, int count) {
+	public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int count) {
 		if (entity instanceof ServerPlayer player) {
 			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 

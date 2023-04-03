@@ -21,7 +21,7 @@ public class BalloonBomber extends BaseCannon {
 	double dmg;
 	int firingDelay;
 
-	public BalloonBomber(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BalloonBomber(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

@@ -43,7 +43,7 @@ public class RuneCreationTask implements Runnable {
 				ItemEntity entity = new ItemEntity(level, pos.getX() + 0.5f, pos.getY() + 1.85f, pos.getZ() + 0.5f, new ItemStack(rune, Math.min(64, count)));
 
 				entity.setDeltaMovement(0, 0, 0);
-				entity.setOwner(this.owner);
+				entity.setThrower(this.owner);
 				entity.setNoPickUpDelay();
 				entity.setNoGravity(true);
 				level.addFreshEntity(entity);

@@ -7,7 +7,7 @@ import net.minecraft.world.phys.Vec3;
 
 public record PositionAndRotation(double x, double y, double z, float pitch, float yaw) {
 	public BlockPos asBlockPos() {
-		return new BlockPos(x, y, z);
+		return BlockPos.containing(x, y, z);
 	}
 
 	public void applyToEntity(Entity entity) {

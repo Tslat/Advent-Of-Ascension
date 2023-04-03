@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -69,7 +70,7 @@ public class LottoTotemEntity extends Entity {
 						ItemEntity drop = spawnAtLocation(stack, 0);
 
 						if (drop != null)
-							drop.setOwner(player.getUUID());
+							drop.setThrower(player.getUUID());
 
 						AdvancementUtil.completeAdvancement((ServerPlayer)player, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/winner_winner"), "lotto_win");
 					}
@@ -77,7 +78,7 @@ public class LottoTotemEntity extends Entity {
 					ItemEntity drop = spawnAtLocation(new ItemStack(AoABlocks.LOTTO_BANNER.get()), 0);
 
 					if (drop != null)
-						drop.setOwner(player.getUUID());
+						drop.setThrower(player.getUUID());
 
 					level.playSound(null, blockPosition(), AoASounds.LOTTO_WIN.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 				}
@@ -142,7 +143,7 @@ public class LottoTotemEntity extends Entity {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source != DamageSource.OUT_OF_WORLD;
+		return !source.is(DamageTypes.OUT_OF_WORLD);
 	}
 
 	@Override

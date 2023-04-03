@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class BaseCannon extends BaseGun {
-	public BaseCannon(double dmg, int durability, int fireDelayTicks, float recoil) {
+	public BaseCannon(float dmg, int durability, int fireDelayTicks, float recoil) {
 		super(dmg, durability, fireDelayTicks, recoil);
 	}
 
@@ -42,7 +42,7 @@ public abstract class BaseCannon extends BaseGun {
 			if (target instanceof LivingEntity)
 				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(Attributes.ARMOR).getValue() * 1.50) / 100;
 
-			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier)) {
+			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, (float)getDamage() * bulletDmgMultiplier)) {
 				if (target instanceof Player && ((Player)target).isBlocking())
 					((Player)target).disableShield(true);
 

@@ -92,7 +92,7 @@ public class CreeperlockEntity extends AoACreeponiaCreeper implements AoARangedA
 
     @Override
     public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
-        if (DamageUtil.dealBlasterDamage(this, target, projectile, 7f, false))
+        if (DamageUtil.doEnergyProjectileAttack(this, projectile, target, 7f))
             doProjectileImpactEffect(projectile, target);
     }
 

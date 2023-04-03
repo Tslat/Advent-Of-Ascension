@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.util.GsonHelper;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -46,7 +47,7 @@ public class OnKillDamageBoost extends AoAAbility.Instance {
 
 	@Override
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
-		if (ev.getEntity().level.getGameTime() < boostExpiry && !ev.getSource().isExplosion())
+		if (ev.getEntity().level.getGameTime() < boostExpiry && !ev.getSource().is(DamageTypeTags.IS_EXPLOSION))
 			ev.setAmount(ev.getAmount() * this.modifier);
 	}
 

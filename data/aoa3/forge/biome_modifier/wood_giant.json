@@ -16,7 +16,7 @@
     {
       "type": "aoa3:wood_giant",
       "maxCount": 1,
-      "minCount": -50,
+      "minCount": 1,
       "weight": 1
     }
   ]

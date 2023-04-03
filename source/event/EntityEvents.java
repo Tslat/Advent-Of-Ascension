@@ -9,7 +9,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
+import net.minecraftforge.event.entity.living.MobSpawnEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -28,7 +28,7 @@ public final class EntityEvents {
 
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingEvent.LivingTickEvent.class, EntityEvents::onEntityUpdate);
 		forgeBus.addListener(EventPriority.NORMAL, false, EntityJoinLevelEvent.class, EntityEvents::onEntityJoinWorld);
-		forgeBus.addListener(EventPriority.LOWEST, false, LivingSpawnEvent.SpecialSpawn.class, EntityEvents::onEntitySpawn);
+		forgeBus.addListener(EventPriority.LOWEST, false, MobSpawnEvent.FinalizeSpawn.class, EntityEvents::onEntitySpawn);
 		forgeBus.addListener(EventPriority.NORMAL, false, ExplosionEvent.Detonate.class, EntityEvents::onEntityExploded);
 	}
 
@@ -56,8 +56,8 @@ public final class EntityEvents {
 		}
 	}
 
-	private static void onEntitySpawn(final LivingSpawnEvent.SpecialSpawn ev) {
-		if (ev.getSpawnReason() == MobSpawnType.SPAWNER)
+	private static void onEntitySpawn(final MobSpawnEvent.FinalizeSpawn ev) {
+		if (ev.getSpawnType() == MobSpawnType.SPAWNER)
 			ev.getEntity().getPersistentData().putBoolean("spawned_by_spawner", true);
 	}
 

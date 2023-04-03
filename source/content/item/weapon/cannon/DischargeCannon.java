@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class DischargeCannon extends BaseCannon {
-	public DischargeCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public DischargeCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

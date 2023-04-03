@@ -71,19 +71,19 @@ public final class ItemUtil {
 	public static ArmorMaterial customArmourMaterial(String name, int durabilityBase, int[] protectionValues, int enchantability, SoundEvent equipSound, float toughness) {
 		return new ArmorMaterial() {
 			@Override
-			public int getDurabilityForSlot(EquipmentSlot slot) {
+			public int getDurabilityForType(ArmorItem.Type slot) {
 				return switch (slot) {
-					case HEAD -> 11 * durabilityBase;
-					case CHEST -> 16 * durabilityBase;
-					case LEGS -> 15 * durabilityBase;
-					case FEET -> 13 * durabilityBase;
+					case HELMET -> 11 * durabilityBase;
+					case CHESTPLATE -> 16 * durabilityBase;
+					case LEGGINGS -> 15 * durabilityBase;
+					case BOOTS -> 13 * durabilityBase;
 					default -> 0;
 				};
 			}
 
 			@Override
-			public int getDefenseForSlot(EquipmentSlot slot) {
-				return protectionValues[slot.getIndex()];
+			public int getDefenseForType(ArmorItem.Type slot) {
+				return protectionValues[slot.getSlot().getIndex()];
 			}
 
 			@Override

@@ -50,7 +50,7 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 		for (int x = -2; x <= 2; x++) {
 			for (int y = -2; y <= 2; y++) {
 				for (int z = -2; z <= 2; z++) {
-					BlockPos pos = new BlockPos(caster.getX() + x, caster.getY() + y, caster.getZ() + z);
+					BlockPos pos = BlockPos.containing(caster.getX() + x, caster.getY() + y, caster.getZ() + z);
 					BlockState state = caster.level.getBlockState(pos);
 					Block block = state.getBlock();
 

@@ -8,7 +8,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.item.AoATiers;
-import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
@@ -21,9 +20,13 @@ public class BaronSword extends BaseSword {
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (RandomUtil.percentChance(0.2f * attackCooldown))
-			DamageUtil.dealMeleeDamage(attacker, target, getDamage() * 0.5f, false);
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
+		float dmg = super.getDamageForAttack(target, attacker, swordStack, baseDamage);
+
+		if (RandomUtil.percentChance(0.2f * getSwingEffectiveness(swordStack)))
+			dmg *= 1.5f;
+
+		return dmg;
 	}
 
 	@OnlyIn(Dist.CLIENT)

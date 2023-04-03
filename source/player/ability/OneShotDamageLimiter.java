@@ -7,7 +7,7 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
@@ -53,7 +53,7 @@ public class OneShotDamageLimiter extends AoAAbility.Instance {
 
 	@Override
 	public void handlePostIncomingAttack(LivingDamageEvent ev) {
-		if (ev.getSource() == DamageSource.OUT_OF_WORLD)
+		if (ev.getSource().is(DamageTypes.OUT_OF_WORLD))
 			return;
 
 		LivingEntity player = ev.getEntity();

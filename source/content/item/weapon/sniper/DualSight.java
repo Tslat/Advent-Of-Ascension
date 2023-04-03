@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class DualSight extends BaseSniper {
-	public DualSight(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public DualSight(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

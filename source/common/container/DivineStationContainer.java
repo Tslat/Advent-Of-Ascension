@@ -132,7 +132,7 @@ public class DivineStationContainer extends AbstractContainerMenu { // TODO Look
 				if (recipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayer)player).getRecipeBook().contains(recipe)) {
 					craftResult.setRecipeUsed(recipe);
 
-					resultStack = recipe.assemble(inv);
+					resultStack = recipe.assemble(inv, world.registryAccess());
 				}
 			}
 

@@ -24,7 +24,7 @@ public class ErebonStickler extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
-	public ErebonStickler(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public ErebonStickler(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

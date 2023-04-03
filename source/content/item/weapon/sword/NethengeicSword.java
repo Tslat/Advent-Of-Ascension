@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,7 +22,7 @@ public class NethengeicSword extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (!attacker.level.isClientSide) {
-			if (target.fireImmune() || target.isInvulnerableTo(DamageSource.ON_FIRE)) {
+			if (target.fireImmune() || target.isInvulnerableTo(target.level.damageSources().onFire())) {
 
 				target.addEffect(new MobEffectInstance(MobEffects.WITHER, (int)(80 * attackCooldown), 2, false, true));
 			}

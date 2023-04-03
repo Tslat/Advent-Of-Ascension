@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
@@ -150,7 +151,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 	}
 
 	@Override
-	public ItemStack assemble(InfusionTableContainer.InfusionInventory inv) {
+	public ItemStack assemble(InfusionTableContainer.InfusionInventory inv, RegistryAccess registryAccess) {
 		if (isEnchanting) {
 			return provideEmptyOrCompatibleStackForEnchanting(inv.getItem(0).copy());
 		}
@@ -170,7 +171,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 	}
 
 	@Override
-	public ItemStack getResultItem() {
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return isEnchanting ? ItemStack.EMPTY : output;
 	}
 
@@ -428,7 +429,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 			else {
 				buffer.writeBoolean(false);
 				recipe.getRecipeInput().toNetwork(buffer);
-				buffer.writeItemStack(recipe.getResultItem(), false);
+				buffer.writeItemStack(recipe.getResultItem(null), false);
 				buffer.writeInt(recipe.getIngredients().size());
 
 				for (Ingredient ing : recipe.getIngredients()) {

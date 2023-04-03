@@ -12,7 +12,7 @@ import net.tslat.aoa3.library.builder.SoundBuilder;
 import javax.annotation.Nullable;
 
 public class Megagun extends BaseGun {
-	public Megagun(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Megagun(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

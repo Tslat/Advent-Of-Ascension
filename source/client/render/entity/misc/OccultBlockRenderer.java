@@ -65,7 +65,6 @@ public final class OccultBlockRenderer {
 
 		PoseStack.Pose pose = matrix.last();
 
-		RenderSystem.disableTexture();
 		RenderSystem.disableDepthTest();
 		RenderSystem.depthMask(false);
 		RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -108,7 +107,6 @@ public final class OccultBlockRenderer {
 		RenderSystem.disableBlend();
 		RenderSystem.enableDepthTest();
 		RenderSystem.depthMask(true);
-		RenderSystem.enableTexture();
 
 		if (rendered)
 			mc.renderBuffers().bufferSource().endBatch();

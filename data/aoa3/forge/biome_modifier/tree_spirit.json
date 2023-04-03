@@ -18,7 +18,7 @@
     {
       "type": "aoa3:tree_spirit",
       "maxCount": 1,
-      "minCount": -20,
+      "minCount": 1,
       "weight": 5
     }
   ]

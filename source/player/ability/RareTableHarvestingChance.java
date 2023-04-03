@@ -53,7 +53,7 @@ public class RareTableHarvestingChance extends ScalableModAbility {
 		if (origin == null)
 			return;
 
-		if (!Block.isShapeFullBlock(state.getCollisionShape(context.getLevel(), new BlockPos(origin))))
+		if (!Block.isShapeFullBlock(state.getCollisionShape(context.getLevel(), BlockPos.containing(origin))))
 			return;
 
 		if (!ExtractionSkill.isApplicableBlock(state))

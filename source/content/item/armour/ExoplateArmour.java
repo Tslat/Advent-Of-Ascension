@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -22,7 +23,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class ExoplateArmour extends AdventArmour {
-	public ExoplateArmour(EquipmentSlot slot) {
+	public ExoplateArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:exoplate", 46, new int[] {4, 6, 8, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 3), slot);
 	}
 

@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -27,7 +28,7 @@ public class EntityTagDamageBonusExplosion extends EntityTagDamageBonus {
 
 	@Override
 	public void handleOutgoingAttack(LivingHurtEvent ev) {
-		if (ev.getEntity().getType().is(tag) && ev.getSource().isExplosion())
+		if (ev.getEntity().getType().is(tag) && ev.getSource().is(DamageTypeTags.IS_EXPLOSION))
 			ev.setAmount(ev.getAmount() * (1 + getScaledValue()));
 	}
 }

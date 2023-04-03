@@ -47,7 +47,7 @@ public final class AoAEntityStats {
 	}
 
 	private static void doNetherEntityStats(final EntityAttributeCreationEvent ev) {
-		AttributeBuilder.createMonster(AoAMobs.EMBRAKE.get()).health(40).moveSpeed(0.25).meleeStrength(7).projectileDamage(2).knockbackResist(0.6).followRange(16).aggroRange(10).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.EMBRAKE.get()).health(40).moveSpeed(0.25).meleeStrength(7).projectileDamage(0.25f).knockbackResist(0.6).followRange(16).aggroRange(10).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.FLAMEWALKER.get()).health(45).moveSpeed(0.3).projectileDamage(7).followRange(10).aggroRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.LITTLE_BAM.get()).health(10).moveSpeed(0.32).followRange(14).aggroRange(8).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.NETHENGEIC_BEAST.get()).health(120).moveSpeed(0.25).projectileDamage(10).aggroRange(16).followRange(24).build(ev);

@@ -21,7 +21,7 @@ public class BlastCannon extends BaseCannon {
 	private double dmg;
 	private int firingDelay;
 
-	public BlastCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BlastCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

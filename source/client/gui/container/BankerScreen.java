@@ -6,7 +6,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
@@ -14,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.util.ColourUtil;
@@ -66,7 +66,7 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 		mc.font.draw(matrix, title, 30, 6, ColourUtil.WHITE);
 	}
 
-	private void renderCoinPlaceholders(PoseStack matrix, int centerX, int centerY) {
+	private void renderCoinPlaceholders(PoseStack poseStack, int centerX, int centerY) {
 		for (int i = 0; i < 12; i++) {
 			Slot slot = menu.getSlot(i);
 			ItemStack stack = slot.getItem();
@@ -75,7 +75,7 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 				ItemStack coinStack = new ItemStack(BankerContainer.getCoinForSlot(i), (i < 3 || i > 8) ? 20 : 1);
 				BakedModel model = mc.getItemRenderer().getModel(coinStack, null, null, 0);
 
-				matrix.pushPose();
+				poseStack.pushPose();
 				RenderUtil.prepRenderTexture(InventoryMenu.BLOCK_ATLAS);
 				mc.textureManager.getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
 				//RenderSystem.enableRescaleNormal();
@@ -83,10 +83,10 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 				RenderSystem.enableBlend();
 				RenderUtil.setDefaultAlphaBlend();
 				RenderUtil.resetShaderColour();
-				matrix.translate(slot.x + centerX, slot.y + centerY, 100);
-				matrix.translate(8, 8, 0);
-				matrix.scale(1, -1, 1);
-				matrix.scale(16, 16, 16);
+				poseStack.translate(slot.x + centerX, slot.y + centerY, 100);
+				poseStack.translate(8, 8, 0);
+				poseStack.scale(1, -1, 1);
+				poseStack.scale(16, 16, 16);
 
 				MultiBufferSource.BufferSource renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
 				boolean diffuseLighting = !model.usesBlockLight();
@@ -94,7 +94,7 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 				if (diffuseLighting)
 					Lighting.setupForFlatItems();
 
-				mc.getItemRenderer().render(coinStack, ItemTransforms.TransformType.GUI, false, matrix, renderTypeBuffer, 1000, OverlayTexture.NO_OVERLAY, model);
+				mc.getItemRenderer().render(coinStack, ItemDisplayContext.GUI, false, poseStack, renderTypeBuffer, 1000, OverlayTexture.NO_OVERLAY, model);
 				renderTypeBuffer.endBatch();
 				RenderSystem.enableDepthTest();
 				if (diffuseLighting)
@@ -102,8 +102,8 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 
 				//RenderSystem.disableAlphaTest();
 				//RenderSystem.disableRescaleNormal();
-				matrix.popPose();
-				mc.getItemRenderer().renderGuiItemDecorations(mc.font, coinStack, slot.x + centerX, slot.y + centerY);
+				poseStack.popPose();
+				mc.getItemRenderer().renderGuiItemDecorations(poseStack, mc.font, coinStack, slot.x + centerX, slot.y + centerY);
 				//RenderSystem.enableAlphaTest();
 			}
 		}

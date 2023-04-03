@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "id": "aoa3:recoil",
+      "required": false
+    },
+    {
+      "id": "aoa3:suffocation",
+      "required": false
+    },
+    {
+      "id": "aoa3:bleed",
+      "required": false
+    },
+    {
+      "id": "aoa3:vulcane",
+      "required": false
+    }
+  ]
+}

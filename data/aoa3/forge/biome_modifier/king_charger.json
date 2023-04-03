@@ -12,7 +12,7 @@
     {
       "type": "aoa3:king_charger",
       "maxCount": 1,
-      "minCount": -100,
+      "minCount": 1,
       "weight": 1
     }
   ]

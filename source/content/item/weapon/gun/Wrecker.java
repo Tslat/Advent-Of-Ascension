@@ -14,7 +14,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Wrecker extends BaseGun {
-	public Wrecker(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Wrecker(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

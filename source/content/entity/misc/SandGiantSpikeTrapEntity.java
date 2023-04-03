@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -66,7 +65,7 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 
 			if (tickCount > 28 && tickCount % 10 == 0) {
 				for (Entity entity : EntityRetrievalUtil.<Entity>getEntities(level, getBoundingBox(), damagePredicate)) {
-					entity.hurt(DamageSource.STALAGMITE, 3);
+					entity.hurt(level.damageSources().stalagmite(), 3);
 				}
 			}
 		}

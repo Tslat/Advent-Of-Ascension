@@ -73,7 +73,7 @@ public class BaseMobProjectile extends ThrowableProjectile implements GeoEntity 
 
 	@Override
 	protected void onHit(HitResult result) {
- 		if (result.getType() != HitResult.Type.BLOCK || level.getBlockState(new BlockPos(result.getLocation())).getMaterial().blocksMotion()) {
+ 		if (result.getType() != HitResult.Type.BLOCK || level.getBlockState(BlockPos.containing(result.getLocation())).getMaterial().blocksMotion()) {
 			if (!level.isClientSide) {
 				if (result instanceof EntityHitResult entityHitResult) {
 					if (entityHitResult.getEntity() == shooter || shooter == null)
@@ -85,7 +85,7 @@ public class BaseMobProjectile extends ThrowableProjectile implements GeoEntity 
 				else if (result instanceof BlockHitResult blockHitResult) {
 					if (shooter != null) {
 						onHitBlock(blockHitResult);
-						shooter.doRangedAttackBlock(this, level.getBlockState(new BlockPos(result.getLocation())), new BlockPos(result.getLocation()), blockHitResult.getDirection());
+						shooter.doRangedAttackBlock(this, level.getBlockState(BlockPos.containing(result.getLocation())), BlockPos.containing(result.getLocation()), blockHitResult.getDirection());
 					}
 				}
 
@@ -113,7 +113,7 @@ public class BaseMobProjectile extends ThrowableProjectile implements GeoEntity 
 		MAGIC,
 		PHYSICAL,
 		GUN,
-		OTHER
+		ENERGY
 	}
 
 	@Override

@@ -10,7 +10,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.IndirectEntityDamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,10 +24,12 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.event.custom.events.HaulingItemFishedEvent;
 import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -234,10 +235,14 @@ public class HaulingRod extends FishingRodItem {
 	}
 
 	private DamageSource killHaulingEntity(FishingHook bobber, Player player, LivingEntity target) {
-		DamageSource damageSource = new IndirectEntityDamageSource("hauling", bobber, player).bypassArmor().bypassMagic().bypassInvul();
+		DamageSource damageSource = DamageUtil.indirectEntityDamage(AoADamageTypes.HAULING, player, bobber);
 
 		target.invulnerableTime = 0;
 		target.hurt(damageSource, target.getHealth() - 0.01f);
+
+		if (target.getHealth() > 0.01f)
+			target.setHealth(0.01f);
+
 		target.discard();
 
 		return damageSource;

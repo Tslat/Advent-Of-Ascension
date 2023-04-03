@@ -8,7 +8,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class Ka500 extends BaseSniper {
-	public Ka500(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Ka500(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

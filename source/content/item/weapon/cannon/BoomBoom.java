@@ -21,7 +21,7 @@ public class BoomBoom extends BaseCannon {
 	double dmg;
 	int firingDelay;
 
-	public BoomBoom(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BoomBoom(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PulseCannon extends BaseCannon {
-	public PulseCannon(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public PulseCannon(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

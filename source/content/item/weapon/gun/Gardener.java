@@ -23,7 +23,7 @@ public class Gardener extends BaseGun {
 	double dmg;
 	int firingDelay;
 
-	public Gardener(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Gardener(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(new Item.Properties().durability(durability).rarity(Rarity.RARE), dmg, firingDelayTicks, recoil);
 		this.dmg = dmg;
 		this.firingDelay = firingDelayTicks;

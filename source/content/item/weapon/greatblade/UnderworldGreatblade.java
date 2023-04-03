@@ -7,7 +7,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoATiers;
-import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
@@ -19,9 +18,13 @@ public class UnderworldGreatblade extends BaseGreatblade {
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
+		float dmg = super.getDamageForAttack(target, attacker, swordStack, baseDamage);
+
 		if (target.getMobType() == MobType.UNDEAD)
-			DamageUtil.dealMeleeDamage(attacker, target, 5 * attackCooldown, false);
+			dmg += 5 * getSwingEffectiveness(swordStack);
+
+		return dmg;
 	}
 
 	@Override

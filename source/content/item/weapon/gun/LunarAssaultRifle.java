@@ -16,7 +16,7 @@ public class LunarAssaultRifle extends BaseGun {
 	private final double baseDmg;
 	private final double maxDmg;
 
-	public LunarAssaultRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public LunarAssaultRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 
 		this.baseDmg = dmg - (dmg / 2d);
@@ -30,8 +30,8 @@ public class LunarAssaultRifle extends BaseGun {
 	}
 
 	@Override
-	public double getDamage() {
-		return RandomUtil.randomValueBetween(baseDmg, maxDmg);
+	public float getDamage() {
+		return (float)RandomUtil.randomValueBetween(baseDmg, maxDmg);
 	}
 
 	@Override

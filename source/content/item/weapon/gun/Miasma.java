@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Miasma extends BaseGun {
-	public Miasma(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Miasma(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

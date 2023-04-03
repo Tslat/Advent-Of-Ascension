@@ -5,10 +5,10 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -26,7 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class NecroArmour extends AdventArmour {
-	public NecroArmour(EquipmentSlot slot) {
+	public NecroArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:necro", 64, new int[] {5, 8, 9, 4}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 7), slot);
 	}
 
@@ -42,7 +42,7 @@ public class NecroArmour extends AdventArmour {
 
 			event.setAmount(0);
 			plData.equipment().setCooldown("necro_armour", 72000);
-			pl.hurtArmor(DamageSource.GENERIC, 2000);
+			pl.hurtArmor(pl.level.damageSources().generic(), 2000);
 
 			if (pl.getHealth() < 4)
 				pl.setHealth(4);

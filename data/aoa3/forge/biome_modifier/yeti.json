@@ -15,7 +15,7 @@
     {
       "type": "aoa3:yeti",
       "maxCount": 1,
-      "minCount": 0,
+      "minCount": 1,
       "weight": 10
     }
   ]

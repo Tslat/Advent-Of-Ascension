@@ -20,7 +20,7 @@ import java.util.List;
 public class ApocoRifle extends BaseGun {
 	private final int firingDelay;
 
-	public ApocoRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public ApocoRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 		this.firingDelay = firingDelayTicks;
 	}

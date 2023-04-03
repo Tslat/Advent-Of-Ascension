@@ -13,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class Stormer extends BaseGun {
-	public Stormer(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public Stormer(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

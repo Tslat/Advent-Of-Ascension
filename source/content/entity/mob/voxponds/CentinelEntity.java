@@ -59,6 +59,6 @@ public class CentinelEntity extends AoARangedMob<CentinelEntity> {
 
 	@Override
 	protected BaseMobProjectile getNewProjectileInstance() {
-		return new BloodballEntity(this, BaseMobProjectile.Type.OTHER);
+		return new BloodballEntity(this, BaseMobProjectile.Type.PHYSICAL);
 	}
 }

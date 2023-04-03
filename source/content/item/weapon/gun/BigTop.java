@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class BigTop extends BaseGun {
-	public BigTop(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public BigTop(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

@@ -6,7 +6,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import javax.annotation.Nullable;
 
 public class IroRifle extends BaseGun {
-	public IroRifle(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public IroRifle(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

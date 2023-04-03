@@ -2,9 +2,9 @@ package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CrystallisArmour extends AdventArmour {
-	public CrystallisArmour(EquipmentSlot slot) {
+	public CrystallisArmour(ArmorItem.Type slot) {
 		super(ItemUtil.customArmourMaterial("aoa3:crystallis", 56, new int[] {5, 6, 10, 3}, 10, SoundEvents.ARMOR_EQUIP_GENERIC, 5), slot);
 	}
 
@@ -30,14 +30,14 @@ public class CrystallisArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingDamageEvent event) {
-		if (event.getSource().getEntity() instanceof LivingEntity) {
+		if (event.getSource().getEntity() instanceof LivingEntity attacker) {
 			if (slots == null && (DamageUtil.isMeleeDamage(event.getSource()) || DamageUtil.isRangedDamage(event.getSource(), plData.player(), event.getAmount()))) {
-				event.getSource().getEntity().hurt(DamageSource.thorns(plData.player()), event.getAmount());
-				plData.player().hurtArmor(DamageSource.GENERIC, event.getAmount() * 2);
+				attacker.hurt(attacker.level.damageSources().thorns(plData.player()), event.getAmount());
+				plData.player().hurtArmor(attacker.level.damageSources().generic(), event.getAmount() * 2);
 			}
 			else if (slots != null && plData.equipment().getCurrentFullArmourSet() != setType() && DamageUtil.isMeleeDamage(event.getSource())) {
-				event.getSource().getEntity().hurt(DamageSource.thorns(plData.player()), event.getAmount() * slots.size() / 4f);
-				plData.player().hurtArmor(DamageSource.GENERIC, event.getAmount() * 2);
+				attacker.hurt(attacker.level.damageSources().thorns(plData.player()), event.getAmount() * slots.size() / 4f);
+				plData.player().hurtArmor(attacker.level.damageSources().generic(), event.getAmount() * 2);
 			}
 		}
 	}

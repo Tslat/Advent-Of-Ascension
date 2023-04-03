@@ -60,7 +60,7 @@ public class FirestormStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			if (target instanceof LivingEntity)
 				target.setSecondsOnFire(7);
 

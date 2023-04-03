@@ -46,7 +46,7 @@ public class PrimordialStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (DamageUtil.dealMagicDamage(shot, shooter, target, getDmg(), false)) {
+		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 40).level(3));
 
 			return true;

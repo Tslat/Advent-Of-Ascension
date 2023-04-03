@@ -27,7 +27,7 @@ public class FloatingItemFragmentParticle extends BreakingItemParticle {
 	public void tick() {
 		super.tick();
 
-		if (level.isWaterAt(new BlockPos(x, y, z))) {
+		if (level.isWaterAt(BlockPos.containing(x, y, z))) {
 			xd *= 0.1f;
 			yd *= 0.01f;
 			zd *= 0.1f;

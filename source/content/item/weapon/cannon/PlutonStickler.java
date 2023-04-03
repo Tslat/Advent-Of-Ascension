@@ -21,7 +21,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 public class PlutonStickler extends BaseCannon {
-	public PlutonStickler(double dmg, int durability, int firingDelayTicks, float recoil) {
+	public PlutonStickler(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);
 	}
 

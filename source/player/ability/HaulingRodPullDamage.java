@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.LivingEntity;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.DamageUtil;
@@ -35,6 +36,6 @@ public class HaulingRodPullDamage extends ScalableModAbility {
 	@Override
 	public void handleHaulingRodPullEntity(HaulingRodPullEntityEvent ev) {
 		if (ev.getHookedEntity() instanceof LivingEntity)
-			DamageUtil.dealHaulingDamage(getPlayer(), ev.getBobber(), ev.getHookedEntity(), getScaledValue());
+			DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.HAULING, getPlayer(), ev.getBobber()), ev.getHookedEntity(), getScaledValue());
 	}
 }

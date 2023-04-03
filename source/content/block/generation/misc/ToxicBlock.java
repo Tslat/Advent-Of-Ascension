@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.block.generation.misc;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -35,7 +34,7 @@ public class ToxicBlock extends Block {
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
 		if (entity instanceof Player && !((Player)entity).isCreative()) {
-			entity.hurt(new DamageSource("toxic_block").bypassArmor(), 4);
+			//entity.hurt(new DamageSource("toxic_block").bypassArmor(), 4);
 			EntityUtil.applyPotions(entity,
 					new EffectBuilder(MobEffects.POISON, 60).level(6),
 					new EffectBuilder(MobEffects.CONFUSION, 40),
