@@ -32,10 +32,17 @@ import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
 import net.tslat.aoa3.content.block.functional.utility.TeaSink;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
-import net.tslat.aoa3.util.*;
+import net.tslat.aoa3.util.AdvancementUtil;
+import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+
+import java.util.List;
 
 public final class NowhereEvents {
 	public static boolean isInParkourRegion(BlockPos pos) {
@@ -65,6 +72,16 @@ public final class NowhereEvents {
 				}
 				else {
 					PlayerUtil.getAdventPlayer(serverPl).leaveAbilityLockRegion();
+				}
+			}
+			else if (isInBossRegion(ev.player.blockPosition())) {
+				List<AoABoss> bosses = EntityRetrievalUtil.getEntities(ev.player, 80, entity -> entity instanceof AoABoss);
+
+				if (!bosses.isEmpty()) {
+					AoABoss boss = bosses.get(0);
+
+					if (boss.getMusic() != null)
+						new SoundBuilder(boss.getMusic()).isMusic().include(ev.player).execute();
 				}
 			}
 		}
@@ -193,7 +210,7 @@ public final class NowhereEvents {
 				ev.getEntity().getAbilities().mayBuild = true;
 			}
 		}
-		else if (TagUtil.isTaggedAs(block, AoATags.Blocks.NOWHERE_SAFE_GUI_BLOCK, ev.getLevel())) {
+		else if (blockState.is(AoATags.Blocks.NOWHERE_SAFE_GUI_BLOCK)) {
 			ev.setUseItem(Event.Result.DENY);
 		}
 		else if (block == Blocks.WATER_CAULDRON) {

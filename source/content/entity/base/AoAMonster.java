@@ -286,10 +286,10 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 	@Override
 	public void setInvulnerable(boolean isInvulnerable) {
-		super.setInvulnerable(isInvulnerable);
-
 		if (!INVULNERABLE.is(this, isInvulnerable))
-			INVULNERABLE.set(this, isInvulnerable);
+			INVULNERABLE.setRaw(this, isInvulnerable);
+
+		super.setInvulnerable(isInvulnerable);
 	}
 
 	@Override

@@ -19,7 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 
@@ -64,10 +63,7 @@ public abstract class BaseThrownWeapon extends BaseGun {
 	}
 
 	@Override
-	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
-		if (target != null && dmg > 0.0f && DamageUtil.doProjectileAttack(shooter, bullet, target, (float)dmg * bulletDmgMultiplier))
-			doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
-	}
+	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {}
 
 	@Override
 	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack weaponStack, InteractionHand hand) {

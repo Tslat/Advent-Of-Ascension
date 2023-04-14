@@ -18,7 +18,6 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.event.AoAPlayerEvents;
@@ -26,20 +25,19 @@ import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
-import javax.annotation.Nullable;
 import java.util.function.Function;
 
 public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
-	public ThermalFishingBobberEntity(Level world, Player player, double posX, double posY, double posZ) {
-		super(world, player, posX, posY, posZ);
-	}
-
 	public ThermalFishingBobberEntity(Player player, Level world, ItemStack rod) {
 		super(player, world, rod);
 	}
 
 	public ThermalFishingBobberEntity(Player player, Level world, ItemStack rod, float luck, float lure) {
 		super(player, world, rod, luck, lure);
+	}
+
+	public ThermalFishingBobberEntity(EntityType<? extends ThermalFishingBobberEntity> entityType, Level level) {
+		super(entityType, level);
 	}
 
 	@Override
@@ -148,15 +146,5 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 		}
 
 		return 1f;
-	}
-
-	@Nullable
-	public static ThermalFishingBobberEntity handleClientSpawn(PlayMessages.SpawnEntity packet, Level world) {
-		Entity owner = world.getEntity((int)packet.getPosY());
-
-		if (owner instanceof Player)
-			return new ThermalFishingBobberEntity(world, (Player)owner, packet.getPosX(), owner.getEyeY(), packet.getPosZ());
-
-		return null;
 	}
 }

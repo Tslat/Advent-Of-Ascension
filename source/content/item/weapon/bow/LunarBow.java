@@ -22,7 +22,7 @@ public class LunarBow extends BaseBow {
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (isSelected && !world.isClientSide && entity instanceof LivingEntity)
-			EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.JUMP, -1));
+			EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.JUMP, 0));
 
 		super.inventoryTick(stack, world, entity, itemSlot, isSelected);
 	}

@@ -48,7 +48,7 @@ public class SubterraneanArmour extends AdventArmour {
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
 		if (slots == null)
-			plData.player().addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, -1, 1, true, false));
+			plData.player().addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 0, 1, true, false));
 	}
 
 	@Override

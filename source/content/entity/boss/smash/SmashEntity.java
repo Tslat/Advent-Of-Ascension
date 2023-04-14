@@ -82,7 +82,7 @@ public class SmashEntity extends AoABoss {
 
 	@Nullable
 	@Override
-	protected SoundEvent getMusic() {
+	public SoundEvent getMusic() {
 		return AoASounds.SMASH_MUSIC.get();
 	}
 

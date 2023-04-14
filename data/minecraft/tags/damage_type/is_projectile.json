@@ -13,10 +13,6 @@
       "required": false
     },
     {
-      "id": "aoa3:mob_ice_ranged_attack",
-      "required": false
-    },
-    {
       "id": "aoa3:gun",
       "required": false
     },

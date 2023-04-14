@@ -13,10 +13,6 @@
       "required": false
     },
     {
-      "id": "aoa3:bleed",
-      "required": false
-    },
-    {
       "id": "aoa3:ranged_attack",
       "required": false
     },
@@ -33,15 +29,7 @@
       "required": false
     },
     {
-      "id": "aoa3:mob_ice_ranged_attack",
-      "required": false
-    },
-    {
       "id": "aoa3:mob_fire_recoil",
-      "required": false
-    },
-    {
-      "id": "aoa3:mob_flamethrower",
       "required": false
     },
     {

@@ -23,6 +23,6 @@ public class AnimatedMobRenderer<T extends LivingEntity & GeoEntity> extends Geo
 
 	@Override
 	public float getMotionAnimThreshold(T animatable) {
-		return 0.009f;
+		return 0.012f;
 	}
 }

@@ -172,6 +172,9 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_WITHER).model(new NethengeicWitherModel()).emissive();
 	public static final EntityRendererPackage<?> ELITE_NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.ELITE_NETHENGEIC_WITHER).path("boss/nethengeic_wither/elite_nethengeic_wither").emissive();
 
+	public static final EntityRendererPackage<?> KING_BAMBAMBAM = new GeckoLibRendererPackage<>(AoAMobs.KING_BAMBAMBAM).path("boss/king_bambambam/king_bambambam").emissive();
+	public static final EntityRendererPackage<?> ELITE_KING_BAMBAMBAM = new GeckoLibRendererPackage<>(AoAMobs.ELITE_KING_BAMBAMBAM).path("boss/king_bambambam/elite_king_bambambam").emissive();
+
 	//public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
 	public static final EntityRendererPackage<?> CREEP_BANKER = new EntityRendererPackage<>(AoANpcs.CREEP_BANKER).defineLayer("creep_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/creep_banker.png");
 	public static final EntityRendererPackage<?> CRYSTAL_TRADER = new EntityRendererPackage<>(AoANpcs.CRYSTAL_TRADER).defineLayer("crystal_trader", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/crystal_trader.png");

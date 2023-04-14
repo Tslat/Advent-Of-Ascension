@@ -104,7 +104,7 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 		boolean success = super.hurt(source, amount);
 
 		if (success && getHealth() <= halfHealth && preAttackHealth > halfHealth) {
-			setInvulnerable(true);
+ 			setInvulnerable(true);
 
 			LivingEntity target = getTarget() != null ? getTarget() : this;
 
@@ -162,8 +162,6 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 			setInvulnerable(true);
 			bushBaby.addEffect(new EffectBuilder(MobEffects.GLOWING, 35).isAmbient().build());
 		}
-
-		level.addFreshEntity(bushBaby);
 	}
 
 	@Override

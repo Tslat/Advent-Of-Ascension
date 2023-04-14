@@ -40,11 +40,20 @@ public class ParticleEffectPacket implements AoAPacket {
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
 		switch (this.type) {
 			case FREEZING_SNOWFLAKE -> {
-				Entity entity = context.get().getSender().getLevel().getEntity(this.entityId);
+				ServerLevel level = context.get().getSender().getLevel();
+				Entity entity = level.getEntity(this.entityId);
+				Entity attacker = null;
 
-				if (entity != null && entity.getTicksFrozen() <= entity.getTicksRequiredToFreeze() * 2.5f) {
-					DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(AoADamageTypes.FREEZE, entity.level, entity.position()), entity, 1);
-					entity.setTicksFrozen(entity.getTicksFrozen() + 14);
+				if (entity != null) {
+					if (this.senderId > 0)
+						attacker = level.getEntity(this.senderId);
+
+					if (attacker instanceof AoARangedAttacker rangedAttacker) {
+						rangedAttacker.doRangedAttackEntity(null, entity);
+					}
+					else if (entity.getTicksFrozen() <= entity.getTicksRequiredToFreeze() * 2.5f) {
+						entity.setTicksFrozen(entity.getTicksFrozen() + 14);
+					}
 				}
 			}
 			case SANDSTORM -> {

@@ -84,18 +84,18 @@ public final class ClientOperations {
 	}
 
 	public static void registerParticleFactories(RegisterParticleProvidersEvent ev) {
-		ev.register(AoAParticleTypes.PORTAL_FLOATER.get(), PortalFloaterParticle.Factory::new);
-		ev.register(AoAParticleTypes.SPARKLER.get(), SparklerParticle.Factory::new);
-		ev.register(AoAParticleTypes.FLICKERING_SPARKLER.get(), FlickeringSparklerParticle.Factory::new);
-		ev.register(AoAParticleTypes.LINGERING_SPARKLER.get(), LingeringSparklerParticle.Factory::new);
-		ev.register(AoAParticleTypes.RAINBOW_SPARKLER.get(), RainbowSparklerParticle.Factory::new);
-		ev.register(AoAParticleTypes.SWIRLY.get(), SwirlyParticle.Factory::new);
-		ev.register(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), new FloatingItemFragmentParticle.Factory());
-		ev.register(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), FreezingSnowflakeParticle.Factory::new);
-		ev.register(AoAParticleTypes.BURNING_FLAME.get(), BurningFlameParticle.Factory::new);
-		ev.register(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
-		ev.register(AoAParticleTypes.ORB.get(), OrbParticle.Factory::new);
-		ev.register(AoAParticleTypes.FIRE_AURA.get(), FireAuraParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.PORTAL_FLOATER.get(), PortalFloaterParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.SPARKLER.get(), SparklerParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.FLICKERING_SPARKLER.get(), FlickeringSparklerParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.LINGERING_SPARKLER.get(), LingeringSparklerParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.RAINBOW_SPARKLER.get(), RainbowSparklerParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.SWIRLY.get(), SwirlyParticle.Factory::new);
+		ev.registerSpecial(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), new FloatingItemFragmentParticle.Factory());
+		ev.registerSpriteSet(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), FreezingSnowflakeParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.BURNING_FLAME.get(), BurningFlameParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.ORB.get(), OrbParticle.Factory::new);
+		ev.registerSpriteSet(AoAParticleTypes.FIRE_AURA.get(), FireAuraParticle.Factory::new);
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {

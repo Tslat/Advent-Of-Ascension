@@ -2629,6 +2629,12 @@
     ],
     "subtitle": "subtitles.entity.neptuno.hurt"
   },
+  "entity.nethengeic_beast.death": {
+    "sounds": [
+      "aoa3:entity/nethengeic_beast/death"
+    ],
+    "subtitle": "subtitles.entity.nethengeic_beast.death"
+  },
   "entity.nethengeic_beast.flame_aura_activate": {
     "sounds": [
       "aoa3:entity/nethengeic_beast/flame_aura_activate"
@@ -2646,26 +2652,6 @@
       "aoa3:entity/nethengeic_beast/hurt"
     ],
     "subtitle": "subtitles.entity.nethengeic_beast.hurt"
-  },
-  "entity.nethengeic_wither.ambient": {
-    "sounds": [
-      "aoa3:entity/nethengeic_wither/ambient1",
-      "aoa3:entity/nethengeic_wither/ambient2",
-      "aoa3:entity/nethengeic_wither/ambient3"
-    ],
-    "subtitle": "subtitles.entity.nethengeic_wither.ambient"
-  },
-  "entity.nethengeic_wither.death": {
-    "sounds": [
-      "aoa3:entity/nethengeic_wither/death"
-    ],
-    "subtitle": "subtitles.entity.nethengeic_wither.death"
-  },
-  "entity.nethengeic_wither.hurt": {
-    "sounds": [
-      "aoa3:entity/nethengeic_wither/hurt"
-    ],
-    "subtitle": "subtitles.entity.nethengeic_wither.hurt"
   },
   "entity.nethengeic_wither.music": {
     "sounds": [

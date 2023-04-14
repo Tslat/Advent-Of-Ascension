@@ -29,10 +29,6 @@
       "required": false
     },
     {
-      "id": "aoa3:mob_flamethrower",
-      "required": false
-    },
-    {
       "id": "aoa3:vulcane",
       "required": false
     },

@@ -77,7 +77,7 @@ public class LightSpark extends BaseBlaster {
 	}
 
 	@Override
-	public void onUsingTick(ItemStack stack, LivingEntity player, int count) {
+	public void onUseTick(Level level, LivingEntity player, ItemStack stack, int count) {
 		if (!player.level.isClientSide) {
 			if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 				if (getFiringSound() != null)

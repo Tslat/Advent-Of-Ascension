@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.entity.mob.overworld;
 
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,12 +22,16 @@ import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
+import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.entity.ai.mob.MultiTypeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
+import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -36,7 +40,7 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements RangedAttackMob {
+public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARangedAttacker {
 	private int lastAttackTime = 0;
 
 	public IceGiantEntity(EntityType<? extends IceGiantEntity> entityType, Level world) {
@@ -193,4 +197,15 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements Range
 				DefaultAnimations.genericWalkController(this),
 				AoAAnimations.genericAttackAnimation(this, DefaultAnimations.ATTACK_SLAM));
 	}
+
+	@Override
+	public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
+		if (projectile == null) {
+			if (DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_ICEBEAM, this, target.position()), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && target.getTicksFrozen() <= target.getTicksRequiredToFreeze() * 2.5f)
+				target.setTicksFrozen(target.getTicksFrozen() + 14);
+		}
+	}
+
+	@Override
+	public void doRangedAttackBlock(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
 }

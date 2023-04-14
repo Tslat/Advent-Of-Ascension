@@ -5,8 +5,7 @@
       "#forge:no_mob_spawns"
     ],
     "if_any": [
-      "minecraft:nether_wastes",
-      "minecraft:crimson_forest"
+      "minecraft:nether_wastes"
     ]
   },
   "spawn": [

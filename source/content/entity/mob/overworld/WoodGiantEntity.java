@@ -151,7 +151,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 				if (weapon.isCorrectToolForDrops(Blocks.OAK_LOG.defaultBlockState())) {
 					lastMeleeHit += 100;
-					particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 5);
+					particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 10);
 
 					if (getHealth() <= 0 && attacker instanceof ServerPlayer pl)
 						pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("i_axed_you_a_question")), "tool_kill");
@@ -160,7 +160,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 				if (getStage() < 3) {
 					STAGE.set(this, getStage() + 1);
-					particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 3);
+					particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 5);
 
 					if (!(attacker instanceof ServerPlayer pl) || !pl.isCreative()) {
 						if (attacker instanceof ServerPlayer pl)

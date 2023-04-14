@@ -64,7 +64,7 @@ public class AlarmoEntity extends AoAMeleeMob<AlarmoEntity> {
         if (!playerList.isEmpty()) {
             List<LivingEntity> mobList = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB);
 
-            EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN).level(20));
+            EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 0).level(20));
 
             for (LivingEntity mob : mobList) {
                 mob.setLastHurtByMob(playerList.get(rand().nextInt(playerList.size())));

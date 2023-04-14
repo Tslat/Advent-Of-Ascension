@@ -39,7 +39,6 @@ import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
-import net.tslat.aoa3.content.entity.brain.task.temp.CustomDelayedBehaviour;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.FireballEntity;
 import net.tslat.aoa3.util.DamageUtil;
@@ -50,6 +49,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessHeldAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.CustomDelayedBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FloatToSurfaceOfFluid;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
@@ -293,6 +293,12 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         return AoASounds.ENTITY_NETHENGEIC_BEAST_HURT.get();
     }
 
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return AoASounds.ENTITY_NETHENGEIC_BEAST_DEATH.get();
+    }
+
     @Override
     protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
         return null;
@@ -352,7 +358,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         super.doRangedAttackEntity(projectile, target);
 
         if (projectile == null) {
-            DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, null), target, 1);
+            DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, 1);
 
             if (RandomUtil.oneInNChance(4))
                 target.setSecondsOnFire(Math.min(30, (int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1));

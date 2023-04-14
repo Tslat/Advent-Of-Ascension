@@ -31,8 +31,8 @@ public class AchelosHelmet extends AdventArmour {
 
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
-		plData.player().addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, -1, 1, true, false));
-		plData.player().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, -1, 0, true, false));
+		plData.player().addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 0, 1, true, false));
+		plData.player().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 0, 0, true, false));
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class CoralstormSword extends BaseSword {
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (entity.isInWater() && isSelected && entity instanceof LivingEntity)
-			((LivingEntity)entity).addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, -1, 0, true, false));
+			((LivingEntity)entity).addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 0, 0, true, false));
 	}
 
 	@OnlyIn(Dist.CLIENT)

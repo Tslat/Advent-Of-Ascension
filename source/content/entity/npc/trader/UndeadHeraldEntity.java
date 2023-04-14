@@ -1,6 +1,9 @@
 package net.tslat.aoa3.content.entity.npc.trader;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
@@ -43,6 +46,22 @@ public class UndeadHeraldEntity extends AoATrader {
 	@Override
 	public MobType getMobType() {
 		return MobType.UNDEAD;
+	}
+
+	@Nullable
+	@Override
+	public SoundEvent getAmbientSound() {
+		return SoundEvents.SKELETON_AMBIENT;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSource) {
+		return SoundEvents.SKELETON_HURT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return SoundEvents.SKELETON_DEATH;
 	}
 
 	@Override

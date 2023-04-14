@@ -45,8 +45,12 @@ public class EntityDataHolder<T> {
 		return this.getter.apply(entity);
 	}
 
-	public void set(Entity entity, T value) {
+	public void setRaw(Entity entity, T value) {
 		entity.getEntityData().set(this.key, value);
+	}
+
+	public void set(Entity entity, T value) {
+		setRaw(entity, value);
 		this.setter.accept(entity, value);
 	}
 

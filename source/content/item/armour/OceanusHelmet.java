@@ -30,7 +30,7 @@ public class OceanusHelmet extends AdventArmour {
 
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
-		plData.player().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, -1, 1, true, false));
+		plData.player().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 0, 1, true, false));
 
 		if (plData.player().isInWater())
 			plData.player().setAirSupply(-10);

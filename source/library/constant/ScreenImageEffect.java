@@ -17,7 +17,7 @@ public class ScreenImageEffect {
 
 	private boolean fullscreen = false;
 	private float scale = 1;
-	private ColourUtil.Colour colour = new ColourUtil.Colour(255, 255, 255, 255);
+	private ColourUtil.Colour colour = new ColourUtil.Colour(1, 1, 1, 1);
 	private int duration = 60;
 
 	private long expiredAt = 0;
@@ -40,7 +40,7 @@ public class ScreenImageEffect {
 	}
 
 	public ScreenImageEffect coloured(int red, int green, int blue, int alpha) {
-		this.colour = new ColourUtil.Colour(red, green, blue, alpha);
+		this.colour = new ColourUtil.Colour(red / 255f, green / 255f, blue / 255f, alpha / 255f);
 
 		return this;
 	}

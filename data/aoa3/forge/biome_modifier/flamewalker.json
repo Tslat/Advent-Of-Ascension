@@ -6,7 +6,6 @@
     ],
     "if_any": [
       "minecraft:nether_wastes",
-      "minecraft:crimson_forest",
       "minecraft:basalt_deltas"
     ]
   },

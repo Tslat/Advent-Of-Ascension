@@ -10,6 +10,8 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.entity.boss.king_bambambam.EliteKingBamBamBamEntity;
+import net.tslat.aoa3.content.entity.boss.king_bambambam.KingBamBamBamEntity;
 import net.tslat.aoa3.content.entity.boss.nethengeic_wither.EliteNethengeicWitherEntity;
 import net.tslat.aoa3.content.entity.boss.nethengeic_wither.NethengeicWitherEntity;
 import net.tslat.aoa3.content.entity.boss.smash.EliteSmashEntity;
@@ -190,7 +192,6 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<KaiyuEntity>> KAIYU = registerMob("kaiyu", KaiyuEntity::new, 0.75f, 1.125f, 13873991, 15259030);
 	//public static final RegistryObject<EntityType<KajarosEntity>> KAJAROS = registerMob("kajaros", KajarosEntity::new, 0.7f, 2.375f, 3351588, 9189689);
 	public static final RegistryObject<EntityType<KeelerEntity>> KEELER = registerMob("keeler", KeelerEntity::new, 0.6875f, 1.4f, 9271950, 10507941);
-	//public static final RegistryObject<EntityType<KingBambambamEntity>> KING_BAMBAMBAM = registerMob("king_bambambam", KingBambambamEntity::new, 1.2f, 2f, 7673107, 11365161);
 	public static final RegistryObject<EntityType<KingChargerEntity>> KING_CHARGER = registerMob("king_charger", KingChargerEntity::new, 18 / 16f, 33 / 16f, 0xDF7858, 0x8D4347);
 	public static final RegistryObject<EntityType<KingCreeperEntity>> KING_CREEPER = registerMob("king_creeper", KingCreeperEntity::new, 0.6f, 1.9375f, 2448937, 8348682);
 	//public static final RegistryObject<EntityType<KingShroomusEntity>> KING_SHROOMUS = registerMob("king_shroomus", KingShroomusEntity::new, 0.875f, 3.25f, 12368043, 10167758);
@@ -225,7 +226,6 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<MushroomSpiderEntity>> MUSHROOM_SPIDER = registerMob("mushroom_spider", MushroomSpiderEntity::new, 1.4f, 0.8125f, 1739049, 12827332);
 	public static final RegistryObject<EntityType<NeptunoEntity>> NEPTUNO = registerMob("neptuno", NeptunoEntity::new, 0.85f, 2.875f, 0x1D4D68, 0xEBB332);
 	public static final RegistryObject<EntityType<NethengeicBeastEntity>> NETHENGEIC_BEAST = registerMob("nethengeic_beast", NethengeicBeastEntity::new, true, 1.25f, 3.75f, 0x1A1513, 0xD43D10);
-	//public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, true, 1.3f, 3.28125f, 5506309, 11385897);
 	public static final RegistryObject<EntityType<NightReaperEntity>> NIGHT_REAPER = registerMob("night_reaper", NightReaperEntity::new, 0.6875f, 2f, 0x2C3137, 0xE7E0D2);
 	public static final RegistryObject<EntityType<NightflyEntity>> NIGHTFLY = registerMob("nightfly", NightflyEntity::new, 0.8125f, 0.8125f, 0x251E2C, 0x64534F);
 	public static final RegistryObject<EntityType<NightmareSpiderEntity>> NIGHTMARE_SPIDER = registerMob("nightmare_spider", NightmareSpiderEntity::new, 1.4f, 0.8125f, 1574189, 5180318);
@@ -345,6 +345,8 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<EliteSmashEntity>> ELITE_SMASH = registerMob("elite_smash", EliteSmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 	public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, true, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
 	public static final RegistryObject<EntityType<EliteNethengeicWitherEntity>> ELITE_NETHENGEIC_WITHER = registerMob("elite_nethengeic_wither", EliteNethengeicWitherEntity::new, true, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
+	public static final RegistryObject<EntityType<KingBamBamBamEntity>> KING_BAMBAMBAM = registerMob("king_bambambam", KingBamBamBamEntity::new, true, 18 / 16f, 44 / 16f, 0x211C1A, 0x4D352B);
+	public static final RegistryObject<EntityType<EliteKingBamBamBamEntity>> ELITE_KING_BAMBAMBAM = registerMob("elite_king_bambambam", EliteKingBamBamBamEntity::new, true, 18 / 16f, 44 / 16f, 0x211C1A, 0x4D352B);
 
 	private static <T extends Mob> RegistryObject<EntityType<T>> registerMob(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int primaryEggColour, int secondaryEggColour) {
 		return registerMob(registryName, factory, false, width, height, primaryEggColour, secondaryEggColour);

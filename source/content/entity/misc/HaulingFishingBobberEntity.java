@@ -2,8 +2,6 @@ package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -30,7 +28,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.network.PlayMessages;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.item.tool.misc.HaulingRod;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
@@ -63,21 +60,15 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 	public int ownerId;
 
-	// Clientside constructor, don't use.
-	public HaulingFishingBobberEntity(Level world, Player player, double posX, double posY, double posZ) {
-		super(AoAMiscEntities.REINFORCED_BOBBER.get(), world);
+	public HaulingFishingBobberEntity(EntityType<? extends HaulingFishingBobberEntity> entityType, Level level) {
+		super(entityType, level);
 
-		setPos(posX, posY, posZ);
-		setOwner(player);
-
-		player.fishing = this;
+		this.rod = null;
 		this.xo = getX();
 		this.yo = getY();
 		this.zo = getZ();
-		this.rod = null;
 		this.luck = 0;
 		this.lure = 0;
-		this.ownerId = player.getId();
 	}
 
 	public HaulingFishingBobberEntity(Player player, Level world, ItemStack rod) {
@@ -93,7 +84,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		this.rod = rod;
 		this.luck = luck;
 		this.lure = lure;
-		this.ownerId = player.getId();
+		setOwner(player);
 		float castStrength = getCastStrength();
 
 		setDeltaMovement(getDeltaMovement().multiply(castStrength, castStrength, castStrength));
@@ -190,14 +181,6 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		}
 
 		return 1f;
-	}
-
-	@Override
-	public void absMoveTo(double x, double y, double z, float pitch, float yaw) { // Because we have to use hacky spawn positioning
-		if (y == ownerId)
-			return;
-
-		super.absMoveTo(x, y, z, pitch, yaw);
 	}
 
 	@Override
@@ -571,16 +554,6 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	public void handleEntityEvent(byte p_70103_1_) {}
 
 	@Nullable
-	public static HaulingFishingBobberEntity handleClientSpawn(PlayMessages.SpawnEntity packet, Level world) {
-		Entity owner = world.getEntity((int)packet.getPosY());
-
-		if (owner instanceof Player)
-			return new HaulingFishingBobberEntity(world, (Player)owner, packet.getPosX(), owner.getEyeY(), packet.getPosZ());
-
-		return null;
-	}
-
-	@Nullable
 	@Override
 	public Entity getHookedIn() {
 		return this.hookedEntity;
@@ -591,22 +564,6 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		super.remove(pReason);
 
 		stopFishing();
-	}
-
-	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
-		double y = getY();
-
-		setPosRaw(getX(), ownerId, getZ());
-
-		Packet<ClientGamePacketListener> spawnPacket = super.getAddEntityPacket();
-
-		setPosRaw(getX(), y, getZ());
-
-		if (ownerId == -1)
-			discard();
-
-		return spawnPacket;
 	}
 
 	public enum State {

@@ -234,11 +234,11 @@ public abstract class BaseGun extends Item {
 
 			if (RandomUtil.percentChance(this.firingDelay / 10f)) {
 				if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier * shellMod))
-					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
+					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier * shellMod);
 			}
 			else {
 				if (DamageUtil.doGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier * shellMod))
-					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
+					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier * shellMod);
 			}
 		}
 	}

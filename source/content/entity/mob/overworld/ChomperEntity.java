@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ForgeMod;
@@ -52,6 +53,11 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 				new AoAEntityPart<>(this, getBbWidth(), 7 / 16f, 0, 0.225f, -getBbWidth()).setDamageMultiplier(0.9f),
 				new AoAEntityPart<>(this, 7 / 16f, 5 / 16f, 0, 0.25f, -getBbWidth() * 1.775f).setDamageMultiplier(0.75f)
 		);
+	}
+
+	@Override
+	public PathNavigation getNavigation() {
+		return super.getNavigation();
 	}
 
 	@Override

@@ -416,11 +416,9 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_NEPTUNO_DEATH = registerSound("entity.neptuno.death");
 	public static final RegistryObject<SoundEvent> ENTITY_NEPTUNO_HURT = registerSound("entity.neptuno.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_HURT = registerSound("entity.nethengeic_beast.hurt");
+	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_DEATH = registerSound("entity.nethengeic_beast.death");
 	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_FLAME_AURA_ACTIVATE = registerSound("entity.nethengeic_beast.flame_aura_activate");
 	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_BEAST_FLAMETHROWER_OPEN = registerSound("entity.nethengeic_beast.flamethrower_open");
-	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_WITHER_AMBIENT = registerSound("entity.nethengeic_wither.ambient");
-	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_WITHER_DEATH = registerSound("entity.nethengeic_wither.death");
-	public static final RegistryObject<SoundEvent> ENTITY_NETHENGEIC_WITHER_HURT = registerSound("entity.nethengeic_wither.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_NIGHTFLY_AMBIENT = registerSound("entity.nightfly.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_NIGHTFLY_DEATH = registerSound("entity.nightfly.death");
 	public static final RegistryObject<SoundEvent> ENTITY_NIGHTFLY_HURT = registerSound("entity.nightfly.hurt");

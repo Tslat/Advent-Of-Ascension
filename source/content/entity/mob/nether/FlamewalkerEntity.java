@@ -113,7 +113,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
 
             target.setSecondsOnFire(3);
 
-            if (DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.BURN, this), target, 3) && rand().oneInNChance(15))
+            if (DamageUtil.safelyDealDamage(DamageUtil.entityDamage(AoADamageTypes.MOB_FIRE_RECOIL, this), target, 3) && rand().oneInNChance(15))
                 EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));
         }
     }
@@ -122,7 +122,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
         target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
 
-       if (DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.BURN, this, null), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && rand().oneInNChance(10))
+       if (DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && rand().oneInNChance(10))
            EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));
     }
 

@@ -52,7 +52,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 	}
 
 	@Nullable
-	protected abstract SoundEvent getMusic();
+	public abstract SoundEvent getMusic();
 
 	@Override
 	public boolean canChangeDimensions() {
@@ -140,7 +140,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 
 		this.bossStatusTracker.addPlayer(player);
 
-		if (getMusic() != null)
+		if (getMusic() != null && getLevel().dimension() != AoADimensions.NOWHERE.key)
 			new SoundBuilder(getMusic()).isMusic().include(player).execute();
 	}
 
@@ -150,7 +150,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 
 		this.bossStatusTracker.removePlayer(player);
 
-		if (getMusic() != null)
+		if (getMusic() != null && getLevel().dimension() != AoADimensions.NOWHERE.key)
 			new SoundBuilder(getMusic()).isMusic().stopSound().include(player).execute();
 	}
 

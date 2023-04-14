@@ -17,6 +17,7 @@ import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 
 public class VulkramEntity extends BaseBullet implements HardProjectile, ItemSupplier {
 	public VulkramEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -55,6 +56,9 @@ public class VulkramEntity extends BaseBullet implements HardProjectile, ItemSup
 	@Override
 	public void doEntityImpact(Entity target, Vec3 impactLocation) {
 		DamageUtil.doProjectileAttack(getOwner(), this, target, AoAWeapons.VULKRAM.get().getDamage());
+
+		if (getOwner() instanceof LivingEntity owner)
+			EntityUtil.healEntity(owner, 1.0f);
 	}
 
 	@Override

@@ -51,13 +51,13 @@ public class StimuloEntity extends AoAMeleeMob<StimuloEntity> {
             EffectBuilder effect = null;
 
             if (healthPercent < 0.25) {
-                effect = new EffectBuilder(MobEffects.MOVEMENT_SPEED, -1).level(1);
+                effect = new EffectBuilder(MobEffects.MOVEMENT_SPEED, 0).level(1);
             }
             else if (healthPercent < 0.50) {
-                effect = new EffectBuilder(MobEffects.MOVEMENT_SPEED, -1).level(2);
+                effect = new EffectBuilder(MobEffects.MOVEMENT_SPEED, 0).level(2);
             }
             else if (healthPercent < 0.75) {
-                effect = new EffectBuilder(MobEffects.MOVEMENT_SPEED, -1).level(3);
+                effect = new EffectBuilder(MobEffects.MOVEMENT_SPEED, 0).level(3);
             }
 
             if (effect != null)

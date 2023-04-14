@@ -51,13 +51,13 @@ public class StimulosusEntity extends AoAMeleeMob<StimulosusEntity> {
             EffectBuilder effect = null;
 
             if (healthPercent < 0.25) {
-                effect = new EffectBuilder(MobEffects.DAMAGE_BOOST, -1).level(2);
+                effect = new EffectBuilder(MobEffects.DAMAGE_BOOST, 0).level(2);
             }
             else if (healthPercent < 0.50) {
-                effect = new EffectBuilder(MobEffects.DAMAGE_BOOST, -1).level(3);
+                effect = new EffectBuilder(MobEffects.DAMAGE_BOOST, 0).level(3);
             }
             else if (healthPercent < 0.75) {
-                effect = new EffectBuilder(MobEffects.DAMAGE_BOOST, -1).level(4);
+                effect = new EffectBuilder(MobEffects.DAMAGE_BOOST, 0).level(4);
             }
 
             if (effect != null)

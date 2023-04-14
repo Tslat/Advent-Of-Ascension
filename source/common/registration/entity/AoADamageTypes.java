@@ -19,10 +19,10 @@ public final class AoADamageTypes {
 	public static final ResourceKey<DamageType> MOB_MELEE_ATTACK = create("mob_melee_attack");
 	public static final ResourceKey<DamageType> MOB_FIRE_MELEE_ATTACK = create("mob_fire_melee_attack");
 	public static final ResourceKey<DamageType> MOB_FIRE_RANGED_ATTACK = create("mob_fire_ranged_attack");
-	public static final ResourceKey<DamageType> MOB_ICE_RANGED_ATTACK = create("mob_ice_ranged_attack");
 
 	public static final ResourceKey<DamageType> MOB_FIRE_RECOIL = create("mob_fire_recoil");
 	public static final ResourceKey<DamageType> MOB_FLAMETHROWER = create("mob_flamethrower");
+	public static final ResourceKey<DamageType> MOB_ICEBEAM = create("mob_icebeam");
 
 	public static final ResourceKey<DamageType> VULCANE = create("vulcane");
 	public static final ResourceKey<DamageType> GUN = create("gun");

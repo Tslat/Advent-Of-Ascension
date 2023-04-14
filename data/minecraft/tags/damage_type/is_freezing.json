@@ -5,11 +5,7 @@
       "required": false
     },
     {
-      "id": "aoa3:mob_ice_ranged_attack",
-      "required": false
-    },
-    {
-      "id": "aoa3:mob_ice_ranged_attack",
+      "id": "aoa3:mob_icebeam",
       "required": false
     }
   ]

@@ -75,7 +75,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 
 	@Override
 	public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
-		DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, null), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
+		DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
 		if (RandomUtil.oneInNChance(5))
 			target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1);

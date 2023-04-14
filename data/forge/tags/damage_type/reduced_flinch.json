@@ -1,0 +1,24 @@
+{
+  "values": [
+    {
+      "id": "aoa3:burn",
+      "required": false
+    },
+    {
+      "id": "aoa3:freeze",
+      "required": false
+    },
+    {
+      "id": "aoa3:bleed",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_flamethrower",
+      "required": false
+    },
+    {
+      "id": "aoa3:mob_icebeam",
+      "required": false
+    }
+  ]
+}

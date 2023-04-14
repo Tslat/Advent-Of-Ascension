@@ -4,6 +4,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -62,10 +65,24 @@ public class Slingshot extends BaseBow {
 	}
 
 	@Override
-	public CustomArrowEntity doArrowMods(CustomArrowEntity arrow, LivingEntity shooter, ItemStack ammoStack, int useTicksRemaining) {
-		PopShotEntity popShot = new PopShotEntity(arrow.level, this, shooter, dmg, ammoStack.getItem() instanceof ArrowItem);
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return super.canApplyAtEnchantingTable(stack, enchantment) && enchantment != Enchantments.PUNCH_ARROWS && enchantment != Enchantments.FLAMING_ARROWS;
+	}
 
-		popShot.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0, BowItem.getPowerForTime((int)(72000 / drawSpeedMultiplier - useTicksRemaining)) * 2, 1);
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		return super.isBookEnchantable(stack, book);
+	}
+
+	@Override
+	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
+		PopShotEntity popShot = new PopShotEntity(shooter.level, this, shooter, dmg, ammoStack.getItem() instanceof ArrowItem);
+		int powerEnchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bowStack);
+
+		popShot.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0, velocity * 2, 1);
+
+		if (powerEnchant > 0)
+			popShot.setBaseDamage(popShot.getBaseDamage() + powerEnchant * 1.5D + 1D);
 
 		return popShot;
 	}

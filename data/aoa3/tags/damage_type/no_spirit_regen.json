@@ -1,0 +1,28 @@
+{
+  "values": [
+    {
+      "id": "aoa3:vulcane",
+      "required": false
+    },
+    {
+      "id": "aoa3:energy_projectile",
+      "required": false
+    },
+    {
+      "id": "aoa3:magic_projectile",
+      "required": false
+    },
+    {
+      "id": "aoa3:magic_effect",
+      "required": false
+    },
+    {
+      "id": "aoa3:energy_effect",
+      "required": false
+    },
+    "minecraft:explosion",
+    "minecraft:player_explosion",
+    "minecraft:magic",
+    "minecraft:indirect_magic"
+  ]
+}

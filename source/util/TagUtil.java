@@ -13,6 +13,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class TagUtil {
+	// Currently doesn't work because of a Forge bug. Nice.
 	public static <T> boolean isTaggedAs(T object, TagKey<T> tagKey, Level level) {
 		return level.registryAccess().registry(tagKey.registry()).map(registry -> registry.wrapAsHolder(object).is(tagKey)).orElse(false);
 	}

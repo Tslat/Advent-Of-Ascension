@@ -43,8 +43,8 @@ public final class DamageUtil {
 		return new DamageSource(attacker.level.damageSources().damageTypes.getHolderOrThrow(damageType), attacker, null, position);
 	}
 
-	public static DamageSource indirectEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, @Nullable Entity projectile) {
-		return new DamageSource(attacker.level.damageSources().damageTypes.getHolderOrThrow(damageType), projectile, attacker);
+	public static DamageSource indirectEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, Entity projectile) {
+		return new DamageSource(projectile.level.damageSources().damageTypes.getHolderOrThrow(damageType), projectile, attacker);
 	}
 
 	public static boolean doMobMeleeAttack(Entity attacker, Entity target, float dmg) {
@@ -56,7 +56,7 @@ public final class DamageUtil {
 	}
 
 	public static boolean doVulcaneAttack(@Nullable Entity attacker, Entity target, float dmg) {
-		return safelyDealDamage(indirectEntityDamage(AoADamageTypes.VULCANE, attacker, null), target, dmg);
+		return safelyDealDamage(positionedEntityDamage(AoADamageTypes.VULCANE, attacker, target.position()), target, dmg);
 	}
 
 	public static boolean doGunAttack(@Nullable Entity attacker, @Nullable Entity projectile, Entity target, float dmg) {

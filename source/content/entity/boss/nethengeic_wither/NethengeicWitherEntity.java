@@ -23,6 +23,8 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -41,27 +43,33 @@ import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.ai.movehelper.AirborneMoveControl;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
-import net.tslat.aoa3.content.entity.brain.task.temp.*;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.FireballEntity;
 import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
+import net.tslat.aoa3.library.object.explosion.StandardExplosion;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
-import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessHeldAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.CustomDelayedBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.InvalidateMemory;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StayWithinDistanceOfAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StrafeTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomHoverTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.SetAdditionalAttackTargets;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
+import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
@@ -136,7 +144,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 
 	@Nullable
 	@Override
-	protected SoundEvent getMusic() {
+	public SoundEvent getMusic() {
 		return AoASounds.NETHENGEIC_WITHER_MUSIC.get();
 	}
 
@@ -146,10 +154,16 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 		return SoundEvents.CAMPFIRE_CRACKLE;
 	}
 
-	@javax.annotation.Nullable
+	@Nullable
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
 		return AoASounds.ENTITY_NETHENGEIC_BEAST_HURT.get();
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getDeathSound() {
+		return AoASounds.ENTITY_NETHENGEIC_BEAST_DEATH.get();
 	}
 
 	@Override
@@ -166,6 +180,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	public List<ExtendedSensor<AoABoss>> getSensors() {
 		return ObjectArrayList.of(
 				new NearbyPlayersSensor<>(),
+				new NearbyLivingEntitySensor<AoABoss>().setScanRate(entity -> 40),
 				new HurtBySensor<>()
 		);
 	}
@@ -328,7 +343,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	@Override
 	public void doRangedAttackEntity(@Nullable BaseMobProjectile projectile, Entity target) {
 		if (projectile == null) {
-			DamageUtil.safelyDealDamage(DamageUtil.indirectEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, null), target, 1);
+			DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, 1);
 
 			if (RandomUtil.oneInNChance(4))
 				target.setSecondsOnFire(Math.min(30, (int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1));
@@ -356,7 +371,14 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 		if (projectile == null)
 			return;
 
-		WorldUtil.createExplosion(this, this.level, projectile.getX(), projectile.getY(), projectile.getZ(), 1, Level.ExplosionInteraction.MOB, true);
+		if (level instanceof ServerLevel serverLevel) {
+			ExplosionInfo fireballExplosionInfo = new ExplosionInfo().radius(2).penetration(50).explodeInOneTick().baseDamage(5).onBlockHit((explosion, state, explodePos) -> {
+				if (explosion.level.random.nextInt(3) == 0 && explosion.level.getBlockState(explodePos.below()).isSolidRender(explosion.level, explodePos.below()))
+					explosion.level.setBlock(explodePos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
+			});
+
+			new StandardExplosion(fireballExplosionInfo, serverLevel, projectile, this).explode();
+		}
 	}
 
 	@Override

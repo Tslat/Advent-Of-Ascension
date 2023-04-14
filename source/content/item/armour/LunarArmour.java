@@ -30,7 +30,7 @@ public class LunarArmour extends AdventArmour {
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
 		if (slots != null)
-			plData.player().addEffect(new MobEffectInstance(MobEffects.JUMP, -1, slots.size() - 1, true, false));
+			plData.player().addEffect(new MobEffectInstance(MobEffects.JUMP, 0, slots.size() - 1, true, false));
 	}
 
 	@Override

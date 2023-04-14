@@ -18,20 +18,26 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.ObjectUtil;
+import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.apache.logging.log4j.Level;
@@ -137,17 +143,42 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 		}
 
 		public boolean checkAndClear(ServerLevel level) {
-			if (!getPlayersInside(level).isEmpty())
-				return false;
+			List<Player> players = getPlayersInside(level);
+			List<Entity> entities = getEntitiesInside(level);
 
-			for (Entity entity : getEntitiesInside(level)) {
+			if (!players.isEmpty()) {
+				boolean keepArena = false;
+
+				for (Entity entity : entities) {
+					if (entity instanceof ItemEntity || entity.getType().is(Tags.EntityTypes.BOSSES)) {
+						keepArena = true;
+
+						break;
+					}
+				}
+
+				if (keepArena)
+					return false;
+
+				for (Player player : players) {
+					AoAScheduler.scheduleSyncronisedTask(() -> {
+						ServerPlayer pl = (ServerPlayer)player;
+						PlayerUtil.resetToDefaultStatus(pl);
+						pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
+						ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+						PlayerUtil.getAdventPlayer(pl).returnItemStorage();
+					}, 1);
+				}
+			}
+
+			for (Entity entity : entities) {
 				entity.discard();
 			}
 
 			return true;
 		}
 
-		public void placePlayersAndBoss(ServerLevel level, List<Player> players, Predicate<Player> playerStillValid, ItemStack stack, BossTokenItem.SpawningFunction bossFunction) {
+		public void placePlayersAndBoss(ServerLevel level, List<Player> players, Predicate<Player> playerStillValid, ItemStack stack, EntityType<?> entityType, BossTokenItem.SpawningFunction bossFunction) {
 			if (players.isEmpty())
 				return;
 
@@ -158,6 +189,11 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 
 			AoAScheduler.scheduleSyncronisedTask(() -> {
 				boolean spawnBoss = false;
+				Entity entity = entityType.create(level);
+				SoundBuilder soundBuilder = entity instanceof AoABoss boss && boss.getMusic() != null ? new SoundBuilder(boss.getMusic()).isMusic() : null;
+
+				if (entity != null)
+					entity.discard();
 
 				for (Player player : players) {
 					if (!(player instanceof ServerPlayer serverPlayer))
@@ -174,9 +210,17 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 					else {
 						serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.tooFar", ChatFormatting.RED));
 					}
+
+					if (soundBuilder != null)
+						soundBuilder.include(player);
 				}
 
 				if (spawnBoss)
+					AoAScheduler.scheduleSyncronisedTask(() -> {
+						if (soundBuilder != null)
+							soundBuilder.execute();
+					}, 40);
+
 					AoAScheduler.scheduleSyncronisedTask(() -> {
 						if (!getPlayersInside(level).isEmpty())
 							bossFunction.spawn(level, getRandomBossSpawn(), stack);
@@ -243,7 +287,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			if (bounds == null)
 				return List.of();
 
-			return EntityRetrievalUtil.getEntities(level, bounds, entity -> true);
+			return EntityRetrievalUtil.getEntities(level, bounds, entity -> !(entity instanceof Player));
 		}
 
 		public Vec3 getRandomBossSpawn() {

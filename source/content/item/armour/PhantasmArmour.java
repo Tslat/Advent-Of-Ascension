@@ -30,7 +30,7 @@ public class PhantasmArmour extends AdventArmour {
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
 		if (slots != null)
-			plData.player().addEffect(new MobEffectInstance(MobEffects.LUCK, -1, slots.size() - 1, true, false));
+			plData.player().addEffect(new MobEffectInstance(MobEffects.LUCK, 0, slots.size() - 1, true, false));
 	}
 
 	@Override

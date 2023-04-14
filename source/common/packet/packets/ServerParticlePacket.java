@@ -50,7 +50,7 @@ public class ServerParticlePacket implements AoAPacket {
 	public ServerParticlePacket particle(ParticleOptions particle, Entity entity, boolean randomPosInBB, double velX, double velY, double velZ, int amountPerParticle, int particlesToGen) {
 		for (int i = 0; i < particlesToGen; i++) {
 			if (randomPosInBB) {
-				particle(particle, entity.getX() + RandomUtil.randomValueUpTo(entity.getBbWidth()), entity.getY() + RandomUtil.randomValueUpTo(entity.getBbHeight()), entity.getZ() + RandomUtil.randomValueUpTo(entity.getBbWidth()), velX, velY, velZ, amountPerParticle);
+				particle(particle, entity.getRandomX(0.5f), entity.getRandomY(), entity.getRandomZ(0.5f), velX, velY, velZ, amountPerParticle);
 			}
 			else {
 				particle(particle, entity, velX, velY, velZ);
