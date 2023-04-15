@@ -1749,6 +1749,8 @@
   "dimension.aoa3.shyrelands": "塞尔瑞",
   "dimension.aoa3.vox_ponds": "未知",
   "effect.aoa3.bleeding": "流血",
+  "effect.aoa3.burned": "烧伤",
+  "effect.aoa3.nethengeic_curse": "纳德吉克诅咒",
   "enchantment.aoa3.archmage": "法术",
   "enchantment.aoa3.archmage.desc": "每级减少1个法杖的所有符文消耗。",
   "enchantment.aoa3.brace": "攥紧",
