@@ -208,3 +208,38 @@ NOTO: Vi nun rigardas la lingvajn dosierojn por la versio Minecraft-1.18.2 de la
 
 Vi povas legi lernilon pri la redakta procezo en angla ĉi tie:
 https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
+--
+Português Brasileiro:
+# Advent of Ascension
+Este é o Github oficial do Advent of Ascension.
+
+Este branch é o da versão 1.19 mais recente do mod.
+
+## Aviso
+O código fonte presente neste github é apenas para fins de visualização. Sob a licença, você só tem permissão de alterar esse código para USO PRIVADO.
+A redistribuição do código é uma QUEBRA dos termos da licença.
+
+O código presente aqui é commit-free. Todo o código fonte que pode ser lido aqui representa apenas a versão pública mais recente.
+Portanto, todos os commits que não forem de tradução serão imediatamente deletados. Envie um relatório de erro ou sugestão para correções e mudanças.
+
+## O que eu posso fazer aqui?
+Você pode fazer 3 coisas aqui:
+1. Enviar um relatório de erro. Para fazer isso, vá para a página de "Issues", e clique "New Issue":
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+2. Dar uma sugestão. Para fazer isso, vá para a página de "Issues", clique "New Issue" e então selecione o tipo de sugestão:
+https://github.com/Tslat/Advent-Of-Ascension/issues
+
+3. Contribuir com a tradução do mod. Para fazer isso, você precisa seguir estes passos:
+
+  i) Vá para a pasta 'lang' e clique no arquivo do idioma que você quer traduzir;
+
+  ii) Clique no ícone pequeno de lápis no canto superior direito para editar o arquivo;
+
+  iii) Edite o arquivo ao seu gosto e quando terminar clique "Propose File Change"
+
+Você pode ler um tutorial sobre o processo de edição aqui:
+https://help.github.com/articles/editing-files-in-another-user-s-repository/
+
+--
