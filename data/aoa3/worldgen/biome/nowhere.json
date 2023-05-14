@@ -7,7 +7,7 @@
     "music": {
       "max_delay": 24000,
       "min_delay": 12000,
-      "replace_current_music": true,
+      "replace_current_music": false,
       "sound": "aoa3:biome.nowhere.music"
     },
     "sky_color": 0,

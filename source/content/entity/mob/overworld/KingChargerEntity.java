@@ -67,13 +67,8 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	}
 
 	@Override
-	protected SoundEvent getDeathSound() {
-		return AoASounds.ENTITY_CHARGER_DEATH.get();
-	}
-
-	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return AoASounds.ENTITY_CHARGER_HURT.get();
+		return AoASounds.ENTITY_KING_CHARGER_HURT.get();
 	}
 
 	@Override

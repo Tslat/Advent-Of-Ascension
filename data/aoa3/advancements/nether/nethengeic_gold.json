@@ -1,0 +1,40 @@
+{
+  "parent": "aoa3:nether/nethengeic_shutdown",
+  "criteria": {
+    "obtain_gold_nethengeic_wither_trophy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:gold_trophy"
+            ],
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:nethengeic_wither\",OriginalTrophy:1b},display:{Name:'{\"translate\":\"block.aoa3.gold_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.nethengeic_wither\"}]}'}}"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nether.nethengeic_gold.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:gold_trophy"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nether.nethengeic_gold.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_gold_nethengeic_wither_trophy"
+    ]
+  ]
+}

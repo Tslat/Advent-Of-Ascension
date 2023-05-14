@@ -90,11 +90,6 @@
           ],
           "name": "aoa3:hellfire",
           "weight": 8
-        },
-        {
-          "type": "minecraft:item",
-          "name": "aoa3:explosive_idol",
-          "weight": 5
         }
       ],
       "name": "loot",

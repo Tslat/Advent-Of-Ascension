@@ -9,8 +9,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessAttack;
 import net.tslat.smartbrainlib.object.SquareRadius;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
@@ -66,9 +68,7 @@ public class GroundSlamAttack<E extends LivingEntity> extends ConditionlessAttac
 						groundState = state;
 					}
 					else if (groundState != null) {
-						for (int i = 0; i < 3; i++) {
-							packet.particle(new BlockParticleOption(ParticleTypes.BLOCK, groundState), pos.getX() + rand.nextFloat(), pos.getY() + 0.1, pos.getZ() + rand.nextFloat(), 0, 0f, 0);
-						}
+						packet.particle(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, groundState), () -> new Vec3(pos.getX() + rand.nextFloat(), pos.getY() + 0.1, pos.getZ() + rand.nextFloat())).spawnNTimes(3));
 
 						groundState = null;
 					}

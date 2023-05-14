@@ -40,7 +40,7 @@ public class IonRevolver extends BaseGun {
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
 		if (target instanceof LivingEntity)
-			DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 0.4f, 1, 1, 1);
+			DamageUtil.doScaledKnockback((LivingEntity)target, shooter, 0.9f, 1, 1, 1);
 	}
 
 	@Override

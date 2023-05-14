@@ -218,7 +218,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		if (getDamage() > 0)
-			tooltip.add(1, LocaleUtil.getLocaleMessage("items.description.damage.blaster", ChatFormatting.DARK_RED, Component.literal(NumberUtil.roundToNthDecimalPlace((float)getDamage(), 1))));
+			tooltip.add(1, LocaleUtil.getLocaleMessage("items.description.damage.energy", ChatFormatting.DARK_RED, Component.literal(NumberUtil.roundToNthDecimalPlace((float)getDamage(), 1))));
 
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.fire", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.blaster.effect", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));

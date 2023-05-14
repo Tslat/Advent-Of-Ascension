@@ -1,32 +1,24 @@
 package net.tslat.aoa3.library.object.explosion;
 
-import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ProtectionEnchantment;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.library.object.AllDirections;
-import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.smartbrainlib.object.SquareRadius;
-import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.EnumMap;
+import java.util.Optional;
 
 public class StandardExplosion extends ExtendedExplosion {
-	private static final int MAX_STEPS_PER_TICK = 1000;
 	protected EnumMap<AllDirections, Float> sectorPenetrationMap;
-	protected List<BlockPos> blockPositions;
-	protected BlockPos originPos;
 
 	public StandardExplosion(ExplosionInfo explosionInfo, ServerLevel level, Entity exploder, Entity indirectExploder) {
 		super(explosionInfo, level, exploder, indirectExploder);
@@ -61,124 +53,93 @@ public class StandardExplosion extends ExtendedExplosion {
 	}
 
 	@Override
-	public void explode() {
-		super.explode();
+	public int stepsPerTick() {
+		return 1000;
+	}
 
-		this.originPos = BlockPos.containing(this.origin);
-		boolean blockDamage = shouldDamageBlocks();
-
-		if (blockDamage) {
+	@Override
+	protected void doPreExplosionWork() {
+		if (shouldDamageBlocks()) {
 			this.sectorPenetrationMap = new EnumMap<>(AllDirections.class);
-			float penetration = this.info.penetrationPower;
-			float originFluidBlastResistance = level.getFluidState(this.originPos).getExplosionResistance(level, this.originPos, this);
+			float penetration = this.info.getPenetrationPower();
+			BlockPos originPos = BlockPos.containing(this.origin);
+			float originFluidBlastResistance = level.getFluidState(originPos).getExplosionResistance(this.level, originPos, this);
 
 			if (originFluidBlastResistance > 0)
 				penetration *= Math.max(0, 0.6f - 0.1f * originFluidBlastResistance / 100);
 
 			for (AllDirections direction : AllDirections.values()) {
-				this.sectorPenetrationMap.put(direction, penetration * (float)RandomUtil.randomValueBetween(0.5f, 1.5f));
+				this.sectorPenetrationMap.put(direction, penetration * (float)this.random.randomValueBetween(0.5f, 1.5f));
 			}
-		}
-
-		ObjectArrayList<Pair<ItemStack, BlockPos>> loot = new ObjectArrayList<>();
-		List<Entity> nearbyEntities = getEntitiesInBlastRadius();
-
-		ForgeEventFactory.onExplosionDetonate(this.level, this, nearbyEntities, (this.info.baseDamage + this.info.getEffectiveRadius()) / 2f);
-		this.level.playSound(null, this.origin.x, this.origin.y, this.origin.z, this.info.explosionSound, SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F);
-		collectBlocksInRadius();
-
-		if (this.info.singleTickExplosion) {
-			this.info.particleConsumer.accept(this, -1);
-
-			if (blockDamage) {
-				for (BlockPos pos : this.blockPositions) {
-					if (!doBlockDamage(pos, loot))
-						break;
-				}
-			}
-
-			impactEntities(nearbyEntities);
-			spawnDrops(loot);
-			this.info.afterExplodingFunction.accept(this);
-		}
-		else {
-			doExplosionStep(loot, nearbyEntities);
 		}
 	}
 
-	protected void collectBlocksInRadius() {
-		blockPositions = new ObjectArrayList<>((int)Math.pow(this.info.getEffectiveRadius(), 2) * 4);
+	@Override
+	protected ObjectArrayList<BlockPos> getAffectedBlocks() {
+		if (!shouldDamageBlocks())
+			return new ObjectArrayList<>();
 
-		if (this.info.squareRadius == null) {
-			for (int x = -(int)Math.floor(this.info.radius); x <= (int)Math.ceil(this.info.radius); x++) {
-				for (int y = -(int)Math.floor(this.info.radius); y <= (int)Math.ceil(this.info.radius); y++) {
-					for (int z = -(int)Math.floor(this.info.radius); z <= (int)Math.ceil(this.info.radius); z++) {
-						if ((x + 0.5f) * (x + 0.5f) + (y + 0.5f) * (y + 0.5f) + (z + 0.5f) * (z + 0.5f) < this.info.radius * this.info.radius) {
-							BlockPos pos = BlockPos.containing(x + this.origin.x, y + this.origin.y, z + this.origin.z);
+		ObjectArrayList<BlockPos> list = new ObjectArrayList<>((int)Math.pow(this.info.getEffectiveRadius(), 2) * 4);
 
-							if (this.level.isInWorldBounds(pos))
-								this.blockPositions.add(pos);
+		this.info.getRadius()
+				.ifLeft(radius -> {
+					for (int x = -(int)Math.floor(radius); x <= (int)Math.ceil(radius); x++) {
+						for (int y = -(int)Math.floor(radius); y <= (int)Math.ceil(radius); y++) {
+							for (int z = -(int)Math.floor(radius); z <= (int)Math.ceil(radius); z++) {
+								if ((x + 0.5f) * (x + 0.5f) + (y + 0.5f) * (y + 0.5f) + (z + 0.5f) * (z + 0.5f) < radius * radius) {
+									BlockPos pos = BlockPos.containing(x + this.origin.x, y + this.origin.y, z + this.origin.z);
+
+									if (this.level.isInWorldBounds(pos))
+										list.add(pos);
+								}
+							}
 						}
 					}
-				}
-			}
-		}
-		else {
-			SquareRadius radius = this.info.squareRadius;
-			BlockPos originPos = this.originPos;
+				})
+				.ifRight(squareRadius -> {
+					BlockPos originPos = BlockPos.containing(this.origin);
 
-			for (BlockPos pos : BlockPos.betweenClosed(originPos.offset((int)Math.floor(-radius.xzRadius()), (int)Math.floor(-radius.yRadius()), (int)Math.floor(-radius.xzRadius())), originPos.offset((int)Math.floor(radius.xzRadius()), (int)Math.floor(radius.yRadius()), (int)Math.floor(radius.xzRadius())))) {
-				if (this.level.isInWorldBounds(pos))
-					this.blockPositions.add(pos);
-			}
-		}
+					for (BlockPos pos : BlockPos.betweenClosed(originPos.subtract(squareRadius.toVec3i()), originPos.offset(squareRadius.toVec3i()))) {
+						if (this.level.isInWorldBounds(pos))
+							list.add(pos);
+					}
+				});
 
-		this.blockPositions.sort(Comparator.comparingDouble(pos -> pos.distToCenterSqr(this.origin)));
+		list.sort(Comparator.comparingDouble(pos -> pos.distToCenterSqr(this.origin)));
+
+		return list;
 	}
 
-	protected void doExplosionStep(ObjectArrayList<Pair<ItemStack, BlockPos>> loot, List<Entity> entities) {
-		if (!shouldDamageBlocks()) {
-			int step = 0;
-
-			for (Iterator<BlockPos> iterator = this.blockPositions.iterator(); step++ <= MAX_STEPS_PER_TICK && iterator.hasNext();) {
-				if (!doBlockDamage(iterator.next(), loot))
-					break;
-
-				iterator.remove();
-			}
-
-			if (this.explodeTick++ < 600 && !this.blockPositions.isEmpty()) {
-				AoAScheduler.scheduleSyncronisedTask(() -> doExplosionStep(loot, entities), 1);
-
-				return;
-			}
+	@Override
+	protected void filterAffectedBlocksAndEntities() {
+		for (BlockPos pos : this.toBlow) {
+			if (!doBlockDamage(pos))
+				break;
 		}
 
-		impactEntities(entities);
-		spawnDrops(loot);
-		this.info.afterExplodingFunction.accept(this);
+		this.toBlow.removeIf(pos -> !this.affectedBlocks.containsKey(pos));
 	}
 
-	protected void impactEntities(List<Entity> entities) {
-		for (Entity entity : entities) {
-			if (!this.info.noEntityDamage || !this.info.noEntityKnockback) {
+	protected void impactEntities() {
+		for (Entity entity : this.affectedEntities) {
+			if (this.info.isEntityDamaging() || this.info.isKnockbackEntities()) {
 				double impactPercent = getSeenPercent(this.origin, entity);
 
-				if (!this.info.noEntityDamage) {
+				if (this.info.isEntityDamaging()) {
 					float distModifier = (float)Math.pow(EntityUtil.getEntityCenter(entity).distanceTo(this.origin), 0.5);
-					float damage = this.info.baseDamage * (1 / distModifier);
+					float damage = this.info.getBaseDamage() * (1 / distModifier);
 
-					damage *= this.info.damageModFunction.apply(this, entity);
+					damage *= this.info.calculateEntityDamageModifier(this, entity);
 					damage *= impactPercent;
-					damage = Math.min(this.info.baseDamage, damage);
+					damage = Math.min(this.info.getBaseDamage(), damage);
 
 					entity.hurt(this.damageSource, damage);
 				}
 
-				if (!this.info.noEntityKnockback && entity.isPushable()) {
+				if (this.info.isKnockbackEntities() && entity.isPushable()) {
 					Vec3 dist = entity.position().subtract(this.origin).normalize();
-					double knockback = this.info.baseKnockback * impactPercent;
-					knockback *= this.info.knockbackVelocityFunction.apply(this, entity);
+					double knockback = this.info.getBaseKnockback() * impactPercent;
+					knockback *= this.info.calculateKnockbackModifier(this, entity);
 
 					if (entity instanceof LivingEntity livingEntity)
 						knockback = ProtectionEnchantment.getExplosionKnockbackAfterDampener(livingEntity, knockback);
@@ -188,11 +149,11 @@ public class StandardExplosion extends ExtendedExplosion {
 				}
 			}
 
-			this.info.entityEffectConsumer.accept(this, entity);
+			this.info.entityImpacted(this, entity);
 		}
 	}
 
-	protected boolean doBlockDamage(BlockPos pos, ObjectArrayList<Pair<ItemStack, BlockPos>> loot) {
+	protected boolean doBlockDamage(BlockPos pos) {
 		Vec3 posCenter = Vec3.atCenterOf(pos);
 		AllDirections sector = AllDirections.byAngle(this.origin.subtract(posCenter).normalize());
 		float sectorPenetration = this.sectorPenetrationMap.get(sector);
@@ -206,28 +167,34 @@ public class StandardExplosion extends ExtendedExplosion {
 		if (blastResistance.isEmpty())
 			return true;
 
-		if (!this.info.affectedBlockPredicate.test(this, state, pos) || !this.damageCalculator.shouldBlockExplode(this, this.level, pos, state, (this.info.baseDamage + this.info.getEffectiveRadius()) / 2f)) {
+		if (!this.info.shouldAffectBlock(this, state, pos) || !this.damageCalculator.shouldBlockExplode(this, this.level, pos, state, (this.info.getBaseDamage() + this.info.getEffectiveRadius()) / 2f)) {
 			float remainingPenetration = Math.max(0, sectorPenetration - blastResistance.get() / 5);
 
 			this.sectorPenetrationMap.put(sector, remainingPenetration);
 
-			return remainingPenetration > 0;
+			if (remainingPenetration > 0)
+				return true;
+
+			for (float value : this.sectorPenetrationMap.values()) {
+				if (value > 0)
+					return true;
+			}
+
+			return false;
 		}
 
-		float specificPenetration = sectorPenetration * this.info.penetrationModFunction.apply(this, state, pos);
+		float specificPenetration = sectorPenetration * this.info.calculateBlockDamageModifier(this, state, pos);
 		float remainingPenetration = sectorPenetration;
 		BlockPos immutablePos = pos.immutable();
 
 		if (specificPenetration <= blastResistance.get()) {
-			if (RandomUtil.fiftyFifty())
+			if (this.random.fiftyFifty())
 				remainingPenetration *= 0.5f;
 		}
 		else {
 			remainingPenetration = sectorPenetration - blastResistance.get();
 
-			captureBlockDrops(state, immutablePos, loot);
-			state.onBlockExploded(this.level, immutablePos, this);
-			this.info.blockEffectConsumer.accept(this, state, immutablePos);
+			this.affectedBlocks.put(immutablePos, state);
 		}
 
 		this.sectorPenetrationMap.put(sector, Math.max(0, remainingPenetration));

@@ -10,7 +10,7 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 200
+          "weight": 175
         },
         {
           "type": "minecraft:loot_table",
@@ -199,6 +199,25 @@
             }
           ],
           "name": "aoa3:magic_mending_compound",
+          "weight": 5
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{CustomPotionColor:\"302351977\",CustomPotionEffects:[{Ambient:0b,Amplifier:0b,CurativeItems:[{Count:1b,id:\"minecraft:milk_bucket\"}],Duration:18000,Id:5,ShowIcon:1b,ShowParticles:1b,\"forge:id\":\"minecraft:strength\"}],display:{Name:'{\"translate\":\"item.aoa3.potion.everlastingStrength\"}'}}"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": -1.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
+          "name": "minecraft:potion",
           "weight": 5
         }
       ],

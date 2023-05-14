@@ -18,11 +18,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -54,19 +56,18 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
                 new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()).whenActivating(entity -> {
                     Entity target = BrainUtils.getTargetOfEntity(entity);
                     BlockPos pos = (target == null ? entity : target).blockPosition();
-                    ServerParticlePacket packet = new ServerParticlePacket();
                     BlockState state = level.getBlockState(pos);
 
                     if (state.isAir())
                         state = level.getBlockState(pos = pos.below());
 
-                    for (int i = 0; i < 3; i++) {
-                        packet.particle(new BlockParticleOption(ParticleTypes.BLOCK, state), pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + 1.1f, pos.getZ() + RandomUtil.randomValueUpTo(1), 0, 0.5, 1);
-                    }
+                    BlockPos finalPos = pos;
+
+                    ServerParticlePacket packet = new ServerParticlePacket(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, state), () -> new Vec3(finalPos.getX() + RandomUtil.randomValueUpTo(1), finalPos.getY() + 1.1f, finalPos.getZ() + RandomUtil.randomValueUpTo(1))).velocity(0, 0.5f, 0).spawnNTimes(3));
 
                     entity.playSound(AoASounds.ROCK_SMASH.get(), 1, 0.2f);
                     AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
-                    doSlam(pos, 0.75f);
+                    doSlam(finalPos, 0.75f);
                 }));
     }
 
@@ -121,7 +122,7 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
                     int tickTime = Math.max(1, 1 - pos.distManhattan(fromPos));
                     sendPacket = true;
 
-                    packet.particle(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.randomValueUpTo(1));
+                    packet.particle(ParticleBuilder.forPos(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.randomValueUpTo(1)));
                     level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
                     AoAScheduler.scheduleSyncronisedTask(() -> doSlam(pos, chance * 0.8f), tickTime);
                     AoAScheduler.scheduleSyncronisedTask(() -> {

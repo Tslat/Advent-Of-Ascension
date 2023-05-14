@@ -15,6 +15,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.projectile.cannon.RPGEntity;
@@ -66,7 +67,7 @@ public class RPG extends BaseCannon {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
-		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(RPGEntity.RPG_EXPLOSION, flag.isAdvanced(), false)) {
+		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(AoAExplosions.RPG, flag.isAdvanced(), false)) {
 			tooltip.add(2, component);
 		}
 	}

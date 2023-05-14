@@ -31,20 +31,23 @@ public abstract class BossAltarBlock extends Block {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (getActivationItem() != null && heldItem.getItem() != getActivationItem())
 			return InteractionResult.PASS;
 
+		if (level.getDifficulty() == Difficulty.PEACEFUL) {
+			if (!level.isClientSide)
+				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
+
+			return InteractionResult.FAIL;
+		}
+
 		if (player instanceof ServerPlayer) {
-			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
-				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
-					return InteractionResult.FAIL;
-				}
-				else if (checkActivationConditions(player, hand, state, pos)) {
-					if (!player.isCreative())
+			if (getActivationItem() == null || heldItem.getItem() == getActivationItem()) {
+				if (checkActivationConditions(player, hand, state, pos)) {
+					if (!player.getAbilities().instabuild)
 						heldItem.shrink(1);
 
 					doActivationEffect(player, hand, state, pos);
@@ -52,7 +55,7 @@ public abstract class BossAltarBlock extends Block {
 			}
 		}
 
-		return InteractionResult.SUCCESS;
+		return InteractionResult.sidedSuccess(level.isClientSide);
 	}
 
 	@Nullable

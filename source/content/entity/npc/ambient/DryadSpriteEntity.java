@@ -25,6 +25,7 @@ import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -116,7 +117,9 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_UNHAPPY.get(), SoundSource.PLAYERS, 1, 1);
 
 					for(int i = 0; i < 20; ++i) {
-						this.level.addParticle(ParticleTypes.ANGRY_VILLAGER, this.getRandomX(1), this.getRandomY(), this.getRandomZ(1), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d));
+						AoAPackets.messageAllPlayersTrackingEntity(new ServerParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.ANGRY_VILLAGER, this)
+										.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d))),
+								this);
 					}
 				}
 
@@ -148,7 +151,8 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 			ServerParticlePacket packet = new ServerParticlePacket();
 
 			for (int i = 0; i < 20; ++i) {
-				packet.particle(ParticleTypes.HAPPY_VILLAGER, getRandomX(1), getRandomY(), getRandomZ(1), rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d));
+				packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.HAPPY_VILLAGER, this)
+						.velocity(rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d)));
 			}
 
 			AoAPackets.messageAllPlayersTrackingEntity(packet, this);

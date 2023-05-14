@@ -29,7 +29,6 @@ import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
 import net.tslat.aoa3.client.model.entity.boss.EliteSmashModel;
-import net.tslat.aoa3.client.model.entity.boss.NethengeicWitherModel;
 import net.tslat.aoa3.client.model.entity.boss.SmashModel;
 import net.tslat.aoa3.client.model.entity.mob.ChargerModel;
 import net.tslat.aoa3.client.model.entity.mob.FlamewalkerModel;
@@ -46,6 +45,7 @@ import net.tslat.aoa3.client.render.entity.JankyJankTempRendererToPreventCrashes
 import net.tslat.aoa3.client.render.entity.animal.BasicLavaFishRenderer;
 import net.tslat.aoa3.client.render.entity.animal.BasicWaterFishRenderer;
 import net.tslat.aoa3.client.render.entity.animal.ShinySquidRenderer;
+import net.tslat.aoa3.client.render.entity.boss.KingBamBamBamRenderer;
 import net.tslat.aoa3.client.render.entity.layer.PlayerHaloRenderLayer;
 import net.tslat.aoa3.client.render.entity.misc.FishingCageRenderer;
 import net.tslat.aoa3.client.render.entity.misc.HaulingBobberRenderer;
@@ -169,11 +169,11 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMobs.SMASH).model(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMobs.ELITE_SMASH).model(new EliteSmashModel());
 
-	public static final EntityRendererPackage<?> NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_WITHER).model(new NethengeicWitherModel()).emissive();
+	public static final EntityRendererPackage<?> NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.NETHENGEIC_WITHER).path("boss/nethengeic_wither/nethengeic_wither").emissive();
 	public static final EntityRendererPackage<?> ELITE_NETHENGEIC_WITHER = new GeckoLibRendererPackage<>(AoAMobs.ELITE_NETHENGEIC_WITHER).path("boss/nethengeic_wither/elite_nethengeic_wither").emissive();
 
-	public static final EntityRendererPackage<?> KING_BAMBAMBAM = new GeckoLibRendererPackage<>(AoAMobs.KING_BAMBAMBAM).path("boss/king_bambambam/king_bambambam").emissive();
-	public static final EntityRendererPackage<?> ELITE_KING_BAMBAMBAM = new GeckoLibRendererPackage<>(AoAMobs.ELITE_KING_BAMBAMBAM).path("boss/king_bambambam/elite_king_bambambam").emissive();
+	public static final EntityRendererPackage<?> KING_BAMBAMBAM = new GeckoLibRendererPackage<>(AoAMobs.KING_BAMBAMBAM).renderer(KingBamBamBamRenderer::new);
+	public static final EntityRendererPackage<?> ELITE_KING_BAMBAMBAM = new GeckoLibRendererPackage<>(AoAMobs.ELITE_KING_BAMBAMBAM).path("boss/king_bambambam/elite_king_bambambam", true).emissive();
 
 	//public static final EntityRendererPackage<?> ASSASSIN = new EntityRendererPackage<>(AoANpcs.ASSASSIN).defineLayer("assassin", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/trader/assassin.png");
 	public static final EntityRendererPackage<?> CREEP_BANKER = new EntityRendererPackage<>(AoANpcs.CREEP_BANKER).defineLayer("creep_banker", humanoidLayerDefinition()).defaultMobRenderer(HumanoidModel::new, "textures/entity/npc/banker/creep_banker.png");
@@ -407,6 +407,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> STONE_GIANT_ROCK = new GeckoLibRendererPackage<>(AoAProjectiles.STONE_GIANT_ROCK).path("projectile/mob/stone_giant_rock").projectile();
 	public static final EntityRendererPackage<?> TREE_SPIRIT_SPRITE = new GeckoLibRendererPackage<>(AoAProjectiles.TREE_SPIRIT_SPRITE).path("projectile/mob/tree_spirit_sprite").projectile().emissive();
 	public static final EntityRendererPackage<?> FIREBALL = new GeckoLibRendererPackage<>(AoAProjectiles.FIREBALL).path("projectile/mob/fireball").nonLiving().emissive();
+	public static final EntityRendererPackage<?> STICKY_FIREBALL = new GeckoLibRendererPackage<>(AoAProjectiles.STICKY_FIREBALL).path("projectile/mob/fireball").nonLiving().emissive();
 
 	// Begin super jank test
 	public static final EntityRendererPackage<?> AIRHEAD = new EntityRendererPackage<>(AoAMobs.AIRHEAD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

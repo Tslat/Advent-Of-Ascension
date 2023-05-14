@@ -1,15 +1,21 @@
 package net.tslat.aoa3.event;
 
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.piglin.Piglin;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.MobSpawnEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -18,6 +24,7 @@ import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
+import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -30,6 +37,35 @@ public final class EntityEvents {
 		forgeBus.addListener(EventPriority.NORMAL, false, EntityJoinLevelEvent.class, EntityEvents::onEntityJoinWorld);
 		forgeBus.addListener(EventPriority.LOWEST, false, MobSpawnEvent.FinalizeSpawn.class, EntityEvents::onEntitySpawn);
 		forgeBus.addListener(EventPriority.NORMAL, false, ExplosionEvent.Detonate.class, EntityEvents::onEntityExploded);
+		forgeBus.addListener(EventPriority.NORMAL, false, PlayerInteractEvent.EntityInteractSpecific.class, EntityEvents::onEntityInteract);
+	}
+
+	private static void onEntityInteract(final PlayerInteractEvent.EntityInteractSpecific ev) {
+		if (!ev.getEntity().level.isClientSide) {
+			if (ev.getTarget() instanceof Piglin piglin && piglin.getItemBySlot(EquipmentSlot.HEAD).getItem() == Items.GOLDEN_HELMET) {
+				ItemStack stack = ev.getEntity().getItemInHand(ev.getHand());
+
+				if ((stack.getItem() == Items.ENCHANTED_GOLDEN_APPLE || stack.getItem() == AoAItems.GOLD_COIN.get()) && piglin.getOffhandItem().isEmpty()) {
+					piglin.addTag("BarteringForExplosiveIdol");
+					piglin.setItemSlot(EquipmentSlot.OFFHAND, stack.split(1));
+					piglin.setGuaranteedDrop(EquipmentSlot.OFFHAND);
+					piglin.getBrain().setMemoryWithExpiry(MemoryModuleType.ADMIRING_ITEM, true, 121);
+					piglin.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
+					piglin.getNavigation().stop();
+
+					AoAScheduler.scheduleSyncronisedTask(() -> {
+						if (piglin != null && piglin.isAlive() && piglin.getHealth() >= piglin.getMaxHealth()) {
+							ItemStack offHandItem = piglin.getItemInHand(InteractionHand.OFF_HAND);
+
+							if (offHandItem.getItem() == Items.ENCHANTED_GOLDEN_APPLE || offHandItem.getItem() == AoAItems.GOLD_COIN.get()) {
+								piglin.setItemInHand(InteractionHand.OFF_HAND, Items.GOLD_INGOT.getDefaultInstance());
+								piglin.getBrain().eraseMemory(MemoryModuleType.ADMIRING_ITEM);
+							}
+						}
+					}, 120);
+				}
+			}
+		}
 	}
 
 	private static void onEntityUpdate(LivingEvent.LivingTickEvent ev) {

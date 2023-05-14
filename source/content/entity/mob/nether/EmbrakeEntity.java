@@ -28,6 +28,7 @@ import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
@@ -112,16 +113,14 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 				double baseX = direction.x;
 				double baseY = entity.getEyeY() - 0.3f;
 				double baseZ = direction.z;
-				ServerParticlePacket packet = new ServerParticlePacket();
+				ServerParticlePacket packet = new ServerParticlePacket(ParticleBuilder.forPos(ParticleTypes.SMOKE, baseX, baseY, baseZ));
 
 				for (int i = 0; i < 5; i++) {
 					Vec3 velocity = target.position().subtract(position.x + RandomUtil.randomScaledGaussianValue(0.5f), position.y + RandomUtil.randomScaledGaussianValue(0.5f) - 0.3, position.z + RandomUtil.randomScaledGaussianValue(0.5f)).normalize().scale(0.75f);
 
-					packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.3f, 3, 0, 0, 0, 0, entity.getId()), baseX, baseY, baseZ, velocity.x, velocity.y, velocity.z);
-					packet.particle(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ, velocity.x, velocity.y, velocity.z);
+					packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.3f, 3, 0, 0, 0, 0, entity.getId()), baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
+					packet.particle(ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
 				}
-
-				packet.particle(ParticleTypes.SMOKE, baseX, baseY, baseZ, 0, 0, 0);
 
 				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, entity.getEyePosition(), 64);
 

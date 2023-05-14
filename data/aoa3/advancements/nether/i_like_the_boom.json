@@ -1,0 +1,39 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "obtain_explosive_idol": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:explosive_idol"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nether.i_like_the_boom.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:explosive_idol"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nether.i_like_the_boom.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_explosive_idol"
+    ]
+  ]
+}

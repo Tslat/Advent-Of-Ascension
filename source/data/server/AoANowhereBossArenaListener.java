@@ -109,6 +109,9 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 		for (NowhereBossArena arena : REGISTERED_ARENAS) {
 			double testDist = arena.getStructureBounds(level).getCenter().distanceToSqr(pos);
 
+			if (testDist < 50 * 50)
+				return arena;
+
 			if (testDist < dist) {
 				dist = testDist;
 				closest = arena;
@@ -215,7 +218,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 						soundBuilder.include(player);
 				}
 
-				if (spawnBoss)
+				if (spawnBoss) {
 					AoAScheduler.scheduleSyncronisedTask(() -> {
 						if (soundBuilder != null)
 							soundBuilder.execute();
@@ -225,6 +228,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 						if (!getPlayersInside(level).isEmpty())
 							bossFunction.spawn(level, getRandomBossSpawn(), stack);
 					}, 140);
+				}
 			}, 100);
 
 			for (Player player : players) {

@@ -14,6 +14,7 @@ import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -47,7 +48,8 @@ public class DryadSpriteSpawn extends ScalableModAbility {
 				ServerParticlePacket packet = new ServerParticlePacket();
 
 				for(int i = 0; i < 20; ++i) {
-					packet.particle(ParticleTypes.HAPPY_VILLAGER, dryad.getRandomX(0.5f), dryad.getRandomY(), dryad.getRandomZ(0.5f), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d));
+					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.HAPPY_VILLAGER, dryad)
+							.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d)));
 				}
 
 				AoAPackets.messageAllPlayersTrackingEntity(packet, ev.getPlayer());

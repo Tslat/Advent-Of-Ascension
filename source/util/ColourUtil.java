@@ -1,5 +1,7 @@
 package net.tslat.aoa3.util;
 
+import net.minecraft.network.FriendlyByteBuf;
+
 public final class ColourUtil {
 	public static final int WHITE = RGB(255, 255, 255);
 	public static final int BLACK = RGB(0, 0, 0);
@@ -52,6 +54,17 @@ public final class ColourUtil {
 
 		public int packed() {
 			return RGBA(red, green, blue, alpha);
+		}
+
+		public void toNetwork(FriendlyByteBuf buffer) {
+			buffer.writeFloat(this.red);
+			buffer.writeFloat(this.green);
+			buffer.writeFloat(this.blue);
+			buffer.writeFloat(this.alpha);
+		}
+
+		public static Colour fromNetwork(FriendlyByteBuf buffer) {
+			return new Colour(buffer.readFloat(), buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 		}
 	}
 }

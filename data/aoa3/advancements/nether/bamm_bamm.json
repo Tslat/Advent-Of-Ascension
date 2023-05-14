@@ -1,0 +1,40 @@
+{
+  "parent": "aoa3:nether/blast_resistant",
+  "criteria": {
+    "obtain_ornate_king_bambambam_trophy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:ornate_trophy"
+            ],
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:king_bambambam\",OriginalTrophy:1b},display:{Name:'{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.king_bambambam\"}]}'}}"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nether.bamm_bamm.description"
+    },
+    "frame": "task",
+    "hidden": true,
+    "icon": {
+      "item": "aoa3:ornate_trophy"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nether.bamm_bamm.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_ornate_king_bambambam_trophy"
+    ]
+  ]
+}

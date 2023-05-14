@@ -22,17 +22,15 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
-import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoABrainActivities;
@@ -44,8 +42,8 @@ import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.FireballEntity;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.EntityDataHolder;
-import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
 import net.tslat.aoa3.library.object.explosion.StandardExplosion;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
@@ -383,14 +381,8 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 		if (projectile == null)
 			return;
 
-		if (level instanceof ServerLevel serverLevel) {
-			ExplosionInfo fireballExplosionInfo = new ExplosionInfo().radius(2).penetration(50).explodeInOneTick().baseDamage(5).onBlockHit((explosion, state, explodePos) -> {
-				if (explosion.level.random.nextInt(3) == 0 && explosion.level.getBlockState(explodePos.below()).isSolidRender(explosion.level, explodePos.below()))
-					explosion.level.setBlock(explodePos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
-			});
-
-			new StandardExplosion(fireballExplosionInfo, serverLevel, projectile, this).explode();
-		}
+		if (level instanceof ServerLevel serverLevel)
+			new StandardExplosion(AoAExplosions.NETHENGEIC_WITHER_FIREBALL, serverLevel, projectile, this).explode();
 	}
 
 	@Override
@@ -464,17 +456,18 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 					double startZ = sin * getBbWidth() + getZ();
 					double startY = getRandomY();
 
-					ClientOperations.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FIRE_AURA.get(), 0.25f, 5, 1, 1, 1, 0.75f, getId()), startX, startY, startZ, RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1, 1);
+					ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FIRE_AURA.get(), 0.25f, 5, 1, 1, 1, 0.75f, getId()), startX, startY, startZ)
+							.velocity(RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1).spawnParticles();
 				}
 			}
 
-			ClientOperations.addParticle(ParticleTypes.FLAME, getX() + RandomUtil.randomValueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.randomValueBetween(-0.2f, 0.2f), getZ() + RandomUtil.randomValueBetween(-0.2f, 0.2f), 0, 0, 0, 1);
+			ParticleBuilder.forPos(ParticleTypes.FLAME, getX() + RandomUtil.randomValueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.randomValueBetween(-0.2f, 0.2f), getZ() + RandomUtil.randomValueBetween(-0.2f, 0.2f)).spawnParticles();
 
 			if (getRandom().nextInt(10) == 0) {
-				ClientOperations.addParticle(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ(), 0, 0, 0, 1);
+				ParticleBuilder.forPos(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ()).spawnParticles();
 
 				if (getDeltaMovement().horizontalDistanceSqr() == 0)
-					ClientOperations.addParticle(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ(), 0, 0, 0, 1);
+					ParticleBuilder.forPos(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ()).spawnParticles();
 			}
 		}
 		else if (hasAura() && BrainUtils.getTargetOfEntity(this) == null) {
@@ -617,16 +610,14 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 				double baseX = position.x;
 				double baseY = position.y;
 				double baseZ = position.z;
-				ServerParticlePacket packet = new ServerParticlePacket();
+				ServerParticlePacket packet = new ServerParticlePacket(ParticleBuilder.forPos(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ));
 
 				for (int i = 0; i < 5; i++) {
 					Vec3 velocity = this.target.getEyePosition().subtract(baseX + RandomUtil.randomScaledGaussianValue(0.5f), baseY + RandomUtil.randomScaledGaussianValue(0.5f), baseZ + RandomUtil.randomScaledGaussianValue(0.5f)).normalize().scale(0.9f);
 
-					packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.35f, 5, 0, 0, 0, 0, entity.getId()), baseX, baseY, baseZ, velocity.x, velocity.y, velocity.z);
-					packet.particle(RandomUtil.fiftyFifty() ? ParticleTypes.SMALL_FLAME : ParticleTypes.SQUID_INK, baseX, baseY, baseZ, velocity.x, velocity.y, velocity.z);
+					packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.35f, 5, 0, 0, 0, 0, entity.getId()), baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
+					packet.particle(ParticleBuilder.forPos(RandomUtil.fiftyFifty() ? ParticleTypes.SMALL_FLAME : ParticleTypes.SQUID_INK, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
 				}
-
-				packet.particle(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ, 0, 0, 0);
 
 				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, EntityUtil.getEntityCenter(entity), 64);
 

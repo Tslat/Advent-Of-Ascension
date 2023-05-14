@@ -18,6 +18,7 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.item.misc.TooltipItem;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.AdvancementUtil;
@@ -54,10 +55,10 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 	@Override
 	public void onUseTick(Level level, LivingEntity livingEntity, ItemStack stack, int remainingUseDuration) {
 		if (!level.isClientSide()) {
-			ServerParticlePacket packet = new ServerParticlePacket();
+			ServerParticlePacket packet = new ServerParticlePacket(3);
 
 			for (int i = 0; i < 3; i++) {
-				packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 1, 0xD1B100), livingEntity, true);
+				packet.particle(ParticleBuilder.forRandomPosInEntity(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 1, 0xD1B100), livingEntity));
 			}
 
 			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, livingEntity.position(), 20);

@@ -196,7 +196,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		Entity entityResult = rayTrace.getEntity();
 
 		if (entityResult != lastPierceTarget) {
-			if (getOwner() instanceof LivingEntity)
+			if (this.weapon != null && getOwner() instanceof LivingEntity)
 				weapon.doImpactDamage(entityResult, (LivingEntity)getOwner(), this, rayTrace.getLocation(), dmgMulti);
 
 			doEntityImpact(entityResult, rayTrace.getLocation());

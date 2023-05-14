@@ -328,7 +328,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 				}
 			}
 			else {
-				String type;
+				String type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.other");
 				String attribute = "";
 
 				if (openEntryInstance instanceof LivingEntity && openEntryInstance instanceof Enemy) {
@@ -368,9 +368,6 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 				}
 				else if (openEntryInstance instanceof AmbientCreature || openEntryInstance instanceof WaterAnimal) {
 					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.ambient");
-				}
-				else {
-					type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.other");
 				}
 
 				if (livingInstance != null) {

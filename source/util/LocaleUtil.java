@@ -117,7 +117,7 @@ public final class LocaleUtil {
 		if (extendedInfo) {
 			List<MutableComponent> lines = new ObjectArrayList<>();
 
-			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.penetration." + (shrapnel ? "shrapnel" : "concussive"), LocaleUtil.getLocaleMessage(NumberUtil.roundToNthDecimalPlace((float)info.getPenetrationPower(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.penetration." + (shrapnel ? "shrapnel" : "concussive"), LocaleUtil.getLocaleMessage(NumberUtil.roundToNthDecimalPlace(info.getPenetrationPower(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.type." + (shrapnel ? "shrapnel" : "concussive"), ChatFormatting.GRAY));
 			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.radius", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
 			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.damage", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));

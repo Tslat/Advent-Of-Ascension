@@ -77,7 +77,6 @@ public final class ItemUtil {
 					case CHESTPLATE -> 16 * durabilityBase;
 					case LEGGINGS -> 15 * durabilityBase;
 					case BOOTS -> 13 * durabilityBase;
-					default -> 0;
 				};
 			}
 

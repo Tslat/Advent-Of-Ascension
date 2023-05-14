@@ -26,6 +26,7 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -78,7 +79,7 @@ public class ChumItem extends Item {
 			ItemParticleOption particleData = new ItemParticleOption(AoAParticleTypes.FLOATING_ITEM_FRAGMENT.get(), stack);
 
 			for (float i = -0.15f; i <= 0.15f; i += 0.05f) {
-				packet.particle(particleData, user.getX(), user.getY() + user.getEyeHeight(), user.getZ(), velocityVector.x() + (i * 2 * velocityVector.z()), velocityVector.y(), velocityVector.z() + (i * 2 * velocityVector.x()));
+				packet.particle(ParticleBuilder.forPos(particleData, user.getX(), user.getY() + user.getEyeHeight(), user.getZ()).velocity(velocityVector.x() + (i * 2 * velocityVector.z()), velocityVector.y(), velocityVector.z() + (i * 2 * velocityVector.x())));
 			}
 
 			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, user.position(), 32);

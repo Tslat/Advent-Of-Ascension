@@ -707,19 +707,19 @@
   },
   "entity.charger.ambient": {
     "sounds": [
-      "aoa3:entity/charger/ambient"
+      "aoa3:entity/charger/ambient-01",
+      "aoa3:entity/charger/ambient-02",
+      "aoa3:entity/charger/ambient-03",
+      "aoa3:entity/charger/ambient-04"
     ],
     "subtitle": "subtitles.entity.charger.ambient"
   },
-  "entity.charger.death": {
-    "sounds": [
-      "aoa3:entity/charger/death"
-    ],
-    "subtitle": "subtitles.entity.charger.death"
-  },
   "entity.charger.hurt": {
     "sounds": [
-      "aoa3:entity/charger/hurt"
+      "aoa3:entity/charger/hurt-01",
+      "aoa3:entity/charger/hurt-02",
+      "aoa3:entity/charger/hurt-03",
+      "aoa3:entity/charger/hurt-04"
     ],
     "subtitle": "subtitles.entity.charger.hurt"
   },
@@ -2233,24 +2233,11 @@
     ],
     "subtitle": "subtitles.entity.keeler.revive"
   },
-  "entity.king_bambambam.ambient": {
+  "entity.king_bambambam.exhausted": {
     "sounds": [
-      "aoa3:entity/king_bambambam/ambient1",
-      "aoa3:entity/king_bambambam/ambient2"
+      "aoa3:entity/king_bambambam/exhausted"
     ],
-    "subtitle": "subtitles.entity.king_bambambam.ambient"
-  },
-  "entity.king_bambambam.death": {
-    "sounds": [
-      "aoa3:entity/king_bambambam/death"
-    ],
-    "subtitle": "subtitles.entity.king_bambambam.death"
-  },
-  "entity.king_bambambam.hurt": {
-    "sounds": [
-      "aoa3:entity/king_bambambam/hurt"
-    ],
-    "subtitle": "subtitles.entity.king_bambambam.hurt"
+    "subtitle": "subtitles.entity.king_bambambam.exhausted"
   },
   "entity.king_bambambam.music": {
     "sounds": [
@@ -2259,6 +2246,30 @@
         "stream": true
       }
     ]
+  },
+  "entity.king_bambambam.summon1": {
+    "sounds": [
+      "aoa3:entity/king_bambambam/summon1"
+    ],
+    "subtitle": "subtitles.entity.king_bambambam.summon1"
+  },
+  "entity.king_bambambam.summon2": {
+    "sounds": [
+      "aoa3:entity/king_bambambam/summon2"
+    ],
+    "subtitle": "subtitles.entity.king_bambambam.summon2"
+  },
+  "entity.king_bambambam.summon3": {
+    "sounds": [
+      "aoa3:entity/king_bambambam/summon3"
+    ],
+    "subtitle": "subtitles.entity.king_bambambam.summon3"
+  },
+  "entity.king_charger.hurt": {
+    "sounds": [
+      "aoa3:entity/king_charger/hurt"
+    ],
+    "subtitle": "subtitles.entity.king_charger.hurt"
   },
   "entity.king_shroomus.death": {
     "sounds": [

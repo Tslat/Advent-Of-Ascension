@@ -14,6 +14,7 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.item.food.*;
 import net.tslat.aoa3.content.item.lootbox.*;
 import net.tslat.aoa3.content.item.misc.*;
+import net.tslat.aoa3.content.item.misc.summoning.ExplosiveIdol;
 import net.tslat.aoa3.content.item.misc.summoning.NethengeicCallstone;
 import net.tslat.aoa3.content.item.misc.summoning.TrollIdol;
 import net.tslat.aoa3.content.item.tablet.*;
@@ -218,6 +219,10 @@ public final class AoAItems {
 	public static final RegistryObject<Item> SHOTGUN_FRAME = registerItem("shotgun_frame", miscItem());
 	public static final RegistryObject<Item> SNIPER_FRAME = registerItem("sniper_frame", miscItem());
 
+	public static final RegistryObject<Item> EXPLOSIVE_IDOL = registerItem("explosive_idol", ExplosiveIdol::new);
+	public static final RegistryObject<Item> NETHENGEIC_CALLSTONE = registerItem("nethengeic_callstone", NethengeicCallstone::new);
+	public static final RegistryObject<Item> TROLL_IDOL = registerItem("troll_idol", TrollIdol::new);
+
 	public static final RegistryObject<Item> AMPHIBIYTE_LUNG = registerItem("amphibiyte_lung", miscItem()); // TODO
 	public static final RegistryObject<Item> ANCIENT_RING = registerItem("ancient_ring", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> BONE_HORN = registerItem("bone_horn", miscItem()); // TODO
@@ -225,7 +230,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> BOULDER_DASH = registerItem("boulder_dash", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> CALL_OF_THE_DRAKE = registerItem("call_of_the_drake", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> EXPLOSIVE_GEMS = registerItem("explosive_gems", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
-	public static final RegistryObject<Item> EXPLOSIVE_IDOL = registerItem("explosive_idol", miscItem()); // TODO
 	public static final RegistryObject<Item> GIANT_CRYSTAL = registerItem("giant_crystal", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> GOLD_SPRING = registerItem("gold_spring", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> GUARDIANS_EYE = registerItem("guardians_eye", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
@@ -233,14 +237,12 @@ public final class AoAItems {
 	public static final RegistryObject<Item> HEAVY_BOULDER = registerItem("heavy_boulder", miscItem()); // TODO
 	public static final RegistryObject<Item> HIVE_EGG = registerItem("hive_egg", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> MEGA_RUNE_STONE = registerItem("mega_rune_stone", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON).durability(5).setNoRepair()));
-	public static final RegistryObject<Item> NETHENGEIC_CALLSTONE = registerItem("nethengeic_callstone", NethengeicCallstone::new);
 	public static final RegistryObject<Item> OBSERVING_EYE = registerItem("observing_eye", miscItem()); // TODO
 	public static final RegistryObject<Item> PETALS = registerItem("petals", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> SHROOM_STONE = registerItem("shroom_stone", miscItem()); // TODO
 	public static final RegistryObject<Item> STARING_EYE = registerItem("staring_eye", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> TOY_GYROCOPTER = registerItem("toy_gyrocopter", miscItem()); // TODO
 	public static final RegistryObject<Item> TREAT_BAG = registerItem("treat_bag", miscItem()); // TODO
-	public static final RegistryObject<Item> TROLL_IDOL = registerItem("troll_idol", TrollIdol::new);
 	public static final RegistryObject<Item> VILE_STONE = registerItem("vile_stone", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> VOLIANT_HEART = registerItem("voliant_heart", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 	public static final RegistryObject<Item> WARLOCK_GEM = registerItem("warlock_gem", () -> new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));

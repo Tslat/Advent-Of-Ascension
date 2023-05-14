@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMonster;
 import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
@@ -30,6 +31,8 @@ import javax.annotation.Nullable;
 public abstract class AoABoss extends AoAMonster<AoABoss>{
 	private final ServerBossEvent bossStatusTracker = (ServerBossEvent)new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.NOTCHED_20).setDarkenScreen(false).setCreateWorldFog(false);
 	private SwingData swingData;
+
+	private int lastArenaBoundTick = -1;
 
 	protected AoABoss(EntityType<? extends AoABoss> entityType, Level level) {
 		super(entityType, level);
@@ -91,6 +94,30 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 		super.customServerAiStep();
 
 		this.bossStatusTracker.setProgress(getHealth() / getMaxHealth());
+
+		if (this.level.dimension() == AoADimensions.NOWHERE.key && this.tickCount % 60 == 0) {
+			if (this.level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)getX(), (int)getZ()) == this.level.getMinBuildHeight()) {
+				if (this.lastArenaBoundTick != -1 && this.tickCount - this.lastArenaBoundTick >= 180) {
+					this.lastArenaBoundTick = -1;
+
+					AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level, this.position());
+
+					if (arena != null) {
+						resetFallDistance();
+						setPos(arena.getRandomBossSpawn());
+					}
+					else {
+						discard();
+					}
+				}
+				else if (this.lastArenaBoundTick == -1) {
+					this.lastArenaBoundTick = this.tickCount;
+				}
+			}
+			else if (this.lastArenaBoundTick != -1) {
+				this.lastArenaBoundTick = -1;
+			}
+		}
 	}
 
 	public SwingData getSwingData() {
@@ -150,7 +177,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 
 		this.bossStatusTracker.removePlayer(player);
 
-		if (getMusic() != null && getLevel().dimension() != AoADimensions.NOWHERE.key)
+		if (getMusic() != null)
 			new SoundBuilder(getMusic()).isMusic().stopSound().include(player).execute();
 	}
 

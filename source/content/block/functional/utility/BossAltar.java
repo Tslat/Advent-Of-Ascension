@@ -29,6 +29,7 @@ import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.BlockUtil;
+import net.tslat.aoa3.util.InteractionResults;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
@@ -56,8 +57,15 @@ public class BossAltar extends Block implements EntityBlock {
 
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!WorldUtil.isWorld(level, AoADimensions.NOWHERE.key) || level.getDifficulty() == Difficulty.PEACEFUL)
-			return InteractionResult.PASS;
+		if (!WorldUtil.isWorld(level, AoADimensions.NOWHERE.key))
+			return InteractionResults.BlockUse.noActionTaken();
+
+		if (level.getDifficulty() == Difficulty.PEACEFUL) {
+			if (!level.isClientSide && hand == InteractionHand.MAIN_HAND)
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.difficulty", ChatFormatting.RED));
+
+			return InteractionResults.BlockUse.noActionTaken();
+		}
 
 		ItemStack heldItem = player.getItemInHand(hand);
 		BossTokenItem bossItem;
@@ -67,7 +75,7 @@ public class BossAltar extends Block implements EntityBlock {
 			if (hand == InteractionHand.OFF_HAND && !level.isClientSide())
 				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.badItem", ChatFormatting.RED));
 
-			return InteractionResult.FAIL;
+			return InteractionResults.BlockUse.noActionTaken();
 		}
 
 		if (level instanceof ServerLevel serverLevel) {
@@ -77,7 +85,7 @@ public class BossAltar extends Block implements EntityBlock {
 			if (players.isEmpty()) {
 				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.tooFar", ChatFormatting.RED));
 
-				return InteractionResult.FAIL;
+				return InteractionResults.BlockUse.noActionTaken();
 			}
 
 			AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getFreeArena(serverLevel);
@@ -92,7 +100,7 @@ public class BossAltar extends Block implements EntityBlock {
 					if (bossAltar.getCurrentEntity() != null) {
 						player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.inUse", ChatFormatting.RED));
 
-						return InteractionResult.FAIL;
+						return InteractionResults.BlockUse.noActionTaken();
 					}
 
 					bossAltar.updateEntity(entityType);
@@ -103,7 +111,7 @@ public class BossAltar extends Block implements EntityBlock {
 			}
 		}
 
-		return InteractionResult.SUCCESS;
+		return InteractionResults.BlockUse.succeedAndSwingArmBothSides(level.isClientSide);
 	}
 
 	@Nullable

@@ -59,7 +59,7 @@ public class CoralClogger extends BaseGun {
 		super.doImpactDamage(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 
 		if (target instanceof LivingEntity livingTarget) {
-			DamageUtil.doScaledKnockback(livingTarget, shooter, 1.143f, 1, 1, 1);
+			DamageUtil.doScaledKnockback(livingTarget, shooter, 1.15f, 1, 1, 1);
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 60));
 		}
 	}

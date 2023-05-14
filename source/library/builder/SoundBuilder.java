@@ -71,11 +71,15 @@ public final class SoundBuilder {
 		return atPos(level, pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d);
 	}
 
-	public SoundBuilder atPos(Level level, double x, double y, double z) {
-		this.location = new Vec3(x, y, z);
+	public SoundBuilder atPos(Level level, Vec3 pos) {
 		this.level = level;
+		this.location = pos;
 
 		return this;
+	}
+
+	public SoundBuilder atPos(Level level, double x, double y, double z) {
+		return atPos(level, new Vec3(x, y, z));
 	}
 
 	public SoundBuilder followEntity(Entity entity) {

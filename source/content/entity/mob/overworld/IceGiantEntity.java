@@ -32,6 +32,7 @@ import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -110,14 +111,20 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 		super.customServerAiStep();
 
 		if (isUnderWater()) {
-			ServerParticlePacket packet = new ServerParticlePacket();
+
+
+
+
 			AABB boundingBox = getBoundingBox();
 			double width = boundingBox.maxX - boundingBox.minX;
 			double depth = boundingBox.maxZ - boundingBox.minZ;
 			double height = boundingBox.maxY - boundingBox.minY;
+			int particleCount = (int)Math.ceil(3 + (10 * width * depth * height));
+			ServerParticlePacket packet = new ServerParticlePacket();
 
-			for (int i = 0; i < 3 + (10 * width * depth * height); i++) {
-				packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.3f, 3, 0), boundingBox.minX + RandomUtil.randomValueUpTo(width), boundingBox.minY + RandomUtil.randomValueUpTo(height), boundingBox.minZ + RandomUtil.randomValueUpTo(depth), RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d));
+			for (int i = 0; i < particleCount; i++) {
+				packet.particle(ParticleBuilder.forRandomPosInEntity(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.3f, 3, 0), this)
+						.velocity(RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d)));
 			}
 
 			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 10);
@@ -172,7 +179,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 		double baseX = getX();
 		double baseY = getEyeY();
 		double baseZ = getZ();
-		ServerParticlePacket packet = new ServerParticlePacket(true);
+		ServerParticlePacket packet = new ServerParticlePacket(5);
 
 		for (int i = 0; i < 5; i++) {
 			double x = baseX + RandomUtil.randomScaledGaussianValue(0.5f);
@@ -182,7 +189,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 			double targetY = target.getEyeY() + RandomUtil.randomScaledGaussianValue(0.5f);
 			double targetZ = target.getZ() + RandomUtil.randomScaledGaussianValue(0.5f);
 
-			packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.4f, 12, 0, 0, 0, 0, getId()), baseX, baseY, baseZ, (targetX - x) * 0.1, (targetY - y) * 0.1, (targetZ - z) * 0.1);
+			packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.4f, 12, 0, 0, 0, 0, getId()), baseX, baseY, baseZ).velocity((targetX - x) * 0.1, (targetY - y) * 0.1, (targetZ - z) * 0.1));
 		}
 
 		if (tickCount % 5 == 0)
@@ -202,7 +209,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 	public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
 		if (projectile == null) {
 			if (DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_ICEBEAM, this, target.position()), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && target.getTicksFrozen() <= target.getTicksRequiredToFreeze() * 2.5f)
-				target.setTicksFrozen(target.getTicksFrozen() + 14);
+				target.setTicksFrozen(target.getTicksFrozen() + 34);
 		}
 	}
 

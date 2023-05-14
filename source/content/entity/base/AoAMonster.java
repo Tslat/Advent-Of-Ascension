@@ -6,7 +6,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.stats.Stats;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectUtil;
@@ -238,14 +240,35 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public boolean hurt(DamageSource source, float amount) {
-		if (super.hurt(source, amount)) {
-			onHurt(source, amount);
+	protected void actuallyHurt(DamageSource source, float amount) {
+		if (!isInvulnerableTo(source)) {
+			amount = ForgeHooks.onLivingHurt(this, source, amount);
 
-			return true;
+			if (amount <= 0)
+				return;
+
+			amount = getDamageAfterArmorAbsorb(source, amount);
+			amount = getDamageAfterMagicAbsorb(source, amount);
+			float adjustedDamage = Math.max(amount - getAbsorptionAmount(), 0);
+			float absorbedAmount = amount - adjustedDamage;
+
+			setAbsorptionAmount(getAbsorptionAmount() - absorbedAmount);
+
+			if (absorbedAmount > 0 && absorbedAmount < 3.4028235E37F && source.getEntity() instanceof ServerPlayer pl)
+				pl.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(absorbedAmount * 10.0F));
+
+			adjustedDamage = ForgeHooks.onLivingDamage(this, source, adjustedDamage);
+
+			if (adjustedDamage != 0) {
+				float currentHealth = getHealth();
+
+				getCombatTracker().recordDamage(source, currentHealth, adjustedDamage);
+				setHealth(currentHealth - adjustedDamage);
+				setAbsorptionAmount(getAbsorptionAmount() - adjustedDamage);
+				gameEvent(GameEvent.ENTITY_DAMAGE);
+				onHurt(source, adjustedDamage);
+			}
 		}
-
-		return false;
 	}
 
 	protected void onAttack(Entity target) {}

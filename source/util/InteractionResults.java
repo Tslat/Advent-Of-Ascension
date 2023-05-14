@@ -275,7 +275,8 @@ public final class InteractionResults {
 	}
 
 	/**
-	 * Specifically for {@link net.minecraft.world.level.block.Block#use Block.use}
+	 * Specifically for {@link net.minecraft.world.level.block.Block#use Block.use}.<br>
+	 * Note that there is no way to prevent the second hand from being checked here without returning a successful result
 	 */
 	public static class BlockUse {
 		/**
@@ -350,22 +351,6 @@ public final class InteractionResults {
 		 */
 		public static InteractionResult noActionTaken() {
 			return InteractionResult.PASS;
-		}
-
-		/**
-		 * Use if you want to count the call as a failure (E.G. some conditions weren't met)<br>
-		 * <br>
-		 * <b>Properties:</b>
-		 * <p>
-		 *     On client:
-		 *     <ul>
-		 *         <li>Prevents the next hand from being checked for action</li>
-		 *     </ul>
-		 * </p>
-		 *
-		 */
-		public static InteractionResult denyUsage() {
-			return InteractionResult.FAIL;
 		}
 	}
 

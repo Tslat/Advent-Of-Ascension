@@ -36,6 +36,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.constant.ScreenImageEffect;
 import net.tslat.aoa3.library.object.EntityDataHolder;
@@ -151,7 +152,8 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 				if (weapon.isCorrectToolForDrops(Blocks.OAK_LOG.defaultBlockState())) {
 					lastMeleeHit += 100;
-					particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 10);
+
+					particlePacket.particle(ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this).spawnNTimes(10));
 
 					if (getHealth() <= 0 && attacker instanceof ServerPlayer pl)
 						pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("i_axed_you_a_question")), "tool_kill");
@@ -160,7 +162,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 				if (getStage() < 3) {
 					STAGE.set(this, getStage() + 1);
-					particlePacket.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true, 0, 0, 0, 1, 5);
+					particlePacket.particle(ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this).spawnNTimes(5));
 
 					if (!(attacker instanceof ServerPlayer pl) || !pl.isCreative()) {
 						if (attacker instanceof ServerPlayer pl)
@@ -217,10 +219,10 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 			EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR_TOUGHNESS, STAGE_TOUGHNESS_MOD, false);
 
 			if (oldStage < stage) {
-				ServerParticlePacket packet = new ServerParticlePacket();
+				ServerParticlePacket packet = new ServerParticlePacket(10);
 
 				for (int i = 0; i < 10; i++) {
-					packet.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this, true);
+					packet.particle(ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this));
 				}
 
 				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);

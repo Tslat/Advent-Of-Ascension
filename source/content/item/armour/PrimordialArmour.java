@@ -32,7 +32,7 @@ public class PrimordialArmour extends AdventArmour {
 	@Override
 	public void onAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
 		if (slots == null || (DamageUtil.isMeleeDamage(event.getSource()) && plData.equipment().getCurrentFullArmourSet() != setType())) {
-			if (event.getSource().getEntity() instanceof LivingEntity && ((LivingEntity)event.getSource().getEntity()).hasEffect(MobEffects.WITHER))
+			if (event.getSource().getEntity() instanceof LivingEntity attacker && attacker.hasEffect(MobEffects.WITHER))
 				event.setAmount(event.getAmount() * (1 - 0.15f * (slots == null ? 4 : slots.size())));
 		}
 	}

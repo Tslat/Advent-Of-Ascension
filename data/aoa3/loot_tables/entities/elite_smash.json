@@ -10,7 +10,7 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 200
+          "weight": 150
         },
         {
           "type": "minecraft:loot_table",

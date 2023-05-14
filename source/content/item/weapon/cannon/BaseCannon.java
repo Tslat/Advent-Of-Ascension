@@ -42,12 +42,12 @@ public abstract class BaseCannon extends BaseGun {
 			if (target instanceof LivingEntity)
 				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(Attributes.ARMOR).getValue() * 1.50) / 100;
 
-			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, (float)getDamage() * bulletDmgMultiplier)) {
+			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier)) {
 				if (target instanceof Player && ((Player)target).isBlocking())
 					((Player)target).disableShield(true);
 
 				if (target instanceof LivingEntity livingTarget)
-					DamageUtil.doScaledKnockback(livingTarget, shooter, ((float)getDamage() * bulletDmgMultiplier) / 15f, 1, 1, 1);
+					DamageUtil.doScaledKnockback(livingTarget, shooter, getDamage() * bulletDmgMultiplier / 10f, 1, 1, 1);
 
 				doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}

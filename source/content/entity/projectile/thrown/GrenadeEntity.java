@@ -16,17 +16,15 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
 import net.tslat.aoa3.library.object.explosion.ShrapnelExplosion;
 import net.tslat.aoa3.util.AdvancementUtil;
 
 public class GrenadeEntity extends BaseBullet implements HardProjectile {
-	public static final ExplosionInfo GRENADE_EXPLOSION = new ExplosionInfo().radius(2.5f).penetration(5).baseDamage(5).explodeInOneTick().blocksDropChance(0.1f);
-
 	public GrenadeEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
@@ -88,6 +86,6 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 
 	protected void explode(Vec3 position) {
 		if (!this.level.isClientSide())
-			new ShrapnelExplosion(GRENADE_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), position).explode();
+			new ShrapnelExplosion(AoAExplosions.GRENADE, (ServerLevel)getLevel(), this, getOwner(), position).explode();
 	}
 }

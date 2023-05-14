@@ -22,6 +22,7 @@ import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
@@ -61,11 +62,10 @@ public class EmberstonePickaxe extends BasePickaxe implements LootModifyingItem 
 				existingLoot.set(i, smeltedStack);
 				block.popExperience(level, BlockPos.containing(pos), (int)smeltRecipe.get().getExperience());
 
-				ServerParticlePacket particlePacket = new ServerParticlePacket();
-
-				for (int x = 0; x < 5; x++) {
-					particlePacket.particle(ParticleTypes.FLAME, pos.x + RandomUtil.randomValueUpTo(1), pos.y + RandomUtil.randomValueUpTo(1), pos.z + RandomUtil.randomValueUpTo(1));
-				}
+				ServerParticlePacket particlePacket = new ServerParticlePacket(
+						ParticleBuilder.forPos(ParticleTypes.FLAME,
+								() -> new Vec3(pos.x + RandomUtil.randomValueUpTo(1), pos.y + RandomUtil.randomValueUpTo(1), pos.z + RandomUtil.randomValueUpTo(1)))
+								.spawnNTimes(5));
 
 				AoAPackets.messageNearbyPlayers(particlePacket, level, pos.add(0.5f, 0.5f, 0.5f), 32);
 			}

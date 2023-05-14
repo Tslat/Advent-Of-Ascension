@@ -3,12 +3,10 @@ package net.tslat.aoa3.content.entity.mob.nether;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -24,6 +22,7 @@ import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
@@ -127,9 +126,8 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     }
 
     @Override
-    protected void onInsideBlock(BlockState state) {
-        if (!level.isClientSide() && state.getFluidState().is(FluidTags.WATER))
-            hurt(level.damageSources().drown(), 0.25f);
+    public boolean isSensitiveToWater() {
+        return true;
     }
 
     @Override
@@ -151,11 +149,10 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             super.start(entity);
 
             this.targetingPosition = this.target.position().add(this.target.getBbWidth() * 0.5f, 0, this.target.getBbWidth() * 0.5f);
-            ServerParticlePacket packet = new ServerParticlePacket();
-
-            for (int i = 0; i < 10; i++) {
-                packet.particle(ParticleTypes.SMALL_FLAME, targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().randomValueBetween(-1, 1));
-            }
+            ServerParticlePacket packet = new ServerParticlePacket(
+                    ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME,
+                            () -> new Vec3(targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().randomValueBetween(-1, 1)))
+                            .spawnNTimes(10));
 
             entity.level.playSound(null, this.targetingPosition.x, this.targetingPosition.y, this.targetingPosition.z, AoASounds.ENTITY_FLAMEWALKER_FLARE.get(), SoundSource.HOSTILE, 1, 1);
             AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
@@ -169,10 +166,12 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             if (!BrainUtils.canSee(entity, this.target) || entity.distanceToSqr(this.target) > this.attackRadius)
                 return;
 
-            ServerParticlePacket packet = new ServerParticlePacket();
+            ServerParticlePacket packet = new ServerParticlePacket(15);
 
             for (int i = 0; i < 15; i++) {
-                packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.5f, 2, 1, 1, 1, 1, entity.getId()), targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y, targetingPosition.z + entity.rand().randomValueBetween(-1, 1), entity.rand().randomValueBetween(-0.05f, 0.05f), 0.5, entity.rand().randomValueBetween(-0.05f, 0.05f));
+                packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.5f, 2, 1, 1, 1, 1, entity.getId()),
+                        targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y, targetingPosition.z + entity.rand().randomValueBetween(-1, 1))
+                        .velocity(entity.rand().randomValueBetween(-0.05f, 0.05f), 0.5, entity.rand().randomValueBetween(-0.05f, 0.05f)));
             }
 
             AoAPackets.messageAllPlayersTrackingEntity(packet, entity);

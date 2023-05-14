@@ -10,17 +10,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
 import net.tslat.aoa3.library.object.explosion.StandardExplosion;
 
 
 public class RPGEntity extends BaseBullet implements HardProjectile {
-	public static final ExplosionInfo RPG_EXPLOSION = new ExplosionInfo().explodeInOneTick().radius(4).penetration(20).blocksDropChance(0.55f).baseDamage(12).baseKnockbackStrength(2.5f);
-
 	public RPGEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
 	}
@@ -49,6 +47,6 @@ public class RPGEntity extends BaseBullet implements HardProjectile {
 
 	protected void explode(Vec3 position) {
 		if (!level.isClientSide)
-			new StandardExplosion(RPG_EXPLOSION, (ServerLevel)getLevel(), this, getOwner(), position).explode();
+			new StandardExplosion(AoAExplosions.RPG, (ServerLevel)getLevel(), this, getOwner(), position).explode();
 	}
 }

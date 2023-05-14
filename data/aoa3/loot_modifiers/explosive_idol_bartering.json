@@ -1,0 +1,9 @@
+{
+  "type": "aoa3:explosive_idol_bartering",
+  "conditions": [
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/piglin_bartering"
+    }
+  ]
+}

@@ -156,7 +156,6 @@ public class JEIIntegration implements IModPlugin {
 		if (!IntegrationManager.isJEIActive())
 			return;
 
-
 		/*if (!IntegrationManager.isTinkersConstructActive()) {
 			Function<FluidUtil.RegisteredFluidHolder, FluidStack> fluidStackGen = holder -> new FluidStack(holder.fluid().get(), FluidAttributes.BUCKET_VOLUME);
 

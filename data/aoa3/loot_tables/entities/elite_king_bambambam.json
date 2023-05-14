@@ -1,0 +1,61 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 150
+        },
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:misc/rare_table"
+        }
+      ],
+      "name": "rare_table",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:loot_table",
+          "name": "aoa3:worlds/nowhere_boss",
+          "weight": 100
+        }
+      ],
+      "name": "nowhere_table",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_nbt",
+              "tag": "{BlockEntityTag:{EntityID:\"aoa3:elite_king_bambambam\",OriginalTrophy:1b},display:{Name:'{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.elite_king_bambambam\"}]}'}}"
+            }
+          ],
+          "name": "aoa3:ornate_trophy"
+        }
+      ],
+      "name": "trophy",
+      "rolls": 1.0
+    }
+  ]
+}

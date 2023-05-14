@@ -16,6 +16,7 @@ public final class AoALootModifiers {
 	public static final RegistryObject<Codec<HavenLootModifier>> HAVEN = registerSerializer("haven", HavenLootModifier.CODEC);
 	public static final RegistryObject<Codec<FertilisedFarmlandLootModifier>> FERTILISED_FARMLAND = registerSerializer("fertilised_farmland", FertilisedFarmlandLootModifier.CODEC);
 	public static final RegistryObject<Codec<RollEntityWorldTableLootModifier>> ROLL_ENTITY_WORLD_TABLE = registerSerializer("roll_entity_world_table", RollEntityWorldTableLootModifier.CODEC);
+	public static final RegistryObject<Codec<ExplosiveIdolBarteringModifier>> EXPLOSIVE_IDOL_BARTERING = registerSerializer("explosive_idol_bartering", ExplosiveIdolBarteringModifier.CODEC);
 
 	private static <T extends LootModifier> RegistryObject<Codec<T>> registerSerializer(String id, Codec<T> serializer) {
 		return AoARegistries.LOOT_MODIFIERS.register(id, () -> serializer);

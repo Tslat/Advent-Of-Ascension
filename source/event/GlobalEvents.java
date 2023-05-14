@@ -1,6 +1,7 @@
 package net.tslat.aoa3.event;
 
 import com.google.common.collect.ImmutableList;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraftforge.common.MinecraftForge;
@@ -11,17 +12,14 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.AoAStartupCache;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.content.world.spawner.PixonSpawner;
-import net.tslat.aoa3.content.world.spawner.RoamingTradersSpawner;
-import net.tslat.aoa3.content.world.spawner.VisualentSpawner;
+import net.tslat.aoa3.content.world.spawner.AoACustomSpawner;
+import net.tslat.aoa3.data.server.AoACustomSpawnersListener;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.WebUtil;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public final class GlobalEvents {
 	public static int tick;
@@ -45,19 +43,15 @@ public final class GlobalEvents {
 	}
 
 	private static void worldLoad(final LevelEvent.Load ev) {
-		if (ev.getLevel() instanceof ServerLevel world) {
-			ArrayList<CustomSpawner> spawners = new ArrayList<>(world.customSpawners);
+		if (ev.getLevel() instanceof ServerLevel level) {
+			List<CustomSpawner> spawners = new ObjectArrayList<>(level.customSpawners);
 
-			if (PixonSpawner.isValidSpawnWorld(world))
-				spawners.add(new PixonSpawner());
+			for (AoACustomSpawner aoaSpawner : AoACustomSpawnersListener.SPAWNERS) {
+				if (aoaSpawner.shouldAddToDimension(level))
+					spawners.add(aoaSpawner);
+			}
 
-			if (world.dimension() == AoADimensions.LUNALUS.key)
-				spawners.add(new VisualentSpawner());
-
-			if (!world.isFlat() && !world.dimensionTypeRegistration().is(AdventOfAscension.id("nowhere")))
-				spawners.add(new RoamingTradersSpawner());
-
-			world.customSpawners = ImmutableList.copyOf(spawners);
+			level.customSpawners = ImmutableList.copyOf(spawners);
 		}
 	}
 

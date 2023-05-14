@@ -20,7 +20,11 @@ public class FireballEntity extends BaseMobProjectile implements GeoEntity {
 	}
 
 	public FireballEntity(Level world, AoARangedAttacker shooter, Type projectileType) {
-		super(AoAProjectiles.FIREBALL.get(), world, shooter, projectileType);
+		this(AoAProjectiles.FIREBALL.get(), world, shooter, projectileType);
+	}
+
+	public FireballEntity(EntityType<? extends FireballEntity> entityType, Level world, AoARangedAttacker shooter, Type projectileType) {
+		super(entityType, world, shooter, projectileType);
 	}
 
 	@Override

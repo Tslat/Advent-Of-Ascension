@@ -33,6 +33,7 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.StoneGiantRockEntity;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -126,7 +127,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 		if (attacker instanceof Silverfish) {
 			if (!level.isClientSide()) {
 				heal(level.getDifficulty().getId() * 7);
-				AoAPackets.messageNearbyPlayers(new ServerParticlePacket().particle(ParticleTypes.HEART, attacker), (ServerLevel)level, attacker.position(), 50);
+				AoAPackets.messageNearbyPlayers(new ServerParticlePacket(ParticleBuilder.forPos(ParticleTypes.HEART, attacker.position())), (ServerLevel)level, attacker.position(), 50);
 				playSound(SoundEvents.SILVERFISH_AMBIENT);
 				attacker.discard();
 			}
@@ -166,9 +167,9 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 	public void doRangedAttackEntity(BaseMobProjectile projectile, Entity target) {
 		DamageUtil.doProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
-		ServerParticlePacket packet = new ServerParticlePacket()
-				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3)
-				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3);
+		ServerParticlePacket packet = new ServerParticlePacket(
+				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile).spawnNTimes(3),
+				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile).spawnNTimes(3));
 
 		projectile.playSound(AoASounds.ROCK_SMASH.get());
 		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
@@ -176,9 +177,9 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		ServerParticlePacket packet = new ServerParticlePacket()
-				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3)
-				.particle(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile, true, 0, 0, 0, 1, 3);
+		ServerParticlePacket packet = new ServerParticlePacket(
+				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.STONE.defaultBlockState()), projectile).spawnNTimes(3),
+				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile).spawnNTimes(3));
 
 		projectile.playSound(AoASounds.ROCK_SMASH.get());
 		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);

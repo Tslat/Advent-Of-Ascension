@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.mobeffect;
 
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -29,7 +30,7 @@ public class NethengeicCurseEffect extends ExtendedMobEffect {
 		if (source.is(DamageTypeTags.IS_FIRE) && entity.hasEffect(MobEffects.FIRE_RESISTANCE)) {
 			Vec3 position = source.getSourcePosition();
 
-			DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(DamageTypes.MAGIC, entity.level, position != null ? position : entity.position()), entity, amount * (float)(Math.min(Math.max(effectInstance.getAmplifier(), 1), 8) * 0.5 + 1f));
+			DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(DamageTypes.MAGIC, entity.level, position != null ? position : entity.position()), entity, amount * (Mth.clamp(effectInstance.getAmplifier(), 1, 8) * 0.5f + 1f));
 		}
 
 		return true;

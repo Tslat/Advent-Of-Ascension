@@ -23,6 +23,7 @@
     "minecraft:explosion",
     "minecraft:player_explosion",
     "minecraft:magic",
-    "minecraft:indirect_magic"
+    "minecraft:indirect_magic",
+    "minecraft:fireworks"
   ]
 }

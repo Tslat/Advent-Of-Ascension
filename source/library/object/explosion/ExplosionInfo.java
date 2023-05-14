@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.TriFunction;
 import net.tslat.smartbrainlib.object.SquareRadius;
 import net.tslat.smartbrainlib.object.TriPredicate;
@@ -20,33 +21,34 @@ import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public class ExplosionInfo {
-	protected float baseDamage = 20;
-	protected float baseKnockback = 1;
-	protected SquareRadius squareRadius = null;
-	protected float radius = 10;
-	protected float penetrationPower = 100;
-	protected float blockDropChance = 1;
-	protected SoundEvent explosionSound = SoundEvents.GENERIC_EXPLODE;
+	private float baseDamage = 20;
+	private float baseKnockback = 1;
+	private SquareRadius squareRadius = null;
+	private float radius = 10;
+	private float penetrationPower = 100;
+	private float blockDropChance = 1;
+	private SoundEvent explosionSound = SoundEvents.GENERIC_EXPLODE;
 
-	protected boolean affectsOwner = false;
-	protected boolean noEntityDamage = false;
-	protected boolean noEntityKnockback = false;
-	protected boolean noBlockDamage = false;
+	private boolean affectsOwner = false;
+	private boolean noEntityDamage = false;
+	private boolean noEntityKnockback = false;
+	private boolean noBlockDamage = false;
 
-	protected boolean singleTickExplosion = false;
+	private Boolean singleTickExplosion = null;
 
-	protected BiPredicate<ExtendedExplosion, Entity> affectedEntityPredicate = (explosion, entity) -> true;
-	protected TriPredicate<ExtendedExplosion, BlockState, BlockPos> affectedBlockPredicate = (explosion, blockState, pos) -> true;
-	protected BiFunction<ExtendedExplosion, Entity, Float> knockbackVelocityFunction = (explosion, entity) -> 1f;
-	protected BiFunction<ExtendedExplosion, Entity, Float> damageModFunction = (explosion, entity) -> 1f;
-	protected TriFunction<ExtendedExplosion, BlockState, BlockPos, Float> penetrationModFunction = (explosion, blockState, pos) -> 1f;
-	protected BiConsumer<ExtendedExplosion, Entity> entityEffectConsumer = (explosion, entity) -> {};
-	protected TriConsumer<ExtendedExplosion, BlockState, BlockPos> blockEffectConsumer = (explosion, blockState, pos) -> {};
-	protected Consumer<ExtendedExplosion> afterExplodingFunction = explosion -> {};
-	protected BiConsumer<ExtendedExplosion, Integer> particleConsumer = (explosion, explodeTick) -> {
+	private BiPredicate<ExtendedExplosion, Entity> affectedEntityPredicate = (explosion, entity) -> true;
+	private TriPredicate<ExtendedExplosion, BlockState, BlockPos> affectedBlockPredicate = (explosion, blockState, pos) -> true;
+	private BiFunction<ExtendedExplosion, Entity, Float> knockbackVelocityFunction = (explosion, entity) -> 1f;
+	private BiFunction<ExtendedExplosion, Entity, Float> damageModFunction = (explosion, entity) -> 1f;
+	private TriFunction<ExtendedExplosion, BlockState, BlockPos, Float> penetrationModFunction = (explosion, blockState, pos) -> 1f;
+	private BiConsumer<ExtendedExplosion, Entity> entityEffectConsumer = (explosion, entity) -> {};
+	private TriConsumer<ExtendedExplosion, BlockState, BlockPos> blockEffectConsumer = (explosion, blockState, pos) -> {};
+	private Consumer<ExtendedExplosion> afterExplodingFunction = explosion -> {};
+	private BiConsumer<ExtendedExplosion, Integer> particleConsumer = (explosion, explodeTick) -> {
 		if (explodeTick <= 0)
-			AoAPackets.messageNearbyPlayers(new ServerParticlePacket().particle(getEffectiveRadius() >= 4.0F && !this.noBlockDamage ? ParticleTypes.EXPLOSION_EMITTER : ParticleTypes.EXPLOSION, explosion.origin.x, explosion.origin.y, explosion.origin.z, 0, 0, 0), (ServerLevel)explosion.level, explosion.origin, 64);
+			AoAPackets.messageNearbyPlayers(new ServerParticlePacket(ParticleBuilder.forPos(getEffectiveRadius() >= 4.0F && !this.noBlockDamage ? ParticleTypes.EXPLOSION_EMITTER : ParticleTypes.EXPLOSION, explosion.origin.x, explosion.origin.y, explosion.origin.z)), (ServerLevel)explosion.level, explosion.origin, 64);
 	};
 
 	public float getBaseDamage() {
@@ -68,7 +70,7 @@ public class ExplosionInfo {
 		return this.radius;
 	}
 
-	public double getPenetrationPower() {
+	public float getPenetrationPower() {
 		return this.penetrationPower;
 	}
 
@@ -97,7 +99,46 @@ public class ExplosionInfo {
 	}
 
 	public boolean isSingleTickExplosion() {
+		if (this.singleTickExplosion == null)
+			this.singleTickExplosion = getEffectiveRadius() <= 50;
+
 		return this.singleTickExplosion;
+	}
+
+	public boolean shouldAffectEntity(ExtendedExplosion explosion, Entity entity) {
+		return this.affectedEntityPredicate.test(explosion, entity);
+	}
+
+	public boolean shouldAffectBlock(ExtendedExplosion explosion, BlockState state, BlockPos pos) {
+		return this.affectedBlockPredicate.test(explosion, state, pos);
+	}
+
+	public float calculateKnockbackModifier(ExtendedExplosion explosion, Entity entity) {
+		return this.knockbackVelocityFunction.apply(explosion, entity);
+	}
+
+	public float calculateEntityDamageModifier(ExtendedExplosion explosion, Entity entity) {
+		return this.damageModFunction.apply(explosion, entity);
+	}
+
+	public float calculateBlockDamageModifier(ExtendedExplosion explosion, BlockState state, BlockPos pos) {
+		return this.penetrationModFunction.apply(explosion, state, pos);
+	}
+
+	public void entityImpacted(ExtendedExplosion explosion, Entity entity) {
+		this.entityEffectConsumer.accept(explosion, entity);
+	}
+
+	public void blockBroken(ExtendedExplosion explosion, BlockState state, BlockPos pos) {
+		this.blockEffectConsumer.accept(explosion, state, pos);
+	}
+
+	public void postExplosionCallback(ExtendedExplosion explosion) {
+		this.afterExplodingFunction.accept(explosion);
+	}
+
+	public void doParticles(ExtendedExplosion explosion, int explosionTick) {
+		this.particleConsumer.accept(explosion, explosionTick);
 	}
 
 	public ExplosionInfo affectsOwner() {
@@ -160,19 +201,19 @@ public class ExplosionInfo {
 		return this;
 	}
 
-	public ExplosionInfo knockback(BiFunction<ExtendedExplosion, Entity, Float> modifierFunction) {
+	public ExplosionInfo knockbackMod(BiFunction<ExtendedExplosion, Entity, Float> modifierFunction) {
 		this.knockbackVelocityFunction = modifierFunction;
 
 		return this;
 	}
 
-	public ExplosionInfo damage(BiFunction<ExtendedExplosion, Entity, Float> modifierFunction) {
+	public ExplosionInfo damageMod(BiFunction<ExtendedExplosion, Entity, Float> modifierFunction) {
 		this.damageModFunction = modifierFunction;
 
 		return this;
 	}
 
-	public ExplosionInfo blockDamage(TriFunction<ExtendedExplosion, BlockState, BlockPos, Float> modifierFunction) {
+	public ExplosionInfo blockDamageMod(TriFunction<ExtendedExplosion, BlockState, BlockPos, Float> modifierFunction) {
 		this.penetrationModFunction = modifierFunction;
 
 		return this;
@@ -214,8 +255,8 @@ public class ExplosionInfo {
 		return this;
 	}
 
-	public ExplosionInfo explodeInOneTick() {
-		this.singleTickExplosion = true;
+	public ExplosionInfo singleTickExplosion(boolean explodeInOneTick) {
+		this.singleTickExplosion = explodeInOneTick;
 
 		return this;
 	}

@@ -31,6 +31,7 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.misc.SandGiantPitTrapEntity;
 import net.tslat.aoa3.content.entity.misc.SandGiantSpikeTrapEntity;
 import net.tslat.aoa3.library.builder.EntityPredicate;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -224,10 +225,8 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 				double centerZ = entity.position().z();
 
 				for (double angle = 0; angle < 2 * Math.PI; angle += 2 / 180d * (2 * Math.PI)) {
-					packet.particle(new CustomisableParticleType.Data(AoAParticleTypes.SANDSTORM.get(), 0.5f, 4f, 0, 0, 0, 0, entity.getId()),
-							centerX + 4 * Math.cos(angle),
-							entity.position().y(),
-							centerZ + 4 * Math.sin(angle), 0, 0.25f, 0, 1);
+					packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.SANDSTORM.get(), 0.5f, 4f, 0, 0, 0, 0, entity.getId()),
+							centerX + 4 * Math.cos(angle), entity.position().y(), centerZ + 4 * Math.sin(angle)).velocity(0, 0.25f, 0));
 				}
 
 				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, entity.position(), 20);

@@ -116,8 +116,8 @@ public final class DamageUtil {
 				.add(attacker.getDeltaMovement().scale(0.5f))
 				.multiply(strength, strength, strength);
 
-		if (target.isOnGround())
-			vec.multiply(0.5f, 0.75f, 0.5f);
+		if (target.isOnGround() && attacker.getY() == target.getY())
+			vec = vec.add(0, 0.25f, 0);
 
 		target.setDeltaMovement(vec);
 		target.hasImpulse = true;
@@ -170,7 +170,14 @@ public final class DamageUtil {
 		if (!ignoreMiscEntities && !(target instanceof LivingEntity) && !(target instanceof PartEntity<?>) && !(target instanceof EndCrystal))
 			return false;
 
-		return target.hurt(damageSource, dmg);
+		if (target.hurt(damageSource, dmg)) {
+			if (damageSource.getEntity() instanceof LivingEntity attacker)
+				attacker.setLastHurtMob(target);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	public static boolean isMeleeDamage(DamageSource source) {
@@ -186,7 +193,7 @@ public final class DamageUtil {
 	}
 
 	public static boolean isRangedDamage(DamageSource source, Entity target, float dmg) {
-		return source.is(DamageTypeTags.IS_PROJECTILE) && !isMagicDamage(source, target, dmg) && !source.is(AoATags.DamageTypes.GUN);
+		return source.is(DamageTypeTags.IS_PROJECTILE) && !isMagicDamage(source, target, dmg) && !isEnergyDamage(source) && !source.is(AoATags.DamageTypes.GUN);
 	}
 
 	public static boolean isGunDamage(DamageSource source) {
@@ -198,7 +205,7 @@ public final class DamageUtil {
 	}
 
 	public static boolean isPhysicalDamage(DamageSource source) {
-		return !source.is(DamageTypeTags.BYPASSES_ARMOR) && !source.is(DamageTypeTags.IS_EXPLOSION) && !isEnvironmentalDamage(source);
+		return !source.is(DamageTypeTags.BYPASSES_ARMOR) && !source.is(DamageTypeTags.IS_EXPLOSION) && !source.is(DamageTypes.THORNS) && !isEnvironmentalDamage(source);
 	}
 
 	public static boolean isVulcaneDamage(DamageSource source) {

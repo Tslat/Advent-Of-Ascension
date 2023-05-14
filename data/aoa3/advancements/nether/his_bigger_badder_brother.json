@@ -1,0 +1,40 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "obtain_nethengeic_callstone": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:nethengeic_callstone"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nether.his_bigger_badder_brother.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:nethengeic_callstone",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nether.his_bigger_badder_brother.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_nethengeic_callstone"
+    ]
+  ]
+}

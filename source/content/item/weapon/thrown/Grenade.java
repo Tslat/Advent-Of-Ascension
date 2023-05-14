@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.thrown.GrenadeEntity;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -33,7 +34,7 @@ public class Grenade extends BaseThrownWeapon {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
-		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(GrenadeEntity.GRENADE_EXPLOSION, flag.isAdvanced(), true)) {
+		for (MutableComponent component : LocaleUtil.getExplosionInfoLocale(AoAExplosions.GRENADE, flag.isAdvanced(), true)) {
 			tooltip.add(2, component);
 		}
 	}

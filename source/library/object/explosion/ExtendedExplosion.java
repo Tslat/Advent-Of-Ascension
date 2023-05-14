@@ -1,9 +1,11 @@
 package net.tslat.aoa3.library.object.explosion;
 
 import com.mojang.datafixers.util.Pair;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.OwnableEntity;
@@ -22,20 +24,29 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.common.registration.AoAGameRules;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;
 
 public class ExtendedExplosion extends Explosion {
 	protected final ExplosionInfo info;
+	protected final RandomUtil.EasyRandom random = new RandomUtil.EasyRandom();
+
+	protected List<Entity> affectedEntities;
+	protected Object2ObjectOpenHashMap<BlockPos, BlockState> affectedBlocks = new Object2ObjectOpenHashMap<>();
+	protected ObjectArrayList<Pair<ItemStack, BlockPos>> blockDrops = new ObjectArrayList<>();
 
 	@Nullable
 	protected Entity indirectExploder;
 	protected Vec3 origin;
 
+	protected boolean shouldDamageBlocks = true;
 	protected int explodeTick;
 	protected Predicate<Vec3> boundsPredicate = null;
 
@@ -75,69 +86,6 @@ public class ExtendedExplosion extends Explosion {
 		this.indirectExploder = indirectExploder;
 	}
 
-	@Override
-	public void explode() {
-		sanityCheck();
-
-		this.level.gameEvent(this.source, GameEvent.EXPLODE, this.origin);
-
-		this.damageCalculator = this.source != null ? new EntityBasedExplosionDamageCalculator(this.source) : new ExplosionDamageCalculator();
-
-		if (this.info.squareRadius != null) {
-			AABB bounds = this.info.squareRadius.inflateAABB(new AABB(this.origin.x, this.origin.y, this.origin.z, this.origin.x, this.origin.y, this.origin.z));
-			this.boundsPredicate = bounds::contains;
-		}
-		else {
-			this.boundsPredicate = pos -> pos.closerThan(this.origin, this.info.radius);
-		}
-	}
-
-	protected void sanityCheck() {
-		if (this.info.radius <= 0 || this.info.radius > 256)
-			throw new IllegalArgumentException("Invalid radius provided, must be between 1 and 255 blocks (inclusive)");
-
-		if (this.info.squareRadius != null) {
-			if (this.info.squareRadius.xzRadius() <= 0 || this.info.squareRadius.xzRadius() > 256)
-				throw new IllegalArgumentException("Invalid lateral radius provided, must be between 1 and 255 blocks (inclusive)");
-
-			if (this.info.squareRadius.yRadius() <= 0 || this.info.squareRadius.yRadius() > this.level.getMaxBuildHeight() - this.level.getMinBuildHeight())
-				throw new IllegalArgumentException("Invalid vertical radius provided, must be between 1 and " + (this.level.getMaxBuildHeight() - this.level.getMinBuildHeight()) + " blocks (inclusive)");
-		}
-	}
-
-	protected List<Entity> getEntitiesInBlastRadius() {
-		Predicate<Entity> predicate = this.info.affectsOwner ? entity -> !entity.ignoreExplosion() && this.info.affectedEntityPredicate.test(this, entity) : entity -> entity != this.source && entity != this.indirectExploder && !entity.ignoreExplosion() && this.info.affectedEntityPredicate.test(this, entity);
-
-		if (this.info.squareRadius != null) {
-			return EntityRetrievalUtil.getEntities(this.level, this.info.squareRadius.inflateAABB(new AABB(this.origin.x, this.origin.y, this.origin.z, this.origin.x, this.origin.y, this.origin.z)), predicate);
-		}
-		else {
-			return EntityRetrievalUtil.getEntities(this.level, new AABB(this.origin.x - this.info.radius, this.origin.y - this.info.radius, this.origin.z - this.info.radius, this.origin.x + this.info.radius, this.origin.y + this.info.radius, this.origin.z + this.info.radius), predicate);
-		}
-	}
-
-	protected void captureBlockDrops(BlockState state, BlockPos pos, ObjectArrayList<Pair<ItemStack, BlockPos>> loot) {
-		if (state.canDropFromExplosion(this.level, pos, this) && RandomUtil.percentChance(this.info.blockDropChance)) {
-			ServerLevel serverLevel = (ServerLevel)level;
-			LootContext.Builder lootContext = new LootContext.Builder(serverLevel)
-					.withRandom(this.level.random)
-					.withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
-					.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
-					.withParameter(LootContextParams.EXPLOSION_RADIUS, (this.info.baseDamage + this.info.radius) / 2f)
-					.withOptionalParameter(LootContextParams.BLOCK_ENTITY, state.hasBlockEntity() ? this.level.getBlockEntity(pos) : null)
-					.withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
-
-			state.spawnAfterBreak(serverLevel, pos, ItemStack.EMPTY, this.source instanceof Player || this.indirectExploder instanceof Player);
-			state.getDrops(lootContext).forEach(stack -> addBlockDrops(loot, stack, pos));
-		}
-	}
-
-	protected void spawnDrops(List<Pair<ItemStack, BlockPos>> loot) {
-		for (Pair<ItemStack, BlockPos> lootDrop : loot) {
-			Block.popResource(this.level, lootDrop.getSecond(), lootDrop.getFirst());
-		}
-	}
-
 	public ExplosionInfo getExplosionInfo() {
 		return this.info;
 	}
@@ -146,12 +94,94 @@ public class ExtendedExplosion extends Explosion {
 		return this.level;
 	}
 
+	public RandomUtil.EasyRandom rand() {
+		return this.random;
+	}
+
 	public int getExplodeTick() {
 		return this.explodeTick;
 	}
 
 	public boolean shouldDamageBlocks() {
-		if (this.info.noBlockDamage)
+		return this.shouldDamageBlocks;
+	}
+
+	public int stepsPerTick() {
+		return 1000;
+	}
+
+	/**
+	 * Begin the actual explosion
+	 */
+	@Override
+	public void explode() {
+		sanityCheck();
+
+		this.shouldDamageBlocks = griefingCheck();
+		this.damageCalculator = this.source != null ? new EntityBasedExplosionDamageCalculator(this.source) : new ExplosionDamageCalculator();
+
+		this.level.gameEvent(this.source, GameEvent.EXPLODE, this.origin);
+
+		this.boundsPredicate = this.info.getRadius().map(
+				radius -> pos -> pos.closerThan(this.origin, radius),
+				squareRadius -> {
+					AABB bounds = squareRadius.inflateAABB(new AABB(this.origin.x, this.origin.y, this.origin.z, this.origin.x, this.origin.y, this.origin.z));
+
+					return bounds::contains;
+				});
+
+		doPreExplosionWork();
+		this.toBlow = getAffectedBlocks();
+		this.affectedEntities = getAffectedEntities();
+
+		filterAffectedBlocksAndEntities();
+		ForgeEventFactory.onExplosionDetonate(this.level, this, this.affectedEntities, (this.info.getBaseDamage() + this.info.getEffectiveRadius()) / 2f);
+		this.level.playSound(null, this.origin.x, this.origin.y, this.origin.z, this.info.getExplosionSound(), SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F);
+
+		if (this.info.isSingleTickExplosion()) {
+			this.info.doParticles(this, -1);
+
+			for (BlockPos pos : this.toBlow) {
+				BlockState state = this.affectedBlocks.get(pos);
+
+				if (state == null)
+					continue;
+
+				captureDropsForBlock(state, pos, this.blockDrops);
+				state.onBlockExploded(this.level, pos, this);
+				this.info.blockBroken(this, state, pos);
+			}
+
+			impactEntities();
+			finishExplosion();
+		}
+		else {
+			doExplosionTick(stepsPerTick());
+		}
+	}
+
+	/**
+	 * Safety check the explosion and its attributes prior to explosion, to prevent any unintentional problems
+	 */
+	protected void sanityCheck() {
+		if (!NumberUtil.numberIsBetween(this.info.getEffectiveRadius(), 0, 256))
+			throw new IllegalArgumentException("Invalid radius provided, must be between 1 and 255 blocks (inclusive)");
+
+		if (!this.info.isBlockDamaging() && !this.info.isEntityDamaging() && !this.info.isKnockbackEntities())
+			throw new IllegalArgumentException("Provided ExplosionInfo has all functional effects disabled. What are you even doing?");
+	}
+
+	/**
+	 * Complete any pre-emptive work required for the explosion, that needs to be done before any of the actual explosion work is done
+	 */
+	protected void doPreExplosionWork() {}
+
+	/**
+	 * Make the necessary checks and events to determine whether the given explosion should do block damage
+	 * @return Whether the explosion should do block damage
+	 */
+	protected boolean griefingCheck() {
+		if (!this.info.isBlockDamaging())
 			return false;
 
 		if (this.indirectExploder != null) {
@@ -171,5 +201,99 @@ public class ExtendedExplosion extends Explosion {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Collect and return the block positions affected by this explosion. Must be completed prior to the actual explosion, for event handling
+	 * @return The list of block positions that are to be impacted by this explosion
+	 */
+	protected ObjectArrayList<BlockPos> getAffectedBlocks() {
+		return new ObjectArrayList<>();
+	}
+
+	/**
+	 * Collect and return the entities affected by this explosion. Should be completed prior to the actual explosion
+	 * @return The list of entities that are to be impacted by this explosion
+	 */
+	protected List<Entity> getAffectedEntities() {
+		Predicate<Entity> predicate = this.info.getAffectsOwner() ? entity -> !entity.ignoreExplosion() && this.info.shouldAffectEntity(this, entity) : entity -> entity != this.source && entity != this.indirectExploder && !entity.ignoreExplosion() && this.info.shouldAffectEntity(this, entity);
+
+		return this.info.getRadius().map(
+				radius -> EntityRetrievalUtil.getEntities(this.level, AABB.ofSize(this.origin, radius * 2, radius * 2, radius * 2), predicate),
+				squareRadius -> EntityRetrievalUtil.getEntities(this.level, squareRadius.inflateAABB(new AABB(this.origin.x, this.origin.y, this.origin.z, this.origin.x, this.origin.y, this.origin.z)), predicate)
+		);
+	}
+
+	/**
+	 * Filter out anything that shouldn't be affected by the explosion prior to the events and callbacks being called
+	 */
+	protected void filterAffectedBlocksAndEntities() {}
+
+	/**
+	 * Called when the explosion is complete.<br>
+	 * This spawns the collected loot and handles final callbacks
+	 */
+	protected void finishExplosion() {
+		spawnDrops(this.blockDrops);
+		this.info.postExplosionCallback(this);
+	}
+
+	/**
+	 * Handle a single tick's worth of functionality for the explosion, then schedule the next tick's work.<br>
+	 * This is only called for multi-tick explosions.<br>
+	 * <br>
+	 * This method assumes you have already completed all other functional work such as filtering out irrelevant blocks or entities
+	 * @param steps The number of actions (usually block-breaks) to run before stopping and scheduling the next tick's work.
+	 */
+	protected void doExplosionTick(int steps) {
+		this.info.doParticles(this, this.explodeTick);
+
+		if (shouldDamageBlocks()) {
+			int step = 0;
+
+			for (Iterator<BlockPos> iterator = this.toBlow.iterator(); step++ <= steps && iterator.hasNext();) {
+				BlockPos pos = iterator.next();
+				BlockState state = this.affectedBlocks.get(pos);
+
+				captureDropsForBlock(state, pos, this.blockDrops);
+				state.onBlockExploded(this.level, pos, this);
+				this.info.blockBroken(this, state, pos);
+
+				iterator.remove();
+			}
+
+			if (this.explodeTick++ < 600 && !this.toBlow.isEmpty()) {
+				AoAScheduler.scheduleSyncronisedTask(() -> doExplosionTick(steps), 1);
+
+				return;
+			}
+		}
+
+		impactEntities();
+		finishExplosion();
+	}
+
+	protected void impactEntities() {}
+
+	protected void captureDropsForBlock(BlockState state, BlockPos pos, ObjectArrayList<Pair<ItemStack, BlockPos>> loot) {
+		if (state.canDropFromExplosion(this.level, pos, this) && RandomUtil.percentChance(this.info.getBlockDropChance())) {
+			ServerLevel serverLevel = (ServerLevel)level;
+			LootContext.Builder lootContext = new LootContext.Builder(serverLevel)
+					.withRandom(this.level.random)
+					.withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
+					.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
+					.withParameter(LootContextParams.EXPLOSION_RADIUS, (this.info.getBaseDamage() + this.info.getEffectiveRadius()) / 2f)
+					.withOptionalParameter(LootContextParams.BLOCK_ENTITY, state.hasBlockEntity() ? this.level.getBlockEntity(pos) : null)
+					.withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
+
+			state.spawnAfterBreak(serverLevel, pos, ItemStack.EMPTY, this.source instanceof Player || this.indirectExploder instanceof Player);
+			state.getDrops(lootContext).forEach(stack -> addBlockDrops(loot, stack, pos));
+		}
+	}
+
+	protected void spawnDrops(List<Pair<ItemStack, BlockPos>> loot) {
+		for (Pair<ItemStack, BlockPos> lootDrop : loot) {
+			Block.popResource(this.level, lootDrop.getSecond(), lootDrop.getFirst());
+		}
 	}
 }

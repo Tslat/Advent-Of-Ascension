@@ -7,11 +7,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.mob.overworld.BombCarrierEntity;
 import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
 import net.tslat.aoa3.library.object.explosion.StandardExplosion;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -19,8 +19,6 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class BombCarrierDynamiteEntity extends BaseMobProjectile implements GeoEntity {
-	public static final ExplosionInfo EXPLOSION_INFO = new ExplosionInfo().baseDamage(8).radius(3f).penetration(8.5f).blocksDropChance(0.3f).explodeInOneTick();
-
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
 
 	public BombCarrierDynamiteEntity(Level world, Vec3 position, BombCarrierEntity owner) {
@@ -55,7 +53,7 @@ public class BombCarrierDynamiteEntity extends BaseMobProjectile implements GeoE
 
 	private void explode(Vec3 position) {
 		if (level instanceof ServerLevel serverLevel)
-			new StandardExplosion(EXPLOSION_INFO, serverLevel, this, position).explode();
+			new StandardExplosion(AoAExplosions.BOMB_CARRIER_DYNAMITE, serverLevel, this, position).explode();
 	}
 
 	@Override

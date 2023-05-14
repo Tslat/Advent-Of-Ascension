@@ -61,7 +61,7 @@ public class ParticleEffectPacket implements AoAPacket {
 
 				if (entity instanceof LivingEntity) {
 					if (EntityPredicate.TARGETABLE_ENTITIES.test(entity))
-						DamageUtil.safelyDealDamage(DamageUtil.miscDamage(DamageTypes.GENERIC, entity.level), entity, 2);
+						DamageUtil.safelyDealDamage(DamageUtil.miscDamage(DamageTypes.MOB_ATTACK_NO_AGGRO, entity.level), entity, 4);
 				}
 				else if (entity instanceof Projectile) {
 					entity.setDeltaMovement(entity.getDeltaMovement().multiply(-0.5f, -0.5f, -0.5f));
