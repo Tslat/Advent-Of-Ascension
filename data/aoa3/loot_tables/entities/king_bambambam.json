@@ -415,7 +415,7 @@
           "weight": 3
         },
         {
-          "type": "minecraft:group",
+          "type": "aoa3:collection",
           "children": [
             {
               "type": "minecraft:item",

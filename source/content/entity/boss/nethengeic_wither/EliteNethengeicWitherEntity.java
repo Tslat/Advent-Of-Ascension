@@ -40,6 +40,7 @@ import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.ai.movehelper.AirborneMoveControl;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
+import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.FireballEntity;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
@@ -67,7 +68,6 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliat
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -177,7 +177,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 	@Override
 	public List<ExtendedSensor<AoABoss>> getSensors() {
 		return ObjectArrayList.of(
-				new NearbyPlayersSensor<>(),
+				new AggroBasedNearbyPlayersSensor<>(),
 				new NearbyLivingEntitySensor<AoABoss>().setScanRate(entity -> 40),
 				new HurtBySensor<>()
 		);
@@ -355,8 +355,8 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 		if (projectile == null) {
 			DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, 1);
 
-			if (RandomUtil.oneInNChance(3))
-				target.setSecondsOnFire(Math.min(30, (int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1));
+			if (RandomUtil.oneInNChance(3) && target.getRemainingFireTicks() < 300)
+				target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1);
 
 			if (RandomUtil.oneInNChance(3) && target instanceof LivingEntity livingEntity)
 				livingEntity.addEffect(new MobEffectInstance(MobEffects.WITHER, 80, 1));
@@ -403,16 +403,15 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 		}
 
 		float priorHealth = getHealth();
-		boolean success = super.hurt(source, amount);
 
-		if (success) {
+		if (super.hurt(source, amount)) {
 			float maxHealth = getMaxHealth();
 			float quarterHealth = maxHealth / 4f;
 			float currentHealth = getHealth();
 
 			for (float checkHealth = maxHealth - quarterHealth; checkHealth > 0; checkHealth -= quarterHealth) {
 				if (priorHealth > checkHealth && currentHealth < checkHealth) {
-					crossedThreshold = true;
+					this.crossedThreshold = true;
 
 					break;
 				}

@@ -128,8 +128,7 @@ public final class DamageUtil {
 		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
 
-		Vec3 attackerVelocity = attacker.getDeltaMovement()
-				.multiply(xModifier, yModifier, zModifier);
+		Vec3 attackerVelocity = attacker.getDeltaMovement().multiply(xModifier, yModifier, zModifier);
 		double xVelocity = attackerVelocity.x() * xModifier;
 		double yVelocity = attackerVelocity.y() * yModifier;
 		double zVelocity = attackerVelocity.z() * zModifier;

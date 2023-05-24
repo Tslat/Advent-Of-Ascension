@@ -21,6 +21,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.entity.PartEntity;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
@@ -299,8 +300,7 @@ public final class EntityUtil {
 		return killers;
 	}
 
-	public static Vec3
-	getDirectionForFacing(Entity entity) {
+	public static Vec3 getDirectionForFacing(Entity entity) {
 		return new Vec3(
 				-Mth.sin(entity.getYRot() * (float)Math.PI / 180f),
 				-Mth.sin(entity.getXRot() * (float)Math.PI / 180f),
@@ -372,5 +372,13 @@ public final class EntityUtil {
 		}
 
 		return impactEntity == null ? null : new EntityHitResult(impactEntity, position);
+	}
+
+	@org.jetbrains.annotations.Nullable
+	public static LivingEntity getLivingEntityFromSelfOrPart(Entity entity) {
+		if (entity instanceof LivingEntity livingEntity)
+			return livingEntity;
+
+		return entity instanceof PartEntity<?> part && part.getParent() instanceof LivingEntity livingEntity ? livingEntity : null;
 	}
 }

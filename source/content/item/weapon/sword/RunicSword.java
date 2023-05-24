@@ -29,8 +29,20 @@ public class RunicSword extends BaseSword {
 	}
 
 	@Override
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
+		if (baseDamage / getDamage() > 0.75f) {
+			ItemStack offhandStack = attacker.getOffhandItem();
+
+			if (offhandStack.getItem() == AoAItems.FIRE_RUNE.get() && offhandStack.getCount() >= 5)
+				target.setSecondsOnFire(5);
+		}
+
+		return super.getDamageForAttack(target, attacker, swordStack, baseDamage);
+	}
+
+	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.level.isClientSide && attackCooldown > 0.75 && attacker instanceof Player) {
+		if (!attacker.level.isClientSide && attackCooldown > 0.75) {
 			ItemStack offhandStack = attacker.getOffhandItem();
 
 			if (offhandStack.is(AoATags.Items.ADVENT_RUNE) && offhandStack.getCount() >= 5) {
@@ -42,9 +54,6 @@ public class RunicSword extends BaseSword {
 				else if (rune == AoAItems.WITHER_RUNE.get()) {
 					target.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 2, false, true));
 				}
-				else if (rune == AoAItems.FIRE_RUNE.get()) {
-					target.setSecondsOnFire(5);
-				}
 				else if (rune == AoAItems.WIND_RUNE.get()) {
 					DamageUtil.doScaledKnockback(target, attacker, 0.5f, 1, 1, 1);
 				}
@@ -54,11 +63,11 @@ public class RunicSword extends BaseSword {
 				else if (rune == AoAItems.CHARGED_RUNE.get()) {
 					((ServerLevel)target.level).sendParticles(ParticleTypes.ANGRY_VILLAGER, target.getX() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), target.getY() + 1 + (RandomUtil.randomValueUpTo(1) * target.getBbHeight()), target.getZ() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), 3, 0, 0, 0, (double)0);
 				}
-				else {
+				else if (rune != AoAItems.FIRE_RUNE.get()) {
 					return;
 				}
 
-				if (!((Player)attacker).isCreative()) {
+				if (attacker instanceof Player pl && !pl.getAbilities().instabuild) {
 					offhandStack.shrink(5);
 					ItemUtil.damageItem(stack, attacker, 1, EquipmentSlot.MAINHAND);
 				}

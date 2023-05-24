@@ -19,6 +19,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.movehelper.UnderwaterWalkingMovementController;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
@@ -63,7 +64,7 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 	@Override
 	public List<ExtendedSensor<ChomperEntity>> getSensors() {
 		return ObjectArrayList.of(
-				new NearbyPlayersSensor<>(),
+				new AggroBasedNearbyPlayersSensor<>(),
 				new NearbyLivingEntitySensor<ChomperEntity>().setPredicate((target, entity) -> {
 					EntityDimensions entitySize = target.getDimensions(Pose.STANDING);
 

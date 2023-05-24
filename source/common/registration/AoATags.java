@@ -204,6 +204,7 @@ public final class AoATags {
 		public static final TagKey<Item> SHULKER_BOXES = tag("shulker_boxes");
 		public static final TagKey<Item> IVORY = tag("ivory");
 		public static final TagKey<Item> RODS_METAL = tag("rods/metal");
+		public static final TagKey<Item> AIRTIGHT = tag("armor/airtight");
 
 		public static final TagKey<Item> COOKIES = tag("cookies");
 		public static final TagKey<Item> RAWMEATS = tag("rawmeats");

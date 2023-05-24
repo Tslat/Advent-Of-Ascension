@@ -1,6 +1,8 @@
 {
   "chance_per_player": 1.0,
-  "dimension_blacklist": [],
+  "dimension_blacklist": [
+    "aoa3:nowhere"
+  ],
   "extra_delay_per_spawn": {
     "type": "minecraft:uniform",
     "value": {

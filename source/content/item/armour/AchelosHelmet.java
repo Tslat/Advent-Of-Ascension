@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -33,11 +32,6 @@ public class AchelosHelmet extends AdventArmour {
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
 		plData.player().addEffect(new MobEffectInstance(MobEffects.CONDUIT_POWER, 0, 1, true, false));
 		plData.player().addEffect(new MobEffectInstance(MobEffects.DOLPHINS_GRACE, 0, 0, true, false));
-	}
-
-	@Override
-	public boolean isHelmetAirTight(ServerPlayer player) {
-		return true;
 	}
 
 	@Override

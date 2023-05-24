@@ -60,6 +60,12 @@ public class StickyFireballEntity extends FireballEntity {
 				discard();
 			}
 			else if (result instanceof BlockHitResult blockHitResult) {
+				if (getDeltaMovement().y > 0) {
+					setDeltaMovement(getDeltaMovement().multiply(1, -0.05f, 1));
+
+					return;
+				}
+
 				if (!this.level.isClientSide && shooter != null & getDeltaMovement().lengthSqr() != 0) {
 					onHitBlock(blockHitResult);
 					shooter.doRangedAttackBlock(this, level.getBlockState(BlockPos.containing(result.getLocation())), BlockPos.containing(result.getLocation()), blockHitResult.getDirection());

@@ -32,6 +32,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
 import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -93,6 +94,7 @@ public final class AoARegistries {
 
 	public static final VanillaRegistryHelper<LootItemFunctionType> LOOT_FUNCTIONS = new VanillaRegistryHelper<>(Registries.LOOT_FUNCTION_TYPE, AoALootOperations.LootFunctions::init);
 	public static final VanillaRegistryHelper<LootItemConditionType> LOOT_CONDITIONS = new VanillaRegistryHelper<>(Registries.LOOT_CONDITION_TYPE, AoALootOperations.LootConditions::init);
+	public static final VanillaRegistryHelper<LootPoolEntryType> LOOT_ENTRY_TYPES = new VanillaRegistryHelper<>(Registries.LOOT_POOL_ENTRY_TYPE, AoALootOperations.LootEntryTypes::init);
 	public static final VanillaRegistryHelper<RecipeType<?>> RECIPE_TYPES = new VanillaRegistryHelper<>(Registries.RECIPE_TYPE, AoARecipes::init);
 	public static final VanillaRegistryHelper<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPES = new VanillaRegistryHelper<>(Registries.COMMAND_ARGUMENT_TYPE, AoACommands::init);
 

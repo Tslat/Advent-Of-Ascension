@@ -17,6 +17,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
 import net.minecraft.world.item.Item;
@@ -35,6 +36,7 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
+import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.content.entity.brain.task.temp.LookAtAttackTarget;
 import net.tslat.aoa3.content.entity.brain.task.temp.NearbyItemsSensor;
 import net.tslat.aoa3.content.entity.mob.nether.EmbrakeEntity;
@@ -62,8 +64,6 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttack
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -172,11 +172,11 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 	@Override
 	public List<ExtendedSensor<AoABoss>> getSensors() {
 		return ObjectArrayList.of(
-				new NearbyPlayersSensor<>(),
-				new NearbyLivingEntitySensor<AoABoss>().setScanRate(entity -> 40),
+				new AggroBasedNearbyPlayersSensor<AoABoss>()
+						.onlyAttacking(TargetingConditions.forCombat().ignoreLineOfSight()::test)
+						.onlyTargeting(TargetingConditions.forNonCombat().ignoreLineOfSight()::test),
 				new HurtBySensor<AoABoss>().setPredicate((source, mob) -> !EntityUtil.isHostileMob(mob)),
-				new NearbyItemsSensor<>()
-		);
+				new NearbyItemsSensor<>());
 	}
 
 	@Override
@@ -189,7 +189,8 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 	@Override
 	public BrainActivityGroup<AoABoss> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
-				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER));
+				new TargetOrRetaliate<>()
+						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER));
 	}
 
 	@Override
@@ -353,7 +354,7 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 				StickyFireballEntity fireball = new StickyFireballEntity(entity.level, (KingBamBamBamEntity)entity, BaseMobProjectile.Type.PHYSICAL);
 
 				fireball.setPos((forward.x + left.x) * 0.25f + entity.getRandomX(0.25f), entity.getY() + 4.5f, (forward.z + left.z) * 0.25f + entity.getRandomZ(0.25f));
-				fireball.setDeltaMovement(entity.getRandom().nextGaussian() * 0.4f, 1.4f, entity.getRandom().nextGaussian() * 0.4f);
+				fireball.setDeltaMovement(entity.getRandom().nextGaussian() * 0.15f, 1.2f, entity.getRandom().nextGaussian() * 0.15f);
 				entity.level.addFreshEntity(fireball);
 			}
 

@@ -17,8 +17,11 @@ public class FireborneSword extends BaseSword {
 	}
 
 	@Override
-	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		target.setSecondsOnFire((int)(3 * attackCooldown));
+	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
+		if (baseDamage > 0)
+			target.setSecondsOnFire((int)(3 * baseDamage / getDamage()));
+
+		return baseDamage;
 	}
 
 	@Override

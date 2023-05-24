@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -52,11 +51,6 @@ public class SealordHelmet extends AdventArmour {
 	@Override
 	public void onUnequip(ServerPlayerDataManager plData, @Nullable EquipmentSlot slot) {
 		EntityUtil.removeAttributeModifier(plData.player(), Attributes.ATTACK_SPEED, SEALORD_ATTACK_BUFF);
-	}
-
-	@Override
-	public boolean isHelmetAirTight(ServerPlayer player) {
-		return true;
 	}
 
 	@Override

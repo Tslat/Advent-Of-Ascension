@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -34,11 +33,6 @@ public class OceanusHelmet extends AdventArmour {
 
 		if (plData.player().isInWater())
 			plData.player().setAirSupply(-10);
-	}
-
-	@Override
-	public boolean isHelmetAirTight(ServerPlayer player) {
-		return true;
 	}
 
 	@Override

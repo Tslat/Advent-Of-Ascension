@@ -13,9 +13,9 @@ import java.util.function.Supplier;
 public final class AoAArmour {
 	public static void init() {}
 
-	public static final RegistryObject<Item> ACHELOS_DIVING_HELMET = registerArmour("achelos_helmet", AchelosHelmet::new);
-	public static final RegistryObject<Item> OCEANUS_DIVING_HELMET = registerArmour("oceanus_helmet", OceanusHelmet::new);
-	public static final RegistryObject<Item> SEALORD_DIVING_HELMET = registerArmour("sealord_helmet", SealordHelmet::new);
+	public static final RegistryObject<Item> ACHELOS_HELMET = registerArmour("achelos_helmet", AchelosHelmet::new);
+	public static final RegistryObject<Item> OCEANUS_HELMET = registerArmour("oceanus_helmet", OceanusHelmet::new);
+	public static final RegistryObject<Item> SEALORD_HELMET = registerArmour("sealord_helmet", SealordHelmet::new);
 	public static final RegistryObject<Item> FACE_MASK = registerArmour("face_mask", FaceMask::new);
 	public static final RegistryObject<Item> NIGHT_VISION_GOGGLES = registerArmour("night_vision_goggles", NightVisionGoggles::new);
 	

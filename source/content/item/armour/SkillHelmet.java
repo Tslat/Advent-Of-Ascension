@@ -3,14 +3,12 @@ package net.tslat.aoa3.content.item.armour;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterials;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -19,6 +17,7 @@ import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nonnull;
@@ -28,10 +27,11 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class SkillHelmet extends AdventArmour {
+	private static final ArmorMaterial MATERIAL = ItemUtil.customArmourMaterial("skill_helmet", 50, new int[] {5, 8, 9, 5}, 20, SoundEvents.ARMOR_EQUIP_LEATHER, 7);
 	private final Supplier<AoASkill> skill;
 
 	public SkillHelmet(Supplier<AoASkill> skill) {
-		super(ArmorMaterials.DIAMOND, ArmorItem.Type.HELMET);
+		super(MATERIAL, ArmorItem.Type.HELMET, Rarity.RARE);
 
 		this.skill = skill;
 	}

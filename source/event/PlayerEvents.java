@@ -114,8 +114,8 @@ public class PlayerEvents {
 		if (DamageUtil.isMeleeDamage(ev.getSource()) && attacker instanceof LivingEntity) {
 			ItemStack weapon = ((LivingEntity)attacker).getItemInHand(InteractionHand.MAIN_HAND);
 
-			if (weapon.getItem() instanceof BaseSword baseSword) // TODO chck swing progress reduction on getDamageForAttack usage
-				ev.setAmount((float)baseSword.getDamageForAttack(ev.getEntity(), (LivingEntity)attacker, weapon, ev.getAmount()));
+			if (weapon.getItem() instanceof BaseSword baseSword)
+				ev.setAmount(baseSword.getDamageForAttack(ev.getEntity(), (LivingEntity)attacker, weapon, ev.getAmount()));
 		}
 
 		if (ev.getEntity() instanceof ServerPlayer pl) {

@@ -110,7 +110,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> DARK_BONES = registerItem("dark_bones", () -> new ReservedItem("alien_orb"), (Supplier<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> DARKLY_POWDER = registerItem("darkly_powder", miscItem());
 	public static final RegistryObject<Item> DENSE_ROCK = registerItem("dense_rock", miscItem());
-	public static final RegistryObject<Item> DISTORTING_ARTIFACT = registerItem("distorting_artifact", DistortingArtifact::new);
 	public static final RegistryObject<Item> BLUE_DRUSE = registerItem("blue_druse", miscItem());
 	public static final RegistryObject<Item> GREEN_DRUSE = registerItem("green_druse", miscItem());
 	public static final RegistryObject<Item> PURPLE_DRUSE = registerItem("purple_druse", miscItem());
@@ -131,7 +130,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> YELLOW_GEMSTONES = registerItem("yellow_gemstones", miscItem());
 	public static final RegistryObject<Item> GHOSTLY_POWDER = registerItem("ghostly_powder", miscItem());
 	public static final RegistryObject<Item> GHOULASM = registerItem("ghoulasm", miscItem());
-	public static final RegistryObject<Item> GRAVITATOR = registerItem("gravitator", Gravitator::new);
 	public static final RegistryObject<Item> HARDENED_CONFETTI_BALL = registerItem("hardened_confetti_ball", miscFuelItem(120));
 	public static final RegistryObject<Item> HIVE_CHUNK = registerItem("hive_chunk", HiveChunk::new);
 	public static final RegistryObject<Item> ICE_CRYSTAL = registerItem("ice_crystal", miscItem());

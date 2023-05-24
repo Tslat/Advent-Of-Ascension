@@ -119,7 +119,8 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
 
     @Override
     public void doRangedAttackEntity(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, Entity target) {
-        target.setSecondsOnFire((int)Math.ceil(target.getRemainingFireTicks() / 20f) + 1);
+        if (target.getRemainingFireTicks() < 200)
+            target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1);
 
        if (DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get())) && rand().oneInNChance(10))
            EntityUtil.applyPotions(target, new EffectBuilder(AoAMobEffects.BURNED.get(), 600));

@@ -21,7 +21,8 @@ public final class AoAExplosions {
 			.blocksDropChance(0.3f);
 	public static final ExplosionInfo KING_BAMBAMBAM_DISCHARGE = new ExplosionInfo()
 			.radius(5)
-			.damageMod((explosion, target) -> PlayerUtil.getPlayerOrOwnerIfApplicable(target) != null ? 40f : 0f)
+			.baseDamage(40)
+			.damageMod((explosion, target) -> PlayerUtil.getPlayerOrOwnerIfApplicable(target) != null ? 1 : 0f)
 			.onHit((explosion, target) -> target.setSecondsOnFire(target.getRemainingFireTicks() / 20 + 10));
 	public static final ExplosionInfo LITTLE_BAM_OVERLOAD = new ExplosionInfo()
 			.radius(6)
@@ -65,6 +66,7 @@ public final class AoAExplosions {
 			});
 	public static final ExplosionInfo STICKY_FIREBALL = new ExplosionInfo()
 			.radius(2)
+			.baseDamage(1)
 			.damageMod((explosion, target) -> (target.level.getDifficulty().getId() + 1) * 5f);
 	public static final ExplosionInfo EXPLOSIVE_BOW = new ExplosionInfo()
 			.radius(2.5f)

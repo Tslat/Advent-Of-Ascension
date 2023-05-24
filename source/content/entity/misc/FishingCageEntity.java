@@ -36,6 +36,7 @@ import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -178,6 +179,12 @@ public class FishingCageEntity extends Entity {
 	@Override
 	public boolean canBeCollidedWith() {
 		return tickCount > 1;
+	}
+
+	@Nullable
+	@Override
+	public ItemStack getPickResult() {
+		return AoATools.FISHING_CAGE.get().getDefaultInstance();
 	}
 
 	@Override

@@ -23,6 +23,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
+import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.content.entity.brain.task.custom.ChargeAttack;
 import net.tslat.aoa3.content.entity.brain.task.custom.GroundSlamAttack;
 import net.tslat.aoa3.library.builder.SoundBuilder;
@@ -169,7 +170,7 @@ public class EliteSmashEntity extends AoABoss {
 	@Override
 	public List<ExtendedSensor<AoABoss>> getSensors() {
 		return ObjectArrayList.of(
-				new NearbyPlayersSensor<>(),
+				new AggroBasedNearbyPlayersSensor<>(),
 				new HurtBySensor<>(),
 				new UnreachableTargetSensor<AoABoss>()
 		);

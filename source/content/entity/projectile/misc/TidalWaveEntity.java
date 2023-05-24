@@ -6,8 +6,9 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
+import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.EntityUtil;
 
 public class TidalWaveEntity extends ThrowableProjectile {
 	public TidalWaveEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
@@ -54,10 +55,10 @@ public class TidalWaveEntity extends ThrowableProjectile {
 				EntityHitResult rayTraceResult = (EntityHitResult)result;
 
 				if (rayTraceResult.getEntity() != getOwner()) {
-					Vec3 motion = getDeltaMovement();
+					LivingEntity target = EntityUtil.getLivingEntityFromSelfOrPart(rayTraceResult.getEntity());
 
-					rayTraceResult.getEntity().push(motion.x() * 0.3, motion.y() * 0.3, motion.z() * 0.3);
-					rayTraceResult.getEntity().hurtMarked = true;
+					if (target != null)
+						DamageUtil.doBodySlamKnockback(target, this, 0.3f, 0.3f, 0.3f);
 				}
 			}
 		}

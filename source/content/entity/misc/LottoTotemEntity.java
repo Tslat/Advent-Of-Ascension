@@ -25,8 +25,10 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LootUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.UUID;
 
@@ -65,7 +67,6 @@ public class LottoTotemEntity extends Entity {
 		if (isAlive() && (ownerUUID == null || player.getUUID().equals(ownerUUID))) {
 			if (player instanceof ServerPlayer) {
 				if (winnerUUID != null && winnerUUID.equals(getUUID())) {
-
 					for (ItemStack stack : LootUtil.generateLoot((ServerLevel)level,  new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftContext((ServerLevel)level, position(), 5, player))) {
 						ItemEntity drop = spawnAtLocation(stack, 0);
 
@@ -139,6 +140,12 @@ public class LottoTotemEntity extends Entity {
 	@Override
 	public boolean isPickable() {
 		return true;
+	}
+
+	@Nullable
+	@Override
+	public ItemStack getPickResult() {
+		return AoAItems.LOTTO_TOTEM.get().getDefaultInstance();
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
@@ -17,7 +18,7 @@ public class ToyMerchantEntity extends AoATrader {
 			.trades(1,
 					BuildableTrade.trade(AoAItems.BALLOON, 10).cost(AoAItems.CIRCUS_COIN, 2).xp(5).stock(32))
 			.trades(3,
-					BuildableTrade.trade(AoAItems.GRAVITATOR).cost(AoAItems.CIRCUS_COIN, 30).xp(40).stock(5),
+					BuildableTrade.trade(AoATools.GRAVITATOR).cost(AoAItems.CIRCUS_COIN, 30).xp(40).stock(5),
 					BuildableTrade.trade(AoAItems.TOY_GYROCOPTER).cost(AoAItems.CIRCUS_COIN, 10).xp(25))
 			.trades(4,
 					BuildableTrade.trade(AoAWeapons.CONFETTI_CLUSTER).cost(AoAItems.CIRCUS_COIN, 12).xp(40).stock(5),

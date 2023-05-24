@@ -9,7 +9,7 @@
       "#minecraft:is_overworld"
     ],
     "if_any": [
-      "#forge:is_coniferous"
+      "#minecraft:is_jungle"
     ]
   },
   "spawn": [

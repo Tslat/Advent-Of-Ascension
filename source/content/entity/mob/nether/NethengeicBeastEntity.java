@@ -359,8 +359,8 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
         if (projectile == null) {
             DamageUtil.safelyDealDamage(DamageUtil.positionedEntityDamage(AoADamageTypes.MOB_FLAMETHROWER, this, position()), target, 1);
 
-            if (RandomUtil.oneInNChance(4))
-                target.setSecondsOnFire(Math.min(30, (int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1));
+            if (RandomUtil.oneInNChance(4) && target.getRemainingFireTicks() < 300)
+                target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 1);
         }
     }
 

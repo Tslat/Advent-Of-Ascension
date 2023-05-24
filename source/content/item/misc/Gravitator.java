@@ -31,18 +31,21 @@ public class Gravitator extends Item {
 	}
 
 	@Override
-	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
-		if (isSelected && entity instanceof LivingEntity) {
+	public void inventoryTick(ItemStack stack, Level level, Entity entity, int itemSlot, boolean isSelected) {
+		if (entity instanceof Player pl && (isSelected || pl.getOffhandItem() == stack)) {
 			if (entity.getDeltaMovement().y() < -0.079) {
 				entity.setDeltaMovement(entity.getDeltaMovement().multiply(1, 0.8f, 1));
-				entity.fallDistance *= 0.8f;
 
-				if (RandomUtil.oneInNChance(15) && (!(entity instanceof Player) || !((Player)entity).isCreative()))
-					ItemUtil.damageItem(stack, (LivingEntity)entity, 1, EquipmentSlot.MAINHAND);
+				if (!level.isClientSide) {
+					if (RandomUtil.oneInNChance(15) && !pl.getAbilities().instabuild)
+						ItemUtil.damageItem(stack, (LivingEntity)entity, 1, EquipmentSlot.MAINHAND);
+
+					entity.fallDistance *= 0.8f;
+				}
 			}
 
-			if (!world.isClientSide) {
-				if (WorldUtil.isWorld(world, AoADimensions.HAVEN.key) && !entity.isOnGround() && world.getGameTime() % 5 == 0 && entity instanceof Player pl) {
+			if (!level.isClientSide) {
+				if (WorldUtil.isWorld(level, AoADimensions.HAVEN.key) && !entity.isOnGround() && level.getGameTime() % 5 == 0) {
 					if (pl.isCreative())
 						return;
 
@@ -51,7 +54,7 @@ public class Gravitator extends Item {
 					for (ItemStack invStack : pl.getInventory().items) {
 						if (invStack.getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 							for (int i = 0; i < entity.getY(); i++) {
-								if (!world.isEmptyBlock(pos.set(pos.getX(), pos.getY() - i, pos.getZ())))
+								if (!level.isEmptyBlock(pos.set(pos.getX(), pos.getY() - i, pos.getZ())))
 									return;
 							}
 

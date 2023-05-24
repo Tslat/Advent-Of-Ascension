@@ -5,6 +5,8 @@ import net.minecraft.world.item.Rarity;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
+import net.tslat.aoa3.content.item.misc.DistortingArtifact;
+import net.tslat.aoa3.content.item.misc.Gravitator;
 import net.tslat.aoa3.content.item.tool.axe.*;
 import net.tslat.aoa3.content.item.tool.hoe.BaseHoe;
 import net.tslat.aoa3.content.item.tool.hoe.DryadsBlessing;
@@ -65,6 +67,8 @@ public final class AoATools {
 	public static final RegistryObject<Item> STONE_BOWL = registerTool("stone_bowl", () -> new InfusionBowl(100, 1, 0));
 	public static final RegistryObject<Item> DIAMOND_BOWL = registerTool("diamond_bowl", () -> new InfusionBowl(750, 5, 10));
 	public static final RegistryObject<Item> EXP_FLASK = registerTool("exp_flask", ExpFlask::new);
+	public static final RegistryObject<Item> GRAVITATOR = registerTool("gravitator", Gravitator::new);
+	public static final RegistryObject<Item> DISTORTING_ARTIFACT = registerTool("distorting_artifact", DistortingArtifact::new);
 
 	private static <T extends Item> RegistryObject<T> registerTool(String registryName, Supplier<T> item) {
 		return AoAItems.registerItem(registryName, item, () -> AoACreativeModeTabs.TOOLS);

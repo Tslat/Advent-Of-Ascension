@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.bow;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -18,9 +17,10 @@ public class InfernalBow extends BaseBow {
 	}
 
 	@Override
-	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		if (target instanceof LivingEntity)
-			target.setSecondsOnFire(5);
+	public CustomArrowEntity doArrowMods(CustomArrowEntity arrow, LivingEntity shooter, ItemStack ammoStack, int useTicksRemaining) {
+		arrow.setSecondsOnFire(100);
+
+		return super.doArrowMods(arrow, shooter, ammoStack, useTicksRemaining);
 	}
 
 	@Override

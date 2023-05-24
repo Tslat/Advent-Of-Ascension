@@ -13,8 +13,24 @@ import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiPredicate;
 
 public class AggroBasedNearbyPlayersSensor<E extends LivingEntity> extends NearbyPlayersSensor<E> {
+	private BiPredicate<E, Player> targetablePredicate = AggroBasedNearbyPlayersSensor::isEntityTargetable;
+	private BiPredicate<E, Player> attackablePredicate = AggroBasedNearbyPlayersSensor::isEntityAttackable;
+
+	public AggroBasedNearbyPlayersSensor<E> onlyTargeting(BiPredicate<E, Player> predicate) {
+		this.targetablePredicate = predicate;
+
+		return this;
+	}
+
+	public AggroBasedNearbyPlayersSensor<E> onlyAttacking(BiPredicate<E, Player> predicate) {
+		this.attackablePredicate = predicate;
+
+		return this;
+	}
+
 	@Override
 	protected void doTick(ServerLevel level, E entity) {
 		SquareRadius radius = this.radius;
@@ -31,11 +47,11 @@ public class AggroBasedNearbyPlayersSensor<E extends LivingEntity> extends Nearb
 
 		List<Player> targetablePlayers = new ObjectArrayList<>(players);
 
-		targetablePlayers.removeIf(pl -> !isEntityTargetable(entity, pl));
+		targetablePlayers.removeIf(pl -> !this.targetablePredicate.test(entity, pl));
 
 		List<Player> attackablePlayers = new ObjectArrayList<>(targetablePlayers);
 
-		attackablePlayers.removeIf(pl -> !isEntityAttackable(entity, pl));
+		attackablePlayers.removeIf(pl -> !this.attackablePredicate.test(entity, pl));
 
 		BrainUtils.setMemory(entity, MemoryModuleType.NEAREST_PLAYERS, players);
 		BrainUtils.setMemory(entity, MemoryModuleType.NEAREST_VISIBLE_PLAYER, targetablePlayers.isEmpty() ? null : targetablePlayers.get(0));

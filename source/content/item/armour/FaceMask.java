@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.armour;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
@@ -21,11 +20,6 @@ public class FaceMask extends AdventArmour {
 	@Override
 	public Type setType() {
 		return Type.ALL;
-	}
-
-	@Override
-	public boolean isHelmetAirTight(ServerPlayer player) {
-		return true;
 	}
 
 	@Override

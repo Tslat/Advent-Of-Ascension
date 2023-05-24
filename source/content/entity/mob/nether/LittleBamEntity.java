@@ -20,6 +20,7 @@ import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.object.explosion.StandardExplosion;
@@ -78,7 +79,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 	@Override
 	public List<ExtendedSensor<LittleBamEntity>> getSensors() {
 		return ObjectArrayList.of(
-				new NearbyPlayersSensor<LittleBamEntity>().setPredicate((player, entity) -> !PiglinAi.isWearingGold(player)),
+				new AggroBasedNearbyPlayersSensor<LittleBamEntity>().setPredicate((player, entity) -> !PiglinAi.isWearingGold(player)),
 				new NearbyLivingEntitySensor<LittleBamEntity>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
 				new HurtBySensor<>());
 	}

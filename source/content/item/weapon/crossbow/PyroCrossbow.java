@@ -17,8 +17,8 @@ public class PyroCrossbow extends BaseCrossbow {
 	}
 
 	@Override
-	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		target.setSecondsOnFire(5);
+	public void doArrowMods(CustomArrowEntity arrow, Entity shooter, int useTicksRemaining) {
+		arrow.setSecondsOnFire(100);
 	}
 
 	@Override

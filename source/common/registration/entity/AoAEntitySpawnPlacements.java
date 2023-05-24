@@ -32,7 +32,7 @@ public final class AoAEntitySpawnPlacements {
 
     public static void setOverworldSpawnPlacements() {
         setSpawnPlacement(AoAMobs.ANCIENT_GOLEM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(65));
-        setSpawnPlacement(AoAMobs.BOMB_CARRIER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55).spawnChance(1 / 50f));
+        setSpawnPlacement(AoAMobs.BOMB_CARRIER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55).spawnChance(1 / 5f));
         setSpawnPlacement(AoAMobs.BUSH_BABY.get(), ON_GROUND, MOTION_BLOCKING, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(65));
         setSpawnPlacement(AoAMobs.CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER);
         setSpawnPlacement(AoAMobs.CHOMPER.get(), AMPHIBIOUS, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER);
@@ -41,18 +41,18 @@ public final class AoAEntitySpawnPlacements {
         setSpawnPlacement(AoAMobs.FLAMEWALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
         setSpawnPlacement(AoAMobs.GHOST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_MONSTER.noHigherThanY(0).spawnChance(1 / 2f));
         setSpawnPlacement(AoAMobs.GOBLIN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER);
-        setSpawnPlacement(AoAMobs.ICE_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 50f));
-        setSpawnPlacement(AoAMobs.INFERNAL.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 100f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
-        setSpawnPlacement(AoAMobs.KING_CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 100f));
-        setSpawnPlacement(AoAMobs.LEAFY_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 50f));
+        setSpawnPlacement(AoAMobs.ICE_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
+        setSpawnPlacement(AoAMobs.INFERNAL.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 10f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
+        setSpawnPlacement(AoAMobs.KING_CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 20f));
+        setSpawnPlacement(AoAMobs.LEAFY_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
         setSpawnPlacement(AoAMobs.LITTLE_BAM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
         setSpawnPlacement(AoAMobs.NETHENGEIC_BEAST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock().and(NethengeicBeastEntity::checkSpawnConditions));
-        setSpawnPlacement(AoAMobs.SAND_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 50f));
+        setSpawnPlacement(AoAMobs.SAND_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
         setSpawnPlacement(AoAMobs.SASQUATCH.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55));
-        setSpawnPlacement(AoAMobs.STONE_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 50f));
-        setSpawnPlacement(AoAMobs.TREE_SPIRIT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55).spawnChance(1 / 20f));
+        setSpawnPlacement(AoAMobs.STONE_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
+        setSpawnPlacement(AoAMobs.TREE_SPIRIT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55).spawnChance(1 / 10f));
         setSpawnPlacement(AoAMobs.VOID_WALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_MONSTER.noHigherThanY(0));
-        setSpawnPlacement(AoAMobs.WOOD_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 50f));
+        setSpawnPlacement(AoAMobs.WOOD_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
         setSpawnPlacement(AoAMobs.YETI.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(45).spawnChance(1 / 2f));
 
         setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>(GlowSquid::checkGlowSquideSpawnRules).spawnChance(1 / 1000f));
@@ -102,7 +102,7 @@ public final class AoAEntitySpawnPlacements {
         static final SpawnBuilder<Mob> DEFAULT_FISH = new SpawnBuilder<>().onlySpawnIn(Blocks.WATER).onlySpawnUnder(Blocks.WATER);
         static final SpawnBuilder<Mob> DEFAULT_LAVA_FISH = new SpawnBuilder<>().onlySpawnIn(Blocks.LAVA).onlySpawnUnder(Blocks.LAVA);
         static final SpawnBuilder<Mob> DEFAULT_MONSTER = new SpawnBuilder<>().noPeacefulSpawn().defaultMonsterLightLevels().ifValidSpawnBlock();
-        static final SpawnBuilder<Mob> DEFAULT_DAY_MONSTER = new SpawnBuilder<>().noPeacefulSpawn().onlyDuringDay().defaultMonsterBlockLightLevels().difficultyBasedSpawnChance(0.15f).ifValidSpawnBlock();
+        static final SpawnBuilder<Mob> DEFAULT_DAY_MONSTER = new SpawnBuilder<>().noPeacefulSpawn().onlyDuringDay().defaultMonsterBlockLightLevels().difficultyBasedSpawnChance(0.12f).ifValidSpawnBlock();
 
         private final SpawnPlacements.SpawnPredicate<T> predicate;
 
@@ -140,11 +140,11 @@ public final class AoAEntitySpawnPlacements {
         }
 
         SpawnBuilder<T> spawnChance(float chance) {
-            return new SpawnBuilder<>((entityType, level, spawnType, pos, rand) -> this.predicate.test(entityType, level, spawnType, pos, rand) && rand.nextFloat() < chance);
+            return new SpawnBuilder<>((entityType, level, spawnType, pos, rand) ->  this.predicate.test(entityType, level, spawnType, pos, rand) && rand.nextFloat() < chance);
         }
 
         SpawnBuilder<T> difficultyBasedSpawnChance(float chance) {
-            return new SpawnBuilder<>((entityType, level, spawnType, pos, rand) -> this.predicate.test(entityType, level, spawnType, pos, rand) && rand.nextFloat() < chance / 2f * level.getCurrentDifficultyAt(pos).getEffectiveDifficulty());
+            return new SpawnBuilder<>((entityType, level, spawnType, pos, rand) -> this.predicate.test(entityType, level, spawnType, pos, rand) && rand.nextFloat() < chance * level.getCurrentDifficultyAt(pos).getEffectiveDifficulty());
         }
 
         SpawnBuilder<T> noSpawnOn(TagKey<Block> blockTag) {

@@ -5,14 +5,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
-import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class LunalusEvents {
 	public static void doPlayerTick(Player pl) {
-		boolean hasDistortingArtifact = ItemUtil.hasItemInHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) || ItemUtil.hasItemInOffhand(pl, AoAItems.DISTORTING_ARTIFACT.get());
+		boolean hasDistortingArtifact = ItemUtil.hasItemInHotbar(pl, AoATools.DISTORTING_ARTIFACT.get()) || ItemUtil.hasItemInOffhand(pl, AoATools.DISTORTING_ARTIFACT.get());
 
 		if (!pl.level.isClientSide() && PlayerUtil.shouldPlayerBeAffected(pl)) {
 			if (pl.getY() <= -25 && !hasDistortingArtifact)
@@ -35,14 +35,14 @@ public class LunalusEvents {
 	}
 
 	public static void doPlayerJump(Player pl) {
-		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null)
+		if (ItemUtil.getStackFromHotbar(pl, AoATools.DISTORTING_ARTIFACT.get()) != null)
 			return;
 
 		pl.setDeltaMovement(pl.getDeltaMovement().add(0, 0.5f, 0));
 	}
 
 	public static void doPlayerLanding(Player pl, LivingFallEvent ev) {
-		if (ItemUtil.getStackFromHotbar(pl, AoAItems.DISTORTING_ARTIFACT.get()) != null && !ItemUtil.hasItemInOffhand(pl, AoAItems.DISTORTING_ARTIFACT.get()))
+		if (ItemUtil.getStackFromHotbar(pl, AoATools.DISTORTING_ARTIFACT.get()) != null && !ItemUtil.hasItemInOffhand(pl, AoATools.DISTORTING_ARTIFACT.get()))
 			return;
 
 		ev.setDistance(Math.min(10, ev.getDistance()));

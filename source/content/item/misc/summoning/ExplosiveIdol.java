@@ -20,7 +20,7 @@ import java.util.List;
 
 public class ExplosiveIdol extends BossSpawningItem<KingBamBamBamEntity> {
 	public ExplosiveIdol() {
-		super(0, new Properties().rarity(Rarity.RARE));
+		super(0, new Properties().rarity(Rarity.RARE).stacksTo(1));
 	}
 
 	@Override

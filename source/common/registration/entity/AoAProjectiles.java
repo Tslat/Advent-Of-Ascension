@@ -16,6 +16,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.*;
 import net.tslat.aoa3.content.entity.projectile.staff.*;
 import net.tslat.aoa3.content.entity.projectile.thrown.*;
 
+import java.util.function.Consumer;
+
 public final class AoAProjectiles {
 	public static void init() {}
 
@@ -235,7 +237,13 @@ public final class AoAProjectiles {
 	}
 
 	private static <T extends Entity> RegistryObject<EntityType<T>> registerProjectile(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int updateInterval) {
+		return registerProjectile(registryName, factory, width, height, updateInterval, EntityType.Builder::noSave);
+	}
+
+	private static <T extends Entity> RegistryObject<EntityType<T>> registerProjectile(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int updateInterval, Consumer<EntityType.Builder<T>> builderMod) {
 		EntityType.Builder<T> typeBuilder = EntityType.Builder.of(factory, MobCategory.MISC).sized(width, height).clientTrackingRange(8).setTrackingRange(120).setUpdateInterval(updateInterval);
+
+		builderMod.accept(typeBuilder);
 
 		return AoARegistries.ENTITIES.register(registryName, () -> {
 			boolean dataFixers = SharedConstants.CHECK_DATA_FIXER_SCHEMA;

@@ -2,10 +2,12 @@ package net.tslat.aoa3.common.packet.packets;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
@@ -57,11 +59,17 @@ public class ParticleEffectPacket implements AoAPacket {
 				}
 			}
 			case SANDSTORM -> {
-				Entity entity = context.get().getSender().getLevel().getEntity(this.entityId);
+				Level level = context.get().getSender().getLevel();
+				Entity entity = level.getEntity(this.entityId);
+				Entity attacker = this.senderId >= 0 ? level.getEntity(this.senderId) : null;
 
 				if (entity instanceof LivingEntity) {
-					if (EntityPredicate.TARGETABLE_ENTITIES.test(entity))
-						DamageUtil.safelyDealDamage(DamageUtil.miscDamage(DamageTypes.MOB_ATTACK_NO_AGGRO, entity.level), entity, 4);
+					if (EntityPredicate.TARGETABLE_ENTITIES.test(entity)) {
+						DamageSource source = attacker == null ? DamageUtil.miscDamage(DamageTypes.STING, entity.level) :
+								DamageUtil.positionedEntityDamage(DamageTypes.MOB_ATTACK_NO_AGGRO, attacker, entity.position());
+
+						DamageUtil.safelyDealDamage(source, entity, 4);
+					}
 				}
 				else if (entity instanceof Projectile) {
 					entity.setDeltaMovement(entity.getDeltaMovement().multiply(-0.5f, -0.5f, -0.5f));

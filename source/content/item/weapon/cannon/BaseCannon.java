@@ -63,6 +63,7 @@ public abstract class BaseCannon extends BaseGun {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
+		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.KNOCKBACK, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText("items.description.cannon.damage", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

@@ -130,7 +130,7 @@ public class PortalBlock extends Block {
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (this != AoABlocks.NETHER_PORTAL.get() && this != AoABlocks.NOWHERE_PORTAL.get())
+		if (this != AoABlocks.NETHER_PORTAL.get() && this != AoABlocks.NOWHERE_PORTAL.get() && this != AoABlocks.PRECASIA_PORTAL.get())
 			return;
 
 		if (!world.isClientSide() && !entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
