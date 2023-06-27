@@ -21,7 +21,7 @@ public class VitalityTabletEntity extends SoulTabletEntity {
 
 	@Override
 	protected void doTickEffect() {
-		if (level.getGameTime() % 10 == 0) {
+		if (level().getGameTime() % 10 == 0) {
 			for (Player pl : getTargetsWithinRadius(Player.class, player -> player != null && player.isAlive())) {
 				if (!pl.hasEffect(MobEffects.REGENERATION))
 					EntityUtil.applyPotions(pl, new EffectBuilder(MobEffects.REGENERATION, 50).level(2).isAmbient());

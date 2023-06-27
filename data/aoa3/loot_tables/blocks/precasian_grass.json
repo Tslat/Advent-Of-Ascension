@@ -37,7 +37,7 @@
                   "condition": "minecraft:survives_explosion"
                 }
               ],
-              "name": "aoa3:precasian_surface_rock"
+              "name": "aoa3:precasian_soil"
             }
           ]
         }

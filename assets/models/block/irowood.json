@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "render_type": "minecraft:solid",
-  "textures": {
-    "end": "aoa3:block/irolog",
-    "side": "aoa3:block/irolog"
-  }
-}

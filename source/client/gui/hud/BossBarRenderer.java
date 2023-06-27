@@ -12,6 +12,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -45,7 +46,8 @@ public final class BossBarRenderer {
 		RenderUtil.prepRenderTexture(BAR_ID_CACHE.computeIfAbsent(RegistryUtil.getId(entity.getType()), key -> new ResourceLocation(key.getNamespace(), "textures/gui/bossbars/" + key.getPath() + ".png")));
 
 		Window window = mc.getWindow();
-		PoseStack poseStack = ev.getPoseStack();
+		PoseStack poseStack = ev.getGuiGraphics().pose();
+		RenderContext renderContext = RenderContext.of(ev.getGuiGraphics());
 		int xPos = window.getGuiScaledWidth() / 2 - 100;
 		int yPos = ev.getY();
 		float progressWidth = bossStatusInfo.getProgress() * STANDARD_BAR_WIDTH;
@@ -58,7 +60,7 @@ public final class BossBarRenderer {
 			RenderUtil.renderCustomSizedTexture(poseStack, xPos + 2, yPos, 2, 0, progressWidth, 12, 200, 36);
 
 		RenderUtil.renderCustomSizedTexture(poseStack, xPos, yPos, 0, 24, 200, 12, 200, 36);
-		mc.font.drawShadow(poseStack, displayName, window.getGuiScaledWidth() / 2 - mc.font.width(displayName) / 2, yPos - 9, ColourUtil.WHITE);
+		renderContext.renderText(displayName, window.getGuiScaledWidth() / 2 - mc.font.width(displayName) / 2, yPos - 9, ColourUtil.WHITE, RenderUtil.TextRenderType.DROP_SHADOW);
 
 		ev.setIncrement(ev.getIncrement() + 5);
 		ev.setCanceled(true);

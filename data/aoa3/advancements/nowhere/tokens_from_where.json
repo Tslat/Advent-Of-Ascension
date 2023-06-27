@@ -35,5 +35,6 @@
     [
       "obtain_archaic_token"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -33,7 +33,7 @@ public class PhantomShotEntity extends BaseEnergyShot {
 
 	@Override
 	protected void onHit(HitResult result) {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (weapon != null) {
 				if (result.getType() == HitResult.Type.BLOCK) {
 					Entity shooter = getOwner();

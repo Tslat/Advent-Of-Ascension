@@ -14,6 +14,6 @@ public class YellowGuardianShotRenderer extends ParticleProjectileRenderer<Yello
 
 	@Override
 	protected void addParticles(YellowGuardianShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 }

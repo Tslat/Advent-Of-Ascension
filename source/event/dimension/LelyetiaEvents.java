@@ -11,6 +11,6 @@ public class LelyetiaEvents {
 			return;
 
 		if (pl.getY() <= -25 && PlayerUtil.shouldPlayerBeAffected(pl))
-			pl.teleportTo(pl.getX(), pl.level.getMaxBuildHeight(), pl.getZ());
+			pl.teleportTo(pl.getX(), pl.level().getMaxBuildHeight(), pl.getZ());
 	}
 }

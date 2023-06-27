@@ -25,7 +25,7 @@ public class LelyetiaTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.LELYETIAN_BRICKS.get();
+		return AoABlocks.LELYETIAN_BRICKS.stone();
 	}
 
 	@Override

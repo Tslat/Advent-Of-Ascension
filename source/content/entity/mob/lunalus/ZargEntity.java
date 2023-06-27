@@ -44,10 +44,10 @@ public class ZargEntity extends AoAMeleeMob<ZargEntity> {
 	public void aiStep() {
 		super.aiStep();
 
-		if (!level.isClientSide && getTarget() != null && RandomUtil.oneInNChance(350)) {
+		if (!level().isClientSide && getTarget() != null && RandomUtil.oneInNChance(350)) {
 			FakeZorpEntity fakeZorp = new FakeZorpEntity(getTarget());
 
-			level.addFreshEntity(fakeZorp);
+			level().addFreshEntity(fakeZorp);
 		}
 	}
 }

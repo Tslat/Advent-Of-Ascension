@@ -35,5 +35,6 @@
     [
       "obtain_creeponia_realmstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

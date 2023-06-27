@@ -90,7 +90,7 @@ public class RockCrawlerEntity extends AoAMeleeMob<RockCrawlerEntity> {
     public void tick() {
         super.tick();
 
-        if (!level.isClientSide)
+        if (!level().isClientSide)
             setBesideClimbableBlock(this.horizontalCollision);
     }
 

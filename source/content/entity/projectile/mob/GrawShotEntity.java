@@ -16,7 +16,7 @@ public class GrawShotEntity extends BaseMobProjectile {
 	}
 
 	public GrawShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.GRAW_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.GRAW_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

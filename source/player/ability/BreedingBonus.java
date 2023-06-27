@@ -35,7 +35,7 @@ public class BreedingBonus extends ScalableModAbility {
 	public void handleAnimalBreed(BabyEntitySpawnEvent ev) {
 		if (testAsChance()) {
 			Mob parentA = ev.getParentA();
-			EntitySpawningUtil.spawnEntity((ServerLevel)parentA.getLevel(), (EntityType<AgeableMob>)ev.getChild().getType(), parentA.position(), MobSpawnType.BREEDING, child -> child.setBaby(true));
+			EntitySpawningUtil.spawnEntity((ServerLevel)parentA.level(), (EntityType<AgeableMob>)ev.getChild().getType(), parentA.position(), MobSpawnType.BREEDING, child -> child.setBaby(true));
 
 			PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getCausedByPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getCausedByPlayer(), AoASkills.FARMING.get()), 3), false);
 		}

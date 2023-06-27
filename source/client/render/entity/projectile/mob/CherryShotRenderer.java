@@ -14,7 +14,7 @@ public class CherryShotRenderer extends ParticleProjectileRenderer<CherryShotEnt
 
 	@Override
 	protected void addParticles(CherryShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RED), entity.getX(), entity.getY() + 0.2f, entity.getZ(), 0, 0, 0);
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY() - 0.2f, entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RED), entity.getX(), entity.getY() + 0.2f, entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY() - 0.2f, entity.getZ(), 0, 0, 0);
 	}
 }

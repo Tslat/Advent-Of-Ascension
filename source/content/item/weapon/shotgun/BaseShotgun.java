@@ -67,10 +67,10 @@ public class BaseShotgun extends BaseGun {
 		for (int i = 0; i < pellets; i++) {
 			BaseBullet pellet = new LimoniteBulletEntity(shooter, this, hand, 4, 1.0f, 0, RandomUtil.randomValueUpTo(0.5f) * spreadFactor, RandomUtil.randomValueUpTo(0.5f) * spreadFactor, RandomUtil.randomValueUpTo(0.5f) * spreadFactor);
 
-			shooter.level.addFreshEntity(pellet);
+			shooter.level().addFreshEntity(pellet);
 		}
 
-		if (!shooter.level.isClientSide())
+		if (!shooter.level().isClientSide())
 			doFiringEffects(shooter, bullet, stack, hand);
 
 		return true;

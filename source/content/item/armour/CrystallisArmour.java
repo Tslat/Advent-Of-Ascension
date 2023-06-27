@@ -32,12 +32,12 @@ public class CrystallisArmour extends AdventArmour {
 	public void onPostAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingDamageEvent event) {
 		if (event.getSource().getEntity() instanceof LivingEntity attacker) {
 			if (slots == null && (DamageUtil.isMeleeDamage(event.getSource()) || DamageUtil.isRangedDamage(event.getSource(), plData.player(), event.getAmount()))) {
-				attacker.hurt(attacker.level.damageSources().thorns(plData.player()), event.getAmount());
-				plData.player().hurtArmor(attacker.level.damageSources().generic(), event.getAmount() * 2);
+				attacker.hurt(attacker.level().damageSources().thorns(plData.player()), event.getAmount());
+				plData.player().hurtArmor(attacker.level().damageSources().generic(), event.getAmount() * 2);
 			}
 			else if (slots != null && plData.equipment().getCurrentFullArmourSet() != setType() && DamageUtil.isMeleeDamage(event.getSource())) {
-				attacker.hurt(attacker.level.damageSources().thorns(plData.player()), event.getAmount() * slots.size() / 4f);
-				plData.player().hurtArmor(attacker.level.damageSources().generic(), event.getAmount() * 2);
+				attacker.hurt(attacker.level().damageSources().thorns(plData.player()), event.getAmount() * slots.size() / 4f);
+				plData.player().hurtArmor(attacker.level().damageSources().generic(), event.getAmount() * 2);
 			}
 		}
 	}

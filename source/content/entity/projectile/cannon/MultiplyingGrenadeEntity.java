@@ -56,12 +56,12 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide && count < 5 && getAge() == 10 && shooter instanceof Player) {
+		if (!level().isClientSide && count < 5 && getAge() == 10 && shooter instanceof Player) {
 			if (gun != null)
 				gun.doRecoil((ServerPlayer)shooter, new ItemStack(gun), hand);
 
-			level.addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
-			level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+			level().addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
+			level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 		}
 	}
 
@@ -76,14 +76,14 @@ public class MultiplyingGrenadeEntity extends BaseBullet implements HardProjecti
 	}
 
 	protected void explode(Vec3 position) {
-		WorldUtil.createExplosion(getOwner(), level, this, 1.5f);
+		WorldUtil.createExplosion(getOwner(), level(), this, 1.5f);
 
-		if (!level.isClientSide && getAge() < 10 && shooter instanceof Player && count < 5) {
+		if (!level().isClientSide && getAge() < 10 && shooter instanceof Player && count < 5) {
 			if (gun != null)
 				gun.doRecoil((ServerPlayer)shooter, new ItemStack(gun), hand);
 
-			level.addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
-			level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+			level().addFreshEntity(new MultiplyingGrenadeEntity(shooter, gun, hand, 120, count + 1));
+			level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_MISSILE_MAKER_FIRE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 		}
 	}
 }

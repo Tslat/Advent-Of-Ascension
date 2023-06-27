@@ -62,7 +62,7 @@ public final class SoundBuilder {
 
 	public SoundBuilder atEntity(Entity entity) {
 		this.location = entity.position();
-		this.level = entity.level;
+		this.level = entity.level();
 
 		return this;
 	}
@@ -83,7 +83,7 @@ public final class SoundBuilder {
 	}
 
 	public SoundBuilder followEntity(Entity entity) {
-		this.level = entity.level;
+		this.level = entity.level();
 		this.followingEntity = entity;
 		this.location = entity.position();
 
@@ -185,7 +185,7 @@ public final class SoundBuilder {
 			exclude = new HashSet<Player>();
 
 		if (level == null)
-			level = players[0].level;
+			level = players[0].level();
 
 		Collections.addAll(exclude, players);
 
@@ -197,7 +197,7 @@ public final class SoundBuilder {
 			playTo = new HashSet<Player>();
 
 		if (level == null)
-			level = players[0].level;
+			level = players[0].level();
 
 		Collections.addAll(playTo, players);
 
@@ -297,7 +297,7 @@ public final class SoundBuilder {
 			}
 			else {
 				for (ServerPlayer pl : level.getServer().getPlayerList().getPlayers()) {
-					if (pl.level == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
+					if (pl.level() == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
 						AoAPackets.messagePlayer(pl, packet);
 				}
 			}
@@ -319,7 +319,7 @@ public final class SoundBuilder {
 			}
 			else {
 				for (ServerPlayer pl : level.getServer().getPlayerList().getPlayers()) {
-					if (pl.level == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
+					if (pl.level() == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
 						AoAPackets.messagePlayer(pl, packet);
 				}
 			}

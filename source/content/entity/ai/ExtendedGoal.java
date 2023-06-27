@@ -77,7 +77,7 @@ public abstract class ExtendedGoal<T extends Mob> extends Goal {
 
 	@Override
 	public boolean canUse() {
-		return this.nextAvailableTime < this.entity.level.getGameTime();
+		return this.nextAvailableTime < this.entity.level().getGameTime();
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public abstract class ExtendedGoal<T extends Mob> extends Goal {
 		super.stop();
 
 		this.onStop.accept(this);
-		this.nextAvailableTime = this.entity.level.getGameTime() + this.cooldownProvider.sample(RandomUtil.RANDOM);
+		this.nextAvailableTime = this.entity.level().getGameTime() + this.cooldownProvider.sample(RandomUtil.RANDOM);
 		this.nextActionTelegraphCompleteTime = 0;
 	}
 

@@ -88,7 +88,7 @@ public class CarrotopEntity extends AoAMeleeMob<CarrotopEntity> {
 			if (isInWater()) {
 				heal(0.2f);
 			}
-			else if (level.isRainingAt(blockPosition())) {
+			else if (level().isRainingAt(blockPosition())) {
 				heal(0.1f);
 			}
 		}
@@ -98,7 +98,7 @@ public class CarrotopEntity extends AoAMeleeMob<CarrotopEntity> {
 	public void die(DamageSource source) {
 		super.die(source);
 
-		if (!level.isClientSide && candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+		if (!level().isClientSide && candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 		    ItemUtil.givePlayerItemOrDrop((Player)source.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
 	}
 }

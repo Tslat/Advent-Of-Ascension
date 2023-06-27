@@ -23,7 +23,7 @@ public class ShyreBankerEntity extends AoABanker {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.SHYRELANDS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.SHYRELANDS.key);
 	}
 
 	@Override

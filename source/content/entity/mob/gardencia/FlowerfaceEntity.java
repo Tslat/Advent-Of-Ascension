@@ -82,7 +82,7 @@ public class FlowerfaceEntity extends AoAMeleeMob<FlowerfaceEntity> {
             if (isInWater()) {
                 heal(0.2f);
             }
-            else if (level.isRainingAt(blockPosition())) {
+            else if (level().isRainingAt(blockPosition())) {
                 heal(0.1f);
             }
         }
@@ -92,7 +92,7 @@ public class FlowerfaceEntity extends AoAMeleeMob<FlowerfaceEntity> {
     public void die(DamageSource source) {
         super.die(source);
 
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             if (candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
                 ItemUtil.givePlayerItemOrDrop((Player)source.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
         }

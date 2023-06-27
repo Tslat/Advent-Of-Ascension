@@ -30,7 +30,7 @@ public class PulseCannon extends BaseCannon {
 	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
 		super.doFiringEffects(shooter, bullet, stack, hand);
 
-		for (LivingEntity entity : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2.5d), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity entity : shooter.level().getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2.5d), EntityUtil.Predicates.HOSTILE_MOB)) {
 			EntityUtil.pushEntityAway(shooter, entity, 0.75f);
 		}
 	}

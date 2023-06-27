@@ -16,7 +16,7 @@ public class ModuloShotEntity extends BaseMobProjectile {
 	}
 
 	public ModuloShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.MODULO_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.MODULO_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

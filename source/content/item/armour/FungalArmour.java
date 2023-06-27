@@ -37,7 +37,7 @@ public class FungalArmour extends AdventArmour {
 					((LivingEntity)event.getSource().getEntity()).addEffect(new MobEffectInstance(MobEffects.POISON, 60, 1, true, true));
 
 				if (PlayerUtil.isWearingFullSet(plData.player(), this.setType()) && RandomUtil.oneInNChance(4)) {
-					for (LivingEntity mob : plData.player().level.getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(5), EntityUtil.Predicates.HOSTILE_MOB)) {
+					for (LivingEntity mob : plData.player().level().getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(5), EntityUtil.Predicates.HOSTILE_MOB)) {
 						mob.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, true, true));
 					}
 				}

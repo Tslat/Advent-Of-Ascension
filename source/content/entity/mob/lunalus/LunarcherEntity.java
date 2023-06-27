@@ -73,7 +73,7 @@ public class LunarcherEntity extends AoAFlyingRangedMob {
 
 	@Override
 	public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
-		CustomArrowEntity projectile = new CustomArrowEntity(level, (BaseBow)AoAWeapons.LUNAR_BOW.get(), this, getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
+		CustomArrowEntity projectile = new CustomArrowEntity(level(), (BaseBow)AoAWeapons.LUNAR_BOW.get(), this, getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
 		double distanceFactorX = target.getX() - projectile.getX();
 		double distanceFactorY = target.getBoundingBox().minY + (target.getBbHeight() / 3) - projectile.getY();
@@ -83,7 +83,7 @@ public class LunarcherEntity extends AoAFlyingRangedMob {
 		if (getShootSound() != null)
 			playSound(getShootSound(), 1.0f, 1.0f);
 
-		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
-		level.addFreshEntity(projectile);
+		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - this.level().getDifficulty().getId()));
+		level().addFreshEntity(projectile);
 	}
 }

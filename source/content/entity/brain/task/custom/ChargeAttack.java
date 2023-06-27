@@ -100,12 +100,12 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 
 	@Override
 	protected void tick(E entity) {
-		if (this.delayFinishedAt <= entity.level.getGameTime()) {
+		if (this.delayFinishedAt <= entity.level().getGameTime()) {
 			entity.setSharedFlag(3, true);
 			entity.setDeltaMovement(this.chargeVelocity);
 			entity.lookAt(EntityAnchorArgument.Anchor.FEET, entity.position().add(this.chargeVelocity));
 
-			for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity.level, entity.getBoundingBox().expandTowards(this.chargeVelocity), target -> target != entity && target.isAlive() && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.isCreative()))) {
+			for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity.level(), entity.getBoundingBox().expandTowards(this.chargeVelocity), target -> target != entity && target.isAlive() && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.isCreative()))) {
 				entity.doHurtTarget(target);
 				EntityUtil.pushEntityAway(entity, target, 1.5f);
 			}

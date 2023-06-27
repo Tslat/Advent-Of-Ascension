@@ -31,7 +31,6 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttack
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -91,7 +90,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 				new SetWalkTargetToAttackTarget<>(),
 				new ConditionlessAttack<LittleBamEntity>(getAttackSwingDuration())
 						.attack(mob -> {
-							new StandardExplosion(AoAExplosions.LITTLE_BAM_OVERLOAD, (ServerLevel)getLevel(), this, getX(0.5), getY(1), getZ(0.5)).explode();
+							new StandardExplosion(AoAExplosions.LITTLE_BAM_OVERLOAD, (ServerLevel)level(), this, getX(0.5), getY(1), getZ(0.5)).explode();
 							discard();
 						})
 						.requiresTarget()
@@ -117,7 +116,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 								packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.25f, 25f, 0x7C0000), x, y, z).velocity((x - targetX) * 2, (y - targetY) * 2, (z - targetZ) * 2));
 							}
 
-							AoAPackets.messageNearbyPlayers(packet, (ServerLevel)getLevel(), position(), 64);
+							AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 64);
 							AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_LITTLE_BAM_CHARGE.get()).followEntity(this)), this);
 						})
 		);

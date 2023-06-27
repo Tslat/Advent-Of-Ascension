@@ -54,12 +54,12 @@ public abstract class BaseSniper extends BaseGun {
 		if (bullet == null)
 			return false;
 
-		if (!shooter.isOnGround() || !shooter.isShiftKeyDown())
+		if (!shooter.onGround() || !shooter.isShiftKeyDown())
 			bullet.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0.0f, 20.0f, 50.0f);
 
-		shooter.level.addFreshEntity(bullet);
+		shooter.level().addFreshEntity(bullet);
 
-		if (!shooter.level.isClientSide())
+		if (!shooter.level().isClientSide())
 			doFiringEffects(shooter, bullet, stack, hand);
 
 		return true;
@@ -70,7 +70,7 @@ public abstract class BaseSniper extends BaseGun {
 		int control = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CONTROL.get(), stack);
 		float recoilAmount = getRecoilForShot(stack, player) * 0.25f * (1 - control * 0.15f);
 
-		if (!player.isShiftKeyDown() || !player.isOnGround())
+		if (!player.isShiftKeyDown() || !player.onGround())
 			recoilAmount *= 3.5f;
 
 		AoAPackets.messagePlayer(player, new GunRecoilPacket(recoilAmount, getFiringDelay()));

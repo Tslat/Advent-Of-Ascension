@@ -16,7 +16,7 @@ public class BloodballEntity extends BaseMobProjectile {
 	}
 
 	public BloodballEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.BLOODBALL.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.BLOODBALL.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

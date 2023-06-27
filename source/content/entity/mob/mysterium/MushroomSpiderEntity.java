@@ -95,7 +95,7 @@ public class MushroomSpiderEntity extends AoAMeleeMob<MushroomSpiderEntity> {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide)
+		if (!level().isClientSide)
 			setBesideClimbableBlock(this.horizontalCollision);
 	}
 

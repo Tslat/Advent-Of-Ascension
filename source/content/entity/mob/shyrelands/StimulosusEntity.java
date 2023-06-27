@@ -46,7 +46,7 @@ public class StimulosusEntity extends AoAMeleeMob<StimulosusEntity> {
     public void aiStep() {
         super.aiStep();
 
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             float healthPercent = EntityUtil.getCurrentHealthPercent(this);
             EffectBuilder effect = null;
 

@@ -8,28 +8,24 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.PipeBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
 
 public class SteelPlateBlock extends Block {
 	private static final NonNullList<VoxelShape> SHAPE_MAP = generateShapeMap();
 
-	public SteelPlateBlock() {
-		super(new BlockUtil.CompactProperties(Material.HEAVY_METAL, MaterialColor.METAL)
-						.stats(7f, 20f)
-						.needsTool().get());
+	public SteelPlateBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState()
 				.setValue(BlockStateProperties.UP, false)

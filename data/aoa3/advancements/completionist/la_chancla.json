@@ -27,5 +27,6 @@
     [
       "shoe_flinger_boss_kill"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

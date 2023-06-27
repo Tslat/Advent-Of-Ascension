@@ -51,7 +51,7 @@ public class VineWizardEntity extends AoARangedMob<VineWizardEntity> {
 
     @Override
     public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
-        level.addFreshEntity(new VineWizardShotEntity(this, target, BaseMobProjectile.Type.MAGIC));
+        level().addFreshEntity(new VineWizardShotEntity(this, target, BaseMobProjectile.Type.MAGIC));
     }
 
     @Override
@@ -94,7 +94,7 @@ public class VineWizardEntity extends AoARangedMob<VineWizardEntity> {
             if (isInWater()) {
                 heal(0.2f);
             }
-            else if (level.isRainingAt(blockPosition())) {
+            else if (level().isRainingAt(blockPosition())) {
                 heal(0.1f);
             }
         }
@@ -104,7 +104,7 @@ public class VineWizardEntity extends AoARangedMob<VineWizardEntity> {
     public void die(DamageSource source) {
         super.die(source);
 
-        if (!level.isClientSide && candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+        if (!level().isClientSide && candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
             ItemUtil.givePlayerItemOrDrop((Player)source.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
     }
 }

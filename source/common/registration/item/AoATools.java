@@ -71,6 +71,6 @@ public final class AoATools {
 	public static final RegistryObject<Item> DISTORTING_ARTIFACT = registerTool("distorting_artifact", DistortingArtifact::new);
 
 	private static <T extends Item> RegistryObject<T> registerTool(String registryName, Supplier<T> item) {
-		return AoAItems.registerItem(registryName, item, () -> AoACreativeModeTabs.TOOLS);
+		return AoAItems.registerItem(registryName, item, AoACreativeModeTabs.TOOLS.getKey());
 	}
 }

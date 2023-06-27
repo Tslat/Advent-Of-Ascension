@@ -42,12 +42,12 @@ public class NecroArmour extends AdventArmour {
 
 			event.setAmount(0);
 			plData.equipment().setCooldown("necro_armour", 72000);
-			pl.hurtArmor(pl.level.damageSources().generic(), 2000);
+			pl.hurtArmor(pl.level().damageSources().generic(), 2000);
 
 			if (pl.getHealth() < 4)
 				pl.setHealth(4);
 
-			((ServerLevel)pl.level).sendParticles(ParticleTypes.HEART, pl.getX(), pl.getBoundingBox().maxY, pl.getZ(), 5, 0, 0, 0, (double)0);
+			((ServerLevel)pl.level()).sendParticles(ParticleTypes.HEART, pl.getX(), pl.getBoundingBox().maxY, pl.getZ(), 5, 0, 0, 0, (double)0);
 		}
 	}
 

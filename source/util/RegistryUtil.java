@@ -7,6 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -77,6 +78,10 @@ public final class RegistryUtil {
 
 	public static ResourceLocation getId(StructurePlacementType<?> structurePlacementType) {
 		return BuiltInRegistries.STRUCTURE_PLACEMENT.getKey(structurePlacementType);
+	}
+
+	public static ResourceLocation getId(CreativeModeTab creativeTab) {
+		return BuiltInRegistries.CREATIVE_MODE_TAB.getKey(creativeTab);
 	}
 
 	public static <T> Registry<T> getVanillaRegistry(Level level, IForgeRegistry<T> forgeRegistry) {

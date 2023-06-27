@@ -11,22 +11,19 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.List;
 
 public class CrystalExtensionShrine extends Block {
-	public CrystalExtensionShrine() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_WHITE).stats(10f, 15f).sound(SoundType.GLASS).get());
+	public CrystalExtensionShrine(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

@@ -42,7 +42,7 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 
 	@Override
 	public boolean matches(DivineStationContainer.DivineStationInventory inv, Level world) {
-		return ItemStack.isSame(input, inv.getItem(0)) && ItemStack.isSame(upgradeKit, inv.getItem(1));
+		return ItemStack.isSameItem(input, inv.getItem(0)) && ItemStack.isSameItem(upgradeKit, inv.getItem(1));
 	}
 
 	@Override

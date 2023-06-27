@@ -32,8 +32,8 @@ public class NightmareBow extends BaseBow {
 
 		leftArrow.teleportTo(leftArrow.getX() + xOffset, leftArrow.getY(), leftArrow.getZ() + zOffset);
 		rightArrow.teleportTo(rightArrow.getX() - xOffset, rightArrow.getY(), rightArrow.getZ() - zOffset);
-		shooter.level.addFreshEntity(leftArrow);
-		shooter.level.addFreshEntity(rightArrow);
+		shooter.level().addFreshEntity(leftArrow);
+		shooter.level().addFreshEntity(rightArrow);
 
 		return centralArrow;
 	}

@@ -13,9 +13,17 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 public final class TagUtil {
-	// Currently doesn't work because of a Forge bug. Nice.
-	public static <T> boolean isTaggedAs(T object, TagKey<T> tagKey, Level level) {
-		return level.registryAccess().registry(tagKey.registry()).map(registry -> registry.wrapAsHolder(object).is(tagKey)).orElse(false);
+	public static <T> boolean isTaggedAs(Level level, T object, TagKey<T>... tagKeys) {
+		return level.registryAccess().registry(tagKeys[0].registry()).map(registry -> {
+			Holder<T> holder = registry.wrapAsHolder(object);
+
+			for (TagKey<T> tagKey : tagKeys) {
+				if (holder.is(tagKey))
+					return true;
+			}
+
+			return false;
+		}).orElse(false);
 	}
 
 	public static <T> Stream<TagKey<T>> getAllTagsFor(ResourceKey<? extends Registry<T>> registryKey, T object, Level level) {
@@ -32,15 +40,5 @@ public final class TagUtil {
 		return vanillaRegistry
 				.map(registry -> Streams.stream(registry.getTagOrEmpty(tag)).map(Holder::get))
 				.orElseGet(() -> RegistryManager.ACTIVE.getRegistry(tag.registry()).tags().getTag(tag).stream());
-	}
-
-	@SafeVarargs
-	public static <T extends Holder<T>> boolean isTaggedAsAny(T object, TagKey<T>... tags) {
-		for (TagKey<T> tag : tags) {
-			if (object.is(tag))
-				return true;
-		}
-
-		return false;
 	}
 }

@@ -14,6 +14,6 @@ public class HagShotRenderer extends ParticleProjectileRenderer<HagShotEntity> {
 
 	@Override
 	protected void addParticles(HagShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 }

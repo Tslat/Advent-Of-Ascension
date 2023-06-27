@@ -17,15 +17,15 @@ public class ConfettiClusterRenderer extends ParticleProjectileRenderer<Confetti
 		Vec3 motion = entity.getDeltaMovement();
 
 		for (int i = 0; i < 3; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x(), motion.y(), motion.z());
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + -0.05, motion.y(), motion.z());
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + 0.05, motion.y(), motion.z());
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + -0.05, motion.y(), motion.z() + -0.05);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + -0.05, motion.y(), motion.z() + 0.05);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + 0.05, motion.y(), motion.z() + 0.05);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + 0.05, motion.y(), motion.z() + -0.05);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x(), motion.y(), motion.z() + -0.05);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x(), motion.y(), motion.z() + 0.05);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x(), motion.y(), motion.z());
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + -0.05, motion.y(), motion.z());
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + 0.05, motion.y(), motion.z());
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + -0.05, motion.y(), motion.z() + -0.05);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + -0.05, motion.y(), motion.z() + 0.05);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + 0.05, motion.y(), motion.z() + 0.05);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x() + 0.05, motion.y(), motion.z() + -0.05);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x(), motion.y(), motion.z() + -0.05);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), motion.x(), motion.y(), motion.z() + 0.05);
 		}
 	}
 }

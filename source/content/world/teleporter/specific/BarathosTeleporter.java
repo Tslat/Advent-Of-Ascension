@@ -23,6 +23,6 @@ public class BarathosTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.BARON_STONE_BRICKS.get();
+		return AoABlocks.BARON_STONE_BRICKS.stone();
 	}
 }

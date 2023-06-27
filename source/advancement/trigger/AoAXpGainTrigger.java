@@ -19,7 +19,7 @@ public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.In
 	}
 
 	@Override
-	public Instance createInstance(JsonObject json, EntityPredicate.Composite predicate, DeserializationContext conditions) {
+	public Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext conditions) {
 		AoASkill skill = null;
 
 		if (json.has("skill")) {
@@ -44,7 +44,7 @@ public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.In
 		private final AoASkill skill;
 		private final float xp;
 
-		public Instance(@Nullable AoASkill skill, float xp, EntityPredicate.Composite playerPredicate) {
+		public Instance(@Nullable AoASkill skill, float xp, ContextAwarePredicate playerPredicate) {
 			super(triggerId, playerPredicate);
 
 			this.skill = skill;
@@ -52,7 +52,7 @@ public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.In
 		}
 
 		public Instance(@Nullable AoASkill skill, float xp) {
-			this(skill, xp, EntityPredicate.Composite.ANY);
+			this(skill, xp, ContextAwarePredicate.ANY);
 		}
 
 		public boolean test(AoASkill skill, float xp) {

@@ -29,7 +29,7 @@ public class ConfettiCluster extends BaseBlaster {
 		ConfettiClusterEntity shot = new ConfettiClusterEntity(shooter, this, 1);
 
 		shot.setDeltaMovement(shot.getDeltaMovement().multiply(0.25d, 0.25d, 0.25d));
-		shooter.level.addFreshEntity(shot);
+		shooter.level().addFreshEntity(shot);
 	}
 
 	@Override

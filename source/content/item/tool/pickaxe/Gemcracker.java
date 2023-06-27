@@ -11,7 +11,6 @@ import net.minecraftforge.common.Tags;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -29,7 +28,7 @@ public class Gemcracker extends BasePickaxe implements LootModifyingItem {
 		BlockState harvestedBlock = getHarvestedBlock(lootContext);
 		Block block = harvestedBlock.getBlock();
 
-		if (BlockUtil.isAirBlock(harvestedBlock) || existingLoot.isEmpty() || getDestroySpeed(getToolStack(lootContext), harvestedBlock) <= 1 || !harvestedBlock.is(Tags.Blocks.ORES))
+		if (harvestedBlock.isAir() || existingLoot.isEmpty() || getDestroySpeed(getToolStack(lootContext), harvestedBlock) <= 1 || !harvestedBlock.is(Tags.Blocks.ORES))
 			return;
 
 		ItemStack primaryStack = existingLoot.get(0);

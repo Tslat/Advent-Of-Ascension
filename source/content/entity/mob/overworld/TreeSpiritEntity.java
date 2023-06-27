@@ -12,7 +12,6 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -23,6 +22,7 @@ import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
@@ -100,17 +100,17 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 				new SetRetaliateTarget<>()
 						.attackablePredicate(entity -> entity.isAlive() && (!(entity instanceof Player player) || !player.isCreative()) && distanceToSqr(entity.position()) < Math.pow(getAttributeValue(AoAAttributes.AGGRO_RANGE.get()), 2))
 						.whenStarting(owner -> ATTACK_STATE.set(owner, 1))
-						.startCondition(entity -> level.getDifficulty() != Difficulty.PEACEFUL));
+						.startCondition(entity -> level().getDifficulty() != Difficulty.PEACEFUL));
 	}
 
 	@Override
 	public BrainActivityGroup<TreeSpiritEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new InvalidateAttackTarget<>()
-						.invalidateIf((entity, target) -> !target.isAlive() || level.getDifficulty() == Difficulty.PEACEFUL || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
+						.invalidateIf((entity, target) -> !target.isAlive() || level().getDifficulty() == Difficulty.PEACEFUL || (target instanceof Player pl && (pl.isCreative() || pl.isSpectator())) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
 				new AnimatableRangedAttack<>(15)
 						.attackInterval(entity -> RandomUtil.randomNumberBetween(15, 35))
-						.startCondition(entity -> level.getDifficulty() != Difficulty.PEACEFUL));
+						.startCondition(entity -> level().getDifficulty() != Difficulty.PEACEFUL));
 	}
 
 	@Nullable
@@ -137,7 +137,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.is(DamageTypes.OUT_OF_WORLD))
+		if (source.is(AoATags.DamageTypes.IS_TECHNICAL))
 			return super.hurt(source, amount);
 
 		if (source.is(DamageTypeTags.IS_FIRE))
@@ -146,7 +146,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 		boolean wasMaxHealth = isAlive() && getHealth() == getMaxHealth();
 
 		if (super.hurt(source, amount)) {
-			if (!level.isClientSide && wasMaxHealth && PlayerUtil.getPlayerOrOwnerIfApplicable(source.getEntity()) instanceof ServerPlayer pl) {
+			if (!level().isClientSide && wasMaxHealth && PlayerUtil.getPlayerOrOwnerIfApplicable(source.getEntity()) instanceof ServerPlayer pl) {
 				if (getHealth() <= 0)
 					AdvancementUtil.completeAdvancement(pl, AdventOfAscension.id("overworld/mightiest_tree_in_the_forest"), "tree_spirit_instakill");
 			}
@@ -217,13 +217,13 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 
 	@Override
 	public void onProjectileAttack(@Nullable BaseMobProjectile projectile, Entity target) {
-		level.playSound(null, projectile.getX(), projectile.getY(), projectile.getZ(), AoASounds.ENTITY_TREE_SPIRIT_SPRITE_IMPACT.get(), SoundSource.HOSTILE, 1, 1);
+		level().playSound(null, projectile.getX(), projectile.getY(), projectile.getZ(), AoASounds.ENTITY_TREE_SPIRIT_SPRITE_IMPACT.get(), SoundSource.HOSTILE, 1, 1);
 	}
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		this.level.addFreshEntity(getNewProjectileInstance());
-		this.level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
+		this.level().addFreshEntity(getNewProjectileInstance());
+		this.level().playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
 	}
 
 	@Override

@@ -76,7 +76,7 @@ public final class OccultBlockRenderer {
 			for (Iterator<OccultBlock> iterator = entry.right().iterator(); iterator.hasNext();) {
 				OccultBlock block = iterator.next();
 
-				if (GlobalEvents.tick % 2 == 1 && mc.player.level.getBlockState(block.pos) != block.state) {
+				if (GlobalEvents.tick % 2 == 1 && mc.player.level().getBlockState(block.pos) != block.state) {
 					iterator.remove();
 
 					continue;

@@ -7,17 +7,14 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
 
@@ -26,8 +23,8 @@ public class Iropole extends RotatedPillarBlock {
 	private static final VoxelShape X_SHAPE = box(0, 3, 3, 16, 13, 13);
 	private static final VoxelShape Z_SHAPE = box(3, 3, 0, 13, 13, 16);
 
-	public Iropole() {
-		super(new BlockUtil.CompactProperties(Material.METAL, MaterialColor.COLOR_BLACK).stats(1.5f, 10f).needsTool().sound(SoundType.METAL).get());
+	public Iropole(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 	}

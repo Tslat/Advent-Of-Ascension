@@ -79,7 +79,7 @@ public class ReservedItem extends Item {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (!target.level.isClientSide) {
+		if (!target.level().isClientSide) {
 			if (stack.getItem() == AoAItems.MILLENNIUM_UPGRADER.get()) {
 				if (target.isInLava() && attacker.isInLava()) {
 					attacker.setItemInHand(InteractionHand.MAIN_HAND, ((ReservedItem)AoAItems.MOLTEN_UPGRADER.get()).newValidStack());
@@ -134,7 +134,7 @@ public class ReservedItem extends Item {
 	}
 
 	public static void handlePlayerToss(ItemTossEvent ev) {
-		Level world = ev.getEntity().level;
+		Level world = ev.getEntity().level();
 
 		if (!world.isClientSide()) {
 			if (ev.getEntity().getItem().getItem() == AoAItems.MOLTEN_UPGRADER.get() && world.getMoonBrightness() == 1)
@@ -153,7 +153,7 @@ public class ReservedItem extends Item {
 	}
 
 	public static void handlePlayerDeath(Player pl) {
-		if (pl.getHealth() > 0 && !pl.level.getLevelData().isHardcore())
+		if (pl.getHealth() > 0 && !pl.level().getLevelData().isHardcore())
 			return;
 
 		if (!ForgeRegistries.ITEMS.getKey(pl.getMainHandItem().getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))

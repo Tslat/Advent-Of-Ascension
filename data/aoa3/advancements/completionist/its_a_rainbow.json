@@ -36,5 +36,6 @@
     [
       "obtain_colour_cannon"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

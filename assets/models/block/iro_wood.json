@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "render_type": "minecraft:solid",
+  "textures": {
+    "end": "aoa3:block/iro_log",
+    "side": "aoa3:block/iro_log"
+  }
+}

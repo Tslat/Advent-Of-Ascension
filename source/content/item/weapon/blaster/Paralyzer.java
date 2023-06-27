@@ -31,7 +31,7 @@ public class Paralyzer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new ParalyzerShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new ParalyzerShotEntity(shooter, this, 60));
 	}
 
 	@Override

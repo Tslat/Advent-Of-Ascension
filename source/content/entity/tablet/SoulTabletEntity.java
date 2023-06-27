@@ -9,7 +9,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
@@ -19,6 +18,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.content.item.tablet.TabletItem;
 
 import javax.annotation.Nullable;
@@ -56,7 +56,7 @@ public abstract class SoulTabletEntity extends Entity {
 	@Override
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		if (isAlive() && (ownerUUID == null || player.getUUID().equals(ownerUUID))) {
-			if (!level.isClientSide && !player.isCreative()) {
+			if (!level().isClientSide && !player.isCreative()) {
 				ItemStack stack = new ItemStack(getRelevantItem());
 
 				if (player.getItemInHand(hand).isEmpty()) {
@@ -86,7 +86,7 @@ public abstract class SoulTabletEntity extends Entity {
 		if (compound.contains("OwnedBy")) {
 			try {
 				ownerUUID = UUID.fromString(compound.getString("OwnedBy"));
-				owner = level instanceof ServerLevel ? (ServerPlayer)level.getPlayerByUUID(ownerUUID) : null;
+				owner = level() instanceof ServerLevel ? (ServerPlayer)level().getPlayerByUUID(ownerUUID) : null;
 			}
 			catch (IllegalArgumentException e) {
 				Logging.logMessage(org.apache.logging.log4j.Level.WARN, "Unknown or malformed owner UUID for soul tablet entity: " + compound.getString("OwnerBy"));
@@ -96,9 +96,9 @@ public abstract class SoulTabletEntity extends Entity {
 
 	@Override
 	public void tick() {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (isAlive() && tickCount % 5 == 0) {
-				if (level.isEmptyBlock(blockPosition().below())) {
+				if (level().isEmptyBlock(blockPosition().below())) {
 					ItemEntity itemDrop = spawnAtLocation(new ItemStack(getRelevantItem()), 0f);
 
 					if (owner != null && itemDrop != null)
@@ -119,7 +119,7 @@ public abstract class SoulTabletEntity extends Entity {
 				}
 			}
 		}
-		else if (level.isEmptyBlock(blockPosition().below())) {
+		else if (level().isEmptyBlock(blockPosition().below())) {
 			discard();
 		}
 	}
@@ -141,7 +141,7 @@ public abstract class SoulTabletEntity extends Entity {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return !source.is(DamageTypes.OUT_OF_WORLD);
+		return !source.is(AoATags.DamageTypes.IS_TECHNICAL);
 	}
 
 	@Override
@@ -167,6 +167,6 @@ public abstract class SoulTabletEntity extends Entity {
 	}
 
 	protected <T extends Entity> List<T> getTargetsWithinRadius(Class<T> targetClass, @Nullable Predicate<? super T> predicate) {
-		return level.getEntitiesOfClass(targetClass, getBoundingBox().inflate(getRelevantItem().getEffectRadius()), predicate);
+		return level().getEntitiesOfClass(targetClass, getBoundingBox().inflate(getRelevantItem().getEffectRadius()), predicate);
 	}
 }

@@ -7,7 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.block.functional.plant.AoASaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.HashMap;
@@ -18,7 +18,7 @@ public class HauntedTreeFeature extends AoATreeFeature {
 	private final int hauntedLogChance = 25;
 	private final int purplingLogChance = 20;
 
-	public HauntedTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public HauntedTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
@@ -44,9 +44,9 @@ public class HauntedTreeFeature extends AoATreeFeature {
 			return false;
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
-		BlockState log = rand.nextInt(purplingLogChance) == 0 ? AoABlocks.HAUNTED_PURPLING_LOG.get().defaultBlockState() : AoABlocks.HAUNTED_LOG.get().defaultBlockState();
-		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.get().defaultBlockState();
-		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.get().defaultBlockState();
+		BlockState log = rand.nextInt(purplingLogChance) == 0 ? AoABlocks.HAUNTED_PURPLING_LOG.log().defaultBlockState() : AoABlocks.HAUNTED_LOG.log().defaultBlockState();
+		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.log().defaultBlockState();
+		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.log().defaultBlockState();
 		BlockState leaves = AoABlocks.HAUNTED_LEAVES.get().defaultBlockState();
 		BlockState eyeLeaves = AoABlocks.HAUNTED_EYES_LEAVES.get().defaultBlockState();
 
@@ -77,9 +77,9 @@ public class HauntedTreeFeature extends AoATreeFeature {
 			return false;
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
-		BlockState log = rand.nextInt(purplingLogChance) == 0 ? AoABlocks.HAUNTED_PURPLING_LOG.get().defaultBlockState() : AoABlocks.HAUNTED_LOG.get().defaultBlockState();
-		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.get().defaultBlockState();
-		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.get().defaultBlockState();
+		BlockState log = rand.nextInt(purplingLogChance) == 0 ? AoABlocks.HAUNTED_PURPLING_LOG.log().defaultBlockState() : AoABlocks.HAUNTED_LOG.log().defaultBlockState();
+		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.log().defaultBlockState();
+		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.log().defaultBlockState();
 		BlockState leaves = AoABlocks.HAUNTED_LEAVES.get().defaultBlockState();
 		BlockState eyeLeaves = AoABlocks.HAUNTED_EYES_LEAVES.get().defaultBlockState();
 
@@ -148,9 +148,9 @@ public class HauntedTreeFeature extends AoATreeFeature {
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
 		boolean purpling = rand.nextInt(purplingLogChance) == 0;
-		BlockState log = purpling ? AoABlocks.HAUNTED_PURPLING_LOG.get().defaultBlockState() : AoABlocks.HAUNTED_LOG.get().defaultBlockState();
-		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.get().defaultBlockState();
-		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.get().defaultBlockState();
+		BlockState log = purpling ? AoABlocks.HAUNTED_PURPLING_LOG.log().defaultBlockState() : AoABlocks.HAUNTED_LOG.log().defaultBlockState();
+		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.log().defaultBlockState();
+		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.log().defaultBlockState();
 		BlockState leaves = AoABlocks.HAUNTED_LEAVES.get().defaultBlockState();
 		BlockState eyeLeaves = AoABlocks.HAUNTED_EYES_LEAVES.get().defaultBlockState();
 
@@ -213,9 +213,9 @@ public class HauntedTreeFeature extends AoATreeFeature {
 			return false;
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
-		BlockState log = rand.nextInt(purplingLogChance) == 0 ? AoABlocks.HAUNTED_PURPLING_LOG.get().defaultBlockState() : AoABlocks.HAUNTED_LOG.get().defaultBlockState();
-		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.get().defaultBlockState();
-		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.get().defaultBlockState();
+		BlockState log = rand.nextInt(purplingLogChance) == 0 ? AoABlocks.HAUNTED_PURPLING_LOG.log().defaultBlockState() : AoABlocks.HAUNTED_LOG.log().defaultBlockState();
+		BlockState redEyesLog = AoABlocks.HAUNTED_EYES_LOG.log().defaultBlockState();
+		BlockState eyeLog = AoABlocks.HAUNTED_EYE_LOG.log().defaultBlockState();
 		BlockState leaves = AoABlocks.HAUNTED_LEAVES.get().defaultBlockState();
 		BlockState eyeLeaves = AoABlocks.HAUNTED_EYES_LEAVES.get().defaultBlockState();
 
@@ -267,8 +267,8 @@ public class HauntedTreeFeature extends AoATreeFeature {
 
 	private void generateCrossBranch(WorldGenLevel reader, RandomSource rand, BlockPos branchPos, BlockState log, int length) {
 		BlockState barkLog = getBarkForLog(log);
-		BlockState redEyesBarkLog = AoABlocks.HAUNTED_EYES_WOOD.get().defaultBlockState();
-		BlockState eyeBarkLog = AoABlocks.HAUNTED_EYE_WOOD.get().defaultBlockState();
+		BlockState redEyesBarkLog = AoABlocks.HAUNTED_EYES_LOG.bark().defaultBlockState();
+		BlockState eyeBarkLog = AoABlocks.HAUNTED_EYE_LOG.bark().defaultBlockState();
 		BlockState leaves = AoABlocks.HAUNTED_LEAVES.get().defaultBlockState();
 		BlockState eyeLeaves = AoABlocks.HAUNTED_EYES_LEAVES.get().defaultBlockState();
 
@@ -290,18 +290,18 @@ public class HauntedTreeFeature extends AoATreeFeature {
 	}
 
 	private BlockState getBarkForLog(BlockState state) {
-		if (state.getBlock() == AoABlocks.HAUNTED_LOG.get())
-			return AoABlocks.HAUNTED_WOOD.get().defaultBlockState();
+		if (state.getBlock() == AoABlocks.HAUNTED_LOG.log())
+			return AoABlocks.HAUNTED_LOG.bark().defaultBlockState();
 
-		if (state.getBlock() == AoABlocks.HAUNTED_PURPLING_LOG.get())
-			return AoABlocks.HAUNTED_PURPLING_WOOD.get().defaultBlockState();
+		if (state.getBlock() == AoABlocks.HAUNTED_PURPLING_LOG.log())
+			return AoABlocks.HAUNTED_PURPLING_LOG.bark().defaultBlockState();
 
-		if (state.getBlock() == AoABlocks.HAUNTED_EYE_LOG.get())
-			return AoABlocks.HAUNTED_EYES_LOG.get().defaultBlockState();
+		if (state.getBlock() == AoABlocks.HAUNTED_EYE_LOG.log())
+			return AoABlocks.HAUNTED_EYES_LOG.log().defaultBlockState();
 
-		if (state.getBlock() == AoABlocks.HAUNTED_EYES_LOG.get())
-			return AoABlocks.HAUNTED_EYES_WOOD.get().defaultBlockState();
+		if (state.getBlock() == AoABlocks.HAUNTED_EYES_LOG.log())
+			return AoABlocks.HAUNTED_EYES_LOG.bark().defaultBlockState();
 
-		return AoABlocks.HAUNTED_WOOD.get().defaultBlockState();
+		return AoABlocks.HAUNTED_LOG.bark().defaultBlockState();
 	}
 }

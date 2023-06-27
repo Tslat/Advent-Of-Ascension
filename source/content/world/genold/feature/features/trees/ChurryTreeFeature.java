@@ -7,13 +7,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.block.functional.plant.AoASaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.function.Supplier;
 
 public class ChurryTreeFeature extends AoATreeFeature {
-	public ChurryTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public ChurryTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
@@ -28,7 +28,7 @@ public class ChurryTreeFeature extends AoATreeFeature {
 			return false;
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
-		BlockState log = AoABlocks.CHURRY_LOG.get().defaultBlockState();
+		BlockState log = AoABlocks.CHURRY_LOG.log().defaultBlockState();
 		BlockState lelyetianLeaves = AoABlocks.LELYETIAN_LEAVES.get().defaultBlockState();
 		int leafGap = 0;
 

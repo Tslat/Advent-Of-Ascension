@@ -8,8 +8,8 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.util.BlockUtil;
@@ -28,8 +28,8 @@ public class MagicMarangCrop extends HangingCropBlock {
 			BlockUtil.pixelBasedCube(0, 4, 0, 16, 16, 16),
 			BlockUtil.pixelBasedCube(0, 2, 0, 16, 16, 16)};
 
-	public MagicMarangCrop(MaterialColor colour, Supplier<Item> seedItem) {
-		super(colour, seedItem);
+	public MagicMarangCrop(BlockBehaviour.Properties properties, Supplier<Item> seedItem) {
+		super(properties, seedItem);
 	}
 
 	@Override

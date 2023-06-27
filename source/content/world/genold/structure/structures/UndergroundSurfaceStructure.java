@@ -28,8 +28,8 @@ public class UndergroundSurfaceStructure extends AoAStructureBase<IntRangeConfig
 
 				chunkCenter.setY(config.getValue(random));
 
-				if (blockReader.getBlockState(chunkCenter).getMaterial().isReplaceable()) {
-					while (chunkCenter.getY() > 0 && blockReader.getBlockState(chunkCenter.move(Direction.DOWN)).getMaterial().isReplaceable()) {
+				if (blockReader.getBlockState(chunkCenter).canBeReplaced()) {
+					while (chunkCenter.getY() > 0 && blockReader.getBlockState(chunkCenter.move(Direction.DOWN)).canBeReplaced()) {
 						;
 					}
 

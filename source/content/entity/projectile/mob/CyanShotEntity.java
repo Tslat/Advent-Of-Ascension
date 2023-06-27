@@ -17,7 +17,7 @@ public class CyanShotEntity extends BaseMobProjectile {
 	}
 
 	public CyanShotEntity(AoARangedAttacker shooter, Type projectileType) {
-		super(AoAProjectiles.CYAN_SHOT.get(), ((Entity)shooter).level, shooter, projectileType);
+		super(AoAProjectiles.CYAN_SHOT.get(), ((Entity)shooter).level(), shooter, projectileType);
 	}
 
 	@Override

@@ -1,25 +1,30 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
+import com.mojang.datafixers.util.Pair;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class EmberStaff extends BaseStaff<Object> {
+public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<LivingEntity>>> {
 	public EmberStaff(int durability) {
 		super(durability);
 	}
@@ -37,15 +42,30 @@ public class EmberStaff extends BaseStaff<Object> {
 		runes.put(AoAItems.FIRE_RUNE.get(), 1);
 	}
 
+	@org.jetbrains.annotations.Nullable
 	@Override
-	public void cast(Level world, ItemStack staff, LivingEntity caster, Object args) {
-		caster.clearFire();
+	public Pair<List<BlockPos>, List<LivingEntity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<BlockPos> blocks = new ObjectArrayList<>();
+		List<LivingEntity> entities = new ObjectArrayList<>();
 
-		for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(5), entity -> entity instanceof Player || entity instanceof TamableAnimal)) {
+		if (caster.isOnFire())
+			entities.add(caster);
+
+		entities.addAll(EntityRetrievalUtil.getEntities(caster, 5, entity -> !(entity instanceof Enemy)));
+		blocks.addAll(WorldUtil.getBlocksWithinAABB(caster.level(), new AABB(caster.blockPosition().offset(-5, -5, -5), caster.blockPosition().offset(5, 5, 5)), (state, pos) -> WorldUtil.canModifyBlock(caster.level(), pos, caster, staff) && state.is(BlockTags.FIRE)));
+
+		return entities.isEmpty() && blocks.isEmpty() ? null : Pair.of(blocks, entities);
+	}
+
+	@Override
+	public void cast(Level world, ItemStack staff, LivingEntity caster, Pair<List<BlockPos>, List<LivingEntity>> args) {
+		for (LivingEntity entity : args.getSecond()) {
 			entity.clearFire();
 		}
 
-		WorldUtil.operateOnMultipleBlocksInRange(world, caster.blockPosition(), 5, state -> state.getBlock() == Blocks.FIRE, pos -> world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState()));
+		for (BlockPos pos : args.getFirst()) {
+			world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
+		}
 	}
 
 	@Override

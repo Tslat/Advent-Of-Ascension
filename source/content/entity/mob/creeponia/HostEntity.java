@@ -64,11 +64,11 @@ public class HostEntity extends AoAMeleeMob<HostEntity> {
 
 		setDeltaMovement(motion.x(), motionY, motion.z());
 
-		if (!level.isClientSide && getTarget() != null && RandomUtil.oneInNChance(80)) {
-			Creeper creeper = new Creeper(EntityType.CREEPER, level);
+		if (!level().isClientSide && getTarget() != null && RandomUtil.oneInNChance(80)) {
+			Creeper creeper = new Creeper(EntityType.CREEPER, level());
 
 			creeper.moveTo(getX(), getY(), getZ(), rand().nextFloat() * 360f, 0.0f);
-			level.addFreshEntity(creeper);
+			level().addFreshEntity(creeper);
 			playSound(AoASounds.ENTITY_HOST_SUMMON.get(), 1.0f, 1.0f);
 		}
 	}

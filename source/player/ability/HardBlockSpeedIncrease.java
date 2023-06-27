@@ -27,7 +27,7 @@ public class HardBlockSpeedIncrease extends ScalableModAbility {
 		if (ev.getPosition().isEmpty())
 			return;
 
-		float hardness = ev.getState().getDestroySpeed(ev.getEntity().level, ev.getPosition().get());
+		float hardness = ev.getState().getDestroySpeed(ev.getEntity().level(), ev.getPosition().get());
 
 		if (hardness > 2)
 			ev.setNewSpeed(ev.getNewSpeed() * (1 + (getScaledValue() * ((hardness - 2) / 48f))));

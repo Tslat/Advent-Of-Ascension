@@ -42,9 +42,9 @@ public class InnervationSkill extends AoASkill.Instance {
 
 		attackTracker.compute(target.getId(), (id, value) -> {
 			if (value == null)
-				return Pair.of(target.level.getGameTime(), ev.getAmount());
+				return Pair.of(target.level().getGameTime(), ev.getAmount());
 
-			return Pair.of(target.level.getGameTime(), Math.min(target.getMaxHealth() * 1.5f, ev.getAmount() + value.getSecond()));
+			return Pair.of(target.level().getGameTime(), Math.min(target.getMaxHealth() * 1.5f, ev.getAmount() + value.getSecond()));
 		});
 	}
 
@@ -61,7 +61,7 @@ public class InnervationSkill extends AoASkill.Instance {
 			adjustXp(getKillXpForEntity(target, damageDealt), false, false);
 
 		if (attackTracker.size() > 10)
-			purgeTracker(target.level.getGameTime());
+			purgeTracker(target.level().getGameTime());
 	}
 
 	private void purgeTracker(long currentTime) {

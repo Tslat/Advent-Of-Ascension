@@ -20,7 +20,7 @@ public class FlowerBallRenderer extends TexturedProjectileRenderer<FlowerBallEnt
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 8; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY() + 0.3, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY() + 0.3, entity.getZ(), 0, 0, 0);
 		}
 	}
 }

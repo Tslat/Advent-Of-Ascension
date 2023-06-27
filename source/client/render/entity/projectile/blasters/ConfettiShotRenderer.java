@@ -14,7 +14,7 @@ public class ConfettiShotRenderer extends ParticleProjectileRenderer<ConfettiSho
 	@Override
 	protected void addParticles(ConfettiShotEntity entity, float partialTicks) {
 		for (int i = 0; i < 8; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), 0, -0.05, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.15f, 10, 0), entity.getX(), entity.getY(), entity.getZ(), 0, -0.05, 0);
 		}
 	}
 }

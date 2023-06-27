@@ -27,7 +27,7 @@ public class GravityBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		for (LivingEntity mob : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2, 0, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity mob : shooter.level().getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(2, 0, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
 			EntityUtil.pushEntityAway(shooter, mob, 0.5f);
 			DamageUtil.doMiscEnergyAttack(shooter, mob, (float)getDamage(), null);
 		}

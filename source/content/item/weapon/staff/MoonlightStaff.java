@@ -75,7 +75,7 @@ public class MoonlightStaff extends BaseStaff<BlockPos> {
 	}
 
 	private void createCloud(BaseEnergyShot shot, LivingEntity caster) {
-		AreaEffectCloud cloud = new AreaEffectCloud(shot.level, shot.getX(), shot.getY(), shot.getZ());
+		AreaEffectCloud cloud = new AreaEffectCloud(shot.level(), shot.getX(), shot.getY(), shot.getZ());
 
 		cloud.setOwner(caster);
 		cloud.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 140, 1, false, true));
@@ -84,7 +84,7 @@ public class MoonlightStaff extends BaseStaff<BlockPos> {
 		cloud.setDuration(10);
 		cloud.setWaitTime(0);
 
-		shot.level.addFreshEntity(cloud);
+		shot.level().addFreshEntity(cloud);
 	}
 
 	@Override

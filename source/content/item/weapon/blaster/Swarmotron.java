@@ -26,11 +26,11 @@ public class Swarmotron extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0, 0, 0));
-		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0f, -0.125f));
-		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0, 0));
-		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, -0.125f, 0.125f));
-		shooter.level.addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, 0.125f, 0.125f));
+		shooter.level().addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0, 0, 0));
+		shooter.level().addFreshEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0f, -0.125f));
+		shooter.level().addFreshEntity(new SwarmShotEntity(shooter, this, 60, -0.125f, 0, 0));
+		shooter.level().addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, -0.125f, 0.125f));
+		shooter.level().addFreshEntity(new SwarmShotEntity(shooter, this, 60, 0.125f, 0.125f, 0.125f));
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class AoACycleTrigger extends SimpleCriterionTrigger<AoACycleTrigger.Inst
 	}
 
 	@Override
-	public Instance createInstance(JsonObject json, EntityPredicate.Composite predicate, DeserializationContext conditions) {
+	public Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext conditions) {
 		AoASkill skill = null;
 
 		if (json.has("skill")) {
@@ -46,7 +46,7 @@ public class AoACycleTrigger extends SimpleCriterionTrigger<AoACycleTrigger.Inst
 		private final AoASkill skill;
 		private final int cycle;
 
-		public Instance(@Nullable AoASkill skill, int cycle, EntityPredicate.Composite playerPredicate) {
+		public Instance(@Nullable AoASkill skill, int cycle, ContextAwarePredicate playerPredicate) {
 			super(triggerId, playerPredicate);
 
 			this.skill = skill;
@@ -54,7 +54,7 @@ public class AoACycleTrigger extends SimpleCriterionTrigger<AoACycleTrigger.Inst
 		}
 
 		public Instance(@Nullable AoASkill skill, int cycle) {
-			this(skill, cycle, EntityPredicate.Composite.ANY);
+			this(skill, cycle, ContextAwarePredicate.ANY);
 		}
 
 		@Override

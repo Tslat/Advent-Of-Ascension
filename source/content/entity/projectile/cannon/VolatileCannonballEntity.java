@@ -42,6 +42,6 @@ public class VolatileCannonballEntity extends BaseBullet implements HardProjecti
 		super.tick();
 
 		if (getAge() % 4 == 1)
-			WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
+			WorldUtil.createExplosion(getOwner(), level(), this, 2.0f);
 	}
 }

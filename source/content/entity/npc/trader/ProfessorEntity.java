@@ -39,7 +39,7 @@ public class ProfessorEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.IROMINE.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.IROMINE.key);
 	}
 
 	@Nullable

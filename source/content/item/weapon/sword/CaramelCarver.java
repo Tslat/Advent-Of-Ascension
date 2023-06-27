@@ -23,7 +23,7 @@ public class CaramelCarver extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		final int multiplier = attacker.level.getEntitiesOfClass(LivingEntity.class, attacker.getBoundingBox().inflate(5.0f), EntityUtil.Predicates.HOSTILE_MOB).size();
+		final int multiplier = attacker.level().getEntitiesOfClass(LivingEntity.class, attacker.getBoundingBox().inflate(5.0f), EntityUtil.Predicates.HOSTILE_MOB).size();
 
 		target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int)(multiplier * 15 * attackCooldown), 1));
 	}

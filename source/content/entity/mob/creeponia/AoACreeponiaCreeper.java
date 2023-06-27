@@ -107,16 +107,16 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 		ItemStack itemstack = player.getItemInHand(hand);
 
 		if (itemstack.getItem() == Items.FLINT_AND_STEEL) {
-			level.playSound(player, getX(), getY(), getZ(), SoundEvents.FLINTANDSTEEL_USE, getSoundSource(), 1.0F, rand().nextFloat() * 0.4F + 0.8F);
+			level().playSound(player, getX(), getY(), getZ(), SoundEvents.FLINTANDSTEEL_USE, getSoundSource(), 1.0F, rand().nextFloat() * 0.4F + 0.8F);
 
-			if (!level.isClientSide) {
+			if (!level().isClientSide) {
 				ignite();
 				itemstack.hurtAndBreak(1, player, (p_213625_1_) -> {
 					p_213625_1_.broadcastBreakEvent(hand);
 				});
 			}
 
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		}
 		else {
 			return super.mobInteract(player, hand);
@@ -149,7 +149,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 		}
 
 		if (!net.minecraftforge.common.ForgeHooks.onLivingTick(this)) {
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				setSharedFlag(6, isCurrentlyGlowing());
 
 			baseTick();
@@ -163,7 +163,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 				swimAnimation = Math.max(0.0F, swimAnimation - 0.09F);
 			}
 
-			if (!level.isClientSide) {
+			if (!level().isClientSide) {
 				int arrowCount = getArrowCount();
 
 				if (arrowCount > 0) {
@@ -226,17 +226,17 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 			if (attackAnim > 0.0F)
 				direction = getYRot();
 
-			if (!onGround)
+			if (!onGround())
 				moveSpeedBase = 0.0F;
 
 			run += (moveSpeedBase - run) * 0.3F;
 
-			level.getProfiler().push("headTurn");
+			level().getProfiler().push("headTurn");
 
 			distanceMoved = tickHeadTurn(direction, distanceMoved);
 
-			level.getProfiler().pop();
-			level.getProfiler().push("rangeChecks");
+			level().getProfiler().pop();
+			level().getProfiler().push("rangeChecks");
 
 			while (getYRot() - yRotO < -180.0F) {
 				yRotO -= 360.0F;
@@ -270,7 +270,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 				yHeadRotO += 360.0F;
 			}
 
-			level.getProfiler().pop();
+			level().getProfiler().pop();
 
 			animStep += distanceMoved;
 
@@ -285,7 +285,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 				setXRot(0);
 		}
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			tickLeash();
 
 			if (tickCount % 5 == 0)
@@ -357,8 +357,8 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 	}
 
 	protected void explode() {
-		if (!level.isClientSide) {
-			WorldUtil.createExplosion(this, level, getExplosionStrength() * (isCharged() ? 2f : 1f));
+		if (!level().isClientSide) {
+			WorldUtil.createExplosion(this, level(), getExplosionStrength() * (isCharged() ? 2f : 1f));
 			discard();
 			spawnLingeringCloud();
 		}
@@ -368,7 +368,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 		Collection<MobEffectInstance> activeEffects = getActiveEffects();
 
 		if (!activeEffects.isEmpty()) {
-			AreaEffectCloud cloud = new AreaEffectCloud(level, getX(), getY(), getZ());
+			AreaEffectCloud cloud = new AreaEffectCloud(level(), getX(), getY(), getZ());
 			cloud.setRadius(2.5F);
 			cloud.setRadiusOnUse(-0.5F);
 			cloud.setWaitTime(10);
@@ -379,7 +379,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 				cloud.addEffect(new MobEffectInstance(effect));
 			}
 
-			level.addFreshEntity(cloud);
+			level().addFreshEntity(cloud);
 		}
 	}
 

@@ -52,7 +52,7 @@ public class PatchouliGiveBookPacket implements AoAPacket {
 					if (itemEntity != null)
 						itemEntity.makeFakeItem();
 
-					pl.level.playSound(null, pl.getX(), pl.getY(), pl.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2f, ((pl.getRandom().nextFloat() - pl.getRandom().nextFloat()) * 0.7f + 1) * 2f);
+					pl.level().playSound(null, pl.getX(), pl.getY(), pl.getZ(), SoundEvents.ITEM_PICKUP, SoundSource.PLAYERS, 0.2f, ((pl.getRandom().nextFloat() - pl.getRandom().nextFloat()) * 0.7f + 1) * 2f);
 					pl.containerMenu.broadcastChanges();
 				}
 				else {

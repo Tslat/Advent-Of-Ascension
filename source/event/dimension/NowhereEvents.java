@@ -89,39 +89,49 @@ public final class NowhereEvents {
 			pl.getAbilities().mayBuild = pl.isCreative();
 
 			if (PlayerUtil.shouldPlayerBeAffected(pl)) {
-				if (pl.getY() < pl.level.getMinBuildHeight()) {
+				if (pl.getY() < pl.level().getMinBuildHeight()) {
 					pl.fallDistance = -1;
 
 					if (pl instanceof ServerPlayer serverPlayer) {
-						ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(serverPlayer);
-						PositionAndRotation checkpoint = plData.getCheckpoint();
-
-						if (checkpoint != null) {
-							if (CheckpointBlock.isValidCheckpoint(serverPlayer.level, checkpoint)) {
-								AoAScheduler.scheduleSyncronisedTask(() -> {
-									if (NowhereEvents.isInBossRegion(serverPlayer.blockPosition()))
-										ItemUtil.clearInventoryOfItems(serverPlayer, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-
-									PlayerUtil.resetToDefaultStatus(serverPlayer);
-
-									if (!NowhereEvents.isInParkourRegion(serverPlayer.blockPosition()))
-										serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
-
-									serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN), true);
-									checkpoint.applyToEntity(serverPlayer);
-								}, 1);
-
-								ev.setCanceled(true);
-
-								return;
-							}
-							else {
-								plData.clearCheckpoint();
-								serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.invalid", ChatFormatting.RED));
-							}
+						if (!AdvancementUtil.isAdvancementCompleted(serverPlayer, AdventOfAscension.id("nowhere/root"))) {
+							AoAScheduler.scheduleSyncronisedTask(() -> {
+								PlayerUtil.resetToDefaultStatus(serverPlayer);
+								ItemUtil.clearInventoryOfItems(serverPlayer, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+								serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
+								serverPlayer.connection.teleport(17.5d, 452.5d, 3.5d, 0, serverPlayer.getXRot());
+							}, 1);
 						}
 						else {
-							NowhereActivityPortal.Activity.RETURN.activate((ServerPlayer)pl);
+							ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(serverPlayer);
+							PositionAndRotation checkpoint = plData.getCheckpoint();
+
+							if (checkpoint != null) {
+								if (CheckpointBlock.isValidCheckpoint(serverPlayer.level(), checkpoint)) {
+									AoAScheduler.scheduleSyncronisedTask(() -> {
+										if (NowhereEvents.isInBossRegion(serverPlayer.blockPosition()))
+											ItemUtil.clearInventoryOfItems(serverPlayer, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
+
+										PlayerUtil.resetToDefaultStatus(serverPlayer);
+
+										if (!NowhereEvents.isInParkourRegion(serverPlayer.blockPosition()))
+											serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
+
+										serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN), true);
+										checkpoint.applyToEntity(serverPlayer);
+									}, 1);
+
+									ev.setCanceled(true);
+
+									return;
+								}
+								else {
+									plData.clearCheckpoint();
+									serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.invalid", ChatFormatting.RED));
+								}
+							}
+							else {
+								NowhereActivityPortal.Activity.RETURN.activate((ServerPlayer)pl);
+							}
 						}
 					}
 				}

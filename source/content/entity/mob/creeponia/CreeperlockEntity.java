@@ -57,14 +57,14 @@ public class CreeperlockEntity extends AoACreeponiaCreeper implements AoARangedA
         if (!isAlive())
             return;
 
-        Player target = level.getNearestPlayer(getX(), getY(), getZ(), 20, false);
+        Player target = level().getNearestPlayer(getX(), getY(), getZ(), 20, false);
 
         if (target == null || target.isCreative())
             return;
 
-        if (!level.isClientSide && RandomUtil.oneInNChance(120)) {
+        if (!level().isClientSide && RandomUtil.oneInNChance(120)) {
             setPos(target.getX(), target.getY(), target.getZ());
-            level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CREEPERLOCK_TELEPORT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
+            level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_CREEPERLOCK_TELEPORT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
         }
 
         if (RandomUtil.oneInNChance(70)) {
@@ -75,19 +75,19 @@ public class CreeperlockEntity extends AoACreeponiaCreeper implements AoARangedA
             double distanceFactorZ = target.getZ() - this.getZ();
             double hyp = Math.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
-            level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MAGICAL_CREEPER_SHOOT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
-            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
-            level.addFreshEntity(projectile);
+            level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MAGICAL_CREEPER_SHOOT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
+            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level().getDifficulty().getId()));
+            level().addFreshEntity(projectile);
         }
     }
 
     @Override
     public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-        WorldUtil.createExplosion(this, level, projectile, 2f);
+        WorldUtil.createExplosion(this, level(), projectile, 2f);
     }
 
     public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-        WorldUtil.createExplosion(this, level, projectile, 2f);
+        WorldUtil.createExplosion(this, level(), projectile, 2f);
     }
 
     @Override

@@ -52,20 +52,20 @@ public class CustomisableLightningBolt extends LightningBolt {
 		this.baseTick();
 
 		if (this.life == 2) {
-			if (this.level.isClientSide()) {
+			if (this.level().isClientSide()) {
 				if (!isSilent()) {
-					this.level.playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 10, 0.8F + this.random.nextFloat() * 0.2F, false);
-					this.level.playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.WEATHER, 1, 0.5F + this.random.nextFloat() * 0.2F, false);
+					this.level().playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_THUNDER, SoundSource.WEATHER, 10, 0.8F + this.random.nextFloat() * 0.2F, false);
+					this.level().playLocalSound(getX(), getY(), getZ(), SoundEvents.LIGHTNING_BOLT_IMPACT, SoundSource.WEATHER, 1, 0.5F + this.random.nextFloat() * 0.2F, false);
 				}
 			}
 			else {
-				Difficulty difficulty = this.level.getDifficulty();
+				Difficulty difficulty = this.level().getDifficulty();
 
 				if ((difficulty == Difficulty.NORMAL || difficulty == Difficulty.HARD) && this.doFire)
 					spawnFire(4);
 
 				powerLightningRod();
-				clearCopperOnLightningStrike(this.level, this.getStrikePosition());
+				clearCopperOnLightningStrike(this.level(), this.getStrikePosition());
 				gameEvent(GameEvent.LIGHTNING_STRIKE);
 			}
 		}
@@ -74,10 +74,10 @@ public class CustomisableLightningBolt extends LightningBolt {
 
 		if (this.life < 0) {
 			if (this.flashes == 0) {
-				if (this.level instanceof ServerLevel) {
-					List<Entity> entities = EntityRetrievalUtil.getEntities(this.level, new AABB(getX() - 15, getY() - 15, getZ() - 15, getX() + 15, getY() + 21, getZ() + 15), new EntityPredicate<>(this).isAlive().notInCollection(this.hitEntities));
+				if (this.level() instanceof ServerLevel) {
+					List<Entity> entities = EntityRetrievalUtil.getEntities(this.level(), new AABB(getX() - 15, getY() - 15, getZ() - 15, getX() + 15, getY() + 21, getZ() + 15), new EntityPredicate<>(this).isAlive().notInCollection(this.hitEntities));
 
-					for(ServerPlayer player : ((ServerLevel)this.level).getPlayers(player -> player.distanceTo(this) < 256)) {
+					for(ServerPlayer player : ((ServerLevel)this.level()).getPlayers(player -> player.distanceTo(this) < 256)) {
 						CriteriaTriggers.LIGHTNING_STRIKE.trigger(player, this, entities);
 					}
 				}
@@ -95,15 +95,15 @@ public class CustomisableLightningBolt extends LightningBolt {
 		}
 
 		if (this.life >= 0) {
-			if (!(this.level instanceof ServerLevel)) {
-				this.level.setSkyFlashTime(2);
+			if (!(this.level() instanceof ServerLevel)) {
+				this.level().setSkyFlashTime(2);
 			}
 			else if (!this.visualOnly) {
-				List<Entity> entities = EntityRetrievalUtil.getEntities(this.level, new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 9, getZ() + 3), new EntityPredicate<>(this).isAlive());
+				List<Entity> entities = EntityRetrievalUtil.getEntities(this.level(), new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 9, getZ() + 3), new EntityPredicate<>(this).isAlive());
 
 				for(Entity entity : entities) {
 					if (!ForgeEventFactory.onEntityStruckByLightning(entity, this)) {
-						entity.thunderHit((ServerLevel)this.level, this);
+						entity.thunderHit((ServerLevel)this.level(), this);
 
 						if (this.onEntityStrike != null)
 							this.onEntityStrike.accept(entity);

@@ -37,7 +37,7 @@ public class ExoplateArmour extends AdventArmour {
 		if (slots != null && !DamageUtil.isEnvironmentalDamage(event.getSource())) {
 			LivingEntity entity = event.getEntity();
 			BlockPos playerPos = entity.blockPosition();
-			int lightLvl = Mth.clamp(2 + WorldUtil.getLightLevel((ServerLevel)entity.level, playerPos, false, false), 2, 15);
+			int lightLvl = Mth.clamp(2 + WorldUtil.getLightLevel((ServerLevel)entity.level(), playerPos, false, false), 2, 15);
 
 			event.setAmount(event.getAmount() * (1 - (1 - (lightLvl / 15f)) * 0.0625f * slots.size()));
 		}

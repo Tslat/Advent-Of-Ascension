@@ -55,7 +55,7 @@ public class HotShot extends BaseGun {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		AreaEffectCloud cloud = new AreaEffectCloud(bullet.level, (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
+		AreaEffectCloud cloud = new AreaEffectCloud(bullet.level(), (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
 
 		cloud.setOwner(shooter);
 		cloud.setParticle(ParticleTypes.FLAME);
@@ -64,9 +64,9 @@ public class HotShot extends BaseGun {
 		cloud.setRadiusPerTick(0.4f);
 		cloud.setWaitTime(0);
 
-		bullet.level.addFreshEntity(cloud);
+		bullet.level().addFreshEntity(cloud);
 
-		for (LivingEntity entity : bullet.level.getEntitiesOfClass(LivingEntity.class, cloud.getBoundingBox().inflate(2, 1, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity entity : bullet.level().getEntitiesOfClass(LivingEntity.class, cloud.getBoundingBox().inflate(2, 1, 2), EntityUtil.Predicates.HOSTILE_MOB)) {
 			entity.setSecondsOnFire(4);
 		}
 	}

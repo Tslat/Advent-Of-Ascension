@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": {
-    "item": "aoa3:irowood"
+    "item": "aoa3:iro_wood"
   },
   "result": "minecraft:charcoal"
 }

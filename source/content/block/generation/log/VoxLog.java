@@ -6,12 +6,12 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.BooleanOp;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -24,8 +24,8 @@ public class VoxLog extends LogBlock {
 	private static final VoxelShape Z_SHAPE = Shapes.join(Shapes.block(), box(2, 2, 0, 14, 14, 16), BooleanOp.NOT_SAME);
 	private static final VoxelShape Y_SHAPE = Shapes.join(Shapes.block(), box(2, 0, 2, 14, 16, 14), BooleanOp.NOT_SAME);
 
-	public VoxLog() {
-		super(MaterialColor.COLOR_GREEN, MaterialColor.COLOR_GREEN);
+	public VoxLog(BlockBehaviour.Properties properties) {
+		super(properties, null);
 
 		registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 	}

@@ -41,7 +41,7 @@ public class DischargeShotgun extends BaseShotgun {
 
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
-		WorldUtil.createExplosion(shooter, bullet.level, bullet, 2.5f);
+		WorldUtil.createExplosion(shooter, bullet.level(), bullet, 2.5f);
 	}
 
 	@Override
@@ -57,10 +57,10 @@ public class DischargeShotgun extends BaseShotgun {
 		for (int i = 0; i < pellets; i++) {
 			BaseBullet pellet = new DischargeShotEntity(shooter, this, hand, 4, 1.0f, 0, RandomUtil.randomValueUpTo(0.5f) * spreadFactor, RandomUtil.randomValueUpTo(0.5f) * spreadFactor, RandomUtil.randomValueUpTo(0.5f) * spreadFactor);
 
-			shooter.level.addFreshEntity(pellet);
+			shooter.level().addFreshEntity(pellet);
 		}
 
-		if (!shooter.level.isClientSide())
+		if (!shooter.level().isClientSide())
 			doFiringEffects(shooter, bullet, stack, hand);
 
 		return true;

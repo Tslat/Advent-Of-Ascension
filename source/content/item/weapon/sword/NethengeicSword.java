@@ -20,7 +20,7 @@ public class NethengeicSword extends BaseSword {
 
 	@Override
 	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
-		if (!attacker.level.isClientSide && !target.fireImmune() && !target.isInvulnerableTo(target.level.damageSources().onFire()))
+		if (!attacker.level().isClientSide && !target.fireImmune() && !target.isInvulnerableTo(target.level().damageSources().onFire()))
 			target.setSecondsOnFire((int)(4 * baseDamage / getDamage()));
 
 		return super.getDamageForAttack(target, attacker, swordStack, baseDamage);
@@ -28,8 +28,8 @@ public class NethengeicSword extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.level.isClientSide) {
-			if (target.fireImmune() || target.isInvulnerableTo(target.level.damageSources().onFire()))
+		if (!attacker.level().isClientSide) {
+			if (target.fireImmune() || target.isInvulnerableTo(target.level().damageSources().onFire()))
 				target.addEffect(new MobEffectInstance(MobEffects.WITHER, (int)(80 * attackCooldown), 2, false, true));
 		}
 	}

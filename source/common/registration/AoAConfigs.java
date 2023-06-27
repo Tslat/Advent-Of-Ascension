@@ -4,23 +4,30 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fml.loading.FileUtils;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.config.ClientConfig;
 import net.tslat.aoa3.config.CommonConfig;
 import net.tslat.aoa3.config.IntegrationsConfig;
 import net.tslat.aoa3.config.ServerConfig;
+import net.tslat.aoa3.util.ObjectUtil;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.io.File;
+import java.io.IOException;
 
 public final class AoAConfigs {
 	public static void init() {
-		FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve(AdventOfAscension.MOD_ID), AdventOfAscension.MOD_ID);
-		ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AoAConfigs.SERVER_CONFIG_SPEC, AdventOfAscension.MOD_ID + "_server_config.toml");
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AoAConfigs.COMMON_CONFIG_SPEC, AdventOfAscension.MOD_ID + File.separator + "common_config.toml");
-		ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AoAConfigs.CLIENT_CONFIG_SPEC, AdventOfAscension.MOD_ID + File.separator + "client_config.toml");
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AoAConfigs.INTEGRATIONS_CONFIG_SPEC, AdventOfAscension.MOD_ID + File.separator + "integrations_config.toml");
+		try {
+			ObjectUtil.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve(AdventOfAscension.MOD_ID), AdventOfAscension.MOD_ID);
+			ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, AoAConfigs.SERVER_CONFIG_SPEC, AdventOfAscension.MOD_ID + "_server_config.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AoAConfigs.COMMON_CONFIG_SPEC, AdventOfAscension.MOD_ID + File.separator + "common_config.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, AoAConfigs.CLIENT_CONFIG_SPEC, AdventOfAscension.MOD_ID + File.separator + "client_config.toml");
+			ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, AoAConfigs.INTEGRATIONS_CONFIG_SPEC, AdventOfAscension.MOD_ID + File.separator + "integrations_config.toml");
+		}
+		catch (IOException ex) {
+			Logging.error("Failed to create config directories.. this is not good", ex);
+		}
 	}
 
 	public static final ClientConfig CLIENT;

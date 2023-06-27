@@ -5,19 +5,18 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.PlantType;
 
 public class FertilisedFarmland extends FarmBlock {
 	public static final BooleanProperty WELL_FERTILISED = BooleanProperty.create("well_fertilised");
 
-	public FertilisedFarmland() {
-		super(Block.Properties.of(Material.DIRT).randomTicks().strength(0.6f).sound(SoundType.GRAVEL).isViewBlocking((state, world, pos) -> true).isSuffocating((state, world, pos) -> true));
+	public FertilisedFarmland(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(WELL_FERTILISED, false));
 	}

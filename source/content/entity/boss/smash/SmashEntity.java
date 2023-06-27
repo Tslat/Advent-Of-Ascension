@@ -45,7 +45,6 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliat
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.custom.UnreachableTargetSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
-import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -211,7 +210,7 @@ public class SmashEntity extends AoABoss {
 								Pair.of(
 										new GroundSlamAttack<>(getSwingWarmupTicks(AXE_SLAM_STATE))
 												.requiresTarget()
-												.whenActivating(entity -> this.level.playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
+												.whenActivating(entity -> this.level().playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
 												.cooldownFor(entity -> (int)(getSwingDurationTicks(AXE_SLAM_STATE) * entity.getRandom().nextFloat() * 2))
 												.startCondition(mob -> ATTACK_STATE.is(this, AXE_SLAM_STATE))
 												.whenStopping(entity -> ATTACK_STATE.set(this, AXE_SWING_STATE)),

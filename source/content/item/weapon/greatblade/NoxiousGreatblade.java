@@ -24,7 +24,7 @@ public class NoxiousGreatblade extends BaseGreatblade {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (target.hasEffect(MobEffects.POISON)) {
-			AreaEffectCloud cloud = new AreaEffectCloud(target.level, target.getX(), target.getY(), target.getZ());
+			AreaEffectCloud cloud = new AreaEffectCloud(target.level(), target.getX(), target.getY(), target.getZ());
 
 			cloud.setRadius(2);
 			cloud.setPotion(Potions.STRONG_POISON);
@@ -33,7 +33,7 @@ public class NoxiousGreatblade extends BaseGreatblade {
 			cloud.setFixedColor(ColourUtil.RGB(51, 102, 0));
 			cloud.setOwner(attacker);
 
-			target.level.addFreshEntity(cloud);
+			target.level().addFreshEntity(cloud);
 		}
 		else {
 			target.addEffect(new MobEffectInstance(MobEffects.POISON, (int)(40 * attackCooldown), 1, true, true));

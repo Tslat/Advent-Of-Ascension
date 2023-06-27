@@ -48,7 +48,7 @@ public class LuxocronEntity extends AoAMeleeMob<LuxocronEntity> {
     public void aiStep() {
         super.aiStep();
 
-        for (Player pl : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(4), PlayerUtil::shouldPlayerBeAffected)) {
+        for (Player pl : level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(4), PlayerUtil::shouldPlayerBeAffected)) {
             EntityUtil.applyPotions(pl, new EffectBuilder(MobEffects.WEAKNESS, 30).level(3));
         }
     }

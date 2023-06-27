@@ -95,7 +95,7 @@ public class BankerContainer extends AbstractContainerMenu {
 	public void removed(Player player) {
 		super.removed(player);
 
-		if (!player.level.isClientSide)
+		if (!player.level().isClientSide)
 			clearContainer(player, inputs);
 	}
 

@@ -16,7 +16,7 @@ public class RunicGuardianShotEntity extends BaseMobProjectile {
 	}
 
 	public RunicGuardianShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.RUNIC_GUARDIAN_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.RUNIC_GUARDIAN_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

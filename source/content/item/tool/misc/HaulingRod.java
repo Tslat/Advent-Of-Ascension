@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.tool.misc;
 
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -20,7 +19,7 @@ import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
@@ -32,6 +31,7 @@ import net.tslat.aoa3.event.custom.events.HaulingRodPullEntityEvent;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LootUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class HaulingRod extends FishingRodItem {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (!level.isClientSide()) {
-			if (player.fishing != null && player.fishing.level == player.level) {
+			if (player.fishing != null && player.fishing.level() == player.level()) {
 				if (player.fishing instanceof HaulingFishingBobberEntity) {
 					HaulingFishingBobberEntity bobber = (HaulingFishingBobberEntity)player.fishing;
 
@@ -100,7 +100,7 @@ public class HaulingRod extends FishingRodItem {
 				handleLureRetrieval(player, stack, bobber, loot);
 
 				for (ItemStack lootStack : loot) {
-					ItemEntity entity = new ItemEntity(player.level, bobber.getX(), bobber.getY(), bobber.getZ(), lootStack);
+					ItemEntity entity = new ItemEntity(player.level(), bobber.getX(), bobber.getY(), bobber.getZ(), lootStack);
 					double velX = player.getX() - bobber.getX();
 					double velY = player.getY() - bobber.getY();
 					double velZ = player.getZ() - bobber.getZ();
@@ -108,9 +108,9 @@ public class HaulingRod extends FishingRodItem {
 					Vec3 pullVec = new Vec3(velX, velY + Math.sqrt(Math.sqrt(velX * velX + velY * velY + velZ * velZ)), velZ).scale(0.1d);
 
 					entity.setDeltaMovement(pullVec);
-					player.level.addFreshEntity(entity);
+					player.level().addFreshEntity(entity);
 
-					if (!player.isOnGround())
+					if (!player.onGround())
 						player.setDeltaMovement(pullVec.reverse());
 
 					if (lootStack.is(ItemTags.FISHES))
@@ -121,7 +121,7 @@ public class HaulingRod extends FishingRodItem {
 			if (!player.isCreative())
 				ItemUtil.damageItem(stack, player, hand, event.getRodDamage());
 
-			player.level.addFreshEntity(new ExperienceOrb(player.level, player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, event.getXp()));
+			player.level().addFreshEntity(new ExperienceOrb(player.level(), player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, event.getXp()));
 			bobber.discard();
 		}
 		else {
@@ -134,7 +134,7 @@ public class HaulingRod extends FishingRodItem {
 
 				hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().multiply(1, 0.5f, 1));
 
-				if (!player.isOnGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
+				if (!player.onGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
 					EntityUtil.pullEntityIn(hookedEntity, player, 0.25f * pullStrength, true);
 			}
 		}
@@ -162,7 +162,7 @@ public class HaulingRod extends FishingRodItem {
 
 			hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().multiply(1, 0.25f, 1));
 
-			if (!player.isOnGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
+			if (!player.onGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
 				EntityUtil.pullEntityIn(hookedEntity, player, 0.25f * pullStrength, true);
 
 			player.getCooldowns().addCooldown(this, 10);
@@ -185,18 +185,16 @@ public class HaulingRod extends FishingRodItem {
 			return loot;
 		}
 		else if (hookedEntity instanceof LivingEntity livingEntity) {
-			DamageSource damageSource = killHaulingEntity(bobber, player, livingEntity);
-			LootContext.Builder lootContext = new LootContext.Builder((ServerLevel)player.level)
+			loot.addAll(LootUtil.generateLoot(livingEntity.getLootTable(), new LootParams.Builder(player.serverLevel())
 					.withParameter(LootContextParams.ORIGIN, bobber.position())
-					.withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
+					.withParameter(LootContextParams.DAMAGE_SOURCE, killHaulingEntity(bobber, player, livingEntity))
 					.withParameter(LootContextParams.TOOL, stack)
 					.withParameter(LootContextParams.THIS_ENTITY, bobber)
 					.withParameter(LootContextParams.KILLER_ENTITY, player)
 					.withParameter(LootContextParams.DIRECT_KILLER_ENTITY, bobber)
 					.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, player)
-					.withRandom(livingEntity.getRandom())
-					.withLuck(bobber.getLuck());
-			loot.addAll(player.getServer().getLootTables().get(livingEntity.getLootTable()).getRandomItems(lootContext.create(LootContextParamSets.ENTITY)));
+					.withLuck(bobber.getLuck())
+					.create(LootContextParamSets.ENTITY)));
 
 			return loot;
 		}
@@ -211,15 +209,15 @@ public class HaulingRod extends FishingRodItem {
 	}
 
 	protected void playRetrievalSound(Player player, HaulingFishingBobberEntity bobber, ItemStack stack) {
-		player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1, 0.4f / (float)RandomUtil.randomValueBetween(0.8f, 1.2f));
+		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.NEUTRAL, 1, 0.4f / (float)RandomUtil.randomValueBetween(0.8f, 1.2f));
 	}
 
 	protected void playCastSound(Player player, HaulingFishingBobberEntity bobber, ItemStack stack) {
-		player.level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5f, 0.4f / (float)RandomUtil.randomValueBetween(0.8f, 1.2f));
+		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.FISHING_BOBBER_THROW, SoundSource.NEUTRAL, 0.5f, 0.4f / (float)RandomUtil.randomValueBetween(0.8f, 1.2f));
 	}
 
 	protected HaulingFishingBobberEntity getNewBobber(Player player, ItemStack stack, int lureMod, int luckMod) {
-		return new HaulingFishingBobberEntity(player, player.level, stack, luckMod, lureMod);
+		return new HaulingFishingBobberEntity(player, player.level(), stack, luckMod, lureMod);
 	}
 
 	public float getHaulStrengthMod(Player player, ItemStack stack, HaulingFishingBobberEntity bobber) {

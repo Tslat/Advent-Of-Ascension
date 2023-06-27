@@ -213,7 +213,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			if (entry != null)
 				return entry;
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(tag -> LAVA_MAP.containsKey(tag)).findFirst().orElse(null);
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(LAVA_MAP::containsKey).findFirst().orElse(null);
 
 			if (matchedTag != null)
 				return LAVA_MAP.get(matchedTag);
@@ -228,7 +228,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 			if (entry != null)
 				return entry;
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(tag -> WATER_MAP.containsKey(tag)).findFirst().orElse(null);
+			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(WATER_MAP::containsKey).findFirst().orElse(null);
 
 			if (matchedTag != null)
 				return WATER_MAP.get(matchedTag);

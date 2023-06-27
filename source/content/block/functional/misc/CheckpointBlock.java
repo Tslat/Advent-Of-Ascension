@@ -13,11 +13,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -28,15 +27,14 @@ import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
 
 public class CheckpointBlock extends Block {
-	public CheckpointBlock() {
-		super(new BlockUtil.CompactProperties(Material.BARRIER, MaterialColor.COLOR_LIGHT_GREEN).unbreakable().isAir().noOcclusion().emissive().noClip().get());
+	public CheckpointBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

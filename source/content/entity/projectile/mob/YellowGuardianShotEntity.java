@@ -16,7 +16,7 @@ public class YellowGuardianShotEntity extends BaseMobProjectile {
 	}
 
 	public YellowGuardianShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.YELLOW_GUARDIAN_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.YELLOW_GUARDIAN_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

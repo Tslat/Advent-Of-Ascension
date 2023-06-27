@@ -23,26 +23,26 @@ public class PrimordialBow extends BaseBow {
 
 	@Override
 	public void onBlockHit(CustomArrowEntity arrow, BlockHitResult rayTrace, Entity shooter) {
-		AreaEffectCloud cloud = new AreaEffectCloud(arrow.level, arrow.getX(), arrow.getY(), arrow.getZ());
+		AreaEffectCloud cloud = new AreaEffectCloud(arrow.level(), arrow.getX(), arrow.getY(), arrow.getZ());
 
 		cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 0, false, true));
 		cloud.setParticle(ParticleTypes.SMOKE);
 		cloud.setRadius(2);
 		cloud.setDuration(200);
 
-		arrow.level.addFreshEntity(cloud);
+		arrow.level().addFreshEntity(cloud);
 	}
 
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		AreaEffectCloud cloud = new AreaEffectCloud(arrow.level, arrow.getX(), arrow.getY(), arrow.getZ());
+		AreaEffectCloud cloud = new AreaEffectCloud(arrow.level(), arrow.getX(), arrow.getY(), arrow.getZ());
 
 		cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 0, false, true));
 		cloud.setParticle(ParticleTypes.SMOKE);
 		cloud.setRadius(2);
 		cloud.setDuration(200);
 
-		arrow.level.addFreshEntity(cloud);
+		arrow.level().addFreshEntity(cloud);
 	}
 
 	@Override

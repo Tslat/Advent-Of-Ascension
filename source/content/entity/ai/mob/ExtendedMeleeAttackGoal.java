@@ -64,12 +64,12 @@ public class ExtendedMeleeAttackGoal<T extends Mob> extends ExtendedGoal<T> {
 		if (!super.canUse())
 			return false;
 
-		long gameTime = this.entity.level.getGameTime();
+		long gameTime = this.entity.level().getGameTime();
 
 		if (gameTime - this.goalTimeoutCounter < 20)
 			return false;
 
-		if (entity.level.getDifficulty() == Difficulty.PEACEFUL)
+		if (entity.level().getDifficulty() == Difficulty.PEACEFUL)
 			return false;
 
 		this.goalTimeoutCounter = gameTime;

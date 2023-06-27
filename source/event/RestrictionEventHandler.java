@@ -32,41 +32,41 @@ import java.util.function.Predicate;
 
 public final class RestrictionEventHandler {
 	public static void preInit() {
-		cancelEventIf(EntityTeleportEvent.EnderPearl.class, ev -> ev.getTargetY() >= ev.getEntity().level.dimensionType().logicalHeight());
+		cancelEventIf(EntityTeleportEvent.EnderPearl.class, ev -> ev.getTargetY() >= ev.getEntity().level().dimensionType().logicalHeight());
 		cancelEventIf(LivingConversionEvent.Pre.class, ev -> ev.getEntity() instanceof AoATrader);
-		cancelEventIf(PlayerEvent.BreakSpeed.class, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
+		cancelEventIf(PlayerEvent.BreakSpeed.class, ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key));
 		cancelEventIf(BlockEvent.FluidPlaceBlockEvent.class, ev -> WorldUtil.isWorld((Level)ev.getLevel(), AoADimensions.NOWHERE.key));
-		cancelEventIf(EntityMobGriefingEvent.class, ev -> ev.getEntity() != null && WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
+		cancelEventIf(EntityMobGriefingEvent.class, ev -> ev.getEntity() != null && WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key));
 		cancelEventIf(FillBucketEvent.class, ev -> WorldUtil.isWorld(ev.getLevel(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 		cancelEventIf(BlockEvent.BreakEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getPlayer()) && (WorldUtil.isWorld((Level)ev.getLevel(), AoADimensions.NOWHERE.key) || !AoASkillReqReloadListener.canBreakBlock(PlayerUtil.getAdventPlayer(ev.getPlayer()), ev.getState().getBlock(), true)));
 		cancelEventIf(BlockEvent.EntityPlaceEvent.class, ev -> EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && (WorldUtil.isWorld((Level)ev.getLevel(), AoADimensions.NOWHERE.key) || (!AoASkillReqReloadListener.canPlaceBlock(PlayerUtil.getAdventPlayer((Player)ev.getEntity()), ev.getState().getBlock(), true))));
 
 		handleEventIf(PlayerInteractEvent.RightClickBlock.class,
 				RestrictionEventHandler::handleRightClickBlock,
-				ev -> !WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+				ev -> !WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 
 		handleEventIf(PlayerInteractEvent.RightClickBlock.class,
 				NowhereEvents::handleNowhereRightClickBlock,
-				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+				ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 		handleEventIf(PlayerInteractEvent.EntityInteract.class,
 				NowhereEvents::handleNowhereRightClickEntity,
-				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+				ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 		handleEventIf(AttackEntityEvent.class,
 				NowhereEvents::handleNowhereLeftClickEntity,
-				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+				ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 		handleEventIf(PlayerInteractEvent.RightClickItem.class,
 				NowhereEvents::handleNowhereRightClickItem,
-				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
+				ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 		handleEventIf(EntityTeleportEvent.class, ev -> {
 			cancelEvent(ev);
 			PlayerUtil.notifyPlayer((Player)ev.getEntity(), Component.translatable("message.feedback.nowhere.teleport"));
-		}, ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && !(ev instanceof EntityTeleportEvent.TeleportCommand) && !(ev instanceof EntityTeleportEvent.SpreadPlayersCommand));
+		}, ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && !(ev instanceof EntityTeleportEvent.TeleportCommand) && !(ev instanceof EntityTeleportEvent.SpreadPlayersCommand));
 		handleEventIf(ExplosionEvent.Detonate.class,
 				ev -> ev.getAffectedBlocks().clear(),
 				ev -> WorldUtil.isWorld(ev.getLevel(), AoADimensions.NOWHERE.key));
 		handleEventIf(LivingDropsEvent.class,
 				NowhereEvents::handleLoot,
-				ev -> WorldUtil.isWorld(ev.getEntity().level, AoADimensions.NOWHERE.key));
+				ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key));
 	}
 
 	private static void handleRightClickBlock(final PlayerInteractEvent.RightClickBlock ev) {

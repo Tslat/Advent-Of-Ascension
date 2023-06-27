@@ -69,15 +69,15 @@ public class BombCarrierEntity extends AoARangedMob<BombCarrierEntity> {
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		BaseMobProjectile projectile = new BombCarrierDynamiteEntity(level, position(), this);
+		BaseMobProjectile projectile = new BombCarrierDynamiteEntity(level(), position(), this);
 
 		projectile.setYRot(getYHeadRot());
 		PositionAndMotionUtil.moveRelativeToFacing(projectile, -0.2f, 0, 0.6f);
-		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 0.65d, 4 - level.getDifficulty().getId());
+		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 0.65d, 4 - level().getDifficulty().getId());
 		projectile.setDeltaMovement(PositionAndMotionUtil.accountForGravity(projectile.position(), projectile.getDeltaMovement(), target.position(), projectile.getGravity()));
 		PositionAndMotionUtil.faceTowardsMotion(projectile);
 
-		level.addFreshEntity(projectile);
+		level().addFreshEntity(projectile);
 	}
 
 	@Override

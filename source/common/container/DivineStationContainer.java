@@ -87,7 +87,7 @@ public class DivineStationContainer extends AbstractContainerMenu { // TODO Look
 			stack = slotStack.copy();
 
 			if (index == 0) {
-				functionCaller.execute((world, pos) -> slotStack.getItem().onCraftedBy(slotStack, player.level, player));
+				functionCaller.execute((world, pos) -> slotStack.getItem().onCraftedBy(slotStack, player.level(), player));
 
 				if (!moveItemStackTo(slotStack, 3, 39, true))
 					return ItemStack.EMPTY;
@@ -151,12 +151,12 @@ public class DivineStationContainer extends AbstractContainerMenu { // TODO Look
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-				return new DivineStationContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
+				return new DivineStationContainer(windowId, inv, ContainerLevelAccess.create(player.level(), pos));
 			}
 		}, pos);
 	}
 
-	public static class DivineStationInventory extends CraftingContainer {
+	public static class DivineStationInventory extends TransientCraftingContainer {
 		private final NonNullList<ItemStack> stackList;
 		private final AbstractContainerMenu eventListener;
 

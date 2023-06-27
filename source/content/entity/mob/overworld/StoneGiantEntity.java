@@ -125,9 +125,9 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 		Entity attacker = source.getEntity();
 
 		if (attacker instanceof Silverfish) {
-			if (!level.isClientSide()) {
-				heal(level.getDifficulty().getId() * 7);
-				AoAPackets.messageNearbyPlayers(new ServerParticlePacket(ParticleBuilder.forPos(ParticleTypes.HEART, attacker.position())), (ServerLevel)level, attacker.position(), 50);
+			if (!level().isClientSide()) {
+				heal(level().getDifficulty().getId() * 7);
+				AoAPackets.messageNearbyPlayers(new ServerParticlePacket(ParticleBuilder.forPos(ParticleTypes.HEART, attacker.position())), (ServerLevel)level(), attacker.position(), 50);
 				playSound(SoundEvents.SILVERFISH_AMBIENT);
 				attacker.discard();
 			}
@@ -137,8 +137,8 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 
 		boolean success = super.hurt(source, amount);
 
-		if (success && amount > 1 && !level.isClientSide() && !isNoAi())
-			level.addFreshEntity(makeSilverfish(this, attacker));
+		if (success && amount > 1 && !level().isClientSide() && !isNoAi())
+			level().addFreshEntity(makeSilverfish(this, attacker));
 
 		return success;
 	}
@@ -152,15 +152,15 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 
 	@Override
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
-		BaseMobProjectile projectile = new StoneGiantRockEntity(AoAProjectiles.STONE_GIANT_ROCK.get(), level, this, BaseMobProjectile.Type.PHYSICAL);
+		BaseMobProjectile projectile = new StoneGiantRockEntity(AoAProjectiles.STONE_GIANT_ROCK.get(), level(), this, BaseMobProjectile.Type.PHYSICAL);
 
 		projectile.setYRot(getYHeadRot());
 		PositionAndMotionUtil.moveRelativeToFacing(projectile, -1, 0, 1.5f);
-		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 1.6d, 4 - level.getDifficulty().getId());
+		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 1.6d, 4 - level().getDifficulty().getId());
 		projectile.setDeltaMovement(PositionAndMotionUtil.accountForGravity(projectile.position(), projectile.getDeltaMovement(), target.position(), projectile.getGravity()));
 		PositionAndMotionUtil.faceTowardsMotion(projectile);
 
-		level.addFreshEntity(projectile);
+		level().addFreshEntity(projectile);
 	}
 
 	@Override
@@ -172,7 +172,7 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile).spawnNTimes(3));
 
 		projectile.playSound(AoASounds.ROCK_SMASH.get());
-		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
+		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 20);
 	}
 
 	@Override
@@ -182,13 +182,13 @@ public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements R
 				ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.DIRT.defaultBlockState()), projectile).spawnNTimes(3));
 
 		projectile.playSound(AoASounds.ROCK_SMASH.get());
-		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
+		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 20);
 	}
 
 	public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {}
 
 	private static Silverfish makeSilverfish(StoneGiantEntity stoneGiant, @Nullable Entity target) {
-		Silverfish silverfish = new Silverfish(EntityType.SILVERFISH, stoneGiant.level) {
+		Silverfish silverfish = new Silverfish(EntityType.SILVERFISH, stoneGiant.level()) {
 			@Override
 			protected void customServerAiStep() {
 				super.customServerAiStep();

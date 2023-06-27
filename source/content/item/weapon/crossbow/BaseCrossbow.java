@@ -253,7 +253,7 @@ public class BaseCrossbow extends CrossbowItem {
 
 	protected CustomArrowEntity createArrow(LivingEntity shooter, ItemStack crossbowStack, ItemStack ammoStack) {
 		ArrowItem arrowItem = (ArrowItem)(ammoStack.getItem() instanceof ArrowItem ? ammoStack.getItem() : Items.ARROW);
-		CustomArrowEntity arrow = CustomArrowEntity.fromArrow(arrowItem.createArrow(shooter.level, ammoStack, shooter), this, shooter, getDamage());
+		CustomArrowEntity arrow = CustomArrowEntity.fromArrow(arrowItem.createArrow(shooter.level(), ammoStack, shooter), this, shooter, getDamage());
 
 		if (shooter instanceof Player)
 			arrow.setCritArrow(true);

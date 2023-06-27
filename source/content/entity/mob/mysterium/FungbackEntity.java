@@ -53,7 +53,7 @@ public class FungbackEntity extends AoAMeleeMob<FungbackEntity> {
 	@Override
 	protected void onHurt(DamageSource source, float amount) {
 		if (!DamageUtil.isEnvironmentalDamage(source)) {
-			AreaEffectCloud effectCloud = new AreaEffectCloud(level, getX(), getY(), getZ());
+			AreaEffectCloud effectCloud = new AreaEffectCloud(level(), getX(), getY(), getZ());
 
 			effectCloud.setDuration(30);
 			effectCloud.setRadius(1.5f);
@@ -64,7 +64,7 @@ public class FungbackEntity extends AoAMeleeMob<FungbackEntity> {
 			effectCloud.addEffect(new MobEffectInstance(MobEffects.POISON, 40, 2, false, true));
 			effectCloud.setRadiusPerTick(-(effectCloud.getRadius() - 0.5f) / (float)effectCloud.getDuration());
 
-			level.addFreshEntity(effectCloud);
+			level().addFreshEntity(effectCloud);
 		}
 	}
 }

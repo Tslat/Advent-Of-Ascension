@@ -4,6 +4,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -38,21 +39,23 @@ public class AdventGuiTabHelp extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-		RenderUtil.drawVerticalGradient(matrix, AdventMainGui.scaledTabRootX + 35, AdventMainGui.scaledTabRootY + 55, 0, 570, 225, -1072689136, -804253680);
-		RenderUtil.drawCenteredScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.theme"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 10, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-		RenderUtil.drawCenteredScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.links"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 100, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		PoseStack poseStack = guiGraphics.pose();
 
-		RenderUtil.drawScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.title"), AdventMainGui.scaledTabRootX + 80, AdventMainGui.scaledTabRootY + 25, 2.5f, ColourUtil.RGB(239, 137, 119), RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.renderVerticalGradient(poseStack, AdventMainGui.scaledTabRootX + 35, AdventMainGui.scaledTabRootY + 55, 570, 225, -1072689136, -804253680);
+		RenderUtil.renderCenteredScaledText(poseStack, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.theme"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 10, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+		RenderUtil.renderCenteredScaledText(poseStack, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.links"), AdventMainGui.scaledTabRootX + 672, AdventMainGui.scaledTabRootY + 100, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 
-		matrix.pushPose();
-		matrix.scale(1.5625f, 1.5625f, 1.5625f);
-		RenderUtil.drawWrappedMessage(matrix, font, Component.literal(LocaleUtil.getLocaleString("gui.aoa3.adventGui.help.description").replace("<br>", "\n")), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, ColourUtil.WHITE);
-		matrix.popPose();
+		RenderUtil.renderScaledText(poseStack, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.title"), AdventMainGui.scaledTabRootX + 80, AdventMainGui.scaledTabRootY + 25, 2.5f, ColourUtil.RGB(239, 137, 119), RenderUtil.TextRenderType.OUTLINED);
 
-		RenderUtil.drawScaledMessage(matrix, font, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip", LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip." + tipNumber)), AdventMainGui.scaledTabRootX + 30, AdventMainGui.scaledTabRootY + 310, 1.8f, ColourUtil.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
+		poseStack.pushPose();
+		poseStack.scale(1.5625f, 1.5625f, 1.5625f);
+		RenderUtil.renderWrappedText(poseStack, Component.literal(LocaleUtil.getLocaleString("gui.aoa3.adventGui.help.description").replace("<br>", "\n")), (int)((AdventMainGui.scaledTabRootX + 40) / 1.5625f), (int)((AdventMainGui.scaledTabRootY + 60) / 1.5625f), 360, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+		poseStack.popPose();
 
-		super.render(matrix, mouseX, mouseY, partialTicks);
+		RenderUtil.renderScaledText(poseStack, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip", LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help.tip." + tipNumber)), AdventMainGui.scaledTabRootX + 30, AdventMainGui.scaledTabRootY + 310, 1.8f, ColourUtil.WHITE, RenderUtil.TextRenderType.DROP_SHADOW);
+
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 	}
 
 	private static void openURL(URI url) {
@@ -92,7 +95,7 @@ public class AdventGuiTabHelp extends Screen {
 		}
 
 		@Override
-		public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
 
@@ -104,7 +107,7 @@ public class AdventGuiTabHelp extends Screen {
 				if (isHovered)
 					stringColour = ColourUtil.RGB(247, 239, 0);
 
-				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), (int)(AdventMainGui.scaledTabRootX + getX() + width / 2f), AdventMainGui.scaledTabRootY + getY(), 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(guiGraphics.pose(), getMessage(), (int)(AdventMainGui.scaledTabRootX + getX() + width / 2f), AdventMainGui.scaledTabRootY + getY(), 2f, stringColour, RenderUtil.TextRenderType.OUTLINED);
 			}
 		}
 
@@ -131,7 +134,7 @@ public class AdventGuiTabHelp extends Screen {
 		}
 
 		@Override
-		public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
 				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
@@ -141,7 +144,7 @@ public class AdventGuiTabHelp extends Screen {
 				RenderSystem.setShaderTexture(0, AdventMainGui.theme.menuButtonTexture());
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
-				RenderUtil.renderScaledCustomSizedTexture(matrix, AdventMainGui.scaledTabRootX + getX(), AdventMainGui.scaledTabRootY + getY(), 0, isHovered ? 60 : 0, 180, 60, width, height, 180, 180);
+				RenderUtil.renderScaledCustomSizedTexture(guiGraphics.pose(), AdventMainGui.scaledTabRootX + getX(), AdventMainGui.scaledTabRootY + getY(), 0, isHovered ? 60 : 0, 180, 60, width, height, 180, 180);
 
 				int stringColour = 14737632;
 
@@ -155,7 +158,7 @@ public class AdventGuiTabHelp extends Screen {
 					stringColour = 16777120;
 				}
 
-				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), (int)(AdventMainGui.scaledTabRootX + getX() + width / 2f), (int)(AdventMainGui.scaledTabRootY + getY() + height / 2.5), 1.5f, stringColour, RenderUtil.StringRenderType.DROP_SHADOW);
+				RenderUtil.renderCenteredScaledText(guiGraphics.pose(), getMessage(), (int)(AdventMainGui.scaledTabRootX + getX() + width / 2f), (int)(AdventMainGui.scaledTabRootY + getY() + height / 2.5), 1.5f, stringColour, RenderUtil.TextRenderType.DROP_SHADOW);
 			}
 		}
 

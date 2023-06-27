@@ -368,7 +368,7 @@ public final class AoAMobs {
 			return entityType;
 		});
 
-		AoAItems.registerItem(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties()), () -> CreativeModeTabs.SPAWN_EGGS);
+		AoAItems.registerItem(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
 
 		return registryObject;
 	}

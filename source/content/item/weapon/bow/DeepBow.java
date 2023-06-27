@@ -24,8 +24,8 @@ public class DeepBow extends BaseBow {
 
 	@Override
 	public void onArrowTick(CustomArrowEntity arrow, Entity shooter) {
-		if (!arrow.level.isClientSide)
-			((ServerLevel)arrow.level).sendParticles(ParticleTypes.FIREWORK, arrow.getX(), arrow.getY() + 0.1, arrow.getZ(), 1, 0, 0, 0, (double)0);
+		if (!arrow.level().isClientSide)
+			((ServerLevel)arrow.level()).sendParticles(ParticleTypes.FIREWORK, arrow.getX(), arrow.getY() + 0.1, arrow.getZ(), 1, 0, 0, 0, (double)0);
 	}
 
 	@Override

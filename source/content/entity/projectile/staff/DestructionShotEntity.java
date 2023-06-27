@@ -32,7 +32,7 @@ public class DestructionShotEntity extends BaseEnergyShot {
 		setDeltaMovement(getDeltaMovement().multiply(0.4d, 0.4d, 0.4d));
 
 		if (getAge() >= 65) {
-			WorldUtil.createExplosion(getOwner(), level, this, 3.2f);
+			WorldUtil.createExplosion(getOwner(), level(), this, 3.2f);
 			discard();
 		}
 	}

@@ -49,7 +49,7 @@ public class YPosStructure extends GenericAoAStructure<VariableHeightStructureCo
 				if (!genContext.validBiome().test(genContext.chunkGenerator().getNoiseBiome(QuartPos.fromBlock(currentPos.getX()), QuartPos.fromBlock(currentPos.getY()), QuartPos.fromBlock(currentPos.getZ()))))
 					return false;
 
-				return config.ignoreObstructions() || noiseColumn.getBlock(currentPos.getY()).getMaterial().isReplaceable();
+				return config.ignoreObstructions() || noiseColumn.getBlock(currentPos.getY()).canBeReplaced();
 			}
 		};
 	}

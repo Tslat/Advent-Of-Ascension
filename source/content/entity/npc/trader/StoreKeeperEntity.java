@@ -42,7 +42,7 @@ public class StoreKeeperEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.VOX_PONDS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.VOX_PONDS.key);
 	}
 
 	@Nullable

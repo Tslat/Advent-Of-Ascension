@@ -27,7 +27,7 @@ public class CreepBankerEntity extends AoABanker {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.CREEPONIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.CREEPONIA.key);
 	}
 
 	@Override

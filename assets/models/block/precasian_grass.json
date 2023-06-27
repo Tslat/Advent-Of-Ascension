@@ -1,8 +1,9 @@
 {
-  "parent": "minecraft:block/cube_bottom_top",
-  "render_type": "minecraft:solid",
+  "parent": "minecraft:block/grass_block",
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "bottom": "aoa3:block/precasian_surface_rock",
+    "bottom": "aoa3:block/precasian_soil",
+    "overlay": "aoa3:block/precasian_grass_side_overlay",
     "particle": "#side",
     "side": "aoa3:block/precasian_grass_side",
     "top": "aoa3:block/precasian_grass_top"

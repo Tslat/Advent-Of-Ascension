@@ -42,7 +42,7 @@ public class WhitewashingRecipe implements Recipe<Inventory> {
 
 	@Override
 	public boolean matches(Inventory inv, Level world) {
-		return ItemStack.isSame(input, inv.getItem(0)) && ItemStack.isSame(washingMaterial, inv.getItem(1));
+		return ItemStack.isSameItem(input, inv.getItem(0)) && ItemStack.isSameItem(washingMaterial, inv.getItem(1));
 	}
 
 	@Override

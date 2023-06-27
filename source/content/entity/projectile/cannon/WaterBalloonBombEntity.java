@@ -55,22 +55,22 @@ public class WaterBalloonBombEntity extends BaseBullet implements HardProjectile
 
 	protected void explode(Vec3 position) {
 		Entity shooter = getOwner();
-		WorldUtil.createExplosion(shooter, level, this, 1.5f);
+		WorldUtil.createExplosion(shooter, level(), this, 1.5f);
 
-		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition()) && !level.dimensionType().ultraWarm()) {
-			if (!WorldUtil.canPlaceBlock(level, blockPosition(), shooter instanceof Player ? shooter : null, null))
+		if (!level().isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level()) && level().isEmptyBlock(blockPosition()) && !level().dimensionType().ultraWarm()) {
+			if (!WorldUtil.canPlaceBlock(level(), blockPosition(), shooter instanceof Player ? shooter : null, null))
 				return;
 
 			int i = 1;
 
-			while (level.getBlockState(blockPosition().below(i)).getMaterial().isReplaceable() && blockPosition().getY() - i >= 0) {
+			while (level().getBlockState(blockPosition().below(i)).canBeReplaced() && blockPosition().getY() - i >= 0) {
 				i++;
 			}
 
 			if (blockPosition().getY() - i <= 0)
 				return;
 
-			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.WATER.defaultBlockState());
+			level().setBlockAndUpdate(blockPosition().below(i - 1), Blocks.WATER.defaultBlockState());
 		}
 	}
 }

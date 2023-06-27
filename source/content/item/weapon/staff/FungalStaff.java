@@ -51,17 +51,17 @@ public class FungalStaff extends BaseStaff<HashMap<BlockPos, Boolean>> {
 			for (int y = -2; y <= 2; y++) {
 				for (int z = -2; z <= 2; z++) {
 					BlockPos pos = BlockPos.containing(caster.getX() + x, caster.getY() + y, caster.getZ() + z);
-					BlockState state = caster.level.getBlockState(pos);
+					BlockState state = caster.level().getBlockState(pos);
 					Block block = state.getBlock();
 
 					if (block == Blocks.GRASS_BLOCK) {
-						if (WorldUtil.canModifyBlock(caster.level, pos, caster, staff))
+						if (WorldUtil.canModifyBlock(caster.level(), pos, caster, staff))
 							workablePositions.put(pos, true);
 					}
 					else if (block instanceof MushroomBlock) {
 						MushroomBlock mushroom = (MushroomBlock)block;
 
-						if (mushroom.isValidBonemealTarget(caster.level, pos, state, caster.level.isClientSide()) && WorldUtil.canModifyBlock(caster.level, pos, caster, staff))
+						if (mushroom.isValidBonemealTarget(caster.level(), pos, state, caster.level().isClientSide()) && WorldUtil.canModifyBlock(caster.level(), pos, caster, staff))
 							workablePositions.put(pos, false);
 					}
 				}

@@ -22,10 +22,10 @@ public class ShyreSword extends BaseGreatblade {
 	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		float dmg = super.getDamageForAttack(target, attacker, swordStack, baseDamage);
 
-		if (!(attacker.level instanceof ServerLevelAccessor))
+		if (!(attacker.level() instanceof ServerLevelAccessor))
 			return dmg;
 
-		return dmg - 4 + (WorldUtil.getLightLevel((ServerLevelAccessor)attacker.level, attacker.blockPosition(), false, false) / 15f * 9f);
+		return dmg - 4 + (WorldUtil.getLightLevel((ServerLevelAccessor)attacker.level(), attacker.blockPosition(), false, false) / 15f * 9f);
 	}
 
 	@Override

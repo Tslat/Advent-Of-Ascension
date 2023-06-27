@@ -51,7 +51,7 @@ public class LuxonStickler extends BaseCannon {
 		super.doImpactDamage(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 
 		if (target instanceof LivingEntity)
-			target.level.addFreshEntity(new LuxonSticklerStuckEntity(shooter, this, (LivingEntity)target, bulletDmgMultiplier));
+			target.level().addFreshEntity(new LuxonSticklerStuckEntity(shooter, this, (LivingEntity)target, bulletDmgMultiplier));
 
 		bullet.discard();
 	}

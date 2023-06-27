@@ -34,7 +34,7 @@ public class PincherEntity extends AoAWaterMeleeMob {
 		if (EntityUtil.isNaturalSpawnReason(reason)) {
 			BlockPos.MutableBlockPos spawnPos = new BlockPos.MutableBlockPos().set(blockPosition());
 
-			while (!world.getBlockState(spawnPos).getMaterial().blocksMotion() && spawnPos.getY() > 0) {
+			while (!world.getBlockState(spawnPos).blocksMotion() && spawnPos.getY() > 0) {
 				spawnPos.move(Direction.DOWN);
 			}
 
@@ -87,8 +87,8 @@ public class PincherEntity extends AoAWaterMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (!level.isClientSide && isInWater() && target.isInWater())
-			WorldUtil.createExplosion(this, level, 1.5f);
+		if (!level().isClientSide && isInWater() && target.isInWater())
+			WorldUtil.createExplosion(this, level(), 1.5f);
 	}
 
 	@Override

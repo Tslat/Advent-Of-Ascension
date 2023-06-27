@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
@@ -77,10 +78,20 @@ public final class PositionAndMotionUtil {
 		return position.add(x, moveUp, z);
 	}
 
+	public static boolean isNonVoidPosition(Level level, Vec3 pos) {
+		int x = (int)Math.floor(pos.x);
+		int z = (int)Math.floor(pos.z);
+
+		if (x < -30000000 || z < -30000000 || x >= 30000000 || z >= 30000000)
+			return false;
+
+		return level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) > level.getMinBuildHeight();
+	}
+
 	public static Vec3 moveDownToGround(Level level, Vec3 pos) {
 		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(pos.x, pos.y, pos.z);
 
-		while (!level.getBlockState(testPos.move(Direction.DOWN)).getMaterial().blocksMotion() && testPos.getY() > level.getMinBuildHeight()) {}
+		while (!level.getBlockState(testPos.move(Direction.DOWN)).blocksMotion() && testPos.getY() > level.getMinBuildHeight()) {}
 
 		return new Vec3(pos.x, testPos.getY() + 1, pos.z);
 	}
@@ -88,7 +99,7 @@ public final class PositionAndMotionUtil {
 	public static Vec3 moveUpToSurface(Level level, Vec3 pos) {
 		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(pos.x, pos.y, pos.z);
 
-		while (level.getBlockState(testPos.move(Direction.UP)).getMaterial().blocksMotion() && testPos.getY() < level.getMaxBuildHeight()) {}
+		while (level.getBlockState(testPos.move(Direction.UP)).blocksMotion() && testPos.getY() < level.getMaxBuildHeight()) {}
 
 		return new Vec3(pos.x, testPos.getY(), pos.z);
 	}

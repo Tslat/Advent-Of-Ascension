@@ -14,6 +14,6 @@ public class CreeperShotRenderer extends ParticleProjectileRenderer<CreeperShotE
 
 	@Override
 	protected void addParticles(CreeperShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 }

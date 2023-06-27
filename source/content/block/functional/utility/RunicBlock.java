@@ -7,18 +7,16 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
 
 public class RunicBlock extends Block {
-	public RunicBlock() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_BLUE).stats(10f, 15f).get());
+	public RunicBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

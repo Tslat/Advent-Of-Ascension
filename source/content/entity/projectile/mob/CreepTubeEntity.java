@@ -17,15 +17,15 @@ public class CreepTubeEntity extends BaseMobProjectile {
 	}
 
 	public CreepTubeEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.CREEP_TUBE.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CREEP_TUBE.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide && tickCount % 4 == 0)
-			WorldUtil.createExplosion(getOwner(), level, this, 2f);
+		if (!level().isClientSide && tickCount % 4 == 0)
+			WorldUtil.createExplosion(getOwner(), level(), this, 2f);
 	}
 
 	@Override

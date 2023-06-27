@@ -27,9 +27,9 @@ public class TidalGreatblade extends BaseGreatblade {
 		double xOffset = Mth.cos(attacker.getYRot() / 180.0F * (float)Math.PI) * 0.7F;
 		double zOffset = Mth.sin(attacker.getYRot() / 180.0F * (float)Math.PI) * 0.7F;
 
-		attacker.level.addFreshEntity(new TidalWaveEntity(attacker.level, attacker, xOffset, zOffset));
-		attacker.level.addFreshEntity(new TidalWaveEntity(attacker.level, attacker, 0, 0));
-		attacker.level.addFreshEntity(new TidalWaveEntity(attacker.level, attacker, -xOffset, -zOffset));
+		attacker.level().addFreshEntity(new TidalWaveEntity(attacker.level(), attacker, xOffset, zOffset));
+		attacker.level().addFreshEntity(new TidalWaveEntity(attacker.level(), attacker, 0, 0));
+		attacker.level().addFreshEntity(new TidalWaveEntity(attacker.level(), attacker, -xOffset, -zOffset));
 	}
 
 	@Override

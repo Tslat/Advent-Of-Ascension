@@ -10,24 +10,22 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
 
 import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
 
 public class BannerExtension extends Block implements SimpleWaterloggedBlock {
-	public BannerExtension() {
-		super(new BlockUtil.CompactProperties(Material.DECORATION, MaterialColor.METAL).stats(0.5f, 1f).sound(SoundType.WOOL).noClip().noOcclusion().get());
+	public BannerExtension(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(BannerBlock.TYPE, BannerBlock.BannerType.MOUNTED).setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(WATERLOGGED, false));
 	}

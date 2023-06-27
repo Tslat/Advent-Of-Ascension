@@ -1,6 +1,6 @@
 package net.tslat.aoa3.client.gui.container;
 
-import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -16,16 +16,16 @@ public class InfusionTableScreen extends AbstractContainerScreen<InfusionTableCo
 	}
 
 	@Override
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(matrix);
-		super.render(matrix, mouseX, mouseY, partialTicks);
-		renderTooltip(matrix, mouseX, mouseY);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(guiGraphics);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		renderTooltip(guiGraphics, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
 		RenderUtil.prepRenderTexture(textures);
 		RenderUtil.resetShaderColour();
-		RenderUtil.renderCustomSizedTexture(matrix, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
+		RenderUtil.renderCustomSizedTexture(guiGraphics.pose(), leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
 	}
 }

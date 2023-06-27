@@ -87,13 +87,13 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 
 		projectile.setYRot(getYHeadRot());
 		PositionAndMotionUtil.moveRelativeToFacing(projectile, 0, 0, 0);
-		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 1.6d, 4 - level.getDifficulty().getId());
+		PositionAndMotionUtil.moveTowards(projectile, target.getEyePosition(), 1.6d, 4 - level().getDifficulty().getId());
 		projectile.setDeltaMovement(PositionAndMotionUtil.accountForGravity(projectile.position(), projectile.getDeltaMovement(), target.position(), projectile.getGravity()));
 		PositionAndMotionUtil.faceTowardsMotion(projectile);
 
 		if (getShootSound() != null)
-			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
+			level().playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
-		level.addFreshEntity(projectile);
+		level().addFreshEntity(projectile);
 	}
 }

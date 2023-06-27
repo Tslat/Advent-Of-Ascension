@@ -16,7 +16,7 @@ public class CherryShotEntity extends BaseMobProjectile {
 	}
 
 	public CherryShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.CHERRY_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CHERRY_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

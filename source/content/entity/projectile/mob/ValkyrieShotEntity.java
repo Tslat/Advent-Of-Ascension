@@ -16,7 +16,7 @@ public class ValkyrieShotEntity extends BaseMobProjectile {
 	}
 
 	public ValkyrieShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.VALKYRIE_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.VALKYRIE_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

@@ -35,7 +35,7 @@ public class EchoGull extends BaseGun {
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
 		ArrayList<Tuple<LivingEntity, Integer>> entityList = new ArrayList<Tuple<LivingEntity, Integer>>();
 
-		for (LivingEntity entity : bullet.level.getEntitiesOfClass(LivingEntity.class, bullet.getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity entity : bullet.level().getEntitiesOfClass(LivingEntity.class, bullet.getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB)) {
 			int distance = (int)entity.distanceTo(bullet);
 
 			if (entityList.isEmpty()) {
@@ -54,7 +54,7 @@ public class EchoGull extends BaseGun {
 			}
 		}
 
-		AoAScheduler.scheduleSyncronisedTask(new EchoGullTask(bullet.level, entityList), 1);
+		AoAScheduler.scheduleSyncronisedTask(new EchoGullTask(bullet.level(), entityList), 1);
 	}
 
 	@Override

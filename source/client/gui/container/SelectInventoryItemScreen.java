@@ -1,7 +1,7 @@
 package net.tslat.aoa3.client.gui.container;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.ContainerScreen;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.SimpleContainer;
@@ -57,7 +57,7 @@ public class SelectInventoryItemScreen extends ContainerScreen {
 	}
 
 	@Override
-	protected void renderTooltip(PoseStack matrixStack, int x, int y) {
+	protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
 		if (this.hoveredSlot != null) {
 			MutableComponent component = null;
 
@@ -70,7 +70,7 @@ public class SelectInventoryItemScreen extends ContainerScreen {
 			}
 
 			if (component != null)
-				this.renderComponentTooltip(matrixStack, Collections.singletonList(component), x, y, (font == null ? this.font : font));
+				guiGraphics.renderComponentTooltip((font == null ? this.font : font), Collections.singletonList(component), x, y);
 		}
 	}
 }

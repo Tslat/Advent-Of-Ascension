@@ -16,7 +16,7 @@ public class CraexxeusNukeEntity extends BaseMobProjectile {
 	}
 
 	public CraexxeusNukeEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.CRAEXXEUS_NUKE.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CRAEXXEUS_NUKE.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

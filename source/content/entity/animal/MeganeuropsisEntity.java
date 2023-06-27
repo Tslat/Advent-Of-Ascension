@@ -74,7 +74,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	}
 
 	public int getStartLandingTicks() {
-		return level.isClientSide ? clientStartLandingTicks : entityData.get(START_LANDING_TICKS);
+		return level().isClientSide ? clientStartLandingTicks : entityData.get(START_LANDING_TICKS);
 	}
 
 	public boolean isLanded() {
@@ -123,7 +123,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
 
-		if (level.isClientSide && key.equals(START_LANDING_TICKS))
+		if (level().isClientSide && key.equals(START_LANDING_TICKS))
 			clientStartLandingTicks = tickCount;
 	}
 
@@ -135,9 +135,9 @@ public class MeganeuropsisEntity extends AoAAnimal {
 	@Override
 	public void travel(Vec3 motion) {
 		if (isLanded()) {
-			if (level.isClientSide && getLandingDirection() == Direction.DOWN && !isPassenger()) {
+			if (level().isClientSide && getLandingDirection() == Direction.DOWN && !isPassenger()) {
 				if (entityData.get(LANDED_PLAYER).isPresent()) {
-					Player pl = level.getPlayerByUUID(entityData.get(LANDED_PLAYER).get());
+					Player pl = level().getPlayerByUUID(entityData.get(LANDED_PLAYER).get());
 
 					if (pl != null) {
 						clientRidingPlayer = pl;
@@ -148,7 +148,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 
 			return;
 		}
-		else if (level.isClientSide && isPassenger() && clientRidingPlayer != null) {
+		else if (level().isClientSide && isPassenger() && clientRidingPlayer != null) {
 			clientRidingPlayer = null;
 			stopRiding();
 		}
@@ -168,19 +168,19 @@ public class MeganeuropsisEntity extends AoAAnimal {
 		else {
 			float friction = 0.91F;
 
-			if (onGround) {
+			if (onGround()) {
 				BlockPos underPos = new BlockPos(Mth.floor(getX()), Mth.floor(getBoundingBox().minY) - 1, Mth.floor(getZ()));
-				BlockState underState = level.getBlockState(underPos);
-				friction = underState.getBlock().getFriction(underState, level, underPos, this) * 0.91F;
+				BlockState underState = level().getBlockState(underPos);
+				friction = underState.getBlock().getFriction(underState, level(), underPos, this) * 0.91F;
 			}
 
-			moveRelative(onGround ? 0.1F * (0.16277136F / (friction * friction * friction)) : 0.02F, motion);
+			moveRelative(onGround() ? 0.1F * (0.16277136F / (friction * friction * friction)) : 0.02F, motion);
 			friction = 0.91F;
 
-			if (onGround) {
+			if (onGround()) {
 				BlockPos underPos = new BlockPos(Mth.floor(getX()), Mth.floor(getBoundingBox().minY) - 1, Mth.floor(getZ()));
-				BlockState underState = level.getBlockState(underPos);
-				friction = underState.getBlock().getFriction(underState, level, underPos, this) * 0.91F;
+				BlockState underState = level().getBlockState(underPos);
+				friction = underState.getBlock().getFriction(underState, level(), underPos, this) * 0.91F;
 			}
 
 			move(MoverType.SELF, getDeltaMovement());
@@ -212,7 +212,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 
 			if (landingPos == null && landingPlayer == null && taskOwner.getRandom().nextFloat() <= 0.01f) {
 				if (random.nextBoolean()) {
-					Player nearestPlayer = taskOwner.level.getNearestPlayer(getX(), getY(), getZ(), 10, false);
+					Player nearestPlayer = taskOwner.level().getNearestPlayer(getX(), getY(), getZ(), 10, false);
 
 					if (nearestPlayer != null && !nearestPlayer.isVehicle()) {
 						taskOwner.navigation.stop();
@@ -225,7 +225,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 					for (int i = 0; i < 3; i ++) {
 						int x = (int)(taskOwner.getX() + taskOwner.getRandom().nextGaussian() * 10);
 						int z = (int)(taskOwner.getZ() + taskOwner.getRandom().nextGaussian() * 10);
-						int y = taskOwner.level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(x, taskOwner.getY(), z)).getY();
+						int y = taskOwner.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(x, taskOwner.getY(), z)).getY();
 
 						if (taskOwner.getY() - y > 10)
 							continue;
@@ -234,7 +234,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 							if (true) // TODO Alternate landing pattern
 								return false;
 
-							BlockHitResult trace = taskOwner.level.clip(new ClipContext(position(), new Vec3(x + 0.5d, y + 0.5d, z + 0.5d), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null));
+							BlockHitResult trace = taskOwner.level().clip(new ClipContext(position(), new Vec3(x + 0.5d, y + 0.5d, z + 0.5d), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null));
 
 							if (trace.getType() == HitResult.Type.MISS)
 								return false;
@@ -291,7 +291,7 @@ public class MeganeuropsisEntity extends AoAAnimal {
 					Vec3 actualLandingLocation = getActualLandingLocation();
 					BlockPos actualLandingBlockPos = BlockPos.containing(actualLandingLocation);
 
-					if (taskOwner.level.getBlockState(actualLandingBlockPos).getCollisionShape(taskOwner.level, actualLandingBlockPos) != Shapes.empty()) {
+					if (taskOwner.level().getBlockState(actualLandingBlockPos).getCollisionShape(taskOwner.level(), actualLandingBlockPos) != Shapes.empty()) {
 						landingPos = null;
 						landingPlayer = null;
 

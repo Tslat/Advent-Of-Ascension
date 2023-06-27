@@ -32,7 +32,7 @@ public class ConcussionStaff extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(8), EntityUtil.Predicates.HOSTILE_MOB);
+		List<LivingEntity> list = caster.level().getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(8), EntityUtil.Predicates.HOSTILE_MOB);
 
 		if (!list.isEmpty())
 			return list;
@@ -50,7 +50,7 @@ public class ConcussionStaff extends BaseStaff<List<LivingEntity>> {
 	public void cast(Level world, ItemStack staff, LivingEntity caster, List<LivingEntity> args) {
 		for (LivingEntity e : args) {
 			EntityUtil.pushEntityAway(caster, e, 3f);
-			WorldUtil.createExplosion(caster, e.level, e.getX(), e.getY() + e.getBbHeight() + 0.5, e.getZ(), 2.3f);
+			WorldUtil.createExplosion(caster, e.level(), e.getX(), e.getY() + e.getBbHeight() + 0.5, e.getZ(), 2.3f);
 			EntityUtil.applyPotions(e, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 25).level(10));
 		}
 	}

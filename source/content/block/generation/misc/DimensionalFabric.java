@@ -7,21 +7,18 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
 
 public class DimensionalFabric extends Block {
-	public DimensionalFabric() {
-		super(new BlockUtil.CompactProperties(Material.BARRIER, MaterialColor.COLOR_BLACK).unbreakable().noSpawns().sound(SoundType.WOOL).get());
+	public DimensionalFabric(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
@@ -45,7 +42,7 @@ public class DimensionalFabric extends Block {
 	}
 
 	@Override
-	public boolean isPossibleToRespawnInThis() {
+	public boolean isPossibleToRespawnInThis(BlockState p_279289_) {
 		return false;
 	}
 

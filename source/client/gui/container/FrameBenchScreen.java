@@ -3,6 +3,7 @@ package net.tslat.aoa3.client.gui.container;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -48,17 +49,17 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 	}
 
 	@Override
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(matrix);
-		super.render(matrix, mouseX, mouseY, partialTicks);
-		renderTooltip(matrix, mouseX, mouseY);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(guiGraphics);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		renderTooltip(guiGraphics, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
 		RenderUtil.resetShaderColour();
 		RenderUtil.prepRenderTexture(textures);
-		RenderUtil.renderCustomSizedTexture(matrix, leftPos, topPos, 0, 0, 175, 165, 256, 256);
+		RenderUtil.renderCustomSizedTexture(guiGraphics.pose(), leftPos, topPos, 0, 0, 175, 165, 256, 256);
 	}
 
 	private static class FrameSelectButton extends Button {
@@ -78,8 +79,9 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 		}
 
 		@Override
-		public void renderWidget(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+		public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 			Minecraft mc = Minecraft.getInstance();
+			PoseStack poseStack = guiGraphics.pose();
 
 			poseStack.pushPose();
 			RenderUtil.prepRenderTexture(textures);
@@ -91,7 +93,7 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchContaine
 
 			RenderUtil.renderCustomSizedTexture(poseStack, getX(), getY(), textureX, textureY, buttonWidth, buttonHeight, 256, 256);
 			poseStack.translate(0, 0, 32);
-			mc.getItemRenderer().renderGuiItem(poseStack, new ItemStack(frame), getX() + 1, getY() + 1);
+			guiGraphics.renderItem(new ItemStack(frame), getX() + 1, getY() + 1);
 			RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
 			poseStack.popPose();
 		}

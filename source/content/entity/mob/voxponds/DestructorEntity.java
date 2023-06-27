@@ -61,12 +61,12 @@ public class DestructorEntity extends AoARangedMob<DestructorEntity> {
 
 	@Override
 	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, level, projectile, 3);
+		WorldUtil.createExplosion(this, level(), projectile, 3);
 	}
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, level, projectile, 3);
+		WorldUtil.createExplosion(this, level(), projectile, 3);
 	}
 
 	@Nullable

@@ -48,6 +48,6 @@ public class TriDischargeShotEntity extends BaseBullet implements HardProjectile
 	}
 
 	protected void explode(Vec3 position) {
-		WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
+		WorldUtil.createExplosion(getOwner(), level(), this, 3.0f);
 	}
 }

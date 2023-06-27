@@ -35,5 +35,6 @@
     [
       "obtain_greckon_realmstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

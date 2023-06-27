@@ -1,16 +1,18 @@
 package net.tslat.aoa3.util;
 
+import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
@@ -25,8 +27,10 @@ import net.tslat.aoa3.common.registration.AoAConfigs;
 import org.joml.Matrix4f;
 
 public final class RenderUtil {
+	// <-- Textures
+
 	public static void renderTexture(PoseStack matrix, int x, int y, float u, float v, float width, float height) {
-		renderCustomSizedTexture(matrix, x, y, u, v, (int)width, (int)height, width, height);
+		renderCustomSizedTexture(matrix, x, y, u, v, width, height, width, height);
 	}
 
 	public static void renderCustomSizedTexture(PoseStack matrix, int x, int y, float u, float v, float uWidth, float vHeight, float textureWidth, float textureHeight) {
@@ -34,179 +38,127 @@ public final class RenderUtil {
 	}
 
 	public static void renderScaledCustomSizedTexture(PoseStack matrixStack, float x, float y, float u, float v, float uWidth, float vHeight, float renderWidth, float renderHeight, float textureWidth, float textureHeight) {
-		RenderSystem.setShader(GameRenderer::getPositionTexShader);
-		BufferBuilder buffer = Tesselator.getInstance().getBuilder();
-		Matrix4f matrix = matrixStack.last().pose();
-		float widthRatio = 1.0F / textureWidth;
-		float heightRatio = 1.0F / textureHeight;
+		final BufferBuilder buffer = Tesselator.getInstance().getBuilder();
+		final Matrix4f pose = matrixStack.last().pose();
+		final float widthRatio = 1 / textureWidth;
+		final float heightRatio = 1 / textureHeight;
 
+		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		buffer.vertex(matrix, x, y + renderHeight, 0f).uv(u * widthRatio, (v + vHeight) * heightRatio).endVertex();
-		buffer.vertex(matrix, x + renderWidth, y + renderHeight, 0f).uv((u + uWidth) * widthRatio, (v + vHeight) * heightRatio).endVertex();
-		buffer.vertex(matrix, x + renderWidth, y, 0f).uv((u + uWidth) * widthRatio, v * heightRatio).endVertex();
-		buffer.vertex(matrix, x, y, 0f).uv(u * widthRatio, v * heightRatio).endVertex();
+		buffer.vertex(pose, x, y + renderHeight, 0f).uv(u * widthRatio, (v + vHeight) * heightRatio).endVertex();
+		buffer.vertex(pose, x + renderWidth, y + renderHeight, 0f).uv((u + uWidth) * widthRatio, (v + vHeight) * heightRatio).endVertex();
+		buffer.vertex(pose, x + renderWidth, y, 0f).uv((u + uWidth) * widthRatio, v * heightRatio).endVertex();
+		buffer.vertex(pose, x, y, 0f).uv(u * widthRatio, v * heightRatio).endVertex();
 		BufferUploader.drawWithShader(buffer.end());
 	}
 
-	public static void renderFullscreenTexture() {
-		Minecraft mc = Minecraft.getInstance();
-		Window window = mc.getWindow();
-
+	public static void renderFullscreenTexture(GuiGraphics guiGraphics, ResourceLocation texture) {
 		RenderSystem.disableDepthTest();
 		RenderSystem.depthMask(false);
-		RenderSystem.defaultBlendFunc();
-		RenderSystem.setShaderColor(1, 1, 1, 1);
-		//RenderSystem.disableAlphaTest();
-
-		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder buffer = tesselator.getBuilder();
-
-		buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-		buffer.vertex(0, window.getGuiScaledHeight(), -90).uv(0, 1).endVertex();
-		buffer.vertex(window.getGuiScaledWidth(), window.getGuiScaledHeight(), -90).uv(1, 1).endVertex();
-		buffer.vertex(window.getGuiScaledWidth(), 0, -90).uv(1, 0).endVertex();
-		buffer.vertex(0, 0, -90).uv(0, 0).endVertex();
-		tesselator.end();
+		resetShaderColour();
+		guiGraphics.blit(texture, 0, 0, -90, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight());
 		RenderSystem.depthMask(true);
-		RenderSystem.enableDepthTest();
-		//RenderSystem.enableAlphaTest();
-		RenderSystem.setShaderColor(1, 1, 1, 1);
+		resetShaderColour();
 	}
 
-	public static void drawVerticalGradient(PoseStack matrixStack, int x, int y, int z, int width, int height, int topColour, int bottomColour) {
-		float alphaTop = (float)(topColour >> 24 & 255) / 255.0F;
-		float redTop = (float)(topColour >> 16 & 255) / 255.0F;
-		float greenTop = (float)(topColour >> 8 & 255) / 255.0F;
-		float blueTop = (float)(topColour & 255) / 255.0F;
-		float alphaBottom = (float)(bottomColour >> 24 & 255) / 255.0F;
-		float redBottom = (float)(bottomColour >> 16 & 255) / 255.0F;
-		float greenBottom = (float)(bottomColour >> 8 & 255) / 255.0F;
-		float blueBottom = (float)(bottomColour & 255) / 255.0F;
+	public static void renderVerticalGradient(PoseStack poseStack, float x, float y, float width, float height, int topColour, int bottomColour) {
+		MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
 
-		//RenderSystem.pushTextureAttributes();
-		RenderSystem.enableBlend();
-		//RenderSystem.disableAlphaTest();
-		RenderSystem.defaultBlendFunc();
-		//RenderSystem.shadeModel(7425);
-
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
-		Tesselator tesselator = Tesselator.getInstance();
-		BufferBuilder bufferbuilder = tesselator.getBuilder();
-		Matrix4f matrix = matrixStack.last().pose();
-
-		bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-		bufferbuilder.vertex(matrix, x + width, y, z).color(redTop, greenTop, blueTop, alphaTop).endVertex();
-		bufferbuilder.vertex(matrix, x, y, z).color(redTop, greenTop, blueTop, alphaTop).endVertex();
-		bufferbuilder.vertex(matrix, x, y + height, z).color(redBottom, greenBottom, blueBottom, alphaBottom).endVertex();
-		bufferbuilder.vertex(matrix, x + width, y + height, z).color(redBottom, greenBottom, blueBottom, alphaBottom).endVertex();
-		tesselator.end();
-		//RenderSystem.shadeModel(7424);
-		RenderSystem.disableBlend();
-		//RenderSystem.enableAlphaTest();
-		//RenderSystem.popAttributes();
+		renderVerticalGradient(poseStack, bufferSource.getBuffer(RenderType.gui()), x, y, width, height, topColour, bottomColour);
+		bufferSource.endBatch(RenderType.gui());
 	}
 
-	public static void drawColouredBox(PoseStack matrixStack, int x, int y, int z, int width, int height, int colour) {
-		float alpha = (float)(colour >> 24 & 255) / 255.0F;
-		float red = (float)(colour >> 16 & 255) / 255.0F;
-		float green = (float)(colour >> 8 & 255) / 255.0F;
-		float blue = (float)(colour & 255) / 255.0F;
+	public static void renderVerticalGradient(PoseStack poseStack, VertexConsumer buffer, float x, float y, float width, float height, int topColour, int bottomColour) {
+		final float alphaTop = (float)(topColour >> 24 & 255) / 255f;
+		final float redTop = (float)(topColour >> 16 & 255) / 255f;
+		final float greenTop = (float)(topColour >> 8 & 255) / 255f;
+		final float blueTop = (float)(topColour & 255) / 255f;
+		final float alphaBottom = (float)(bottomColour >> 24 & 255) / 255f;
+		final float redBottom = (float)(bottomColour >> 16 & 255) / 255f;
+		final float greenBottom = (float)(bottomColour >> 8 & 255) / 255f;
+		final float blueBottom = (float)(bottomColour & 255) / 255f;
+		final Matrix4f pose = poseStack.last().pose();
 
-		RenderSystem.setShader(GameRenderer::getPositionColorShader);
-		BufferBuilder bufferBuilder = Tesselator.getInstance().getBuilder();
-		Matrix4f matrix = matrixStack.last().pose();
-
-		RenderSystem.enableBlend();
-		RenderSystem.defaultBlendFunc();
-		bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
-		bufferBuilder.vertex(matrix, (float)x, (float)y + height, z).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex(matrix, (float)x + width, (float)y + height, z).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex(matrix, (float)x + width, (float)y, z).color(red, green, blue, alpha).endVertex();
-		bufferBuilder.vertex(matrix, (float)x, (float)y, z).color(red, green, blue, alpha).endVertex();
-		BufferUploader.drawWithShader(bufferBuilder.end());
-		RenderSystem.disableBlend();
+		buffer.vertex(pose, x + width, y, 0).color(redTop, greenTop, blueTop, alphaTop).endVertex();
+		buffer.vertex(pose, x, y, 0).color(redTop, greenTop, blueTop, alphaTop).endVertex();
+		buffer.vertex(pose, x, y + height, 0).color(redBottom, greenBottom, blueBottom, alphaBottom).endVertex();
+		buffer.vertex(pose, x + width, y + height, 0).color(redBottom, greenBottom, blueBottom, alphaBottom).endVertex();
 	}
 
-	public static void drawCenteredScaledMessage(PoseStack matrix, Font fontRenderer, Component msg, float x, float y, float scale, int colour, StringRenderType renderType) {
-		matrix.pushPose();
-		matrix.scale(scale, scale, 1);
+	public static void drawRectangle(PoseStack poseStack, float x, float y, float width, float height, int colour) {
+		MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
 
-		float realX = (x - fontRenderer.width(msg) * scale / 2f) / scale;
-		float realY = y / scale;
-
-		if (renderType == StringRenderType.OUTLINED) {
-			fontRenderer.draw(matrix, msg, realX, realY + (1 / scale), 0);
-			fontRenderer.draw(matrix, msg, realX, realY - (1 / scale), 0);
-			fontRenderer.draw(matrix, msg, realX + (1 / scale), realY, 0);
-			fontRenderer.draw(matrix, msg, realX - (1 / scale), realY, 0);
-		}
-
-		if (renderType == StringRenderType.DROP_SHADOW) {
-			fontRenderer.drawShadow(matrix, msg, realX, realY, colour);
-		}
-		else {
-			fontRenderer.draw(matrix, msg, realX, realY, colour);
-		}
-
-		//RenderSystem.enableAlphaTest();
-		matrix.popPose();
+		drawRectangle(poseStack, bufferSource.getBuffer(RenderType.gui()), x, y, width, height, colour);
+		bufferSource.endBatch(RenderType.gui());
 	}
 
-	public static void drawCenteredScaledString(PoseStack matrix, Font fontRenderer, String msg, float x, float y, float scale, int colour, StringRenderType renderType) {
-		drawCenteredScaledMessage(matrix, fontRenderer, Component.literal(msg), x, y, scale, colour, renderType);
+	public static void drawRectangle(PoseStack poseStack, VertexConsumer buffer, float x, float y, float width, float height, int colour) {
+		final float alpha = (float)(colour >> 24 & 255) / 255f;
+		final float red = (float)(colour >> 16 & 255) / 255f;
+		final float green = (float)(colour >> 8 & 255) / 255f;
+		final float blue = (float)(colour & 255) / 255f;
+		final Matrix4f pose = poseStack.last().pose();
+
+		buffer.vertex(pose, x, y + height, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(pose, x + width, y + height, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(pose, x + width, y, 0).color(red, green, blue, alpha).endVertex();
+		buffer.vertex(pose, x, y, 0).color(red, green, blue, alpha).endVertex();
 	}
 
-	public static void drawScaledMessage(PoseStack matrix, Font fontRenderer, Component msg, float x, float y, float scale, int colour, StringRenderType renderType) {
-		float realX = x / scale;
-		float realY = y / scale;
+	// <-- Text
 
-		matrix.pushPose();
-		matrix.scale(scale, scale, scale);
-
-		if (renderType == StringRenderType.OUTLINED) {
-			fontRenderer.draw(matrix, msg, realX, realY + (1 / scale), 0);
-			fontRenderer.draw(matrix, msg, realX, realY - (1 / scale), 0);
-			fontRenderer.draw(matrix, msg, realX + (1 / scale), realY, 0);
-			fontRenderer.draw(matrix, msg, realX - (1 / scale), realY, 0);
-		}
-
-		if (renderType == StringRenderType.DROP_SHADOW) {
-			fontRenderer.drawShadow(matrix, msg, realX, realY, colour);
-		}
-		else {
-			fontRenderer.draw(matrix, msg, realX, realY, colour);
-		}
-
-		//RenderSystem.enableAlphaTest();
-		matrix.popPose();
+	public static void renderText(PoseStack poseStack, Component text, float x, float y, int colour, TextRenderType renderType) {
+		renderText(poseStack, Minecraft.getInstance().font, text.getVisualOrderText(), x, y, colour, 0, renderType, LightTexture.FULL_BRIGHT, Minecraft.getInstance().renderBuffers().bufferSource());
 	}
 
-	public static void drawScaledString(PoseStack matrix, Font fontRenderer, String msg, int x, int y, float scale, int colour, StringRenderType renderType) {
-		drawScaledMessage(matrix, fontRenderer, Component.literal(msg), x, y, scale, colour, renderType);
+	public static void renderText(PoseStack poseStack, Font fontRenderer, FormattedCharSequence text, float x, float y, int colour, int outlineColour, TextRenderType renderType, int packedLight, MultiBufferSource.BufferSource bufferSource) {
+		renderType.render(fontRenderer, poseStack.last().pose(), text, x, y, colour, outlineColour, packedLight, bufferSource);
+		bufferSource.endLastBatch();
 	}
 
-	public static void drawOutlinedText(PoseStack matrix, Font fontRenderer, String msg, int x, int y, int colour, float currentScale) {
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		fontRenderer.draw(matrix, msg, x, y + (1 / currentScale), 0);
-		fontRenderer.draw(matrix, msg, x, y - (1 / currentScale), 0);
-		fontRenderer.draw(matrix, msg, x + (1 / currentScale), y, 0);
-		fontRenderer.draw(matrix, msg, x - (1 / currentScale), y, 0);
-		fontRenderer.draw(matrix, msg, x, y, colour);
-		//RenderSystem.enableAlphaTest();
+	public static void renderCenteredScaledText(PoseStack poseStack, Component text, float x, float y, float scale, int colour, TextRenderType renderType) {
+		renderCenteredScaledText(poseStack, Minecraft.getInstance().font, text, x, y, scale, colour, 0, renderType, LightTexture.FULL_BRIGHT, Minecraft.getInstance().renderBuffers().bufferSource());
 	}
 
-	public static void drawWrappedMessage(PoseStack matrix, Font fontRenderer, Component message, float x, float y, int maxLength, int color) {
-		Matrix4f matrix4f = matrix.last().pose();
+	public static void renderCenteredScaledText(PoseStack poseStack, Font fontRenderer, Component text, float x, float y, float scale, int colour, int outlineColour, TextRenderType renderType, int packedLight, MultiBufferSource.BufferSource bufferSource) {
+		poseStack.pushPose();
+		poseStack.scale(scale, scale, 1);
 
-		for (FormattedCharSequence processor : fontRenderer.split(message, maxLength)) {
-			MultiBufferSource.BufferSource renderTypeBuffer = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+		final float renderX = (x - fontRenderer.width(text) * scale / 2f) / scale;
+		final float renderY = y / scale;
 
-			fontRenderer.drawInBatch(processor, x, y, color, false, matrix4f, renderTypeBuffer, Font.DisplayMode.NORMAL, 0, LightTexture.FULL_BRIGHT);
-			renderTypeBuffer.endBatch();
+		renderText(poseStack, fontRenderer, text.getVisualOrderText(), renderX, renderY, colour, outlineColour, renderType, packedLight, bufferSource);
+
+		poseStack.popPose();
+	}
+
+	public static void renderScaledText(PoseStack poseStack, Component text, float x, float y, float scale, int colour, TextRenderType renderType) {
+		renderScaledText(poseStack, Minecraft.getInstance().font, text, x, y, scale, colour, 0, renderType, LightTexture.FULL_BRIGHT, Minecraft.getInstance().renderBuffers().bufferSource());
+	}
+
+	public static void renderScaledText(PoseStack poseStack, Font fontRenderer, Component text, float x, float y, float scale, int colour, int outlineColour, TextRenderType renderType, int packedLight, MultiBufferSource.BufferSource bufferSource) {
+		poseStack.pushPose();
+		poseStack.scale(scale, scale, 1);
+
+		renderText(poseStack, fontRenderer, text.getVisualOrderText(), x / scale, y / scale, colour, outlineColour, renderType, packedLight, bufferSource);
+
+		poseStack.popPose();
+	}
+
+	public static void renderWrappedText(PoseStack poseStack, Component text, float x, float y, int maxLength, int colour, TextRenderType renderType) {
+		renderWrappedText(poseStack, Minecraft.getInstance().font, text, x, y, maxLength, colour, 0, renderType, LightTexture.FULL_BRIGHT, Minecraft.getInstance().renderBuffers().bufferSource());
+	}
+
+	public static void renderWrappedText(PoseStack poseStack, Font fontRenderer, Component text, float x, float y, int maxLength, int colour, int outlineColour, TextRenderType renderType, int packedLight, MultiBufferSource.BufferSource bufferSource) {
+		for (FormattedCharSequence line : fontRenderer.split(text, maxLength)) {
+			renderText(poseStack, fontRenderer, line, x, y, colour, outlineColour, renderType, packedLight, bufferSource);
+			bufferSource.endLastBatch();
 
 			y += fontRenderer.lineHeight;
 		}
 	}
+
+	// <-- Other
 
 	public static void renderItemInGui(PoseStack matrix, Minecraft mc, ItemStack stack, int x, int y) {
 		BakedModel model = mc.getItemRenderer().getModel(stack, null, null, 0);
@@ -283,9 +235,48 @@ public final class RenderUtil {
 		return widget.isActive() ? widget.isHoveredOrFocused() ? focussedV : activeV : disabledV;
 	}
 
-	public enum StringRenderType {
-		NORMAL,
-		DROP_SHADOW,
-		OUTLINED
+	public interface TextRenderType {
+		void render(final Font fontRenderer, final Matrix4f pose, final FormattedCharSequence text, float x, float y, int colour, int outlineColour, int packedLight, final MultiBufferSource.BufferSource bufferSource);
+
+		TextRenderType NORMAL = (fontRenderer, pose, text, x, y, colour, outlineColour, packedLight, bufferSource) -> {
+			fontRenderer.drawInBatch(text, x, y, colour, false, pose, bufferSource, Font.DisplayMode.NORMAL, outlineColour, packedLight);
+		};
+		TextRenderType DROP_SHADOW = (fontRenderer, pose, text, x, y, colour, outlineColour, packedLight, bufferSource) -> {
+			fontRenderer.drawInBatch(text, x, y, colour, true, pose, bufferSource, Font.DisplayMode.NORMAL, outlineColour, packedLight);
+		};
+		TextRenderType TRANSLUCENT = (fontRenderer, pose, text, x, y, colour, outlineColour, packedLight, bufferSource) -> {
+			fontRenderer.drawInBatch(text, x, y, colour, false, pose, bufferSource, Font.DisplayMode.SEE_THROUGH, outlineColour, packedLight);
+		};
+		TextRenderType GLOWING = (fontRenderer, pose, text, x, y, colour, outlineColour, packedLight, bufferSource) -> {
+			fontRenderer.drawInBatch8xOutline(text, x, y, colour, outlineColour, pose, bufferSource, packedLight);
+		};
+		TextRenderType OUTLINED = (fontRenderer, pose, text, x, y, colour, outlineColour, packedLight, bufferSource) -> {
+			final int borderColour = (outlineColour & -67108864) == 0 ? outlineColour | -16777216 : outlineColour;
+			Font.StringRenderOutput outlineOutput = fontRenderer.new StringRenderOutput(bufferSource, 0, 0, borderColour, false, pose, Font.DisplayMode.NORMAL, packedLight);
+
+			for (float deltaX = -1; deltaX <= 1; deltaX++) {
+				for (float deltaY = -1; deltaY <= 1; deltaY++) {
+					if (deltaX == 0 ^ deltaY == 0) {
+						final float[] newX = new float[] {x};
+						final float offsetX = deltaX;
+						final float offsetY = deltaY;
+
+						text.accept((currentPosition, style, codePoint) -> {
+							GlyphInfo glyphInfo = fontRenderer.getFontSet(style.getFont()).getGlyphInfo(codePoint, fontRenderer.filterFishyGlyphs);
+							outlineOutput.x = newX[0] + offsetX * glyphInfo.getShadowOffset() * 0.6f;
+							outlineOutput.y = y + offsetY * glyphInfo.getShadowOffset() * 0.6f;
+							newX[0] += glyphInfo.getAdvance(style.isBold());
+
+							return outlineOutput.accept(currentPosition, style.withColor(borderColour), codePoint);
+						});
+					}
+				}
+			}
+
+			Font.StringRenderOutput output = fontRenderer.new StringRenderOutput(bufferSource, x, y, (colour & -67108864) == 0 ? colour | -16777216 : colour, false, pose, Font.DisplayMode.POLYGON_OFFSET, packedLight);
+
+			text.accept(output);
+			output.finish(0, x);
+		};
 	}
 }

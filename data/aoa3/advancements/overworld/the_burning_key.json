@@ -35,5 +35,6 @@
     [
       "obtain_nether_realmstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

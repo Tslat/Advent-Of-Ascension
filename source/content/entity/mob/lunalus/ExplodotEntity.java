@@ -40,8 +40,8 @@ public class ExplodotEntity extends AoAFlyingMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		if (!level.isClientSide) {
-			WorldUtil.createExplosion(this, level, 1.75f);
+		if (!level().isClientSide) {
+			WorldUtil.createExplosion(this, level(), 1.75f);
 			discard();
 		}
 	}

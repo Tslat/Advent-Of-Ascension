@@ -16,7 +16,7 @@ public class PolytomShotEntity extends BaseMobProjectile {
 	}
 
 	public PolytomShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.POLYTOM_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.POLYTOM_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

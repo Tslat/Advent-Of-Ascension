@@ -24,10 +24,8 @@ import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -39,7 +37,6 @@ import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.WaterloggableBlock;
 import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -51,8 +48,8 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 			Block.box(5, 2, 5, 11, 9, 11),
 			Block.box(4.5, 9, 4.5, 11.5, 11, 11.5));
 
-	public TrophyBlock() {
-		super(new BlockUtil.CompactProperties(new Material(MaterialColor.GOLD, false, false, true, false, false, false, PushReaction.BLOCK), MaterialColor.STONE).stats(10f, 2000f).get());
+	public TrophyBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

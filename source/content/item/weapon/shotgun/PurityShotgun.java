@@ -43,10 +43,10 @@ public class PurityShotgun extends BaseShotgun {
 		for (int i = 0; i < pellets; i++) {
 			BaseBullet pellet = new LimoniteBulletEntity(shooter, this, hand, 4, charged ? 1.5f : 1.0f, 0, (float)RandomUtil.randomValueBetween(-0.5f, 0.5f) * spreadFactor, (float)RandomUtil.randomValueBetween(-0.5f, 0.5f) * spreadFactor, (float)RandomUtil.randomValueBetween(-0.5f, 0.5f) * spreadFactor);
 
-			shooter.level.addFreshEntity(pellet);
+			shooter.level().addFreshEntity(pellet);
 		}
 
-		if (!shooter.level.isClientSide())
+		if (!shooter.level().isClientSide())
 			doFiringEffects(shooter, bullet, stack, hand);
 
 		return true;

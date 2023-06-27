@@ -32,19 +32,19 @@ public class ApocoShower extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new ShowerShotEntity(shooter, this, 60));
-		shooter.level.addFreshEntity(new WeightedShowerShotEntity(shooter, this, 60));
-		shooter.level.addFreshEntity(new HeavyShowerShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new ShowerShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new WeightedShowerShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new HeavyShowerShotEntity(shooter, this, 60));
 	}
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 2.5f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 2.5f);
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 2.5f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 2.5f);
 	}
 
 	@Override

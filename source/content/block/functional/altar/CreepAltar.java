@@ -5,8 +5,8 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.scheduling.async.CreepSpawnTask;
@@ -16,15 +16,15 @@ import net.tslat.smartbrainlib.util.RandomUtil;
 import java.util.concurrent.TimeUnit;
 
 public class CreepAltar extends BossAltarBlock {
-	public CreepAltar() {
-		super(MaterialColor.COLOR_GREEN);
+	public CreepAltar(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
 	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
 		double centerX = blockPos.getX() + 0.5d;
 		double centerZ = blockPos.getZ() + 0.5d;
-		Level world = player.level;
+		Level world = player.level();
 
 		if (world.getBlockState(blockPos.north()).getBlock() == this)
 			centerZ -= 0.5d;
@@ -44,7 +44,7 @@ public class CreepAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level, AoADimensions.CREEPONIA.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.CREEPONIA.key);
 	}
 
 	@Override

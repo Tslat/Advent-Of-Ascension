@@ -4,17 +4,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 
 public class GyrocopterEntity extends Entity {
     public GyrocopterEntity(Player player) {
-        this(AoAMiscEntities.GYROCOPTER.get(), player.level);
+        this(AoAMiscEntities.GYROCOPTER.get(), player.level());
 
         double offsetX = -Mth.sin(player.getYRot() * (float)Math.PI / 180f);
         double offsetZ = Mth.cos(player.getYRot() * (float)Math.PI / 180f);
@@ -80,7 +80,7 @@ public class GyrocopterEntity extends Entity {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return !source.is(DamageTypes.OUT_OF_WORLD);
+        return !source.is(AoATags.DamageTypes.IS_TECHNICAL);
     }
 
     @Override

@@ -24,6 +24,6 @@ public class CreeponiaTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.CREEPONIA_BRICKS.get();
+		return AoABlocks.CREEPONIA_BRICKS.stone();
 	}
 }

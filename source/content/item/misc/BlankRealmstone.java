@@ -50,18 +50,18 @@ public class BlankRealmstone extends Item {
 
 	@Override
 	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-		if (!entity.level.isClientSide) {
-			if (WorldUtil.isWorld(entity.level, AoADimensions.PRECASIA.key)) {
+		if (!entity.level().isClientSide) {
+			if (WorldUtil.isWorld(entity.level(), AoADimensions.PRECASIA.key)) {
 				BlockPos pos = entity.blockPosition();
-				BlockState state = entity.level.getBlockState(pos);
+				BlockState state = entity.level().getBlockState(pos);
 
 				if (state.getBlock() == Blocks.CARROTS && ((CropBlock)state.getBlock()).isMaxAge(state)) {
-					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAMobs.PRIMITIVE_CARROTOP.get(), entity.level);
+					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAMobs.PRIMITIVE_CARROTOP.get(), entity.level());
 
 					carrotop.setPos(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
-					entity.level.addFreshEntity(carrotop);
+					entity.level().addFreshEntity(carrotop);
 					entity.discard();
-					entity.level.setBlockAndUpdate(entity.blockPosition(), Blocks.AIR.defaultBlockState());
+					entity.level().setBlockAndUpdate(entity.blockPosition(), Blocks.AIR.defaultBlockState());
 				}
 			}
 		}
@@ -71,7 +71,7 @@ public class BlankRealmstone extends Item {
 
 	@Override
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-		if (WorldUtil.isWorld(player.level, AoADimensions.CREEPONIA.key) && (target instanceof AoATrader || target instanceof AoABanker)) {
+		if (WorldUtil.isWorld(player.level(), AoADimensions.CREEPONIA.key) && (target instanceof AoATrader || target instanceof AoABanker)) {
 			if (player instanceof ServerPlayer && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
@@ -86,7 +86,7 @@ public class BlankRealmstone extends Item {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (!attacker.level.isClientSide && target.getHealth() <= 0 && target instanceof Husk && attacker instanceof Player)
+		if (!attacker.level().isClientSide && target.getHealth() <= 0 && target instanceof Husk && attacker instanceof Player)
 			attacker.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(AoAItems.BARATHOS_REALMSTONE.get()));
 
 		return super.hurtEnemy(stack, target, attacker);

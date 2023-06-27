@@ -26,5 +26,6 @@
     [
       "complete_course"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

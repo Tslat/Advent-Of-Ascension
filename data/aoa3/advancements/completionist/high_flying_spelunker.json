@@ -35,5 +35,6 @@
     [
       "obtain_music_disc_caverns"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

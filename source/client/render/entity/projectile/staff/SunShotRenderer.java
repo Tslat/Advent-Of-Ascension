@@ -17,14 +17,14 @@ public class SunShotRenderer extends ParticleProjectileRenderer<SunShotEntity> {
 
 	@Override
 	protected void addParticles(SunShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, ColourUtil.RED), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 2, 3, ColourUtil.RED), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 
 		double posX = entity.getX() + RandomUtil.randomGaussianValue() * 0.5;
 		double posY = entity.getY() + RandomUtil.randomGaussianValue() * 0.5;
 		double posZ = entity.getZ() + RandomUtil.randomGaussianValue() * 0.5;
 
 		if (!Minecraft.getInstance().isPaused())
-			entity.level.addParticle(ParticleTypes.FLAME, posX, posY, posZ, 0, 0, 0);
+			entity.level().addParticle(ParticleTypes.FLAME, posX, posY, posZ, 0, 0, 0);
 	}
 }

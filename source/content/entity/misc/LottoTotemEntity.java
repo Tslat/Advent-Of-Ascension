@@ -5,13 +5,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -23,6 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -54,7 +53,7 @@ public class LottoTotemEntity extends Entity {
 
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
-		return tickCount >= 12000 || (!level.isClientSide && (ownerUUID == null || player.getUUID().equals(ownerUUID))) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+		return tickCount >= 12000 || (!level().isClientSide && (ownerUUID == null || player.getUUID().equals(ownerUUID))) ? InteractionResult.SUCCESS : InteractionResult.FAIL;
 	}
 
 	@Override
@@ -65,26 +64,26 @@ public class LottoTotemEntity extends Entity {
 	@Override
 	public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
 		if (isAlive() && (ownerUUID == null || player.getUUID().equals(ownerUUID))) {
-			if (player instanceof ServerPlayer) {
+			if (player instanceof ServerPlayer serverPlayer) {
 				if (winnerUUID != null && winnerUUID.equals(getUUID())) {
-					for (ItemStack stack : LootUtil.generateLoot((ServerLevel)level,  new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftContext((ServerLevel)level, position(), 5, player))) {
+					for (ItemStack stack : LootUtil.generateLoot(new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftParameters(serverPlayer.serverLevel(), position(), 5, serverPlayer))) {
 						ItemEntity drop = spawnAtLocation(stack, 0);
 
 						if (drop != null)
-							drop.setThrower(player.getUUID());
+							drop.setThrower(serverPlayer.getUUID());
 
-						AdvancementUtil.completeAdvancement((ServerPlayer)player, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/winner_winner"), "lotto_win");
+						AdvancementUtil.completeAdvancement(serverPlayer, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/winner_winner"), "lotto_win");
 					}
 
-					ItemEntity drop = spawnAtLocation(new ItemStack(AoABlocks.LOTTO_BANNER.get()), 0);
+					ItemEntity drop = spawnAtLocation(new ItemStack(AoABlocks.LOTTO_BANNER.base()), 0);
 
 					if (drop != null)
-						drop.setThrower(player.getUUID());
+						drop.setThrower(serverPlayer.getUUID());
 
-					level.playSound(null, blockPosition(), AoASounds.LOTTO_WIN.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+					level().playSound(null, blockPosition(), AoASounds.LOTTO_WIN.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 				}
 
-				for (LottoTotemEntity totem : level.getEntitiesOfClass(LottoTotemEntity.class, new AABB(blockPosition()).inflate(2d))) {
+				for (LottoTotemEntity totem : level().getEntitiesOfClass(LottoTotemEntity.class, new AABB(blockPosition()).inflate(2d))) {
 					totem.discard();
 				}
 			}
@@ -99,9 +98,9 @@ public class LottoTotemEntity extends Entity {
 	public void onRemovedFromWorld() {
 		super.onRemovedFromWorld();
 
-		if (level.isClientSide && !isAlive()) {
+		if (level().isClientSide && !isAlive()) {
 			for (int i = 0; i < 3; i++) {
-				level.addParticle(ParticleTypes.LARGE_SMOKE, getX(), getY() + 0.3d, getZ(), 0, 0.1, 0);
+				level().addParticle(ParticleTypes.LARGE_SMOKE, getX(), getY() + 0.3d, getZ(), 0, 0.1, 0);
 			}
 		}
 	}
@@ -150,7 +149,7 @@ public class LottoTotemEntity extends Entity {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return !source.is(DamageTypes.OUT_OF_WORLD);
+		return !source.is(AoATags.DamageTypes.IS_TECHNICAL);
 	}
 
 	@Override
@@ -160,11 +159,11 @@ public class LottoTotemEntity extends Entity {
 
 	@Override
 	public void baseTick() {
-		this.level.getProfiler().push("entityBaseTick");
+		this.level().getProfiler().push("entityBaseTick");
 
 		if (getY() < -64.0D)
-			outOfWorld();
+			onBelowWorld();
 
-		this.level.getProfiler().pop();
+		this.level().getProfiler().pop();
 	}
 }

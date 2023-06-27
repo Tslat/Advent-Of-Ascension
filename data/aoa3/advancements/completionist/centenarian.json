@@ -29,5 +29,6 @@
     [
       "level_100"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -10,18 +10,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.util.BlockUtil;
 
 public class LivingGrowth extends Block {
 	public static final IntegerProperty GROWTH_STAGE = BlockStateProperties.AGE_5;
@@ -34,8 +32,8 @@ public class LivingGrowth extends Block {
 			Shapes.create(new AABB(0.001, 0, 0.001, 0.99, 1.625, 0.99))
 	};
 
-	public LivingGrowth() {
-		super(new BlockUtil.CompactProperties(Material.PLANT, MaterialColor.COLOR_GREEN).stats(1f, 0f).get());
+	public LivingGrowth(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(GROWTH_STAGE, 0));
 	}

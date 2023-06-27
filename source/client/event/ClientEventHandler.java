@@ -68,7 +68,7 @@ public final class ClientEventHandler {
 				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome", ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()));
 			}
 
-			ev.getPlayer().sendSystemMessage(Component.literal("AoA 1.18+ IS NOT READY FOR SURVIVAL. ALL DIMENSIONS AND MOST MOBS ARE MISSING. PLAY 1.16.5 FOR SURVIVAL AoA. JOIN THE DISCORD FOR MORE INFO").withStyle(ChatFormatting.DARK_RED));
+			ev.getPlayer().sendSystemMessage(Component.literal("AoA IS IN A TRANSITION PERIOD. ALL DIMENSIONS AND MOST MOBS ARE MISSING. PLAY 1.16.5 FOR SURVIVAL AoA. JOIN THE DISCORD FOR MORE INFO").withStyle(ChatFormatting.DARK_RED));
 		}
 
 		AoAPackets.INSTANCE.sendTo(new HaloChangePacket(AoAConfigs.CLIENT.personalHaloPreference.get()), ev.getConnection(), NetworkDirection.PLAY_TO_SERVER);
@@ -94,7 +94,7 @@ public final class ClientEventHandler {
 				return;
 			}
 
-			if (player.level.getEntitiesOfClass(SilencerEntity.class, player.getBoundingBox().inflate(8)).isEmpty()) {
+			if (player.level().getEntitiesOfClass(SilencerEntity.class, player.getBoundingBox().inflate(8)).isEmpty()) {
 				SilencerEntity.isClientNearby = false;
 				Minecraft.getInstance().getSoundManager().updateSourceVolume(SoundSource.MASTER, SilencerEntity.previousGain);
 			}

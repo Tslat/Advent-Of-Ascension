@@ -4,13 +4,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
 public class HiveSpawner extends BossAltarBlock {
-	public HiveSpawner() {
-		super(MaterialColor.TERRACOTTA_RED);
+	public HiveSpawner(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

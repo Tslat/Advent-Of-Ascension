@@ -79,7 +79,7 @@ public class ArocknidEntity extends AoAMeleeMob<ArocknidEntity> {
     public void tick() {
         super.tick();
 
-        if (!level.isClientSide)
+        if (!level().isClientSide)
             setBesideClimbableBlock(this.horizontalCollision);
     }
 

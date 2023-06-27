@@ -61,12 +61,12 @@ public class CelestialStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 2.5f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 2.5f);
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 2.5f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 2.5f);
 
 		return DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg());
 	}

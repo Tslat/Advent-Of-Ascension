@@ -42,12 +42,12 @@ public class CherryBlasterEntity extends AoARangedMob<CherryBlasterEntity> {
 
 	@Override
 	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, level, projectile, 3f);
+		WorldUtil.createExplosion(this, level(), projectile, 3f);
 	}
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, level, projectile, 3f);
+		WorldUtil.createExplosion(this, level(), projectile, 3f);
 	}
 
 	@Override

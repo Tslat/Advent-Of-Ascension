@@ -17,7 +17,7 @@ public class SpectralShotEntity extends BaseMobProjectile {
 	}
 
 	public SpectralShotEntity(AoARangedAttacker shooter, Type projectileType) {
-		super(AoAProjectiles.SPECTRAL_SHOT.get(), ((Entity)shooter).level, shooter, projectileType);
+		super(AoAProjectiles.SPECTRAL_SHOT.get(), ((Entity)shooter).level(), shooter, projectileType);
 	}
 
 	@Override

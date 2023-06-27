@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -21,6 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -29,7 +31,7 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
 public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedTravellerContainer> {
-	private static final ResourceLocation guiTexture = new ResourceLocation("aoa3", "textures/gui/containers/corrupted_traveller.png");
+	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("aoa3", "textures/gui/containers/corrupted_traveller.png");
 	private static final ArrayList<Item> validFoods = new ArrayList<Item>();
 
 	private long nextFoodTick = 0;
@@ -43,39 +45,42 @@ public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedT
 	}
 
 	@Override
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(matrix);
-		super.render(matrix, mouseX, mouseY, partialTicks);
-		renderTooltip(matrix, mouseX, mouseY);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(guiGraphics);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		renderTooltip(guiGraphics, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-		final int centerX = (width - imageWidth) / 2;
-		final int centerY = (height - imageHeight) / 2;
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+		final int centerX = (this.width - this.imageWidth) / 2;
+		final int centerY = (this.height - this.imageHeight) / 2;
+		final RenderContext renderContext = RenderContext.of(guiGraphics);
 
-		RenderUtil.prepRenderTexture(guiTexture);
-		RenderUtil.renderCustomSizedTexture(matrix, centerX, centerY, 0, 0, imageWidth, imageHeight, 256, 256);
-		renderGhostlyFood(matrix, centerX, centerY);
+		renderContext.setTextureForRendering(GUI_TEXTURE);
+		renderContext.resetShaderColour();
+		renderContext.renderCustomSizedTexture(centerX, centerY, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
+		renderGhostlyFood(renderContext, centerX, centerY);
 	}
 
 	@Override
-	protected void renderLabels(PoseStack matrix, int mouseX, int mouseY) {
-		int titleWidth = 4 + mc.font.width(title);
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+		final RenderContext renderContext = RenderContext.of(guiGraphics);
+		final int titleWidth = 4 + renderContext.textWidth(this.title);
 
-		RenderUtil.prepRenderTexture(guiTexture);
-		RenderUtil.renderCustomSizedTexture(matrix, 28, 4, 176, 0, 1, 12, 256, 256);
+		renderContext.setTextureForRendering(GUI_TEXTURE);
+		renderContext.renderCustomSizedTexture(28, 4, 176, 0, 1, 12, 256, 256);
 
 		for (int i = 0; i < titleWidth - 2; i++) {
-			RenderUtil.renderCustomSizedTexture(matrix, 29 + i, 4, 177, 0, 1, 12, 256, 256);
+			renderContext.renderCustomSizedTexture(29 + i, 4, 177, 0, 1, 12, 256, 256);
 		}
 
-		RenderUtil.renderCustomSizedTexture(matrix, 28 + titleWidth - 2, 4, 178, 0, 1, 12, 256, 256);
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		mc.font.draw(matrix, title, 30, 6, ColourUtil.WHITE);
+		renderContext.renderCustomSizedTexture(28 + titleWidth - 2, 4, 178, 0, 1, 12, 256, 256);
+		renderContext.resetShaderColour();
+		renderContext.renderText(this.title, 30, 6, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 	}
 
-	private void renderGhostlyFood(PoseStack matrix, int centerX, int centerY) {
+	private void renderGhostlyFood(RenderContext renderContext, int centerX, int centerY) {
 		Slot slot = menu.getSlot(0);
 
 		if (!slot.hasItem()) {

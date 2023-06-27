@@ -173,7 +173,7 @@ public abstract class BaseGun extends Item {
 				ItemStack offhand;
 
 				if (hand == InteractionHand.MAIN_HAND && EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.BRACE.get(), (offhand = shooter.getItemInHand(InteractionHand.OFF_HAND))) > 0)
-					offhand.onUseTick(shooter.level, shooter, count);
+					offhand.onUseTick(shooter.level(), shooter, count);
 
 				ItemUtil.damageItem(stack, shooter, 1, hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
 
@@ -196,9 +196,9 @@ public abstract class BaseGun extends Item {
 		if (bullet == null)
 			return false;
 
-		shooter.level.addFreshEntity(bullet);
+		shooter.level().addFreshEntity(bullet);
 
-		if (!shooter.level.isClientSide())
+		if (!shooter.level().isClientSide())
 			doFiringEffects(shooter, bullet, stack, hand);
 
 		return true;
@@ -214,14 +214,14 @@ public abstract class BaseGun extends Item {
 	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
 		doFiringSound(shooter, bullet, stack, hand);
 
-		((ServerLevel)shooter.level).sendParticles(ParticleTypes.SMOKE, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+		((ServerLevel)shooter.level()).sendParticles(ParticleTypes.SMOKE, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
 
 		if (dmg > 15) {
 			if (dmg > 20) {
-				((ServerLevel)shooter.level).sendParticles(ParticleTypes.FLAME, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+				((ServerLevel)shooter.level()).sendParticles(ParticleTypes.FLAME, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
 			}
 
-			((ServerLevel)shooter.level).sendParticles(ParticleTypes.POOF, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+			((ServerLevel)shooter.level()).sendParticles(ParticleTypes.POOF, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
 		}
 	}
 
@@ -255,7 +255,7 @@ public abstract class BaseGun extends Item {
 
 	@Nullable
 	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level.isClientSide(), 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level().isClientSide(), 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
 			return createProjectileEntity(shooter, gunStack, hand);
 
 		return null;

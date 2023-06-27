@@ -35,7 +35,7 @@ public class BleedingEffect extends ExtendedMobEffect {
 	@Override
 	public void tick(LivingEntity entity, @org.jetbrains.annotations.Nullable MobEffectInstance effectInstance, int amplifier) {
 		if (entity.getMobType() != MobType.UNDEAD) {
-			entity.hurt(DamageUtil.miscDamage(AoADamageTypes.BLEED, entity.level), 0.75f);
+			entity.hurt(DamageUtil.miscDamage(AoADamageTypes.BLEED, entity.level()), 0.75f);
 
 			if (entity instanceof Player player)
 				player.causeFoodExhaustion(5);

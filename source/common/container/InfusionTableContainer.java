@@ -24,9 +24,11 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.event.custom.AoAEvents;
+import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
+import java.util.Objects;
 import java.util.Optional;
 
 public class InfusionTableContainer extends AbstractContainerMenu {
@@ -45,7 +47,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 		addSlot(new SlotCraftingMod(player, inputs, output, 0, 139, 35) {
 			@Override
 			protected void checkTakeAchievements(ItemStack stack) {
-				if (!player.level.isClientSide) {
+				if (!player.level().isClientSide) {
 					InfusionRecipe recipe = (InfusionRecipe)((ResultContainer)container).getRecipeUsed();
 
 					if (recipe != null && recipe.getMaxXp() > 0) {
@@ -113,7 +115,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 			stack = slotStack.copy();
 
 			if (index == 0) {
-				functionCaller.execute((world, pos) -> slotStack.getItem().onCraftedBy(slotStack, player.level, player));
+				functionCaller.execute((world, pos) -> slotStack.getItem().onCraftedBy(slotStack, player.level(), player));
 
 				if (!moveItemStackTo(slotStack, 11, 47, true))
 					return ItemStack.EMPTY;
@@ -161,7 +163,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-				return new InfusionTableContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
+				return new InfusionTableContainer(windowId, inv, ContainerLevelAccess.create(player.level(), pos));
 			}
 		}, pos);
 	}
@@ -194,7 +196,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 		PlayerUtil.giveXpToPlayer(player, AoASkills.IMBUING.get(), xp, false);
 	}
 
-	public static class InfusionInventory extends CraftingContainer {
+	public static class InfusionInventory extends TransientCraftingContainer {
 		private final NonNullList<ItemStack> stackList;
 		private final AbstractContainerMenu eventListener;
 
@@ -299,7 +301,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 		@Override
 		protected void checkTakeAchievements(ItemStack stack) {
 			if (amountCrafted > 0) {
-				stack.onCraftedBy(player.level, player, amountCrafted);
+				stack.onCraftedBy(player.level(), player, amountCrafted);
 				ForgeEventFactory.firePlayerCraftingEvent(player, stack, craftInv);
 			}
 
@@ -311,7 +313,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 		public void onTake(Player player, ItemStack stack) {
 			checkTakeAchievements(stack);
 			ForgeHooks.setCraftingPlayer(player);
-			NonNullList<ItemStack> remainingItems = player.level.getRecipeManager().getRemainingItemsFor(AoARecipes.INFUSION.type().get(), craftInv, player.level);
+			NonNullList<ItemStack> remainingItems = player.level().getRecipeManager().getRemainingItemsFor(AoARecipes.INFUSION.type().get(), craftInv, player.level());
 			ForgeHooks.setCraftingPlayer(null);
 
 			for (int i = 0; i < remainingItems.size(); ++i) {
@@ -327,7 +329,7 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 					if (slotStack.isEmpty()) {
 						craftInv.setItem(i, remainingItem);
 					}
-					else if (ItemStack.isSame(slotStack, remainingItem) && ItemStack.tagMatches(slotStack, remainingItem)) {
+					else if (ItemUtil.areStacksFunctionallyEqual(slotStack, remainingItem) && Objects.equals(slotStack.getTag(), remainingItem.getTag())) {
 						remainingItem.grow(slotStack.getCount());
 						craftInv.setItem(i, remainingItem);
 					}

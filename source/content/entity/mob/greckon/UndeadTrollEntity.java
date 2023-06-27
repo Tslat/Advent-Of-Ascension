@@ -79,7 +79,7 @@ public class UndeadTrollEntity extends AoARangedMob<UndeadTrollEntity> {
 	public void swing(InteractionHand hand, boolean updateSelf) {
 		super.swing(hand, updateSelf);
 
-		if (!level.isClientSide())
+		if (!level().isClientSide())
 			getEntityData().set(SHOT_TYPE, rand().nextBoolean() ? 0 : 1);
 	}
 

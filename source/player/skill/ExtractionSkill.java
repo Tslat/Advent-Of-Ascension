@@ -81,7 +81,7 @@ public class ExtractionSkill extends AoASkill.Instance {
 
 	@Override
 	public void handleItemSmelted(PlayerEvent.ItemSmeltedEvent ev) {
-		if (ev.getEntity().level.isClientSide())
+		if (ev.getEntity().level().isClientSide())
 			return;
 
 		ItemStack smelting = ev.getSmelting();

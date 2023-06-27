@@ -58,7 +58,7 @@ public class ExtendedHurtByTargetGoal<T extends Mob> extends ExtendedTargetGoal<
 		if (this.entity.getLastHurtByMobTimestamp() == this.lastHurtByTimestamp || lastAttacker == null)
 			return false;
 
-		if (lastAttacker.getType() == EntityType.PLAYER && this.entity.level.getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER))
+		if (lastAttacker.getType() == EntityType.PLAYER && this.entity.level().getGameRules().getBoolean(GameRules.RULE_UNIVERSAL_ANGER))
 			return false;
 
 		if (!this.targetableAttackerPredicate.test(lastAttacker))

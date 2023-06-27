@@ -49,7 +49,7 @@ public class AxiolightEntity extends AoAMeleeMob<AxiolightEntity> {
     public void aiStep() {
         super.aiStep();
 
-        List<Player> playerList = level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(12), PlayerUtil::shouldPlayerBeAffected);
+        List<Player> playerList = level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(12), PlayerUtil::shouldPlayerBeAffected);
 
         if (playerList.isEmpty())
             EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.INVISIBILITY, 0).hideParticles());

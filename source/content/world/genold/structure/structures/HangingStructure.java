@@ -31,8 +31,8 @@ public class HangingStructure extends AoAStructureBase<IntRangeConfig> {
 
 				chunkCenter.setY(config.getValue(random));
 
-				if (blockReader.getBlockState(chunkCenter).getMaterial().isReplaceable()) {
-					while (chunkCenter.getY() < blockReader.getMaxBuildHeight() && blockReader.getBlockState(chunkCenter.move(Direction.UP)).getMaterial().isReplaceable()) {
+				if (blockReader.getBlockState(chunkCenter).canBeReplaced()) {
+					while (chunkCenter.getY() < blockReader.getMaxBuildHeight() && blockReader.getBlockState(chunkCenter.move(Direction.UP)).canBeReplaced()) {
 						;
 					}
 

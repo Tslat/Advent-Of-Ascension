@@ -42,7 +42,7 @@ public class ThermallyInsulatedRod extends HaulingRod {
 				handleLureRetrieval(player, stack, bobber, loot);
 
 				for (ItemStack lootStack : loot) {
-					ItemEntity entity = new ItemEntity(player.level, bobber.getX(), bobber.getY(), bobber.getZ(), lootStack) {
+					ItemEntity entity = new ItemEntity(player.level(), bobber.getX(), bobber.getY(), bobber.getZ(), lootStack) {
 						@Override
 						public boolean isInvulnerableTo(DamageSource source) {
 							return source.is(DamageTypeTags.IS_FIRE) || super.isInvulnerableTo(source);
@@ -54,7 +54,7 @@ public class ThermallyInsulatedRod extends HaulingRod {
 					double velZ = player.getZ() - bobber.getZ();
 
 					entity.setDeltaMovement(velX * 0.1d, velY * 0.1d + Math.sqrt(Math.sqrt(velX * velX + velY * velY + velZ * velZ)) * 0.1d, velZ * 0.1d);
-					player.level.addFreshEntity(entity);
+					player.level().addFreshEntity(entity);
 
 					if (lootStack.is(ItemTags.FISHES))
 						player.awardStat(Stats.FISH_CAUGHT, 1);
@@ -64,7 +64,7 @@ public class ThermallyInsulatedRod extends HaulingRod {
 			if (!player.isCreative())
 				ItemUtil.damageItem(stack, player, hand, event.getRodDamage());
 
-			player.level.addFreshEntity(new ExperienceOrb(player.level, player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, event.getXp()));
+			player.level().addFreshEntity(new ExperienceOrb(player.level(), player.getX() + 0.5d, player.getY() + 0.5d, player.getZ() + 0.5d, event.getXp()));
 			bobber.discard();
 		}
 		else {
@@ -77,7 +77,7 @@ public class ThermallyInsulatedRod extends HaulingRod {
 
 				hookedEntity.setDeltaMovement(hookedEntity.getDeltaMovement().multiply(1, 0.5f, 1));
 
-				if (!player.isOnGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
+				if (!player.onGround() && bobber.getState() == HaulingFishingBobberEntity.State.HOOKED_IN_ENTITY)
 					EntityUtil.pullEntityIn(hookedEntity, player, 0.25f * pullStrength, true);
 			}
 		}
@@ -85,7 +85,7 @@ public class ThermallyInsulatedRod extends HaulingRod {
 
 	@Override
 	protected HaulingFishingBobberEntity getNewBobber(Player player, ItemStack stack, int lureMod, int luckMod) {
-		return new ThermalFishingBobberEntity(player, player.level, stack, luckMod, lureMod);
+		return new ThermalFishingBobberEntity(player, player.level(), stack, luckMod, lureMod);
 	}
 
 	@Override

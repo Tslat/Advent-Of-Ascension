@@ -16,7 +16,7 @@ public class CreepBombEntity extends BaseMobProjectile {
 	}
 
 	public CreepBombEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.CREEP_BOMB.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CREEP_BOMB.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

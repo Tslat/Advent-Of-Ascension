@@ -9,6 +9,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
@@ -17,6 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
@@ -54,13 +56,14 @@ public class BlankRealmstoneScreen extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 		if (minecraft == null)
 			return;
 
 		int x = (this.width - 252) / 2;
 		int y = (this.height - 182) / 2;
 		currentlyHoveredInsert = null;
+		PoseStack poseStack = guiGraphics.pose();
 
 		if (isDragging()) {
 			if (!isPanning) {
@@ -80,32 +83,32 @@ public class BlankRealmstoneScreen extends Screen {
 			panMouseY = 0;
 		}
 
-		renderBackground(matrix);
-		matrix.pushPose();
-		matrix.scale(scale, scale, scale);
+		renderBackground(guiGraphics);
+		poseStack.pushPose();
+		poseStack.scale(scale, scale, scale);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, background);
-		RenderUtil.renderCustomSizedTexture(matrix, (int)((x + 5) / scale), (int)((y + 7) / scale), offsetX, offsetY, (int)(viewSpaceWidth / scale), (int)(viewSpaceHeight / scale), backgroundWidth, backgroundHeight);
+		RenderUtil.renderCustomSizedTexture(poseStack, (int)((x + 5) / scale), (int)((y + 7) / scale), offsetX, offsetY, (int)(viewSpaceWidth / scale), (int)(viewSpaceHeight / scale), backgroundWidth, backgroundHeight);
 
 		for (RealmstoneWorldInsert insert : worldInserts.values()) {
-			insert.render(matrix, minecraft, worldInserts, (int)((x + 5) / scale), (int)((y + 7) / scale), offsetX, offsetY, (int)(mouseX / scale), (int)(mouseY / scale));
+			insert.render(poseStack, minecraft, worldInserts, (int)((x + 5) / scale), (int)((y + 7) / scale), offsetX, offsetY, (int)(mouseX / scale), (int)(mouseY / scale));
 		}
 
-		matrix.popPose();
-		drawWindowFrame(matrix, x, y);
+		poseStack.popPose();
+		drawWindowFrame(RenderContext.of(guiGraphics), x, y);
 
 		if (currentlyHoveredInsert != null && !currentlyHoveredInsert.getHoverTexts().isEmpty())
-			renderTooltip(matrix, currentlyHoveredInsert.getHoverTexts(), mouseX, mouseY);
+			guiGraphics.renderTooltip(Minecraft.getInstance().font, currentlyHoveredInsert.getHoverTexts(), mouseX, mouseY);
 	}
 
-	private void drawWindowFrame(PoseStack matrix, int x, int y) {
+	private void drawWindowFrame(RenderContext renderContext, int x, int y) {
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderSystem.enableBlend();
 		//Lighting.turnOff();
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
 		RenderSystem.setShaderTexture(0, windowFrame);
-		RenderUtil.renderCustomSizedTexture(matrix, x, y, 0, 0, 256, 187, 256, 256);
-		minecraft.font.draw(matrix, title, x + 8, y + 6, ColourUtil.RGB(181, 181, 181));
+		RenderUtil.renderCustomSizedTexture(renderContext.getGuiGraphics().pose(), x, y, 0, 0, 256, 187, 256, 256);
+		renderContext.renderText(title, x + 8, y + 6, ColourUtil.RGB(181, 181, 181), RenderUtil.TextRenderType.NORMAL);
 	}
 
 	public static class RealmstoneWorldInsert {

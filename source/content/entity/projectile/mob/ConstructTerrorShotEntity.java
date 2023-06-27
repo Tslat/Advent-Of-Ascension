@@ -16,7 +16,7 @@ public class ConstructTerrorShotEntity extends BaseMobProjectile {
 	}
 
 	public ConstructTerrorShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.TERROR_CONSTRUCT_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.TERROR_CONSTRUCT_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

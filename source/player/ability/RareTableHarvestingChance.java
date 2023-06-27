@@ -62,7 +62,7 @@ public class RareTableHarvestingChance extends ScalableModAbility {
 		ServerPlayer player = getPlayer();
 		ServerLevel world = context.getLevel();
 
-		loot.addAll(LootUtil.generateLoot(world,  new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftContext(world, origin, player.getLuck(), player)));
+		loot.addAll(LootUtil.generateLoot(new ResourceLocation(AdventOfAscension.MOD_ID, "misc/lotto_totem"), LootUtil.getGiftParameters(world, origin, player.getLuck(), player)));
 		PlayerUtil.giveXpToPlayer(player, getSkill().type(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(player, AoASkills.FARMING.get()), 10), false);
 	}
 }

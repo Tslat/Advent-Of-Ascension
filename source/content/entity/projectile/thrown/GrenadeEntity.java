@@ -85,7 +85,7 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 	}
 
 	protected void explode(Vec3 position) {
-		if (!this.level.isClientSide())
-			new ShrapnelExplosion(AoAExplosions.GRENADE, (ServerLevel)getLevel(), this, getOwner(), position).explode();
+		if (!this.level().isClientSide())
+			new ShrapnelExplosion(AoAExplosions.GRENADE, (ServerLevel)level(), this, getOwner(), position).explode();
 	}
 }

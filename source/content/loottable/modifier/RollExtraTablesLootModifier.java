@@ -39,7 +39,7 @@ public class RollExtraTablesLootModifier extends LootModifier {
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		for (ResourceLocation tableLocation : additionalTables) {
-			LootTable table = context.getLootTable(tableLocation);
+			LootTable table = context.getLevel().getServer().getLootData().getLootTable(tableLocation);
 			boolean compatible = true;
 
 			for (LootContextParam<?> param : table.getParamSet().getRequired()) {

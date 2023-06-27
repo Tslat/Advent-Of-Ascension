@@ -9,8 +9,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
@@ -18,9 +18,9 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.function.Supplier;
 
-public abstract class HangingCropBlock extends CropBlock {
-	public HangingCropBlock(MaterialColor colour, Supplier<Item> seedItem) {
-		super(colour, seedItem);
+public abstract class HangingCropBlock extends AoACropBlock {
+	public HangingCropBlock(BlockBehaviour.Properties properties, Supplier<Item> seedItem) {
+		super(properties, seedItem);
 	}
 
 	@Override

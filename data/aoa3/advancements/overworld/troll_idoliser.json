@@ -36,5 +36,6 @@
     [
       "obtain_troll_idol"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

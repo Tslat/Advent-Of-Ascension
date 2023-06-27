@@ -29,7 +29,7 @@ public class FlamewalkerModel extends DefaultedEntityGeoModel<FlamewalkerEntity>
 			this.rock5 = getBone("rock_5").get();
 		}
 
-		if (flamewalker.isOnGround() && animationState.isMoving()) {
+		if (flamewalker.onGround() && animationState.isMoving()) {
 			this.rock1.setHidden(false);
 			this.rock2.setHidden(false);
 			this.rock3.setHidden(false);

@@ -1,10 +1,12 @@
 package net.tslat.aoa3.common.registration;
 
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.CreativeModeTabEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -14,74 +16,52 @@ import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.util.LocaleUtil;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 public final class AoACreativeModeTabs {
+
 	public static void init() {
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, CreativeModeTabEvent.Register.class, AoACreativeModeTabs::registerTabs);
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, CreativeModeTabEvent.BuildContents.class, AoACreativeModeTabs::fillVanillaTabs);
+		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, BuildCreativeModeTabContentsEvent.class, AoACreativeModeTabs::fillVanillaTabs);
 	}
 
-	public static CreativeModeTab MISC_ITEMS;
-	public static CreativeModeTab FOOD;
-	public static CreativeModeTab TOOLS;
-	public static CreativeModeTab ARMOUR;
-	public static CreativeModeTab SWORDS;
-	public static CreativeModeTab GREATBLADES;
-	public static CreativeModeTab MAULS;
-	public static CreativeModeTab GUNS;
-	public static CreativeModeTab CANNONS;
-	public static CreativeModeTab SHOTGUNS;
-	public static CreativeModeTab SNIPERS;
-	public static CreativeModeTab BLASTERS;
-	public static CreativeModeTab CROSSBOWS;
-	public static CreativeModeTab BOWS;
-	public static CreativeModeTab THROWN_WEAPONS;
-	public static CreativeModeTab STAVES;
-	public static CreativeModeTab VULCANES;
-	public static CreativeModeTab AMMUNITION;
-	public static CreativeModeTab TABLETS;
-	public static CreativeModeTab GENERATION_BLOCKS;
-	public static CreativeModeTab DECORATION_BLOCKS;
-	public static CreativeModeTab FUNCTIONAL_BLOCKS;
-	public static CreativeModeTab BANNERS;
+	public static final RegistryObject<CreativeModeTab> MISC_ITEMS = register("miscellaneous", () -> new ItemStack(AoAItems.LIMONITE_INGOT.get()), CreativeModeTabs.SPAWN_EGGS);
+	public static final RegistryObject<CreativeModeTab> FOOD = register("food", () -> new ItemStack(AoAItems.COOKED_RAINBOWFISH.get()), MISC_ITEMS);
+	public static final RegistryObject<CreativeModeTab> TOOLS = register("tools", () -> new ItemStack(AoATools.LIMONITE_PICKAXE.get()), FOOD);
+	public static final RegistryObject<CreativeModeTab> ARMOUR = register("armour", () -> new ItemStack(AoAArmour.ALACRITY_ARMOUR.chestplate.get()), TOOLS);
+	public static final RegistryObject<CreativeModeTab> SWORDS = register("swords", () -> new ItemStack(AoAWeapons.LIMONITE_SWORD.get()), ARMOUR);
+	public static final RegistryObject<CreativeModeTab> GREATBLADES = register("greatblades", () -> new ItemStack(AoAWeapons.BLOODLURKER.get()), SWORDS);
+	public static final RegistryObject<CreativeModeTab> MAULS = register("mauls", () -> new ItemStack(AoAWeapons.HORIZON_MAUL.get()), GREATBLADES);
+	public static final RegistryObject<CreativeModeTab> GUNS = register("guns", () -> new ItemStack(AoAWeapons.SQUAD_GUN.get()), MAULS);
+	public static final RegistryObject<CreativeModeTab> CANNONS = register("cannons", () -> new ItemStack(AoAWeapons.BLAST_CANNON.get()), GUNS);
+	public static final RegistryObject<CreativeModeTab> SHOTGUNS = register("shotguns", () -> new ItemStack(AoAWeapons.BLAST_BARREL.get()), CANNONS);
+	public static final RegistryObject<CreativeModeTab> SNIPERS = register("snipers", () -> new ItemStack(AoAWeapons.BOLT_RIFLE.get()), SHOTGUNS);
+	public static final RegistryObject<CreativeModeTab> BLASTERS = register("blasters", () -> new ItemStack(AoAWeapons.LASER_BLASTER.get()), SNIPERS);
+	public static final RegistryObject<CreativeModeTab> CROSSBOWS = register("crossbows", () -> new ItemStack(AoAWeapons.LUNAR_CROSSBOW.get()), BLASTERS);
+	public static final RegistryObject<CreativeModeTab> BOWS = register("bows", () -> new ItemStack(AoAWeapons.SPEED_BOW.get()), CROSSBOWS);
+	public static final RegistryObject<CreativeModeTab> THROWN_WEAPONS = register("thrown_weapons", () -> new ItemStack(AoAWeapons.GRENADE.get()), BOWS);
+	public static final RegistryObject<CreativeModeTab> STAVES = register("staves", () -> new ItemStack(AoAWeapons.CELESTIAL_STAFF.get()), THROWN_WEAPONS);
+	public static final RegistryObject<CreativeModeTab> VULCANES = register("vulcanes", () -> new ItemStack(AoAWeapons.VULCANE.get()), STAVES);
+	public static final RegistryObject<CreativeModeTab> AMMUNITION = register("ammunition", () -> new ItemStack(AoAItems.LIMONITE_BULLET.get()), VULCANES);
+	public static final RegistryObject<CreativeModeTab> TABLETS = register("tablets", () -> new ItemStack(AoAItems.AGILITY_TABLET.get()), AMMUNITION);
+	public static final RegistryObject<CreativeModeTab> GENERATION_BLOCKS = register("worldgen_blocks", () -> new ItemStack(AoABlocks.LELYETIAN_GRASS.get()), TABLETS);
+	public static final RegistryObject<CreativeModeTab> DECORATION_BLOCKS = register("decoration_blocks", () -> new ItemStack(AoABlocks.BARON_STONE_BRICKS.stone()), GENERATION_BLOCKS);
+	public static final RegistryObject<CreativeModeTab> FUNCTIONAL_BLOCKS = register("functional_blocks", () -> new ItemStack(AoABlocks.SHADOW_ALTAR.get()), DECORATION_BLOCKS);
+	public static final RegistryObject<CreativeModeTab> BANNERS = register("banners", () -> new ItemStack(AoABlocks.ANCIENT_BANNER.base()), FUNCTIONAL_BLOCKS);
 
-	private static void registerTabs(final CreativeModeTabEvent.Register ev) {
-		MISC_ITEMS = register(ev, "miscellaneous", () -> new ItemStack(AoAItems.LIMONITE_INGOT.get()), () -> MISC_ITEMS, CreativeModeTabs.SPAWN_EGGS);
-		FOOD = register(ev, "food", () -> new ItemStack(AoAItems.COOKED_RAINBOWFISH.get()), () -> FOOD, MISC_ITEMS);
-		TOOLS = register(ev, "tools", () -> new ItemStack(AoATools.LIMONITE_PICKAXE.get()), () -> TOOLS, FOOD);
-		ARMOUR = register(ev, "armour", () -> new ItemStack(AoAArmour.ALACRITY_ARMOUR.chestplate.get()), () -> ARMOUR, TOOLS);
-		SWORDS = register(ev, "swords", () -> new ItemStack(AoAWeapons.LIMONITE_SWORD.get()), () -> SWORDS, ARMOUR);
-		GREATBLADES = register(ev, "greatblades", () -> new ItemStack(AoAWeapons.BLOODLURKER.get()), () -> GREATBLADES, SWORDS);
-		MAULS = register(ev, "mauls", () -> new ItemStack(AoAWeapons.HORIZON_MAUL.get()), () -> MAULS, GREATBLADES);
-		GUNS = register(ev, "guns", () -> new ItemStack(AoAWeapons.SQUAD_GUN.get()), () -> GUNS, MAULS);
-		CANNONS = register(ev, "cannons", () -> new ItemStack(AoAWeapons.BLAST_CANNON.get()), () -> CANNONS, GUNS);
-		SHOTGUNS = register(ev, "shotguns", () -> new ItemStack(AoAWeapons.BLAST_BARREL.get()), () -> SHOTGUNS, CANNONS);
-		SNIPERS = register(ev, "snipers", () -> new ItemStack(AoAWeapons.BOLT_RIFLE.get()), () -> SNIPERS, SHOTGUNS);
-		BLASTERS = register(ev, "blasters", () -> new ItemStack(AoAWeapons.LASER_BLASTER.get()), () -> BLASTERS, SNIPERS);
-		CROSSBOWS = register(ev, "crossbows", () -> new ItemStack(AoAWeapons.LUNAR_CROSSBOW.get()), () -> CROSSBOWS, BLASTERS);
-		BOWS = register(ev, "bows", () -> new ItemStack(AoAWeapons.SPEED_BOW.get()), () -> BOWS, CROSSBOWS);
-		THROWN_WEAPONS = register(ev, "thrown_weapons", () -> new ItemStack(AoAWeapons.GRENADE.get()), () -> THROWN_WEAPONS, BOWS);
-		STAVES = register(ev, "staves", () -> new ItemStack(AoAWeapons.CELESTIAL_STAFF.get()), () -> STAVES, THROWN_WEAPONS);
-		VULCANES = register(ev, "vulcanes", () -> new ItemStack(AoAWeapons.VULCANE.get()), () -> VULCANES, STAVES);
-		AMMUNITION = register(ev, "ammunition", () -> new ItemStack(AoAItems.LIMONITE_BULLET.get()), () -> AMMUNITION, VULCANES);
-		TABLETS = register(ev, "tablets", () -> new ItemStack(AoAItems.AGILITY_TABLET.get()), () -> TABLETS, AMMUNITION);
-		GENERATION_BLOCKS = register(ev, "worldgen_blocks", () -> new ItemStack(AoABlocks.LELYETIAN_GRASS.get()), () -> GENERATION_BLOCKS, TABLETS);
-		DECORATION_BLOCKS = register(ev, "decoration_blocks", () -> new ItemStack(AoABlocks.BARON_STONE_BRICKS.get()), () -> DECORATION_BLOCKS, GENERATION_BLOCKS);
-		FUNCTIONAL_BLOCKS = register(ev, "functional_blocks", () -> new ItemStack(AoABlocks.SHADOW_ALTAR.get()), () -> FUNCTIONAL_BLOCKS, DECORATION_BLOCKS);
-		BANNERS = register(ev, "banners", () -> new ItemStack(AoABlocks.ANCIENT_BANNER.get()), () -> BANNERS, FUNCTIONAL_BLOCKS);
+	private static RegistryObject<CreativeModeTab> register(String id, Supplier<ItemStack> icon, RegistryObject<CreativeModeTab> afterTab) {
+		return register(id, icon, afterTab.getKey());
 	}
 
-	private static CreativeModeTab register(CreativeModeTabEvent.Register ev, String id, Supplier<ItemStack> icon, Supplier<CreativeModeTab> tab, CreativeModeTab afterTab) {
-		return ev.registerCreativeModeTab(AdventOfAscension.id(id), List.of(), List.of(afterTab), builder -> {
-			builder.title(LocaleUtil.getLocaleMessage("itemGroup." + AdventOfAscension.MOD_ID + "." + id))
-					.icon(icon)
-					.displayItems((displayParams, output) -> output.acceptAll(AoAStartupCache.getItemsForTab(tab.get())));
-		});
+	private static RegistryObject<CreativeModeTab> register(String id, Supplier<ItemStack> icon, ResourceKey<CreativeModeTab>... afterTabs) {
+		return AoARegistries.CREATIVE_MODE_TABS.register(id, () -> CreativeModeTab.builder()
+				.title(LocaleUtil.getLocaleMessage("itemGroup." + AdventOfAscension.MOD_ID + "." + id))
+				.withTabsBefore(afterTabs)
+				.icon(icon)
+				.displayItems((displayParams, output) -> output.acceptAll(AoAStartupCache.getItemsForTab(AoARegistries.CREATIVE_MODE_TABS.getEntry(AdventOfAscension.id(id)))))
+				.build());
 	}
 
-	private static void fillVanillaTabs(final CreativeModeTabEvent.BuildContents ev) {
+	private static void fillVanillaTabs(final BuildCreativeModeTabContentsEvent ev) {
 		ev.acceptAll(AoAStartupCache.getItemsForTab(ev.getTab()));
 	}
 }

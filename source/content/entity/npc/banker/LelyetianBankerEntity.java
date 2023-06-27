@@ -23,7 +23,7 @@ public class LelyetianBankerEntity extends AoABanker {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.LELYETIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LELYETIA.key);
 	}
 
 	@Override

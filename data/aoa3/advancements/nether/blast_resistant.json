@@ -36,5 +36,6 @@
     [
       "obtain_gold_king_bambambam_trophy"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -47,7 +47,7 @@ public class TidalWaveEntity extends ThrowableProjectile {
 
 	@Override
 	protected void onHit(HitResult result) {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (result.getType() == HitResult.Type.BLOCK) {
 				discard();
 			}

@@ -52,7 +52,7 @@ public class ParryStunlockTask<E extends Mob> extends Behavior<E> {
 					owner.doHurtTarget(target);
 					doStop(level, owner, gameTime);
 				}
-				else if (owner.isOnGround()) {
+				else if (owner.onGround()) {
 					Vec3 lungeVector = new Vec3(target.getX() - owner.getX(), 0, target.getZ() - owner.getZ());
 
 					if (lungeVector.lengthSqr() > 1.0E-7D)

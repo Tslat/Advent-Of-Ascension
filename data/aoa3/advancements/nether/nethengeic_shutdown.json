@@ -37,5 +37,6 @@
     [
       "kill_nethengeic_wither"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

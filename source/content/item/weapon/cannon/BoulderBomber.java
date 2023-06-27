@@ -28,8 +28,8 @@ public class BoulderBomber extends BaseCannon {
 	@Override
 	protected boolean fireGun(LivingEntity shooter, ItemStack stack, InteractionHand hand) {
 		if (super.fireGun(shooter, stack, hand)) {
-			if (!shooter.level.isClientSide)
-				shooter.level.addFreshEntity(new HeavyCannonballEntity(shooter, this, hand, 120, 0, 0, 0.325f, 0));
+			if (!shooter.level().isClientSide)
+				shooter.level().addFreshEntity(new HeavyCannonballEntity(shooter, this, hand, 120, 0, 0, 0.325f, 0));
 
 			return true;
 		}

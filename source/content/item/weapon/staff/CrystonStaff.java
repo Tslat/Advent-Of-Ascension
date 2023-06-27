@@ -31,7 +31,7 @@ public class CrystonStaff extends BaseStaff<Integer> {
 
 	@Override
 	public Integer checkPreconditions(LivingEntity caster, ItemStack staff) {
-		int count = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB).size();
+		int count = caster.level().getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB).size();
 
 		if (count > 0)
 			return count;

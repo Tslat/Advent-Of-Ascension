@@ -5,33 +5,20 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 
 import javax.annotation.Nullable;
 
-public class GenericWaterPlant extends GenericPlantBlock implements SimpleWaterloggedBlock {
-	public GenericWaterPlant(Material material, MaterialColor mapColour, SoundType sound, int lightLevel, Material... growthMaterials) {
-		super(material, mapColour, sound, lightLevel, growthMaterials);
-
-		registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
-	}
-
-	public GenericWaterPlant(Material material, MaterialColor mapColour, SoundType sound, Material... growthMaterials) {
-		super(material, mapColour, sound, growthMaterials);
-
-		registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
-	}
-
-	public GenericWaterPlant(Material material, MaterialColor mapColour, Material... growthMaterials) {
-		super(material, mapColour, growthMaterials);
+public class GenericWaterPlant extends BushBlock implements SimpleWaterloggedBlock {
+	public GenericWaterPlant(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
 	}

@@ -45,12 +45,12 @@ public class CreepupleEntity extends AoACreeponiaCreeper {
 
     @Override
     protected void explode() {
-        if (!level.isClientSide) {
+        if (!level().isClientSide) {
             for (int i = 0; i < 3; i++) {
-                WorldUtil.createExplosion(this, level, getX() + (rand().nextDouble() * 3) - 1, getY() + (rand().nextDouble() * 3) - 1, getZ() + (rand().nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
+                WorldUtil.createExplosion(this, level(), getX() + (rand().nextDouble() * 3) - 1, getY() + (rand().nextDouble() * 3) - 1, getZ() + (rand().nextDouble() * 2) - 1, (getExplosionStrength() / 1.25f) * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level(), this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
             }
 
-            level.explode(this, getX(), getY(), getZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level, this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
+            level().explode(this, getX(), getY(), getZ(), getExplosionStrength() * (isCharged() ? 2f : 1f), ForgeEventFactory.getMobGriefingEvent(level(), this) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE);
             discard();
             spawnLingeringCloud();
         }

@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -20,6 +19,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.tool.misc.InfusionBowl;
 import net.tslat.aoa3.util.EntityUtil;
@@ -80,7 +80,7 @@ public abstract class PixonEntity extends PathfinderMob {
     }
 
     public boolean canHarvest(ServerPlayer player, ItemStack bowlStack) {
-        if (level.getGameTime() >= this.nextHarvestTick && bowlStack.getItem() instanceof InfusionBowl) {
+        if (level().getGameTime() >= this.nextHarvestTick && bowlStack.getItem() instanceof InfusionBowl) {
             InfusionBowl bowl = ((InfusionBowl)bowlStack.getItem());
 
             if (player.isCreative() || PlayerUtil.doesPlayerHaveLevel(player, AoASkills.IMBUING.get(), getHarvestLevelReq() + bowl.getHarvestReqModifier())) {
@@ -112,7 +112,7 @@ public abstract class PixonEntity extends PathfinderMob {
 
     @Override
     public boolean isInvulnerableTo(DamageSource source) {
-        return !source.is(DamageTypes.OUT_OF_WORLD);
+        return !source.is(AoATags.DamageTypes.IS_TECHNICAL);
     }
 
     @Override

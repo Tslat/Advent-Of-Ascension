@@ -16,7 +16,7 @@ public class ShyreBeamEntity extends BaseMobProjectile {
 	}
 
 	public ShyreBeamEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.SHYRE_BEAM.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.SHYRE_BEAM.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

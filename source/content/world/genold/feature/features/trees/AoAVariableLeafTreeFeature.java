@@ -5,13 +5,13 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.block.functional.plant.AoASaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.function.Supplier;
 
 public abstract class AoAVariableLeafTreeFeature extends AoATreeFeature {
-	public AoAVariableLeafTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> sapling) {
+	public AoAVariableLeafTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> sapling) {
 		super(codec, sapling);
 	}
 

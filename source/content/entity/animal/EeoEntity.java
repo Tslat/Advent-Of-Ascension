@@ -56,21 +56,21 @@ public class EeoEntity extends AoAAnimal {
 
 	@Override
 	public boolean skipAttackInteraction(Entity entity) {
-		if (!level.isClientSide()) {
-			if (!level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(20), nearbyEntity -> nearbyEntity instanceof SpiritGuardianEntity || nearbyEntity instanceof SpiritProtectorEntity).isEmpty())
+		if (!level().isClientSide()) {
+			if (!level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(20), nearbyEntity -> nearbyEntity instanceof SpiritGuardianEntity || nearbyEntity instanceof SpiritProtectorEntity).isEmpty())
 				return false;
 
 			if (random.nextBoolean()) {
-				SpiritGuardianEntity guardian = new SpiritGuardianEntity(AoAMobs.SPIRIT_GUARDIAN.get(), level);
+				SpiritGuardianEntity guardian = new SpiritGuardianEntity(AoAMobs.SPIRIT_GUARDIAN.get(), level());
 
 				guardian.absMoveTo(getX(), getY(), getZ(), getYRot(), getXRot());
-				level.addFreshEntity(guardian);
+				level().addFreshEntity(guardian);
 			}
 			else {
-				SpiritProtectorEntity protector = new SpiritProtectorEntity(AoAMobs.SPIRIT_PROTECTOR.get(), level);
+				SpiritProtectorEntity protector = new SpiritProtectorEntity(AoAMobs.SPIRIT_PROTECTOR.get(), level());
 
 				protector.absMoveTo(getX(), getY(), getZ(), getYRot(), getXRot());
-				level.addFreshEntity(protector);
+				level().addFreshEntity(protector);
 			}
 		}
 

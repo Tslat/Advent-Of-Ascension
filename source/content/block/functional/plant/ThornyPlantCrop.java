@@ -5,8 +5,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -19,8 +19,8 @@ import java.util.function.Supplier;
 public class ThornyPlantCrop extends MultiBlockCrop {
 	private static final VoxelShape BOTTOM_FULL_SHAPE = BlockUtil.pixelBasedCube(0, 0, 0, 16, 1, 16);
 
-	public ThornyPlantCrop(MaterialColor colour, Supplier<Item> seedItem) {
-		super(colour, seedItem);
+	public ThornyPlantCrop(BlockBehaviour.Properties properties, Supplier<Item> seedItem) {
+		super(properties, seedItem);
 	}
 
 	@Override

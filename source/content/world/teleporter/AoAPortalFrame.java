@@ -90,7 +90,7 @@ public class AoAPortalFrame {
 						if (state.getBlock() == portalBlock)
 							return EXISTING;
 					}
-					else if (!state.getMaterial().isReplaceable()) {
+					else if (!state.canBeReplaced()) {
 						return INVALID;
 					}
                 }
@@ -153,7 +153,7 @@ public class AoAPortalFrame {
 						if (state.getBlock() == portalBlock)
 							return EXISTING;
 					}
-					else if (!state.getMaterial().isReplaceable()) {
+					else if (!state.canBeReplaced()) {
 						return INVALID;
 					}
                 }

@@ -30,39 +30,39 @@ public class RosidianGreatblade extends BaseGreatblade {
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack stack, BlockPos pos, Player player) {
-		if (player.level.isClientSide || player.isCreative())
+		if (player.level().isClientSide || player.isCreative())
 			return false;
 
-		Block block = player.level.getBlockState(pos).getBlock();
+		Block block = player.level().getBlockState(pos).getBlock();
 
 		if (block instanceof IForgeShearable) {
-			if (((IForgeShearable)block).isShearable(stack, player.level, pos)) {
+			if (((IForgeShearable)block).isShearable(stack, player.level(), pos)) {
 				List<ItemStack> drops;
 
 				for (int x = pos.getX() - 1; x <= pos.getX() + 1; x++) {
 					for (int y = pos.getY() - 1; y <= pos.getY() + 1; y++) {
 						for (int z = pos.getZ() - 1; z <= pos.getZ() + 1; z++) {
 							BlockPos newPos = new BlockPos(x, y, z);
-							Block newBlock = player.level.getBlockState(newPos).getBlock();
+							Block newBlock = player.level().getBlockState(newPos).getBlock();
 
-							if (!(newBlock instanceof IForgeShearable) || !((IForgeShearable)newBlock).isShearable(stack, player.level, newPos))
+							if (!(newBlock instanceof IForgeShearable) || !((IForgeShearable)newBlock).isShearable(stack, player.level(), newPos))
 								continue;
 
-							drops = ((IForgeShearable)block).onSheared(player, stack, player.level, newPos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
+							drops = ((IForgeShearable)block).onSheared(player, stack, player.level(), newPos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
 
 							for (ItemStack drop : drops) {
 								double xMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
 								double yMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
 								double zMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
-								ItemEntity item = new ItemEntity(player.level, x + xMod, y + yMod, z + zMod, drop);
+								ItemEntity item = new ItemEntity(player.level(), x + xMod, y + yMod, z + zMod, drop);
 
 								item.setDefaultPickUpDelay();
-								player.level.addFreshEntity(item);
+								player.level().addFreshEntity(item);
 							}
 
 							ItemUtil.damageItem(stack, player, 1, EquipmentSlot.MAINHAND);
 							player.awardStat(Stats.BLOCK_MINED.get(block));
-							player.level.setBlock(newPos, Blocks.AIR.defaultBlockState(), 11);
+							player.level().setBlock(newPos, Blocks.AIR.defaultBlockState(), 11);
 						}
 					}
 				}

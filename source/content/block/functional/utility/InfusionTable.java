@@ -9,19 +9,17 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.content.item.misc.InfusionStone;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class InfusionTable extends Block {
-	public InfusionTable() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).get());
+	public InfusionTable(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

@@ -27,10 +27,10 @@ public class ShadowlordSpawnTask implements Runnable {
             for (int x = -2; x <= 2; x += 4) {
                 for (int z = -2; z <= 2; z += 4) {
                     BlockPos pos = altarPosition.offset(x, 1, z);
-                    Block block = player.level.getBlockState(pos).getBlock();
+                    Block block = player.level().getBlockState(pos).getBlock();
 
                     if (block instanceof LampBlock)
-                        player.level.setBlockAndUpdate(pos, block.defaultBlockState().setValue(LampBlock.LIT, true).setValue(LampBlock.TOGGLEABLE, false));
+                        player.level().setBlockAndUpdate(pos, block.defaultBlockState().setValue(LampBlock.LIT, true).setValue(LampBlock.TOGGLEABLE, false));
                 }
             }
         }
@@ -48,13 +48,13 @@ public class ShadowlordSpawnTask implements Runnable {
                 for (int y = 0; y <= 1; y++) {
                     for (int z = -2; z <= 2; z++) {
                         BlockPos pos = altarPosition.offset(x, y, z);
-                        BlockState state = player.level.getBlockState(pos);
+                        BlockState state = player.level().getBlockState(pos);
                         Block block = state.getBlock();
 
                         if (block instanceof LampBlock && state.getValue(LampBlock.LIT)) {
-                            player.level.setBlock(pos, state.setValue(LampBlock.LIT, false), 2);
+                            player.level().setBlock(pos, state.setValue(LampBlock.LIT, false), 2);
                             schedule(2, TimeUnit.SECONDS);
-                            player.level.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+                            player.level().addParticle(ParticleTypes.LARGE_SMOKE, pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
 
                             return;
                         }

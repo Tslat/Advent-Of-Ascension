@@ -36,10 +36,10 @@ public class FireballEntity extends BaseMobProjectile implements GeoEntity {
 	public void tick() {
 		super.tick();
 
-		if (this.level.isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0)) {
-			level.addParticle(ParticleTypes.LARGE_SMOKE, getX(0.5f), getY(0.5f), getZ(0.5f), 0, 0, 0);
-			level.addParticle(ParticleTypes.FLAME, getRandomX(0.25f), getRandomY(), getRandomZ(0.25f), 0, 0, 0);
-			level.addParticle(ParticleTypes.FLAME, getRandomX(0.25f), getRandomY(), getRandomZ(0.25f), 0, 0, 0);
+		if (this.level().isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0)) {
+			level().addParticle(ParticleTypes.LARGE_SMOKE, getX(0.5f), getY(0.5f), getZ(0.5f), 0, 0, 0);
+			level().addParticle(ParticleTypes.FLAME, getRandomX(0.25f), getRandomY(), getRandomZ(0.25f), 0, 0, 0);
+			level().addParticle(ParticleTypes.FLAME, getRandomX(0.25f), getRandomY(), getRandomZ(0.25f), 0, 0, 0);
 		}
 		else if (this.tickCount > 100) {
 			discard();

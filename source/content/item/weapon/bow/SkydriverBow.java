@@ -27,12 +27,12 @@ public class SkydriverBow extends BaseBow {
 
 			testPos.set(arrow.blockPosition());
 
-			while (testPos.getY() >= 0 && arrow.level.isEmptyBlock(testPos.move(Direction.DOWN))) {
+			while (testPos.getY() >= 0 && arrow.level().isEmptyBlock(testPos.move(Direction.DOWN))) {
 				;
 			}
 
-			if (arrow.level.getBlockState(testPos).isFaceSturdy(arrow.level, testPos, Direction.UP) && arrow.level.getBlockState(testPos.above()).getMaterial().isReplaceable() && WorldUtil.canPlaceBlock(arrow.level, testPos.above(), shooter, null))
-				arrow.level.setBlockAndUpdate(testPos.above(), AoABlocks.ORANGE_ACID.get().defaultBlockState());
+			if (arrow.level().getBlockState(testPos).isFaceSturdy(arrow.level(), testPos, Direction.UP) && arrow.level().getBlockState(testPos.above()).canBeReplaced() && WorldUtil.canPlaceBlock(arrow.level(), testPos.above(), shooter, null))
+				arrow.level().setBlockAndUpdate(testPos.above(), AoABlocks.ORANGE_ACID.get().defaultBlockState());
 		}
 	}
 

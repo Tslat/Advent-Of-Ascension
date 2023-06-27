@@ -83,28 +83,28 @@ public class PlayerEvents {
 
 	private static void onPlayerTick(final TickEvent.PlayerTickEvent ev) {
 		if (ev.phase == TickEvent.Phase.END) {
-			if (WorldUtil.isWorld(ev.player.level, AoADimensions.LELYETIA.key)) {
+			if (WorldUtil.isWorld(ev.player.level(), AoADimensions.LELYETIA.key)) {
 				LelyetiaEvents.doPlayerTick(ev.player);
 			}
-			else if (WorldUtil.isWorld(ev.player.level, AoADimensions.VOX_PONDS.key)) {
+			else if (WorldUtil.isWorld(ev.player.level(), AoADimensions.VOX_PONDS.key)) {
 				VoxPondsEvents.doPlayerTick(ev.player);
 			}
-			else if (WorldUtil.isWorld(ev.player.level, AoADimensions.LUNALUS.key)) {
+			else if (WorldUtil.isWorld(ev.player.level(), AoADimensions.LUNALUS.key)) {
 				LunalusEvents.doPlayerTick(ev.player);
 			}
 		}
 
-		if (WorldUtil.isWorld(ev.player.level, AoADimensions.NOWHERE.key))
+		if (WorldUtil.isWorld(ev.player.level(), AoADimensions.NOWHERE.key))
 			NowhereEvents.doPlayerTick(ev);
 	}
 
 	private static void onPlayerJump(final LivingEvent.LivingJumpEvent ev) {
-		if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.LUNALUS.key) && ev.getEntity() instanceof Player)
+		if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.LUNALUS.key) && ev.getEntity() instanceof Player)
 			LunalusEvents.doPlayerJump((Player)ev.getEntity());
 	}
 
 	private static void onPlayerHit(final LivingAttackEvent ev) {
-		if (ev.getEntity() instanceof ServerPlayer && ev.getEntity().getHealth() - ev.getAmount() <= 0 && ev.getEntity().level.getLevelData().isHardcore())
+		if (ev.getEntity() instanceof ServerPlayer && ev.getEntity().getHealth() - ev.getAmount() <= 0 && ev.getEntity().level().getLevelData().isHardcore())
 			ReservedItem.handlePlayerDeath((ServerPlayer)ev.getEntity());
 	}
 
@@ -120,7 +120,7 @@ public class PlayerEvents {
 
 		if (ev.getEntity() instanceof ServerPlayer pl) {
 			if (pl.getHealth() > 0 && ev.getSource().is(DamageTypeTags.IS_EXPLOSION) && ev.getSource().getDirectEntity() instanceof Creeper) {
-				if ((!pl.level.getEntitiesOfClass(PrimedTnt.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level.getEntitiesOfClass(PrimedTnt.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+				if ((!pl.level().getEntitiesOfClass(PrimedTnt.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level().getEntitiesOfClass(PrimedTnt.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.CREEPONIA_REALMSTONE.get()));
 			}
 		}
@@ -133,7 +133,7 @@ public class PlayerEvents {
 				PositionAndRotation checkpoint = plData.getCheckpoint();
 
 				if (checkpoint != null) {
-					if (CheckpointBlock.isValidCheckpoint(pl.level, checkpoint)) {
+					if (CheckpointBlock.isValidCheckpoint(pl.level(), checkpoint)) {
 						AoAScheduler.scheduleSyncronisedTask(() -> {
 							if (NowhereEvents.isInBossRegion(pl.blockPosition()))
 								ItemUtil.clearInventoryOfItems(pl, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
@@ -154,7 +154,7 @@ public class PlayerEvents {
 					}
 				}
 
-				if (ev.getEntity().level.dimension() == AoADimensions.NOWHERE.key)
+				if (ev.getEntity().level().dimension() == AoADimensions.NOWHERE.key)
 					NowhereEvents.doDeathPrevention(ev, plData);
 			}
 		}
@@ -165,18 +165,18 @@ public class PlayerEvents {
 			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.LELYETIA_REALMSTONE.get()));
 
-			if (WorldUtil.isWorld(player.level, AoADimensions.LUNALUS.key))
+			if (WorldUtil.isWorld(player.level(), AoADimensions.LUNALUS.key))
 				LunalusEvents.doPlayerLanding(player, ev);
 		}
 	}
 
 	private static void onEntityDeath(final LivingDeathEvent ev) {
-		if (!ev.getEntity().level.isClientSide) {
+		if (!ev.getEntity().level().isClientSide) {
 			if (ev.getEntity() instanceof ServerPlayer) {
 				ReservedItem.handlePlayerDeath((ServerPlayer)ev.getEntity());
 			}
 			else if (ev.getSource().getEntity() instanceof ServerPlayer) {
-				if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.DEEPLANDS.key)) {
+				if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.DEEPLANDS.key)) {
 					if (ev.getEntity() instanceof FlyingMob)
 						ev.getEntity().spawnAtLocation(new ItemStack(AoAItems.MUSIC_DISC_CAVERNS.get()), 0.5f);
 				}
@@ -190,7 +190,7 @@ public class PlayerEvents {
 		if (pl instanceof ServerPlayer) {
 			BlockPos pos = ev.getPos();
 
-			if (!pl.isCreative() && ev.getState().is(Tags.Blocks.ORES) && pos.getY() <= pl.level.getMinBuildHeight() + 5 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (!pl.isCreative() && ev.getState().is(Tags.Blocks.ORES) && pos.getY() <= pl.level().getMinBuildHeight() + 5 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 				ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.DEEPLANDS_REALMSTONE.get()));
 		}
 	}
@@ -200,9 +200,9 @@ public class PlayerEvents {
 			return;
 
 		if (PlayerUtil.isWearingFullSet(player, AdventArmour.Type.HYDRANGIC)) {
-			if (ev.getPlacedBlock().getBlock() instanceof BonemealableBlock && BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), ev.getEntity().level, ev.getPos(), player)) {
+			if (ev.getPlacedBlock().getBlock() instanceof BonemealableBlock && BoneMealItem.applyBonemeal(new ItemStack(Items.BONE_MEAL), ev.getEntity().level(), ev.getPos(), player)) {
 				ev.getLevel().levelEvent(LevelEvent.PARTICLES_PLANT_GROWTH, ev.getPos(), 0);
-				player.hurtArmor(player.level.damageSources().generic(), 16);
+				player.hurtArmor(player.level().damageSources().generic(), 16);
 			}
 		}
 	}
@@ -215,7 +215,7 @@ public class PlayerEvents {
 			if (uuid.compareTo(UUID.fromString("2459b511-ca45-43d8-808d-f0eb30a63be4")) == 0) {
 				msg = ChatFormatting.DARK_RED + "It begins...Is this the end?";
 
-				((ServerLevel)player.level).sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 0.2d, player.getZ(), 16, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, 1);
+				((ServerLevel)player.level()).sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 0.2d, player.getZ(), 16, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, 1);
 			}
 			else if (AoAHaloUtil.isCrazyDonator(uuid)) {
 				msg = ChatFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
@@ -259,7 +259,7 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerPickupXp(final PlayerXpEvent.PickupXp ev) {
-		if (!ev.getEntity().level.isClientSide && ev.getOrb().value > 0) {
+		if (!ev.getEntity().level().isClientSide && ev.getOrb().value > 0) {
 			ItemStack stack = ItemUtil.getStackFromInventory(ev.getEntity(), AoATools.EXP_FLASK.get());
 
 			if (stack != null) {
@@ -272,18 +272,18 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerFishing(final ItemFishedEvent ev) {
-		if (WorldUtil.isWorld(ev.getEntity().level, AoADimensions.LBOREAN.key) && RandomUtil.oneInNChance(10)) {
+		if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.LBOREAN.key) && RandomUtil.oneInNChance(10)) {
 			FishingHook hook = ev.getHookEntity();
 			LivingEntity fisher = ev.getEntity();
 
-			ItemEntity drop = new ItemEntity(fisher.level, hook.getX(), hook.getY(), hook.getZ(), new ItemStack(AoAItems.CALL_OF_THE_DRAKE.get()));
+			ItemEntity drop = new ItemEntity(fisher.level(), hook.getX(), hook.getY(), hook.getZ(), new ItemStack(AoAItems.CALL_OF_THE_DRAKE.get()));
 			double velocityX = fisher.getX() - hook.getX();
 			double velocityY = fisher.getY() - hook.getY();
 			double velocityZ = fisher.getZ() - hook.getZ();
 			double velocity = Math.sqrt((velocityX * velocityX + velocityY * velocityY + velocityZ * velocityZ));
 
 			drop.setDeltaMovement(velocityX * 0.1D, velocityY * 0.1D + (double)Math.sqrt(velocity) * 0.08D, velocityZ * 0.1D);
-			fisher.level.addFreshEntity(drop);
+			fisher.level().addFreshEntity(drop);
 		}
 	}
 

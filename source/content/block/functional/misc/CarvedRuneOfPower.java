@@ -11,22 +11,20 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.item.misc.BlankRealmstone;
 import net.tslat.aoa3.content.item.misc.Realmstone;
 import net.tslat.aoa3.content.world.teleporter.AoAPortalFrame;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
 import javax.annotation.Nullable;
 
 public class CarvedRuneOfPower extends Block {
-	public CarvedRuneOfPower() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_BLACK).stats(3f, 10f).get());
+	public CarvedRuneOfPower(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

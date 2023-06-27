@@ -89,7 +89,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 			LivingEntity target = getTarget();
 
 			if (target != null) {
-				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.CHARGER.get(), RandomUtil.getRandomPositionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level, 2, (state, statePos) -> true), MobSpawnType.MOB_SUMMONED);
+				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level(), AoAMobs.CHARGER.get(), RandomUtil.getRandomPositionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level(), 2, (state, statePos) -> true), MobSpawnType.MOB_SUMMONED);
 
 				if (charger != null)
 					BrainUtils.setTargetOfEntity(charger, target);

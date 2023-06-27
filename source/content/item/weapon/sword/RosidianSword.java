@@ -34,15 +34,15 @@ public class RosidianSword extends BaseSword {
 			float motionY = (float)(player.getY() - target.getY()) * 0.1f;
 			float motionZ = (float)(player.getZ() - target.getZ()) * 0.1f;
 
-			player.level.addParticle(ParticleTypes.END_ROD, target.getX() + RandomUtil.randomScaledGaussianValue(0.2), target.getY() + target.getBbHeight() / 2f, target.getZ() + RandomUtil.randomScaledGaussianValue(0.2), motionX, motionY, motionZ);
+			player.level().addParticle(ParticleTypes.END_ROD, target.getX() + RandomUtil.randomScaledGaussianValue(0.2), target.getY() + target.getBbHeight() / 2f, target.getZ() + RandomUtil.randomScaledGaussianValue(0.2), motionX, motionY, motionZ);
 
-			for (LivingEntity swipeTarget : player.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
+			for (LivingEntity swipeTarget : player.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
 				if (swipeTarget != target && swipeTarget != player && !player.isAlliedTo(swipeTarget) && player.distanceToSqr(swipeTarget) < 9) {
 					motionX = (float)(player.getX() - swipeTarget.getX()) * 0.1f;
 					motionY = (float)(player.getY() - swipeTarget.getY()) * 0.1f;
 					motionZ = (float)(player.getZ() - swipeTarget.getZ()) * 0.1f;
 
-					player.level.addParticle(ParticleTypes.END_ROD, true, swipeTarget.getX() + RandomUtil.randomScaledGaussianValue(0.2), swipeTarget.getY() + target.getBbHeight() / 2f, swipeTarget.getZ() + RandomUtil.randomScaledGaussianValue(0.2), motionX, motionY, motionZ);
+					player.level().addParticle(ParticleTypes.END_ROD, true, swipeTarget.getX() + RandomUtil.randomScaledGaussianValue(0.2), swipeTarget.getY() + target.getBbHeight() / 2f, swipeTarget.getZ() + RandomUtil.randomScaledGaussianValue(0.2), motionX, motionY, motionZ);
 				}
 			}
 		}
@@ -56,7 +56,7 @@ public class RosidianSword extends BaseSword {
 			EntityUtil.healEntity(attacker, 1);
 
 			if (attacker instanceof Player) {
-				for (LivingEntity swipeTarget : attacker.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
+				for (LivingEntity swipeTarget : attacker.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(1, 0.25, 1))) {
 					if (swipeTarget != target && swipeTarget != attacker && swipeTarget.getHealth() < swipeTarget.getMaxHealth() && !attacker.isAlliedTo(swipeTarget) && attacker.distanceToSqr(swipeTarget) < 9)
 						EntityUtil.healEntity(attacker, 0.4f);
 				}

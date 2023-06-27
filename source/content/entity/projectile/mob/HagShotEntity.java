@@ -16,7 +16,7 @@ public class HagShotEntity extends BaseMobProjectile {
 	}
 
 	public HagShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.HAG_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.HAG_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

@@ -16,9 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -40,8 +39,8 @@ import java.util.List;
 public class BossAltar extends Block implements EntityBlock {
 	private static final VoxelShape SHAPE = BlockUtil.pixelBasedCube(4, 0, 4, 12, 12, 12);
 
-	public BossAltar() {
-		super(new BlockUtil.CompactProperties(Material.HEAVY_METAL, MaterialColor.COLOR_BLACK).unbreakable().light(2).emissive().noOcclusion().get());
+	public BossAltar(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Nullable
@@ -107,7 +106,7 @@ public class BossAltar extends Block implements EntityBlock {
 					AoAScheduler.scheduleSyncronisedTask(() -> bossAltar.updateEntity(null), 95);
 				}
 
-				arena.placePlayersAndBoss(serverLevel, players, pl -> pl.getLevel() == level && pl.isAlive() && teleportBounds.contains(pl.position()), heldItem, entityType, bossItem::spawnBoss);
+				arena.placePlayersAndBoss(serverLevel, players, pl -> pl.level() == level && pl.isAlive() && teleportBounds.contains(pl.position()), heldItem, entityType, bossItem::spawnBoss);
 			}
 		}
 

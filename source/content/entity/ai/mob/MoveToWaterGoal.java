@@ -28,7 +28,7 @@ public class MoveToWaterGoal<T extends Mob> extends ExtendedGoal<T> {
 		if (!super.canUse())
 			return false;
 
-		if (!this.entity.level.isDay() || this.entity.isInWater())
+		if (!this.entity.level().isDay() || this.entity.isInWater())
 			return false;
 
 		this.targetPos = findWaterPos();
@@ -51,7 +51,7 @@ public class MoveToWaterGoal<T extends Mob> extends ExtendedGoal<T> {
 	@Nullable
 	protected Vec3 findWaterPos() {
 		BlockPos pos = this.entity.blockPosition();
-		BlockPos targetPos = RandomUtil.getRandomPositionWithinRange(pos, 10, 6, 10, 0, 0, 0, false, this.entity.level, 10, (state, statePos) -> state.getFluidState().is(FluidTags.WATER));
+		BlockPos targetPos = RandomUtil.getRandomPositionWithinRange(pos, 10, 6, 10, 0, 0, 0, false, this.entity.level(), 10, (state, statePos) -> state.getFluidState().is(FluidTags.WATER));
 
 		return targetPos != pos ? Vec3.atBottomCenterOf(targetPos) : null;
 	}

@@ -37,7 +37,7 @@ public class SkyStaff extends BaseStaff<Boolean> {
 
 	@Override
 	public Boolean checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return caster.isOnGround() ? true : null;
+		return caster.onGround() ? true : null;
 	}
 
 	@Override

@@ -10,20 +10,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.mob.precasia.*;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class ArmyBlock extends BossAltarBlock {
-	public ArmyBlock() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.TERRACOTTA_GREEN).stats(35f, 1000f).randomTicks().get());
+	public ArmyBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
@@ -47,7 +45,7 @@ public class ArmyBlock extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
-		spawnWave(player.level, blockPos, 1);
+		spawnWave(player.level(), blockPos, 1);
 		//sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAMobs.SKELETRON.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 

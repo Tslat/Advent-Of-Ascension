@@ -29,7 +29,7 @@ public class TreeSpiritSpriteEntity extends BaseMobProjectile implements GeoEnti
 	}
 
 	public TreeSpiritSpriteEntity(TreeSpiritEntity treeSpirit, Entity target) {
-		super(AoAProjectiles.TREE_SPIRIT_SPRITE.get(), treeSpirit.level);
+		super(AoAProjectiles.TREE_SPIRIT_SPRITE.get(), treeSpirit.level());
 
 		this.projectileType = Type.MAGIC;
 		this.shooter = treeSpirit;
@@ -43,8 +43,8 @@ public class TreeSpiritSpriteEntity extends BaseMobProjectile implements GeoEnti
 	public void tick() {
 		super.tick();
 
-		if (!this.level.isClientSide()) {
-			if (this.target == null || this.target.level != this.level || !this.target.isAlive() || this.level.getDifficulty() == Difficulty.PEACEFUL) {
+		if (!this.level().isClientSide()) {
+			if (this.target == null || this.target.level() != this.level() || !this.target.isAlive() || this.level().getDifficulty() == Difficulty.PEACEFUL) {
 				kill();
 
 				return;
@@ -61,7 +61,7 @@ public class TreeSpiritSpriteEntity extends BaseMobProjectile implements GeoEnti
 		}
 		else {
 			if (this.tickCount % 4 == 0)
-				level.addParticle(ParticleTypes.END_ROD, getX(), getY(), getZ(), 0, 0, 0);
+				level().addParticle(ParticleTypes.END_ROD, getX(), getY(), getZ(), 0, 0, 0);
 		}
 	}
 
@@ -69,8 +69,8 @@ public class TreeSpiritSpriteEntity extends BaseMobProjectile implements GeoEnti
 	public boolean hurt(DamageSource source, float amount) {
 		if (!isInvulnerableTo(source)) {
 			markHurt();
-			level.playSound(null, getX(), getY(), getZ(), SoundEvents.SLIME_JUMP, SoundSource.HOSTILE, 1, 1);
-			level.addParticle(ParticleTypes.ITEM_SLIME, getRandomX(0.5d), getY(), getRandomZ(0.5d), 0, 0, 0);
+			level().playSound(null, getX(), getY(), getZ(), SoundEvents.SLIME_JUMP, SoundSource.HOSTILE, 1, 1);
+			level().addParticle(ParticleTypes.ITEM_SLIME, getRandomX(0.5d), getY(), getRandomZ(0.5d), 0, 0, 0);
 			kill();
 
 			return true;

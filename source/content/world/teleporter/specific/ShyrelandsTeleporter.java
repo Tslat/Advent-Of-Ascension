@@ -22,6 +22,6 @@ public class ShyrelandsTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.YELLOW_SHYRE_BRICKS.get();
+		return AoABlocks.YELLOW_SHYRE_BRICKS.stone();
 	}
 }

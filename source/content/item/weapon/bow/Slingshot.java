@@ -36,7 +36,7 @@ public class Slingshot extends BaseBow {
 	@Override
 	public void onEntityHit(CustomArrowEntity shot, Entity target, Entity shooter, double damage, float drawStrength) {
 		if (shot instanceof PopShotEntity && ((PopShotEntity)shot).isExplosive)
-			WorldUtil.createExplosion(shooter, shot.level, shot, 1.0f);
+			WorldUtil.createExplosion(shooter, shot.level(), shot, 1.0f);
 
 		shot.discard();
 	}
@@ -44,7 +44,7 @@ public class Slingshot extends BaseBow {
 	@Override
 	public void onBlockHit(CustomArrowEntity shot, BlockHitResult rayTrace, Entity shooter) {
 		if (shot instanceof PopShotEntity && ((PopShotEntity)shot).isExplosive)
-			WorldUtil.createExplosion(shooter, shot.level, shot, 1.0f);
+			WorldUtil.createExplosion(shooter, shot.level(), shot, 1.0f);
 
 		shot.discard();
 	}
@@ -76,7 +76,7 @@ public class Slingshot extends BaseBow {
 
 	@Override
 	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
-		PopShotEntity popShot = new PopShotEntity(shooter.level, this, shooter, dmg, ammoStack.getItem() instanceof ArrowItem);
+		PopShotEntity popShot = new PopShotEntity(shooter.level(), this, shooter, dmg, ammoStack.getItem() instanceof ArrowItem);
 		int powerEnchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bowStack);
 
 		popShot.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0, velocity * 2, 1);

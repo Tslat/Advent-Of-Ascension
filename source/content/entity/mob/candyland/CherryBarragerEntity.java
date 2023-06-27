@@ -42,19 +42,19 @@ public class CherryBarragerEntity extends AoARangedMob<CherryBarragerEntity> {
 
 	@Override
 	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, level, projectile, 3f);
+		WorldUtil.createExplosion(this, level(), projectile, 3f);
 	}
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, level, projectile, 3f);
+		WorldUtil.createExplosion(this, level(), projectile, 3f);
 	}
 
 	@Override
 	public void aiStep() {
 		super.aiStep();
 
-		if (!level.isClientSide && isInWater() && getHealth() > 0)
+		if (!level().isClientSide && isInWater() && getHealth() > 0)
 			heal(0.4f);
 	}
 

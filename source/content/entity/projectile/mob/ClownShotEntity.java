@@ -16,7 +16,7 @@ public class ClownShotEntity extends BaseMobProjectile {
 	}
 
 	public ClownShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.CLOWN_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CLOWN_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

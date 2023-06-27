@@ -35,5 +35,6 @@
     [
       "obtain_music_disc_outlaw"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

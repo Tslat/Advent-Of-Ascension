@@ -35,5 +35,6 @@
     [
       "obtain_lunalus_realmstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

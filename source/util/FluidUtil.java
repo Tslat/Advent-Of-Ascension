@@ -5,9 +5,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,9 +19,11 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.library.object.MutableSupplier;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -39,7 +44,6 @@ public final class FluidUtil {
 
 		private ForgeFlowingFluid.Properties fluidProperties;
 
-		private Material material = Material.WATER;
 		private int tickRate = 5;
 		private ToIntFunction<BlockState> lightFunction = state -> 0;
 
@@ -50,12 +54,6 @@ public final class FluidUtil {
 		}
 
 		private String localeKey;
-
-		public Builder material(Material material) {
-			this.material = material;
-
-			return this;
-		}
 
 		public Builder localeKey(String key) {
 			this.localeKey = key;
@@ -134,9 +132,10 @@ public final class FluidUtil {
 
 			makeFluidProperties();
 
-			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, Block.Properties.of(this.material).noCollission().strength(100).noLootTable().lightLevel(lightFunction)));
+			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY).lightLevel(lightFunction)));
 
 			this.fluidProperties.block(block);
+			AoABlocks.registeredLiquid(block);
 
 			return block;
 		}
@@ -150,7 +149,7 @@ public final class FluidUtil {
 
 			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().stacksTo(16).craftRemainder(Items.BUCKET)));
 
-			AoAStartupCache.setItemCreativeTab(bucket, () -> AoACreativeModeTabs.MISC_ITEMS);
+			AoAStartupCache.setItemCreativeTabs(bucket, List.of(AoACreativeModeTabs.MISC_ITEMS.getKey()));
 			this.fluidProperties.bucket(bucket);
 
 			return bucket;

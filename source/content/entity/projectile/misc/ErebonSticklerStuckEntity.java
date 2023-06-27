@@ -27,7 +27,7 @@ public class ErebonSticklerStuckEntity extends ThrowableProjectile {
 	}
 
 	public ErebonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAProjectiles.EREBON_STICKLER_STUCK.get(), shooter.level);
+		super(AoAProjectiles.EREBON_STICKLER_STUCK.get(), shooter.level());
 		this.target = target;
 		this.shooter = shooter;
 
@@ -51,7 +51,7 @@ public class ErebonSticklerStuckEntity extends ThrowableProjectile {
 	public void tick() {
 		super.tick();
 
-		if (level.isClientSide)
+		if (level().isClientSide)
 			return;
 
 		age++;
@@ -60,7 +60,7 @@ public class ErebonSticklerStuckEntity extends ThrowableProjectile {
 			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
 		}
 		else {
-			WorldUtil.createExplosion(shooter, level, this, 2.0f);
+			WorldUtil.createExplosion(shooter, level(), this, 2.0f);
 			discard();
 
 			if (cloud != null)
@@ -70,7 +70,7 @@ public class ErebonSticklerStuckEntity extends ThrowableProjectile {
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
+			WorldUtil.createExplosion(getOwner(), level(), getX(), getY() + 1, getZ(), 2.0f);
 			discard();
 
 			if (cloud != null)
@@ -80,12 +80,12 @@ public class ErebonSticklerStuckEntity extends ThrowableProjectile {
 		}
 
 		if (cloud == null) {
-			cloud = new AreaEffectCloud(level, target.getX(), target.getY(), target.getZ());
+			cloud = new AreaEffectCloud(level(), target.getX(), target.getY(), target.getZ());
 
 			cloud.setDuration(100 - age);
 			cloud.setRadius(2);
 			cloud.addEffect(new MobEffectInstance(MobEffects.WITHER, 40, 0, false, true));
-			level.addFreshEntity(cloud);
+			level().addFreshEntity(cloud);
 		}
 		else {
 			cloud.teleportTo(target.getX(), target.getY(), target.getZ());

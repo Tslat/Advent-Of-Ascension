@@ -27,5 +27,6 @@
     [
       "phantom_sniper_kill"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -13,11 +13,10 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -25,7 +24,6 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -40,8 +38,8 @@ public class TeaSink extends HorizontalDirectionalBlock {
 	private static final VoxelShape WEST_SHAPE = Shapes.or(BOTTOM_SHAPE, box(0, 7, 6, 10, 16, 10));
 	private static final VoxelShape EAST_SHAPE = Shapes.or(BOTTOM_SHAPE, box(6, 7, 6, 16, 16, 10));
 
-	public TeaSink() {
-		super(new BlockUtil.CompactProperties(Material.WOOD, MaterialColor.COLOR_LIGHT_GRAY).stats(5f, 3f).get());
+	public TeaSink(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(FILLED, false).setValue(FACING, Direction.NORTH));
 	}

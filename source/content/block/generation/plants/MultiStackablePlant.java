@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.block.generation.plants;
 
 import net.minecraft.core.BlockPos;
@@ -73,3 +74,4 @@ public class MultiStackablePlant extends StackablePlant {
 		super.playerWillDestroy(world, pos, state, player);
 	}
 }
+*/

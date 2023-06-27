@@ -41,7 +41,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	}
 
 	public BaseBullet(EntityType<? extends ThrowableProjectile> entityType, LivingEntity shooter, BaseGun gun, float dmgMultiplier, int piercingValue, float velocity) {
-		super(entityType, shooter.level);
+		super(entityType, shooter.level());
 		this.age = 0;
 		this.dmgMulti = dmgMultiplier;
 		this.lifespan = 60;
@@ -58,7 +58,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	}
 
 	public BaseBullet(EntityType<? extends ThrowableProjectile> entityType, LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, float dmgMultiplier, int piercingValue, float xMod, float yMod, float zMod) {
-		super(entityType, shooter.level);
+		super(entityType, shooter.level());
 		this.age = 0;
 		this.dmgMulti = dmgMultiplier;
 		this.lifespan = maxAge;
@@ -93,7 +93,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	}
 
 	public BaseBullet(EntityType<? extends ThrowableProjectile> entityType, LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, float dmgMultiplier, int piercingValue) {
-		super(entityType, shooter.level);
+		super(entityType, shooter.level());
 		this.age = 0;
 		this.dmgMulti = dmgMultiplier;
 		this.lifespan = maxAge;
@@ -164,19 +164,19 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	@Override
 	protected void onHitBlock(BlockHitResult rayTrace) {
 		BlockPos resultPos = rayTrace.getBlockPos();
-		BlockState bl = level.getBlockState(resultPos);
+		BlockState bl = level().getBlockState(resultPos);
 
-		bl.onProjectileHit(level, bl, rayTrace, this);
+		bl.onProjectileHit(level(), bl, rayTrace, this);
 
-		if (AoAGameRules.checkDestructiveWeaponPhysics(level)) {
-			float hardness = bl.getDestroySpeed(level, resultPos);
+		if (AoAGameRules.checkDestructiveWeaponPhysics(level())) {
+			float hardness = bl.getDestroySpeed(level(), resultPos);
 
 			if (hardness >= 0 && hardness <= 0.3f) {
 				if (random.nextBoolean()) {
-					level.destroyBlock(resultPos, true);
+					level().destroyBlock(resultPos, true);
 				}
 				else {
-					level.setBlockAndUpdate(resultPos, Blocks.AIR.defaultBlockState());
+					level().setBlockAndUpdate(resultPos, Blocks.AIR.defaultBlockState());
 				}
 
 				if (random.nextFloat() > hardness / 1.5f)
@@ -184,7 +184,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 			}
 		}
 
-		if (!bl.getMaterial().blocksMotion())
+		if (!bl.blocksMotion())
 			return;
 
 		doBlockImpact(rayTrace.getLocation(), rayTrace.getDirection(), rayTrace.getBlockPos());
@@ -215,7 +215,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 
 	@Override
 	protected void onHit(HitResult result) {
-		if (level.isClientSide || result.getType() == HitResult.Type.MISS || !isAlive())
+		if (level().isClientSide || result.getType() == HitResult.Type.MISS || !isAlive())
 			return;
 
 		if (result.getType() == HitResult.Type.BLOCK) {
@@ -255,7 +255,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		}
 
 		Vec3 velocityAdjustedPosition = new Vec3(getX() + motion.x(), getY() + motion.y(), getZ() + motion.z());
-		HitResult intersectedBlocksTrace = level.clip(new ClipContext(position, velocityAdjustedPosition, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+		HitResult intersectedBlocksTrace = level().clip(new ClipContext(position, velocityAdjustedPosition, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
 		if (intersectedBlocksTrace.getType() != HitResult.Type.MISS) {
 			velocityAdjustedPosition = new Vec3(intersectedBlocksTrace.getLocation().x, intersectedBlocksTrace.getLocation().y, intersectedBlocksTrace.getLocation().z);
@@ -265,7 +265,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		}
 
 		Entity shooter = getOwner();
-		EntityHitResult entityTrace = EntityUtil.getEntityCollisionWithPrecision(level, this, position, velocityAdjustedPosition, boundingBox.expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.1d), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter, 0.3f);
+		EntityHitResult entityTrace = EntityUtil.getEntityCollisionWithPrecision(level(), this, position, velocityAdjustedPosition, boundingBox.expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.1d), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter, 0.3f);
 
 		if (entityTrace != null)
 			intersectedBlocksTrace = entityTrace;
@@ -282,7 +282,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 
 		super.tick();
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (age > lifespan) {
 				discard();
 			}

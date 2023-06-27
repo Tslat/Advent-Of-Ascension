@@ -41,7 +41,7 @@ public final class EntityEvents {
 	}
 
 	private static void onEntityInteract(final PlayerInteractEvent.EntityInteractSpecific ev) {
-		if (!ev.getEntity().level.isClientSide) {
+		if (!ev.getEntity().level().isClientSide) {
 			if (ev.getTarget() instanceof Piglin piglin && piglin.getItemBySlot(EquipmentSlot.HEAD).getItem() == Items.GOLDEN_HELMET) {
 				ItemStack stack = ev.getEntity().getItemInHand(ev.getHand());
 
@@ -69,14 +69,14 @@ public final class EntityEvents {
 	}
 
 	private static void onEntityUpdate(LivingEvent.LivingTickEvent ev) {
-		if (ev.getEntity().level.isClientSide && AoAConfigs.CLIENT.partyDeaths.get() && ev.getEntity().deathTime >= 10) {
+		if (ev.getEntity().level().isClientSide && AoAConfigs.CLIENT.partyDeaths.get() && ev.getEntity().deathTime >= 10) {
 			AABB boundingBox = ev.getEntity().getBoundingBox();
 			double width = boundingBox.maxX - boundingBox.minX;
 			double depth = boundingBox.maxZ - boundingBox.minZ;
 			double height = boundingBox.maxY - boundingBox.minY;
 
 			for (int i = 0; i < 3 + (10 * width * depth * height); i++) {
-				ev.getEntity().level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.1f, 3, 0, 0, 0, 1, -1), boundingBox.minX + RandomUtil.randomValueUpTo(width), boundingBox.minY + RandomUtil.randomValueUpTo(height), boundingBox.minZ + RandomUtil.randomValueUpTo(depth), RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d));
+				ev.getEntity().level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.RAINBOW_SPARKLER.get(), 0.1f, 3, 0, 0, 0, 1, -1), boundingBox.minX + RandomUtil.randomValueUpTo(width), boundingBox.minY + RandomUtil.randomValueUpTo(height), boundingBox.minZ + RandomUtil.randomValueUpTo(depth), RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d));
 			}
 		}
 	}

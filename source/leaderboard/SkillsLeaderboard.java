@@ -1,13 +1,13 @@
 package net.tslat.aoa3.leaderboard;
 
 import net.minecraftforge.fml.loading.FMLPaths;
-import net.minecraftforge.fml.loading.FileUtils;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.leaderboard.connection.RetrievalConnection;
 import net.tslat.aoa3.leaderboard.task.InitializeLeaderboardTask;
+import net.tslat.aoa3.util.ObjectUtil;
 import org.apache.logging.log4j.Level;
 import org.hsqldb.jdbc.JDBCDriver;
 
@@ -50,7 +50,7 @@ public class SkillsLeaderboard {
 			return;
 
 		try {
-			dataPath = FileUtils.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve(AdventOfAscension.MOD_ID), AdventOfAscension.MOD_ID).toAbsolutePath().toString();
+			dataPath = ObjectUtil.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve(AdventOfAscension.MOD_ID), AdventOfAscension.MOD_ID).toAbsolutePath().toString();
 		}
 		catch (Exception ex) {
 			Logging.logMessage(Level.ERROR, "Unable to create or access directory for database storage. Disabling leaderboard.", ex);

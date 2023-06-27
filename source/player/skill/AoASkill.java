@@ -168,7 +168,7 @@ public final class AoASkill {
 		private float applyXpBuffs(float xp) {
 			xp *= AoAConfigs.SERVER.globalXpModifier.get();
 
-			if (WorldUtil.isWorld(getPlayer().level, AoADimensions.NOWHERE.key))
+			if (WorldUtil.isWorld(getPlayer().level(), AoADimensions.NOWHERE.key))
 				xp *= 0.5f;
 
 			xp *= xpModifier;

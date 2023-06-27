@@ -8,7 +8,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
@@ -23,6 +22,7 @@ import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
@@ -52,7 +52,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 	}
 
 	public DryadSpriteEntity(Player owner) {
-		super(AoANpcs.DRYAD_SPRITE.get(), owner.level);
+		super(AoANpcs.DRYAD_SPRITE.get(), owner.level());
 
 		OWNER.set(this, Optional.of(owner.getUUID()));
 		VARIANT.set(this, rand().randomNumberUpTo(6));
@@ -87,7 +87,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (!source.is(DamageTypes.OUT_OF_WORLD))
+		if (!source.is(AoATags.DamageTypes.IS_TECHNICAL))
 			return false;
 
 		return super.hurt(source, amount);
@@ -95,7 +95,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		if (isAlive() && isOwner(player) && SUCCESS_TIMER.is(this, -1)) {
+		if (isAlive() && /*isOwner(player) && */SUCCESS_TIMER.is(this, -1)) {
 			ItemStack heldStack = player.getItemInHand(hand);
 
 			if (OWNER.get(this).isEmpty())
@@ -103,18 +103,17 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 			if (ItemUtil.isHoe(heldStack.getItem())) {
 				if (heldStack.getItem() == getVariant().getTool()) {
-					if (!level.isClientSide()) {
+					if (!level().isClientSide()) {
 						SUCCESS_TIMER.set(this, 44);
-						player.awardKillScore(this, 1, this.level.damageSources().playerAttack(player));
+						player.awardKillScore(this, 1, this.level().damageSources().playerAttack(player));
 						navigation.stop();
-						setNoAi(true);
 						setDeltaMovement(0, 0, 0);
 					}
 				}
-				else {
+				else if (!level().isClientSide) {
 					discard();
 
-					level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_UNHAPPY.get(), SoundSource.PLAYERS, 1, 1);
+					level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_UNHAPPY.get(), SoundSource.PLAYERS, 1, 1);
 
 					for(int i = 0; i < 20; ++i) {
 						AoAPackets.messageAllPlayersTrackingEntity(new ServerParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.ANGRY_VILLAGER, this)
@@ -156,15 +155,17 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 			}
 
 			AoAPackets.messageAllPlayersTrackingEntity(packet, this);
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundSource.NEUTRAL, 1, 1);
+			level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundSource.NEUTRAL, 1, 1);
 
 			OWNER.get(this).ifPresent(ownerId -> {
-				Player player = level.getPlayerByUUID(ownerId);
-
 				setHealth(0);
 
-				if (player != null)
-					dropAllDeathLoot(this.level.damageSources().playerAttack(player));
+				Player player = level().getPlayerByUUID(ownerId);
+
+				if (player != null) {
+					setLastHurtByPlayer(player);
+					dropAllDeathLoot(this.level().damageSources().playerAttack(player));
+				}
 			});
 
 			remove(RemovalReason.KILLED);

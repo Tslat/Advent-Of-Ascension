@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.block.functional.plant.AoASaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 import org.apache.commons.lang3.tuple.Triple;
 
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> {
-	protected final Supplier<SaplingBlock> sapling;
+	protected final Supplier<AoASaplingBlock> sapling;
 
-	public AoATreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> sapling) {
+	public AoATreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> sapling) {
 		super(codec);
 
 		this.sapling = sapling;
@@ -60,7 +60,7 @@ public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> 
 	protected static boolean isSafeBlock(WorldGenLevel reader, BlockPos pos) {
 		BlockState existingState = reader.getBlockState(pos);
 
-		return existingState.isAir() || existingState.getMaterial().isReplaceable() || existingState.is(BlockTags.LEAVES);
+		return existingState.isAir() || existingState.canBeReplaced() || existingState.is(BlockTags.LEAVES);
 	}
 
 	protected boolean checkSafeHeight(WorldGenLevel reader, BlockPos pos, int maxHeight, int trunkWidth, boolean isWorldGen) {

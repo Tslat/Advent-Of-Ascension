@@ -70,9 +70,9 @@ public class GiantSnailEntity extends AoAMeleeMob<GiantSnailEntity> {
 	public void aiStep() {
 		super.aiStep();
 
-		if (!level.isClientSide && level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
-			if (level.getBlockState(blockPosition().below()).isSolidRender(level, blockPosition().below()) && level.getBlockState(blockPosition()).getMaterial().isReplaceable())
-				level.setBlockAndUpdate(blockPosition(), AoABlocks.GIANT_SNAIL_ACID.get().defaultBlockState());
+		if (!level().isClientSide && level().getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+			if (level().getBlockState(blockPosition().below()).isSolidRender(level(), blockPosition().below()) && level().getBlockState(blockPosition()).canBeReplaced())
+				level().setBlockAndUpdate(blockPosition(), AoABlocks.GIANT_SNAIL_ACID.get().defaultBlockState());
 		}
 	}
 }

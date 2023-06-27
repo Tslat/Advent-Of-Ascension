@@ -26,5 +26,6 @@
     [
       "lava_chilli_consume"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

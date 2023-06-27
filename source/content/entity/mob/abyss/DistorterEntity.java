@@ -59,7 +59,7 @@ public class DistorterEntity extends AoAMeleeMob<DistorterEntity> {
 		if (tickCount % 5 == 0) {
 			MobEffect currentEffect = effectTick <= 30 ? MobEffects.MOVEMENT_SLOWDOWN : MobEffects.MOVEMENT_SPEED;
 
-			for (Player pl : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(2), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && hasLineOfSight(pl))) {
+			for (Player pl : level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(2), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && hasLineOfSight(pl))) {
 				EntityUtil.applyPotions(pl, new EffectBuilder(currentEffect, 5).level(6).hideParticles()); // TODO custom effect?
 			}
 		}

@@ -26,5 +26,6 @@
     [
       "20_target_hellfire"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

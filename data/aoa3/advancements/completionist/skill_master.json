@@ -120,5 +120,6 @@
     [
       "aoa3:extraction_cycle10"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

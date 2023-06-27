@@ -24,7 +24,7 @@ public class SelyanSticklerStuckEntity extends ThrowableProjectile {
 	}
 
 	public SelyanSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAProjectiles.SELYAN_STICKLER_STUCK.get(), shooter.level);
+		super(AoAProjectiles.SELYAN_STICKLER_STUCK.get(), shooter.level());
 		this.target = target;
 		this.shooter = shooter;
 		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
@@ -49,7 +49,7 @@ public class SelyanSticklerStuckEntity extends ThrowableProjectile {
 
 		age++;
 
-		if (level.isClientSide)
+		if (level().isClientSide)
 			return;
 
 		if (target != null && target.isAlive()) {
@@ -57,16 +57,16 @@ public class SelyanSticklerStuckEntity extends ThrowableProjectile {
 			EntityUtil.healEntity(shooter, 0.03f);
 		}
 		else {
-			WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
+			WorldUtil.createExplosion(getOwner(), level(), this, 2.0f);
 
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				discard();
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
+			WorldUtil.createExplosion(getOwner(), level(), getX(), getY() + 1, getZ(), 2.0f);
 
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				discard();
 		}
 	}

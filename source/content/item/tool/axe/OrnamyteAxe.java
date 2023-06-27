@@ -5,8 +5,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.block.generation.log.LogBlock;
 import net.tslat.aoa3.library.constant.AttackSpeed;
@@ -22,7 +22,7 @@ public class OrnamyteAxe extends BaseAxe {
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		return state.getMaterial() == Material.WOOD && (!state.is(BlockTags.LOGS) && !(state.getBlock() instanceof LogBlock)) ? super.getDestroySpeed(stack, state) * 10 : super.getDestroySpeed(stack, state);
+		return state.getSoundType() == SoundType.WOOD && (!state.is(BlockTags.LOGS) && !(state.getBlock() instanceof LogBlock)) ? super.getDestroySpeed(stack, state) * 10 : super.getDestroySpeed(stack, state);
 	}
 
 	@Override

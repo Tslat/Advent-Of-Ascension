@@ -45,12 +45,12 @@ public class RunicGuardianEntity extends AoARangedMob<RunicGuardianEntity> {
 		if (getShootSound() != null)
 			playSound(getShootSound(), 1.0f, 1.0f);
 
-		projectile1.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
-		projectile2.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
-		projectile3.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
-		level.addFreshEntity(projectile1);
-		level.addFreshEntity(projectile2);
-		level.addFreshEntity(projectile3);
+		projectile1.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level().getDifficulty().getId()));
+		projectile2.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level().getDifficulty().getId()));
+		projectile3.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level().getDifficulty().getId()));
+		level().addFreshEntity(projectile1);
+		level().addFreshEntity(projectile2);
+		level().addFreshEntity(projectile3);
 	}
 
 	@Nullable

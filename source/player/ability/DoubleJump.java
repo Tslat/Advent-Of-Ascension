@@ -62,7 +62,7 @@ public class DoubleJump extends AoAAbility.Instance {
 	public boolean shouldSendKeyPress() {
 		Player player = Minecraft.getInstance().player;
 
-		if (player.isOnGround() || player.jumpTriggerTime > 0)
+		if (player.onGround() || player.jumpTriggerTime > 0)
 			return false;
 
 		if (player.getItemBySlot(EquipmentSlot.CHEST).canElytraFly(player))
@@ -79,7 +79,7 @@ public class DoubleJump extends AoAAbility.Instance {
 		ServerPlayer player = getPlayer();
 
 		if (canJump || player.isCreative()) {
-			if (player.isOnGround())
+			if (player.onGround())
 				return;
 
 			if (consumeResource(AoAResources.ENERGY.get(), energyConsumption, true)) {

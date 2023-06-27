@@ -7,13 +7,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.block.functional.plant.AoASaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.function.Supplier;
 
 public class LuniciaTreeFeature extends AoATreeFeature {
-	public LuniciaTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public LuniciaTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
@@ -37,7 +37,7 @@ public class LuniciaTreeFeature extends AoATreeFeature {
 			return false;
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
-		BlockState log = AoABlocks.LUNIDE_LOG.get().defaultBlockState();
+		BlockState log = AoABlocks.LUNIDE_LOG.log().defaultBlockState();
 		BlockState leaves = AoABlocks.LUNICIA_LEAVES.get().defaultBlockState();
 
 		int leafGap = -1;
@@ -72,7 +72,7 @@ public class LuniciaTreeFeature extends AoATreeFeature {
 			return false;
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
-		BlockState log = AoABlocks.LUNIDE_LOG.get().defaultBlockState();
+		BlockState log = AoABlocks.LUNIDE_LOG.log().defaultBlockState();
 		BlockState leaves = AoABlocks.LUNICIA_LEAVES.get().defaultBlockState();
 
 		for (int i = 0; i < trunkHeight; i++) {

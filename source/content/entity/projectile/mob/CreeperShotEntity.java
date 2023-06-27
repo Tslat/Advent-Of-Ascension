@@ -17,11 +17,11 @@ public class CreeperShotEntity extends BaseMobProjectile {
 	}
 
 	public CreeperShotEntity(CreeperlockEntity shooter, Type projectileType) {
-		super(AoAProjectiles.CREEPER_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CREEPER_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	public CreeperShotEntity(MagicalCreeperEntity shooter, Type projectileType) {
-		super(AoAProjectiles.CREEPER_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CREEPER_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

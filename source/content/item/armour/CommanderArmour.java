@@ -32,8 +32,8 @@ public class CommanderArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
-		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType() && plData.player().level.getGameTime() % 20 == 0) {
-			for (LivingEntity entity : plData.player().level.getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(2 * (slots == null ? 4 : slots.size())))) {
+		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType() && plData.player().level().getGameTime() % 20 == 0) {
+			for (LivingEntity entity : plData.player().level().getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(2 * (slots == null ? 4 : slots.size())))) {
 				if (entity != plData.player() && (entity instanceof Player || (entity instanceof TamableAnimal && ((TamableAnimal)entity).getOwner() == plData.player())))
 					entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 25, slots == null ? 1 : 0, false, true));
 			}

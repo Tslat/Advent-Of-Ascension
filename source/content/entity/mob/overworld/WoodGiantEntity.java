@@ -143,7 +143,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 	@Override
 	protected void onHurt(DamageSource source, float amount) {
-		if (!level.isClientSide() && DamageUtil.isMeleeDamage(source)) {
+		if (!level().isClientSide() && DamageUtil.isMeleeDamage(source)) {
 			lastMeleeHit = tickCount;
 
 			if (source.getEntity() instanceof LivingEntity attacker) {
@@ -174,7 +174,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 					new SoundBuilder(AoASounds.HEAVY_WOOD_SHATTER.get()).followEntity(this).isMonster().execute();
 				}
 
-				AoAPackets.messageNearbyPlayers(particlePacket, (ServerLevel)level, position(), 20);
+				AoAPackets.messageNearbyPlayers(particlePacket, (ServerLevel)level(), position(), 20);
 			}
 		}
 	}
@@ -212,7 +212,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 	private void setStage(int stage) {
 		this.stage = stage;
 
-		if (!level.isClientSide()) {
+		if (!level().isClientSide()) {
 			int oldStage = getStage();
 
 			EntityUtil.reapplyAttributeModifier(this, Attributes.ARMOR, STAGE_ARMOUR_MOD, false);
@@ -225,7 +225,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 					packet.particle(ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 20);
+				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 20);
 			}
 		}
 	}

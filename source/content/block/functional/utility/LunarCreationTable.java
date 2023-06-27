@@ -13,14 +13,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.tileentity.LunarCreationTableTileEntity;
-import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
 import java.util.function.BiFunction;
@@ -28,8 +26,8 @@ import java.util.function.BiFunction;
 public class LunarCreationTable extends Block implements EntityBlock {
 	private static final Component CONTAINER_TITLE = Component.translatable("container." + AdventOfAscension.MOD_ID + ".lunar_creation_table");
 
-	public LunarCreationTable() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_PURPLE).stats(10f, 15f).get());
+	public LunarCreationTable(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Nullable
@@ -72,7 +70,7 @@ public class LunarCreationTable extends Block implements EntityBlock {
 					LunarCreationTableTileEntity tileEntity = (LunarCreationTableTileEntity)access.evaluate((BiFunction<Level, BlockPos, Object>)this::getTileEntity, null);
 
 					if (tileEntity != null) {
-						tileEntity.setContents(craftSlots.items);
+						tileEntity.setContents(craftSlots.getItems());
 
 						craftSlots.clearContent();
 					}
@@ -92,7 +90,7 @@ public class LunarCreationTable extends Block implements EntityBlock {
 					LunarCreationTableTileEntity tileEntity = (LunarCreationTableTileEntity)access.evaluate((BiFunction<Level, BlockPos, Object>)this::getTileEntity, null);
 
 					if (tileEntity != null)
-						tileEntity.setContents(craftSlots.items);
+						tileEntity.setContents(craftSlots.getItems());
 
 					super.slotsChanged(inventory);
 				}
@@ -109,7 +107,7 @@ public class LunarCreationTable extends Block implements EntityBlock {
 				NonNullList<ItemStack> cachedContents = ((LunarCreationTableTileEntity)te).getContents();
 
 				for (int i = 0; i < cachedContents.size(); i++) {
-					container.craftSlots.items.set(i, cachedContents.get(i));
+					container.craftSlots.setItem(i, cachedContents.get(i));
 				}
 
 				container.slotsChanged(container.craftSlots);

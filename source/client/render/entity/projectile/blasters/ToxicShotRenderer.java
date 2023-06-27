@@ -15,8 +15,8 @@ public class ToxicShotRenderer extends ParticleProjectileRenderer<ToxicShotEntit
 	@Override
 	protected void addParticles(ToxicShotEntity entity, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 20, ColourUtil.RGB(51, 102, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.5f, 20, ColourUtil.RGB(30, 29, 22)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 20, ColourUtil.RGB(51, 102, 0)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.5f, 20, ColourUtil.RGB(30, 29, 22)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

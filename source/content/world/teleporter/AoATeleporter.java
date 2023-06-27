@@ -19,7 +19,6 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.specific.NowhereTeleporter;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -84,13 +83,13 @@ public abstract class AoATeleporter implements ITeleporter {
 			PortalCoordinatesContainer portalLoc = plData.getPortalReturnLocation(destWorld.dimension());
 
 			if (portalLoc != null) {
-				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.level.dimension());
+				PortalCoordinatesContainer returnPortalLoc = plData.getPortalReturnLocation(entity.level().dimension());
 
 				if (returnPortalLoc != null && returnPortalLoc.fromDim() == destWorld.dimension())
 					return positionPlayer((ServerPlayer)entity, teleportPos, currentWorld, destWorld, false);
 			}
 
-			if (portalLoc == null || entity.level.dimension() == portalLoc.fromDim() || entity.distanceToSqr(BlockUtil.posToVec(portalLoc.asBlockPos())) > AoAConfigs.SERVER.portalSearchRadius.get())
+			if (portalLoc == null || entity.level().dimension() == portalLoc.fromDim() || entity.distanceToSqr(Vec3.atLowerCornerOf(portalLoc.asBlockPos())) > AoAConfigs.SERVER.portalSearchRadius.get())
 				plData.setPortalReturnLocation(destWorld.dimension(), new PortalCoordinatesContainer(currentWorld.dimension(), startPos.getX(), startPos.getY(), startPos.getZ()));
 		}
 
@@ -120,7 +119,7 @@ public abstract class AoATeleporter implements ITeleporter {
 
 		fromWorld.getProfiler().pop();
 		fromWorld.getProfiler().push("placing");
-		player.setLevel(toWorld);
+		player.setServerLevel(toWorld);
 		player.connection.teleport(position.x(), position.y(), position.z(), player.getYRot(), player.getXRot());
 		player.connection.resetPosition();
 		toWorld.addDuringPortalTeleport(player);
@@ -131,7 +130,7 @@ public abstract class AoATeleporter implements ITeleporter {
 	}
 
 	private Entity positionNonPlayer(Entity entity, Vec3 position, ServerLevel toWorld, boolean spawnPortal) {
-		entity.level.getProfiler().popPush("reloading");
+		entity.level().getProfiler().popPush("reloading");
 
 		Entity newEntity = entity.getType().create(toWorld);
 

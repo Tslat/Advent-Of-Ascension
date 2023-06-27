@@ -35,10 +35,10 @@ public class BoreicArmour extends AdventArmour {
 
 		if (pl.isInWater() && !DamageUtil.isEnvironmentalDamage(event.getSource())) {
 			if (slots != null) {
-				WorldUtil.createExplosion(pl, pl.level, pl.blockPosition() , 0.7f + 0.3f * slots.size());
+				WorldUtil.createExplosion(pl, pl.level(), pl.blockPosition() , 0.7f + 0.3f * slots.size());
 			}
 			else {
-				for (LivingEntity entity : pl.level.getEntitiesOfClass(LivingEntity.class, pl.getBoundingBox().inflate(4), EntityUtil.Predicates.HOSTILE_MOB)) {
+				for (LivingEntity entity : pl.level().getEntitiesOfClass(LivingEntity.class, pl.getBoundingBox().inflate(4), EntityUtil.Predicates.HOSTILE_MOB)) {
 					entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 40, 1, false, true));
 				}
 			}

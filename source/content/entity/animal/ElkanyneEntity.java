@@ -57,6 +57,6 @@ public class ElkanyneEntity extends AoAAnimal {
 	@Nullable
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
-		return new ElkanyneEntity(AoAAnimals.ELKANYNE.get(), this.level);
+		return new ElkanyneEntity(AoAAnimals.ELKANYNE.get(), this.level());
 	}
 }

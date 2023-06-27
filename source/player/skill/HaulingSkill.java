@@ -10,8 +10,6 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
-import java.util.List;
-
 public class HaulingSkill extends AoASkill.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.FISHED_ITEM, ListenerType.CUSTOM};
 
@@ -53,8 +51,8 @@ public class HaulingSkill extends AoASkill.Instance {
 			if (!canGainXp(true))
 				return;
 
-			List<ItemStack> loot = (List<ItemStack>)data;
-			float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 1000) * Math.min(4, loot.size());
+			ItemStack[] loot = (ItemStack[])data;
+			float xp = PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 1000) * Math.min(4, loot.length);
 
 			adjustXp(xp, false, false);
 		}

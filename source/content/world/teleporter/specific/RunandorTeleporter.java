@@ -22,6 +22,6 @@ public class RunandorTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.RUNIC_STONE.get();
+		return AoABlocks.RUNIC_STONE.stone();
 	}
 }

@@ -43,7 +43,7 @@ public class DestructionStaff extends BaseStaff<Object> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 2.8f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 2.8f);
 
 		return true;
 	}

@@ -14,12 +14,12 @@ public class LunalusEvents {
 	public static void doPlayerTick(Player pl) {
 		boolean hasDistortingArtifact = ItemUtil.hasItemInHotbar(pl, AoATools.DISTORTING_ARTIFACT.get()) || ItemUtil.hasItemInOffhand(pl, AoATools.DISTORTING_ARTIFACT.get());
 
-		if (!pl.level.isClientSide() && PlayerUtil.shouldPlayerBeAffected(pl)) {
+		if (!pl.level().isClientSide() && PlayerUtil.shouldPlayerBeAffected(pl)) {
 			if (pl.getY() <= -25 && !hasDistortingArtifact)
 				pl.teleportTo(pl.getX(), 350, pl.getZ());
 
 			if (!DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)pl))
-				pl.hurt(DamageUtil.miscDamage(AoADamageTypes.SUFFOCATION, pl.level), 1f);
+				pl.hurt(DamageUtil.miscDamage(AoADamageTypes.SUFFOCATION, pl.level()), 1f);
 		}
 
 		if (hasDistortingArtifact)

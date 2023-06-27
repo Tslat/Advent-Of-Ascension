@@ -44,7 +44,7 @@ public class RoamingFlightMovementController extends MoveControl {
 		for (int i = 1; i < distance; ++i) {
 			collisionBox = collisionBox.move(d0, d1, d2);
 
-			if (!taskOwner.level.noCollision(taskOwner))
+			if (!taskOwner.level().noCollision(taskOwner))
 				return true;
 		}
 

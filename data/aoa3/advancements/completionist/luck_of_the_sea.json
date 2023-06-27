@@ -36,5 +36,6 @@
     [
       "obtain_golden_rod"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

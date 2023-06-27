@@ -33,11 +33,11 @@ public class HidingFungiEntity extends AoAMeleeMob<HidingFungiEntity> {
 
 	@Override
 	protected void onHurt(DamageSource source, float amount) {
-		if (!level.isClientSide) {
-			LivingFungiEntity livingFungi = new LivingFungiEntity(AoAMobs.LIVING_FUNGI.get(), level);
+		if (!level().isClientSide) {
+			LivingFungiEntity livingFungi = new LivingFungiEntity(AoAMobs.LIVING_FUNGI.get(), level());
 
 			livingFungi.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
-			level.addFreshEntity(livingFungi);
+			level().addFreshEntity(livingFungi);
 			livingFungi.hurt(source, amount);
 			playSound(AoASounds.ENTITY_LIVING_FUNGI_SPAWN.get(), 1.0f, 1.0f);
 			discard();

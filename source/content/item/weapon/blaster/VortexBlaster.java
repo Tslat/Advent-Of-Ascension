@@ -31,7 +31,7 @@ public class VortexBlaster extends BaseBlaster {
 		float y = -Mth.sin(shooter.getXRot() / 180.0F * (float)Math.PI);
 		float z = Mth.cos(shooter.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(shooter.getXRot() / 180.0F * (float)Math.PI);
 
-		for (LivingEntity entity : shooter.level.getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(x * 7 + 1, y * 7 + 1, z * 7 + 1))) {
+		for (LivingEntity entity : shooter.level().getEntitiesOfClass(LivingEntity.class, shooter.getBoundingBox().inflate(x * 7 + 1, y * 7 + 1, z * 7 + 1))) {
 			DamageUtil.doScaledKnockback(entity, shooter, 7f, 1, 1, 1);
 		}
 	}

@@ -79,7 +79,7 @@ public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacke
 		super.tick();
 
 		if (!level.isClientSide) {
-			if (random.nextInt(200) == 0 && !level.dimensionType().ultraWarm() && level.getBlockState(blockPosition()).getMaterial().isReplaceable()) {
+			if (random.nextInt(200) == 0 && !level.dimensionType().ultraWarm() && level.getBlockState(blockPosition()).canBeReplaced()) {
 				level.setBlockAndUpdate(blockPosition(), Blocks.WATER.defaultBlockState());
 				new DracyonCleanupTask(level, blockPosition()).schedule(5, TimeUnit.SECONDS);
 			}

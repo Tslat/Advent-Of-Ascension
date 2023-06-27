@@ -7,6 +7,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
@@ -40,8 +41,10 @@ import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.content.entity.base.*;
 import net.tslat.aoa3.data.client.BestiaryReloadListener;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
+import org.joml.Matrix4f;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -103,13 +106,13 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 	}
 
 	@Override
-	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		this.adjustedMouseX = (int)(mouseX * (1 / AdventMainGui.SCALE));
 		this.adjustedMouseY = (int)(mouseY * (1 / AdventMainGui.SCALE));
 
-		scrollMenu.render(matrixStack, adjustedMouseX, adjustedMouseY, partialTicks);
+		scrollMenu.render(guiGraphics, adjustedMouseX, adjustedMouseY, partialTicks);
 	}
 
 	@Override
@@ -489,34 +492,36 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		}
 
 		@Override
-		public void drawPaneContents(PoseStack matrix, int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
-			matrix.pushPose();
+		public void drawPaneContents(GuiGraphics guiGraphics, int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
+			RenderContext renderContext = RenderContext.of(guiGraphics);
+			PoseStack poseStack = guiGraphics.pose();
+			poseStack.pushPose();
 
 			if (!receivedStats) {
-				RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.downloading"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-				RenderUtil.drawCenteredScaledString(matrix, font, LOADING_SYMBOLS[(int)(Util.getMillis() / 150L % (long)LOADING_SYMBOLS.length)], left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f), 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(poseStack, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary.downloading"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(poseStack, Component.literal(LOADING_SYMBOLS[(int)(Util.getMillis() / 150L % (long)LOADING_SYMBOLS.length)]), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f), 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 			}
 			else if (filteredMobList.isEmpty()) {
 				if (!statList.isEmpty()) {
-					RenderUtil.drawColouredBox(matrix, left, AdventMainGui.scaledTabRootY, 0, 20, 20, 0xFF202020);
+					RenderUtil.drawRectangle(poseStack, left, AdventMainGui.scaledTabRootY, 20, 20, 0xFF202020);
 					RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 					RenderSystem.setShaderTexture(0, iconsTextures);
 					RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(poseStack, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
 
 					if (searchField.isVisible()) {
 						searchField.setX((int)((left + 20) / 2d));
 						searchField.setY((int)(AdventMainGui.scaledTabRootY / 2d));
 						searchField.setWidth((int)((right - left - 40) / 2d));
-						matrix.scale(2, 2, 2);
-						searchField.render(matrix, adjustedMouseX, adjustedMouseX, partialTicks);
-						matrix.scale(0.5f, 0.5f, 0.5f);
+						poseStack.scale(2, 2, 2);
+						searchField.render(guiGraphics, adjustedMouseX, adjustedMouseX, partialTicks);
+						poseStack.scale(0.5f, 0.5f, 0.5f);
 					}
 
-					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.emptySearch"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.renderCenteredScaledText(poseStack, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary.emptySearch"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 				}
 				else {
-					RenderUtil.drawCenteredScaledString(matrix, font, LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.empty"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.renderCenteredScaledText(poseStack, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary.empty"), left + (int)(viewWidth / 2f), top + (int)(viewHeight / 2f) - 20, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 				}
 			}
 			else {
@@ -528,64 +533,65 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 						Entity entity = getEntityFromStat(entityStat);
 						Component entityName = entity != null ? entityStat.killStat.getValue().getDescription() : LocaleUtil.getLocaleMessage("entity." + registryName.getNamespace().replace(".minecraft", "") + "." + registryName.getPath());
 
-						RenderUtil.drawColouredBox(matrix, left + 40, rowTop + 30, 0, 320, 150, 0xFF202020);
+						RenderUtil.drawRectangle(poseStack, left + 40, rowTop + 30, 320, 150, 0xFF202020);
 
 						if (entity != null)
-							drawEntity(matrix, entity, left + 200, rowTop + 170, 50f);
+							drawEntity(guiGraphics, entity, left + 200, rowTop + 170, 50f);
 
-						matrix.pushPose();
-						matrix.translate(0, 0, 100);
-						RenderUtil.drawColouredBox(matrix, left + 40, rowTop, 0, 320, 30, 0xFF010101);
-						RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+						poseStack.pushPose();
+						poseStack.translate(0, 0, 100);
+						RenderUtil.drawRectangle(poseStack, left + 40, rowTop, 320, 30, 0xFF010101);
+						RenderUtil.renderCenteredScaledText(poseStack, entityName, left + 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 						RenderSystem.setShaderTexture(0, iconsTextures);
 						//RenderSystem.enableAlphaTest();
-						RenderUtil.renderScaledCustomSizedTexture(matrix, left + 300, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
-						RenderUtil.renderScaledCustomSizedTexture(matrix, left + 43, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
+						RenderUtil.renderScaledCustomSizedTexture(poseStack, left + 300, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
+						RenderUtil.renderScaledCustomSizedTexture(poseStack, left + 43, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
 						//RenderSystem.disableAlphaTest();
-						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 60, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
-						RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 320, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
-						matrix.popPose();
+						RenderUtil.renderScaledText(poseStack, Component.literal(NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true)), left + 60, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+						RenderUtil.renderScaledText(poseStack, Component.literal(NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true)), left + 320, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+						poseStack.popPose();
 
 						if (i + 1 < filteredMobList.size()) {
 							entityStat = filteredMobList.get(i + 1);
 							entity = getEntityFromStat(entityStat);
 							entityName = entity != null ? entity.getDisplayName() : LocaleUtil.getLocaleMessage("entity." + entityStat.registryName.getNamespace().replace(".minecraft", "") + "." + entityStat.registryName.getPath());
 
-							RenderUtil.drawColouredBox(matrix, right - 360, rowTop + 30, 0, 320, 150, 0xFF202020);
+							RenderUtil.drawRectangle(poseStack, right - 360, rowTop + 30, 320, 150, 0xFF202020);
 
 							if (entity != null)
-								drawEntity(matrix, entity, right - 200, rowTop + 170, 50f);
+								drawEntity(guiGraphics, entity, right - 200, rowTop + 170, 50f);
 
-							matrix.pushPose();
-							matrix.translate(0, 0, 100);
-							RenderUtil.drawColouredBox(matrix, right - 360, rowTop, 0, 320, 30, 0xFF010101);
-							RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, right - 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+							poseStack.pushPose();
+							poseStack.translate(0, 0, 100);
+							RenderUtil.drawRectangle(poseStack, right - 360, rowTop, 320, 30, 0xFF010101);
+							RenderUtil.renderCenteredScaledText(poseStack, entityName, right - 200, rowTop + 8, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 							RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 							RenderSystem.setShaderTexture(0, iconsTextures);
 							//RenderSystem.enableAlphaTest();
-							RenderUtil.renderScaledCustomSizedTexture(matrix, right - 100, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
-							RenderUtil.renderScaledCustomSizedTexture(matrix, right - 357, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
+							RenderUtil.renderScaledCustomSizedTexture(poseStack, right - 100, rowTop + 160, 0, 0, 16, 16, 16, 16, 16, 48);
+							RenderUtil.renderScaledCustomSizedTexture(poseStack, right - 357, rowTop + 160, 0, 16, 16, 16, 16, 16, 16, 48);
 							//RenderSystem.disableAlphaTest();
-							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), right - 340, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
-							RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), right - 80, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
-							matrix.popPose();
+							RenderUtil.renderScaledText(poseStack, Component.literal(NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true)), right - 340, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+							RenderUtil.renderScaledText(poseStack, Component.literal(NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true)), right - 80, rowTop + 163, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+							poseStack.popPose();
 						}
 					}
 
 					RenderSystem.disableDepthTest();
-					RenderUtil.drawColouredBox(matrix, left, AdventMainGui.scaledTabRootY, 0, 20, 20, 0xFF202020);
+					RenderUtil.drawRectangle(poseStack, left, AdventMainGui.scaledTabRootY, 20, 20, 0xFF202020);
 					RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 					RenderSystem.setShaderTexture(0, iconsTextures);
 					RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(poseStack, left + 2, AdventMainGui.scaledTabRootY + 2, 0, 32, 16, 16, 16, 16, 16, 48);
 
 					if (searchField.isVisible()) {
 						searchField.setX((int)((left + 20) / 2d));
 						searchField.setY((int)(AdventMainGui.scaledTabRootY / 2d));
 						searchField.setWidth((int)((right - left - 40) / 2d));
-						matrix.scale(2, 2, 2);
-						searchField.render(matrix, adjustedMouseX, adjustedMouseX, partialTicks);
-						matrix.scale(0.5f, 0.5f, 0.5f);
+						poseStack.scale(2, 2, 2);
+						poseStack.translate(0, 0, 1000);
+						searchField.render(guiGraphics, adjustedMouseX, adjustedMouseX, partialTicks);
+						poseStack.scale(0.5f, 0.5f, 0.5f);
 					}
 
 					RenderSystem.enableDepthTest();
@@ -595,47 +601,49 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 					ResourceLocation registryName = entityStat.registryName;
 					openEntryHeight = Math.max(viewHeight - 30, 320 + (int)(openEntryInfoLines.size() * font.lineHeight * 1.5f));
 
-					RenderUtil.drawColouredBox(matrix, left, top + 30, 0, right - left, bottom - top, 0xFF202020);
-					RenderUtil.drawColouredBox(matrix, left, top, 0, right - left, 30, 0xFF010101);
+					RenderUtil.drawRectangle(poseStack, left, top + 30, right - left, bottom - top, 0xFF202020);
+					RenderUtil.drawRectangle(poseStack, left, top, right - left, 30, 0xFF010101);
 					Component entityName = openEntryInstance != null ? openEntryInstance.getName() : LocaleUtil.getLocaleMessage("entity." + registryName.getNamespace().replace(".minecraft", "") + "." + registryName.getPath());
 
-					RenderUtil.drawCenteredScaledMessage(matrix, font, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.renderCenteredScaledText(poseStack, entityName, left + (int)(viewWidth / 2f), top + 8, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 
 					if (openEntryInstance != null)
-						drawEntity(matrix, openEntryInstance, left + 200, top + 240, 75f);
+						drawEntity(guiGraphics, openEntryInstance, left + 200, top + 240, 75f);
 
 					RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 					RenderSystem.setShaderTexture(0, iconsTextures);
 					//RenderSystem.enableAlphaTest();
-					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 425, top + 45, 0, 16, 16, 16, 16, 16, 16, 48);
-					RenderUtil.renderScaledCustomSizedTexture(matrix, left + 425, top + 65, 0, 0, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(poseStack, left + 425, top + 45, 0, 16, 16, 16, 16, 16, 16, 48);
+					RenderUtil.renderScaledCustomSizedTexture(poseStack, left + 425, top + 65, 0, 0, 16, 16, 16, 16, 16, 48);
 					//RenderSystem.disableAlphaTest();
-					RenderUtil.drawScaledString(matrix, font, "X", right - 20, top + 5, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
-					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true), left + 445, top + 48, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
-					RenderUtil.drawScaledString(matrix, font, NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true), left + 445, top + 68, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.renderScaledText(poseStack, Component.literal("X"), right - 20, top + 5, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+					RenderUtil.renderScaledText(poseStack, Component.literal(NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.killStat), true)), left + 445, top + 48, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+					RenderUtil.renderScaledText(poseStack, Component.literal(NumberUtil.floorAndAppendSuffix(stats.getValue(entityStat.deathStat), true)), left + 445, top + 68, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 
-					matrix.scale(1.5f, 1.5f, 1.5f);
+					poseStack.scale(1.5f, 1.5f, 1.5f);
+					Matrix4f pose = poseStack.last().pose();
 
 					for (int i = 0; i < openEntryStatsLines.size(); i++) {
-						font.drawShadow(matrix, openEntryStatsLines.get(i), (int)((left + 425) / 1.5f), (int)((top + 100 + 14 * i) / 1.5f), ColourUtil.WHITE);
+						renderContext.renderText(Component.literal(openEntryStatsLines.get(i)), (int)((left + 425) / 1.5f), (int)((top + 100 + 14 * i) / 1.5f), ColourUtil.WHITE, RenderUtil.TextRenderType.DROP_SHADOW);
 					}
 
 					for (int i = 0; i < openEntryInfoLines.size(); i++) {
-						font.draw(matrix, openEntryInfoLines.get(i), (int)((left + 20) / 1.5f), (int)((top + 300 + i * 14) / 1.5f), ColourUtil.WHITE);
+						renderContext.renderText(openEntryInfoLines.get(i), (int)((left + 20) / 1.5f), (int)((top + 300 + i * 14) / 1.5f), ColourUtil.WHITE, 0, RenderUtil.TextRenderType.NORMAL, LightTexture.FULL_BRIGHT);
 					}
 				}
 			}
 
-			matrix.popPose();
+			poseStack.popPose();
 		}
 
 		@Override
-		public void drawBackground(PoseStack matrix) {}
+		public void drawBackground(GuiGraphics guiGraphics) {}
 
-		private void drawEntity(PoseStack matrix, Entity entity, int posX, int posY, float scale) {
-			matrix.pushPose();
-			matrix.translate((float)posX, (float)posY, 1050.0F);
-			matrix.scale(1.0F, 1.0F, -1.0F);
+		private void drawEntity(GuiGraphics guiGraphics, Entity entity, int posX, int posY, float scale) {
+			PoseStack poseStack = guiGraphics.pose();
+			poseStack.pushPose();
+			poseStack.translate((float)posX, (float)posY, 1050.0F);
+			poseStack.scale(1.0F, 1.0F, -1.0F);
 
 			Minecraft mc = Minecraft.getInstance();
 
@@ -644,9 +652,9 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 			if (sizeFactor > 2.5D)
 				scale /= sizeFactor / 2.5;
 
-			matrix.translate(0.0D, 0.0D, 1000.0D);
-			matrix.scale(scale, scale, scale);
-			matrix.mulPose(Axis.XP.rotationDegrees(180f));
+			poseStack.translate(0.0D, 0.0D, 1000.0D);
+			poseStack.scale(scale, scale, scale);
+			poseStack.mulPose(Axis.XP.rotationDegrees(180f));
 
 			entity.tickCount = mc.player.tickCount;
 			entity.setYRot(0);
@@ -657,10 +665,10 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 
 			MultiBufferSource.BufferSource renderBuffer = mc.renderBuffers().bufferSource();
 
-			renderManager.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, matrix, renderBuffer, LightTexture.FULL_BRIGHT);
+			renderManager.render(entity, 0.0D, 0.0D, 0.0D, 0.0F, 1.0F, poseStack, renderBuffer, LightTexture.FULL_BRIGHT);
 			renderBuffer.endBatch();
 			renderManager.setRenderShadow(true);
-			matrix.popPose();
+			poseStack.popPose();
 		}
 
 		@Override

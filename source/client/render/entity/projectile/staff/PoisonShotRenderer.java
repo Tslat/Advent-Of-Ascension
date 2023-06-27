@@ -15,7 +15,7 @@ public class PoisonShotRenderer extends ParticleProjectileRenderer<PoisonShotEnt
 	@Override
 	protected void addParticles(PoisonShotEntity entity, float partialTicks) {
 		for (int i = 0; i < 8; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.GREEN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

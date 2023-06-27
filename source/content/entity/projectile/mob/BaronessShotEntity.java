@@ -16,7 +16,7 @@ public class BaronessShotEntity extends BaseMobProjectile {
 	}
 
 	public BaronessShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.BARONESS_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.BARONESS_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

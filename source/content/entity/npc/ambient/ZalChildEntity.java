@@ -30,7 +30,7 @@ public class ZalChildEntity extends AoAAmbientNPC {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.LUNALUS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS.key);
 	}
 
 	@Nullable
@@ -45,7 +45,7 @@ public class ZalChildEntity extends AoAAmbientNPC {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.ALIEN_ORB.get()) {
-			if (!level.isClientSide) {
+			if (!level().isClientSide) {
 				player.setItemInHand(hand, ((ReservedItem)AoAItems.FLESHY_BONES.get()).newValidStack());
 				DamageUtil.killEntityCleanly(this);
 			}

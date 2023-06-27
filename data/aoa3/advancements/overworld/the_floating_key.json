@@ -35,5 +35,6 @@
     [
       "obtain_haven_realmstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -29,7 +29,7 @@ public class SoulDrainer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new SoulDrainerShotEntity(shooter, this, 1));
+		shooter.level().addFreshEntity(new SoulDrainerShotEntity(shooter, this, 1));
 	}
 
 	@Override

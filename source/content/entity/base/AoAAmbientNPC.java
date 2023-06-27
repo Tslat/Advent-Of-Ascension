@@ -114,7 +114,7 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 	}
 
 	protected boolean canSpawnAt(MobSpawnType reason, BlockState blockState) {
-		return reason == MobSpawnType.SPAWNER || blockState.isValidSpawn(level, blockPosition(), getType());
+		return reason == MobSpawnType.SPAWNER || blockState.isValidSpawn(level(), blockPosition(), getType());
 	}
 
 	protected int getSpawnChanceFactor() {
@@ -126,16 +126,16 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 	}
 
 	protected boolean isValidLightLevel(MobSpawnType reason) {
-		if (!WorldUtil.isWorld(level, AoADimensions.OVERWORLD.key))
+		if (!WorldUtil.isWorld(level(), AoADimensions.OVERWORLD.key))
 			return true;
 
 		BlockPos blockpos = BlockPos.containing(getX(), getBoundingBox().minY, getZ());
 
-		if (level.getBrightness(LightLayer.SKY, blockpos) > random.nextInt(32)) {
+		if (level().getBrightness(LightLayer.SKY, blockpos) > random.nextInt(32)) {
 			return true;
 		}
 		else {
-			int light = level.isThundering() ? level.getMaxLocalRawBrightness(blockpos, 10) : level.getMaxLocalRawBrightness(blockpos);
+			int light = level().isThundering() ? level().getMaxLocalRawBrightness(blockpos, 10) : level().getMaxLocalRawBrightness(blockpos);
 
 			return light > random.nextInt(8);
 		}
@@ -151,7 +151,7 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 			return InteractionResult.SUCCESS;
 		}
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (hand == InteractionHand.MAIN_HAND) {
 				String msg = getInteractMessage(heldStack);
 

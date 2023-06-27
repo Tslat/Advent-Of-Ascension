@@ -41,7 +41,7 @@ public class FishingTrapSpawn extends ScalableModAbility {
 		if (ev.getEntity() instanceof ServerPlayer && testAsChance()) {
 			FishingHook bobber = ev.getHookEntity();
 			Player player = ev.getEntity();
-			Level level = bobber.level;
+			Level level = bobber.level();
 			BlockPos pos = bobber.blockPosition();
 			float luck = bobber.luck;
 			boolean isLava = false;

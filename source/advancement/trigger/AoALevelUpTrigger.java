@@ -21,7 +21,7 @@ public class AoALevelUpTrigger extends SimpleCriterionTrigger<AoALevelUpTrigger.
 	}
 
 	@Override
-	public Instance createInstance(JsonObject json, EntityPredicate.Composite predicate, DeserializationContext conditions) {
+	public Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext conditions) {
 		AoASkill skill = null;
 
 		if (json.has("skill")) {
@@ -46,7 +46,7 @@ public class AoALevelUpTrigger extends SimpleCriterionTrigger<AoALevelUpTrigger.
 		private final AoASkill skill;
 		private final int level;
 
-		public Instance(@Nullable AoASkill skill, int lvl, EntityPredicate.Composite playerPredicate) {
+		public Instance(@Nullable AoASkill skill, int lvl, ContextAwarePredicate playerPredicate) {
 			super(triggerId, playerPredicate);
 
 			this.skill = skill;
@@ -54,7 +54,7 @@ public class AoALevelUpTrigger extends SimpleCriterionTrigger<AoALevelUpTrigger.
 		}
 
 		public Instance(@Nullable AoASkill skill, int lvl) {
-			this(skill, lvl, EntityPredicate.Composite.ANY);
+			this(skill, lvl, ContextAwarePredicate.ANY);
 		}
 
 		@Override

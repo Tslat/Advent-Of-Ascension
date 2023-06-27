@@ -13,10 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import javax.annotation.Nullable;
@@ -24,10 +21,6 @@ import javax.annotation.Nullable;
 public abstract class BossAltarBlock extends Block {
 	public BossAltarBlock(Block.Properties properties) {
 		super(properties);
-	}
-
-	public BossAltarBlock(MaterialColor mapColour) {
-		this(new BlockUtil.CompactProperties(Material.STONE, mapColour).stats(35f, 1000f).get());
 	}
 
 	@Override
@@ -68,6 +61,6 @@ public abstract class BossAltarBlock extends Block {
 	}
 
 	protected void sendSpawnMessage(Player player, MutableComponent msg, BlockPos pos) {
-		PlayerUtil.messageAllPlayersInRange(msg, player.level, pos, 50);
+		PlayerUtil.messageAllPlayersInRange(msg, player.level(), pos, 50);
 	}
 }

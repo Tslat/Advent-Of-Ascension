@@ -1,26 +1,20 @@
 package net.tslat.aoa3.client.gui.container;
 
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.container.BankerContainer;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
 public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
-	private static final ResourceLocation guiTexture = new ResourceLocation("aoa3", "textures/gui/containers/banker.png");
+	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("aoa3", "textures/gui/containers/banker.png");
 	private final Minecraft mc;
 	public BankerScreen(BankerContainer container, Inventory inv, Component guiTitle) {
 		super(container, inv, guiTitle);
@@ -30,53 +24,61 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 	}
 
 	@Override
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(matrix);
-		super.render(matrix, mouseX, mouseY, partialTicks);
-		renderTooltip(matrix, mouseX, mouseY);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(guiGraphics);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		renderTooltip(guiGraphics, mouseX, mouseY);
 	}
 
 	@Override
-	protected void renderBg(PoseStack matrix, float partialTicks, int mouseX, int mouseY) {
-		final int centerX = (width - imageWidth) / 2;
-		final int centerY = (height - imageHeight) / 2;
+	protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
+		final int centerX = (this.width - this.imageWidth) / 2;
+		final int centerY = (this.height - this.imageHeight) / 2;
+		final RenderContext renderContext = RenderContext.of(guiGraphics);
 
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-		RenderUtil.prepRenderTexture(guiTexture);
-		RenderUtil.renderCustomSizedTexture(matrix, centerX, centerY, 0, 0, imageWidth, imageHeight, 256, 256);
+		renderContext.resetShaderColour();
+		renderContext.setTextureForRendering(GUI_TEXTURE);
+		renderContext.renderCustomSizedTexture(centerX, centerY, 0, 0, this.imageWidth, this.imageHeight, 256, 256);
 
-		if (mc.player != null)
-			renderCoinPlaceholders(matrix, centerX, centerY);
+		if (this.mc.player != null)
+			renderCoinPlaceholders(renderContext, centerX, centerY);
 	}
 
 	@Override
-	protected void renderLabels(PoseStack matrix, int mouseX, int mouseY) {
+	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
 		int titleWidth = 4 + mc.font.width(title);
+		RenderContext renderContext = RenderContext.of(guiGraphics);
 
-		RenderUtil.resetShaderColour();
-		RenderUtil.prepRenderTexture(guiTexture);
-		RenderUtil.renderCustomSizedTexture(matrix, 28, 4, 176, 15, 1, 12, 256, 256);
+		renderContext.setTextureForRendering(GUI_TEXTURE);
+		renderContext.resetShaderColour();
+		renderContext.renderCustomSizedTexture(28, 4, 176, 15, 1, 12, 256, 256);
 
 		for (int i = 0; i < titleWidth - 2; i++) {
-			RenderUtil.renderCustomSizedTexture(matrix, 29 + i, 4, 177, 15, 1, 12, 256, 256);
+			renderContext.renderCustomSizedTexture(29 + i, 4, 177, 15, 1, 12, 256, 256);
 		}
 
-		RenderUtil.renderCustomSizedTexture(matrix, 28 + titleWidth - 2, 4, 178, 15, 1, 12, 256, 256);
-		RenderUtil.resetShaderColour();
-		mc.font.draw(matrix, title, 30, 6, ColourUtil.WHITE);
+		renderContext.renderCustomSizedTexture(28 + titleWidth - 2, 4, 178, 15, 1, 12, 256, 256);
+		renderContext.resetShaderColour();
+		renderContext.renderText(this.title, 30, 60, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 	}
 
-	private void renderCoinPlaceholders(PoseStack poseStack, int centerX, int centerY) {
+	private void renderCoinPlaceholders(RenderContext renderContext, int centerX, int centerY) {
 		for (int i = 0; i < 12; i++) {
 			Slot slot = menu.getSlot(i);
 			ItemStack stack = slot.getItem();
 
 			if (stack.isEmpty()) {
 				ItemStack coinStack = new ItemStack(BankerContainer.getCoinForSlot(i), (i < 3 || i > 8) ? 20 : 1);
-				BakedModel model = mc.getItemRenderer().getModel(coinStack, null, null, 0);
 
-				poseStack.pushPose();
-				RenderUtil.prepRenderTexture(InventoryMenu.BLOCK_ATLAS);
+				renderContext.renderDummyItemAndDetails(coinStack, slot.x + centerX, slot.y + centerY);
+
+
+
+
+				/*BakedModel model = mc.getItemRenderer().getModel(coinStack, null, null, 0);
+
+				renderContext.pushPose();
+				renderContext.setTextureForRendering(InventoryMenu.BLOCK_ATLAS);
 				mc.textureManager.getTexture(InventoryMenu.BLOCK_ATLAS).setFilter(false, false);
 				//RenderSystem.enableRescaleNormal();
 				//RenderSystem.enableAlphaTest();
@@ -104,7 +106,7 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 				//RenderSystem.disableRescaleNormal();
 				poseStack.popPose();
 				mc.getItemRenderer().renderGuiItemDecorations(poseStack, mc.font, coinStack, slot.x + centerX, slot.y + centerY);
-				//RenderSystem.enableAlphaTest();
+				//RenderSystem.enableAlphaTest();*/
 			}
 		}
 	}

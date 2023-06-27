@@ -13,10 +13,10 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ForgeHooks;
@@ -24,13 +24,13 @@ import net.minecraftforge.common.IPlantable;
 
 import java.util.function.Supplier;
 
-public abstract class MultiBlockCrop extends CropBlock {
+public abstract class MultiBlockCrop extends AoACropBlock {
 	public IntegerProperty HEIGHT = null;
 	public IntegerProperty AGE = null;
 	private final VoxelShape[][] SHAPES;
 
-	public MultiBlockCrop(MaterialColor colour, Supplier<Item> seedItem) {
-		super(colour, seedItem);
+	public MultiBlockCrop(BlockBehaviour.Properties properties, Supplier<Item> seedItem) {
+		super(properties, seedItem);
 
 		registerDefaultState(defaultBlockState().setValue(getHeightProperty(), 0));
 		populateShapes(SHAPES = new VoxelShape[getGrowthHeight()][stagesPerBlock()]);

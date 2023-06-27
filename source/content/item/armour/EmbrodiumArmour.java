@@ -35,7 +35,7 @@ public class EmbrodiumArmour extends AdventArmour {
 		}
 		else {
 			Player pl = plData.player();
-			float temp = WorldUtil.getAmbientTemperature(pl.level, pl.blockPosition());
+			float temp = WorldUtil.getAmbientTemperature(pl.level(), pl.blockPosition());
 
 			if (temp > 0.8f)
 				plData.getResource(AoAResources.SPIRIT.get()).addValue(0.08f * slots.size() * Math.min(1f, (temp / 2f)));

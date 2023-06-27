@@ -30,7 +30,7 @@ public class Cyclone extends BaseGun {
 	protected boolean fireGun(LivingEntity shooter, ItemStack stack, InteractionHand hand) {
 		if (super.fireGun(shooter, stack, hand)) {
 			if (RandomUtil.oneInNChance(5))
-				shooter.level.addFreshEntity(new LimoniteBulletEntity(shooter, this, hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
+				shooter.level().addFreshEntity(new LimoniteBulletEntity(shooter, this, hand, 120, 1.0f, 0, 0f, 0.05f, 0f));
 
 			return true;
 		}

@@ -298,6 +298,7 @@ public final class AoATags {
 		public static final TagKey<DamageType> ENVIRONMENTAL = tag("environmental");
 		public static final TagKey<DamageType> NO_SPIRIT_REGEN = aoaTag("no_spirit_regen");
 		public static final TagKey<DamageType> REDUCED_FLINCH = tag("reduced_flinch");
+		public static final TagKey<DamageType> IS_TECHNICAL = tag("is_technical");
 
 		private static TagKey<DamageType> aoaTag(String id) {
 			return create(AdventOfAscension.id(id));

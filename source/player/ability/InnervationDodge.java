@@ -65,18 +65,18 @@ public class InnervationDodge extends AoAAbility.Instance {
 		LocalPlayer player = Minecraft.getInstance().player;
 		float yRot = player.getViewYRot(Minecraft.getInstance().getDeltaFrameTime());
 
-		if (player.input.leftImpulse == 0 || player.input.hasForwardImpulse() || player.level.getGameTime() <= activationTime + 5 || player.getAbilities().flying)
+		if (player.input.leftImpulse == 0 || player.input.hasForwardImpulse() || player.level().getGameTime() <= activationTime + 5 || player.getAbilities().flying)
 			return false;
 
 		if (ClientPlayerDataManager.get().getResource(AoAResources.ENERGY.get()).hasAmount(this.energyCost)) {
 			Vec3 movement = player.getDeltaMovement();
-			double limit = player.isOnGround() ? 2.5d : 0.9d;
+			double limit = player.onGround() ? 2.5d : 0.9d;
 			double velocityX = Mth.clamp(movement.x() + (Mth.cos(yRot * ((float)Math.PI / 180F)) * player.input.leftImpulse), -limit, limit);
 			double velocityZ = Mth.clamp(movement.z() + (Mth.sin(yRot * ((float)Math.PI / 180F)) * player.input.leftImpulse), -limit, limit);
 
 			player.setDeltaMovement(new Vec3(velocityX, movement.y(), velocityZ));
 
-			activationTime = player.level.getGameTime();
+			activationTime = player.level().getGameTime();
 		}
 
 		return true;
@@ -96,7 +96,7 @@ public class InnervationDodge extends AoAAbility.Instance {
 
 	@Override
 	public void handlePreIncomingAttack(LivingAttackEvent ev) {
-		if (ev.getEntity().level.getGameTime() < activationTime + 5 && DamageUtil.isMeleeDamage(ev.getSource()))
+		if (ev.getEntity().level().getGameTime() < activationTime + 5 && DamageUtil.isMeleeDamage(ev.getSource()))
 			ev.setCanceled(true);
 	}
 

@@ -21,7 +21,7 @@ public class RunicornEntity extends AoAMeleeMob<RunicornEntity> {
 	}
 
 	public RunicornEntity(RunicornRiderEntity rider, float health) {
-		this(AoAMobs.RUNICORN.get(), rider.level);
+		this(AoAMobs.RUNICORN.get(), rider.level());
 
 		moveTo(rider.getX(), rider.getY(), rider.getZ(), rider.getYRot(), rider.getXRot());
 		setHealth(health);

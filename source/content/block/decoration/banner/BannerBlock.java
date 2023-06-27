@@ -11,21 +11,22 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 
 import javax.annotation.Nullable;
@@ -43,8 +44,8 @@ public class BannerBlock extends Block implements SimpleWaterloggedBlock {
 	private static final VoxelShape STANDING_EAST_SHAPE = Shapes.create(new AABB(0.390625, 0, 0.1875, 0.546875, 1, 0.8125));
 	private static final VoxelShape STANDING_WEST_SHAPE = Shapes.create(new AABB(0.453125, 0, 0.1875, 0.609375, 1, 0.8125));
 
-	public BannerBlock() {
-		super(new BlockUtil.CompactProperties(Material.DECORATION, MaterialColor.METAL).stats(0.5f, 1f).sound(SoundType.WOOL).noClip().noOcclusion().get());
+	public BannerBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(TYPE, BannerType.MOUNTED).setValue(HorizontalDirectionalBlock.FACING, Direction.NORTH).setValue(BlockStateProperties.WATERLOGGED, false));
 	}
@@ -83,10 +84,10 @@ public class BannerBlock extends Block implements SimpleWaterloggedBlock {
 		if (state.getValue(TYPE) == BannerType.MOUNTED) {
 			Direction mountedFace = state.getValue(HorizontalDirectionalBlock.FACING);
 
-			return canSupportCenter(world, pos.relative(mountedFace), mountedFace.getOpposite()) && world.getBlockState(pos.below()).getMaterial().isReplaceable();
+			return canSupportCenter(world, pos.relative(mountedFace), mountedFace.getOpposite()) && world.getBlockState(pos.below()).canBeReplaced();
 		}
 		else {
-			return world.getBlockState(pos.above()).getMaterial().isReplaceable();
+			return world.getBlockState(pos.above()).canBeReplaced();
 		}
 	}
 
@@ -114,11 +115,11 @@ public class BannerBlock extends Block implements SimpleWaterloggedBlock {
 	@Override
 	public void neighborChanged(BlockState state, Level world, BlockPos pos, Block blockIn, BlockPos fromPos, boolean isMoving) {
 		if (state.getValue(TYPE) == BannerType.MOUNTED) {
-			if (!world.getBlockState(pos.relative(state.getValue(HorizontalDirectionalBlock.FACING))).getMaterial().isSolid())
+			if (!world.getBlockState(pos.relative(state.getValue(HorizontalDirectionalBlock.FACING))).isSolid())
 				world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 		else {
-			if (!world.getBlockState(pos.below()).getMaterial().isSolid())
+			if (!world.getBlockState(pos.below()).isSolid())
 				world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 		}
 	}

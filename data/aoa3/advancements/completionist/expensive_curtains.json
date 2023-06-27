@@ -380,5 +380,6 @@
     [
       "obtain_bejewelled_rosidian_banner"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

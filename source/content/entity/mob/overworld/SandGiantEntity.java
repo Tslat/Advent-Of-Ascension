@@ -56,7 +56,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new FloatGoal(this));
-		goalSelector.addGoal(2, new TrapChaseGoal<>(this, pos -> RandomUtil.fiftyFifty() ? new SandGiantPitTrapEntity(level, pos) : new SandGiantSpikeTrapEntity(level, pos))
+		goalSelector.addGoal(2, new TrapChaseGoal<>(this, pos -> RandomUtil.fiftyFifty() ? new SandGiantPitTrapEntity(level(), pos) : new SandGiantSpikeTrapEntity(level(), pos))
 				.attackEvenIfMidair()
 				.spawnExtraTrapsOnStart(20)
 				.spawnFrequency(10)
@@ -128,17 +128,17 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			return;
 
 		BlockPos.MutableBlockPos pos = getTarget().blockPosition().mutable();
-		BlockState block = level.getBlockState(pos);
+		BlockState block = level().getBlockState(pos);
 
 		if (block.isAir()) {
 			int x = 10;
 
-			while (x-- >= 0 && pos.getY() > level.getMinBuildHeight() && (block = level.getBlockState(pos.move(Direction.DOWN))).isAir()) {}
+			while (x-- >= 0 && pos.getY() > level().getMinBuildHeight() && (block = level().getBlockState(pos.move(Direction.DOWN))).isAir()) {}
 
 			if (block.isAir())
 				return;
 
-			level.addFreshEntity(RandomUtil.fiftyFifty() ? new SandGiantPitTrapEntity(level, Vec3.atBottomCenterOf(pos.move(Direction.UP))) : new SandGiantSpikeTrapEntity(level, Vec3.atBottomCenterOf(pos.move(Direction.UP))));
+			level().addFreshEntity(RandomUtil.fiftyFifty() ? new SandGiantPitTrapEntity(level(), Vec3.atBottomCenterOf(pos.move(Direction.UP))) : new SandGiantSpikeTrapEntity(level(), Vec3.atBottomCenterOf(pos.move(Direction.UP))));
 		}
 	}
 
@@ -182,7 +182,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			if (!super.canUse())
 				return false;
 
-			if (entity.level.getDifficulty() == Difficulty.PEACEFUL)
+			if (entity.level().getDifficulty() == Difficulty.PEACEFUL)
 				return false;
 
 			LivingEntity target = entity.getTarget();
@@ -229,12 +229,12 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 							centerX + 4 * Math.cos(angle), entity.position().y(), centerZ + 4 * Math.sin(angle)).velocity(0, 0.25f, 0));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, entity.position(), 20);
+				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), entity.position(), 20);
 
 				if (entity.tickCount % 20 == 0 && (taskExpiresAt == Integer.MAX_VALUE || runningTime + 20 < taskExpiresAt))
 					entity.playSound(AoASounds.SAND_WIND.get(), 1, 0.5f);
 
-				if (!onlyIfOnGround && !target.isOnGround()) {
+				if (!onlyIfOnGround && !target.onGround()) {
 					resetActionTelegraph();
 
 					return;
@@ -250,7 +250,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 					Entity trap = trapFactory.apply(target.position());
 
 					if (trap != null)
-						entity.level.addFreshEntity(trap);
+						entity.level().addFreshEntity(trap);
 
 					nextSpawnTime = entity.tickCount + trapSpawnFrequency;
 
@@ -260,12 +260,12 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			else if (chargeUpTime - 1 == runningTime) {
 				for (int i = 0; i < this.initialTrapSpawns; i++) {
 					BlockPos.MutableBlockPos pos = RandomPos.generateRandomDirection(RandomUtil.RANDOM, 5, 5).offset(entity.getTarget().blockPosition()).mutable();
-					BlockState block = entity.level.getBlockState(pos);
+					BlockState block = entity.level().getBlockState(pos);
 
 					if (block.isAir()) {
 						int x = 10;
 
-						while (x-- >= 0 && pos.getY() > entity.level.getMinBuildHeight() && (block = entity.level.getBlockState(pos.move(Direction.DOWN))).isAir()) {}
+						while (x-- >= 0 && pos.getY() > entity.level().getMinBuildHeight() && (block = entity.level().getBlockState(pos.move(Direction.DOWN))).isAir()) {}
 
 						if (block.isAir())
 							continue;
@@ -273,7 +273,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 						Entity trap = trapFactory.apply(Vec3.atBottomCenterOf(pos.move(Direction.UP)));
 
 						if (trap != null)
-							entity.level.addFreshEntity(trap);
+							entity.level().addFreshEntity(trap);
 					}
 				}
 			}

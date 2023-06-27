@@ -15,7 +15,7 @@ public class OrbocronRenderer extends ParticleProjectileRenderer<OrbocronEntity>
 	@Override
 	protected void addParticles(OrbocronEntity entity, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RGB(130, 0, 178)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RGB(130, 0, 178)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

@@ -14,6 +14,6 @@ public class PhantomShotRenderer extends ParticleProjectileRenderer<PhantomShotE
 
 	@Override
 	protected void addParticles(PhantomShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.RGB(193, 64, 215) | (128 << 24)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.RGB(193, 64, 215) | (128 << 24)), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 }

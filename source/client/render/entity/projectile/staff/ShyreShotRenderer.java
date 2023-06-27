@@ -15,7 +15,7 @@ public class ShyreShotRenderer extends ParticleProjectileRenderer<ShyreShotEntit
 	@Override
 	protected void addParticles(ShyreShotEntity entity, float partialTicks) {
 		for (int i = 0; i < 3; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.CYAN), entity.getX(), entity.getY() + 0.25d, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.CYAN), entity.getX(), entity.getY() + 0.25d, entity.getZ(), 0, 0, 0);
 		}
 	}
 }

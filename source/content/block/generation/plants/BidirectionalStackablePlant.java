@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.block.generation.plants;
 
 import net.minecraft.core.BlockPos;
@@ -110,3 +111,4 @@ public class BidirectionalStackablePlant extends StackablePlant {
 			PiglinAi.angerNearbyPiglins(player, false);
 	}
 }
+*/

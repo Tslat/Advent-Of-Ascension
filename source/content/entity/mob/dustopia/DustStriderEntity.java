@@ -19,7 +19,7 @@ public class DustStriderEntity extends AoAMeleeMob<DustStriderEntity> {
     }
 
     public DustStriderEntity(DustonEntity duston) {
-        this(AoAMobs.DUST_STRIDER.get(), duston.level);
+        this(AoAMobs.DUST_STRIDER.get(), duston.level());
 
         moveTo(duston.getX(), duston.getY() + 0.5, duston.getZ(), duston.getYRot(), duston.getXRot());
         fallDistance = -10;

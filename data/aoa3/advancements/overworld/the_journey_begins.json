@@ -35,5 +35,6 @@
     [
       "obtain_worn_book"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

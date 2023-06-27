@@ -50,7 +50,7 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.OVERWORLD.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.OVERWORLD.key);
 	}
 
 	@Override
@@ -78,10 +78,10 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 		}
 
 		if (isAlive() && !player.isShiftKeyDown()) {
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				openScreen(player);
 
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		}
 
 		return super.mobInteract(player, hand);

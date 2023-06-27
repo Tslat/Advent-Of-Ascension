@@ -53,7 +53,7 @@ public enum BossDropsScheme {
 		}
 
 		for (int i = combatEntries.size() - 1; i >= 0; i--) {
-			Entity attacker = combatEntries.get(i).getSource().getEntity();
+			Entity attacker = combatEntries.get(i).source().getEntity();
 
 			if (attacker instanceof Player player) {
 				giveDropsToPlayer(player, ev.getDrops().iterator());
@@ -64,7 +64,7 @@ public enum BossDropsScheme {
 	}
 
 	private static void mostDamagingPlayerDistributor(final LivingDropsEvent ev) {
-		LivingEntity killer = ev.getEntity().getCombatTracker().getKiller();
+		LivingEntity killer = ev.getEntity().getKillCredit();
 
 		if (killer == null)
 			killer = PlayerUtil.getPlayerOrOwnerIfApplicable(ev.getSource().getEntity());
@@ -177,7 +177,7 @@ public enum BossDropsScheme {
 		LivingEntity entity = ev.getEntity();
 
 		for (ItemStack stack : drops) {
-			ev.getDrops().add(new ItemEntity(entity.getLevel(), entity.getX(), entity.getY() + 0.5, entity.getZ(), stack));
+			ev.getDrops().add(new ItemEntity(entity.level(), entity.getX(), entity.getY() + 0.5, entity.getZ(), stack));
 		}
 	}
 

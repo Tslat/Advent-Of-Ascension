@@ -411,5 +411,6 @@
     [
       "obtain_parapiranha"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

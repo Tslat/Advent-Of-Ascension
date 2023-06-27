@@ -62,12 +62,12 @@ public class AnemiaEntity extends AoAFlyingRangedMob {
 		if (target instanceof ServerPlayer)
 			PlayerUtil.consumeResource((ServerPlayer)target, AoAResources.SPIRIT.get(), 50f, true);
 
-		WorldUtil.createExplosion(this, level, projectile, 2.0f);
+		WorldUtil.createExplosion(this, level(), projectile, 2.0f);
 	}
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, level, projectile, 2.0f);
+		WorldUtil.createExplosion(this, level(), projectile, 2.0f);
 	}
 
 }

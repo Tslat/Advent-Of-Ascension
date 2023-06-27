@@ -3,18 +3,12 @@ package net.tslat.aoa3.util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
-import net.minecraft.tags.TagKey;
 import net.minecraft.util.random.SimpleWeightedRandomList;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.SpawnData;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -24,227 +18,13 @@ import net.minecraftforge.registries.RegistryObject;
 
 import javax.annotation.Nullable;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.ToIntFunction;
 
 public final class BlockUtil {
 	public static final float UNBREAKABLE_HARDNESS = -1f;
 	public static final float UNBREAKABLE_RESISTANCE = 999999999f;
 
-	public static class CompactProperties {
-		private final Block.Properties properties;
-
-		public CompactProperties(Material material, Function<BlockState, MaterialColor> mapColours) {
-			this.properties = Block.Properties.of(material, mapColours).sound(approximateSound(material));
-		}
-
-		public CompactProperties(Material material, MaterialColor mapColour) {
-			this(material, state -> mapColour);
-		}
-
-		public CompactProperties needsTool() {
-			this.properties.requiresCorrectToolForDrops();
-
-			return this;
-		}
-
-		public CompactProperties sound(SoundType sound) {
-			this.properties.sound(sound);
-
-			return this;
-		}
-
-		public CompactProperties stats(float hardness) {
-			return stats(hardness, hardness);
-		}
-
-		public CompactProperties stats(float hardness, float resistance) {
-			this.properties.strength(hardness, resistance);
-
-			return this;
-		}
-
-		public CompactProperties unbreakable() {
-			noDrops();
-
-			return stats(UNBREAKABLE_HARDNESS, UNBREAKABLE_RESISTANCE);
-		}
-
-		public CompactProperties light(int light) {
-			return light(state -> light);
-		}
-
-		public CompactProperties light(ToIntFunction<BlockState> light) {
-			this.properties.lightLevel(light);
-
-			return this;
-		}
-
-		public CompactProperties randomTicks() {
-			this.properties.randomTicks();
-
-			return this;
-		}
-
-		public CompactProperties isAir() {
-			this.properties.air();
-
-			return this;
-		}
-
-		public CompactProperties dynamicShape() {
-			this.properties.dynamicShape();
-
-			return this;
-		}
-
-		public CompactProperties slippery(float slipMod) {
-			this.properties.friction(slipMod);
-
-			return this;
-		}
-
-		public CompactProperties emissive() {
-			return emissive((state, world, pos) -> true);
-		}
-
-		public CompactProperties emissive(BlockBehaviour.StatePredicate when) {
-			this.properties.emissiveRendering(when);
-
-			return this;
-		}
-
-		public CompactProperties renderAdjust() {
-			return renderAdjust((state, world, pos) -> true);
-		}
-
-		public CompactProperties renderAdjust(BlockBehaviour.StatePredicate when) {
-			this.properties.hasPostProcess(when);
-
-			return this;
-		}
-
-		public CompactProperties moveSpeed(float speedMod) {
-			this.properties.speedFactor(speedMod);
-
-			return this;
-		}
-
-		public CompactProperties bouncy(float jumpFactor) {
-			this.properties.jumpFactor(jumpFactor);
-
-			return this;
-		}
-
-		public CompactProperties noDrops() {
-			this.properties.noLootTable();
-
-			return this;
-		}
-
-		public CompactProperties noOcclusion() {
-			this.properties.noOcclusion();
-
-			return this;
-		}
-
-		public CompactProperties noClip() {
-			this.properties.noCollission();
-			coversScreen((state, world, pos) -> false);
-
-			return this;
-		}
-
-		public CompactProperties noScreenCover() {
-			return coversScreen((state, world, pos) -> false);
-		}
-
-		public CompactProperties coversScreen(BlockBehaviour.StatePredicate when) {
-			this.properties.isViewBlocking(when);
-
-			return this;
-		}
-
-		public CompactProperties noRedstone() {
-			return conductRedstone((state, world, pos) -> false);
-		}
-
-		public CompactProperties conductRedstone(BlockBehaviour.StatePredicate when) {
-			this.properties.isRedstoneConductor(when);
-
-			return this;
-		}
-
-		public CompactProperties noSpawns() {
-			return specialSpawns((state, world, pos, entityType) -> false);
-		}
-
-		public CompactProperties specialSpawns(BlockBehaviour.StateArgumentPredicate<EntityType<?>> when) {
-			this.properties.isValidSpawn(when);
-
-			return this;
-		}
-
-		public CompactProperties breathable() {
-			return suffocate((state, world, pos) -> false);
-		}
-
-		public CompactProperties suffocate(BlockBehaviour.StatePredicate when) {
-			this.properties.isSuffocating(when);
-
-			return this;
-		}
-
-		public Block.Properties get() {
-			return this.properties;
-		}
-
-		private static SoundType approximateSound(Material material) {
-			if (material == Material.WOOD) {
-				return SoundType.WOOD;
-			}
-			else if (material == Material.GLASS) {
-				return SoundType.GLASS;
-			}
-			else if (material == Material.DIRT) {
-				return SoundType.GRAVEL;
-			}
-			else if (material == Material.PLANT || material == Material.GRASS) {
-				return SoundType.GRASS;
-			}
-			else if (material == Material.TOP_SNOW || material == Material.SNOW) {
-				return SoundType.SNOW;
-			}
-			else if (material == Material.SAND) {
-				return SoundType.SAND;
-			}
-			else if (material == Material.WOOL) {
-				return SoundType.WOOL;
-			}
-			else if (material == Material.METAL || material == Material.HEAVY_METAL) {
-				return SoundType.METAL;
-			}
-			else {
-				return SoundType.STONE;
-			}
-		}
-	}
-
 	public static Vec3 posToVec(BlockPos pos) {
 		return new Vec3(pos.getX(), pos.getY(), pos.getZ());
-	}
-
-	public static boolean isBlockTaggedAs(Block block, TagKey<Block>... tags) {
-		for (TagKey<Block> tag : tags) {
-			if (block.builtInRegistryHolder().is(tag))
-				return true;
-		}
-
-		return false;
-	}
-
-	public static boolean isAirBlock(BlockState state) {
-		return state.getMaterial() == Material.AIR || state.getMaterial() == Material.STRUCTURAL_AIR;
 	}
 
 	public static class SpawnerBuilder {

@@ -95,12 +95,12 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 
 		this.bossStatusTracker.setProgress(getHealth() / getMaxHealth());
 
-		if (this.level.dimension() == AoADimensions.NOWHERE.key && this.tickCount % 60 == 0) {
-			if (this.level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)getX(), (int)getZ()) == this.level.getMinBuildHeight()) {
+		if (this.level().dimension() == AoADimensions.NOWHERE.key && this.tickCount % 60 == 0) {
+			if (this.level().getHeight(Heightmap.Types.MOTION_BLOCKING, (int)getX(), (int)getZ()) == this.level().getMinBuildHeight()) {
 				if (this.lastArenaBoundTick != -1 && this.tickCount - this.lastArenaBoundTick >= 180) {
 					this.lastArenaBoundTick = -1;
 
-					AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level, this.position());
+					AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level(), this.position());
 
 					if (arena != null) {
 						resetFallDistance();
@@ -167,7 +167,7 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 
 		this.bossStatusTracker.addPlayer(player);
 
-		if (getMusic() != null && getLevel().dimension() != AoADimensions.NOWHERE.key)
+		if (getMusic() != null && level().dimension() != AoADimensions.NOWHERE.key)
 			new SoundBuilder(getMusic()).isMusic().include(player).execute();
 	}
 
@@ -183,8 +183,8 @@ public abstract class AoABoss extends AoAMonster<AoABoss>{
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (source.is(DamageTypes.OUT_OF_WORLD) && WorldUtil.isWorld(this.level, AoADimensions.NOWHERE.key) && !this.level.isClientSide() && getY() < this.level.getMinBuildHeight()) {
-			AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level, this.position());
+		if (source.is(DamageTypes.FELL_OUT_OF_WORLD) && WorldUtil.isWorld(this.level(), AoADimensions.NOWHERE.key) && !this.level().isClientSide() && getY() < this.level().getMinBuildHeight()) {
+			AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getClosestArena((ServerLevel)this.level(), this.position());
 
 			if (arena != null) {
 				resetFallDistance();

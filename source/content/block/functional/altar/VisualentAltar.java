@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.block.functional.altar;
 
 import net.minecraft.core.BlockPos;
@@ -17,11 +18,13 @@ public class VisualentAltar extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
-		/*VisualentEntity visualent = new VisualentEntity(AoAMobs.VISUALENT.get(), player.level);
+		*/
+/*VisualentEntity visualent = new VisualentEntity(AoAMobs.VISUALENT.get(), player.level);
 
 		visualent.teleportTo(blockPos.getX() + 0.5, blockPos.above().getY(), blockPos.getZ() + 0.5);
 		player.level.addFreshEntity(visualent);
-		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAMobs.VISUALENT.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);*/
+		sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAMobs.VISUALENT.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);*//*
+
 	}
 
 	@Override
@@ -34,3 +37,4 @@ public class VisualentAltar extends BossAltarBlock {
 		return AoAItems.OBSERVING_EYE.get();
 	}
 }
+*/

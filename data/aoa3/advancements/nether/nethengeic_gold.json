@@ -36,5 +36,6 @@
     [
       "obtain_gold_nethengeic_wither_trophy"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

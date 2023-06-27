@@ -23,6 +23,6 @@ public class DeeplandsTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.DENSE_STONE.get();
+		return AoABlocks.DENSE_STONE.stone();
 	}
 }

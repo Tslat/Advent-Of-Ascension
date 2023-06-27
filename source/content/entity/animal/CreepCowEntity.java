@@ -34,7 +34,7 @@ public class CreepCowEntity extends AoAAnimal {
 			if (!player.isCreative())
 				heldStack.shrink(1);
 
-			WorldUtil.createExplosion(this, level, getX(), getY(), getZ(), 1.5f, Level.ExplosionInteraction.NONE);
+			WorldUtil.createExplosion(this, level(), getX(), getY(), getZ(), 1.5f, Level.ExplosionInteraction.NONE);
 
 			if (player instanceof ServerPlayer)
 				AdvancementUtil.completeAdvancement((ServerPlayer)player, new ResourceLocation(AdventOfAscension.MOD_ID, "creeponia/worst_farmer_ever"), "creep_cow_milk");
@@ -60,6 +60,6 @@ public class CreepCowEntity extends AoAAnimal {
 	@Nullable
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
-		return new CreepCowEntity(AoAAnimals.CREEP_COW.get(), this.level);
+		return new CreepCowEntity(AoAAnimals.CREEP_COW.get(), this.level());
 	}
 }

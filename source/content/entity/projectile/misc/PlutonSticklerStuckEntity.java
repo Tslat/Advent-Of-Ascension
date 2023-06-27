@@ -26,7 +26,7 @@ public class PlutonSticklerStuckEntity extends ThrowableProjectile {
 	}
 
 	public PlutonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), shooter.level);
+		super(AoAProjectiles.PLUTON_STICKLER_STUCK.get(), shooter.level());
 		this.target = target;
 		this.shooter = shooter;
 		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
@@ -54,25 +54,25 @@ public class PlutonSticklerStuckEntity extends ThrowableProjectile {
 
 		age++;
 
-		if (level.isClientSide)
+		if (level().isClientSide)
 			return;
 
 		if (target != null && target.isAlive()) {
 			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
 		}
 		else {
-			WorldUtil.createExplosion(shooter, level, this, 2.0f);
+			WorldUtil.createExplosion(shooter, level(), this, 2.0f);
 			explodeCoins();
 
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				discard();
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(shooter, level, getX(), getY() + 1, getZ(), 2.0f);
+			WorldUtil.createExplosion(shooter, level(), getX(), getY() + 1, getZ(), 2.0f);
 			explodeCoins();
 
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				discard();
 		}
 	}
@@ -81,12 +81,12 @@ public class PlutonSticklerStuckEntity extends ThrowableProjectile {
 		for (float x = -0.5f; x <= 0.5f; x += 0.5f) {
 			for (float y = -0.5f; y <= 0.5f; y += 0.5f) {
 				for (float z = -0.5f; z <= 0.5f; z += 0.5f) {
-					ItemEntity coin = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(AoAItems.COPPER_COIN.get()));
+					ItemEntity coin = new ItemEntity(level(), getX(), getY(), getZ(), new ItemStack(AoAItems.COPPER_COIN.get()));
 
 					coin.setPickUpDelay(120);
 					coin.push(x, y, z);
 					coin.lifespan = 140;
-					level.addFreshEntity(coin);
+					level().addFreshEntity(coin);
 				}
 			}
 		}

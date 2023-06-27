@@ -53,7 +53,7 @@ public class WingedCreeperEntity extends AoACreeponiaCreeper {
     public void aiStep() {
         super.aiStep();
 
-        Player pl = level.getNearestPlayer(getX(), getY(), getZ(), 15, false);
+        Player pl = level().getNearestPlayer(getX(), getY(), getZ(), 15, false);
 
         if (pl == null || pl.isCreative())
             return;

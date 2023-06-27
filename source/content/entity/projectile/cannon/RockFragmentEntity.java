@@ -34,17 +34,17 @@ public class RockFragmentEntity extends BaseBullet implements HardProjectile {
 
 	@Override
 	public void doBlockImpact(Vec3 impactLocation, Direction face, BlockPos blockPos) {
-		if (!level.isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level) && level.isEmptyBlock(blockPosition())) {
+		if (!level().isClientSide && AoAGameRules.checkDestructiveWeaponPhysics(level()) && level().isEmptyBlock(blockPosition())) {
 			int i = 1;
 
-			while (level.getBlockState(blockPosition().below(i)).getMaterial().isReplaceable() && blockPosition().getY() - i >= 0) {
+			while (level().getBlockState(blockPosition().below(i)).canBeReplaced() && blockPosition().getY() - i >= 0) {
 				i++;
 			}
 
 			if (blockPosition().getY() - i <= 0)
 				return;
 
-			level.setBlockAndUpdate(blockPosition().below(i - 1), Blocks.COBBLESTONE.defaultBlockState());
+			level().setBlockAndUpdate(blockPosition().below(i - 1), Blocks.COBBLESTONE.defaultBlockState());
 		}
 	}
 

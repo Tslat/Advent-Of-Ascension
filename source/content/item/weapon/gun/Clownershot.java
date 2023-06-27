@@ -32,7 +32,7 @@ public class Clownershot extends BaseGun {
 
 			if (bullet != null) {
 				bullet.teleportTo(bullet.getX(), bullet.getY() + 0.1f, bullet.getZ());
-				shooter.level.addFreshEntity(bullet);
+				shooter.level().addFreshEntity(bullet);
 			}
 
 			return true;

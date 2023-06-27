@@ -55,7 +55,7 @@ public abstract class BasicMiscEntity extends Entity implements GeoEntity {
 		}
 
 		BlockPos feetPos = getBlockPosBelowThatAffectsMyMovement();
-		float blockFriction = onGround ? level.getBlockState(feetPos).getFriction(level, feetPos, this) * 0.91f : 0.91f;
+		float blockFriction = onGround() ? level().getBlockState(feetPos).getFriction(level(), feetPos, this) * 0.91f : 0.91f;
 
 		setDeltaMovement(getDeltaMovement().multiply(blockFriction, 0.98d,  blockFriction));
 

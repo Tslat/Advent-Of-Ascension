@@ -7,13 +7,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.content.block.functional.plant.SaplingBlock;
+import net.tslat.aoa3.content.block.functional.plant.AoASaplingBlock;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.function.Supplier;
 
 public class BloodtwisterTreeFeature extends AoATreeFeature {
-	public BloodtwisterTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<SaplingBlock> saplingBlock) {
+	public BloodtwisterTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 
@@ -29,11 +29,11 @@ public class BloodtwisterTreeFeature extends AoATreeFeature {
 			return false;
 
 		BlockPos.MutableBlockPos movablePos = new BlockPos.MutableBlockPos().set(pos.below());
-		BlockState log = AoABlocks.BLOOD_LOG.get().defaultBlockState();
+		BlockState log = AoABlocks.BLOOD_LOG.log().defaultBlockState();
 		BlockState leaves = AoABlocks.BLOOD_LEAVES.get().defaultBlockState();
-		BlockState barkLog = AoABlocks.BLOOD_WOOD.get().defaultBlockState();
+		BlockState barkLog = AoABlocks.BLOOD_LOG.bark().defaultBlockState();
 
-		placeBlock(reader, pos.above(1 + rand.nextInt(3)), AoABlocks.EYEBALL_LOG.get().defaultBlockState());
+		placeBlock(reader, pos.above(1 + rand.nextInt(3)), AoABlocks.EYEBALL_LOG.log().defaultBlockState());
 
 		for (int i = 0; i < trunkHeight; i++) {
 			placeBlock(reader, movablePos.move(Direction.UP), log);

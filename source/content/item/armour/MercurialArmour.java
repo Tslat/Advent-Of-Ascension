@@ -31,7 +31,7 @@ public class MercurialArmour extends AdventArmour {
 
 	@Override
 	public void onPostAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingDamageEvent event) {
-		if (!plData.player().level.isClientSide && event.getSource().is(DamageTypeTags.IS_EXPLOSION) && event.getAmount() > 0) {
+		if (!plData.player().level().isClientSide && event.getSource().is(DamageTypeTags.IS_EXPLOSION) && event.getAmount() > 0) {
 			if (slots == null) {
 				plData.player().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 320, 1, true, true));
 			}

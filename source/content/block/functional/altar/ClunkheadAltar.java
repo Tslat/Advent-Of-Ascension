@@ -10,8 +10,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -20,8 +20,8 @@ import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 public class ClunkheadAltar extends BossAltarBlock {
-	public ClunkheadAltar() {
-		super(MaterialColor.COLOR_LIGHT_BLUE);
+	public ClunkheadAltar(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class ClunkheadAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level, AoADimensions.RUNANDOR.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.RUNANDOR.key);
 	}
 
 	@Override

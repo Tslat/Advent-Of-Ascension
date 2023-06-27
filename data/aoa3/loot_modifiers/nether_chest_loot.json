@@ -2,7 +2,7 @@
   "type": "aoa3:roll_extra_tables",
   "conditions": [
     {
-      "condition": "minecraft:alternative",
+      "condition": "minecraft:any_of",
       "terms": [
         {
           "condition": "forge:loot_table_id",

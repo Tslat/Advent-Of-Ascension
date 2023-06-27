@@ -67,7 +67,7 @@ public final class AoAExplosions {
 	public static final ExplosionInfo STICKY_FIREBALL = new ExplosionInfo()
 			.radius(2)
 			.baseDamage(1)
-			.damageMod((explosion, target) -> (target.level.getDifficulty().getId() + 1) * 5f);
+			.damageMod((explosion, target) -> (target.level().getDifficulty().getId() + 1) * 5f);
 	public static final ExplosionInfo EXPLOSIVE_BOW = new ExplosionInfo()
 			.radius(2.5f)
 			.baseDamage(4)

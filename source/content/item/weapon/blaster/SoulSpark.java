@@ -38,7 +38,7 @@ public class SoulSpark extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new SoulSparkEntity(shooter, this, 5));
+		shooter.level().addFreshEntity(new SoulSparkEntity(shooter, this, 5));
 	}
 
 	@Override
@@ -78,10 +78,10 @@ public class SoulSpark extends BaseBlaster {
 
 	@Override
 	public void onUseTick(Level level, LivingEntity player, ItemStack stack, int count) {
-		if (!player.level.isClientSide) {
+		if (!player.level().isClientSide) {
 			if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 				if (getFiringSound() != null)
-					player.level.playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
+					player.level().playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
 				fire(stack, player);
 				((Player)player).awardStat(Stats.ITEM_USED.get(this));

@@ -40,7 +40,7 @@ public class TrophyRenderer implements BlockEntityRenderer<TrophyTileEntity> {
 			matrix.translate(0, (1 / scale), 0);
 
 			if (blockEntity.isOriginal() && partialTicks > 0.95f)
-				entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.005f, 10, ColourUtil.RGB(255, 200, 0)), blockEntity.getBlockPos().getX() + 0.5f, blockEntity.getBlockPos().getY() + 0.9 + ((entity.getBbHeight() / 2f) * scale), blockEntity.getBlockPos().getZ() + 0.5f, RandomUtil.randomGaussianValue() * 0.5f, RandomUtil.randomGaussianValue() * 0.5f, RandomUtil.randomGaussianValue() * 0.5f);
+				entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.005f, 10, ColourUtil.RGB(255, 200, 0)), blockEntity.getBlockPos().getX() + 0.5f, blockEntity.getBlockPos().getY() + 0.9 + ((entity.getBbHeight() / 2f) * scale), blockEntity.getBlockPos().getZ() + 0.5f, RandomUtil.randomGaussianValue() * 0.5f, RandomUtil.randomGaussianValue() * 0.5f, RandomUtil.randomGaussianValue() * 0.5f);
 
 			if (AoAConfigs.CLIENT.rotatingTrophies.get())
 				matrix.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, blockEntity.getPrevMobRotation(), blockEntity.getMobRotation()) * 30.0F));

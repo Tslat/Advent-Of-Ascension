@@ -91,7 +91,7 @@ public class CorateeEntity extends AoAAnimal {
 	@Nullable
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob partner) {
-		return new CorateeEntity(AoAAnimals.CORATEE.get(), this.level);
+		return new CorateeEntity(AoAAnimals.CORATEE.get(), this.level());
 	}
 
 	@Override

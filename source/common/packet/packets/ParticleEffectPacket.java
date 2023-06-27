@@ -42,7 +42,7 @@ public class ParticleEffectPacket implements AoAPacket {
 	public void receiveMessage(Supplier<NetworkEvent.Context> context) {
 		switch (this.type) {
 			case FREEZING_SNOWFLAKE -> {
-				ServerLevel level = context.get().getSender().getLevel();
+				ServerLevel level = context.get().getSender().serverLevel();
 				Entity entity = level.getEntity(this.entityId);
 				Entity attacker = null;
 
@@ -59,13 +59,13 @@ public class ParticleEffectPacket implements AoAPacket {
 				}
 			}
 			case SANDSTORM -> {
-				Level level = context.get().getSender().getLevel();
+				Level level = context.get().getSender().level();
 				Entity entity = level.getEntity(this.entityId);
 				Entity attacker = this.senderId >= 0 ? level.getEntity(this.senderId) : null;
 
 				if (entity instanceof LivingEntity) {
 					if (EntityPredicate.TARGETABLE_ENTITIES.test(entity)) {
-						DamageSource source = attacker == null ? DamageUtil.miscDamage(DamageTypes.STING, entity.level) :
+						DamageSource source = attacker == null ? DamageUtil.miscDamage(DamageTypes.STING, entity.level()) :
 								DamageUtil.positionedEntityDamage(DamageTypes.MOB_ATTACK_NO_AGGRO, attacker, entity.position());
 
 						DamageUtil.safelyDealDamage(source, entity, 4);
@@ -76,7 +76,7 @@ public class ParticleEffectPacket implements AoAPacket {
 				}
 			}
 			case BURNING_FLAME -> {
-				ServerLevel level = context.get().getSender().getLevel();
+				ServerLevel level = context.get().getSender().serverLevel();
 				Entity entity = level.getEntity(this.entityId);
 
 				if (entity instanceof LivingEntity) {
@@ -89,7 +89,7 @@ public class ParticleEffectPacket implements AoAPacket {
 						rangedAttacker.doRangedAttackEntity(null, entity);
 					}
 					else {
-						DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(AoADamageTypes.BURN, entity.level, entity.position()), entity, 1);
+						DamageUtil.safelyDealDamage(DamageUtil.miscPositionedDamage(AoADamageTypes.MOB_FIRE_RANGED_ATTACK, entity.level(), entity.position()), entity, 1);
 						entity.setSecondsOnFire((int)Math.ceil(entity.getRemainingFireTicks() / 20f) + 1);
 					}
 				}

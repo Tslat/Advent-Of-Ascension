@@ -17,12 +17,12 @@ public class WinderShotRenderer extends ParticleProjectileRenderer<WinderShotEnt
 	protected void addParticles(WinderShotEntity entity, float partialTicks) {
 		if (RandomUtil.fiftyFifty()) {
 			for (int i = 0; i < 3; i++) {
-				entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.RED), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+				entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.RED), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 			}
 		}
 		else {
 			for (int i = 0; i < 3; i++) {
-				entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+				entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 			}
 		}
 	}

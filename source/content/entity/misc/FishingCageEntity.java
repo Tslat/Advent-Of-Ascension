@@ -14,7 +14,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
@@ -24,11 +23,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.event.AoAPlayerEvents;
@@ -71,7 +72,7 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public InteractionResult interact(Player player, InteractionHand hand) {
-		if (!level.isClientSide() && ownerUUID == null || player.getUUID().equals(ownerUUID)) {
+		if (!level().isClientSide() && ownerUUID == null || player.getUUID().equals(ownerUUID)) {
 			ItemStack fishingCage = new ItemStack(AoATools.FISHING_CAGE.get());
 			int damage = this.damage + 1;
 
@@ -99,7 +100,7 @@ public class FishingCageEntity extends Entity {
 			return InteractionResult.SUCCESS;
 		}
 
-		return level.isClientSide() ? InteractionResult.SUCCESS : InteractionResult.FAIL;
+		return level().isClientSide() ? InteractionResult.SUCCESS : InteractionResult.FAIL;
 	}
 
 	@Override
@@ -189,40 +190,40 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return source.is(DamageTypes.OUT_OF_WORLD);
+		return !source.is(AoATags.DamageTypes.IS_TECHNICAL);
 	}
 
 	protected void doFishingCheckTick() {
-		if (level.isClientSide() || ownerUUID == null)
+		if (level().isClientSide() || ownerUUID == null)
 			return;
 
 		if (!CAUGHT_STACK_3.is(this, ItemStack.EMPTY))
 			return;
 
-		if (!onGround || !isInWater())
+		if (!onGround() || !isInWater())
 			return;
 
 		if (RandomUtil.oneInNChance(5000)) {
-			FluidState fluid = level.getFluidState(blockPosition());
+			FluidState fluid = level().getFluidState(blockPosition());
 
 			if (!(fluid.getType() instanceof FlowingFluid flowingFluid)) {
 				if (!RandomUtil.oneInNChance(3))
 					return;
 			}
-			else if (flowingFluid.getFlow(level, blockPosition(), fluid).lengthSqr() == 0 && !RandomUtil.fiftyFifty()) {
+			else if (flowingFluid.getFlow(level(), blockPosition(), fluid).lengthSqr() == 0 && !RandomUtil.fiftyFifty()) {
 				return;
 			}
 
-			Player owner = level.getPlayerByUUID(ownerUUID);
+			Player owner = level().getPlayerByUUID(ownerUUID);
 
 			if (owner != null) {
-				LootContext.Builder lootContext = new LootContext.Builder((ServerLevel)this.level)
+				LootParams.Builder lootContext = new LootParams.Builder((ServerLevel)this.level())
 						.withParameter(LootContextParams.ORIGIN, this.position())
 						.withParameter(LootContextParams.TOOL, new ItemStack(AoATools.FISHING_CAGE.get()))
 						.withParameter(LootContextParams.THIS_ENTITY, this)
 						.withParameter(LootContextParams.KILLER_ENTITY, owner)
-						.withRandom(random).withLuck(2 + owner.getLuck());
-				LootTable lootTable = level.getServer().getLootTables().get(AdventOfAscension.id("misc/fishing_cage_catches"));
+						.withLuck(2 + owner.getLuck());
+				LootTable lootTable = level().getServer().getLootData().getLootTable(AdventOfAscension.id("misc/fishing_cage_catches"));
 				List<ItemStack> loot = lootTable.getRandomItems(lootContext.create(LootContextParamSets.FISHING));
 
 				for (int i = 0; i < 3 && i < loot.size(); i++) {
@@ -258,7 +259,7 @@ public class FishingCageEntity extends Entity {
 			}
 
 			if (velocity.y() < -0.023f)
-				level.addParticle(ParticleTypes.BUBBLE, getX() + random.nextGaussian() * getBbWidth() * 0.5f, getY(), getZ() + random.nextGaussian() * getBbWidth() * 0.5f, 0, 0, 0);
+				level().addParticle(ParticleTypes.BUBBLE, getX() + random.nextGaussian() * getBbWidth() * 0.5f, getY(), getZ() + random.nextGaussian() * getBbWidth() * 0.5f, 0, 0, 0);
 
 			move(MoverType.SELF, getDeltaMovement());
 
@@ -281,15 +282,15 @@ public class FishingCageEntity extends Entity {
 		}
 		else {
 			BlockPos feetPos = getBlockPosBelowThatAffectsMyMovement();
-			float blockSlipperiness = this.level.getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).getFriction(level, this.getBlockPosBelowThatAffectsMyMovement(), this);
-			float friction = this.onGround ? blockSlipperiness * 0.91f : 0.91f;
+			float blockSlipperiness = this.level().getBlockState(this.getBlockPosBelowThatAffectsMyMovement()).getFriction(level(), this.getBlockPosBelowThatAffectsMyMovement(), this);
+			float friction = this.onGround() ? blockSlipperiness * 0.91f : 0.91f;
 
 			move(MoverType.SELF, getDeltaMovement());
 
 			Vec3 newVelocity = getDeltaMovement();
 			double newYVelocity = newVelocity.y();
 
-			if (this.level.isClientSide && !this.level.hasChunkAt(feetPos)) {
+			if (this.level().isClientSide && !this.level().hasChunkAt(feetPos)) {
 				if (getY() > 0) {
 					newYVelocity = -0.1d;
 				}
@@ -306,24 +307,24 @@ public class FishingCageEntity extends Entity {
 
 		setDeltaMovement(getDeltaMovement().multiply(0.98f, 0.98f, 0.98f));
 
-		if (!level.isClientSide())
+		if (!level().isClientSide())
 			setSharedFlag(6, hasGlowingTag());
 	}
 
 	@Override
 	public void baseTick() {
-		this.level.getProfiler().push("entityBaseTick");
+		this.level().getProfiler().push("entityBaseTick");
 
 		updateInWaterStateAndDoFluidPushing();
 
-		if (!level.isClientSide()) {
-			if (getY() < level.getMinBuildHeight() - 20)
-				outOfWorld();
+		if (!level().isClientSide()) {
+			if (getY() < level().getMinBuildHeight() - 20)
+				onBelowWorld();
 
 			if (isInLava())
 				lavaHurt();
 
-			if (isAlive() && tickCount > 40 && onGround && !isInWater()) {
+			if (isAlive() && tickCount > 40 && onGround() && !isInWater()) {
 				ItemStack fishingCage = new ItemStack(AoATools.FISHING_CAGE.get());
 
 				if (hasCatches())
@@ -335,7 +336,7 @@ public class FishingCageEntity extends Entity {
 			}
 		}
 
-		this.level.getProfiler().pop();
+		this.level().getProfiler().pop();
 	}
 
 	@Override
@@ -343,7 +344,7 @@ public class FishingCageEntity extends Entity {
 		if (isInvulnerableTo(source))
 			return false;
 
-		if (!level.isClientSide() && amount >= 1) {
+		if (!level().isClientSide() && amount >= 1) {
 			markHurt();
 			discard();
 		}
@@ -353,7 +354,7 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	public void remove(RemovalReason reason) {
-		if (!level.isClientSide() && hasCatches()) {
+		if (!level().isClientSide() && hasCatches()) {
 			for (ItemStack stack : loot) {
 				spawnAtLocation(stack);
 			}

@@ -16,7 +16,7 @@ public class PlutonSticklerStuckRenderer extends ParticleProjectileRenderer<Plut
 	@Override
 	protected void addParticles(PlutonSticklerStuckEntity entity, float partialTicks) {
 		for (int i = 0; i < 7; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

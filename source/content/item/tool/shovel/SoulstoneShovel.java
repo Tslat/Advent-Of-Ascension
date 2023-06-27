@@ -23,9 +23,9 @@ import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.TagUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
@@ -44,7 +44,7 @@ public class SoulstoneShovel extends BaseShovel implements LootModifyingItem {
 		if (block == Blocks.AIR || existingLoot.isEmpty() || getDestroySpeed(getToolStack(lootContext), harvestedBlock) <= 1 || !lootContext.hasParam(LootContextParams.THIS_ENTITY))
 			return;
 
-		if (!BlockUtil.isBlockTaggedAs(block, BlockTags.DIRT, Tags.Blocks.SAND, Tags.Blocks.GRAVEL, AoATags.Blocks.GRASS) && !(block instanceof GrassBlock))
+		if (!TagUtil.isTaggedAs(lootContext.getLevel(), block, BlockTags.DIRT, Tags.Blocks.SAND, Tags.Blocks.GRAVEL, AoATags.Blocks.GRASS) && !(block instanceof GrassBlock))
 			return;
 
 		Entity harvestingPlayer = lootContext.getParamOrNull(LootContextParams.THIS_ENTITY);

@@ -169,10 +169,10 @@ public abstract class AoAFlyingRangedMob extends FlyingMob implements Enemy, Ran
 		double hyp = Math.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) * 0.05d;
 
 		if (getShootSound() != null)
-			level.playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
+			level().playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
-		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - level.getDifficulty().getId()));
-		level.addFreshEntity(projectile);
+		projectile.shoot(distanceFactorX, distanceFactorY + hyp, distanceFactorZ, 1.6f, (float)(4 - level().getDifficulty().getId()));
+		level().addFreshEntity(projectile);
 	}
 
 	protected abstract BaseMobProjectile getNewProjectileInstance();

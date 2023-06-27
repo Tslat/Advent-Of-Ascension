@@ -62,13 +62,13 @@ public class MeteorStaff extends BaseStaff<BlockPos> {
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 1.4f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 1.4f);
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
 		if (DamageUtil.doMagicProjectileAttack(shooter, shot, target, getDmg())) {
-			WorldUtil.createExplosion(shooter, shot.level, shot, 1.4f);
+			WorldUtil.createExplosion(shooter, shot.level(), shot, 1.4f);
 
 			return true;
 		}

@@ -33,7 +33,7 @@ public class Sublimus extends BaseGun {
 	@Nullable
 	@Override
 	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level.isClientSide() && (!shooter.level.isDay() || !shooter.level.canSeeSky(shooter.blockPosition())), 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level().isClientSide() && (!shooter.level().isDay() || !shooter.level().canSeeSky(shooter.blockPosition())), 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
 			return createProjectileEntity(shooter, gunStack, hand);
 
 		return null;

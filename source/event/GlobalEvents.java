@@ -12,7 +12,6 @@ import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.content.world.spawner.AoACustomSpawner;
 import net.tslat.aoa3.data.server.AoACustomSpawnersListener;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
@@ -63,7 +62,6 @@ public final class GlobalEvents {
 	private static void serverStarted(final ServerStartedEvent ev) {
 		if (ev.getServer().isDedicatedServer()) {
 			SkillsLeaderboard.init();
-			AoAStartupCache.clear();
 		}
 	}
 

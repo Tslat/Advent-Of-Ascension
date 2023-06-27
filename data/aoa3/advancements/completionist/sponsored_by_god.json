@@ -36,5 +36,6 @@
     [
       "obtain_holy_sword"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

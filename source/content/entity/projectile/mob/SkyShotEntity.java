@@ -16,7 +16,7 @@ public class SkyShotEntity extends BaseMobProjectile {
 	}
 
 	public SkyShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.SKY_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.SKY_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

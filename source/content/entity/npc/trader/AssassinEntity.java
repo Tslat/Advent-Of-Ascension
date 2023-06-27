@@ -41,7 +41,7 @@ public class AssassinEntity extends AoATrader {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (heldStack.getItem() == AoAItems.ROCK_BONES.get()) {
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				player.setItemInHand(hand, ((ReservedItem)AoAItems.MILLENNIUM_UPGRADER.get()).newValidStack());
 
 			return InteractionResult.SUCCESS;

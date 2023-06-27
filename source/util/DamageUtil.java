@@ -36,15 +36,15 @@ public final class DamageUtil {
 	}
 
 	public static DamageSource entityDamage(ResourceKey<DamageType> damageType, Entity attacker) {
-		return new DamageSource(attacker.level.damageSources().damageTypes.getHolderOrThrow(damageType), attacker);
+		return new DamageSource(attacker.level().damageSources().damageTypes.getHolderOrThrow(damageType), attacker);
 	}
 
 	public static DamageSource positionedEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, Vec3 position) {
-		return new DamageSource(attacker.level.damageSources().damageTypes.getHolderOrThrow(damageType), attacker, null, position);
+		return new DamageSource(attacker.level().damageSources().damageTypes.getHolderOrThrow(damageType), attacker, null, position);
 	}
 
 	public static DamageSource indirectEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, Entity projectile) {
-		return new DamageSource(projectile.level.damageSources().damageTypes.getHolderOrThrow(damageType), projectile, attacker);
+		return new DamageSource(projectile.level().damageSources().damageTypes.getHolderOrThrow(damageType), projectile, attacker);
 	}
 
 	public static boolean doMobMeleeAttack(Entity attacker, Entity target, float dmg) {
@@ -76,7 +76,7 @@ public final class DamageUtil {
 	}
 
 	public static boolean doRecoilAttack(Entity target, float dmg) {
-		return safelyDealDamage(miscDamage(AoADamageTypes.RECOIL, target.level), target, dmg);
+		return safelyDealDamage(miscDamage(AoADamageTypes.RECOIL, target.level()), target, dmg);
 	}
 
 	public static boolean doMiscMagicAttack(Entity attacker, Entity target, float dmg, @Nullable Vec3 position) {
@@ -116,7 +116,7 @@ public final class DamageUtil {
 				.add(attacker.getDeltaMovement().scale(0.5f))
 				.multiply(strength, strength, strength);
 
-		if (target.isOnGround() && attacker.getY() == target.getY())
+		if (target.onGround() && attacker.getY() == target.getY())
 			vec = vec.add(0, 0.25f, 0);
 
 		target.setDeltaMovement(vec);
@@ -149,13 +149,13 @@ public final class DamageUtil {
 
 	public static void killEntityCleanly(Entity entity) {
 		if (!(entity instanceof LivingEntity livingEntity)) {
-			entity.hurt(entity.level.damageSources().outOfWorld(), Float.MAX_VALUE);
+			entity.hurt(entity.level().damageSources().genericKill(), Float.MAX_VALUE);
 			entity.discard();
 
 			return;
 		}
 
-		safelyDealDamage(livingEntity.level.damageSources().outOfWorld(), livingEntity, livingEntity.getHealth());
+		safelyDealDamage(livingEntity.level().damageSources().genericKill(), livingEntity, livingEntity.getHealth());
 
 		if (livingEntity.getHealth() > 0)
 			livingEntity.setHealth(0);

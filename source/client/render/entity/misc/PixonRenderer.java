@@ -21,7 +21,7 @@ public class PixonRenderer extends InvisibleEntityRenderer {
 
 	@Override
 	public void render(Mob entity, float entityYaw, float partialTicks, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1.25f, 3, colour), true, entity.getX(), entity.getY() + 0.65d, entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1.25f, 3, colour), true, entity.getX(), entity.getY() + 0.65d, entity.getZ(), 0, 0, 0);
 	}
 
 	@Override

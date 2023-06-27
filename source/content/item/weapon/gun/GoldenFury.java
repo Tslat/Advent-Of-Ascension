@@ -38,13 +38,13 @@ public class GoldenFury extends BaseGun {
 		super.doFiringEffects(shooter, bullet, stack, hand);
 
 		for (int i = 0; i < 6; i++) {
-			((ServerLevel)shooter.level).sendParticles(ParticleTypes.DRAGON_BREATH, bullet.getX() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getY() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getZ() + RandomUtil.randomScaledGaussianValue(0.2f), 1, 0, 0, 0, 0d);
+			((ServerLevel)shooter.level()).sendParticles(ParticleTypes.DRAGON_BREATH, bullet.getX() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getY() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getZ() + RandomUtil.randomScaledGaussianValue(0.2f), 1, 0, 0, 0, 0d);
 		}
 	}
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		AreaEffectCloud cloud = new AreaEffectCloud(bullet.level, (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
+		AreaEffectCloud cloud = new AreaEffectCloud(bullet.level(), (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
 
 		cloud.setOwner(shooter);
 		cloud.setParticle(ParticleTypes.DRAGON_BREATH);
@@ -53,7 +53,7 @@ public class GoldenFury extends BaseGun {
 		cloud.setRadiusPerTick((5.0F - cloud.getRadius()) / (float)cloud.getDuration());
 		cloud.addEffect(new MobEffectInstance(MobEffects.HARM, 1, 0));
 
-		bullet.level.addFreshEntity(cloud);
+		bullet.level().addFreshEntity(cloud);
 	}
 
 	@Override

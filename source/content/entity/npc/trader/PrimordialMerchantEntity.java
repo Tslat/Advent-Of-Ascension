@@ -41,7 +41,7 @@ public class PrimordialMerchantEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.DUSTOPIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.DUSTOPIA.key);
 	}
 
 	@Nullable

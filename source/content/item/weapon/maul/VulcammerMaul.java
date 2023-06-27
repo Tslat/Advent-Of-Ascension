@@ -23,12 +23,12 @@ public class VulcammerMaul extends BaseMaul {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, Entity target, LivingEntity attacker, float attackCooldown) {
 		if (attackCooldown > 0.85f) {
-			boolean doWorldDamage = AoAGameRules.checkDestructiveWeaponPhysics(attacker.level);
+			boolean doWorldDamage = AoAGameRules.checkDestructiveWeaponPhysics(attacker.level());
 
-			WorldUtil.createExplosion(attacker, attacker.level, (attacker.getX() + target.getX()) / 2d, (attacker.getY() + target.getY()) / 2d, (attacker.getZ() + target.getZ()) / 2d, 2f, doWorldDamage ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, doWorldDamage);
+			WorldUtil.createExplosion(attacker, attacker.level(), (attacker.getX() + target.getX()) / 2d, (attacker.getY() + target.getY()) / 2d, (attacker.getZ() + target.getZ()) / 2d, 2f, doWorldDamage ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, doWorldDamage);
 
 			if (!doWorldDamage) {
-				for (LivingEntity entity : attacker.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(2), EntityUtil.Predicates.HOSTILE_MOB)) {
+				for (LivingEntity entity : attacker.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(2), EntityUtil.Predicates.HOSTILE_MOB)) {
 					entity.setSecondsOnFire(3);
 				}
 			}

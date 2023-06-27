@@ -28,7 +28,7 @@ public class ConfettiClusterEntity extends BaseEnergyShot {
 
 	@Override
 	protected void onHit(HitResult result) {
-		if (!level.isClientSide)
+		if (!level().isClientSide)
 			discard();
 	}
 }

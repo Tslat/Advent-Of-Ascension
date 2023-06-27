@@ -878,5 +878,6 @@
     [
       "consume_raw_halycon_beef"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

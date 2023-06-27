@@ -56,13 +56,13 @@ public class AlarmoEntity extends AoAMeleeMob<AlarmoEntity> {
     public void aiStep() {
         super.aiStep();
 
-        if (level.isClientSide || isNoAi())
+        if (level().isClientSide || isNoAi())
             return;
 
-        List<Player> playerList = level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(4), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && hasLineOfSight(pl));
+        List<Player> playerList = level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(4), pl -> pl != null && !pl.isSpectator() && !pl.isCreative() && hasLineOfSight(pl));
 
         if (!playerList.isEmpty()) {
-            List<LivingEntity> mobList = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB);
+            List<LivingEntity> mobList = level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB);
 
             EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 0).level(20));
 

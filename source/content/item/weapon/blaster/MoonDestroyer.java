@@ -30,7 +30,7 @@ public class MoonDestroyer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new MoonDestroyerShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new MoonDestroyerShotEntity(shooter, this, 60));
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class MoonDestroyer extends BaseBlaster {
 		for (double x = posX - 5; x <= posX + 5; x += 2.5) {
 			for (double y = posY - 5; y <= posY + 5; y += 2.5) {
 				for (double z = posZ - 5; z <= posZ + 5; z += 2.5) {
-					WorldUtil.createExplosion(shooter, shot.level, x, y, z, 2.5f);
+					WorldUtil.createExplosion(shooter, shot.level(), x, y, z, 2.5f);
 				}
 			}
 		}

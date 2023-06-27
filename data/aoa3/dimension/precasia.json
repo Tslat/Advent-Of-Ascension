@@ -6,11 +6,38 @@
       "type": "minecraft:multi_noise",
       "biomes": [
         {
-          "biome": "minecraft:plains",
+          "biome": "aoa3:precasian_plains",
           "parameters": {
             "continentalness": [
-              -0.2,
+              0.1,
               1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -0.5,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -0.5,
+              0.5
+            ],
+            "weirdness": 0.0
+          }
+        },
+        {
+          "biome": "aoa3:precasian_ocean",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              -0.3
             ],
             "depth": [
               -1.0,
@@ -36,11 +63,131 @@
           }
         },
         {
-          "biome": "minecraft:ocean",
+          "biome": "aoa3:precasian_shore",
+          "parameters": {
+            "continentalness": [
+              -0.3,
+              0.1
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -0.2,
+              0.2
+            ],
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              -1.0,
+              1.0
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aoa3:precasian_volcano",
           "parameters": {
             "continentalness": [
               -1.0,
-              -0.3
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              -0.8
+            ],
+            "humidity": [
+              -1.0,
+              -0.5
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.8,
+              1.0
+            ],
+            "weirdness": [
+              0.5,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aoa3:precasian_deadlands",
+          "parameters": {
+            "continentalness": [
+              -1.0,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -0.8,
+              -0.5
+            ],
+            "humidity": [
+              -1.0,
+              0.5
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.7,
+              0.8
+            ],
+            "weirdness": [
+              0.5,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aoa3:precasian_tar_pits",
+          "parameters": {
+            "continentalness": [
+              0.2,
+              1.0
+            ],
+            "depth": [
+              -0.1,
+              0.1
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              1.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.2,
+              0.6
+            ],
+            "weirdness": [
+              0.0,
+              0.5
+            ]
+          }
+        },
+        {
+          "biome": "aoa3:precasian_jungle",
+          "parameters": {
+            "continentalness": [
+              0.2,
+              1.0
             ],
             "depth": [
               -1.0,
@@ -50,9 +197,45 @@
               -1.0,
               1.0
             ],
-            "humidity": 1.0,
+            "humidity": [
+              0.3,
+              1.0
+            ],
             "offset": 0.0,
-            "temperature": 1.0,
+            "temperature": [
+              0.2,
+              0.8
+            ],
+            "weirdness": [
+              -1.0,
+              1.0
+            ]
+          }
+        },
+        {
+          "biome": "aoa3:precasian_desert",
+          "parameters": {
+            "continentalness": [
+              0.4,
+              1.0
+            ],
+            "depth": [
+              -1.0,
+              1.0
+            ],
+            "erosion": [
+              -1.0,
+              1.0
+            ],
+            "humidity": [
+              -1.0,
+              0.0
+            ],
+            "offset": 0.0,
+            "temperature": [
+              0.2,
+              0.9
+            ],
             "weirdness": [
               -1.0,
               1.0

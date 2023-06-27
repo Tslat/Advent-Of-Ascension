@@ -27,5 +27,6 @@
     [
       "max_dodge"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

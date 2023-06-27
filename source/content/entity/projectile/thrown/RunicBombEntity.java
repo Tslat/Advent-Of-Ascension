@@ -77,9 +77,9 @@ public class RunicBombEntity extends BaseBullet implements HardProjectile, ItemS
 	}
 
 	private void explode() {
-		WorldUtil.createExplosion(shooter, level, this, explosionStrength);
+		WorldUtil.createExplosion(shooter, level(), this, explosionStrength);
 
-		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(3.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(3.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
 			EntityUtil.applyPotions(e, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 30).level(100));
 
 			if (e instanceof RunicGolemEntity && ((RunicGolemEntity)e).isShielded())

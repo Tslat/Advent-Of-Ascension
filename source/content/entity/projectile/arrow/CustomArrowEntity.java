@@ -67,7 +67,7 @@ public class CustomArrowEntity extends Arrow {
 	}
 
 	public static CustomArrowEntity fromArrow(AbstractArrow baseArrow, BaseBow bow, LivingEntity shooter, double baseDamage) {
-		CustomArrowEntity arrow = new CustomArrowEntity(AoAProjectiles.ARROW.get(), baseArrow.level);
+		CustomArrowEntity arrow = new CustomArrowEntity(AoAProjectiles.ARROW.get(), baseArrow.level());
 
 		arrow.setOwner(shooter);
 		arrow.setBaseDamage(baseDamage);
@@ -89,7 +89,7 @@ public class CustomArrowEntity extends Arrow {
 	}
 
 	public static CustomArrowEntity fromArrow(AbstractArrow baseArrow, BaseCrossbow crossbow, LivingEntity shooter, double baseDamage) {
-		CustomArrowEntity arrow = new CustomArrowEntity(AoAProjectiles.ARROW.get(), baseArrow.level);
+		CustomArrowEntity arrow = new CustomArrowEntity(AoAProjectiles.ARROW.get(), baseArrow.level());
 
 		arrow.setOwner(shooter);
 		arrow.setBaseDamage(baseDamage);
@@ -159,7 +159,7 @@ public class CustomArrowEntity extends Arrow {
 		}
 		else if (rayTrace.getType() == HitResult.Type.BLOCK) {
 			BlockHitResult blockTrace = (BlockHitResult)rayTrace;
-			BlockState blockstate = level.getBlockState(blockTrace.getBlockPos());
+			BlockState blockstate = level().getBlockState(blockTrace.getBlockPos());
 			lastState = blockstate;
 			Vec3 Vec3 = blockTrace.getLocation().subtract(getX(), getY(), getZ());
 
@@ -191,7 +191,7 @@ public class CustomArrowEntity extends Arrow {
 			if (piercingIgnoreEntityIds != null)
 				piercingIgnoreEntityIds.clear();
 
-			blockstate.onProjectileHit(level, blockstate, blockTrace, this);
+			blockstate.onProjectileHit(level(), blockstate, blockTrace, this);
 		}
 	}
 
@@ -258,7 +258,7 @@ public class CustomArrowEntity extends Arrow {
 			}
 
 			if (target instanceof LivingEntity livingTarget) {
-				if (!level.isClientSide && getPierceLevel() <= 0)
+				if (!level().isClientSide && getPierceLevel() <= 0)
 					livingTarget.setArrowCount(livingTarget.getArrowCount() + 1);
 
 				if (getKnockback() > 0) {
@@ -268,7 +268,7 @@ public class CustomArrowEntity extends Arrow {
 						livingTarget.push(Vec3.x, 0.1D, Vec3.z);
 				}
 
-				if (!level.isClientSide && shooter instanceof LivingEntity) {
+				if (!level().isClientSide && shooter instanceof LivingEntity) {
 					EnchantmentHelper.doPostHurtEffects(livingTarget, shooter);
 					EnchantmentHelper.doPostDamageEffects((LivingEntity)shooter, livingTarget);
 				}
@@ -281,7 +281,7 @@ public class CustomArrowEntity extends Arrow {
 				if (!target.isAlive() && piercedAndKilledEntities != null)
 					piercedAndKilledEntities.add(livingTarget);
 
-				if (!level.isClientSide && shooter instanceof ServerPlayer serverPlayer) {
+				if (!level().isClientSide && shooter instanceof ServerPlayer serverPlayer) {
 					if (piercedAndKilledEntities != null && shotFromCrossbow()) {
 						CriteriaTriggers.KILLED_BY_CROSSBOW.trigger(serverPlayer, this.piercedAndKilledEntities);
 					}
@@ -304,7 +304,7 @@ public class CustomArrowEntity extends Arrow {
 
 			yRotO += 180.0F;
 
-			if (!level.isClientSide && getDeltaMovement().lengthSqr() < 0.0000001) {
+			if (!level().isClientSide && getDeltaMovement().lengthSqr() < 0.0000001) {
 				if (pickup == Pickup.ALLOWED)
 					spawnAtLocation(getPickupItem(), 0.1F);
 

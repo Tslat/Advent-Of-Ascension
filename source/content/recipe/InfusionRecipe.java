@@ -316,7 +316,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 
 				for (JsonElement element : GsonHelper.getAsJsonArray(json, "ingredients")) {
 					try {
-						ingredients.add(CraftingHelper.getIngredient(element));
+						ingredients.add(CraftingHelper.getIngredient(element, false));
 					}
 					catch (JsonSyntaxException ex) {
 						if (ex.getMessage().startsWith("Unknown item") && !ModList.get().isLoaded(ex.getMessage().split("'")[1].split(":")[0]))
@@ -336,7 +336,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 			}
 			else {
 				String group = GsonHelper.getAsString(json, "group", "");
-				Ingredient input = CraftingHelper.getIngredient(GsonHelper.getAsJsonObject(json, "input"));
+				Ingredient input = CraftingHelper.getIngredient(GsonHelper.getAsJsonObject(json, "input"), false);
 				ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
 				NonNullList<Ingredient> ingredients = NonNullList.create();
 				int infusionReq = 1;
@@ -362,7 +362,7 @@ public class InfusionRecipe implements Recipe<InfusionTableContainer.InfusionInv
 				}
 
 				for (JsonElement element : GsonHelper.getAsJsonArray(json, "ingredients")) {
-					ingredients.add(CraftingHelper.getIngredient(element));
+					ingredients.add(CraftingHelper.getIngredient(element, false));
 				}
 
 				if (ingredients.isEmpty())

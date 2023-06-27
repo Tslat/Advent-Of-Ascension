@@ -29,12 +29,12 @@ public class Orbocron extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new OrbocronEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new OrbocronEntity(shooter, this, 60));
 	}
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		for (LivingEntity e : shot.level.getEntitiesOfClass(LivingEntity.class, shot.getBoundingBox().inflate(15), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity e : shot.level().getEntitiesOfClass(LivingEntity.class, shot.getBoundingBox().inflate(15), EntityUtil.Predicates.HOSTILE_MOB)) {
 			if (!EntityUtil.isImmuneToSpecialAttacks(e, shooter))
 				EntityUtil.pullEntityIn(target, e, 0.5f, false);
 		}

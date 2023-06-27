@@ -30,12 +30,12 @@ public class Predigun extends BaseGun {
 
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity shooter, int timeCharged) {
-		shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_GUN_MINIGUN_WINDDOWN.get(), SoundSource.PLAYERS, 1.0f, 1f);
+		shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), AoASounds.ITEM_GUN_MINIGUN_WINDDOWN.get(), SoundSource.PLAYERS, 1.0f, 1f);
 	}
 
 	@Override
 	protected void doFiringSound(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
-		shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, getFiringSoundPitchAdjust());
+		shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, getFiringSoundPitchAdjust());
 	}
 
 	@Override

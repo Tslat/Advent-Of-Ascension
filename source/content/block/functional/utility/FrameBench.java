@@ -7,16 +7,14 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.container.FrameBenchContainer;
-import net.tslat.aoa3.util.BlockUtil;
 
 public class FrameBench extends Block {
-	public FrameBench() {
-		super(new BlockUtil.CompactProperties(Material.WOOD, MaterialColor.WOOD).stats(2.5f, 0f).get());
+	public FrameBench(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

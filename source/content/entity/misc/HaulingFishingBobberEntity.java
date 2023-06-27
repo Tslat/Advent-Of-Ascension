@@ -137,7 +137,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	protected void calculateFishingLureBonus() {
 		this.fishingBonusMod = 1;
 
-		Holder<Biome> biome = level.getBiome(blockPosition());
+		Holder<Biome> biome = level().getBiome(blockPosition());
 		float temperature = biome.value().getTemperature(blockPosition());
 
 		if (temperature < 0.15f) {
@@ -150,12 +150,12 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		if (biome.value().getPrecipitationAt(blockPosition()) == Biome.Precipitation.RAIN)
 			this.fishingBonusMod *= 1.1f;
 
-		if (level.isRainingAt(blockPosition()))
+		if (level().isRainingAt(blockPosition()))
 			this.fishingBonusMod *= 1.1f;
 
 		this.fishingBonusMod *= fishingBonusModForBiome(biome);
 
-		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(3, 2, 3), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
+		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level(), getBoundingBox().inflate(3, 2, 3), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
 		if (nearbyFluidBlocks <=  50) {
 			this.fishingBonusMod *= 0.5f;
@@ -167,7 +167,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0025f);
 		this.fishingBonusMod += 0.25f * lure;
 
-		if (!EntityRetrievalUtil.getPlayers(level, getBoundingBox().inflate(5)).isEmpty())
+		if (!EntityRetrievalUtil.getPlayers(level(), getBoundingBox().inflate(5)).isEmpty())
 			this.fishingBonusMod *= 0.2f;
 	}
 
@@ -189,7 +189,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 		Player player = getPlayerOwner();
 
-		if (!level.isClientSide() && !checkStillValid(player)) {
+		if (!level().isClientSide() && !checkStillValid(player)) {
 			discard();
 
 			return;
@@ -201,27 +201,27 @@ public class HaulingFishingBobberEntity extends FishingHook {
 			return;
 		}
 
-		if (!level.isClientSide())
+		if (!level().isClientSide())
 			updateState();
 
 		if (hookedEntity == null)
 			checkIfCollided();
 
-		if (!level.isClientSide() && position().distanceToSqr(player.position()) > Math.pow(getMaxCastDistance() * 2f, 2)) {
+		if (!level().isClientSide() && position().distanceToSqr(player.position()) > Math.pow(getMaxCastDistance() * 2f, 2)) {
 			discard();
 
 			return;
 		}
 
 		BlockPos pos = blockPosition();
-		FluidState fluidState = level.getFluidState(pos);
+		FluidState fluidState = level().getFluidState(pos);
 
 		if (state == State.HOOKED_FISH || state == State.HOOKED_IN_ENTITY) {
 			if (hookedEntity != null) {
 				setPos(hookedEntity.getX(), hookedEntity.getY(0.8d) - 0.1d, hookedEntity.getZ());
 
 				if (state == State.HOOKED_FISH) {
-					if (!level.isClientSide() && hookTime-- <= 0) {
+					if (!level().isClientSide() && hookTime-- <= 0) {
 						stopFishing();
 					}
 					else {
@@ -229,7 +229,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 							hookTime -= 2;
 
 						if (hookedEntity instanceof PathfinderMob) {
-							if (!level.isClientSide()) {
+							if (!level().isClientSide()) {
 								PathfinderMob creature = (PathfinderMob)hookedEntity;
 
 								if (creature.getNavigation().isDone()) {
@@ -241,7 +241,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 							}
 						}
 						else {
-							if (hookedEntity.isOnGround()) {
+							if (hookedEntity.onGround()) {
 								stopFishing();
 							}
 							else {
@@ -255,7 +255,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 			return;
 		}
 
-		if (!level.isClientSide()) {
+		if (!level().isClientSide()) {
 			if (timeUntilFishSpawn >= 0) {
 				if (timeUntilFishSpawn-- == 0)
 					spawnFish((ServerPlayer)player);
@@ -302,7 +302,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	protected void doBobbing(FluidState fluidState) {
 		if (state == State.IN_FLUID) {
 			BlockPos pos = blockPosition();
-			float fluidHeight = fluidState.getHeight(level, pos);
+			float fluidHeight = fluidState.getHeight(level(), pos);
 			Vec3 vector3d = this.getDeltaMovement();
 			double fluidAdjustedHeight = this.getY() + vector3d.y - (double)pos.getY() - (double)fluidHeight + 0.1;
 
@@ -316,7 +316,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	protected void updateState() {
 		State fromState = getState();
 
-		if (onGround || horizontalCollision) {
+		if (onGround() || horizontalCollision) {
 			state = State.STUCK;
 		}
 		else if (state == State.STUCK) {
@@ -333,7 +333,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		if (state == State.IN_FLUID && spawnedFish != null && spawnedFish.distanceToSqr(this) < 0.25f)
 			state = State.HOOKED_FISH;
 
-		FluidState fluidState = level.getFluidState(blockPosition());
+		FluidState fluidState = level().getFluidState(blockPosition());
 
 		if (fluidState.is(getApplicableFluid())) {
 			if (state == State.MIDAIR)
@@ -422,24 +422,24 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	protected void spawnFish(ServerPlayer player) {
-		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()).value(), false, this.level).getRandomElement(player, getLuck());
+		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level().getBiome(blockPosition()).value(), false, this.level()).getRandomElement(player, getLuck());
 
 		if (fishFunction != null) {
-			Entity entity = fishFunction.apply(player.level);
+			Entity entity = fishFunction.apply(player.level());
 
 			if (entity == null)
 				return;
 
 			if (entity instanceof Mob mob) {
-				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, (state, statePos) -> state.getFluidState().getType() == Fluids.WATER);
+				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level(), 5, (state, statePos) -> state.getFluidState().getType() == Fluids.WATER);
 
 				mob.setPos(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
 				mob.getNavigation().createPath(blockPosition(), 0);
-				level.addFreshEntity(mob);
+				level().addFreshEntity(mob);
 			}
 			else {
 				entity.setPos(getX(), getY() - entity.getBbHeight(), getZ());
-				level.addFreshEntity(entity);
+				level().addFreshEntity(entity);
 			}
 
 			spawnedFish = entity;
@@ -449,7 +449,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	protected void checkIfCollided() {
-		HitResult rayTrace = ProjectileUtil.getHitResult(this, this::canHitEntity);
+		HitResult rayTrace = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
 
 		if (rayTrace.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTrace))
 			this.onHit(rayTrace);
@@ -475,7 +475,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		if (!this.leftOwner)
 			this.leftOwner = checkLeftOwner();
 
-		if (!this.level.isClientSide())
+		if (!level().isClientSide())
 			setSharedFlag(6, hasGlowingTag());
 
 		baseTick();
@@ -501,7 +501,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 	@Override
 	protected void onHitEntity(EntityHitResult rayTrace) {
-		if (!level.isClientSide()) {
+		if (!level().isClientSide()) {
 			this.hookedEntity = rayTrace.getEntity();
 
 			updateHookedEntity();
@@ -513,7 +513,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		if (param.equals(HOOKED_ENTITY)) {
 			int id = getEntityData().get(HOOKED_ENTITY);
 
-			this.hookedEntity = id == -1 ? null : this.level.getEntity(id);
+			this.hookedEntity = id == -1 ? null : this.level().getEntity(id);
 		}
 		else if (param.equals(STATE)) {
 			this.state = State.byValue(getEntityData().get(STATE));
@@ -524,7 +524,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	protected void updateHookedEntity() {
-		if (!level.isClientSide())
+		if (!level().isClientSide())
 			getEntityData().set(HOOKED_ENTITY, this.hookedEntity == null ? -1 : this.hookedEntity.getId());
 	}
 

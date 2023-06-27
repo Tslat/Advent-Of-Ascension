@@ -3,16 +3,13 @@ package net.tslat.aoa3.content.block.generation.plants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.VineBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
-import net.tslat.aoa3.util.BlockUtil;
 
 public class VinesBlock extends VineBlock {
-	public VinesBlock(MaterialColor mapColour) {
-		super(new BlockUtil.CompactProperties(Material.REPLACEABLE_PLANT, mapColour).stats(0.2f, 0f).sound(SoundType.GRASS).noClip().randomTicks().get());
+	public VinesBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	public BlockState getStateForPosition(LevelAccessor world, BlockPos pos) {

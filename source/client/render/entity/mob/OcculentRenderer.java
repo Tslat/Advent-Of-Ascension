@@ -39,10 +39,10 @@ public class OcculentRenderer extends AoAMobRenderer {
 			double lerpX = Mth.lerp(partialTicks, entity.xOld, entity.getX());
 			double lerpZ = Mth.lerp(partialTicks, entity.zOld, entity.getZ());
 
-			if (!entity.level.getBlockState(mutablePos.set(lerpX + cloneOffset.x(), entity.blockPosition().getY() - 1, lerpZ + cloneOffset.z())).entityCanStandOn(entity.level, mutablePos, entity))
+			if (!entity.level().getBlockState(mutablePos.set(lerpX + cloneOffset.x(), entity.blockPosition().getY() - 1, lerpZ + cloneOffset.z())).entityCanStandOn(entity.level, mutablePos, entity))
 				continue;
 
-			if (entity.level.getBlockState(mutablePos.move(Direction.UP)).getMaterial().blocksMotion())
+			if (entity.level().getBlockState(mutablePos.move(Direction.UP)).getMaterial().blocksMotion())
 				continue;
 
 			matrix.pushPose();

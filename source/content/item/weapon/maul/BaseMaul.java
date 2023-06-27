@@ -20,8 +20,8 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.Lazy;
@@ -93,7 +93,7 @@ public class BaseMaul extends Item {
 	@Override
 	public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity holder) {
 		if (!world.isClientSide && (double)state.getDestroySpeed(world, pos) != 0.0D)
-			ItemUtil.damageItem(stack, holder, state.getMaterial() == Material.STONE ? 1 : 2, EquipmentSlot.MAINHAND);
+			ItemUtil.damageItem(stack, holder, state.getSoundType() == SoundType.STONE ? 1 : 2, EquipmentSlot.MAINHAND);
 
 		return true;
 	}

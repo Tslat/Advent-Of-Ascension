@@ -126,7 +126,7 @@ public class FrameBenchContainer extends AbstractContainerMenu {
 			stack = slotStack.copy();
 
 			if (index == 0) {
-				slotStack.getItem().onCraftedBy(slotStack, player.level, player);
+				slotStack.getItem().onCraftedBy(slotStack, player.level(), player);
 
 				if (!moveItemStackTo(slotStack, 2, 38, true))
 					return ItemStack.EMPTY;
@@ -188,7 +188,7 @@ public class FrameBenchContainer extends AbstractContainerMenu {
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-				return new FrameBenchContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
+				return new FrameBenchContainer(windowId, inv, ContainerLevelAccess.create(player.level(), pos));
 			}
 		}, pos);
 	}

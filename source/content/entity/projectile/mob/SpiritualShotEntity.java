@@ -16,7 +16,7 @@ public class SpiritualShotEntity extends BaseMobProjectile {
 	}
 
 	public SpiritualShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.SPIRITUAL_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.SPIRITUAL_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

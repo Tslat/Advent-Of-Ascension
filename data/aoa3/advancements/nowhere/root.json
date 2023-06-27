@@ -37,5 +37,6 @@
     [
       "enter_natural_nowhere_portal"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

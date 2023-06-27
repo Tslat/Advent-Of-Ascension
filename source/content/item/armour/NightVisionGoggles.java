@@ -1,5 +1,7 @@
 package net.tslat.aoa3.content.item.armour;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -53,8 +55,7 @@ public class NightVisionGoggles extends AdventArmour {
 		consumer.accept(new IClientItemExtensions() {
 			@Override
 			public void renderHelmetOverlay(ItemStack stack, Player player, int width, int height, float partialTick) {
-				RenderUtil.prepRenderTexture(OVERLAY_TEXTURE);
-				RenderUtil.renderFullscreenTexture();
+				RenderUtil.renderFullscreenTexture(new GuiGraphics(Minecraft.getInstance(), Minecraft.getInstance().renderBuffers().bufferSource()), OVERLAY_TEXTURE);
 			}
 		});
 	}

@@ -16,7 +16,7 @@ public class CottonCandorShotEntity extends BaseMobProjectile {
 	}
 
 	public CottonCandorShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.COTTON_CANDOR_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.COTTON_CANDOR_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

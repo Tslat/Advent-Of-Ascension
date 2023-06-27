@@ -46,7 +46,7 @@ public class CreepirdEntity extends AoAFlyingMeleeMob {
 
 	@Override
 	protected void onAttack(Entity target) {
-		WorldUtil.createExplosion(this, level, 2.5f);
+		WorldUtil.createExplosion(this, level(), 2.5f);
 		discard();
 	}
 
@@ -54,7 +54,7 @@ public class CreepirdEntity extends AoAFlyingMeleeMob {
 	public void die(DamageSource cause) {
 		super.die(cause);
 
-		if (this.dead && !level.isClientSide()) {
+		if (this.dead && !level().isClientSide()) {
 			Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
 			if (player != null && player.hasEffect(MobEffects.POISON) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))

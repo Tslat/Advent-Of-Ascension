@@ -48,7 +48,7 @@ public class AoACommand {
 	}
 
 	protected static void feedback(CommandSourceStack source, String commandName, String langKey, CommandFeedbackType type, Component... args) {
-		source.sendSuccess(AoACommand.getCmdPrefix(commandName).append(LocaleUtil.getLocaleMessage(langKey, args).setStyle(Style.EMPTY.applyFormat(type.getColour()))), true);
+		source.sendSuccess(() -> AoACommand.getCmdPrefix(commandName).append(LocaleUtil.getLocaleMessage(langKey, args).setStyle(Style.EMPTY.applyFormat(type.getColour()))), true);
 	}
 
 	protected static void error(CommandSourceStack source, String commandName, String langKey, Component... args) {

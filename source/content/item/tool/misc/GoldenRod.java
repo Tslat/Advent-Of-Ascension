@@ -41,7 +41,7 @@ public class GoldenRod extends HaulingRod {
 
 	@Override
 	protected HaulingFishingBobberEntity getNewBobber(Player player, ItemStack stack, int lureMod, int luckMod) {
-		return new GoldFishingBobberEntity(player, player.level, stack, luckMod, lureMod);
+		return new GoldFishingBobberEntity(player, player.level(), stack, luckMod, lureMod);
 	}
 
 	@Override

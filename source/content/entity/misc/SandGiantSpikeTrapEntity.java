@@ -48,7 +48,7 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 
 	@Override
 	public void checkDespawn() {
-		if (level.getDifficulty() == Difficulty.PEACEFUL)
+		if (level().getDifficulty() == Difficulty.PEACEFUL)
 			discard();
 	}
 
@@ -56,7 +56,7 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide()) {
+		if (!level().isClientSide()) {
 			if (tickCount > 6000) {
 				discard();
 
@@ -64,8 +64,8 @@ public class SandGiantSpikeTrapEntity extends BasicMiscEntity {
 			}
 
 			if (tickCount > 28 && tickCount % 10 == 0) {
-				for (Entity entity : EntityRetrievalUtil.<Entity>getEntities(level, getBoundingBox(), damagePredicate)) {
-					entity.hurt(level.damageSources().stalagmite(), 3);
+				for (Entity entity : EntityRetrievalUtil.<Entity>getEntities(level(), getBoundingBox(), damagePredicate)) {
+					entity.hurt(level().damageSources().stalagmite(), 3);
 				}
 			}
 		}

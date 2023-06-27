@@ -43,7 +43,7 @@ public class CryptidEntity extends AoAMeleeMob<CryptidEntity> {
 	public void aiStep() {
 		super.aiStep();
 
-		if (level.getBlockState(blockPosition().below()).getBlock() == AoABlocks.HELLSTONE.get() && level.getBlockState(blockPosition()).getMaterial().isReplaceable())
-			level.setBlockAndUpdate(blockPosition(), Blocks.FIRE.defaultBlockState());
+		if (level().getBlockState(blockPosition().below()).getBlock() == AoABlocks.HELLSTONE.stone() && level().getBlockState(blockPosition()).canBeReplaced())
+			level().setBlockAndUpdate(blockPosition(), Blocks.FIRE.defaultBlockState());
 	}
 }

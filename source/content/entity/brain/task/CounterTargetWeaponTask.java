@@ -39,7 +39,7 @@ public class CounterTargetWeaponTask extends Behavior<Mob> {
 		if (!target.isAlive())
 			return false;
 
-		return nextSwitchTime == 0 || nextSwitchTime < owner.level.getGameTime();
+		return nextSwitchTime == 0 || nextSwitchTime < owner.level().getGameTime();
 	}
 
 	@Override

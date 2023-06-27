@@ -59,7 +59,7 @@ public class FloroRPG extends BaseCannon {
 
 			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, (float)dmg * bulletDmgMultiplier) && shooter instanceof ServerPlayer) {
 				if (target instanceof LivingEntity && ((LivingEntity)target).getHealth() == 0 && target.hasImpulse) {
-					if (target.level.isEmptyBlock(target.blockPosition().below()) && target.level.isEmptyBlock(target.blockPosition().below(2)))
+					if (target.level().isEmptyBlock(target.blockPosition().below()) && target.level().isEmptyBlock(target.blockPosition().below(2)))
 						AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/surface_to_air"), "rpg_air_kill");
 				}
 			}

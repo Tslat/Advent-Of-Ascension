@@ -41,7 +41,7 @@ public class RejuvenationStaff extends BaseStaff<Object> {
 		EffectBuilder effect = new EffectBuilder(MobEffects.REGENERATION, 500);
 
 		EntityUtil.applyPotions(caster, effect);
-		EntityUtil.applyPotions(caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), (entity) -> entity != null && entity.isAlive() && !(entity instanceof Enemy)), effect);
+		EntityUtil.applyPotions(caster.level().getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10), (entity) -> entity != null && entity.isAlive() && !(entity instanceof Enemy)), effect);
 	}
 
 	@Override

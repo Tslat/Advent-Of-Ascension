@@ -4,20 +4,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.util.BlockUtil;
 
 public class CloudBlock extends Block {
-	public CloudBlock() {
-		super(new BlockUtil.CompactProperties(Material.AIR, MaterialColor.NONE).stats(0f).sound(SoundType.WOOL).noClip().noOcclusion().noDrops().get());
+	public CloudBlock(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

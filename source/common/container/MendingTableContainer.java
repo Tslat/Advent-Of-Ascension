@@ -128,7 +128,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-				return new MendingTableContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
+				return new MendingTableContainer(windowId, inv, ContainerLevelAccess.create(player.level(), pos));
 			}
 		}, pos);
 	}

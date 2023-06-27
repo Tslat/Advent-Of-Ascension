@@ -60,7 +60,7 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.NETHENGEIC_WITHER.get()).health(420).moveSpeed(0.31).flyingSpeed(0.6).projectileDamage(6).knockbackResist(1).followRange(100).aggroRange(64).knockback(1f).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.ELITE_NETHENGEIC_WITHER.get()).health(950).moveSpeed(0.33).flyingSpeed(1.5f).projectileDamage(30).knockbackResist(1).followRange(100).aggroRange(64).knockback(1f).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.KING_BAMBAMBAM.get()).health(740).moveSpeed(0.2875f).projectileDamage(12).knockbackResist(1).followRange(100).aggroRange(64).armour(10, 30).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.ELITE_KING_BAMBAMBAM.get()).health(950).moveSpeed(0.33).knockbackResist(1).followRange(100).aggroRange(100).knockback(1f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.ELITE_KING_BAMBAMBAM.get()).health(1510).moveSpeed(0.2875f).projectileDamage(25).knockbackResist(1).followRange(100).aggroRange(64).armour(15, 30).build(ev);
 	}
 
 	private static void registerStats(final EntityAttributeCreationEvent ev) {

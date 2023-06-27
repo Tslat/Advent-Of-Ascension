@@ -23,6 +23,6 @@ public class ColourCannon extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new RainbowShotEntity(shooter, this, 120));
+		shooter.level().addFreshEntity(new RainbowShotEntity(shooter, this, 120));
 	}
 }

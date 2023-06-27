@@ -155,7 +155,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
                             () -> new Vec3(targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().randomValueBetween(-1, 1)))
                             .spawnNTimes(10));
 
-            entity.level.playSound(null, this.targetingPosition.x, this.targetingPosition.y, this.targetingPosition.z, AoASounds.ENTITY_FLAMEWALKER_FLARE.get(), SoundSource.HOSTILE, 1, 1);
+            entity.level().playSound(null, this.targetingPosition.x, this.targetingPosition.y, this.targetingPosition.z, AoASounds.ENTITY_FLAMEWALKER_FLARE.get(), SoundSource.HOSTILE, 1, 1);
             AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
         }
 

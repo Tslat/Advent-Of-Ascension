@@ -227,7 +227,7 @@ public final class EntityUtil {
 			Vec3 initialVec = new Vec3(impactingEntity.getX(), impactingEntity.getY(), impactingEntity.getZ());
 			Vec3 projectedVec = initialVec.add(projectionX, projectionY, projectionZ);
 
-			List<Entity> entityList = impactingEntity.level.getEntities(impactingEntity, impactingEntity.getBoundingBox().inflate(projectionX, projectionY, projectionZ));
+			List<Entity> entityList = impactingEntity.level().getEntities(impactingEntity, impactingEntity.getBoundingBox().inflate(projectionX, projectionY, projectionZ));
 
 			for (Entity entity : entityList) {
 				if (entity != impactedEntity)
@@ -244,7 +244,7 @@ public final class EntityUtil {
 	}
 
 	public static boolean canPvp(Player attacker, Player target) {
-		return attacker.level.getServer().isPvpAllowed() && attacker != target && !attacker.isAlliedTo(target);
+		return attacker.level().getServer().isPvpAllowed() && attacker != target && !attacker.isAlliedTo(target);
 	}
 
 	public static Direction getDirectionFacing(Entity entity, boolean lateralOnly) {
@@ -293,8 +293,8 @@ public final class EntityUtil {
 		HashSet<Entity> killers = new HashSet<>(tracker.entries.size());
 
 		for (CombatEntry entry : tracker.entries) {
-			if (entry.isCombatRelated() && (filter == null || filter.test(entry.getSource().getEntity())))
-				killers.add(entry.getSource().getEntity());
+			if (entry.source().getEntity() instanceof LivingEntity attacker && (filter == null || filter.test(attacker)))
+				killers.add(attacker);
 		}
 
 		return killers;

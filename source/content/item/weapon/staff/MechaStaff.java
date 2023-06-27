@@ -61,11 +61,11 @@ public class MechaStaff extends BaseStaff<Object> {
 			if (armour != null && armour.getValue() > 0 && !armour.hasModifier(DEBUFF)) {
 				EntityUtil.applyAttributeModifierSafely(entity, Attributes.ARMOR, DEBUFF, false);
 
-				if (!entity.level.isClientSide) {
+				if (!entity.level().isClientSide) {
 					AABB bounds = entity.getBoundingBox();
 
 					for (int i = 0; i < 8; i++) {
-						((ServerLevel)entity.level).sendParticles(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getBbWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getBbWidth()), 1, 0, 0, 0, 0);
+						((ServerLevel)entity.level()).sendParticles(ParticleTypes.TOTEM_OF_UNDYING, bounds.minX + RandomUtil.randomValueUpTo(entity.getBbWidth()), bounds.maxY + 0.1d, bounds.minZ + RandomUtil.randomValueUpTo(entity.getBbWidth()), 1, 0, 0, 0, 0);
 					}
 				}
 			}

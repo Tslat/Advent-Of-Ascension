@@ -18,7 +18,7 @@ public class LightRod extends HaulingRod {
 
 	@Override
 	protected HaulingFishingBobberEntity getNewBobber(Player player, ItemStack stack, int lureMod, int luckMod) {
-		return new HaulingFishingBobberEntity(player, player.level, stack, luckMod, lureMod);
+		return new HaulingFishingBobberEntity(player, player.level(), stack, luckMod, lureMod);
 	}
 
 	@Override

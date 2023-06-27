@@ -12,6 +12,7 @@ import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.library.util.RecipeUtil;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -58,19 +59,20 @@ public class FrameBenchRecipeCategory implements IRecipeCategory<FrameBenchRecip
 	}
 
 	@Override
-	public void draw(FrameBenchRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
+	public void draw(FrameBenchRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
 		Minecraft mc = Minecraft.getInstance();
+		PoseStack poseStack = guiGraphics.pose();
 
-		drawButton(matrix, mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
-		drawButton(matrix, mc, AoAItems.BLASTER_FRAME.get(), recipe, 65, 1);
-		drawButton(matrix, mc, AoAItems.CANNON_FRAME.get(), recipe, 85, 1);
-		drawButton(matrix, mc, AoAItems.HELMET_FRAME.get(), recipe, 35, 21);
-		drawButton(matrix, mc, AoAItems.CHESTPLATE_FRAME.get(), recipe, 55, 21);
-		drawButton(matrix, mc, AoAItems.LEGGINGS_FRAME.get(), recipe, 75, 21);
-		drawButton(matrix, mc, AoAItems.BOOTS_FRAME.get(), recipe, 95, 21);
-		drawButton(matrix, mc, AoAItems.GUN_FRAME.get(), recipe, 45, 41);
-		drawButton(matrix, mc, AoAItems.SHOTGUN_FRAME.get(), recipe, 65, 41);
-		drawButton(matrix, mc, AoAItems.SNIPER_FRAME.get(), recipe, 85, 41);
+		drawButton(poseStack, mc, AoAItems.CROSSBOW_FRAME.get(), recipe, 45, 1);
+		drawButton(poseStack, mc, AoAItems.BLASTER_FRAME.get(), recipe, 65, 1);
+		drawButton(poseStack, mc, AoAItems.CANNON_FRAME.get(), recipe, 85, 1);
+		drawButton(poseStack, mc, AoAItems.HELMET_FRAME.get(), recipe, 35, 21);
+		drawButton(poseStack, mc, AoAItems.CHESTPLATE_FRAME.get(), recipe, 55, 21);
+		drawButton(poseStack, mc, AoAItems.LEGGINGS_FRAME.get(), recipe, 75, 21);
+		drawButton(poseStack, mc, AoAItems.BOOTS_FRAME.get(), recipe, 95, 21);
+		drawButton(poseStack, mc, AoAItems.GUN_FRAME.get(), recipe, 45, 41);
+		drawButton(poseStack, mc, AoAItems.SHOTGUN_FRAME.get(), recipe, 65, 41);
+		drawButton(poseStack, mc, AoAItems.SNIPER_FRAME.get(), recipe, 85, 41);
 	}
 
 	private void drawButton(PoseStack matrix, Minecraft mc, Item frame, FrameBenchRecipe recipe, int x, int y) {

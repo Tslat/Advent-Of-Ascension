@@ -249,7 +249,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 	}
 
 	@Override
-	public Map<Activity, BrainActivityGroup<AoABoss>> getAdditionalTasks() {
+	public Map<Activity, BrainActivityGroup<? extends AoABoss>> getAdditionalTasks() {
 		return Map.of(AoABrainActivities.FIGHT_2.get(),
 				new BrainActivityGroup(AoABrainActivities.FIGHT_2.get())
 						.priority(11)
@@ -319,7 +319,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 	}
 
 	private void doFireball(@Nullable Vec3 startPos, LivingEntity target) {
-		BaseMobProjectile projectile = new FireballEntity(this.level, this, BaseMobProjectile.Type.PHYSICAL);
+		BaseMobProjectile projectile = new FireballEntity(this.level(), this, BaseMobProjectile.Type.PHYSICAL);
 
 		if (startPos != null)
 			projectile.setPos(startPos);
@@ -336,13 +336,13 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 					.multiply(timeToTarget, timeToTarget, timeToTarget));
 		}
 
-		PositionAndMotionUtil.moveTowards(projectile, targetPos, 1.6d, 4 - level.getDifficulty().getId());
+		PositionAndMotionUtil.moveTowards(projectile, targetPos, 1.6d, 4 - level().getDifficulty().getId());
 		projectile.setDeltaMovement(PositionAndMotionUtil.accountForGravity(projectile.position(), projectile.getDeltaMovement(), target.position(), projectile.getGravity()));
 		PositionAndMotionUtil.faceTowardsMotion(projectile);
 
 		playSound(SoundEvents.BLAZE_SHOOT, 1, 1);
 
-		level.addFreshEntity(projectile);
+		level().addFreshEntity(projectile);
 	}
 
 	@Override
@@ -371,7 +371,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 				target.setSecondsOnFire((int)Math.ceil(Math.max(0, target.getRemainingFireTicks()) / 20f) + 3);
 
 				if (target instanceof LivingEntity livingEntity)
-					livingEntity.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE.get(), 200, this.level.getDifficulty().getId()));
+					livingEntity.addEffect(new MobEffectInstance(AoAMobEffects.NETHENGEIC_CURSE.get(), 200, this.level().getDifficulty().getId()));
 			}
 		}
 	}
@@ -381,7 +381,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 		if (projectile == null)
 			return;
 
-		if (level instanceof ServerLevel serverLevel)
+		if (level() instanceof ServerLevel serverLevel)
 			new StandardExplosion(AoAExplosions.NETHENGEIC_WITHER_FIREBALL, serverLevel, projectile, this).explode();
 	}
 
@@ -446,7 +446,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 	public void aiStep() {
 		super.aiStep();
 
-		if (level.isClientSide()) {
+		if (level().isClientSide()) {
 			if (hasAura()) {
 				for (int i = 0; i < 3; i++) {
 					double cos = Math.cos(getX() * RandomUtil.randomValueBetween(-1, 1));
@@ -524,7 +524,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 							Vec3 angle = fireball.position().subtract(entity.position()).multiply(1, 0, 1).normalize();
 
 							fireball.setYRot((float)Math.atan2(angle.z, angle.y));
-							PositionAndMotionUtil.moveTowards(fireball, fireball.position().add(angle.multiply(10, 10, 10)), 1.4d, 4 - entity.level.getDifficulty().getId());
+							PositionAndMotionUtil.moveTowards(fireball, fireball.position().add(angle.multiply(10, 10, 10)), 1.4d, 4 - entity.level().getDifficulty().getId());
 							PositionAndMotionUtil.faceTowardsMotion(fireball);
 						}
 
@@ -534,13 +534,13 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 
 					for (double angle = RandomUtil.randomValueBetween(-45, 45) * Mth.DEG_TO_RAD; angle <= 360 * Mth.DEG_TO_RAD; angle += 45 * Mth.DEG_TO_RAD) {
 						for (double offsetY = -2f; offsetY <= 2; offsetY += 1f) {
-							FireballEntity projectile = new FireballEntity(entity.level, entity, BaseMobProjectile.Type.PHYSICAL);
+							FireballEntity projectile = new FireballEntity(entity.level(), entity, BaseMobProjectile.Type.PHYSICAL);
 							double xAngle = Math.cos(angle);
 							double zAngle = Math.sin(angle);
 
 							projectile.setPos(entity.position().add(2 * xAngle, entity.getBbHeight() / 2f + offsetY, 2 * zAngle));
 							projectile.setDeltaMovement(0, -0.01f, 0);
-							entity.level.addFreshEntity(projectile);
+							entity.level().addFreshEntity(projectile);
 							this.fireballs.add(projectile);
 						}
 					}
@@ -580,7 +580,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 						Vec3 angle = fireball.position().subtract(entity.position()).normalize();
 
 						fireball.setYRot((float)Math.atan2(angle.z, angle.y));
-						PositionAndMotionUtil.moveTowards(fireball, fireball.position().add(angle.multiply(10, 10, 10)), 1.2d, 4 - entity.level.getDifficulty().getId());
+						PositionAndMotionUtil.moveTowards(fireball, fireball.position().add(angle.multiply(10, 10, 10)), 1.2d, 4 - entity.level().getDifficulty().getId());
 						PositionAndMotionUtil.faceTowardsMotion(fireball);
 					}
 
@@ -618,7 +618,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 					packet.particle(ParticleBuilder.forPos(RandomUtil.fiftyFifty() ? ParticleTypes.SMALL_FLAME : ParticleTypes.SQUID_INK, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, EntityUtil.getEntityCenter(entity), 64);
+				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
 				if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
 					entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);

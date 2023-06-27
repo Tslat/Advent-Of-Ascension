@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.lootbox;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -29,7 +28,7 @@ public class ShinyBox extends Item {
 		ItemStack heldStack = player.getItemInHand(hand);
 
 		if (player instanceof ServerPlayer pl) {
-			ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot((ServerLevel)pl.level, new ResourceLocation(AdventOfAscension.MOD_ID, "items/shiny_box"), LootUtil.getGiftContext((ServerLevel)pl.level, pl.position(), pl)));
+			ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot(new ResourceLocation(AdventOfAscension.MOD_ID, "items/shiny_box"), LootUtil.getGiftParameters(pl.serverLevel(), pl.position(), pl)));
 
 			if (!pl.isCreative())
 				heldStack.shrink(1);

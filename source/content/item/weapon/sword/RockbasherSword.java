@@ -23,7 +23,7 @@ public class RockbasherSword extends BaseSword {
 		double armour = target.getAttribute(Attributes.ARMOR).getValue();
 
 		if (armour > 0)
-			WorldUtil.createExplosion(attacker, attacker.level, target.getX(), target.getY() + target.getBbHeight() / 1.5, target.getZ(), 0.5f + (float)(3 * armour / 30f));
+			WorldUtil.createExplosion(attacker, attacker.level(), target.getX(), target.getY() + target.getBbHeight() / 1.5, target.getZ(), 0.5f + (float)(3 * armour / 30f));
 	}
 
 	@Override

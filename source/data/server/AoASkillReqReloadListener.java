@@ -42,7 +42,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 		SkillReqHandler handler = getRequirements(ForgeRegistries.ITEMS.getKey(item));
 
 		if (handler != null && !handler.canEquip(plData)) {
-			if (notifyPlayer && !plData.player().level.isClientSide())
+			if (notifyPlayer && !plData.player().level().isClientSide())
 				handler.notifyPlayerCantEquip((ServerPlayer)plData.player());
 
 			return false;
@@ -55,7 +55,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
 
 		if (handler != null && !handler.canPlaceBlock(plData)) {
-			if (notifyPlayer && !plData.player().level.isClientSide())
+			if (notifyPlayer && !plData.player().level().isClientSide())
 				handler.notifyPlayerCantPlaceBlock((ServerPlayer)plData.player());
 
 			return false;
@@ -68,7 +68,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
 
 		if (handler != null && !handler.canBreakBlock(plData)) {
-			if (notifyPlayer && !plData.player().level.isClientSide())
+			if (notifyPlayer && !plData.player().level().isClientSide())
 				handler.notifyPlayerCantBreakBlock((ServerPlayer)plData.player());
 
 			return false;
@@ -81,7 +81,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
 
 		if (handler != null && !handler.canInteractWith(plData)) {
-			if (notifyPlayer && !plData.player().level.isClientSide())
+			if (notifyPlayer && !plData.player().level().isClientSide())
 				handler.notifyPlayerCantInteract((ServerPlayer)plData.player());
 
 			return false;

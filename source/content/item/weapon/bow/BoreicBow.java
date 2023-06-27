@@ -20,8 +20,8 @@ public class BoreicBow extends BaseBow {
 	@Override
 	public void onArrowTick(CustomArrowEntity arrow, Entity shooter) {
 		if (arrow.isInWater()) {
-			if (!arrow.level.isClientSide)
-				WorldUtil.createExplosion(shooter, arrow.level, arrow, arrow.isCritArrow() ? 2.0f : 1.0f);
+			if (!arrow.level().isClientSide)
+				WorldUtil.createExplosion(shooter, arrow.level(), arrow, arrow.isCritArrow() ? 2.0f : 1.0f);
 
 			arrow.discard();
 		}

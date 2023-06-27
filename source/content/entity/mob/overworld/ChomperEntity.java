@@ -89,7 +89,7 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER),
 				new OneRandomBehaviour<>(
 						new FirstApplicableBehaviour<>(
-								new SeekRandomNearbyPosition<>().speedModifier(0.8f).validPositions((entity, state) -> state.getFluidState().is(FluidTags.WATER)).startCondition(entity -> entity.level.isDay() && !entity.isInWater()),
+								new SeekRandomNearbyPosition<>().speedModifier(0.8f).validPositions((entity, state) -> state.getFluidState().is(FluidTags.WATER)).startCondition(entity -> entity.level().isDay() && !entity.isInWater()),
 								new SetRandomWalkTarget<>().speedModifier(0.7f)),
 						new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))));
 	}

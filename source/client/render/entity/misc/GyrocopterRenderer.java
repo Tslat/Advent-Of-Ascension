@@ -47,7 +47,7 @@ public class GyrocopterRenderer extends EntityRenderer<GyrocopterEntity> {
 			IVertexBuilder ivertexbuilder = buffer.getBuffer(rendertype);
 
 			this.model.renderToBuffer(matrix, ivertexbuilder, packedLight, ColourUtil.WHITE, 1f, 1f, 1f, shade ? 0.15f : 1f);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 3, ColourUtil.CYAN), entity.getX(), entity.getY() + 0.3f, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 3, ColourUtil.CYAN), entity.getX(), entity.getY() + 0.3f, entity.getZ(), 0, 0, 0);
 		}
 
 		matrix.popPose();

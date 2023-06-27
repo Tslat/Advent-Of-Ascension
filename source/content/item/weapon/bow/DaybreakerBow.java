@@ -31,7 +31,7 @@ public class DaybreakerBow extends BaseBow {
 
 					arrow.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
 					arrow.teleportTo(arrow.getX() + x, arrow.getY(), arrow.getZ() + z);
-					arrow.level.addFreshEntity(arrow);
+					arrow.level().addFreshEntity(arrow);
 				}
 			}
 		}

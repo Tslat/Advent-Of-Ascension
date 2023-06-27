@@ -36,5 +36,6 @@
     [
       "obtain_experiment_w_801"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

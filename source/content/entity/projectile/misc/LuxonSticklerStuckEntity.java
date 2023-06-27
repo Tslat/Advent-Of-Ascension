@@ -26,7 +26,7 @@ public class LuxonSticklerStuckEntity extends ThrowableProjectile {
 	}
 
 	public LuxonSticklerStuckEntity(LivingEntity shooter, BaseGun gun, LivingEntity target, float bulletDmgMultiplier) {
-		super(AoAProjectiles.LUXON_STICKLER_STUCK.get(), shooter.level);
+		super(AoAProjectiles.LUXON_STICKLER_STUCK.get(), shooter.level());
 		this.target = target;
 		this.shooter = shooter;
 		moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 0);
@@ -51,32 +51,32 @@ public class LuxonSticklerStuckEntity extends ThrowableProjectile {
 
 		age++;
 
-		if (level.isClientSide)
+		if (level().isClientSide)
 			return;
 
 		if (target != null && target.isAlive()) {
 			moveTo(target.getX(), target.getY() + target.getEyeHeight(), target.getZ(), 0, 360);
 		}
 		else {
-			WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
+			WorldUtil.createExplosion(getOwner(), level(), this, 2.0f);
 
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				discard();
 
 			return;
 		}
 
 		if (age >= 100) {
-			WorldUtil.createExplosion(getOwner(), level, getX(), getY() + 1, getZ(), 2.0f);
+			WorldUtil.createExplosion(getOwner(), level(), getX(), getY() + 1, getZ(), 2.0f);
 
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				discard();
 
 			return;
 		}
 
-		if (level.getGameTime() % 40 == 0)
-			EntityUtil.applyPotions(level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(7), EntityUtil.Predicates.HOSTILE_MOB), new EffectBuilder(MobEffects.GLOWING, 45));
+		if (level().getGameTime() % 40 == 0)
+			EntityUtil.applyPotions(level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(7), EntityUtil.Predicates.HOSTILE_MOB), new EffectBuilder(MobEffects.GLOWING, 45));
 	}
 
 	@Override

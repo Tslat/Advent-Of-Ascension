@@ -14,12 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -36,7 +34,6 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.content.world.teleporter.specific.*;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -49,8 +46,8 @@ public class PortalBlock extends Block {
 	private final int particleColour;
 	private final ResourceKey<Level> world;
 
-	public PortalBlock(ResourceKey<Level> world, MaterialColor mapColour, int particleColour) {
-		super(new BlockUtil.CompactProperties(Material.PORTAL, mapColour).unbreakable().light(11).sound(SoundType.GLASS).noClip().get());
+	public PortalBlock(BlockBehaviour.Properties properties, ResourceKey<Level> world, int particleColour) {
+		super(properties);
 
 		registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X));
 

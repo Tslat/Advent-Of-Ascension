@@ -34,7 +34,7 @@ public class PoisonPlunger extends BaseBlaster {
 		float y = (-Mth.sin(shooter.getXRot() / 180.0F * (float)Math.PI)) * 5;
 		float z = (Mth.cos(shooter.getYRot() / 180.0F * (float)Math.PI) * Mth.cos(shooter.getXRot() / 180.0F * (float)Math.PI)) * 5;
 
-		AreaEffectCloud cloud = new AreaEffectCloud(shooter.level, shooter.getX() + x, shooter.getY() + shooter.getEyeHeight() + y, shooter.getZ() + z);
+		AreaEffectCloud cloud = new AreaEffectCloud(shooter.level(), shooter.getX() + x, shooter.getY() + shooter.getEyeHeight() + y, shooter.getZ() + z);
 
 		cloud.setRadius(4);
 		cloud.setWaitTime(0);
@@ -42,7 +42,7 @@ public class PoisonPlunger extends BaseBlaster {
 		cloud.setFixedColor(ColourUtil.RGB(51, 102, 0));
 		cloud.addEffect(new MobEffectInstance(MobEffects.POISON, 200, 1, false, true));
 		cloud.setOwner(shooter);
-		shooter.level.addFreshEntity(cloud);
+		shooter.level().addFreshEntity(cloud);
 	}
 
 	@Override

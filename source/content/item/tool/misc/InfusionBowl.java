@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.item.tool.misc;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -14,7 +13,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
@@ -57,42 +56,42 @@ public class InfusionBowl extends Item {
 		if (!(target instanceof PixonEntity))
 			return InteractionResult.FAIL;
 
-		if (player instanceof ServerPlayer) {
+		if (player instanceof ServerPlayer serverPlayer) {
 			PixonEntity pixon = (PixonEntity)target;
 
-			if (!pixon.canHarvest((ServerPlayer)player, stack))
+			if (!pixon.canHarvest(serverPlayer, stack))
 				return InteractionResult.PASS;
 
-			LootTable harvestTable = player.getServer().getLootTables().get(pixon.getLootTable());
+			LootTable harvestTable = serverPlayer.getServer().getLootData().getLootTable(pixon.getLootTable());
 
 			int harvestCount = 0;
 			List<ItemStack> harvestStacks = new ArrayList<>();
-			LootContext lootContext = (new LootContext.Builder((ServerLevel)player.level).withParameter(LootContextParams.KILLER_ENTITY, player).withParameter(LootContextParams.THIS_ENTITY, pixon).withParameter(LootContextParams.ORIGIN, pixon.position())).withParameter(LootContextParams.DAMAGE_SOURCE, pixon.level.damageSources().generic()).create(LootContextParamSets.ENTITY);
+			LootParams lootParams = new LootParams.Builder(serverPlayer.serverLevel()).withParameter(LootContextParams.KILLER_ENTITY, serverPlayer).withParameter(LootContextParams.THIS_ENTITY, pixon).withParameter(LootContextParams.ORIGIN, pixon.position()).withParameter(LootContextParams.DAMAGE_SOURCE, pixon.level().damageSources().generic()).create(LootContextParamSets.ENTITY);
 
 			while (harvestCount < getHarvestAmount() && pixon.getHealth() > 0) {
-				if (!player.isCreative())
-					ItemUtil.damageItem(stack, player, 1, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
+				if (!serverPlayer.isCreative())
+					ItemUtil.damageItem(stack, serverPlayer, 1, hand == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
 
-				harvestStacks.addAll(harvestTable.getRandomItems(lootContext));
+				harvestStacks.addAll(harvestTable.getRandomItems(lootParams));
 
 				pixon.setHealth(pixon.getHealth() - 7 + RandomUtil.randomNumberUpTo(6));
-				pixon.setLastHurtByPlayer(player);
+				pixon.setLastHurtByPlayer(serverPlayer);
 
 				harvestCount++;
 			}
 
 			if (!harvestStacks.isEmpty())
-				ItemUtil.givePlayerMultipleItems(player, harvestStacks);
+				ItemUtil.givePlayerMultipleItems(serverPlayer, harvestStacks);
 
 			if (pixon.isAlive()) {
-				pixon.nextHarvestTick = pixon.level.getGameTime() + 8 + pixon.getRandom().nextInt(32);
+				pixon.nextHarvestTick = pixon.level().getGameTime() + 8 + pixon.getRandom().nextInt(32);
 			}
 			else {
-				player.awardStat(Stats.ENTITY_KILLED.get(pixon.getType()));
+				serverPlayer.awardStat(Stats.ENTITY_KILLED.get(pixon.getType()));
 			}
 
-			player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-			player.level.playSound(null, pixon.blockPosition().getX(), pixon.blockPosition().getY(), pixon.blockPosition().getZ(), AoASounds.ENTITY_PIXON_HARVEST.get(), SoundSource.MASTER, 1.0f, 1.0f);
+			serverPlayer.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+			serverPlayer.level().playSound(null, pixon.blockPosition().getX(), pixon.blockPosition().getY(), pixon.blockPosition().getZ(), AoASounds.ENTITY_PIXON_HARVEST.get(), SoundSource.MASTER, 1.0f, 1.0f);
 		}
 
 		return InteractionResult.SUCCESS;

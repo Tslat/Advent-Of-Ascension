@@ -34,7 +34,7 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 		if (EntityUtil.isNaturalSpawnReason(reason)) {
 			BlockPos.MutableBlockPos spawnPos = new BlockPos.MutableBlockPos().set(blockPosition());
 
-			while (!world.getBlockState(spawnPos).getMaterial().blocksMotion() && spawnPos.getY() > 0) {
+			while (!world.getBlockState(spawnPos).blocksMotion() && spawnPos.getY() > 0) {
 				spawnPos.move(Direction.DOWN);
 			}
 
@@ -94,7 +94,7 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 	public void aiStep() {
 		super.aiStep();
 
-		if (!onGround)
+		if (!onGround())
 			setDeltaMovement(getDeltaMovement().add(0, -0.005, 0));
 	}
 

@@ -45,16 +45,16 @@ public class UndergroundCaveStructure extends AoAStructureBase<IntRangeConfig> {
 				BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos().set(originPos.getX() - ((bounds.x1 - bounds.x0) / 2), bounds.y0, originPos.getZ() - ((bounds.z1 - bounds.z0) / 2));
 				int height = bounds.y1 - bounds.y0;
 
-				if (blockReader.getBlockState(testPos).getMaterial().isReplaceable()) {
-					while (blockReader.getBlockState(testPos.move(Direction.DOWN)).getMaterial().isReplaceable() && testPos.getY() > 0) {
+				if (blockReader.getBlockState(testPos).canBeReplaced()) {
+					while (blockReader.getBlockState(testPos.move(Direction.DOWN)).canBeReplaced() && testPos.getY() > 0) {
 						;
 					}
 
 					if (testPos.getY() <= 2)
 						return;
 				}
-				else if (blockReader.getBlockState(testPos.above(height)).getMaterial().isReplaceable()) {
-					while (blockReader.getBlockState(testPos.move(Direction.UP)).getMaterial().isReplaceable() && testPos.getY() + height < blockReader.getMaxBuildHeight()) {
+				else if (blockReader.getBlockState(testPos.above(height)).canBeReplaced()) {
+					while (blockReader.getBlockState(testPos.move(Direction.UP)).canBeReplaced() && testPos.getY() + height < blockReader.getMaxBuildHeight()) {
 						;
 					}
 

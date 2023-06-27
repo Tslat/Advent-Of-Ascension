@@ -48,7 +48,7 @@ public class OcculentEntity extends AoAMeleeMob<OcculentEntity> {
 	public void tick() {
 		super.tick();
 
-		if (level.isClientSide() && RandomUtil.oneInNChance(200)) {
+		if (level().isClientSide() && RandomUtil.oneInNChance(200)) {
 			double xPos = rand().nextFloat() * 10 - 5;
 			double zPos = rand().nextFloat() * 10 - 5;
 

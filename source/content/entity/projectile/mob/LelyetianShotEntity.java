@@ -16,7 +16,7 @@ public class LelyetianShotEntity extends BaseMobProjectile {
 	}
 
 	public LelyetianShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.LELYETIAN_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.LELYETIAN_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

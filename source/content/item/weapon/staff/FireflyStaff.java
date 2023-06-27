@@ -55,7 +55,7 @@ public class FireflyStaff extends BaseStaff<Object> {
 				return true;
 
 			for (int i = 0; i < RandomUtil.randomNumberBetween(1, 7); i++) {
-				shot.level.addFreshEntity(new FireflyShotEntity(shooter, this, (FireflyShotEntity)shot, targetUUID, RandomUtil.randomScaledGaussianValue(0.35f), 1.4f, RandomUtil.randomScaledGaussianValue(0.35f)));
+				shot.level().addFreshEntity(new FireflyShotEntity(shooter, this, (FireflyShotEntity)shot, targetUUID, RandomUtil.randomScaledGaussianValue(0.35f), 1.4f, RandomUtil.randomScaledGaussianValue(0.35f)));
 			}
 
 			return true;

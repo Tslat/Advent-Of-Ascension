@@ -15,8 +15,8 @@ public class UltimatumShotRenderer extends ParticleProjectileRenderer<UltimatumS
 
 	@Override
 	protected void addParticles(UltimatumShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.25f, 3, ColourUtil.CYAN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.WHITE), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 3, ColourUtil.YELLOW), entity.getX() + RandomUtil.randomValueBetween(-0.5d, 0.5d), entity.getY() + RandomUtil.randomValueBetween(-0.5d, 0.5d), entity.getZ() + RandomUtil.randomValueBetween(-0.5d, 0.5d), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.25f, 3, ColourUtil.CYAN), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.WHITE), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 3, ColourUtil.YELLOW), entity.getX() + RandomUtil.randomValueBetween(-0.5d, 0.5d), entity.getY() + RandomUtil.randomValueBetween(-0.5d, 0.5d), entity.getZ() + RandomUtil.randomValueBetween(-0.5d, 0.5d), 0, 0, 0);
 	}
 }

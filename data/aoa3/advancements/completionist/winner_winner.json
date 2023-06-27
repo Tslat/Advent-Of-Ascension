@@ -26,5 +26,6 @@
     [
       "lotto_win"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -8,8 +8,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -21,8 +21,8 @@ import net.tslat.aoa3.util.WorldUtil;
 import java.util.concurrent.TimeUnit;
 
 public class KrorAltar extends BossAltarBlock {
-	public KrorAltar() {
-		super(MaterialColor.COLOR_GRAY);
+	public KrorAltar(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
@@ -44,13 +44,13 @@ public class KrorAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		if (player.level.getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayer) {
+		if (player.level().getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayer) {
 			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.krorAltar.chargingTable"));
 
 			return false;
 		}
 
-		return WorldUtil.isWorld(player.level, AoADimensions.DEEPLANDS.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.DEEPLANDS.key);
 	}
 
 	@Override

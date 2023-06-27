@@ -127,7 +127,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 						.velocity(RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d)));
 			}
 
-			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, position(), 10);
+			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 10);
 			remove(RemovalReason.KILLED);
 		}
 
@@ -165,7 +165,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
 		if (super.hurt(source, amount)) {
-			if (source.getDirectEntity() instanceof LivingEntity attacker && DamageUtil.isMeleeDamage(source))
+			if (source.getDirectEntity() instanceof LivingEntity attacker && DamageUtil.isMeleeDamage(source) && (!(attacker instanceof Player pl) || pl.getAbilities().invulnerable))
 				attacker.setTicksFrozen(attacker.getTicksFrozen() + 100);
 
 			return true;
@@ -195,7 +195,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 		if (tickCount % 5 == 0)
 			playSound(AoASounds.ICE_WIND.get(), 1.5f, 1f);
 
-		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, getEyePosition(), 200);
+		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), getEyePosition(), 200);
 	}
 
 	@Override

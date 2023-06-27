@@ -130,7 +130,7 @@ public class WebReaperEntity extends AoARangedMob<WebReaperEntity> {
 			if (stage >= 10)
 				return InteractionResult.FAIL;
 
-			if (!level.isClientSide) {
+			if (!level().isClientSide) {
 				heldStack.shrink(1);
 				stage++;
 				updateStage();
@@ -140,7 +140,7 @@ public class WebReaperEntity extends AoARangedMob<WebReaperEntity> {
 			return InteractionResult.SUCCESS;
 		}
 		else if (heldStack.getItem() == Items.ENCHANTED_BOOK && stage > 1) {
-			if (!level.isClientSide) {
+			if (!level().isClientSide) {
 				player.setItemInHand(hand, new ItemStack(AoAItems.BOOK_OF_SHADOWS.get()));
 
 				if (stage <= 10) {
@@ -157,7 +157,7 @@ public class WebReaperEntity extends AoARangedMob<WebReaperEntity> {
 	}
 
 	private void updateStage() {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			entityData.set(STAGE, stage);
 		}
 		else {
@@ -166,7 +166,7 @@ public class WebReaperEntity extends AoARangedMob<WebReaperEntity> {
 
 		stageMod = 1 + (stage - 1) / 7.5f;
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			EntityUtil.reapplyAttributeModifier(this, Attributes.MAX_HEALTH, STAGE_HEALTH_MOD, false);
 			EntityUtil.reapplyAttributeModifier(this, Attributes.KNOCKBACK_RESISTANCE, STAGE_KNOCKBACK_MOD, false);
 			EntityUtil.reapplyAttributeModifier(this, AoAAttributes.RANGED_ATTACK_DAMAGE.get(), STAGE_DAMAGE_MOD, false);

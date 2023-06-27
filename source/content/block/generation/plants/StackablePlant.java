@@ -12,57 +12,24 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraftforge.common.IForgeShearable;
 import net.minecraftforge.common.IPlantable;
-import net.tslat.aoa3.util.BlockUtil;
+import net.minecraftforge.common.PlantType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
 public class StackablePlant extends Block implements IForgeShearable, IPlantable {
-	protected Supplier<Block> hatBlock;
-	protected Supplier<Block> stemBlock;
-	protected final List<Material> growthMaterials;
-
-	public StackablePlant(Block.Properties properties, Material... growthMaterial) {
+	protected Supplier<? extends StackablePlant> hatBlock;
+	protected Supplier<? extends StackablePlant> stemBlock;
+// TODO fix this to use blockstates =/
+	public StackablePlant(Block.Properties properties) {
 		super(properties);
-
-		this.hatBlock = () -> this;
-		this.stemBlock = () -> this;
-		this.growthMaterials = Arrays.asList(growthMaterial);
-	}
-
-	public StackablePlant(Material material, MaterialColor mapColour, SoundType sound, Material... growthMaterial) {
-		super(new BlockUtil.CompactProperties(material, mapColour).sound(sound).noClip().get());
-
-		this.hatBlock = () -> this;
-		this.stemBlock = () -> this;
-		this.growthMaterials = Arrays.asList(growthMaterial);
-	}
-
-	public StackablePlant(MaterialColor mapColour, Material... growthMaterials) {
-		this(Material.PLANT, mapColour, SoundType.GRASS, growthMaterials);
-	}
-
-	public StackablePlant setStemBlock(Supplier<Block> block) {
-		this.stemBlock = block;
-
-		return this;
-	}
-
-	public StackablePlant setHatBlock(Supplier<Block> block) {
-		this.hatBlock = block;
-
-		return this;
 	}
 
 	@Override
@@ -71,7 +38,7 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 		BlockState blockState = world.getBlockState(newPos = pos.above());
 		Block block = blockState.getBlock();
 
-		while (block == stemBlock.get() || block == hatBlock.get()) {
+		while (block == this.stemBlock.get() || block == this.hatBlock.get()) {
 			world.setBlock(newPos, Blocks.AIR.defaultBlockState(), 35);
 			world.levelEvent(player, 2001, newPos, Block.getId(blockState));
 
@@ -88,10 +55,15 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 	}
 
 	@Override
-	public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
-		BlockState targetState = world.getBlockState(pos.below());
+	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
+		BlockState targetState = level.getBlockState(pos.below());
 
-		return ((growthMaterials.isEmpty() || growthMaterials.contains(targetState.getMaterial())) && targetState.isSolidRender(world, pos.below())) || targetState.getBlock() == stemBlock.get();
+		return targetState.getBlock() == this.stemBlock.get() || targetState.canSustainPlant(level, pos.below(), Direction.UP, this);
+	}
+
+	@Override
+	public PlantType getPlantType(BlockGetter level, BlockPos pos) {
+		return PlantType.CAVE;
 	}
 
 	@Override
@@ -105,7 +77,7 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 	}
 
 	@Override
-	public boolean isShearable(@Nonnull ItemStack item, Level world, BlockPos pos) {
+	public boolean isShearable(@NotNull ItemStack item, Level world, BlockPos pos) {
 		return true;
 	}
 
@@ -129,9 +101,9 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 		return state;
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
-	public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level world, BlockPos pos, int fortune) {
+	public List<ItemStack> onSheared(@Nullable Player player, @NotNull ItemStack item, Level world, BlockPos pos, int fortune) {
 		ArrayList<ItemStack> drops = new ArrayList<ItemStack>();
 
 		drops.add(new ItemStack(Item.byBlock(this)));

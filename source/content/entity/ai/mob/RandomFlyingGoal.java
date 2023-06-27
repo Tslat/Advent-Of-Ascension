@@ -29,7 +29,7 @@ public class RandomFlyingGoal extends Goal {
 		else if (maintainTarget && taskOwner.getTarget() != null) {
 			return false;
 		}
-		else if (taskOwner.isOnGround()) {
+		else if (taskOwner.onGround()) {
 			return true;
 		}
 		else {
@@ -50,7 +50,7 @@ public class RandomFlyingGoal extends Goal {
 	@Override
 	public void start() {
 		RandomSource rand = this.taskOwner.getRandom();
-		float heightMod = (float)(taskOwner.getY() + 1) / (float)(taskOwner.level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)taskOwner.getX(), (int)taskOwner.getZ()) + 10);
+		float heightMod = (float)(taskOwner.getY() + 1) / (float)(taskOwner.level().getHeight(Heightmap.Types.MOTION_BLOCKING, (int)taskOwner.getX(), (int)taskOwner.getZ()) + 10);
 		double targetX = this.taskOwner.getX() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);
 		double targetY = this.taskOwner.getY() + (double)((rand.nextFloat() * 2.0F - heightMod) * 16.0F);
 		double targetZ = this.taskOwner.getZ() + (double)((rand.nextFloat() * 2.0F - 1.0F) * 16.0F);

@@ -8,8 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -18,19 +18,19 @@ import net.tslat.aoa3.util.WorldUtil;
 import javax.annotation.Nullable;
 
 public class VinocorneShrine extends BossAltarBlock {
-	public VinocorneShrine() {
-		super(MaterialColor.COLOR_GREEN);
+	public VinocorneShrine(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level, AoADimensions.GARDENCIA.key) && player.level.getBlockState(pos.above()).getMaterial().isReplaceable();
+		return WorldUtil.isWorld(player.level(), AoADimensions.GARDENCIA.key) && player.level().getBlockState(pos.above()).canBeReplaced();
 	}
 
 	@Override
 	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
-		player.level.setBlockAndUpdate(blockPos.above(), AoABlocks.LIVING_GROWTH.get().defaultBlockState());
-		player.level.scheduleTick(blockPos.above(), AoABlocks.LIVING_GROWTH.get(), 40);
+		player.level().setBlockAndUpdate(blockPos.above(), AoABlocks.LIVING_GROWTH.get().defaultBlockState());
+		player.level().scheduleTick(blockPos.above(), AoABlocks.LIVING_GROWTH.get(), 40);
 
 		//sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAMobs.VINOCORNE.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}

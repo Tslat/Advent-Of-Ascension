@@ -15,6 +15,6 @@ public class LyonicShotRenderer extends ParticleProjectileRenderer<LyonicShotEnt
 
 	@Override
 	protected void addParticles(LyonicShotEntity entity, float partialTicks) {
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, RandomUtil.getRandomSelection(ColourUtil.RGB(30, 29, 22), ColourUtil.RGB(204, 172, 0))), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 1, 3, RandomUtil.getRandomSelection(ColourUtil.RGB(30, 29, 22), ColourUtil.RGB(204, 172, 0))), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 }

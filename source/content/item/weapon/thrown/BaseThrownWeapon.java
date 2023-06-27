@@ -70,7 +70,7 @@ public abstract class BaseThrownWeapon extends BaseGun {
 		if (weaponStack.isEmpty())
 			return null;
 
-		if (!shooter.level.isClientSide() && shooter instanceof Player && !((Player)shooter).isCreative())
+		if (!shooter.level().isClientSide() && shooter instanceof Player && !((Player)shooter).isCreative())
 			weaponStack.shrink(1);
 
 		return createProjectileEntity(shooter, weaponStack, hand);

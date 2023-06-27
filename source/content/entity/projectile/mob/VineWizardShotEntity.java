@@ -17,7 +17,7 @@ public class VineWizardShotEntity extends BaseMobProjectile {
 	}
 
 	public VineWizardShotEntity(AoARangedMob shooter, Entity target, Type projectileType) {
-		super(AoAProjectiles.VINE_WIZARD_SHOT.get(), shooter.level, shooter, target, projectileType);
+		super(AoAProjectiles.VINE_WIZARD_SHOT.get(), shooter.level(), shooter, target, projectileType);
 	}
 
 	@Override

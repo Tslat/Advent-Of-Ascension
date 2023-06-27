@@ -18,7 +18,7 @@ public class HellfireProjectileEntity extends ThrowableProjectile {
 	}
 
 	public HellfireProjectileEntity(HellfireEntity source, double targetPosX, double targetPosY, double targetPosZ) {
-		super(AoAProjectiles.HELLFIRE_TAIL.get(), source.getX(), source.getY(), source.getZ(), source.level);
+		super(AoAProjectiles.HELLFIRE_TAIL.get(), source.getX(), source.getY(), source.getZ(), source.level());
 
 		Vec3 motion = new Vec3(targetPosX - source.getX(), targetPosY - source.getY(), targetPosZ - source.getZ());
 
@@ -36,7 +36,7 @@ public class HellfireProjectileEntity extends ThrowableProjectile {
 
 	@Override
 	protected void onHit(HitResult result) {
-		if (!level.isClientSide)
+		if (!level().isClientSide)
 			discard();
 	}
 

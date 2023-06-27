@@ -56,7 +56,7 @@ public class BattlebornArmour extends AdventArmour {
 		if (counter == 1) {
 			EntityUtil.removeAttributeModifier(plData.player(), Attributes.ATTACK_SPEED, BATTLEBORN_ARMOUR_BUFF);
 		}
-		else if (counter > 0 && plData.player().level.getGameTime() % 10 == 0) {
+		else if (counter > 0 && plData.player().level().getGameTime() % 10 == 0) {
 			EntityUtil.removeAttributeModifier(plData.player(), Attributes.ATTACK_SPEED, BATTLEBORN_ARMOUR_BUFF);
 			EntityUtil.applyAttributeModifierSafely(plData.player(), Attributes.ATTACK_SPEED, buff(Math.min(0.65, counter / 240d)), false);
 		}

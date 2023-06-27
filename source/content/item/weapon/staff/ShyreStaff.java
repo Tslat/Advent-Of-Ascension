@@ -53,7 +53,7 @@ public class ShyreStaff extends BaseStaff<Object> {
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
-		Level world = shooter.level;
+		Level world = shooter.level();
 		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(hitPos.x(), hitPos.y(), hitPos.z());
 		BlockState state = world.getBlockState(testPos);
 		Vec3 shotMotion = shot.getDeltaMovement();
@@ -77,7 +77,7 @@ public class ShyreStaff extends BaseStaff<Object> {
 
 		shooter.teleportTo(testVec.x(), testVec.y(), testVec.z());
 
-		if (shooter instanceof ServerPlayer && WorldUtil.isWorld(shooter.level, AoADimensions.LUNALUS.key))
+		if (shooter instanceof ServerPlayer && WorldUtil.isWorld(shooter.level(), AoADimensions.LUNALUS.key))
 			AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
 	}
 

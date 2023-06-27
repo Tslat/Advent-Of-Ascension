@@ -221,7 +221,7 @@ public final class WorldUtil {
 		for (int i = Math.min(world.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z) + 2, world.dimensionType().logicalHeight()); i > minY; i--) {
 			BlockState state;
 
-			if ((state = world.getBlockState(testPos.set(x, i, z))).isAir() || (allowFluids && state.getMaterial().isLiquid())) {
+			if ((state = world.getBlockState(testPos.set(x, i, z))).isAir() || (allowFluids && state.liquid())) {
 				if (headBlock) {
 					if (!feetBlock)
 						feetBlock = true;

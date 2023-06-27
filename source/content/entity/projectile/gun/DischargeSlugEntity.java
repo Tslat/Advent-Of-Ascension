@@ -46,6 +46,6 @@ public class DischargeSlugEntity extends BaseBullet implements HardProjectile {
 	}
 
 	protected void explode(Vec3 position) {
-		WorldUtil.createExplosion(getOwner(), level, this, 1.8f);
+		WorldUtil.createExplosion(getOwner(), level(), this, 1.8f);
 	}
 }

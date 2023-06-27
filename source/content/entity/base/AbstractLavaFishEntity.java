@@ -77,10 +77,10 @@ public abstract class AbstractLavaFishEntity extends LavaMobEntity {
 	}
 
 	public void aiStep() {
-		if (!this.isInLava() && this.onGround && this.verticalCollision) {
+		if (!this.isInLava() && this.onGround() && this.verticalCollision) {
 			this.setDeltaMovement(this.getDeltaMovement().add((this.random.nextFloat() * 2 - 1) * 0.05f, 0.4f, (this.random.nextFloat() * 2 - 1) * 0.05f));
 
-			this.onGround = false;
+			setOnGround(false);
 			this.hasImpulse = true;
 
 			this.playSound(this.getFlopSound(), this.getSoundVolume(), this.getVoicePitch());

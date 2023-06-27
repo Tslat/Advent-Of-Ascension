@@ -9,15 +9,15 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.lighting.LayerLightEngine;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.lighting.LightEngine;
 
 import java.util.function.Supplier;
 
-public class WaterGrassBlock extends GrassBlock {
-	public WaterGrassBlock(MaterialColor mapColour, Supplier<Block> soilBlock, boolean growsInDark) {
-		super(mapColour, soilBlock, growsInDark);
+public class WaterGrassBlock extends AoAGrassBlock {
+	public WaterGrassBlock(BlockBehaviour.Properties properties, Supplier<Block> soilBlock, boolean growsInDark) {
+		super(properties, soilBlock, growsInDark);
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class WaterGrassBlock extends GrassBlock {
 		if (topBlock.getFluidState().getAmount() == 8)
 			return true;
 
-		return LayerLightEngine.getLightBlockInto(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getLightBlock(world, topPos)) < world.getMaxLightLevel();
+		return LightEngine.getLightBlockInto(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getLightBlock(world, topPos)) < world.getMaxLightLevel();
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class WaterGrassBlock extends GrassBlock {
 			return true;
 		}
 		else {
-			int i = LayerLightEngine.getLightBlockInto(worldReader, state, pos, topBlock, upPos, Direction.UP, topBlock.getLightBlock(worldReader, upPos));
+			int i = LightEngine.getLightBlockInto(worldReader, state, pos, topBlock, upPos, Direction.UP, topBlock.getLightBlock(worldReader, upPos));
 
 			return i < worldReader.getMaxLightLevel();
 		}

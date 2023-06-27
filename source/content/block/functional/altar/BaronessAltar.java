@@ -4,15 +4,15 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
 
 public class BaronessAltar extends BossAltarBlock {
-	public BaronessAltar() {
-		super(MaterialColor.COLOR_PURPLE);
+	public BaronessAltar(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
@@ -32,7 +32,7 @@ public class BaronessAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level, AoADimensions.BARATHOS.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.BARATHOS.key);
 	}
 
 	@Override

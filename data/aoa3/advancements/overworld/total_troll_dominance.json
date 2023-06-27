@@ -50,5 +50,6 @@
       "obtain_ornate_smash_trophy",
       "obtain_ornate_elite_smash_trophy"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

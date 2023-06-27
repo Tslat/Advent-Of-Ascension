@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.GameRenderer;
@@ -27,6 +28,7 @@ import net.tslat.aoa3.common.packet.packets.ToggleAoAAbilityPacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
@@ -105,7 +107,9 @@ public class AdventGuiTabPlayer extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		final RenderContext renderContext = RenderContext.of(guiGraphics);
+		PoseStack poseStack = guiGraphics.pose();
 		adjustedMouseX = (int)(mouseX * (1 / AdventMainGui.SCALE));
 		adjustedMouseY = (int)(mouseY * (1 / AdventMainGui.SCALE));
 
@@ -120,7 +124,7 @@ public class AdventGuiTabPlayer extends Screen {
 
 			poseStack.pushPose();
 			poseStack.scale(skillRenderScale, skillRenderScale, 1);
-			super.render(poseStack, adjustedMouseX, adjustedMouseY, partialTicks);
+			super.render(guiGraphics, adjustedMouseX, adjustedMouseY, partialTicks);
 
 			poseStack.popPose();
 
@@ -135,31 +139,31 @@ public class AdventGuiTabPlayer extends Screen {
 
 			poseStack.pushPose();
 
-			RenderUtil.drawScaledString(poseStack, font, "x", 740, 5, 3f, hoveringSkillClose ? ColourUtil.RGB(20, 20, 20) : ColourUtil.BLACK, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderScaledText(poseStack, Component.literal("x"), 740, 5, 3f, hoveringSkillClose ? ColourUtil.RGB(75, 10, 10) : ColourUtil.BLACK, RenderUtil.TextRenderType.OUTLINED);
 
 			poseStack.translate(150 - skillRenderWidth / 2f, 20, 0);
 
-			RenderUtil.drawCenteredScaledMessage(poseStack, font, abilityPane.skill.getName(), 0, 0, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, abilityPane.skill.getName(), 0, 0, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 
 			poseStack.translate(0, 20, 0);
 			poseStack.pushPose();
 			poseStack.translate(-skillRenderWidth, 0, 0);
 			poseStack.scale(3f, 3f, 1);
 
-			skillRenderer.renderInGui(poseStack, abilityPane.skill, partialTicks, adjustedMouseX, adjustedMouseY, AoASkillRenderer.ProgressRenderType.None, false);
+			skillRenderer.renderInGui(renderContext, abilityPane.skill, partialTicks, adjustedMouseX, adjustedMouseY, AoASkillRenderer.ProgressRenderType.None, false);
 
 			poseStack.popPose();
 
-			RenderUtil.drawCenteredScaledMessage(poseStack, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillLevel", ""), 0, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(poseStack, font, String.valueOf(abilityPane.skill.getLevel(true)), 0, 95, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(poseStack, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXp", ""), 0, 120, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(poseStack, font, NumberUtil.roundToNthDecimalPlace(abilityPane.skill.getXp(), 2), 0, 135, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(poseStack, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXpRemaining", ""), 0, 160, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(poseStack, font, NumberUtil.roundToNthDecimalPlace(PlayerUtil.getXpRequiredForNextLevel(abilityPane.skill.getLevel(true)) - abilityPane.skill.getXp(), 2), 0, 175, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(poseStack, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillProgress", ""), 0, 200, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(poseStack, font, PlayerUtil.getLevelProgressPercentage(abilityPane.skill.getLevel(true), abilityPane.skill.getXp()) + "%", 0, 215, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledMessage(poseStack, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillCycles", ""), 0, 240, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-			RenderUtil.drawCenteredScaledString(poseStack, font, String.valueOf(abilityPane.skill.getCycles()), 0, 255, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillLevel", ""), 0, 80, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.literal(String.valueOf(abilityPane.skill.getLevel(true))), 0, 95, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXp", ""), 0, 120, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.literal(NumberUtil.roundToNthDecimalPlace(abilityPane.skill.getXp(), 2)), 0, 135, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillXpRemaining", ""), 0, 160, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.literal(NumberUtil.roundToNthDecimalPlace(PlayerUtil.getXpRequiredForNextLevel(abilityPane.skill.getLevel(true)), 2)), 0, 175, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillProgress", ""), 0, 200, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.literal(PlayerUtil.getLevelProgressPercentage(abilityPane.skill.getLevel(true), abilityPane.skill.getXp()) + "%"), 0, 215, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.skillCycles", ""), 0, 240, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.literal(String.valueOf(abilityPane.skill.getCycles())), 0, 255, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 
 			if (abilityPane.skill.getLevel(true) >= 100 && abilityPane.skill.getCycles() < 10) {
 				MutableComponent text = addCycleLastClicked > 0 ? Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle.confirm") : Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.addCycle");
@@ -169,7 +173,7 @@ public class AdventGuiTabPlayer extends Screen {
 				if (System.currentTimeMillis() - addCycleLastClicked > 3000)
 					addCycleLastClicked = -1;
 
-				RenderUtil.drawCenteredScaledMessage(poseStack, font, text, 0, 275, 1.5f, hoveringAddCycle ? ColourUtil.RGB(255, 100, 100) : ColourUtil.RGB(255, 50, 50), RenderUtil.StringRenderType.DROP_SHADOW);
+				RenderUtil.renderCenteredScaledText(poseStack, text, 0, 275, 1.5f, hoveringAddCycle ? ColourUtil.RGB(255, 100, 100) : ColourUtil.RGB(255, 50, 50), RenderUtil.TextRenderType.DROP_SHADOW);
 			}
 			else {
 				hoveringAddCycle = false;
@@ -177,12 +181,12 @@ public class AdventGuiTabPlayer extends Screen {
 
 			poseStack.popPose();
 
-			RenderUtil.drawCenteredScaledMessage(poseStack, font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.abilities"), 500, 20, 2f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.abilities"), 500, 20, 2f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 
 			poseStack.popPose();
 
 			if (abilityPane != null)
-				abilityPane.render(poseStack, adjustedMouseX, adjustedMouseY, partialTicks);
+				abilityPane.render(guiGraphics, adjustedMouseX, adjustedMouseY, partialTicks);
 
 			return;
 		}
@@ -195,7 +199,7 @@ public class AdventGuiTabPlayer extends Screen {
 		int totalLevel = ClientPlayerDataManager.get().getTotalLevel();
 
 		if (totalLevel == 0) {
-			RenderUtil.drawCenteredScaledMessage(matrix, mc.font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.noSkills"), 280, 80, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(matrix, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.noSkills"), 280, 80, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 
 			return;
 		}
@@ -203,8 +207,8 @@ public class AdventGuiTabPlayer extends Screen {
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, TOTAL_LEVEL_ICON);
 		RenderUtil.renderScaledCustomSizedTexture(matrix, 10, 14, 0, 0, 48, 48, 60, 60, 48, 48);
-		RenderUtil.drawCenteredScaledMessage(matrix, mc.font, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.totalLevel"), 40, 10, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
-		RenderUtil.drawCenteredScaledString(matrix, mc.font, String.valueOf(ClientPlayerDataManager.get().getTotalLevel()), 40, 40, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.renderCenteredScaledText(matrix, Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.player.totalLevel"), 40, 10, 1, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
+		RenderUtil.renderCenteredScaledText(matrix, Component.literal(String.valueOf(ClientPlayerDataManager.get().getTotalLevel())), 40, 40, 1, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 	}
 
 	private void drawPlayerBox(PoseStack poseStack, int mouseX, int mouseY, int scale, float partialTicks) {
@@ -219,7 +223,7 @@ public class AdventGuiTabPlayer extends Screen {
 		float mouseAngleY = (float)Math.atan((((AdventMainGui.scaledRootY + 465) - 111 - mouseY) / 40.0F));
 
 		poseStack.translate(40, 206, 1050.0F);
-		RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, name, 0, 206 - 310, 1, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+		RenderUtil.renderCenteredScaledText(poseStack, name, 0, 206 - 310, 1, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 		poseStack.scale(1.0F, 1.0F, -1.0F);
 		poseStack.translate(0.0D, 0.0D, 1000.0D);
 		poseStack.scale((float)scale * 0.625f, (float)scale * 0.625f, (float)scale * 0.625f);
@@ -406,10 +410,10 @@ public class AdventGuiTabPlayer extends Screen {
 		}
 
 		@Override
-		public void drawPaneContents(PoseStack matrix, int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
+		public void drawPaneContents(GuiGraphics guiGraphics, int top, int left, int right, int bottom, float scrollDistance, float partialTicks) {
 			Minecraft mc = Minecraft.getInstance();
-			Font font = mc.font;
 			float center = (right - left) / 2f;
+			PoseStack poseStack = guiGraphics.pose();
 
 			if (isMouseHovering() && mouseX < right - 8) {
 				hoveredAbility = Math.min((int)-((top - mouseY - scrollDistance) / 50f), sortedAbilities.size() - 1);
@@ -418,9 +422,9 @@ public class AdventGuiTabPlayer extends Screen {
 				hoveredAbility = -1;
 			}
 
-			matrix.pushPose();
-			matrix.translate(left, top, 0);
-			matrix.translate(0, -scrollDistance, 0);
+			poseStack.pushPose();
+			poseStack.translate(left, top, 0);
+			poseStack.translate(0, -scrollDistance, 0);
 
 			for (int i = 0; i < sortedAbilities.size(); i++) {
 				AoAAbility.Instance ability = sortedAbilities.get(i);
@@ -435,18 +439,18 @@ public class AdventGuiTabPlayer extends Screen {
 						colour = ColourUtil.RGB(150, 150, 100);
 				}
 
-				RenderUtil.drawScaledString(matrix, font, String.valueOf(ability.getLevelReq()), 5, 2, 1.5f, colour, RenderUtil.StringRenderType.OUTLINED);
-				RenderUtil.drawCenteredScaledMessage(matrix, font, ability.getName(), center, 2, 1.5f, colour, RenderUtil.StringRenderType.OUTLINED);
-				matrix.translate(0, 20, 0);
-				RenderUtil.drawWrappedMessage(matrix, font, ability.getDescription(), 5, 2, right - left - 10, colour);
-				matrix.translate(0, 30, 0);
+				RenderUtil.renderScaledText(poseStack, Component.literal(String.valueOf(ability.getLevelReq())), 5, 2, 1.5f, colour, RenderUtil.TextRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(poseStack, ability.getName(), center, 2, 1.5f, colour, RenderUtil.TextRenderType.OUTLINED);
+				poseStack.translate(0, 20, 0);
+				RenderUtil.renderWrappedText(poseStack, ability.getDescription(), 5, 2, right - left - 10, colour, RenderUtil.TextRenderType.NORMAL);
+				poseStack.translate(0, 30, 0);
 			}
 
-			matrix.popPose();
+			poseStack.popPose();
 		}
 
 		@Override
-		public void drawBackground(PoseStack matrix) {}
+		public void drawBackground(GuiGraphics guiGraphics) {}
 	}
 
 	private static class SkillEntry extends Button {
@@ -466,18 +470,19 @@ public class AdventGuiTabPlayer extends Screen {
 		}
 
 		@Override
-		public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {
+		public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 			if (this.visible) {
 				this.isHovered = isMouseOver(mouseX - AdventMainGui.scaledTabRootX, mouseY - AdventMainGui.scaledTabRootY);
+				PoseStack poseStack = guiGraphics.pose();
 
 				poseStack.pushPose();
 				poseStack.scale(2, 2, 1);
 				poseStack.translate(getX(), getY(), 0);
-				renderer.renderInGui(poseStack, skill, partialTicks, mouseX, mouseY, AoAConfigs.CLIENT.hudSkillProgressRenderType.get(), true);
+				renderer.renderInGui(RenderContext.of(guiGraphics), skill, partialTicks, mouseX, mouseY, AoAConfigs.CLIENT.hudSkillProgressRenderType.get(), true);
 				poseStack.translate(0, -5, 0);
 				poseStack.scale(0.5f, 0.5f, 1);
 
-				RenderUtil.drawCenteredScaledMessage(poseStack, Minecraft.getInstance().font, getMessage(), width, 0, 1, isHovered ? ColourUtil.RGB(255, 255, 100) : ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(poseStack, getMessage(), width, 0, 1, isHovered ? ColourUtil.RGB(255, 255, 100) : ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 				poseStack.popPose();
 			}
 		}

@@ -35,7 +35,7 @@ public class HeadHunter extends BaseSniper {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity && target.level instanceof ServerLevel serverLevel) {
+		if (target instanceof LivingEntity && target.level() instanceof ServerLevel serverLevel) {
 
 			if (impactPos != null) {
 				double headMinRange = (target.getBoundingBox().minY + target.getEyeHeight()) - target.getBbHeight() * 0.105f;

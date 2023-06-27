@@ -79,10 +79,10 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 
 		if (!powderStack.isEmpty() && brickStack.getItem() == BlockItem.byBlock(Blocks.OBSIDIAN)) {
 			if (powderStack.getItem() == AoAItems.DARKLY_POWDER.get()) {
-				output.setItem(0, new ItemStack(AoABlocks.DARKWASH_BRICKS.get(), 2));
+				output.setItem(0, new ItemStack(AoABlocks.DARKWASH_BRICKS.stone(), 2));
 			}
 			else if (powderStack.getItem() == AoAItems.WHITEWASHING_SOLUTION.get()) {
-				output.setItem(0, new ItemStack(AoABlocks.WHITEWASH_BRICKS.get(), 2));
+				output.setItem(0, new ItemStack(AoABlocks.WHITEWASH_BRICKS.stone(), 2));
 			}
 			else {
 				output.setItem(0, ItemStack.EMPTY);
@@ -108,7 +108,7 @@ public class WhitewashingTableContainer extends UtilityBlockContainer {
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int windowId, Inventory inv, Player player) {
-				return new WhitewashingTableContainer(windowId, inv, ContainerLevelAccess.create(player.level, pos));
+				return new WhitewashingTableContainer(windowId, inv, ContainerLevelAccess.create(player.level(), pos));
 			}
 		}, pos);
 	}

@@ -29,7 +29,7 @@ public class BlastBarrel extends BaseShotgun {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		WorldUtil.createExplosion(shooter, shooter.level, bullet, 2f);
+		WorldUtil.createExplosion(shooter, shooter.level(), bullet, 2f);
 	}
 
 	@Override

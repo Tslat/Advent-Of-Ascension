@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 public abstract class FaunamancyTrapEntity extends Entity {
 
 	public FaunamancyTrapEntity(EntityType<? extends FaunamancyTrapEntity> entityType, Player player, int lifeSpan) {
-		this(entityType, player.level);
+		this(entityType, player.level());
 	}
 
 	public FaunamancyTrapEntity(EntityType<? extends FaunamancyTrapEntity> entityType, Level level) {

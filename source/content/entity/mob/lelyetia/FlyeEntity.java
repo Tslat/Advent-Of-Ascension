@@ -48,7 +48,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 		do {
 			spawnPos = RandomUtil.getRandomPositionWithinRange(altarPos, 20, 20, 20);
 		}
-		while (world.getBlockState(spawnPos).getMaterial().blocksMotion());
+		while (world.getBlockState(spawnPos).blocksMotion());
 
 		setPos(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
 		EntityUtil.applyPotions(this, new EffectBuilder(MobEffects.GLOWING, EffectUtil.MAX_POTION_DURATION).isAmbient().hideParticles());
@@ -116,7 +116,7 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	public void aiStep() {
 		super.aiStep();
 
-		if (!level.isClientSide && altarPos != null && level.getGameTime() % 40 == 0 && !altarPos.closerThan(blockPosition(), 30)) {
+		if (!level().isClientSide && altarPos != null && level().getGameTime() % 40 == 0 && !altarPos.closerThan(blockPosition(), 30)) {
 			double posX = ((altarPos.getX() + random.nextFloat() * 2f - 1f) * 10f);
 			double posY = ((altarPos.getY() + random.nextFloat() * 2f - 1f) * 10f);
 			double posZ = ((altarPos.getZ() + random.nextFloat() * 2f - 1f) * 10f);
@@ -142,8 +142,8 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 	public void die(DamageSource cause) {
 		super.die(cause);
 
-		if (!level.isClientSide) {
-			if (WorldUtil.isWorld(level, AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof Player pl) {
+		if (!level().isClientSide) {
+			if (WorldUtil.isWorld(level(), AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof Player pl) {
 				if (pl.getY() >= 120 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.HAVEN_REALMSTONE.get()));
 			}

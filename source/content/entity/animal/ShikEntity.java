@@ -99,7 +99,7 @@ public class ShikEntity extends AoAAnimal {
 		BlockPos checkPos = new BlockPos(blockPosition());
 		BlockState spawnBlock = world.getBlockState(checkPos.below());
 
-		return spawnBlock.getBlock() == AoABlocks.DENSE_STONE.get();
+		return spawnBlock.getBlock() == AoABlocks.DENSE_STONE.stone();
 	}
 
 	@Override
@@ -136,7 +136,7 @@ public class ShikEntity extends AoAAnimal {
 			}
 
 			if (random.nextFloat() <= 0.05f) {
-				List<ShikEntity> dancePartners = level.getEntitiesOfClass(ShikEntity.class, getBoundingBox().inflate(0.5));
+				List<ShikEntity> dancePartners = level().getEntitiesOfClass(ShikEntity.class, getBoundingBox().inflate(0.5));
 
 				for (ShikEntity potentialPartner : dancePartners) {
 					if (potentialPartner == shik)
@@ -245,7 +245,7 @@ public class ShikEntity extends AoAAnimal {
 
 						for (int x = -1; x <= 1; x++) {
 							for (int z = -1; z <= 1; z++) {
-								if (taskOwner.level.getBlockState(checkPos.set(taskOwner.getX() + -x, taskOwner.getY(), taskOwner.getZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
+								if (taskOwner.level().getBlockState(checkPos.set(taskOwner.getX() + -x, taskOwner.getY(), taskOwner.getZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.stone()) {
 									discard();
 
 									return;
@@ -260,14 +260,14 @@ public class ShikEntity extends AoAAnimal {
 
 					for (int x = 0; x <= 3; x++) {
 						for (int z = 0; z <= 3; z++) {
-							if (taskOwner.level.getBlockState(checkPos.set(taskOwner.getX() + x, taskOwner.getY(), taskOwner.getZ() + z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
+							if (taskOwner.level().getBlockState(checkPos.set(taskOwner.getX() + x, taskOwner.getY(), taskOwner.getZ() + z)).getBlock() == AoABlocks.DENSE_STONE.stone()) {
 								getNavigation().moveTo(checkPos.getX() + 0.5d, checkPos.getY(), checkPos.getZ() + 0.5d, speed);
 								panicTimer++;
 								hidePos = checkPos.immutable();
 
 								return;
 							}
-							else if (taskOwner.level.getBlockState(checkPos.set(taskOwner.getX() + -x, taskOwner.getY(), taskOwner.getZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.get()) {
+							else if (taskOwner.level().getBlockState(checkPos.set(taskOwner.getX() + -x, taskOwner.getY(), taskOwner.getZ() + -z)).getBlock() == AoABlocks.DENSE_STONE.stone()) {
 								taskOwner.getNavigation().moveTo(checkPos.getX() + 0.5d, checkPos.getY(), checkPos.getZ() + 0.5d, speed);
 								panicTimer++;
 								hidePos = checkPos.immutable();

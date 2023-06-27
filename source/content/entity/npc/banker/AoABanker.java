@@ -41,7 +41,7 @@ public abstract class AoABanker extends PathfinderMob {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !isOverworldNPC() || !WorldUtil.isWorld(level, Level.OVERWORLD) || tickCount >= 48000;
+		return !isOverworldNPC() || !WorldUtil.isWorld(level(), Level.OVERWORLD) || tickCount >= 48000;
 	}
 
 	@Override
@@ -56,10 +56,10 @@ public abstract class AoABanker extends PathfinderMob {
 		}
 
 		if (isAlive() && !player.isShiftKeyDown()) {
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				openScreen(player);
 
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		}
 
 		return super.mobInteract(player, hand);

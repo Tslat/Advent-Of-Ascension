@@ -4,8 +4,8 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.entity.player.Player;
@@ -62,12 +62,12 @@ public class SkillMasterEntity extends AoATrader {
 
 	@Override
 	public boolean requiresCustomPersistence() {
-		return super.requiresCustomPersistence() || WorldUtil.isWorld(level, AoADimensions.NOWHERE.key);
+		return super.requiresCustomPersistence() || WorldUtil.isWorld(level(), AoADimensions.NOWHERE.key);
 	}
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return super.isInvulnerableTo(source) || (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key) && !source.is(DamageTypes.OUT_OF_WORLD));
+		return super.isInvulnerableTo(source) || (WorldUtil.isWorld(level(), AoADimensions.NOWHERE.key) && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY));
 	}
 
 	@Override
@@ -82,9 +82,14 @@ public class SkillMasterEntity extends AoATrader {
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
 
-		if (key.equals(TRADING) && level.isClientSide()) {
+		if (key.equals(TRADING) && level().isClientSide()) {
 			this.trading = getEntityData().get(TRADING);
 		}
+	}
+
+	@Override
+	public boolean isPushable() {
+		return !WorldUtil.isWorld(level(), AoADimensions.NOWHERE.key) && super.isPushable();
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class ShyreArcherEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.SHYRELANDS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.SHYRELANDS.key);
 	}
 
 	@Nullable

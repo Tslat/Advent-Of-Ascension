@@ -39,12 +39,12 @@ public class RosidianShotEntity extends BaseEnergyShot {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide && impacted && lifespan > 15 && tickCount % 5 == 0) {
+		if (!level().isClientSide && impacted && lifespan > 15 && tickCount % 5 == 0) {
 			double posX = this.getX() + random.nextGaussian() * 3;
 			double posZ = this.getZ() + random.nextGaussian() * 3;
-			double posY = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(posX, getY(), posZ)).getY();
+			double posY = level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(posX, getY(), posZ)).getY();
 
-			level.addFreshEntity(new RosidianShotEntity(this, posX, posY + 0.5, posZ));
+			level().addFreshEntity(new RosidianShotEntity(this, posX, posY + 0.5, posZ));
 		}
 	}
 

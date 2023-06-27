@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.Tooltip;
@@ -69,31 +70,33 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 	}
 
 	@Override
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(matrix);
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		renderBackground(guiGraphics);
 
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, theme.backgroundTexture());
 
-		matrix.pushPose();
+		PoseStack poseStack = guiGraphics.pose();
+
+		poseStack.pushPose();
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		matrix.scale(SCALE, SCALE, SCALE);
+		poseStack.scale(SCALE, SCALE, SCALE);
 
-		RenderUtil.renderCustomSizedTexture(matrix, scaledRootX, scaledRootY, 24, 16, BACKGROUND_TEXTURE_WIDTH, BACKGROUND_TEXTURE_HEIGHT, GUI_WIDTH, GUI_HEIGHT);
+		RenderUtil.renderCustomSizedTexture(poseStack, scaledRootX, scaledRootY, 24, 16, BACKGROUND_TEXTURE_WIDTH, BACKGROUND_TEXTURE_HEIGHT, GUI_WIDTH, GUI_HEIGHT);
 		RenderSystem.setShaderTexture(0, TITLE);
-		RenderUtil.renderCustomSizedTexture(matrix, scaledRootX - ((GUI_WIDTH - BACKGROUND_TEXTURE_WIDTH) / 2) + 68, scaledRootY - ((GUI_HEIGHT - BACKGROUND_TEXTURE_HEIGHT) / 2) + 21, 0, 0, 892, 112, 892, 112);
+		RenderUtil.renderCustomSizedTexture(poseStack, scaledRootX - ((GUI_WIDTH - BACKGROUND_TEXTURE_WIDTH) / 2) + 68, scaledRootY - ((GUI_HEIGHT - BACKGROUND_TEXTURE_HEIGHT) / 2) + 21, 0, 0, 892, 112, 892, 112);
 
-		super.render(matrix, mouseX, mouseY, partialTicks);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 		if (theme.overlayTexture() != null) {
 			RenderSystem.setShaderTexture(0, theme.overlayTexture());
 			RenderSystem.enableBlend();
-			RenderUtil.renderCustomSizedTexture(matrix, scaledRootX - ((GUI_WIDTH - BACKGROUND_TEXTURE_WIDTH) / 2), scaledRootY - ((GUI_HEIGHT - BACKGROUND_TEXTURE_HEIGHT) / 2), 0, 0, GUI_WIDTH, GUI_HEIGHT, GUI_WIDTH, GUI_HEIGHT);
+			RenderUtil.renderCustomSizedTexture(poseStack, scaledRootX - ((GUI_WIDTH - BACKGROUND_TEXTURE_WIDTH) / 2), scaledRootY - ((GUI_HEIGHT - BACKGROUND_TEXTURE_HEIGHT) / 2), 0, 0, GUI_WIDTH, GUI_HEIGHT, GUI_WIDTH, GUI_HEIGHT);
 			RenderSystem.disableBlend();
 		}
 
-		RenderUtil.drawScaledMessage(matrix, font, Component.literal("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.StringRenderType.DROP_SHADOW);
+		RenderUtil.renderScaledText(poseStack, Component.literal("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.TextRenderType.DROP_SHADOW);
 
 		if (WebUtil.isUpdateAvailable()) {
 			updateMessageTicker--;
@@ -104,15 +107,15 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 			if (updateMessageTicker > 0) {
 				Component msg = LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.update", Component.literal(WebUtil.getLatestVersion()));
 
-				RenderUtil.drawScaledMessage(matrix, font, msg, scaledRootX + 915 - font.width(msg), scaledRootY + 105, 1.25f, ColourUtil.RGB(229, 0, 0), RenderUtil.StringRenderType.DROP_SHADOW);
+				RenderUtil.renderScaledText(poseStack, msg, scaledRootX + 915 - font.width(msg), scaledRootY + 105, 1.25f, ColourUtil.RGB(229, 0, 0), RenderUtil.TextRenderType.DROP_SHADOW);
 			}
 		}
 
 		if (tabScreen != null)
-			tabScreen.render(matrix, mouseX, mouseY, partialTicks);
+			tabScreen.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		RenderSystem.setShaderColor(1, 1, 1, 1);
-		matrix.popPose();
+		poseStack.popPose();
 	}
 
 	public static boolean isBlockingKeys() {
@@ -159,18 +162,19 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 		}
 
 		@Override
-		public void renderWidget(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+		public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
 				Minecraft mc = Minecraft.getInstance();
+				PoseStack poseStack = guiGraphics.pose();
 
 				RenderSystem.setShaderTexture(0, theme.menuButtonTexture());
 				RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
 
 				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 				int textureX = 0;
-				int textureY = buttonHeight * (tabID == selectedTab ? 0 : RenderUtil.selectVForWidgetState(this, 2, 0, 1));
+				int textureY = buttonHeight * (tabID == selectedTab ? 0 : RenderUtil.selectVForWidgetState(this, 2, 2, 1));
 
-				RenderUtil.renderScaledCustomSizedTexture(matrix, scaledRootX + getX(), scaledRootY + getY(), textureX, textureY, 180, 60, 180, 60, 180, 180);
+				RenderUtil.renderScaledCustomSizedTexture(poseStack, scaledRootX + getX(), scaledRootY + getY(), textureX, textureY, 180, 60, 180, 60, 180, 180);
 
 				int stringColour = ColourUtil.RGB(239, 137, 119);
 
@@ -184,10 +188,10 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 					stringColour = ColourUtil.RGB(247, 239, 0);
 				}
 
-				RenderUtil.drawCenteredScaledMessage(matrix, mc.font, getMessage(), scaledRootX + getX() + 90, scaledRootY + getY() + 25, 2f, stringColour, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(poseStack, getMessage(), scaledRootX + getX() + 90, scaledRootY + getY() + 25, 2f, stringColour, RenderUtil.TextRenderType.OUTLINED);
 
-				matrix.pushPose();
-				matrix.scale(2f, 2f, 2f);
+				poseStack.pushPose();
+				poseStack.scale(2f, 2f, 2f);
 
 				if (isHovered) {
 					if (!active && this.tabID == ADVENT_WINDOW_TAB.LORE) {
@@ -201,7 +205,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 				//if (isHovered)
 					//renderToolTip(matrix, (int)(mouseX / SCALE / 2), (int)(mouseY / SCALE / 2));
 
-				matrix.popPose();
+				poseStack.popPose();
 			}
 		}
 

@@ -54,7 +54,7 @@ public class SilencerEntity extends AoAMeleeMob<SilencerEntity> {
     public void aiStep() {
         super.aiStep();
 
-        if (level.isClientSide() && !isNoAi())
+        if (level().isClientSide() && !isNoAi())
             ClientOperations.doSilencerSilence(this);
     }
 }

@@ -8,20 +8,18 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedstoneTorchBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.util.BlockUtil;
 
 public class DustopianLamp extends Block {
 	public static final BooleanProperty LIT = RedstoneTorchBlock.LIT;
 
-	public DustopianLamp() {
-		super(new BlockUtil.CompactProperties(Material.GLASS, MaterialColor.COLOR_GRAY).stats(5f, 10f).light(state -> state.getValue(LIT) ? 14 : 0).get());
+	public DustopianLamp(BlockBehaviour.Properties properties) {
+		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(LIT, false));
 	}

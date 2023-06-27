@@ -152,5 +152,6 @@
       "obtain_crossbow_frame",
       "obtain_blaster_frame"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -36,5 +36,6 @@
     [
       "obtain_occult_axe"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

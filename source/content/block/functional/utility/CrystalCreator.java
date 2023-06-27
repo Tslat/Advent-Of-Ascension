@@ -9,13 +9,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.util.BlockUtil;
 import net.tslat.aoa3.util.ItemUtil;
 
 import java.util.function.Supplier;
@@ -25,8 +22,8 @@ public class CrystalCreator extends Block {
 	private final Supplier<Item> gemtrap;
 	private final Supplier<Item> crystal;
 
-	public CrystalCreator(MaterialColor mapColour, Supplier<Item> gemstone, Supplier<Item> gemtrap, Supplier<Item> crystal) {
-		super(new BlockUtil.CompactProperties(Material.STONE, mapColour).stats(10f, 15f).sound(SoundType.GLASS).get());
+	public CrystalCreator(BlockBehaviour.Properties properties, Supplier<Item> gemstone, Supplier<Item> gemtrap, Supplier<Item> crystal) {
+		super(properties);
 
 		this.gemstone = gemstone;
 		this.gemtrap = gemtrap;

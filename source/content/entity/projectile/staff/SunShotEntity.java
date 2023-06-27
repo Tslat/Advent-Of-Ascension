@@ -35,19 +35,19 @@ public class SunShotEntity extends BaseEnergyShot {
 
 		setDeltaMovement(getDeltaMovement().multiply(0.3d, 0.3d, 0.3d));
 
-		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB)) {
+		for (LivingEntity e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(10), EntityUtil.Predicates.HOSTILE_MOB)) {
 			if (!e.isOnFire() && !e.fireImmune())
 				e.setSecondsOnFire(2);
 		}
 
 		if (getAge() >= 260) {
-			WorldUtil.createExplosion(getOwner(), level, this, 3.5f);
+			WorldUtil.createExplosion(getOwner(), level(), this, 3.5f);
 			discard();
 		}
 	}
 
 	@Override
 	protected void onHit(HitResult result) {
-		setDeltaMovement(new Vec3(0, level.getBlockState(blockPosition().below()).getBlock() != Blocks.AIR ? 1 : getDeltaMovement().y(), 0));
+		setDeltaMovement(new Vec3(0, level().getBlockState(blockPosition().below()).getBlock() != Blocks.AIR ? 1 : getDeltaMovement().y(), 0));
 	}
 }

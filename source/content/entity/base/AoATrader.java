@@ -96,13 +96,13 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 				player.awardStat(Stats.TALKED_TO_VILLAGER);
 
 			if (!getOffers().isEmpty()) {
-				if (!level.isClientSide) {
+				if (!level().isClientSide) {
 					updateSpecialPrices(player);
 					setTradingPlayer(player);
 					openTradingScreen(player, getDisplayName(), getVillagerData().getLevel());
 				}
 			}
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return InteractionResult.sidedSuccess(level().isClientSide);
 		}
 		else {
 			return InteractionResult.PASS;
@@ -175,7 +175,7 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 		xp /= (offer.getMaxUses() / 16f);
 
 		if (offer.shouldRewardExp())
-			level.addFreshEntity(new ExperienceOrb(level, getX(), getY() + 0.5D, getZ(), xp));
+			level().addFreshEntity(new ExperienceOrb(level(), getX(), getY() + 0.5D, getZ(), xp));
 	}
 
 	@Nullable
@@ -196,7 +196,7 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !isOverworldNPC() || !WorldUtil.isWorld(level, Level.OVERWORLD) || tickCount >= 48000;
+		return !isOverworldNPC() || !WorldUtil.isWorld(level(), Level.OVERWORLD) || tickCount >= 48000;
 	}
 
 	@Override
@@ -211,7 +211,7 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 		if (getRemainingFireTicks() == 0)
 			setSecondsOnFire(8);
 
-		hurt(level.damageSources().lightningBolt(), 5.0F);
+		hurt(level().damageSources().lightningBolt(), 5.0F);
 	}
 
 	@Override
@@ -231,12 +231,12 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 
 				getCombatTracker().recheckStatus();
 
-				if (this.level instanceof ServerLevel) {
+				if (this.level() instanceof ServerLevel) {
 					dropAllDeathLoot(cause);
 					createWitherRose(killer);
 				}
 
-				level.broadcastEntityEvent(this, (byte)3);
+				level().broadcastEntityEvent(this, (byte)3);
 				setPose(Pose.DYING);
 			}
 		}

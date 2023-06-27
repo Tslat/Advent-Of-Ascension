@@ -54,8 +54,8 @@ public class StalkerEntity extends AoAMeleeMob<StalkerEntity> {
 
     @Override
     protected void onHurt(DamageSource source, float amount) {
-        if (!level.isClientSide && getTarget() != null && getTarget().distanceToSqr(this) <= 2 * 2) {
-            BlockPos teleportPos = RandomUtil.getRandomPositionWithinRange(blockPosition(), 64, 0, 64, true, level);
+        if (!level().isClientSide && getTarget() != null && getTarget().distanceToSqr(this) <= 2 * 2) {
+            BlockPos teleportPos = RandomUtil.getRandomPositionWithinRange(blockPosition(), 64, 0, 64, true, level());
             randomTeleport(teleportPos.getX(), teleportPos.getY(), teleportPos.getZ(), false);
         }
     }

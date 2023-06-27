@@ -31,7 +31,7 @@ public class ToyMerchantEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level, AoADimensions.CELEVE.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.CELEVE.key);
 	}
 
 	@Nullable

@@ -51,11 +51,11 @@ public class ShadowEntity extends AoAMeleeMob<ShadowEntity> {
 	}
 
 	private void transform() {
-		if (!level.isClientSide) {
-			ShadeEntity shade = new ShadeEntity(AoAMobs.SHADE.get(), level);
+		if (!level().isClientSide) {
+			ShadeEntity shade = new ShadeEntity(AoAMobs.SHADE.get(), level());
 
 			shade.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
-			level.addFreshEntity(shade);
+			level().addFreshEntity(shade);
 		}
 
 		this.discard();

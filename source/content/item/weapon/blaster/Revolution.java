@@ -30,17 +30,17 @@ public class Revolution extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new RevolutionShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new RevolutionShotEntity(shooter, this, 60));
 	}
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 3.0f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 3.0f);
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 3.0f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 3.0f);
 
 		return true;
 	}

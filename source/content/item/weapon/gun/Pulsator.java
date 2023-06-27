@@ -35,13 +35,13 @@ public class Pulsator extends BaseGun {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		if (target instanceof LivingEntity && target.level instanceof ServerLevel) {
-			List<Mob> nearbyEntities = target.level.getEntitiesOfClass(Mob.class, new AABB(bullet.position(), bullet.position()).inflate(7, 5, 7), entity -> entity.isAlive() && entity instanceof Enemy);
+		if (target instanceof LivingEntity && target.level() instanceof ServerLevel) {
+			List<Mob> nearbyEntities = target.level().getEntitiesOfClass(Mob.class, new AABB(bullet.position(), bullet.position()).inflate(7, 5, 7), entity -> entity.isAlive() && entity instanceof Enemy);
 
 			if (!nearbyEntities.isEmpty() && RandomUtil.oneInNChance(8)) {
 				Mob entity = RandomUtil.getRandomSelection(nearbyEntities);
 
-				WorldUtil.spawnLightning((ServerLevel)target.level, shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, entity.getX(), entity.getY(), entity.getZ(), true, false);
+				WorldUtil.spawnLightning((ServerLevel)target.level(), shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, entity.getX(), entity.getY(), entity.getZ(), true, false);
 			}
 		}
 	}

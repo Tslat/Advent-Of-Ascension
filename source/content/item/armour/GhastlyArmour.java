@@ -31,8 +31,8 @@ public class GhastlyArmour extends AdventArmour {
 
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
-		if (slots != null && plData.player().level.getGameTime() % 5 == 0 && plData.player().isShiftKeyDown()) {
-			for (LivingEntity entity : plData.player().level.getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(4 * slots.size()), EntityUtil.Predicates.HOSTILE_MOB)) {
+		if (slots != null && plData.player().level().getGameTime() % 5 == 0 && plData.player().isShiftKeyDown()) {
+			for (LivingEntity entity : plData.player().level().getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(4 * slots.size()), EntityUtil.Predicates.HOSTILE_MOB)) {
 				entity.addEffect(new MobEffectInstance(MobEffects.GLOWING, 6, 0, true, false));
 			}
 		}

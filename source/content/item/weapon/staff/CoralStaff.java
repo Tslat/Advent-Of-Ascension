@@ -97,7 +97,7 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 	}
 
 	private boolean safeBlockPos(LivingEntity caster, BlockPos pos, ItemStack staff) {
-		return caster.level.getBlockState(pos).getBlock() == Blocks.AIR && WorldUtil.canPlaceBlock(caster.level, pos, caster, staff);
+		return caster.level().getBlockState(pos).getBlock() == Blocks.AIR && WorldUtil.canPlaceBlock(caster.level(), pos, caster, staff);
 	}
 
 	@Override

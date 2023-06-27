@@ -50,12 +50,12 @@ public class BaumbaEntity extends AoARangedMob<BaumbaEntity> {
 
 	@Override
 	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, level, projectile, 2f);
+		WorldUtil.createExplosion(this, level(), projectile, 2f);
 	}
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, level, projectile, 2f);
+		WorldUtil.createExplosion(this, level(), projectile, 2f);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class BaumbaEntity extends AoARangedMob<BaumbaEntity> {
 		super.aiStep();
 
 		if (isAlive() && tickCount % 50 == 0) {
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_BAUMBA_JUMP.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
+			level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_BAUMBA_JUMP.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
 			Vec3 motion = getDeltaMovement();
 

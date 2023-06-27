@@ -43,12 +43,12 @@ public class CentinelEntity extends AoARangedMob<CentinelEntity> {
 
 	@Override
 	public void onProjectileAttack(BaseMobProjectile projectile, Entity target) {
-		WorldUtil.createExplosion(this, level, projectile, 2f);
+		WorldUtil.createExplosion(this, level(), projectile, 2f);
 	}
 
 	@Override
 	public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-		WorldUtil.createExplosion(this, level, projectile, 2f);
+		WorldUtil.createExplosion(this, level(), projectile, 2f);
 	}
 
 	@Nullable

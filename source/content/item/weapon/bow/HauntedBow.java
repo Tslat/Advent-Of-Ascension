@@ -27,8 +27,8 @@ public class HauntedBow extends BaseBow {
 
 	@Override
 	public void onArrowTick(CustomArrowEntity arrow, Entity shooter) {
-		if (!arrow.level.isClientSide && !arrow.inGround && arrow.tickCount % 2 == 0)
-			WorldUtil.createExplosion(shooter, arrow.level, arrow, 1.0f);
+		if (!arrow.level().isClientSide && !arrow.inGround && arrow.tickCount % 2 == 0)
+			WorldUtil.createExplosion(shooter, arrow.level(), arrow, 1.0f);
 	}
 
 	@Override

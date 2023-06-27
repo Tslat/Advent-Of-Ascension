@@ -20,7 +20,7 @@ public class StructurePieceGenFeature extends Feature<StructureFeatureConfig> {
 		RandomSource rand = context.random();
 		WorldGenLevel reader = context.level();
 
-		if (!config.requireGround || !reader.getBlockState(pos.below()).getMaterial().isReplaceable())
+		if (!config.requireGround || !reader.getBlockState(pos.below()).canBeReplaced())
 			config.getTemplate(rand).placeInWorld(reader, pos, pos, config.getPlacementSettings(rand), rand, 2);
 
 		return true;

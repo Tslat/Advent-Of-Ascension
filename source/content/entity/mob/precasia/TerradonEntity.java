@@ -71,7 +71,7 @@ public class TerradonEntity extends AoAMeleeMob<TerradonEntity> {
 	public void aiStep() {
 		super.aiStep();
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (invulnCooldown > 0)
 				invulnCooldown--;
 

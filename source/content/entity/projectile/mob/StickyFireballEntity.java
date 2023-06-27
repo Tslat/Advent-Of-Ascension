@@ -32,7 +32,7 @@ public class StickyFireballEntity extends FireballEntity {
 	public void tick() {
 		super.tick();
 
-		if (level instanceof ServerLevel serverLevel && this.tickCount == 99) {
+		if (level() instanceof ServerLevel serverLevel && this.tickCount == 99) {
 			new StandardExplosion(AoAExplosions.STICKY_FIREBALL, serverLevel, this, getOwner(), position()).explode();
 
 			discard();
@@ -40,18 +40,18 @@ public class StickyFireballEntity extends FireballEntity {
 			return;
 		}
 
-		if (this.onGround)
+		if (this.onGround())
 			setDeltaMovement(0, 0, 0);
 
-		if (this.level.isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0))
+		if (this.level().isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0))
 			ParticleBuilder.forRandomPosInEntity(ParticleTypes.CAMPFIRE_COSY_SMOKE, this).lifespan(40).scaleMod(0.5f).spawnParticles();
 	}
 
 	@Override
 	protected void onHit(HitResult result) {
-		if (result.getType() != HitResult.Type.BLOCK || level.getBlockState(BlockPos.containing(result.getLocation())).getMaterial().blocksMotion()) {
+		if (result.getType() != HitResult.Type.BLOCK || level().getBlockState(BlockPos.containing(result.getLocation())).blocksMotion()) {
 			if (result instanceof EntityHitResult entityHitResult) {
-				if (this.level.isClientSide || entityHitResult.getEntity() == shooter || shooter == null)
+				if (this.level().isClientSide || entityHitResult.getEntity() == shooter || shooter == null)
 					return;
 
 				onHitEntity(entityHitResult);
@@ -66,16 +66,16 @@ public class StickyFireballEntity extends FireballEntity {
 					return;
 				}
 
-				if (!this.level.isClientSide && shooter != null & getDeltaMovement().lengthSqr() != 0) {
+				if (!this.level().isClientSide && shooter != null & getDeltaMovement().lengthSqr() != 0) {
 					onHitBlock(blockHitResult);
-					shooter.doRangedAttackBlock(this, level.getBlockState(BlockPos.containing(result.getLocation())), BlockPos.containing(result.getLocation()), blockHitResult.getDirection());
+					shooter.doRangedAttackBlock(this, level().getBlockState(BlockPos.containing(result.getLocation())), BlockPos.containing(result.getLocation()), blockHitResult.getDirection());
 				}
 
-				if (!this.onGround) {
+				if (!this.onGround()) {
 					setPos(blockHitResult.getLocation().subtract(getDeltaMovement().multiply(0.25f, 0.25f, 0.25f)));
 					setDeltaMovement(0, 0, 0);
 
-					this.onGround = true;
+					setOnGround(true);
 				}
 			}
 		}

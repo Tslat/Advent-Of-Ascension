@@ -114,9 +114,9 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 	@Nullable
 	protected SoundEvent getStepSound(BlockPos pos, BlockState blockState) {
-		if (!blockState.getMaterial().isLiquid()) {
-			BlockState state = this.level.getBlockState(pos.above());
-			SoundType blockSound = state.getBlock() == Blocks.SNOW ? state.getSoundType(this.level, pos, this) : blockState.getSoundType(this.level, pos, this);
+		if (!blockState.liquid()) {
+			BlockState state = level().getBlockState(pos.above());
+			SoundType blockSound = state.getBlock() == Blocks.SNOW ? state.getSoundType(level(), pos, this) : blockState.getSoundType(level(), pos, this);
 
 			return blockSound.getStepSound();
 		}
@@ -255,15 +255,13 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 			setAbsorptionAmount(getAbsorptionAmount() - absorbedAmount);
 
 			if (absorbedAmount > 0 && absorbedAmount < 3.4028235E37F && source.getEntity() instanceof ServerPlayer pl)
-				pl.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(absorbedAmount * 10.0F));
+				pl.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(absorbedAmount * 10f));
 
 			adjustedDamage = ForgeHooks.onLivingDamage(this, source, adjustedDamage);
 
 			if (adjustedDamage != 0) {
-				float currentHealth = getHealth();
-
-				getCombatTracker().recordDamage(source, currentHealth, adjustedDamage);
-				setHealth(currentHealth - adjustedDamage);
+				getCombatTracker().recordDamage(source, adjustedDamage);
+				setHealth(getHealth() - adjustedDamage);
 				setAbsorptionAmount(getAbsorptionAmount() - adjustedDamage);
 				gameEvent(GameEvent.ENTITY_DAMAGE);
 				onHurt(source, adjustedDamage);
@@ -292,14 +290,14 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 			this.dead = true;
 
-			if (this.level instanceof ServerLevel) {
-				if (lastAttacker == null || lastAttacker.wasKilled((ServerLevel)this.level, this)) {
+			if (level() instanceof ServerLevel serverLevel) {
+				if (lastAttacker == null || lastAttacker.killedEntity(serverLevel, this)) {
 					gameEvent(GameEvent.ENTITY_DIE);
 					dropAllDeathLoot(source);
 					createWitherRose(killer);
 				}
 
-				this.level.broadcastEntityEvent(this, (byte)3);
+				serverLevel.broadcastEntityEvent(this, (byte)3);
 			}
 
 			getCombatTracker().recheckStatus();

@@ -29,7 +29,7 @@ public class BigBlast extends BaseCannon {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		WorldUtil.createExplosion(shooter, bullet.level, bullet, 3f);
+		WorldUtil.createExplosion(shooter, bullet.level(), bullet, 3f);
 	}
 
 	@Override

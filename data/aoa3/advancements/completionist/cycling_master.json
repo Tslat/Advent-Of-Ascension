@@ -29,5 +29,6 @@
     [
       "cycle_10"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

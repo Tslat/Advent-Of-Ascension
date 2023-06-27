@@ -34,7 +34,7 @@ public class VoidArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingDamageEvent event) {
 		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType()) {
-			if (!plData.player().level.isClientSide && event.getSource().getEntity() instanceof LivingEntity) {
+			if (!plData.player().level().isClientSide && event.getSource().getEntity() instanceof LivingEntity) {
 				LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
 
 				if (DamageUtil.isMeleeDamage(event.getSource())) {

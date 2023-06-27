@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "aoa3:precasian_surface_rock"
-  },
-  "result": "aoa3:precasian_surface_rock_stairs"
-}

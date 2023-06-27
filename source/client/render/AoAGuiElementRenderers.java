@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -16,6 +17,7 @@ import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.client.render.custom.EnergyResourceRenderer;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -58,7 +60,7 @@ public final class AoAGuiElementRenderers {
 		SKILL_RENDERERS.put(skill, renderer);
 	}
 
-	private static void renderResources(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void renderResources(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		Minecraft mc = Minecraft.getInstance();
 		Window window = mc.getWindow();
 		int horizontalAdjuster = AoAConfigs.CLIENT.hudResourcesHorizontal.get() ? 1 : 0;
@@ -66,6 +68,7 @@ public final class AoAGuiElementRenderers {
 		int potionRenderOffset = 0;
 		int x = 0;
 		int y = 0;
+		PoseStack poseStack = guiGraphics.pose();
 
 		if (mc.player == null || mc.player.isSpectator())
 			return;
@@ -107,7 +110,7 @@ public final class AoAGuiElementRenderers {
 			poseStack.scale(0.5f, 0.5f, 0);
 			MutableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.resources.showtip", AoAKeybinds.RESOURCE_GUI.getTranslatedKeyMessage());
 
-			RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)((y + 4) / 2f), 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, locale, -(int)(mc.font.width(locale) * 0.75f), (int)((y + 4) / 2f), 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 
 			y = y + 4 + mc.font.lineHeight / 2;
 		}
@@ -117,11 +120,12 @@ public final class AoAGuiElementRenderers {
 		resourcesRenderHeightOffset = (AoAConfigs.CLIENT.hudResourcesPosition.get() == AoAResourceRenderer.HudResourcesPosition.Top_Right ? y : 0) + potionRenderOffset;
 	}
 
-	private static void renderSkills(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void renderSkills(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		Minecraft mc = Minecraft.getInstance();
 		Window window = mc.getWindow();
 		int x = 0;
 		int y = 0;
+		PoseStack poseStack = guiGraphics.pose();
 
 		if (mc.player == null || mc.player.isSpectator())
 			return;
@@ -150,7 +154,7 @@ public final class AoAGuiElementRenderers {
 
 				poseStack.pushPose();
 				poseStack.translate(x, y, 0);
-				renderer.renderInHud(poseStack, skill, partialTick, AoAConfigs.CLIENT.hudSkillProgressRenderType.get(), true);
+				renderer.renderInHud(RenderContext.of(guiGraphics), skill, partialTick, AoAConfigs.CLIENT.hudSkillProgressRenderType.get(), true);
 				poseStack.popPose();
 			}
 		}
@@ -158,7 +162,7 @@ public final class AoAGuiElementRenderers {
 			poseStack.scale(0.5f, 0.5f, 1);
 			MutableComponent locale = LocaleUtil.getLocaleMessage("gui.aoa3.skills.showtip", AoAKeybinds.SKILL_GUI.getTranslatedKeyMessage());
 
-			RenderUtil.drawCenteredScaledMessage(poseStack, mc.font, locale, -(int)(mc.font.width(locale) * 0.75f), (int)(y / 2f) + 1, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(poseStack, locale, -(int)(mc.font.width(locale) * 0.75f), (int)(y / 2f) + 1, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 		}
 
 		RenderSystem.enableDepthTest();

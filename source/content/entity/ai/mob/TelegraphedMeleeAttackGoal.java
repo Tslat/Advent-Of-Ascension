@@ -69,12 +69,12 @@ public class TelegraphedMeleeAttackGoal<T extends Mob> extends Goal {
 
 	@Override
 	public boolean canUse() {
-		long gameTime = this.entity.level.getGameTime();
+		long gameTime = this.entity.level().getGameTime();
 
 		if (gameTime - this.goalTimeoutCounter < 20)
 			return false;
 
-		if (entity.level.getDifficulty() == Difficulty.PEACEFUL)
+		if (entity.level().getDifficulty() == Difficulty.PEACEFUL)
 			return false;
 
 		this.goalTimeoutCounter = gameTime;
@@ -164,10 +164,10 @@ public class TelegraphedMeleeAttackGoal<T extends Mob> extends Goal {
 				this.attackCooldown = this.attackInterval;
 				this.entity.swing(InteractionHand.MAIN_HAND);
 
-				this.attackDamageTick = this.entity.level.getGameTime() + this.preAttackTime;
+				this.attackDamageTick = this.entity.level().getGameTime() + this.preAttackTime;
 			}
 
-			if (this.attackDamageTick >= 0 && this.entity.level.getGameTime() >= attackDamageTick) {
+			if (this.attackDamageTick >= 0 && this.entity.level().getGameTime() >= attackDamageTick) {
 				this.entity.doHurtTarget(target);
 
 				this.attackDamageTick = -1;

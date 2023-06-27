@@ -38,8 +38,8 @@ public class Crystaneer extends BaseSniper {
 
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
-		if (!shooter.level.isClientSide() && target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0) {
-			for (ItemStack drop : LootUtil.generateLoot((ServerLevel)shooter.level, AdventOfAscension.id("items/crystaneer"), LootUtil.getGiftContext((ServerLevel)shooter.level, target.position(), (shooter instanceof Player ? ((Player)shooter).getLuck() : 0), shooter))) {
+		if (!shooter.level().isClientSide() && target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0) {
+			for (ItemStack drop : LootUtil.generateLoot(AdventOfAscension.id("items/crystaneer"), LootUtil.getGiftParameters((ServerLevel)shooter.level(), target.position(), (shooter instanceof Player ? ((Player)shooter).getLuck() : 0), shooter))) {
 				target.spawnAtLocation(drop, 0f);
 			}
 		}

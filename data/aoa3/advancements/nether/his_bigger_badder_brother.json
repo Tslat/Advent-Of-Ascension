@@ -36,5 +36,6 @@
     [
       "obtain_nethengeic_callstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

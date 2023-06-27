@@ -16,7 +16,7 @@ public class OmnilightShotEntity extends BaseMobProjectile {
 	}
 
 	public OmnilightShotEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.OMNILIGHT_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.OMNILIGHT_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

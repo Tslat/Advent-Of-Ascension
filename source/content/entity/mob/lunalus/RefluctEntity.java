@@ -46,7 +46,7 @@ public class RefluctEntity extends AoAMeleeMob<RefluctEntity> {
 	public void aiStep() {
 		super.aiStep();
 
-		for (BaseEnergyShot e : EntityRetrievalUtil.<BaseEnergyShot>getEntities(this.level, getBoundingBox().inflate(3), new EntityPredicate<>().isSubtypeOf(BaseEnergyShot.class))) {
+		for (BaseEnergyShot e : EntityRetrievalUtil.<BaseEnergyShot>getEntities(this.level(), getBoundingBox().inflate(3), new EntityPredicate<>().isSubtypeOf(BaseEnergyShot.class))) {
 			e.setDeltaMovement(e.getDeltaMovement().multiply(-1, -1, -1));
 		}
 	}

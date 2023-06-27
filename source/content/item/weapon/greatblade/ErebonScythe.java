@@ -25,8 +25,8 @@ public class ErebonScythe extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.level.isClientSide) {
-			for (LivingEntity entity : target.level.getEntitiesOfClass(LivingEntity.class, new AABB(target.getX() - 1.5, target.getBoundingBox().minY, target.getZ() - 1.5, target.getX() + 1.5, target.getBoundingBox().minY + 1, target.getZ() + 1.5), EntityUtil.Predicates.HOSTILE_MOB)) {
+		if (!attacker.level().isClientSide) {
+			for (LivingEntity entity : target.level().getEntitiesOfClass(LivingEntity.class, new AABB(target.getX() - 1.5, target.getBoundingBox().minY, target.getZ() - 1.5, target.getX() + 1.5, target.getBoundingBox().minY + 1, target.getZ() + 1.5), EntityUtil.Predicates.HOSTILE_MOB)) {
 				entity.setSecondsOnFire((int)(5 * attackCooldown));
 			}
 

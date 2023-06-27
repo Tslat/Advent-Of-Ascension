@@ -80,7 +80,7 @@ public final class AoAArmour {
 	public static final RegistryObject<SkillHelmet> HELM_OF_THE_WARRIOR = registerArmour("helm_of_the_warrior", () -> new SkillHelmet(AoASkills.INNERVATION));
 
 	private static <T extends Item> RegistryObject<T> registerArmour(String registryName, Supplier<T> item) {
-		return AoAItems.registerItem(registryName, item, () -> AoACreativeModeTabs.ARMOUR);
+		return AoAItems.registerItem(registryName, item, AoACreativeModeTabs.ARMOUR.getKey());
 	}
 	
 	private static ArmourSet registerArmourSet(String registryPrefix, Function<ArmorItem.Type, AdventArmour> constructor) {
@@ -94,10 +94,10 @@ public final class AoAArmour {
 		public final RegistryObject<Item> boots;
 
 		private ArmourSet(String registryPrefix, Function<ArmorItem.Type, AdventArmour> constructor) {
-			this.helmet = AoAItems.registerItem(registryPrefix + "_helmet", () -> constructor.apply(ArmorItem.Type.HELMET), () -> AoACreativeModeTabs.ARMOUR);
-			this.chestplate = AoAItems.registerItem(registryPrefix + "_chestplate", () -> constructor.apply(ArmorItem.Type.CHESTPLATE), () -> AoACreativeModeTabs.ARMOUR);
-			this.leggings = AoAItems.registerItem(registryPrefix + "_leggings", () -> constructor.apply(ArmorItem.Type.LEGGINGS), () -> AoACreativeModeTabs.ARMOUR);
-			this.boots = AoAItems.registerItem(registryPrefix + "_boots", () -> constructor.apply(ArmorItem.Type.BOOTS), () -> AoACreativeModeTabs.ARMOUR);
+			this.helmet = AoAItems.registerItem(registryPrefix + "_helmet", () -> constructor.apply(ArmorItem.Type.HELMET), AoACreativeModeTabs.ARMOUR.getKey());
+			this.chestplate = AoAItems.registerItem(registryPrefix + "_chestplate", () -> constructor.apply(ArmorItem.Type.CHESTPLATE), AoACreativeModeTabs.ARMOUR.getKey());
+			this.leggings = AoAItems.registerItem(registryPrefix + "_leggings", () -> constructor.apply(ArmorItem.Type.LEGGINGS), AoACreativeModeTabs.ARMOUR.getKey());
+			this.boots = AoAItems.registerItem(registryPrefix + "_boots", () -> constructor.apply(ArmorItem.Type.BOOTS), AoACreativeModeTabs.ARMOUR.getKey());
 		}
 	}
 }

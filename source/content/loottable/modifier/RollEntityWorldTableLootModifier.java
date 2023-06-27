@@ -45,12 +45,12 @@ public class RollEntityWorldTableLootModifier extends LootModifier {
 		if (!context.hasParam(LootContextParams.THIS_ENTITY))
 			return generatedLoot;
 
-		ResourceLocation tableId = this.tables.get(context.getParam(LootContextParams.THIS_ENTITY).level.dimension());
+		ResourceLocation tableId = this.tables.get(context.getParam(LootContextParams.THIS_ENTITY).level().dimension());
 
 		if (tableId == null)
 			return generatedLoot;
 
-		LootTable table = context.getLootTable(tableId);
+		LootTable table = context.getLevel().getServer().getLootData().getLootTable(tableId);
 
 		if (table == LootTable.EMPTY || table.getParamSet() != LootContextParamSets.ENTITY)
 			return generatedLoot;

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "aoa3:block/precasian_stone_slab"
+    },
+    "type=double": {
+      "model": "aoa3:block/precasian_stone"
+    },
+    "type=top": {
+      "model": "aoa3:block/precasian_stone_slab_top"
+    }
+  }
+}

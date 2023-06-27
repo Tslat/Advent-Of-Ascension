@@ -30,7 +30,7 @@ public abstract class LavaMobEntity extends PathfinderMob {
 	}
 
 	protected int getExperienceReward(Player pPlayer) {
-		return 1 + this.level.random.nextInt(3);
+		return 1 + this.level().random.nextInt(3);
 	}
 
 	protected void handleAirSupply(int air) {
@@ -39,7 +39,7 @@ public abstract class LavaMobEntity extends PathfinderMob {
 
 			if (this.getAirSupply() == -20) {
 				this.setAirSupply(0);
-				this.hurt(level.damageSources().drown(), 2.0F);
+				this.hurt(level().damageSources().drown(), 2.0F);
 			}
 		}
 		else {

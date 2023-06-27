@@ -22,7 +22,7 @@ public class CreepifiedSword extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.level.isClientSide && RandomUtil.oneInNChance(10) && (!(attacker instanceof Player) || attackCooldown > 0.75f)) {
+		if (!attacker.level().isClientSide && RandomUtil.oneInNChance(10) && (!(attacker instanceof Player) || attackCooldown > 0.75f)) {
 			/*final FriendlyCreeperEntity creeper = new FriendlyCreeperEntity(AoAEntities.Minions.FRIENDLY_CREEPER.get(), target.level);
 
 			creeper.moveTo(target.getX(), target.getY(), target.getZ(), random.nextFloat() * 360.0f, 0.0f);

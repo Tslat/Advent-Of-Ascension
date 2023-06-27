@@ -16,7 +16,7 @@ public class MagicBallEntity extends BaseMobProjectile {
 	}
 
 	public MagicBallEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.MAGIC_BALL.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.MAGIC_BALL.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

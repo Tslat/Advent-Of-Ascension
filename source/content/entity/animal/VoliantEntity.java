@@ -77,16 +77,16 @@ public class VoliantEntity extends AoAAnimal {
 			BlockPos groundPos = blockPosition().below();
 			float friction = 0.91F;
 
-			if (onGround)
-				friction = level.getBlockState(groundPos).getFriction(this.level, groundPos, this) * 0.91F;
+			if (onGround())
+				friction = level().getBlockState(groundPos).getFriction(this.level(), groundPos, this) * 0.91F;
 
 			float frictionFactor = 0.16277137F / (friction * friction * friction);
 			friction = 0.91F;
 
-			if (onGround)
-				friction = level.getBlockState(groundPos).getFriction(level, groundPos, this) * 0.91F;
+			if (onGround())
+				friction = level().getBlockState(groundPos).getFriction(level(), groundPos, this) * 0.91F;
 
-			moveRelative(onGround ? 0.1F * frictionFactor : 0.02F, travelVector);
+			moveRelative(onGround() ? 0.1F * frictionFactor : 0.02F, travelVector);
 			move(MoverType.SELF, getDeltaMovement());
 			setDeltaMovement(getDeltaMovement().scale(friction));
 		}

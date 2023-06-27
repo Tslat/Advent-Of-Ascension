@@ -45,10 +45,10 @@ public class RunicornRiderEntity extends AoAMeleeMob<RunicornRiderEntity> {
 	protected void actuallyHurt(DamageSource damageSrc, float damageAmount) {
 		super.actuallyHurt(damageSrc, damageAmount);
 
-		if (!level.isClientSide && getHealth() <= getMaxHealth() * 0.45f) {
+		if (!level().isClientSide && getHealth() <= getMaxHealth() * 0.45f) {
 			RunicornEntity runicorn = new RunicornEntity(this, getHealth());
 
-			level.addFreshEntity(runicorn);
+			level().addFreshEntity(runicorn);
 			setHealth(0);
 			die(damageSrc);
 		}

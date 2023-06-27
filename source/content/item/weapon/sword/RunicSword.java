@@ -42,7 +42,7 @@ public class RunicSword extends BaseSword {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.level.isClientSide && attackCooldown > 0.75) {
+		if (!attacker.level().isClientSide && attackCooldown > 0.75) {
 			ItemStack offhandStack = attacker.getOffhandItem();
 
 			if (offhandStack.is(AoATags.Items.ADVENT_RUNE) && offhandStack.getCount() >= 5) {
@@ -61,7 +61,7 @@ public class RunicSword extends BaseSword {
 					target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0, false, true));
 				}
 				else if (rune == AoAItems.CHARGED_RUNE.get()) {
-					((ServerLevel)target.level).sendParticles(ParticleTypes.ANGRY_VILLAGER, target.getX() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), target.getY() + 1 + (RandomUtil.randomValueUpTo(1) * target.getBbHeight()), target.getZ() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), 3, 0, 0, 0, (double)0);
+					((ServerLevel)target.level()).sendParticles(ParticleTypes.ANGRY_VILLAGER, target.getX() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), target.getY() + 1 + (RandomUtil.randomValueUpTo(1) * target.getBbHeight()), target.getZ() + (RandomUtil.randomValueUpTo(1) * target.getBbWidth() * 2f) - target.getBbWidth(), 3, 0, 0, 0, (double)0);
 				}
 				else if (rune != AoAItems.FIRE_RUNE.get()) {
 					return;

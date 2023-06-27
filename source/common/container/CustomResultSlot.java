@@ -1,5 +1,6 @@
 package net.tslat.aoa3.common.container;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,9 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeEventFactory;
+
+import java.util.List;
+import java.util.Objects;
 
 public class CustomResultSlot<C extends Container, T extends Recipe<C>> extends Slot {
 	private final RecipeType<T> recipeType;
@@ -53,12 +57,19 @@ public class CustomResultSlot<C extends Container, T extends Recipe<C>> extends 
 	@Override
 	protected void checkTakeAchievements(ItemStack stack) {
 		if (this.removeCount > 0) {
-			stack.onCraftedBy(this.player.level, this.player, this.removeCount);
+			stack.onCraftedBy(this.player.level(), this.player, this.removeCount);
 			ForgeEventFactory.firePlayerCraftingEvent(this.player, stack, this.craftSlots);
 		}
 
-		if (this.container instanceof RecipeHolder recipeHolder)
-			recipeHolder.awardUsedRecipes(this.player);
+		if (this.container instanceof RecipeHolder recipeHolder) {
+			List<ItemStack> items = new ObjectArrayList<>(this.craftSlots.getContainerSize());
+
+			for (int i = 0; i < this.craftSlots.getContainerSize(); i++) {
+				items.add(this.craftSlots.getItem(i));
+			}
+
+			recipeHolder.awardUsedRecipes(this.player, items);
+		}
 
 		this.removeCount = 0;
 	}
@@ -70,7 +81,7 @@ public class CustomResultSlot<C extends Container, T extends Recipe<C>> extends 
 		checkTakeAchievements(stack);
 		ForgeHooks.setCraftingPlayer(player);
 
-		NonNullList<ItemStack> remainingItems = player.level.getRecipeManager().getRemainingItemsFor(recipeType, this.craftSlots, player.level);
+		NonNullList<ItemStack> remainingItems = player.level().getRecipeManager().getRemainingItemsFor(recipeType, this.craftSlots, player.level());
 
 		ForgeHooks.setCraftingPlayer(null);
 
@@ -88,7 +99,7 @@ public class CustomResultSlot<C extends Container, T extends Recipe<C>> extends 
 				if (slotStack.isEmpty()) {
 					this.craftSlots.setItem(i, remainingStack);
 				}
-				else if (ItemStack.isSame(slotStack, remainingStack) && ItemStack.tagMatches(slotStack, remainingStack)) {
+				else if (ItemStack.isSameItem(slotStack, remainingStack) && Objects.equals(slotStack.getTag(), remainingStack.getTag())) {
 					remainingStack.grow(slotStack.getCount());
 					this.craftSlots.setItem(i, remainingStack);
 				}

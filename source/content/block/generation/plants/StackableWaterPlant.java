@@ -6,29 +6,18 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 
 import javax.annotation.Nullable;
 
 public class StackableWaterPlant extends StackablePlant implements SimpleWaterloggedBlock {
-	public StackableWaterPlant(BlockBehaviour.Properties properties, Material... growthMaterial) {
-		super(properties, growthMaterial);
-	}
-
-	public StackableWaterPlant(Material material, MaterialColor mapColour, SoundType sound, Material... growthMaterial) {
-		super(material, mapColour, sound, growthMaterial);
-	}
-
-	public StackableWaterPlant(MaterialColor mapColour, Material... growthMaterials) {
-		super(mapColour, growthMaterials);
+	public StackableWaterPlant(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Nullable

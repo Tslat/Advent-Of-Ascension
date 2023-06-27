@@ -1,8 +1,8 @@
 package net.tslat.aoa3.client.gui.overlay;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
@@ -47,14 +47,14 @@ public final class ScopeOverlayRenderer {
 			event.setCanceled(true);
 	}
 
-	private static void afterOverlayRender(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void afterOverlayRender(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON)
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
 		ResourceLocation texture = null;
 
-		if (mc.player.isShiftKeyDown() && mc.player.isOnGround()) {
+		if (mc.player.isShiftKeyDown() && mc.player.onGround()) {
 			ItemStack sniper = mc.player.getItemInHand(InteractionHand.MAIN_HAND);
 
 			if (sniper.getItem() instanceof BaseSniper) {
@@ -72,7 +72,6 @@ public final class ScopeOverlayRenderer {
 		if (!isScoped)
 			return;
 
-		RenderUtil.prepRenderTexture(texture);
-		RenderUtil.renderFullscreenTexture();
+		RenderUtil.renderFullscreenTexture(guiGraphics, texture);
 	}
 }

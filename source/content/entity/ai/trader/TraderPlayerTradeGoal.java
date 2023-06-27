@@ -16,7 +16,7 @@ public class TraderPlayerTradeGoal extends Goal {
 	}
 
 	public boolean canUse() {
-		if (!trader.isAlive() || trader.isInWater() || !trader.isOnGround() || trader.hurtMarked)
+		if (!trader.isAlive() || trader.isInWater() || !trader.onGround() || trader.hurtMarked)
 			return false;
 
 		Player customer = trader.getTradingPlayer();

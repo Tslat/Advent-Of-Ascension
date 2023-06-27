@@ -5,6 +5,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -37,7 +38,7 @@ public final class ScreenEffectRenderer {
 		effects.clear();
 	}
 
-	private static void onEffectRender(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void onEffectRender(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON || effects.isEmpty() || Minecraft.getInstance().level == null)
 			return;
 
@@ -48,6 +49,7 @@ public final class ScreenEffectRenderer {
 
 		long gameTime = mc.level.getGameTime();
 		boolean hasExpiredEffects = false;
+		PoseStack poseStack = guiGraphics.pose();
 
 		RenderSystem.disableDepthTest();
 		RenderSystem.depthMask(false);

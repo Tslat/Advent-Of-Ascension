@@ -16,7 +16,7 @@ public class WitherBallEntity extends BaseMobProjectile {
 	}
 
 	public WitherBallEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.WITHER_BALL.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.WITHER_BALL.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class VileVanquisher extends BaseGun {
 	@Override
 	protected void doImpactEffect(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPos, float bulletDmgMultiplier) {
 		if (!target.isAlive() || (target instanceof LivingEntity && ((LivingEntity)target).getHealth() <= 0)) {
-			AreaEffectCloud cloud = new AreaEffectCloud(bullet.level, (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
+			AreaEffectCloud cloud = new AreaEffectCloud(bullet.level(), (target.getX() + bullet.getX()) / 2d, (target.getY() + bullet.getY()) / 2d, (target.getZ() + bullet.getZ()) / 2d);
 
 			cloud.setRadius(0.5f);
 			cloud.setDuration(10);
@@ -42,7 +42,7 @@ public class VileVanquisher extends BaseGun {
 			cloud.setFixedColor(ColourUtil.RGB(51, 102, 0));
 			cloud.addEffect(new MobEffectInstance(MobEffects.POISON, 150, 0, false, true));
 
-			bullet.level.addFreshEntity(cloud);
+			bullet.level().addFreshEntity(cloud);
 		}
 	}
 

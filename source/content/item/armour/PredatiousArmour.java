@@ -38,7 +38,7 @@ public class PredatiousArmour extends AdventArmour {
 	@Override
 	public void onPostAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingDamageEvent event) {
 		if (slots == null && event.getEntity() != null && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getDirectEntity() instanceof LivingEntity)
-			event.getSource().getDirectEntity().hurt(plData.player().level.damageSources().thorns(plData.player()), 1);
+			event.getSource().getDirectEntity().hurt(plData.player().level().damageSources().thorns(plData.player()), 1);
 	}
 
 	@Override

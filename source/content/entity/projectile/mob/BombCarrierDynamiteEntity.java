@@ -52,7 +52,7 @@ public class BombCarrierDynamiteEntity extends BaseMobProjectile implements GeoE
 	}
 
 	private void explode(Vec3 position) {
-		if (level instanceof ServerLevel serverLevel)
+		if (level() instanceof ServerLevel serverLevel)
 			new StandardExplosion(AoAExplosions.BOMB_CARRIER_DYNAMITE, serverLevel, this, position).explode();
 	}
 

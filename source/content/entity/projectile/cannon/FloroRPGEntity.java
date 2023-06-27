@@ -47,7 +47,7 @@ public class FloroRPGEntity extends BaseBullet implements HardProjectile {
 	}
 
 	protected void explode(Vec3 position) {
-		if (!level.isClientSide())
-			WorldUtil.createExplosion(getOwner(), level, this, 3.0f);
+		if (!level().isClientSide())
+			WorldUtil.createExplosion(getOwner(), level(), this, 3.0f);
 	}
 }

@@ -23,9 +23,9 @@ public class BaronGreatblade extends BaseGreatblade {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
-		if (!attacker.level.isClientSide && attackCooldown > 0.85f) {
+		if (!attacker.level().isClientSide && attackCooldown > 0.85f) {
 			if (!(attacker instanceof Player) || ((Player)attacker).isCreative() || ItemUtil.findInventoryItem((Player)attacker, new ItemStack(AoAWeapons.GRENADE.get()), true, 1)) {
-				attacker.level.addFreshEntity(new GrenadeEntity(attacker, null));
+				attacker.level().addFreshEntity(new GrenadeEntity(attacker, null));
 				ItemUtil.damageItem(stack, attacker, 1, EquipmentSlot.MAINHAND);
 			}
 		}

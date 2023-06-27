@@ -5,16 +5,16 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.block.functional.plant.CropBlock;
+import net.tslat.aoa3.content.block.functional.plant.AoACropBlock;
 import net.tslat.aoa3.util.BlockUtil;
 
-public class GreenManure extends CropBlock {
+public class GreenManure extends AoACropBlock {
 	private static final VoxelShape[] SHAPES = new VoxelShape[] {
 		BlockUtil.pixelBasedCube(0, 0, 0, 16, 2, 16),
 		BlockUtil.pixelBasedCube(0, 0, 0, 16, 3, 16),
@@ -26,8 +26,8 @@ public class GreenManure extends CropBlock {
 		BlockUtil.pixelBasedCube(0, 0, 0, 16, 7, 16)
 	};
 
-	public GreenManure() {
-		super(MaterialColor.COLOR_GREEN, AoAItems.GREEN_MANURE_SEEDS);
+	public GreenManure(BlockBehaviour.Properties properties) {
+		super(properties, AoAItems.GREEN_MANURE_SEEDS);
 	}
 
 	@Override

@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.15,
   "ingredient": {
-    "item": "aoa3:irolog"
+    "item": "aoa3:iro_log"
   },
   "result": "minecraft:charcoal"
 }

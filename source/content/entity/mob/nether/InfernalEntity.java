@@ -56,10 +56,10 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
                 new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()).whenActivating(entity -> {
                     Entity target = BrainUtils.getTargetOfEntity(entity);
                     BlockPos pos = (target == null ? entity : target).blockPosition();
-                    BlockState state = level.getBlockState(pos);
+                    BlockState state = level().getBlockState(pos);
 
                     if (state.isAir())
-                        state = level.getBlockState(pos = pos.below());
+                        state = level().getBlockState(pos = pos.below());
 
                     BlockPos finalPos = pos;
 
@@ -118,16 +118,16 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
             if (RandomUtil.percentChance(chance)) {
                 BlockPos pos = fromPos.offset(dir.getNormal());
 
-                if (level.getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
+                if (level().getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
                     int tickTime = Math.max(1, 1 - pos.distManhattan(fromPos));
                     sendPacket = true;
 
                     packet.particle(ParticleBuilder.forPos(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.randomValueUpTo(1)));
-                    level.setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
+                    level().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
                     AoAScheduler.scheduleSyncronisedTask(() -> doSlam(pos, chance * 0.8f), tickTime);
                     AoAScheduler.scheduleSyncronisedTask(() -> {
-                        if (level.getBlockState(pos).getBlock() == Blocks.MAGMA_BLOCK)
-                            level.setBlock(pos, Blocks.NETHERRACK.defaultBlockState(), Block.UPDATE_ALL);
+                        if (level().getBlockState(pos).getBlock() == Blocks.MAGMA_BLOCK)
+                            level().setBlock(pos, Blocks.NETHERRACK.defaultBlockState(), Block.UPDATE_ALL);
                     }, tickTime + 100);
                 }
             }

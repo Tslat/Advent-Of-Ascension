@@ -10,22 +10,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.content.item.misc.RuneSource;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.scheduling.sync.RuneCreationTask;
-import net.tslat.aoa3.util.BlockUtil;
 
 import java.util.function.Supplier;
 
 public class RunePostBlock extends Block {
-	private Supplier<Item> rune;
+	private final Supplier<Item> rune;
 
-	public RunePostBlock(Supplier<Item> runeItem) {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_BLACK).stats(10f, 15f).get());
+	public RunePostBlock(BlockBehaviour.Properties properties, Supplier<Item> runeItem) {
+		super(properties);
 
 		this.rune = runeItem;
 	}
@@ -39,7 +37,7 @@ public class RunePostBlock extends Block {
 		ItemStack heldItem = player.getItemInHand(hand);
 
 		if (heldItem.getItem() instanceof RuneSource) {
-			if (level.getBlockState(pos.above()).getMaterial().blocksMotion()) {
+			if (level.getBlockState(pos.above()).blocksMotion()) {
 				if (!level.isClientSide())
 					player.sendSystemMessage(Component.translatable("message.feedback.runeShrine.blocked"));
 

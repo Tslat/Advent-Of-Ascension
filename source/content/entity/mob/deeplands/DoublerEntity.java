@@ -51,7 +51,7 @@ public class DoublerEntity extends AoAMeleeMob<DoublerEntity> {
     public void aiStep() {
         super.aiStep();
 
-        Player closestPlayer = level.getNearestPlayer(getX(), getY(), getZ(), 10, pl -> PlayerUtil.shouldPlayerBeAffected((Player)pl));
+        Player closestPlayer = level().getNearestPlayer(getX(), getY(), getZ(), 10, pl -> PlayerUtil.shouldPlayerBeAffected((Player)pl));
 
         if (closestPlayer != null)
             EntityUtil.applyPotions(closestPlayer, new EffectBuilder(MobEffects.BLINDNESS, 30));

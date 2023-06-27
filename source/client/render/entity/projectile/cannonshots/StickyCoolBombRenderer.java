@@ -20,8 +20,8 @@ public class StickyCoolBombRenderer extends TexturedProjectileRenderer<StickyCoo
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 8; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RGB(193, 64, 215)), entity.getX(), entity.getY() + 0.25D, entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.BLUE), entity.getX(), entity.getY() - 0.25D, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.RGB(193, 64, 215)), entity.getX(), entity.getY() + 0.25D, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SWIRLY.get(), 1, 3, ColourUtil.BLUE), entity.getX(), entity.getY() - 0.25D, entity.getZ(), 0, 0, 0);
 		}
 	}
 }

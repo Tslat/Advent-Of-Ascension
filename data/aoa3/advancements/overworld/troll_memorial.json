@@ -36,5 +36,6 @@
     [
       "obtain_gold_smash_trophy"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -16,7 +16,7 @@ public class AquaballEntity extends BaseMobProjectile {
 	}
 
 	public AquaballEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.AQUABALL.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.AQUABALL.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

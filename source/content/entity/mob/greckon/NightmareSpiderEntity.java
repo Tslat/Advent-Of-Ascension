@@ -95,7 +95,7 @@ public class NightmareSpiderEntity extends AoAMeleeMob<NightmareSpiderEntity> {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide)
+		if (!level().isClientSide)
 			setBesideClimbableBlock(this.horizontalCollision);
 	}
 

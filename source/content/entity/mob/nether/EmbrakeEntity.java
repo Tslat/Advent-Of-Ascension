@@ -122,7 +122,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 					packet.particle(ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, entity.getEyePosition(), 64);
+				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), entity.getEyePosition(), 64);
 
 				if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
 					entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);

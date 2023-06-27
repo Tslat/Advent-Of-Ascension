@@ -46,12 +46,12 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 	protected void onHit(HitResult result) {
 		if (result.getType() == HitResult.Type.BLOCK) {
 			BlockHitResult rayTraceResult = (BlockHitResult)result;
-			BlockState bl = level.getBlockState(rayTraceResult.getBlockPos());
+			BlockState bl = level().getBlockState(rayTraceResult.getBlockPos());
 			double posX = rayTraceResult.getBlockPos().getX();
 			double posY = rayTraceResult.getBlockPos().getY();
 			double posZ = rayTraceResult.getBlockPos().getZ();
 
-			if (!bl.getMaterial().blocksMotion())
+			if (!bl.blocksMotion())
 				return;
 
 			ticksInGround++;
@@ -84,7 +84,7 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 			setPos(posX, posY, posZ);
 		}
 		else {
-			if (!level.isClientSide()) {
+			if (!level().isClientSide()) {
 				if (result instanceof EntityHitResult entityResult) {
 					Entity shooter = getOwner();
 
@@ -108,13 +108,13 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 
 			ticksInGround++;
 
-			if (ticksInGround >= 80 && !level.isClientSide) {
+			if (ticksInGround >= 80 && !level().isClientSide) {
 				explode(position());
 
 				return;
 			}
 
-			if (!level.isClientSide)
+			if (!level().isClientSide)
 				unsetRemoved();
 		}
 	}
@@ -130,9 +130,9 @@ public class StickyRedBombEntity extends BaseBullet implements HardProjectile {
 	}
 
 	protected void explode(Vec3 position) {
-		WorldUtil.createExplosion(getOwner(), level, this, 2.0f);
+		WorldUtil.createExplosion(getOwner(), level(), this, 2.0f);
 
-		if (!level.isClientSide)
+		if (!level().isClientSide)
 			discard();
 	}
 }

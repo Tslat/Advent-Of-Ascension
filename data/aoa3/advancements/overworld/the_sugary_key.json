@@ -35,5 +35,6 @@
     [
       "obtain_candyland_realmstone"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

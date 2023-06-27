@@ -26,7 +26,7 @@ public class CreepoidGreatblade extends BaseGreatblade {
 			double offsetY = Mth.clamp(attacker.getY() + attacker.getEyeHeight() - target.getY(), -0.1, target.getBbHeight() + 0.1);
 			double offsetZ = Mth.clamp(attacker.getZ() - target.getZ(), -offset, offset);
 
-			WorldUtil.createExplosion(attacker, attacker.level, target.getX() + offsetX, target.getY() + offsetY, target.getZ() + offsetZ, 1.5f);
+			WorldUtil.createExplosion(attacker, attacker.level(), target.getX() + offsetX, target.getY() + offsetY, target.getZ() + offsetZ, 1.5f);
 		}
 	}
 

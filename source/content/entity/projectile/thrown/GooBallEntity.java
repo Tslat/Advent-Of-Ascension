@@ -54,7 +54,7 @@ public class GooBallEntity extends BaseBullet implements HardProjectile, ItemSup
 		if (DamageUtil.doProjectileAttack(getOwner(), this, target, AoAWeapons.GOO_BALL.get().getDamage()))
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 60).level(2));
 
-		level.playSound(null, getX(), getY(), getZ(), AoASounds.GOO_BALL_IMPACT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+		level().playSound(null, getX(), getY(), getZ(), AoASounds.GOO_BALL_IMPACT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 	}
 
 	@Override

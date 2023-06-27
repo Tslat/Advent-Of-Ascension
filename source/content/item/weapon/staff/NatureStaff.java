@@ -29,14 +29,14 @@ public class NatureStaff extends BaseStaff<List<BlockPos>> {
 
 	@Override
 	public List<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level, caster.getBoundingBox().inflate(10), (state, pos) -> {
+		List<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level(), caster.getBoundingBox().inflate(10), (state, pos) -> {
 			if (!(state.getBlock() instanceof BonemealableBlock))
 				return false;
 
-			if (!((BonemealableBlock)state.getBlock()).isValidBonemealTarget(caster.level, pos.immutable(), state, false))
+			if (!((BonemealableBlock)state.getBlock()).isValidBonemealTarget(caster.level(), pos.immutable(), state, false))
 				return false;
 
-			return WorldUtil.canModifyBlock(caster.level, pos, caster, staff);
+			return WorldUtil.canModifyBlock(caster.level(), pos, caster, staff);
 		});
 
 		return blocks.isEmpty() ? null : blocks;
@@ -51,7 +51,7 @@ public class NatureStaff extends BaseStaff<List<BlockPos>> {
 	@Override
 	public void cast(Level world, ItemStack staff, LivingEntity caster, List<BlockPos> args) {
 		for (BlockPos pos : args) {
-			BoneMealItem.growCrop(new ItemStack(Items.BONE_MEAL), caster.level, pos);
+			BoneMealItem.growCrop(new ItemStack(Items.BONE_MEAL), caster.level(), pos);
 		}
 	}
 

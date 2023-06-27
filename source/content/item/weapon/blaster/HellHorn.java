@@ -31,7 +31,7 @@ public class HellHorn extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new HellBubbleShotEntity(shooter, this, 100));
+		shooter.level().addFreshEntity(new HellBubbleShotEntity(shooter, this, 100));
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class GasBlaster extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new ToxicShotEntity(shooter, this, 1));
+		shooter.level().addFreshEntity(new ToxicShotEntity(shooter, this, 1));
 	}
 
 	@Override

@@ -50,7 +50,7 @@ public class UltimatumStaffTask implements Runnable {
 
 	@Override
 	public void run() {
-		if (shooter == null || target == null || shooter.level.isClientSide || !shooter.blockPosition().equals(shooterPos) || !target.blockPosition().equals(targetPos)) {
+		if (shooter == null || target == null || shooter.level().isClientSide || !shooter.blockPosition().equals(shooterPos) || !target.blockPosition().equals(targetPos)) {
 			resetStates();
 
 			return;
@@ -83,7 +83,7 @@ public class UltimatumStaffTask implements Runnable {
 				target.setHealth(targetPostHealth);
 			}
 
-			((ServerLevel)shooter.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + target.getBbHeight(), target.getZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
+			((ServerLevel)shooter.level()).sendParticles(ParticleTypes.DAMAGE_INDICATOR, target.getX(), target.getY() + target.getBbHeight(), target.getZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
 		}
 		else {
 			if (!(shooter instanceof Player) || !((Player)shooter).isCreative()) {
@@ -95,7 +95,7 @@ public class UltimatumStaffTask implements Runnable {
 					shooter.setHealth(shooterPostHealth);
 				}
 
-				((ServerLevel)shooter.level).sendParticles(ParticleTypes.DAMAGE_INDICATOR, shooter.getX(), shooter.getY() + shooter.getBbHeight(), shooter.getZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
+				((ServerLevel)shooter.level()).sendParticles(ParticleTypes.DAMAGE_INDICATOR, shooter.getX(), shooter.getY() + shooter.getBbHeight(), shooter.getZ(), (int)Math.ceil(10 * healthPercent), 0, 0, 0, 0);
 			}
 		}
 

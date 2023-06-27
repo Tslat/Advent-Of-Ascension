@@ -30,7 +30,7 @@ public class AirborneMoveControl extends MoveControl {
 			this.mob.setNoGravity(true);
 
 			this.operation = Operation.WAIT;
-			float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.isOnGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
+			float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
 
 			this.mob.setSpeed(moveSpeed);
 			this.mob.setZza(this.strafeForwards);
@@ -54,7 +54,7 @@ public class AirborneMoveControl extends MoveControl {
 
 			this.mob.setYRot(rotlerp(this.mob.getYRot(), (float)(Mth.atan2(distZ, distX) * Mth.RAD_TO_DEG) - 90, 90));
 
-			float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.isOnGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
+			float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
 			double lateralDist = Math.sqrt(distX * distX + distZ * distZ);
 
 			this.mob.setSpeed(moveSpeed);

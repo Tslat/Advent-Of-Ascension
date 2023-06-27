@@ -46,7 +46,7 @@ public class ArcFlowerEntity extends AoAMeleeMob<ArcFlowerEntity> {
     public void aiStep() {
         super.aiStep();
 
-        Player nearestPlayer = level.getNearestPlayer(this, 64);
+        Player nearestPlayer = level().getNearestPlayer(this, 64);
 
         if (nearestPlayer == null)
             return;
@@ -70,11 +70,11 @@ public class ArcFlowerEntity extends AoAMeleeMob<ArcFlowerEntity> {
     public void die(DamageSource source) {
         super.die(source);
 
-        if (!level.isClientSide) {
-            ArcwormEntity arcworm = new ArcwormEntity(AoAMobs.ARCWORM.get(), level);
+        if (!level().isClientSide) {
+            ArcwormEntity arcworm = new ArcwormEntity(AoAMobs.ARCWORM.get(), level());
 
             arcworm.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
-            level.addFreshEntity(arcworm);
+            level().addFreshEntity(arcworm);
             discard();
         }
     }

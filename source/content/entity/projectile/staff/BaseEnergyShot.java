@@ -33,7 +33,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 	}
 
 	public BaseEnergyShot(EntityType<? extends ThrowableProjectile> entityType, LivingEntity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, double motionX, double motionY, double motionZ) {
-		super(entityType, shooter.level);
+		super(entityType, shooter.level());
 		this.age = 0;
 		this.lifespan = 60;
 		this.weapon = weapon;
@@ -44,7 +44,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 	}
 
 	public BaseEnergyShot(EntityType<? extends ThrowableProjectile> entityType, Entity shooter, EnergyProjectileWeapon weapon, double posX, double posY, double posZ, float velocity) {
-		super(entityType, shooter.level);
+		super(entityType, shooter.level());
 		this.age = 0;
 		this.lifespan = 120;
 		this.weapon = weapon;
@@ -56,7 +56,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 	}
 
 	public BaseEnergyShot(EntityType<? extends ThrowableProjectile> entityType, LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge, float xMod, float yMod, float zMod) {
-		super(entityType, shooter.level);
+		super(entityType, shooter.level());
 		this.age = 0;
 		this.lifespan = maxAge;
 		this.weapon = weapon;
@@ -91,7 +91,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 	}
 
 	public BaseEnergyShot(EntityType<? extends ThrowableProjectile> entityType, LivingEntity shooter, EnergyProjectileWeapon weapon, int maxAge) {
-		super(entityType, shooter.level);
+		super(entityType, shooter.level());
 		this.age = 0;
 		this.lifespan = maxAge;
 		this.weapon = weapon;
@@ -143,7 +143,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 
 	@Override
 	protected void onHit(HitResult result) {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (weapon != null && isAlive()) {
 				Entity shooter = getOwner();
 
@@ -177,7 +177,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 		Vec3 motion = getDeltaMovement();
 		Vec3 position = new Vec3(getX() - motion.x() * 0.5f, getY() - motion.y() * 0.5f, getZ() - motion.z() * 0.5f);
 		Vec3 velocityAdjustedPosition = new Vec3(getX() + motion.x(), getY() + motion.y(), getZ() + motion.z());
-		HitResult collisionTrace = level.clip(new ClipContext(position, velocityAdjustedPosition, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, null));
+		HitResult collisionTrace = level().clip(new ClipContext(position, velocityAdjustedPosition, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, null));
 
 		if (collisionTrace.getType() != HitResult.Type.MISS) {
 			velocityAdjustedPosition = new Vec3(collisionTrace.getLocation().x, collisionTrace.getLocation().y, collisionTrace.getLocation().z);
@@ -187,7 +187,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 		}
 
 		Entity shooter = getOwner();
-		EntityHitResult entityTrace = ProjectileUtil.getEntityHitResult(level, this, position, velocityAdjustedPosition, getBoundingBox().expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.5D), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter);
+		EntityHitResult entityTrace = ProjectileUtil.getEntityHitResult(level(), this, position, velocityAdjustedPosition, getBoundingBox().expandTowards(motion.x(), motion.y(), motion.z()).inflate(0.5D), entity -> entity.isAlive() && entity.isPickable() && !entity.isSpectator() && entity != shooter);
 
 		if (entityTrace != null)
 			collisionTrace = entityTrace;
@@ -201,7 +201,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 
 		super.tick();
 
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (age > lifespan) {
 				discard();
 			}

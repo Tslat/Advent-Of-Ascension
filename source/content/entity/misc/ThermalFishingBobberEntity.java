@@ -52,24 +52,24 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 
 	@Override
 	protected void spawnFish(ServerPlayer player) {
-		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level.getBiome(blockPosition()).value(), true, this.level).getRandomElement(player, getLuck());
+		Function<Level, Entity> fishFunction = AoAHaulingFishReloadListener.getFishListForBiome(level().getBiome(blockPosition()).value(), true, this.level()).getRandomElement(player, getLuck());
 
 		if (fishFunction != null) {
-			Entity entity = fishFunction.apply(player.level);
+			Entity entity = fishFunction.apply(player.level());
 
 			if (entity == null)
 				return;
 
 			if (entity instanceof Mob mob) {
-				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level, 5, (state, statePos) -> state.getFluidState().getType() == Fluids.LAVA);
+				BlockPos pos = RandomUtil.getRandomPositionWithinRange(this.blockPosition(), 10, 10, 10, 2, 2, 2, false, level(), 5, (state, statePos) -> state.getFluidState().getType() == Fluids.LAVA);
 
 				mob.setPos(pos.getX(), pos.getY(), pos.getZ());
 				mob.getNavigation().createPath(blockPosition(), 0);
-				level.addFreshEntity(mob);
+				level().addFreshEntity(mob);
 			}
 			else {
 				entity.setPos(getX(), getY() - entity.getBbHeight(), getZ());
-				level.addFreshEntity(entity);
+				level().addFreshEntity(entity);
 			}
 
 			spawnedFish = entity;
@@ -82,7 +82,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 	protected void calculateFishingLureBonus() {
 		this.fishingBonusMod = 1;
 
-		Holder<Biome> biome = level.getBiome(blockPosition());
+		Holder<Biome> biome = level().getBiome(blockPosition());
 		float temperature = biome.value().getTemperature(blockPosition());
 
 		if (temperature > 2) {
@@ -99,12 +99,12 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 			this.fishingBonusMod *= 0.9f;
 		}
 
-		if (level.isRainingAt(blockPosition()))
+		if (level().isRainingAt(blockPosition()))
 			this.fishingBonusMod *= 0.75f;
 
 		this.fishingBonusMod *= fishingBonusModForBiome(biome);
 
-		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level, getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
+		int nearbyFluidBlocks = WorldUtil.getBlocksWithinAABB(level(), getBoundingBox().inflate(2, 1, 2), (state, pos) -> state.getFluidState().is(getApplicableFluid()) && state.getFluidState().isSource()).size();
 
 		if (nearbyFluidBlocks <=  50) {
 			this.fishingBonusMod *= 0.5f;
@@ -116,7 +116,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0035f);
 		this.fishingBonusMod += 0.25f * lure;
 
-		if (!EntityRetrievalUtil.getPlayers(level, getBoundingBox().inflate(5)).isEmpty())
+		if (!EntityRetrievalUtil.getPlayers(level(), getBoundingBox().inflate(5)).isEmpty())
 			this.fishingBonusMod *= 0.2f;
 	}
 
@@ -124,7 +124,7 @@ public class ThermalFishingBobberEntity extends HaulingFishingBobberEntity {
 	protected void doBobbing(FluidState fluidState) {
 		if (state == State.IN_FLUID) {
 			BlockPos pos = blockPosition();
-			float fluidHeight = fluidState.getHeight(level, pos);
+			float fluidHeight = fluidState.getHeight(level(), pos);
 			Vec3 vector3d = this.getDeltaMovement();
 			double fluidAdjustedHeight = this.getY() + vector3d.y - (double)pos.getY() - (double)fluidHeight + 0.1;
 

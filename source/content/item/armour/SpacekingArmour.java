@@ -34,7 +34,7 @@ public class SpacekingArmour extends AdventArmour {
 		if (slots == null && !DamageUtil.isEnvironmentalDamage(event.getSource()) && !DamageUtil.isPoisonDamage(event.getSource(), plData.player(), event.getAmount())) {
 			Player pl = plData.player();
 
-			if (!pl.level.isClientSide && pl.getHealth() > 0 && RandomUtil.oneInNChance(3)) {
+			if (!pl.level().isClientSide && pl.getHealth() > 0 && RandomUtil.oneInNChance(3)) {
 				/*OrblingEntity orbling = new OrblingEntity(AoAEntities.Minions.ORBLING.get(), pl.level);
 
 				orbling.setPos(pl.getX(), pl.getY() + 1.5, pl.getZ());

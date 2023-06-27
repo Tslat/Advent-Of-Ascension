@@ -45,7 +45,7 @@ public class CandyArmour extends AdventArmour {
 				FoodProperties food = stack.getItem().getFoodProperties();
 
 				if (food.getNutrition() > 0 && food.getSaturationModifier() > 0) {
-					player.getInventory().setItem(i, stack.getItem().finishUsingItem(stack, player.level, player));
+					player.getInventory().setItem(i, stack.getItem().finishUsingItem(stack, player.level(), player));
 
 					return true;
 				}

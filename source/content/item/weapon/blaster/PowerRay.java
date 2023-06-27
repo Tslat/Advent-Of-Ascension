@@ -31,7 +31,7 @@ public class PowerRay extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new PowerRayEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new PowerRayEntity(shooter, this, 60));
 	}
 
 	@Override

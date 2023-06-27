@@ -14,6 +14,9 @@ import net.tslat.smartbrainlib.util.RandomUtil;
 
 import javax.annotation.Nullable;
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -83,5 +86,14 @@ public final class ObjectUtil {
 			list.set(i, list.get(index));
 			list.set(index, swapElement);
 		}
+	}
+
+	public static Path getOrCreateDirectory(Path parentPath, String directory) throws IOException {
+		Path resolvedPath = parentPath.resolve(directory);
+
+		if (!Files.isDirectory(resolvedPath))
+			Files.createDirectories(resolvedPath);
+
+		return resolvedPath;
 	}
 }

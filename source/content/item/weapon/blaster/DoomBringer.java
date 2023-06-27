@@ -30,17 +30,17 @@ public class DoomBringer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new DoomShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new DoomShotEntity(shooter, this, 60));
 	}
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, Vec3 hitPos, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 1.25f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 1.25f);
 	}
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		WorldUtil.createExplosion(shooter, shot.level, shot, 1.25f);
+		WorldUtil.createExplosion(shooter, shot.level(), shot, 1.25f);
 
 		return true;
 	}

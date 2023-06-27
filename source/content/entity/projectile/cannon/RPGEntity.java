@@ -46,7 +46,7 @@ public class RPGEntity extends BaseBullet implements HardProjectile {
 	}
 
 	protected void explode(Vec3 position) {
-		if (!level.isClientSide)
-			new StandardExplosion(AoAExplosions.RPG, (ServerLevel)getLevel(), this, getOwner(), position).explode();
+		if (!level().isClientSide)
+			new StandardExplosion(AoAExplosions.RPG, (ServerLevel)level(), this, getOwner(), position).explode();
 	}
 }

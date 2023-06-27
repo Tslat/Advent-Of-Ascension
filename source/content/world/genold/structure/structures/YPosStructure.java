@@ -27,7 +27,7 @@ public class YPosStructure extends AoAStructureBase<IntRangeConfig> {
 
 				chunkCenter.setY(config.getValue(random));
 
-				return config.ignoreObstructions || blockReader.getBlockState(chunkCenter).getMaterial().isReplaceable();
+				return config.ignoreObstructions || blockReader.getBlockState(chunkCenter).canBeReplaced();
 			}
 		};
 	}

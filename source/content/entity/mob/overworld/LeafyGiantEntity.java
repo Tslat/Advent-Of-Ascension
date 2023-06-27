@@ -143,10 +143,10 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 	}
 
 	protected void spawnBushBaby(@Nonnull LivingEntity target) {
-		if (level.isClientSide())
+		if (level().isClientSide())
 			return;
 
-		BushBabyEntity bushBaby = EntitySpawningUtil.spawnEntity((ServerLevel)level, AoAMobs.BUSH_BABY.get(), BlockPos.containing(getX(), getBoundingBox().maxY, getZ()), MobSpawnType.MOB_SUMMONED);
+		BushBabyEntity bushBaby = EntitySpawningUtil.spawnEntity((ServerLevel)level(), AoAMobs.BUSH_BABY.get(), BlockPos.containing(getX(), getBoundingBox().maxY, getZ()), MobSpawnType.MOB_SUMMONED);
 
 		if (bushBaby == null)
 			return;

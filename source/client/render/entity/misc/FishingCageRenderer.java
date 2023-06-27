@@ -47,7 +47,7 @@ public class FishingCageRenderer extends EntityRenderer<FishingCageEntity> {
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 
 		for (ItemStack stack : entity.getLoot()) {
-			itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrix, buffer, entity.level, 0);
+			itemRenderer.renderStatic(stack, ItemDisplayContext.GROUND, packedLight, OverlayTexture.NO_OVERLAY, matrix, buffer, entity.level(), 0);
 			matrix.translate(0, -0.15d, 0);
 		}
 

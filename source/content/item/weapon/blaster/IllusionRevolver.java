@@ -21,6 +21,6 @@ public class IllusionRevolver extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new IllusionShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new IllusionShotEntity(shooter, this, 60));
 	}
 }

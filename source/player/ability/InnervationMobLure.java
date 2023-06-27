@@ -93,7 +93,7 @@ public class InnervationMobLure extends AoAAbility.Instance {
 			return;
 		}
 
-		if (ev.player.level.getGameTime() % 10 == 0 && ev.player instanceof ServerPlayer pl)
+		if (ev.player.level().getGameTime() % 10 == 0 && ev.player instanceof ServerPlayer pl)
 			new ScreenImageEffect(ScreenImageEffect.Type.ACTION_KEY_VIGNETTE).fullscreen(true).duration(10).sendToPlayer(pl);
 
 		if (luringEntity.getTarget() != ev.player)

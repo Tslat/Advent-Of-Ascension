@@ -26,12 +26,11 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.misc.HellfireProjectileEntity;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.AdvancementUtil;
+import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 
 public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSupplier {
-	private float explosionStrength = 1.5f;
 	private LivingEntity shooter;
-	private BaseGun gun;
 
 	public HellfireEntity(EntityType<? extends ThrowableProjectile> entityType, Level world) {
 		super(entityType, world);
@@ -44,7 +43,6 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 	public HellfireEntity(LivingEntity shooter, BaseGun gun) {
 		super(AoAProjectiles.HELLFIRE.get(), shooter, gun, 1.0f, 0, 1.5f);
 		this.shooter = shooter;
-		this.gun = gun;
 	}
 
 	public HellfireEntity(LivingEntity shooter, BaseGun gun, InteractionHand hand, int maxAge, int piercingValue) {
@@ -58,10 +56,6 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 	@Override
 	public float getGravity() {
 		return 0.075f;
-	}
-
-	public void setExplosionStrength(float strength) {
-		explosionStrength = strength;
 	}
 
 	@Override
@@ -85,14 +79,16 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 	protected void explode(Vec3 position) {
 		int count = 0;
 
-		for (LivingEntity e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
-			level.addFreshEntity(new HellfireProjectileEntity(this, e.getX(), e.getY(), e.getZ()));
-			e.setSecondsOnFire(10);
-			count++;
+		for (LivingEntity e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
+			if (DamageUtil.doMiscMagicAttack(getOwner(), this, 3.5f, position())) {
+				level().addFreshEntity(new HellfireProjectileEntity(this, e.getX(), e.getY(), e.getZ()));
+				e.setSecondsOnFire(10);
+				count++;
+			}
 		}
 
 		if (shooter instanceof Player) {
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.HELLFIRE_IMPACT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+			level().playSound(null, getX(), getY(), getZ(), AoASounds.HELLFIRE_IMPACT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
 			if (count >= 20 && shooter instanceof ServerPlayer)
 				AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/heckfire"), "20_target_hellfire");

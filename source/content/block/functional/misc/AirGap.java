@@ -9,21 +9,19 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.tslat.aoa3.util.BlockUtil;
 
 import javax.annotation.Nullable;
 
 public class AirGap extends Block {
-	public AirGap() {
-		super(new BlockUtil.CompactProperties(Material.BARRIER, MaterialColor.NONE).stats(BlockUtil.UNBREAKABLE_HARDNESS, 0f).isAir().noDrops().noOcclusion().noClip().get());
+	public AirGap(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 	@Override
 	public VoxelShape getOcclusionShape(BlockState state, BlockGetter world, BlockPos pos) {

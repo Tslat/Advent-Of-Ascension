@@ -64,7 +64,7 @@ public class RunicGolemEntity extends AoAMeleeMob<RunicGolemEntity> {
 
 	@Override
 	public boolean hurt(DamageSource source, float amount) {
-		if (!level.isClientSide) {
+		if (!level().isClientSide) {
 			if (isShielded() && EntityUtil.Predicates.SURVIVAL_PLAYER.test(source.getEntity())) {
 				if (DamageUtil.isMeleeDamage(source) && runeStoneCooldown <= 0) {
 					runeStoneCooldown = 120;

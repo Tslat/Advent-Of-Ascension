@@ -16,7 +16,7 @@ public class AnemiaBombEntity extends BaseMobProjectile {
 	}
 
 	public AnemiaBombEntity(AoAFlyingRangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.ANEMIA_BOMB.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.ANEMIA_BOMB.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

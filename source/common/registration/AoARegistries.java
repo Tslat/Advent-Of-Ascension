@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -71,6 +72,7 @@ public final class AoARegistries {
 	public static final ResourceKey<Registry<AoAResource>> RESOURCES_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("resources"));
 	public static final ResourceKey<Registry<AoAAbility>> ABILITIES_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("abilities"));
 
+	public static final VanillaRegistryHelper<CreativeModeTab> CREATIVE_MODE_TABS = new VanillaRegistryHelper<>(Registries.CREATIVE_MODE_TAB, AoACreativeModeTabs::init);
 	public static final ForgeRegistryHelper<Block> BLOCKS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.BLOCKS, AoABlocks::init);
 	public static final ForgeRegistryHelper<Item> ITEMS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ITEMS, AoAItems::init, AoAWeapons::init, AoATools::init, AoAArmour::init);
 	public static final ForgeRegistryHelper<Fluid> FLUIDS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FLUIDS);
@@ -113,6 +115,7 @@ public final class AoARegistries {
 		for (Runnable initTask : REGISTRY_INIT_TASKS) {
 			initTask.run();
 		}
+
 		REGISTRY_INIT_TASKS.clear();
 
 		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, NewRegistryEvent.class, AoARegistries::createCustomRegistries);

@@ -2,13 +2,16 @@ package net.tslat.aoa3.client.gui.lib;
 
 import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.gui.ScreenUtils;
 import org.joml.Matrix4f;
 
 @OnlyIn(Dist.CLIENT)
@@ -43,7 +46,7 @@ public abstract class ScrollablePane {
 		this.currentRenderScale = renderingScale;
 	}
 
-	public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
 		int scrollBarWidth = 6;
@@ -87,10 +90,10 @@ public abstract class ScrollablePane {
 		float windowHeightScale = currentRenderScale * (mcWindow.getScreenHeight() / (float)mcWindow.getGuiScaledHeight());
 
 		RenderSystem.enableScissor((int)((left - 1.5) * windowWidthScale), (int)((mcWindow.getScreenHeight() / windowHeightScale - bottom - 2) * windowHeightScale), (int)((viewWidth + 3) * windowWidthScale), (int)((viewHeight + 1.5) * windowHeightScale + 2));
-		drawBackground(matrix);
-		ScreenUtils.drawGradientRect(matrix.last().pose(), 0, left - 1, top - 1, right + 1, bottom + 1, 0xC0101010, 0xD0101010);
+		drawBackground(guiGraphics);
+		guiGraphics.fillGradient(left - 1, top - 1, right + 1, bottom + 1, 0, 0xC0101010, 0xD0101010);
 		int newTop = top - Math.max(0, (int)distanceScrolled);
-		drawPaneContents(matrix, newTop, left, right, bottom, distanceScrolled, partialTicks);
+		drawPaneContents(guiGraphics, newTop, left, right, bottom, distanceScrolled, partialTicks);
 		RenderSystem.disableDepthTest();
 
 		if (paneViewDiff > 0) {
@@ -98,7 +101,7 @@ public abstract class ScrollablePane {
 			int barLeft = right - 6;
 			Tesselator tess = Tesselator.getInstance();
 			BufferBuilder buff = tess.getBuilder();
-			Matrix4f matrix4f = matrix.last().pose();
+			Matrix4f matrix4f = guiGraphics.pose().last().pose();
 
 			RenderSystem.setShader(GameRenderer::getPositionColorShader);
 			buff.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
@@ -165,7 +168,7 @@ public abstract class ScrollablePane {
 
 	public abstract int getFullPaneHeight();
 
-	public abstract void drawPaneContents(PoseStack matrix, int top, int left, int right, int bottom, float scrollDistance, float partialTicks);
+	public abstract void drawPaneContents(GuiGraphics guiGraphics, int top, int left, int right, int bottom, float scrollDistance, float partialTicks);
 
-	public abstract void drawBackground(PoseStack matrix);
+	public abstract void drawBackground(GuiGraphics guiGraphics);
 }

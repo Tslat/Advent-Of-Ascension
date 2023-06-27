@@ -63,6 +63,6 @@ public class HalyconEntity extends AoAAnimal {
 	@Nullable
 	@Override
 	public AgeableMob getBreedOffspring(ServerLevel world, AgeableMob mate) {
-		return new HalyconEntity(AoAAnimals.HALYCON.get(), this.level);
+		return new HalyconEntity(AoAAnimals.HALYCON.get(), this.level());
 	}
 }

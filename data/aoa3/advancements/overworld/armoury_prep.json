@@ -35,5 +35,6 @@
     [
       "obtain_frame_bench"
     ]
-  ]
+  ],
+  "sends_telemetry_event": false
 }

@@ -41,10 +41,10 @@ public class BubbleShotEntity extends BaseEnergyShot {
 			discard();
 
 		if (!isAlive()) {
-			level.playSound(null, getX(), getY(), getZ(), AoASounds.BUBBLE_SHOT_POP.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+			level().playSound(null, getX(), getY(), getZ(), AoASounds.BUBBLE_SHOT_POP.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 		}
-		else if (!level.isClientSide && weapon != null) {
-			List<LivingEntity> collidingEntities = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox(), EntityUtil.Predicates.HOSTILE_MOB);
+		else if (!level().isClientSide && weapon != null) {
+			List<LivingEntity> collidingEntities = level().getEntitiesOfClass(LivingEntity.class, getBoundingBox(), EntityUtil.Predicates.HOSTILE_MOB);
 
 			if (!collidingEntities.isEmpty()) {
 				Entity shooter = getOwner();

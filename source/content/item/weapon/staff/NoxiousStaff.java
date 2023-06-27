@@ -68,7 +68,7 @@ public class NoxiousStaff extends BaseStaff<Object> {
 
 	@Override
 	public void doBlockImpact(BaseEnergyShot shot, Vec3 pos, LivingEntity shooter) {
-		AreaEffectCloud cloud = new AreaEffectCloud(shot.level, shot.getX(), shot.getY(), shot.getZ());
+		AreaEffectCloud cloud = new AreaEffectCloud(shot.level(), shot.getX(), shot.getY(), shot.getZ());
 
 		cloud.setRadius(3);
 		cloud.setPotion(Potions.STRONG_POISON);
@@ -77,7 +77,7 @@ public class NoxiousStaff extends BaseStaff<Object> {
 		cloud.setFixedColor(ColourUtil.RGB(51, 102, 0));
 		cloud.setOwner(shooter);
 
-		shot.level.addFreshEntity(cloud);
+		shot.level().addFreshEntity(cloud);
 	}
 
 	@Override

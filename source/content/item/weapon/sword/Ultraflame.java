@@ -20,7 +20,7 @@ public class Ultraflame extends BaseSword {
 	@Override
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {
 		if (attackCooldown > 0.75) {
-			for (LivingEntity entity : target.level.getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(3), EntityUtil.Predicates.HOSTILE_MOB)) {
+			for (LivingEntity entity : target.level().getEntitiesOfClass(LivingEntity.class, target.getBoundingBox().inflate(3), EntityUtil.Predicates.HOSTILE_MOB)) {
 				entity.setSecondsOnFire(3);
 			}
 		}

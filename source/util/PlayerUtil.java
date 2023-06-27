@@ -68,7 +68,7 @@ public final class PlayerUtil {
     public static PlayerDataManager getAdventPlayer(@Nonnull Player player) {
         PlayerDataManager plData;
 
-        if (!player.level.isClientSide()) {
+        if (!player.level().isClientSide()) {
             plData = getAdventPlayer((ServerPlayer)player);
         }
         else {
@@ -241,7 +241,7 @@ public final class PlayerUtil {
         float angleX = sinYaw * cosPitch;
         float angleZ = cosYaw * cosPitch;
         Vec3 endVec = startVec.add((double)angleX * distance, (double)sinPitch * distance, (double)angleZ * distance);
-        BlockHitResult ray = pl.level.clip(new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, null));
+        BlockHitResult ray = pl.level().clip(new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, null));
 
         if (ray.getType() != HitResult.Type.BLOCK)
             return null;

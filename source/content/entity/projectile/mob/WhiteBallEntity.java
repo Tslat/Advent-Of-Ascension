@@ -16,7 +16,7 @@ public class WhiteBallEntity extends BaseMobProjectile {
 	}
 
 	public WhiteBallEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.WHITE_BALL.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.WHITE_BALL.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

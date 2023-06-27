@@ -1,5 +1,7 @@
 package net.tslat.aoa3.common.registration.item;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
@@ -107,7 +109,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> CORAL_STONE = registerItem("coral_stone", miscItem());
 	public static final RegistryObject<Item> COSMIC_DUST = registerItem("cosmic_dust", miscItem());
 	public static final RegistryObject<Item> CUP = registerItem("cup", miscItem());
-	public static final RegistryObject<Item> DARK_BONES = registerItem("dark_bones", () -> new ReservedItem("alien_orb"), (Supplier<CreativeModeTab>[])null);
+	public static final RegistryObject<Item> DARK_BONES = registerItem("dark_bones", () -> new ReservedItem("alien_orb"), (ResourceKey<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> DARKLY_POWDER = registerItem("darkly_powder", miscItem());
 	public static final RegistryObject<Item> DENSE_ROCK = registerItem("dense_rock", miscItem());
 	public static final RegistryObject<Item> BLUE_DRUSE = registerItem("blue_druse", miscItem());
@@ -120,7 +122,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> ENCHANTED_GUNPOWDER = registerItem("enchanted_gunpowder", miscItem());
 	public static final RegistryObject<Item> EYE_BULB = registerItem("eye_bulb", () -> new ItemNameBlockItem(AoABlocks.EYE_BULB_CROP.get(), new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4f).build())));
 	public static final RegistryObject<Item> FLAMMABLE_DUST = registerItem("flammable_dust", miscFuelItem(100));
-	public static final RegistryObject<Item> FLESHY_BONES = registerItem("fleshy_bones", () -> new ReservedItem("alien_orb"), (Supplier<CreativeModeTab>[])null);
+	public static final RegistryObject<Item> FLESHY_BONES = registerItem("fleshy_bones", () -> new ReservedItem("alien_orb"), (ResourceKey<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> FLOATING_STONE = registerItem("floating_stone", FloatingStone::new);
 	public static final RegistryObject<Item> BLUE_GEMSTONES = registerItem("blue_gemstones", miscItem());
 	public static final RegistryObject<Item> GREEN_GEMSTONES = registerItem("green_gemstones", miscItem());
@@ -193,18 +195,18 @@ public final class AoAItems {
 	public static final RegistryObject<Item> WEAPON_PARTS = registerItem("weapon_parts", miscItem());
 	public static final RegistryObject<Item> WHITEWASHING_SOLUTION = registerItem("whitewashing_solution", miscItem());
 	public static final RegistryObject<Item> WORN_BOOK = registerItem("worn_book", WornBook::new);
-	public static final RegistryObject<Item> TORN_PAGES = registerItem("torn_pages", TornPages::new, (Supplier<CreativeModeTab>[])null);
+	public static final RegistryObject<Item> TORN_PAGES = registerItem("torn_pages", TornPages::new, (ResourceKey<CreativeModeTab>[])null);
 	public static final RegistryObject<Item> YELLOW_SPORES = registerItem("yellow_spores", miscItem());
 	public static final RegistryObject<Item> ZHINX_DUST = registerItem("zhinx_dust", miscItem());
-	public static final RegistryObject<Item> CREATURE_ESSENCE = registerItem("creature_essence", CreatureEssence::new, (Supplier<CreativeModeTab>[])null);
+	public static final RegistryObject<Item> CREATURE_ESSENCE = registerItem("creature_essence", CreatureEssence::new, (ResourceKey<CreativeModeTab>[])null);
 
-	public static final RegistryObject<Item> BALLOON = registerItem("balloon", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
-	public static final RegistryObject<Item> CANNONBALL = registerItem("cannonball", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
-	public static final RegistryObject<Item> DISCHARGE_CAPSULE = registerItem("discharge_capsule", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
-	public static final RegistryObject<Item> LIMONITE_BULLET = registerItem("limonite_bullet", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
-	public static final RegistryObject<Item> METAL_SLUG = registerItem("metal_slug", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
-	public static final RegistryObject<Item> POP_SHOT = registerItem("pop_shot", () -> new ArrowItem(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
-	public static final RegistryObject<Item> SPREADSHOT = registerItem("spreadshot", () -> new Item(new Item.Properties()), () -> AoACreativeModeTabs.AMMUNITION);
+	public static final RegistryObject<Item> BALLOON = registerItem("balloon", () -> new Item(new Item.Properties()), AoACreativeModeTabs.AMMUNITION.getKey());
+	public static final RegistryObject<Item> CANNONBALL = registerItem("cannonball", () -> new Item(new Item.Properties()), AoACreativeModeTabs.AMMUNITION.getKey());
+	public static final RegistryObject<Item> DISCHARGE_CAPSULE = registerItem("discharge_capsule", () -> new Item(new Item.Properties()), AoACreativeModeTabs.AMMUNITION.getKey());
+	public static final RegistryObject<Item> LIMONITE_BULLET = registerItem("limonite_bullet", () -> new Item(new Item.Properties()), AoACreativeModeTabs.AMMUNITION.getKey());
+	public static final RegistryObject<Item> METAL_SLUG = registerItem("metal_slug", () -> new Item(new Item.Properties()), AoACreativeModeTabs.AMMUNITION.getKey());
+	public static final RegistryObject<Item> POP_SHOT = registerItem("pop_shot", () -> new ArrowItem(new Item.Properties()), AoACreativeModeTabs.AMMUNITION.getKey());
+	public static final RegistryObject<Item> SPREADSHOT = registerItem("spreadshot", () -> new Item(new Item.Properties()), AoACreativeModeTabs.AMMUNITION.getKey());
 
 	public static final RegistryObject<Item> BLASTER_FRAME = registerItem("blaster_frame", miscItem());
 	public static final RegistryObject<Item> CROSSBOW_FRAME = registerItem("crossbow_frame", miscItem());
@@ -302,23 +304,23 @@ public final class AoAItems {
 	public static final RegistryObject<Item> SHYRELANDS_REALMSTONE = registerItem("shyrelands_realmstone", () -> new Realmstone(AoABlocks.SHYRELANDS_PORTAL, AoASounds.SHYRELANDS_PORTAL_ACTIVATE, "shyrelands"));
 	public static final RegistryObject<Item> VOX_PONDS_REALMSTONE = registerItem("vox_ponds_realmstone", () -> new Realmstone(AoABlocks.VOX_PONDS_PORTAL, AoASounds.DARK_PORTAL_ACTIVATE, "vox_ponds"));
 
-	public static final RegistryObject<Item> AGILITY_TABLET = registerItem("agility_tablet", AgilityTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> AWARENESS_TABLET = registerItem("awareness_tablet", AwarenessTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> BREEDING_TABLET = registerItem("breeding_tablet", BreedingTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> CLEANSING_TABLET = registerItem("cleansing_tablet", CleansingTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> DISTORTION_TABLET = registerItem("distortion_tablet", DistortionTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> ENERGY_TABLET = registerItem("energy_tablet", EnergyTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> GRAVITY_TABLET = registerItem("gravity_tablet", GravityTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> OXYGEN_TABLET = registerItem("oxygen_tablet", OxygenTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> PRESSURE_TABLET = registerItem("pressure_tablet", PressureTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> PROFICIENCY_TABLET = registerItem("proficiency_tablet", ProficiencyTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> RESISTANCE_TABLET = registerItem("resistance_tablet", ResistanceTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> SANCTITY_TABLET = registerItem("sanctity_tablet", SanctityTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> SATIATION_TABLET = registerItem("satiation_tablet", SatiationTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> SIGHT_TABLET = registerItem("sight_tablet", SightTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> STRENGTH_TABLET = registerItem("strength_tablet", StrengthTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> UNTIRING_TABLET = registerItem("untiring_tablet", UntiringTablet::new, () -> AoACreativeModeTabs.TABLETS);
-	public static final RegistryObject<Item> VITALITY_TABLET = registerItem("vitality_tablet", VitalityTablet::new, () -> AoACreativeModeTabs.TABLETS);
+	public static final RegistryObject<Item> AGILITY_TABLET = registerItem("agility_tablet", AgilityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> AWARENESS_TABLET = registerItem("awareness_tablet", AwarenessTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> BREEDING_TABLET = registerItem("breeding_tablet", BreedingTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> CLEANSING_TABLET = registerItem("cleansing_tablet", CleansingTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> DISTORTION_TABLET = registerItem("distortion_tablet", DistortionTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> ENERGY_TABLET = registerItem("energy_tablet", EnergyTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> GRAVITY_TABLET = registerItem("gravity_tablet", GravityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> OXYGEN_TABLET = registerItem("oxygen_tablet", OxygenTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> PRESSURE_TABLET = registerItem("pressure_tablet", PressureTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> PROFICIENCY_TABLET = registerItem("proficiency_tablet", ProficiencyTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> RESISTANCE_TABLET = registerItem("resistance_tablet", ResistanceTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> SANCTITY_TABLET = registerItem("sanctity_tablet", SanctityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> SATIATION_TABLET = registerItem("satiation_tablet", SatiationTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> SIGHT_TABLET = registerItem("sight_tablet", SightTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> STRENGTH_TABLET = registerItem("strength_tablet", StrengthTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> UNTIRING_TABLET = registerItem("untiring_tablet", UntiringTablet::new, AoACreativeModeTabs.TABLETS.getKey());
+	public static final RegistryObject<Item> VITALITY_TABLET = registerItem("vitality_tablet", VitalityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
 
 	public static final RegistryObject<Item> AMBIENT_POWER_STONE = registerItem("ambient_power_stone", miscItem());
 	public static final RegistryObject<Item> BLOOMING_POWER_STONE = registerItem("blooming_power_stone", miscItem());
@@ -350,78 +352,78 @@ public final class AoAItems {
 	public static final RegistryObject<Item> TREASURE_BOX = registerItem("treasure_box", TreasureBox::new);
 	public static final RegistryObject<Item> WEAPONS_CASE = registerItem("weapons_case", WeaponsCase::new);
 
-	public static final RegistryObject<Item> BLUE_GEMTRAP = registerItem("blue_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CANDLEFISH = registerItem("candlefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
+	public static final RegistryObject<Item> BLUE_GEMTRAP = registerItem("blue_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CANDLEFISH = registerItem("candlefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> CHARRED_CHAR = registerItem("charred_char", CharredChar::new);
-	public static final RegistryObject<Item> CHOCAW = registerItem("chocaw", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.65f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CRIMSON_SKIPPER = registerItem("crimson_skipper", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CRIMSON_STRIPEFISH = registerItem("crimson_stripefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> DARK_HATCHETFISH = registerItem("dark_hatchetfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> GREEN_GEMTRAP = registerItem("green_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
+	public static final RegistryObject<Item> CHOCAW = registerItem("chocaw", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.65f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CRIMSON_SKIPPER = registerItem("crimson_skipper", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CRIMSON_STRIPEFISH = registerItem("crimson_stripefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> DARK_HATCHETFISH = registerItem("dark_hatchetfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> GREEN_GEMTRAP = registerItem("green_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> HYDRONE = registerItem("hydrone", miscItem());
-	public static final RegistryObject<Item> IRONBACK = registerItem("ironback", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> JAMFISH = registerItem("jamfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5f).effect(() -> new EffectBuilder(MobEffects.MOVEMENT_SPEED, 600).build(), 1f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> PARAPIRANHA = registerItem("parapiranha", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> PEARL_STRIPEFISH = registerItem("pearl_stripefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> PURPLE_GEMTRAP = registerItem("purple_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> RAZORFISH = registerItem("razorfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> RED_GEMTRAP = registerItem("red_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> REEFTOOTH = registerItem("reeftooth", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> ROCKETFISH = registerItem("rocketfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> SAILBACK = registerItem("sailback", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> SAPPHIRE_STRIDER = registerItem("sapphire_strider", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> SKELECANTH = registerItem("skelecanth", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> WHITE_GEMTRAP = registerItem("white_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> YELLOW_GEMTRAP = registerItem("yellow_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> TURQUOISE_STRIPEFISH = registerItem("turquoise_stripefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> VIOLET_SKIPPER = registerItem("violet_skipper", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
+	public static final RegistryObject<Item> IRONBACK = registerItem("ironback", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> JAMFISH = registerItem("jamfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(5).saturationMod(0.5f).effect(() -> new EffectBuilder(MobEffects.MOVEMENT_SPEED, 600).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> PARAPIRANHA = registerItem("parapiranha", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> PEARL_STRIPEFISH = registerItem("pearl_stripefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> PURPLE_GEMTRAP = registerItem("purple_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> RAZORFISH = registerItem("razorfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> RED_GEMTRAP = registerItem("red_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> REEFTOOTH = registerItem("reeftooth", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> ROCKETFISH = registerItem("rocketfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> SAILBACK = registerItem("sailback", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> SAPPHIRE_STRIDER = registerItem("sapphire_strider", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> SKELECANTH = registerItem("skelecanth", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> WHITE_GEMTRAP = registerItem("white_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> YELLOW_GEMTRAP = registerItem("yellow_gemtrap", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> TURQUOISE_STRIPEFISH = registerItem("turquoise_stripefish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> VIOLET_SKIPPER = registerItem("violet_skipper", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
 
-	public static final RegistryObject<Item> RAW_RAINBOWFISH = registerItem("raw_rainbowfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.85f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> COOKED_RAINBOWFISH = registerItem("cooked_rainbowfish", () -> new HealingFood(5.0f, new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.85f).effect(() -> new EffectBuilder(MobEffects.LUCK, 600).build(), 1f).build())), () -> AoACreativeModeTabs.FOOD);
+	public static final RegistryObject<Item> RAW_RAINBOWFISH = registerItem("raw_rainbowfish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(3).saturationMod(0.85f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> COOKED_RAINBOWFISH = registerItem("cooked_rainbowfish", () -> new HealingFood(5.0f, new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.85f).effect(() -> new EffectBuilder(MobEffects.LUCK, 600).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
 
-	public static final RegistryObject<Item> BUBBLE_BERRIES = registerItem("bubble_berries", BubbleBerries::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CANDY_CANE = registerItem("candy_cane", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CANDY_CORN = registerItem("candy_corn", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.22f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CHILLI = registerItem("chilli", Chilli::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> RAW_CHARGER_SHANK = registerItem("raw_charger_shank", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).meat().build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> COOKED_CHARGER_SHANK = registerItem("cooked_charger_shank", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.3f).meat().build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> RAW_CHIMERA_CHOP = registerItem("raw_chimera_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).meat().build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> COOKED_CHIMERA_CHOP = registerItem("cooked_chimera_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6f).meat().build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> RAW_FURLION_CHOP = registerItem("raw_furlion_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).meat().build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> COOKED_FURLION_CHOP = registerItem("cooked_furlion_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6f).meat().build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> RAW_HALYCON_BEEF = registerItem("raw_halycon_beef", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3f).meat().effect(() -> new EffectBuilder(MobEffects.CONFUSION, 150).build(), 1f).effect(() -> new EffectBuilder(MobEffects.POISON, 40).build(), 1f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> COOKED_HALYCON_BEEF = registerItem("cooked_halycon_beef", () -> new TooltipItem(1, new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.7f).meat().effect(() -> new EffectBuilder(MobEffects.CONFUSION, 150).build(), 1f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> EYE_CANDY = registerItem("eye_candy", EyeCandy::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> FIERY_CHOPS = registerItem("fiery_chops", FieryChops::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> FLORACLE_STICKS = registerItem("floracle_sticks", FloracleSticks::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> GINGERBREAD_COOKIE = registerItem("gingerbread_cookie", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.25f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> GINGERBREAD_WING = registerItem("gingerbread_wing", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> GOLDICAP_PETALS = registerItem("goldicap_petals", GoldicapPetals::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> HEART_FRUIT = registerItem("heart_fruit", HeartFruit::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> HOT_ROD = registerItem("hot_rod", HotRod::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> LUNACRIKE = registerItem("lunacrike", Lunacrike::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> LUNA_GLOBE = registerItem("luna_globe", () -> new TooltipItem(1, new Item.Properties().food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new EffectBuilder(MobEffects.INVISIBILITY, 120).build(), 1).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> LUNALONS = registerItem("lunalons", () -> new TooltipItem(1, new Item.Properties().food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new EffectBuilder(MobEffects.NIGHT_VISION, 40).level(2).build(), 1).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> MAGIC_MARANG = registerItem("magic_marang", MagicMarang::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> MYSTIC_SHROOMS = registerItem("mystic_shrooms", () -> new ItemNameBlockItem(AoABlocks.MYSTIC_SHROOM_CROP.get(), new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4f).alwaysEat().build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> NATURE_MELON_SLICE = registerItem("nature_melon_slice", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> PEPPERMINT_CANDY = registerItem("peppermint_candy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.2f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> ROSIDONS = registerItem("rosidons", Rosidons::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> SOUR_CANDY = registerItem("sour_candy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.15f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> SOUR_GUMMY = registerItem("sour_gummy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.3f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> SOUR_POP = registerItem("sour_pop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.18f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> SPEARMINT_CANDY = registerItem("spearmint_candy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.25f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> TRILLIAD_LEAVES = registerItem("trilliad_leaves", TrilliadLeaves::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> YETI_FINGERNAILS = registerItem("yeti_fingernails", YetiFingernails::new, (Supplier<CreativeModeTab>[])null);
-	public static final RegistryObject<Item> HALYCON_MILK = registerItem("halycon_milk", HalyconMilk::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> LUNARADE = registerItem("lunarade", Lunarade::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> TEA = registerItem("tea", Tea::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> FUNGAL_TEA = registerItem("fungal_tea", FungalTea::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> NATURAL_TEA = registerItem("natural_tea", NaturalTea::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.85F).effect(() -> new EffectBuilder(MobEffects.CONDUIT_POWER, 600).build(), 1f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CHUM = registerItem("chum", ChumItem::new, () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new EffectBuilder(MobEffects.CONFUSION, 80).build(), 1f).build())), () -> AoACreativeModeTabs.FOOD);
-	public static final RegistryObject<Item> CHUM_AND_SALAD_BURGER = registerItem("chum_and_salad_burger", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(12).saturationMod(0.9F).effect(() -> new EffectBuilder(MobEffects.CONFUSION, 80).build(), 1f).build())), () -> AoACreativeModeTabs.FOOD);
+	public static final RegistryObject<Item> BUBBLE_BERRIES = registerItem("bubble_berries", BubbleBerries::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CANDY_CANE = registerItem("candy_cane", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.1f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CANDY_CORN = registerItem("candy_corn", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.22f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CHILLI = registerItem("chilli", Chilli::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> RAW_CHARGER_SHANK = registerItem("raw_charger_shank", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).meat().build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> COOKED_CHARGER_SHANK = registerItem("cooked_charger_shank", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.3f).meat().build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> RAW_CHIMERA_CHOP = registerItem("raw_chimera_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).meat().build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> COOKED_CHIMERA_CHOP = registerItem("cooked_chimera_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6f).meat().build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> RAW_FURLION_CHOP = registerItem("raw_furlion_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).meat().build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> COOKED_FURLION_CHOP = registerItem("cooked_furlion_chop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.6f).meat().build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> RAW_HALYCON_BEEF = registerItem("raw_halycon_beef", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3f).meat().effect(() -> new EffectBuilder(MobEffects.CONFUSION, 150).build(), 1f).effect(() -> new EffectBuilder(MobEffects.POISON, 40).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> COOKED_HALYCON_BEEF = registerItem("cooked_halycon_beef", () -> new TooltipItem(1, new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.7f).meat().effect(() -> new EffectBuilder(MobEffects.CONFUSION, 150).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> EYE_CANDY = registerItem("eye_candy", EyeCandy::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> FIERY_CHOPS = registerItem("fiery_chops", FieryChops::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> FLORACLE_STICKS = registerItem("floracle_sticks", FloracleSticks::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> GINGERBREAD_COOKIE = registerItem("gingerbread_cookie", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.25f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> GINGERBREAD_WING = registerItem("gingerbread_wing", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> GOLDICAP_PETALS = registerItem("goldicap_petals", GoldicapPetals::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> HEART_FRUIT = registerItem("heart_fruit", HeartFruit::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> HOT_ROD = registerItem("hot_rod", HotRod::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> LUNACRIKE = registerItem("lunacrike", Lunacrike::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> LUNA_GLOBE = registerItem("luna_globe", () -> new TooltipItem(1, new Item.Properties().food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new EffectBuilder(MobEffects.INVISIBILITY, 120).build(), 1).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> LUNALONS = registerItem("lunalons", () -> new TooltipItem(1, new Item.Properties().food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().effect(new EffectBuilder(MobEffects.NIGHT_VISION, 40).level(2).build(), 1).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> MAGIC_MARANG = registerItem("magic_marang", MagicMarang::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> MYSTIC_SHROOMS = registerItem("mystic_shrooms", () -> new ItemNameBlockItem(AoABlocks.MYSTIC_SHROOM_CROP.get(), new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4f).alwaysEat().build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> NATURE_MELON_SLICE = registerItem("nature_melon_slice", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.4f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> PEPPERMINT_CANDY = registerItem("peppermint_candy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.2f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> ROSIDONS = registerItem("rosidons", Rosidons::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> SOUR_CANDY = registerItem("sour_candy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.15f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> SOUR_GUMMY = registerItem("sour_gummy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.3f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> SOUR_POP = registerItem("sour_pop", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.18f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> SPEARMINT_CANDY = registerItem("spearmint_candy", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(1).saturationMod(0.25f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> TRILLIAD_LEAVES = registerItem("trilliad_leaves", TrilliadLeaves::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> YETI_FINGERNAILS = registerItem("yeti_fingernails", YetiFingernails::new, (ResourceKey<CreativeModeTab>[])null);
+	public static final RegistryObject<Item> HALYCON_MILK = registerItem("halycon_milk", HalyconMilk::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> LUNARADE = registerItem("lunarade", Lunarade::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> TEA = registerItem("tea", Tea::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> FUNGAL_TEA = registerItem("fungal_tea", FungalTea::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> NATURAL_TEA = registerItem("natural_tea", NaturalTea::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> COOKED_FISH = registerItem("cooked_fish", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(6).saturationMod(0.85F).effect(() -> new EffectBuilder(MobEffects.CONDUIT_POWER, 600).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CHUM = registerItem("chum", ChumItem::new, AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new EffectBuilder(MobEffects.CONFUSION, 80).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> CHUM_AND_SALAD_BURGER = registerItem("chum_and_salad_burger", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(12).saturationMod(0.9F).effect(() -> new EffectBuilder(MobEffects.CONFUSION, 80).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
 
 	public static final RegistryObject<Item> BUBBLE_BERRY_SEEDS = registerItem("bubble_berry_seeds", () -> new ItemNameBlockItem(AoABlocks.BUBBLE_BERRY_CROP.get(), new Item.Properties()));
 	public static final RegistryObject<Item> CHILLI_SEEDS = registerItem("chilli_seeds", () -> new ItemNameBlockItem(AoABlocks.CHILLI_CROP.get(), new Item.Properties()));
@@ -456,15 +458,11 @@ public final class AoAItems {
 	public static final RegistryObject<Item> WITHER_RUNE_BANNER_PATTERN = registerItem("wither_rune_banner_pattern", () -> new BannerPatternItem(AoABannerPatterns.WITHER_RUNE.tag(), new Item.Properties().stacksTo(1)));
 
 	@SafeVarargs
-	public static <T extends Item> RegistryObject<T> registerItem(String registryId, Supplier<T> item, @Nullable Supplier<CreativeModeTab>... tabs) {
+	public static <T extends Item> RegistryObject<T> registerItem(String registryId, Supplier<T> item, @Nullable ResourceKey<CreativeModeTab>... tabs) {
 		RegistryObject<T> registryObject = AoARegistries.ITEMS.register(registryId, item);
 
-		if (tabs != null) {
-			if (tabs.length == 0)
-				tabs = new Supplier[] {() -> AoACreativeModeTabs.MISC_ITEMS};
-
-			AoAStartupCache.setItemCreativeTab(registryObject, tabs);
-		}
+		if (tabs != null)
+			AoAStartupCache.setItemCreativeTabs(registryObject, tabs.length == 0 ? ObjectArrayList.of(AoACreativeModeTabs.MISC_ITEMS.getKey()) : ObjectArrayList.of(tabs));
 
 		return registryObject;
 	}

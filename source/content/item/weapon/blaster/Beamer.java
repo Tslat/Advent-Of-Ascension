@@ -26,9 +26,9 @@ public class Beamer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, 0.25f, 0));
-		shooter.level.addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, 0f, 0));
-		shooter.level.addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, -0.25f, 0));
+		shooter.level().addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, 0.25f, 0));
+		shooter.level().addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, 0f, 0));
+		shooter.level().addFreshEntity(new BeamerShotEntity(shooter, this, 60, 0, -0.25f, 0));
 	}
 
 	@Override

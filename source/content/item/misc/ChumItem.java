@@ -88,7 +88,7 @@ public class ChumItem extends Item {
 
 	private Entity getFishEntity(LivingEntity user, Level level, BlockPos pos) {
 		if (user instanceof ServerPlayer player) {
-			Entity entity = AoAHaulingFishReloadListener.getFishListForBiome(user.level.getBiome(pos).value(), false, level).getRandomElement(player, player.getLuck()).apply(user.level);
+			Entity entity = AoAHaulingFishReloadListener.getFishListForBiome(user.level().getBiome(pos).value(), false, level).getRandomElement(player, player.getLuck()).apply(user.level());
 
 			if (!(entity instanceof ItemEntity))
 				return entity;

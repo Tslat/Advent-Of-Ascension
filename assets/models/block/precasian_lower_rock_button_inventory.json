@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/button_inventory",
-  "render_type": "minecraft:solid",
-  "textures": {
-    "texture": "aoa3:block/precasian_lower_rock"
-  }
-}

@@ -7,17 +7,14 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.container.DivineStationContainer;
-import net.tslat.aoa3.util.BlockUtil;
 
 public class DivineStation extends Block {
-	public DivineStation() {
-		super(new BlockUtil.CompactProperties(Material.STONE, MaterialColor.COLOR_CYAN).stats(5f, 10f).sound(SoundType.GLASS).get());
+	public DivineStation(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override

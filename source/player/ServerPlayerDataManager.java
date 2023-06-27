@@ -348,7 +348,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	public void doPlayerTick() {
-		if (player == null || player.isSpectator() || player.level.isClientSide)
+		if (player == null || player.isSpectator() || player.level().isClientSide)
 			return;
 
 		if (!dirtyListeners.isEmpty()) {
@@ -464,7 +464,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 					this.itemStorage[i] = ItemStack.EMPTY;
 				}
-				else if (ItemUtil.areStacksFunctionallyEqual(slotItem, storageItem) && ItemStack.tagMatches(slotItem, storageItem)) {
+				else if (ItemUtil.areStacksFunctionallyEqual(slotItem, storageItem) && Objects.equals(slotItem.getTag(), storageItem.getTag())) {
 					int growSize = Math.min(slotItem.getMaxStackSize(), slotItem.getCount() + storageItem.getCount()) - slotItem.getCount();
 
 					if (growSize > 0) {

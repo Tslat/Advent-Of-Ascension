@@ -53,7 +53,7 @@ public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARang
     public void aiStep() {
         super.aiStep();
 
-        Player target = level.getNearestPlayer(getX(), getY(), getZ(), 20, false);
+        Player target = level().getNearestPlayer(getX(), getY(), getZ(), 20, false);
 
         if (target == null || target.isCreative())
             return;
@@ -67,8 +67,8 @@ public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARang
             double hyp = Math.sqrt(distanceFactorX * distanceFactorX + distanceFactorZ * distanceFactorZ) + 0.2D;
 
             playSound(AoASounds.ENTITY_MAGICAL_CREEPER_SHOOT.get(), 1.0f, 1.0f);
-            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level.getDifficulty().getId()));
-            level.addFreshEntity(projectile);
+            projectile.shoot(distanceFactorX, distanceFactorY + hyp * 0.20000000298023224D, distanceFactorZ, 1.6f, (float)(4 - this.level().getDifficulty().getId()));
+            level().addFreshEntity(projectile);
         }
     }
 
@@ -80,11 +80,11 @@ public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARang
 
     @Override
     public void doRangedAttackBlock(BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-        WorldUtil.createExplosion(this, level, projectile, 2f);
+        WorldUtil.createExplosion(this, level(), projectile, 2f);
     }
 
     public void doProjectileImpactEffect(BaseMobProjectile projectile, Entity target) {
-        WorldUtil.createExplosion(this, level, projectile, 2f);
+        WorldUtil.createExplosion(this, level(), projectile, 2f);
     }
 
     @Override

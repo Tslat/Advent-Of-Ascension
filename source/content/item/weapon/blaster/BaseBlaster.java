@@ -139,7 +139,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 				if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 					if (consumeEnergy(plData, stack, energyConsumption)) {
 						if (getFiringSound() != null)
-							player.level.playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
+							player.level().playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
 						fire(stack, player);
 						((Player)player).awardStat(Stats.ITEM_USED.get(this));

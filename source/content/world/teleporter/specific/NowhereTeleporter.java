@@ -45,7 +45,7 @@ public class NowhereTeleporter extends AoATeleporter {
 	public BlockPos findExistingPortal(Level world, Entity entity) {
 		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
 			if (entity instanceof ServerPlayer pl)
-				PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(world.dimension(), new PortalCoordinatesContainer(entity.level.dimension(), entity.getX(), entity.getY(), entity.getZ()));
+				PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(world.dimension(), new PortalCoordinatesContainer(entity.level().dimension(), entity.getX(), entity.getY(), entity.getZ()));
 
 			return new BlockPos(25, 1501, 15);
 		}

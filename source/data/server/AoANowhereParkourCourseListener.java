@@ -183,9 +183,9 @@ public class AoANowhereParkourCourseListener extends SimpleJsonResourceReloadLis
 
 		public void grantRewards(ServerPlayer player) {
 			this.rewardLootTable.ifPresent(tableId -> {
-				ServerLevel level = player.getLevel();
+				ServerLevel level = player.serverLevel();
 
-				ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot(level, tableId, LootUtil.getGiftContext(level, player.position(), player.getLuck(), player)));
+				ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot(tableId, LootUtil.getGiftParameters(level, player.position(), player.getLuck(), player)));
 			});
 
 			player.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/tier_" + this.tier + "_acrobat")), "complete_course");

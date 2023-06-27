@@ -16,7 +16,7 @@ public class ConstructShotEntity extends BaseMobProjectile {
 	}
 
 	public ConstructShotEntity(AoARangedMob shooter, Type projectileType) {
-		super(AoAProjectiles.CONSTRUCT_SHOT.get(), shooter.level, shooter, projectileType);
+		super(AoAProjectiles.CONSTRUCT_SHOT.get(), shooter.level(), shooter, projectileType);
 	}
 
 	@Override

@@ -23,6 +23,6 @@ public class IromineTeleporter extends AoATeleporter {
 
 	@Override
 	public Block getBorderBlock() {
-		return AoABlocks.IRO_STRIPED_BRICKS.get();
+		return AoABlocks.IRO_STRIPED_BRICKS.stone();
 	}
 }

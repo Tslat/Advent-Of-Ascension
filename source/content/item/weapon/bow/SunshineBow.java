@@ -27,7 +27,7 @@ public class SunshineBow extends BaseBow {
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
 		if (arrow.isCritArrow()) {
-			AreaEffectCloud cloud = new AreaEffectCloud(target.level, arrow.getX(), arrow.getY(), arrow.getZ());
+			AreaEffectCloud cloud = new AreaEffectCloud(target.level(), arrow.getX(), arrow.getY(), arrow.getZ());
 
 			cloud.addEffect(new MobEffectInstance(MobEffects.GLOWING, 200, 0, true, false));
 			cloud.setRadius(0.5f);
@@ -40,9 +40,9 @@ public class SunshineBow extends BaseBow {
 			if (shooter instanceof LivingEntity)
 				cloud.setOwner((LivingEntity)shooter);
 
-			target.level.addFreshEntity(cloud);
+			target.level().addFreshEntity(cloud);
 
-			for (LivingEntity entity : arrow.level.getEntitiesOfClass(LivingEntity.class, arrow.getBoundingBox().inflate(30, 1, 30), EntityUtil.Predicates.HOSTILE_MOB)) {
+			for (LivingEntity entity : arrow.level().getEntitiesOfClass(LivingEntity.class, arrow.getBoundingBox().inflate(30, 1, 30), EntityUtil.Predicates.HOSTILE_MOB)) {
 				EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.GLOWING, 200));
 			}
 		}

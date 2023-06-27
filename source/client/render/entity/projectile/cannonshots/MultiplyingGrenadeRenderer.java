@@ -20,7 +20,7 @@ public class MultiplyingGrenadeRenderer extends TexturedProjectileRenderer<Multi
 	public void render(MultiplyingGrenadeEntity entity, float entityYaw, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int packedLight) {
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
-		entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+		entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 3, ColourUtil.YELLOW), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 	}
 }
 */

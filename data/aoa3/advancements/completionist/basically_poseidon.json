@@ -36,5 +36,6 @@
     [
       "obtain_tidal_greatblade"
     ]
-  ]
+  ],
+  "sends_telemetry_event": true
 }

@@ -21,7 +21,7 @@ public class FakeZorpEntity extends AoAMeleeMob<FakeZorpEntity> {
 	}
 
 	public FakeZorpEntity(Entity target) {
-		this(AoAMobs.FAKE_ZORP.get(), target.level);
+		this(AoAMobs.FAKE_ZORP.get(), target.level());
 
 		this.moveTo(target.getX(), target.getY(), target.getZ(), target.getYRot(), target.getXRot());
 	}

@@ -24,12 +24,12 @@ public class HopAtTargetGoal extends Goal {
 		if ((hopTarget = taskHost.getTarget()) == null)
 			return false;
 
-		return taskHost.isOnGround() && taskHost.getRandom().nextInt(5) == 0 && taskHost.distanceToSqr(hopTarget) <= 32;
+		return taskHost.onGround() && taskHost.getRandom().nextInt(5) == 0 && taskHost.distanceToSqr(hopTarget) <= 32;
 	}
 
 	@Override
 	public boolean canContinueToUse() {
-		return !taskHost.isOnGround();
+		return !taskHost.onGround();
 	}
 
 	@Override

@@ -9,8 +9,8 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -20,8 +20,8 @@ import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class PrimordialShrine extends BossAltarBlock {
-	public PrimordialShrine() {
-		super(MaterialColor.TERRACOTTA_BLACK);
+	public PrimordialShrine(BlockBehaviour.Properties properties) {
+		super(properties);
 	}
 
 	@Override
@@ -40,10 +40,10 @@ public class PrimordialShrine extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		if (!WorldUtil.isWorld(player.level, AoADimensions.DUSTOPIA.key))
+		if (!WorldUtil.isWorld(player.level(), AoADimensions.DUSTOPIA.key))
 			return false;
 
-		return checkLamps(player.level,
+		return checkLamps(player.level(),
 				pos.offset(5, 1, -3),
 				pos.offset(4, 1, -1),
 				pos.offset(3, 3, 1),
@@ -67,7 +67,7 @@ public class PrimordialShrine extends BossAltarBlock {
 
 	@Override
 	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
-		Level world = player.level;
+		Level world = player.level();
 		BlockState lampOff = AoABlocks.DUSTOPIAN_LAMP.get().defaultBlockState().setValue(DustopianLamp.LIT, false);
 
 		world.setBlockAndUpdate(RandomUtil.getRandomSelection(

@@ -102,7 +102,7 @@ public final class AoAAnimals {
 		});
 
 		if (primaryEggColour != -1)
-			AoAItems.registerItem(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties()), () -> CreativeModeTabs.SPAWN_EGGS);
+			AoAItems.registerItem(registryName + "_spawn_egg", () -> new ForgeSpawnEggItem(registryObject, primaryEggColour, secondaryEggColour, new Item.Properties()), CreativeModeTabs.SPAWN_EGGS);
 
 
 		return registryObject;

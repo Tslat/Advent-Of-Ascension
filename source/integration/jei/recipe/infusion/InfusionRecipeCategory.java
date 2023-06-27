@@ -1,6 +1,5 @@
 package net.tslat.aoa3.integration.jei.recipe.infusion;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
@@ -14,7 +13,9 @@ import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.library.util.RecipeUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -24,8 +25,10 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.recipe.InfusionRecipe;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RenderUtil;
 
 public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	public static final RecipeType<InfusionRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "infusion", InfusionRecipe.class);
@@ -95,44 +98,39 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	}
 
 	@Override
-	public void draw(InfusionRecipe recipe, IRecipeSlotsView recipeSlotsView, PoseStack matrix, double mouseX, double mouseY) {
+	public void draw(InfusionRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
 		if (recipe == null)
 			return;
 
 		Minecraft mc = Minecraft.getInstance();
-		String message;
+		Component message;
 		int textColour;
 		int shadowColour;
 		int width;
 		int posX;
 		int posY;
+		RenderContext renderContext = RenderContext.of(guiGraphics);
 
 		if (recipe.getInfusionReq() > 1) {
-			message = AoASkills.IMBUING.get().getName().append(": " + recipe.getInfusionReq()).getString();
+			message = AoASkills.IMBUING.get().getName().append(": " + recipe.getInfusionReq());
 			textColour = (ClientPlayerDataManager.get().getSkill(AoASkills.IMBUING.get()).getLevel(true) < recipe.getInfusionReq()) ? 0xFFFF6060 : 0xFF80FF20;
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
-			width = mc.font.width(message);
+			width = renderContext.textWidth(message);
 			posX = 150 - width;
 			posY = 10;
 
-			mc.font.draw(matrix, message, posX + 1, posY, shadowColour);
-			mc.font.draw(matrix, message, posX, posY + 1, shadowColour);
-			mc.font.draw(matrix, message, posX + 1, posY + 1, shadowColour);
-			mc.font.draw(matrix, message, posX, posY, textColour);
+			renderContext.renderText(message, posX, posY, textColour, shadowColour, RenderUtil.TextRenderType.DROP_SHADOW, LightTexture.FULL_BRIGHT);
 		}
 
 		if (recipe.getMaxXp() > 0) {
-			message = LocaleUtil.getLocaleString("gui.misc.skills.xp", String.valueOf((recipe.getMinXp() == recipe.getMaxXp() ? recipe.getMaxXp() : recipe.getMinXp() + "-" + recipe.getMaxXp())));
+			message = LocaleUtil.getLocaleMessage("gui.misc.skills.xp", Component.literal(String.valueOf((recipe.getMinXp() == recipe.getMaxXp() ? recipe.getMaxXp() : recipe.getMinXp() + "-" + recipe.getMaxXp()))));
 			textColour = 0xFF8F8F8F;
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
 			width = mc.font.width(message);
 			posX = 150 - width;
 			posY = 50;
 
-			mc.font.draw(matrix, message, posX + 1, posY, shadowColour);
-			mc.font.draw(matrix, message, posX, posY + 1, shadowColour);
-			mc.font.draw(matrix, message, posX + 1, posY + 1, shadowColour);
-			mc.font.draw(matrix, message, posX, posY, textColour);
+			renderContext.renderText(message, posX, posY, textColour, shadowColour, RenderUtil.TextRenderType.DROP_SHADOW, LightTexture.FULL_BRIGHT);
 		}
 	}
 }

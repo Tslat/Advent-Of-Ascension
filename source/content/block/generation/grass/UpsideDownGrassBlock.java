@@ -13,16 +13,16 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.lighting.LayerLightEngine;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.lighting.LightEngine;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 import java.util.function.Supplier;
 
-public class UpsideDownGrassBlock extends GrassBlock {
-	public UpsideDownGrassBlock(MaterialColor mapColour, Supplier<Block> dirtBlock, boolean growsInDark, boolean isStoneBased) {
-		super(mapColour, dirtBlock, growsInDark, isStoneBased);
+public class UpsideDownGrassBlock extends AoAGrassBlock {
+	public UpsideDownGrassBlock(BlockBehaviour.Properties properties, Supplier<? extends Block> soilBlock, boolean growsInDark) {
+		super(properties, soilBlock, growsInDark);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class UpsideDownGrassBlock extends GrassBlock {
 		BlockPos bottomPos = grassPos.below();
 		BlockState bottomBlock = world.getBlockState(bottomPos);
 
-		return LayerLightEngine.getLightBlockInto(world, grassState, grassPos, bottomBlock, bottomPos, Direction.DOWN, bottomBlock.getLightBlock(world, bottomPos)) < world.getMaxLightLevel();
+		return LightEngine.getLightBlockInto(world, grassState, grassPos, bottomBlock, bottomPos, Direction.DOWN, bottomBlock.getLightBlock(world, bottomPos)) < world.getMaxLightLevel();
 	}
 
 	public boolean canStayGrass(BlockState grassState, Level world, BlockPos grassPos) {
@@ -74,7 +74,7 @@ public class UpsideDownGrassBlock extends GrassBlock {
 			return false;
 		}
 		else {
-			int i = LayerLightEngine.getLightBlockInto(worldReader, state, pos, bottomBlock, downPos, Direction.DOWN, bottomBlock.getLightBlock(worldReader, downPos));
+			int i = LightEngine.getLightBlockInto(worldReader, state, pos, bottomBlock, downPos, Direction.DOWN, bottomBlock.getLightBlock(worldReader, downPos));
 
 			return i < worldReader.getMaxLightLevel();
 		}

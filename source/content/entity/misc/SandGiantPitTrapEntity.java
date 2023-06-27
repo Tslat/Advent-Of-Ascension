@@ -50,7 +50,7 @@ public class SandGiantPitTrapEntity extends BasicMiscEntity {
 
 	@Override
 	public void checkDespawn() {
-		if (level.getDifficulty() == Difficulty.PEACEFUL)
+		if (level().getDifficulty() == Difficulty.PEACEFUL)
 			discard();
 	}
 
@@ -58,7 +58,7 @@ public class SandGiantPitTrapEntity extends BasicMiscEntity {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide()) {
+		if (!level().isClientSide()) {
 			if (tickCount > 6000) {
 				discard();
 
@@ -66,7 +66,7 @@ public class SandGiantPitTrapEntity extends BasicMiscEntity {
 			}
 
 			if (tickCount > 13 && tickCount % 5 == 0) {
-				for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(level, getBoundingBox(), damagePredicate)) {
+				for (LivingEntity entity : EntityRetrievalUtil.<LivingEntity>getEntities(level(), getBoundingBox(), damagePredicate)) {
 					entity.resetFallDistance();
 					entity.addEffect(new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 12).level(5).hideEffectIcon().hideParticles().isAmbient().build());
 				}

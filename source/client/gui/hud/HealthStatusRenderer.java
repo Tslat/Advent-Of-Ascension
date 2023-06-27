@@ -5,8 +5,8 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
@@ -24,6 +24,7 @@ import net.tslat.aoa3.util.RenderUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class HealthStatusRenderer {
+	private static final ResourceLocation GUI_ICONS_LOCATION = new ResourceLocation("textures/gui/icons.png");
 	private static final ResourceLocation HEALTH_BAR = AdventOfAscension.id("textures/gui/overlay/misc/health_bar.png");
 	private static float deltaHealth = 0;
 	private static int lastHealthTime = 0;
@@ -48,7 +49,7 @@ public class HealthStatusRenderer {
 			return;
 
 		LocalPlayer player = mc.player;
-		PoseStack matrix = ev.getPoseStack();
+		PoseStack matrix = ev.getGuiGraphics().pose();
 
 		int left = (mc.getWindow().getGuiScaledWidth() / 2) - 91;
 		int top = mc.getWindow().getGuiScaledHeight() - gui.leftHeight;
@@ -164,7 +165,7 @@ public class HealthStatusRenderer {
 			RenderUtil.renderScaledCustomSizedTexture(matrix, x, 0, x, deltaUvY, width, 12, width, 12, 81, 132);
 		}
 
-		RenderUtil.drawColouredBox(matrix, 0, 0, 0, 81, 11, 0x44000000);
+		RenderUtil.drawRectangle(matrix, 0, 0, 81, 11, 0x44000000);
 		matrix.popPose();
 	}
 
@@ -193,15 +194,15 @@ public class HealthStatusRenderer {
 			if (currentHealth > 0) {
 				renderHeart(matrix, mc, currentHealth, maxHealth, handleHealthState(mc.player, gui, (int)Math.ceil(currentHealth)), poisoned, withered, frozen, absorption);
 
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(matrix, Component.literal(NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1)), 34, 0, 1, healthColour, RenderUtil.TextRenderType.OUTLINED);
 
 				if (absorption > 0) {
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, "+", 67, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 83, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.renderCenteredScaledText(matrix, Component.literal("+"), 67, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.TextRenderType.OUTLINED);
+					RenderUtil.renderCenteredScaledText(matrix, Component.literal(NumberUtil.roundToNthDecimalPlace(absorption, 1)), 83, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.TextRenderType.OUTLINED);
 				}
 			}
 			else {
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfigs.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(matrix, LocaleUtil.getLocaleMessage("deathScreen.title"), (AoAConfigs.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.TextRenderType.OUTLINED);
 			}
 		}
 		else {
@@ -216,15 +217,15 @@ public class HealthStatusRenderer {
 			if (currentHealth > 0) {
 				renderHeart(matrix, mc, currentHealth, maxHealth, handleHealthState(mc.player, gui, (int)Math.ceil(currentHealth)), poisoned, withered, frozen, absorption);
 
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1), 34, 0, 1, healthColour, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(matrix, Component.literal(NumberUtil.roundToNthDecimalPlace(currentHealth, 1) + "/" + NumberUtil.roundToNthDecimalPlace(maxHealth, 1)), 34, 0, 1, healthColour, RenderUtil.TextRenderType.OUTLINED);
 
 				if (absorption > 0) {
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, "+", 62, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
-					RenderUtil.drawCenteredScaledString(matrix, mc.font, NumberUtil.roundToNthDecimalPlace(absorption, 1), 70, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.StringRenderType.OUTLINED);
+					RenderUtil.renderCenteredScaledText(matrix, Component.literal("+"), 62, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.TextRenderType.OUTLINED);
+					RenderUtil.renderCenteredScaledText(matrix, Component.literal(NumberUtil.roundToNthDecimalPlace(absorption, 1)), 70, 0, 1, ColourUtil.RGB(255, 204, 0), RenderUtil.TextRenderType.OUTLINED);
 				}
 			}
 			else {
-				RenderUtil.drawCenteredScaledString(matrix, mc.font, LocaleUtil.getLocaleString("deathScreen.title"), (AoAConfigs.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(matrix, LocaleUtil.getLocaleMessage("deathScreen.title"), (AoAConfigs.CLIENT.healthRenderType.get() == HealthRenderType.BAR_NUMERIC ? 28.5f : 24), 0, 1, ColourUtil.RGB(150, 0, 0), RenderUtil.TextRenderType.OUTLINED);
 			}
 		}
 
@@ -251,7 +252,7 @@ public class HealthStatusRenderer {
 		if (mc.gui.tickCount % 25 == 0 && mc.player.hasEffect(MobEffects.REGENERATION))
 			y -= 2;
 
-		RenderSystem.setShaderTexture(0, GuiComponent.GUI_ICONS_LOCATION);
+		RenderSystem.setShaderTexture(0, GUI_ICONS_LOCATION);
 		RenderUtil.renderCustomSizedTexture(matrix, 0, y, Gui.HeartType.CONTAINER.getX(false, flashing), uvY, 9, 9, 256, 256);
 
 		if (flashing)

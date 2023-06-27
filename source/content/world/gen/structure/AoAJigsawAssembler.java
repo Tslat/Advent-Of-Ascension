@@ -117,8 +117,8 @@ public class AoAJigsawAssembler {
 
 	protected Optional<BlockPos> getRandomNamedJigsaw(StructurePoolElement poolElement, ResourceLocation jigsawName, BlockPos startPos, Rotation rotation, StructureTemplateManager templateManager, WorldgenRandom rand) {
 		for(StructureTemplate.StructureBlockInfo jigsawBlockInfo : poolElement.getShuffledJigsawBlocks(templateManager, startPos, rotation, rand)) {
-			if (jigsawName.equals(ResourceLocation.tryParse(jigsawBlockInfo.nbt.getString("name"))))
-				return Optional.of(jigsawBlockInfo.pos);
+			if (jigsawName.equals(ResourceLocation.tryParse(jigsawBlockInfo.nbt().getString("name"))))
+				return Optional.of(jigsawBlockInfo.pos());
 		}
 
 		return Optional.empty();
@@ -196,9 +196,9 @@ public class AoAJigsawAssembler {
 			int minY = parentBounds.minY();
 
 			for(StructureTemplate.StructureBlockInfo jigsawBlockInfo : poolElement.getShuffledJigsawBlocks(this.structureTemplateManager, parentPiece.getPosition(), parentPiece.getRotation(), this.random)) {
-				BlockPos jigsawPos = jigsawBlockInfo.pos;
-				BlockPos jigsawFacingPos = jigsawPos.relative(JigsawBlock.getFrontFacing(jigsawBlockInfo.state));
-				ResourceLocation poolPath = new ResourceLocation(jigsawBlockInfo.nbt.getString("pool"));
+				BlockPos jigsawPos = jigsawBlockInfo.pos();
+				BlockPos jigsawFacingPos = jigsawPos.relative(JigsawBlock.getFrontFacing(jigsawBlockInfo.state()));
+				ResourceLocation poolPath = new ResourceLocation(jigsawBlockInfo.nbt().getString("pool"));
 				Optional<StructureTemplatePool> pool = this.pools.getOptional(poolPath);
 
 				if (pool.isEmpty() || (pool.get().size() == 0 && !poolPath.equals(Pools.EMPTY.location()))) {
@@ -253,13 +253,13 @@ public class AoAJigsawAssembler {
 
 					for(StructureTemplate.StructureBlockInfo childPieceJigsawBlock : childPieceJigsawBlocks) {
 						if (JigsawBlock.canAttach(jigsawBlockInfo, childPieceJigsawBlock)) {
-							BlockPos childPieceJigsawPos = childPieceJigsawBlock.pos;
+							BlockPos childPieceJigsawPos = childPieceJigsawBlock.pos();
 							BlockPos jigsawToPieceDelta = jigsawFacingPos.subtract(childPieceJigsawPos);
 							BoundingBox childBounds = childPoolElement.getBoundingBox(this.structureTemplateManager, jigsawToPieceDelta, pieceRotation);
 							StructureTemplatePool.Projection childProjection = childPoolElement.getProjection();
 							boolean childIsRigid = childProjection == StructureTemplatePool.Projection.RIGID;
 							int childJigsawYPos = childPieceJigsawPos.getY();
-							int deltaY = jigsawPosDelta - childJigsawYPos + JigsawBlock.getFrontFacing(jigsawBlockInfo.state).getStepY();
+							int deltaY = jigsawPosDelta - childJigsawYPos + JigsawBlock.getFrontFacing(jigsawBlockInfo.state()).getStepY();
 							int placementYOffset = minY + deltaY;
 
 							if (!isRigid || !childIsRigid) {

@@ -78,7 +78,7 @@ public class RockCritterEntity extends AoAMeleeMob<RockCritterEntity> {
     public void tick() {
         super.tick();
 
-        if (!level.isClientSide)
+        if (!level().isClientSide)
             setBesideClimbableBlock(this.horizontalCollision);
     }
 

@@ -30,7 +30,7 @@ public class CrystalStaff extends BaseStaff<List<Player>> {
 
 	@Override
 	public List<Player> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<Player> playerList = caster.level.getEntitiesOfClass(Player.class, caster.getBoundingBox().inflate(20), PlayerUtil::shouldPlayerBeAffected);
+		List<Player> playerList = caster.level().getEntitiesOfClass(Player.class, caster.getBoundingBox().inflate(20), PlayerUtil::shouldPlayerBeAffected);
 
 		if (playerList.isEmpty())
 			return null;

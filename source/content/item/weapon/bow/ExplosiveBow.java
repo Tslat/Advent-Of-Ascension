@@ -23,13 +23,13 @@ public class ExplosiveBow extends BaseBow {
 
 	@Override
 	public void onEntityHit(CustomArrowEntity arrow, Entity target, Entity shooter, double damage, float drawStrength) {
-		if (arrow.isCritArrow() && arrow.level instanceof ServerLevel serverLevel)
+		if (arrow.isCritArrow() && arrow.level() instanceof ServerLevel serverLevel)
 			new StandardExplosion(AoAExplosions.EXPLOSIVE_BOW, serverLevel, arrow, shooter).explode();
 	}
 
 	@Override
 	public void onBlockHit(CustomArrowEntity arrow, BlockHitResult rayTrace, Entity shooter) {
-		if (arrow.isCritArrow() && arrow.level instanceof ServerLevel serverLevel)
+		if (arrow.isCritArrow() && arrow.level() instanceof ServerLevel serverLevel)
 			new StandardExplosion(AoAExplosions.EXPLOSIVE_BOW, serverLevel, arrow, shooter).explode();
 	}
 

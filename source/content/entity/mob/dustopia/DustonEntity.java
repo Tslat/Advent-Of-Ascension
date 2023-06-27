@@ -36,11 +36,11 @@ public class DustonEntity extends AoAFlyingMeleeMob {
 	public void tick() {
 		super.tick();
 
-		if (!level.isClientSide && isAlive() && tickCount % 20 == 0 && level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(15), PlayerUtil::shouldPlayerBeAffected).size() > 0) {
+		if (!level().isClientSide && isAlive() && tickCount % 20 == 0 && level().getEntitiesOfClass(Player.class, getBoundingBox().inflate(15), PlayerUtil::shouldPlayerBeAffected).size() > 0) {
 			cooldown -= 20;
 
 			if (cooldown <= 0) {
-				level.addFreshEntity(new DustStriderEntity(this));
+				level().addFreshEntity(new DustStriderEntity(this));
 
 				cooldown = 600;
 			}

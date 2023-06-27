@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.item.weapon.greatblade;
 
 import com.google.common.collect.ImmutableSetMultimap;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -12,8 +13,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
@@ -42,7 +43,7 @@ public class BaseGreatblade extends BaseSword {
 
 	@Override
 	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
-		if (attacker.fallDistance > 0 && !attacker.isOnGround() && !attacker.onClimbable() && !attacker.isInWater() && !attacker.isPassenger() && !attacker.hasEffect(MobEffects.BLINDNESS) && VolatileStackCapabilityProvider.getOrDefault(swordStack, Direction.NORTH).getValue() >= 1)
+		if (attacker.fallDistance > 0 && !attacker.onGround() && !attacker.onClimbable() && !attacker.isInWater() && !attacker.isPassenger() && !attacker.hasEffect(MobEffects.BLINDNESS) && VolatileStackCapabilityProvider.getOrDefault(swordStack, Direction.NORTH).getValue() >= 1)
 			baseDamage += 1.15f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SEVER.get(), swordStack);
 
 		return baseDamage;
@@ -58,16 +59,9 @@ public class BaseGreatblade extends BaseSword {
 
 	@Override
 	public float getDestroySpeed(ItemStack stack, BlockState state) {
-		Material material = state.getMaterial();
+		if (state.is(Blocks.COBWEB))
+			return 25f;
 
-		if (material == Material.WEB) {
-			return 25.0f;
-		}
-		else if (material == Material.PLANT || material == Material.REPLACEABLE_PLANT || material == Material.LEAVES || material == Material.VEGETABLE) {
-			return 2.0f;
-		}
-		else {
-			return 1.0f;
-		}
+		return state.is(BlockTags.SWORD_EFFICIENT) ? 2f : 1f;
 	}
 }

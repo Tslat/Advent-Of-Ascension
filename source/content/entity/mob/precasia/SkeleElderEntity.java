@@ -104,10 +104,10 @@ public class SkeleElderEntity extends AoAMeleeMob<SkeleElderEntity> {
 		super.die(source);
 
 		if (wave >= 0 && armyBlockPos != null && distanceToSqr(armyBlockPos.getX(), armyBlockPos.getY(), armyBlockPos.getZ()) < 50 * 50) {
-			Block bl = level.getBlockState(armyBlockPos).getBlock();
+			Block bl = level().getBlockState(armyBlockPos).getBlock();
 
 			if (bl == AoABlocks.ARMY_BLOCK.get())
-				ArmyBlock.spawnWave(level, armyBlockPos, wave + 1);
+				ArmyBlock.spawnWave(level(), armyBlockPos, wave + 1);
 		}
 	}
 }

@@ -31,11 +31,11 @@ public class ToxicTerrorizer extends BaseBlaster {
 
 	@Override
 	public void fire(ItemStack blaster, LivingEntity shooter) {
-		shooter.level.addFreshEntity(new ToxicShotEntity(shooter, this, 60));
-		shooter.level.addFreshEntity(new ToxicShotEntity(shooter, this, 60, -0.05f, -0.05f, 0f));
-		shooter.level.addFreshEntity(new ToxicShotEntity(shooter, this, 60, 0.05f, -0.05f, 0f));
-		shooter.level.addFreshEntity(new ToxicShotEntity(shooter, this, 60, 0, -0.05f, -0.05f));
-		shooter.level.addFreshEntity(new ToxicShotEntity(shooter, this, 60, 0, -0.05f, 0.05f));
+		shooter.level().addFreshEntity(new ToxicShotEntity(shooter, this, 60));
+		shooter.level().addFreshEntity(new ToxicShotEntity(shooter, this, 60, -0.05f, -0.05f, 0f));
+		shooter.level().addFreshEntity(new ToxicShotEntity(shooter, this, 60, 0.05f, -0.05f, 0f));
+		shooter.level().addFreshEntity(new ToxicShotEntity(shooter, this, 60, 0, -0.05f, -0.05f));
+		shooter.level().addFreshEntity(new ToxicShotEntity(shooter, this, 60, 0, -0.05f, 0.05f));
 	}
 
 	@Override

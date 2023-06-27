@@ -84,7 +84,7 @@ public class LottoTotem extends Item {
 			for (int z = pos.getZ() - 1; z <= pos.getZ() + 1; z += 2) {
 				checkPos.set(x, pos.getY(), z);
 
-				if (world.getBlockState(checkPos.above()).getMaterial().isReplaceable()) {
+				if (world.getBlockState(checkPos.above()).canBeReplaced()) {
 					if (world.getBlockState(checkPos).isFaceSturdy(world, checkPos, Direction.UP)) {
 						spawnPositions.add(checkPos.immutable());
 

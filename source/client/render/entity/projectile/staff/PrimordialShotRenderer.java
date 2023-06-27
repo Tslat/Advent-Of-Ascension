@@ -15,7 +15,7 @@ public class PrimordialShotRenderer extends ParticleProjectileRenderer<Primordia
 	@Override
 	protected void addParticles(PrimordialShotEntity entity, float partialTicks) {
 		for (int i = 0; i < 8; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.WHITE), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 3, ColourUtil.WHITE), entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
 		}
 	}
 }

@@ -120,7 +120,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                                             triggerAnim("posing", "fire_aura");
 
                                             if (!hasAura())
-                                                level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_NETHENGEIC_BEAST_FLAME_AURA_ACTIVATE.get(), SoundSource.HOSTILE, 1, 1);
+                                                level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_NETHENGEIC_BEAST_FLAME_AURA_ACTIVATE.get(), SoundSource.HOSTILE, 1, 1);
                                         })
                                         .whenStopping(entity -> BrainUtils.setForgettableMemory(entity, SBLMemoryTypes.SPECIAL_ATTACK_COOLDOWN.get(), true, 25)),
                                 1
@@ -160,7 +160,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     packet.particle(ParticleBuilder.forPos(ParticleTypes.SMOKE, x, y, z));
                 }
 
-                AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, EntityUtil.getEntityCenter(entity), 64);
+                AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -206,7 +206,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     packet.particle(ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
                 }
 
-                AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level, EntityUtil.getEntityCenter(entity), 64);
+                AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -259,7 +259,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
     @Override
     protected BaseMobProjectile getNewProjectileInstance() {
-        return new FireballEntity(this.level, this, BaseMobProjectile.Type.PHYSICAL);
+        return new FireballEntity(this.level(), this, BaseMobProjectile.Type.PHYSICAL);
     }
 
     @Override
@@ -324,7 +324,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     public void aiStep() {
         super.aiStep();
 
-        if (level.isClientSide()) {
+        if (level().isClientSide()) {
             if (hasAura()) {
                 for (int i = 0; i < 3; i++) {
                     double cos = Math.cos(getX() * RandomUtil.randomValueBetween(-1, 1));
@@ -371,17 +371,17 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
     @Override
     public void doRangedAttackBlock(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-        if (ForgeEventFactory.getMobGriefingEvent(level, projectile.getOwner()) && projectile instanceof FireballEntity) {
+        if (ForgeEventFactory.getMobGriefingEvent(level(), projectile.getOwner()) && projectile instanceof FireballEntity) {
             BlockPos firePos = pos.offset(sideHit.getNormal());
 
-            if (!this.level.getBlockState(firePos).getMaterial().isReplaceable()) { // Because vanilla collision detection is stupid
+            if (!this.level().getBlockState(firePos).canBeReplaced()) { // Because vanilla collision detection is stupid
                 firePos = pos.relative(Direction.UP);
 
-                if (!this.level.getBlockState(firePos).getMaterial().isReplaceable())
+                if (!this.level().getBlockState(firePos).canBeReplaced())
                     return;
             }
 
-            this.level.setBlock(firePos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
+            this.level().setBlock(firePos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
         }
     }
 

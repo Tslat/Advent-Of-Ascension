@@ -4,6 +4,8 @@ import com.mojang.blaze3d.platform.Window;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
 import net.minecraftforge.client.gui.overlay.ForgeGui;
@@ -14,6 +16,7 @@ import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ColourUtil;
@@ -92,7 +95,7 @@ public final class XpParticlesRenderer {
 		}
 	}
 
-	private static void renderParticles(ForgeGui gui, PoseStack poseStack, float partialTick, int width, int height) {
+	private static void renderParticles(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		if (particlesMap.isEmpty())
 			return;
 
@@ -106,6 +109,7 @@ public final class XpParticlesRenderer {
 		int x = 0;
 		int y = 0;
 		boolean hasExpiredParticles = false;
+		PoseStack poseStack = guiGraphics.pose();
 
 		poseStack.pushPose();
 		poseStack.translate(windowWidth / 2f, 1, 0);
@@ -141,12 +145,12 @@ public final class XpParticlesRenderer {
 				float lifespan = 1 - (currentTime - particle.creationTime) / 1500f;
 
 				if (lifespan >= 0.1f) {
-					RenderUtil.drawCenteredScaledString(poseStack, mc.font, particle.xpString, 0, scrollHeight * lifespan, 0.5f, ColourUtil.RGBA(255, 255, 255, (int)Mth.clamp(255 * lifespan, 1, 255)), RenderUtil.StringRenderType.NORMAL);
+					RenderUtil.renderCenteredScaledText(poseStack, Component.literal(particle.xpString), 0, scrollHeight * lifespan, 0.5f, ColourUtil.RGBA(255, 255, 255, (int)Mth.clamp(255 * lifespan, 1, 255)), RenderUtil.TextRenderType.NORMAL);
 				}
 			}
 
 			poseStack.popPose();
-			skillRenderer.renderInHud(poseStack, skill, partialTick, AoASkillRenderer.ProgressRenderType.Ring, false);
+			skillRenderer.renderInHud(RenderContext.of(guiGraphics), skill, partialTick, AoASkillRenderer.ProgressRenderType.Ring, false);
 
 			if (particles.get(0).levelUp) {
 				String level = String.valueOf(skill.getLevel(true));
@@ -154,7 +158,7 @@ public final class XpParticlesRenderer {
 				float scale = Math.min(1 / (stringWidth / (float)(renderWidth - 7)), 1 / (mc.font.lineHeight / (float)(renderHeight - 7)));
 
 				poseStack.translate(renderWidth / 2d, renderHeight / 2d, 0);
-				RenderUtil.drawCenteredScaledString(poseStack, mc.font, level, scale * 0.5f, -mc.font.lineHeight * scale / 2.5f, scale, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+				RenderUtil.renderCenteredScaledText(poseStack, Component.literal(level), scale * 0.5f, -mc.font.lineHeight * scale / 2.5f, scale, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 			}
 
 			cumulativeXOffset += renderWidth;

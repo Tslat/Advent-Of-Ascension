@@ -48,7 +48,7 @@ public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 	@Nullable
 	@Override
 	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> targets = caster.level.getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10, 1, 10), entity -> entity instanceof Enemy && entity.isAlive());
+		List<LivingEntity> targets = caster.level().getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10, 1, 10), entity -> entity instanceof Enemy && entity.isAlive());
 
 		return targets.isEmpty() ? null : targets;
 	}
@@ -64,11 +64,11 @@ public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 
 	@Override
 	public boolean doEntityImpact(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		if (EntityUtil.isHostileMob(target) && target.level instanceof ServerLevel) {
+		if (EntityUtil.isHostileMob(target) && target.level() instanceof ServerLevel) {
 			EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 100).level(2));
 
 			if (RandomUtil.oneInNChance(150))
-				WorldUtil.spawnLightning((ServerLevel)target.level, shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, target.getX(), target.getY(), target.getZ(), true, false);
+				WorldUtil.spawnLightning((ServerLevel)target.level(), shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null, target.getX(), target.getY(), target.getZ(), true, false);
 
 			return true;
 		}

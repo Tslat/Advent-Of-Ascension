@@ -32,7 +32,7 @@ public class BossAltarTileEntityRenderer implements BlockEntityRenderer<BossAlta
 			matrix.translate(0, -0.1, 0);
 			matrix.scale(scale, scale, scale);
 			matrix.translate(0, (1 / scale), 0);
-			matrix.mulPose(Axis.YP.rotationDegrees(entity.level.getGameTime() % 360 - 90));
+			matrix.mulPose(Axis.YP.rotationDegrees(entity.level().getGameTime() % 360 - 90));
 
 			Minecraft.getInstance().getEntityRenderDispatcher().render(entity, 0, 0, 0, 0, 0, matrix, buffer, combinedLight);
 			matrix.popPose();

@@ -28,13 +28,13 @@ public class ArcwormShotRenderer extends ModelledProjectileRenderer<ArcwormShotE
 		super.render(entity, entityYaw, partialTicks, matrix, buffer, packedLight);
 
 		for (int i = 0; i < 3; i++) {
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.RED), true, entity.getX(), entity.getY() + 0.45, entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.RGB(223, 153, 0)), true, entity.getX(), entity.getY() + 0.3, entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.YELLOW), true, entity.getX(), entity.getY() + 0.15, entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.GREEN), true, entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.CYAN), true, entity.getX(), entity.getY() - 0.15, entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.BLUE), true, entity.getX(), entity.getY() - 0.3, entity.getZ(), 0, 0, 0);
-			entity.level.addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.RGB(193, 64, 215)), true, entity.getX(), entity.getY() - 0.45, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.RED), true, entity.getX(), entity.getY() + 0.45, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.RGB(223, 153, 0)), true, entity.getX(), entity.getY() + 0.3, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.YELLOW), true, entity.getX(), entity.getY() + 0.15, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.GREEN), true, entity.getX(), entity.getY(), entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.CYAN), true, entity.getX(), entity.getY() - 0.15, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.BLUE), true, entity.getX(), entity.getY() - 0.3, entity.getZ(), 0, 0, 0);
+			entity.level().addParticle(new CustomisableParticleType.Data(AoAParticleTypes.SPARKLER.get(), 0.75f, 20, ColourUtil.RGB(193, 64, 215)), true, entity.getX(), entity.getY() - 0.45, entity.getZ(), 0, 0, 0);
 		}
 	}
 }

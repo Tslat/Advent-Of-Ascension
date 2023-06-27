@@ -22,13 +22,13 @@ public class KrorSpawnTask implements Runnable {
 
 	public KrorSpawnTask(ServerPlayer player, BlockPos pos) {
 		this.player = player;
-		this.world = player.level;
+		this.world = player.level();
 		this.chargingTablePos = pos;
 	}
 
 	@Override
 	public void run() {
-		if (player.level != world || player.distanceToSqr(chargingTablePos.getX(), chargingTablePos.getY(), chargingTablePos.getZ()) > 100) {
+		if (player.level() != world || player.distanceToSqr(chargingTablePos.getX(), chargingTablePos.getY(), chargingTablePos.getZ()) > 100) {
 			//player.sendSystemMessage(LocaleUtil.getLocaleMessage(AoAMobs.KROR.get().getDescriptionId() + "tooFar"));
 
 			return;

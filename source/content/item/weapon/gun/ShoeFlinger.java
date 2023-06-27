@@ -76,7 +76,7 @@ public class ShoeFlinger extends BaseGun {
 
 	@Override
 	protected void doFiringSound(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
-		shooter.level.playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, getFiringSoundPitchAdjust() + (float)RandomUtil.randomScaledGaussianValue(0.01f));
+		shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, getFiringSoundPitchAdjust() + (float)RandomUtil.randomScaledGaussianValue(0.01f));
 	}
 
 	@Override

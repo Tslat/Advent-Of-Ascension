@@ -28,10 +28,10 @@ public class Chainsaw extends BaseAxe {
 
 	@Override
 	public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
-		if (!player.level.isClientSide) {
-			player.level.playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+		if (!player.level().isClientSide) {
+			player.level().playSound(null, player.getX(), player.getY(), player.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 
-			BlockState state = player.level.getBlockState(pos);
+			BlockState state = player.level().getBlockState(pos);
 
 			if (state.getBlock() instanceof LogBlock || state.is(BlockTags.LOGS))
 				player.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 10, 30, true, false));
@@ -42,8 +42,8 @@ public class Chainsaw extends BaseAxe {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		if (!attacker.level.isClientSide) {
-			attacker.level.playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+		if (!attacker.level().isClientSide) {
+			attacker.level().playSound(null, attacker.getX(), attacker.getY(), attacker.getZ(), AoASounds.ITEM_CHAINSAW_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 			ItemUtil.damageItem(stack, attacker, 1, EquipmentSlot.MAINHAND);
 		}
 

@@ -2,8 +2,8 @@ package net.tslat.aoa3.client.render.custom;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.tslat.aoa3.common.registration.AoARegistries;
@@ -52,10 +52,10 @@ public class EnergyResourceRenderer implements AoAResourceRenderer {
 		RenderUtil.renderScaledCustomSizedTexture(matrix, 0, 0, 0, percentOfMax == renderWidth ? renderHeight * 2 : renderHeight, percentOfMax, renderHeight, percentOfMax, renderHeight, renderWidth, renderHeight * 3);
 
 		if (((EnergyResource)resource).getCurrentDelay() > 0) {
-			RenderUtil.drawCenteredScaledString(matrix, Minecraft.getInstance().font, String.valueOf(Mth.ceil(((EnergyResource)resource).getCurrentDelay() / 20f)), 26, 29, 1.5f, ColourUtil.RED, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(matrix, Component.literal(String.valueOf(Mth.ceil(((EnergyResource)resource).getCurrentDelay() / 20f))), 26, 29, 1.5f, ColourUtil.RED, RenderUtil.TextRenderType.OUTLINED);
 		}
 		else {
-			RenderUtil.drawCenteredScaledString(matrix, Minecraft.getInstance().font, value, 26, 29, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.OUTLINED);
+			RenderUtil.renderCenteredScaledText(matrix, Component.literal(value), 26, 29, 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 		}
 
 		matrix.popPose();

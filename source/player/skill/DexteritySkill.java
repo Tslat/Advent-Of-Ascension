@@ -40,7 +40,7 @@ public class DexteritySkill extends AoASkill.Instance {
 		Vec3 pos = ev.player.position();
 
 		if (ev.player.isSprinting()) {
-			if (ev.player.isOnGround() || ev.player.isSwimming()) {
+			if (ev.player.onGround() || ev.player.isSwimming()) {
 				if (lastX != 0 && lastZ != 0) {
 					double distX = pos.x() - this.lastX;
 					double distZ = pos.z() - this.lastZ;

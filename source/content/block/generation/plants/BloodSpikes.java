@@ -1,3 +1,4 @@
+/*
 package net.tslat.aoa3.content.block.generation.plants;
 
 import net.minecraft.core.BlockPos;
@@ -23,3 +24,4 @@ public class BloodSpikes extends StackablePlant {
 			EntityUtil.applyPotions(entity, new EffectBuilder(MobEffects.BLINDNESS, 100), new EffectBuilder(MobEffects.POISON, 100).level(3));
 	}
 }
+*/

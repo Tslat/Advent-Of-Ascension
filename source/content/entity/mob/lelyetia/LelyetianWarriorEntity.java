@@ -47,7 +47,7 @@ public class LelyetianWarriorEntity extends AoAMeleeMob<LelyetianWarriorEntity> 
 	public void die(DamageSource source) {
 		super.die(source);
 
-		if (!level.isClientSide() && source.getMsgId().equals("fireworks") && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+		if (!level().isClientSide() && source.getMsgId().equals("fireworks") && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
 			ItemUtil.givePlayerItemOrDrop((Player)source.getEntity(), new ItemStack(AoAItems.CELEVE_REALMSTONE.get()));
 	}
 }

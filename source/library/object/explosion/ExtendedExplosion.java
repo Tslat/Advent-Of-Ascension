@@ -18,7 +18,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -278,8 +278,7 @@ public class ExtendedExplosion extends Explosion {
 	protected void captureDropsForBlock(BlockState state, BlockPos pos, ObjectArrayList<Pair<ItemStack, BlockPos>> loot) {
 		if (state.canDropFromExplosion(this.level, pos, this) && RandomUtil.percentChance(this.info.getBlockDropChance())) {
 			ServerLevel serverLevel = (ServerLevel)level;
-			LootContext.Builder lootContext = new LootContext.Builder(serverLevel)
-					.withRandom(this.level.random)
+			LootParams.Builder params = new LootParams.Builder(serverLevel)
 					.withParameter(LootContextParams.ORIGIN, Vec3.atCenterOf(pos))
 					.withParameter(LootContextParams.TOOL, ItemStack.EMPTY)
 					.withParameter(LootContextParams.EXPLOSION_RADIUS, (this.info.getBaseDamage() + this.info.getEffectiveRadius()) / 2f)
@@ -287,7 +286,7 @@ public class ExtendedExplosion extends Explosion {
 					.withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
 
 			state.spawnAfterBreak(serverLevel, pos, ItemStack.EMPTY, this.source instanceof Player || this.indirectExploder instanceof Player);
-			state.getDrops(lootContext).forEach(stack -> addBlockDrops(loot, stack, pos));
+			state.getDrops(params).forEach(stack -> addBlockDrops(loot, stack, pos));
 		}
 	}
 
