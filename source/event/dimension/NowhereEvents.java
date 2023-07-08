@@ -31,7 +31,6 @@ import net.tslat.aoa3.content.block.functional.misc.CheckpointBlock;
 import net.tslat.aoa3.content.block.functional.portal.NowhereActivityPortal;
 import net.tslat.aoa3.content.block.functional.utility.TeaSink;
 import net.tslat.aoa3.content.entity.boss.AoABoss;
-import net.tslat.aoa3.content.item.tablet.TabletItem;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
@@ -231,7 +230,7 @@ public final class NowhereEvents {
 			ev.setUseItem(Event.Result.DENY);
 			AoAScheduler.scheduleSyncronisedTask(() -> ev.getLevel().setBlock(ev.getPos(), blockState.setValue(TeaSink.FILLED, true), Block.UPDATE_CLIENTS), 1);
 		}
-		else if (heldItem instanceof TabletItem || heldItem == AoAItems.LOTTO_TOTEM.get()) {
+		else if (heldItem == AoAItems.LOTTO_TOTEM.get()) {
 			ev.setUseItem(Event.Result.ALLOW);
 			ev.setUseBlock(Event.Result.DENY);
 			ev.getEntity().getAbilities().mayBuild = true;

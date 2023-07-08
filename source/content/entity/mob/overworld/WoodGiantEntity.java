@@ -71,8 +71,6 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 	public WoodGiantEntity(EntityType<? extends WoodGiantEntity> entityType, Level world) {
 		super(entityType, world);
-
-		this.maxUpStep = 1.5f;
 	}
 
 	@Override

@@ -2,12 +2,16 @@ package net.tslat.aoa3.util;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.smartbrainlib.util.RandomUtil;
+
+import java.util.Optional;
 
 public final class PositionAndMotionUtil {
 	public static Vec3 accountForGravity(Vec3 origin, Vec3 velocity, Vec3 targetPos, double gravity) {
@@ -90,17 +94,29 @@ public final class PositionAndMotionUtil {
 
 	public static Vec3 moveDownToGround(Level level, Vec3 pos) {
 		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(pos.x, pos.y, pos.z);
+		LevelChunk chunk = level.getChunk(SectionPos.blockToSectionCoord(pos.x), SectionPos.blockToSectionCoord(pos.z));
 
-		while (!level.getBlockState(testPos.move(Direction.DOWN)).blocksMotion() && testPos.getY() > level.getMinBuildHeight()) {}
+		while (!chunk.getBlockState(testPos.move(Direction.DOWN)).blocksMotion() && testPos.getY() > level.getMinBuildHeight()) {}
 
-		return new Vec3(pos.x, testPos.getY() + 1, pos.z);
+		return new Vec3(pos.x, testPos.getY(), pos.z);
 	}
 
 	public static Vec3 moveUpToSurface(Level level, Vec3 pos) {
 		BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos(pos.x, pos.y, pos.z);
+		LevelChunk chunk = level.getChunk(SectionPos.blockToSectionCoord(pos.x), SectionPos.blockToSectionCoord(pos.z));
 
-		while (level.getBlockState(testPos.move(Direction.UP)).blocksMotion() && testPos.getY() < level.getMaxBuildHeight()) {}
+		while (chunk.getBlockState(testPos.move(Direction.UP)).blocksMotion() && testPos.getY() < level.getMaxBuildHeight()) {}
 
 		return new Vec3(pos.x, testPos.getY(), pos.z);
+	}
+
+	public static Optional<Vec3> getNearestOnGroundPosition(Level level, Vec3 pos) {
+		if (!isNonVoidPosition(level, pos))
+			return Optional.empty();
+
+		pos = moveDownToGround(level, pos);
+		pos = moveUpToSurface(level, pos);
+
+		return Optional.of(pos);
 	}
 }

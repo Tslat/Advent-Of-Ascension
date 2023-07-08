@@ -440,31 +440,28 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 		protected void doDelayedAction(AoABoss entity) {
 			Vec3 spawnPos = Vec3.atBottomCenterOf(RandomUtil.getRandomPositionWithinRange(entity.blockPosition(), 4, 2, 4, 1, 0, 1, false, entity.level(), 5, (state, pos) -> Math.abs(pos.getY() - entity.getY()) <= 5));
 
-			if (!PositionAndMotionUtil.isNonVoidPosition(entity.level(), spawnPos))
-				return;
+			PositionAndMotionUtil.getNearestOnGroundPosition(entity.level(), spawnPos).ifPresent(pos -> {
+				LivingEntity minion = this.variant.spawnFunction.apply(entity, pos, BrainUtils.memoryOrDefault(entity, MemoryModuleType.HURT_BY_ENTITY, () -> null));
 
-			spawnPos = PositionAndMotionUtil.moveDownToGround(entity.level(), spawnPos);
-			spawnPos = PositionAndMotionUtil.moveUpToSurface(entity.level(), spawnPos);
-			LivingEntity minion = this.variant.spawnFunction.apply(entity, spawnPos, BrainUtils.memoryOrDefault(entity, MemoryModuleType.HURT_BY_ENTITY, () -> null));
+				if (minion != null) {
+					LivingEntity target = BrainUtils.getTargetOfEntity(entity);
 
-			if (minion != null) {
-				LivingEntity target = BrainUtils.getTargetOfEntity(entity);
+					((KingBamBamBamEntity)entity).consumeEnergy(this.variant.energyCost);
 
-				((KingBamBamBamEntity)entity).consumeEnergy(this.variant.energyCost);
+					if (target != null)
+						BrainUtils.setMemory(minion, MemoryModuleType.ATTACK_TARGET, target);
 
-				if (target != null)
-					BrainUtils.setMemory(minion, MemoryModuleType.ATTACK_TARGET, target);
+					ServerParticlePacket packet = new ServerParticlePacket();
 
-				ServerParticlePacket packet = new ServerParticlePacket();
+					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SMALL_FLAME, minion)
+							.spawnNTimes(50)
+							.lifespan(40)
+							.ignoreDistanceAndLimits());
 
-				packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SMALL_FLAME, minion)
-						.spawnNTimes(50)
-						.lifespan(40)
-						.ignoreDistanceAndLimits());
-
-				AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
-				AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
-			}
+					AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+					AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
+				}
+			});
 		}
 
 		@Override

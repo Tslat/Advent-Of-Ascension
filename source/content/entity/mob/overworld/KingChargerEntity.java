@@ -4,6 +4,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -27,8 +29,10 @@ import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
+	private static final AttributeModifier MINION_FOLLOW_RANGE_MOD = new AttributeModifier(UUID.fromString("52da0dd9-a425-48cb-a2c9-6f0d8d5a25d1"), "KingChargerFollowRangeMod", 40, AttributeModifier.Operation.ADDITION);
 	private int nextChargerSpawn = 0;
 
 	public KingChargerEntity(EntityType<? extends KingChargerEntity> entityType, Level world) {
@@ -50,7 +54,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	@Override
 	public BrainActivityGroup<KingChargerEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
-				new InvalidateAttackTarget<>(),
+				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
 				new SetWalkTargetToAttackTarget<>().speedMod(1.125f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
@@ -90,6 +94,8 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 
 			if (target != null) {
 				ChargerEntity charger = EntitySpawningUtil.spawnEntity((ServerLevel)level(), AoAMobs.CHARGER.get(), RandomUtil.getRandomPositionWithinRange(target.blockPosition(), 40, 10, 40, 30, 0, 30, true, level(), 2, (state, statePos) -> true), MobSpawnType.MOB_SUMMONED);
+
+				charger.getAttribute(Attributes.FOLLOW_RANGE).addTransientModifier(MINION_FOLLOW_RANGE_MOD);
 
 				if (charger != null)
 					BrainUtils.setTargetOfEntity(charger, target);

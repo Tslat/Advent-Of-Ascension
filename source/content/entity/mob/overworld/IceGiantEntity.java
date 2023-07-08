@@ -46,8 +46,6 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 
 	public IceGiantEntity(EntityType<? extends IceGiantEntity> entityType, Level world) {
 		super(entityType, world);
-
-		this.maxUpStep = 1.5f;
 	}
 
 	@Override

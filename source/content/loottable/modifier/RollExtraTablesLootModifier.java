@@ -53,7 +53,7 @@ public class RollExtraTablesLootModifier extends LootModifier {
 			}
 
 			if (compatible && table != LootTable.EMPTY)
-				table.getRandomItems(context, generatedLoot::add);
+				table.getRandomItemsRaw(context, generatedLoot::add);
 		}
 
 		return generatedLoot;

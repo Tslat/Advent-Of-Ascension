@@ -19,7 +19,6 @@ import net.tslat.aoa3.content.item.misc.*;
 import net.tslat.aoa3.content.item.misc.summoning.ExplosiveIdol;
 import net.tslat.aoa3.content.item.misc.summoning.NethengeicCallstone;
 import net.tslat.aoa3.content.item.misc.summoning.TrollIdol;
-import net.tslat.aoa3.content.item.tablet.*;
 import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
@@ -303,24 +302,6 @@ public final class AoAItems {
 	public static final RegistryObject<Item> RUNANDOR_REALMSTONE = registerItem("runandor_realmstone", () -> new Realmstone(AoABlocks.RUNANDOR_PORTAL, AoASounds.LIGHT_PORTAL_ACTIVATE, "runandor"));
 	public static final RegistryObject<Item> SHYRELANDS_REALMSTONE = registerItem("shyrelands_realmstone", () -> new Realmstone(AoABlocks.SHYRELANDS_PORTAL, AoASounds.SHYRELANDS_PORTAL_ACTIVATE, "shyrelands"));
 	public static final RegistryObject<Item> VOX_PONDS_REALMSTONE = registerItem("vox_ponds_realmstone", () -> new Realmstone(AoABlocks.VOX_PONDS_PORTAL, AoASounds.DARK_PORTAL_ACTIVATE, "vox_ponds"));
-
-	public static final RegistryObject<Item> AGILITY_TABLET = registerItem("agility_tablet", AgilityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> AWARENESS_TABLET = registerItem("awareness_tablet", AwarenessTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> BREEDING_TABLET = registerItem("breeding_tablet", BreedingTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> CLEANSING_TABLET = registerItem("cleansing_tablet", CleansingTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> DISTORTION_TABLET = registerItem("distortion_tablet", DistortionTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> ENERGY_TABLET = registerItem("energy_tablet", EnergyTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> GRAVITY_TABLET = registerItem("gravity_tablet", GravityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> OXYGEN_TABLET = registerItem("oxygen_tablet", OxygenTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> PRESSURE_TABLET = registerItem("pressure_tablet", PressureTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> PROFICIENCY_TABLET = registerItem("proficiency_tablet", ProficiencyTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> RESISTANCE_TABLET = registerItem("resistance_tablet", ResistanceTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> SANCTITY_TABLET = registerItem("sanctity_tablet", SanctityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> SATIATION_TABLET = registerItem("satiation_tablet", SatiationTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> SIGHT_TABLET = registerItem("sight_tablet", SightTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> STRENGTH_TABLET = registerItem("strength_tablet", StrengthTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> UNTIRING_TABLET = registerItem("untiring_tablet", UntiringTablet::new, AoACreativeModeTabs.TABLETS.getKey());
-	public static final RegistryObject<Item> VITALITY_TABLET = registerItem("vitality_tablet", VitalityTablet::new, AoACreativeModeTabs.TABLETS.getKey());
 
 	public static final RegistryObject<Item> AMBIENT_POWER_STONE = registerItem("ambient_power_stone", miscItem());
 	public static final RegistryObject<Item> BLOOMING_POWER_STONE = registerItem("blooming_power_stone", miscItem());

@@ -70,8 +70,6 @@ public class EliteSmashEntity extends AoABoss {
 
 	public EliteSmashEntity(EntityType<? extends AoABoss> entityType, Level level) {
 		super(entityType, level);
-
-		this.maxUpStep = 1.25f;
 	}
 
 	@Override
@@ -208,6 +206,7 @@ public class EliteSmashEntity extends AoABoss {
 						new OneRandomBehaviour<>(
 								Pair.of(
 										new GroundSlamAttack<>(getSwingWarmupTicks(AXE_SLAM_STATE))
+												.slamAtTarget()
 												.requiresTarget()
 												.whenActivating(entity -> this.level().playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
 												.cooldownFor(entity -> 5 + (int)(getSwingDurationTicks(AXE_SLAM_STATE) * entity.getRandom().nextFloat() * 1.5f))

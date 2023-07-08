@@ -1,0 +1,12 @@
+{
+  "feature": "aoa3:single_calab_or_vanilla_grass",
+  "placement": [
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "minecraft:air"
+      }
+    }
+  ]
+}

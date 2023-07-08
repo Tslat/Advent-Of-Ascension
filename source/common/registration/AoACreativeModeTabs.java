@@ -42,8 +42,7 @@ public final class AoACreativeModeTabs {
 	public static final RegistryObject<CreativeModeTab> STAVES = register("staves", () -> new ItemStack(AoAWeapons.CELESTIAL_STAFF.get()), THROWN_WEAPONS);
 	public static final RegistryObject<CreativeModeTab> VULCANES = register("vulcanes", () -> new ItemStack(AoAWeapons.VULCANE.get()), STAVES);
 	public static final RegistryObject<CreativeModeTab> AMMUNITION = register("ammunition", () -> new ItemStack(AoAItems.LIMONITE_BULLET.get()), VULCANES);
-	public static final RegistryObject<CreativeModeTab> TABLETS = register("tablets", () -> new ItemStack(AoAItems.AGILITY_TABLET.get()), AMMUNITION);
-	public static final RegistryObject<CreativeModeTab> GENERATION_BLOCKS = register("worldgen_blocks", () -> new ItemStack(AoABlocks.LELYETIAN_GRASS.get()), TABLETS);
+	public static final RegistryObject<CreativeModeTab> GENERATION_BLOCKS = register("worldgen_blocks", () -> new ItemStack(AoABlocks.LELYETIAN_GRASS.get()), AMMUNITION);
 	public static final RegistryObject<CreativeModeTab> DECORATION_BLOCKS = register("decoration_blocks", () -> new ItemStack(AoABlocks.BARON_STONE_BRICKS.stone()), GENERATION_BLOCKS);
 	public static final RegistryObject<CreativeModeTab> FUNCTIONAL_BLOCKS = register("functional_blocks", () -> new ItemStack(AoABlocks.SHADOW_ALTAR.get()), DECORATION_BLOCKS);
 	public static final RegistryObject<CreativeModeTab> BANNERS = register("banners", () -> new ItemStack(AoABlocks.ANCIENT_BANNER.base()), FUNCTIONAL_BLOCKS);

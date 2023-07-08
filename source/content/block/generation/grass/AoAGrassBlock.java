@@ -2,112 +2,157 @@ package net.tslat.aoa3.content.block.generation.grass;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GrassBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.lighting.LightEngine;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.function.Supplier;
 
-public class AoAGrassBlock extends net.minecraft.world.level.block.GrassBlock {
+public class AoAGrassBlock extends GrassBlock {
 	protected final Supplier<? extends Block> soilBlock;
-	protected final boolean growsInDark;
+	protected final ResourceKey<PlacedFeature> bonemealFeature;
 
-	public AoAGrassBlock(BlockBehaviour.Properties properties, Supplier<? extends Block> soilBlock, boolean growsInDark) {
+	public AoAGrassBlock(Properties properties, Supplier<? extends Block> soilBlock) {
+		this(properties, soilBlock, null);
+	}
+
+	public AoAGrassBlock(Properties properties, Supplier<? extends Block> soilBlock, @Nullable ResourceKey<PlacedFeature> bonemealFeature) {
 		super(properties);
 
 		this.soilBlock = soilBlock;
-		this.growsInDark = growsInDark;
+		this.bonemealFeature = bonemealFeature;
 	}
 
-	public Supplier<? extends Block> getSoilBlock() {
-		return soilBlock;
+	public Block getSoilBlock() {
+		return this.soilBlock.get();
 	}
 
-	@Override
-	public void performBonemeal(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {}
-
-	public boolean hasSufficientLight(BlockState grassState, Level world, BlockPos grassPos) {
-		BlockPos topPos = grassPos.above();
-		BlockState topBlock = world.getBlockState(topPos);
-
-		if (topBlock.getBlock() == Blocks.SNOW && topBlock.getValue(SnowLayerBlock.LAYERS) == 1)
-			return true;
-
-		return LightEngine.getLightBlockInto(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getLightBlock(world, topPos)) < world.getMaxLightLevel();
-	}
-
-	public boolean canStayGrass(BlockState grassState, Level world, BlockPos grassPos) {
-		return hasSufficientLight(grassState, world, grassPos) && !world.getFluidState(grassPos.above()).is(FluidTags.WATER);
+	@Nullable
+	protected ResourceKey<PlacedFeature> getBonemealGrowthFeature(LevelReader level, BlockState state, BlockPos pos) {
+		return this.bonemealFeature;
 	}
 
 	@Override
-	public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
-		if (!hasSufficientLight(state, world, pos)) {
-			if (!world.isAreaLoaded(pos, 3))
-				return;
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean clientSide) {
+		return getBonemealGrowthFeature(level, state, pos) != null && super.isValidBonemealTarget(level, pos, state, clientSide);
+	}
 
-			world.setBlockAndUpdate(pos, soilBlock.get().defaultBlockState());
-		}
-		else if (growsInDark == (world.getMaxLocalRawBrightness(pos.above()) < 9)) {
-			BlockState grassState = this.defaultBlockState();
+	@Override
+	public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+		return getBonemealGrowthFeature(level, state, pos) != null;
+	}
 
-			for (int i = 0; i < 4; i++) {
-				BlockPos growPos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+	@Override
+	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (checkRevertToSoil(level, state, pos, random))
+			return;
 
-				if (world.getBlockState(growPos).getBlock() == soilBlock.get() && canStayGrass(grassState, world, growPos))
-					world.setBlockAndUpdate(growPos, grassState.setValue(SNOWY, world.getBlockState(growPos.above()).getBlock() == Blocks.SNOW));
+		checkMakeSnowy(level, state, pos, random);
+	}
+
+	@Override
+	public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+		BlockPos abovePos = pos.above();
+		ResourceKey<PlacedFeature> bonemealFeatureKey = getBonemealGrowthFeature(level, state, pos);
+
+		if (bonemealFeatureKey == null)
+			return;
+
+		Optional<Holder.Reference<PlacedFeature>> boneMealFeature = level.registryAccess().registryOrThrow(Registries.PLACED_FEATURE).getHolder(bonemealFeatureKey);
+
+		placementLoop:
+		for(int i = 0; i < 128; ++i) {
+			BlockPos adjacentPos = abovePos;
+
+			for(int j = 0; j < i / 16; ++j) {
+				adjacentPos = adjacentPos.offset(random.nextInt(3) - 1, (random.nextInt(3) - 1) * random.nextInt(3) / 2, random.nextInt(3) - 1);
+
+				if (!level.getBlockState(adjacentPos.below()).is(this) || level.getBlockState(adjacentPos).isCollisionShapeFullBlock(level, adjacentPos)) {
+					continue placementLoop;
+				}
 			}
-		}
-	}
 
-	@Override
-	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
-		if (!couldBeSnowy(state, world, pos)) {
-			if (!world.isAreaLoaded(pos, 3))
-				return;
+			BlockState adjacentState = level.getBlockState(adjacentPos);
 
-			world.setBlockAndUpdate(pos, soilBlock.get().defaultBlockState());
-		}
-		else {
-			if (world.getMaxLocalRawBrightness(pos.above()) >= 9) {
-				BlockState defaultState = defaultBlockState();
+			if (adjacentState.is(this) && random.nextInt(10) == 0)
+				performBonemeal(level, random, adjacentPos, adjacentState);
 
-				for(int i = 0; i < 4; ++i) {
-					BlockPos spreadPos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+			if (adjacentState.isAir()) {
+				if (random.nextInt(8) == 0) {
+					List<ConfiguredFeature<?, ?>> flowerFeatures = level.getBiome(adjacentPos).value().getGenerationSettings().getFlowerFeatures();
 
-					if (world.getBlockState(spreadPos).getBlock() == soilBlock.get() && isSnowyAndNotUnderwater(defaultState, world, spreadPos))
-						world.setBlockAndUpdate(spreadPos, defaultState.setValue(SNOWY, Boolean.valueOf(world.getBlockState(spreadPos.above()).is(Blocks.SNOW))));
+					if (!flowerFeatures.isEmpty())
+						((RandomPatchConfiguration)flowerFeatures.get(0).config()).feature().value().place(level, level.getChunkSource().getGenerator(), random, adjacentPos);
+				}
+				else {
+					if (boneMealFeature.isPresent())
+						boneMealFeature.get().value().place(level, level.getChunkSource().getGenerator(), random, adjacentPos);
 				}
 			}
 		}
 	}
 
-	protected boolean couldBeSnowy(BlockState state, LevelAccessor worldReader, BlockPos pos) {
-		BlockPos upPos = pos.above();
-		BlockState topBlock = worldReader.getBlockState(upPos);
-
-		if (topBlock.is(Blocks.SNOW) && topBlock.getValue(SnowLayerBlock.LAYERS) == 1) {
-			return true;
-		}
-		else if (topBlock.getFluidState().getAmount() == 8) {
+	protected boolean checkRevertToSoil(ServerLevel level, BlockState state, BlockPos pos, RandomSource random) {
+		if (canBeGrass(level, state, pos))
 			return false;
-		}
-		else {
-			int i = LightEngine.getLightBlockInto(worldReader, state, pos, topBlock, upPos, Direction.UP, topBlock.getLightBlock(worldReader, upPos));
 
-			return i < worldReader.getMaxLightLevel();
-		}
+		if (level.isAreaLoaded(pos, 1))
+			level.setBlockAndUpdate(pos, getSoilBlock().defaultBlockState());
+
+		return true;
 	}
 
-	protected boolean isSnowyAndNotUnderwater(BlockState state, LevelAccessor worldReader, BlockPos pos) {
-		return couldBeSnowy(state, worldReader, pos) && !worldReader.getFluidState(pos.above()).is(FluidTags.WATER);
+	protected boolean checkMakeSnowy(ServerLevel level, BlockState state, BlockPos pos, RandomSource random) {
+		if (!level.isAreaLoaded(pos, 3))
+			return false;
+
+		boolean madeSnowy = false;
+
+		if (level.getMaxLocalRawBrightness(pos.above()) >= 9) {
+			for(int i = 0; i < 4; ++i) {
+				BlockPos nearbyPos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+
+				if (level.getBlockState(nearbyPos).is(getSoilBlock()) && canSpread(level, defaultBlockState(), nearbyPos)) {
+					level.setBlockAndUpdate(nearbyPos, defaultBlockState().setValue(SNOWY, Boolean.valueOf(level.getBlockState(nearbyPos.above()).is(Blocks.SNOW))));
+
+					madeSnowy = true;
+				}
+			}
+		}
+
+		return madeSnowy;
+	}
+
+	public static boolean canSpread(LevelReader level, BlockState state, BlockPos pos) {
+		return canBeGrass(level, state, pos) && level.getFluidState(pos.above()).isEmpty();
+	}
+
+	public static boolean canBeGrass(LevelReader level, BlockState state, BlockPos pos) {
+		BlockPos abovePos = pos.above();
+		BlockState aboveState = level.getBlockState(abovePos);
+
+		if (aboveState.is(Blocks.SNOW) && aboveState.getValue(SnowLayerBlock.LAYERS) == 1)
+			return true;
+
+		if (aboveState.getFluidState().getAmount() == 8)
+			return false;
+
+		return LightEngine.getLightBlockInto(level, state, pos, aboveState, abovePos, Direction.UP, aboveState.getLightBlock(level, abovePos)) < level.getMaxLightLevel();
 	}
 }

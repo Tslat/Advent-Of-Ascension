@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:grass"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "aoa3:calab_grass"
+          },
+          "weight": 2
+        }
+      ]
+    }
+  }
+}

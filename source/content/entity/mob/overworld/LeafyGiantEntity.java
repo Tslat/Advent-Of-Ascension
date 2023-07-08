@@ -43,7 +43,6 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 		super(entityType, world);
 
 		this.nextBushBaby = RandomUtil.randomNumberBetween(150, 500);
-		this.maxUpStep = 1.5f;
 	}
 
 	@Override

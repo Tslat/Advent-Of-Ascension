@@ -14,7 +14,30 @@
     "water_color": 5210338,
     "water_fog_color": 329011
   },
-  "features": [],
+  "features": [
+    [],
+    [
+      "aoa3:underground_precasian_lava_lake",
+      "aoa3:surface_precasian_lava_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "aoa3:precasian_spring",
+      "aoa3:precasian_lava_spring"
+    ],
+    [
+      "aoa3:precasian_tall_grass_patch",
+      "aoa3:precasian_grass_patch"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
   "has_precipitation": true,
   "spawn_costs": {},
   "spawners": {

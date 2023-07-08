@@ -5,10 +5,12 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
@@ -23,7 +25,8 @@ import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
  * @param <E> The entity
  */
 public class GroundSlamAttack<E extends LivingEntity> extends ConditionlessAttack<E> {
-	private SquareRadius radius = new SquareRadius(10, 10);
+	protected SquareRadius radius = new SquareRadius(10, 10);
+	protected boolean atTarget = false;
 
 	public GroundSlamAttack(int delayTicks) {
 		super(delayTicks);
@@ -52,29 +55,37 @@ public class GroundSlamAttack<E extends LivingEntity> extends ConditionlessAttac
 		return this;
 	}
 
+	public GroundSlamAttack<E> slamAtTarget() {
+		requiresTarget();
+
+		this.atTarget = true;
+
+		return this;
+	}
+
 	protected void doSlam(E entity) {
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		ServerParticlePacket packet = new ServerParticlePacket();
 		Level level = entity.level();
 		RandomSource rand = entity.getRandom();
+		Entity originEntity = this.atTarget ? this.target : entity;
 
-		for (int x = entity.getBlockX() - (int)this.radius.xzRadius(); x < entity.getBlockX() + this.radius.xzRadius(); x++) {
-			for (int z = entity.getBlockZ() - (int)this.radius.xzRadius(); z < entity.getBlockZ() + this.radius.xzRadius(); z++) {
-				BlockState groundState;
-				Vec3 spawnPos = entity.position().add(x, 0, z);
+		for (int x = -(int)this.radius.xzRadius(); x < this.radius.xzRadius(); x++) {
+			for (int z = -(int)this.radius.xzRadius(); z < this.radius.xzRadius(); z++) {
+				Vec3 spawnPos = originEntity.position().add(x, 0, z);
 
-				spawnPos = PositionAndMotionUtil.moveDownToGround(entity.level(), spawnPos);
-				spawnPos = PositionAndMotionUtil.moveUpToSurface(entity.level(), spawnPos);
+				PositionAndMotionUtil.getNearestOnGroundPosition(level, spawnPos).ifPresent(particlePos -> {
+					BlockState groundState;
 
-				if ((groundState = level.getBlockState(pos.set(spawnPos.x, spawnPos.y - 1, spawnPos.z))).blocksMotion()) {
-					packet.particle(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, groundState), () -> new Vec3(pos.getX() + rand.nextFloat(), pos.getY() + 0.1, pos.getZ() + rand.nextFloat())).spawnNTimes(3));
-				}
+					if ((groundState = level.getBlockState(pos.set(spawnPos.x, spawnPos.y - 1, spawnPos.z))).blocksMotion())
+						packet.particle(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, groundState), () -> new Vec3(pos.getX() + rand.nextFloat(), pos.getY() + 0.1, pos.getZ() + rand.nextFloat())).spawnNTimes(3));
+				});
 			}
 		}
 
 		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, entity.position(), 50);
 
-		for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity, radius.xzRadius(), radius.yRadius(), radius.xzRadius(), target -> target.isAlive() && target.onGround() && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.isCreative()))) {
+		for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity.level(), new AABB(originEntity.position(), originEntity.position()).inflate(radius.xzRadius(), radius.yRadius(), radius.xzRadius()), target -> target.isAlive() && target.onGround() && target != entity && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.getAbilities().invulnerable))) {
 			entity.doHurtTarget(target);
 		}
 	}

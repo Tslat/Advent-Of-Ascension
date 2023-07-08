@@ -44,8 +44,6 @@ import java.util.function.Function;
 public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 	public SandGiantEntity(EntityType<? extends SandGiantEntity> entityType, Level world) {
 		super(entityType, world);
-
-		this.maxUpStep = 1.5f;
 	}
 
 	@Override

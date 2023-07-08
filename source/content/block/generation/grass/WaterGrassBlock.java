@@ -1,26 +1,16 @@
 package net.tslat.aoa3.content.block.generation.grass;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.lighting.LightEngine;
 
 import java.util.function.Supplier;
 
 public class WaterGrassBlock extends AoAGrassBlock {
 	public WaterGrassBlock(BlockBehaviour.Properties properties, Supplier<Block> soilBlock, boolean growsInDark) {
-		super(properties, soilBlock, growsInDark);
+		super(properties, soilBlock);
 	}
 
-	@Override
+	/*@Override
 	public boolean canStayGrass(BlockState grassState, Level world, BlockPos grassPos) {
 		return hasSufficientLight(grassState, world, grassPos);
 	}
@@ -37,25 +27,25 @@ public class WaterGrassBlock extends AoAGrassBlock {
 			return true;
 
 		return LightEngine.getLightBlockInto(world, grassState, grassPos, topBlock, topPos, Direction.UP, topBlock.getLightBlock(world, topPos)) < world.getMaxLightLevel();
-	}
+	}*/
 
-	@Override
-	public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
-		if (!couldBeSnowy(state, world, pos)) {
-			if (!world.isAreaLoaded(pos, 3))
+	/*@Override
+	public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+		if (!couldBeSnowy(state, level, pos)) {
+			if (!level.isAreaLoaded(pos, 3))
 				return;
 
-			world.setBlockAndUpdate(pos, soilBlock.get().defaultBlockState());
+			level.setBlockAndUpdate(pos, soilBlock.get().defaultBlockState());
 		}
 		else {
-			if (world.getMaxLocalRawBrightness(pos.above()) >= 9) {
+			if (level.getMaxLocalRawBrightness(pos.above()) >= 9) {
 				BlockState defaultState = defaultBlockState();
 
 				for(int i = 0; i < 4; ++i) {
-					BlockPos spreadPos = pos.offset(rand.nextInt(3) - 1, rand.nextInt(5) - 3, rand.nextInt(3) - 1);
+					BlockPos spreadPos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
 
-					if (world.getBlockState(spreadPos).is(Blocks.DIRT) && isSnowyAndNotUnderwater(defaultState, world, spreadPos))
-						world.setBlockAndUpdate(spreadPos, defaultState.setValue(SNOWY, Boolean.valueOf(world.getBlockState(spreadPos.above()).is(Blocks.SNOW))));
+					if (level.getBlockState(spreadPos).is(Blocks.DIRT) && isSnowyAndNotUnderwater(defaultState, level, spreadPos))
+						level.setBlockAndUpdate(spreadPos, defaultState.setValue(SNOWY, Boolean.valueOf(level.getBlockState(spreadPos.above()).is(Blocks.SNOW))));
 				}
 			}
 		}
@@ -77,5 +67,5 @@ public class WaterGrassBlock extends AoAGrassBlock {
 
 			return i < worldReader.getMaxLightLevel();
 		}
-	}
+	}*/
 }

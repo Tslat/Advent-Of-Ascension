@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +24,6 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
@@ -34,6 +32,7 @@ import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.*;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -74,6 +73,11 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 	@Nullable
 	public SoundEvent getFiringSound() {
 		return null;
+	}
+
+	@Override
+	public ItemStack getDefaultInstance() {
+		return super.getDefaultInstance();
 	}
 
 	@Override
@@ -173,12 +177,9 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		return plData.getResource(AoAResources.SPIRIT.get()).consume(cost, false);
 	}
 
-	@Nullable
 	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		stack.getOrCreateTag().putInt("HideFlags", ItemStack.TooltipPart.MODIFIERS.getMask());
-
-		return null;
+	public int getDefaultTooltipHideFlags(@NotNull ItemStack stack) {
+		return ItemStack.TooltipPart.MODIFIERS.getMask();
 	}
 
 	@Override

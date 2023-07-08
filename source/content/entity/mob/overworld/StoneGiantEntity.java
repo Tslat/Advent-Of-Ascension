@@ -45,8 +45,6 @@ import java.util.List;
 public class StoneGiantEntity extends AoAMeleeMob<StoneGiantEntity> implements RangedAttackMob, AoARangedAttacker {
 	public StoneGiantEntity(EntityType<? extends StoneGiantEntity> entityType, Level world) {
 		super(entityType, world);
-
-		this.maxUpStep = 1.5f;
 	}
 
 	@Override

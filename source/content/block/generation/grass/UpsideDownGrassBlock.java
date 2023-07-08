@@ -9,10 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.lighting.LightEngine;
@@ -22,11 +20,11 @@ import java.util.function.Supplier;
 
 public class UpsideDownGrassBlock extends AoAGrassBlock {
 	public UpsideDownGrassBlock(BlockBehaviour.Properties properties, Supplier<? extends Block> soilBlock, boolean growsInDark) {
-		super(properties, soilBlock, growsInDark);
+		super(properties, soilBlock);
 	}
 
 	@Override
-	public void performBonemeal(ServerLevel world, RandomSource rand, BlockPos pos, BlockState state) {}
+	public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {}
 
 	public boolean hasSufficientLight(BlockState grassState, Level world, BlockPos grassPos) {
 		if (world.dimension() == ResourceKey.create(Registries.DIMENSION, new ResourceLocation(AdventOfAscension.MOD_ID, "lelyetia")))
@@ -50,7 +48,7 @@ public class UpsideDownGrassBlock extends AoAGrassBlock {
 
 			world.setBlockAndUpdate(pos, soilBlock.get().defaultBlockState());
 		}
-		else if (growsInDark == (world.getMaxLocalRawBrightness(pos.below()) < 9)) {
+		else if (true == (world.getMaxLocalRawBrightness(pos.below()) < 9)) {
 			BlockState grassState = this.defaultBlockState();
 
 			for (int i = 0; i < 4; i++) {
@@ -62,7 +60,7 @@ public class UpsideDownGrassBlock extends AoAGrassBlock {
 		}
 	}
 
-	@Override
+	/*@Override
 	protected boolean couldBeSnowy(BlockState state, LevelAccessor worldReader, BlockPos pos) {
 		BlockPos downPos = pos.below();
 		BlockState bottomBlock = worldReader.getBlockState(downPos);
@@ -78,5 +76,5 @@ public class UpsideDownGrassBlock extends AoAGrassBlock {
 
 			return i < worldReader.getMaxLightLevel();
 		}
-	}
+	}*/
 }

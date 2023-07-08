@@ -29,6 +29,8 @@ public final class AoATintHandling {
 		BlockColor grassColouring = vanillaColouring.apply(Blocks.GRASS_BLOCK);
 
 		ev.register(grassColouring, AoABlocks.PRECASIAN_GRASS.get());
+		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get());
+		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get());
 	}
 
 	private static void registerItemColours(final RegisterColorHandlersEvent.Item ev) {
@@ -36,5 +38,7 @@ public final class AoATintHandling {
 		ItemColor grassColouring = vanillaColouring.apply(Items.GRASS_BLOCK);
 
 		ev.register(grassColouring, AoABlocks.PRECASIAN_GRASS.get().asItem());
+		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get().asItem());
+		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get().asItem());
 	}
 }

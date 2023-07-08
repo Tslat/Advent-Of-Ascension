@@ -3,37 +3,19 @@ package net.tslat.aoa3.integration;
 import net.minecraftforge.fml.ModList;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.integration.tes.TESIntegration;
 
 public class IntegrationManager {
 	static boolean jeiActive = false;
-	static boolean reiActive = false;
-	static boolean jerActive = false;
-	static boolean immersiveEngineeringActive = false;
+	static boolean tesActive = false;
 	static boolean patchouliActive = false;
-	static boolean tinkersConstructActive = false;
 
 	public static boolean isJEIActive() {
 		return jeiActive && AoAConfigs.INTEGRATIONS.jeiIntegrationEnabled.get();
 	}
 
-	public static boolean isREIActive() {
-		return reiActive && AoAConfigs.INTEGRATIONS.reiIntegrationEnabled.get();
-	}
-
-	public static boolean isJERActive() {
-		return jerActive && AoAConfigs.INTEGRATIONS.jerIntegrationEnabled.get();
-	}
-
-	public static boolean isImmersiveEngineeringActive() {
-		return immersiveEngineeringActive && AoAConfigs.INTEGRATIONS.immersiveEngineeringEnabled.get();
-	}
-
 	public static boolean isPatchouliActive() {
 		return patchouliActive && AoAConfigs.INTEGRATIONS.patchouliEnabled.get();
-	}
-
-	public static boolean isTinkersConstructActive() {
-		return tinkersConstructActive && AoAConfigs.INTEGRATIONS.tinkersConstructEnabled.get();
 	}
 
 	public static void init() {
@@ -42,30 +24,17 @@ public class IntegrationManager {
 		if (isModPresent("jei"))
 			jeiPreInit();
 
-		if (isModPresent("rei"))
-			jeiPreInit();
-
-		if (isModPresent("jeresources"))
-			jerPreInit();
-
-		if (isModPresent("immersiveengineering"))
-			immersiveEngineeringPreInit();
-
 		if (isModPresent("patchouli"))
 			patchouliPreInit();
 
-		/*if (isModPresent("tconstruct"))
-			tinkersConstructPreInit();*/
-
-		//TinkersFluids.preInit();
+		if (isModPresent("tslatentitystatus"))
+			tesPreInit();
 	}
 
-	public static void lateInit() {
-		/*if (isJERActive())
-			JERIntegration.postInit();
+	public static void lateInit() {}
 
-		if (isImmersiveEngineeringActive())
-			ImmersiveEngineeringIntegration.postInit();*/
+	public static void clientInit() {
+		TESIntegration.clientInit();
 	}
 
 	private static void jeiPreInit() {
@@ -74,22 +43,10 @@ public class IntegrationManager {
 		jeiActive = true;
 	}
 
-	private static void reiPreInit() {
-		Logging.logStatusMessage("Found REI, integrating");
+	private static void tesPreInit() {
+		Logging.logStatusMessage("Found TES, integrating");
 
-		reiActive = true;
-	}
-
-	private static void jerPreInit() {
-		Logging.logStatusMessage("Found JustEnoughResources, integrating");
-
-		jerActive = true;
-	}
-
-	private static void immersiveEngineeringPreInit() {
-		Logging.logStatusMessage("Found Immersive Engineering, integrating");
-
-		immersiveEngineeringActive = true;
+		tesActive = true;
 	}
 
 	private static void patchouliPreInit() {
@@ -97,13 +54,6 @@ public class IntegrationManager {
 
 		patchouliActive = true;
 		//PatchouliIntegration.preInit();
-	}
-
-	private static void tinkersConstructPreInit() {
-		Logging.logStatusMessage("Found Tinkers Construct, Integrating");
-
-		tinkersConstructActive = true;
-		//TinkersConstructIntegration.preInit();
 	}
 
 	public static boolean isModPresent(String modId) {

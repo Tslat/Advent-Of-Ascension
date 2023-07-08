@@ -147,11 +147,12 @@ public final class EntityUtil {
 	}
 
 	public static void pushEntityAway(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
-		Vec3 targetMotion = targetEntity.getDeltaMovement();
+		double knockbackResist = targetEntity instanceof LivingEntity target ? Math.min(safelyGetAttributeValue(target, Attributes.KNOCKBACK_RESISTANCE), 1) : 0;
 
-		targetEntity.setDeltaMovement((targetEntity.getX(0.5f) - centralEntity.getX(0.5f)) * strength + targetMotion.x(),
-				(targetEntity.getY() - centralEntity.getY()) * strength + targetMotion.y(),
-				(targetEntity.getZ(0.5f) - centralEntity.getZ(0.5f)) * strength + targetMotion.z());
+		if (knockbackResist >= 1)
+			return;
+
+		targetEntity.setDeltaMovement(targetEntity.getDeltaMovement().add(centralEntity.position().vectorTo(targetEntity.position()).scale((1 - knockbackResist) * strength)));
 		targetEntity.hurtMarked = true;
 	}
 

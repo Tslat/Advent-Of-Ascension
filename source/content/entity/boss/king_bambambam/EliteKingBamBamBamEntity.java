@@ -109,7 +109,8 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	private static final int SUMMON_1_STATE = 0;
 	private static final int SUMMON_2_STATE = 1;
 	private static final int SUMMON_3_STATE = 2;
-	private static final int FIREBALLS_STATE = 3;
+	private static final int SUMMON_4_STATE = 3;
+	private static final int FIREBALLS_STATE = 4;
 
 	private boolean exhausted = false;
 	private boolean staffCharged = false;
@@ -122,8 +123,9 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	@Override
 	protected void addSwingData(SwingData swings) {
 		swings.put(SUMMON_1_STATE, new SwingData.Swing(20, 10, SUMMON_1_ANIM));
-		swings.put(SUMMON_2_STATE, new SwingData.Swing(20, 12, SUMMON_2_ANIM));
-		swings.put(SUMMON_3_STATE, new SwingData.Swing(70, 53, SUMMON_3_ANIM));
+		swings.put(SUMMON_2_STATE, new SwingData.Swing(20, 10, SUMMON_1_ANIM));
+		swings.put(SUMMON_3_STATE, new SwingData.Swing(20, 12, SUMMON_2_ANIM));
+		swings.put(SUMMON_4_STATE, new SwingData.Swing(70, 53, SUMMON_3_ANIM));
 	}
 
 	@Override
@@ -246,30 +248,27 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 		for (int i = 0; i < 5; i++) {
 			Vec3 spawnPos = Vec3.atBottomCenterOf(RandomUtil.getRandomPositionWithinRange(blockPosition(), 8, 2, 8, 3, 0, 3, false, level(), 5, (state, pos) -> Math.abs(pos.getY() - getY()) <= 5));
 
-			if (!PositionAndMotionUtil.isNonVoidPosition(level(), spawnPos))
-				continue;
+			PositionAndMotionUtil.getNearestOnGroundPosition(level(), spawnPos).ifPresent(pos -> {
+				LivingEntity minion = SummonMinions.summonHoglin(this, pos, BrainUtils.memoryOrDefault(this, MemoryModuleType.HURT_BY_ENTITY, () -> null));
 
-			spawnPos = PositionAndMotionUtil.moveDownToGround(level(), spawnPos);
-			spawnPos = PositionAndMotionUtil.moveUpToSurface(level(), spawnPos);
-			LivingEntity minion = SummonMinions.summonHoglin(this, spawnPos, BrainUtils.memoryOrDefault(this, MemoryModuleType.HURT_BY_ENTITY, () -> null));
+				if (minion != null) {
+					EntityUtil.applyPotions(minion,
+							new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles(),
+							new EffectBuilder(MobEffects.DAMAGE_BOOST).level(4));
 
-			if (minion != null) {
-				EntityUtil.applyPotions(minion,
-						new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles(),
-						new EffectBuilder(MobEffects.DAMAGE_BOOST).level(4));
+					ServerParticlePacket packet = new ServerParticlePacket();
 
-				ServerParticlePacket packet = new ServerParticlePacket();
+					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SOUL_FIRE_FLAME, minion)
+							.spawnNTimes(50)
+							.lifespan(40)
+							.velocity(0, 0.25f, 0)
+							.ignoreDistanceAndLimits()
+							.lifespan(40));
 
-				packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SOUL_FIRE_FLAME, minion)
-						.spawnNTimes(50)
-						.lifespan(40)
-						.velocity(0, 0.25f, 0)
-						.ignoreDistanceAndLimits()
-						.lifespan(40));
-
-				AoAPackets.messageAllPlayersTrackingEntity(packet, this);
-				AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).atPos(level(), minion.position()).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), this);
-			}
+					AoAPackets.messageAllPlayersTrackingEntity(packet, this);
+					AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).atPos(level(), minion.position()).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), this);
+				}
+			});
 		}
 
 		for (int i = 0; i < 15; i++) {
@@ -509,29 +508,26 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 		protected void doDelayedAction(AoABoss entity) {
 			Vec3 spawnPos = Vec3.atBottomCenterOf(RandomUtil.getRandomPositionWithinRange(entity.blockPosition(), 4, 2, 4, 1, 0, 1, false, entity.level(), 5, (state, pos) -> Math.abs(pos.getY() - entity.getY()) <= 5));
 
-			if (!PositionAndMotionUtil.isNonVoidPosition(entity.level(), spawnPos))
-				return;
+			PositionAndMotionUtil.getNearestOnGroundPosition(entity.level(), spawnPos).ifPresent(pos -> {
+				LivingEntity minion = this.variant.spawnFunction.apply(entity, pos, BrainUtils.memoryOrDefault(entity, MemoryModuleType.HURT_BY_ENTITY, () -> BrainUtils.getTargetOfEntity(entity)));
 
-			spawnPos = PositionAndMotionUtil.moveDownToGround(entity.level(), spawnPos);
-			spawnPos = PositionAndMotionUtil.moveUpToSurface(entity.level(), spawnPos);
-			LivingEntity minion = this.variant.spawnFunction.apply(entity, spawnPos, BrainUtils.memoryOrDefault(entity, MemoryModuleType.HURT_BY_ENTITY, () -> BrainUtils.getTargetOfEntity(entity)));
+				if (minion != null) {
+					((EliteKingBamBamBamEntity)entity).consumeEnergy(this.variant.energyCost);
+					EntityUtil.applyPotions(minion,
+							new EffectBuilder(MobEffects.DAMAGE_BOOST).level(3).hideParticles(),
+							new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles());
 
-			if (minion != null) {
-				((EliteKingBamBamBamEntity)entity).consumeEnergy(this.variant.energyCost);
-				EntityUtil.applyPotions(minion,
-						new EffectBuilder(MobEffects.DAMAGE_BOOST).level(3).hideParticles(),
-						new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles());
+					ServerParticlePacket packet = new ServerParticlePacket();
 
-				ServerParticlePacket packet = new ServerParticlePacket();
+					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SMALL_FLAME, minion)
+							.spawnNTimes(50)
+							.lifespan(40)
+							.ignoreDistanceAndLimits());
 
-				packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SMALL_FLAME, minion)
-						.spawnNTimes(50)
-						.lifespan(40)
-						.ignoreDistanceAndLimits());
-
-				AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
-				AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
-			}
+					AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+					AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
+				}
+			});
 		}
 
 		@Override

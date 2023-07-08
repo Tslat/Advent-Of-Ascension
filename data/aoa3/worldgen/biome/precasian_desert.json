@@ -14,7 +14,20 @@
     "water_color": 5210338,
     "water_fog_color": 329011
   },
-  "features": [],
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "minecraft:patch_dead_bush_2"
+    ]
+  ],
   "has_precipitation": true,
   "spawn_costs": {},
   "spawners": {

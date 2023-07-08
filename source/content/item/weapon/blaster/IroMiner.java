@@ -63,8 +63,6 @@ public class IroMiner extends BaseBlaster {
 	@Nullable
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		stack.getOrCreateTag().putInt("HideFlags", ItemStack.TooltipPart.MODIFIERS.getMask());
-
 		return new VolatileStackCapabilityProvider();
 	}
 

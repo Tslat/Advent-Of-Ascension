@@ -55,7 +55,7 @@ public class RollEntityWorldTableLootModifier extends LootModifier {
 		if (table == LootTable.EMPTY || table.getParamSet() != LootContextParamSets.ENTITY)
 			return generatedLoot;
 
-		table.getRandomItems(context, generatedLoot::add);
+		table.getRandomItemsRaw(context, generatedLoot::add);
 
 		return generatedLoot;
 	}

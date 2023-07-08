@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "aoa3:block/calab_long_grass_bottom"
+    },
+    "half=upper": {
+      "model": "aoa3:block/calab_long_grass_top"
+    }
+  }
+}
