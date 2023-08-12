@@ -1,0 +1,46 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:grass"
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "minecraft:tall_grass",
+            "Properties": {
+              "half": "lower"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "aoa3:calab_grass"
+          },
+          "weight": 10
+        },
+        {
+          "data": {
+            "Name": "aoa3:calab_long_grass",
+            "Properties": {
+              "half": "lower"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "minecraft:fern"
+          },
+          "weight": 3
+        }
+      ]
+    }
+  }
+}

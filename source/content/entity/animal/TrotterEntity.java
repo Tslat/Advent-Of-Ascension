@@ -8,11 +8,11 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 
 import javax.annotation.Nullable;
 
-public class TrotterEntity extends AoAAnimal {
+public class TrotterEntity extends AoAAnimalOld {
 	public TrotterEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 

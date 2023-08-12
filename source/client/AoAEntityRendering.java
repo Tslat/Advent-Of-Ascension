@@ -32,6 +32,7 @@ import net.tslat.aoa3.client.model.entity.boss.EliteSmashModel;
 import net.tslat.aoa3.client.model.entity.boss.SmashModel;
 import net.tslat.aoa3.client.model.entity.mob.ChargerModel;
 import net.tslat.aoa3.client.model.entity.mob.FlamewalkerModel;
+import net.tslat.aoa3.client.model.entity.mob.SpinoledonModel;
 import net.tslat.aoa3.client.model.entity.mob.WoodGiantModel;
 import net.tslat.aoa3.client.model.entity.npc.DryadSpriteModel;
 import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
@@ -114,6 +115,8 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> THORNY_PLANT_SPROUT = new GeckoLibRendererPackage<>(AoAMiscEntities.THORNY_PLANT_SPROUT).path("mob/misc/thorny_plant_sprout");
 
+	public static final EntityRendererPackage<?> HORNDRON = new GeckoLibRendererPackage<>(AoAAnimals.HORNDRON).path("animal/precasia/horndron", true);
+
 	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new GeckoLibRendererPackage<>(AoAMobs.ANCIENT_GOLEM).path("mob/overworld/ancient_golem");
 	public static final EntityRendererPackage<?> ANGLER = new GeckoLibRendererPackage<>(AoAMobs.ANGLER).path("mob/lborean/angler");
 	public static final EntityRendererPackage<?> ARCBEAST = new GeckoLibRendererPackage<>(AoAMobs.ARCBEAST).path("mob/shyrelands/arcbeast");
@@ -165,6 +168,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> WOOD_GIANT = new GeckoLibRendererPackage<>(AoAMobs.WOOD_GIANT).model(new WoodGiantModel());
 	public static final EntityRendererPackage<?> TREE_SPIRIT = new GeckoLibRendererPackage<>(AoAMobs.TREE_SPIRIT).path("mob/overworld/tree_spirit").emissive();
 	public static final EntityRendererPackage<?> YETI = new GeckoLibRendererPackage<>(AoAMobs.YETI).path("mob/overworld/yeti");
+	public static final EntityRendererPackage<?> SPINOLEDON = new GeckoLibRendererPackage<>(AoAMobs.SPINOLEDON).model(new SpinoledonModel());
 
 	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMobs.SMASH).model(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMobs.ELITE_SMASH).model(new EliteSmashModel());
@@ -500,7 +504,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> HAG = new EntityRendererPackage<>(AoAMobs.HAG).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> HAPPY = new EntityRendererPackage<>(AoAMobs.HAPPY).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> HIDING_FUNGI = new EntityRendererPackage<>(AoAMobs.HIDING_FUNGI).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> HORNDRON = new EntityRendererPackage<>(AoAMobs.HORNDRON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> HOST = new EntityRendererPackage<>(AoAMobs.HOST).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> HUNTER = new EntityRendererPackage<>(AoAMobs.HUNTER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> INMATE_X = new EntityRendererPackage<>(AoAMobs.INMATE_X).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -571,7 +574,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SOULVYRE = new EntityRendererPackage<>(AoAMobs.SOULVYRE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SPECTRAL_WIZARD = new EntityRendererPackage<>(AoAMobs.SPECTRAL_WIZARD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SPHINX = new EntityRendererPackage<>(AoAMobs.SPHINX).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> SPINOLEDON = new EntityRendererPackage<>(AoAMobs.SPINOLEDON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SPIRIT_GUARDIAN = new EntityRendererPackage<>(AoAMobs.SPIRIT_GUARDIAN).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SPIRIT_PROTECTOR = new EntityRendererPackage<>(AoAMobs.SPIRIT_PROTECTOR).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SQUASHER = new EntityRendererPackage<>(AoAMobs.SQUASHER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

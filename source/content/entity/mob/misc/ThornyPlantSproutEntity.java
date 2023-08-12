@@ -51,7 +51,9 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 
 	@Override
 	public BrainActivityGroup<ThornyPlantSproutEntity> getIdleTasks() {
-		return BrainActivityGroup.idleTasks(new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER));
+		return BrainActivityGroup.idleTasks(new TargetOrRetaliate<>()
+				.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+				.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)));
 	}
 
 	@Override
@@ -62,7 +64,7 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 	}
 
 	@Override
-	public List<ExtendedSensor<ThornyPlantSproutEntity>> getSensors() {
+	public List<ExtendedSensor<? extends ThornyPlantSproutEntity>> getSensors() {
 		return ObjectArrayList.of(
 				new NearbyPlayersSensor<>(),
 				new NearbyLivingEntitySensor<ThornyPlantSproutEntity>()

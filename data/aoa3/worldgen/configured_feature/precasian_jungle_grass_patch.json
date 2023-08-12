@@ -1,0 +1,71 @@
+{
+  "type": "minecraft:random_patch",
+  "config": {
+    "feature": {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "config": {
+          "to_place": {
+            "type": "minecraft:weighted_state_provider",
+            "entries": [
+              {
+                "data": {
+                  "Name": "minecraft:fern"
+                },
+                "weight": 6
+              },
+              {
+                "data": {
+                  "Name": "aoa3:calab_grass"
+                },
+                "weight": 13
+              },
+              {
+                "data": {
+                  "Name": "minecraft:grass"
+                },
+                "weight": 11
+              },
+              {
+                "data": {
+                  "Name": "minecraft:tall_grass",
+                  "Properties": {
+                    "half": "lower"
+                  }
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "aoa3:calab_long_grass",
+                  "Properties": {
+                    "half": "lower"
+                  }
+                },
+                "weight": 3
+              },
+              {
+                "data": {
+                  "Name": "aoa3:tangle_thorns"
+                },
+                "weight": 1
+              }
+            ]
+          }
+        }
+      },
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
+        }
+      ]
+    },
+    "tries": 32,
+    "xz_spread": 7,
+    "y_spread": 3
+  }
+}

@@ -3,6 +3,7 @@ package net.tslat.aoa3.util;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
@@ -40,8 +41,8 @@ public final class RegistryUtil {
 		return ForgeRegistries.BLOCKS.getKey(block);
 	}
 
-	public static ResourceLocation getId(Biome biome) {
-		return ForgeRegistries.BIOMES.getKey(biome);
+	public static ResourceLocation getId(Level level, Biome biome) {
+		return level.registryAccess().registry(Registries.BIOME).get().getKey(biome);
 	}
 
 	public static ResourceLocation getId(SoundEvent sound) {

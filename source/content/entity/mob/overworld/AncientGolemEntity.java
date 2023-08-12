@@ -9,6 +9,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidType;
@@ -42,7 +43,9 @@ public class AncientGolemEntity extends AoAMeleeMob<AncientGolemEntity> {
 	@Override
 	public BrainActivityGroup<AncientGolemEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
-				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER),
+				new TargetOrRetaliate<>()
+						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)),
 				new OneRandomBehaviour<>(
 						Pair.of(new SetRandomWalkTarget<>().speedModifier(0.9f), 1),
 						Pair.of(new Idle<>().runFor(entity -> entity.getRandom().nextInt(60, 120)), 2)));

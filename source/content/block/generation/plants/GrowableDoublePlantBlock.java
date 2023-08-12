@@ -26,12 +26,12 @@ public class GrowableDoublePlantBlock extends GrowablePlantBlock {
 
 	@Override
 	void growPlant(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-		level.setBlock(pos, mergeWaterlogging(level, state.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER), pos), Block.UPDATE_CLIENTS);
-		level.setBlock(pos.above(), mergeWaterlogging(level, state.setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER), pos), Block.UPDATE_CLIENTS);
+		level.setBlock(pos, mergeWaterlogging(level, getGrownPlantForHeight(level, random, pos, state, 0).setValue(DoublePlantBlock.HALF, DoubleBlockHalf.LOWER), pos), Block.UPDATE_CLIENTS);
+		level.setBlock(pos.above(), mergeWaterlogging(level, getGrownPlantForHeight(level, random, pos, state, 1).setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER), pos), Block.UPDATE_CLIENTS);
 	}
 
 	@Override
-	BlockState getGrownPlantBase(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+	BlockState getGrownPlantForHeight(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, int heightStage) {
 		return this.grownPlant.get().defaultBlockState();
 	}
 }

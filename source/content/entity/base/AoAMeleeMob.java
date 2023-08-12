@@ -24,7 +24,7 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 	}
 
 	@Override
-	public BrainActivityGroup<T> getFightTasks() {
+	public BrainActivityGroup<? extends T> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
 				new SetWalkTargetToAttackTarget<>(),

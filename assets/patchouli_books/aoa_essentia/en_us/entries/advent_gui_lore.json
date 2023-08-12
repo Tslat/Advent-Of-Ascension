@@ -1,0 +1,18 @@
+{
+  "category": "aoa3:advent_gui",
+  "icon": "minecraft:written_book",
+  "name": "Lore Tab",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "lore_tab",
+      "text": "Only accessible if $(thing)Patchouli$() is installed, the $(thing)lore tab$() gives access to any $(aoa) $(thing)Patchouli$() books that have been previously opened.",
+      "title": "Lore Tab"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "By default, the tab should always have the $(thing)AoA Essentia$() book available, with more books becoming available as you find them.$(br2)You can open any available book by clicking on it, even if you don't have it in your inventory. You can also drag it out of the GUI to give yourself a fresh copy if you don't already have one!"
+    }
+  ],
+  "sortnum": 3
+}

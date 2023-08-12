@@ -141,6 +141,16 @@
       },
       "trigger": "minecraft:consume_item"
     },
+    "consume_cooked_giant_lizard_meat": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:cooked_giant_lizard_meat"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
     "consume_cooked_halycon_beef": {
       "conditions": {
         "item": {
@@ -718,6 +728,9 @@
     ],
     [
       "consume_natural_tea"
+    ],
+    [
+      "consume_cooked_giant_lizard_meat"
     ],
     [
       "consume_razorfish"

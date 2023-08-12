@@ -42,6 +42,8 @@ import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.data.server.AoASkillsReloadListener;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.integration.IntegrationManager;
+import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
+import net.tslat.aoa3.leaderboard.task.LeaderboardActions;
 import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
@@ -344,6 +346,9 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			plData.patchouliBooks.add(new ResourceLocation(AdventOfAscension.MOD_ID, "aoa_essentia"));
 		}
 
+		if (SkillsLeaderboard.isEnabled())
+			LeaderboardActions.addNewPlayer(plData);
+
 		AoAPackets.messagePlayer(pl, new PlayerDataSyncPacket(plData.savetoNbt(true)));
 	}
 
@@ -572,6 +577,9 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	@Override
 	public void handleLevelChange(PlayerLevelChangeEvent ev) {
+		if (SkillsLeaderboard.isEnabled())
+			LeaderboardActions.updatePlayer(this, ev.getSkill());
+
 		if (!abilitiesRegionLocked)
 			recheckSkills();
 	}
@@ -655,7 +663,13 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	@Override
 	public int getTotalLevel() {
-		return 0;
+		int i = 0;
+
+		for (AoASkill.Instance skill : this.getSkills()) {
+			i += skill.getLevel(true);
+		}
+
+		return i;
 	}
 
 	public void addPatchouliBook(ResourceLocation book) {

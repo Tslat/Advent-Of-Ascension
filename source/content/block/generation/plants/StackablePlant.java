@@ -30,6 +30,9 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 // TODO fix this to use blockstates =/
 	public StackablePlant(Block.Properties properties) {
 		super(properties);
+
+		stemBlock = () -> this;
+		hatBlock = () -> this;
 	}
 
 	@Override

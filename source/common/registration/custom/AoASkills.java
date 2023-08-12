@@ -12,9 +12,9 @@ public class AoASkills {
 	public static void init() {}
 
 	public static final RegistryObject<AoASkill> ALCHEMY = AoARegistries.AOA_SKILLS.register("alchemy", () -> new AoASkill(AlchemySkill::new, AlchemySkill::new));
+	public static final RegistryObject<AoASkill> ARTIFICE = AoARegistries.AOA_SKILLS.register("artifice", () -> new AoASkill(ArtificeSkill::new, ArtificeSkill::new));
 	public static final RegistryObject<AoASkill> CREATION = AoARegistries.AOA_SKILLS.register("creation", () -> new AoASkill(CreationSkill::new, CreationSkill::new));
 	public static final RegistryObject<AoASkill> DEXTERITY = AoARegistries.AOA_SKILLS.register("dexterity", () -> new AoASkill(DexteritySkill::new, DexteritySkill::new));
-	public static final RegistryObject<AoASkill> ENGINEERING = AoARegistries.AOA_SKILLS.register("engineering", () -> new AoASkill(EngineeringSkill::new, EngineeringSkill::new));
 	public static final RegistryObject<AoASkill> EXTRACTION = AoARegistries.AOA_SKILLS.register("extraction", () -> new AoASkill(ExtractionSkill::new, ExtractionSkill::new));
 	public static final RegistryObject<AoASkill> FARMING = AoARegistries.AOA_SKILLS.register("farming", () -> new AoASkill(FarmingSkill::new, FarmingSkill::new));
 	public static final RegistryObject<AoASkill> FAUNAMANCY = AoARegistries.AOA_SKILLS.register("faunamancy", () -> new AoASkill(FaunamancySkill::new, FaunamancySkill::new));

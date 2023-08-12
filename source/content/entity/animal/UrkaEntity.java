@@ -11,11 +11,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 
 import javax.annotation.Nullable;
 
-public class UrkaEntity extends AoAAnimal {
+public class UrkaEntity extends AoAAnimalOld {
 	public UrkaEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}

@@ -2069,12 +2069,6 @@
       }
     ]
   },
-  "entity.horndron.ambient": {
-    "sounds": [
-      "aoa3:entity/horndron/ambient"
-    ],
-    "subtitle": "subtitles.entity.horndron.ambient"
-  },
   "entity.horndron.death": {
     "sounds": [
       "aoa3:entity/horndron/death"
@@ -2083,7 +2077,8 @@
   },
   "entity.horndron.hurt": {
     "sounds": [
-      "aoa3:entity/horndron/hurt"
+      "aoa3:entity/horndron/hurt-01",
+      "aoa3:entity/horndron/hurt-02"
     ],
     "subtitle": "subtitles.entity.horndron.hurt"
   },
@@ -3392,7 +3387,8 @@
   },
   "entity.spinoledon.ambient": {
     "sounds": [
-      "aoa3:entity/spinoledon/ambient"
+      "aoa3:entity/spinoledon/ambient-01",
+      "aoa3:entity/spinoledon/ambient-02"
     ],
     "subtitle": "subtitles.entity.spinoledon.ambient"
   },

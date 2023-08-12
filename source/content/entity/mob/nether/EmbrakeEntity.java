@@ -7,12 +7,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
-import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.ai.memory.WalkTarget;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -67,7 +63,7 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 						new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()),
 						new FirstApplicableBehaviour<>(
 								new BreathAttack(),
-								new WalkUpToTarget()
+								new SetWalkTargetToAttackTarget<>().closeEnoughDist((entity, target) -> 4)
 						)
 				));
 	}
@@ -85,22 +81,6 @@ public class EmbrakeEntity extends AoAMeleeMob<EmbrakeEntity> implements AoARang
 
 	@Override
 	public void doRangedAttackBlock(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {}
-
-	private static class WalkUpToTarget extends SetWalkTargetToAttackTarget<EmbrakeEntity> {
-		@Override
-		protected void start(EmbrakeEntity entity) {
-			Brain<?> brain = entity.getBrain();
-			LivingEntity target = BrainUtils.getTargetOfEntity(entity);
-
-			if (entity.getSensing().hasLineOfSight(target) && BehaviorUtils.isWithinAttackRange(entity, target, 1)) {
-				BrainUtils.clearMemory(brain, MemoryModuleType.WALK_TARGET);
-			}
-			else {
-				BrainUtils.setMemory(brain, MemoryModuleType.LOOK_TARGET, new EntityTracker(target, true));
-				BrainUtils.setMemory(brain, MemoryModuleType.WALK_TARGET, new WalkTarget(new EntityTracker(target, false), this.speedModifier, 4));
-			}
-		}
-	}
 
 	private static class BreathAttack extends ConditionlessHeldAttack<EmbrakeEntity> {
 		public BreathAttack() {

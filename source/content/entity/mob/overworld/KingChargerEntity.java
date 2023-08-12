@@ -42,8 +42,9 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	@Override
 	public BrainActivityGroup<KingChargerEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
-				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
-						.attackablePredicate(entity -> entity.isAlive() && (!(entity instanceof Player player) || !player.isCreative()))
+				new TargetOrRetaliate<>()
+						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target))
 						.whenStopping(entity -> EntityRetrievalUtil.<ChargerEntity>getEntities(entity, 40, ally -> ally instanceof ChargerEntity)
 								.forEach(charger -> BrainUtils.setTargetOfEntity(charger, BrainUtils.getTargetOfEntity(entity)))),
 				new OneRandomBehaviour<>(
@@ -55,7 +56,7 @@ public class KingChargerEntity extends AoAMeleeMob<KingChargerEntity> {
 	public BrainActivityGroup<KingChargerEntity> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
-				new SetWalkTargetToAttackTarget<>().speedMod(1.125f),
+				new SetWalkTargetToAttackTarget<>().speedMod((entity, target) -> 1.125f),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
 

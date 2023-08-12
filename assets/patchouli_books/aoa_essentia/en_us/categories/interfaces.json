@@ -1,0 +1,5 @@
+{
+  "description": "$(aoa) comes with a few important $(thing)interfaces$() that you should be aware of. These $(thing)interfaces$() give you access to critical in-game information, or access to helpful functions not found anywhere else.",
+  "icon": "minecraft:map",
+  "name": "Interfaces"
+}

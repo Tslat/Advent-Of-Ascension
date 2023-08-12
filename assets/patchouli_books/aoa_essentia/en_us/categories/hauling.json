@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Hauling$() is a skill about fishing up creatures and loot from the depths.$(br2)Higher levels of $(thing)Hauling$() gives access to more fishing opportunities, and greater rewards.$(br2)$(l)NOTE:$() this guide is based on the mod defaults. Modpack/datapack changes may affect the accuracy of the following information",
+  "icon": "aoa3:textures/gui/aoaskill/hauling.png",
+  "name": "Hauling"
+}

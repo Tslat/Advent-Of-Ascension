@@ -339,7 +339,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_HAG_HURT = registerSound("entity.hag.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_HIVE_KING_AMBIENT = registerSound("entity.hive_king.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_HIVE_KING_DEATH = registerSound("entity.hive_king.death");
-	public static final RegistryObject<SoundEvent> ENTITY_HORNDRON_AMBIENT = registerSound("entity.horndron.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_HORNDRON_DEATH = registerSound("entity.horndron.death");
 	public static final RegistryObject<SoundEvent> ENTITY_HORNDRON_HURT = registerSound("entity.horndron.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_HOST_AMBIENT = registerSound("entity.host.ambient");

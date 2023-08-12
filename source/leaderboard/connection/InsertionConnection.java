@@ -21,27 +21,22 @@ public class InsertionConnection extends LeaderboardConnection {
 
     @Override
     protected void prepareStatements(Connection connection) throws SQLException {
-        INSERT_OR_UPDATE_PLAYER_TOTAL = connection.prepareStatement("IF EXISTS (SELECT 1 FROM Totals WHERE Uuid=?) " +
-                "BEGIN " +
-                "UPDATE Totals SET Total=?, LastUpdate=CURRENT_DATE WHERE Uuid=? " +
-                "END " +
-                "ELSE " +
-                "BEGIN " +
-                "INSERT INTO Totals (Uuid, Username, Total, LastUpdate) VALUES (?, ?, ?, CURRENT_DATE) " +
-                "END");
+        INSERT_OR_UPDATE_PLAYER_TOTAL = connection.prepareStatement(
+                "MERGE INTO Totals " +
+                    "Using (VALUES ?, ?, ?, CURRENT_DATE) I (UUID, USER, TOTAL, CURDATE) " +
+                    "ON (Totals.UUID=I.UUID)" +
+                    "WHEN MATCHED THEN UPDATE SET Totals.Total=I.TOTAL, Totals.LastUpdate = I.CURDATE " +
+                    "WHEN NOT MATCHED THEN INSERT (Uuid, Username, Total, LastUpdate) VALUES (I.UUID, I.USER, I.TOTAL, I.CURDATE)");
 
         for (AoASkill skill : AoARegistries.AOA_SKILLS.getAllRegisteredObjects()) {
             String tableName = LeaderboardTask.idToTableName(AoARegistries.AOA_SKILLS.getId(skill));
 
             INSERT_OR_UPDATE_PLAYER_SKILL.put(skill, connection.prepareStatement(
-                    "IF EXISTS (SELECT 1 FROM " + tableName + " WHERE Uuid=?) " +
-                            "BEGIN " +
-                            "UPDATE " + tableName + " SET Level=?, LastUpdate=CURRENT_DATE WHERE Uuid=? " +
-                            "END " +
-                            "ELSE " +
-                            "BEGIN " +
-                            "INSERT INTO " + tableName + " (Uuid, Username, Level, LastUpdate) VALUES (?, ?, ?, CURRENT_DATE) " +
-                            "END"));
+                    "MERGE INTO " + tableName + " " +
+                            "Using (VALUES ?, ?, ?, CURRENT_DATE) I (UUID, USER, LEVEL, CURDATE) " +
+                            "ON (" + tableName + ".Uuid=I.UUID)" +
+                            "WHEN MATCHED THEN UPDATE SET " + tableName + ".Level=I.LEVEL, " + tableName + ".LastUpdate = I.CURDATE " +
+                            "WHEN NOT MATCHED THEN INSERT (Uuid, Username, Level, LastUpdate) VALUES (I.UUID, I.USER, I.LEVEL, I.CURDATE)"));
         }
     }
 
@@ -55,11 +50,9 @@ public class InsertionConnection extends LeaderboardConnection {
     }
 
     public void updatePlayerTotal(Connection connection, String uuid, String playerName, int totalLevel) throws SQLException {
-        INSERT_OR_UPDATE_PLAYER_TOTAL.setNString(1, uuid);
-        INSERT_OR_UPDATE_PLAYER_TOTAL.setInt(2, totalLevel);
-        INSERT_OR_UPDATE_PLAYER_TOTAL.setNString(3, uuid);
-        INSERT_OR_UPDATE_PLAYER_TOTAL.setString(4, playerName);
-        INSERT_OR_UPDATE_PLAYER_TOTAL.setInt(5, totalLevel);
+        INSERT_OR_UPDATE_PLAYER_TOTAL.setString(1, uuid);
+        INSERT_OR_UPDATE_PLAYER_TOTAL.setNString(2, playerName);
+        INSERT_OR_UPDATE_PLAYER_TOTAL.setInt(3, totalLevel);
 
         runPreparedStatement(connection, INSERT_OR_UPDATE_PLAYER_TOTAL);
     }
@@ -67,12 +60,9 @@ public class InsertionConnection extends LeaderboardConnection {
     public void updatePlayerLevel(Connection connection, String uuid, String playerName, AoASkill skill, short level) throws SQLException {
         PreparedStatement statement = INSERT_OR_UPDATE_PLAYER_SKILL.get(skill);
 
-        statement.setNString(1, uuid);
-        statement.setShort(2, level);
-        statement.setNString(3, uuid);
-        statement.setNString(4, uuid);
-        statement.setString(5, playerName);
-        statement.setShort(6, level);
+        statement.setString(1, uuid);
+        statement.setNString(2, playerName);
+        statement.setShort(3, level);
 
         runPreparedStatement(connection, statement);
     }

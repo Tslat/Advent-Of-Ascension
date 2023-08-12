@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "aoa3:single_spindly_stranglewood_tree",
+    "features": [
+      {
+        "chance": 0.6,
+        "feature": "aoa3:single_spindly_stranglewood_tree"
+      },
+      {
+        "chance": 0.3,
+        "feature": "aoa3:stranglewood_bush"
+      }
+    ]
+  }
+}

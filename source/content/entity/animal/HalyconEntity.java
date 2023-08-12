@@ -15,12 +15,12 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.util.ItemUtil;
 
 import javax.annotation.Nullable;
 
-public class HalyconEntity extends AoAAnimal {
+public class HalyconEntity extends AoAAnimalOld {
 	public HalyconEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}

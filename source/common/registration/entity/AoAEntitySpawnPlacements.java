@@ -5,6 +5,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -28,25 +29,23 @@ public final class AoAEntitySpawnPlacements {
         Logging.logStatusMessage("Setting entity spawn placements");
 
         setOverworldSpawnPlacements();
+        setNetherSpawnPlacements();
+        setPrecasiaSpawnPlacements();
+        setMiscSpawnPlacements();
     }
 
-    public static void setOverworldSpawnPlacements() {
+    private static void setOverworldSpawnPlacements() {
         setSpawnPlacement(AoAMobs.ANCIENT_GOLEM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(65));
         setSpawnPlacement(AoAMobs.BOMB_CARRIER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55).spawnChance(1 / 5f));
         setSpawnPlacement(AoAMobs.BUSH_BABY.get(), ON_GROUND, MOTION_BLOCKING, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(65));
         setSpawnPlacement(AoAMobs.CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER);
-        setSpawnPlacement(AoAMobs.CHOMPER.get(), AMPHIBIOUS, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER);
+        setSpawnPlacement(AoAMobs.CHOMPER.get(), AMPHIBIOUS, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.difficultyBasedSpawnChance(0.1f));
         setSpawnPlacement(AoAMobs.CYCLOPS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55));
-        setSpawnPlacement(AoAMobs.EMBRAKE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
-        setSpawnPlacement(AoAMobs.FLAMEWALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
         setSpawnPlacement(AoAMobs.GHOST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_MONSTER.noHigherThanY(0).spawnChance(1 / 2f));
         setSpawnPlacement(AoAMobs.GOBLIN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER);
         setSpawnPlacement(AoAMobs.ICE_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
-        setSpawnPlacement(AoAMobs.INFERNAL.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 10f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
         setSpawnPlacement(AoAMobs.KING_CHARGER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 20f));
         setSpawnPlacement(AoAMobs.LEAFY_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
-        setSpawnPlacement(AoAMobs.LITTLE_BAM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
-        setSpawnPlacement(AoAMobs.NETHENGEIC_BEAST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock().and(NethengeicBeastEntity::checkSpawnConditions));
         setSpawnPlacement(AoAMobs.SAND_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
         setSpawnPlacement(AoAMobs.SASQUATCH.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(55));
         setSpawnPlacement(AoAMobs.STONE_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
@@ -54,7 +53,22 @@ public final class AoAEntitySpawnPlacements {
         setSpawnPlacement(AoAMobs.VOID_WALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_MONSTER.noHigherThanY(0));
         setSpawnPlacement(AoAMobs.WOOD_GIANT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.spawnChance(1 / 15f));
         setSpawnPlacement(AoAMobs.YETI.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_MONSTER.noLowerThanY(45).spawnChance(1 / 2f));
+    }
 
+    private static void setNetherSpawnPlacements() {
+        setSpawnPlacement(AoAMobs.EMBRAKE.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
+        setSpawnPlacement(AoAMobs.FLAMEWALKER.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
+        setSpawnPlacement(AoAMobs.INFERNAL.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 10f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
+        setSpawnPlacement(AoAMobs.LITTLE_BAM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().spawnChance(1 / 2f).noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock());
+        setSpawnPlacement(AoAMobs.NETHENGEIC_BEAST.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().noPeacefulSpawn().noSpawnOn(Blocks.NETHER_WART_BLOCK).ifValidSpawnBlock().and(NethengeicBeastEntity::checkSpawnConditions));
+    }
+
+    private static void setPrecasiaSpawnPlacements() {
+        setSpawnPlacement(AoAMobs.SPINOLEDON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.05f));
+        setSpawnPlacement(AoAAnimals.HORNDRON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
+    }
+
+    private static void setMiscSpawnPlacements() {
         setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>(GlowSquid::checkGlowSquideSpawnRules).spawnChance(1 / 1000f));
 
         setSpawnPlacement(AoANpcs.LOTTOMAN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().ifValidSpawnBlock());
@@ -102,7 +116,9 @@ public final class AoAEntitySpawnPlacements {
         static final SpawnBuilder<Mob> DEFAULT_FISH = new SpawnBuilder<>().onlySpawnIn(Blocks.WATER).onlySpawnUnder(Blocks.WATER);
         static final SpawnBuilder<Mob> DEFAULT_LAVA_FISH = new SpawnBuilder<>().onlySpawnIn(Blocks.LAVA).onlySpawnUnder(Blocks.LAVA);
         static final SpawnBuilder<Mob> DEFAULT_MONSTER = new SpawnBuilder<>().noPeacefulSpawn().defaultMonsterLightLevels().ifValidSpawnBlock();
-        static final SpawnBuilder<Mob> DEFAULT_DAY_MONSTER = new SpawnBuilder<>().noPeacefulSpawn().onlyDuringDay().defaultMonsterBlockLightLevels().difficultyBasedSpawnChance(0.12f).ifValidSpawnBlock();
+        static final SpawnBuilder<Mob> DEFAULT_DAY_NIGHT_MONSTER = new SpawnBuilder<>().noPeacefulSpawn().defaultMonsterBlockLightLevels().ifValidSpawnBlock();
+        static final SpawnBuilder<Mob> DEFAULT_DAY_MONSTER = DEFAULT_DAY_NIGHT_MONSTER.onlyDuringDay().difficultyBasedSpawnChance(0.12f);
+        static final SpawnBuilder<Mob> DEFAULT_ANIMAL = new SpawnBuilder<>().animalSpawnRules();
 
         private final SpawnPlacements.SpawnPredicate<T> predicate;
 
@@ -117,6 +133,10 @@ public final class AoAEntitySpawnPlacements {
         @Override
         public boolean test(EntityType<T> entityType, ServerLevelAccessor level, MobSpawnType spawnType, BlockPos pos, RandomSource rand) {
             return this.predicate.test(entityType, level, spawnType, pos, rand);
+        }
+
+        SpawnBuilder<T> animalSpawnRules() {
+            return new SpawnBuilder<>((entityType, level, spawnType, pos, rand) -> this.predicate.test(entityType, level, spawnType, pos, rand) && Animal.checkMobSpawnRules(entityType, level, spawnType, pos, rand));
         }
 
         SpawnBuilder<T> noPeacefulSpawn() {

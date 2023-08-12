@@ -175,7 +175,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	}
 
 	@Override
-	public List<ExtendedSensor<AoABoss>> getSensors() {
+	public List<ExtendedSensor<? extends AoABoss>> getSensors() {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<>(),
 				new NearbyLivingEntitySensor<AoABoss>().setScanRate(entity -> 40),
@@ -193,7 +193,9 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 	@Override
 	public BrainActivityGroup<AoABoss> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
-				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER),
+				new TargetOrRetaliate<>()
+						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)),
 				new SetRandomHoverTarget<>().speedModifier(0.9f));
 	}
 
@@ -214,7 +216,7 @@ public class NethengeicWitherEntity extends AoABoss implements AoARangedAttacker
 							}
 						}),
 				new SetWalkTargetToAttackTarget<>()
-						.speedMod(1.25f)
+						.speedMod((entity, target) -> 1.25f)
 						.startCondition(entity -> hasAura() && !ATTACK_STATE.is(entity, FIRE_BOMB_STATE))
 						.stopIf(entity -> !hasAura()),
 				new StayWithinDistanceOfAttackTarget<>()

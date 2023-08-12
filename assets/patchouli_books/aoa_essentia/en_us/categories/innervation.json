@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Innervation$() is a skill based around your natural resilience.$(br2)As you level up, your body's natural strength, resistance, and combat abilities increase.",
+  "icon": "aoa3:textures/gui/aoaskill/innervation.png",
+  "name": "Innervation"
+}

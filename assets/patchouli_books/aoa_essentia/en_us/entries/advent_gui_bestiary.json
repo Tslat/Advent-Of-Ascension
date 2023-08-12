@@ -1,0 +1,22 @@
+{
+  "category": "aoa3:advent_gui",
+  "icon": "minecraft:zombie_head",
+  "name": "Bestiary Tab",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "bestiary_tab",
+      "text": "The $(thing)bestiary tab$() is the monster collector's place to be! Every time you kill a creature, it will be added to the bestiary, with its stats and other information available. Collect them all!",
+      "title": "Bestiary Tab"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The tab will list out every available creature you have previously killed, along with a counter for the amount you have killed, as well as the number of times it has killed you.$(br2)Clicking on an entry expands it to a larger view with more detail, including the creature's classification, stats, and other relevant info. Some creatures may also have some lore text to read!"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "If you have a lot of creatures available in your $(thing)bestiary$() and want to look for a specific one, you can use the search bar at the top of the tab to narrow down the list."
+    }
+  ],
+  "sortnum": 2
+}

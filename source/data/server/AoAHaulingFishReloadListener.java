@@ -222,7 +222,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getWaterEntry(Biome biome, Level level) {
-			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, RegistryUtil.getId(biome));
+			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, RegistryUtil.getId(level, biome));
 			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = WATER_MAP.get(resourceKey);
 
 			if (entry != null)

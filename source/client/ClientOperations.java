@@ -27,6 +27,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
+import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
 import net.tslat.aoa3.client.gui.hud.toasts.AbilityUnlockToast;
 import net.tslat.aoa3.client.gui.hud.toasts.LevelRequirementToast;
@@ -55,7 +56,6 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -156,8 +156,8 @@ public final class ClientOperations {
 		}
 	}
 
-	public static void syncPatchouliBooks(ArrayList<ResourceLocation> books) {
-		//AdventGuiTabLore.syncBooks(books);
+	public static void syncPatchouliBooks(List<ResourceLocation> books) {
+		AdventGuiTabLore.syncBooks(books);
 	}
 
 	public static void adjustPlayerMovement(@Nullable Float x, @Nullable Float y, @Nullable Float z, UpdateClientMovementPacket.Operation operation) {

@@ -1,0 +1,40 @@
+{
+  "category": "aoa3:guides",
+  "icon": "minecraft:wooden_sword",
+  "name": "Getting Started",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Welcome to $(aoa)!$(br2)This mod is a big one, and it covers many areas of Minecraft - so it's a bit easy to get lost. But don't worry! There are a few things we can start off with to get you set up!",
+      "title": "Getting Started"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "First of all, you're going to want to find shelter. The Overworld can get dangerous, so it's very important that you have a place to retreat in order to recharge and heal.$(br)Your best bet is to quickly grab a pickaxe and dig your way into a hill, or into the ground. Make a small hole and mark it on the outside so you know where to find it later."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "From there, you will want to take your time building up your resources so that you don't starve, and equipping yourself with some basic armour and a weapon. The main thing to remember is to be careful!$(br2)Once you're ready to go, you're going to want to go very deep underground and start digging around for a $(l:aoa3:getting_started#ruined_teleporter_frame)Ruined Teleporter Frame$(/l), guarded by a $(l:aoa3:getting_started#corrupted_traveller)Corrupted Traveller$(/l)."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Help him out, and he'll give you something to keep you going.$(br2)While you're there, scavenge some $(thing)Ancient Rock$() for later."
+    },
+    {
+      "type": "patchouli:image",
+      "anchor": "ruined_teleporter_frame",
+      "images": [
+        "aoa3:patchouli/images/structures/ruined_teleporter_frame.png"
+      ],
+      "text": "Ruined Teleporter Frames generate deep underground, near the base of the world.",
+      "title": "Ruined Teleporter Frame"
+    },
+    {
+      "type": "patchouli:entity",
+      "anchor": "corrupted_traveller",
+      "entity": "aoa3:corrupted_traveller",
+      "text": "Corrupted Travellers can be found tethered to their $(l:aoa3:getting_started#ruined_teleporter_frame)Ruined Teleporter Frame$(/l), unable to leave."
+    }
+  ],
+  "sortnum": 1
+}

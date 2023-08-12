@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:blue_barrel",
+  "name": "Shotguns",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "shotguns",
+      "text": "A sub-class of $(l:aoa3:guns#guns)guns$(/l), $(thing)Shotguns$() work in a similar manner.$(br)The defining difference with $(thing)shotguns$() however, is that they fire larger rounds, hitting all targets in an small area simultaneously, or the same target multiple times.",
+      "title": "Shotguns"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Shotguns$() fire much slower than regular $(thing)guns$(), but exchange that fire rate for higher damage output per shot, and the ability to hit multiple targets at once.$(br)Be aware that $(thing)shotguns$() only have a fairly short range because the pellets become ineffective, so these weapons must be used at short range."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:long_shot",
+      "text": "Replace the fast firing single shot $(l:aoa3:guns#guns)guns$(/l) with heavy-duty $(thing)shotgun$() blasts.",
+      "title": "A Shotgun"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)shotguns$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Shotguns"
+    }
+  ],
+  "sortnum": 6
+}

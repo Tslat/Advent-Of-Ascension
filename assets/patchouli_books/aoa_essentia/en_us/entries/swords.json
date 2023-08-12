@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:limonite_sword",
+  "name": "Swords",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "swords",
+      "text": "$(thing)Swords$() are the most basic of all weapon types, but they are also the most versatile.$(br)Because of this, they are likely to be the first weapon type you use when playing. This also comes at a cost, however, as $(thing)swords$() do not offer much in the way of protection.",
+      "title": "Swords"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "With a sword, it's expected that you will be right in the face of a fight, at arm's reach of the enemy.$(br)This can put you at risk of taking some hits yourself, but also comes with some of the highest damage potential across all weapon types.$(br2)It's generally a good idea to keep a sword on you at all times for when things get quick and dirty, or you need a quick escape."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:bloodfury",
+      "text": "$(thing)Swords$() are the most versatile weapon type in the game.",
+      "title": "A Sword"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)swords$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Swords"
+    }
+  ],
+  "sortnum": 0
+}

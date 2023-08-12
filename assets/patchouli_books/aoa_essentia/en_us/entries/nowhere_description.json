@@ -1,0 +1,18 @@
+{
+  "advancement": "aoa3:nowhere/root",
+  "category": "aoa3:nowhere",
+  "icon": "",
+  "name": "Description",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(l:https://adventofascension.fandom.com/wiki/Nowhere)Nowhere$(/l) is a dimension lost to both time and space, existing somewhere in the void between both.$(br)It contains many secrets lost to past civilisations, and everything is not quite as it seems$(br2)All deaths inside this dimension are safe, returning you to the hub",
+      "title": "Description"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "It can be accessed via one of two methods:$(br2)$(li)Via a $(l:aoa3:getting_started#ruined_teleporter_frame)Ruined Teleporter Frame$(/l), or $(br)$(li)Directly, by activating a boss soul totem such as $(item)$(l:https://adventofascension.fandom.com/wiki/Troll_Idol)Troll Idol$(/l)$(), or $(item)$(l:https://adventofascension.fandom.com/wiki/Nethengeic_Callstone)Nethengeic Callstone$(/l)$()$(br)Accessing it via a boss soul totem only gives you access to a restricted section of the dimension"
+    }
+  ],
+  "sortnum": 0
+}

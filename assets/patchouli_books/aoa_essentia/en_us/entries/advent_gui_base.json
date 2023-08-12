@@ -1,0 +1,18 @@
+{
+  "category": "aoa3:advent_gui",
+  "icon": "minecraft:filled_map",
+  "name": "Main Window",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "advent_gui",
+      "text": "Being $(aoa)'s main GUI, the $(thing)Advent GUI$() is where you can find most in-game information and utilities for the mod itself.",
+      "title": "Main Window"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "At the top of the window, the mod's current version is displayed under the left corner of the logo. If the mod detects an update is available, it will also show a flashing notification in the same location.$(br2)Along the left side of the screen are the available tabs - clicking on one will change the largest section of the GUI to the contents of that tab."
+    }
+  ],
+  "sortnum": 0
+}

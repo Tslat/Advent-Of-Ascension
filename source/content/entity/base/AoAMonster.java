@@ -19,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -139,7 +140,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public List<ExtendedSensor<T>> getSensors() {
+	public List<ExtendedSensor<? extends T>> getSensors() {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<T>(),
 				new AggroBasedNearbyLivingEntitySensor<T>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),
@@ -147,7 +148,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public BrainActivityGroup<T> getCoreTasks() {
+	public BrainActivityGroup<? extends T> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(
 				new LookAtTarget<>(),
 				new WalkOrRunToWalkTarget<>().startCondition(entity -> !IMMOBILE.get(this)),
@@ -155,9 +156,11 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public BrainActivityGroup<T> getIdleTasks() {
+	public BrainActivityGroup<? extends T> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
-				new TargetOrRetaliate<>().useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER),
+				new TargetOrRetaliate<>()
+						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)),
 				new OneRandomBehaviour<>(
 						new SetRandomWalkTarget<>().speedModifier(0.9f),
 						new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))));

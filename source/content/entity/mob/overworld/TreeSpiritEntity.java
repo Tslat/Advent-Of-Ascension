@@ -76,7 +76,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	}
 
 	@Override
-	public List<ExtendedSensor<TreeSpiritEntity>> getSensors() {
+	public List<ExtendedSensor<? extends TreeSpiritEntity>> getSensors() {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<TreeSpiritEntity>(),
 				new AggroBasedNearbyLivingEntitySensor<TreeSpiritEntity>()
@@ -98,7 +98,7 @@ public class TreeSpiritEntity extends AoARangedMob<TreeSpiritEntity> {
 	public BrainActivityGroup<TreeSpiritEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
 				new SetRetaliateTarget<>()
-						.attackablePredicate(entity -> entity.isAlive() && (!(entity instanceof Player player) || !player.isCreative()) && distanceToSqr(entity.position()) < Math.pow(getAttributeValue(AoAAttributes.AGGRO_RANGE.get()), 2))
+						.attackablePredicate(entity -> entity.isAlive() && (!(entity instanceof Player player) || !player.getAbilities().invulnerable) && distanceToSqr(entity.position()) < Math.pow(getAttributeValue(AoAAttributes.AGGRO_RANGE.get()), 2))
 						.whenStarting(owner -> ATTACK_STATE.set(owner, 1))
 						.startCondition(entity -> level().getDifficulty() != Difficulty.PEACEFUL));
 	}

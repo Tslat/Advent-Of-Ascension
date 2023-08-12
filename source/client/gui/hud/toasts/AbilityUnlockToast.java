@@ -44,6 +44,11 @@ public class AbilityUnlockToast implements Toast {
 		if (RegistryUtil.getId(skill) == null)
 			return Visibility.HIDE;
 
+		AoASkill.Instance skillInstance = ClientPlayerDataManager.get().getSkill(skill);
+
+		if (skillInstance == null)
+			return Visibility.HIDE;
+
 		Minecraft mc = toastGui.getMinecraft();
 		PoseStack poseStack = guiGraphics.pose();
 		RenderContext renderContext = RenderContext.of(guiGraphics);
@@ -53,7 +58,7 @@ public class AbilityUnlockToast implements Toast {
 		poseStack.pushPose();
 		poseStack.scale(0.9f, 0.9f, 1f);
 		poseStack.translate(5.5f, 5, 0);
-		AoAGuiElementRenderers.getSkillRenderer(skill).renderInHud(renderContext, ClientPlayerDataManager.get().getSkill(skill), mc.getDeltaFrameTime(), AoASkillRenderer.ProgressRenderType.None, false);
+		AoAGuiElementRenderers.getSkillRenderer(skill).renderInHud(renderContext, skillInstance, mc.getDeltaFrameTime(), AoASkillRenderer.ProgressRenderType.None, false);
 		poseStack.popPose();
 		renderContext.renderText(Component.literal(title), 30, 7, 1488129, RenderUtil.TextRenderType.NORMAL);
 

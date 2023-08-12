@@ -26,6 +26,7 @@ public final class AoAAnimations {
 	public static final RawAnimation ATTACK_BLOCK = RawAnimation.begin().thenPlay("attack.block").thenPlay("attack.block.hold");
 	public static final RawAnimation ATTACK_CHARGE = RawAnimation.begin().thenPlay("attack.charge").thenPlay("attack.charge.hold");
 	public static final RawAnimation ATTACK_CHARGE_END = RawAnimation.begin().thenPlay("attack.charge.end");
+	public static final RawAnimation ATTACK_POUNCE = RawAnimation.begin().thenPlay("attack.pounce");
 
 	public static final RawAnimation ATTACK_SWIPE_LEFT = RawAnimation.begin().thenPlay("attack.swipe_left");
 	public static final RawAnimation ATTACK_SWIPE_RIGHT = RawAnimation.begin().thenPlay("attack.swipe_right");

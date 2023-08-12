@@ -9,6 +9,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 
 public final class AoABlockCollections {
 	public static final BlockSetType ACHONY_SET = blockSet("achony");
+	public static final BlockSetType BAOBAB_SET = blockSet("baobab");
 	public static final BlockSetType BLOODWOOD_SET = blockSet("bloodwood");
 	public static final BlockSetType CHURRY_SET = blockSet("churry");
 	public static final BlockSetType CREEP_SET = blockSet("creep");
@@ -32,6 +33,7 @@ public final class AoABlockCollections {
 	public static final BlockSetType RUNIC_STONE_SET = blockSet("runic_stone", true, SoundType.STONE, SoundEvents.IRON_DOOR_CLOSE, SoundEvents.IRON_DOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.STONE_PRESSURE_PLATE_CLICK_OFF, SoundEvents.STONE_PRESSURE_PLATE_CLICK_ON, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON);
 
 	public static final WoodType ACHONY_WOOD = wood("achony", ACHONY_SET);
+	public static final WoodType BAOBAB_WOOD = wood("baobab", BAOBAB_SET);
 	public static final WoodType BLOODWOOD_WOOD = wood("bloodwood", BLOODWOOD_SET);
 	public static final WoodType CHURRY_WOOD = wood("churry", CHURRY_SET);
 	public static final WoodType CREEP_WOOD = wood("creep", CREEP_SET);

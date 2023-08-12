@@ -1,0 +1,82 @@
+{
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "downfall": 0.5,
+  "effects": {
+    "fog_color": 12638463,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "sky_color": 8103167,
+    "water_color": 4159204,
+    "water_fog_color": 329011
+  },
+  "features": [
+    [],
+    [
+      "aoa3:underground_precasian_lava_lake",
+      "aoa3:surface_precasian_lava_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+      "aoa3:gravel_ore",
+      "aoa3:high_altitude_granite_ore",
+      "aoa3:low_altitude_granite_ore",
+      "aoa3:high_altitude_diorite_ore",
+      "aoa3:low_altitude_diorite_ore",
+      "aoa3:high_altitude_andesite_ore",
+      "aoa3:low_altitude_andesite_ore",
+      "aoa3:tuff_ore",
+      "minecraft:underwater_magma",
+      "aoa3:better_sand_disk",
+      "aoa3:better_clay_disk",
+      "aoa3:better_gravel_disk"
+    ],
+    [],
+    [],
+    [
+      "minecraft:seagrass_river"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [
+      {
+        "type": "aoa3:chomper",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 100
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [
+      {
+        "type": "minecraft:salmon",
+        "maxCount": 5,
+        "minCount": 1,
+        "weight": 5
+      }
+    ],
+    "water_creature": []
+  },
+  "temperature": 0.5
+}

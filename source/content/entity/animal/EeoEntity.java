@@ -8,13 +8,13 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.ai.mob.CompletePanicGoal;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.content.entity.mob.haven.SpiritGuardianEntity;
 import net.tslat.aoa3.content.entity.mob.haven.SpiritProtectorEntity;
 
 import javax.annotation.Nullable;
 
-public class EeoEntity extends AoAAnimal {
+public class EeoEntity extends AoAAnimalOld {
 	public EeoEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}

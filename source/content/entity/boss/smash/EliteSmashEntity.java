@@ -18,6 +18,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.fluids.FluidType;
@@ -165,7 +166,7 @@ public class EliteSmashEntity extends AoABoss {
 	}
 
 	@Override
-	public List<ExtendedSensor<AoABoss>> getSensors() {
+	public List<ExtendedSensor<? extends AoABoss>> getSensors() {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<>(),
 				new HurtBySensor<>(),
@@ -188,6 +189,7 @@ public class EliteSmashEntity extends AoABoss {
 				new FirstApplicableBehaviour<AoABoss>(
 						new TargetOrRetaliate<>()
 								.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+								.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target))
 								.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
 						new Idle<>().runFor(entity -> entity.getRandom().nextInt(15, 45))),
 				new OneRandomBehaviour<>(
@@ -200,7 +202,7 @@ public class EliteSmashEntity extends AoABoss {
 		return BrainActivityGroup.fightTasks(
 				new InvalidateAttackTarget<>(),
 				new SetWalkTargetToAttackTarget<>()
-						.speedMod(1.1f)
+						.speedMod((entity, target) -> 1.1f)
 						.startCondition(entity -> !ATTACK_STATE.is(this, CHARGE_STATE)),
 				new FirstApplicableBehaviour<>(
 						new OneRandomBehaviour<>(

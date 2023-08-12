@@ -47,7 +47,7 @@ public final class AoAMiscModels {
 		skillHelmetModels.put(AoASkills.ALCHEMY.get(), Pair.of(CachedFunction.of(HelmOfTheAlchemistModel.modelFactory()), CachedFunction.of(HelmOfTheAlchemistTrimModel.modelFactory())));
 		skillHelmetModels.put(AoASkills.CREATION.get(), Pair.of(CachedFunction.of(HelmOfTheCreatorModel.modelFactory()), CachedFunction.of(HelmOfTheCreatorTrimModel.modelFactory())));
 		skillHelmetModels.put(AoASkills.DEXTERITY.get(), Pair.of(CachedFunction.of(HelmOfTheDextrousModel.modelFactory()), CachedFunction.of(HelmOfTheDextrousTrimModel.modelFactory())));
-		skillHelmetModels.put(AoASkills.ENGINEERING.get(), Pair.of(CachedFunction.of(HelmOfTheTinkererModel.modelFactory()), CachedFunction.of(HelmOfTheTinkererTrimModel.modelFactory())));
+		skillHelmetModels.put(AoASkills.ARTIFICE.get(), Pair.of(CachedFunction.of(HelmOfTheTinkererModel.modelFactory()), CachedFunction.of(HelmOfTheTinkererTrimModel.modelFactory())));
 		skillHelmetModels.put(AoASkills.EXTRACTION.get(), Pair.of(CachedFunction.of(HelmOfTheTreasurerModel.modelFactory()), CachedFunction.of(HelmOfTheTreasurerTrimModel.modelFactory())));
 		skillHelmetModels.put(AoASkills.FARMING.get(), Pair.of(CachedFunction.of(HelmOfTheDryadModel.modelFactory()), CachedFunction.of(HelmOfTheDryadTrimModel.modelFactory())));
 		skillHelmetModels.put(AoASkills.FAUNAMANCY.get(), Pair.of(CachedFunction.of(HelmOfTheOccultistModel.modelFactory()), CachedFunction.of(HelmOfTheOccultistTrimModel.modelFactory())));

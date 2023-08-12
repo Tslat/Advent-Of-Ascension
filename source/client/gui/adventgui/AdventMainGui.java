@@ -61,7 +61,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 		addRenderableWidget(new AdventMainGuiTabButton(11, 129, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.stats"), ADVENT_WINDOW_TAB.PLAYER));
 		addRenderableWidget(new AdventMainGuiTabButton(11, 199, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.bestiary"), ADVENT_WINDOW_TAB.BESTIARY));
-		//addRenderableWidget(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.lore"), ADVENT_WINDOW_TAB.LORE));
+		addRenderableWidget(new AdventMainGuiTabButton(11, 269, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.lore"), ADVENT_WINDOW_TAB.LORE));
 		addRenderableWidget(new AdventMainGuiTabButton(11, 339, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.leaderboards"), ADVENT_WINDOW_TAB.LEADERBOARDS));
 		addRenderableWidget(new AdventMainGuiTabButton(11, 409, LocaleUtil.getLocaleMessage("gui.aoa3.adventGui.help"), ADVENT_WINDOW_TAB.HELP));
 
@@ -153,12 +153,8 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 			this.tabID = tab;
 
-			if (tab == ADVENT_WINDOW_TAB.LEADERBOARDS) {
+			if (tab == ADVENT_WINDOW_TAB.LORE && !IntegrationManager.isPatchouliActive())
 				this.active = false;
-			}
-			else if (tab == ADVENT_WINDOW_TAB.LORE && !IntegrationManager.isPatchouliActive()) {
-				this.active = false;
-			}
 		}
 
 		@Override
@@ -176,17 +172,13 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 				RenderUtil.renderScaledCustomSizedTexture(poseStack, scaledRootX + getX(), scaledRootY + getY(), textureX, textureY, 180, 60, 180, 60, 180, 180);
 
-				int stringColour = ColourUtil.RGB(239, 137, 119);
+				int stringColour = 14737632;
 
-				if (getFGColor() != 0) {
+				if (getFGColor() >= 0)
 					stringColour = getFGColor();
-				}
-				else if (!this.active) {
-					stringColour = 10526880;
-				}
-				else if (this.isHovered || tabID == selectedTab) {
-					stringColour = ColourUtil.RGB(247, 239, 0);
-				}
+
+				if (isHovered() && this.tabID != selectedTab)
+					stringColour = 16777120;
 
 				RenderUtil.renderCenteredScaledText(poseStack, getMessage(), scaledRootX + getX() + 90, scaledRootY + getY() + 25, 2f, stringColour, RenderUtil.TextRenderType.OUTLINED);
 
@@ -307,9 +299,8 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 				case PLAYER -> tabScreen = new AdventGuiTabPlayer();
 				case HELP -> tabScreen = new AdventGuiTabHelp();
 				case BESTIARY -> tabScreen = new AdventGuiTabBestiary();
-				case LORE -> {
-					//tabScreen = new AdventGuiTabLore();
-				}
+				case LORE -> tabScreen = new AdventGuiTabLore();
+				case LEADERBOARDS -> tabScreen = new AdventGuiTabLeaderboard();
 				default -> {}
 			}
 

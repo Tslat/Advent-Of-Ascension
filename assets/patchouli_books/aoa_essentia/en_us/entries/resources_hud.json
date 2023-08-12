@@ -1,0 +1,21 @@
+{
+  "category": "aoa3:interfaces",
+  "icon": "aoa3:patchouli/images/icons/resources_icon.png",
+  "name": "Resources HUD",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "resources_hud",
+      "text": "The $(thing)resources HUD$() is the in-game interface that displays your current consumable resource values.$(br2)When first joining the game, this interface is hidden and can be toggled on or off by pressing the $(k:aoa3.resources) key.",
+      "title": "Resources HUD"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "By default, this $(thing)interface$() appears in the top-right corner of the screen, rendering horizontally.$(br)It can be toggled to a vertical render layout via the $(thing)hudResourcesHorizontal$() config option, or moved to other screen corners with the $(thing)hudResourcesPosition$() config option."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "If the $(thing)interface$() is left in the top-right corner of the screen, and the $(thing)disableHudPotionOffset$() config option is left to $(thing)true$(), the HUD will automatically slide downwards when potion effects are shown in the same location."
+    }
+  ]
+}

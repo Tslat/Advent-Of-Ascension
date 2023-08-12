@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:death_ray",
+  "name": "Blasters",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "blasters",
+      "text": "Want to shoot things, but don't want to make or carry any ammunition? $(thing)Blasters$() are your friend!$(br)$(thing)Blasters$() utilise your natural $(thing)spirit$() to charge shots, allowing you to deal quick damage at range, with the drawback of only being able to fire in short bursts.",
+      "title": "Blasters"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "To fire a $(thing)blaster$(), hold it out and hold right-click. After a short charge-up time, the blaster will begin to fire, dealing energy damage to targets.$(br2)Energy-based projectiles don't have the mass required to punch through foliage like $(thing)arrows$() or $(thing)bullets$() might, and will dissipate quickly in water.$(br2)The $(thing)blaster$() will be able to continue firing until you run out of $(l:aoa3:spirit#spirit)spirit$(/l)."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:beamer",
+      "text": "$(l:aoa3:guns#guns)Guns$(/l) without ammo? $(thing)Blasters$() are here for you!",
+      "title": "A Blaster"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)blasters$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Blasters"
+    }
+  ],
+  "sortnum": 9
+}

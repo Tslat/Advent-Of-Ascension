@@ -1,0 +1,24 @@
+{
+  "category": "aoa3:contents",
+  "icon": "aoa3:torn_pages",
+  "name": "Transcription",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "I've set foot for the first time in another dimension; it appears to be a flaming hellscape filled with mutated animalistic creatures that fit well into the environment.$(br)Unfortunately it's as inhospitable as I expected prior to powering the portal, so I made haste on a makeshift shelter built into a cliffside"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The creatures here are notably more dangerous than the creatures from my dimension, but nothing I can't handle. They are interesting though - the primary denizens seem to be some kind of animal-human hybrid, with a pig-like appearance. I believe there may be some relation to the old fables of 'hell' that we tell each other in stories."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "I have noticed some intentional-looking structures in the foggy distance, which I'll be checking out in the next few days - are there even days in here? I'm not even sure if there's an equivalent of celestial bodies in this place. Something else to investigate, perhaps. Anyway, I'll be checking those structures out soon, as a matter of interest"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "If they are as intentional as they appear to be, it might be my first actual evidence of the Arc-ancestors' presence in a plane other than my own.$(br)That alone would be confirmation enough that I've made the right decision in chasing down this path."
+    }
+  ],
+  "sortnum": 0
+}

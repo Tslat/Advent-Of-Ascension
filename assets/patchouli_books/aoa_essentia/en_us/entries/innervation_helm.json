@@ -1,0 +1,13 @@
+{
+  "category": "aoa3:innervation",
+  "icon": "aoa3:helm_of_the_warrior",
+  "name": "Helm of the Warrior",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Reaching level 100 $(thing)Innervation$() grants you the ability to wear the $(thing)Helm of the Warrior$().$(br)The helmet is unbreakable, gives diamond-tier stats, and grants a 50% bonus to all $(thing)Innervation$() xp gained while worn.$(br2)At level 1000, it gains a fancy improved look.",
+      "title": "Helm of the Warrior"
+    }
+  ],
+  "sortnum": 2
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Farming$() is a skill about growing crops and breeding animals.$(br2)Higher levels of $(thing)Farming$() grants additional abilities and bonuses to harvesting, as well as access to new crops$(br2)$(l)NOTE:$() this guide is based on the mod defaults. Modpack/datapack changes may affect the accuracy of the following information",
+  "icon": "aoa3:textures/gui/aoaskill/farming.png",
+  "name": "Farming"
+}

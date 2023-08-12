@@ -2,27 +2,13 @@ package net.tslat.aoa3.content.block.generation.leaves;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class AoALeavesBlock extends net.minecraft.world.level.block.LeavesBlock {
-	private final float saplingDropChance;
-
-	public AoALeavesBlock(BlockBehaviour.Properties properties, float saplingChance) {
+public class AoALeavesBlock extends LeavesBlock {
+	public AoALeavesBlock(Properties properties) {
 		super(properties);
-		// TODO Tick Randomly & decay
-
-		this.saplingDropChance = saplingChance;
-	}
-
-	@Override
-	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {}
-
-	public float getSaplingDropChance() {
-		return saplingDropChance;
 	}
 
 	@Override

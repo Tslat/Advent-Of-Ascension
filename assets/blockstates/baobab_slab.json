@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "aoa3:block/baobab_slab"
+    },
+    "type=double": {
+      "model": "aoa3:block/baobab_planks"
+    },
+    "type=top": {
+      "model": "aoa3:block/baobab_slab_top"
+    }
+  }
+}

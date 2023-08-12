@@ -60,13 +60,15 @@ public final class GlobalEvents {
 	}
 
 	private static void serverStarted(final ServerStartedEvent ev) {
-		if (ev.getServer().isDedicatedServer()) {
-			SkillsLeaderboard.init();
+		if (false && ev.getServer().isDedicatedServer()) {
+			SkillsLeaderboard.init(ev.getServer());
 		}
 	}
 
 	private static void serverStopping(final ServerStoppingEvent ev) {
-		if (ev.getServer().isDedicatedServer())
-			AoAScheduler.serverShutdownTasks();
+		AoAScheduler.serverShutdownTasks();
+
+		if (false && ev.getServer().isDedicatedServer())
+			SkillsLeaderboard.shutdown();
 	}
 }

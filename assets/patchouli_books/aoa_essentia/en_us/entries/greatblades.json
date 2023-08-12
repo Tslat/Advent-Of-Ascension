@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:bloodlurker",
+  "name": "Greatblades",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "greatblades",
+      "text": "The big brother of $(l:aoa3:swords#swords)swords$(/l), $(thing)Greatblades$() are a similar but slightly different weapon type.$(br)Attacking using a greatblade works the same as a sword, but $(thing)greatblades$() take longer to swing, hit harder, and reach further.",
+      "title": "Greatblades"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The best way to utilise a greatblade is to take advantage of its longer range, swiping at enemies from as far as you can reach to keep them at bay.$(br)While you still have to be fairly close to an enemy to use a greatblade, the extra distance is much more valuable than it may seem at first.$(br2)These weapons are most useful for tougher individual enemies that you don't want to come close to."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:bloodlurker",
+      "text": "$(thing)Greatblades$() are $(l:aoa3:swords#swords)swords$(/l) bigger brother, and will act like one!",
+      "title": "A Greatblade"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)greatblades$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Greatblades"
+    }
+  ],
+  "sortnum": 1
+}

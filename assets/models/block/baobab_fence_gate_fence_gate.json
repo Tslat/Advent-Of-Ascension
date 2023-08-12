@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_fence_gate",
+  "render_type": "minecraft:solid",
+  "textures": {
+    "texture": "aoa3:block/baobab_planks"
+  }
+}

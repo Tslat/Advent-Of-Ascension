@@ -31,6 +31,7 @@ public final class AoATintHandling {
 		ev.register(grassColouring, AoABlocks.PRECASIAN_GRASS.get());
 		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get());
 		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get());
+		ev.register(vanillaColouring.apply(Blocks.ACACIA_LEAVES), AoABlocks.BAOBAB_LEAVES.get());
 	}
 
 	private static void registerItemColours(final RegisterColorHandlersEvent.Item ev) {
@@ -40,5 +41,6 @@ public final class AoATintHandling {
 		ev.register(grassColouring, AoABlocks.PRECASIAN_GRASS.get().asItem());
 		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get().asItem());
 		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get().asItem());
+		ev.register(vanillaColouring.apply(Items.ACACIA_LEAVES), AoABlocks.BAOBAB_LEAVES.get().asItem());
 	}
 }

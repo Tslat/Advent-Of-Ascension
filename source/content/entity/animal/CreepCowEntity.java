@@ -15,13 +15,13 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
 import javax.annotation.Nullable;
 
-public class CreepCowEntity extends AoAAnimal {
+public class CreepCowEntity extends AoAAnimalOld {
 	public CreepCowEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 	}

@@ -334,6 +334,18 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
+	public BlockRegistrar<T> baseSign(RegistryObject<? extends Block> block) {
+		basedOn(block);
+		alwaysSolid();
+		instrument(NoteBlockInstrument.BASS);
+		noClip();
+		stats(1);
+		flammable();
+		decorationBlocksTab();
+
+		return this;
+	}
+
 	public BlockRegistrar<T> baseBricks() {
 		basedOn(Blocks.NETHER_BRICKS);
 		decorationBlocksTab();

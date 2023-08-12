@@ -97,8 +97,6 @@ public class AdventGuiTabHelp extends Screen {
 		@Override
 		public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
-				Minecraft mc = Minecraft.getInstance();
-
 				RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
@@ -136,7 +134,6 @@ public class AdventGuiTabHelp extends Screen {
 		@Override
 		public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 			if (visible) {
-				Minecraft mc = Minecraft.getInstance();
 				isHovered = isMouseInRegion(mouseX, mouseY, getX(), getY());
 				width = (int)(10 + Minecraft.getInstance().font.width(getMessage()) * 1.5f);
 
@@ -146,17 +143,14 @@ public class AdventGuiTabHelp extends Screen {
 
 				RenderUtil.renderScaledCustomSizedTexture(guiGraphics.pose(), AdventMainGui.scaledTabRootX + getX(), AdventMainGui.scaledTabRootY + getY(), 0, isHovered ? 60 : 0, 180, 60, width, height, 180, 180);
 
+
 				int stringColour = 14737632;
 
-				if (getFGColor() != 0) {
+				if (getFGColor() >= 0)
 					stringColour = getFGColor();
-				}
-				else if (!this.active) {
-					stringColour = 10526880;
-				}
-				else if (this.isHovered) {
+
+				if (this.isHovered)
 					stringColour = 16777120;
-				}
 
 				RenderUtil.renderCenteredScaledText(guiGraphics.pose(), getMessage(), (int)(AdventMainGui.scaledTabRootX + getX() + width / 2f), (int)(AdventMainGui.scaledTabRootY + getY() + height / 2.5), 1.5f, stringColour, RenderUtil.TextRenderType.DROP_SHADOW);
 			}

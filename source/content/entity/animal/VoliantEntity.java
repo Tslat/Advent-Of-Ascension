@@ -13,11 +13,11 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementController;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 
 import javax.annotation.Nullable;
 
-public class VoliantEntity extends AoAAnimal {
+public class VoliantEntity extends AoAAnimalOld {
 	public VoliantEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 

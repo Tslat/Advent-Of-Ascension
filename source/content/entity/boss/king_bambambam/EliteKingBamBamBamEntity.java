@@ -24,6 +24,7 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.hoglin.Hoglin;
 import net.minecraft.world.entity.monster.piglin.PiglinBrute;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -178,7 +179,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	}
 
 	@Override
-	public List<ExtendedSensor<AoABoss>> getSensors() {
+	public List<ExtendedSensor<? extends AoABoss>> getSensors() {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<AoABoss>()
 						.onlyAttacking(TargetingConditions.forCombat().ignoreLineOfSight()::test)
@@ -198,7 +199,8 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	public BrainActivityGroup<AoABoss> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
 				new TargetOrRetaliate<>()
-						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER));
+						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)));
 	}
 
 	@Override

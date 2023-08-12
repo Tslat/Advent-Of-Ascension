@@ -25,14 +25,14 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementController;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.Optional;
 import java.util.UUID;
 
-public class MeganeuropsisEntity extends AoAAnimal {
+public class MeganeuropsisEntity extends AoAAnimalOld {
 	private static final EntityDataAccessor<Boolean> LANDED = SynchedEntityData.defineId(MeganeuropsisEntity.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Integer> START_LANDING_TICKS = SynchedEntityData.defineId(MeganeuropsisEntity.class, EntityDataSerializers.INT);
 	private static final EntityDataAccessor<Direction> LANDING_DIRECTION = SynchedEntityData.defineId(MeganeuropsisEntity.class, EntityDataSerializers.DIRECTION);

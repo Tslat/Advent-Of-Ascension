@@ -3,6 +3,7 @@ package net.tslat.aoa3.leaderboard.connection;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.leaderboard.LeaderboardTask;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
+import net.tslat.aoa3.leaderboard.task.InitializeLeaderboardTask;
 import org.apache.logging.log4j.Level;
 
 import javax.annotation.Nullable;
@@ -12,6 +13,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.function.Consumer;
 
 public abstract class LeaderboardConnection extends Thread {
+	private static volatile boolean initialized = false;
 	private final LinkedBlockingQueue<LeaderboardTask<LeaderboardConnection>> queue;
 	private final Properties properties;
 
@@ -25,6 +27,11 @@ public abstract class LeaderboardConnection extends Thread {
 	@Override
 	public void run() {
 		try (Connection connection = DriverManager.getConnection(SkillsLeaderboard.getConnectionPath(), properties)) {
+			if (!initialized && this instanceof InsertionConnection insertionConnection) {
+				new InitializeLeaderboardTask().execute(connection, insertionConnection);
+				initialized = true;
+			}
+
 			prepareStatements(connection);
 
 			do {
@@ -40,6 +47,7 @@ public abstract class LeaderboardConnection extends Thread {
 			while (SkillsLeaderboard.isEnabled() || !queue.isEmpty());
 
 			closeStatements();
+			connection.commit();
 		}
 		catch (SQLException ex) {
 			Logging.logMessage(Level.ERROR, "Error connecting to leaderboard database, dropping thread.", ex);
@@ -96,7 +104,7 @@ public abstract class LeaderboardConnection extends Thread {
 			}
 		}
 		catch (SQLException ex) {
-			Logging.logMessage(Level.WARN, "Failed to execute prepated statement for skills leaderboard.", ex);
+			Logging.logMessage(Level.WARN, "Failed to execute prepared statement for skills leaderboard.", ex);
 		}
 	}
 }

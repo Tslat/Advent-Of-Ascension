@@ -17,6 +17,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
@@ -93,7 +94,8 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     @Override
     public BrainActivityGroup<NethengeicBeastEntity> getIdleTasks() {
         return BrainActivityGroup.idleTasks(
-                new SetRetaliateTarget<>(),
+                new SetRetaliateTarget<>()
+                        .attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)),
                 new OneRandomBehaviour<>(
                         new SetRandomWalkTarget<>().speedModifier(0.9f),
                         new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60))));

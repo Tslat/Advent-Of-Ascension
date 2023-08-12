@@ -1,5 +1,11 @@
 {
-  "carvers": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
   "downfall": 0.0,
   "effects": {
     "fog_color": 13755135,
@@ -10,22 +16,49 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
+    "music": {
+      "max_delay": 24000,
+      "min_delay": 12000,
+      "replace_current_music": false,
+      "sound": "minecraft:music.overworld.desert"
+    },
     "sky_color": 6202367,
     "water_color": 5210338,
     "water_fog_color": 329011
   },
   "features": [
     [],
-    [],
-    [],
-    [],
-    [],
+    [
+      "aoa3:underground_precasian_lava_lake",
+      "aoa3:surface_precasian_lava_lake"
+    ],
     [],
     [],
     [],
     [],
     [
-      "minecraft:patch_dead_bush_2"
+      "aoa3:gravel_ore",
+      "aoa3:high_altitude_granite_ore",
+      "aoa3:low_altitude_granite_ore",
+      "aoa3:high_altitude_diorite_ore",
+      "aoa3:low_altitude_diorite_ore",
+      "aoa3:high_altitude_andesite_ore",
+      "aoa3:low_altitude_andesite_ore",
+      "aoa3:tuff_ore",
+      "minecraft:underwater_magma",
+      "aoa3:better_sand_disk",
+      "aoa3:better_clay_disk",
+      "aoa3:better_gravel_disk"
+    ],
+    [],
+    [
+      "aoa3:precasian_spring",
+      "aoa3:precasian_lava_spring"
+    ],
+    [
+      "minecraft:patch_dead_bush_2",
+      "minecraft:patch_sugar_cane_desert",
+      "aoa3:tall_cactus_patch"
     ]
   ],
   "has_precipitation": true,

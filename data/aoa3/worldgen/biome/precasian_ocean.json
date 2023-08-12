@@ -1,5 +1,11 @@
 {
-  "carvers": {},
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
   "downfall": 0.5,
   "effects": {
     "fog_color": 13755135,
@@ -14,7 +20,38 @@
     "water_color": 5210338,
     "water_fog_color": 329011
   },
-  "features": [],
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "aoa3:gravel_ore",
+      "aoa3:high_altitude_granite_ore",
+      "aoa3:low_altitude_granite_ore",
+      "aoa3:high_altitude_diorite_ore",
+      "aoa3:low_altitude_diorite_ore",
+      "aoa3:high_altitude_andesite_ore",
+      "aoa3:low_altitude_andesite_ore",
+      "aoa3:tuff_ore",
+      "minecraft:underwater_magma",
+      "aoa3:better_sand_disk",
+      "aoa3:better_clay_disk",
+      "aoa3:better_gravel_disk"
+    ],
+    [],
+    [],
+    [
+      "minecraft:seagrass_normal",
+      "minecraft:seagrass_simple",
+      "minecraft:kelp_cold"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
   "has_precipitation": true,
   "spawn_costs": {},
   "spawners": {
@@ -24,7 +61,14 @@
     "misc": [],
     "monster": [],
     "underground_water_creature": [],
-    "water_ambient": [],
+    "water_ambient": [
+      {
+        "type": "minecraft:cod",
+        "maxCount": 6,
+        "minCount": 3,
+        "weight": 5
+      }
+    ],
     "water_creature": []
   },
   "temperature": 0.55

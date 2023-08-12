@@ -1,0 +1,14 @@
+{
+  "category": "aoa3:advent_gui",
+  "icon": "minecraft:target",
+  "name": "Leaderboards Tab",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "leaderboards_tab",
+      "text": "",
+      "title": "Leaderboards Tab"
+    }
+  ],
+  "sortnum": 4
+}

@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:big_blast",
+  "name": "Cannons",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "cannons",
+      "text": "$(thing)Cannons$() are the third sub-class of $(l:aoa3:guns#guns)guns$(/l), offering increased fire power in exchange for more expensive ammunition and a slower fire rate.$(br)$(thing)Cannons$() also offer additional damage against armoured targets, disable shields if the target is blocking with one, and pushes targets back when struck.",
+      "title": "Cannons"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Think of $(thing)cannons$() as the big brother of $(l:aoa3:guns#guns)guns$(/l), working the same way but dishing out much more damage per shot, and hitting defensive targets $(o)hard$().$(br2)Where $(thing)guns$() might be used for multiple weaker targets, or to dish out rapid damage, $(thing)cannons$() act as the ranged-equivalent of a $(l:aoa3:mauls#mauls)maul$(/l), blowing targets away."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:missile_maker",
+      "text": "Blow your enemies away with these oversized shooty-sticks.",
+      "title": "A Cannon"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)cannons$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Cannons"
+    }
+  ],
+  "sortnum": 8
+}

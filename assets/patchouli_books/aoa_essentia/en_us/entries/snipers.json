@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:bolt_rifle",
+  "name": "Snipers",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "snipers",
+      "text": "Just like $(l:aoa3:shotguns#shotguns)shotguns$(/l), $(thing)snipers$() are a sub-class of $(l:aoa3:guns#guns)guns$(/l), and work in a similar mannager.$(br2)Where $(thing)shotguns$() focus on short-range fire, $(thing)snipers$() excel at long-range. No $(thing)gun$() or $(l:aoa3:bows#bows)bow$(/l) can compete with a $(thing)sniper$() at range.",
+      "title": "Snipers"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "While similar, $(thing)snipers$() do have a very important functional distinction from $(l:aoa3:guns#guns)guns$(/l).$(br)To properly fire a $(thing)sniper$(), you must crouch, which will scope in and give you a better long-distance view. Failing to scope in will cause shots to be wildly inaccurate, so it's recommended to scope in for every shot.$(br2)$(thing)Sniper$() shots travel incredibly quickly, and will strike the target far quicker than any other ranged weapon."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:terminator",
+      "text": "Take out long range targets before they even know what hit them with a $(thing)sniper$()!",
+      "title": "A Sniper"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)snipers$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Snipers"
+    }
+  ],
+  "sortnum": 7
+}

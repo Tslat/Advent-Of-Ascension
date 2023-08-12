@@ -1,14 +1,12 @@
-/*
 package net.tslat.aoa3.client.gui.adventgui;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -19,9 +17,11 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.AoAPackets;
-import net.tslat.aoa3.common.packet.packets.PatchouliBookOpenPacket;
-import net.tslat.aoa3.common.packet.packets.PatchouliGiveBookPacket;
+import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliBookOpenPacket;
+import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliGiveBookPacket;
 import net.tslat.aoa3.integration.IntegrationManager;
+import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
+import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
@@ -47,6 +47,9 @@ public class AdventGuiTabLore extends Screen {
 		int accumWidth = 0;
 		int height = AdventMainGui.scaledTabRootY + 20;
 
+		if (loreBooks.isEmpty())
+			loreBooks.put(AdventOfAscension.id("aoa_essentia"), PatchouliIntegration.getBook(AdventOfAscension.id("aoa_essentia")));
+
 		for (Map.Entry<ResourceLocation, ItemStack> bookEntry : loreBooks.entrySet()) {
 			int width = (int)(font.width(bookEntry.getValue().getHoverName()) * 1.5f);
 
@@ -64,14 +67,14 @@ public class AdventGuiTabLore extends Screen {
 	}
 
 	@Override
-	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 		this.adjustedMouseX = (int)(mouseX * (1 / AdventMainGui.SCALE));
 		this.adjustedMouseY = (int)(mouseY * (1 / AdventMainGui.SCALE));
 
-		super.render(matrixStack, mouseX, mouseY, partialTicks);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		for (GuiEventListener book : children()) {
-			((PatchouliBook)book).render(matrixStack, mouseX, mouseY, partialTicks);
+			((PatchouliBook)book).render(guiGraphics, mouseX, mouseY, partialTicks);
 		}
 	}
 
@@ -124,7 +127,7 @@ public class AdventGuiTabLore extends Screen {
 
 			this.id = id;
 			this.book = book;
-			this.titleWidth = Minecraft.getInstance().font.width(book.getHoverName());
+			this.titleWidth = Minecraft.getInstance().font.width(book.getDisplayName());
 		}
 
 		protected boolean clicked(double mouseX, double mouseY) {
@@ -184,44 +187,41 @@ public class AdventGuiTabLore extends Screen {
 			if (!this.active || !this.visible)
 				return false;
 
-			if (mouseX < (this.x + this.titleWidth / 2f - 5) * AdventMainGui.SCALE)
+			if (mouseX < (this.getX() + this.titleWidth / 2f - 4) * AdventMainGui.SCALE)
 				return false;
 
-			if (mouseY < (this.y + 22 - 5) * AdventMainGui.SCALE)
+			if (mouseY < (this.getY() + 22 - 5) * AdventMainGui.SCALE)
 				return false;
 
-			if (mouseX > (this.x + this.titleWidth / 2f + 32 + 5) * AdventMainGui.SCALE)
+			if (mouseX > (this.getX() + this.titleWidth / 2f + 32 + 4) * AdventMainGui.SCALE)
 				return false;
 
-			return mouseY < (this.y + 22 + 32 + 5) * AdventMainGui.SCALE;
+			return mouseY < (this.getY() + 22 + 32 + 5) * AdventMainGui.SCALE;
 		}
 
 		@Override
-		public void render(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
-			if (this.visible) {
-				this.isHovered = isMouseOver(mouseX, mouseY);
+		protected void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+			this.isHovered = isMouseOver(mouseX, mouseY);
+			int itemX = mouseHolding ? (int)((mouseX - 8) / AdventMainGui.SCALE) : (int)(getX() + titleWidth / 2f);
+			int itemY = mouseHolding ? (int)((mouseY - 8) / AdventMainGui.SCALE) : (int)((getY() + 8 * 1.5f) + 10);
+			RenderContext renderContext = RenderContext.of(guiGraphics);
+			PoseStack poseStack = guiGraphics.pose();
 
-				Font fontRenderer = Minecraft.getInstance().font;
-				ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-				int itemX = mouseHolding ? (int)(mouseX - 16 * AdventMainGui.SCALE) : (int)((x + titleWidth / 2f) * AdventMainGui.SCALE);
-				int itemY = mouseHolding ? (int)(mouseY - 16 * AdventMainGui.SCALE) : (int)(((y + 8 * 1.5f) + 10) * AdventMainGui.SCALE);
+			renderContext.renderScaledText(book.getHoverName(), getX(), getY(), 1.5f, ColourUtil.WHITE, RenderUtil.TextRenderType.DROP_SHADOW);
+			poseStack.pushPose();
+			poseStack.scale(2, 2, 1);
+			renderContext.renderDummyItem(book, (int)(itemX / 2f), (int)(itemY / 2f));
+			poseStack.popPose();
 
-				RenderUtil.drawScaledMessage(matrix, fontRenderer, book.getHoverName(), x, y, 1.5f, ColourUtil.WHITE, RenderUtil.StringRenderType.DROP_SHADOW);
-
-				itemRenderer.renderAndDecorateItem(book, itemX, itemY);
-				itemRenderer.renderGuiItemDecorations(fontRenderer, book, itemX, itemY - 2, "");
-
-				if (isHovered && !mouseHolding) {
-					matrix.pushPose();
-					matrix.scale(1.5f, 1.5f, 1.5f);
-					AdventMainGui.instance.renderTooltip(matrix, Collections.singletonList(Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.clickBook")), Optional.empty(), (int)(mouseX / AdventMainGui.SCALE / 1.5f), (int)(mouseY / AdventMainGui.SCALE / 1.5f), fontRenderer, book);
-					matrix.popPose();
-				}
+			if (isHovered && !mouseHolding) {
+				poseStack.pushPose();
+				poseStack.scale(1.5f, 1.5f, 1.5f);
+				guiGraphics.renderTooltip(Minecraft.getInstance().font, Collections.singletonList(Component.translatable("gui." + AdventOfAscension.MOD_ID + ".adventGui.lore.clickBook")), Optional.empty(), book, (int)(mouseX / AdventMainGui.SCALE / 1.5f), (int)(mouseY / AdventMainGui.SCALE / 1.5f));
+				poseStack.popPose();
 			}
 		}
 
 		@Override
-		public void updateNarration(NarrationElementOutput pNarrationElementOutput) {}
+		protected void updateWidgetNarration(NarrationElementOutput pNarrationElementOutput) {}
 	}
 }
-*/

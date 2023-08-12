@@ -119,8 +119,6 @@ public final class NowhereEvents {
 										checkpoint.applyToEntity(serverPlayer);
 									}, 1);
 
-									ev.setCanceled(true);
-
 									return;
 								}
 								else {
@@ -141,9 +139,12 @@ public final class NowhereEvents {
 				if (isInFoodFreeRegion(pl.blockPosition())) {
 					FoodData foodData = pl.getFoodData();
 
-					foodData.setFoodLevel(20);
-					foodData.setExhaustion(0);
-					foodData.setSaturation(20);
+					foodData.setExhaustion(-4);
+
+					if (pl.tickCount > 2400) {
+						foodData.setFoodLevel(20);
+						foodData.setSaturation(20);
+					}
 				}
 			}
 		}

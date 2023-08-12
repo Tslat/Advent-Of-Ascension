@@ -1,12 +1,13 @@
 package net.tslat.aoa3.leaderboard;
 
-import net.minecraftforge.fml.loading.FMLPaths;
-import net.tslat.aoa3.advent.AdventOfAscension;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.storage.LevelResource;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.leaderboard.connection.InsertionConnection;
 import net.tslat.aoa3.leaderboard.connection.RetrievalConnection;
 import net.tslat.aoa3.leaderboard.task.InitializeLeaderboardTask;
+import net.tslat.aoa3.leaderboard.task.KillTask;
 import net.tslat.aoa3.util.ObjectUtil;
 import org.apache.logging.log4j.Level;
 import org.hsqldb.jdbc.JDBCDriver;
@@ -18,6 +19,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SkillsLeaderboard {
+	private static final LevelResource DATA_DIR = new LevelResource("data");
 	private static LinkedBlockingQueue<LeaderboardTask<InsertionConnection>> updateTaskQueue;
 	private static LinkedBlockingQueue<LeaderboardTask<RetrievalConnection>> retrievalTaskQueue;
 
@@ -28,7 +30,7 @@ public class SkillsLeaderboard {
 	private static String dataPath;
 
 	public static String getConnectionPath() {
-		return "jdbc:hsqldb:file:" + dataPath + "/skills";
+		return "jdbc:hsqldb:file:" + dataPath + "\\skills";
 	}
 
 	public static LinkedBlockingQueue<LeaderboardTask<InsertionConnection>> getUpdateTaskQueue() {
@@ -43,14 +45,14 @@ public class SkillsLeaderboard {
 		return enabled.get();
 	}
 
-	public static void init() {
+	public static void init(MinecraftServer server) {
 		enabled.set(AoAConfigs.SERVER.skillsLeaderboardEnabled.get());
 
 		if (!isEnabled())
 			return;
 
 		try {
-			dataPath = ObjectUtil.getOrCreateDirectory(FMLPaths.CONFIGDIR.get().resolve(AdventOfAscension.MOD_ID), AdventOfAscension.MOD_ID).toAbsolutePath().toString();
+			dataPath = ObjectUtil.getOrCreateDirectory(server.getWorldPath(DATA_DIR), "aoa_leaderboards").toAbsolutePath().toString();
 		}
 		catch (Exception ex) {
 			Logging.logMessage(Level.ERROR, "Unable to create or access directory for database storage. Disabling leaderboard.", ex);
@@ -60,6 +62,7 @@ public class SkillsLeaderboard {
 		}
 
 		updateTaskQueue = new LinkedBlockingQueue<>();
+		retrievalTaskQueue = new LinkedBlockingQueue<>();
 
 		try {
 			DriverManager.registerDriver(new JDBCDriver());
@@ -75,7 +78,7 @@ public class SkillsLeaderboard {
 		Logging.logMessage(Level.INFO, "Starting threads and opening connections for skills database..");
 
 		int maxThreads = AoAConfigs.SERVER.maxLeaderboardThreads.get();
-		int updateThreadCount = maxThreads / 2;
+		int updateThreadCount = (int)Math.ceil(maxThreads / 1.5f);
 		int retrievalThreadCount = maxThreads - updateThreadCount;
 		Properties connectionProperties = new Properties();
 		updateThreads = new InsertionConnection[updateThreadCount];
@@ -83,8 +86,8 @@ public class SkillsLeaderboard {
 
 		connectionProperties.put("user", AoAConfigs.SERVER.databaseUsername.get());
 		connectionProperties.put("password", AoAConfigs.SERVER.databasePassword.get());
-		connectionProperties.put("shutdown", true);
-		connectionProperties.put("hsqldb.log_size", 5);
+		connectionProperties.put("shutdown", "true");
+		connectionProperties.put("hsqldb.log_size", "5");
 
 		for (int i = 0; i < updateThreadCount; i++) {
 			updateThreads[i] = new InsertionConnection(updateTaskQueue, connectionProperties);
@@ -104,28 +107,30 @@ public class SkillsLeaderboard {
 
 		if (updateThreads != null) {
 			for (Thread thread : updateThreads) {
-				try {
-					if (thread.isAlive())
-						thread.join();
-				}
-				catch (InterruptedException ex) {
-					Logging.logMessage(Level.ERROR, "Tried to stop already interrupted consumer thread, this is awkward..", ex);
+				while (thread.isAlive()) {
+					queueUpdateTask(new KillTask());
+
+					try {
+						thread.join(1);
+					}
+					catch (InterruptedException ignored) {}
 				}
 			}
 		}
 
 		if (retrievalThreads != null) {
 			for (Thread thread : retrievalThreads) {
-				try {
-					if (thread.isAlive())
-						thread.join();
-				}
-				catch (InterruptedException ex) {
-					Logging.logMessage(Level.ERROR, "Tried to stop already interrupted consumer thread, this is awkward..", ex);
+
+				while (thread.isAlive()) {
+					queueRetrievalTask(new KillTask());
+
+					try {
+						thread.join(1);
+					}
+					catch (InterruptedException ignored) {}
 				}
 			}
 		}
-
 	}
 
 	public static void queueUpdateTask(LeaderboardTask<InsertionConnection> task) {

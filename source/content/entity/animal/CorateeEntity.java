@@ -22,14 +22,14 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
-import net.tslat.aoa3.content.entity.base.AoAAnimal;
+import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
-public class CorateeEntity extends AoAAnimal {
+public class CorateeEntity extends AoAAnimalOld {
 	public CorateeEntity(EntityType<? extends Animal> entityType, Level world) {
 		super(entityType, world);
 

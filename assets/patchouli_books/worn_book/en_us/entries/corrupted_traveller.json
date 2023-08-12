@@ -1,0 +1,20 @@
+{
+  "category": "aoa3:journal",
+  "icon": "aoa3:corrupted_traveller_spawn_egg",
+  "name": "Corrupted Traveller",
+  "pages": [
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Visit the $(aoa) wiki to read more about the $(thing)Corrupted Traveller$()",
+      "title": "Wiki Link",
+      "url": ""
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:corrupted_traveller",
+      "text": ""
+    }
+  ],
+  "sortnum": 1
+}

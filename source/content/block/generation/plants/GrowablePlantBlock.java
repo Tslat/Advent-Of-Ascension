@@ -17,13 +17,11 @@ public abstract class GrowablePlantBlock extends TallGrassBlock {
 
 	abstract void growPlant(ServerLevel level, RandomSource random, BlockPos pos, BlockState state);
 
-	abstract BlockState getGrownPlantBase(ServerLevel level, RandomSource random, BlockPos pos, BlockState state);
+	abstract BlockState getGrownPlantForHeight(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, int heightStage);
 
 	@Override
 	public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-		BlockState base = getGrownPlantBase(level, random, pos, state);
-
-		if (base.canSurvive(level, pos)) {
+		if (getGrownPlantForHeight(level, random, pos, state, 0).canSurvive(level, pos)) {
 			int height = getGrowHeight(level, random, pos, state);
 			BlockPos.MutableBlockPos checkPos = pos.mutable();
 
@@ -37,6 +35,6 @@ public abstract class GrowablePlantBlock extends TallGrassBlock {
 	}
 
 	protected final BlockState mergeWaterlogging(Level level, BlockState state, BlockPos pos) {
-		return state.setValue(BlockStateProperties.WATERLOGGED, level.isWaterAt(pos));
+		return state.hasProperty(BlockStateProperties.WATERLOGGED) ? state.setValue(BlockStateProperties.WATERLOGGED, level.isWaterAt(pos)) : state;
 	}
 }

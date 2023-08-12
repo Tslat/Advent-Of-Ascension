@@ -1,0 +1,88 @@
+{
+  "carvers": {
+    "air": [
+      "minecraft:cave",
+      "minecraft:cave_extra_underground",
+      "minecraft:canyon"
+    ]
+  },
+  "downfall": 0.2,
+  "effects": {
+    "fog_color": 14219263,
+    "mood_sound": {
+      "block_search_extent": 8,
+      "offset": 2.0,
+      "sound": "minecraft:ambient.cave",
+      "tick_delay": 6000
+    },
+    "sky_color": 5813756,
+    "water_color": 5025499,
+    "water_fog_color": 333112
+  },
+  "features": [
+    [],
+    [
+      "aoa3:underground_precasian_lava_lake",
+      "aoa3:surface_precasian_lava_lake"
+    ],
+    [],
+    [],
+    [],
+    [],
+    [
+      "aoa3:gravel_ore",
+      "aoa3:high_altitude_granite_ore",
+      "aoa3:low_altitude_granite_ore",
+      "aoa3:high_altitude_diorite_ore",
+      "aoa3:low_altitude_diorite_ore",
+      "aoa3:high_altitude_andesite_ore",
+      "aoa3:low_altitude_andesite_ore",
+      "aoa3:tuff_ore",
+      "minecraft:underwater_magma",
+      "aoa3:better_sand_disk",
+      "aoa3:better_clay_disk",
+      "aoa3:better_gravel_disk"
+    ],
+    [],
+    [
+      "aoa3:precasian_spring",
+      "aoa3:precasian_lava_spring"
+    ],
+    [
+      "aoa3:common_baobab_trees",
+      "aoa3:sparse_acacia_trees",
+      "aoa3:precasian_tall_grass_patch",
+      "aoa3:precasian_grass_patch"
+    ],
+    [
+      "minecraft:freeze_top_layer"
+    ]
+  ],
+  "has_precipitation": true,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [
+      {
+        "type": "aoa3:horndron",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 100
+      }
+    ],
+    "misc": [],
+    "monster": [
+      {
+        "type": "aoa3:spinoledon",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 100
+      }
+    ],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 2.0
+}

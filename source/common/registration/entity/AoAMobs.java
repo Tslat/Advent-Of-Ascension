@@ -179,7 +179,6 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<HidingFungiEntity>> HIDING_FUNGI = registerMob("hiding_fungi", HidingFungiEntity::new, 1.0f, 1.0f, 7679, 13028863);
 	//public static final RegistryObject<EntityType<HiveKingEntity>> HIVE_KING = registerMob("hive_king", HiveKingEntity::new, 1.2f, 1.5f, 13211587, 15340050);
 	//public static final RegistryObject<EntityType<HiveWorkerEntity>> HIVE_WORKER = registerMob("hive_worker", HiveWorkerEntity::new, 1.0f, 1.8f, 13211587, 3675965);
-	public static final RegistryObject<EntityType<HorndronEntity>> HORNDRON = registerMob("horndron", HorndronEntity::new, 1.7f, 2.2f, 3482377, 11377022);
 	public static final RegistryObject<EntityType<HostEntity>> HOST = registerMob("host", HostEntity::new, 2.1875f, 2.0625f, 4629316, 11321260);
 	public static final RegistryObject<EntityType<HunterEntity>> HUNTER = registerMob("hunter", HunterEntity::new, 1.3f, 1.3f, 3152742, 4007949);
 	public static final RegistryObject<EntityType<IceGiantEntity>> ICE_GIANT = registerMob("ice_giant", IceGiantEntity::new, 1.25f, 3.59375f, 0x8AB5C7, 0x54819A);
@@ -288,7 +287,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<SoulvyreEntity>> SOULVYRE = registerMob("soulvyre", SoulvyreEntity::new, 0.6f, 2.125f, 14743310, 1369563);
 	public static final RegistryObject<EntityType<SpectralWizardEntity>> SPECTRAL_WIZARD = registerMob("spectral_wizard", SpectralWizardEntity::new, 0.5f, 2.1875f, 15267050, 52722);
 	public static final RegistryObject<EntityType<SphinxEntity>> SPHINX = registerMob("sphinx", SphinxEntity::new, 1.0f, 1.0f, 15134447, 13422286);
-	public static final RegistryObject<EntityType<SpinoledonEntity>> SPINOLEDON = registerMob("spinoledon", SpinoledonEntity::new, 0.7f, 1.5625f, 7682874, 12016473);
+	public static final RegistryObject<EntityType<SpinoledonEntity>> SPINOLEDON = registerMob("spinoledon", SpinoledonEntity::new, 0.75f, 1.9375f, 0x3E5234, 0x3B3A38);
 	public static final RegistryObject<EntityType<SpiritGuardianEntity>> SPIRIT_GUARDIAN = registerMob("spirit_guardian", SpiritGuardianEntity::new, 0.6f, 1.8125f, 15265007, 13881253);
 	public static final RegistryObject<EntityType<SpiritProtectorEntity>> SPIRIT_PROTECTOR = registerMob("spirit_protector", SpiritProtectorEntity::new, 0.6f, 1.8125f, 15265007, 14867354);
 	public static final RegistryObject<EntityType<SquasherEntity>> SQUASHER = registerMob("squasher", SquasherEntity::new, 0.75f, 1.6f, 5732923, 9476961);

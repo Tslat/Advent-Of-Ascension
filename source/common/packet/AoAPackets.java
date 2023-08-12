@@ -10,6 +10,9 @@ import net.minecraftforge.network.PacketDistributor;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.packet.packets.*;
+import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliBookOpenPacket;
+import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliBookSyncPacket;
+import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliGiveBookPacket;
 
 public class AoAPackets {
 	private static final String REV = "1";

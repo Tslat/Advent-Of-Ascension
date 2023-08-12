@@ -1,0 +1,65 @@
+{
+  "type": "minecraft:tree",
+  "config": {
+    "decorators": [
+      {
+        "type": "minecraft:trunk_vine"
+      },
+      {
+        "type": "minecraft:leave_vine",
+        "probability": 0.25
+      }
+    ],
+    "dirt_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "aoa3:precasian_soil"
+      }
+    },
+    "foliage_placer": {
+      "type": "minecraft:jungle_foliage_placer",
+      "height": 2,
+      "offset": 0,
+      "radius": 2
+    },
+    "foliage_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "aoa3:stranglewood_leaves",
+        "Properties": {
+          "distance": "7",
+          "persistent": "false",
+          "waterlogged": "false"
+        }
+      }
+    },
+    "force_dirt": false,
+    "ignore_vines": false,
+    "minimum_size": {
+      "type": "minecraft:two_layers_feature_size",
+      "limit": 1,
+      "lower_size": 1,
+      "upper_size": 2
+    },
+    "trunk_placer": {
+      "type": "aoa3:aoa_giant_jungle",
+      "additional_height": {
+        "type": "minecraft:uniform",
+        "value": {
+          "max_inclusive": 37,
+          "min_inclusive": 0
+        }
+      },
+      "base_height": 10
+    },
+    "trunk_provider": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "aoa3:stranglewood_log",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    }
+  }
+}

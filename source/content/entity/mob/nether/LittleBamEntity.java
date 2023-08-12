@@ -78,7 +78,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 	}
 
 	@Override
-	public List<ExtendedSensor<LittleBamEntity>> getSensors() {
+	public List<ExtendedSensor<? extends LittleBamEntity>> getSensors() {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<LittleBamEntity>().setPredicate((player, entity) -> !PiglinAi.isWearingGold(player)),
 				new NearbyLivingEntitySensor<LittleBamEntity>().setPredicate((target, entity) -> target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null).setScanRate(entity -> 40),

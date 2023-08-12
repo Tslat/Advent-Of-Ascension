@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "category": "food",
+  "cookingtime": 600,
+  "experience": 3.0,
+  "ingredient": {
+    "item": "aoa3:raw_giant_lizard_meat"
+  },
+  "result": "aoa3:cooked_giant_lizard_meat"
+}

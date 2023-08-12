@@ -1,4 +1,3 @@
-/*
 package net.tslat.aoa3.integration.patchouli;
 
 import net.minecraft.resources.ResourceLocation;
@@ -27,4 +26,3 @@ public final class PatchouliClientIntegration {
 		}
 	}
 }
-*/
