@@ -2,19 +2,33 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 100
+          "weight": 50
         },
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
+            }
+          ],
           "name": "aoa3:chitin",
-          "weight": 5
+          "weight": 10
         }
       ],
-      "name": "mob_specific_loot",
+      "name": "loot",
       "rolls": 1.0
     }
   ]

@@ -1,88 +1,61 @@
 package net.tslat.aoa3.content.entity.animal;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
-import net.minecraft.world.phys.Vec3;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
-import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementController;
-import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
+import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import net.tslat.aoa3.content.entity.brain.task.temp.SetRandomFlyingTarget;
+import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
+import net.tslat.smartbrainlib.util.BrainUtils;
 
 import javax.annotation.Nullable;
-import java.util.EnumSet;
-import java.util.Optional;
-import java.util.UUID;
 
-public class MeganeuropsisEntity extends AoAAnimalOld {
-	private static final EntityDataAccessor<Boolean> LANDED = SynchedEntityData.defineId(MeganeuropsisEntity.class, EntityDataSerializers.BOOLEAN);
-	private static final EntityDataAccessor<Integer> START_LANDING_TICKS = SynchedEntityData.defineId(MeganeuropsisEntity.class, EntityDataSerializers.INT);
-	private static final EntityDataAccessor<Direction> LANDING_DIRECTION = SynchedEntityData.defineId(MeganeuropsisEntity.class, EntityDataSerializers.DIRECTION);
-	private static final EntityDataAccessor<Optional<UUID>> LANDED_PLAYER = SynchedEntityData.defineId(MeganeuropsisEntity.class, EntityDataSerializers.OPTIONAL_UUID);
-
-	private Player clientRidingPlayer = null;
-	private int clientStartLandingTicks = 0;
-
-	public MeganeuropsisEntity(EntityType<? extends Animal> entityType, Level world) {
+public class MeganeuropsisEntity extends AoAMeleeMob<MeganeuropsisEntity> {
+	public MeganeuropsisEntity(EntityType<? extends MeganeuropsisEntity> entityType, Level world) {
 		super(entityType, world);
 
-		moveControl = new RoamingFlightMovementController(this);
+		this.moveControl = new MeganeuropsisMoveControl(this);
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
+	protected PathNavigation createNavigation(Level level) {
+		final FlyingPathNavigation navigation = new FlyingPathNavigation(this, level);
 
-		entityData.define(LANDED, false);
-		entityData.define(START_LANDING_TICKS, 0);
-		entityData.define(LANDING_DIRECTION, Direction.DOWN);
-		entityData.define(LANDED_PLAYER, Optional.empty());
+		navigation.setCanFloat(true);
+
+		return navigation;
 	}
 
 	@Override
-	protected void registerGoals() {
-		goalSelector.addGoal(0, new EntityAIMeganeuropsisLand(this));
-		goalSelector.addGoal(1, new RandomFlyingGoal(this, true));
-	}
-
-	@Override
-	protected PathNavigation createNavigation(Level world) {
-		return new FlyingPathNavigation(this, world);
+	public BrainActivityGroup<? extends MeganeuropsisEntity> getIdleTasks() {
+		return BrainActivityGroup.idleTasks(
+				new TargetOrRetaliate<>()
+						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
+						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)),
+				new SetRandomFlyingTarget<>()
+						.verticalWeight(entity -> -(entity.getRandom().nextInt(10) == 0 ? 1 : 0))
+						.setRadius(4, 4)
+						.startCondition(entity -> !BrainUtils.hasMemory(entity, MemoryModuleType.IS_PANICKING)));
 	}
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions size) {
 		return 0.3125f;
-	}
-
-	public int getStartLandingTicks() {
-		return level().isClientSide ? clientStartLandingTicks : entityData.get(START_LANDING_TICKS);
-	}
-
-	public boolean isLanded() {
-		return entityData.get(LANDED);
-	}
-
-	public Direction getLandingDirection() {
-		return entityData.get(LANDING_DIRECTION);
 	}
 
 	@Nullable
@@ -104,6 +77,9 @@ public class MeganeuropsisEntity extends AoAAnimalOld {
 	}
 
 	@Override
+	protected void spawnSprintParticle() {}
+
+	@Override
 	protected void playStepSound(BlockPos pos, BlockState block) {}
 
 	@Override
@@ -120,11 +96,9 @@ public class MeganeuropsisEntity extends AoAAnimalOld {
 	}
 
 	@Override
-	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-		super.onSyncedDataUpdated(key);
-
-		if (level().isClientSide && key.equals(START_LANDING_TICKS))
-			clientStartLandingTicks = tickCount;
+	protected void onAttack(Entity target) {
+		if (target instanceof LivingEntity livingTarget && rand().oneInNChance(10))
+			EntityUtil.applyPotions(livingTarget, new EffectBuilder(MobEffects.CONFUSION, 120).hideParticles());
 	}
 
 	@Override
@@ -132,244 +106,85 @@ public class MeganeuropsisEntity extends AoAAnimalOld {
 		return MobType.ARTHROPOD;
 	}
 
-	@Override
-	public void travel(Vec3 motion) {
-		if (isLanded()) {
-			if (level().isClientSide && getLandingDirection() == Direction.DOWN && !isPassenger()) {
-				if (entityData.get(LANDED_PLAYER).isPresent()) {
-					Player pl = level().getPlayerByUUID(entityData.get(LANDED_PLAYER).get());
+	private static class MeganeuropsisMoveControl extends MoveControl {
+		private int cooldown = 0;
 
-					if (pl != null) {
-						clientRidingPlayer = pl;
-						startRiding(clientRidingPlayer, false);
-					}
-				}
-			}
-
-			return;
-		}
-		else if (level().isClientSide && isPassenger() && clientRidingPlayer != null) {
-			clientRidingPlayer = null;
-			stopRiding();
-		}
-
-		if (isInWater()) {
-			moveRelative(0.02f, motion);
-			move(MoverType.SELF, getDeltaMovement());
-
-			setDeltaMovement(getDeltaMovement().scale(0.8d));
-		}
-		else if (isInLava()) {
-			moveRelative(0.02f, motion);
-			move(MoverType.SELF, getDeltaMovement());
-
-			setDeltaMovement(getDeltaMovement().scale(0.5d));
-		}
-		else {
-			float friction = 0.91F;
-
-			if (onGround()) {
-				BlockPos underPos = new BlockPos(Mth.floor(getX()), Mth.floor(getBoundingBox().minY) - 1, Mth.floor(getZ()));
-				BlockState underState = level().getBlockState(underPos);
-				friction = underState.getBlock().getFriction(underState, level(), underPos, this) * 0.91F;
-			}
-
-			moveRelative(onGround() ? 0.1F * (0.16277136F / (friction * friction * friction)) : 0.02F, motion);
-			friction = 0.91F;
-
-			if (onGround()) {
-				BlockPos underPos = new BlockPos(Mth.floor(getX()), Mth.floor(getBoundingBox().minY) - 1, Mth.floor(getZ()));
-				BlockState underState = level().getBlockState(underPos);
-				friction = underState.getBlock().getFriction(underState, level(), underPos, this) * 0.91F;
-			}
-
-			move(MoverType.SELF, getDeltaMovement());
-			setDeltaMovement(getDeltaMovement().scale(friction));
-		}
-
-		double movedX = getZ() - xo;
-		double movedZ = getZ() - zo;
-
-		this.walkAnimation.update((float)Math.min(1, Math.sqrt((movedX * movedX + movedZ * movedZ)) * 4f), 0.4f);
-	}
-
-	private class EntityAIMeganeuropsisLand extends Goal {
-		private final MeganeuropsisEntity taskOwner;
-		private BlockPos landingPos = null;
-		private Direction blockFace = null;
-		private Player landingPlayer = null;
-
-		public EntityAIMeganeuropsisLand(MeganeuropsisEntity creature) {
-			this.taskOwner = creature;
-
-			setFlags(EnumSet.of(Flag.LOOK, Flag.MOVE, Flag.TARGET));
+		public MeganeuropsisMoveControl(Mob mob) {
+			super(mob);
 		}
 
 		@Override
-		public boolean canUse() {
-			if (taskOwner.getLastHurtByMob() != null)
-				return false;
-
-			if (landingPos == null && landingPlayer == null && taskOwner.getRandom().nextFloat() <= 0.01f) {
-				if (random.nextBoolean()) {
-					Player nearestPlayer = taskOwner.level().getNearestPlayer(getX(), getY(), getZ(), 10, false);
-
-					if (nearestPlayer != null && !nearestPlayer.isVehicle()) {
-						taskOwner.navigation.stop();
-						landingPlayer = nearestPlayer;
-
-						return true;
-					}
-				}
-				else {
-					for (int i = 0; i < 3; i ++) {
-						int x = (int)(taskOwner.getX() + taskOwner.getRandom().nextGaussian() * 10);
-						int z = (int)(taskOwner.getZ() + taskOwner.getRandom().nextGaussian() * 10);
-						int y = taskOwner.level().getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, BlockPos.containing(x, taskOwner.getY(), z)).getY();
-
-						if (taskOwner.getY() - y > 10)
-							continue;
-
-						if (y > taskOwner.getY()) {
-							if (true) // TODO Alternate landing pattern
-								return false;
-
-							BlockHitResult trace = taskOwner.level().clip(new ClipContext(position(), new Vec3(x + 0.5d, y + 0.5d, z + 0.5d), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, null));
-
-							if (trace.getType() == HitResult.Type.MISS)
-								return false;
-
-							if (trace.getDirection() == Direction.DOWN)
-								return false;
-
-							taskOwner.navigation.stop();
-							landingPos = trace.getBlockPos();
-							blockFace = trace.getDirection();
-
-							return true;
-						}
-						else {
-							taskOwner.navigation.stop();
-							landingPos = new BlockPos(x, y, z);
-							blockFace = Direction.UP;
-
-							return true;
-						}
-					}
-				}
-			}
-
-			return false;
-		}
-
-		@Override
-		public void start() {
-			if (landingPos != null) {
-				taskOwner.getNavigation().moveTo(landingPos.getX(), landingPos.getY() + 1, landingPos.getZ(), 1f);
-			}
-			else if (landingPlayer != null) {
-				taskOwner.getNavigation().moveTo(landingPlayer, 1f);
-			}
-		}
-
-		@Override
-		public boolean canContinueToUse() {
-			if ((landingPos == null && (landingPlayer == null || !landingPlayer.isAlive() || (landingPlayer.isVehicle() && !landingPlayer.hasPassenger(taskOwner))) || taskOwner.getLastHurtByMob() != null))
-				return false;
-
-			return !taskOwner.getNavigation().isDone() || (taskOwner.getStartLandingTicks() > 0 && taskOwner.tickCount - taskOwner.getStartLandingTicks() < 240);
+		public void strafe(float pForward, float pStrafe) {
+			this.operation = MoveControl.Operation.STRAFE;
+			this.strafeForwards = pForward;
+			this.strafeRight = pStrafe;
+			this.speedModifier = 0.5d;
 		}
 
 		@Override
 		public void tick() {
-			BlockPos targetPos = landingPos != null ? landingPos : landingPlayer.blockPosition().above();
+			if (this.mob.tickCount > 0) {
+				if (this.cooldown < this.mob.tickCount) {
+					this.cooldown = 0;
+				}
+				else {
+					this.mob.setSpeed(0);
+					this.mob.setDeltaMovement(this.mob.getDeltaMovement().scale(0.5f));
+					this.mob.setYya(0);
+					this.mob.setZza(0);
 
-			if (!taskOwner.isLanded()) {
-				if (taskOwner.blockPosition().distToCenterSqr(targetPos.getX(), targetPos.getY(), targetPos.getZ()) <= 4) {
-					taskOwner.getNavigation().stop();
+					return;
+				}
+			}
 
-					Vec3 actualLandingLocation = getActualLandingLocation();
-					BlockPos actualLandingBlockPos = BlockPos.containing(actualLandingLocation);
+			if (this.operation == MoveControl.Operation.STRAFE) {
+				this.mob.setNoGravity(true);
 
-					if (taskOwner.level().getBlockState(actualLandingBlockPos).getCollisionShape(taskOwner.level(), actualLandingBlockPos) != Shapes.empty()) {
-						landingPos = null;
-						landingPlayer = null;
+				this.operation = MoveControl.Operation.WAIT;
+				float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
 
-						return;
-					}
+				this.mob.setSpeed(moveSpeed);
+				this.mob.setZza(this.strafeForwards);
+				this.mob.setXxa(this.strafeRight);
+			}
+			else if (this.operation == MoveControl.Operation.MOVE_TO) {
+				this.mob.setNoGravity(true);
 
-					if (taskOwner.getStartLandingTicks() == 0)
-						taskOwner.entityData.set(START_LANDING_TICKS, taskOwner.tickCount);
+				this.operation = MoveControl.Operation.WAIT;
+				double distX = this.wantedX - this.mob.getX();
+				double distY = this.wantedY - this.mob.getY();
+				double distZ = this.wantedZ - this.mob.getZ();
+				double distSq = distX * distX + distY * distY + distZ * distZ;
 
-					if (taskOwner.blockPosition().distToCenterSqr(targetPos.getX(), targetPos.getY(), targetPos.getZ()) <= 1d) {
-						double vecX = actualLandingLocation.x - taskOwner.getX();
-						double vecZ = actualLandingLocation.z - taskOwner.getZ();
-						float rotYaw = (float)(Mth.atan2(vecZ, vecX) * (180 / Math.PI)) - 90f;
+				if (distSq < 0.9) {
+					this.mob.setYya(0);
+					this.mob.setZza(0);
+					this.cooldown = this.mob.tickCount + 20;
 
-						taskOwner.moveTo(actualLandingLocation.x, actualLandingLocation.y, actualLandingLocation.z, rotYaw, 0);
+					return;
+				}
 
-						taskOwner.entityData.set(LANDED, true);
+				this.mob.setYRot(rotlerp(this.mob.getYRot(), (float)(Mth.atan2(distZ, distX) * Mth.RAD_TO_DEG) - 90, 180));
 
-						if (landingPlayer != null) {
-							taskOwner.entityData.set(LANDING_DIRECTION, Direction.DOWN);
-							taskOwner.entityData.set(LANDED_PLAYER, Optional.of(landingPlayer.getUUID()));
-							taskOwner.startRiding(landingPlayer, true);
-						}
-						else {
-							taskOwner.entityData.set(LANDING_DIRECTION, blockFace);
-						}
-					}
-					else {
-						double vecX = (actualLandingLocation.x - taskOwner.getX()) * 0.5d;
-						double vecZ = (actualLandingLocation.z - taskOwner.getZ()) * 0.5d;
-						double vecY = (actualLandingLocation.y - taskOwner.getY()) * 0.5d;
+				float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
+				double lateralDist = Math.sqrt(distX * distX + distZ * distZ);
 
-						taskOwner.move(MoverType.SELF, new Vec3(vecX, vecY, vecZ));
-					}
+				this.mob.setSpeed(moveSpeed);
+				this.mob.setZza(2);
+
+				if (Math.abs(distY) > (double)0.75f || Math.abs(lateralDist) > (double)0.75f) {
+					float angle = (float)(-(Mth.atan2(distY, lateralDist) * Mth.RAD_TO_DEG));
+
+					this.mob.setXRot(rotlerp(this.mob.getXRot(), angle, 1f));
+					this.mob.setYya(distY > 0 ? moveSpeed : -moveSpeed);
+				}
+				else {
+					this.mob.setSpeed(0);
 				}
 			}
 			else {
-				if (landingPlayer == null) {
-					Vec3 actualLandingLocation = getActualLandingLocation();
-
-					taskOwner.setDeltaMovement(new Vec3(0, 0, 0));
-					taskOwner.hurtMarked = true;
-
-					taskOwner.teleportTo(actualLandingLocation.x, actualLandingLocation.y - 0.5d, actualLandingLocation.z);
-				}
-			}
-		}
-
-		@Override
-		public void stop() {
-			landingPos = null;
-			blockFace = null;
-			landingPlayer = null;
-			taskOwner.entityData.set(START_LANDING_TICKS, 0);
-			taskOwner.entityData.set(LANDED, false);
-			taskOwner.entityData.set(LANDING_DIRECTION, Direction.DOWN);
-			taskOwner.entityData.set(LANDED_PLAYER, Optional.empty());
-			taskOwner.stopRiding();
-		}
-
-		private Vec3 getActualLandingLocation() {
-			if (landingPlayer != null) {
-				return new Vec3(landingPlayer.getX(), landingPlayer.getY() + landingPlayer.getBbHeight() + taskOwner.getBbHeight() + 0.1d, landingPlayer.getZ());
-			}
-			else {
-				switch (blockFace) {
-					case NORTH:
-						return new Vec3(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() - taskOwner.getBbWidth() / 2d);
-					case SOUTH:
-						return new Vec3(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() + 1 + taskOwner.getBbWidth() / 2d);
-					case EAST:
-						return new Vec3(landingPos.getX() + 1 + taskOwner.getBbWidth() / 2d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
-					case WEST:
-						return new Vec3(landingPos.getX() - taskOwner.getBbWidth() / 2d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
-					default:
-					case UP:
-						return new Vec3(landingPos.getX() + 0.5d, landingPos.getY() + 0.5d, landingPos.getZ() + 0.5d);
-				}
+				this.mob.setYya(0);
+				this.mob.setZza(0);
 			}
 		}
 	}

@@ -1,0 +1,52 @@
+{
+  "values": [
+    {
+      "id": "aoa3:precasian_plains",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_savannah",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_ocean",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_shore",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_volcano",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_deadlands",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_tar_pits",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_jungle",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_desert",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_river",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_forest",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_tall_forest",
+      "required": false
+    }
+  ]
+}

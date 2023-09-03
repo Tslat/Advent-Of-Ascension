@@ -1,0 +1,29 @@
+{
+  "type": "aoa3:fluid_chute",
+  "config": {
+    "chute_diameter": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 10,
+        "min_inclusive": 8
+      }
+    },
+    "fluid": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:lava",
+        "Properties": {
+          "level": "0"
+        }
+      }
+    },
+    "fluid_diameter": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 14,
+        "min_inclusive": 12
+      }
+    },
+    "max_depth": 200
+  }
+}

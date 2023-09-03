@@ -23,12 +23,12 @@ public class PercentChance extends PlacementFilter {
 	}
 
 	@Override
-	protected boolean shouldPlace(PlacementContext context, RandomSource rand, BlockPos pos) {
-		return rand.nextFloat() < this.chance;
+	public PlacementModifierType<PercentChance> type() {
+		return AoAPlacementModifiers.PERCENT_CHANCE.get();
 	}
 
 	@Override
-	public PlacementModifierType<?> type() {
-		return AoAPlacementModifiers.PERCENT_CHANCE.get();
+	protected boolean shouldPlace(PlacementContext context, RandomSource rand, BlockPos pos) {
+		return rand.nextFloat() < this.chance;
 	}
 }

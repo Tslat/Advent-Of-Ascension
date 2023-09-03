@@ -22,7 +22,9 @@
   },
   "features": [
     [],
-    [],
+    [
+      "aoa3:precasian_tar_pit"
+    ],
     [],
     [],
     [],
@@ -36,10 +38,30 @@
       "aoa3:high_altitude_andesite_ore",
       "aoa3:low_altitude_andesite_ore",
       "aoa3:tuff_ore",
+      "aoa3:precasian_high_altitude_iron_ore",
+      "aoa3:precasian_iron_ore",
+      "aoa3:precasian_low_altitude_iron_ore",
+      "aoa3:precasian_small_iron_ore",
+      "aoa3:precasian_gold_ore",
+      "aoa3:precasian_low_altitude_gold_ore",
+      "aoa3:precasian_redstone_ore",
+      "aoa3:precasian_low_altitude_redstone_ore",
+      "aoa3:precasian_lapis_ore",
+      "aoa3:precasian_buried_lapis_ore",
+      "aoa3:precasian_copper_ore",
+      "aoa3:bone_fragments_ore",
+      "aoa3:shallow_bone_fragments_ore",
       "minecraft:underwater_magma",
       "aoa3:better_sand_disk",
       "aoa3:better_clay_disk",
-      "aoa3:better_gravel_disk"
+      "aoa3:better_gravel_disk",
+      "aoa3:basalt_disk"
+    ],
+    [],
+    [],
+    [
+      "aoa3:deadlands_dead_trees",
+      "minecraft:patch_dead_bush_2"
     ]
   ],
   "has_precipitation": false,
@@ -47,7 +69,20 @@
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [],
+    "creature": [
+      {
+        "type": "aoa3:horndron",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 100
+      },
+      {
+        "type": "aoa3:deinotherium",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 100
+      }
+    ],
     "misc": [],
     "monster": [],
     "underground_water_creature": [],

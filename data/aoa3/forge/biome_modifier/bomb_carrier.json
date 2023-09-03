@@ -19,7 +19,7 @@
       "type": "aoa3:bomb_carrier",
       "maxCount": 1,
       "minCount": 1,
-      "weight": 3
+      "weight": 10
     }
   ]
 }

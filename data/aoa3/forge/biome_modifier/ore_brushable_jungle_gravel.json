@@ -1,0 +1,13 @@
+{
+  "type": "aoa3:new_feature",
+  "biomes": {
+    "if_all": [
+      "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "#minecraft:is_jungle"
+    ]
+  },
+  "features": "aoa3:ore_brushable_jungle_gravel",
+  "gen_step": "underground_ores"
+}

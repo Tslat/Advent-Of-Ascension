@@ -1,5 +1,17 @@
 {
   "values": [
+    {
+      "id": "aoa3:precasian_volcano",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_deadlands",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_tar_pits",
+      "required": false
+    },
     "#forge:is_mushroom",
     "minecraft:deep_dark"
   ]

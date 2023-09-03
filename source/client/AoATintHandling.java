@@ -7,6 +7,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
+import net.minecraftforge.client.model.DynamicFluidContainerModel;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -31,16 +32,20 @@ public final class AoATintHandling {
 		ev.register(grassColouring, AoABlocks.PRECASIAN_GRASS.get());
 		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get());
 		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get());
-		ev.register(vanillaColouring.apply(Blocks.ACACIA_LEAVES), AoABlocks.BAOBAB_LEAVES.get());
+		ev.register(vanillaColouring.apply(Blocks.ACACIA_LEAVES), AoABlocks.BAOBAB_LEAVES.get(), AoABlocks.LUCALUS_LEAVES.get(), AoABlocks.STRANGLEWOOD_LEAVES.get(), AoABlocks.STRANGLEWOOD_LOG.get(), AoABlocks.STRANGLEWOOD.get());
 	}
 
 	private static void registerItemColours(final RegisterColorHandlersEvent.Item ev) {
 		final Function<Item, ItemColor> vanillaColouring = item -> ((ItemColorsAccessor)ev.getItemColors()).getItemColors().get(ForgeRegistries.ITEMS.getDelegateOrThrow(item));
 		ItemColor grassColouring = vanillaColouring.apply(Items.GRASS_BLOCK);
 
-		ev.register(grassColouring, AoABlocks.PRECASIAN_GRASS.get().asItem());
-		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get().asItem());
-		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get().asItem());
-		ev.register(vanillaColouring.apply(Items.ACACIA_LEAVES), AoABlocks.BAOBAB_LEAVES.get().asItem());
+		ev.register(grassColouring, AoABlocks.PRECASIAN_GRASS.get());
+		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get());
+		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get());
+		ev.register(vanillaColouring.apply(Items.ACACIA_LEAVES), AoABlocks.BAOBAB_LEAVES.get(), AoABlocks.LUCALUS_LEAVES.get(), AoABlocks.STRANGLEWOOD_LEAVES.get(), AoABlocks.STRANGLEWOOD_LOG.get(), AoABlocks.STRANGLEWOOD.get());
+
+		ev.register(new DynamicFluidContainerModel.Colors(), AoABlocks.CANDIED_WATER.getBucket());
+		ev.register(new DynamicFluidContainerModel.Colors(), AoABlocks.TOXIC_WASTE.getBucket());
+		ev.register(new DynamicFluidContainerModel.Colors(), AoABlocks.TAR.getBucket());
 	}
 }

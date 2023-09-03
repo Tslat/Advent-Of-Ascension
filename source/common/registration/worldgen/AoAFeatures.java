@@ -5,12 +5,19 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.content.world.gen.feature.lakes.BigLakeFeature;
+import net.tslat.aoa3.content.world.gen.feature.misc.FluidChuteFeature;
+import net.tslat.aoa3.content.world.gen.feature.ore.BrushableBlockOreFeature;
 import net.tslat.aoa3.content.world.genold.feature.features.trees.*;
 import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePlacementConfig;
 
 import java.util.function.Supplier;
 
 public final class AoAFeatures {
+	public static final RegistryObject<BigLakeFeature> BIG_LAKE = register("big_lake", () -> new BigLakeFeature(BigLakeFeature.Configuration.CODEC));
+	public static final RegistryObject<FluidChuteFeature> FLUID_CHUTE = register("fluid_chute", () -> new FluidChuteFeature(FluidChuteFeature.Configuration.CODEC));
+	public static final RegistryObject<BrushableBlockOreFeature> BRUSHABLE_BLOCK_ORE = register("brushable_block_ore", () -> new BrushableBlockOreFeature(BrushableBlockOreFeature.Configuration.CODEC));
+
 	public static final RegistryObject<AchonyTreeFeature> ACHONY_TREE = register("achony_tree", () -> new AchonyTreeFeature(BlockStatePlacementConfig.CODEC, (RegistryObject)AoABlocks.ACHONY_SAPLING.plant));
 	public static final RegistryObject<BloodtwisterTreeFeature> BLOODTWISTER_TREE = register("bloodtwister_tree", () -> new BloodtwisterTreeFeature(BlockStatePlacementConfig.CODEC, (RegistryObject)AoABlocks.BLOODTWISTER_SAPLING.plant));
 	public static final RegistryObject<BlueCelevusTreeFeature> BLUE_CELEVUS_TREE = register("blue_celevus_tree", () -> new BlueCelevusTreeFeature(BlockStatePlacementConfig.CODEC, (RegistryObject)AoABlocks.BLUE_CELEVUS_SAPLING.plant));

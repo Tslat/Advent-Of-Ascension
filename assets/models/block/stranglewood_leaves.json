@@ -1,8 +1,7 @@
 {
-  "parent": "minecraft:block/cube_all",
+  "parent": "minecraft:block/leaves",
   "render_type": "minecraft:cutout_mipped",
   "textures": {
-    "all": "aoa3:block/stranglewood_leaves",
-    "particle": "aoa3:block/stranglewood_leaves"
+    "all": "aoa3:block/stranglewood_leaves"
   }
 }

@@ -1,5 +1,5 @@
 {
-  "parent": "forge:item/bucket_drip",
+  "parent": "forge:item/bucket",
   "apply_fluid_luminosity": false,
   "apply_tint": true,
   "fluid": "aoa3:toxic_waste",

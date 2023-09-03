@@ -16,6 +16,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.recipe.*;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.integration.jei.ingredient.subtype.TrophySubtypeInterpreter;
+import net.tslat.aoa3.integration.jei.recipe.ashferncooking.AshfernCookingRecipeExtension;
 import net.tslat.aoa3.integration.jei.recipe.framebench.FrameBenchRecipeCategory;
 import net.tslat.aoa3.integration.jei.recipe.framebench.FrameBenchRecipeTransferInfo;
 import net.tslat.aoa3.integration.jei.recipe.imbuing.ImbuingRecipeCategory;
@@ -41,6 +42,7 @@ public class JEIIntegration implements IModPlugin {
 	@Override
 	public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
 		registration.getCraftingCategory().addCategoryExtension(ToolInteractionRecipe.class, ToolInteractionRecipeExtension::new);
+		registration.getCraftingCategory().addCategoryExtension(AshfernCookingRecipe.class, AshfernCookingRecipeExtension::new);
 	}
 
 	@Override

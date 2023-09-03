@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:simple_random_selector",
+  "config": {
+    "features": [
+      "aoa3:deadlands_dead_tree_1",
+      "aoa3:deadlands_dead_tree_2"
+    ]
+  }
+}

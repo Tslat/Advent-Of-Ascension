@@ -39,6 +39,7 @@
       "aoa3:high_altitude_andesite_ore",
       "aoa3:low_altitude_andesite_ore",
       "aoa3:tuff_ore",
+      "aoa3:shallow_bone_fragments_ore",
       "minecraft:underwater_magma",
       "aoa3:better_sand_disk",
       "aoa3:better_clay_disk",
@@ -47,6 +48,10 @@
     [],
     [
       "aoa3:precasian_lava_spring"
+    ],
+    [
+      "aoa3:deadlands_dead_trees",
+      "minecraft:patch_dead_bush_badlands"
     ]
   ],
   "has_precipitation": false,

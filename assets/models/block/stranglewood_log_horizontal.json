@@ -1,8 +1,103 @@
 {
-  "parent": "minecraft:block/cube_column_horizontal",
-  "render_type": "minecraft:solid",
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#down"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#east"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#north"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#south"
+        },
+        "up": {
+          "cullface": "up",
+          "rotation": 180,
+          "texture": "#up"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#west"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#vine_top",
+          "tintindex": 0
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#vine_side",
+          "tintindex": 0
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#vine_side",
+          "tintindex": 0
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#vine_side",
+          "tintindex": 0
+        },
+        "up": {
+          "cullface": "up",
+          "rotation": 180,
+          "texture": "#vine_top",
+          "tintindex": 0
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#vine_side",
+          "tintindex": 0
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout_mipped",
   "textures": {
+    "down": "#end",
+    "east": "#side",
     "end": "aoa3:block/stranglewood_log_top",
-    "side": "aoa3:block/stranglewood_log"
+    "north": "#side",
+    "particle": "#side",
+    "side": "aoa3:block/stranglewood_log",
+    "south": "#side",
+    "up": "#end",
+    "vine_side": "aoa3:block/stranglewood_log_vine",
+    "vine_top": "aoa3:block/stranglewood_log_top_vine",
+    "west": "#side"
   }
 }

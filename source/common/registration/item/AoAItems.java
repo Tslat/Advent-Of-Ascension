@@ -94,6 +94,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> WIND_RUNE = registerItem("wind_rune", miscItem());
 	public static final RegistryObject<Item> WITHER_RUNE = registerItem("wither_rune", miscItem());
 
+	public static final RegistryObject<Item> ASHFERN = registerItem("ashfern", miscFuelItem(800));
 	public static final RegistryObject<Item> ACTIVE_RUNE_STONE = registerItem("active_rune_stone", miscItem());
 	public static final RegistryObject<Item> ALIEN_ORB = registerItem("alien_orb", () -> new ReservedItem("alien_orb"));
 	public static final RegistryObject<Item> ARMOUR_PLATING = registerItem("armour_plating", miscItem());
@@ -280,28 +281,28 @@ public final class AoAItems {
 	public static final RegistryObject<Item> INCOMPLETE_MECHYRO = registerItem("incomplete_mechyro", miscItem());
 
 	public static final RegistryObject<Item> BLANK_REALMSTONE = registerItem("blank_realmstone", BlankRealmstone::new);
-	public static final RegistryObject<Item> ABYSS_REALMSTONE = registerItem("abyss_realmstone", () -> new Realmstone(AoABlocks.ABYSS_PORTAL, AoASounds.ABYSS_PORTAL_ACTIVATE, "abyss"));
+	public static final RegistryObject<Item> ABYSS_REALMSTONE = registerItem("abyss_realmstone", () -> new Realmstone(null/*AoABlocks.ABYSS_PORTAL*/, AoASounds.ABYSS_PORTAL_ACTIVATE, "abyss"));
 	public static final RegistryObject<Item> NETHER_REALMSTONE = registerItem("nether_realmstone", () -> new Realmstone(AoABlocks.NETHER_PORTAL, AoASounds.ABYSS_PORTAL_ACTIVATE, "nether"));
-	public static final RegistryObject<Item> BARATHOS_REALMSTONE = registerItem("barathos_realmstone", () -> new Realmstone(AoABlocks.BARATHOS_PORTAL, AoASounds.BARREN_PORTAL_ACTIVATE, "barathos"));
-	public static final RegistryObject<Item> LBOREAN_REALMSTONE = registerItem("lborean_realmstone", () -> new Realmstone(AoABlocks.LBOREAN_PORTAL, AoASounds.NATURAL_PORTAL_ACTIVATE, "lborean"));
-	public static final RegistryObject<Item> CANDYLAND_REALMSTONE = registerItem("candyland_realmstone", () -> new Realmstone(AoABlocks.CANDYLAND_PORTAL, AoASounds.CANDYLAND_PORTAL_ACTIVATE, "candyland"));
-	public static final RegistryObject<Item> CELEVE_REALMSTONE = registerItem("celeve_realmstone", () -> new Realmstone(AoABlocks.CELEVE_PORTAL, AoASounds.CELEVE_PORTAL_ACTIVATE, "celeve"));
-	public static final RegistryObject<Item> CREEPONIA_REALMSTONE = registerItem("creeponia_realmstone", () -> new Realmstone(AoABlocks.CREEPONIA_PORTAL, AoASounds.CREEPONIA_PORTAL_ACTIVATE, "creeponia"));
-	public static final RegistryObject<Item> CRYSTEVIA_REALMSTONE = registerItem("crystevia_realmstone", () -> new Realmstone(AoABlocks.CRYSTEVIA_PORTAL, AoASounds.CRYSTEVIA_PORTAL_ACTIVATE, "crystevia"));
-	public static final RegistryObject<Item> DEEPLANDS_REALMSTONE = registerItem("deeplands_realmstone", () -> new Realmstone(AoABlocks.DEEPLANDS_PORTAL, AoASounds.BARREN_PORTAL_ACTIVATE, "deeplands"));
-	public static final RegistryObject<Item> DUSTOPIA_REALMSTONE = registerItem("dustopia_realmstone", () -> new Realmstone(AoABlocks.DUSTOPIA_PORTAL, AoASounds.DARK_PORTAL_ACTIVATE, "dustopia"));
-	public static final RegistryObject<Item> GARDENCIA_REALMSTONE = registerItem("gardencia_realmstone", () -> new Realmstone(AoABlocks.GARDENCIA_PORTAL, AoASounds.NATURAL_PORTAL_ACTIVATE, "gardencia"));
-	public static final RegistryObject<Item> GRECKON_REALMSTONE = registerItem("greckon_realmstone", () -> new Realmstone(AoABlocks.GRECKON_PORTAL, AoASounds.DARK_PORTAL_ACTIVATE, "greckon"));
-	public static final RegistryObject<Item> HAVEN_REALMSTONE = registerItem("haven_realmstone", () -> new Realmstone(AoABlocks.HAVEN_PORTAL, AoASounds.LIGHT_PORTAL_ACTIVATE, "haven"));
-	public static final RegistryObject<Item> IROMINE_REALMSTONE = registerItem("iromine_realmstone", () -> new Realmstone(AoABlocks.IROMINE_PORTAL, AoASounds.IROMINE_PORTAL_ACTIVATE, "iromine"));
-	public static final RegistryObject<Item> LELYETIA_REALMSTONE = registerItem("lelyetia_realmstone", () -> new Realmstone(AoABlocks.LELYETIA_PORTAL, AoASounds.NATURAL_PORTAL_ACTIVATE, "lelyetia"));
-	public static final RegistryObject<Item> LUNALUS_REALMSTONE = registerItem("lunalus_realmstone", () -> new Realmstone(AoABlocks.LUNALUS_PORTAL, null, "lunalus"));
-	public static final RegistryObject<Item> MYSTERIUM_REALMSTONE = registerItem("mysterium_realmstone", () -> new Realmstone(AoABlocks.MYSTERIUM_PORTAL, AoASounds.NATURAL_PORTAL_ACTIVATE, "mysterium"));
+	public static final RegistryObject<Item> BARATHOS_REALMSTONE = registerItem("barathos_realmstone", () -> new Realmstone(null/*AoABlocks.BARATHOS_PORTAL*/, AoASounds.BARREN_PORTAL_ACTIVATE, "barathos"));
+	public static final RegistryObject<Item> LBOREAN_REALMSTONE = registerItem("lborean_realmstone", () -> new Realmstone(null/*AoABlocks.LBOREAN_PORTAL*/, AoASounds.NATURAL_PORTAL_ACTIVATE, "lborean"));
+	public static final RegistryObject<Item> CANDYLAND_REALMSTONE = registerItem("candyland_realmstone", () -> new Realmstone(null/*AoABlocks.CANDYLAND_PORTAL*/, AoASounds.CANDYLAND_PORTAL_ACTIVATE, "candyland"));
+	public static final RegistryObject<Item> CELEVE_REALMSTONE = registerItem("celeve_realmstone", () -> new Realmstone(null/*AoABlocks.CELEVE_PORTAL*/, AoASounds.CELEVE_PORTAL_ACTIVATE, "celeve"));
+	public static final RegistryObject<Item> CREEPONIA_REALMSTONE = registerItem("creeponia_realmstone", () -> new Realmstone(null/*AoABlocks.CREEPONIA_PORTAL*/, AoASounds.CREEPONIA_PORTAL_ACTIVATE, "creeponia"));
+	public static final RegistryObject<Item> CRYSTEVIA_REALMSTONE = registerItem("crystevia_realmstone", () -> new Realmstone(null/*AoABlocks.CRYSTEVIA_PORTAL*/, AoASounds.CRYSTEVIA_PORTAL_ACTIVATE, "crystevia"));
+	public static final RegistryObject<Item> DEEPLANDS_REALMSTONE = registerItem("deeplands_realmstone", () -> new Realmstone(null/*AoABlocks.DEEPLANDS_PORTAL*/, AoASounds.BARREN_PORTAL_ACTIVATE, "deeplands"));
+	public static final RegistryObject<Item> DUSTOPIA_REALMSTONE = registerItem("dustopia_realmstone", () -> new Realmstone(null/*AoABlocks.DUSTOPIA_PORTAL*/, AoASounds.DARK_PORTAL_ACTIVATE, "dustopia"));
+	public static final RegistryObject<Item> GARDENCIA_REALMSTONE = registerItem("gardencia_realmstone", () -> new Realmstone(null/*AoABlocks.GARDENCIA_PORTAL*/, AoASounds.NATURAL_PORTAL_ACTIVATE, "gardencia"));
+	public static final RegistryObject<Item> GRECKON_REALMSTONE = registerItem("greckon_realmstone", () -> new Realmstone(null/*AoABlocks.GRECKON_PORTAL*/, AoASounds.DARK_PORTAL_ACTIVATE, "greckon"));
+	public static final RegistryObject<Item> HAVEN_REALMSTONE = registerItem("haven_realmstone", () -> new Realmstone(null/*AoABlocks.HAVEN_PORTAL*/, AoASounds.LIGHT_PORTAL_ACTIVATE, "haven"));
+	public static final RegistryObject<Item> IROMINE_REALMSTONE = registerItem("iromine_realmstone", () -> new Realmstone(null/*AoABlocks.IROMINE_PORTAL*/, AoASounds.IROMINE_PORTAL_ACTIVATE, "iromine"));
+	public static final RegistryObject<Item> LELYETIA_REALMSTONE = registerItem("lelyetia_realmstone", () -> new Realmstone(null/*AoABlocks.LELYETIA_PORTAL*/, AoASounds.NATURAL_PORTAL_ACTIVATE, "lelyetia"));
+	public static final RegistryObject<Item> LUNALUS_REALMSTONE = registerItem("lunalus_realmstone", () -> new Realmstone(null/*AoABlocks.LUNALUS_PORTAL*/, null, "lunalus"));
+	public static final RegistryObject<Item> MYSTERIUM_REALMSTONE = registerItem("mysterium_realmstone", () -> new Realmstone(null/*AoABlocks.MYSTERIUM_PORTAL*/, AoASounds.NATURAL_PORTAL_ACTIVATE, "mysterium"));
 	public static final RegistryObject<Item> NOWHERE_REALMSTONE = registerItem("nowhere_realmstone", () -> new Realmstone(AoABlocks.NOWHERE_PORTAL, AoASounds.NOWHERE_PORTAL_ACTIVATE, "nowhere"));
 	public static final RegistryObject<Item> PRECASIA_REALMSTONE = registerItem("precasia_realmstone", () -> new Realmstone(AoABlocks.PRECASIA_PORTAL, AoASounds.NATURAL_PORTAL_ACTIVATE, "precasia"));
-	public static final RegistryObject<Item> RUNANDOR_REALMSTONE = registerItem("runandor_realmstone", () -> new Realmstone(AoABlocks.RUNANDOR_PORTAL, AoASounds.LIGHT_PORTAL_ACTIVATE, "runandor"));
-	public static final RegistryObject<Item> SHYRELANDS_REALMSTONE = registerItem("shyrelands_realmstone", () -> new Realmstone(AoABlocks.SHYRELANDS_PORTAL, AoASounds.SHYRELANDS_PORTAL_ACTIVATE, "shyrelands"));
-	public static final RegistryObject<Item> VOX_PONDS_REALMSTONE = registerItem("vox_ponds_realmstone", () -> new Realmstone(AoABlocks.VOX_PONDS_PORTAL, AoASounds.DARK_PORTAL_ACTIVATE, "vox_ponds"));
+	public static final RegistryObject<Item> RUNANDOR_REALMSTONE = registerItem("runandor_realmstone", () -> new Realmstone(null/*AoABlocks.RUNANDOR_PORTAL*/, AoASounds.LIGHT_PORTAL_ACTIVATE, "runandor"));
+	public static final RegistryObject<Item> SHYRELANDS_REALMSTONE = registerItem("shyrelands_realmstone", () -> new Realmstone(null/*AoABlocks.SHYRELANDS_PORTAL*/, AoASounds.SHYRELANDS_PORTAL_ACTIVATE, "shyrelands"));
+	public static final RegistryObject<Item> VOX_PONDS_REALMSTONE = registerItem("vox_ponds_realmstone", () -> new Realmstone(null/*AoABlocks.VOX_PONDS_PORTAL*/, AoASounds.DARK_PORTAL_ACTIVATE, "vox_ponds"));
 
 	public static final RegistryObject<Item> AMBIENT_POWER_STONE = registerItem("ambient_power_stone", miscItem());
 	public static final RegistryObject<Item> BLOOMING_POWER_STONE = registerItem("blooming_power_stone", miscItem());
@@ -375,7 +376,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> RAW_HALYCON_BEEF = registerItem("raw_halycon_beef", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.3f).meat().effect(() -> new EffectBuilder(MobEffects.CONFUSION, 150).build(), 1f).effect(() -> new EffectBuilder(MobEffects.POISON, 40).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> COOKED_HALYCON_BEEF = registerItem("cooked_halycon_beef", () -> new TooltipItem(1, new Item.Properties().food(new FoodProperties.Builder().nutrition(7).saturationMod(0.7f).meat().effect(() -> new EffectBuilder(MobEffects.CONFUSION, 150).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> RAW_GIANT_LIZARD_MEAT = registerItem("raw_giant_lizard_meat", () -> new Item(new Item.Properties().food(AoAFood.RAW_GIANT_LIZARD_MEAT)), AoACreativeModeTabs.FOOD.getKey());
-	public static final RegistryObject<Item> COOKED_GIANT_LIZARD_MEAT = registerItem("cooked_giant_lizard_meat", () -> new TooltipItem(1, new Item.Properties().food(AoAFood.COOKED_GIANT_LIZARD_MEAT)), AoACreativeModeTabs.FOOD.getKey());
+	public static final RegistryObject<Item> COOKED_GIANT_LIZARD_MEAT = registerItem("cooked_giant_lizard_meat", () -> new Item(new Item.Properties().food(AoAFood.COOKED_GIANT_LIZARD_MEAT)), AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> EYE_CANDY = registerItem("eye_candy", EyeCandy::new, AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> FIERY_CHOPS = registerItem("fiery_chops", FieryChops::new, AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> FLORACLE_STICKS = registerItem("floracle_sticks", FloracleSticks::new, AoACreativeModeTabs.FOOD.getKey());
@@ -408,6 +409,7 @@ public final class AoAItems {
 	public static final RegistryObject<Item> CHUM_BURGER = registerItem("chum_burger", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(9).saturationMod(0.85F).effect(() -> new EffectBuilder(MobEffects.CONFUSION, 80).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
 	public static final RegistryObject<Item> CHUM_AND_SALAD_BURGER = registerItem("chum_and_salad_burger", () -> new Item(new Item.Properties().food(new FoodProperties.Builder().nutrition(12).saturationMod(0.9F).effect(() -> new EffectBuilder(MobEffects.CONFUSION, 80).build(), 1f).build())), AoACreativeModeTabs.FOOD.getKey());
 
+	public static final RegistryObject<Item> ASHFERN_SEEDS = registerItem("ashfern_seeds", () -> new ItemNameBlockItem(AoABlocks.ASHFERN_CROP.get(), new Item.Properties()));
 	public static final RegistryObject<Item> BUBBLE_BERRY_SEEDS = registerItem("bubble_berry_seeds", () -> new ItemNameBlockItem(AoABlocks.BUBBLE_BERRY_CROP.get(), new Item.Properties()));
 	public static final RegistryObject<Item> CHILLI_SEEDS = registerItem("chilli_seeds", () -> new ItemNameBlockItem(AoABlocks.CHILLI_CROP.get(), new Item.Properties()));
 	public static final RegistryObject<Item> FLORACLE_SEEDS = registerItem("floracle_seeds", () -> new ItemNameBlockItem(AoABlocks.FLORACLES_CROP.get(), new Item.Properties()));

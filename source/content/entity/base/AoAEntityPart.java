@@ -7,8 +7,9 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.entity.PartEntity;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,22 +35,25 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 	}
 
 	public void updatePosition() {
-		T parent = getParent();
+		final T parent = getParent();
 
-		double rot = Math.toRadians(-parent.yHeadRot);
-		double cos = Math.cos(rot);
-		double sin = Math.sin(rot);
-		double xRot = cos * this.posOffset.x + sin * this.posOffset.z;
-		double zRot = sin * this.posOffset.x + cos * this.posOffset.z;
+		final Vec3 offset = this.posOffset.scale(getScale());
+		final double rot = Math.toRadians(-parent.yHeadRot);
+		final double cos = Math.cos(rot);
+		final double sin = Math.sin(rot);
+		final double xOffset = -cos * offset.x + sin * offset.z;
+		final double zOffset = sin * offset.x + cos * offset.z;
 
 		setOldPosAndRot();
-		setPos(parent.position().x + xRot, parent.position().y + this.posOffset.y, parent.position().z + zRot);
+		setPos(parent.position().x + xOffset, parent.position().y + offset.y, parent.position().z + zOffset);
 	}
 
 	@Nullable
 	@Override
 	public ItemStack getPickResult() {
-		return getParent().getPickResult();
+		final SpawnEggItem egg = ForgeSpawnEggItem.fromEntityType(getParent().getType());
+
+		return egg == null ? null : egg.getDefaultInstance();
 	}
 
 	@Override
@@ -63,18 +67,17 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 	}
 
 	@Override
-	public ItemStack getPickedResult(HitResult target) {
-		return getParent().getPickResult();
-	}
-
-	@Override
 	public boolean is(Entity entity) {
 		return this == entity || getParent() == entity;
 	}
 
 	@Override
 	public EntityDimensions getDimensions(Pose pose) {
-		return this.size;
+		return this.size.scale(getScale());
+	}
+
+	public float getScale() {
+		return getParent().getScale();
 	}
 
 	@Override
@@ -86,8 +89,8 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 	protected void defineSynchedData() {}
 
 	@Override
-	protected void readAdditionalSaveData(CompoundTag pCompound) {}
+	protected void readAdditionalSaveData(CompoundTag tag) {}
 
 	@Override
-	protected void addAdditionalSaveData(CompoundTag pCompound) {}
+	protected void addAdditionalSaveData(CompoundTag tag) {}
 }

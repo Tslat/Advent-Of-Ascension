@@ -4,7 +4,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -16,10 +15,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.content.item.weapon.blaster.BaseBlaster;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 
@@ -56,7 +58,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 				return InteractionResultHolder.fail(stack);
 
 			if (getCastingSound() != null)
-				world.playSound(null, player.getX(), player.getY(), player.getZ(), getCastingSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
+				AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(getCastingSound()).isPlayer().followEntity(player)), player);
 
 			player.getCooldowns().addCooldown(this, 24);
 			player.awardStat(Stats.ITEM_USED.get(this));

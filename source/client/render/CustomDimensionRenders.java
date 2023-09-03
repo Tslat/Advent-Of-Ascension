@@ -37,6 +37,7 @@ public final class CustomDimensionRenders {
 			ev.register(VoidSky.ID, voidSkyRenderer);
 			ev.register(CelestialOnly.ID, new CelestialOnly());
 			ev.register(Shyrelands.ID, new Shyrelands());
+			ev.register(Precasia.ID, new Precasia());
 			ev.register(Lunalus.ID, lunalusRenderer);
 			ev.register(Nowhere.ID, new Nowhere(lunalusRenderer, voidSkyRenderer));
 		});
@@ -118,6 +119,24 @@ public final class CustomDimensionRenders {
 
 		@Override // Show fog at X/Z
 		public boolean isFoggyAt(int posX, int posZ) {
+			return false;
+		}
+	}
+
+	public static class Precasia extends DimensionSpecialEffects {
+		public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "precasia");
+
+		public Precasia() {
+			super(192, true, DimensionSpecialEffects.SkyType.NORMAL, false, false);
+		}
+
+		@Override
+		public Vec3 getBrightnessDependentFogColor(Vec3 biomeFogColour, float celestialAngle) {
+			return biomeFogColour.multiply(celestialAngle * 0.94F + 0.06F, celestialAngle * 0.94F + 0.06F, celestialAngle * 0.91F + 0.09F);
+		}
+
+		@Override // Show fog at X/Z
+		public boolean isFoggyAt(int posX, int posY) {
 			return false;
 		}
 	}

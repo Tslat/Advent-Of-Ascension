@@ -25,7 +25,7 @@ public class RoamingFlightMovementController extends MoveControl {
 				this.courseChangeCooldown += this.taskOwner.getRandom().nextInt(5) + 2;
 				distance = Math.sqrt(distance);
 
-				if (!this.doesPathCollide(this.wantedX, this.wantedY, this.wantedZ, distance)) {
+				if (!this.doesPathCollide(this.wantedX / distance, this.wantedY / distance, this.wantedZ / distance, distance)) {
 					taskOwner.setDeltaMovement(taskOwner.getDeltaMovement().add(distanceX / distance * 0.1D, distanceY / distance * 0.1D, distanceZ / distance * 0.1D));
 				}
 				else {

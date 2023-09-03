@@ -19,7 +19,7 @@
       "type": "aoa3:goblin",
       "maxCount": 2,
       "minCount": 1,
-      "weight": 10
+      "weight": 75
     }
   ]
 }

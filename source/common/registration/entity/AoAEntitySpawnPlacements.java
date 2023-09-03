@@ -1,11 +1,11 @@
 package net.tslat.aoa3.common.registration.entity;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.content.entity.mob.misc.ThornyPlantSproutEntity;
 import net.tslat.aoa3.content.entity.mob.nether.NethengeicBeastEntity;
 import net.tslat.aoa3.util.WorldUtil;
 import org.apache.logging.log4j.Level;
@@ -65,12 +66,15 @@ public final class AoAEntitySpawnPlacements {
 
     private static void setPrecasiaSpawnPlacements() {
         setSpawnPlacement(AoAMobs.SPINOLEDON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.05f));
+        setSpawnPlacement(AoAMiscEntities.THORNY_PLANT_SPROUT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.05f).and(ThornyPlantSproutEntity::checkSpawnConditions));
         setSpawnPlacement(AoAAnimals.HORNDRON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
+        setSpawnPlacement(AoAAnimals.DEINOTHERIUM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
+        setSpawnPlacement(AoAMobs.MEGANEUROPSIS.get(), NO_RESTRICTIONS, MOTION_BLOCKING, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(65).difficultyBasedSpawnChance(0.05f));
     }
 
     private static void setMiscSpawnPlacements() {
         setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>(GlowSquid::checkGlowSquideSpawnRules).spawnChance(1 / 1000f));
-
+        setSpawnPlacement(EntityType.SNIFFER, ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
         setSpawnPlacement(AoANpcs.LOTTOMAN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().ifValidSpawnBlock());
         setSpawnPlacement(AoANpcs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().ifValidSpawnBlock());
 
@@ -136,7 +140,7 @@ public final class AoAEntitySpawnPlacements {
         }
 
         SpawnBuilder<T> animalSpawnRules() {
-            return new SpawnBuilder<>((entityType, level, spawnType, pos, rand) -> this.predicate.test(entityType, level, spawnType, pos, rand) && Animal.checkMobSpawnRules(entityType, level, spawnType, pos, rand));
+            return new SpawnBuilder<>((entityType, level, spawnType, pos, rand) -> this.predicate.test(entityType, level, spawnType, pos, rand) && level.getBlockState(pos.below()).is(BlockTags.ANIMALS_SPAWNABLE_ON) && level.getRawBrightness(pos, 0) > 8);
         }
 
         SpawnBuilder<T> noPeacefulSpawn() {

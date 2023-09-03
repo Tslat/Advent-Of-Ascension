@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "blocks",
+  "cookingtime": 100,
+  "experience": 3.0,
+  "ingredient": {
+    "item": "aoa3:precasian_redstone_ore"
+  },
+  "result": "minecraft:redstone"
+}

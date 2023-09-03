@@ -1,0 +1,46 @@
+{
+  "type": "aoa3:big_lake",
+  "config": {
+    "barrier": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "minecraft:basalt",
+        "Properties": {
+          "axis": "y"
+        }
+      }
+    },
+    "fluid": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "aoa3:tar",
+        "Properties": {
+          "level": "0"
+        }
+      }
+    },
+    "max_fluid_depth": 5,
+    "max_width": 16,
+    "sample_blob_count": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 8,
+        "min_inclusive": 4
+      }
+    },
+    "sample_blob_height": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_exclusive": 6.0,
+        "min_inclusive": 4.0
+      }
+    },
+    "sample_blob_width": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_exclusive": 12.0,
+        "min_inclusive": 5.0
+      }
+    }
+  }
+}

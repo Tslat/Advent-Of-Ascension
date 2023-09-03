@@ -11,6 +11,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.tslat.aoa3.common.registration.AoATags;
 
 import java.util.function.Supplier;
 
@@ -30,6 +31,11 @@ public class AoACropBlock extends CropBlock {
 		super(properties);
 
 		this.seedItem = seedItem;
+	}
+
+	@Override
+	protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+		return state.is(AoATags.Blocks.FARMLAND);
 	}
 
 	@Override

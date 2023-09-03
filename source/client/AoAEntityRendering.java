@@ -27,6 +27,7 @@ import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
+import net.tslat.aoa3.client.model.entity.animal.MeganeuropsisModel;
 import net.tslat.aoa3.client.model.entity.animal.ShinySquidModel;
 import net.tslat.aoa3.client.model.entity.boss.EliteSmashModel;
 import net.tslat.aoa3.client.model.entity.boss.SmashModel;
@@ -43,9 +44,7 @@ import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.client.render.entity.AnimatedProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.client.render.entity.JankyJankTempRendererToPreventCrashesWhileInDev;
-import net.tslat.aoa3.client.render.entity.animal.BasicLavaFishRenderer;
-import net.tslat.aoa3.client.render.entity.animal.BasicWaterFishRenderer;
-import net.tslat.aoa3.client.render.entity.animal.ShinySquidRenderer;
+import net.tslat.aoa3.client.render.entity.animal.*;
 import net.tslat.aoa3.client.render.entity.boss.KingBamBamBamRenderer;
 import net.tslat.aoa3.client.render.entity.layer.PlayerHaloRenderLayer;
 import net.tslat.aoa3.client.render.entity.misc.FishingCageRenderer;
@@ -115,7 +114,8 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> THORNY_PLANT_SPROUT = new GeckoLibRendererPackage<>(AoAMiscEntities.THORNY_PLANT_SPROUT).path("mob/misc/thorny_plant_sprout");
 
-	public static final EntityRendererPackage<?> HORNDRON = new GeckoLibRendererPackage<>(AoAAnimals.HORNDRON).path("animal/precasia/horndron", true);
+	public static final EntityRendererPackage<?> HORNDRON = new GeckoLibRendererPackage<>(AoAAnimals.HORNDRON).model(new HorndronModel());
+	public static final EntityRendererPackage<?> DEINOTHERIUM = new GeckoLibRendererPackage<>(AoAAnimals.DEINOTHERIUM).model(new DeinotheriumModel());
 
 	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new GeckoLibRendererPackage<>(AoAMobs.ANCIENT_GOLEM).path("mob/overworld/ancient_golem");
 	public static final EntityRendererPackage<?> ANGLER = new GeckoLibRendererPackage<>(AoAMobs.ANGLER).path("mob/lborean/angler");
@@ -169,6 +169,7 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> TREE_SPIRIT = new GeckoLibRendererPackage<>(AoAMobs.TREE_SPIRIT).path("mob/overworld/tree_spirit").emissive();
 	public static final EntityRendererPackage<?> YETI = new GeckoLibRendererPackage<>(AoAMobs.YETI).path("mob/overworld/yeti");
 	public static final EntityRendererPackage<?> SPINOLEDON = new GeckoLibRendererPackage<>(AoAMobs.SPINOLEDON).model(new SpinoledonModel());
+	public static final EntityRendererPackage<?> MEGANEUROPSIS = new GeckoLibRendererPackage<>(AoAMobs.MEGANEUROPSIS).model(new MeganeuropsisModel()).transparent();
 
 	public static final EntityRendererPackage<?> SMASH = new GeckoLibRendererPackage<>(AoAMobs.SMASH).model(new SmashModel());
 	public static final EntityRendererPackage<?> ELITE_SMASH = new GeckoLibRendererPackage<>(AoAMobs.ELITE_SMASH).model(new EliteSmashModel());
@@ -458,7 +459,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> CRUSILISK = new EntityRendererPackage<>(AoAMobs.CRUSILISK).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> CRYPTID = new EntityRendererPackage<>(AoAMobs.CRYPTID).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DAYSEE = new EntityRendererPackage<>(AoAMobs.DAYSEE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> DEINOTHERIUM = new EntityRendererPackage<>(AoAMobs.DEINOTHERIUM).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DESTRUCTOR = new EntityRendererPackage<>(AoAMobs.DESTRUCTOR).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DEVOURER = new EntityRendererPackage<>(AoAMobs.DEVOURER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> DIOCUS = new EntityRendererPackage<>(AoAMobs.DIOCUS).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
@@ -633,7 +633,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> TROTTER = new EntityRendererPackage<>(AoAAnimals.TROTTER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> URKA = new EntityRendererPackage<>(AoAAnimals.URKA).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> VOLIANT = new EntityRendererPackage<>(AoAAnimals.VOLIANT).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> MEGANEUROPSIS = new EntityRendererPackage<>(AoAAnimals.MEGANEUROPSIS).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SHIK = new EntityRendererPackage<>(AoAAnimals.SHIK).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 
 	public static final EntityRendererPackage<?> AMBIENT_PIXON = new EntityRendererPackage<>(AoAAnimals.AMBIENT_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

@@ -1,13 +1,17 @@
 {
   "values": [
-    "aoa3:chestbone_fragments_ore",
-    "aoa3:footbone_fragments_ore",
+    "aoa3:bone_fragments_ore",
+    "aoa3:deepslate_bone_fragments_ore",
+    "aoa3:precasian_iron_ore",
+    "aoa3:precasian_gold_ore",
+    "aoa3:precasian_quartz_ore",
+    "aoa3:precasian_redstone_ore",
+    "aoa3:precasian_lapis_ore",
+    "aoa3:precasian_copper_ore",
     "aoa3:jade_ore",
     "aoa3:deepslate_jade_ore",
-    "aoa3:legbone_fragments_ore",
     "aoa3:runium_ore",
     "aoa3:deepslate_runium_ore",
-    "aoa3:netherrack_runium_ore",
-    "aoa3:skullbone_fragments_ore"
+    "aoa3:netherrack_runium_ore"
   ]
 }

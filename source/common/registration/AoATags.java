@@ -19,24 +19,23 @@ public final class AoATags {
 	public static class Blocks {
 		public static final TagKey<Block> GRASS = tag("grass");
 		public static final TagKey<Block> MUSHROOMS = tag("mushrooms");
+		public static final TagKey<Block> FARMLAND = tag("farmland");
 
 		public static final TagKey<Block> BARONYTE_ORE = tag("ores/baronyte");
 		public static final TagKey<Block> BLAZIUM_ORE = tag("ores/blazium");
 		public static final TagKey<Block> BLOODSTONE_ORE = tag("ores/bloodstone");
 		public static final TagKey<Block> BLUE_GEMSTONE_ORE = tag("ores/blue_gemstone");
 		public static final TagKey<Block> CHARGED_RUNIUM_ORE = tag("ores/charged_runium");
-		public static final TagKey<Block> CHESTBONE_FRAGMENTS_ORE = tag("ores/chestbone_fragments");
+		public static final TagKey<Block> BONE_FRAGMENTS_ORE = tag("ores/chestbone_fragments");
 		public static final TagKey<Block> CRYSTALLITE_ORE = tag("ores/crystallite");
 		public static final TagKey<Block> ELECANIUM_ORE = tag("ores/elecanium");
 		public static final TagKey<Block> EMBERSTONE_ORE = tag("ores/emberstone");
-		public static final TagKey<Block> FOOTBONE_FRAGMENTS_ORE = tag("ores/footbone_fragments");
 		public static final TagKey<Block> GEMENYTE_ORE = tag("ores/gemenyte");
 		public static final TagKey<Block> GHASTLY_ORE = tag("ores/ghastly");
 		public static final TagKey<Block> GHOULISH_ORE = tag("ores/ghoulish");
 		public static final TagKey<Block> GREEN_GEMSTONE_ORE = tag("ores/green_gemstone");
 		public static final TagKey<Block> JADE_ORE = tag("ores/jade");
 		public static final TagKey<Block> JEWELYTE_ORE = tag("ores/jewelyte");
-		public static final TagKey<Block> LEGBONE_FRAGMENTS_ORE = tag("ores/legbone_fragments");
 		public static final TagKey<Block> LIMONITE_ORE = tag("ores/limonite");
 		public static final TagKey<Block> LYON_ORE = tag("ores/lyon");
 		public static final TagKey<Block> MYSTITE_ORE = tag("ores/mystite");
@@ -46,7 +45,6 @@ public final class AoATags {
 		public static final TagKey<Block> RUNIUM_ORE = tag("ores/runium");
 		public static final TagKey<Block> SHYREGEM_ORE = tag("ores/shyregem");
 		public static final TagKey<Block> SHYRESTONE_ORE = tag("ores/shyrestone");
-		public static final TagKey<Block> SKULLBONE_FRAGMENTS_ORE = tag("ores/skullbone_fragments");
 		public static final TagKey<Block> VARSIUM_ORE = tag("ores/varsium");
 		public static final TagKey<Block> WHITE_GEMSTONE_ORE = tag("ores/white_gemstone");
 		public static final TagKey<Block> YELLOW_GEMSTONE_ORE = tag("ores/yellow_gemstone");
@@ -97,18 +95,16 @@ public final class AoATags {
 		public static final TagKey<Item> BLOODSTONE_ORE = tag("ores/bloodstone");
 		public static final TagKey<Item> BLUE_GEMSTONE_ORE = tag("ores/blue_gemstone");
 		public static final TagKey<Item> CHARGED_RUNIUM_ORE = tag("ores/charged_runium");
-		public static final TagKey<Item> CHESTBONE_FRAGMENTS_ORE = tag("ores/chestbone_fragments");
+		public static final TagKey<Item> BONE_FRAGMENTS_ORE = tag("ores/chestbone_fragments");
 		public static final TagKey<Item> CRYSTALLITE_ORE = tag("ores/crystallite");
 		public static final TagKey<Item> ELECANIUM_ORE = tag("ores/elecanium");
 		public static final TagKey<Item> EMBERSTONE_ORE = tag("ores/emberstone");
-		public static final TagKey<Item> FOOTBONE_FRAGMENTS_ORE = tag("ores/footbone_fragments");
 		public static final TagKey<Item> GEMENYTE_ORE = tag("ores/gemenyte");
 		public static final TagKey<Item> GHASTLY_ORE = tag("ores/ghastly");
 		public static final TagKey<Item> GHOULISH_ORE = tag("ores/ghoulish");
 		public static final TagKey<Item> GREEN_GEMSTONE_ORE = tag("ores/green_gemstone");
 		public static final TagKey<Item> JADE_ORE = tag("ores/jade");
 		public static final TagKey<Item> JEWELYTE_ORE = tag("ores/jewelyte");
-		public static final TagKey<Item> LEGBONE_FRAGMENTS_ORE = tag("ores/legbone_fragments");
 		public static final TagKey<Item> LIMONITE_ORE = tag("ores/limonite");
 		public static final TagKey<Item> LYON_ORE = tag("ores/lyon");
 		public static final TagKey<Item> MYSTITE_ORE = tag("ores/mystite");
@@ -118,7 +114,6 @@ public final class AoATags {
 		public static final TagKey<Item> RUNIUM_ORE = tag("ores/runium");
 		public static final TagKey<Item> SHYREGEM_ORE = tag("ores/shyregem");
 		public static final TagKey<Item> SHYRESTONE_ORE = tag("ores/shyrestone");
-		public static final TagKey<Item> SKULLBONE_FRAGMENTS_ORE = tag("ores/skullbone_fragments");
 		public static final TagKey<Item> VARSIUM_ORE = tag("ores/varsium");
 		public static final TagKey<Item> WHITE_GEMSTONE_ORE = tag("ores/white_gemstone");
 		public static final TagKey<Item> YELLOW_GEMSTONE_ORE = tag("ores/yellow_gemstone");
@@ -229,6 +224,7 @@ public final class AoATags {
 	public static class Fluids {
 		public static final TagKey<Fluid> CANDIED_WATER = tag("candied_water");
 		public static final TagKey<Fluid> TOXIC_WASTE = tag("toxic_waste");
+		public static final TagKey<Fluid> TAR = tag("tar");
 
 		private static TagKey<Fluid> aoaTag(String id) {
 			return FluidTags.create(new ResourceLocation(AdventOfAscension.MOD_ID, id));
@@ -261,6 +257,7 @@ public final class AoATags {
 	public static class Biomes {
 		public static final TagKey<Biome> NO_MOB_SPAWNS = tag("no_mob_spawns");
 		public static final TagKey<Biome> HAS_RUINED_TELEPORTER = aoaTag("has_structure/ruined_teleporter");
+		public static final TagKey<Biome> IS_PRECASIA = aoaTag("is_precasia");
 
 		private static TagKey<Biome> aoaTag(String id) {
 			return create(AdventOfAscension.id(id));

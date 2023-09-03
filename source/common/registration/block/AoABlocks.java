@@ -23,6 +23,7 @@ import net.tslat.aoa3.content.block.decoration.banner.BannerExtension;
 import net.tslat.aoa3.content.block.decoration.misc.NonFullBlock;
 import net.tslat.aoa3.content.block.decoration.misc.SteelPlateBlock;
 import net.tslat.aoa3.content.block.functional.altar.*;
+import net.tslat.aoa3.content.block.functional.fluid.Tar;
 import net.tslat.aoa3.content.block.functional.fluid.ToxicWaste;
 import net.tslat.aoa3.content.block.functional.light.LampBlock;
 import net.tslat.aoa3.content.block.functional.light.VoxLight;
@@ -126,11 +127,15 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> CRYSTALLITE_ORE = register("crystallite_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 6, 11)).mapColour(MapColor.TERRACOTTA_LIGHT_BLUE));
 	public static final RegistryObject<Block> ELECANIUM_ORE = register("elecanium_ore", registrar -> registrar.baseOre().factory(AoAOreBlock::new).mapColour(MapColor.COLOR_BLUE));
 	public static final RegistryObject<Block> EMBERSTONE_ORE = register("emberstone_ore", registrar -> registrar.baseOre().sounds(SoundType.NETHER_GOLD_ORE).factory(AoAOreBlock::new).mapColour(MapColor.NETHER));
-	public static final RegistryObject<Block> CHESTBONE_FRAGMENTS_ORE = register("chestbone_fragments_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.TERRACOTTA_GREEN));
-	public static final RegistryObject<Block> FOOTBONE_FRAGMENTS_ORE = register("footbone_fragments_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.TERRACOTTA_GREEN));
-	public static final RegistryObject<Block> LEGBONE_FRAGMENTS_ORE = register("legbone_fragments_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.TERRACOTTA_GREEN));
-	public static final RegistryObject<Block> SKULLBONE_FRAGMENTS_ORE = register("skullbone_fragments_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.TERRACOTTA_GREEN));
-	public static final RegistryObject<Block> GEMENYTE_ORE = register("gemenyte_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.TERRACOTTA_LIGHT_GREEN));
+	public static final RegistryObject<Block> BONE_FRAGMENTS_ORE = register("bone_fragments_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.TERRACOTTA_GREEN));
+	public static final RegistryObject<Block> DEEPSLATE_BONE_FRAGMENTS_ORE = register("deepslate_bone_fragments_ore", registrar -> registrar.baseOre().stats(4.5f, 3f).sounds(SoundType.DEEPSLATE).factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.DEEPSLATE));
+	public static final RegistryObject<Block> PRECASIAN_IRON_ORE = register("precasian_iron_ore", registrar -> registrar.baseOre().factory(AoAOreBlock::new).mapColour(MapColor.TERRACOTTA_BROWN));
+	public static final RegistryObject<Block> PRECASIAN_GOLD_ORE = register("precasian_gold_ore", registrar -> registrar.baseOre().factory(AoAOreBlock::new).mapColour(MapColor.TERRACOTTA_BROWN));
+	public static final RegistryObject<Block> PRECASIAN_QUARTZ_ORE = register("precasian_quartz_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 2, 5)).mapColour(MapColor.TERRACOTTA_BROWN));
+	public static final RegistryObject<Block> PRECASIAN_REDSTONE_ORE = register("precasian_redstone_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 1, 5)).mapColour(MapColor.TERRACOTTA_BROWN));
+	public static final RegistryObject<Block> PRECASIAN_LAPIS_ORE = register("precasian_lapis_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 2, 5)).mapColour(MapColor.TERRACOTTA_BROWN));
+	public static final RegistryObject<Block> PRECASIAN_COPPER_ORE = register("precasian_copper_ore", registrar -> registrar.baseOre().factory(AoAOreBlock::new).mapColour(MapColor.TERRACOTTA_BROWN));
+	public static final RegistryObject<Block> GEMENYTE_ORE = register("gemenyte_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 8)).mapColour(MapColor.TERRACOTTA_BROWN));
 	public static final RegistryObject<Block> BLUE_GEMSTONE_ORE = register("blue_gemstone_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 7)).mapColour(MapColor.COLOR_PURPLE));
 	public static final RegistryObject<Block> GREEN_GEMSTONE_ORE = register("green_gemstone_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 7)).mapColour(MapColor.COLOR_PURPLE));
 	public static final RegistryObject<Block> PURPLE_GEMSTONE_ORE = register("purple_gemstone_ore", registrar -> registrar.baseOre().factory(properties -> new AoAOreBlock(properties, 4, 7)).mapColour(MapColor.COLOR_PURPLE));
@@ -238,7 +243,7 @@ public final class AoABlocks {
 	public static final PottablePlantBlockGroup SHADOW_SAPLING = registerGroup("shadow_sapling", PottablePlantBlockGroup::new, registrar -> registrar.baseSapling().factory(properties -> new DarkGrowingSapling(new AoATreeOld(AoAFeatures.SHADOW_TREE), properties)));
 	public static final PottablePlantBlockGroup BRIGHT_SHYRE_SAPLING = registerGroup("bright_shyre_sapling", PottablePlantBlockGroup::new, registrar -> registrar.baseSapling().factory(properties -> new AoASaplingBlock(new AoATreeOld(AoAFeatures.BRIGHT_SHYRE_TREE), properties)));
 	public static final PottablePlantBlockGroup SHYRE_SAPLING = registerGroup("shyre_sapling", PottablePlantBlockGroup::new, registrar -> registrar.baseSapling().factory(properties -> new AoASaplingBlock(new AoATreeOld(AoAFeatures.NORMAL_SHYRE_TREE), properties)));
-	public static final PottablePlantBlockGroup STRANGLEWOOD_SAPLING = registerGroup("stranglewood_sapling", PottablePlantBlockGroup::new, registrar -> registrar.baseSapling().factory(properties -> new AoASaplingBlock(new AoATreeOld(AoAFeatures.STRANGLEWOOD_TREE), properties)));
+	public static final PottablePlantBlockGroup STRANGLEWOOD_SAPLING = registerGroup("stranglewood_sapling", PottablePlantBlockGroup::new, registrar -> registrar.baseSapling().factory(properties -> new AoASaplingBlock(new AoAThickTreeGrower(AoAWorldgenKeys.Features.Configured.STRANGLEWOOD_TREE), properties)));
 
 	public static final RegistryObject<Block> ACHONY_LEAVES = register("achony_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 58f)));
 	public static final RegistryObject<Block> BAOBAB_LEAVES = register("baobab_leaves", registrar -> registrar.baseLeaves().factory(AoALeavesBlock::new));
@@ -263,7 +268,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> IRODUST_LEAVES = register("irodust_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 19f)));
 	public static final RegistryObject<Block> IROGOLD_LEAVES = register("irogold_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 9f)));
 	public static final RegistryObject<Block> LELYETIAN_LEAVES = register("lelyetian_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 0)));
-	public static final RegistryObject<Block> LUCALUS_LEAVES = register("lucalus_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 45f)));
+	public static final RegistryObject<Block> LUCALUS_LEAVES = register("lucalus_leaves", registrar -> registrar.baseLeaves().factory(AoALeavesBlock::new));
 	public static final RegistryObject<Block> LUNICIA_LEAVES = register("lunicia_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 14f)));
 	public static final RegistryObject<Block> LUNOSSO_LEAVES = register("lunosso_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 8f)));
 	public static final RegistryObject<Block> RUNIC_LEAVES = register("runic_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 8f)));
@@ -271,7 +276,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> SHADOW_LEAVES = register("shadow_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 27f)));
 	public static final RegistryObject<Block> BRIGHT_SHYRE_LEAVES = register("bright_shyre_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 7f)));
 	public static final RegistryObject<Block> SHYRE_LEAVES = register("shyre_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 7f)));
-	public static final RegistryObject<Block> STRANGLEWOOD_LEAVES = register("stranglewood_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 34f)));
+	public static final RegistryObject<Block> STRANGLEWOOD_LEAVES = register("stranglewood_leaves", registrar -> registrar.baseLeaves().factory(AoALeavesBlock::new));
 	public static final RegistryObject<Block> VEIN_LEAVES = register("vein_leaves", registrar -> registrar.baseLeaves().factory(properties -> new AoALeavesBlockOld(properties, 1 / 30f)));
 
 	public static final LogBlockGroup ACHONY_LOG = registerGroup("achony", (id, registry, registrar) -> new LogBlockGroup(id, registry, MapColor.COLOR_BROWN, MapColor.TERRACOTTA_BROWN, (registrar2, strippedLog, endColour, sideColour) -> registrar2.baseLog(endColour, sideColour, strippedLog)), registrar -> {});
@@ -509,8 +514,9 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> GIANT_SNAIL_ACID = register("giant_snail_acid", registrar -> registrar.pistonBreaks().noItem().noOcclusion().noScreenCover().noSpawns().mapColour(MapColor.TERRACOTTA_GREEN).sounds(SoundType.WET_GRASS).noDrops().randomTicks().neverSolid().replaceable().factory(GiantSnailAcid::new));
 	public static final RegistryObject<Block> ORANGE_ACID = register("orange_acid", registrar -> registrar.pistonBreaks().noItem().noOcclusion().noScreenCover().noSpawns().mapColour(MapColor.TERRACOTTA_ORANGE).sounds(SoundType.WET_GRASS).noDrops().randomTicks().neverSolid().replaceable().factory(AcidBlock::new));
 
-	public static final RegistryObject<LiquidBlock> CANDIED_WATER = new FluidUtil.Builder("candied_water", AoAFluidTypes.CANDIED_WATER).defaultRegisterAll();
-	public static final RegistryObject<LiquidBlock> TOXIC_WASTE = new FluidUtil.Builder("toxic_waste", AoAFluidTypes.TOXIC_WASTE).tickRate(50).customBlock((fluid, properties) -> () -> new ToxicWaste(fluid, properties)).defaultRegisterAll();
+	public static final FluidUtil.RegisteredFluidHolder CANDIED_WATER = new FluidUtil.Builder("candied_water", AoAFluidTypes.CANDIED_WATER).defaultRegisterAll();
+	public static final FluidUtil.RegisteredFluidHolder TOXIC_WASTE = new FluidUtil.Builder("toxic_waste", AoAFluidTypes.TOXIC_WASTE).tickRate(50).customBlock((fluid, properties) -> () -> new ToxicWaste(fluid, properties)).defaultRegisterAll();
+	public static final FluidUtil.RegisteredFluidHolder TAR = new FluidUtil.Builder("tar", AoAFluidTypes.TAR).tickRate(50).customBlock((fluid, properties) -> () -> new Tar(fluid, properties)).defaultRegisterAll();
 
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_WITHER = register("kaiyu_temple_trap_wither", registrar -> registrar.utilityBlocksTab().mapColour(MapColor.TERRACOTTA_ORANGE).stats(12, 15).factory(KaiyuTempleTrapWither::new));
 	public static final RegistryObject<Block> KAIYU_TEMPLE_TRAP_DAMAGE = register("kaiyu_temple_trap_damage", registrar -> registrar.utilityBlocksTab().mapColour(MapColor.TERRACOTTA_ORANGE).stats(12, 15).factory(KaiyuTempleTrapDamage::new));
@@ -730,6 +736,7 @@ public final class AoABlocks {
 
 	public static final RegistryObject<Block> CREEP_VINES = register("creep_vines", registrar -> registrar.noClip().mapColour(MapColor.PLANT).replaceable().randomTicks().stats(0.2f).flammable().pistonBreaks().generationBlocksTab().factory(VinesBlock::new).compostable(0.5f));
 
+	public static final RegistryObject<Block> ASHFERN_CROP = register("ashfern_crop", registrar -> registrar.baseCrop().factory(properties -> new AshfernCropBlock(properties, AoAItems.ASHFERN_SEEDS)));
 	public static final RegistryObject<Block> BUBBLE_BERRY_CROP = register("bubble_berry_crop", registrar -> registrar.baseCrop().factory(properties -> new AoACropBlock(properties, AoAItems.BUBBLE_BERRY_SEEDS)));
 	public static final RegistryObject<Block> CHILLI_CROP = register("chilli_crop", registrar -> registrar.baseCrop().factory(properties -> new AoACropBlock(properties, AoAItems.CHILLI_SEEDS)));
 	public static final RegistryObject<Block> EYE_BULB_CROP = register("eye_bulb_crop", registrar -> registrar.baseCrop().factory(properties -> new AoACropBlock(properties, AoAItems.EYE_BULB)));

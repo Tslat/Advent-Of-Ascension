@@ -36,6 +36,17 @@
       "aoa3:high_altitude_andesite_ore",
       "aoa3:low_altitude_andesite_ore",
       "aoa3:tuff_ore",
+      "aoa3:precasian_high_altitude_iron_ore",
+      "aoa3:precasian_iron_ore",
+      "aoa3:precasian_low_altitude_iron_ore",
+      "aoa3:precasian_small_iron_ore",
+      "aoa3:precasian_gold_ore",
+      "aoa3:precasian_low_altitude_gold_ore",
+      "aoa3:precasian_redstone_ore",
+      "aoa3:precasian_low_altitude_redstone_ore",
+      "aoa3:precasian_lapis_ore",
+      "aoa3:precasian_buried_lapis_ore",
+      "aoa3:bone_fragments_ore",
       "minecraft:underwater_magma",
       "aoa3:better_sand_disk",
       "aoa3:better_clay_disk",
@@ -44,6 +55,8 @@
     [],
     [],
     [
+      "minecraft:flower_default",
+      "aoa3:precasian_grass_patch",
       "minecraft:seagrass_normal",
       "minecraft:seagrass_simple",
       "minecraft:kelp_cold"
@@ -60,16 +73,60 @@
     "creature": [],
     "misc": [],
     "monster": [],
-    "underground_water_creature": [],
+    "underground_water_creature": [
+      {
+        "type": "minecraft:glow_squid",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 5
+      }
+    ],
     "water_ambient": [
       {
         "type": "minecraft:cod",
         "maxCount": 6,
         "minCount": 3,
+        "weight": 25
+      },
+      {
+        "type": "minecraft:salmon",
+        "maxCount": 5,
+        "minCount": 1,
+        "weight": 25
+      },
+      {
+        "type": "aoa3:dark_hatchetfish",
+        "maxCount": 1,
+        "minCount": 1,
         "weight": 5
+      },
+      {
+        "type": "minecraft:pufferfish",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 10
+      },
+      {
+        "type": "minecraft:tropical_fish",
+        "maxCount": 8,
+        "minCount": 6,
+        "weight": 15
       }
     ],
-    "water_creature": []
+    "water_creature": [
+      {
+        "type": "minecraft:squid",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 10
+      },
+      {
+        "type": "aoa3:shiny_squid",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      }
+    ]
   },
   "temperature": 0.55
 }

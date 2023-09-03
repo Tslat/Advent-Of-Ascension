@@ -7,10 +7,10 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacer;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.content.world.gen.tree.foliageplacer.NoFoliagePlacer;
-import net.tslat.aoa3.content.world.gen.tree.trunkplacer.AoAGiantJungleTrunkPlacer;
-import net.tslat.aoa3.content.world.gen.tree.trunkplacer.AoAGiantTrunkPlacer;
-import net.tslat.aoa3.content.world.gen.tree.trunkplacer.BaobabTrunkPlacer;
+import net.tslat.aoa3.content.world.gen.feature.tree.foliageplacer.NoFoliagePlacer;
+import net.tslat.aoa3.content.world.gen.feature.tree.trunkplacer.AoAGiantJungleTrunkPlacer;
+import net.tslat.aoa3.content.world.gen.feature.tree.trunkplacer.AoAGiantTrunkPlacer;
+import net.tslat.aoa3.content.world.gen.feature.tree.trunkplacer.BaobabTrunkPlacer;
 
 public final class AoATrees {
 	public static final RegistryObject<TrunkPlacerType<AoAGiantTrunkPlacer>> AOA_GIANT_TRUNK = registerTrunkPlacer("aoa_giant", AoAGiantTrunkPlacer.CODEC);

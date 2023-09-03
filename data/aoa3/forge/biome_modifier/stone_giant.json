@@ -18,7 +18,7 @@
       "type": "aoa3:stone_giant",
       "maxCount": 1,
       "minCount": 1,
-      "weight": 1
+      "weight": 5
     }
   ]
 }

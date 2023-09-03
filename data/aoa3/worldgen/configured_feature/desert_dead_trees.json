@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:simple_random_selector",
-  "config": {
-    "features": [
-      "aoa3:desert_dead_tree_1",
-      "aoa3:desert_dead_tree_2"
-    ]
-  }
-}

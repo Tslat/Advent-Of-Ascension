@@ -11,6 +11,7 @@ import net.minecraftforge.common.SoundActions;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.content.fluid.Tar;
 import net.tslat.aoa3.content.fluid.ToxicWaste;
 import net.tslat.aoa3.util.ColourUtil;
 
@@ -26,6 +27,7 @@ public final class AoAFluidTypes {
 	private static final ResourceLocation UNDERWATER_TEXTURE = new ResourceLocation("textures/misc/underwater.png");
 
 	public static final RegistryObject<FluidType> TOXIC_WASTE = register("toxic_waste", ToxicWaste::new);
+	public static final RegistryObject<FluidType> TAR = register("tar", Tar::new);
 	public static final RegistryObject<FluidType> CANDIED_WATER = register("candied_water", () -> new DefaultWaterFluidType(FluidType.Properties.create()
 			.canSwim(true)
 			.canDrown(true)

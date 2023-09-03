@@ -123,7 +123,7 @@ public class SpinoledonEntity extends AoAMeleeMob<SpinoledonEntity> {
 
 	@Override
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
-		return 2.125f;
+		return 1.9f;
 	}
 
 	@Override

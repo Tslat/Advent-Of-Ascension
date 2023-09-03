@@ -1,5 +1,13 @@
 {
   "biomes": [
+    "aoa3:precasian_desert",
+    "aoa3:precasian_forest",
+    "aoa3:precasian_jungle",
+    "aoa3:precasian_ocean",
+    "aoa3:precasian_plains",
+    "aoa3:precasian_river",
+    "aoa3:precasian_savannah",
+    "aoa3:precasian_shore",
     "aoa3:precasian_tall_forest"
   ],
   "entities": [
@@ -82,14 +90,6 @@
       "level": 30,
       "weight": 35,
       "weight_mod": 5.0
-    },
-    {
-      "item": "aoa3:old_boot",
-      "level": 50,
-      "weight_mod": 2.0
-    },
-    {
-      "item": "minecraft:water_bucket"
     }
   ]
 }

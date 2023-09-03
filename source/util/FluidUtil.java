@@ -113,8 +113,8 @@ public final class FluidUtil {
 			return this;
 		}
 
-		public RegistryObject<LiquidBlock> defaultRegisterAll() {
-			return registerAll(AoARegistries.ITEMS.deferredRegister(), AoARegistries.BLOCKS.deferredRegister(), AoARegistries.FLUIDS.deferredRegister()).fluidBlock();
+		public RegisteredFluidHolder defaultRegisterAll() {
+			return registerAll(AoARegistries.ITEMS.deferredRegister(), AoARegistries.BLOCKS.deferredRegister(), AoARegistries.FLUIDS.deferredRegister());
 		}
 
 		public RegisteredFluidHolder registerAll(DeferredRegister<Item> itemRegistry, DeferredRegister<Block> blockRegistry, DeferredRegister<Fluid> fluidRegistry) {
@@ -174,5 +174,17 @@ public final class FluidUtil {
 		}
 	}
 
-	public record RegisteredFluidHolder(RegistryObject<BucketItem> bucket, RegistryObject<LiquidBlock> fluidBlock, RegistryObject<ForgeFlowingFluid.Source> fluid) {}
+	public record RegisteredFluidHolder(RegistryObject<BucketItem> bucket, RegistryObject<LiquidBlock> fluidBlock, RegistryObject<ForgeFlowingFluid.Source> fluid) {
+		public BucketItem getBucket() {
+			return this.bucket.get();
+		}
+
+		public LiquidBlock getBlock() {
+			return this.fluidBlock.get();
+		}
+
+		public ForgeFlowingFluid.Source getFluid() {
+			return this.fluid.get();
+		}
+	}
 }

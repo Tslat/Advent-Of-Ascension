@@ -67,6 +67,9 @@ public class AoAPackets {
 	}
 
 	public static void messageAllPlayersTrackingEntity(AoAPacket packet, Entity entity) {
+		if (entity instanceof ServerPlayer pl)
+			messagePlayer(pl, packet);
+
 		INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), packet);
 	}
 }

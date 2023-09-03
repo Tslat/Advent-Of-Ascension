@@ -1,0 +1,36 @@
+{
+  "type": "aoa3:brushable_block_ore",
+  "config": {
+    "loot_table": "aoa3:archaeology/jungle_gravel",
+    "ore_config": {
+      "discard_chance_on_air_exposure": 0.0,
+      "size": 5,
+      "targets": [
+        {
+          "state": {
+            "Name": "minecraft:suspicious_gravel",
+            "Properties": {
+              "dusted": "0"
+            }
+          },
+          "target": {
+            "predicate_type": "minecraft:tag_match",
+            "tag": "minecraft:dirt"
+          }
+        },
+        {
+          "state": {
+            "Name": "minecraft:suspicious_gravel",
+            "Properties": {
+              "dusted": "0"
+            }
+          },
+          "target": {
+            "predicate_type": "minecraft:tag_match",
+            "tag": "forge:grass"
+          }
+        }
+      ]
+    }
+  }
+}

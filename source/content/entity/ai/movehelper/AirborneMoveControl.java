@@ -55,6 +55,7 @@ public class AirborneMoveControl extends MoveControl {
 			this.mob.setYRot(rotlerp(this.mob.getYRot(), (float)(Mth.atan2(distZ, distX) * Mth.RAD_TO_DEG) - 90, 90));
 
 			float moveSpeed = (float)(this.speedModifier * this.mob.getAttributeValue((this.mob.onGround() ? Attributes.MOVEMENT_SPEED : Attributes.FLYING_SPEED)));
+
 			double lateralDist = Math.sqrt(distX * distX + distZ * distZ);
 
 			this.mob.setSpeed(moveSpeed);

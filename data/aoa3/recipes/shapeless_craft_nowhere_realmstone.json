@@ -6,10 +6,16 @@
       "tag": "forge:shulker_boxes"
     },
     {
-      "item": "minecraft:beacon"
+      "item": "minecraft:nether_star"
     },
     {
-      "item": "minecraft:golden_apple"
+      "item": "aoa3:void_scales"
+    },
+    {
+      "item": "minecraft:recovery_compass"
+    },
+    {
+      "item": "minecraft:redstone_lamp"
     },
     {
       "item": "aoa3:blank_realmstone"

@@ -1,0 +1,18 @@
+{
+  "feature": "aoa3:precasian_lava_chute",
+  "placement": [
+    {
+      "type": "minecraft:in_square"
+    },
+    {
+      "type": "minecraft:heightmap",
+      "heightmap": "WORLD_SURFACE_WG"
+    },
+    {
+      "type": "aoa3:chunk_high_point"
+    },
+    {
+      "type": "minecraft:biome"
+    }
+  ]
+}

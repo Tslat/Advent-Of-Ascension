@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -24,11 +23,14 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.*;
@@ -143,7 +145,7 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 				if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 					if (consumeEnergy(plData, stack, energyConsumption)) {
 						if (getFiringSound() != null)
-							player.level().playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
+							AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(getFiringSound()).isPlayer().followEntity(player)), player);
 
 						fire(stack, player);
 						((Player)player).awardStat(Stats.ITEM_USED.get(this));

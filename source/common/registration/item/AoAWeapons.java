@@ -24,7 +24,6 @@ import net.tslat.aoa3.library.constant.AttackSpeed;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
-@SuppressWarnings("ConfusingArgumentToVarargsMethod")
 public final class AoAWeapons {
 	public static void init() {}
 

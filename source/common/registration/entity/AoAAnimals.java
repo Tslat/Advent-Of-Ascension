@@ -19,6 +19,7 @@ import net.tslat.aoa3.content.entity.mob.haven.AngelicaEntity;
 import net.tslat.aoa3.content.entity.mob.haven.DawnlightEntity;
 import net.tslat.aoa3.content.entity.mob.haven.RainicornEntity;
 import net.tslat.aoa3.content.entity.mob.overworld.HorndronEntity;
+import net.tslat.aoa3.content.entity.mob.precasia.DeinotheriumEntity;
 
 import java.util.function.Consumer;
 
@@ -59,6 +60,8 @@ public final class AoAAnimals {
 	public static final RegistryObject<EntityType<BasicFishEntity>> VIOLET_SKIPPER = registerAnimal("violet_skipper", BasicFishEntity::new, MobCategory.WATER_AMBIENT, 0.7f, 0.4f, 0x814FBB, 0xF5F9F6, builder -> builder.clientTrackingRange(4));
 
 	public static final RegistryObject<EntityType<HorndronEntity>> HORNDRON = registerAnimal("horndron", HorndronEntity::new, 1.5f, 2f, 0x332521, 0x5F523A);
+	public static final RegistryObject<EntityType<DeinotheriumEntity>> DEINOTHERIUM = registerAnimal("deinotherium", DeinotheriumEntity::new, 1.5f, 3.125f, 0x797168, 0x595149);
+
 	public static final RegistryObject<EntityType<Animal>> ANGELICA = registerAnimal("angelica", AngelicaEntity::new, 0.6f, 2f, 0x146262, 0xB4B4B4);
 	public static final RegistryObject<EntityType<Animal>> DAWNLIGHT = registerAnimal("dawnlight", DawnlightEntity::new, 0.6875f, 1.375f, 0xD8DAD2, 0xEBEBEA);
 	public static final RegistryObject<EntityType<Animal>> EEO = registerAnimal("eeo", EeoEntity::new, 0.375f, 1.25f, 0xDADDDD, 0xE4E5E5);
@@ -69,7 +72,6 @@ public final class AoAAnimals {
 	public static final RegistryObject<EntityType<Animal>> TROTTER = registerAnimal("trotter", TrotterEntity::new, 0.75f, 1.1875f, 0xC02A00, 0xAC2400);
 	public static final RegistryObject<EntityType<Animal>> URKA = registerAnimal("urka", UrkaEntity::new, 1.2f, 1.5f, 0x545454, 0x191515);
 	public static final RegistryObject<EntityType<Animal>> VOLIANT = registerAnimal("voliant", VoliantEntity::new, 3.5f, 4.75f, 0x195E7A, 0x1A6A84);
-	public static final RegistryObject<EntityType<MeganeuropsisEntity>> MEGANEUROPSIS = registerAnimal("meganeuropsis", MeganeuropsisEntity::new, 0.5f, 0.4375f, 0x715C0D, 0xE2E2E2);
 	public static final RegistryObject<EntityType<ShikEntity>> SHIK = registerAnimal("shik", ShikEntity::new, 0.375f, 0.4375f, 0x444444, 0x606060);
 
 	public static final RegistryObject<EntityType<PixonEntity>> AMBIENT_PIXON = registerAnimal("ambient_pixon", AmbientPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 12235956, 12039354);

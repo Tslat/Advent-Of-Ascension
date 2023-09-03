@@ -2,12 +2,18 @@ package net.tslat.aoa3.content.entity.mob.misc;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -31,6 +37,8 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import java.util.List;
 
 public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity> {
+	private boolean isCrop = false;
+
 	public ThornyPlantSproutEntity(EntityType<? extends ThornyPlantSproutEntity> entityType, Level world) {
 		super(entityType, world);
 
@@ -42,6 +50,7 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 		this(AoAMiscEntities.THORNY_PLANT_SPROUT.get(), world);
 
 		moveTo(plantPos.getX() + 0.5f + rand().nextGaussian() * 0.1f, plantPos.getY() + 0.1f ,plantPos.getZ() + 0.5f + rand().nextGaussian() * 0.1f, rand().nextFloat() * 360, 0);
+		this.isCrop = true;
 	}
 
 	@Override
@@ -73,14 +82,36 @@ public class ThornyPlantSproutEntity extends AoAMeleeMob<ThornyPlantSproutEntity
 	}
 
 	@Override
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
+
+		compound.putBoolean("IsCropSprout", this.isCrop);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
+
+		if (compound.contains("IsCropSprout", Tag.TAG_BYTE))
+			this.isCrop = compound.getBoolean("IsCropSprout");
+	}
+
+	@Override
 	protected float getStandingEyeHeight(Pose pose, EntityDimensions dimensions) {
 		return 1.4f;
 	}
 
 	@Override
 	protected void customServerAiStep() {
-		if (tickCount % 5 == 0 && level().getBlockState(BlockPos.containing(getX(), getY() + 0.25f, getZ())).getBlock() != AoABlocks.THORNY_PLANT_CROP.get())
+		if (this.isCrop && this.tickCount % 5 == 0 && level().getBlockState(BlockPos.containing(getX(), getY() + 0.25f, getZ())).getBlock() != AoABlocks.THORNY_PLANT_CROP.get())
 			discard();
+	}
+
+	public static boolean checkSpawnConditions(EntityType<?> entityType, LevelAccessor levelAccessor, MobSpawnType spawnReason, BlockPos blockPos, RandomSource rand) {
+		if (!(levelAccessor instanceof Level level) || (spawnReason != MobSpawnType.STRUCTURE && spawnReason != MobSpawnType.NATURAL))
+			return true;
+
+		return levelAccessor.getBlockState(blockPos.below()).is(BlockTags.DIRT) && EntityRetrievalUtil.getEntities(level, new AABB(blockPos.getX() - 15, blockPos.getY() - 10, blockPos.getZ() - 15, blockPos.getX() + 15, blockPos.getY() + 10, blockPos.getZ() + 15), ThornyPlantSproutEntity.class::isInstance).isEmpty();
 	}
 
 	@Override

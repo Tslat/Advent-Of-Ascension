@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.item.weapon.vulcane;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,8 +11,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -63,7 +65,7 @@ public abstract class BaseVulcane extends Item {
 
 		if (DamageUtil.doVulcaneAttack(pl, pl.getLastHurtByMob(), damage)) {
 			doAdditionalEffect(pl.getLastHurtByMob(), pl, Math.min(targetHealth, damage));
-			pl.level().playSound(null, pl.getX(), pl.getY(), pl.getZ(), AoASounds.ITEM_VULCANE_USE.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
+			AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ITEM_VULCANE_USE.get()).isPlayer().followEntity(pl)), pl);
 			ItemUtil.damageItem(vulcane, pl, hand);
 			rage.consume(rage.getCurrentValue(), true);
 

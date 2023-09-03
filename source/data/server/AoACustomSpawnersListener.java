@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class AoACustomSpawnersListener extends SimpleJsonResourceReloadListener {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-	private static final String FOLDER = "spawners";
+	private static final String FOLDER = "custom_spawners";
 	private static final Map<ResourceLocation, Codec<? extends AoACustomSpawner>> REGISTERED_SPAWNERS = Util.make(new Object2ObjectOpenHashMap<>(), map ->
 			map.put(AdventOfAscension.id("roaming_traders"), RoamingTraderSpawner.CODEC));
 

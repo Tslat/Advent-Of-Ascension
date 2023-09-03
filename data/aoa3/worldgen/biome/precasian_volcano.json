@@ -24,7 +24,8 @@
     [],
     [
       "aoa3:underground_precasian_lava_lake",
-      "aoa3:surface_precasian_lava_lake"
+      "aoa3:surface_precasian_lava_lake",
+      "aoa3:precasian_volcano_chute"
     ],
     [],
     [],
@@ -39,6 +40,7 @@
       "aoa3:high_altitude_andesite_ore",
       "aoa3:low_altitude_andesite_ore",
       "aoa3:tuff_ore",
+      "aoa3:precasian_quartz_ore",
       "minecraft:underwater_magma",
       "aoa3:better_sand_disk",
       "aoa3:better_clay_disk",
@@ -47,6 +49,10 @@
     [],
     [
       "aoa3:precasian_lava_spring"
+    ],
+    [
+      "minecraft:patch_dead_bush",
+      "aoa3:sparse_ashfern"
     ]
   ],
   "has_precipitation": false,

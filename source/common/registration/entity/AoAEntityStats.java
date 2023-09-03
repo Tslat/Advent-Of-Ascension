@@ -56,6 +56,9 @@ public final class AoAEntityStats {
 
 	private static void doPrecasiaEntityStats(final EntityAttributeCreationEvent ev) {
 		AttributeBuilder.createMonster(AoAMobs.SPINOLEDON.get()).health(72).armour(4, 4).moveSpeed(0.3).meleeStrength(9.5f).knockbackResist(0.6f).aggroRange(16).followRange(32).build(ev);
+		AttributeBuilder.create(AoAAnimals.HORNDRON.get()).health(58).moveSpeed(0.25f).followRange(16).knockbackResist(0.75f).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
+		AttributeBuilder.create(AoAAnimals.DEINOTHERIUM.get()).health(70).moveSpeed(0.2f).followRange(16).meleeStrength(8).knockback(1).knockbackResist(0.9f).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
+		AttributeBuilder.create(AoAMobs.MEGANEUROPSIS.get()).health(24).meleeStrength(5).moveSpeed(0.33).flyingSpeed(0.33f).aggroRange(8).followRange(12).armour(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 	}
 
 	private static void doBossEntityStats(final EntityAttributeCreationEvent ev) {
@@ -86,7 +89,6 @@ public final class AoAEntityStats {
 		AttributeBuilder.create(AoAAnimals.GLISTENING_PIXON.get()).health(15).moveSpeed(0.4).knockbackResist(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.GLOWING_PIXON.get()).health(15).moveSpeed(0.4).knockbackResist(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.HALYCON.get()).health(20).moveSpeed(0.2).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
-		AttributeBuilder.create(AoAAnimals.MEGANEUROPSIS.get()).health(9).moveSpeed(0.5).armour(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.NIGHT_WATCHER.get()).health(19).moveSpeed(0).knockbackResist(0.3).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.PEPPERMINT_SNAIL.get()).health(25).moveSpeed(0.2875).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.RADIANT_PIXON.get()).health(15).moveSpeed(0.4).knockbackResist(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
@@ -124,8 +126,6 @@ public final class AoAEntityStats {
 		AttributeBuilder.create(AoAAnimals.SKELECANTH.get()).health(4).swimSpeed(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.TURQUOISE_STRIPEFISH.get()).health(4).swimSpeed(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.VIOLET_SKIPPER.get()).health(4).swimSpeed(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
-
-		AttributeBuilder.create(AoAAnimals.HORNDRON.get()).health(78).moveSpeed(0.25f).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 
 		AttributeBuilder.createMonster(AoAMiscEntities.THORNY_PLANT_SPROUT.get()).health(50).moveSpeed(0).meleeStrength(8).knockbackResist(1).followRange(8).build(ev);
 
@@ -203,7 +203,6 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.CRYPTID.get()).health(55).moveSpeed(0.2875).meleeStrength(7).followRange(16).build(ev);
 		//AttributeBuilder.createMonster(AoAMobs.CRYSTOCORE.get()).health(3000).flyingSpeed(0.1).meleeStrength(15).knockbackResist(0.6).followRange(36).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.DAYSEE.get()).health(86).moveSpeed(0.2875).meleeStrength(7).followRange(16).build(ev);
-		AttributeBuilder.createMonster(AoAMobs.DEINOTHERIUM.get()).health(120).moveSpeed(0.29).meleeStrength(10).knockbackResist(1).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.DESTRUCTOR.get()).health(999).moveSpeed(0).projectileDamage(15).knockbackResist(1).followRange(24).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.DEVOURER.get()).health(135).moveSpeed(0.2875).meleeStrength(14).knockbackResist(0.15).followRange(16).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.DIOCUS.get()).health(64).moveSpeed(0.28).meleeStrength(6).followRange(16).build(ev);

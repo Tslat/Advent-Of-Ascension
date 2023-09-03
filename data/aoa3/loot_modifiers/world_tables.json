@@ -19,6 +19,7 @@
     }
   ],
   "worlds": {
+    "aoa3:precasia": "aoa3:worlds/precasia",
     "minecraft:overworld": "aoa3:worlds/overworld",
     "minecraft:the_nether": "aoa3:worlds/nether"
   }

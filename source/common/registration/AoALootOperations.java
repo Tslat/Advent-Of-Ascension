@@ -35,6 +35,7 @@ public final class AoALootOperations {
 		public static final RegistryObject<LootItemConditionType> PLAYER_HAS_RESOURCE = register("player_has_resource", PlayerHasResource.Serializer::new);
 		public static final RegistryObject<LootItemConditionType> HAS_BLOCK_TAG = register("has_block_tag", BlockHasTag.Serializer::new);
 		public static final RegistryObject<LootItemConditionType> IS_HOSTILE_ENTITY = register("is_hostile_entity", IsHostileEntity.Serializer::new);
+		public static final RegistryObject<LootItemConditionType> IS_BABY = register("is_baby", IsBaby.Serializer::new);
 
 		private static RegistryObject<LootItemConditionType> register(String id, Supplier<Serializer<? extends LootItemCondition>> serializer) {
 			return AoARegistries.LOOT_CONDITIONS.register(id, () -> new LootItemConditionType(serializer.get()));

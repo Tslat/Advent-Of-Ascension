@@ -1,0 +1,82 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "7"
+            }
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "6"
+            }
+          },
+          "weight": 2
+        },
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "5"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "4"
+            }
+          },
+          "weight": 4
+        },
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "3"
+            }
+          },
+          "weight": 5
+        },
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "2"
+            }
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "1"
+            }
+          },
+          "weight": 7
+        },
+        {
+          "data": {
+            "Name": "aoa3:ashfern_crop",
+            "Properties": {
+              "age": "0"
+            }
+          },
+          "weight": 8
+        }
+      ]
+    }
+  }
+}

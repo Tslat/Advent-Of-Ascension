@@ -35,12 +35,6 @@ public class EverfightStaff extends BaseStaff<Float> {
 		runes.put(AoAItems.POWER_RUNE.get(), 4);
 	}
 
-	public Float checkPreconditions(LivingEntity caster, ItemStack staff) {
-		float healthPercent = EntityUtil.getCurrentHealthPercent(caster);
-
-		return healthPercent < 1 && healthPercent > 0 ? healthPercent : null;
-	}
-
 	@Override
 	public void cast(Level world, ItemStack staff, LivingEntity caster, Float args) {
 		EntityUtil.applyPotions(caster, new EffectBuilder(MobEffects.DAMAGE_RESISTANCE, (int)(1200f * (1 - args))));

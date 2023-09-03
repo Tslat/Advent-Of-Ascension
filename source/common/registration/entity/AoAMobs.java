@@ -10,6 +10,7 @@ import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.entity.animal.MeganeuropsisEntity;
 import net.tslat.aoa3.content.entity.boss.king_bambambam.EliteKingBamBamBamEntity;
 import net.tslat.aoa3.content.entity.boss.king_bambambam.KingBamBamBamEntity;
 import net.tslat.aoa3.content.entity.boss.nethengeic_wither.EliteNethengeicWitherEntity;
@@ -113,7 +114,6 @@ public final class AoAMobs {
 	//public static final RegistryObject<EntityType<CrystocoreEntity>> CRYSTOCORE = registerMob("crystocore", CrystocoreEntity::new, 2.5f, 4.875f, 1315589, 3812640);
 	public static final RegistryObject<EntityType<CyclopsEntity>> CYCLOPS = registerMob("cyclops", CyclopsEntity::new, 0.6f, 34 / 16f, 0x664D3D, 0x7B6354);
 	public static final RegistryObject<EntityType<DayseeEntity>> DAYSEE = registerMob("daysee", DayseeEntity::new, 0.5f, 2.0625f, 11913662, 6272881);
-	public static final RegistryObject<EntityType<DeinotheriumEntity>> DEINOTHERIUM = registerMob("deinotherium", DeinotheriumEntity::new, 1.7f, 3f, 12040114, 10855832);
 	public static final RegistryObject<EntityType<DestructorEntity>> DESTRUCTOR = registerMob("destructor", DestructorEntity::new, 2.2f, 8.53125f, 2895664, 10696493);
 	public static final RegistryObject<EntityType<DevourerEntity>> DEVOURER = registerMob("devourer", DevourerEntity::new, 0.875f, 1.1875f, 1249827, 3750461);
 	public static final RegistryObject<EntityType<DiocusEntity>> DIOCUS = registerMob("diocus", DiocusEntity::new, 0.75f, 1f, 5521679, 8994198);
@@ -214,6 +214,7 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<MechamatonEntity>> MECHAMATON = registerMob("mechamaton", MechamatonEntity::new, 1.125f, 2.125f, 9340427, 131585);
 	//public static final RegistryObject<EntityType<MechbotEntity>> MECHBOT = registerMob("mechbot", MechbotEntity::new, 0.9f, 2.4375f, 13882126, 1644815);
 	public static final RegistryObject<EntityType<MechyonEntity>> MECHYON = registerMob("mechyon", MechyonEntity::new, 0.75f, 1.5f, 3355435, 4013324);
+	public static final RegistryObject<EntityType<MeganeuropsisEntity>> MEGANEUROPSIS = registerMob("meganeuropsis", MeganeuropsisEntity::new, 0.5f, 0.4375f, 0x715C0D, 0xE2E2E2);
 	public static final RegistryObject<EntityType<MerkyreEntity>> MERKYRE = registerMob("merkyre", MerkyreEntity::new, 0.5625f, 2f, 2500131, 1835779);
 	public static final RegistryObject<EntityType<MermageEntity>> MERMAGE = registerMob("mermage", MermageEntity::new, 0.6f, 2.125f, 262786, 1756891);
 	//public static final RegistryObject<EntityType<MirageEntity>> MIRAGE = registerMob("mirage", MirageEntity::new, 0.8f, 2f, 13552553, 1447439);

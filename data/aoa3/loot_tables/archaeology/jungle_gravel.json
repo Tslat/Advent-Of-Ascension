@@ -1,0 +1,49 @@
+{
+  "type": "minecraft:archaeology",
+  "pools": [
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:snort_pottery_sherd",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:skull_pottery_sherd",
+          "weight": 2
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:mossy_cobblestone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:silver_coin"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:jade"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:stick"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "minecraft:bone"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:precasia_realmstone"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ]
+}

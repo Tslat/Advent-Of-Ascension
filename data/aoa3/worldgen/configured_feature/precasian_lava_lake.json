@@ -4,16 +4,16 @@
     "barrier": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "minecraft:lava",
-        "Properties": {
-          "level": "0"
-        }
+        "Name": "aoa3:precasian_stone"
       }
     },
     "fluid": {
       "type": "minecraft:simple_state_provider",
       "state": {
-        "Name": "aoa3:precasian_stone"
+        "Name": "minecraft:lava",
+        "Properties": {
+          "level": "0"
+        }
       }
     }
   }

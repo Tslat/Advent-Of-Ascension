@@ -503,6 +503,21 @@
                   {
                     "type": "minecraft:condition",
                     "if_true": {
+                      "type": "minecraft:biome",
+                      "biome_is": [
+                        "aoa3:precasian_tar_pits"
+                      ]
+                    },
+                    "then_run": {
+                      "type": "minecraft:block",
+                      "result_state": {
+                        "Name": "aoa3:precasian_soil"
+                      }
+                    }
+                  },
+                  {
+                    "type": "minecraft:condition",
+                    "if_true": {
                       "type": "minecraft:water",
                       "add_stone_depth": false,
                       "offset": -1,
@@ -574,6 +589,25 @@
                   "type": "minecraft:block",
                   "result_state": {
                     "Name": "minecraft:sand"
+                  }
+                }
+              },
+              {
+                "type": "minecraft:condition",
+                "if_true": {
+                  "type": "minecraft:biome",
+                  "biome_is": [
+                    "aoa3:precasian_desert",
+                    "aoa3:precasian_volcano"
+                  ]
+                },
+                "then_run": {
+                  "type": "minecraft:block",
+                  "result_state": {
+                    "Name": "minecraft:basalt",
+                    "Properties": {
+                      "axis": "y"
+                    }
                   }
                 }
               },

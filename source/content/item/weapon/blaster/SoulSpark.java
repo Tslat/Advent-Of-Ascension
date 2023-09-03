@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.weapon.blaster;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -12,10 +11,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.entity.projectile.blaster.SoulSparkEntity;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
@@ -81,7 +83,7 @@ public class SoulSpark extends BaseBlaster {
 		if (!player.level().isClientSide) {
 			if (count + firingDelay <= 72000 && count % firingDelay == 0) {
 				if (getFiringSound() != null)
-					player.level().playSound(null, player.getX(), player.getY(), player.getZ(), getFiringSound(), SoundSource.PLAYERS, 1.0f, 1.0f);
+					AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(getFiringSound()).isPlayer().followEntity(player)), player);
 
 				fire(stack, player);
 				((Player)player).awardStat(Stats.ITEM_USED.get(this));

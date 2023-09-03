@@ -46,12 +46,12 @@ public final class AoAVillagerTrades {
 
 	private static void doClericTraces(Int2ObjectMap<List<VillagerTrades.ItemListing>> tradesMap) {
 		tradesMap.get(1).add(AoATrader.BuildableTrade.trade(AoABlocks.ANCIENT_ROCK, 3).cost(AoAItems.COPPER_COIN).xp(1).stock(16));
-		tradesMap.get(2).addAll(List.of(
+		tradesMap.get(2).add(AoATrader.BuildableTrade.trade(AoAItems.RUNIUM_CHUNK).cost(AoAItems.COPPER_COIN, 5).xp(9).stock(8));
+		tradesMap.get(3).addAll(List.of(
 				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_TRAVEL).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
 				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_SPACE).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
 				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_REALITY).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
 				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_DIRECTION).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4)));
-		tradesMap.get(4).add(AoATrader.BuildableTrade.trade(AoAItems.RUNIUM_CHUNK).cost(AoAItems.COPPER_COIN, 5).xp(9).stock(8));
 		tradesMap.get(5).add(AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_POWER).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(1));
 	}
 

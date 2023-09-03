@@ -89,6 +89,15 @@ public final class EntityUtil {
 		return entity instanceof LivingEntity && (entity instanceof FlyingMob || entity instanceof FlyingAnimal);
 	}
 
+	public static boolean hasAttributeModifier(final LivingEntity entity, final Attribute attribute, final AttributeModifier modifier) {
+		final AttributeInstance instance = entity.getAttribute(attribute);
+
+		if (instance != null)
+			return instance.hasModifier(modifier);
+
+		return false;
+	}
+
 	public static void reapplyAttributeModifier(LivingEntity entity, Attribute attribute, AttributeModifier modifier, boolean permanentModifier) {
 		AttributeInstance instance = entity.getAttribute(attribute);
 

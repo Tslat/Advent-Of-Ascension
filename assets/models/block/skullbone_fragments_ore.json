@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "render_type": "minecraft:cutout_mipped",
-  "textures": {
-    "all": "aoa3:block/skullbone_fragments_ore",
-    "particle": "aoa3:block/skullbone_fragments_ore"
-  }
-}

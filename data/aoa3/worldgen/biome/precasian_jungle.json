@@ -28,7 +28,10 @@
   },
   "features": [
     [],
-    [],
+    [
+      "aoa3:underground_precasian_lava_lake",
+      "aoa3:surface_precasian_lake"
+    ],
     [],
     [],
     [],
@@ -42,6 +45,17 @@
       "aoa3:high_altitude_andesite_ore",
       "aoa3:low_altitude_andesite_ore",
       "aoa3:tuff_ore",
+      "aoa3:precasian_high_altitude_iron_ore",
+      "aoa3:precasian_iron_ore",
+      "aoa3:precasian_low_altitude_iron_ore",
+      "aoa3:precasian_small_iron_ore",
+      "aoa3:precasian_gold_ore",
+      "aoa3:precasian_low_altitude_gold_ore",
+      "aoa3:precasian_redstone_ore",
+      "aoa3:precasian_low_altitude_redstone_ore",
+      "aoa3:precasian_lapis_ore",
+      "aoa3:precasian_buried_lapis_ore",
+      "aoa3:precasian_copper_ore",
       "minecraft:underwater_magma",
       "aoa3:better_sand_disk",
       "aoa3:better_clay_disk",
@@ -61,7 +75,12 @@
     ]
   ],
   "has_precipitation": true,
-  "spawn_costs": {},
+  "spawn_costs": {
+    "aoa3:meganeuropsis": {
+      "charge": 0.20000000298023224,
+      "energy_budget": 0.699999988079071
+    }
+  },
   "spawners": {
     "ambient": [],
     "axolotls": [],
@@ -71,6 +90,12 @@
       {
         "type": "aoa3:spinoledon",
         "maxCount": 1,
+        "minCount": 1,
+        "weight": 5
+      },
+      {
+        "type": "aoa3:meganeuropsis",
+        "maxCount": 3,
         "minCount": 1,
         "weight": 100
       }
