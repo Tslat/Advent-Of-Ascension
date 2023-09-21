@@ -9,11 +9,11 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
+import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMobOld;
 
 import javax.annotation.Nullable;
 
-public class FischerEntity extends AoAWaterMeleeMob {
+public class FischerEntity extends AoAWaterMeleeMobOld {
     public FischerEntity(EntityType<? extends WaterAnimal> entityType, Level world) {
         super(entityType, world);
     }

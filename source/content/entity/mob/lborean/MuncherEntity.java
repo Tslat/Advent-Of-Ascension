@@ -16,14 +16,14 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
-import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
+import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMobOld;
 import net.tslat.aoa3.util.EntityUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
-public class MuncherEntity extends AoAWaterMeleeMob {
+public class MuncherEntity extends AoAWaterMeleeMobOld {
 	public MuncherEntity(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
 	}
@@ -46,7 +46,7 @@ public class MuncherEntity extends AoAWaterMeleeMob {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<AoAWaterMeleeMob>(this).ignoreLineOfSight().preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
+		goalSelector.addGoal(2, new TelegraphedMeleeAttackGoal<AoAWaterMeleeMobOld>(this).ignoreLineOfSight().preAttackTime(getPreAttackTime()).attackInterval(getCurrentSwingDuration()));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, false));
 	}

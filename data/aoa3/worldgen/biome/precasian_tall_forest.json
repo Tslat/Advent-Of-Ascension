@@ -109,6 +109,24 @@
         "type": "aoa3:spinoledon",
         "maxCount": 1,
         "minCount": 1,
+        "weight": 50
+      },
+      {
+        "type": "aoa3:smilodon",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 80
+      },
+      {
+        "type": "aoa3:veloraptor",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 100
+      },
+      {
+        "type": "aoa3:attercopus",
+        "maxCount": 2,
+        "minCount": 1,
         "weight": 100
       }
     ],

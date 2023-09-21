@@ -2,21 +2,13 @@ package net.tslat.aoa3.content.block.functional.altar;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.tslat.aoa3.common.registration.entity.AoAMobs;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.content.entity.mob.precasia.*;
-import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class ArmyBlock extends BossAltarBlock {
@@ -36,16 +28,16 @@ public class ArmyBlock extends BossAltarBlock {
 
 		return false;
 	}
-
+/*
 	@Override
 	public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
 		if (!world.isClientSide && WorldUtil.isWorld((ServerLevelAccessor)world, AoADimensions.PRECASIA.key) && rand.nextBoolean() && world.getEntitiesOfClass(SkeleElderEntity.class, new AABB(pos).inflate(100)).isEmpty())
 			world.addFreshEntity(new SkeleElderEntity(world, pos, 0));
-	}
+	}*/
 
 	@Override
 	protected void doActivationEffect(Player player, InteractionHand hand, BlockState state, BlockPos blockPos) {
-		spawnWave(player.level(), blockPos, 1);
+		//spawnWave(player.level(), blockPos, 1);
 		//sendSpawnMessage(player, LocaleUtil.getLocaleMessage(AoAMobs.SKELETRON.get().getDescriptionId() + ".spawn", player.getDisplayName()), blockPos);
 	}
 
@@ -65,7 +57,7 @@ public class ArmyBlock extends BossAltarBlock {
 	}
 
 
-	public static void spawnWave(Level world, BlockPos blockPos, int wave) {
+	/*public static void spawnWave(Level world, BlockPos blockPos, int wave) {
 		if (!world.isClientSide) {
 			switch (wave) {
 				case 1:
@@ -469,7 +461,7 @@ public class ArmyBlock extends BossAltarBlock {
 					break;
 			}
 		}
-	}
+	}*/
 
 	@Override
 	protected Item getActivationItem() {

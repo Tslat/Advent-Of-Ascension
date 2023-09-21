@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.entity.brain.task.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -78,12 +77,12 @@ public class GroundSlamAttack<E extends LivingEntity> extends ConditionlessAttac
 					BlockState groundState;
 
 					if ((groundState = level.getBlockState(pos.set(spawnPos.x, spawnPos.y - 1, spawnPos.z))).blocksMotion())
-						packet.particle(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, groundState), () -> new Vec3(pos.getX() + rand.nextFloat(), pos.getY() + 0.1, pos.getZ() + rand.nextFloat())).spawnNTimes(3));
+						packet.particle(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, groundState), () -> new Vec3(spawnPos.x + rand.nextGaussian(), spawnPos.y + 1.1, spawnPos.z + rand.nextGaussian())).spawnNTimes(3));
 				});
 			}
 		}
 
-		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, entity.position(), 50);
+		AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
 
 		for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity.level(), new AABB(originEntity.position(), originEntity.position()).inflate(radius.xzRadius(), radius.yRadius(), radius.xzRadius()), target -> target.isAlive() && target.onGround() && target != entity && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.getAbilities().invulnerable))) {
 			entity.doHurtTarget(target);

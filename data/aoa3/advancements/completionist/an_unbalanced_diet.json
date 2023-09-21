@@ -111,31 +111,11 @@
       },
       "trigger": "minecraft:consume_item"
     },
-    "consume_cooked_chimera_chop": {
-      "conditions": {
-        "item": {
-          "items": [
-            "aoa3:cooked_chimera_chop"
-          ]
-        }
-      },
-      "trigger": "minecraft:consume_item"
-    },
     "consume_cooked_fish": {
       "conditions": {
         "item": {
           "items": [
             "aoa3:cooked_fish"
-          ]
-        }
-      },
-      "trigger": "minecraft:consume_item"
-    },
-    "consume_cooked_furlion_chop": {
-      "conditions": {
-        "item": {
-          "items": [
-            "aoa3:cooked_furlion_chop"
           ]
         }
       },
@@ -441,26 +421,6 @@
       },
       "trigger": "minecraft:consume_item"
     },
-    "consume_raw_chimera_chop": {
-      "conditions": {
-        "item": {
-          "items": [
-            "aoa3:raw_chimera_chop"
-          ]
-        }
-      },
-      "trigger": "minecraft:consume_item"
-    },
-    "consume_raw_furlion_chop": {
-      "conditions": {
-        "item": {
-          "items": [
-            "aoa3:raw_furlion_chop"
-          ]
-        }
-      },
-      "trigger": "minecraft:consume_item"
-    },
     "consume_raw_halycon_beef": {
       "conditions": {
         "item": {
@@ -739,12 +699,6 @@
       "consume_yeti_fingernails"
     ],
     [
-      "consume_raw_furlion_chop"
-    ],
-    [
-      "consume_cooked_chimera_chop"
-    ],
-    [
       "consume_yellow_gemtrap"
     ],
     [
@@ -755,9 +709,6 @@
     ],
     [
       "consume_pearl_stripefish"
-    ],
-    [
-      "consume_raw_chimera_chop"
     ],
     [
       "consume_candy_corn"
@@ -851,9 +802,6 @@
     ],
     [
       "consume_mystic_shrooms"
-    ],
-    [
-      "consume_cooked_furlion_chop"
     ],
     [
       "consume_chocaw"

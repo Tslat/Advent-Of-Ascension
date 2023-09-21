@@ -29,17 +29,6 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 	}
 
 	@Override
-	protected void registerGoals() {
-		//goalSelector.addGoal(1, new FloatGoal(this));
-		//goalSelector.addGoal(2, new TelegraphedRangedAttackGoal<>(this).windUpTime(getPreAttackTime()));
-		//goalSelector.addGoal(7, new WaterAvoidingRandomStrollGoal(this, 1));
-		//goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8f));
-		//goalSelector.addGoal(8, new RandomLookAroundGoal(this));
-		//targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		//targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-	}
-
-	@Override
 	public BrainActivityGroup<T> getFightTasks() {
 		return BrainActivityGroup.fightTasks(
 				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> !target.isAlive() || (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
@@ -64,7 +53,7 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 	@Override
 	public void doRangedAttackEntity(@Nullable BaseMobProjectile projectile, Entity target) {
 		if (projectile != null) {
-			boolean success = switch (projectile.getProjectileType()) {
+			final boolean success = switch (projectile.getProjectileType()) {
 				case MAGIC -> DamageUtil.doMagicProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 				case GUN -> DamageUtil.doGunAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 				case PHYSICAL -> DamageUtil.doProjectileAttack(this, projectile, target, (float)getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
@@ -92,7 +81,7 @@ public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster
 		PositionAndMotionUtil.faceTowardsMotion(projectile);
 
 		if (getShootSound() != null)
-			level().playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1.0f, 1.0f);
+			level().playSound(null, getX(), getY(), getZ(), getShootSound(), SoundSource.HOSTILE, 1, 1);
 
 		level().addFreshEntity(projectile);
 	}

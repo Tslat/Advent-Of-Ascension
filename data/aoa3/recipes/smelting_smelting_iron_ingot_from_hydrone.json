@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 4.0,
+  "ingredient": {
+    "item": "aoa3:hydrone"
+  },
+  "result": "minecraft:iron_ingot"
+}

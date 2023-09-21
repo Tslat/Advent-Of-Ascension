@@ -72,7 +72,7 @@ public class SpinoledonEntity extends AoAMeleeMob<SpinoledonEntity> {
 		super.customServerAiStep();
 
 		if (this.tickCount % 100 == 0) {
-			if (level().isDay()) {
+			if (!level().isDay()) {
 				EntityUtil.applyAttributeModifierSafely(this, AoAAttributes.AGGRO_RANGE.get(), AoAAttributes.NIGHT_AGGRO_MODIFIER, false);
 			}
 			else {
@@ -175,8 +175,8 @@ public class SpinoledonEntity extends AoAMeleeMob<SpinoledonEntity> {
 	}
 
 	@Override
-	public double getMeleeAttackRangeSqr(LivingEntity target) {
-		return 2.25f * 2.25f;
+	protected float getAttackVectorPositionOffset() {
+		return 2f;
 	}
 
 	@Override

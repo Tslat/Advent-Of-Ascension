@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.ItemCraftingEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -71,6 +72,9 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 
 	@Override
 	public void handleItemCrafting(ItemCraftingEvent ev) {
+		if (ev.getCraftMatrix() instanceof InfusionTableContainer.InfusionInventory)
+			return;
+
 		ItemStack output = ev.getOutputStack();
 
 		for (EnchantmentInstance data : enchantments) {

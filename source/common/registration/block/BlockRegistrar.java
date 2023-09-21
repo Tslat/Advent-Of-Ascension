@@ -93,6 +93,22 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
+	public BlockRegistrar<T> baseFlammable(int spreadSpeed, int flammability) {
+		factory(properties -> new Block(properties) {
+			@Override
+			public int getFireSpreadSpeed(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+				return spreadSpeed;
+			}
+
+			@Override
+			public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
+				return flammability;
+			}
+		});
+
+		return this;
+	}
+
 	public BlockRegistrar<T> baseLog(MapColor endColour, MapColor sideColour, Supplier<? extends Block> strippedBlock) {
 		mapColour(state -> state.getValue(RotatedPillarBlock.AXIS) == Direction.Axis.Y ? endColour : sideColour);
 		factory(properties -> new LogBlock(properties, strippedBlock));

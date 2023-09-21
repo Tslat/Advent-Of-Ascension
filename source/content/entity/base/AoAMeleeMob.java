@@ -16,11 +16,12 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 	protected AoAMeleeMob(EntityType<? extends AoAMeleeMob> entityType, Level world) {
 		super(entityType, world);
 
-		this.attackReach = getBbWidth() * 1.75d + (getEyeHeight() / 3.6d * 0.25d);
+		this.attackReach = getBbWidth() + getAttackVectorPositionOffset() * 0.25f * 1.75d + (getEyeHeight() / 3.6d * 0.25d);
 	}
 
+	@Override
 	public int calculateKillXp() {
-		return !this.hasDrops ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 1.5f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
+  		return !this.hasDrops ? 0 : (int)(5 + (getAttributeValue(Attributes.MAX_HEALTH) + getAttributeValue(Attributes.ARMOR) * 1.75f + getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 1.5f + getAttributeValue(Attributes.ATTACK_DAMAGE) * 2) / 10f);
 	}
 
 	@Override
@@ -29,6 +30,10 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 				new InvalidateAttackTarget<>().invalidateIf((entity, target) -> (target instanceof Player pl && pl.getAbilities().invulnerable) || distanceToSqr(target.position()) > Math.pow(getAttributeValue(Attributes.FOLLOW_RANGE), 2)),
 				new SetWalkTargetToAttackTarget<>(),
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
+	}
+
+	protected float getAttackVectorPositionOffset() {
+		return 0;
 	}
 
 	@Override

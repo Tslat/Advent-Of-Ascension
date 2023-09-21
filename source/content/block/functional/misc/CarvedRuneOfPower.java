@@ -42,14 +42,14 @@ public class CarvedRuneOfPower extends Block {
 
 	public static boolean fillPortal(Level world, BlockPos pos, Direction direction, ItemStack stack, @Nullable Player player) {
 		Realmstone realmstone = (Realmstone)stack.getItem();
-		PortalBlock portalBlock = (PortalBlock)realmstone.getPortalBlock().get();
 
-		if (portalBlock == null) {
+		if (realmstone.getPortalBlock() == null) {
 			player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.portal.tba"));
 
 			return false;
 		}
 
+		PortalBlock portalBlock = (PortalBlock)realmstone.getPortalBlock().get();
 		AoAPortalFrame.PortalDirection facing = AoAPortalFrame.testFrameForActivation(world, pos, direction, portalBlock);
 
 		if (facing == AoAPortalFrame.PortalDirection.EXISTING) {

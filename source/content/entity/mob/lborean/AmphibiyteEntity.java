@@ -8,11 +8,11 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
+import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMobOld;
 
 import javax.annotation.Nullable;
 
-public class AmphibiyteEntity extends AoAWaterMeleeMob {
+public class AmphibiyteEntity extends AoAWaterMeleeMobOld {
 	public AmphibiyteEntity(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
 	}

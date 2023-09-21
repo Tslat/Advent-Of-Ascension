@@ -6,7 +6,6 @@ import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
 import net.minecraft.client.Minecraft;
-import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -37,7 +36,6 @@ public class AshfernCookingRecipeExtension implements ICraftingCategoryExtension
 			return;
 
 		final RegistryAccess registryAccess = level.registryAccess();
-		final ItemStack ashfern = AoAItems.ASHFERN.get().getDefaultInstance();
 
 		final List<Pair<ItemStack, ItemStack>> recipes = BuiltInRegistries.ITEM.stream()
 				.filter(Item::isEdible)
@@ -53,14 +51,7 @@ public class AshfernCookingRecipeExtension implements ICraftingCategoryExtension
 				.toList();
 
 		craftingGridHelper.createAndSetOutputs(builder, recipes.stream().map(Pair::second).toList());
-		craftingGridHelper.createAndSetInputs(builder, recipes.stream().map(pair -> {
-			List<ItemStack> ingredients = NonNullList.withSize(9, ItemStack.EMPTY);
-
-			ingredients.set(0, ashfern);
-			ingredients.set(1, pair.first());
-
-			return ingredients;
-		}).toList(), 0, 0);
+		craftingGridHelper.createAndSetInputs(builder, List.of(recipes.stream().map(Pair::first).toList(), List.of(AoAItems.ASHFERN.get().getDefaultInstance())), 0, 0);
 	}
 
 	@Nullable

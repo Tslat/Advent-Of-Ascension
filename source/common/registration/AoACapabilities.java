@@ -25,7 +25,7 @@ public final class AoACapabilities {
 	}
 
 	private static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof ServerPlayer)
-			event.addCapability(AdventPlayerCapabilityProvider.ID, new AdventPlayerCapabilityProvider((ServerPlayer)event.getObject()));
+		if (event.getObject() instanceof ServerPlayer player)
+			event.addCapability(AdventPlayerCapabilityProvider.ID, new AdventPlayerCapabilityProvider(player));
 	}
 }

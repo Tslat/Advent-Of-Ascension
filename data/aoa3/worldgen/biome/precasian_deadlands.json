@@ -51,7 +51,8 @@
     ],
     [
       "aoa3:deadlands_dead_trees",
-      "minecraft:patch_dead_bush_badlands"
+      "minecraft:patch_dead_bush_badlands",
+      "aoa3:sparse_ashfern"
     ]
   ],
   "has_precipitation": false,

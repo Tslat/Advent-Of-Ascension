@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.misc;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
@@ -8,26 +7,20 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Husk;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CropBlock;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.DistExecutor;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.entity.base.AoATrader;
-import net.tslat.aoa3.content.entity.mob.precasia.PrimitiveCarrotopEntity;
 import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 import net.tslat.aoa3.util.*;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -46,27 +39,6 @@ public class BlankRealmstone extends Item {
 			DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> ClientOperations::displayBlankRealmstoneGui);
 
 		return InteractionResultHolder.success(player.getItemInHand(hand));
-	}
-
-	@Override
-	public boolean onEntityItemUpdate(ItemStack stack, ItemEntity entity) {
-		if (!entity.level().isClientSide) {
-			if (WorldUtil.isWorld(entity.level(), AoADimensions.PRECASIA.key)) {
-				BlockPos pos = entity.blockPosition();
-				BlockState state = entity.level().getBlockState(pos);
-
-				if (state.getBlock() == Blocks.CARROTS && ((CropBlock)state.getBlock()).isMaxAge(state)) {
-					PrimitiveCarrotopEntity carrotop = new PrimitiveCarrotopEntity(AoAMobs.PRIMITIVE_CARROTOP.get(), entity.level());
-
-					carrotop.setPos(pos.getX() + 0.5, pos.getY() + 0.2, pos.getZ() + 0.5);
-					entity.level().addFreshEntity(carrotop);
-					entity.discard();
-					entity.level().setBlockAndUpdate(entity.blockPosition(), Blocks.AIR.defaultBlockState());
-				}
-			}
-		}
-
-		return false;
 	}
 
 	@Override

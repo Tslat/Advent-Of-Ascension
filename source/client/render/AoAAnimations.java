@@ -32,10 +32,15 @@ public final class AoAAnimations {
 	public static final RawAnimation ATTACK_SWIPE_RIGHT = RawAnimation.begin().thenPlay("attack.swipe_right");
 	public static final RawAnimation ATTACK_SHOOT_ALTERNATE = RawAnimation.begin().thenPlay("attack.shoot_alternate");
 
+	public static final RawAnimation SWIM_SPRINT = RawAnimation.begin().thenLoop("move.swim_sprint");
+
 	public static <T extends LivingEntity & GeoEntity> AnimationController<T> genericWalkRunSwimIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
 				if (false && entity.isInWater() && entity.getFluidTypeHeight(ForgeMod.WATER_TYPE.get()) > entity.getFluidJumpThreshold()) { // Disable until Geckolib fixes fluid movement
+					// TODO Fix Geckolib fluid movement?
+					// Unsure, entity might be floating too high.
+					// Think I already fixed it in Geckolib though
 					event.setAnimation(DefaultAnimations.SWIM);
 				}
 				else if (entity.isSprinting()) {

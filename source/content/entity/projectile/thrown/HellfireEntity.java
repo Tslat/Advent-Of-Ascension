@@ -80,7 +80,7 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 		int count = 0;
 
 		for (LivingEntity e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
-			if (DamageUtil.doMiscMagicAttack(getOwner(), this, 3.5f, position())) {
+			if (DamageUtil.doMiscMagicAttack(getOwner(), e, 3.5f, position())) {
 				level().addFreshEntity(new HellfireProjectileEntity(this, e.getX(), e.getY(), e.getZ()));
 				e.setSecondsOnFire(10);
 				count++;

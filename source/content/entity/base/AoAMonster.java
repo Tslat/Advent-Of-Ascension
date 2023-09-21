@@ -349,7 +349,6 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		for (AoAEntityPart<?> part : getParts()) {
 			part.updatePosition();
 		}
-		setNoGravity(true);
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -25,6 +26,11 @@ public class ShinySquidRenderer extends MobRenderer<ShinySquidEntity, ShinySquid
 		matrixStack.mulPose(Axis.XP.rotationDegrees(Mth.lerp(partialTicks, squid.xBodyRotO, squid.xBodyRot)));
 		matrixStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, squid.zBodyRotO, squid.zBodyRot)));
 		matrixStack.translate(0, -1.2f, 0);
+	}
+
+	@Override
+	protected int getBlockLightLevel(ShinySquidEntity entity, BlockPos pos) {
+		return 15;
 	}
 
 	@Override

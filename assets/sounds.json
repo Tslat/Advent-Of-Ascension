@@ -729,24 +729,6 @@
     ],
     "subtitle": "subtitles.entity.cherry_blaster.shoot"
   },
-  "entity.chimera.ambient": {
-    "sounds": [
-      "aoa3:entity/chimera/ambient"
-    ],
-    "subtitle": "subtitles.entity.chimera.ambient"
-  },
-  "entity.chimera.death": {
-    "sounds": [
-      "aoa3:entity/chimera/death"
-    ],
-    "subtitle": "subtitles.entity.chimera.death"
-  },
-  "entity.chimera.hurt": {
-    "sounds": [
-      "aoa3:entity/chimera/hurt"
-    ],
-    "subtitle": "subtitles.entity.chimera.hurt"
-  },
   "entity.chomper.ambient": {
     "sounds": [
       "aoa3:entity/chomper/ambient"
@@ -1092,7 +1074,9 @@
   },
   "entity.deinotherium.ambient": {
     "sounds": [
-      "aoa3:entity/deinotherium/ambient"
+      "aoa3:entity/deinotherium/ambient-01",
+      "aoa3:entity/deinotherium/ambient-02",
+      "aoa3:entity/deinotherium/ambient-03"
     ],
     "subtitle": "subtitles.entity.deinotherium.ambient"
   },
@@ -1104,7 +1088,8 @@
   },
   "entity.deinotherium.hurt": {
     "sounds": [
-      "aoa3:entity/deinotherium/hurt"
+      "aoa3:entity/deinotherium/hurt-01",
+      "aoa3:entity/deinotherium/hurt-02"
     ],
     "subtitle": "subtitles.entity.deinotherium.hurt"
   },
@@ -1143,24 +1128,6 @@
       "aoa3:entity/devourer/hurt"
     ],
     "subtitle": "subtitles.entity.devourer.hurt"
-  },
-  "entity.diocus.ambient": {
-    "sounds": [
-      "aoa3:entity/diocus/ambient"
-    ],
-    "subtitle": "subtitles.entity.diocus.ambient"
-  },
-  "entity.diocus.death": {
-    "sounds": [
-      "aoa3:entity/diocus/death"
-    ],
-    "subtitle": "subtitles.entity.diocus.death"
-  },
-  "entity.diocus.hurt": {
-    "sounds": [
-      "aoa3:entity/diocus/hurt"
-    ],
-    "subtitle": "subtitles.entity.diocus.hurt"
   },
   "entity.distorter.ambient": {
     "sounds": [
@@ -1218,24 +1185,6 @@
       }
     ]
   },
-  "entity.draggy.ambient": {
-    "sounds": [
-      "aoa3:entity/draggy/ambient"
-    ],
-    "subtitle": "subtitles.entity.draggy.ambient"
-  },
-  "entity.draggy.death": {
-    "sounds": [
-      "aoa3:entity/draggy/death"
-    ],
-    "subtitle": "subtitles.entity.draggy.death"
-  },
-  "entity.draggy.hurt": {
-    "sounds": [
-      "aoa3:entity/draggy/hurt"
-    ],
-    "subtitle": "subtitles.entity.draggy.hurt"
-  },
   "entity.dryad_sprite.happy": {
     "sounds": [
       "aoa3:entity/dryad_sprite/dryad_sprite_happy"
@@ -1290,24 +1239,6 @@
     ],
     "subtitle": "subtitles.entity.duston.hurt"
   },
-  "entity.dyrehorn.ambient": {
-    "sounds": [
-      "aoa3:entity/dyrehorn/ambient"
-    ],
-    "subtitle": "subtitles.entity.dyrehorn.ambient"
-  },
-  "entity.dyrehorn.death": {
-    "sounds": [
-      "aoa3:entity/dyrehorn/death"
-    ],
-    "subtitle": "subtitles.entity.dyrehorn.death"
-  },
-  "entity.dyrehorn.hurt": {
-    "sounds": [
-      "aoa3:entity/dyrehorn/hurt"
-    ],
-    "subtitle": "subtitles.entity.dyrehorn.hurt"
-  },
   "entity.echodar.ambient": {
     "sounds": [
       "aoa3:entity/echodar/ambient"
@@ -1325,24 +1256,6 @@
       "aoa3:entity/echodar/hurt"
     ],
     "subtitle": "subtitles.entity.echodar.hurt"
-  },
-  "entity.elkanyne.ambient": {
-    "sounds": [
-      "aoa3:entity/elkanyne/ambient"
-    ],
-    "subtitle": "subtitles.entity.elkanyne.ambient"
-  },
-  "entity.elkanyne.death": {
-    "sounds": [
-      "aoa3:entity/elkanyne/death"
-    ],
-    "subtitle": "subtitles.entity.elkanyne.death"
-  },
-  "entity.elkanyne.hurt": {
-    "sounds": [
-      "aoa3:entity/elkanyne/hurt"
-    ],
-    "subtitle": "subtitles.entity.elkanyne.hurt"
   },
   "entity.elusive.ambient": {
     "sounds": [
@@ -1432,18 +1345,6 @@
     ],
     "subtitle": "subtitles.entity.enforcer.hurt"
   },
-  "entity.everbeast.ambient": {
-    "sounds": [
-      "aoa3:entity/everbeast/ambient"
-    ],
-    "subtitle": "subtitles.entity.everbeast.ambient"
-  },
-  "entity.everbeast.hurt": {
-    "sounds": [
-      "aoa3:entity/everbeast/hurt"
-    ],
-    "subtitle": "subtitles.entity.everbeast.hurt"
-  },
   "entity.exohead.ambient": {
     "sounds": [
       "aoa3:entity/exohead/ambient"
@@ -1515,24 +1416,6 @@
       "aoa3:entity/fiend/hurt"
     ],
     "subtitle": "subtitles.entity.fiend.hurt"
-  },
-  "entity.fishix.ambient": {
-    "sounds": [
-      "aoa3:entity/fishix/ambient"
-    ],
-    "subtitle": "subtitles.entity.fishix.ambient"
-  },
-  "entity.fishix.death": {
-    "sounds": [
-      "aoa3:entity/fishix/death"
-    ],
-    "subtitle": "subtitles.entity.fishix.death"
-  },
-  "entity.fishix.hurt": {
-    "sounds": [
-      "aoa3:entity/fishix/hurt"
-    ],
-    "subtitle": "subtitles.entity.fishix.hurt"
   },
   "entity.flamewalker.ambient": {
     "sounds": [
@@ -1617,24 +1500,6 @@
       "aoa3:entity/fungik/shoot"
     ],
     "subtitle": "subtitles.entity.fungik.shoot"
-  },
-  "entity.furlion.ambient": {
-    "sounds": [
-      "aoa3:entity/furlion/ambient"
-    ],
-    "subtitle": "subtitles.entity.furlion.ambient"
-  },
-  "entity.furlion.death": {
-    "sounds": [
-      "aoa3:entity/furlion/death"
-    ],
-    "subtitle": "subtitles.entity.furlion.death"
-  },
-  "entity.furlion.hurt": {
-    "sounds": [
-      "aoa3:entity/furlion/hurt"
-    ],
-    "subtitle": "subtitles.entity.furlion.hurt"
   },
   "entity.gadgetoid.ambient": {
     "sounds": [
@@ -1825,24 +1690,6 @@
     ],
     "subtitle": "subtitles.entity.giant.hurt"
   },
-  "entity.giant_snail.ambient": {
-    "sounds": [
-      "aoa3:entity/giant_snail/ambient"
-    ],
-    "subtitle": "subtitles.entity.giant_snail.ambient"
-  },
-  "entity.giant_snail.death": {
-    "sounds": [
-      "aoa3:entity/giant_snail/death"
-    ],
-    "subtitle": "subtitles.entity.giant_snail.death"
-  },
-  "entity.giant_snail.hurt": {
-    "sounds": [
-      "aoa3:entity/giant_snail/hurt"
-    ],
-    "subtitle": "subtitles.entity.giant_snail.hurt"
-  },
   "entity.goalby.ambient": {
     "sounds": [
       "aoa3:entity/goalby/ambient"
@@ -2013,30 +1860,6 @@
       }
     ]
   },
-  "entity.hag.ambient": {
-    "sounds": [
-      "aoa3:entity/hag/ambient"
-    ],
-    "subtitle": "subtitles.entity.hag.ambient"
-  },
-  "entity.hag.death": {
-    "sounds": [
-      "aoa3:entity/hag/death"
-    ],
-    "subtitle": "subtitles.entity.hag.death"
-  },
-  "entity.hag.hurt": {
-    "sounds": [
-      "aoa3:entity/hag/hurt"
-    ],
-    "subtitle": "subtitles.entity.hag.hurt"
-  },
-  "entity.hag.shoot": {
-    "sounds": [
-      "aoa3:entity/hag/shoot"
-    ],
-    "subtitle": "subtitles.entity.hag.shoot"
-  },
   "entity.happy.shoot": {
     "sounds": [
       "aoa3:entity/happy/shoot"
@@ -2138,24 +1961,6 @@
     ],
     "subtitle": "subtitles.entity.infernal.hurt"
   },
-  "entity.iosaur.ambient": {
-    "sounds": [
-      "aoa3:entity/iosaur/ambient"
-    ],
-    "subtitle": "subtitles.entity.iosaur.ambient"
-  },
-  "entity.iosaur.death": {
-    "sounds": [
-      "aoa3:entity/iosaur/death"
-    ],
-    "subtitle": "subtitles.entity.iosaur.death"
-  },
-  "entity.iosaur.hurt": {
-    "sounds": [
-      "aoa3:entity/iosaur/hurt"
-    ],
-    "subtitle": "subtitles.entity.iosaur.hurt"
-  },
   "entity.jawe.ambient": {
     "sounds": [
       "aoa3:entity/jawe/ambient"
@@ -2179,30 +1984,6 @@
       "aoa3:entity/jumbo/ambient"
     ],
     "subtitle": "subtitles.entity.jumbo.ambient"
-  },
-  "entity.kaiyu.ambient": {
-    "sounds": [
-      "aoa3:entity/kaiyu/ambient"
-    ],
-    "subtitle": "subtitles.entity.kaiyu.ambient"
-  },
-  "entity.kaiyu.death": {
-    "sounds": [
-      "aoa3:entity/kaiyu/death"
-    ],
-    "subtitle": "subtitles.entity.kaiyu.death"
-  },
-  "entity.kaiyu.hurt": {
-    "sounds": [
-      "aoa3:entity/kaiyu/hurt"
-    ],
-    "subtitle": "subtitles.entity.kaiyu.hurt"
-  },
-  "entity.kaiyu.shoot": {
-    "sounds": [
-      "aoa3:entity/kaiyu/shoot"
-    ],
-    "subtitle": "subtitles.entity.kaiyu.shoot"
   },
   "entity.keeler.ambient": {
     "sounds": [
@@ -2569,36 +2350,6 @@
     ],
     "subtitle": "subtitles.entity.modulo.hurt"
   },
-  "entity.mother_void_walker.ambient": {
-    "sounds": [
-      "aoa3:entity/mother_void_walker/ambient"
-    ],
-    "subtitle": "subtitles.entity.mother_void_walker.ambient"
-  },
-  "entity.mother_void_walker.death": {
-    "sounds": [
-      "aoa3:entity/mother_void_walker/death"
-    ],
-    "subtitle": "subtitles.entity.mother_void_walker.death"
-  },
-  "entity.mother_void_walker.hurt": {
-    "sounds": [
-      "aoa3:entity/mother_void_walker/hurt"
-    ],
-    "subtitle": "subtitles.entity.mother_void_walker.hurt"
-  },
-  "entity.muckopede.ambient": {
-    "sounds": [
-      "aoa3:entity/muckopede/ambient"
-    ],
-    "subtitle": "subtitles.entity.muckopede.ambient"
-  },
-  "entity.muckopede.hurt": {
-    "sounds": [
-      "aoa3:entity/muckopede/hurt"
-    ],
-    "subtitle": "subtitles.entity.muckopede.hurt"
-  },
   "entity.muncher.ambient": {
     "sounds": [
       "aoa3:entity/muncher/ambient"
@@ -2678,24 +2429,6 @@
       "aoa3:entity/night_watcher/hurt"
     ],
     "subtitle": "subtitles.entity.night_watcher.hurt"
-  },
-  "entity.nightfly.ambient": {
-    "sounds": [
-      "aoa3:entity/nightfly/ambient"
-    ],
-    "subtitle": "subtitles.entity.nightfly.ambient"
-  },
-  "entity.nightfly.death": {
-    "sounds": [
-      "aoa3:entity/nightfly/death"
-    ],
-    "subtitle": "subtitles.entity.nightfly.death"
-  },
-  "entity.nightfly.hurt": {
-    "sounds": [
-      "aoa3:entity/nightfly/hurt"
-    ],
-    "subtitle": "subtitles.entity.nightfly.hurt"
   },
   "entity.nightmare_spider.ambient": {
     "sounds": [
@@ -2805,6 +2538,12 @@
     ],
     "subtitle": "subtitles.entity.omnilight.hurt"
   },
+  "entity.opteryx.hurt": {
+    "sounds": [
+      "aoa3:entity/opteryx/hurt"
+    ],
+    "subtitle": "subtitles.entity.opteryx.hurt"
+  },
   "entity.parasect.ambient": {
     "sounds": [
       "aoa3:entity/parasect/ambient"
@@ -2840,42 +2579,6 @@
       "aoa3:entity/paravite/hurt"
     ],
     "subtitle": "subtitles.entity.paravite.hurt"
-  },
-  "entity.penguin.ambient": {
-    "sounds": [
-      "aoa3:entity/penguin/ambient"
-    ],
-    "subtitle": "subtitles.entity.penguin.ambient"
-  },
-  "entity.penguin.death": {
-    "sounds": [
-      "aoa3:entity/penguin/death"
-    ],
-    "subtitle": "subtitles.entity.penguin.death"
-  },
-  "entity.penguin.hurt": {
-    "sounds": [
-      "aoa3:entity/penguin/hurt"
-    ],
-    "subtitle": "subtitles.entity.penguin.hurt"
-  },
-  "entity.pincher.ambient": {
-    "sounds": [
-      "aoa3:entity/pincher/ambient"
-    ],
-    "subtitle": "subtitles.entity.pincher.ambient"
-  },
-  "entity.pincher.death": {
-    "sounds": [
-      "aoa3:entity/pincher/death"
-    ],
-    "subtitle": "subtitles.entity.pincher.death"
-  },
-  "entity.pincher.hurt": {
-    "sounds": [
-      "aoa3:entity/pincher/hurt"
-    ],
-    "subtitle": "subtitles.entity.pincher.hurt"
   },
   "entity.pixon.ambient": {
     "sounds": [
@@ -2984,6 +2687,18 @@
     ],
     "subtitle": "subtitles.entity.ramradon.hurt"
   },
+  "entity.raptor.ambient": {
+    "sounds": [
+      "aoa3:entity/raptor/ambient"
+    ],
+    "subtitle": "subtitles.entity.raptor.ambient"
+  },
+  "entity.raptor.death": {
+    "sounds": [
+      "aoa3:entity/raptor/death"
+    ],
+    "subtitle": "subtitles.entity.raptor.death"
+  },
   "entity.rawbone.ambient": {
     "sounds": [
       "aoa3:entity/rawbone/ambient"
@@ -3001,24 +2716,6 @@
       "aoa3:entity/rawbone/hurt"
     ],
     "subtitle": "subtitles.entity.rawbone.hurt"
-  },
-  "entity.reaper.ambient": {
-    "sounds": [
-      "aoa3:entity/reaper/ambient"
-    ],
-    "subtitle": "subtitles.entity.reaper.ambient"
-  },
-  "entity.reaper.death": {
-    "sounds": [
-      "aoa3:entity/reaper/death"
-    ],
-    "subtitle": "subtitles.entity.reaper.death"
-  },
-  "entity.reaper.hurt": {
-    "sounds": [
-      "aoa3:entity/reaper/hurt"
-    ],
-    "subtitle": "subtitles.entity.reaper.hurt"
   },
   "entity.red_guardian.music": {
     "sounds": [
@@ -3102,24 +2799,6 @@
     ],
     "subtitle": "subtitles.entity.runic_golem.hurt"
   },
-  "entity.sabretooth.ambient": {
-    "sounds": [
-      "aoa3:entity/sabretooth/ambient"
-    ],
-    "subtitle": "subtitles.entity.sabretooth.ambient"
-  },
-  "entity.sabretooth.death": {
-    "sounds": [
-      "aoa3:entity/sabretooth/death"
-    ],
-    "subtitle": "subtitles.entity.sabretooth.death"
-  },
-  "entity.sabretooth.hurt": {
-    "sounds": [
-      "aoa3:entity/sabretooth/hurt"
-    ],
-    "subtitle": "subtitles.entity.sabretooth.hurt"
-  },
   "entity.sea_viper.ambient": {
     "sounds": [
       "aoa3:entity/sea_viper/ambient"
@@ -3137,36 +2816,6 @@
       "aoa3:entity/sea_viper/hurt"
     ],
     "subtitle": "subtitles.entity.sea_viper.hurt"
-  },
-  "entity.shade.ambient": {
-    "sounds": [
-      "aoa3:entity/shade/ambient"
-    ],
-    "subtitle": "subtitles.entity.shade.ambient"
-  },
-  "entity.shade.death": {
-    "sounds": [
-      "aoa3:entity/shade/death"
-    ],
-    "subtitle": "subtitles.entity.shade.death"
-  },
-  "entity.shade.hurt": {
-    "sounds": [
-      "aoa3:entity/shade/hurt"
-    ],
-    "subtitle": "subtitles.entity.shade.hurt"
-  },
-  "entity.shadow.ambient": {
-    "sounds": [
-      "aoa3:entity/shadow/ambient"
-    ],
-    "subtitle": "subtitles.entity.shadow.ambient"
-  },
-  "entity.shadow.hurt": {
-    "sounds": [
-      "aoa3:entity/shadow/hurt"
-    ],
-    "subtitle": "subtitles.entity.shadow.hurt"
   },
   "entity.shadowlord.ambient": {
     "sounds": [
@@ -3224,12 +2873,6 @@
       "aoa3:entity/shik/hurt2"
     ],
     "subtitle": "subtitles.entity.shik.hurt"
-  },
-  "entity.skeleman.shoot": {
-    "sounds": [
-      "aoa3:entity/skeleman/shoot"
-    ],
-    "subtitle": "subtitles.entity.skeleman.shoot"
   },
   "entity.skeletron.ambient": {
     "sounds": [
@@ -3313,6 +2956,25 @@
       }
     ]
   },
+  "entity.smilodon.ambient": {
+    "sounds": [
+      "aoa3:entity/smilodon/ambient-01",
+      "aoa3:entity/smilodon/ambient-02"
+    ],
+    "subtitle": "subtitles.entity.smilodon.ambient"
+  },
+  "entity.smilodon.death": {
+    "sounds": [
+      "aoa3:entity/smilodon/death"
+    ],
+    "subtitle": "subtitles.entity.smilodon.death"
+  },
+  "entity.smilodon.hurt": {
+    "sounds": [
+      "aoa3:entity/smilodon/hurt"
+    ],
+    "subtitle": "subtitles.entity.smilodon.hurt"
+  },
   "entity.soulscorne.ambient": {
     "sounds": [
       "aoa3:entity/soulscorne/ambient"
@@ -3366,24 +3028,6 @@
       "aoa3:entity/spectral_wizard/hurt"
     ],
     "subtitle": "subtitles.entity.spectral_wizard.hurt"
-  },
-  "entity.sphinx.ambient": {
-    "sounds": [
-      "aoa3:entity/sphinx/ambient"
-    ],
-    "subtitle": "subtitles.entity.sphinx.ambient"
-  },
-  "entity.sphinx.death": {
-    "sounds": [
-      "aoa3:entity/sphinx/death"
-    ],
-    "subtitle": "subtitles.entity.sphinx.death"
-  },
-  "entity.sphinx.hurt": {
-    "sounds": [
-      "aoa3:entity/sphinx/hurt"
-    ],
-    "subtitle": "subtitles.entity.sphinx.hurt"
   },
   "entity.spinoledon.ambient": {
     "sounds": [
@@ -3518,24 +3162,6 @@
     ],
     "subtitle": "subtitles.entity.sysker.hurt"
   },
-  "entity.terradon.ambient": {
-    "sounds": [
-      "aoa3:entity/terradon/ambient"
-    ],
-    "subtitle": "subtitles.entity.terradon.ambient"
-  },
-  "entity.terradon.death": {
-    "sounds": [
-      "aoa3:entity/terradon/death"
-    ],
-    "subtitle": "subtitles.entity.terradon.death"
-  },
-  "entity.terradon.hurt": {
-    "sounds": [
-      "aoa3:entity/terradon/hurt"
-    ],
-    "subtitle": "subtitles.entity.terradon.hurt"
-  },
   "entity.terrestrial.ambient": {
     "sounds": [
       "aoa3:entity/terrestrial/ambient"
@@ -3571,24 +3197,6 @@
       "aoa3:entity/tharafly/hurt"
     ],
     "subtitle": "subtitles.entity.tharafly.hurt"
-  },
-  "entity.tortione.ambient": {
-    "sounds": [
-      "aoa3:entity/tortione/ambient"
-    ],
-    "subtitle": "subtitles.entity.tortione.ambient"
-  },
-  "entity.tortione.death": {
-    "sounds": [
-      "aoa3:entity/tortione/death"
-    ],
-    "subtitle": "subtitles.entity.tortione.death"
-  },
-  "entity.tortione.hurt": {
-    "sounds": [
-      "aoa3:entity/tortione/hurt"
-    ],
-    "subtitle": "subtitles.entity.tortione.hurt"
   },
   "entity.toxxulous.ambient": {
     "sounds": [
@@ -3637,24 +3245,6 @@
       "aoa3:entity/tree_spirit_sprite/impact"
     ],
     "subtitle": "subtitles.entity.tree_spirit_sprite.impact"
-  },
-  "entity.trickster.ambient": {
-    "sounds": [
-      "aoa3:entity/trickster/ambient"
-    ],
-    "subtitle": "subtitles.entity.trickster.ambient"
-  },
-  "entity.trickster.hide": {
-    "sounds": [
-      "aoa3:entity/trickster/hide"
-    ],
-    "subtitle": "subtitles.entity.trickster.hide"
-  },
-  "entity.trickster.hurt": {
-    "sounds": [
-      "aoa3:entity/trickster/hurt"
-    ],
-    "subtitle": "subtitles.entity.trickster.hurt"
   },
   "entity.trotter.ambient": {
     "sounds": [

@@ -19,9 +19,9 @@ import net.tslat.aoa3.library.object.PositionTableMap;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class BigLakeFeature extends Feature<BigLakeFeature.Configuration> {
-	private static final int AIR = 0;
-	private static final int FLUID = 1;
-	private static final int BARRIER = 2;
+	private static final int AIR = 1;
+	private static final int FLUID = 2;
+	private static final int BARRIER = 3;
 
 	public BigLakeFeature(Codec<Configuration> codec) {
 		super(codec);
@@ -76,7 +76,7 @@ public class BigLakeFeature extends Feature<BigLakeFeature.Configuration> {
 		// Cancel lake entirely if spheroid-edge block is liquid or isn't solid & isn't the config fluid
 
 		for (Vec3i emptyPos : lakePositions.emptyPositions()) {
-			if (!lakePositions.isAtEdgeOfRegion(emptyPos.getX(), emptyPos.getY(), emptyPos.getZ()) && lakePositions.isAdjacentFilled(emptyPos.getX(), emptyPos.getY(), emptyPos.getZ())) {
+			if (!lakePositions.isAtEdgeOfRegion(emptyPos.getX(), emptyPos.getY(), emptyPos.getZ()) && lakePositions.isAdjacentFilled(emptyPos.getX(), emptyPos.getY(), emptyPos.getZ(), FLUID)) {
 				final BlockState barrierPreState = level.getBlockState(pos.offset(emptyPos));
 
 				if (emptyPos.getY() >= depth) {
@@ -138,8 +138,12 @@ public class BigLakeFeature extends Feature<BigLakeFeature.Configuration> {
 		for (Vec3i pos : lakePositions.positionsForValue(FLUID)) {
 			final BlockPos fluidPos = centerPos.offset(pos);
 
-			if (canReplaceBlock(level.getBlockState(fluidPos)))
+			if (canReplaceBlock(level.getBlockState(fluidPos))) {
 				level.setBlock(fluidPos, fluidState, Block.UPDATE_CLIENTS);
+
+				if (pos.getY() >= depth)
+					markAboveForPostProcessing(level, fluidPos);
+			}
 		}
 	}
 

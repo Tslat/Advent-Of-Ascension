@@ -12,16 +12,15 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.content.entity.mob.misc.ThornyPlantSproutEntity;
 import net.tslat.aoa3.content.entity.mob.nether.NethengeicBeastEntity;
 import net.tslat.aoa3.util.WorldUtil;
 import org.apache.logging.log4j.Level;
 
 import static net.minecraft.world.entity.SpawnPlacements.Type.*;
-import static net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING;
-import static net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES;
+import static net.minecraft.world.level.levelgen.Heightmap.Types.*;
 
 public final class AoAEntitySpawnPlacements {
     private static final SpawnPlacements.Type AMPHIBIOUS = SpawnPlacements.Type.create("AMPHIBIOUS", ((level, pos, entityType) -> NaturalSpawner.canSpawnAtBody((level.getFluidState(pos).isEmpty() ? ON_GROUND : IN_WATER), level, pos, entityType)));
@@ -66,10 +65,13 @@ public final class AoAEntitySpawnPlacements {
 
     private static void setPrecasiaSpawnPlacements() {
         setSpawnPlacement(AoAMobs.SPINOLEDON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.05f));
-        setSpawnPlacement(AoAMiscEntities.THORNY_PLANT_SPROUT.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.05f).and(ThornyPlantSproutEntity::checkSpawnConditions));
         setSpawnPlacement(AoAAnimals.HORNDRON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
         setSpawnPlacement(AoAAnimals.DEINOTHERIUM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
         setSpawnPlacement(AoAMobs.MEGANEUROPSIS.get(), NO_RESTRICTIONS, MOTION_BLOCKING, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(65).difficultyBasedSpawnChance(0.05f));
+        setSpawnPlacement(AoAMobs.SMILODON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.1f));
+        setSpawnPlacement(AoAMobs.ATTERCOPUS.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.and((entityType, level, spawnType, pos, rand) -> (level.getBiome(pos).is(Tags.Biomes.IS_DESERT) && level.getSkyDarken() >= 4) || pos.getY() <= 50));
+        setSpawnPlacement(AoAMobs.VELORAPTOR.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.1f));
+        setSpawnPlacement(AoAMobs.DUNKLEOSTEUS.get(), IN_WATER, OCEAN_FLOOR, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noHigherThanY(55).difficultyBasedSpawnChance(0.05f));
     }
 
     private static void setMiscSpawnPlacements() {

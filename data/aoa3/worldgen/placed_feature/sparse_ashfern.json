@@ -2,10 +2,6 @@
   "feature": "aoa3:single_ashfern",
   "placement": [
     {
-      "type": "aoa3:percent_chance",
-      "chance": 0.33333334
-    },
-    {
       "type": "minecraft:in_square"
     },
     {

@@ -208,6 +208,7 @@ public class EliteSmashEntity extends AoABoss {
 						new OneRandomBehaviour<>(
 								Pair.of(
 										new GroundSlamAttack<>(getSwingWarmupTicks(AXE_SLAM_STATE))
+												.radius(4)
 												.slamAtTarget()
 												.requiresTarget()
 												.whenActivating(entity -> this.level().playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
@@ -227,7 +228,8 @@ public class EliteSmashEntity extends AoABoss {
 						new OneRandomBehaviour<>(
 								Pair.of(
 										new GroundSlamAttack<>(getSwingWarmupTicks(AXE_SLAM_STATE))
-												.radius(5)
+												.radius(4)
+												.slamAtTarget()
 												.requiresTarget()
 												.whenActivating(entity -> this.level().playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 0.5f))
 												.whenStarting(entity -> ATTACK_STATE.set(this, AXE_SLAM_STATE))

@@ -19,7 +19,6 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
@@ -28,10 +27,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.entity.PartEntity;
-import net.tslat.aoa3.content.entity.brain.task.temp.BreedWithPartner;
-import net.tslat.aoa3.content.entity.brain.task.temp.FollowParent;
-import net.tslat.aoa3.content.entity.brain.task.temp.FollowTemptation;
-import net.tslat.aoa3.content.entity.brain.task.temp.Panic;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -40,8 +35,12 @@ import net.tslat.smartbrainlib.api.core.SmartBrainProvider;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Panic;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FloatToSurfaceOfFluid;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowParent;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
@@ -49,7 +48,6 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.ItemTemptingSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
-import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -150,7 +148,7 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	@Override
 	public List<ExtendedSensor<? extends T>> getSensors() {
 		return ObjectArrayList.of(
-				new ItemTemptingSensor<T>().setTemptingItems(getTemptItem() == null ? Ingredient.EMPTY : Ingredient.of(getTemptItem())),
+				new ItemTemptingSensor<T>().temptedWith((entity, stack) -> isFood(stack)),
 				new NearbyPlayersSensor<>(),
 				new NearbyLivingEntitySensor<T>().setScanRate(entity -> 40),
 				new HurtBySensor<>());
@@ -173,14 +171,15 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 						new FollowTemptation<>().startCondition(entity -> getTemptItem() != null),
 						new OneRandomBehaviour<>(
 								new SetRandomWalkTarget<>().speedModifier(0.9f),
-								new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60)))
-				).startCondition(entity -> !BrainUtils.hasMemory(entity, MemoryModuleType.IS_PANICKING)));
+								new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60)))));
 	}
 
 	@Override
 	public Map<Activity, BrainActivityGroup<? extends T>> getAdditionalTasks() {
 		return Map.of(Activity.PANIC, new BrainActivityGroup<T>(Activity.PANIC)
-				.behaviours(new Panic<>())
+				.behaviours(new Panic<>()
+						.setRadius(15, 10)
+						.speedMod(entity -> 1.5f))
 				.requireAndWipeMemoriesOnUse(MemoryModuleType.HURT_BY_ENTITY));
 	}
 

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 3.0,
+  "ingredient": {
+    "item": "aoa3:precasian_copper_ore"
+  },
+  "result": "minecraft:copper_ingot"
+}

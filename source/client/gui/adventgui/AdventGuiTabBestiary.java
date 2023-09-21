@@ -346,7 +346,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 					else if (openEntryInstance instanceof AoAWaterRangedMob) {
 						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.swimmingRanged");
 					}
-					else if (openEntryInstance instanceof AoAWaterMeleeMob || ((LivingEntity)openEntryInstance).getMobType() == WATER) {
+					else if (openEntryInstance instanceof AoAWaterMeleeMobOld || ((LivingEntity)openEntryInstance).getMobType() == WATER) {
 						type = LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.type.swimmingMelee");
 					}
 					else {

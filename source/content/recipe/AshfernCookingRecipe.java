@@ -65,7 +65,7 @@ public class AshfernCookingRecipe extends CustomRecipe {
 		if (level == null)
 			return ItemStack.EMPTY;
 
-		int fernCount = 0;
+		boolean foundFern = false;
 		ItemStack output = ItemStack.EMPTY;
 
 		for (int i = 0; i < container.getContainerSize(); i++) {
@@ -75,18 +75,24 @@ public class AshfernCookingRecipe extends CustomRecipe {
 				continue;
 
 			if (stack.is(AoAItems.ASHFERN.get())) {
-				fernCount = stack.getCount();
+				foundFern = true;
+
+				if (!output.isEmpty())
+					break;
 
 				continue;
 			}
 
 			output = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level).map(recipe -> recipe.getResultItem(registryAccess)).orElse(ItemStack.EMPTY);
 
-			break;
+			if (foundFern)
+				break;
 		}
 
+		if (!foundFern)
+			return ItemStack.EMPTY;
+
 		output = output.copy();
-		output.setCount(Math.min(64, output.getCount() * fernCount));
 
 		return output;
 	}

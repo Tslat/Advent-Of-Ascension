@@ -430,6 +430,7 @@ public final class AoABlocks {
 	public static final RegistryObject<Block> IROSTONE_BUTTON = register("irostone_button", registrar -> registrar.baseButton(IROSTONE.stone).factory(properties -> new ButtonBlock(properties, AoABlockCollections.IROSTONE_SET, 20, false)));
 	public static final RegistryObject<Block> RUNIC_STONE_BUTTON = register("runic_stone_button", registrar -> registrar.baseButton(RUNIC_STONE.stone).factory(properties -> new ButtonBlock(properties, AoABlockCollections.RUNIC_STONE_SET, 20, false)));
 
+	public static final RegistryObject<Block> NEST = register("nest", registrar -> registrar.baseFlammable(30, 60).noOcclusion().sounds(SoundType.GRASS).mapColour(MapColor.COLOR_BROWN).stats(1, 0.5f).decorationBlocksTab().flammable());
 	public static final RegistryObject<Block> KAIYU_TEMPLE_BLOCK_FACE = register("kaiyu_temple_block_face", registrar -> registrar.mapColour(MapColor.TERRACOTTA_ORANGE).stats(10, 15).decorationBlocksTab().instrument(NoteBlockInstrument.BASS));
 	public static final RegistryObject<Block> KAIYU_TEMPLE_BLOCK_FLOW = register("kaiyu_temple_block_flow", registrar -> registrar.mapColour(MapColor.TERRACOTTA_ORANGE).stats(10, 15).decorationBlocksTab().instrument(NoteBlockInstrument.BASS));
 	public static final RegistryObject<Block> KAIYU_TEMPLE_BLOCK_MAZE = register("kaiyu_temple_block_maze", registrar -> registrar.mapColour(MapColor.TERRACOTTA_ORANGE).stats(10, 15).decorationBlocksTab().instrument(NoteBlockInstrument.BASS));

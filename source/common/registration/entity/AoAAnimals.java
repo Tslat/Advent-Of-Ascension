@@ -14,12 +14,13 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.animal.*;
 import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
+import net.tslat.aoa3.content.entity.animal.precasia.DeinotheriumEntity;
+import net.tslat.aoa3.content.entity.animal.precasia.HorndronEntity;
 import net.tslat.aoa3.content.entity.misc.pixon.*;
 import net.tslat.aoa3.content.entity.mob.haven.AngelicaEntity;
 import net.tslat.aoa3.content.entity.mob.haven.DawnlightEntity;
 import net.tslat.aoa3.content.entity.mob.haven.RainicornEntity;
-import net.tslat.aoa3.content.entity.mob.overworld.HorndronEntity;
-import net.tslat.aoa3.content.entity.mob.precasia.DeinotheriumEntity;
+import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
 
 import java.util.function.Consumer;
 
@@ -28,7 +29,6 @@ public final class AoAAnimals {
 
 	public static final RegistryObject<EntityType<CorateeEntity>> CORATEE = registerAnimal("coratee", CorateeEntity::new, MobCategory.WATER_AMBIENT, 1f, 1f,  0x325156, 0x55797E);
 	public static final RegistryObject<EntityType<Animal>> CREEP_COW = registerAnimal("creep_cow", CreepCowEntity::new, 0.9f, 1.4f, 0x0CAB1A, 0xE0E9DB);
-	public static final RegistryObject<EntityType<Animal>> ELKANYNE = registerAnimal("elkanyne", ElkanyneEntity::new, 0.85f, 1.1875f, 0x6D5439, 0xDFC693);
 	public static final RegistryObject<EntityType<Animal>> HALYCON = registerAnimal("halycon", HalyconEntity::new, 0.9f, 1.4f, 0x2B5019, 0x82A94F);
 
 	public static final RegistryObject<EntityType<ShinySquidEntity>> SHINY_SQUID = registerAnimal("shiny_squid", ShinySquidEntity::new, MobCategory.WATER_CREATURE, 0.8f, 0.8f, 0xC7A003, 0x885000, builder -> builder.clientTrackingRange(8));
@@ -61,6 +61,7 @@ public final class AoAAnimals {
 
 	public static final RegistryObject<EntityType<HorndronEntity>> HORNDRON = registerAnimal("horndron", HorndronEntity::new, 1.5f, 2f, 0x332521, 0x5F523A);
 	public static final RegistryObject<EntityType<DeinotheriumEntity>> DEINOTHERIUM = registerAnimal("deinotherium", DeinotheriumEntity::new, 1.5f, 3.125f, 0x797168, 0x595149);
+	public static final RegistryObject<EntityType<OpteryxEntity>> OPTERYX = registerAnimal("opteryx", OpteryxEntity::new, 0.5f, 1.25f, 0xBA912C, 0x785205);
 
 	public static final RegistryObject<EntityType<Animal>> ANGELICA = registerAnimal("angelica", AngelicaEntity::new, 0.6f, 2f, 0x146262, 0xB4B4B4);
 	public static final RegistryObject<EntityType<Animal>> DAWNLIGHT = registerAnimal("dawnlight", DawnlightEntity::new, 0.6875f, 1.375f, 0xD8DAD2, 0xEBEBEA);

@@ -210,6 +210,7 @@ public class SmashEntity extends AoABoss {
 								Pair.of(
 										new GroundSlamAttack<>(getSwingWarmupTicks(AXE_SLAM_STATE))
 												.slamAtTarget()
+												.radius(4)
 												.requiresTarget()
 												.whenActivating(entity -> this.level().playSound(null, getX(), getY(), getZ(), AoASounds.HEAVY_WOODEN_IMPACT.get(), this.getSoundSource(), 1, 1))
 												.cooldownFor(entity -> (int)(getSwingDurationTicks(AXE_SLAM_STATE) * entity.getRandom().nextFloat() * 2))

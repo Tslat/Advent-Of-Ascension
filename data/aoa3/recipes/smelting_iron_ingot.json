@@ -2,9 +2,9 @@
   "type": "minecraft:smelting",
   "category": "misc",
   "cookingtime": 200,
-  "experience": 4.0,
+  "experience": 3.0,
   "ingredient": {
-    "item": "aoa3:hydrone"
+    "item": "aoa3:precasian_iron_ore"
   },
   "result": "minecraft:iron_ingot"
 }

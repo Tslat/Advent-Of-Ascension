@@ -72,7 +72,20 @@
     "axolotls": [],
     "creature": [],
     "misc": [],
-    "monster": [],
+    "monster": [
+      {
+        "type": "aoa3:dunkleosteus",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 1
+      },
+      {
+        "type": "aoa3:attercopus",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 100
+      }
+    ],
     "underground_water_creature": [
       {
         "type": "minecraft:glow_squid",

@@ -81,6 +81,12 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 100
+      },
+      {
+        "type": "aoa3:attercopus",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 100
       }
     ],
     "underground_water_creature": [],

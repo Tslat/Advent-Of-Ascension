@@ -11,7 +11,7 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMob;
+import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMobOld;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -19,7 +19,7 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 
 import javax.annotation.Nullable;
 
-public class SeaViperEntity extends AoAWaterMeleeMob {
+public class SeaViperEntity extends AoAWaterMeleeMobOld {
 	public SeaViperEntity(EntityType<? extends WaterAnimal> entityType, Level world) {
 		super(entityType, world);
 	}

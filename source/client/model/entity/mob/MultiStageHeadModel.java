@@ -14,14 +14,10 @@ import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 public class MultiStageHeadModel<T extends GeoAnimatable> extends DefaultedEntityGeoModel<T> {
-	private Stage[] stages = new Stage[0];
+	protected Stage[] stages = new Stage[0];
 
 	public MultiStageHeadModel(ResourceLocation assetSubpath) {
-		super(assetSubpath);
-	}
-
-	public MultiStageHeadModel(ResourceLocation assetSubpath, boolean turnsHead) {
-		super(assetSubpath, turnsHead);
+		super(assetSubpath, true);
 	}
 
 	public MultiStageHeadModel<T> withStages(Stage... stages) {

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 100,
+  "experience": 3.0,
+  "ingredient": {
+    "item": "aoa3:precasian_gold_ore"
+  },
+  "result": "minecraft:gold_ingot"
+}

@@ -284,15 +284,10 @@ public class AdventGuiTabPlayer extends Screen {
 						AoAMobs.STICKY,
 						AoAMobs.KRANKY,
 						AoAMobs.GINGERBREAD_MAN,
-						AoAMobs.SHADE,
 						AoAMobs.BOBO,
 						AoAMobs.CHOCKO,
 						AoAMobs.STITCHES,
-						AoAMobs.BUGEYE,
-						AoAMobs.SEA_TROLL,
-						AoAMobs.ELITE_SKELE_PIG,
 						AoAAnimals.SPEARMINT_SNAIL,
-						AoAMobs.SHADOW,
 						AoAMobs.ALARMO,
 						AoAMobs.ANCIENT_GOLEM
 				).get().create(mc.level);
