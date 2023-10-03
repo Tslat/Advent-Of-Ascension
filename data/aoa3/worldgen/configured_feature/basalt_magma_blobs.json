@@ -1,0 +1,33 @@
+{
+  "type": "aoa3:better_block_blob",
+  "config": {
+    "blocks": 3,
+    "placing_in": [
+      {
+        "block": "minecraft:basalt",
+        "predicate_type": "minecraft:block_match"
+      }
+    ],
+    "size": 2,
+    "states": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:basalt",
+            "Properties": {
+              "axis": "y"
+            }
+          },
+          "weight": 3
+        },
+        {
+          "data": {
+            "Name": "minecraft:magma_block"
+          },
+          "weight": 1
+        }
+      ]
+    }
+  }
+}

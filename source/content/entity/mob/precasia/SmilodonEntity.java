@@ -33,6 +33,8 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import java.util.List;
 
 public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
+	private final float SPRINTING_ATTACK_REACH = (float)((getBbWidth() + (getAttackVectorPositionOffset() * 0.3f)) * 1.75d + (getEyeHeight() / 3.6d * 0.25d));
+
 	public SmilodonEntity(EntityType<? extends SmilodonEntity> entityType, Level level) {
 		super(entityType, level);
 
@@ -91,11 +93,16 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 	}
 
 	@Override
-	public boolean isWithinMeleeAttackRange(LivingEntity target) {
-		if (isSprinting())
-			return distanceToSqr(target) <= 4;
+	protected float getAttackVectorPositionOffset() {
+		return 1.25f;
+	}
 
-		return super.isWithinMeleeAttackRange(target);
+	@Override
+	public double getMeleeAttackRangeSqr(LivingEntity target) {
+		final double attackReach = isSprinting() ? SPRINTING_ATTACK_REACH : this.attackReach;
+		final double targetBBOffset = target.getBbWidth() * 0.5d;
+
+		return attackReach * attackReach + targetBBOffset * targetBBOffset;
 	}
 
 	@Override

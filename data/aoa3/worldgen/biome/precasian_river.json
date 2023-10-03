@@ -52,12 +52,14 @@
       "minecraft:underwater_magma",
       "aoa3:better_sand_disk",
       "aoa3:better_clay_disk",
-      "aoa3:better_gravel_disk"
+      "aoa3:better_gravel_disk",
+      "aoa3:mud_disk"
     ],
     [],
     [],
     [
-      "minecraft:seagrass_river"
+      "minecraft:seagrass_river",
+      "minecraft:patch_waterlily"
     ],
     [
       "minecraft:freeze_top_layer"
@@ -73,7 +75,14 @@
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [],
+    "creature": [
+      {
+        "type": "minecraft:turtle",
+        "maxCount": 2,
+        "minCount": 1,
+        "weight": 1
+      }
+    ],
     "misc": [],
     "monster": [
       {

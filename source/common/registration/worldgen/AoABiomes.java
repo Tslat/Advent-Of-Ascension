@@ -18,6 +18,7 @@ public final class AoABiomes {
 	public static final ResourceKey<Biome> PRECASIAN_RIVER = ResourceKey.create(Registries.BIOME, AdventOfAscension.id("precasian_river"));
 	public static final ResourceKey<Biome> PRECASIAN_FOREST = ResourceKey.create(Registries.BIOME, AdventOfAscension.id("precasian_forest"));
 	public static final ResourceKey<Biome> PRECASIAN_TALL_FOREST = ResourceKey.create(Registries.BIOME, AdventOfAscension.id("precasian_tall_forest"));
+	public static final ResourceKey<Biome> PRECASIAN_CAVES = ResourceKey.create(Registries.BIOME, AdventOfAscension.id("precasian_caves"));
 
 
 }

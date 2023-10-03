@@ -16,7 +16,7 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 	protected AoAMeleeMob(EntityType<? extends AoAMeleeMob> entityType, Level world) {
 		super(entityType, world);
 
-		this.attackReach = getBbWidth() + getAttackVectorPositionOffset() * 0.25f * 1.75d + (getEyeHeight() / 3.6d * 0.25d);
+		this.attackReach = (getBbWidth() + (getAttackVectorPositionOffset() * 0.3f)) * 1.75d + (getEyeHeight() / 3.6d * 0.25d);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 
 	@Override
 	public double getMeleeAttackRangeSqr(LivingEntity target) {
-		double targetBBOffset = target.getBbWidth() * 0.5d;
+		final double targetBBOffset = target.getBbWidth() * 0.5d;
 
 		return this.attackReach * this.attackReach + targetBBOffset * targetBBOffset;
 	}

@@ -7,7 +7,6 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ComposterBlock;
-import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
 import java.util.List;
@@ -22,7 +21,7 @@ public final class NativePatching {
 		((RangedAttribute)Attributes.ARMOR_TOUGHNESS).maxValue = Double.MAX_VALUE;
 	}
 
-	public static void addCompostableBlock(RegistryObject<? extends Block> block, float chance) {
+	public static void addCompostableBlock(Supplier<? extends Block> block, float chance) {
 		BLOCK_COMPOSTABLES.add(FloatObjectPair.of(chance, () -> block.get().asItem()));
 	}
 

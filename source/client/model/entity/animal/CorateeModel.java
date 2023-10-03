@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.model.entity.animal;
 
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.content.entity.animal.CorateeEntity;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
@@ -9,6 +10,11 @@ import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 public class CorateeModel extends DefaultedEntityGeoModel<CorateeEntity> {
 	public CorateeModel() {
 		super(AdventOfAscension.id("animal/lborean/coratee"));
+	}
+
+	@Override
+	public ResourceLocation getTextureResource(CorateeEntity animatable) {
+		return buildFormattedModelPath(AdventOfAscension.id("animal/lborean/coratee_" + animatable.getVariant().name));
 	}
 
 	@Override

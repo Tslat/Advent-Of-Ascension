@@ -18,7 +18,7 @@
       "state": {
         "Name": "aoa3:baobab_leaves",
         "Properties": {
-          "distance": "7",
+          "distance": "15",
           "persistent": "false",
           "waterlogged": "false"
         }

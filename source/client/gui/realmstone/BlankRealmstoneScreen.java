@@ -205,8 +205,8 @@ public class BlankRealmstoneScreen extends Screen {
 						if (overlapBottom < 100) {
 							renderX += overlapLeft;
 							renderY += overlapTop;
-							int width = iconSize - overlapLeft - overlapRight;
-							int height = iconSize - overlapTop - overlapBottom;
+							int width = 100 - overlapLeft - overlapRight;
+							int height = 100 - overlapTop - overlapBottom;
 
 							GlStateManager._enableBlend();
 							RenderSystem.setShader(GameRenderer::getPositionTexShader);

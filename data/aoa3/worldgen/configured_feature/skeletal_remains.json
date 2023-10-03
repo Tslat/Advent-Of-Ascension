@@ -1,0 +1,14 @@
+{
+  "type": "aoa3:structure_piece",
+  "config": {
+    "processors": {
+      "processors": []
+    },
+    "templates": [
+      "aoa3:precasia/feature/skeletal_remains_leg_1",
+      "aoa3:precasia/feature/skeletal_remains_neck_1",
+      "aoa3:precasia/feature/skeletal_remains_neck_2",
+      "aoa3:precasia/feature/skeletal_remains_skull_1"
+    ]
+  }
+}

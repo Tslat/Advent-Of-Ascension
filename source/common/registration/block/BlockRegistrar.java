@@ -12,12 +12,15 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.registries.RegistryObject;
+import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.misc.NativePatching;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -34,7 +37,7 @@ import java.util.Objects;
 import java.util.function.*;
 
 public final class BlockRegistrar<T extends Block> {
-	private final List<Consumer<RegistryObject<T>>> callbacks = new ObjectArrayList<>();
+	private final List<Consumer<T>> callbacks = new ObjectArrayList<>();
 	private RegistryObject<T> registryObject = null;
 
 	private BlockBehaviour.Properties properties = BlockBehaviour.Properties.of();
@@ -177,6 +180,14 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
+	public BlockRegistrar<T> baseStackablePlant(Function<BlockBehaviour.Properties, Block> factory) {
+		basePlant();
+		factory(factory);
+		compostable(0.5f);
+
+		return this;
+	}
+
 	public BlockRegistrar<T> baseFlower(@Nullable Supplier<? extends MobEffect> potionEffect, int duration) {
 		mapColour(MapColor.PLANT);
 		sounds(SoundType.GRASS);
@@ -222,7 +233,7 @@ public final class BlockRegistrar<T extends Block> {
 	}
 
 	public BlockRegistrar<T> compostable(float chance) {
-		this.callbacks.add(block -> NativePatching.addCompostableBlock(block, chance));
+		this.callbacks.add(block -> NativePatching.addCompostableBlock(() -> block, chance));
 
 		return this;
 	}
@@ -263,6 +274,22 @@ public final class BlockRegistrar<T extends Block> {
 		stats(0.5f);
 		flammable();
 		pistonBreaks();
+		utilityBlocksTab();
+
+		return this;
+	}
+
+	public BlockRegistrar<T> baseDoor(BlockSetType blockSet) {
+		basedOn(Blocks.OAK_DOOR);
+		factory(properties -> new DoorBlock(properties, blockSet));
+		utilityBlocksTab();
+
+		return this;
+	}
+
+	public BlockRegistrar<T> baseTrapdoor(BlockSetType blockSet) {
+		basedOn(Blocks.OAK_TRAPDOOR);
+		factory(properties -> new TrapDoorBlock(properties, blockSet));
 		utilityBlocksTab();
 
 		return this;
@@ -350,7 +377,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseSign(RegistryObject<? extends Block> block) {
+	public BlockRegistrar<T> baseSign(RegistryObject<? extends Block> block, boolean hanging) {
 		basedOn(block);
 		alwaysSolid();
 		instrument(NoteBlockInstrument.BASS);
@@ -358,6 +385,7 @@ public final class BlockRegistrar<T extends Block> {
 		stats(1);
 		flammable();
 		decorationBlocksTab();
+		addToBlockEntity(hanging ? () -> BlockEntityType.HANGING_SIGN : () -> BlockEntityType.SIGN);
 
 		return this;
 	}
@@ -682,6 +710,12 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
+	public BlockRegistrar<T> addToBlockEntity(Supplier<BlockEntityType<?>> blockEntity) {
+		this.callbacks.add(block -> AoAStartupCache.addBlockToExistingBlockEntityType(blockEntity, () -> block));
+
+		return this;
+	}
+
 	T build(Consumer<BlockRegistrar<T>> registrar) {
 		registrar.accept(this);
 
@@ -691,8 +725,13 @@ public final class BlockRegistrar<T extends Block> {
 		return (T)this.factory.apply(this.properties);
 	}
 
-	void doCallbacks(final RegistryObject<T> block) {
-		this.registryObject = block;
+	void setRegistryObject(RegistryObject<T> registryObject) {
+		this.registryObject = registryObject;
+	}
+
+	T doCallbacks(final T block) {
 		this.callbacks.forEach(consumer -> consumer.accept(block));
+
+		return block;
 	}
 }

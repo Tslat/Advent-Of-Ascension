@@ -16,6 +16,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.IExtensibleEnum;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAAttributes;
@@ -27,6 +28,7 @@ import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.MathUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -221,7 +223,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 			};
 		}
 
-		// Use this to create additional variants of chargers if you're an addon creator
+		// Use this to create additional variants of Veloraptors if you're an addon creator
 		public static Type create(String name, String variant) {
 			throw new IllegalStateException("Enum not extended");
 		}
@@ -249,9 +251,21 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 			ATTACK_STATE.set(entity, ATTACK_POUNCE);
 			entity.getNavigation().stop();
 
-			AoAScheduler.scheduleSyncronisedTask(() -> entity.setDeltaMovement(entity.getDeltaMovement().add(entity.position().vectorTo(BrainUtils.getTargetOfEntity(entity).position())
-					.multiply(0.2f, 1, 0.2f)
-					.add(0, 0.1f, 0))), 9);
+			AoAScheduler.scheduleSyncronisedTask(() -> {
+				final Entity target = BrainUtils.getTargetOfEntity(entity);
+				final Vec3 lungePos = target != null ? target.position() : entity.position().add(entity.getLookAngle().scale(4));
+
+				entity.setDeltaMovement(
+						MathUtil.clampVec(entity.getDeltaMovement()
+										.add(entity.position()
+												.vectorTo(lungePos)
+												.normalize()
+												.multiply(0.35f, 1, 0.35f)
+												.add(0, 0.1f, 0)),
+								new Vec3(-0.6, -0.1f, -0.6f),
+								new Vec3(0.6f, 0.5f, 0.6f)));
+			}, 9);
+
 		}
 
 		@Override

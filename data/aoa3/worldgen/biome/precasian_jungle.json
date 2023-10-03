@@ -56,6 +56,7 @@
       "aoa3:precasian_lapis_ore",
       "aoa3:precasian_buried_lapis_ore",
       "aoa3:precasian_copper_ore",
+      "aoa3:bone_fragments_ore",
       "minecraft:underwater_magma",
       "aoa3:better_sand_disk",
       "aoa3:better_clay_disk",
@@ -101,8 +102,8 @@
       },
       {
         "type": "aoa3:veloraptor",
-        "maxCount": 1,
-        "minCount": 1,
+        "maxCount": 3,
+        "minCount": 2,
         "weight": 20
       },
       {

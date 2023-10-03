@@ -120,7 +120,7 @@
             }
           ],
           "name": "aoa3:ice_crystal",
-          "weight": 20
+          "weight": 40
         },
         {
           "type": "minecraft:item",
@@ -136,11 +136,12 @@
             }
           ],
           "name": "aoa3:small_skill_crystal",
-          "weight": 10
+          "weight": 20
         },
         {
           "type": "minecraft:item",
-          "name": "aoa3:silver_coin"
+          "name": "aoa3:silver_coin",
+          "weight": 5
         }
       ],
       "name": "rares",

@@ -1,0 +1,67 @@
+{
+  "type": "minecraft:simple_block",
+  "config": {
+    "to_place": {
+      "type": "minecraft:weighted_state_provider",
+      "entries": [
+        {
+          "data": {
+            "Name": "minecraft:moss_carpet"
+          },
+          "weight": 25
+        },
+        {
+          "data": {
+            "Name": "minecraft:grass"
+          },
+          "weight": 30
+        },
+        {
+          "data": {
+            "Name": "aoa3:calab_grass"
+          },
+          "weight": 30
+        },
+        {
+          "data": {
+            "Name": "minecraft:tall_grass",
+            "Properties": {
+              "half": "lower"
+            }
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "aoa3:calab_long_grass",
+            "Properties": {
+              "half": "lower"
+            }
+          },
+          "weight": 6
+        },
+        {
+          "data": {
+            "Name": "aoa3:tangle_thorns"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:torchflower"
+          },
+          "weight": 1
+        },
+        {
+          "data": {
+            "Name": "minecraft:pitcher_plant",
+            "Properties": {
+              "half": "lower"
+            }
+          },
+          "weight": 1
+        }
+      ]
+    }
+  }
+}

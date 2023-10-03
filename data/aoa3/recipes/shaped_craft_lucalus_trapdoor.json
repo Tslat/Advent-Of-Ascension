@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "X": {
+      "item": "aoa3:lucalus_planks"
+    }
+  },
+  "pattern": [
+    "   ",
+    "XXX",
+    "XXX"
+  ],
+  "result": {
+    "item": "aoa3:lucalus_trapdoor"
+  }
+}

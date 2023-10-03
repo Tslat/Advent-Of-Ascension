@@ -1,6 +1,7 @@
 package net.tslat.aoa3.client.render.entity.animal;
 
 import it.unimi.dsi.fastutil.floats.FloatFloatPair;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.entity.mob.MultiStageHeadModel;
 import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
@@ -17,7 +18,26 @@ public class OpteryxModel extends MultiStageHeadModel<OpteryxEntity> {
 	}
 
 	@Override
+	public ResourceLocation getModelResource(OpteryxEntity animatable) {
+		if (animatable.isEgg())
+			return buildFormattedModelPath(AdventOfAscension.id("animal/precasia/opteryx_egg"));
+
+		return super.getModelResource(animatable);
+	}
+
+	@Override
+	public ResourceLocation getTextureResource(OpteryxEntity animatable) {
+		if (animatable.isEgg())
+			return buildFormattedTexturePath(AdventOfAscension.id("animal/precasia/opteryx_egg"));
+
+		return super.getTextureResource(animatable);
+	}
+
+	@Override
 	public void setCustomAnimations(OpteryxEntity animatable, long instanceId, AnimationState<OpteryxEntity> animationState) {
+		if (animatable.isEgg())
+			return;
+
 		super.setCustomAnimations(animatable, instanceId, animationState);
 
 		final boolean isBaby = animatable.isBaby();

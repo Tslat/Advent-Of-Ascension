@@ -133,4 +133,3 @@ public class SetRandomFlyingTarget<E extends PathfinderMob> extends ExtendedBeha
 		return AirAndWaterRandomPos.getPos(entity, (int)(Math.ceil(this.radius.xzRadius())), (int)Math.ceil(this.radius.yRadius()), this.verticalWeight.applyAsInt(entity), entityFacing.x, entityFacing.z, Mth.HALF_PI);
 	}
 }
-

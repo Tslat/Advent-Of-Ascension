@@ -36,7 +36,7 @@ public class WithersWrath extends BaseBlaster {
 
 	@Override
 	protected void doImpactEffect(BaseEnergyShot shot, Entity target, LivingEntity shooter) {
-		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 30).level(3));
+		EntityUtil.applyPotions(target, new EffectBuilder(MobEffects.WITHER, 100));
 	}
 
 	@Override

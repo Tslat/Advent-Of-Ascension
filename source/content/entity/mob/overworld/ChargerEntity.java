@@ -98,6 +98,12 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 		return AoASounds.ENTITY_CHARGER_HURT.get();
 	}
 
+	@Nullable
+	@Override
+	protected SoundEvent getDeathSound() {
+		return AoASounds.ENTITY_CHARGER_HURT.get();
+	}
+
 	@Override
 	protected int getAttackSwingDuration() {
 		return 11;
@@ -174,7 +180,7 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 			return DEFAULT;
 		}
 
-		// Use this to create additional variants of chargers if you're an addon creator
+		// Use this to create additional variants of Chargers if you're an addon creator
 		public static Type create(String name, String prefix, @Nullable Function<ServerLevel, BiomeMatcher> spawnBiomeMatcher) {
 			throw new IllegalStateException("Enum not extended");
 		}

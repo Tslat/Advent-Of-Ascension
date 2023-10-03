@@ -191,9 +191,6 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	@Override
 	protected void customServerAiStep() {
 		tickBrain((T)this);
-
-		if (this.age == 0 && EntityUtil.hasAttributeModifier(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD))
-			EntityUtil.removeAttributeModifier(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD);
 	}
 
 	@Override
@@ -215,7 +212,7 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 		if (reason == MobSpawnType.SPAWNER)
 			this.xpReward *= 0.5d;
 
-		if (this.age < 0)
+		if (isBaby())
 			EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD, true);
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
@@ -324,16 +321,37 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 		for (AoAEntityPart<?> part : getParts()) {
 			part.updatePosition();
 		}
+
+		if (!level().isClientSide()) {
+			if (!isBaby()) {
+				if (EntityUtil.hasAttributeModifier(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD))
+					EntityUtil.removeAttributeModifier(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD);
+			}
+			else if (!EntityUtil.hasAttributeModifier(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD)) {
+				EntityUtil.applyAttributeModifierSafely(this, Attributes.MAX_HEALTH, BABY_HEALTH_MOD, true);
+			}
+		}
 	}
 
 	@Override
 	public boolean isMultipartEntity() {
-		return getParts().length > 0;
+        for (AoAEntityPart<?> part : getParts()) {
+			if (part.isEnabled())
+				return true;
+		}
+
+		return false;
 	}
 
 	@Override
 	public AoAEntityPart<?>[] getParts() {
 		return this.parts;
+	}
+
+	protected void toggleMultipart(boolean enabled) {
+		for (AoAEntityPart<?> part : getParts()) {
+			part.setEnabled(enabled);
+		}
 	}
 
 	protected void setParts(AoAEntityPart<?>... parts) {

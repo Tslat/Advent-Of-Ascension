@@ -96,7 +96,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 			RenderSystem.disableBlend();
 		}
 
-		RenderUtil.renderScaledText(poseStack, Component.literal("v" + AdventOfAscension.VERSION), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.TextRenderType.DROP_SHADOW);
+		RenderUtil.renderScaledText(poseStack, Component.literal("v" + AdventOfAscension.VERSION + " (1.20.1)"), scaledRootX + 175, scaledRootY + 85, 1.25f, ColourUtil.RGB(255, 223, 0), RenderUtil.TextRenderType.DROP_SHADOW);
 
 		if (WebUtil.isUpdateAvailable()) {
 			updateMessageTicker--;

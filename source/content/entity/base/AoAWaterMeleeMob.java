@@ -16,7 +16,7 @@ public abstract class AoAWaterMeleeMob<T extends AoAWaterMeleeMob<T>> extends Ao
     protected AoAWaterMeleeMob(EntityType<? extends AoAWaterMeleeMob> entityType, Level level) {
         super(entityType, level);
 
-        this.attackReach = getBbWidth() * 1.75d + getAttackVectorPositionOffset() * 0.25f + (getEyeHeight() / 3.6d * 0.25d);
+        this.attackReach = getBbWidth() * 1.75d + getAttackVectorPositionOffset() * 0.3f + (getEyeHeight() / 3.6d * 0.25d);
     }
 
     @Override

@@ -107,8 +107,8 @@
       },
       {
         "type": "aoa3:veloraptor",
-        "maxCount": 2,
-        "minCount": 1,
+        "maxCount": 3,
+        "minCount": 2,
         "weight": 100
       },
       {

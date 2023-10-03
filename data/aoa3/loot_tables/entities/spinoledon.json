@@ -14,6 +14,10 @@
         },
         {
           "type": "minecraft:item",
+          "name": "aoa3:predatious_bow"
+        },
+        {
+          "type": "minecraft:item",
           "functions": [
             {
               "count": {
@@ -171,6 +175,25 @@
         }
       ],
       "name": "misc_supplies",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
+      "entries": [
+        {
+          "type": "minecraft:empty",
+          "weight": 100
+        },
+        {
+          "type": "minecraft:item",
+          "name": "aoa3:legbone_sword"
+        }
+      ],
+      "name": "legbone_sword",
       "rolls": 1.0
     }
   ]

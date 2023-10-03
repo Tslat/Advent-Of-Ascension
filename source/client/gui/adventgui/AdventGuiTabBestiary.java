@@ -406,7 +406,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.toughness") + ChatFormatting.RESET + " " + livingInstance.getAttribute(Attributes.ARMOR_TOUGHNESS).getValue());
 
 					if (EntityUtil.safelyGetAttributeValue(livingInstance, Attributes.KNOCKBACK_RESISTANCE) > 0)
-						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.knockback") + ChatFormatting.RESET + " " + (livingInstance.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue() * 100) + "%");
+						openEntryStatsLines.add(ChatFormatting.BOLD + LocaleUtil.getLocaleString("gui.aoa3.adventGui.bestiary.knockback") + ChatFormatting.RESET + " " + NumberUtil.roundToNthDecimalPlace((float)livingInstance.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue() * 100, 2) + "%");
 
 					AttributeInstance attackAttribute = livingInstance.getAttribute(Attributes.ATTACK_DAMAGE);
 

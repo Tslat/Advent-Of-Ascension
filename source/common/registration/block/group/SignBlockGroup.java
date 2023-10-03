@@ -17,9 +17,9 @@ public final class SignBlockGroup {
 
 	public SignBlockGroup(String baseId, BlockRegistrarFactory registry, Consumer<BlockRegistrar<Block>> baseBlockRegistrar, WoodType woodType) {
 		this.freestanding = (RegistryObject)registry.register(baseId + "_sign", baseBlockRegistrar.andThen(registrar -> registrar.itemFactory((block, properties) -> new SignItem(properties.stacksTo(16), block, wall()))));
-		this.wall = registry.register(baseId + "_wall_sign", registrar -> registrar.baseSign(this.freestanding).noItem().factory(properties -> new WallSignBlock(properties, woodType)));
-		this.hanging = registry.register(baseId + "_hanging_sign", registrar -> registrar.baseSign(this.freestanding).factory(properties -> new CeilingHangingSignBlock(properties, woodType)).itemFactory((block, properties) -> new HangingSignItem(block, wall(), properties)));
-		this.wallHanging = registry.register(baseId + "_wall_hanging_sign", registrar -> registrar.baseSign(this.freestanding).noItem().factory(properties -> new WallHangingSignBlock(properties, woodType)));
+		this.wall = registry.register(baseId + "_wall_sign", registrar -> registrar.baseSign(this.freestanding, false).noItem().useDropsFrom(this.freestanding).factory(properties -> new WallSignBlock(properties, woodType)));
+		this.hanging = registry.register(baseId + "_hanging_sign", registrar -> registrar.baseSign(this.freestanding, true).factory(properties -> new CeilingHangingSignBlock(properties, woodType)).itemFactory((block, properties) -> new HangingSignItem(block, wallHanging(), properties)));
+		this.wallHanging = registry.register(baseId + "_wall_hanging_sign", registrar -> registrar.baseSign(this.freestanding, true).noItem().useDropsFrom(this.hanging).factory(properties -> new WallHangingSignBlock(properties, woodType)));
 	}
 
 	public StandingSignBlock standing() {

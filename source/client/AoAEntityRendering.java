@@ -115,7 +115,7 @@ public final class AoAEntityRendering {
 
 	public static final EntityRendererPackage<?> HORNDRON = new GeckoLibRendererPackage<>(AoAAnimals.HORNDRON).model(new HorndronModel());
 	public static final EntityRendererPackage<?> DEINOTHERIUM = new GeckoLibRendererPackage<>(AoAAnimals.DEINOTHERIUM).model(new DeinotheriumModel());
-	public static final EntityRendererPackage<?> OPTERYX = new GeckoLibRendererPackage<>(AoAAnimals.OPTERYX).model(new OpteryxModel());
+	public static final EntityRendererPackage<?> OPTERYX = new GeckoLibRendererPackage<>(AoAAnimals.OPTERYX).renderer(OpteryxRenderer::new);
 
 	public static final EntityRendererPackage<?> ANCIENT_GOLEM = new GeckoLibRendererPackage<>(AoAMobs.ANCIENT_GOLEM).path("mob/overworld/ancient_golem");
 	public static final EntityRendererPackage<?> ANGLER = new GeckoLibRendererPackage<>(AoAMobs.ANGLER).path("mob/lborean/angler");

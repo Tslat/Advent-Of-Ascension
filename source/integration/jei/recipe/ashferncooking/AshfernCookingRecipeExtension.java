@@ -2,6 +2,7 @@ package net.tslat.aoa3.integration.jei.recipe.ashferncooking;
 
 import it.unimi.dsi.fastutil.Pair;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
+import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
@@ -50,8 +51,10 @@ public class AshfernCookingRecipeExtension implements ICraftingCategoryExtension
 				.map(Optional::get)
 				.toList();
 
-		craftingGridHelper.createAndSetOutputs(builder, recipes.stream().map(Pair::second).toList());
-		craftingGridHelper.createAndSetInputs(builder, List.of(recipes.stream().map(Pair::first).toList(), List.of(AoAItems.ASHFERN.get().getDefaultInstance())), 0, 0);
+		final IRecipeSlotBuilder resultSlot = craftingGridHelper.createAndSetOutputs(builder, recipes.stream().map(Pair::second).toList());
+		final List<IRecipeSlotBuilder> ingredientSlots = craftingGridHelper.createAndSetInputs(builder, List.of(recipes.stream().map(Pair::first).toList(), List.of(AoAItems.ASHFERN.get().getDefaultInstance())), 0, 0);
+
+		builder.createFocusLink(ingredientSlots.get(0), resultSlot);
 	}
 
 	@Nullable

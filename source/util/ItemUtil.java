@@ -475,8 +475,8 @@ public final class ItemUtil {
 		HashSet<Integer> runeSlots = new HashSet<>();
 		HashMap<Item, Integer> runeCounter = new HashMap<>(requiredRunes);
 
-		ItemStack mainHandStack = player.getItemInHand(InteractionHand.OFF_HAND);
-		ItemStack offHandStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+		ItemStack mainHandStack = player.getItemInHand(InteractionHand.MAIN_HAND);
+		ItemStack offHandStack = player.getItemInHand(InteractionHand.OFF_HAND);
 
 		if (mainHandStack.is(AoATags.Items.ADVENT_RUNE)) {
 			Item type = mainHandStack.getItem();

@@ -8,15 +8,12 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -25,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
+import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.EntityUtil;
@@ -38,12 +36,7 @@ import java.util.List;
 public class ChumItem extends Item {
 	public ChumItem() {
 		super(new Item.Properties()
-				.food(new FoodProperties.Builder()
-						.nutrition(1)
-						.saturationMod(0.1f)
-						.alwaysEat()
-						.effect(() -> new MobEffectInstance(MobEffects.CONFUSION, 60), 1)
-						.effect(() -> new MobEffectInstance(MobEffects.POISON, 60), 1).build()));
+				.food(AoAFood.CHUM));
 	}
 
 	@Override

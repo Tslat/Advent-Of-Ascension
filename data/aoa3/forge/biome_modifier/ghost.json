@@ -13,7 +13,7 @@
       "type": "aoa3:ghost",
       "maxCount": 1,
       "minCount": 1,
-      "weight": 11
+      "weight": 25
     }
   ]
 }

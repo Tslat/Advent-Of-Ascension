@@ -98,4 +98,8 @@ public final class MathUtil {
 			}
 		};
 	}
+
+	public static Vec3 clampVec(Vec3 vec, Vec3 min, Vec3 max) {
+		return new Vec3(Mth.clamp(vec.x, min.x, max.x), Mth.clamp(vec.y, min.y, max.y), Mth.clamp(vec.z, min.z, max.z));
+	}
 }

@@ -6,15 +6,13 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -23,12 +21,7 @@ public class HalyconMilk extends Item {
 	public HalyconMilk() {
 		super(new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1)
 				.craftRemainder(Items.BUCKET)
-				.food(new FoodProperties.Builder()
-						.nutrition(0)
-						.saturationMod(0)
-						.alwaysEat()
-						.effect(new EffectBuilder(MobEffects.CONFUSION, 100).build(), 1)
-						.build()));
+				.food(AoAFood.HALYCON_MILK));
 	}
 
 	@Override

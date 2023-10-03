@@ -34,7 +34,9 @@
     ],
     [],
     [],
-    [],
+    [
+      "aoa3:skeletal_remains"
+    ],
     [],
     [
       "aoa3:gravel_ore",
@@ -73,14 +75,45 @@
       "aoa3:tall_cactus_patch"
     ]
   ],
-  "has_precipitation": true,
+  "has_precipitation": false,
   "spawn_costs": {},
   "spawners": {
     "ambient": [],
     "axolotls": [],
-    "creature": [],
+    "creature": [
+      {
+        "type": "aoa3:horndron",
+        "maxCount": 4,
+        "minCount": 2,
+        "weight": 100
+      },
+      {
+        "type": "aoa3:deinotherium",
+        "maxCount": 3,
+        "minCount": 1,
+        "weight": 100
+      }
+    ],
     "misc": [],
     "monster": [
+      {
+        "type": "aoa3:spinoledon",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 50
+      },
+      {
+        "type": "aoa3:smilodon",
+        "maxCount": 1,
+        "minCount": 1,
+        "weight": 80
+      },
+      {
+        "type": "aoa3:veloraptor",
+        "maxCount": 3,
+        "minCount": 2,
+        "weight": 100
+      },
       {
         "type": "aoa3:attercopus",
         "maxCount": 2,

@@ -3,12 +3,12 @@ package net.tslat.aoa3.content.item.food;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class YetiFingernails extends Item {
 	public YetiFingernails() {
-		super(new Item.Properties().rarity(Rarity.RARE).food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
+		super(new Item.Properties().rarity(Rarity.RARE).food(AoAFood.YETI_FINGERNAILS));
 	}
 
 	@Override

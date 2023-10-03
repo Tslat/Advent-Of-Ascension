@@ -47,6 +47,10 @@
     {
       "id": "aoa3:precasian_tall_forest",
       "required": false
+    },
+    {
+      "id": "aoa3:precasian_caves",
+      "required": false
     }
   ]
 }

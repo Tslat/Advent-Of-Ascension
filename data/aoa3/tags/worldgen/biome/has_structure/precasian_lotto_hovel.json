@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "aoa3:precasian_plains",
+      "required": false
+    },
+    {
+      "id": "aoa3:precasian_savannah",
+      "required": false
+    }
+  ]
+}

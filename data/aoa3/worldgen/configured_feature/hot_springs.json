@@ -1,0 +1,12 @@
+{
+  "type": "aoa3:structure_piece",
+  "config": {
+    "processors": {
+      "processors": []
+    },
+    "templates": [
+      "aoa3:precasia/feature/hot_springs_1",
+      "aoa3:precasia/feature/hot_springs_2"
+    ]
+  }
+}

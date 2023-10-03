@@ -15,12 +15,15 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<ConfiguredFeature<?, ?>> BETTER_CLAY_DISK = key("better_clay_disk");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> BETTER_SAND_DISK = key("better_sand_disk");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> BETTER_GRAVEL_DISK = key("better_gravel_disk");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> MUD_DISK = key("mud_disk");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> BASALT_DISK = key("basalt_disk");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> GRAVEL_ORE = key("gravel_ore");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> GRANITE_ORE = key("granite_ore");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> DIORITE_ORE = key("diorite_ore");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> ANDESITE_ORE = key("andesite_ore");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> TUFF_ORE = key("tuff_ore");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> BASALT_MAGMA_BLOBS = key("basalt_magma_blobs");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> HOT_SPRINGS = key("hot_springs");
 
 			// Precasia
 			public static final ResourceKey<ConfiguredFeature<?, ?>> SINGLE_CALAB_OR_VANILLA_GRASS = key("single_calab_or_vanilla_grass");
@@ -39,6 +42,7 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<ConfiguredFeature<?, ?>> GIANT_STRANGLEWOOD_TREE = key("giant_stranglewood_tree");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> STRANGLEWOOD_TREE = key("stranglewood_tree");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> SPINDLY_STRANGLEWOOD_TREE = key("spindly_stranglewood_tree");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> CAVES_TALL_SPINDLY_STRANGLEWOOD_TREE = key("tall_spindly_stranglewood_tree");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> STRANGLEWOOD_BUSH = key("stranglewood_bush");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_JUNGLE_GROUND_FLORA = key("precasian_jungle_ground_flora");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> DEADLANDS_DEAD_TREE_1 = key("deadlands_dead_tree_1");
@@ -54,6 +58,13 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_REDSTONE_ORE = key("precasian_redstone_ore");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> BONE_FRAGMENTS_ORE = key("bone_fragments_ore");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_LAVA_CHUTE = key("precasian_lava_chute");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> SKELETAL_REMAINS = key("skeletal_remains");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_MOSS = key("precasian_cave_moss");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_MOSS_FLORA = key("precasian_cave_moss_flora");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_MOSS_FOLIAGE = key("precasian_cave_moss_foliage");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_CEILING_MOSS = key("precasian_cave_ceiling_moss");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_CEILING_VINES = key("precasian_cave_ceiling_vines");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_SUSPICIOUS_CAVE_GRAVEL = key("precasian_suspicious_cave_gravel");
 
 			private static ResourceKey<ConfiguredFeature<?, ?>> key(String id) {
 				return ResourceKey.create(Registries.CONFIGURED_FEATURE, AdventOfAscension.id(id));
@@ -67,6 +78,7 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<PlacedFeature> BETTER_SAND_DISK = key("better_sand_disk");
 			public static final ResourceKey<PlacedFeature> BETTER_CLAY_DISK = key("better_clay_disk");
 			public static final ResourceKey<PlacedFeature> BETTER_GRAVEL_DISK = key("better_gravel_disk");
+			public static final ResourceKey<PlacedFeature> MUD_DISK = key("mud_disk");
 			public static final ResourceKey<PlacedFeature> BASALT_DISK = key("basalt_disk");
 			public static final ResourceKey<PlacedFeature> GRAVEL_ORE = key("gravel_ore");
 			public static final ResourceKey<PlacedFeature> TUFF_ORE = key("tuff_ore");
@@ -76,6 +88,8 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<PlacedFeature> LOW_ALTITUDE_DIORITE_ORE = key("low_altitude_diorite_ore");
 			public static final ResourceKey<PlacedFeature> HIGH_ALTITUDE_ANDESITE_ORE = key("high_altitude_andesite_ore");
 			public static final ResourceKey<PlacedFeature> LOW_ALTITUDE_ANDESITE_ORE = key("low_altitude_andesite_ore");
+			public static final ResourceKey<PlacedFeature> BASALT_MAGMA_BLOBS = key("basalt_magma_blobs");
+			public static final ResourceKey<PlacedFeature> HOT_SPRINGS = key("hot_springs");
 
 			// Precasia
 			public static final ResourceKey<PlacedFeature> PRECASIAN_GRASS_BONEMEAL = key("precasian_grass_bonemeal");
@@ -118,6 +132,10 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<PlacedFeature> SHALLOW_BONE_FRAGMENTS_ORE = key("shallow_bone_fragments_ore");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_QUARTZ_ORE = key("precasian_quartz_ore");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_VOLCANO_CHUTE = key("precasian_volcano_chute");
+			public static final ResourceKey<PlacedFeature> SKELETAL_REMAINS = key("skeletal_remains");
+			public static final ResourceKey<PlacedFeature> PRECASIAN_CAVE_FLOOR_VEGETATION = key("precasian_cave_floor_vegetation");
+			public static final ResourceKey<PlacedFeature> PRECASIAN_CAVE_CEILING_VEGETATION = key("precasian_cave_ceiling_vegetation");
+			public static final ResourceKey<PlacedFeature> PRECASIAN_SUSPICIOUS_CAVE_GRAVEL = key("precasian_suspicious_cave_gravel");
 
 			private static ResourceKey<PlacedFeature> key(String id) {
 				return ResourceKey.create(Registries.PLACED_FEATURE, AdventOfAscension.id(id));

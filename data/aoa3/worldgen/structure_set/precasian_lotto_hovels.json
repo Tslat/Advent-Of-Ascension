@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 552575066,
+    "separation": 12,
+    "spacing": 24
+  },
+  "structures": [
+    {
+      "structure": "aoa3:precasian_lotto_hovel",
+      "weight": 1
+    }
+  ]
+}

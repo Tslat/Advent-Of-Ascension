@@ -105,6 +105,11 @@ public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
 	}
 
 	@Override
+	protected DamageSource getAttackDamageSource(Entity target) {
+		return target instanceof LivingEntity livingTarget ? damageSources().sting(livingTarget) : super.getAttackDamageSource(target);
+	}
+
+	@Override
 	public boolean canBeAffected(MobEffectInstance effect) {
 		if (effect.getEffect() == MobEffects.POISON) {
 			MobEffectEvent.Applicable event = new MobEffectEvent.Applicable(this, effect);
@@ -115,6 +120,11 @@ public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
 		}
 
 		return super.canBeAffected(effect);
+	}
+
+	@Override
+	protected int calculateFallDamage(float pFallDistance, float pDamageMultiplier) {
+		return super.calculateFallDamage(pFallDistance, pDamageMultiplier) / 2;
 	}
 
 	@Override

@@ -78,6 +78,8 @@ public final class AoATags {
 
 		public static final TagKey<Block> NEEDS_NETHERITE_TOOL = tag("needs_netherite_tool");
 
+		public static final TagKey<Block> BASE_STONE_PRECASIA = tag("base_stone_precasia");
+
 		private static TagKey<Block> aoaTag(String id) {
 			return BlockTags.create(new ResourceLocation(AdventOfAscension.MOD_ID, id));
 		}
@@ -257,6 +259,7 @@ public final class AoATags {
 	public static class Biomes {
 		public static final TagKey<Biome> NO_MOB_SPAWNS = tag("no_mob_spawns");
 		public static final TagKey<Biome> HAS_RUINED_TELEPORTER = aoaTag("has_structure/ruined_teleporter");
+		public static final TagKey<Biome> HAS_PRECASIAN_LOTTO_HOVEL = aoaTag("has_structure/precasian_lotto_hovel");
 		public static final TagKey<Biome> IS_PRECASIA = aoaTag("is_precasia");
 
 		private static TagKey<Biome> aoaTag(String id) {

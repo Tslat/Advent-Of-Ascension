@@ -30,7 +30,7 @@ public class MultiStageHeadModel<T extends GeoAnimatable> extends DefaultedEntit
 	public void setCustomAnimations(T animatable, long instanceId, AnimationState<T> animationState) {
 		final AnimationProcessor<T> processor = getAnimationProcessor();
 		final EntityModelData entityData = animationState.getData(DataTickets.ENTITY_MODEL_DATA);
-		float pitch = entityData.headPitch();
+		//float pitch = entityData.headPitch();
 		float yaw = entityData.netHeadYaw();
 
 		for (Stage stage : this.stages) {
@@ -42,12 +42,12 @@ public class MultiStageHeadModel<T extends GeoAnimatable> extends DefaultedEntit
 				return;
 			}
 
-			float bonePitch = Mth.clamp(pitch, stage.pitchBounds.leftFloat(), stage.pitchBounds.rightFloat());
+			//float bonePitch = Mth.clamp(pitch, stage.pitchBounds.leftFloat(), stage.pitchBounds.rightFloat());
 			float boneYaw = Mth.clamp(yaw, stage.yawBounds.leftFloat(), stage.yawBounds.rightFloat());
-			pitch -= bonePitch * Math.signum(bonePitch);
+			//pitch -= bonePitch * Math.signum(bonePitch);
 			yaw -= boneYaw * Math.signum(boneYaw);
 
-			bone.setRotX(bonePitch * Mth.DEG_TO_RAD);
+			//bone.setRotX(bonePitch * Mth.DEG_TO_RAD);
 			bone.setRotY(boneYaw * Mth.DEG_TO_RAD);
 		}
 	}

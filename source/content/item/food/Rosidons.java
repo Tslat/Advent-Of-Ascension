@@ -5,7 +5,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -14,6 +13,7 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityTeleportEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class Rosidons extends Item {
 	public Rosidons() {
-		super(new Item.Properties().food(new FoodProperties.Builder().nutrition(0).saturationMod(0).alwaysEat().build()));
+		super(new Item.Properties().food(AoAFood.ROSIDONS));
 	}
 
 	@Override

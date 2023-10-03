@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/door_bottom_right_open",
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "bottom": "aoa3:block/baobab_door_bottom",
+    "top": "aoa3:block/baobab_door_top"
+  }
+}

@@ -64,7 +64,7 @@ public final class AoAEntitySpawnPlacements {
     }
 
     private static void setPrecasiaSpawnPlacements() {
-        setSpawnPlacement(AoAMobs.SPINOLEDON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(60).difficultyBasedSpawnChance(0.05f));
+        setSpawnPlacement(AoAMobs.SPINOLEDON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.and((entityType, level, spawnType, pos, random) -> pos.getY() >= 60 || pos.getY() <= -13).difficultyBasedSpawnChance(0.05f));
         setSpawnPlacement(AoAAnimals.HORNDRON.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
         setSpawnPlacement(AoAAnimals.DEINOTHERIUM.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
         setSpawnPlacement(AoAMobs.MEGANEUROPSIS.get(), NO_RESTRICTIONS, MOTION_BLOCKING, SpawnBuilder.DEFAULT_DAY_NIGHT_MONSTER.noLowerThanY(65).difficultyBasedSpawnChance(0.05f));

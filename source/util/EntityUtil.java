@@ -24,9 +24,9 @@ import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.entity.PartEntity;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 
@@ -155,7 +155,7 @@ public final class EntityUtil {
 		return attributes.hasAttribute(attribute) ? attributes.getValue(attribute) : 0;
 	}
 
-	public static void pushEntityAway(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength) {
+	public static void pushEntityAway(@NotNull Entity centralEntity, @NotNull Entity targetEntity, float strength) {
 		double knockbackResist = targetEntity instanceof LivingEntity target ? Math.min(safelyGetAttributeValue(target, Attributes.KNOCKBACK_RESISTANCE), 1) : 0;
 
 		if (knockbackResist >= 1)
@@ -165,7 +165,7 @@ public final class EntityUtil {
 		targetEntity.hurtMarked = true;
 	}
 
-	public static void pullEntityIn(@Nonnull Entity centralEntity, @Nonnull Entity targetEntity, float strength, boolean normalised) {
+	public static void pullEntityIn(@NotNull Entity centralEntity, @NotNull Entity targetEntity, float strength, boolean normalised) {
 		Vec3 targetMotion = targetEntity.getDeltaMovement();
 		Vec3 velocity = new Vec3((centralEntity.getX() - targetEntity.getX()) + targetMotion.x(),
 				(centralEntity.getY() - targetEntity.getY()) + targetMotion.y(),
@@ -187,14 +187,16 @@ public final class EntityUtil {
 	}
 
 	public static void applyPotions(Entity entity, EffectBuilder... effects) {
-		if (!(entity instanceof LivingEntity) || !entity.isAlive() || entity.isSpectator() || entity instanceof FakePlayer)
+		entity = getLivingEntityFromSelfOrPart(entity);
+
+		if (!(entity instanceof LivingEntity target) || !entity.isAlive() || entity.isSpectator() || entity instanceof FakePlayer)
 			return;
 
-		boolean onlyBeneficial = entity instanceof Player && ((Player)entity).isCreative();
+		boolean onlyBeneficial = entity instanceof Player && ((Player)entity).getAbilities().invulnerable;
 
 		for (EffectBuilder builder : effects) {
 			if (!onlyBeneficial || builder.getEffect().isBeneficial())
-				((LivingEntity)entity).addEffect(builder.build());
+				target.addEffect(builder.build());
 		}
 	}
 
@@ -285,7 +287,7 @@ public final class EntityUtil {
 		return jumpVelocity;
 	}
 
-	@Nonnull
+	@NotNull
 	public static Set<Entity> getAttackersForMob(LivingEntity entity, @Nullable Predicate<Entity> filter) {
 		CombatTracker tracker = entity.getCombatTracker();
 

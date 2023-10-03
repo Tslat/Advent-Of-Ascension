@@ -1,0 +1,17 @@
+{
+  "placement": {
+    "type": "aoa3:single_structure",
+    "pos": [
+      -3000,
+      5,
+      -1000
+    ],
+    "salt": 0
+  },
+  "structures": [
+    {
+      "structure": "aoa3:archaic_extraction_station_arena",
+      "weight": 1
+    }
+  ]
+}

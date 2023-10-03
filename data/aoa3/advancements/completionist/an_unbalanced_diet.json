@@ -421,6 +421,16 @@
       },
       "trigger": "minecraft:consume_item"
     },
+    "consume_raw_giant_lizard_meat": {
+      "conditions": {
+        "item": {
+          "items": [
+            "aoa3:raw_giant_lizard_meat"
+          ]
+        }
+      },
+      "trigger": "minecraft:consume_item"
+    },
     "consume_raw_halycon_beef": {
       "conditions": {
         "item": {
@@ -718,6 +728,9 @@
     ],
     [
       "consume_ironback"
+    ],
+    [
+      "consume_raw_giant_lizard_meat"
     ],
     [
       "consume_halycon_milk"

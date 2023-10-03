@@ -1,0 +1,11 @@
+{
+  "type": "aoa3:aoa_default_structure",
+  "biomes": "#aoa3:has_structure/precasian_lotto_hovel",
+  "heightmap_for_start": "WORLD_SURFACE_WG",
+  "spawn_overrides": {},
+  "start_height": {
+    "absolute": 0
+  },
+  "start_pool": "aoa3:precasia/precasian_lotto_hovel/starts",
+  "terrain_adaptation": "bury"
+}

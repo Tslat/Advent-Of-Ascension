@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectUtil;
@@ -20,6 +21,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -233,13 +236,40 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 	@Override
 	public boolean doHurtTarget(Entity target) {
-		if (super.doHurtTarget(target)) {
+		float damage = (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
+		float knockback = (float)this.getAttributeValue(Attributes.ATTACK_KNOCKBACK);
+
+		if (target instanceof LivingEntity livingTarget) {
+			damage += EnchantmentHelper.getDamageBonus(getMainHandItem(), livingTarget.getMobType());
+			knockback += EnchantmentHelper.getKnockbackBonus(this);
+		}
+
+		if (target.hurt(getAttackDamageSource(target), damage)) {
+			final int firstAspect = EnchantmentHelper.getFireAspect(this);
+
+			if (firstAspect > 0)
+				target.setSecondsOnFire(firstAspect * 4);
+
+			if (knockback > 0 && target instanceof LivingEntity livingTarget) {
+				livingTarget.knockback(knockback * 0.5f,  Mth.sin(getYRot() * Mth.DEG_TO_RAD), -Mth.cos(getYRot() * Mth.DEG_TO_RAD));
+				setDeltaMovement(getDeltaMovement().multiply(0.6d, 1, 0.6d));
+			}
+
+			if (target instanceof Player pl)
+				maybeDisableShield(pl, this.getMainHandItem(), pl.isUsingItem() ? pl.getUseItem() : ItemStack.EMPTY);
+
+			doEnchantDamageEffects(this, target);
+			setLastHurtMob(target);
 			onAttack(target);
 
 			return true;
 		}
 
 		return false;
+	}
+
+	protected DamageSource getAttackDamageSource(Entity target) {
+		return damageSources().mobAttack(this);
 	}
 
 	@Override
@@ -364,6 +394,12 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	@Override
 	public AoAEntityPart<?>[] getParts() {
 		return this.parts;
+	}
+
+	protected void toggleMultipart(boolean enabled) {
+		for (AoAEntityPart<?> part : getParts()) {
+			part.setEnabled(enabled);
+		}
 	}
 
 	protected void setParts(AoAEntityPart<?>... parts) {

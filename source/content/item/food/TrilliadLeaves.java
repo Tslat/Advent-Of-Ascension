@@ -3,30 +3,19 @@ package net.tslat.aoa3.content.item.food;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.effectslib.api.util.EffectBuilder;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class TrilliadLeaves extends Item {
 	public TrilliadLeaves() {
-		super(new Item.Properties().food(
-				new FoodProperties.Builder()
-						.nutrition(0)
-						.saturationMod(0)
-						.alwaysEat()
-						.effect(new EffectBuilder(MobEffects.BLINDNESS, 130).build(), 1)
-						.effect(new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 100).level(11).build(), 1)
-						.effect(new EffectBuilder(MobEffects.REGENERATION, 100).level(3).build(), 1)
-						.effect(new EffectBuilder(MobEffects.POISON, 100).level(8).build(), 1)
-						.effect(new EffectBuilder(MobEffects.JUMP, 100).level(129).build(), 1)
-						.build()));
+		super(new Item.Properties().food(AoAFood.TRILLIAD_LEAVES));
 	}
 
 	@Override

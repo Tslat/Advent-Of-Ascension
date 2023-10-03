@@ -21,7 +21,7 @@
       "type": "aoa3:ancient_golem",
       "maxCount": 1,
       "minCount": 1,
-      "weight": 8
+      "weight": 15
     }
   ]
 }
