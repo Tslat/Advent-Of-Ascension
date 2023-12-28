@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 
-import javax.annotation.Nullable;
 
 public class CottonCandorRenderer extends MobRenderer<CottonCandorEntity, EntityModel<CottonCandorEntity>> {
 	private static final ResourceLocation WIND_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/cottoncandor/cotton_candor_wind.png");

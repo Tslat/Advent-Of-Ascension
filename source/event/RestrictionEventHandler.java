@@ -24,6 +24,7 @@ import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -59,7 +60,7 @@ public final class RestrictionEventHandler {
 				ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()));
 		handleEventIf(EntityTeleportEvent.class, ev -> {
 			cancelEvent(ev);
-			PlayerUtil.notifyPlayer((Player)ev.getEntity(), Component.translatable("message.feedback.nowhere.teleport"));
+			PlayerUtil.notifyPlayer((Player)ev.getEntity(), Component.translatable(LocaleUtil.createFeedbackLocaleKey("nowhere.teleport")));
 		}, ev -> WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.NOWHERE.key) && EntityUtil.Predicates.SURVIVAL_PLAYER.test(ev.getEntity()) && !(ev instanceof EntityTeleportEvent.TeleportCommand) && !(ev instanceof EntityTeleportEvent.SpreadPlayersCommand));
 		handleEventIf(ExplosionEvent.Detonate.class,
 				ev -> ev.getAffectedBlocks().clear(),

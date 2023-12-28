@@ -13,8 +13,8 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class CrystallisArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.CRYSTALLIS;
 	}
 
@@ -35,7 +35,7 @@ public class CrystallisArmour extends AdventArmour {
 				attacker.hurt(attacker.level().damageSources().thorns(plData.player()), event.getAmount());
 				plData.player().hurtArmor(attacker.level().damageSources().generic(), event.getAmount() * 2);
 			}
-			else if (slots != null && plData.equipment().getCurrentFullArmourSet() != setType() && DamageUtil.isMeleeDamage(event.getSource())) {
+			else if (slots != null && plData.equipment().getCurrentFullArmourSet() != getSetType() && DamageUtil.isMeleeDamage(event.getSource())) {
 				attacker.hurt(attacker.level().damageSources().thorns(plData.player()), event.getAmount() * slots.size() / 4f);
 				plData.player().hurtArmor(attacker.level().damageSources().generic(), event.getAmount() * 2);
 			}

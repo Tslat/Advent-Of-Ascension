@@ -82,12 +82,6 @@
     "axolotls": [],
     "creature": [
       {
-        "type": "aoa3:horndron",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 100
-      },
-      {
         "type": "aoa3:deinotherium",
         "maxCount": 3,
         "minCount": 1,
@@ -97,22 +91,10 @@
     "misc": [],
     "monster": [
       {
-        "type": "aoa3:spinoledon",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 50
-      },
-      {
-        "type": "aoa3:smilodon",
-        "maxCount": 1,
-        "minCount": 1,
-        "weight": 80
-      },
-      {
         "type": "aoa3:veloraptor",
         "maxCount": 3,
         "minCount": 2,
-        "weight": 100
+        "weight": 30
       },
       {
         "type": "aoa3:attercopus",

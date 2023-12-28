@@ -22,7 +22,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.AddSkillCyclePacket;
 import net.tslat.aoa3.common.packet.packets.ToggleAoAAbilityPacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
@@ -322,7 +322,7 @@ public class AdventGuiTabPlayer extends Screen {
 					return true;
 				}
 
-				AoAPackets.messageServer(new AddSkillCyclePacket(abilityPane.skill.type()));
+				AoANetworking.sendToServer(new AddSkillCyclePacket(abilityPane.skill.type()));
 
 				return true;
 			}
@@ -398,7 +398,7 @@ public class AdventGuiTabPlayer extends Screen {
 				AoAAbility.Instance instance = sortedAbilities.get(hoveredAbility);
 
 				if (instance.onGuiClick(this.mouseX - left, this.mouseY - top - (hoveredAbility * 50) + (int)distanceScrolled * 2))
-					AoAPackets.messageServer(new ToggleAoAAbilityPacket(skill.type(), instance));
+					AoANetworking.sendToServer(new ToggleAoAAbilityPacket(skill.type(), instance));
 			}
 
 			return super.handleMouseReleased(mouseX, mouseY, button);

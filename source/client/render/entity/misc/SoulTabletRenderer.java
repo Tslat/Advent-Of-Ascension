@@ -16,7 +16,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.math.vector.Vector3f;
 import net.tslat.aoa3.content.entity.tablet.SoulTabletEntity;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 
 public class SoulTabletRenderer extends EntityRenderer<Entity> {

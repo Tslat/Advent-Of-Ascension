@@ -15,8 +15,8 @@ import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.scheduling.async.EchoGullTask;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 

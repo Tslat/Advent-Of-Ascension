@@ -11,8 +11,8 @@ import net.tslat.aoa3.content.entity.ai.mob.CompletePanicGoal;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.content.entity.mob.haven.SpiritGuardianEntity;
 import net.tslat.aoa3.content.entity.mob.haven.SpiritProtectorEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class EeoEntity extends AoAAnimalOld {
 	public EeoEntity(EntityType<? extends Animal> entityType, Level world) {

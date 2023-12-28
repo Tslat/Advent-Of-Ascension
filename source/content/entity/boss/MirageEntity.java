@@ -25,7 +25,6 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.SpiritualShotEntity;
 import net.tslat.aoa3.util.WorldUtil;
 
-import javax.annotation.Nullable;
 
 public class MirageEntity extends AoARangedMob<MirageEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);

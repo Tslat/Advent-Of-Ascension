@@ -12,8 +12,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class KokoEntity extends AoAMeleeMob<KokoEntity> {
 	public KokoEntity(EntityType<? extends KokoEntity> entityType, Level world) {

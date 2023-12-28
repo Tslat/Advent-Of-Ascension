@@ -16,14 +16,14 @@ import net.tslat.aoa3.util.*;
 public class ResourceRequirementToast implements Toast {
 	private final AoAResource resource;
 	private final float resourceAmount;
-	private final String title;
-	private final String subtitle;
+	private final Component title;
+	private final Component subtitle;
 
 	public ResourceRequirementToast(AoAResource relevantResource, float resourceRequirement) {
 		this.resource = relevantResource;
 		this.resourceAmount = resourceRequirement;
-		this.title = LocaleUtil.getLocaleString("gui.aoatoast.resourceReq.title", ChatFormatting.DARK_RED);
-		this.subtitle = LocaleUtil.getLocaleString("gui.aoatoast.resourceReq.subtitle", relevantResource.getName().getString(), NumberUtil.roundToNthDecimalPlace(resourceRequirement, 2));
+		this.title = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.title"), ChatFormatting.DARK_RED);
+		this.subtitle = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.subtitle"), relevantResource.getName(), Component.literal(NumberUtil.roundToNthDecimalPlace(resourceRequirement, 2)));
 	}
 
 	public AoAResource getResource() {
@@ -50,12 +50,12 @@ public class ResourceRequirementToast implements Toast {
 		poseStack.translate(5.5f, 5, 0);
 		AoAGuiElementRenderers.getResourceRenderer(resource).renderInHud(poseStack, ClientPlayerDataManager.get().getResource(resource), mc.getDeltaFrameTime(), "-1");
 		poseStack.popPose();
-		renderContext.renderText(Component.literal(title), 30, 7, -11534256, RenderUtil.TextRenderType.NORMAL);
+		renderContext.renderText(title, 30, 7, -11534256, RenderUtil.TextRenderType.NORMAL);
 
 		int subtitleWidth = mc.font.width(subtitle);
 
 		if (subtitleWidth <= 125f) {
-			renderContext.renderText(Component.literal(subtitle), 30, 18, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+			renderContext.renderText(subtitle, 30, 18, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 		}
 		else {
 			poseStack.pushPose();
@@ -63,7 +63,7 @@ public class ResourceRequirementToast implements Toast {
 			float scale = 125f / subtitleWidth;
 
 			poseStack.scale(scale, scale, 1);
-			renderContext.renderText(Component.literal(subtitle), 30 / scale, 18 / scale, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+			renderContext.renderText(subtitle, 30 / scale, 18 / scale, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 			poseStack.popPose();
 		}
 

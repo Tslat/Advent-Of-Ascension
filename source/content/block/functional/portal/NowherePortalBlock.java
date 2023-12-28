@@ -7,12 +7,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.ColourUtil;
 
 public class NowherePortalBlock extends PortalBlock {
 	public NowherePortalBlock(BlockBehaviour.Properties properties) {
-		super(properties, AoADimensions.NOWHERE.key, ColourUtil.RGB(255, 227, 117));
+		super(properties, AoADimensions.NOWHERE.key, ColourUtil.RGB(255, 227, 117), AoASounds.BLOCK_NOWHERE_PORTAL_AMBIENT);
 	}
 
 	@Override

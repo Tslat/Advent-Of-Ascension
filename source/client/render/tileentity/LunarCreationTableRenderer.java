@@ -15,14 +15,14 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.content.block.tileentity.LunarCreationTableTileEntity;
+import net.tslat.aoa3.content.block.tileentity.LunarCreationTableBlockEntity;
 
-public class LunarCreationTableRenderer implements BlockEntityRenderer<LunarCreationTableTileEntity> {
+public class LunarCreationTableRenderer implements BlockEntityRenderer<LunarCreationTableBlockEntity> {
 	public LunarCreationTableRenderer(BlockEntityRendererProvider.Context context) {
 	}
 
 	@Override
-	public void render(LunarCreationTableTileEntity blockEntity, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
+	public void render(LunarCreationTableBlockEntity blockEntity, float partialTicks, PoseStack matrix, MultiBufferSource buffer, int combinedLight, int combinedOverlay) {
 		NonNullList<ItemStack> contents = blockEntity.getContents();
 		ItemRenderer renderer = Minecraft.getInstance().getItemRenderer();
 		Level world = blockEntity.getLevel();

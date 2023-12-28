@@ -1,10 +1,13 @@
 package net.tslat.aoa3.content.block.functional.portal;
 
+import com.google.common.base.Suppliers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -36,23 +39,37 @@ import net.tslat.aoa3.content.world.teleporter.specific.*;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.util.Set;
+import java.util.function.Supplier;
 
 public class PortalBlock extends Block {
+	private static final Supplier<Set<Block>> USEABLE_PORTALS = Suppliers.memoize(() -> Set.of(AoABlocks.NETHER_PORTAL.get(), AoABlocks.NOWHERE_PORTAL.get(), AoABlocks.PRECASIA_PORTAL.get(), AoABlocks.BARATHOS_PORTAL.get(), AoABlocks.LELYETIA_PORTAL.get(), AoABlocks.DEEPLANDS_PORTAL.get(), AoABlocks.LBOREAN_PORTAL.get()));
+
 	private static final VoxelShape X_SHAPE = Shapes.create(new AABB(0.375, 0, 0, 0.625, 1, 1));
 	private static final VoxelShape Z_SHAPE = Shapes.create(new AABB(0, 0, 0.375, 1, 1, 0.625));
 
 	private final int particleColour;
 	private final ResourceKey<Level> world;
+	private final Supplier<SoundEvent> ambientSound;
 
 	public PortalBlock(BlockBehaviour.Properties properties, ResourceKey<Level> world, int particleColour) {
+		this(properties, world, particleColour, null);
+	}
+
+	public PortalBlock(BlockBehaviour.Properties properties, ResourceKey<Level> world, int particleColour, @Nullable Supplier<SoundEvent> ambientSound) {
 		super(properties);
 
 		registerDefaultState(getStateDefinition().any().setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.X));
 
 		this.particleColour = particleColour;
 		this.world = world;
+		this.ambientSound = ambientSound;
+	}
+
+	public int getParticleColour() {
+		return this.particleColour;
 	}
 
 	@Override
@@ -102,40 +119,43 @@ public class PortalBlock extends Block {
 
 	@OnlyIn(Dist.CLIENT)
 	@Override
-	public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
-		for (int i = 0; i < 4; ++i) {
-			double posXStart = (float)pos.getX() + rand.nextFloat();
-			double posYStart = (float)pos.getY() + rand.nextFloat();
-			double posZStart = (float)pos.getZ() + rand.nextFloat();
-			double motionX = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-			double motionY = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-			double motionZ = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-			int randomMod = rand.nextInt(2) * 2 - 1;
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
+		if (this.ambientSound != null && random.nextInt(100) == 0 && level.dimension() != this.world)
+			level.playLocalSound(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, this.ambientSound.get(), SoundSource.BLOCKS, 0.5F, random.nextFloat() * 0.4F + 0.8F, false);
 
-			if (world.getBlockState(pos.west()).getBlock() != this && world.getBlockState(pos.east()).getBlock() != this) {
+		for (int i = 0; i < 4; ++i) {
+			double posXStart = (float)pos.getX() + random.nextFloat();
+			double posYStart = (float)pos.getY() + random.nextFloat();
+			double posZStart = (float)pos.getZ() + random.nextFloat();
+			double motionX = ((double)random.nextFloat() - 0.5D) * 0.5D;
+			double motionY = ((double)random.nextFloat() - 0.5D) * 0.5D;
+			double motionZ = ((double)random.nextFloat() - 0.5D) * 0.5D;
+			int randomMod = random.nextInt(2) * 2 - 1;
+
+			if (level.getBlockState(pos.west()).getBlock() != this && level.getBlockState(pos.east()).getBlock() != this) {
 				posXStart = (double)pos.getX() + 0.5D + 0.25D * (double)randomMod;
-				motionX = rand.nextFloat() * 2.0F * (float)randomMod;
+				motionX = random.nextFloat() * 2.0F * (float)randomMod;
 			}
 			else {
 				posZStart = (double)pos.getZ() + 0.5D + 0.25D * (double)randomMod;
-				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
+				motionZ = random.nextFloat() * 2.0F * (float)randomMod;
 			}
 
-			world.addParticle(new PortalFloaterParticleType.Data(new Vec3(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f), particleColour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
+			level.addParticle(new PortalFloaterParticleType.Data(new Vec3(pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f), particleColour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
 		}
 	}
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (this != AoABlocks.NETHER_PORTAL.get() && this != AoABlocks.NOWHERE_PORTAL.get() && this != AoABlocks.PRECASIA_PORTAL.get())
+		if (!USEABLE_PORTALS.get().contains(this))
 			return;
 
 		if (!world.isClientSide() && !entity.isPassenger() && !entity.isVehicle() && entity.canChangeDimensions()) {
 			if (!AoAConfigs.SERVER.allowNonPlayerPortalTravel.get() & !(entity instanceof Player))
 				return;
 
-			if (entity.portalTime > 0) {
-				entity.portalTime = 30;
+			if (entity.isOnPortalCooldown()) {
+				entity.setPortalCooldown();
 
 				return;
 			}
@@ -180,7 +200,7 @@ public class PortalBlock extends Block {
 			}
 
 			if (entity != null)
-				entity.portalTime = 100;
+				entity.setPortalCooldown();
 		}
 	}
 
@@ -270,5 +290,33 @@ public class PortalBlock extends Block {
 			case VOX_PONDS -> new VoxPondsTeleporter();
 			default -> world.getPortalForcer();
 		};
+	}
+
+	@Nullable
+	public static Block getInsidePortalBlock(Entity entity) {
+		final AABB entityBounds = entity.getBoundingBox();
+		final BlockPos minPos = BlockPos.containing(entityBounds.minX + 1.0E-7D, entityBounds.minY + 1.0E-7D, entityBounds.minZ + 1.0E-7D);
+		final BlockPos maxPos = BlockPos.containing(entityBounds.maxX - 1.0E-7D, entityBounds.maxY - 1.0E-7D, entityBounds.maxZ - 1.0E-7D);
+
+		if (entity.level().hasChunksAt(minPos, maxPos)) {
+			final BlockPos.MutableBlockPos testPos = new BlockPos.MutableBlockPos();
+
+			for(int x = minPos.getX(); x <= maxPos.getX(); ++x) {
+				for(int y = minPos.getY(); y <= maxPos.getY(); ++y) {
+					for(int z = minPos.getZ(); z <= maxPos.getZ(); ++z) {
+						testPos.set(x, y, z);
+						final Block block = entity.level().getBlockState(testPos).getBlock();
+
+						if (block == Blocks.NETHER_PORTAL)
+							return null;
+
+						if (block instanceof PortalBlock portal)
+							return portal;
+					}
+				}
+			}
+		}
+
+		return null;
 	}
 }

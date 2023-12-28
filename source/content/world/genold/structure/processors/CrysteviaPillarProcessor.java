@@ -14,7 +14,6 @@ import net.minecraft.world.gen.feature.template.StructureProcessor;
 import net.minecraft.world.gen.feature.template.Template;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructureProcessors;
 
-import javax.annotation.Nullable;
 
 public class CrysteviaPillarProcessor extends StructureProcessor {
 	public static final Codec<CrysteviaPillarProcessor> CODEC = RecordCodecBuilder.create(builder ->

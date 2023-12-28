@@ -13,8 +13,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class SkelekyteEntity extends AoAMeleeMob<SkelekyteEntity> {
 	private int cloakCooldown = 80;

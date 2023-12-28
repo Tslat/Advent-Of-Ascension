@@ -11,8 +11,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.ModuloShotEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ModuloEntity extends AoAFlyingRangedMob {
 	public ModuloEntity(EntityType<? extends FlyingMob> entityType, Level world) {

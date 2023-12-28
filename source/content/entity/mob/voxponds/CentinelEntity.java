@@ -16,8 +16,8 @@ import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.BloodballEntity;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CentinelEntity extends AoARangedMob<CentinelEntity> {
 	public CentinelEntity(EntityType<? extends CentinelEntity> entityType, Level world) {

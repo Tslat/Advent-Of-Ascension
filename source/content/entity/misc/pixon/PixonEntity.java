@@ -24,8 +24,8 @@ import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.tool.misc.InfusionBowl;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public abstract class PixonEntity extends PathfinderMob {
     public long nextHarvestTick = 0;

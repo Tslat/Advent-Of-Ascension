@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.tslat.aoa3.content.entity.boss.RockRiderEntity;
 
-import javax.annotation.Nullable;
 
 public class RockRiderRenderer extends MobRenderer<RockRiderEntity, EntityModel<RockRiderEntity>> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/rockrider/rock_rider.png");

@@ -48,7 +48,7 @@ public final class AoAEntityStats {
 	}
 
 	private static void doPrecasiaEntityStats(final EntityAttributeCreationEvent ev) {
-		AttributeBuilder.createMonster(AoAMobs.SPINOLEDON.get()).health(51).armour(4, 4).moveSpeed(0.3).meleeStrength(9.5f).knockbackResist(0.6f).aggroRange(16).followRange(32).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.SPINOLEDON.get()).health(51).armour(4, 4).moveSpeed(0.3).meleeStrength(9.5f).knockbackResist(0.7f).aggroRange(16).followRange(32).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.HORNDRON.get()).health(58).moveSpeed(0.25f).followRange(16).knockbackResist(0.75f).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.create(AoAAnimals.DEINOTHERIUM.get()).health(95).moveSpeed(0.2f).followRange(16).meleeStrength(8).knockback(1).knockbackResist(0.9f).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.MEGANEUROPSIS.get()).health(19).meleeStrength(5).moveSpeed(0.33).flyingSpeed(0.33f).aggroRange(8).armour(1).followRange(16).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
@@ -56,6 +56,7 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.DUNKLEOSTEUS.get()).health(70).meleeStrength(7).moveSpeed(1.2f).swimSpeedMod(1.5f).followRange(32).knockbackResist(0.9f).aggroRange(32).followRange(64).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get()).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.ATTERCOPUS.get()).health(29).moveSpeed(0.3).meleeStrength(5.5f).aggroRange(16).followRange(32).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.SMILODON.get()).health(46).meleeStrength(8).moveSpeed(0.25f).aggroRange(16).followRange(32).knockbackResist(0.3f).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get()).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.SKELETAL_ABOMINATION.get()).health(64).meleeStrength(9.5f).moveSpeed(0.35f).aggroRange(32).followRange(48).knockbackResist(0.15f).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get()).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.VELORAPTOR.get()).health(37).moveSpeed(0.35).meleeStrength(7.5f).knockbackResist(0.2f).aggroRange(16).followRange(32).extraAttributes(Attributes.ARMOR_TOUGHNESS, ForgeMod.SWIM_SPEED.get(), ForgeMod.NAMETAG_DISTANCE.get(), ForgeMod.ENTITY_GRAVITY.get(), Attributes.ATTACK_KNOCKBACK).build(ev);
 	}
 
@@ -66,6 +67,10 @@ public final class AoAEntityStats {
 		AttributeBuilder.createMonster(AoAMobs.ELITE_NETHENGEIC_WITHER.get()).health(950).moveSpeed(0.33).flyingSpeed(1.5f).projectileDamage(30).knockbackResist(1).followRange(100).aggroRange(64).knockback(1f).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.KING_BAMBAMBAM.get()).health(740).moveSpeed(0.2875f).projectileDamage(12).knockbackResist(1).followRange(100).aggroRange(64).armour(10, 30).build(ev);
 		AttributeBuilder.createMonster(AoAMobs.ELITE_KING_BAMBAMBAM.get()).health(1510).moveSpeed(0.2875f).projectileDamage(25).knockbackResist(1).followRange(100).aggroRange(64).armour(15, 30).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.TYROSAUR.get()).health(275).moveSpeed(0.31).meleeStrength(15).knockbackResist(0.9).followRange(100).aggroRange(64).armour(10, 10).knockback(1f).stepHeight(1.25f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.ELITE_TYROSAUR.get()).health(600).moveSpeed(0.315).meleeStrength(30).knockbackResist(1).followRange(100).aggroRange(64).armour(15, 25).knockback(1f).stepHeight(1.25f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.SKELETRON.get()).health(275).moveSpeed(0.31).meleeStrength(15).knockbackResist(0.9).followRange(100).aggroRange(64).armour(10, 10).knockback(1f).stepHeight(1.25f).build(ev);
+		AttributeBuilder.createMonster(AoAMobs.ELITE_SKELETRON.get()).health(600).moveSpeed(0.315).meleeStrength(30).knockbackResist(1).followRange(100).aggroRange(64).armour(15, 25).knockback(1f).stepHeight(1.25f).build(ev);
 	}
 
 	private static void registerStats(final EntityAttributeCreationEvent ev) {

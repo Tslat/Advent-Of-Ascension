@@ -16,6 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -34,7 +35,7 @@ public class ClunkheadAltar extends BossAltarBlock {
 		if (player instanceof ServerPlayer) {
 			if (getActivationItem() == null || (heldItem.getItem() == getActivationItem())) {
 				if (world.getDifficulty() == Difficulty.PEACEFUL) {
-					PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
+					PlayerUtil.notifyPlayer(player, Component.translatable(LocaleUtil.createFeedbackLocaleKey("spawnBoss.difficultyFail")));
 					return InteractionResult.FAIL;
 				}
 				else if (checkActivationConditions(player, hand, state, pos)) {

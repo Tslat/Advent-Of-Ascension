@@ -9,8 +9,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class LostSoulEntity extends AoAMeleeMob<LostSoulEntity> {
     public LostSoulEntity(EntityType<? extends LostSoulEntity> entityType, Level world) {

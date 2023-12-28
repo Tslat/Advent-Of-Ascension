@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 
-import javax.annotation.Nullable;
 
 public class CorallusRenderer extends MobRenderer<CorallusEntity, EntityModel<CorallusEntity>> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/corallus/corallus.png");

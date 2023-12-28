@@ -7,8 +7,8 @@ import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.cannon.MiniGreenBallEntity;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class MiniCannon extends BaseCannon {
 	public MiniCannon(float dmg, int durability, int firingDelayTicks, float recoil) {

@@ -16,10 +16,10 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class CaseConstructEntity extends AoAMeleeMob<CaseConstructEntity> {
     public CaseConstructEntity(EntityType<? extends CaseConstructEntity> entityType, Level world) {

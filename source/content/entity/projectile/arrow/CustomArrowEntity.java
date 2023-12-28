@@ -23,8 +23,8 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.content.item.weapon.crossbow.BaseCrossbow;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class CustomArrowEntity extends Arrow {

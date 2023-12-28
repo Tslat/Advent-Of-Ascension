@@ -27,8 +27,8 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class TeaSink extends HorizontalDirectionalBlock {
 	public static final BooleanProperty FILLED = BooleanProperty.create("filled");

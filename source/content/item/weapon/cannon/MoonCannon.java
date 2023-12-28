@@ -16,8 +16,8 @@ import net.tslat.aoa3.content.entity.projectile.cannon.MoonShotEntity;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class MoonCannon extends BaseCannon {

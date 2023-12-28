@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,8 +15,8 @@ import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class DarklyGuster extends BaseBlaster {
@@ -30,7 +31,7 @@ public class DarklyGuster extends BaseBlaster {
 	}
 
 	@Override
-	public void fire(ItemStack blaster, LivingEntity shooter) {
+	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
 		shooter.level().addFreshEntity(new WinderShotEntity(shooter, this, 60));
 	}
 

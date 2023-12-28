@@ -16,8 +16,8 @@ import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 

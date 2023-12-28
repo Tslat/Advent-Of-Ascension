@@ -10,8 +10,8 @@ import net.minecraftforge.event.entity.living.*;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public abstract class AdventArmour extends ArmorItem {
@@ -33,7 +33,7 @@ public abstract class AdventArmour extends ArmorItem {
 		return null;
 	}
 
-	public abstract Type setType();
+	public abstract Type getSetType();
 
 	/**
 	 * Called when the player equips the item or has it placed on their body by a third party method.
@@ -135,19 +135,19 @@ public abstract class AdventArmour extends ArmorItem {
 	}
 
 	public boolean isSetHelmet(AdventArmour helmet) {
-		return this.setType() == helmet.setType() || helmet.setType() == Type.ALL;
+		return this.getSetType() == helmet.getSetType() || helmet.getSetType() == Type.ALL;
 	}
 
 	protected MutableComponent setEffectHeader() {
-		return LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ARMOUR_SET_HEADER, ChatFormatting.GOLD);
+		return LocaleUtil.getLocaleMessage(LocaleUtil.Keys.ARMOUR_SET_HEADER, ChatFormatting.GOLD);
 	}
 
 	protected MutableComponent pieceEffectHeader() {
-		return LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ARMOUR_PIECE_HEADER, ChatFormatting.GRAY);
+		return LocaleUtil.getLocaleMessage(LocaleUtil.Keys.ARMOUR_PIECE_HEADER, ChatFormatting.GRAY);
 	}
 
 	protected MutableComponent anySetEffectHeader() {
-		return LocaleUtil.getLocaleMessage(LocaleUtil.Constants.ARMOUR_ANY_SET_HEADER, ChatFormatting.DARK_AQUA);
+		return LocaleUtil.getLocaleMessage(LocaleUtil.Keys.ARMOUR_ANY_SET_HEADER, ChatFormatting.DARK_AQUA);
 	}
 
 	public boolean isHelmetAirTight(ServerPlayer player) {

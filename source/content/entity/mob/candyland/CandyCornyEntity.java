@@ -8,8 +8,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CandyCornyEntity extends AoAMeleeMob<CandyCornyEntity> {
 	public CandyCornyEntity(EntityType<? extends CandyCornyEntity> entityType, Level world) {

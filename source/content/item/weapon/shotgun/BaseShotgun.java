@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.shotgun;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,8 +20,8 @@ import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class BaseShotgun extends BaseGun {
@@ -51,29 +52,32 @@ public class BaseShotgun extends BaseGun {
 	}
 
 	public int getPelletCount() {
-		return pelletCount;
+		return this.pelletCount;
 	}
 
 	@Override
-	protected boolean fireGun(LivingEntity shooter, ItemStack stack, InteractionHand hand) {
+	protected boolean fireGun(ServerLevel level, LivingEntity shooter, ItemStack stack, InteractionHand hand) {
 		BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);
 
 		if (bullet == null)
 			return false;
 
 		int pellets = getPelletCount();
-		float spreadFactor = 0.1f * pellets * (1 - 0.15f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.FORM.get(), stack));
+		float spreadFactor = getSpreadFactor(shooter, stack, pellets);
 
 		for (int i = 0; i < pellets; i++) {
 			BaseBullet pellet = new LimoniteBulletEntity(shooter, this, hand, 4, 1.0f, 0, RandomUtil.randomValueUpTo(0.5f) * spreadFactor, RandomUtil.randomValueUpTo(0.5f) * spreadFactor, RandomUtil.randomValueUpTo(0.5f) * spreadFactor);
 
-			shooter.level().addFreshEntity(pellet);
+			level.addFreshEntity(pellet);
 		}
 
-		if (!shooter.level().isClientSide())
-			doFiringEffects(shooter, bullet, stack, hand);
+		doFiringEffects(level, shooter, bullet, stack, hand);
 
 		return true;
+	}
+
+	protected float getSpreadFactor(LivingEntity shooter, ItemStack stack, int pellets) {
+		return 0.1f * pellets * (1 - 0.15f * stack.getEnchantmentLevel(AoAEnchantments.FORM.get()));
 	}
 
 	@Override
@@ -85,6 +89,6 @@ public class BaseShotgun extends BaseGun {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
-		tooltip.set(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.shotgun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2)), LocaleUtil.numToComponent(pelletCount)));
+		tooltip.set(1, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SHOTGUN_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2)), LocaleUtil.numToComponent(pelletCount)));
 	}
 }

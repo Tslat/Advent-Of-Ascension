@@ -118,6 +118,9 @@ public class ShrapnelExplosion extends ExtendedExplosion {
 			BlockState state = this.level.getBlockState(pos);
 			lastPos = immutablePos;
 
+			if (state.isAir())
+				continue;
+
 			if (!this.info.shouldAffectBlock(this, state, pos)) {
 				checkForEntitiesInRay(ray, exactPos, nearbyEntities, entities);
 

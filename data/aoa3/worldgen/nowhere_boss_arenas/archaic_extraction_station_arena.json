@@ -7,41 +7,41 @@
   "boss_spawns": [
     [
       -2976.0,
-      8.0,
+      7.0,
       -975.0
     ]
   ],
   "player_spawns": [
     [
       -2980.0,
-      8.0,
+      7.0,
       -961.0
     ],
     [
       -2972.0,
-      8.0,
+      7.0,
       -963.0
     ],
     [
       -2966.0,
-      8.0,
+      7.0,
       -967.0
     ],
     [
       -2970.0,
-      8.0,
+      7.0,
       -987.0
     ],
     [
       -2980.0,
-      8.0,
+      7.0,
       -986.0
     ],
     [
       -2986.0,
-      8.0,
+      7.0,
       -982.0
     ]
   ],
-  "structure_id": "aoa3:archaic_extraction_station"
+  "structure_id": "aoa3:archaic_extraction_station_arena"
 }

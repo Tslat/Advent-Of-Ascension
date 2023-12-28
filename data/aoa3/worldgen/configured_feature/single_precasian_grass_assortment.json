@@ -8,7 +8,7 @@
           "data": {
             "Name": "minecraft:grass"
           },
-          "weight": 6
+          "weight": 7
         },
         {
           "data": {
@@ -17,13 +17,13 @@
               "half": "lower"
             }
           },
-          "weight": 1
+          "weight": 2
         },
         {
           "data": {
             "Name": "aoa3:calab_grass"
           },
-          "weight": 10
+          "weight": 11
         },
         {
           "data": {
@@ -32,13 +32,22 @@
               "half": "lower"
             }
           },
-          "weight": 2
+          "weight": 3
         },
         {
           "data": {
             "Name": "minecraft:fern"
           },
-          "weight": 3
+          "weight": 4
+        },
+        {
+          "data": {
+            "Name": "minecraft:large_fern",
+            "Properties": {
+              "half": "lower"
+            }
+          },
+          "weight": 1
         }
       ]
     }

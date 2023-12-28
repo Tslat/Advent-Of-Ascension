@@ -13,8 +13,8 @@ import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CreepirdEntity extends AoAFlyingMeleeMob {
 	public CreepirdEntity(EntityType<? extends FlyingMob> entityType, Level world) {

@@ -47,8 +47,14 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_GUN_BLOWPIPE_SHOOT = registerSound("item.gun.blowpipe.shoot");
 	public static final RegistryObject<SoundEvent> ITEM_GUN_ENERGY_GUN_FIRE = registerSound("item.gun.energy_gun.fire");
 
+	public static final RegistryObject<SoundEvent> ITEM_BLASTER_ENERGY_PULSE_FIRE = registerSound("item.blaster.energy_pulse.fire");
+
 	public static final RegistryObject<SoundEvent> PLAYER_LEVEL_UP = registerSound("player.skills.level_up");
+	public static final RegistryObject<SoundEvent> PLAYER_LEVEL_UP_100 = registerSound("player.skills.level_up_100");
+	public static final RegistryObject<SoundEvent> PLAYER_LEVEL_UP_1000 = registerSound("player.skills.level_up_1000");
 	public static final RegistryObject<SoundEvent> CHECKPOINT = registerSound("misc.checkpoint");
+	public static final RegistryObject<SoundEvent> PORTAL_EXIT = registerSound("misc.portal_exit");
+	public static final RegistryObject<SoundEvent> PORTAL_ACTIVATE = registerSound("misc.portal_activate");
 
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_HAPPY = registerSound("entity.dryad_sprite.happy");
 	public static final RegistryObject<SoundEvent> ENTITY_DRYAD_SPRITE_UNHAPPY = registerSound("entity.dryad_sprite.unhappy");
@@ -85,9 +91,10 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> BIOME_DUSTOPIAN_FOREST_MUSIC = registerSound("biome.dustopian_forest.music");
 	public static final RegistryObject<SoundEvent> BIOME_IROMINE_MUSIC = registerSound("biome.iromine.music");
 	public static final RegistryObject<SoundEvent> BIOME_LELYETIAN_PLAINS_MUSIC = registerSound("biome.lelyetian_plains.music");
-	public static final RegistryObject<SoundEvent> BIOME_NOWHERE_MUSIC = registerSound("biome.nowhere.music");
 	public static final RegistryObject<SoundEvent> BIOME_RUNIC_CLIFFS_MUSIC = registerSound("biome.runic_cliffs.music");
 	public static final RegistryObject<SoundEvent> BIOME_VOX_WASTES_MUSIC = registerSound("biome.vox_wastes.music");
+
+	public static final RegistryObject<SoundEvent> BIOME_NOWHERE_MUSIC = registerSound("biome.nowhere.music");
 
 	public static final RegistryObject<SoundEvent> ENTITY_CHARGER_AMBIENT = registerSound("entity.charger.ambient");
 	public static final RegistryObject<SoundEvent> ENTITY_CHARGER_HURT = registerSound("entity.charger.hurt");
@@ -97,8 +104,8 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ENTITY_GOBLIN_HURT = registerSound("entity.goblin.hurt");
 	public static final RegistryObject<SoundEvent> ENTITY_OPTERYX_HURT = registerSound("entity.opteryx.hurt");
 
-
-
+	public static final RegistryObject<SoundEvent> BLOCK_PRECASIA_PORTAL_AMBIENT = registerSound("block.precasia_portal.ambient");
+	public static final RegistryObject<SoundEvent> BLOCK_NOWHERE_PORTAL_AMBIENT = registerSound("block.nowhere_portal.ambient");
 
 
 
@@ -661,7 +668,7 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_ION_BLASTER_FIRE = registerSound("item.ion_blaster.fire");
 	public static final RegistryObject<SoundEvent> ITEM_JACK_ROCKER_FIRE = registerSound("item.jack_rocker.fire");
 	public static final RegistryObject<SoundEvent> ITEM_JOKER_STAFF_CAST = registerSound("item.joker_staff.cast");
-	public static final RegistryObject<SoundEvent> ITEM_KAIYU_STAFF_CAST = registerSound("item.kaiyu_staff.cast");
+	public static final RegistryObject<SoundEvent> ITEM_AMBER_STAFF_CAST = registerSound("item.amber_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_LIGHTSHINE_STAFF_CAST = registerSound("item.lightshine_staff.cast");
 	public static final RegistryObject<SoundEvent> ITEM_LIGHT_CANNON_FIRE = registerSound("item.light_cannon.fire");
 	public static final RegistryObject<SoundEvent> ITEM_LOWER_CANNON_FIRE = registerSound("item.lower_cannon.fire");
@@ -709,19 +716,6 @@ public final class AoASounds {
 	public static final RegistryObject<SoundEvent> ITEM_WHIMSY_WINDER_FIRE = registerSound("item.whimsy_winder.fire");
 	public static final RegistryObject<SoundEvent> ITEM_WITHERS_WRATH_FIRE = registerSound("item.withers_wrath.fire");
 	public static final RegistryObject<SoundEvent> ITEM_WITHER_CANNON_FIRE = registerSound("item.wither_cannon.fire");
-
-	public static final RegistryObject<SoundEvent> ABYSS_PORTAL_ACTIVATE = registerSound("portal.abyss.activate");
-	public static final RegistryObject<SoundEvent> BARREN_PORTAL_ACTIVATE = registerSound("portal.barren.activate");
-	public static final RegistryObject<SoundEvent> CANDYLAND_PORTAL_ACTIVATE = registerSound("portal.candyland.activate");
-	public static final RegistryObject<SoundEvent> CELEVE_PORTAL_ACTIVATE = registerSound("portal.celeve.activate");
-	public static final RegistryObject<SoundEvent> CREEPONIA_PORTAL_ACTIVATE = registerSound("portal.creeponia.activate");
-	public static final RegistryObject<SoundEvent> CRYSTEVIA_PORTAL_ACTIVATE = registerSound("portal.crystevia.activate");
-	public static final RegistryObject<SoundEvent> DARK_PORTAL_ACTIVATE = registerSound("portal.dark.activate");
-	public static final RegistryObject<SoundEvent> IROMINE_PORTAL_ACTIVATE = registerSound("portal.iromine.activate");
-	public static final RegistryObject<SoundEvent> LIGHT_PORTAL_ACTIVATE = registerSound("portal.light.activate");
-	public static final RegistryObject<SoundEvent> NATURAL_PORTAL_ACTIVATE = registerSound("portal.natural.activate");
-	public static final RegistryObject<SoundEvent> NOWHERE_PORTAL_ACTIVATE = registerSound("portal.nowhere.activate");
-	public static final RegistryObject<SoundEvent> SHYRELANDS_PORTAL_ACTIVATE = registerSound("portal.shyrelands.activate");
 
 	public static final RegistryObject<SoundEvent> BLOCK_CRYSTAL_CREATOR_CONVERT = registerSound("block.crystal_creator.convert");
 	public static final RegistryObject<SoundEvent> BLOCK_DECLOGGING_TABLE_USE = registerSound("block.declogging_table.use");

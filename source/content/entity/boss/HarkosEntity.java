@@ -20,7 +20,6 @@ import net.tslat.aoa3.common.packet.packets.MusicPacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
-import javax.annotation.Nullable;
 
 public class HarkosEntity extends AoAMeleeMob<HarkosEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);

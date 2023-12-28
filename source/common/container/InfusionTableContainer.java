@@ -26,8 +26,8 @@ import net.tslat.aoa3.content.recipe.InfusionRecipe;
 import net.tslat.aoa3.event.custom.AoAEvents;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 

@@ -1,0 +1,54 @@
+{
+  "type": "minecraft:ore",
+  "config": {
+    "discard_chance_on_air_exposure": 0.0,
+    "size": 30,
+    "targets": [
+      {
+        "state": {
+          "Name": "minecraft:lava",
+          "Properties": {
+            "level": "0"
+          }
+        },
+        "target": {
+          "block_state": {
+            "Name": "minecraft:basalt",
+            "Properties": {
+              "axis": "y"
+            }
+          },
+          "predicate_type": "minecraft:blockstate_match"
+        }
+      },
+      {
+        "state": {
+          "Name": "minecraft:lava",
+          "Properties": {
+            "level": "0"
+          }
+        },
+        "target": {
+          "block_state": {
+            "Name": "aoa3:precasian_soil"
+          },
+          "predicate_type": "minecraft:blockstate_match"
+        }
+      },
+      {
+        "state": {
+          "Name": "minecraft:lava",
+          "Properties": {
+            "level": "0"
+          }
+        },
+        "target": {
+          "block_state": {
+            "Name": "aoa3:precasian_stone"
+          },
+          "predicate_type": "minecraft:blockstate_match"
+        }
+      }
+    ]
+  }
+}

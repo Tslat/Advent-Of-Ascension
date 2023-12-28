@@ -258,9 +258,10 @@ public final class AoATags {
 
 	public static class Biomes {
 		public static final TagKey<Biome> NO_MOB_SPAWNS = tag("no_mob_spawns");
+		public static final TagKey<Biome> IS_PRECASIA = aoaTag("is_precasia");
 		public static final TagKey<Biome> HAS_RUINED_TELEPORTER = aoaTag("has_structure/ruined_teleporter");
 		public static final TagKey<Biome> HAS_PRECASIAN_LOTTO_HOVEL = aoaTag("has_structure/precasian_lotto_hovel");
-		public static final TagKey<Biome> IS_PRECASIA = aoaTag("is_precasia");
+		public static final TagKey<Biome> HAS_ATTERCOPUS_NEST = aoaTag("has_structure/attercopus_nest");
 
 		private static TagKey<Biome> aoaTag(String id) {
 			return create(AdventOfAscension.id(id));

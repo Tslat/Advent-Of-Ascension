@@ -15,7 +15,6 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 
-import javax.annotation.Nullable;
 
 public class VisageEntity extends AoAMeleeMob<VisageEntity> {
 	private VisageEntity mirageHost = null;

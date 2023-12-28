@@ -6,8 +6,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class FireAuraParticle extends TextureSheetParticle {
 	private final Entity entity;

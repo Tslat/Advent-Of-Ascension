@@ -33,7 +33,9 @@
     ],
     [],
     [],
-    [],
+    [
+      "aoa3:stranglewood_stump_decorations"
+    ],
     [],
     [
       "aoa3:gravel_ore",
@@ -94,12 +96,6 @@
         "type": "aoa3:horndron",
         "maxCount": 4,
         "minCount": 2,
-        "weight": 100
-      },
-      {
-        "type": "aoa3:deinotherium",
-        "maxCount": 3,
-        "minCount": 1,
         "weight": 100
       }
     ],

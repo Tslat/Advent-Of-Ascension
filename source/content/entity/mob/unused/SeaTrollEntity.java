@@ -15,10 +15,10 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.CyanShotEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class SeaTrollEntity extends AoARangedMob<SeaTrollEntity> {
 	public SeaTrollEntity(EntityType<? extends SeaTrollEntity> entityType, Level world) {

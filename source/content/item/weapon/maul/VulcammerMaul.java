@@ -11,8 +11,8 @@ import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class VulcammerMaul extends BaseMaul {

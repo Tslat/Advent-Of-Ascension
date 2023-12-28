@@ -8,9 +8,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class PrimordialGuideEntity extends AoAAmbientNPC {
 	public PrimordialGuideEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
@@ -30,6 +31,6 @@ public class PrimordialGuideEntity extends AoAAmbientNPC {
 	@Nullable
 	@Override
 	protected String getInteractMessage(ItemStack heldItem) {
-		return "message.dialogue.primordial_guide." + random.nextInt(5);
+		return LocaleUtil.createDialogueLocaleKey("primordial_guide." + random.nextInt(8));
 	}
 }

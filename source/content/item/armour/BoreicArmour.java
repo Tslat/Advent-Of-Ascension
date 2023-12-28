@@ -14,8 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.*;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class BoreicArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.BOREIC;
 	}
 

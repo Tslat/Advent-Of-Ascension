@@ -24,7 +24,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -37,9 +37,9 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public final class PlayerUtil {
     private static final Int2FloatOpenHashMap XP_MAP = new Int2FloatOpenHashMap(1000);
@@ -138,8 +138,29 @@ public final class PlayerUtil {
         return XP_MAP.get(currentLevel);
     }
 
-    public static boolean isWearingFullSet(ServerPlayer player, AdventArmour.Type setType) {
-        return getAdventPlayer(player).equipment().getCurrentFullArmourSet() == setType;
+    public static boolean isWearingFullSet(Player player, AdventArmour.Type setType) {
+        return getCurrentArmourSet(player) == setType;
+    }
+
+    public static AdventArmour.Type getCurrentArmourSet(Player player) {
+        if (player instanceof ServerPlayer serverPlayer)
+            return getAdventPlayer(serverPlayer).equipment().getCurrentFullArmourSet();
+
+        if (!(player.getItemBySlot(EquipmentSlot.FEET).getItem() instanceof AdventArmour bootsArmour))
+            return AdventArmour.Type.NONE;
+
+        AdventArmour.Type type = bootsArmour.getSetType();
+
+        if (!(player.getItemBySlot(EquipmentSlot.LEGS).getItem() instanceof AdventArmour feetArmour) || feetArmour.getSetType() != type)
+            return AdventArmour.Type.NONE;
+
+        if (!(player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof AdventArmour chestArmour) || chestArmour.getSetType() != type)
+            return AdventArmour.Type.NONE;
+
+        if (!(player.getItemBySlot(EquipmentSlot.HEAD).getItem() instanceof AdventArmour headArmour) || (headArmour.getSetType() != type && headArmour.getSetType() != AdventArmour.Type.ALL))
+            return AdventArmour.Type.NONE;
+
+        return type;
     }
 
     public static float getXpRemainingUntilLevel(PlayerDataManager plData, AoASkill skill) {
@@ -203,11 +224,11 @@ public final class PlayerUtil {
     }
 
     public static void notifyPlayerOfInsufficientLevel(ServerPlayer player, AoASkill skill, int level) {
-        AoAPackets.messagePlayer(player, new ToastPopupPacket(skill, level));
+        AoANetworking.sendToPlayer(player, new ToastPopupPacket(skill, level));
     }
 
     public static void notifyPlayerOfInsufficientResources(ServerPlayer player, AoAResource resource, float amount) {
-        AoAPackets.messagePlayer(player, new ToastPopupPacket(resource, amount));
+        AoANetworking.sendToPlayer(player, new ToastPopupPacket(resource, amount));
     }
 
     public static void messageAllPlayersInRange(Component msg, Level world, BlockPos center, int radius) {

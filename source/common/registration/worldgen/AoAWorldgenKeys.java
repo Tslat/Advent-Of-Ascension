@@ -4,6 +4,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 public final class AoAWorldgenKeys {
@@ -32,6 +33,7 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_LAVA_LAKE = key("precasian_lava_lake");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_LAKE = key("precasian_lake");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_TAR_PIT = key("precasian_tar_pit");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_LAVA_BLOB = key("precasian_lava_blob");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_GRASS_PATCH = key("precasian_grass_patch");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_TALL_GRASS_PATCH = key("precasian_tall_grass_patch");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_JUNGLE_GRASS_PATCH = key("precasian_jungle_grass_patch");
@@ -59,6 +61,8 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<ConfiguredFeature<?, ?>> BONE_FRAGMENTS_ORE = key("bone_fragments_ore");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_LAVA_CHUTE = key("precasian_lava_chute");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> SKELETAL_REMAINS = key("skeletal_remains");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> STRANGLEWOOD_STUMP_DECORATION = key("stranglewood_stump_decoration");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> LUCALUS_STUMP_DECORATION = key("lucalus_stump_decoration");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_MOSS = key("precasian_cave_moss");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_MOSS_FLORA = key("precasian_cave_moss_flora");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_MOSS_FOLIAGE = key("precasian_cave_moss_foliage");
@@ -99,6 +103,7 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<PlacedFeature> SURFACE_PRECASIAN_LAVA_LAKE = key("surface_precasian_lava_lake");
 			public static final ResourceKey<PlacedFeature> SURFACE_PRECASIAN_LAKE = key("surface_precasian_lake");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_TAR_PIT = key("precasian_tar_pit");
+			public static final ResourceKey<PlacedFeature> PRECASIAN_LAVA_BLOBS = key("precasian_lava_blobs");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_GRASS_PATCH = key("precasian_grass_patch");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_TALL_GRASS_PATCH = key("precasian_tall_grass_patch");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_JUNGLE_GRASS_PATCH = key("precasian_jungle_grass_patch");
@@ -133,6 +138,8 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<PlacedFeature> PRECASIAN_QUARTZ_ORE = key("precasian_quartz_ore");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_VOLCANO_CHUTE = key("precasian_volcano_chute");
 			public static final ResourceKey<PlacedFeature> SKELETAL_REMAINS = key("skeletal_remains");
+			public static final ResourceKey<PlacedFeature> STRANGLEWOOD_STUMP_DECORATIONS = key("stranglewood_stump_decorations");
+			public static final ResourceKey<PlacedFeature> LUCALUS_STUMP_DECORATIONS = key("lucalus_stump_decorations");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_CAVE_FLOOR_VEGETATION = key("precasian_cave_floor_vegetation");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_CAVE_CEILING_VEGETATION = key("precasian_cave_ceiling_vegetation");
 			public static final ResourceKey<PlacedFeature> PRECASIAN_SUSPICIOUS_CAVE_GRAVEL = key("precasian_suspicious_cave_gravel");
@@ -140,6 +147,17 @@ public final class AoAWorldgenKeys {
 			private static ResourceKey<PlacedFeature> key(String id) {
 				return ResourceKey.create(Registries.PLACED_FEATURE, AdventOfAscension.id(id));
 			}
+		}
+	}
+
+	public static final class Structures {
+		public static final ResourceKey<Structure> RUINED_TELEPORTER_FRAME = key("ruined_teleporter_frame");
+		public static final ResourceKey<Structure> NETHENGEIC_PIT = key("nethengeic_pit");
+		public static final ResourceKey<Structure> ATTERCOPUS_NEST = key("attercopus_nest");
+		public static final ResourceKey<Structure> PRECASIAN_LOTTO_HOVEL = key("precasian_lotto_hovel");
+
+		private static ResourceKey<Structure> key(String id) {
+			return ResourceKey.create(Registries.STRUCTURE, AdventOfAscension.id(id));
 		}
 	}
 }

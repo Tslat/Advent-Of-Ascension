@@ -11,8 +11,8 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class HostEntity extends AoAMeleeMob<HostEntity> {
 	public HostEntity(EntityType<? extends HostEntity> entityType, Level world) {

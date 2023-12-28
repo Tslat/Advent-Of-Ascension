@@ -12,7 +12,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.XpGainPacket;
 import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
 import net.tslat.aoa3.common.registration.AoAConfigs;
@@ -25,6 +25,7 @@ import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.ability.AoAAbility;
+import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -233,7 +234,7 @@ public final class AoASkill {
 			this.needsSync = true;
 
 			playerDataManager.checkAndUpdateLegitimacy();
-			AoAPackets.messagePlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
+			AoANetworking.sendToPlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
 		}
 
 		private void subtractXp(float xp, boolean isUnnaturalSource) {
@@ -264,13 +265,16 @@ public final class AoASkill {
 			if (!isUnnaturalSource)
 				playerDataManager.applyLegitimacyPenalties();
 
-			AoAPackets.messagePlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
+			AoANetworking.sendToPlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
 		}
 
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {
 			ServerPlayer player = playerDataManager.player();
 
 			new SoundBuilder(AoASounds.PLAYER_LEVEL_UP).isPlayer().notInWorld().include(player).execute();
+
+			if ((newLevel == 100 || newLevel == 1000) && oldLevel < newLevel)
+				AoAScheduler.scheduleSyncronisedTask(() -> new SoundBuilder(newLevel == 100 ? AoASounds.PLAYER_LEVEL_UP_100 : AoASounds.PLAYER_LEVEL_UP_1000).isPlayer().notInWorld().include(player).execute(), 40);
 
 			this.level = newLevel;
 			this.xp = 0f;

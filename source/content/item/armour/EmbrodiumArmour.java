@@ -13,8 +13,8 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -24,7 +24,7 @@ public class EmbrodiumArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.EMBRODIUM;
 	}
 

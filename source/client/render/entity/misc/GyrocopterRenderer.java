@@ -18,7 +18,6 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.content.entity.misc.GyrocopterEntity;
 import net.tslat.aoa3.util.ColourUtil;
 
-import javax.annotation.Nullable;
 
 public class GyrocopterRenderer extends EntityRenderer<GyrocopterEntity> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/boss/gyro/gyro.png");

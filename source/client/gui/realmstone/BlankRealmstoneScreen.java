@@ -132,8 +132,8 @@ public class BlankRealmstoneScreen extends Screen {
 			hoverTexts = Lazy.of(() -> {
 				ArrayList<FormattedCharSequence> texts = new ArrayList<>(2);
 
-				texts.add(LocaleUtil.getLocaleMessage("dimension." + AdventOfAscension.MOD_ID + "." + id, ChatFormatting.BLUE).getVisualOrderText());
-				texts.addAll(Minecraft.getInstance().font.split(LocaleUtil.getLocaleMessage("gui.realmstoneMenu.hover." + id), 200));
+				texts.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("dimension", id), ChatFormatting.BLUE).getVisualOrderText());
+				texts.addAll(Minecraft.getInstance().font.split(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "realmstoneMenu.hover." + id)), 200));
 
 				return texts;
 			});

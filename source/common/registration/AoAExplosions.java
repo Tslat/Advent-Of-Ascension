@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
@@ -43,7 +43,7 @@ public final class AoAExplosions {
 					packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 5, 0x7C0000), pos.x, pos.y, pos.z).velocity(angle.x * 10, angle.y * 10, angle.z * 10));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)explosion.level, pos, 64);
+				AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)explosion.level, pos, 64);
 			});
 	public static final ExplosionInfo RPG = new ExplosionInfo()
 			.radius(4)

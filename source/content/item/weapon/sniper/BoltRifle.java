@@ -2,8 +2,8 @@ package net.tslat.aoa3.content.item.weapon.sniper;
 
 import net.minecraft.sounds.SoundEvent;
 import net.tslat.aoa3.common.registration.AoASounds;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BoltRifle extends BaseSniper {
 	public BoltRifle(float dmg, int durability, int firingDelayTicks, float recoil) {

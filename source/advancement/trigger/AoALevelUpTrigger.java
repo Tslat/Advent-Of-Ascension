@@ -9,8 +9,8 @@ import net.minecraft.util.Mth;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class AoALevelUpTrigger extends SimpleCriterionTrigger<AoALevelUpTrigger.Instance> {
 	private static final ResourceLocation triggerId = new ResourceLocation("aoa3", "level_up");

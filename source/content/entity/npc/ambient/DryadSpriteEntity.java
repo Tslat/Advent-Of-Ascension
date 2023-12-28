@@ -3,23 +3,22 @@ package net.tslat.aoa3.content.entity.npc.ambient;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoATags;
@@ -29,11 +28,11 @@ import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -116,7 +115,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 					level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_UNHAPPY.get(), SoundSource.PLAYERS, 1, 1);
 
 					for(int i = 0; i < 20; ++i) {
-						AoAPackets.messageAllPlayersTrackingEntity(new ServerParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.ANGRY_VILLAGER, this)
+						AoANetworking.sendToAllPlayersTrackingEntity(new ServerParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.ANGRY_VILLAGER, this)
 										.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d))),
 								this);
 					}
@@ -154,8 +153,11 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 						.velocity(rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d)));
 			}
 
-			AoAPackets.messageAllPlayersTrackingEntity(packet, this);
+			AoANetworking.sendToAllPlayersTrackingEntity(packet, this);
 			level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundSource.NEUTRAL, 1, 1);
+
+			if (level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))
+				ExperienceOrb.award((ServerLevel)level(), position(), random.nextInt(10, 20));
 
 			OWNER.get(this).ifPresent(ownerId -> {
 				setHealth(0);

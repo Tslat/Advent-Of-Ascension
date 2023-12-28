@@ -1,0 +1,32 @@
+{
+  "parent": "aoa3:precasia/a_prehistoric_sound",
+  "criteria": {
+    "charge_bone_horn": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.precasia.basic_archaeology.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:bone_horn",
+      "nbt": "{Damage:0}"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.precasia.basic_archaeology.title"
+    }
+  },
+  "requirements": [
+    [
+      "charge_bone_horn"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -9,7 +9,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.level.BlockEvent;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
@@ -52,7 +52,7 @@ public class DryadSpriteSpawn extends ScalableModAbility {
 							.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d)));
 				}
 
-				AoAPackets.messageAllPlayersTrackingEntity(packet, ev.getPlayer());
+				AoANetworking.sendToAllPlayersTrackingEntity(packet, ev.getPlayer());
 			}
 		}
 	}

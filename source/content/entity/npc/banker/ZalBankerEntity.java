@@ -15,8 +15,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ZalBankerEntity extends AoABanker {
 	public ZalBankerEntity(EntityType<? extends PathfinderMob> entityType, Level world) {

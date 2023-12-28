@@ -16,8 +16,8 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public abstract class BaseEnergyShot extends ThrowableProjectile {
 	protected int lifespan;

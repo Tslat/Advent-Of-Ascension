@@ -11,15 +11,15 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.SkillRequirementDataPacket;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -267,7 +267,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static void syncNewPlayer(ServerPlayer player) {
-		AoAPackets.messagePlayer(player, new SkillRequirementDataPacket(requirementsData));
+		AoANetworking.sendToPlayer(player, new SkillRequirementDataPacket(requirementsData));
 	}
 
 	public static class SkillReqHandler {

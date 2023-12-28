@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider.Context;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.content.entity.projectile.staff.DestructionShotEntity;
 
-import javax.annotation.Nullable;
 
 public class DestructionShotRenderer extends EntityRenderer<DestructionShotEntity> {
 	private final ResourceLocation texture;

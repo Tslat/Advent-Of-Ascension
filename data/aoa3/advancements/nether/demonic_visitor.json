@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:nether/root",
+  "criteria": {
+    "enter_structure_nethengeic_pit": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "aoa3:nethengeic_pit"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.nether.demonic_visitor.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "minecraft:blaze_powder"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.nether.demonic_visitor.title"
+    }
+  },
+  "requirements": [
+    [
+      "enter_structure_nethengeic_pit"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

@@ -26,7 +26,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
@@ -620,7 +620,7 @@ public class EliteNethengeicWitherEntity extends AoABoss implements AoARangedAtt
 					packet.particle(ParticleBuilder.forPos(RandomUtil.fiftyFifty() ? ParticleTypes.SMALL_FLAME : ParticleTypes.SQUID_INK, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+				AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
 				if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
 					entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);

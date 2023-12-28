@@ -10,9 +10,9 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.LazyOptional;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class AdventPlayerCapabilityProvider implements ICapabilitySerializable<CompoundTag> {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "advent_player");

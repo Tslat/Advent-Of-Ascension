@@ -15,8 +15,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.AnemiaBombEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class AnemiaEntity extends AoAFlyingRangedMob {
 	public AnemiaEntity(EntityType<? extends FlyingMob> entityType, Level world) {

@@ -8,8 +8,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class OrnamytePickaxe extends BasePickaxe {

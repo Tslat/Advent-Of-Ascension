@@ -16,8 +16,8 @@ import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.client.AoAEntityRendering;
 import net.tslat.aoa3.client.model.misc.FishingCageModel;
 import net.tslat.aoa3.content.entity.misc.FishingCageEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class FishingCageRenderer extends EntityRenderer<FishingCageEntity> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/misc/fishing_cage.png");

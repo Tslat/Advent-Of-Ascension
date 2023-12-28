@@ -9,8 +9,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.cannon.RockFragmentEntity;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class JackRocker extends BaseCannon {
 	double dmg;

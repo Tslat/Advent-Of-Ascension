@@ -24,8 +24,8 @@ import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.content.entity.npc.banker.AoABanker;
 import net.tslat.aoa3.util.*;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlankRealmstone extends Item {
@@ -47,7 +47,7 @@ public class BlankRealmstone extends Item {
 			if (player instanceof ServerPlayer && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));
-				PlayerUtil.notifyPlayer(player, Component.translatable("message.dialogue.creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3)));
+				PlayerUtil.notifyPlayer(player, Component.translatable(LocaleUtil.createDialogueLocaleKey("creeponiaBlankRealmstone." + RandomUtil.randomNumberUpTo(3))));
 			}
 
 			return InteractionResult.SUCCESS;

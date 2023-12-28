@@ -1,5 +1,6 @@
 package net.tslat.aoa3.library.builder;
 
+import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
@@ -14,7 +15,7 @@ import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.PlayLevelSoundEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -194,7 +195,7 @@ public final class SoundBuilder {
 
 	public SoundBuilder include(Player... players) {
 		if (playTo == null)
-			playTo = new HashSet<Player>();
+			playTo = new ObjectOpenHashSet<>();
 
 		if (level == null)
 			level = players[0].level();
@@ -292,13 +293,13 @@ public final class SoundBuilder {
 			if (playTo != null) {
 				for (Player pl : playTo) {
 					if (exclude == null || !exclude.contains(pl))
-						AoAPackets.messagePlayer((ServerPlayer)pl, packet);
+						AoANetworking.sendToPlayer((ServerPlayer)pl, packet);
 				}
 			}
 			else {
 				for (ServerPlayer pl : level.getServer().getPlayerList().getPlayers()) {
 					if (pl.level() == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
-						AoAPackets.messagePlayer(pl, packet);
+						AoANetworking.sendToPlayer(pl, packet);
 				}
 			}
 		}
@@ -314,13 +315,13 @@ public final class SoundBuilder {
 			if (playTo != null) {
 				for (Player pl : playTo) {
 					if (exclude == null || !exclude.contains(pl))
-						AoAPackets.messagePlayer((ServerPlayer)pl, packet);
+						AoANetworking.sendToPlayer((ServerPlayer)pl, packet);
 				}
 			}
 			else {
 				for (ServerPlayer pl : level.getServer().getPlayerList().getPlayers()) {
 					if (pl.level() == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
-						AoAPackets.messagePlayer(pl, packet);
+						AoANetworking.sendToPlayer(pl, packet);
 				}
 			}
 		}

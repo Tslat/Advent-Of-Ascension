@@ -22,8 +22,8 @@ import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class EnergisticPickaxe extends BasePickaxe {
@@ -105,10 +105,10 @@ public class EnergisticPickaxe extends BasePickaxe {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticCharge", LocaleUtil.ItemDescriptionType.NEUTRAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.ENERGISTIC_TOOL_CHARGE, LocaleUtil.ItemDescriptionType.NEUTRAL));
 
 		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
 
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.energisticStorage", LocaleUtil.ItemDescriptionType.NEUTRAL,  Component.literal(Integer.toString((int)cap.getValue()))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.ENERGISTIC_TOOL_STORED, LocaleUtil.ItemDescriptionType.NEUTRAL,  Component.literal(Integer.toString((int)cap.getValue()))));
 	}
 }

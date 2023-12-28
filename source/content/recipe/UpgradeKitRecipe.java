@@ -16,8 +16,8 @@ import net.minecraftforge.common.crafting.CraftingHelper;
 import net.tslat.aoa3.common.container.DivineStationContainer;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineStationInventory> {
 	private final ResourceLocation id;

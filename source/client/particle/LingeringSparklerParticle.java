@@ -3,8 +3,8 @@ package net.tslat.aoa3.client.particle;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class LingeringSparklerParticle extends TextureSheetParticle {
 	private final SpriteSet sprite;

@@ -13,8 +13,9 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.cannon.TriDischargeShotEntity;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.NumberUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class AncientDischarger extends BaseCannon {
@@ -46,5 +47,6 @@ public class AncientDischarger extends BaseCannon {
 		super.appendHoverText(stack, world, tooltip, flag);
 
 		tooltip.set(1, LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
+		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(NumberUtil.roundToNthDecimalPlace(20 / (float)getFiringDelay(), 2))));
 	}
 }

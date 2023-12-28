@@ -1,0 +1,78 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#texture",
+          "uv": [
+            15.0,
+            5.0,
+            10.0,
+            10.0
+          ]
+        },
+        "east": {
+          "texture": "#texture",
+          "uv": [
+            5.0,
+            0.0,
+            10.0,
+            7.0
+          ]
+        },
+        "north": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            0.0,
+            5.0,
+            7.0
+          ]
+        },
+        "south": {
+          "texture": "#texture",
+          "uv": [
+            0.0,
+            7.0,
+            5.0,
+            14.0
+          ]
+        },
+        "up": {
+          "texture": "#texture",
+          "uv": [
+            15.0,
+            5.0,
+            10.0,
+            0.0
+          ]
+        },
+        "west": {
+          "texture": "#texture",
+          "uv": [
+            5.0,
+            7.0,
+            10.0,
+            14.0
+          ]
+        }
+      },
+      "from": [
+        3,
+        0,
+        3
+      ],
+      "to": [
+        13,
+        14,
+        13
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "particle": "#texture",
+    "texture": "aoa3:block/cocoon"
+  }
+}

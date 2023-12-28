@@ -8,8 +8,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ElkanyneEntity extends AoAAnimalOld {
 	public ElkanyneEntity(EntityType<? extends Animal> entityType, Level world) {

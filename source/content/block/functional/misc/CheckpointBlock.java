@@ -29,8 +29,8 @@ import net.tslat.aoa3.library.object.PositionAndRotation;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CheckpointBlock extends Block {
 	public CheckpointBlock(BlockBehaviour.Properties properties) {
@@ -78,7 +78,7 @@ public class CheckpointBlock extends Block {
 
 			if (checkpoint == null || checkpoint.asBlockPos().distSqr(pos) > 9) {
 				plData.setCheckpoint(PositionAndRotation.from(pos, entity));
-				plData.player().sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.set", ChatFormatting.GREEN), true);
+				plData.player().sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.set"), ChatFormatting.GREEN), true);
 				new SoundBuilder(AoASounds.CHECKPOINT).notInWorld().execute();
 			}
 		}

@@ -9,8 +9,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.MetalSlugEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BloodIron extends BaseGun {
 	public BloodIron(float dmg, int durability, int firingDelayTicks, float recoil) {

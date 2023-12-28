@@ -12,8 +12,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class StackableWaterPlant extends StackablePlant implements SimpleWaterloggedBlock {
 	public StackableWaterPlant(BlockBehaviour.Properties properties) {

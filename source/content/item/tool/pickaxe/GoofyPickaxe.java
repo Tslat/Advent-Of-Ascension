@@ -14,8 +14,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class GoofyPickaxe extends BasePickaxe {
@@ -65,7 +65,7 @@ public class GoofyPickaxe extends BasePickaxe {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.goofyRegen", LocaleUtil.ItemDescriptionType.BENEFICIAL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.goofyNoDamage", LocaleUtil.ItemDescriptionType.HARMFUL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.GOOFY_TOOL_REGEN, LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.NO_DAMAGE, LocaleUtil.ItemDescriptionType.HARMFUL));
 	}
 }

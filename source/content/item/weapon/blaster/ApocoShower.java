@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,8 +16,8 @@ import net.tslat.aoa3.content.entity.projectile.blaster.WeightedShowerShotEntity
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ApocoShower extends BaseBlaster {
@@ -31,7 +32,7 @@ public class ApocoShower extends BaseBlaster {
 	}
 
 	@Override
-	public void fire(ItemStack blaster, LivingEntity shooter) {
+	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
 		shooter.level().addFreshEntity(new ShowerShotEntity(shooter, this, 60));
 		shooter.level().addFreshEntity(new WeightedShowerShotEntity(shooter, this, 60));
 		shooter.level().addFreshEntity(new HeavyShowerShotEntity(shooter, this, 60));

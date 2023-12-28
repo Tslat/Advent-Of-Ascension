@@ -1,0 +1,14 @@
+{
+  "type": "aoa3:structure_piece",
+  "config": {
+    "processors": {
+      "processors": []
+    },
+    "templates": [
+      "aoa3:precasia/feature/stranglewood_fallen_tree_1",
+      "aoa3:precasia/feature/stranglewood_fallen_tree_2",
+      "aoa3:precasia/feature/stranglewood_stump_1",
+      "aoa3:precasia/feature/stranglewood_stump_2"
+    ]
+  }
+}

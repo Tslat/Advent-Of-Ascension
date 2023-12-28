@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 
 import net.tslat.aoa3.content.entity.boss.CrystocoreEntity;
 
-import javax.annotation.Nullable;
 
 public class CrystocoreRenderer extends MobRenderer<CrystocoreEntity, EntityModel<CrystocoreEntity>> {
 	private static final ResourceLocation SLOWNESS_PHASE_TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/crystocore/crystocore_slowness.png");

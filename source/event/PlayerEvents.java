@@ -140,7 +140,7 @@ public class PlayerEvents {
 
 							PlayerUtil.resetToDefaultStatus(pl);
 							pl.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
-							pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN), true);
+							pl.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.respawn"), ChatFormatting.GREEN), true);
 							checkpoint.applyToEntity(pl);
 						}, 1);
 
@@ -150,7 +150,7 @@ public class PlayerEvents {
 					}
 					else {
 						plData.clearCheckpoint();
-						pl.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.invalid", ChatFormatting.RED));
+						pl.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.invalid"), ChatFormatting.RED));
 					}
 				}
 

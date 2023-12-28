@@ -1,5 +1,6 @@
 package net.tslat.aoa3.common.packet;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +15,7 @@ import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliBookOpenPacket;
 import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliBookSyncPacket;
 import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliGiveBookPacket;
 
-public class AoAPackets {
+public class AoANetworking {
 	private static final String REV = "1";
 	public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(new ResourceLocation(AdventOfAscension.MOD_ID, "aoa_packets"), () -> REV, REV::equals, REV::equals);
 
@@ -44,31 +45,33 @@ public class AoAPackets {
 		INSTANCE.registerMessage(id++, SyncAoAAbilityDataPacket.class, SyncAoAAbilityDataPacket::encode, SyncAoAAbilityDataPacket::decode, SyncAoAAbilityDataPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, AoASoundBuilderPacket.class, AoASoundBuilderPacket::encode, AoASoundBuilderPacket::decode, AoASoundBuilderPacket::receiveMessage);
 		INSTANCE.registerMessage(id++, ParticleEffectPacket.class, ParticleEffectPacket::encode, ParticleEffectPacket::decode, ParticleEffectPacket::receiveMessage);
+		INSTANCE.registerMessage(id++, MultipartTogglePacket.class, MultipartTogglePacket::encode, MultipartTogglePacket::decode, MultipartTogglePacket::receiveMessage);
 	}
 
-	public static void messageNearbyPlayers(AoAPacket packet, ServerLevel world, Vec3 origin, double radius) {
-		for (ServerPlayer player : world.players()) {
-			if (player.distanceToSqr(origin.x(), origin.y(), origin.z()) < radius * radius)
-				messagePlayer(player, packet);
-		}
+	public static void sendToAllNearbyPlayers(AoAPacket packet, ServerLevel level, Vec3 origin, double radius) {
+		INSTANCE.send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(origin.x, origin.y, origin.z, radius, level.dimension())), packet);
 	}
 
-	public static void messagePlayer(ServerPlayer player, AoAPacket packet) {
+	public static void sendToPlayer(ServerPlayer player, AoAPacket packet) {
 		if (player.connection != null)
 			INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), packet);
 	}
 
-	public static void messageAllPlayers(AoAPacket packet) {
+	public static void sendToAllPlayers(AoAPacket packet) {
 		INSTANCE.send(PacketDistributor.ALL.noArg(), packet);
 	}
 
-	public static void messageServer(AoAPacket packet) {
+	public static void sendToServer(AoAPacket packet) {
 		INSTANCE.sendToServer(packet);
 	}
 
-	public static void messageAllPlayersTrackingEntity(AoAPacket packet, Entity entity) {
+	public static void sendToAllPlayersTrackingBlock(ServerLevel level, BlockPos pos, AoAPacket packet) {
+		INSTANCE.send(PacketDistributor.TRACKING_CHUNK.with(() -> level.getChunkAt(pos)), packet);
+	}
+
+	public static void sendToAllPlayersTrackingEntity(AoAPacket packet, Entity entity) {
 		if (entity instanceof ServerPlayer pl)
-			messagePlayer(pl, packet);
+			sendToPlayer(pl, packet);
 
 		INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), packet);
 	}

@@ -12,8 +12,8 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class HazmatArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.HAZMAT;
 	}
 
@@ -37,12 +37,12 @@ public class HazmatArmour extends AdventArmour {
 
 	@Override
 	public boolean isHelmetAirTight(ServerPlayer player) {
-		return PlayerUtil.isWearingFullSet(player, setType());
+		return PlayerUtil.isWearingFullSet(player, getSetType());
 	}
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(setEffectHeader());
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.helmet.airTight", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.ARMOUR_AIRTIGHT, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

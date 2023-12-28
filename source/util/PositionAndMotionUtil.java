@@ -5,13 +5,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public final class PositionAndMotionUtil {
 	public static Vec3 accountForGravity(Vec3 origin, Vec3 velocity, Vec3 targetPos, double gravity) {
@@ -118,5 +121,52 @@ public final class PositionAndMotionUtil {
 		pos = moveUpToSurface(level, pos);
 
 		return Optional.of(pos);
+	}
+
+	public static HitResult rayTrace(Entity entity, double distance, boolean doEntities, @Nullable Predicate<Entity> entityFilter) {
+		return rayTrace(entity.level(), entity.getEyePosition(), entity.getEyePosition().add(entity.getLookAngle().scale(distance)), ClipContext.Block.COLLIDER, false, doEntities, entityFilter);
+	}
+
+	public static HitResult rayTrace(Level level, Vec3 start, Vec3 end, ClipContext.Block blockhitType, boolean includeFluids, boolean doEntities, @Nullable Predicate<Entity> entityFilter) {
+		BlockHitResult blockHitResult = level.clip(new ClipContext(start, end, blockhitType, includeFluids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, null));
+
+		if (!doEntities)
+			return blockHitResult;
+
+		if (blockHitResult.getType() == HitResult.Type.BLOCK)
+			end = blockHitResult.getLocation();
+
+		double distance = start.distanceTo(end);
+		distance *= distance;
+		Entity closestTarget = null;
+		Vec3 clipPos = null;
+
+		for (Entity entity : level.getEntities((Entity)null, new AABB(start, end).inflate(1), entityFilter == null ? entity -> true : entityFilter)) {
+			AABB entityPickBounds = entity.getBoundingBox().inflate(entity.getPickRadius());
+
+			if (entityPickBounds.contains(start)) {
+				if (distance > 0) {
+					closestTarget = entity;
+					distance = 0;
+					clipPos = entityPickBounds.clip(start, end).orElse(start);
+				}
+			}
+			else {
+				Optional<Vec3> entityClip = entityPickBounds.clip(start, end);
+
+				if (entityClip.isPresent()) {
+					Vec3 clipPoint = entityClip.get();
+					double entityDist = start.distanceToSqr(clipPoint);
+
+					if (entityDist < distance || distance == 0) {
+						closestTarget = entity;
+						clipPos = clipPoint;
+						distance = entityDist;
+					}
+				}
+			}
+		}
+
+		return closestTarget != null ? new EntityHitResult(closestTarget, clipPos) : blockHitResult;
 	}
 }

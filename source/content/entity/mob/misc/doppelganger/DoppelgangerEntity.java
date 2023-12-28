@@ -47,7 +47,6 @@ import net.tslat.aoa3.content.entity.brain.task.wrapper.FirstSuccessfulTask;
 import net.tslat.aoa3.util.BrainUtils;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

@@ -2,8 +2,8 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.sounds.SoundEvent;
 import net.tslat.aoa3.common.registration.AoASounds;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class Tommy extends BaseGun {
 	public Tommy(float dmg, int durability, int firingDelayTicks, float recoil) {

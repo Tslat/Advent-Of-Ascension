@@ -8,8 +8,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class LunarGreatblade extends BaseGreatblade {
@@ -28,6 +28,6 @@ public class LunarGreatblade extends BaseGreatblade {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(Double.toString(getDamage() + 1)), Component.literal(Double.toString(maxDmg))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(Double.toString(getDamage() + 1)), Component.literal(Double.toString(maxDmg))));
 	}
 }

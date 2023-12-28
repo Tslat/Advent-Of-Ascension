@@ -8,9 +8,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -45,6 +46,26 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 	}
 
 	@Override
+	public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
+		return false;
+	}
+
+	@Override
+	public boolean isEnchantable(ItemStack stack) {
+		return false;
+	}
+
+	@Override
+	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+		return false;
+	}
+
+	@Override
+	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+		return false;
+	}
+
+	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key))
 			return InteractionResultHolder.pass(player.getItemInHand(hand));
@@ -61,7 +82,7 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 				packet.particle(ParticleBuilder.forRandomPosInEntity(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.5f, 1, 0xD1B100), livingEntity));
 			}
 
-			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, livingEntity.position(), 20);
+			AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level, livingEntity.position(), 20);
 		}
 	}
 

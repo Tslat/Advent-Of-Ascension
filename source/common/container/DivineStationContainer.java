@@ -20,8 +20,8 @@ import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class DivineStationContainer extends AbstractContainerMenu { // TODO Look at RecipeBookContainer extensions

@@ -72,6 +72,11 @@ public class RoamingTraderSpawner implements AoACustomSpawner {
 	}
 
 	@Override
+	public AoACustomSpawner copy() {
+		return new RoamingTraderSpawner(this.spawnInterval, this.extraDelayPerSpawn, this.chancePerPlayer, this.spawnsPerPlayer, this.biomeBlacklist, this.dimensionBlacklist, this.spawns, this.spawnRules, this.spawnInFlatWorld);
+	}
+
+	@Override
 	public int tick(ServerLevel level, boolean spawnHostiles, boolean spawnPassives) {
 		if (this.nextSpawnTick > level.getGameTime() || !spawnPassives || !level.getGameRules().getBoolean(GameRules.RULE_DO_TRADER_SPAWNING))
 			return 0;

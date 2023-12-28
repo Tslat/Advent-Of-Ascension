@@ -20,8 +20,8 @@ import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.data.client.AdventGuiThemeReloadListener;
 import net.tslat.aoa3.integration.IntegrationManager;
 import net.tslat.aoa3.util.*;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class AdventMainGui extends Screen implements StatsUpdateListener {	
 	private static final ResourceLocation TITLE = HolidayUtil.isAprilFools() ? new ResourceLocation("aoa3", "textures/gui/adventgui/aoa_title_alt.png") : new ResourceLocation("aoa3", "textures/gui/adventgui/aoa_title.png");

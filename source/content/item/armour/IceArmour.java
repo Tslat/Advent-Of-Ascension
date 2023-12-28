@@ -10,8 +10,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class IceArmour extends AdventArmour {
@@ -20,7 +20,7 @@ public class IceArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.ICE;
 	}
 

@@ -18,8 +18,8 @@ import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabili
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ExpFlask extends Item {

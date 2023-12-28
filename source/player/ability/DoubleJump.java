@@ -14,7 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
@@ -86,7 +86,7 @@ public class DoubleJump extends AoAAbility.Instance {
 				canJump = false;
 
 				player.jumpFromGround();
-				AoAPackets.messagePlayer(player, new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET).y((float)player.getDeltaMovement().y()));
+				AoANetworking.sendToPlayer(player, new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET).y((float)player.getDeltaMovement().y()));
 
 				if (getSkill().canGainXp(true))
 					getSkill().adjustXp(PlayerUtil.getTimeBasedXpForLevel(getSkill().getLevel(true), 16), false, false);

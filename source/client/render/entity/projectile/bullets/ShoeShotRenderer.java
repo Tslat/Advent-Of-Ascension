@@ -10,10 +10,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.content.entity.projectile.gun.ShoeShotEntity;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
-import javax.annotation.Nullable;
 
 public class ShoeShotRenderer extends EntityRenderer<ShoeShotEntity> {
 	private final RenderType renderType;

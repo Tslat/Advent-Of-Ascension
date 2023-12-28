@@ -14,9 +14,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public abstract class BossAltarBlock extends Block {
 	public BossAltarBlock(Block.Properties properties) {
@@ -32,7 +33,7 @@ public abstract class BossAltarBlock extends Block {
 
 		if (level.getDifficulty() == Difficulty.PEACEFUL) {
 			if (!level.isClientSide)
-				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
+				PlayerUtil.notifyPlayer(player, Component.translatable(LocaleUtil.createFeedbackLocaleKey("spawnBoss.difficultyFail")));
 
 			return InteractionResult.FAIL;
 		}

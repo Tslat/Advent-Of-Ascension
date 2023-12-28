@@ -6,8 +6,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class EntityAffectingParticle extends TextureSheetParticle {

@@ -10,8 +10,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class WingedCreeperEntity extends AoACreeponiaCreeper {
     public WingedCreeperEntity(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {

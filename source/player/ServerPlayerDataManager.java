@@ -27,7 +27,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.PlayerDataSyncPacket;
 import net.tslat.aoa3.common.packet.packets.PlayerDataUpdatePacket;
 import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
@@ -53,9 +53,9 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Consumer;
@@ -349,7 +349,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		if (SkillsLeaderboard.isEnabled())
 			LeaderboardActions.addNewPlayer(plData);
 
-		AoAPackets.messagePlayer(pl, new PlayerDataSyncPacket(plData.savetoNbt(true)));
+		AoANetworking.sendToPlayer(pl, new PlayerDataSyncPacket(plData.savetoNbt(true)));
 	}
 
 	public void doPlayerTick() {
@@ -429,7 +429,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		if (syncData != null) {
 			syncData.putBoolean("legitimate", this.isLegitimate);
 
-			AoAPackets.messagePlayer(player, new PlayerDataUpdatePacket(syncData));
+			AoANetworking.sendToPlayer(player, new PlayerDataUpdatePacket(syncData));
 		}
 	}
 
@@ -597,7 +597,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					listener.reenable(false);
 
 					if (state == DEACTIVATED && listener instanceof AoAAbility.Instance ability)
-						AoAPackets.messagePlayer(player, new ToastPopupPacket(ability.getSkill().type(), ability.type()));
+						AoANetworking.sendToPlayer(player, new ToastPopupPacket(ability.getSkill().type(), ability.type()));
 				}
 			}
 		});
@@ -843,7 +843,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		public AdventArmour.Type getCurrentFullArmourSet() {
-			return currentFullSet != null ? currentFullSet.setType() : AdventArmour.Type.NONE;
+			return currentFullSet != null ? currentFullSet.getSetType() : AdventArmour.Type.NONE;
 		}
 
 		@Override
@@ -920,7 +920,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			AdventArmour oldSet = currentFullSet;
 
 			if (armourChanged) {
-				if (boots != null && legs != null && body != null && helmet != null && boots.setType() == legs.setType() && legs.setType() == body.setType() && body.isSetHelmet(helmet)) {
+				if (boots != null && legs != null && body != null && helmet != null && boots.getSetType() == legs.getSetType() && legs.getSetType() == body.getSetType() && body.isSetHelmet(helmet)) {
 					currentFullSet = boots;
 
 					if (currentFullSet != oldSet) {
@@ -1043,11 +1043,11 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		private void equipAdventArmour(ServerPlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlot slot) {
 			item.onEquip(plData, slot);
 
-			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.setType());
+			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.getSetType());
 
 			if (slot != null) {
 				if (armourEffectWrapper == null) {
-					armourMap.put(item.setType(), new ArmourEffectWrapper(item, slot));
+					armourMap.put(item.getSetType(), new ArmourEffectWrapper(item, slot));
 				}
 				else {
 					armourEffectWrapper.currentSlots.add(slot);
@@ -1058,11 +1058,11 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		private void unequipAdventArmour(ServerPlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlot slot) {
 			item.onUnequip(plData, slot);
 
-			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.setType());
+			ArmourEffectWrapper armourEffectWrapper = armourMap.get(item.getSetType());
 
 			if (armourEffectWrapper != null && slot != null) {
 				if (armourEffectWrapper.currentSlots.size() <= 1) {
-					armourMap.remove(item.setType());
+					armourMap.remove(item.getSetType());
 				}
 				else {
 					armourEffectWrapper.currentSlots.remove(slot);

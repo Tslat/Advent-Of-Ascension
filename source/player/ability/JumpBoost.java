@@ -9,7 +9,7 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
@@ -65,12 +65,12 @@ public class JumpBoost extends ScalableModAbility {
 		if (!sprintJumpBoost) {
 			newMotion = oldMotion.multiply(1, launchMultiplier / 1.02040814340536d, 1);
 
-			AoAPackets.messagePlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET).y((float)(oldMotion.y() * launchMultiplier / 1.02040814340536d)));
+			AoANetworking.sendToPlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET).y((float)(oldMotion.y() * launchMultiplier / 1.02040814340536d)));
 		}
 		else {
 			newMotion = oldMotion.multiply(baseBoostMultiplier, 1, baseBoostMultiplier);
 
-			AoAPackets.messagePlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.MULTIPLY).x((float)baseBoostMultiplier).z((float)baseBoostMultiplier));
+			AoANetworking.sendToPlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.MULTIPLY).x((float)baseBoostMultiplier).z((float)baseBoostMultiplier));
 		}
 
 		entity.setDeltaMovement(newMotion);

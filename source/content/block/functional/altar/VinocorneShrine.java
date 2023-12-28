@@ -14,8 +14,8 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class VinocorneShrine extends BossAltarBlock {
 	public VinocorneShrine(BlockBehaviour.Properties properties) {

@@ -32,7 +32,6 @@ import net.tslat.aoa3.advent.Logging;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.apache.logging.log4j.Level;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.function.Predicate;
 

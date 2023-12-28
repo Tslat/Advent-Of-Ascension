@@ -32,8 +32,8 @@ import net.tslat.aoa3.util.InteractionResults;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class BossAltar extends Block implements EntityBlock {
@@ -61,7 +61,7 @@ public class BossAltar extends Block implements EntityBlock {
 
 		if (level.getDifficulty() == Difficulty.PEACEFUL) {
 			if (!level.isClientSide && hand == InteractionHand.MAIN_HAND)
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.difficulty", ChatFormatting.RED));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.difficulty"), ChatFormatting.RED));
 
 			return InteractionResults.BlockUse.noActionTaken();
 		}
@@ -72,7 +72,7 @@ public class BossAltar extends Block implements EntityBlock {
 
 		if ((bossItem = getEntityTypeFromStack(heldItem)) == null || (entityType = bossItem.getEntityType(heldItem)) == null) {
 			if (hand == InteractionHand.OFF_HAND && !level.isClientSide())
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.badItem", ChatFormatting.RED));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.badItem"), ChatFormatting.RED));
 
 			return InteractionResults.BlockUse.noActionTaken();
 		}
@@ -90,14 +90,14 @@ public class BossAltar extends Block implements EntityBlock {
 			AoANowhereBossArenaListener.NowhereBossArena arena = AoANowhereBossArenaListener.getFreeArena(serverLevel);
 
 			if (arena == null) {
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.full", ChatFormatting.RED));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.full"), ChatFormatting.RED));
 			}
 			else {
 				BlockEntity blockEntity = level.getBlockEntity(pos);
 
 				if (blockEntity instanceof BossAltarTileEntity bossAltar) {
 					if (bossAltar.getCurrentEntity() != null) {
-						player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.inUse", ChatFormatting.RED));
+						player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.inUse"), ChatFormatting.RED));
 
 						return InteractionResults.BlockUse.noActionTaken();
 					}

@@ -8,8 +8,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class VoltronEntity extends AoAMeleeMob<VoltronEntity> {
 	public VoltronEntity(EntityType<? extends VoltronEntity> entityType, Level world) {

@@ -16,8 +16,8 @@ import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityHa
 import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class PrimalSword extends BaseSword {
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
-		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity) {
+		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity livingEntity) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
 			try {
@@ -37,13 +37,13 @@ public class PrimalSword extends BaseSword {
 					float currentCalcBuff = getCurrentDamageBuff(entity);
 
 					if (currentDamageMod != currentCalcBuff) {
-						((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
+						livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 						cap.setValue(currentCalcBuff);
-						((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
+						livingEntity.getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					}
 				}
-				else if (cap.getValue() != 0 && ((LivingEntity)entity).getMainHandItem().isEmpty()) {
-					((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
+				else if (cap.getValue() != 0 && livingEntity.getMainHandItem().isEmpty()) {
+					livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					cap.setValue(0);
 				}
 			}

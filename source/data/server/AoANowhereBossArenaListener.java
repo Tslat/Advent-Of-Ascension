@@ -41,8 +41,8 @@ import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
@@ -107,7 +107,12 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 		double dist = Double.MAX_VALUE;
 
 		for (NowhereBossArena arena : REGISTERED_ARENAS) {
-			double testDist = arena.getStructureBounds(level).getCenter().distanceToSqr(pos);
+			AABB bounds = arena.getStructureBounds(level);
+
+			if (bounds == null)
+				continue;
+
+			double testDist = bounds.getCenter().distanceToSqr(pos);
 
 			if (testDist < 50 * 50)
 				return arena;
@@ -208,10 +213,10 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 
 						serverPlayer.connection.teleport(pos.x, pos.y, pos.z, 0, 0);
 						ItemUtil.givePlayerItemOrDrop(serverPlayer, new ItemStack(AoAItems.RETURN_CRYSTAL.get()));
-						serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.bossWarning", ChatFormatting.GREEN));
+						serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.bossWarning"), ChatFormatting.GREEN));
 					}
 					else {
-						serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.tooFar", ChatFormatting.RED));
+						serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.tooFar"), ChatFormatting.RED));
 					}
 
 					if (soundBuilder != null)
@@ -232,7 +237,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			}, 100);
 
 			for (Player player : players) {
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.teleportWarning", ChatFormatting.GOLD));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.teleportWarning"), ChatFormatting.GOLD));
 			}
 		}
 
@@ -256,7 +261,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			if (structure == null)
 				return null;
 
-			this.structureStart = level.structureManager().getStructureAt(structurePos, structure);
+			this.structureStart = level.structureManager().getStructureAt(this.structurePos, structure);
 
 			return this.structureStart;
 		}
@@ -271,7 +276,7 @@ public class AoANowhereBossArenaListener extends SimpleJsonResourceReloadListene
 			if (structureStart == null)
 				return null;
 
-			this.structureBounds = AABB.of(structureStart.getBoundingBox());
+			this.structureBounds = AABB.of(structureStart.getBoundingBox()).inflate(50);
 
 			return this.structureBounds;
 		}

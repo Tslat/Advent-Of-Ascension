@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:story/mine_stone",
+  "criteria": {
+    "enter_structure_precasian_lotto_hovel": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "location": {
+                "structure": "aoa3:precasian_lotto_hovel"
+              }
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:location"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.nostalgia_trip.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "aoa3:ancient_rock"
+    },
+    "show_toast": true,
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.nostalgia_trip.title"
+    }
+  },
+  "requirements": [
+    [
+      "enter_structure_precasian_lotto_hovel"
+    ]
+  ],
+  "sends_telemetry_event": false
+}

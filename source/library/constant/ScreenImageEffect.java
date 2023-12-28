@@ -4,7 +4,7 @@ import com.mojang.blaze3d.platform.Window;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ScreenEffectPacket;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -104,7 +104,7 @@ public class ScreenImageEffect {
 	}
 
 	public void sendToPlayer(ServerPlayer player) {
-		AoAPackets.messagePlayer(player, new ScreenEffectPacket(this));
+		AoANetworking.sendToPlayer(player, new ScreenEffectPacket(this));
 	}
 
 	public void init(Window window, long gameTime) {

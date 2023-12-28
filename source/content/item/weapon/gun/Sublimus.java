@@ -15,8 +15,8 @@ import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class Sublimus extends BaseGun {

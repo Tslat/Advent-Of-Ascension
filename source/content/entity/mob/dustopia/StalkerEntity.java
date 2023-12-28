@@ -13,8 +13,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class StalkerEntity extends AoAMeleeMob<StalkerEntity> {
     public StalkerEntity(EntityType<? extends StalkerEntity> entityType, Level world) {

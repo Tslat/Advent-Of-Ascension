@@ -7,8 +7,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoATrader;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class MetalloidEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()

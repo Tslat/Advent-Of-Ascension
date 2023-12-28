@@ -29,7 +29,6 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.scheduling.async.DracyonCleanupTask;
 import net.tslat.aoa3.util.*;
 
-import javax.annotation.Nullable;
 import java.util.concurrent.TimeUnit;
 
 public class DracyonEntity extends AoAFlyingMeleeMob implements AoARangedAttacker {

@@ -24,7 +24,6 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 
-import javax.annotation.Nullable;
 
 public class RaxxanEntity extends AoAMeleeMob<RaxxanEntity> {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -14,8 +15,8 @@ import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class BubbleHorn extends BaseBlaster {
@@ -30,7 +31,7 @@ public class BubbleHorn extends BaseBlaster {
 	}
 
 	@Override
-	public void fire(ItemStack blaster, LivingEntity shooter) {
+	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
 		shooter.level().addFreshEntity(new BubbleShotEntity(shooter, this, 100));
 	}
 
@@ -42,7 +43,7 @@ public class BubbleHorn extends BaseBlaster {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.SLOWS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SLOWS_TARGETS, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

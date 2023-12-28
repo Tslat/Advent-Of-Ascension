@@ -5,8 +5,8 @@ import net.tslat.aoa3.leaderboard.LeaderboardTask;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.leaderboard.task.InitializeLeaderboardTask;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.sql.*;
 import java.util.Properties;
 import java.util.concurrent.LinkedBlockingQueue;

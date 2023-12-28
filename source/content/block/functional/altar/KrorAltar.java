@@ -15,6 +15,7 @@ import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.scheduling.async.KrorSpawnTask;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -45,7 +46,7 @@ public class KrorAltar extends BossAltarBlock {
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
 		if (player.level().getBlockState(pos.above()).getBlock() != AoABlocks.CHARGING_TABLE.get() && player instanceof ServerPlayer) {
-			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.krorAltar.chargingTable"));
+			PlayerUtil.notifyPlayer(player, Component.translatable(LocaleUtil.createFeedbackLocaleKey("krorAltar.chargingTable")));
 
 			return false;
 		}

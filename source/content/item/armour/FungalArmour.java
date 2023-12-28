@@ -14,8 +14,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.*;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class FungalArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.FUNGAL;
 	}
 
@@ -36,7 +36,7 @@ public class FungalArmour extends AdventArmour {
 				if (event.getSource().getEntity() instanceof LivingEntity)
 					((LivingEntity)event.getSource().getEntity()).addEffect(new MobEffectInstance(MobEffects.POISON, 60, 1, true, true));
 
-				if (PlayerUtil.isWearingFullSet(plData.player(), this.setType()) && RandomUtil.oneInNChance(4)) {
+				if (PlayerUtil.isWearingFullSet(plData.player(), this.getSetType()) && RandomUtil.oneInNChance(4)) {
 					for (LivingEntity mob : plData.player().level().getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(5), EntityUtil.Predicates.HOSTILE_MOB)) {
 						mob.addEffect(new MobEffectInstance(MobEffects.POISON, 60, 0, true, true));
 					}

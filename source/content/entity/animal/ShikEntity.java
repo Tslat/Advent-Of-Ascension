@@ -29,8 +29,8 @@ import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.EnumSet;
 import java.util.List;
 

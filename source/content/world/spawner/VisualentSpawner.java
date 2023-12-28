@@ -6,8 +6,8 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.GameRules;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class VisualentSpawner implements CustomSpawner {
 	private int spawnCooldown = 18000;

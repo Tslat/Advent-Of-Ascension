@@ -16,6 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.content.item.misc.RuneSource;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.scheduling.sync.RuneCreationTask;
+import net.tslat.aoa3.util.LocaleUtil;
 
 import java.util.function.Supplier;
 
@@ -39,7 +40,7 @@ public class RunePostBlock extends Block {
 		if (heldItem.getItem() instanceof RuneSource) {
 			if (level.getBlockState(pos.above()).blocksMotion()) {
 				if (!level.isClientSide())
-					player.sendSystemMessage(Component.translatable("message.feedback.runeShrine.blocked"));
+					player.sendSystemMessage(Component.translatable(LocaleUtil.createFeedbackLocaleKey("runeShrine.blocked")));
 
 				return InteractionResult.FAIL;
 			}

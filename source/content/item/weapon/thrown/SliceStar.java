@@ -7,8 +7,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.thrown.SliceStarEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class SliceStar extends BaseThrownWeapon {
 	public SliceStar() {

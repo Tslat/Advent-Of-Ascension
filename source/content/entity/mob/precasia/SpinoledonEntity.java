@@ -2,8 +2,11 @@ package net.tslat.aoa3.content.entity.mob.precasia;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -16,12 +19,18 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.content.entity.animal.precasia.DeinotheriumEntity;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -33,13 +42,13 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliat
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.object.PlayState;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -86,7 +95,7 @@ public class SpinoledonEntity extends AoAMeleeMob<SpinoledonEntity> {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<>(),
 				new AggroBasedNearbyLivingEntitySensor<SpinoledonEntity>()
-						.setPredicate((target, entity) -> (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null) || target instanceof Animal)
+						.setPredicate((target, entity) -> (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null) || target instanceof DeinotheriumEntity)
 						.setScanRate(entity -> 40),
 				new HurtBySensor<>());
 	}
@@ -183,6 +192,26 @@ public class SpinoledonEntity extends AoAMeleeMob<SpinoledonEntity> {
 	protected void onAttack(Entity target) {
 		if (target instanceof Animal animal && animal.getHealth() <= 0)
 			heal(animal.getMaxHealth() / 10f);
+	}
+
+	@Override
+	protected void onHurt(DamageSource source, float amount) {
+		if (level() instanceof ServerLevel level && source.is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
+					.colourOverride(255, 255, 255, 255)
+					.spawnNTimes(20)
+					.sendToAllPlayersTrackingEntity(level,this);
+
+			if (isDeadOrDying()) {
+				AoAScheduler.scheduleSyncronisedTask(() -> {
+					EntitySpawningUtil.spawnEntity(level, AoAMobs.SKELETAL_ABOMINATION.get(), position(), MobSpawnType.CONVERSION, abomination -> {
+						abomination.setXRot(getXRot());
+						abomination.setYRot(getYRot());
+						abomination.setYHeadRot(getYHeadRot());
+					});
+				}, 19 - this.deathTime);
+			}
+		}
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class CrystalExtensionShrine extends Block {
 					}
 
 					if (count < 10) {
-						PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.crystalExtensionShrine.crystals"));
+						PlayerUtil.notifyPlayer(player, Component.translatable(LocaleUtil.createFeedbackLocaleKey("crystalExtensionShrine.crystals")));
 
 						return InteractionResult.PASS;
 					}
@@ -59,7 +60,7 @@ public class CrystalExtensionShrine extends Block {
 						if (stack.getCount() <= 0)
 							crystalList.remove(0);
 
-						i -= size;
+						i -= size - 1;
 					}
 
 					if (!player.isCreative())

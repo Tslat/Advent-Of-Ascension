@@ -18,8 +18,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAWaterRangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.CyanShotEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class MermageEntity extends AoAWaterRangedMob {
 	public MermageEntity(EntityType<? extends WaterAnimal> entityType, Level world) {

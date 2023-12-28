@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class MechamatonEntity extends AoAMeleeMob<MechamatonEntity> {
     public MechamatonEntity(EntityType<? extends MechamatonEntity> entityType, Level world) {

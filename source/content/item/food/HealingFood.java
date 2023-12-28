@@ -9,8 +9,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class HealingFood extends Item {
@@ -43,7 +43,7 @@ public class HealingFood extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.healingFood.desc.1", LocaleUtil.ItemDescriptionType.NEUTRAL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.healingFood.desc.2", LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(Float.toString(healingAmount))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.HEALING_FOOD_DESCRIPTION, LocaleUtil.ItemDescriptionType.NEUTRAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.HEALING_FOOD_AMOUNT, LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(Float.toString(healingAmount))));
 	}
 }

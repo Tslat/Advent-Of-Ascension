@@ -15,10 +15,10 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.BombCarrierDynamiteEntity;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class BombCarrierEntity extends AoARangedMob<BombCarrierEntity> {
 	public BombCarrierEntity(EntityType<? extends BombCarrierEntity> entityType, Level world) {

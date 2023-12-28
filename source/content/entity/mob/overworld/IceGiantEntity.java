@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
@@ -35,10 +35,10 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARangedAttacker {
@@ -125,7 +125,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 						.velocity(RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d)));
 			}
 
-			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 10);
+			AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level(), position(), 10);
 			remove(RemovalReason.KILLED);
 		}
 
@@ -193,7 +193,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 		if (tickCount % 5 == 0)
 			playSound(AoASounds.ICE_WIND.get(), 1.5f, 1f);
 
-		AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), getEyePosition(), 200);
+		AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level(), getEyePosition(), 200);
 	}
 
 	@Override

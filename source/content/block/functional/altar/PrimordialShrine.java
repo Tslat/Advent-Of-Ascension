@@ -15,6 +15,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.misc.DustopianLamp;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -27,7 +28,7 @@ public class PrimordialShrine extends BossAltarBlock {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (world.getDifficulty() == Difficulty.PEACEFUL && player instanceof ServerPlayer) {
-			PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.spawnBoss.difficultyFail"));
+			PlayerUtil.notifyPlayer(player, Component.translatable(LocaleUtil.createFeedbackLocaleKey("spawnBoss.difficultyFail")));
 
 			return InteractionResult.FAIL;
 		}

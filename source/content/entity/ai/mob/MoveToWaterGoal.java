@@ -6,8 +6,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.content.entity.ai.ExtendedGoal;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class MoveToWaterGoal<T extends Mob> extends ExtendedGoal<T> {
 	protected Vec3 targetPos = null;

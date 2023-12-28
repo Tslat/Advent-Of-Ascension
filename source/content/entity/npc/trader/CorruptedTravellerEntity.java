@@ -23,13 +23,13 @@ import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import javax.annotation.Nullable;
 
 public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity {
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);

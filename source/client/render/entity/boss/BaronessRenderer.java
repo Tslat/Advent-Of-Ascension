@@ -9,7 +9,6 @@ import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.client.render.entity.layer.InvulnerabilityAuraRenderLayer;
 
 
-import javax.annotation.Nullable;
 
 public class BaronessRenderer extends AoAMobRenderer {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/boss/baroness/baroness.png");

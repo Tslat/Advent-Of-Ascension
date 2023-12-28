@@ -28,7 +28,6 @@ import net.tslat.aoa3.content.entity.projectile.mob.VoxxulonMeteorEntity;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.*;
 
-import javax.annotation.Nullable;
 
 public class VoxxulonEntity extends AoAMeleeMob implements AoARangedAttacker {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);

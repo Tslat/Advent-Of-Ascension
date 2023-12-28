@@ -15,7 +15,6 @@ import net.minecraft.world.gen.feature.template.Template;
 import net.tslat.aoa3.content.block.functional.misc.TrophyBlock;
 import net.tslat.aoa3.common.registration.worldgen.AoAStructureProcessors;
 
-import javax.annotation.Nullable;
 
 public class TrophyProcessor extends StructureProcessor {
 	public static final Codec<TrophyProcessor> CODEC = RecordCodecBuilder.create(builder ->

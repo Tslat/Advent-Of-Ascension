@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -12,8 +13,8 @@ import net.tslat.aoa3.content.entity.projectile.blaster.SoulDrainerShotEntity;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class SoulDrainer extends BaseBlaster {
@@ -28,7 +29,7 @@ public class SoulDrainer extends BaseBlaster {
 	}
 
 	@Override
-	public void fire(ItemStack blaster, LivingEntity shooter) {
+	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
 		shooter.level().addFreshEntity(new SoulDrainerShotEntity(shooter, this, 1));
 	}
 
@@ -40,7 +41,7 @@ public class SoulDrainer extends BaseBlaster {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.LEECHES_HEALTH, LocaleUtil.ItemDescriptionType.BENEFICIAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.LEECHES_HEALTH, LocaleUtil.ItemDescriptionType.BENEFICIAL));
 		super.appendHoverText(stack, world, tooltip, flag);
 	}
 }

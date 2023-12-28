@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -15,15 +16,17 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.world.teleporter.specific.NowhereTeleporter;
+import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.function.Function;
 
@@ -33,6 +36,18 @@ public abstract class AoATeleporter implements ITeleporter {
 	public abstract PortalBlock getPortalBlock();
 
 	public abstract Block getBorderBlock();
+
+	@Override
+	public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceWorld, ServerLevel destWorld) {
+		new SoundBuilder(AoASounds.PORTAL_EXIT)
+				.pitch(player.getRandom().nextFloat() * 0.4F + 0.8F)
+				.category(SoundSource.AMBIENT)
+				.notInWorld()
+				.include(player)
+				.execute();
+
+		return false;
+	}
 
 	@Override
 	public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> entityPlacementFunction) {

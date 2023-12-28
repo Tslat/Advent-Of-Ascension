@@ -28,8 +28,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.util.EntityUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BannerBlock extends Block implements SimpleWaterloggedBlock {
 	public static final EnumProperty<BannerType> TYPE = EnumProperty.create("type", BannerType.class);

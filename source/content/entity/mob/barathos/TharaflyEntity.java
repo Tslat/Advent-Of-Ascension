@@ -6,8 +6,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class TharaflyEntity extends AoAFlyingMeleeMob {
 	public TharaflyEntity(EntityType<? extends FlyingMob> entityType, Level world) {

@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class EmperorBeastEntity extends AoAMeleeMob<EmperorBeastEntity> {
 	public EmperorBeastEntity(EntityType<? extends EmperorBeastEntity> entityType, Level world) {

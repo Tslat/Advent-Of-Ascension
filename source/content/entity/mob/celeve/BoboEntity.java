@@ -7,8 +7,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BoboEntity extends AoAMeleeMob<BoboEntity> {
 	public BoboEntity(EntityType<? extends BoboEntity> entityType, Level world) {

@@ -17,9 +17,9 @@ import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class LunarcherEntity extends AoAFlyingRangedMob {
 	public LunarcherEntity(EntityType<? extends FlyingMob> entityType, Level world) {

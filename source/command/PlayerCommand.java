@@ -527,6 +527,6 @@ public class PlayerCommand implements Command<CommandSourceStack> {
 		return 1;
 	}
 
-	public static final DynamicCommandExceptionType ERROR_SKILL_INVALID = new DynamicCommandExceptionType(obj -> Component.translatable("argument.aoa.skill.notFound", obj));
-	public static final DynamicCommandExceptionType ERROR_RESOURCE_INVALID = new DynamicCommandExceptionType(obj -> Component.translatable("argument.aoa.resource.notFound", obj));
+	public static final DynamicCommandExceptionType ERROR_SKILL_INVALID = new DynamicCommandExceptionType(obj -> Component.translatable(LocaleUtil.createGenericLocaleKey("argument", "skill.notFound"), obj));
+	public static final DynamicCommandExceptionType ERROR_RESOURCE_INVALID = new DynamicCommandExceptionType(obj -> Component.translatable(LocaleUtil.createGenericLocaleKey("argument", "resource.notFound"), obj));
 }

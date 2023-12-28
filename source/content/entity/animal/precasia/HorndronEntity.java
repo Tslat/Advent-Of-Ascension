@@ -1,22 +1,26 @@
 package net.tslat.aoa3.content.entity.animal.precasia;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.EntitySpawningUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
@@ -100,6 +104,26 @@ public class HorndronEntity extends AoAAnimal<HorndronEntity> {
 												triggerAnim("Walk/Run/Idle", "Charge");
 										}))
 				));
+	}
+
+	@Override
+	protected void onHurt(DamageSource source, float amount) {
+		if (level() instanceof ServerLevel level && source.is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
+					.colourOverride(255, 255, 255, 255)
+					.spawnNTimes(20)
+					.sendToAllPlayersTrackingEntity(level,this);
+
+			if (isDeadOrDying()) {
+				AoAScheduler.scheduleSyncronisedTask(() -> {
+					EntitySpawningUtil.spawnEntity(level, AoAMobs.SKELETAL_ABOMINATION.get(), position(), MobSpawnType.CONVERSION, abomination -> {
+						abomination.setXRot(getXRot());
+						abomination.setYRot(getYRot());
+						abomination.setYHeadRot(getYHeadRot());
+					});
+				}, 19 - this.deathTime);
+			}
+		}
 	}
 
 	@Override

@@ -16,8 +16,8 @@ import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.SeedDartEntity;
 import net.tslat.aoa3.util.ItemUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class Gardener extends BaseGun {
 	double dmg;

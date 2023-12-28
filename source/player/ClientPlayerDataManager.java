@@ -10,7 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.PlayerAbilityKeybindPacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
@@ -108,7 +108,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		}
 
 		if (!abilities.isEmpty())
-			AoAPackets.messageServer(new PlayerAbilityKeybindPacket(abilities));
+			AoANetworking.sendToServer(new PlayerAbilityKeybindPacket(abilities));
 	}
 
 	private void updateTotalLevel() {

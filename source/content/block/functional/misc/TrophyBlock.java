@@ -39,8 +39,8 @@ import net.tslat.aoa3.content.block.WaterloggableBlock;
 import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 	private static final VoxelShape FULL_AABB = Shapes.or(

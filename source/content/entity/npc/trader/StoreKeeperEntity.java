@@ -16,11 +16,11 @@ import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.effectslib.api.util.PotionBuilder;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 
-import javax.annotation.Nullable;
 
 public class StoreKeeperEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()

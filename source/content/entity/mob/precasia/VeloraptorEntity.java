@@ -2,10 +2,13 @@ package net.tslat.aoa3.content.entity.mob.precasia;
 
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -13,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.sniffer.Sniffer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -21,14 +25,19 @@ import net.minecraftforge.common.IExtensibleEnum;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.MathUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -61,8 +70,6 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	public VeloraptorEntity(EntityType<? extends VeloraptorEntity> entityType, Level level) {
 		super(entityType, level);
 
-		this.attackReach += 0.5f;
-
 		setParts(new AoAEntityPart<>(this, getBbWidth(), 0.9375f, 0, 1, getBbWidth()).setDamageMultiplier(1.1f));
 	}
 
@@ -71,6 +78,11 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 		super.defineSynchedData();
 
 		registerDataParams(TYPE);
+	}
+
+	@Override
+	protected float getAttackVectorPositionOffset() {
+		return 0.875f;
 	}
 
 	@Nullable
@@ -96,7 +108,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<>(),
 				new AggroBasedNearbyLivingEntitySensor<VeloraptorEntity>()
-						.setPredicate((target, entity) -> (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null) || target instanceof Animal)
+						.setPredicate((target, entity) -> (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null) || target instanceof OpteryxEntity || target instanceof Sniffer)
 						.setScanRate(entity -> 40),
 				new HurtBySensor<>());
 	}
@@ -119,6 +131,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	public BrainActivityGroup<? extends VeloraptorEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
 				new TargetOrRetaliate<>()
+						.alertAlliesWhen((entity, target) -> entity.getLastHurtByMob() != null || target instanceof Animal)
 						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
 						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)),
 				new OneRandomBehaviour<>(
@@ -151,6 +164,26 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 			}
 			else {
 				EntityUtil.removeAttributeModifier(this, AoAAttributes.AGGRO_RANGE.get(), AoAAttributes.NIGHT_AGGRO_MODIFIER);
+			}
+		}
+	}
+
+	@Override
+	protected void onHurt(DamageSource source, float amount) {
+		if (level() instanceof ServerLevel level && source.is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
+					.colourOverride(255, 255, 255, 255)
+					.spawnNTimes(20)
+					.sendToAllPlayersTrackingEntity(level,this);
+
+			if (isDeadOrDying()) {
+				AoAScheduler.scheduleSyncronisedTask(() -> {
+					EntitySpawningUtil.spawnEntity(level, AoAMobs.SKELETAL_ABOMINATION.get(), position(), MobSpawnType.CONVERSION, abomination -> {
+						abomination.setXRot(getXRot());
+						abomination.setYRot(getYRot());
+						abomination.setYHeadRot(getYHeadRot());
+					});
+				}, 19 - this.deathTime);
 			}
 		}
 	}
@@ -241,7 +274,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 			this.target = BrainUtils.getTargetOfEntity(entity);
 			double targetDist = BrainUtils.getTargetOfEntity(entity).distanceToSqr(entity);
 
-			return entity.isSprinting() && targetDist > 16 && targetDist <= 30 && entity.getSensing().hasLineOfSight(this.target);
+			return entity.isSprinting() && targetDist > 8 && targetDist <= 30 && entity.getSensing().hasLineOfSight(this.target);
 		}
 
 		@Override
@@ -250,22 +283,20 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 
 			ATTACK_STATE.set(entity, ATTACK_POUNCE);
 			entity.getNavigation().stop();
+			Vec3 oldPos = this.target.position();
 
 			AoAScheduler.scheduleSyncronisedTask(() -> {
 				final Entity target = BrainUtils.getTargetOfEntity(entity);
-				final Vec3 lungePos = target != null ? target.position() : entity.position().add(entity.getLookAngle().scale(4));
+				final Vec3 lungePos = target != null ? target.position().add(oldPos.vectorTo(target.position())) : entity.position().add(entity.getLookAngle().scale(4));
 
 				entity.setDeltaMovement(
 						MathUtil.clampVec(entity.getDeltaMovement()
 										.add(entity.position()
-												.vectorTo(lungePos)
-												.normalize()
-												.multiply(0.35f, 1, 0.35f)
+												.vectorTo(lungePos).scale(7 / 9f)
 												.add(0, 0.1f, 0)),
-								new Vec3(-0.6, -0.1f, -0.6f),
-								new Vec3(0.6f, 0.5f, 0.6f)));
+								new Vec3(-1.2, -0.1f, -1.2f),
+								new Vec3(1.2, 0.5f, 1.2f)));
 			}, 9);
-
 		}
 
 		@Override

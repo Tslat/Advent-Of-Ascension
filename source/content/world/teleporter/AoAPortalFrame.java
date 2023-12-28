@@ -3,13 +3,20 @@ package net.tslat.aoa3.content.world.teleporter;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.tslat.aoa3.common.packet.AoANetworking;
+import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
+import net.tslat.aoa3.library.builder.ParticleBuilder;
 
 import java.util.ArrayList;
 
@@ -165,25 +172,52 @@ public class AoAPortalFrame {
         return INVALID;
     }
 
-    public static void lightPortalFrame(Level world, BlockPos basePos, PortalDirection direction, PortalBlock portalBlock) {
+    public static void lightPortalFrame(ServerLevel level, BlockPos basePos, PortalDirection direction, PortalBlock portalBlock) {
+        final ServerParticlePacket packet = new ServerParticlePacket();
+        final int colour = portalBlock.getParticleColour();
+
         switch (direction) {
             case NORTH_SOUTH:
                 for (int x = -1; x < 2; x++) {
                     for (int y = 1; y < 5; y++) {
-                        world.setBlock(basePos.offset(x, y, 0), portalBlock.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z), 2);
+                        BlockPos pos = basePos.offset(x, y, 0);
+
+                        level.setBlock(pos, portalBlock.defaultBlockState().setValue(BlockStateProperties.HORIZONTAL_AXIS, Direction.Axis.Z), Block.UPDATE_CLIENTS);
+
+                        for (int i = 0; i < 10; i++) {
+                            if (level.random.nextBoolean()) {
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(0, 0, 0, 1f));
+                            }
+                            else {
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(colour));
+                            }
+                        }
                     }
                 }
                 break;
             case EAST_WEST:
                 for (int z = -1; z < 2; z++) {
                     for (int y = 1; y < 5; y++) {
-                        world.setBlock(basePos.offset(0, y, z), portalBlock.defaultBlockState(), 2);
+                        BlockPos pos = basePos.offset(0, y, z);
+
+                        level.setBlock(pos, portalBlock.defaultBlockState(), Block.UPDATE_CLIENTS);
+
+                        for (int i = 0; i < 10; i++) {
+                            if (level.random.nextBoolean()) {
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(0, 0, 0, 1f));
+                            }
+                            else {
+                                packet.particle(ParticleBuilder.forRandomPosInBounds(ParticleTypes.END_ROD, new AABB(pos)).spawnNTimes(5).scaleMod(0.5f).colourOverride(colour));
+                            }
+                        }
                     }
                 }
                 break;
             default:
                 break;
         }
+
+        AoANetworking.sendToAllNearbyPlayers(packet, level, Vec3.atBottomCenterOf(basePos), 32);
     }
 
     public enum PortalDirection {

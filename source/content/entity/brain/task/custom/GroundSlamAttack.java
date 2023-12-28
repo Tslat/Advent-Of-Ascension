@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
@@ -82,7 +82,7 @@ public class GroundSlamAttack<E extends LivingEntity> extends ConditionlessAttac
 			}
 		}
 
-		AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+		AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
 
 		for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity.level(), new AABB(originEntity.position(), originEntity.position()).inflate(radius.xzRadius(), radius.yRadius(), radius.xzRadius()), target -> target.isAlive() && target.onGround() && target != entity && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.getAbilities().invulnerable))) {
 			entity.doHurtTarget(target);

@@ -15,8 +15,8 @@ import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class SkeletalAxe extends BaseAxe implements LootModifyingItem {
@@ -56,6 +56,6 @@ public class SkeletalAxe extends BaseAxe implements LootModifyingItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.tool.skeletal", LocaleUtil.ItemDescriptionType.UNIQUE));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SKELETAL_TOOL_DESCRIPTION, LocaleUtil.ItemDescriptionType.UNIQUE));
 	}
 }

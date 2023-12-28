@@ -12,8 +12,8 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class NightWatcherEntity extends AoAAnimalOld {
 	public NightWatcherEntity(EntityType<? extends Animal> entityType, Level world) {

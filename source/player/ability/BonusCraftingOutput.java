@@ -14,8 +14,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.ItemCraftingEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BonusCraftingOutput extends ScalableModAbility {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.ITEM_CRAFTING};

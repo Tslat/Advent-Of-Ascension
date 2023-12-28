@@ -15,8 +15,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class BlockIncomingProjectileTask extends Behavior<Mob> {

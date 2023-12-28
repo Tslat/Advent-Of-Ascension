@@ -47,7 +47,7 @@ public final class GlobalEvents {
 
 			for (AoACustomSpawner aoaSpawner : AoACustomSpawnersListener.SPAWNERS) {
 				if (aoaSpawner.shouldAddToDimension(level))
-					spawners.add(aoaSpawner);
+					spawners.add(aoaSpawner.copy());
 			}
 
 			level.customSpawners = ImmutableList.copyOf(spawners);

@@ -11,8 +11,8 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class RefluctEntity extends AoAMeleeMob<RefluctEntity> {
 	public RefluctEntity(EntityType<? extends RefluctEntity> entityType, Level world) {

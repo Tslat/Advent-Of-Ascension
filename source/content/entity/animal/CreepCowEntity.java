@@ -18,8 +18,8 @@ import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CreepCowEntity extends AoAAnimalOld {
 	public CreepCowEntity(EntityType<? extends Animal> entityType, Level world) {

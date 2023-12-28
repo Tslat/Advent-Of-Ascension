@@ -10,8 +10,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.SpectralShotEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class SpectralWizardEntity extends AoARangedMob<SpectralWizardEntity> {
 	public SpectralWizardEntity(EntityType<? extends SpectralWizardEntity> entityType, Level world) {

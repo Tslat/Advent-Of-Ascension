@@ -69,9 +69,9 @@ public class FluidChuteFeature extends Feature<FluidChuteFeature.Configuration> 
 	public record Configuration(BlockStateProvider fluid, IntProvider fluidDiameter, IntProvider chuteDiameter, IntProvider maxDepth) implements FeatureConfiguration {
 		public static final Codec<Configuration> CODEC = RecordCodecBuilder.create(instance ->
 				instance.group(BlockStateProvider.CODEC.fieldOf("fluid").forGetter(FluidChuteFeature.Configuration::fluid),
-						IntProvider.CODEC.fieldOf("fluid_diameter").forGetter(FluidChuteFeature.Configuration::fluidDiameter),
-						IntProvider.CODEC.fieldOf("chute_diameter").forGetter(FluidChuteFeature.Configuration::chuteDiameter),
-						IntProvider.CODEC.fieldOf("max_depth").forGetter(FluidChuteFeature.Configuration::maxDepth))
+								IntProvider.CODEC.fieldOf("fluid_diameter").forGetter(FluidChuteFeature.Configuration::fluidDiameter),
+								IntProvider.CODEC.fieldOf("chute_diameter").forGetter(FluidChuteFeature.Configuration::chuteDiameter),
+								IntProvider.CODEC.fieldOf("max_depth").forGetter(FluidChuteFeature.Configuration::maxDepth))
 						.apply(instance, FluidChuteFeature.Configuration::new));
 	}
 }

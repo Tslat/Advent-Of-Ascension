@@ -12,8 +12,8 @@ import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
@@ -127,15 +127,25 @@ public final class ParticleBuilder {
 		return this;
 	}
 
-	public ParticleBuilder colourOverride(float red, float green, float blue, float alpha) {
-		this.colourOverride = new ColourUtil.Colour(red, green, blue, alpha);
+	public ParticleBuilder colourOverride(ColourUtil.Colour colour) {
+		this.colourOverride = colour;
 		this.isSimple = false;
 
 		return this;
 	}
 
+	public ParticleBuilder colourOverride(float red, float green, float blue, float alpha) {
+		return colourOverride(new ColourUtil.Colour(red, green, blue, alpha));
+	}
+
 	public ParticleBuilder colourOverride(int red, int green, int blue, int alpha) {
 		return colourOverride(red / 255f, green / 255f, blue / 255f, alpha / 255f);
+	}
+
+	public ParticleBuilder colourOverride(int packedInt) {
+		ColourUtil.Colour colour = new ColourUtil.Colour(packedInt);
+
+		return colourOverride(colour.red(), colour.green(), colour.blue(), colour.alpha() == 0 ? 1f : colour.alpha());
 	}
 
 	public ParticleBuilder lifespan(int ticks) {

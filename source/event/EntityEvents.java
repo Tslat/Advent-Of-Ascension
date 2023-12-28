@@ -99,6 +99,6 @@ public final class EntityEvents {
 
 	private static void onEntityExploded(final ExplosionEvent.Detonate ev) {
 		if (AoAConfigs.SERVER.saveLootFromExplosions.get())
-			ev.getAffectedEntities().removeIf(entity -> entity instanceof ItemEntity && entity.tickCount < 20);
+			ev.getAffectedEntities().removeIf(entity -> entity instanceof ItemEntity && entity.tickCount < 40);
 	}
 }

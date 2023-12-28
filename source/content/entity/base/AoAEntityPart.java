@@ -24,13 +24,13 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 	private final EntityDimensions size;
 	private boolean isEnabled = true;
 
-	public AoAEntityPart(T parent, float width, float height, float offsetX, float offsetY, float offsetZ) {
+	public AoAEntityPart(T parent, float width, float height, float offsetLeftRight, float offsetY, float offsetFrontBack) {
 		super(parent);
 
 		this.size = EntityDimensions.scalable(width, height);
-		this.posOffset = new Vec3(offsetX, offsetY, offsetZ);
+		this.posOffset = new Vec3(offsetLeftRight, offsetY, offsetFrontBack);
 
-		setPos(parent.position().add(offsetX, offsetY, offsetZ));
+		setPos(parent.position().add(offsetLeftRight, offsetY, offsetFrontBack));
 		refreshDimensions();
 	}
 

@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class WeakenArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.WEAKEN;
 	}
 
@@ -37,7 +37,7 @@ public class WeakenArmour extends AdventArmour {
 			if (RandomUtil.percentChance(0.7f) && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getEntity() instanceof LivingEntity)
 				((LivingEntity)event.getSource().getEntity()).addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 1, true, true));
 		}
-		else if (plData.equipment().getCurrentFullArmourSet() != setType()) {
+		else if (plData.equipment().getCurrentFullArmourSet() != getSetType()) {
 			if (RandomUtil.percentChance(0.175f * slots.size()) && DamageUtil.isMeleeDamage(event.getSource()) && event.getSource().getEntity() instanceof LivingEntity)
 				((LivingEntity)event.getSource().getEntity()).addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 0, true, true));
 		}

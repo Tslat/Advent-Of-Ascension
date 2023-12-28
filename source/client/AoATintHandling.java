@@ -4,6 +4,7 @@ import net.minecraft.client.color.block.BlockColor;
 import net.minecraft.client.color.item.ItemColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.FoliageColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.client.event.RegisterColorHandlersEvent;
@@ -33,6 +34,14 @@ public final class AoATintHandling {
 		ev.register(grassColouring, AoABlocks.CALAB_GRASS.get());
 		ev.register(grassColouring, AoABlocks.CALAB_LONG_GRASS.get());
 		ev.register(vanillaColouring.apply(Blocks.ACACIA_LEAVES), AoABlocks.BAOBAB_LEAVES.get(), AoABlocks.LUCALUS_LEAVES.get(), AoABlocks.STRANGLEWOOD_LEAVES.get(), AoABlocks.STRANGLEWOOD_LOG.get(), AoABlocks.STRANGLEWOOD.get());
+		ev.register((state, level, pos, tintIndex) -> {
+            if (level == null || pos == null)
+                return FoliageColor.getEvergreenColor();
+
+            final float desaturation = level.getRawBrightness(pos, 0) * 0.04f;
+
+            return FoliageColor.get(0.1f + desaturation, 1.3f - desaturation * 2f);
+        }, AoABlocks.ANCIENT_VINES.get());
 	}
 
 	private static void registerItemColours(final RegisterColorHandlersEvent.Item ev) {

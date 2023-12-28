@@ -57,24 +57,6 @@
             }
           },
           "weight": 6
-        },
-        {
-          "data": {
-            "Name": "aoa3:ashfern_crop",
-            "Properties": {
-              "age": "1"
-            }
-          },
-          "weight": 7
-        },
-        {
-          "data": {
-            "Name": "aoa3:ashfern_crop",
-            "Properties": {
-              "age": "0"
-            }
-          },
-          "weight": 8
         }
       ]
     }

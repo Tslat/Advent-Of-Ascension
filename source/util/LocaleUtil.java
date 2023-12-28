@@ -2,23 +2,15 @@ package net.tslat.aoa3.util;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
-import net.tslat.aoa3.player.ClientPlayerDataManager;
-import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public final class LocaleUtil {
@@ -51,32 +43,17 @@ public final class LocaleUtil {
 		return Component.literal(String.valueOf(number));
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public static String getLocaleString(String langKey) {
-		return getLocaleString(langKey, (ChatFormatting)null);
+		return getLocaleString(langKey, null);
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public static String getItemName(ItemLike object) {
-		return I18n.get(object.asItem().getDescriptionId());
-	}
-
-	@OnlyIn(Dist.CLIENT)
-	public static String getLocaleString(String langKey, String... args) {
-		return getLocaleString(langKey, null, args);
-	}
-
-	@OnlyIn(Dist.CLIENT)
 	public static String getLocaleString(String langKey, @Nullable ChatFormatting colour, String... args) {
-		return (colour != null ? colour : "") + I18n.get(langKey, (Object[])args);
-	}
+		MutableComponent component = Component.translatable(langKey, (Object[])args);
 
-	@OnlyIn(Dist.CLIENT)
-	public static Component getFormattedLevelRestrictedDescriptionText(AoASkill skill, int levelReq) {
-		LocalPlayer player = Minecraft.getInstance().player;
-		boolean meetsReq = (player != null && player.isCreative()) || ClientPlayerDataManager.get().getSkill(skill).hasLevel(levelReq);
+		if (colour != null)
+			component.withStyle(colour);
 
-		return getLocaleMessage("items.description.skillRequirement", meetsReq ? ChatFormatting.GREEN : ChatFormatting.RED, Component.literal(Integer.toString(levelReq)), skill.getName());
+		return component.getString();
 	}
 
 	public static MutableComponent getAbilityValueDesc(boolean flat, boolean scaling, boolean percent, Object flatArg, Object scalingArg, Object currentValueArg) {
@@ -117,17 +94,33 @@ public final class LocaleUtil {
 		if (extendedInfo) {
 			List<MutableComponent> lines = new ObjectArrayList<>();
 
-			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.penetration." + (shrapnel ? "shrapnel" : "concussive"), LocaleUtil.getLocaleMessage(NumberUtil.roundToNthDecimalPlace(info.getPenetrationPower(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
-			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.type." + (shrapnel ? "shrapnel" : "concussive"), ChatFormatting.GRAY));
-			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.radius", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
-			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.damage", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
-			lines.add(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.heading", ChatFormatting.DARK_RED));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.penetration." + (shrapnel ? "shrapnel" : "concussive")), LocaleUtil.getLocaleMessage(NumberUtil.roundToNthDecimalPlace(info.getPenetrationPower(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.type." + (shrapnel ? "shrapnel" : "concussive")), ChatFormatting.GRAY));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.radius"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.damage"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
+			lines.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.heading"), ChatFormatting.DARK_RED));
 
 			return lines;
 		}
 		else {
-			return List.of(LocaleUtil.getLocaleMessage("gui.tooltip.aoaexplosion.basic", Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1)), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_RED)));
+			return List.of(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.aoaexplosion.basic"), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getBaseDamage(), 1)), Component.literal(NumberUtil.roundToNthDecimalPlace(info.getEffectiveRadius(), 1))).setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_RED)));
 		}
+	}
+
+	public static String createGenericLocaleKey(String type, String subPath) {
+		return type + "." + AdventOfAscension.MOD_ID + "." + subPath;
+	}
+
+	public static String createItemDescriptionLocaleKey(String subPath) {
+		return createGenericLocaleKey("items", "description." + subPath);
+	}
+
+	public static String createDialogueLocaleKey(String subPath) {
+		return createGenericLocaleKey("message", "dialogue." + subPath);
+	}
+
+	public static String createFeedbackLocaleKey(String subPath) {
+		return createGenericLocaleKey("message", "feedback." + subPath);
 	}
 
 	public enum ItemDescriptionType {
@@ -147,49 +140,86 @@ public final class LocaleUtil {
 		}
 	}
 
-	public static class Constants {
-		public static final String ABYSS = "dimension.aoa3.abyss";
-		public static final String BARATHOS = "dimension.aoa3.barathos";
-		public static final String CANDYLAND = "dimension.aoa3.candyland";
-		public static final String CELEVE = "dimension.aoa3.celeve";
-		public static final String CREEPONIA = "dimension.aoa3.creeponia";
-		public static final String CRYSTEVIA = "dimension.aoa3.crystevia";
-		public static final String DEEPLANDS = "dimension.aoa3.deeplands";
-		public static final String DUSTOPIA = "dimension.aoa3.dustopia";
-		public static final String GARDENCIA = "dimension.aoa3.gardencia";
-		public static final String GRECKON = "dimension.aoa3.greckon";
-		public static final String HAVEN = "dimension.aoa3.haven";
-		public static final String IROMINE = "dimension.aoa3.iromine";
-		public static final String LBOREAN = "dimension.aoa3.lborean";
-		public static final String LELYETIA = "dimension.aoa3.lelyetia";
-		public static final String LUNALUS = "dimension.aoa3.lunalus";
-		public static final String MYSTERIUM = "dimension.aoa3.mysterium";
-		public static final String NETHER = "dimension.aoa3.nether";
-		public static final String NOWHERE = "dimension.aoa3.nowhere";
-		public static final String OVERWORLD = "dimension.aoa3.overworld";
-		public static final String PRECASIA = "dimension.aoa3.precasia";
-		public static final String RUNANDOR = "dimension.aoa3.runandor";
-		public static final String SHYRELANDS = "dimension.aoa3.shyrelands";
-		public static final String VOX_PONDS = "dimension.aoa3.vox_ponds";
+	public static class Keys {
+		public static final String ABYSS = LocaleUtil.createGenericLocaleKey("dimension", "abyss");
+		public static final String BARATHOS = LocaleUtil.createGenericLocaleKey("dimension", "barathos");
+		public static final String CANDYLAND = LocaleUtil.createGenericLocaleKey("dimension", "candyland");
+		public static final String CELEVE = LocaleUtil.createGenericLocaleKey("dimension", "celeve");
+		public static final String CREEPONIA = LocaleUtil.createGenericLocaleKey("dimension", "creeponia");
+		public static final String CRYSTEVIA = LocaleUtil.createGenericLocaleKey("dimension", "crystevia");
+		public static final String DEEPLANDS = LocaleUtil.createGenericLocaleKey("dimension", "deeplands");
+		public static final String DUSTOPIA = LocaleUtil.createGenericLocaleKey("dimension", "dustopia");
+		public static final String GARDENCIA = LocaleUtil.createGenericLocaleKey("dimension", "gardencia");
+		public static final String GRECKON = LocaleUtil.createGenericLocaleKey("dimension", "greckon");
+		public static final String HAVEN = LocaleUtil.createGenericLocaleKey("dimension", "haven");
+		public static final String IROMINE = LocaleUtil.createGenericLocaleKey("dimension", "iromine");
+		public static final String LBOREAN = LocaleUtil.createGenericLocaleKey("dimension", "lborean");
+		public static final String LELYETIA = LocaleUtil.createGenericLocaleKey("dimension", "lelyetia");
+		public static final String LUNALUS = LocaleUtil.createGenericLocaleKey("dimension", "lunalus");
+		public static final String MYSTERIUM = LocaleUtil.createGenericLocaleKey("dimension", "mysterium");
+		public static final String NETHER = LocaleUtil.createGenericLocaleKey("dimension", "nether");
+		public static final String NOWHERE = LocaleUtil.createGenericLocaleKey("dimension", "nowhere");
+		public static final String OVERWORLD = LocaleUtil.createGenericLocaleKey("dimension", "overworld");
+		public static final String PRECASIA = LocaleUtil.createGenericLocaleKey("dimension", "precasia");
+		public static final String RUNANDOR = LocaleUtil.createGenericLocaleKey("dimension", "runandor");
+		public static final String SHYRELANDS = LocaleUtil.createGenericLocaleKey("dimension", "shyrelands");
+		public static final String VOX_PONDS = LocaleUtil.createGenericLocaleKey("dimension", "vox_ponds");
 
-		public static final String BURNS_TARGETS = "items.description.damage.fire";
-		public static final String SLOWS_TARGETS = "items.description.damage.slow";
-		public static final String POISONS_TARGETS = "items.description.damage.poison";
-		public static final String WEAKENS_TARGETS = "items.description.damage.weak";
-		public static final String WITHERS_TARGETS = "items.description.damage.wither";
-		public static final String EXPLODES_ON_HIT = "items.description.damage.explosion";
-		public static final String LEECHES_HEALTH = "items.description.damage.leech";
-		public static final String KNOCKBACK = "items.description.damage.knockback";
-		public static final String SPEC_IMMUNE = "items.description.damage.specImmune";
+		public static final String BURNS_TARGETS = LocaleUtil.createItemDescriptionLocaleKey("damage.fire");
+		public static final String SLOWS_TARGETS = LocaleUtil.createItemDescriptionLocaleKey("damage.slow");
+		public static final String FREEZES_TARGETS = LocaleUtil.createItemDescriptionLocaleKey("damage.freeze");
+		public static final String POISONS_TARGETS = LocaleUtil.createItemDescriptionLocaleKey("damage.poison");
+		public static final String WEAKENS_TARGETS = LocaleUtil.createItemDescriptionLocaleKey("damage.weak");
+		public static final String WITHERS_TARGETS = LocaleUtil.createItemDescriptionLocaleKey("damage.wither");
+		public static final String EXPLODES_ON_HIT = LocaleUtil.createItemDescriptionLocaleKey("damage.explosion");
+		public static final String LEECHES_HEALTH = LocaleUtil.createItemDescriptionLocaleKey("damage.leechHealth");
+		public static final String LEECHES_SPIRIT = LocaleUtil.createItemDescriptionLocaleKey("damage.leechSpirit");
+		public static final String KNOCKBACK = LocaleUtil.createItemDescriptionLocaleKey("damage.knockback");
+		public static final String SPEC_IMMUNE = LocaleUtil.createItemDescriptionLocaleKey("damage.specImmune");
 
-		public static final String AMMO_RESOURCE = "items.description.ammo.resource";
-		public static final String AMMO_ITEM = "items.description.ammo.item";
-		public static final String FIRING_SPEED = "items.description.gun.firingSpeed";
-		public static final String RANDOM_DAMAGE = "items.description.damage.random";
-		public static final String ARMOUR_SET_HEADER = "items.description.armour.set";
-		public static final String ARMOUR_PIECE_HEADER = "items.description.armour.piece";
-		public static final String ARMOUR_ANY_SET_HEADER = "items.description.armour.anySet";
-		public static final String SKILL_REQUIREMENT = "items.description.skillRequirement";
-		public static final String XP_BONUS = "items.description.skillXpBonus";
+		public static final String ARROW_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.arrows");
+		public static final String ENERGY_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.energy");
+		public static final String GUN_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.gun");
+		public static final String MAGIC_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.magic");
+		public static final String RANGED_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.ranged");
+		public static final String SHOTGUN_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.shotgun");
+		public static final String VULCANE_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.vulcane");
+		public static final String NO_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.none");
+
+		public static final String AMMO_ITEM = LocaleUtil.createItemDescriptionLocaleKey("ammo.item");
+		public static final String AMMO_RESOURCE = LocaleUtil.createItemDescriptionLocaleKey("ammo.resource");
+		public static final String ARMOUR_AIRTIGHT = LocaleUtil.createItemDescriptionLocaleKey("armour.airtight");
+		public static final String ARMOUR_ANY_SET_HEADER = LocaleUtil.createItemDescriptionLocaleKey("armour.anySet");
+		public static final String ARMOUR_PIECE_HEADER = LocaleUtil.createItemDescriptionLocaleKey("armour.piece");
+		public static final String ARMOUR_SET_HEADER = LocaleUtil.createItemDescriptionLocaleKey("armour.set");
+		public static final String BLASTER_CHARGE = LocaleUtil.createItemDescriptionLocaleKey("blaster.charge");
+		public static final String BLASTER_PENETRATION = LocaleUtil.createItemDescriptionLocaleKey("blaster.penetration");
+		public static final String BOW_DRAW_TIME = LocaleUtil.createItemDescriptionLocaleKey("bow.drawTime");
+		public static final String CANNON_ARMOUR_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("cannon.armourDamage");
+		public static final String FIRING_SPEED = LocaleUtil.createItemDescriptionLocaleKey("gun.firingSpeed");
+		public static final String FULLY_AUTOMATIC_GUN = LocaleUtil.createItemDescriptionLocaleKey("gun.fullyAutomatic");
+		public static final String HEALING_FOOD_AMOUNT = LocaleUtil.createItemDescriptionLocaleKey("healingFood.desc.2");
+		public static final String HEALING_FOOD_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("healingFood.desc.1");
+		public static final String INFUSION_BOWL_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("infusionBowl.desc");
+		public static final String RANDOM_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.random");
+		public static final String SEMI_AUTOMATIC_GUN = LocaleUtil.createItemDescriptionLocaleKey("gun.semiAutomatic");
+		public static final String SKILL_CRYSTAL_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("skillCrystal.desc.1");
+		public static final String SKILL_CRYSTAL_SKILL_THRESHOLD = LocaleUtil.createItemDescriptionLocaleKey("skillCrystal.desc.2");
+		public static final String SKILL_REQUIREMENT = LocaleUtil.createItemDescriptionLocaleKey("skillRequirement");
+		public static final String SNIPER_CROUCH = LocaleUtil.createItemDescriptionLocaleKey("sniper.crouch");
+		public static final String STAFF_RUNE_COST = LocaleUtil.createItemDescriptionLocaleKey("staff.runesRequired");
+		public static final String STAFF_RUNE_COST_LINE = LocaleUtil.createItemDescriptionLocaleKey("staff.runesRequired.specific");
+		public static final String STICKLER_DESCRIPTION_1 = LocaleUtil.createItemDescriptionLocaleKey("stickler.desc.1");
+		public static final String STICKLER_DESCRIPTION_2 = LocaleUtil.createItemDescriptionLocaleKey("stickler.desc.2");
+		public static final String THROWN_WEAPON = LocaleUtil.createItemDescriptionLocaleKey("thrownWeapon");
+		public static final String THROWN_WEAPON_RATE = LocaleUtil.createItemDescriptionLocaleKey("thrownWeapon.throwRate");
+		public static final String UNBREAKABLE = "item.unbreakable";
+		public static final String VULCANE_COST = LocaleUtil.createItemDescriptionLocaleKey("vulcane.cost");
+		public static final String VULCANE_GRACE_PERIOD = LocaleUtil.createItemDescriptionLocaleKey("vulcane.gracePeriod");
+		public static final String XP_BONUS = LocaleUtil.createItemDescriptionLocaleKey("skillXpBonus");
+		public static final String SKELETAL_TOOL_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("skeletalTool.desc");
+		public static final String ENERGISTIC_TOOL_CHARGE = LocaleUtil.createItemDescriptionLocaleKey("energisticTool.charge");
+		public static final String ENERGISTIC_TOOL_STORED = LocaleUtil.createItemDescriptionLocaleKey("energisticTool.stored");
+		public static final String GOOFY_TOOL_REGEN = LocaleUtil.createItemDescriptionLocaleKey("goofyTool.regen");
 	}
 }

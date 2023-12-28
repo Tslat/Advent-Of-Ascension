@@ -28,7 +28,6 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public class BaneEntity extends AoAMeleeMob<BaneEntity> {

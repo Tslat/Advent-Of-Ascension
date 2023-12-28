@@ -8,7 +8,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.model.entity.projectile.CorallusShotModel;
 import net.tslat.aoa3.content.entity.projectile.mob.CorallusShotEntity;
 
-import javax.annotation.Nullable;
 
 public class CorallusShotRenderer extends LivingRenderer<CorallusShotEntity, EntityModel<CorallusShotEntity>> {
 	private final ResourceLocation TEXTURE;

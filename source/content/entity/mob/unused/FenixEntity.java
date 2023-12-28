@@ -10,8 +10,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class FenixEntity extends AoAMeleeMob<FenixEntity> {
 	public FenixEntity(EntityType<? extends FenixEntity> entityType, Level world) {

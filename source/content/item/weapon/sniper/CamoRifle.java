@@ -13,8 +13,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class CamoRifle extends BaseSniper {

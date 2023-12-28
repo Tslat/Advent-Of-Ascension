@@ -20,8 +20,8 @@ import net.tslat.aoa3.content.item.weapon.sword.*;
 import net.tslat.aoa3.content.item.weapon.thrown.*;
 import net.tslat.aoa3.content.item.weapon.vulcane.*;
 import net.tslat.aoa3.library.constant.AttackSpeed;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
 public final class AoAWeapons {
@@ -358,7 +358,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> HAUNTERS_STAFF = registerWeapon("haunters_staff", () -> new HauntersStaff(1225), AoACreativeModeTabs.STAVES.getKey());
 	public static final RegistryObject<Item> HIVE_STAFF = registerWeapon("hive_staff", () -> new HiveStaff(1130), AoACreativeModeTabs.STAVES.getKey());
 	public static final RegistryObject<Item> JOKER_STAFF = registerWeapon("joker_staff", () -> new JokerStaff(300), AoACreativeModeTabs.STAVES.getKey());
-	public static final RegistryObject<Item> KAIYU_STAFF = registerWeapon("kaiyu_staff", () -> new KaiyuStaff(900), AoACreativeModeTabs.STAVES.getKey());
+	public static final RegistryObject<Item> AMBER_STAFF = registerWeapon("amber_staff", () -> new AmberStaff(900), AoACreativeModeTabs.STAVES.getKey());
 	public static final RegistryObject<Item> LIGHTNING_STAFF = registerWeapon("lightning_staff", () -> new LightningStaff(1070), AoACreativeModeTabs.STAVES.getKey());
 	public static final RegistryObject<Item> LIGHTSHINE = registerWeapon("lightshine", () -> new Lightshine(700), AoACreativeModeTabs.STAVES.getKey());
 	public static final RegistryObject<Item> LUNAR_STAFF = registerWeapon("lunar_staff", () -> new LunarStaff(1250), AoACreativeModeTabs.STAVES.getKey());
@@ -394,8 +394,8 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> WITHER_STAFF = registerWeapon("wither_staff", () -> new WitherStaff(850), AoACreativeModeTabs.STAVES.getKey());
 	public static final RegistryObject<Item> WIZARDS_STAFF = registerWeapon("wizards_staff", () -> new WizardsStaff(800), AoACreativeModeTabs.STAVES.getKey());
 
-	public static final RegistryObject<Item> APOCO_SHOWER = registerWeapon("apoco_shower", () -> new ApocoShower(0.0f, 3760, 10, 80f), AoACreativeModeTabs.BLASTERS.getKey());
-	public static final RegistryObject<Item> ATOMIZER = registerWeapon("atomizer", () -> new Atomizer(11.0f, 3150, 8, 15f), AoACreativeModeTabs.BLASTERS.getKey());
+	public static final RegistryObject<Item> APOCO_SHOWER = registerWeapon("apoco_shower", () -> new ApocoShower(0.0f, 3760, 10, 80f), AoACreativeModeTabs.BLASTERS.getKey());// TODO
+	public static final RegistryObject<Item> ATOMIZER = registerWeapon("atomizer", () -> new Atomizer(11.0f, 3150, 8, 15f), AoACreativeModeTabs.BLASTERS.getKey());// TODO
 	public static final RegistryObject<Item> BEAMER = registerWeapon("beamer", () -> new Beamer(1.0f, 3240, 1, 3f), AoACreativeModeTabs.BLASTERS.getKey());
 	public static final RegistryObject<Item> BLAST_CHILLER = registerWeapon("blast_chiller", () -> new BlastChiller(4.0f, 1750, 6, 20f), AoACreativeModeTabs.BLASTERS.getKey());
 	public static final RegistryObject<Item> BLOOD_DRAINER = registerWeapon("blood_drainer", () -> new BloodDrainer(0.1f, 2750, 1, 2.5f), AoACreativeModeTabs.BLASTERS.getKey());
@@ -422,7 +422,7 @@ public final class AoAWeapons {
 	public static final RegistryObject<Item> ILLUSION_SMG = registerWeapon("illusion_smg", () -> new IllusionSMG(4.0f, 3240, 3, 7f), AoACreativeModeTabs.BLASTERS.getKey());
 	public static final RegistryObject<Item> ION_BLASTER = registerWeapon("ion_blaster", () -> new IonBlaster(13.0f, 2810, 11, 28.5f), AoACreativeModeTabs.BLASTERS.getKey());
 	public static final RegistryObject<Item> IRO_MINER = registerWeapon("iro_miner", () -> new IroMiner(4.0f, 3060, 4, 7f), AoACreativeModeTabs.BLASTERS.getKey());
-	public static final RegistryObject<Item> LASER_BLASTER = registerWeapon("laser_blaster", () -> new LaserBlaster(1.2f, 2840, 1, 2.5f), AoACreativeModeTabs.BLASTERS.getKey());
+	public static final RegistryObject<Item> LASER_BLASTER = registerWeapon("laser_blaster", () -> new LaserBlaster(1.2f, 2840, 1, 20, 2.5f), AoACreativeModeTabs.BLASTERS.getKey());
 	public static final RegistryObject<Item> LIGHT_BLASTER = registerWeapon("light_blaster", () -> new LightBlaster(22.5f, 3810, 14, 20.5f), AoACreativeModeTabs.BLASTERS.getKey());
 	public static final RegistryObject<Item> LIGHT_SPARK = registerWeapon("light_spark", () -> new LightSpark(0.0f, 7, 1, 0f), AoACreativeModeTabs.BLASTERS.getKey());
 	public static final RegistryObject<Item> LUNA_BLASTER = registerWeapon("luna_blaster", () -> new LunaBlaster(3.0f, 3200, 2, 4f), AoACreativeModeTabs.BLASTERS.getKey());

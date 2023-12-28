@@ -20,8 +20,8 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRanged
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StayWithinDistanceOfAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StrafeTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public abstract class AoARangedMob<T extends AoARangedMob<T>> extends AoAMonster<T> implements AoARangedAttacker {
 	protected AoARangedMob(EntityType<? extends AoARangedMob> entityType, Level world) {

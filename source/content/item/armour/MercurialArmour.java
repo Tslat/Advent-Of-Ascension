@@ -14,8 +14,8 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -25,7 +25,7 @@ public class MercurialArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.MERCURIAL;
 	}
 
@@ -35,7 +35,7 @@ public class MercurialArmour extends AdventArmour {
 			if (slots == null) {
 				plData.player().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 320, 1, true, true));
 			}
-			else if (plData.equipment().getCurrentFullArmourSet() != setType()) {
+			else if (plData.equipment().getCurrentFullArmourSet() != getSetType()) {
 				plData.player().addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 80 * slots.size(), 0, true, true));
 			}
 		}

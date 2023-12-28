@@ -5,8 +5,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.*;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class AoASkills {
 	public static void init() {}
