@@ -35,7 +35,7 @@ public class KrorSpawnTask implements Runnable {
 		}
 
 		if (world.getDifficulty() == Difficulty.PEACEFUL) {
-			player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.difficultyFail"));
+			player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("spawnBoss.difficultyFail")));
 
 			return;
 		}
@@ -69,7 +69,7 @@ public class KrorSpawnTask implements Runnable {
 				kror.setPos( kror.getX() + rand.nextInt(20) - 10, kror.getY(), kror.getZ() + rand.nextInt(20) - 10);
 
 				if (i > 64) {
-					player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.spawnBoss.noSpace"));
+					player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("spawnBoss.noSpace"));
 
 					return;
 				}

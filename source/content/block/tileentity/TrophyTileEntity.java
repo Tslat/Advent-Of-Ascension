@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Function;
 
 public class TrophyTileEntity extends BlockEntity implements Nameable {

@@ -10,8 +10,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CaveCreepoidEntity extends AoACreeponiaCreeper {
     public CaveCreepoidEntity(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {

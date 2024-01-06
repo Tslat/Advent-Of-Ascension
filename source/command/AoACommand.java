@@ -21,6 +21,7 @@ public class AoACommand {
 				.then(CheckpointResetCommand.register(dispatcher, buildContext))
 				.then(PlayerCommand.register(dispatcher, buildContext))
 				.then(WikiCommand.register(dispatcher, buildContext))
+				.then(ScreenEffectCommand.register(dispatcher, buildContext))
 				.then(VersionCommand.register(dispatcher, buildContext));
 
 		dispatcher.register(cmd);

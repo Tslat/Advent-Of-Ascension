@@ -28,6 +28,7 @@ public final class AoAParticleTypes {
 	public static final RegistryObject<ParticleType<ItemParticleOption>> FLOATING_ITEM_FRAGMENT = registerParticle("floating_item_fragment", () -> new FloatingItemFragmentParticleType(false));
 	public static final RegistryObject<ParticleType<CustomisableParticleType.Data>> ORB = registerParticle("orb", () -> new CustomisableParticleType(true));
 	public static final RegistryObject<ParticleType<CustomisableParticleType.Data>> FIRE_AURA = registerParticle("fire_aura", () -> new CustomisableParticleType(true));
+	//public static final RegistryObject<ParticleType<CustomisableParticleType.Data>> BEAM = registerParticle("beam", () -> new CustomisableParticleType(true));
 
 	public static final RegistryObject<ParticleType<CustomisableParticleType.Data>> FREEZING_SNOWFLAKE = registerParticle("freezing_snowflake", () -> new CustomisableParticleType(true));
 	public static final RegistryObject<ParticleType<CustomisableParticleType.Data>> BURNING_FLAME = registerParticle("burning_flame", () -> new CustomisableParticleType(true));

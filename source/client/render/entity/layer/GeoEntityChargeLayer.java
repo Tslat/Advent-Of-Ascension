@@ -7,12 +7,12 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
-import javax.annotation.Nullable;
 
 public class GeoEntityChargeLayer<T extends Entity & GeoEntity> extends GeoRenderLayer<T> {
 	protected static final ResourceLocation INVULNERABILITY_TEXTURE = AdventOfAscension.id("textures/entity/misc/invulnerability_aura.png");

@@ -16,6 +16,12 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
+    "particle": {
+      "options": {
+        "type": "minecraft:white_ash"
+      },
+      "probability": 0.001
+    },
     "sky_color": 9202234,
     "water_color": 5850681,
     "water_fog_color": 3478533

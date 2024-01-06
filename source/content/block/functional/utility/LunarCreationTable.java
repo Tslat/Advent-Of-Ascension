@@ -1,13 +1,13 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
-import net.minecraft.world.*;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.MenuProvider;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.CraftingMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -17,11 +17,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.content.block.tileentity.LunarCreationTableTileEntity;
+import net.tslat.aoa3.content.block.tileentity.LunarCreationTableBlockEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
-import java.util.function.BiFunction;
 
 public class LunarCreationTable extends Block implements EntityBlock {
 	private static final Component CONTAINER_TITLE = Component.translatable("container." + AdventOfAscension.MOD_ID + ".lunar_creation_table");
@@ -33,16 +31,22 @@ public class LunarCreationTable extends Block implements EntityBlock {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new LunarCreationTableTileEntity(pos, state);
+		return new LunarCreationTableBlockEntity(pos, state);
+	}
+
+	@Override
+	public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @org.jetbrains.annotations.Nullable LivingEntity pPlacer, ItemStack pStack) {
+		if (pStack.hasCustomHoverName()) {
+			if (pLevel.getBlockEntity(pPos) instanceof LunarCreationTableBlockEntity lunarTable)
+				lunarTable.setCustomName(pStack.getHoverName());
+		}
 	}
 
 	@Override
 	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
-			BlockEntity tile = world.getBlockEntity(pos);
-
-			if (tile instanceof LunarCreationTableTileEntity)
-				((LunarCreationTableTileEntity)tile).dropContents(world, pos);
+			if (world.getBlockEntity(pos) instanceof LunarCreationTableBlockEntity creationTable)
+				creationTable.dropContents(world, pos);
 
 			super.onRemove(state, world, pos, newState, isMoving);
 		}
@@ -62,58 +66,10 @@ public class LunarCreationTable extends Block implements EntityBlock {
 
 	@Nullable
 	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level world, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> {
-			CraftingMenu container = new CraftingMenu(id, inventory, ContainerLevelAccess.create(world, pos)) {
-				@Override
-				public void removed(Player player) {
-					LunarCreationTableTileEntity tileEntity = (LunarCreationTableTileEntity)access.evaluate((BiFunction<Level, BlockPos, Object>)this::getTileEntity, null);
+	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
+		if (level.getBlockEntity(pos) instanceof LunarCreationTableBlockEntity creationTable)
+			return creationTable;
 
-					if (tileEntity != null) {
-						tileEntity.setContents(craftSlots.getItems());
-
-						craftSlots.clearContent();
-					}
-
-					super.removed(player);
-				}
-
-				@Nullable
-				private LunarCreationTableTileEntity getTileEntity(Level world, BlockPos pos) {
-					BlockEntity te = world.getBlockEntity(pos);
-
-					return te instanceof LunarCreationTableTileEntity ? (LunarCreationTableTileEntity)te : null;
-				}
-
-				@Override
-				public void slotsChanged(Container inventory) {
-					LunarCreationTableTileEntity tileEntity = (LunarCreationTableTileEntity)access.evaluate((BiFunction<Level, BlockPos, Object>)this::getTileEntity, null);
-
-					if (tileEntity != null)
-						tileEntity.setContents(craftSlots.getItems());
-
-					super.slotsChanged(inventory);
-				}
-
-				@Override
-				public boolean stillValid(Player player) {
-					return stillValid(access, player, AoABlocks.LUNAR_CREATION_TABLE.get());
-				}
-			};
-
-			BlockEntity te = world.getBlockEntity(pos);
-
-			if (te instanceof LunarCreationTableTileEntity) {
-				NonNullList<ItemStack> cachedContents = ((LunarCreationTableTileEntity)te).getContents();
-
-				for (int i = 0; i < cachedContents.size(); i++) {
-					container.craftSlots.setItem(i, cachedContents.get(i));
-				}
-
-				container.slotsChanged(container.craftSlots);
-			}
-
-			return container;
-		}, CONTAINER_TITLE);
+		return null;
 	}
 }

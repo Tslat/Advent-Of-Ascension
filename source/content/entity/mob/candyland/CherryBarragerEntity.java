@@ -15,8 +15,8 @@ import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.CherryShotEntity;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CherryBarragerEntity extends AoARangedMob<CherryBarragerEntity> {
 	public CherryBarragerEntity(EntityType<? extends CherryBarragerEntity> entityType, Level world) {

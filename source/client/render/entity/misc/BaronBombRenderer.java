@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.content.entity.misc.BaronBombEntity;
 
-import javax.annotation.Nullable;
 
 public class BaronBombRenderer extends EntityRenderer<BaronBombEntity> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/misc/baron_bomb.png");

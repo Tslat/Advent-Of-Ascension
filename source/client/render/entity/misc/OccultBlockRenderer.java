@@ -31,7 +31,7 @@ import java.util.OptionalDouble;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public final class OccultBlockRenderer {
-	private static final RenderType RENDER_TYPE = RenderType.create(
+	private static final RenderType CUSTOM_LINES_RENDER_TYPE = RenderType.create(
 			"occult_block_lines", DefaultVertexFormat.POSITION_COLOR_NORMAL, VertexFormat.Mode.LINES, 256, true, false, RenderType.CompositeState.builder()
 					.setShaderState(RenderStateShard.RENDERTYPE_LINES_SHADER)
 					.setLineState(new RenderStateShard.LineStateShard(OptionalDouble.of(5)))
@@ -58,7 +58,7 @@ public final class OccultBlockRenderer {
 		boolean rendered = false;
 		PoseStack matrix = ev.getPoseStack();
 		Vec3 cameraPos = mc.gameRenderer.getMainCamera().getPosition();
-		VertexConsumer buffer = mc.renderBuffers().bufferSource().getBuffer(RENDER_TYPE);
+		VertexConsumer buffer = mc.renderBuffers().bufferSource().getBuffer(CUSTOM_LINES_RENDER_TYPE);
 
 		matrix.pushPose();
 		matrix.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);

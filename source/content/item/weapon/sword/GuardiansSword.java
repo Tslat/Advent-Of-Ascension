@@ -26,8 +26,8 @@ import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabili
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class GuardiansSword extends BaseSword {

@@ -115,7 +115,7 @@ public final class NowhereEvents {
 										if (!NowhereEvents.isInParkourRegion(serverPlayer.blockPosition()))
 											serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("deathScreen.title", ChatFormatting.DARK_RED));
 
-										serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint", ChatFormatting.GREEN), true);
+										serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.respawn"), ChatFormatting.GREEN), true);
 										checkpoint.applyToEntity(serverPlayer);
 									}, 1);
 
@@ -123,7 +123,7 @@ public final class NowhereEvents {
 								}
 								else {
 									plData.clearCheckpoint();
-									serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.checkpoint.invalid", ChatFormatting.RED));
+									serverPlayer.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("checkpoint.invalid"), ChatFormatting.RED));
 								}
 							}
 							else {

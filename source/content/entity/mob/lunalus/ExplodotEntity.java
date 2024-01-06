@@ -7,8 +7,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ExplodotEntity extends AoAFlyingMeleeMob {
 	public ExplodotEntity(EntityType<? extends FlyingMob> entityType, Level world) {

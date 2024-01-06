@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CryptidEntity extends AoAMeleeMob<CryptidEntity> {
 	public CryptidEntity(EntityType<? extends CryptidEntity> entityType, Level world) {

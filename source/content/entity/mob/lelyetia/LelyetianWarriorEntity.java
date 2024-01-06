@@ -12,8 +12,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class LelyetianWarriorEntity extends AoAMeleeMob<LelyetianWarriorEntity> {
 	public LelyetianWarriorEntity(EntityType<? extends LelyetianWarriorEntity> entityType, Level world) {

@@ -12,8 +12,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.HagShotEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class HagEntity extends AoARangedMob<HagEntity> {
 	public HagEntity(EntityType<? extends HagEntity> entityType, Level world) {

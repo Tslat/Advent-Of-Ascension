@@ -14,8 +14,8 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.function.Consumer;
 

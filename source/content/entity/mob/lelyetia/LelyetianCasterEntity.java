@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.LelyetianShotEntity;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class LelyetianCasterEntity extends AoARangedMob<LelyetianCasterEntity> {
 	public LelyetianCasterEntity(EntityType<? extends LelyetianCasterEntity> entityType, Level world) {

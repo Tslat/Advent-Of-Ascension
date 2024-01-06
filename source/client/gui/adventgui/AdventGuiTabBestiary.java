@@ -44,10 +44,10 @@ import net.tslat.aoa3.data.client.BestiaryReloadListener;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -70,7 +70,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 	private ArrayList<EntityStats> filteredMobList;
 
 	private boolean receivedStats = false;
-	private int lastOpenIndex = -1;
+	private EntityStats lastOpenedEntry = null;
 	private int openEntryIndex = -1;
 	private int openEntryHeight = 0;
 	private float lastDistanceScrolled = 0;
@@ -731,21 +731,22 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 					openEntryHeight = 600;
 					lastDistanceScrolled = distanceScrolled;
 					distanceScrolled = 0;
+					EntityStats entry = filteredMobList.get(selectedIndex);
 
-					if (lastOpenIndex != selectedIndex) {
+					if (lastOpenedEntry != entry) {
 						if (openEntryInstance != null)
 							openEntryInstance.discard();
 
-						gatherEntityStats(filteredMobList.get(selectedIndex));
+						gatherEntityStats(entry);
 					}
 
-					lastOpenIndex = selectedIndex;
+					lastOpenedEntry = entry;
 					searchField.setVisible(false);
 				}
 			}
 			else  {
 				if (relativeMouseY <= 30) {
-					lastOpenIndex = openEntryIndex;
+					lastOpenedEntry = openEntryIndex < filteredMobList.size() ? filteredMobList.get(openEntryIndex) : null;
 					openEntryIndex = -1;
 					openEntryHeight = 0;
 					distanceScrolled = lastDistanceScrolled;

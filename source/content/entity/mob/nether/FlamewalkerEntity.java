@@ -12,7 +12,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
@@ -31,10 +31,10 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRanged
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StayWithinDistanceOfAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
     public FlamewalkerEntity(EntityType<? extends FlamewalkerEntity> entityType, Level world) {
@@ -156,7 +156,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
                             .spawnNTimes(10));
 
             entity.level().playSound(null, this.targetingPosition.x, this.targetingPosition.y, this.targetingPosition.z, AoASounds.ENTITY_FLAMEWALKER_FLARE.get(), SoundSource.HOSTILE, 1, 1);
-            AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+            AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
         }
 
         @Override
@@ -175,7 +175,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
                         .velocity(entity.rand().randomValueBetween(-0.05f, 0.05f), 0.5, entity.rand().randomValueBetween(-0.05f, 0.05f)));
             }
 
-            AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+            AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
             BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, this.attackIntervalSupplier.apply(entity));
         }
 

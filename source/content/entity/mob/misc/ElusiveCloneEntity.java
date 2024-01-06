@@ -18,7 +18,6 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
-import javax.annotation.Nullable;
 
 public class ElusiveCloneEntity extends AoAMeleeMob<ElusiveCloneEntity> {
 	private final ElusiveEntity elusive;

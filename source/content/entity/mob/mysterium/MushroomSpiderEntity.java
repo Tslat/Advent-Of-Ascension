@@ -19,8 +19,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class MushroomSpiderEntity extends AoAMeleeMob<MushroomSpiderEntity> {
 	private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.<Byte>defineId(MushroomSpiderEntity.class, EntityDataSerializers.BYTE);

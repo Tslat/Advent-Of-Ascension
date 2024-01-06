@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.item.weapon.sniper;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
@@ -10,11 +11,10 @@ import net.minecraft.world.entity.monster.Phantom;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.GunRecoilPacket;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -23,8 +23,8 @@ import net.tslat.aoa3.content.entity.projectile.gun.SniperSlugEntity;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class BaseSniper extends BaseGun {
@@ -48,7 +48,7 @@ public abstract class BaseSniper extends BaseGun {
 	}
 
 	@Override
-	protected boolean fireGun(LivingEntity shooter, ItemStack stack, InteractionHand hand) {
+	protected boolean fireGun(ServerLevel level, LivingEntity shooter, ItemStack stack, InteractionHand hand) {
 		BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);
 
 		if (bullet == null)
@@ -58,22 +58,20 @@ public abstract class BaseSniper extends BaseGun {
 			bullet.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0.0f, 20.0f, 50.0f);
 
 		shooter.level().addFreshEntity(bullet);
-
-		if (!shooter.level().isClientSide())
-			doFiringEffects(shooter, bullet, stack, hand);
+		doFiringEffects(level, shooter, bullet, stack, hand);
 
 		return true;
 	}
 
 	@Override
 	public void doRecoil(ServerPlayer player, ItemStack stack, InteractionHand hand) {
-		int control = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CONTROL.get(), stack);
+		int control = stack.getEnchantmentLevel(AoAEnchantments.CONTROL.get());
 		float recoilAmount = getRecoilForShot(stack, player) * 0.25f * (1 - control * 0.15f);
 
 		if (!player.isShiftKeyDown() || !player.onGround())
 			recoilAmount *= 3.5f;
 
-		AoAPackets.messagePlayer(player, new GunRecoilPacket(recoilAmount, getFiringDelay()));
+		AoANetworking.sendToPlayer(player, new GunRecoilPacket(recoilAmount, getFiringDelay()));
 	}
 
 	@Override
@@ -97,6 +95,6 @@ public abstract class BaseSniper extends BaseGun {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
-		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText("items.description.sniper.use", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SNIPER_CROUCH, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

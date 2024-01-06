@@ -9,8 +9,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ZargEntity extends AoAMeleeMob<ZargEntity> {
 	public ZargEntity(EntityType<? extends ZargEntity> entityType, Level world) {

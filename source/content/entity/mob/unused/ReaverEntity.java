@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ReaverEntity extends AoAMeleeMob<ReaverEntity> {
 	public ReaverEntity(EntityType<? extends ReaverEntity> entityType, Level world) {

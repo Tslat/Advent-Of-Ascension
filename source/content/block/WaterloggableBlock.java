@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class WaterloggableBlock extends Block implements SimpleWaterloggedBlock {
 	public WaterloggableBlock(Properties properties) {

@@ -14,8 +14,8 @@ import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.ClownShotEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class HappyEntity extends AoARangedMob<HappyEntity> {
 	public HappyEntity(EntityType<? extends HappyEntity> entityType, Level world) {

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -22,19 +23,19 @@ import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ConcurrentModificationException;
 import java.util.List;
 
 public class ElectronMaul extends BaseMaul {
 	public ElectronMaul() {
-		super(25.0f, AttackSpeed.THIRD, 6.5d, 1500);
+		super(25.0f, AttackSpeed.THIRD, 2.5d, 1500);
 	}
 
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
-		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity) {
+		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity livingEntity) {
 			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
 
 			try {
@@ -43,13 +44,13 @@ public class ElectronMaul extends BaseMaul {
 					float currentCalcBuff = getKnockbackMultiplier(entity);
 
 					if (currentKnockbackMod != currentCalcBuff) {
-						((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
+						livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 						cap.setValue(currentCalcBuff);
-						((LivingEntity)entity).getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
+						livingEntity.getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					}
 				}
-				else if (cap.getValue() != 0 && ((LivingEntity)entity).getMainHandItem().isEmpty()) {
-					((LivingEntity)entity).getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
+				else if (cap.getValue() != 0 && livingEntity.getMainHandItem().isEmpty()) {
+					livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					cap.setValue(0);
 				}
 			}
@@ -74,8 +75,8 @@ public class ElectronMaul extends BaseMaul {
 	}
 
 	private float getKnockbackMultiplier(Entity holder) {
-		if (holder instanceof ServerPlayer) {
-			AoAResource.Instance spirit = PlayerUtil.getResource((ServerPlayer)holder, AoAResources.SPIRIT.get());
+		if (holder instanceof Player pl) {
+			AoAResource.Instance spirit = PlayerUtil.getResource(pl, AoAResources.SPIRIT.get());
 
 			return 1 + spirit.getCurrentValue() / spirit.getMaxValue();
 		}

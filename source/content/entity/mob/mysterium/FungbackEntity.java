@@ -11,8 +11,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.DamageUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class FungbackEntity extends AoAMeleeMob<FungbackEntity> {
 	public FungbackEntity(EntityType<? extends FungbackEntity> entityType, Level world) {

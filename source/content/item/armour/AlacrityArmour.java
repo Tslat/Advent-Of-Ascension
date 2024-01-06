@@ -11,8 +11,8 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -22,7 +22,7 @@ public class AlacrityArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.ALACRITY;
 	}
 
@@ -31,7 +31,7 @@ public class AlacrityArmour extends AdventArmour {
 		if (slots == null) {
 			event.setCanceled(true);
 		}
-		else if (plData.equipment().getCurrentFullArmourSet() != setType()) {
+		else if (plData.equipment().getCurrentFullArmourSet() != getSetType()) {
 			event.setDamageMultiplier(1 - (slots.size() * 0.2f));
 		}
 	}

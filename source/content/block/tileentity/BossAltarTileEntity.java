@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.util.RegistryUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BossAltarTileEntity extends BlockEntity {
 	private EntityType<?> entityType = null;

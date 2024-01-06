@@ -7,8 +7,8 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class FloatingItemFragmentParticle extends BreakingItemParticle {
 	public FloatingItemFragmentParticle(ClientLevel level, double x, double y, double z, double velocityX, double velocityY, double velocityZ, ItemStack stack) {

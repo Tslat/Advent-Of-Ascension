@@ -9,6 +9,7 @@ import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.client.resources.sounds.EntityBoundSoundInstance;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.client.resources.sounds.SoundInstance;
@@ -54,8 +55,8 @@ import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -103,6 +104,7 @@ public final class ClientOperations {
 		ev.registerSpriteSet(AoAParticleTypes.SANDSTORM.get(), SandstormParticle.Factory::new);
 		ev.registerSpriteSet(AoAParticleTypes.ORB.get(), OrbParticle.Factory::new);
 		ev.registerSpriteSet(AoAParticleTypes.FIRE_AURA.get(), FireAuraParticle.Factory::new);
+		//ev.registerSpecial(AoAParticleTypes.BEAM.get(), new BeamParticle.Factory());
 	}
 
 	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {
@@ -114,7 +116,7 @@ public final class ClientOperations {
 					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast(skill, (Integer)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientLevels", ChatFormatting.RED, skill.getName(), LocaleUtil.numToComponent((Integer)value)));
+					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("insufficientLevels"), ChatFormatting.RED, skill.getName(), LocaleUtil.numToComponent((Integer)value)));
 				}
 			}
 			case RESOURCE_REQUIREMENT -> {
@@ -124,7 +126,7 @@ public final class ClientOperations {
 					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast(resource, (Float)value));
 				}
 				else {
-					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.insufficientResource", ChatFormatting.RED, resource.getName(), Component.literal(NumberUtil.roundToNthDecimalPlace((Float)value, 2))));
+					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("insufficientResource"), ChatFormatting.RED, resource.getName(), Component.literal(NumberUtil.roundToNthDecimalPlace((Float)value, 2))));
 				}
 			}
 			case ABILITY_UNLOCK -> {
@@ -135,7 +137,7 @@ public final class ClientOperations {
 					Minecraft.getInstance().getToasts().addToast(new AbilityUnlockToast(skill2, ability));
 				}
 				else {
-					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.abilityUnlocked", ChatFormatting.GREEN, skill2.getName(), ability.getName()));
+					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("abilityUnlocked"), ChatFormatting.GREEN, skill2.getName(), ability.getName()));
 				}
 			}
 		}
@@ -280,7 +282,7 @@ public final class ClientOperations {
 				sound = new SimpleSoundInstance(soundBuilder.getSound().getLocation(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), RandomSource.create(soundBuilder.getSeed()), soundBuilder.getIsLooping(), (int)delay, soundBuilder.getIsInWorld() ? SoundInstance.Attenuation.LINEAR : SoundInstance.Attenuation.NONE, soundBuilder.getLocation().x(), soundBuilder.getLocation().y(), soundBuilder.getLocation().z(), false);
 			}
 			else {
-				sound = new SimpleSoundInstance(soundBuilder.getSound().getLocation(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), RandomSource.create(soundBuilder.getSeed()), soundBuilder.getIsLooping(), (int)delay, soundBuilder.getIsInWorld() ? SoundInstance.Attenuation.LINEAR : SoundInstance.Attenuation.NONE, 0, 0, 0, false);
+				sound = new SimpleSoundInstance(soundBuilder.getSound().getLocation(), soundBuilder.getCategory(), soundBuilder.getRadius() / 16f, soundBuilder.getPitch(), RandomSource.create(soundBuilder.getSeed()), soundBuilder.getIsLooping(), (int)delay, soundBuilder.getIsInWorld() ? SoundInstance.Attenuation.LINEAR : SoundInstance.Attenuation.NONE, 0, 0, 0, true);
 			}
 		}
 
@@ -308,5 +310,9 @@ public final class ClientOperations {
 	public static void applyFluidRenderType(LiquidBlock liquid) {
 		ItemBlockRenderTypes.setRenderLayer(liquid.getFluid().getFlowing(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(liquid.getFluid().getSource(), RenderType.translucent());
+	}
+
+	public static String getLocalisedString(String localeKey, Object... args) {
+		return I18n.get(localeKey, args);
 	}
 }

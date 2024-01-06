@@ -11,8 +11,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.SkyShotEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class AirheadEntity extends AoAFlyingRangedMob {
 	public AirheadEntity(EntityType<? extends FlyingMob> entityType, Level world) {

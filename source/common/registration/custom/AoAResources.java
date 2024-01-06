@@ -8,9 +8,9 @@ import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.resource.EnergyResource;
 import net.tslat.aoa3.player.resource.RageResource;
 import net.tslat.aoa3.player.resource.SpiritResource;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class AoAResources {
 	public static void init() {}

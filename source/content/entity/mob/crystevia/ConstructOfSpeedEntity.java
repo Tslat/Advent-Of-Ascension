@@ -12,8 +12,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.effectslib.api.util.EffectUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ConstructOfSpeedEntity extends AoAMeleeMob<ConstructOfSpeedEntity> {
     public ConstructOfSpeedEntity(EntityType<? extends ConstructOfSpeedEntity> entityType, Level world) {

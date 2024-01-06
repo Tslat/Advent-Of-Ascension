@@ -8,9 +8,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public final class AoADimensions {
 	private static final HashBiMap<ResourceKey<Level>, AoADimension> dimTypeMap = HashBiMap.create(25);

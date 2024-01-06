@@ -13,8 +13,8 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -31,12 +31,12 @@ public class ArchaicArmour extends AdventArmour {
 
 	@Override
 	public void onAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingHurtEvent event) {
-		if (slots != null && plData.equipment().getCurrentFullArmourSet() != setType() && DamageUtil.isMeleeDamage(event.getSource()))
+		if (slots != null && plData.equipment().getCurrentFullArmourSet() != getSetType() && DamageUtil.isMeleeDamage(event.getSource()))
 			event.setAmount(event.getAmount() * (1 + 0.16f * slots.size() * (1 - EntityUtil.getCurrentHealthPercent(plData.player()))));
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.ARCHAIC;
 	}
 

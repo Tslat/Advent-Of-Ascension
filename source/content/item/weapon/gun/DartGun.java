@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
@@ -15,8 +16,8 @@ import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.SeedDartEntity;
 import net.tslat.aoa3.util.ItemUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class DartGun extends BaseGun {
 	double dmg;
@@ -59,7 +60,7 @@ public class DartGun extends BaseGun {
 	}
 
 	@Override
-	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
+	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
 		doFiringSound(shooter, bullet, stack, hand);
 	}
 }

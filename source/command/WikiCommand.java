@@ -18,11 +18,11 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.WikiSearchPacket;
 import net.tslat.aoa3.util.StringUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -83,7 +83,7 @@ public class WikiCommand implements Command<CommandSourceStack> {
 	}
 
 	private static int sendPacket(CommandContext<CommandSourceStack> cmd) throws CommandSyntaxException {
-		AoAPackets.messagePlayer((ServerPlayer)cmd.getSource().getEntityOrException(), new WikiSearchPacket(StringArgumentType.getString(cmd, "search")));
+		AoANetworking.sendToPlayer((ServerPlayer)cmd.getSource().getEntityOrException(), new WikiSearchPacket(StringArgumentType.getString(cmd, "search")));
 
 		return 1;
 	}

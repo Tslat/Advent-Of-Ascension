@@ -43,7 +43,7 @@ public class WornBook extends WrittenBookItem {
 		if (!world.isClientSide) {
 			if (!ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), false, 1)) {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()));
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.wornBook.droppedRealmstone"));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("wornBook.droppedRealmstone")));
 				PlayerUtil.getAdventPlayer((ServerPlayer)player).addPatchouliBook(AdventOfAscension.id("worn_book"));
 			}
 		}

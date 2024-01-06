@@ -13,7 +13,6 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.boss.HiveKingEntity;
 
-import javax.annotation.Nullable;
 
 public class HiveWorkerEntity extends AoAMeleeMob<HiveWorkerEntity> {
 	public HiveWorkerEntity(HiveKingEntity hiveKing) {

@@ -11,8 +11,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class FungalTea extends Item {

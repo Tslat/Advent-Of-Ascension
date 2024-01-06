@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.block.functional.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -14,13 +15,14 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
 import net.tslat.aoa3.content.item.misc.BlankRealmstone;
 import net.tslat.aoa3.content.item.misc.Realmstone;
 import net.tslat.aoa3.content.world.teleporter.AoAPortalFrame;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CarvedRuneOfPower extends Block {
 	public CarvedRuneOfPower(BlockBehaviour.Properties properties) {
@@ -40,37 +42,35 @@ public class CarvedRuneOfPower extends Block {
 		return InteractionResult.PASS;
 	}
 
-	public static boolean fillPortal(Level world, BlockPos pos, Direction direction, ItemStack stack, @Nullable Player player) {
+	public static boolean fillPortal(Level level, BlockPos pos, Direction direction, ItemStack stack, @Nullable Player player) {
 		Realmstone realmstone = (Realmstone)stack.getItem();
 
 		if (realmstone.getPortalBlock() == null) {
-			player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.portal.tba"));
+			player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("portal.tba")));
 
 			return false;
 		}
 
 		PortalBlock portalBlock = (PortalBlock)realmstone.getPortalBlock().get();
-		AoAPortalFrame.PortalDirection facing = AoAPortalFrame.testFrameForActivation(world, pos, direction, portalBlock);
+		AoAPortalFrame.PortalDirection facing = AoAPortalFrame.testFrameForActivation(level, pos, direction, portalBlock);
 
 		if (facing == AoAPortalFrame.PortalDirection.EXISTING) {
 			if (player instanceof ServerPlayer)
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.existing"));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("teleporterFrame.existing")));
 
 			return false;
 		}
 
 		if (facing == AoAPortalFrame.PortalDirection.INVALID) {
 			if (player instanceof ServerPlayer)
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.teleporterFrame.fail"));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("teleporterFrame.fail")));
 
 			return false;
 		}
 
-		if (player instanceof ServerPlayer) {
-			AoAPortalFrame.lightPortalFrame(world, pos, facing, portalBlock);
-
-			if (realmstone.getActivationSound() != null)
-				world.playSound(null, pos.getX(), pos.getY(), pos.getZ(), realmstone.getActivationSound().get(), SoundSource.MASTER, 1.0f, 1.0f);
+		if (level instanceof ServerLevel serverLevel) {
+			AoAPortalFrame.lightPortalFrame(serverLevel, pos, facing, portalBlock);
+			level.playSound(null, pos.getX(), pos.getY() + 1, pos.getZ(), AoASounds.PORTAL_ACTIVATE.get(), SoundSource.AMBIENT, 1, 1);
 		}
 
 		return true;

@@ -16,6 +16,12 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000
     },
+    "particle": {
+      "options": {
+        "type": "minecraft:white_ash"
+      },
+      "probability": 0.09
+    },
     "sky_color": 9202234,
     "water_color": 5850681,
     "water_fog_color": 3478533
@@ -35,6 +41,7 @@
     [],
     [],
     [
+      "aoa3:precasian_lava_blobs",
       "aoa3:gravel_ore",
       "aoa3:high_altitude_granite_ore",
       "aoa3:low_altitude_granite_ore",

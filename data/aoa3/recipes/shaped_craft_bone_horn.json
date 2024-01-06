@@ -23,6 +23,10 @@
     "ABC"
   ],
   "result": {
-    "item": "aoa3:bone_horn"
+    "count": 1,
+    "item": "aoa3:bone_horn",
+    "nbt": {
+      "Damage": 1
+    }
   }
 }

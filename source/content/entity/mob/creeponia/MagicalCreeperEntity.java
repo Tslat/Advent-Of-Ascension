@@ -15,8 +15,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.CreeperShotEntity;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class MagicalCreeperEntity extends AoACreeponiaCreeper implements AoARangedAttacker {
     public MagicalCreeperEntity(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {

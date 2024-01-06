@@ -17,7 +17,6 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.boss.CorallusEntity;
 import net.tslat.aoa3.util.WorldUtil;
 
-import javax.annotation.Nullable;
 
 public class CorallusShotEntity extends FlyingMob {
 	private final CorallusEntity corallus;

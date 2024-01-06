@@ -34,7 +34,9 @@
     ],
     [],
     [],
-    [],
+    [
+      "aoa3:lucalus_stump_decorations"
+    ],
     [],
     [
       "aoa3:gravel_ore",
@@ -88,12 +90,6 @@
         "maxCount": 1,
         "minCount": 1,
         "weight": 50
-      },
-      {
-        "type": "aoa3:horndron",
-        "maxCount": 4,
-        "minCount": 2,
-        "weight": 100
       },
       {
         "type": "aoa3:deinotherium",

@@ -18,8 +18,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class GoldenFury extends BaseGun {
@@ -34,8 +34,8 @@ public class GoldenFury extends BaseGun {
 	}
 
 	@Override
-	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
-		super.doFiringEffects(shooter, bullet, stack, hand);
+	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
+		super.doFiringEffects(level, shooter, bullet, stack, hand);
 
 		for (int i = 0; i < 6; i++) {
 			((ServerLevel)shooter.level()).sendParticles(ParticleTypes.DRAGON_BREATH, bullet.getX() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getY() + RandomUtil.randomScaledGaussianValue(0.2f), bullet.getZ() + RandomUtil.randomScaledGaussianValue(0.2f), 1, 0, 0, 0, 0d);

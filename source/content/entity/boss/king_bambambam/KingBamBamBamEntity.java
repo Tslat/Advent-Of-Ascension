@@ -28,7 +28,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoAAttributes;
@@ -391,7 +391,7 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 			entity.setDeltaMovement(0, 0, 0);
 			entity.getNavigation().stop();
 			BrainUtils.clearMemory(entity, MemoryModuleType.PATH);
-			AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_KING_BAMBAMBAM_EXHAUSTED).followEntity(entity)), entity);
+			AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_KING_BAMBAMBAM_EXHAUSTED).followEntity(entity)), entity);
 		}
 
 		@Override
@@ -435,7 +435,7 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 		protected void start(AoABoss entity) {
 			ATTACK_STATE.set(entity, this.variant.ordinal());
 			entity.swing(InteractionHand.MAIN_HAND);
-			AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(this.variant.summonSound).followEntity(entity).category(SoundSource.HOSTILE)), entity);
+			AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(this.variant.summonSound).followEntity(entity).category(SoundSource.HOSTILE)), entity);
 		}
 
 		@Override
@@ -460,8 +460,8 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 							.lifespan(40)
 							.ignoreDistanceAndLimits());
 
-					AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
-					AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
+					AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
+					AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
 				}
 			});
 		}
@@ -645,17 +645,17 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 							this.magnetisedTo.heal(50);
 							((KingBamBamBamEntity)this.magnetisedTo).addEnergy(30);
 							this.magnetisedTo.triggerAnim("Gold Consumption", "consume");
-							AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.ARMOR_EQUIP_GOLD).followEntity(this.magnetisedTo).category(SoundSource.HOSTILE).pitch(0.3f).varyPitch(0.1f)), this.magnetisedTo);
+							AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.ARMOR_EQUIP_GOLD).followEntity(this.magnetisedTo).category(SoundSource.HOSTILE).pitch(0.3f).varyPitch(0.1f)), this.magnetisedTo);
 							particlePacket.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.HEART, this.magnetisedTo).spawnNTimes(10));
 
 							discard();
 						}
 						else if (!EntityRetrievalUtil.getPlayers(this.level(), getBoundingBox().inflate(0.75f, 2, 0.75f)).isEmpty()) {
-							AoAPackets.messageNearbyPlayers(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.ARMOR_EQUIP_GOLD).category(SoundSource.PLAYERS).atPos(this.level(), position().x, position().y, position().z)), (ServerLevel)this.level(), position(), 6);
+							AoANetworking.sendToAllNearbyPlayers(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.ARMOR_EQUIP_GOLD).category(SoundSource.PLAYERS).atPos(this.level(), position().x, position().y, position().z)), (ServerLevel)this.level(), position(), 6);
 							discard();
 						}
 
-						AoAPackets.messageAllPlayersTrackingEntity(particlePacket, this.magnetisedTo);
+						AoANetworking.sendToAllPlayersTrackingEntity(particlePacket, this.magnetisedTo);
 					}
 
 					super.tick();
@@ -701,5 +701,10 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 				this.spawnFunction = spawnFunction;
 			}
 		}
+	}
+
+	@Override
+	public void remove(RemovalReason pReason) {
+		super.remove(pReason);
 	}
 }

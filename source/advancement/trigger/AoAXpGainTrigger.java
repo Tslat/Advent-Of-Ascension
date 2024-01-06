@@ -7,8 +7,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.Instance> {
 	private static final ResourceLocation triggerId = new ResourceLocation("aoa3", "gain_xp");

@@ -5,4 +5,5 @@ import net.minecraft.world.level.CustomSpawner;
 
 public interface AoACustomSpawner extends CustomSpawner {
 	boolean shouldAddToDimension(ServerLevel level);
+	AoACustomSpawner copy();
 }

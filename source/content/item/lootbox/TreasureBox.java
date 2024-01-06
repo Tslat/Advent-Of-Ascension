@@ -14,8 +14,8 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.LootUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class TreasureBox extends Item {

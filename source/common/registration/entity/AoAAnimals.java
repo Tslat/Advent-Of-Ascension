@@ -16,11 +16,11 @@ import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
 import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 import net.tslat.aoa3.content.entity.animal.precasia.DeinotheriumEntity;
 import net.tslat.aoa3.content.entity.animal.precasia.HorndronEntity;
+import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
 import net.tslat.aoa3.content.entity.misc.pixon.*;
 import net.tslat.aoa3.content.entity.mob.haven.AngelicaEntity;
 import net.tslat.aoa3.content.entity.mob.haven.DawnlightEntity;
 import net.tslat.aoa3.content.entity.mob.haven.RainicornEntity;
-import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
 
 import java.util.function.Consumer;
 

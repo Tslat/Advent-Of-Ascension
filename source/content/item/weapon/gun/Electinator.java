@@ -16,8 +16,8 @@ import net.tslat.aoa3.content.entity.projectile.gun.YellowBulletEntity;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class Electinator extends BaseGun {

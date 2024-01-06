@@ -17,8 +17,8 @@ import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
 import net.tslat.aoa3.util.ItemUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class HalyconEntity extends AoAAnimalOld {
 	public HalyconEntity(EntityType<? extends Animal> entityType, Level world) {

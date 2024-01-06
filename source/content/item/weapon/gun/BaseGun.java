@@ -21,10 +21,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.GunRecoilPacket;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -41,8 +40,8 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -116,7 +115,7 @@ public abstract class BaseGun extends Item {
 	}
 
 	public InteractionHand getGunHand(ItemStack stack) {
-		return EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.BRACE.get(), stack) > 0 ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+		return stack.getEnchantmentLevel(AoAEnchantments.BRACE.get()) > 0 ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
 	}
 
 	@Override
@@ -163,64 +162,66 @@ public abstract class BaseGun extends Item {
 		if (!isFullAutomatic() && count < getUseDuration(stack))
 			return;
 
-		ServerPlayer player = shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null;
+		if (level instanceof ServerLevel serverLevel) {
+			ServerPlayer player = shooter instanceof ServerPlayer ? (ServerPlayer)shooter : null;
 
-		if (player == null || player.getCooldowns().getCooldownPercent(this, 0) == 0) {
-			InteractionHand hand = getGunHand(stack);
+			if (player == null || player.getCooldowns().getCooldownPercent(this, 0) == 0) {
+				InteractionHand hand = getGunHand(stack);
 
-			if (fireGun(shooter, stack, hand)) {
-				ItemStack offhand;
+				if (fireGun(serverLevel, shooter, stack, hand)) {
+					ItemStack offhand;
 
-				if (hand == InteractionHand.MAIN_HAND && EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.BRACE.get(), (offhand = shooter.getItemInHand(InteractionHand.OFF_HAND))) > 0)
-					offhand.onUseTick(shooter.level(), shooter, count);
+					if (hand == InteractionHand.MAIN_HAND && (offhand = shooter.getItemInHand(InteractionHand.OFF_HAND)).getEnchantmentLevel(AoAEnchantments.BRACE.get()) > 0)
+						offhand.onUseTick(serverLevel, shooter, count);
 
-				ItemUtil.damageItem(stack, shooter, 1, hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
+					ItemUtil.damageItem(stack, shooter, 1, hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
 
-				if (player != null) {
-					player.awardStat(Stats.ITEM_USED.get(this));
-					player.getCooldowns().addCooldown(this, getFiringDelay());
+					if (player != null) {
+						player.awardStat(Stats.ITEM_USED.get(this));
 
-					doRecoil(player, stack, hand);
+						if (getFiringDelay() > 1)
+							player.getCooldowns().addCooldown(this, getFiringDelay());
+
+						doRecoil(player, stack, hand);
+					}
 				}
-			}
-			else {
-				shooter.releaseUsingItem();
+				else {
+					shooter.releaseUsingItem();
+				}
 			}
 		}
 	}
 
-	protected boolean fireGun(LivingEntity shooter, ItemStack stack, InteractionHand hand) {
+	protected boolean fireGun(ServerLevel level, LivingEntity shooter, ItemStack stack, InteractionHand hand) {
 		BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);
 
 		if (bullet == null)
 			return false;
 
 		shooter.level().addFreshEntity(bullet);
-
-		if (!shooter.level().isClientSide())
-			doFiringEffects(shooter, bullet, stack, hand);
+		doFiringEffects(level, shooter, bullet, stack, hand);
 
 		return true;
 	}
 
 	public void doRecoil(ServerPlayer player, ItemStack stack, InteractionHand hand) {
-		int control = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.CONTROL.get(), stack);
+		int control = stack.getEnchantmentLevel(AoAEnchantments.CONTROL.get());
 		float recoilAmount = getRecoilForShot(stack, player) * 2 * (1 - control * 0.15f);
 
-		AoAPackets.messagePlayer(player, new GunRecoilPacket(hand == InteractionHand.OFF_HAND ? recoilAmount * 1.25f : recoilAmount, getFiringDelay()));
+		AoANetworking.sendToPlayer(player, new GunRecoilPacket(hand == InteractionHand.OFF_HAND ? recoilAmount * 1.25f : recoilAmount, getFiringDelay()));
 	}
 
-	protected void doFiringEffects(LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
+	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, BaseBullet bullet, ItemStack stack, InteractionHand hand) {
 		doFiringSound(shooter, bullet, stack, hand);
 
-		((ServerLevel)shooter.level()).sendParticles(ParticleTypes.SMOKE, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+		level.sendParticles(ParticleTypes.SMOKE, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
 
-		if (dmg > 15) {
-			if (dmg > 20) {
-				((ServerLevel)shooter.level()).sendParticles(ParticleTypes.FLAME, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+		if (this.dmg > 15) {
+			if (this.dmg > 20) {
+				level.sendParticles(ParticleTypes.FLAME, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
 			}
 
-			((ServerLevel)shooter.level()).sendParticles(ParticleTypes.POOF, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
+			level.sendParticles(ParticleTypes.POOF, bullet.getX(), bullet.getY(), bullet.getZ(), 2, 0, 0, 0, 0.025f);
 		}
 	}
 
@@ -229,7 +230,7 @@ public abstract class BaseGun extends Item {
 			float shellMod = 1;
 
 			if (bullet.getHand() != null)
-				shellMod += 0.1 * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), shooter.getItemInHand(bullet.getHand()));
+				shellMod += 0.1f * shooter.getItemInHand(bullet.getHand()).getEnchantmentLevel(AoAEnchantments.SHELL.get());
 
 			if (RandomUtil.percentChance(this.firingDelay / 10f)) {
 				if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier * shellMod))
@@ -251,7 +252,7 @@ public abstract class BaseGun extends Item {
 
 	@Nullable
 	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level().isClientSide(), 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level().isClientSide(), 1 + gunStack.getEnchantmentLevel(AoAEnchantments.GREED.get())))
 			return createProjectileEntity(shooter, gunStack, hand);
 
 		return null;
@@ -284,13 +285,13 @@ public abstract class BaseGun extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-		float damage = (float)getDamage() * (1 + (0.1f * EnchantmentHelper.getTagEnchantmentLevel(AoAEnchantments.SHELL.get(), stack)));
+		float damage = getDamage() * (1 + (0.1f * stack.getEnchantmentLevel(AoAEnchantments.SHELL.get())));
 
 		if (damage > 0)
-			tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.gun", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(NumberUtil.roundToNthDecimalPlace(damage, 2))));
+			tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.GUN_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(NumberUtil.roundToNthDecimalPlace(damage, 2))));
 
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(NumberUtil.roundToNthDecimalPlace(20 / (float)getFiringDelay(), 2))));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, getAmmoItem().getDescription()));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(isFullAutomatic() ? "items.description.gun.fully_automatic" : "items.description.gun.semi_automatic", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.FIRING_SPEED, LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(NumberUtil.roundToNthDecimalPlace(20 / (float)getFiringDelay(), 2))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.AMMO_ITEM, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST, getAmmoItem().getDescription()));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(isFullAutomatic() ? LocaleUtil.Keys.FULLY_AUTOMATIC_GUN : LocaleUtil.Keys.SEMI_AUTOMATIC_GUN, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

@@ -2,8 +2,8 @@ package net.tslat.aoa3.content.item.weapon.shotgun;
 
 import net.minecraft.sounds.SoundEvent;
 import net.tslat.aoa3.common.registration.AoASounds;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class Demolisher extends BaseShotgun {
 	public Demolisher(final float dmg, final int pellets, final int durability, final int fireDelayTicks, final float knockbackFactor, final float recoil) {

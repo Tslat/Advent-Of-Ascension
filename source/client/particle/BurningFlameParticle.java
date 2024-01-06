@@ -8,13 +8,13 @@ import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ParticleEffectPacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BurningFlameParticle extends EntityAffectingParticle {
 	private final SpriteSet sprite;
@@ -65,7 +65,7 @@ public class BurningFlameParticle extends EntityAffectingParticle {
 	@Override
 	protected boolean handleCollision(Entity collidedEntity) {
 		if (EntityPredicate.DAMAGEABLE_ENTITIES.test(collidedEntity))
-			AoAPackets.messageServer(new ParticleEffectPacket(ParticleEffectPacket.Type.BURNING_FLAME, this.senderId, collidedEntity.getId()));
+			AoANetworking.sendToServer(new ParticleEffectPacket(ParticleEffectPacket.Type.BURNING_FLAME, this.senderId, collidedEntity.getId()));
 
 		return true;
 	}

@@ -15,17 +15,16 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +42,7 @@ public class EmberstonePickaxe extends BasePickaxe implements LootModifyingItem 
 			return;
 
 		ServerLevel level = lootContext.getLevel();
-		Vec3 pos = lootContext.getParamOrNull(LootContextParams.ORIGIN);
+		BlockPos pos = BlockPos.containing(lootContext.getParamOrNull(LootContextParams.ORIGIN));
 
 		for (int i = 0; i < existingLoot.size(); i++) {
 			ItemStack stack = existingLoot.get(i);
@@ -54,14 +53,13 @@ public class EmberstonePickaxe extends BasePickaxe implements LootModifyingItem 
 
 				smeltedStack.setCount(smeltedStack.getCount() * stack.getCount());
 				existingLoot.set(i, smeltedStack);
-				block.popExperience(level, BlockPos.containing(pos), (int)smeltRecipe.get().getExperience());
+				block.popExperience(level, pos, (int)smeltRecipe.get().getExperience());
 
 				ServerParticlePacket particlePacket = new ServerParticlePacket(
-						ParticleBuilder.forPos(ParticleTypes.FLAME,
-								() -> new Vec3(pos.x + RandomUtil.randomValueUpTo(1), pos.y + RandomUtil.randomValueUpTo(1), pos.z + RandomUtil.randomValueUpTo(1)))
+						ParticleBuilder.forRandomPosInBounds(ParticleTypes.FLAME, new AABB(pos))
 								.spawnNTimes(5));
 
-				AoAPackets.messageNearbyPlayers(particlePacket, level, pos.add(0.5f, 0.5f, 0.5f), 32);
+				AoANetworking.sendToAllPlayersTrackingBlock(level, pos, particlePacket);
 			}
 		}
 	}

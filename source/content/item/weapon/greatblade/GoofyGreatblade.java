@@ -8,8 +8,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class GoofyGreatblade extends BaseGreatblade {
@@ -24,6 +24,6 @@ public class GoofyGreatblade extends BaseGreatblade {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.BENEFICIAL, Component.literal(String.valueOf(getDamage() - 4)), Component.literal(String.valueOf(getDamage() + 6))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.RANDOM_DAMAGE, LocaleUtil.ItemDescriptionType.BENEFICIAL, Component.literal(String.valueOf(getDamage() - 4)), Component.literal(String.valueOf(getDamage() + 6))));
 	}
 }

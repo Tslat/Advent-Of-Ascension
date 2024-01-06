@@ -3,3 +3,12 @@ bundles:
   - 4
   - 6
   - 8
+files:
+  - source: /lang/en_us.json
+    translation: /lang/%locale_with_underscore%.json
+  - source: /lang/misc/en_us/*
+    translation: /lang/misc/%locale_with_underscore%/%original_file_name%
+  - source: /lang/bestiary/en_us/aoa3/*
+    translation: /lang/bestiary/%locale_with_underscore%/aoa3/%original_file_name%
+  - source: /lang/bestiary/en_us/minecraft/*
+    translation: /lang/bestiary/%locale_with_underscore%/minecraft/%original_file_name%

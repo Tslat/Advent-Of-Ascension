@@ -89,7 +89,7 @@ public class StandardExplosion extends ExtendedExplosion {
 								if ((x + 0.5f) * (x + 0.5f) + (y + 0.5f) * (y + 0.5f) + (z + 0.5f) * (z + 0.5f) < radius * radius) {
 									BlockPos pos = BlockPos.containing(x + this.origin.x, y + this.origin.y, z + this.origin.z);
 
-									if (this.level.isInWorldBounds(pos))
+									if (this.level.isInWorldBounds(pos) && !this.level.getBlockState(pos).isAir())
 										list.add(pos);
 								}
 							}
@@ -162,6 +162,10 @@ public class StandardExplosion extends ExtendedExplosion {
 			return true;
 
 		BlockState state = this.level.getBlockState(pos);
+
+		if (state.isAir())
+			return true;
+
 		Optional<Float> blastResistance = this.damageCalculator.getBlockExplosionResistance(this, this.level, pos, state, this.level.getFluidState(pos));
 
 		if (blastResistance.isEmpty())

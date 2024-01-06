@@ -10,8 +10,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 import net.tslat.aoa3.common.registration.AoAPoiTypes;
 import net.tslat.aoa3.common.registration.AoARegistries;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 

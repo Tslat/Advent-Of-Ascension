@@ -16,8 +16,8 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -27,13 +27,13 @@ public class VoidArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.VOID;
 	}
 
 	@Override
 	public void onPostAttackReceived(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots, LivingDamageEvent event) {
-		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType()) {
+		if (slots == null || plData.equipment().getCurrentFullArmourSet() != getSetType()) {
 			if (!plData.player().level().isClientSide && event.getSource().getEntity() instanceof LivingEntity) {
 				LivingEntity attacker = (LivingEntity)event.getSource().getEntity();
 

@@ -4,8 +4,8 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.LightTexture;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class OrbParticle extends TextureSheetParticle {
 	private final SpriteSet sprite;

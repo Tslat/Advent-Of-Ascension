@@ -22,8 +22,8 @@ import net.tslat.aoa3.content.entity.misc.pixon.PixonEntity;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,6 +99,6 @@ public class InfusionBowl extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.infusionBowl.desc.1", LocaleUtil.ItemDescriptionType.NEUTRAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.INFUSION_BOWL_DESCRIPTION, LocaleUtil.ItemDescriptionType.NEUTRAL));
 	}
 }

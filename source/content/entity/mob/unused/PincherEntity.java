@@ -15,8 +15,8 @@ import net.tslat.aoa3.content.entity.ai.movehelper.UnderwaterWalkingMovementCont
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMobOld;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class PincherEntity extends AoAWaterMeleeMobOld {
 	public PincherEntity(EntityType<? extends WaterAnimal> entityType, Level world) {

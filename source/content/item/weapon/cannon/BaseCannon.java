@@ -17,8 +17,8 @@ import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public abstract class BaseCannon extends BaseGun {
@@ -39,8 +39,8 @@ public abstract class BaseCannon extends BaseGun {
 	@Override
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
 		if (target != null) {
-			if (target instanceof LivingEntity)
-				bulletDmgMultiplier *= 1 + (((LivingEntity)target).getAttribute(Attributes.ARMOR).getValue() * 1.50) / 100;
+			if (target instanceof LivingEntity livingTarget)
+				bulletDmgMultiplier *= 1 + (livingTarget.getAttributeValue(Attributes.ARMOR) * 1.5 + livingTarget.getAttributeValue(Attributes.ARMOR_TOUGHNESS) * 0.5f) / 100f;
 
 			if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier)) {
 				if (target instanceof Player && ((Player)target).isBlocking())
@@ -63,7 +63,7 @@ public abstract class BaseCannon extends BaseGun {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
-		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Constants.KNOCKBACK, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
-		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText("items.description.cannon.damage", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.KNOCKBACK, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(2, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.CANNON_ARMOUR_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

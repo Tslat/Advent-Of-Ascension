@@ -7,8 +7,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class SoulscorneEntity extends AoAMeleeMob<SoulscorneEntity> {

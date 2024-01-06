@@ -14,8 +14,8 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class SkillCrystal extends Item {
@@ -47,7 +47,7 @@ public class SkillCrystal extends Item {
 					heldStack.shrink(1);
 			}
 			else {
-				PlayerUtil.notifyPlayer(plData.player(), Component.translatable("message.feedback.item.skillCrystal.levelFail", Integer.toString(lowerLimit)));
+				PlayerUtil.notifyPlayer(plData.player(), Component.translatable(LocaleUtil.createFeedbackLocaleKey("item.skillCrystal.levelFail"), Integer.toString(lowerLimit)));
 			}
 		}
 
@@ -56,7 +56,7 @@ public class SkillCrystal extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.skillCrystal.desc.1", LocaleUtil.ItemDescriptionType.NEUTRAL));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.skillCrystal.desc.2", LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(Integer.toString(lowerLimit))));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SKILL_CRYSTAL_DESCRIPTION, LocaleUtil.ItemDescriptionType.NEUTRAL));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SKILL_CRYSTAL_SKILL_THRESHOLD, LocaleUtil.ItemDescriptionType.NEUTRAL, Component.literal(Integer.toString(lowerLimit))));
 	}
 }

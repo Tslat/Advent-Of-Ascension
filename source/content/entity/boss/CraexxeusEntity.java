@@ -22,7 +22,6 @@ import net.tslat.aoa3.content.entity.projectile.mob.CraexxeusNukeEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.CraexxeusShotEntity;
 import net.tslat.aoa3.util.DamageUtil;
 
-import javax.annotation.Nullable;
 
 public class CraexxeusEntity extends AoAFlyingRangedMob {
 	private final ServerBossInfo bossInfo = (ServerBossInfo)(new ServerBossInfo(getType().getDescription().copy().append(getDisplayName()), BossInfo.Color.GREEN, BossInfo.Overlay.NOTCHED_20)).setDarkenScreen(false).setCreateWorldFog(false);

@@ -9,9 +9,10 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ZalCitizenEntity extends AoAAmbientNPC {
 	public ZalCitizenEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
@@ -32,10 +33,10 @@ public class ZalCitizenEntity extends AoAAmbientNPC {
 	@Override
 	protected String getInteractMessage(ItemStack heldItem) {
 		if (heldItem.getItem() == AoAItems.ALIEN_ORB.get()) {
-			return "message.dialogue.zal_citizen.alienOrb";
+			return LocaleUtil.createDialogueLocaleKey("zal_citizen.alienOrb");
 		}
 		else {
-			return "message.dialogue.zal_citizen." + random.nextInt(5);
+			return LocaleUtil.createDialogueLocaleKey("zal_citizen." + random.nextInt(5));
 		}
 	}
 }

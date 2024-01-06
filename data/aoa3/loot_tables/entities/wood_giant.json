@@ -465,7 +465,7 @@
             {
               "function": "minecraft:set_name",
               "name": {
-                "translate": "items.raw_herring.name"
+                "translate": "item.aoa3.raw_herring"
               }
             },
             {
@@ -473,7 +473,7 @@
               "lore": [
                 {
                   "color": "dark_purple",
-                  "translate": "items.raw_herring.desc"
+                  "translate": "item.aoa3.raw_herring.desc"
                 }
               ],
               "replace": false

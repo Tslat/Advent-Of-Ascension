@@ -17,8 +17,8 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class RunicGolemEntity extends AoAMeleeMob<RunicGolemEntity> {
 	private static final EntityDataAccessor<Boolean> SHIELDED = SynchedEntityData.<Boolean>defineId(RunicGolemEntity.class, EntityDataSerializers.BOOLEAN);

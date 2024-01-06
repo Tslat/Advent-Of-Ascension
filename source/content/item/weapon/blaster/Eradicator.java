@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -15,8 +16,8 @@ import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class Eradicator extends BaseBlaster {
@@ -31,7 +32,7 @@ public class Eradicator extends BaseBlaster {
 	}
 
 	@Override
-	public void fire(ItemStack blaster, LivingEntity shooter) {
+	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
 		shooter.level().addFreshEntity(new EradicatorShotEntity(shooter, this, 60));
 	}
 

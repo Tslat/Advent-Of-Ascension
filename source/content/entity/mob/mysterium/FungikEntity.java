@@ -14,8 +14,8 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.WitherBallEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class FungikEntity extends AoARangedMob<FungikEntity> {
 	public FungikEntity(EntityType<? extends FungikEntity> entityType, Level world) {

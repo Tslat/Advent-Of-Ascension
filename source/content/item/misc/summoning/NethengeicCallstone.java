@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
@@ -20,8 +19,8 @@ import net.tslat.aoa3.content.entity.boss.nethengeic_wither.NethengeicWitherEnti
 import net.tslat.aoa3.content.entity.mob.nether.NethengeicBeastEntity;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class NethengeicCallstone extends BossSpawningItem<NethengeicWitherEntity> {
@@ -65,26 +64,6 @@ public class NethengeicCallstone extends BossSpawningItem<NethengeicWitherEntity
 		stack.setDamageValue(stack.getDamageValue() - 1);
 
 		return true;
-	}
-
-	@Override
-	public boolean isValidRepairItem(ItemStack stack, ItemStack repairCandidate) {
-		return false;
-	}
-
-	@Override
-	public boolean isEnchantable(ItemStack stack) {
-		return false;
-	}
-
-	@Override
-	public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
-		return false;
-	}
-
-	@Override
-	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
-		return false;
 	}
 
 	@Override

@@ -2,11 +2,11 @@ package net.tslat.aoa3.util;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.PlayerHaloDataPacket;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.*;
 
 public final class AoAHaloUtil {
@@ -15,7 +15,7 @@ public final class AoAHaloUtil {
 
 	public static void syncWithNewClient(ServerPlayer player) {
 		Logging.logMessage(Level.DEBUG, "Syncing player halos with new player: " + player.getUUID().toString());
-		AoAPackets.messagePlayer(player, new PlayerHaloDataPacket(playerHalos));
+		AoANetworking.sendToPlayer(player, new PlayerHaloDataPacket(playerHalos));
 	}
 
 	public static boolean testForNewRenderer(UUID uuid) {
@@ -28,7 +28,7 @@ public final class AoAHaloUtil {
 
 			if (halo != null) {
 				playerHalos.get(uuid).setPreferredHalo(halo);
-				AoAPackets.messageAllPlayers(new PlayerHaloDataPacket(uuid, halo));
+				AoANetworking.sendToAllPlayers(new PlayerHaloDataPacket(uuid, halo));
 			}
 		}
 	}

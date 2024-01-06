@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.item.AoAFood;
@@ -29,8 +29,8 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ChumItem extends Item {
@@ -75,7 +75,7 @@ public class ChumItem extends Item {
 				packet.particle(ParticleBuilder.forPos(particleData, user.getX(), user.getY() + user.getEyeHeight(), user.getZ()).velocity(velocityVector.x() + (i * 2 * velocityVector.z()), velocityVector.y(), velocityVector.z() + (i * 2 * velocityVector.x())));
 			}
 
-			AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level, user.position(), 32);
+			AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level, user.position(), 32);
 		}
 	}
 

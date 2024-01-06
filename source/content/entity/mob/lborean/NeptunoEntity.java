@@ -9,10 +9,10 @@ import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAWaterMeleeMobOld;
 import net.tslat.aoa3.util.DamageUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class NeptunoEntity extends AoAWaterMeleeMobOld {
 	public NeptunoEntity(EntityType<? extends WaterAnimal> entityType, Level world) {

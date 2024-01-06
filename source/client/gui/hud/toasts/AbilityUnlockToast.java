@@ -21,14 +21,14 @@ import net.tslat.aoa3.util.RenderUtil;
 public class AbilityUnlockToast implements Toast {
 	private final AoASkill skill;
 	private final AoAAbility ability;
-	private final String title;
-	private final String subtitle;
+	private final Component title;
+	private final Component subtitle;
 
 	public AbilityUnlockToast(AoASkill relevantSkill, AoAAbility ability) {
 		this.skill = relevantSkill;
 		this.ability = ability;
-		this.title = LocaleUtil.getLocaleString("gui.aoatoast.abilityUnlock.title", ChatFormatting.DARK_RED);
-		this.subtitle = LocaleUtil.getLocaleString("gui.aoatoast.abilityUnlock.subtitle", ability.getName().getString());
+		this.title = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.title"), ChatFormatting.DARK_RED);
+		this.subtitle = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.subtitle"), ability.getName());
 	}
 
 	public AoASkill getSkill() {
@@ -60,12 +60,12 @@ public class AbilityUnlockToast implements Toast {
 		poseStack.translate(5.5f, 5, 0);
 		AoAGuiElementRenderers.getSkillRenderer(skill).renderInHud(renderContext, skillInstance, mc.getDeltaFrameTime(), AoASkillRenderer.ProgressRenderType.None, false);
 		poseStack.popPose();
-		renderContext.renderText(Component.literal(title), 30, 7, 1488129, RenderUtil.TextRenderType.NORMAL);
+		renderContext.renderText(title, 30, 7, 1488129, RenderUtil.TextRenderType.NORMAL);
 
 		int subtitleWidth = mc.font.width(subtitle);
 
 		if (subtitleWidth <= 125f) {
-			renderContext.renderText(Component.literal(subtitle), 30, 18, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+			renderContext.renderText(subtitle, 30, 18, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 		}
 		else {
 			poseStack.pushPose();
@@ -73,7 +73,7 @@ public class AbilityUnlockToast implements Toast {
 			float scale = 125f / subtitleWidth;
 
 			poseStack.scale(scale, scale, 1);
-			renderContext.renderText(Component.literal(subtitle), 30 / scale, 18 / scale, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
+			renderContext.renderText(subtitle, 30 / scale, 18 / scale, ColourUtil.WHITE, RenderUtil.TextRenderType.NORMAL);
 			poseStack.popPose();
 		}
 

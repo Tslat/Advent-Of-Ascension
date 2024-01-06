@@ -131,7 +131,7 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 150
+          "weight": 600
         },
         {
           "type": "minecraft:item",

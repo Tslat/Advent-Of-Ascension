@@ -11,9 +11,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class MineralizationStation extends Block {
 	public MineralizationStation(BlockBehaviour.Properties properties) {
@@ -62,6 +64,10 @@ public class MineralizationStation extends Block {
 					return InteractionResult.SUCCESS;
 				}
 				default -> {
+					if (stack.is(Tags.Items.INGOTS) || stack.is(Tags.Items.GEMS)) {
+						baseAmount = RandomUtil.randomNumberBetween(3, 6);
+						tokensItem = AoAItems.COPPER_COIN.get();
+					}
 				}
 			}
 

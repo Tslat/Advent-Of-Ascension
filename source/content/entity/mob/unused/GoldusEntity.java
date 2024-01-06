@@ -8,8 +8,8 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class GoldusEntity extends AoAMeleeMob<GoldusEntity> {
 	public GoldusEntity(EntityType<? extends GoldusEntity> entityType, Level world) {

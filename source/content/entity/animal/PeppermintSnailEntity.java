@@ -11,8 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class PeppermintSnailEntity extends AoAAnimalOld {
 	public PeppermintSnailEntity(EntityType<? extends Animal> entityType, Level world) {

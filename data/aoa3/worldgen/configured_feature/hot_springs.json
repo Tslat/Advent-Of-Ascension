@@ -2,7 +2,15 @@
   "type": "aoa3:structure_piece",
   "config": {
     "processors": {
-      "processors": []
+      "processors": [
+        {
+          "pos_test": {
+            "block": "minecraft:basalt",
+            "predicate_type": "minecraft:block_match"
+          },
+          "processor_type": "aoa3:terrain_adaption"
+        }
+      ]
     },
     "templates": [
       "aoa3:precasia/feature/hot_springs_1",

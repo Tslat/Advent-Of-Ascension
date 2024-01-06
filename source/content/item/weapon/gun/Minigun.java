@@ -8,8 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class Minigun extends BaseGun {
 	public Minigun(float dmg, int durability, int firingDelayTicks, float recoil) {

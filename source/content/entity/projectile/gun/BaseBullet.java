@@ -21,8 +21,8 @@ import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.content.item.weapon.sniper.BaseSniper;
 import net.tslat.aoa3.content.item.weapon.thrown.BaseThrownWeapon;
 import net.tslat.aoa3.util.EntityUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	private float dmgMulti;

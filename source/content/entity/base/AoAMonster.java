@@ -31,7 +31,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.entity.PartEntity;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
@@ -50,15 +49,15 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
-public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implements GeoEntity, SmartBrainOwner<T> {
+public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implements GeoEntity, SmartBrainOwner<T>, AoAMultipartEntity {
 	public static final EntityDataHolder<Integer> ATTACK_STATE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.INT, 0, monster -> monster.attackState, (monster, value) -> monster.attackState = value);
 	public static final EntityDataHolder<Boolean> INVULNERABLE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.BOOLEAN, false, Entity::isInvulnerable, AoAMonster::setInvulnerable);
 	public static final EntityDataHolder<Boolean> IMMOBILE = EntityDataHolder.register(AoAMonster.class, EntityDataSerializers.BOOLEAN, false, monster -> monster.immobile, (monster, value) -> monster.immobile = value);
@@ -375,10 +374,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	@Override
 	public void aiStep() {
 		super.aiStep();
-
-		for (AoAEntityPart<?> part : getParts()) {
-			part.updatePosition();
-		}
+		updateMultipartPositions();
 	}
 
 	@Override
@@ -387,39 +383,30 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	}
 
 	@Override
-	public boolean isMultipartEntity() {
-		return getParts().length > 0;
-	}
-
-	@Override
 	public AoAEntityPart<?>[] getParts() {
 		return this.parts;
 	}
 
-	protected void toggleMultipart(boolean enabled) {
-		for (AoAEntityPart<?> part : getParts()) {
-			part.setEnabled(enabled);
-		}
+	@Override
+	public boolean isMultipartEntity() {
+		return isMultipartActive();
 	}
 
-	protected void setParts(AoAEntityPart<?>... parts) {
-		if (this.parts.length > 0)
-			throw new IllegalStateException("Cannot add more parts after having already done so!");
+	@Override
+	public void refreshDimensions() {
+		super.refreshDimensions();
+		refreshMultipartDimensions();
+	}
 
-		this.parts = parts;
-
-		setId(ENTITY_COUNTER.getAndAdd(getParts().length + 1) + 1);
+	@Override
+	public void setParts(AoAEntityPart<?>... parts) {
+		this.parts = defineParts(ENTITY_COUNTER, this::setId, parts);
 	}
 
 	@Override
 	public void setId(int id) {
 		super.setId(id);
-
-		int newId = id + 1;
-
-		for (PartEntity<?> part : getParts()) {
-			part.setId(newId++);
-		}
+		setMultipartIds(id);
 	}
 
 	@Override

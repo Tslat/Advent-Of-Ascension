@@ -12,7 +12,6 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.aoa3.util.EntityUtil;
 
-import javax.annotation.Nullable;
 
 public abstract class RunicLifeformEntity extends AoAMeleeMob {
 	private final RuneTemplarEntity templar;

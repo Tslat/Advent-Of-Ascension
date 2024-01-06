@@ -23,8 +23,8 @@ import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public final class DamageUtil {
 	public static DamageSource miscDamage(ResourceKey<DamageType> damageType, Level level) {

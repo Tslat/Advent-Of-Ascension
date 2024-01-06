@@ -8,6 +8,7 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
 import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
@@ -70,6 +71,7 @@ public final class ModelProperties {
 		registerKnightsGuard();
 		registerGuardiansSword();
 		registerRods();
+		registerHorns();
 	}
 
 	private static void registerBows(BaseBow... bows) {
@@ -144,5 +146,12 @@ public final class ModelProperties {
 		registerItemProperty(AoATools.GOLDEN_ROD.get(), "cast", predicateHandler);
 		registerItemProperty(AoATools.LIGHT_ROD.get(), "cast", predicateHandler);
 		registerItemProperty(AoATools.THERMALLY_INSULATED_ROD.get(), "cast", predicateHandler);
+	}
+
+	private static void registerHorns() {
+		ItemPropertyFunction predicateHandler = (stack, world, entity, seed) -> entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1 : 0;
+
+		registerItemProperty(AoAItems.BONE_HORN.get(), "tooting", predicateHandler);
+		registerItemProperty(AoAItems.WARPED_HORN.get(), "tooting", predicateHandler);
 	}
 }

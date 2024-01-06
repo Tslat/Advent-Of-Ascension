@@ -24,7 +24,6 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LootUtil;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 
 public abstract class RuneTemplarEntity extends PathfinderMob {

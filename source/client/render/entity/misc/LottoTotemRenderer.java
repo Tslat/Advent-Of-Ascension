@@ -12,8 +12,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.AoAEntityRendering;
 import net.tslat.aoa3.client.model.misc.LottoTotemModel;
 import net.tslat.aoa3.content.entity.misc.LottoTotemEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class LottoTotemRenderer extends EntityRenderer<LottoTotemEntity> {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/misc/lotto_totem.png");

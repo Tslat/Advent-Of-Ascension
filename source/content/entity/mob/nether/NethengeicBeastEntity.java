@@ -29,7 +29,7 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
@@ -61,13 +61,13 @@ import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 
-import javax.annotation.Nullable;
 
 public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
     private static final EntityDataAccessor<Boolean> FLAME_AURA = SynchedEntityData.defineId(NethengeicBeastEntity.class, EntityDataSerializers.BOOLEAN);
@@ -162,7 +162,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     packet.particle(ParticleBuilder.forPos(ParticleTypes.SMOKE, x, y, z));
                 }
 
-                AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+                AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -208,7 +208,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     packet.particle(ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
                 }
 
-                AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+                AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);

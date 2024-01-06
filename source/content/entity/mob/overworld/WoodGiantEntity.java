@@ -30,7 +30,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
@@ -44,10 +44,10 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.UUID;
 
@@ -172,7 +172,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 					new SoundBuilder(AoASounds.HEAVY_WOOD_SHATTER.get()).followEntity(this).isMonster().execute();
 				}
 
-				AoAPackets.messageNearbyPlayers(particlePacket, (ServerLevel)level(), position(), 20);
+				AoANetworking.sendToAllNearbyPlayers(particlePacket, (ServerLevel)level(), position(), 20);
 			}
 		}
 	}
@@ -223,7 +223,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 					packet.particle(ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 20);
+				AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level(), position(), 20);
 			}
 		}
 	}

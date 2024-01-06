@@ -2,8 +2,8 @@ package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.sounds.SoundEvent;
 import net.tslat.aoa3.common.registration.AoASounds;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 public class HappyHaunter extends BaseGun {
 	public HappyHaunter(float dmg, int durability, int firingDelayTicks, float recoil) {
 		super(dmg, durability, firingDelayTicks, recoil);

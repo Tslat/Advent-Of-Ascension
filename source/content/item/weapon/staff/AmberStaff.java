@@ -13,20 +13,20 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class KaiyuStaff extends BaseStaff<Object> {
-	public KaiyuStaff(int durability) {
+public class AmberStaff extends BaseStaff<Object> {
+	public AmberStaff(int durability) {
 		super(durability);
 	}
 
 	@Nullable
 	@Override
 	public SoundEvent getCastingSound() {
-		return AoASounds.ITEM_KAIYU_STAFF_CAST.get();
+		return AoASounds.ITEM_AMBER_STAFF_CAST.get();
 	}
 
 	@Override

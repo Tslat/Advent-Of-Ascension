@@ -26,7 +26,6 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.entity.PartEntity;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -59,7 +58,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implements GeoEntity, SmartBrainOwner<T> {
+public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implements GeoEntity, SmartBrainOwner<T>, AoAMultipartEntity {
 	protected static final AttributeModifier BABY_HEALTH_MOD = new AttributeModifier(UUID.fromString("8d9e3f81-b520-4c1c-8c7c-e83906296599"), "Baby Health Mod", -0.5f, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
@@ -193,17 +192,6 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 		tickBrain((T)this);
 	}
 
-	@Override
-	public void refreshDimensions() {
-		super.refreshDimensions();
-
-		if (isMultipartEntity()) {
-			for (AoAEntityPart<?> part : getParts()) {
-				part.refreshDimensions();
-			}
-		}
-	}
-
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
@@ -334,36 +322,6 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	}
 
 	@Override
-	public boolean isMultipartEntity() {
-        for (AoAEntityPart<?> part : getParts()) {
-			if (part.isEnabled())
-				return true;
-		}
-
-		return false;
-	}
-
-	@Override
-	public AoAEntityPart<?>[] getParts() {
-		return this.parts;
-	}
-
-	protected void toggleMultipart(boolean enabled) {
-		for (AoAEntityPart<?> part : getParts()) {
-			part.setEnabled(enabled);
-		}
-	}
-
-	protected void setParts(AoAEntityPart<?>... parts) {
-		if (this.parts.length > 0)
-			throw new IllegalStateException("Cannot add more parts after having already done so!");
-
-		this.parts = parts;
-
-		setId(ENTITY_COUNTER.getAndAdd(getParts().length + 1) + 1);
-	}
-
-	@Override
 	public boolean isFood(ItemStack stack) {
 		return stack.getItem() == getTemptItem();
 	}
@@ -387,21 +345,37 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	}
 
 	@Override
-	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
+	public AoAEntityPart<?>[] getParts() {
+		return this.parts;
+	}
 
 	@Override
-	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return this.geoCache;
+	public boolean isMultipartEntity() {
+		return isMultipartActive();
+	}
+
+	@Override
+	public void refreshDimensions() {
+		super.refreshDimensions();
+		refreshMultipartDimensions();
+	}
+
+	@Override
+	public void setParts(AoAEntityPart<?>... parts) {
+		this.parts = defineParts(ENTITY_COUNTER, this::setId, parts);
 	}
 
 	@Override
 	public void setId(int id) {
 		super.setId(id);
+		setMultipartIds(id);
+	}
 
-		int newId = id + 1;
+	@Override
+	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 
-		for (PartEntity<?> part : getParts()) {
-			part.setId(newId++);
-		}
+	@Override
+	public AnimatableInstanceCache getAnimatableInstanceCache() {
+		return this.geoCache;
 	}
 }

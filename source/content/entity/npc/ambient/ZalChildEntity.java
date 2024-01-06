@@ -14,9 +14,10 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ZalChildEntity extends AoAAmbientNPC {
 	public ZalChildEntity(EntityType<? extends PathfinderMob> entityType, Level world) {
@@ -36,7 +37,7 @@ public class ZalChildEntity extends AoAAmbientNPC {
 	@Nullable
 	@Override
 	protected String getInteractMessage(ItemStack heldItem) {
-		return "message.dialogue.zal_child." + random.nextInt(5);
+		return LocaleUtil.createDialogueLocaleKey("zal_child." + random.nextInt(5));
 	}
 
 

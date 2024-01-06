@@ -20,13 +20,13 @@ import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.container.SelectInventoryItemScreen;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.SyncAoAAbilityDataPacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class AutoHarvestingTrash extends AoAAbility.Instance {
@@ -130,7 +130,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		Minecraft mc = Minecraft.getInstance();
 
 		if (ClientOperations.isPressingCrouchKey()) {
-			ForgeHooksClient.pushGuiLayer(mc, new SelectInventoryItemScreen(mc, consumingItem, item -> AoAPackets.messageServer(new SyncAoAAbilityDataPacket(this, ForgeRegistries.ITEMS.getKey(item).toString()))));
+			ForgeHooksClient.pushGuiLayer(mc, new SelectInventoryItemScreen(mc, consumingItem, item -> AoANetworking.sendToServer(new SyncAoAAbilityDataPacket(this, ForgeRegistries.ITEMS.getKey(item).toString()))));
 
 			return false;
 		}

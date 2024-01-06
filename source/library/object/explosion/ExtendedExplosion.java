@@ -28,8 +28,8 @@ import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Predicate;

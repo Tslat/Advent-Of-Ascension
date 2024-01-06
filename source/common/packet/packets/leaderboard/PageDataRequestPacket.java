@@ -4,7 +4,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import net.tslat.aoa3.common.packet.packets.AoAPacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.leaderboard.task.LeaderboardActions;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.RegistryUtil;

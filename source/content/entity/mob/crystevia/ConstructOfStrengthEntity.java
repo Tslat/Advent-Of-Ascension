@@ -16,8 +16,8 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.effectslib.api.util.EffectUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ConstructOfStrengthEntity extends AoAMeleeMob<ConstructOfStrengthEntity> {
     public ConstructOfStrengthEntity(EntityType<? extends ConstructOfStrengthEntity> entityType, Level world) {

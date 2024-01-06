@@ -8,8 +8,8 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class GrobblerEntity extends AoAMeleeMob<GrobblerEntity> {
 	public GrobblerEntity(EntityType<? extends GrobblerEntity> entityType, Level world) {

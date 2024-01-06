@@ -20,7 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -227,7 +227,7 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 							centerX + 4 * Math.cos(angle), entity.position().y(), centerZ + 4 * Math.sin(angle)).velocity(0, 0.25f, 0));
 				}
 
-				AoAPackets.messageNearbyPlayers(packet, (ServerLevel)entity.level(), entity.position(), 20);
+				AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)entity.level(), entity.position(), 20);
 
 				if (entity.tickCount % 20 == 0 && (taskExpiresAt == Integer.MAX_VALUE || runningTime + 20 < taskExpiresAt))
 					entity.playSound(AoASounds.SAND_WIND.get(), 1, 0.5f);

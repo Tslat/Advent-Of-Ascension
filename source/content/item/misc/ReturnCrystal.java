@@ -14,8 +14,8 @@ import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class ReturnCrystal extends Item {

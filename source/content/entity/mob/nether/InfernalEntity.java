@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -32,10 +32,10 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAtt
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
     public InfernalEntity(EntityType<? extends InfernalEntity> entityType, Level world) {
@@ -66,7 +66,7 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
                     ServerParticlePacket packet = new ServerParticlePacket(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, state), () -> new Vec3(finalPos.getX() + RandomUtil.randomValueUpTo(1), finalPos.getY() + 1.1f, finalPos.getZ() + RandomUtil.randomValueUpTo(1))).velocity(0, 0.5f, 0).spawnNTimes(3));
 
                     entity.playSound(AoASounds.ROCK_SMASH.get(), 1, 0.2f);
-                    AoAPackets.messageAllPlayersTrackingEntity(packet, entity);
+                    AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
                     doSlam(finalPos, 0.75f);
                 }));
     }
@@ -134,7 +134,7 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
         }
 
         if (sendPacket)
-            AoAPackets.messageAllPlayersTrackingEntity(packet, this);
+            AoANetworking.sendToAllPlayersTrackingEntity(packet, this);
     }
 
     @Override

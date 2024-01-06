@@ -1,12 +1,13 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.blaster.IllusionShotEntity;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class IllusionSMG extends BaseBlaster {
 	public IllusionSMG(double dmg, int durability, int fireDelayTicks, float energyCost) {
@@ -20,7 +21,7 @@ public class IllusionSMG extends BaseBlaster {
 	}
 
 	@Override
-	public void fire(ItemStack blaster, LivingEntity shooter) {
+	public void fireBlaster(ServerLevel level, LivingEntity shooter, ItemStack blaster) {
 		shooter.level().addFreshEntity(new IllusionShotEntity(shooter, this, 60));
 	}
 }

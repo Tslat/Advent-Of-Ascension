@@ -28,10 +28,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingSwimmingMovementController;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
-import net.tslat.aoa3.content.entity.mob.precasia.VeloraptorEntity;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -109,7 +107,7 @@ public class CorateeEntity extends AoAAnimalOld {
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @org.jetbrains.annotations.Nullable SpawnGroupData spawnData, @org.jetbrains.annotations.Nullable CompoundTag dataTag) {
-		TYPE.set(this, (RandomUtil.fiftyFifty() ? VeloraptorEntity.Type.BROWN : VeloraptorEntity.Type.GREEN).name);
+		//TYPE.set(this, (RandomUtil.fiftyFifty() ? VeloraptorEntity.Type.BROWN : VeloraptorEntity.Type.GREEN).name);
 
 		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 	}

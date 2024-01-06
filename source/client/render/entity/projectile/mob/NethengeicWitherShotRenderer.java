@@ -12,7 +12,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.tslat.aoa3.content.entity.projectile.mob.NethengeicWitherShotEntity;
 
-import javax.annotation.Nullable;
 
 public class NethengeicWitherShotRenderer extends EntityRenderer<NethengeicWitherShotEntity> {
 	private final ResourceLocation texture;

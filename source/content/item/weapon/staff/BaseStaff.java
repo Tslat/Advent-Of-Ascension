@@ -15,7 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
@@ -24,8 +24,8 @@ import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +58,7 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 				return InteractionResultHolder.fail(stack);
 
 			if (getCastingSound() != null)
-				AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(getCastingSound()).isPlayer().followEntity(player)), player);
+				AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(getCastingSound()).isPlayer().followEntity(player)), player);
 
 			player.getCooldowns().addCooldown(this, 24);
 			player.awardStat(Stats.ITEM_USED.get(this));
@@ -122,12 +122,12 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		if (getDmg() > 0)
-			tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText("items.description.damage.magic", LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, LocaleUtil.numToComponent(getDmg())));
+			tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.MAGIC_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, LocaleUtil.numToComponent(getDmg())));
 
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.staff.runesRequired", LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.STAFF_RUNE_COST, LocaleUtil.ItemDescriptionType.ITEM_AMMO_COST));
 
 		for (Map.Entry<Item, Integer> runeEntry : getRunes().entrySet()) {
-			tooltip.add(LocaleUtil.getLocaleMessage("items.description.staff.runesRequired.specific", ChatFormatting.WHITE, LocaleUtil.numToComponent(runeEntry.getValue()), LocaleUtil.getLocaleMessage(runeEntry.getKey().getDescriptionId())));
+			tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.Keys.STAFF_RUNE_COST_LINE, ChatFormatting.WHITE, LocaleUtil.numToComponent(runeEntry.getValue()), LocaleUtil.getLocaleMessage(runeEntry.getKey().getDescriptionId())));
 		}
 	}
 }

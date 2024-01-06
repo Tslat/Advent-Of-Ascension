@@ -16,7 +16,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliBookOpenPacket;
 import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliGiveBookPacket;
 import net.tslat.aoa3.integration.IntegrationManager;
@@ -112,7 +112,7 @@ public class AdventGuiTabLore extends Screen {
 
 	public static void bookOpened(ResourceLocation id) {
 		if (!loreBooks.containsKey(id))
-			AoAPackets.messageServer(new PatchouliBookOpenPacket(id));
+			AoANetworking.sendToServer(new PatchouliBookOpenPacket(id));
 	}
 
 	private static class PatchouliBook extends AbstractWidget {
@@ -166,7 +166,7 @@ public class AdventGuiTabLore extends Screen {
 							}
 						}
 
-						AoAPackets.messageServer(new PatchouliGiveBookPacket(id));
+						AoANetworking.sendToServer(new PatchouliGiveBookPacket(id));
 
 						return true;
 					}

@@ -114,7 +114,6 @@ public final class AoAProjectiles {
 	public static final RegistryObject<EntityType<IllusionShotEntity>> ILLUSION_SHOT = registerProjectile("illusion_shot", IllusionShotEntity::new);
 	public static final RegistryObject<EntityType<IonShotEntity>> ION_SHOT = registerProjectile("ion_shot", IonShotEntity::new, 0.25f, 0.3f);
 	public static final RegistryObject<EntityType<IroMinerShotEntity>> IRO_MINER_SHOT = registerProjectile("iro_miner_shot", IroMinerShotEntity::new);
-	public static final RegistryObject<EntityType<LaserShotEntity>> LASER_SHOT = registerProjectile("laser_shot", LaserShotEntity::new);
 	public static final RegistryObject<EntityType<LelyetianShotEntity>> LELYETIAN_SHOT = registerProjectile("lelyetian_shot", LelyetianShotEntity::new);
 	public static final RegistryObject<EntityType<LightBlasterShotEntity>> LIGHT_BLASTER_SHOT = registerProjectile("light_blaster_shot", LightBlasterShotEntity::new);
 	public static final RegistryObject<EntityType<LightIronShotEntity>> LIGHT_IRON_SHOT = registerProjectile("light_iron_shot", LightIronShotEntity::new);

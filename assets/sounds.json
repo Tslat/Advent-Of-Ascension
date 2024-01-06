@@ -109,11 +109,23 @@
     ],
     "subtitle": "subtitles.block.haunting_table.use"
   },
+  "block.nowhere_portal.ambient": {
+    "sounds": [
+      "aoa3:block/nowhere_portal/ambient"
+    ],
+    "subtitle": "subtitles.block.nowhere_portal.ambient"
+  },
   "block.petal_crafting_station.use": {
     "sounds": [
       "aoa3:block/petal_crafting_station/use"
     ],
     "subtitle": "subtitles.block.petal_crafting_station.use"
+  },
+  "block.precasia_portal.ambient": {
+    "sounds": [
+      "aoa3:block/precasia_portal/ambient"
+    ],
+    "subtitle": "subtitles.block.precasia_portal.ambient"
   },
   "block.rune_randomizer.use": {
     "sounds": [
@@ -3605,6 +3617,12 @@
     ],
     "subtitle": "subtitles.entity.zorp.hurt"
   },
+  "item.amber_staff.cast": {
+    "sounds": [
+      "aoa3:item/amber_staff/cast"
+    ],
+    "subtitle": "subtitles.item.amber_staff.cast"
+  },
   "item.atlantic_staff.cast": {
     "sounds": [
       "aoa3:item/atlantic_staff/cast"
@@ -3628,6 +3646,16 @@
       "aoa3:item/big_blast/fire"
     ],
     "subtitle": "subtitles.item.big_blast.fire"
+  },
+  "item.blaster.energy_pulse.fire": {
+    "sounds": [
+      "aoa3:item/blaster/energy_pulse/fire-01",
+      "aoa3:item/blaster/energy_pulse/fire-02",
+      "aoa3:item/blaster/energy_pulse/fire-03",
+      "aoa3:item/blaster/energy_pulse/fire-04",
+      "aoa3:item/blaster/energy_pulse/fire-05"
+    ],
+    "subtitle": "subtitles.item.blaster.energy_pulse.fire"
   },
   "item.bone_horn.call": {
     "sounds": [
@@ -4076,12 +4104,6 @@
     ],
     "subtitle": "subtitles.item.joker_staff.cast"
   },
-  "item.kaiyu_staff.cast": {
-    "sounds": [
-      "aoa3:item/kaiyu_staff/cast"
-    ],
-    "subtitle": "subtitles.item.kaiyu_staff.cast"
-  },
   "item.light_cannon.fire": {
     "sounds": [
       "aoa3:item/light_cannon/fire"
@@ -4416,81 +4438,30 @@
     ],
     "subtitle": "subtitles.misc.lotto.win"
   },
+  "misc.portal_activate": {
+    "sounds": [
+      "aoa3:misc/portal_activate"
+    ],
+    "subtitle": "subtitles.misc.portal_activate"
+  },
+  "misc.portal_exit": {
+    "sounds": [
+      "aoa3:misc/portal_exit"
+    ]
+  },
   "player.skills.level_up": {
     "sounds": [
       "aoa3:player/skills/level_up"
     ]
   },
-  "portal.abyss.activate": {
+  "player.skills.level_up_100": {
     "sounds": [
-      "aoa3:portal/abyss/activate"
-    ],
-    "subtitle": "subtitles.portal.abyss.activate"
+      "aoa3:player/skills/level_up_100"
+    ]
   },
-  "portal.barren.activate": {
+  "player.skills.level_up_1000": {
     "sounds": [
-      "aoa3:portal/barren/activate"
-    ],
-    "subtitle": "subtitles.portal.barren.activate"
-  },
-  "portal.candyland.activate": {
-    "sounds": [
-      "aoa3:portal/candyland/activate"
-    ],
-    "subtitle": "subtitles.portal.candyland.activate"
-  },
-  "portal.celeve.activate": {
-    "sounds": [
-      "aoa3:portal/celeve/activate"
-    ],
-    "subtitle": "subtitles.portal.celeve.activate"
-  },
-  "portal.creeponia.activate": {
-    "sounds": [
-      "aoa3:portal/creeponia/activate"
-    ],
-    "subtitle": "subtitles.portal.creeponia.activate"
-  },
-  "portal.crystevia.activate": {
-    "sounds": [
-      "aoa3:portal/crystevia/activate"
-    ],
-    "subtitle": "subtitles.portal.crystevia.activate"
-  },
-  "portal.dark.activate": {
-    "sounds": [
-      "aoa3:portal/dark/activate"
-    ],
-    "subtitle": "subtitles.portal.dark.activate"
-  },
-  "portal.iromine.activate": {
-    "sounds": [
-      "aoa3:portal/iromine/activate"
-    ],
-    "subtitle": "subtitles.portal.iromine.activate"
-  },
-  "portal.light.activate": {
-    "sounds": [
-      "aoa3:portal/light/activate"
-    ],
-    "subtitle": "subtitles.portal.light.activate"
-  },
-  "portal.natural.activate": {
-    "sounds": [
-      "aoa3:portal/natural/activate"
-    ],
-    "subtitle": "subtitles.portal.natural.activate"
-  },
-  "portal.nowhere.activate": {
-    "sounds": [
-      "aoa3:portal/nowhere/activate"
-    ],
-    "subtitle": "subtitles.portal.nowhere.activate"
-  },
-  "portal.shyrelands.activate": {
-    "sounds": [
-      "aoa3:portal/shyrelands/activate"
-    ],
-    "subtitle": "subtitles.portal.shyrelands.activate"
+      "aoa3:player/skills/level_up_1000"
+    ]
   }
 }

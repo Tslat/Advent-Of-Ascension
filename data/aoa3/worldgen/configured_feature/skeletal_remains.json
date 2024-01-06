@@ -8,7 +8,12 @@
       "aoa3:precasia/feature/skeletal_remains_leg_1",
       "aoa3:precasia/feature/skeletal_remains_neck_1",
       "aoa3:precasia/feature/skeletal_remains_neck_2",
-      "aoa3:precasia/feature/skeletal_remains_skull_1"
+      "aoa3:precasia/feature/skeletal_remains_skull_1",
+      "aoa3:precasia/feature/skeletal_remains_horn_1",
+      "aoa3:precasia/feature/skeletal_remains_ribcage_1",
+      "aoa3:precasia/feature/skeletal_remains_tailbone_1",
+      "aoa3:precasia/feature/skeletal_remains_talons_1",
+      "aoa3:precasia/feature/skeletal_remains_talons_2"
     ]
   }
 }

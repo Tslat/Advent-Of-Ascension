@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 16315652,
+    "separation": 6,
+    "spacing": 14
+  },
+  "structures": [
+    {
+      "structure": "aoa3:attercopus_nest",
+      "weight": 1
+    }
+  ]
+}

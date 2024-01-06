@@ -9,8 +9,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class CreepupleEntity extends AoACreeponiaCreeper {
     public CreepupleEntity(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {

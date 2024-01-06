@@ -15,8 +15,8 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class Iropole extends RotatedPillarBlock {
 	private static final VoxelShape Y_SHAPE = box(3, 0, 3, 13, 16, 13);

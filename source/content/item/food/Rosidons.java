@@ -18,8 +18,8 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class Rosidons extends Item {
@@ -35,7 +35,7 @@ public class Rosidons extends Item {
 
 			if (calculatedY <= minY) {
 				if (entity instanceof ServerPlayer pl)
-					PlayerUtil.notifyPlayer(pl, Component.translatable("message.feedback.item.rosidons.noHeightFail"));
+					PlayerUtil.notifyPlayer(pl, Component.translatable(LocaleUtil.createFeedbackLocaleKey("item.rosidons.noHeightFail")));
 
 				return super.finishUsingItem(stack, world, entity);
 			}

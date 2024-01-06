@@ -25,10 +25,10 @@ import net.tslat.aoa3.util.*;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.effectslib.api.util.EffectUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class FlyeEntity extends AoAFlyingMeleeMob {
 	private static final EntityDataAccessor<BlockPos> ALTAR_POS = SynchedEntityData.<BlockPos>defineId(FlyeEntity.class, EntityDataSerializers.BLOCK_POS);

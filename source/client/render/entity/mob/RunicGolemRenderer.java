@@ -9,7 +9,6 @@ import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
 import net.tslat.aoa3.client.render.entity.layer.InvulnerabilityAuraRenderLayer;
 
 
-import javax.annotation.Nullable;
 
 public class RunicGolemRenderer extends AoAMobRenderer {
 	private final ResourceLocation texture = new ResourceLocation("aoa3", "textures/entity/mob/mysterium/runic_golem.png");

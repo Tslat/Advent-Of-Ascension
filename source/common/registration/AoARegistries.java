@@ -34,6 +34,7 @@ import net.minecraft.world.level.levelgen.feature.trunkplacers.TrunkPlacerType;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
@@ -104,6 +105,7 @@ public final class AoARegistries {
 	public static final VanillaRegistryHelper<PlacementModifierType<?>> PLACEMENT_MODIFIERS = new VanillaRegistryHelper<>(Registries.PLACEMENT_MODIFIER_TYPE, AoAPlacementModifiers::init);
 	public static final ForgeRegistryHelper<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, AoABiomeModifiers::init);
 	public static final VanillaRegistryHelper<StructurePlacementType<?>> STRUCTURE_PLACEMENTS = new VanillaRegistryHelper<>(Registries.STRUCTURE_PLACEMENT, AoAStructurePlacements::init);
+	public static final VanillaRegistryHelper<StructureProcessorType<?>> STRUCTURE_PROCESSORS = new VanillaRegistryHelper<>(Registries.STRUCTURE_PROCESSOR, AoAStructureProcessors::init);
 	public static final VanillaRegistryHelper<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = new VanillaRegistryHelper<>(Registries.CHUNK_GENERATOR, AoAChunkGenerators::init);
 	public static final VanillaRegistryHelper<TrunkPlacerType<?>> TRUNK_PLACERS = new VanillaRegistryHelper<>(Registries.TRUNK_PLACER_TYPE, AoATrees::init);
 	public static final VanillaRegistryHelper<FoliagePlacerType<?>> FOLIAGE_PLACERS = new VanillaRegistryHelper<>(Registries.FOLIAGE_PLACER_TYPE, AoATrees::init);

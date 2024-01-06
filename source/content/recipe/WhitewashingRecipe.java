@@ -16,8 +16,8 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class WhitewashingRecipe implements Recipe<Inventory> {
 	private final ResourceLocation id;

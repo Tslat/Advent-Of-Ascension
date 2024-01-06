@@ -11,8 +11,8 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class ToolInteractionRecipeExtension implements ICraftingCategoryExtension {
 	private final ToolInteractionRecipe recipe;

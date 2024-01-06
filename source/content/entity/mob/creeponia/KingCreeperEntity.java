@@ -7,8 +7,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class KingCreeperEntity extends AoACreeponiaCreeper {
     public KingCreeperEntity(EntityType<? extends AoACreeponiaCreeper> entityType, Level world) {

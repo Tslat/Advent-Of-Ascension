@@ -14,7 +14,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -34,10 +34,10 @@ import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyLivingEntitySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
@@ -118,8 +118,8 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 								packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.25f, 25f, 0x7C0000), x, y, z).velocity((x - targetX) * 2, (y - targetY) * 2, (z - targetZ) * 2));
 							}
 
-							AoAPackets.messageNearbyPlayers(packet, (ServerLevel)level(), position(), 64);
-							AoAPackets.messageAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_LITTLE_BAM_CHARGE.get()).followEntity(this)), this);
+							AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level(), position(), 64);
+							AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_LITTLE_BAM_CHARGE.get()).followEntity(this)), this);
 						})
 		);
 	}

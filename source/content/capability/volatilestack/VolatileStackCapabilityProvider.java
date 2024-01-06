@@ -9,9 +9,9 @@ import net.minecraftforge.common.capabilities.CapabilityToken;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.LazyOptional;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 public class VolatileStackCapabilityProvider implements ICapabilityProvider {
 	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "volatile_stack");

@@ -73,7 +73,7 @@ public class ImbuingRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 				.addTooltipCallback((recipeSlotView, tooltip) -> {
 					ResourceLocation recipeId = recipe.getId();
 
-					tooltip.add(LocaleUtil.getLocaleMessage("gui.tooltip.jei.imbuing", ChatFormatting.DARK_RED));
+					tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.jei.imbuing"), ChatFormatting.DARK_RED));
 
 					if (recipeId == null)
 						return;
@@ -86,7 +86,7 @@ public class ImbuingRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 				});
 		builder.addSlot(RecipeIngredientRole.INPUT, 7, 25)
 				.addItemStack(new ItemStack(Items.BOOK))
-				.addTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(LocaleUtil.getLocaleMessage("gui.tooltip.jei.imbuing", ChatFormatting.DARK_RED)));
+				.addTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.jei.imbuing"), ChatFormatting.DARK_RED)));
 
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++) {
@@ -126,7 +126,7 @@ public class ImbuingRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		}
 
 		if (recipe.getMaxXp() > 0) {
-			message = LocaleUtil.getLocaleMessage("gui.misc.skills.xp", Component.literal(String.valueOf((recipe.getMinXp() == recipe.getMaxXp() ? recipe.getMaxXp() : recipe.getMinXp() + "-" + recipe.getMaxXp()))));
+			message = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "misc.xpAmount"), Component.literal(String.valueOf((recipe.getMinXp() == recipe.getMaxXp() ? recipe.getMaxXp() : recipe.getMinXp() + "-" + recipe.getMaxXp()))));
 			textColour = 0xFF8F8F8F;
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
 			width = mc.font.width(message);

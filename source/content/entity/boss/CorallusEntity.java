@@ -29,7 +29,6 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class CorallusEntity extends AoAMeleeMob<CorallusEntity> {

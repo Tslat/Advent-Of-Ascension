@@ -12,8 +12,8 @@ import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class SelyanScythe extends BaseGreatblade {
@@ -40,6 +40,6 @@ public class SelyanScythe extends BaseGreatblade {
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));
-		tooltip.add(LocaleUtil.getFormattedItemDescriptionText("items.description.scythe", LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
+		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.LEECHES_SPIRIT, LocaleUtil.ItemDescriptionType.ITEM_TYPE_INFO));
 	}
 }

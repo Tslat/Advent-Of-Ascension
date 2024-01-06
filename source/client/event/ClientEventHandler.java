@@ -20,7 +20,7 @@ import net.minecraftforge.network.NetworkDirection;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.gui.overlay.ScreenEffectRenderer;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
@@ -61,16 +61,16 @@ public final class ClientEventHandler {
 	private static void onPlayerJoin(ClientPlayerNetworkEvent.LoggingIn ev) {
 		if (AoAConfigs.CLIENT.showWelcomeMessage.get()) {
 			if (AoAKeybinds.ADVENT_GUI.getKey().getValue() == GLFW.GLFW_KEY_UNKNOWN) {
-				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome.alt", ChatFormatting.GRAY));
+				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("message", "login.welcome.alt"), ChatFormatting.GRAY));
 			}
 			else {
-				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage("message.login.welcome", ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()));
+				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("message", "login.welcome"), ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()));
 			}
 
 			ev.getPlayer().sendSystemMessage(Component.literal("AoA IS IN A TRANSITION PERIOD. ALL DIMENSIONS AND MOST MOBS ARE MISSING. PLAY 1.16.5 FOR SURVIVAL AoA. JOIN THE DISCORD FOR MORE INFO").withStyle(ChatFormatting.DARK_RED));
 		}
 
-		AoAPackets.INSTANCE.sendTo(new HaloChangePacket(AoAConfigs.CLIENT.personalHaloPreference.get()), ev.getConnection(), NetworkDirection.PLAY_TO_SERVER);
+		AoANetworking.INSTANCE.sendTo(new HaloChangePacket(AoAConfigs.CLIENT.personalHaloPreference.get()), ev.getConnection(), NetworkDirection.PLAY_TO_SERVER);
 		ClientPlayerDataManager.get().updatePlayerInstance(ev.getPlayer());
 	}
 
@@ -107,7 +107,7 @@ public final class ClientEventHandler {
 			List<Component> lines = ev.getToolTip();
 
 			if (ev.getFlags().isAdvanced()) {
-				lines.add(1, LocaleUtil.getLocaleMessage("gui.tooltip.skillReq", ChatFormatting.DARK_RED));
+				lines.add(1, LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.skillReq"), ChatFormatting.DARK_RED));
 
 				int index = 2;
 
@@ -124,7 +124,7 @@ public final class ClientEventHandler {
 				lines.add(index, Component.literal(""));
 			}
 			else {
-				lines.add(1, LocaleUtil.getLocaleMessage("gui.tooltip.skillReq.hidden", ChatFormatting.DARK_RED));
+				lines.add(1, LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.skillReq.hidden"), ChatFormatting.DARK_RED));
 			}
 		}
 	}

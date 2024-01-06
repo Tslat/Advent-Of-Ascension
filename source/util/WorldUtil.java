@@ -30,9 +30,9 @@ import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.misc.CustomisableLightningBolt;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;

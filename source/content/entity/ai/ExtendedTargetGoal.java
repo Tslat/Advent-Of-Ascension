@@ -7,8 +7,8 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.scores.Team;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public abstract class ExtendedTargetGoal<T extends Mob> extends ExtendedGoal<T> {
 	protected boolean requireLineOfSight = false;

@@ -1,0 +1,56 @@
+{
+  "elements": [
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:precasia/attercopus_nest/1",
+        "processors": {
+          "processors": [
+            {
+              "integrity": 0.15,
+              "processor_type": "minecraft:block_rot",
+              "rottable_blocks": "aoa3:cocoon"
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:precasia/attercopus_nest/2",
+        "processors": {
+          "processors": [
+            {
+              "integrity": 0.15,
+              "processor_type": "minecraft:block_rot",
+              "rottable_blocks": "aoa3:cocoon"
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    },
+    {
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "location": "aoa3:precasia/attercopus_nest/3",
+        "processors": {
+          "processors": [
+            {
+              "integrity": 0.15,
+              "processor_type": "minecraft:block_rot",
+              "rottable_blocks": "aoa3:cocoon"
+            }
+          ]
+        },
+        "projection": "rigid"
+      },
+      "weight": 1
+    }
+  ],
+  "fallback": "minecraft:empty"
+}

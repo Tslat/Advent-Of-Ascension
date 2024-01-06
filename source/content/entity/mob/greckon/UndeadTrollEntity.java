@@ -17,10 +17,10 @@ import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.AquaballEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.BloodballEntity;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
 
 public class UndeadTrollEntity extends AoARangedMob<UndeadTrollEntity> {
 	private static final EntityDataAccessor<Integer> SHOT_TYPE = SynchedEntityData.defineId(UndeadTrollEntity.class, EntityDataSerializers.INT);

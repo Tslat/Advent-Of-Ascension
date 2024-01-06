@@ -15,8 +15,12 @@ import net.tslat.aoa3.content.entity.boss.king_bambambam.EliteKingBamBamBamEntit
 import net.tslat.aoa3.content.entity.boss.king_bambambam.KingBamBamBamEntity;
 import net.tslat.aoa3.content.entity.boss.nethengeic_wither.EliteNethengeicWitherEntity;
 import net.tslat.aoa3.content.entity.boss.nethengeic_wither.NethengeicWitherEntity;
+import net.tslat.aoa3.content.entity.boss.skeletron.EliteSkeletronEntity;
+import net.tslat.aoa3.content.entity.boss.skeletron.SkeletronEntity;
 import net.tslat.aoa3.content.entity.boss.smash.EliteSmashEntity;
 import net.tslat.aoa3.content.entity.boss.smash.SmashEntity;
+import net.tslat.aoa3.content.entity.boss.tyrosaur.EliteTyrosaurEntity;
+import net.tslat.aoa3.content.entity.boss.tyrosaur.TyrosaurEntity;
 import net.tslat.aoa3.content.entity.mob.abyss.*;
 import net.tslat.aoa3.content.entity.mob.barathos.*;
 import net.tslat.aoa3.content.entity.mob.candyland.*;
@@ -240,12 +244,18 @@ public final class AoAMobs {
 	public static final RegistryObject<EntityType<ZhinxEntity>> ZHINX = registerMob("zhinx", ZhinxEntity::new, 0.6f, 0.6875f, 11056831, 13029730);
 	public static final RegistryObject<EntityType<ZorpEntity>> ZORP = registerMob("zorp", ZorpEntity::new, 0.6f, 1.875f, 1093861, 14347506);
 
+	public static final RegistryObject<EntityType<SkeletalAbominationEntity>> SKELETAL_ABOMINATION = registerMob("skeletal_abomination", SkeletalAbominationEntity::new, true, 0.7f, 1.3125f, 0xCFCCBE, 0xA69E8C);
+
 	public static final RegistryObject<EntityType<SmashEntity>> SMASH = registerMob("smash", SmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 	public static final RegistryObject<EntityType<EliteSmashEntity>> ELITE_SMASH = registerMob("elite_smash", EliteSmashEntity::new, 22 / 16f, 54 / 16f, 0x644E31, 0x3C2E1E);
 	public static final RegistryObject<EntityType<NethengeicWitherEntity>> NETHENGEIC_WITHER = registerMob("nethengeic_wither", NethengeicWitherEntity::new, true, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
 	public static final RegistryObject<EntityType<EliteNethengeicWitherEntity>> ELITE_NETHENGEIC_WITHER = registerMob("elite_nethengeic_wither", EliteNethengeicWitherEntity::new, true, 22 / 16f, 59 / 16f, 0x1D1816, 0xDE4D13);
 	public static final RegistryObject<EntityType<KingBamBamBamEntity>> KING_BAMBAMBAM = registerMob("king_bambambam", KingBamBamBamEntity::new, true, 18 / 16f, 44 / 16f, 0x211C1A, 0x4D352B);
 	public static final RegistryObject<EntityType<EliteKingBamBamBamEntity>> ELITE_KING_BAMBAMBAM = registerMob("elite_king_bambambam", EliteKingBamBamBamEntity::new, true, 18 / 16f, 44 / 16f, 0x211C1A, 0x4D352B);
+	public static final RegistryObject<EntityType<TyrosaurEntity>> TYROSAUR = registerMob("tyrosaur", TyrosaurEntity::new, 22 / 16f, 27 / 16f, 0x5A4536, 0x252323);
+	public static final RegistryObject<EntityType<EliteTyrosaurEntity>> ELITE_TYROSAUR = registerMob("elite_tyrosaur", EliteTyrosaurEntity::new, 27 / 16f, 54 / 16f, 0x5A4536, 0x252323);
+	public static final RegistryObject<EntityType<SkeletronEntity>> SKELETRON = registerMob("skeletron", SkeletronEntity::new, 22 / 16f, 27 / 16f, 0x5A4536, 0x252323);
+	public static final RegistryObject<EntityType<EliteSkeletronEntity>> ELITE_SKELETRON = registerMob("elite_skeletron", EliteSkeletronEntity::new, 22 / 16f, 27 / 16f, 0x5A4536, 0x252323);
 
 	//public static final RegistryObject<EntityType<BaneEntity>> BANE = registerMob("bane", BaneEntity::new, 0.75f, 2f, 7868105, 4619942);
 	//public static final RegistryObject<EntityType<BaronessEntity>> BARONESS = registerMob("baroness", BaronessEntity::new, 0.6875f, 2.75f, 5377810, 2362949);

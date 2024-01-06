@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.item.weapon.gun;
 
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -10,8 +11,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class Overshot extends BaseGun {
@@ -26,8 +27,8 @@ public class Overshot extends BaseGun {
 	}
 
 	@Override
-	protected boolean fireGun(LivingEntity shooter, ItemStack stack, InteractionHand hand) {
-		if (super.fireGun(shooter, stack, hand)) {
+	protected boolean fireGun(ServerLevel level, LivingEntity shooter, ItemStack stack, InteractionHand hand) {
+		if (super.fireGun(level, shooter, stack, hand)) {
 			BaseBullet bullet = findAndConsumeAmmo(shooter, stack, hand);
 
 			if (bullet != null) {

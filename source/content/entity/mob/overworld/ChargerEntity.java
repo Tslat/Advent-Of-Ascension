@@ -25,14 +25,16 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.world.gen.BiomeMatcher;
 import net.tslat.aoa3.library.object.CachedFunction;
 import net.tslat.aoa3.library.object.EntityDataHolder;
+import net.tslat.aoa3.util.HolidayUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nullable;
+import java.util.Random;
 import java.util.function.Function;
 
 public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
@@ -146,6 +148,24 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 
 	public enum Type implements IExtensibleEnum {
 		DEFAULT("", null),
+		RAVEN("raven", null) {
+			@Override
+			public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
+				return HolidayUtil.isHalloween() && new Random(level.getGameTime() ^ position.asLong()).nextInt(3) == 0;
+			}
+		},
+		ZOMBIE("zombie", null) {
+			@Override
+			public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
+				return HolidayUtil.isHalloween() && new Random(level.getGameTime() ^ position.asLong()).nextInt(3) == 1;
+			}
+		},
+		SKELETON("skeleton", null) {
+			@Override
+			public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
+				return HolidayUtil.isHalloween() && new Random(level.getGameTime() ^ position.asLong()).nextInt(3) == 2;
+			}
+		},
 		DESERT("desert", level -> new BiomeMatcher.Builder(level).mustBe(Tags.Biomes.IS_HOT).atLeastOneOf(Tags.Biomes.IS_SANDY).build()),
 		HILL("hill", level -> new BiomeMatcher.Builder(level).mustBe(Tags.Biomes.IS_MOUNTAIN).cannotBe(Tags.Biomes.IS_SNOWY).build()),
 		SEA("sea", level -> new BiomeMatcher.Builder(level).atLeastOneOf(BiomeTags.IS_OCEAN, BiomeTags.IS_RIVER, BiomeTags.IS_BEACH).cannotBe(Tags.Biomes.IS_SNOWY).build()),

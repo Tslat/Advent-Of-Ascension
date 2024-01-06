@@ -1,7 +1,16 @@
 {
   "variants": {
-    "": {
+    "axis=x": {
+      "model": "aoa3:block/spikey_pillar",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
       "model": "aoa3:block/spikey_pillar"
+    },
+    "axis=z": {
+      "model": "aoa3:block/spikey_pillar",
+      "x": 90
     }
   }
 }

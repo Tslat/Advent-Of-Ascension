@@ -10,8 +10,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class KeelerEntity extends AoAMeleeMob<KeelerEntity> {
 	public KeelerEntity(EntityType<? extends KeelerEntity> entityType, Level world) {

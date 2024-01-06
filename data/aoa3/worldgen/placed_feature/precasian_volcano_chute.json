@@ -12,6 +12,18 @@
       "type": "aoa3:chunk_high_point"
     },
     {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:matching_blocks",
+        "blocks": "minecraft:basalt",
+        "offset": [
+          0,
+          -1,
+          0
+        ]
+      }
+    },
+    {
       "type": "minecraft:biome"
     }
   ]

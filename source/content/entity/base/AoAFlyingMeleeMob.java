@@ -26,12 +26,12 @@ import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.content.entity.ai.mob.TelegraphedMeleeAttackGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementController;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-import javax.annotation.Nullable;
 
 public abstract class AoAFlyingMeleeMob extends FlyingMob implements Enemy, GeoEntity {
 	protected static final EntityDataAccessor<Boolean> INVULNERABLE = SynchedEntityData.defineId(AoAFlyingMeleeMob.class, EntityDataSerializers.BOOLEAN);

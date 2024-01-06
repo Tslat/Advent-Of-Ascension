@@ -1,21 +1,34 @@
 package net.tslat.aoa3.content.entity.mob.precasia;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
+import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.content.entity.animal.precasia.HorndronEntity;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
+import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
@@ -33,8 +46,6 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import java.util.List;
 
 public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
-	private final float SPRINTING_ATTACK_REACH = (float)((getBbWidth() + (getAttackVectorPositionOffset() * 0.3f)) * 1.75d + (getEyeHeight() / 3.6d * 0.25d));
-
 	public SmilodonEntity(EntityType<? extends SmilodonEntity> entityType, Level level) {
 		super(entityType, level);
 
@@ -54,7 +65,7 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 		return ObjectArrayList.of(
 				new AggroBasedNearbyPlayersSensor<>(),
 				new AggroBasedNearbyLivingEntitySensor<SmilodonEntity>()
-						.setPredicate((target, entity) -> (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null) || target instanceof Animal)
+						.setPredicate((target, entity) -> (target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null) || target instanceof HorndronEntity)
 						.setScanRate(entity -> 40),
 				new HurtBySensor<>());
 	}
@@ -93,13 +104,44 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 	}
 
 	@Override
+	protected void onHurt(DamageSource source, float amount) {
+		if (level() instanceof ServerLevel level && source.is(DamageTypeTags.IS_FIRE) && level().getFluidState(BlockPos.containing(getEyePosition())).getFluidType() == AoAFluidTypes.TAR.get() && level().getFluidState(blockPosition().above()).getFluidType() == AoAFluidTypes.TAR.get()) {
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.LARGE_SMOKE, this)
+					.colourOverride(255, 255, 255, 255)
+					.spawnNTimes(20)
+					.sendToAllPlayersTrackingEntity(level,this);
+
+			if (isDeadOrDying()) {
+				AoAScheduler.scheduleSyncronisedTask(() -> {
+					EntitySpawningUtil.spawnEntity(level, AoAMobs.SKELETAL_ABOMINATION.get(), position(), MobSpawnType.CONVERSION, abomination -> {
+						abomination.setXRot(getXRot());
+						abomination.setYRot(getYRot());
+						abomination.setYHeadRot(getYHeadRot());
+					});
+				}, 19 - this.deathTime);
+			}
+		}
+	}
+
+	@Override
+	protected void onAttack(Entity target) {
+		if (target.level() instanceof ServerLevel level && target instanceof LivingEntity livingTarget && rand().oneInNChance(10)) {
+			EntityUtil.applyPotions(livingTarget, new EffectBuilder(MobEffects.MOVEMENT_SLOWDOWN, 20).level(3).hideParticles().hideEffectIcon());
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.CRIT, livingTarget)
+					.spawnNTimes(10)
+					.sendToAllPlayersTrackingEntity(level, livingTarget);
+			level().playSound(null, livingTarget.blockPosition(), SoundEvents.PLAYER_ATTACK_CRIT, SoundSource.HOSTILE);
+		}
+	}
+
+	@Override
 	protected float getAttackVectorPositionOffset() {
 		return 1.25f;
 	}
 
 	@Override
 	public double getMeleeAttackRangeSqr(LivingEntity target) {
-		final double attackReach = isSprinting() ? SPRINTING_ATTACK_REACH : this.attackReach;
+		final double attackReach = isSprinting() ? this.attackReach * 1.1f : this.attackReach;
 		final double targetBBOffset = target.getBbWidth() * 0.5d;
 
 		return attackReach * attackReach + targetBBOffset * targetBBOffset;

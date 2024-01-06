@@ -12,8 +12,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class LightwalkerEntity extends AoAMeleeMob<LightwalkerEntity> {
     public LightwalkerEntity(EntityType<? extends LightwalkerEntity> entityType, Level world) {

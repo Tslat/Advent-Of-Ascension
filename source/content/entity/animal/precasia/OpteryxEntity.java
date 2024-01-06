@@ -1,9 +1,11 @@
 package net.tslat.aoa3.content.entity.animal.precasia;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,7 +30,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.DismountHelper;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
@@ -385,8 +389,12 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	public void setAge(int age) {
 		super.setAge(age);
 
-		if (!level().isClientSide())
+		if (!level().isClientSide()) {
 			IS_EGG.set(this, isEggAge());
+
+			if ((age == 0 || age == -24000) && getOwner() instanceof ServerPlayer pl)
+				CriteriaTriggers.TAME_ANIMAL.trigger(pl, this);
+		}
 	}
 
 	@Nullable
@@ -396,8 +404,23 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	}
 
 	@Override
-	public InteractionResult mobInteract(Player player, InteractionHand pHand) {
-		final InteractionResult result = super.mobInteract(player, pHand);
+	public InteractionResult mobInteract(Player player, InteractionHand hand) {
+		if (player.getUUID().equals(getOwnerUUID())) {
+			ItemStack stack = player.getItemInHand(hand);
+
+			if (isFood(stack) && getHealth() < getMaxHealth()) {
+				heal(stack.getFoodProperties(this).getNutrition());
+
+				if (!player.getAbilities().instabuild)
+					stack.shrink(1);
+
+				gameEvent(GameEvent.EAT, this);
+
+				return InteractionResult.SUCCESS;
+			}
+		}
+
+		final InteractionResult result = super.mobInteract(player, hand);
 
 		if (result != InteractionResult.PASS)
 			return result;
@@ -480,5 +503,15 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 	@Override
 	protected float getRiddenSpeed(Player player) {
 		return (float)getAttributeValue(Attributes.MOVEMENT_SPEED) * (this.isFlying ? 2 : 0.5f);
+	}
+
+	@Override
+	public void die(DamageSource cause) {
+		Component deathMessage = getCombatTracker().getDeathMessage();
+
+		super.die(cause);
+
+		if (this.dead && !level().isClientSide() && level().getGameRules().getBoolean(GameRules.RULE_SHOWDEATHMESSAGES) && getOwner() instanceof ServerPlayer)
+			getOwner().sendSystemMessage(deathMessage);
 	}
 }

@@ -129,7 +129,7 @@ public enum BossDropsScheme {
 					playerDropCount = 0;
 
 					for (Object2IntMap.Entry<Component> entry : messages.object2IntEntrySet()) {
-						player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.drops", ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
+						player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.drops"), ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
 					}
 
 					continue;
@@ -150,7 +150,7 @@ public enum BossDropsScheme {
 					playerDropCount = 0;
 
 					for (Object2IntMap.Entry<Component> entry : messages.object2IntEntrySet()) {
-						player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.drops", ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
+						player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.drops"), ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
 					}
 
 					continue;
@@ -170,7 +170,7 @@ public enum BossDropsScheme {
 			Player player = players.iterator().next();
 
 			for (Object2IntMap.Entry<Component> entry : messages.object2IntEntrySet()) {
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.drops", ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.drops"), ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
 			}
 		}
 
@@ -199,7 +199,7 @@ public enum BossDropsScheme {
 		}
 
 		for (Object2IntMap.Entry<Component> entry : messages.object2IntEntrySet()) {
-			player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.drops", ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
+			player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.drops"), ChatFormatting.GREEN, Component.literal(String.valueOf(entry.getIntValue())), entry.getKey()));
 		}
 	}
 }

@@ -11,8 +11,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.List;
 
 public class YetiFingernails extends Item {
@@ -28,7 +28,7 @@ public class YetiFingernails extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entity) {
 		if (entity instanceof ServerPlayer)
-			PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable("message.feedback.yetiFingernails.eat"));
+			PlayerUtil.notifyPlayer((ServerPlayer)entity, Component.translatable(LocaleUtil.createFeedbackLocaleKey("yetiFingernails.eat")));
 
 		return super.finishUsingItem(stack, worldIn, entity);
 	}

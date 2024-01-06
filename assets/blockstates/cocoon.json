@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "suspended=false": {
+      "model": "aoa3:block/cocoon"
+    },
+    "suspended=true": {
+      "model": "aoa3:block/cocoon_suspended"
+    }
+  }
+}

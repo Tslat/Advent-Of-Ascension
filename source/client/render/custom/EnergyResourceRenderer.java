@@ -12,8 +12,8 @@ import net.tslat.aoa3.player.resource.EnergyResource;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class EnergyResourceRenderer implements AoAResourceRenderer {
 	@Override

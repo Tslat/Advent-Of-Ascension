@@ -23,8 +23,8 @@ import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -61,15 +61,15 @@ public class NowhereActivityPortal extends PortalBlock {
 	}
 
 	@Override
-	public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource rand) {
+	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		for (int i = 0; i < 4; ++i) {
-			double posXStart = (float)pos.getX() + rand.nextFloat();
-			double posYStart = (float)pos.getY() + rand.nextFloat();
-			double posZStart = (float)pos.getZ() + rand.nextFloat();
-			double motionX = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-			double motionY = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-			double motionZ = ((double)rand.nextFloat() - 0.5D) * 0.5D;
-			int randomMod = rand.nextInt(2) * 2 - 1;
+			double posXStart = (float)pos.getX() + random.nextFloat();
+			double posYStart = (float)pos.getY() + random.nextFloat();
+			double posZStart = (float)pos.getZ() + random.nextFloat();
+			double motionX = ((double)random.nextFloat() - 0.5D) * 0.5D;
+			double motionY = ((double)random.nextFloat() - 0.5D) * 0.5D;
+			double motionZ = ((double)random.nextFloat() - 0.5D) * 0.5D;
+			int randomMod = random.nextInt(2) * 2 - 1;
 			int colour = switch (state.getValue(ACTIVITY)) {
 				case PARKOUR -> 39103;
 				case PARKOUR_1 -> 9175295;
@@ -84,16 +84,16 @@ public class NowhereActivityPortal extends PortalBlock {
 				case RETURN -> 16777215;
 			};
 
-			if (world.getBlockState(pos.west()).getBlock() != this && world.getBlockState(pos.east()).getBlock() != this) {
+			if (level.getBlockState(pos.west()).getBlock() != this && level.getBlockState(pos.east()).getBlock() != this) {
 				posXStart = (double)pos.getX() + 0.5D + 0.25D * (double)randomMod;
-				motionX = rand.nextFloat() * 2.0F * (float)randomMod;
+				motionX = random.nextFloat() * 2.0F * (float)randomMod;
 			}
 			else {
 				posZStart = (double)pos.getZ() + 0.5D + 0.25D * (double)randomMod;
-				motionZ = rand.nextFloat() * 2.0F * (float)randomMod;
+				motionZ = random.nextFloat() * 2.0F * (float)randomMod;
 			}
 
-			world.addParticle(new PortalFloaterParticleType.Data(new Vec3(pos.getX(), pos.getY(), pos.getZ()), colour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
+			level.addParticle(new PortalFloaterParticleType.Data(new Vec3(pos.getX(), pos.getY(), pos.getZ()), colour), posXStart, posYStart, posZStart, motionX, motionY, motionZ);
 		}
 	}
 

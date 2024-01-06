@@ -7,8 +7,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoATrader;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class TokenCollectorEntity extends AoATrader {
 	public TokenCollectorEntity(EntityType<? extends AoATrader> entityType, Level world) {

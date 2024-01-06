@@ -24,9 +24,9 @@ import net.tslat.aoa3.content.entity.base.AoAMonster;
 import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.util.WorldUtil;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.core.animation.RawAnimation;
 
-import javax.annotation.Nullable;
 
 public abstract class AoABoss extends AoAMonster<AoABoss>{
 	private final ServerBossEvent bossStatusTracker = (ServerBossEvent)new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.GREEN, BossEvent.BossBarOverlay.NOTCHED_20).setDarkenScreen(false).setCreateWorldFog(false);

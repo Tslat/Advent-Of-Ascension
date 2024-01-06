@@ -38,6 +38,10 @@ public class ServerParticlePacket implements AoAPacket {
 		buffer.writeCollection(this.particles, (buf, builder) -> builder.toNetwork(buf));
 	}
 
+	public boolean isEmpty() {
+		return this.particles.isEmpty();
+	}
+
 	public static ServerParticlePacket decode(FriendlyByteBuf buffer) {
 		return new ServerParticlePacket(buffer.readCollection(ObjectArrayList::new, ParticleBuilder::fromNetwork));
 	}

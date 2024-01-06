@@ -15,8 +15,8 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 
@@ -26,13 +26,13 @@ public class CommanderArmour extends AdventArmour {
 	}
 
 	@Override
-	public Type setType() {
+	public Type getSetType() {
 		return Type.COMMANDER;
 	}
 
 	@Override
 	public void onEffectTick(ServerPlayerDataManager plData, @Nullable HashSet<EquipmentSlot> slots) {
-		if (slots == null || plData.equipment().getCurrentFullArmourSet() != setType() && plData.player().level().getGameTime() % 20 == 0) {
+		if (slots == null || plData.equipment().getCurrentFullArmourSet() != getSetType() && plData.player().level().getGameTime() % 20 == 0) {
 			for (LivingEntity entity : plData.player().level().getEntitiesOfClass(LivingEntity.class, plData.player().getBoundingBox().inflate(2 * (slots == null ? 4 : slots.size())))) {
 				if (entity != plData.player() && (entity instanceof Player || (entity instanceof TamableAnimal && ((TamableAnimal)entity).getOwner() == plData.player())))
 					entity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 25, slots == null ? 1 : 0, false, true));

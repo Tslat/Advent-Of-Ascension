@@ -8,7 +8,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.tslat.aoa3.common.packet.AoAPackets;
+import net.tslat.aoa3.common.packet.AoANetworking;
 import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.TriFunction;
@@ -48,7 +48,7 @@ public class ExplosionInfo {
 	private Consumer<ExtendedExplosion> afterExplodingFunction = explosion -> {};
 	private BiConsumer<ExtendedExplosion, Integer> particleConsumer = (explosion, explodeTick) -> {
 		if (explodeTick <= 0)
-			AoAPackets.messageNearbyPlayers(new ServerParticlePacket(ParticleBuilder.forPos(getEffectiveRadius() >= 4.0F && !this.noBlockDamage ? ParticleTypes.EXPLOSION_EMITTER : ParticleTypes.EXPLOSION, explosion.origin.x, explosion.origin.y, explosion.origin.z)), (ServerLevel)explosion.level, explosion.origin, 64);
+			AoANetworking.sendToAllNearbyPlayers(new ServerParticlePacket(ParticleBuilder.forPos(getEffectiveRadius() >= 4.0F && !this.noBlockDamage ? ParticleTypes.EXPLOSION_EMITTER : ParticleTypes.EXPLOSION, explosion.origin.x, explosion.origin.y, explosion.origin.z)), (ServerLevel)explosion.level, explosion.origin, 64);
 	};
 
 	public float getBaseDamage() {

@@ -15,8 +15,8 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.ai.mob.RandomFlyingGoal;
 import net.tslat.aoa3.content.entity.ai.movehelper.RoamingFlightMovementController;
 import net.tslat.aoa3.content.entity.base.AoAAnimalOld;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 
 public class AngelicaEntity extends AoAAnimalOld {
 	public AngelicaEntity(EntityType<? extends Animal> entityType, Level world) {
