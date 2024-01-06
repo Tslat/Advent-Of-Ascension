@@ -1,4 +1,4 @@
-炼狱是一个高耸的生物，它在下界的平原中跌跌撞撞地行走，试图找到一个可以让它立脚的地方。
+A towering beast that stumbles its way through the planes of the Nether, looking for things to step on.
 它的身体由致密的岩石和岩浆的熔融混合物组成，这使得它们比起生物更像是一种元素。
 
 当它用拳头挥击地面时，它会产生巨大的热量，瞬间将周围的陆地转化为岩浆直到重新冷却
