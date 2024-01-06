@@ -1,6 +1,6 @@
-电弧花实际上是一种利用地面来躲避捕食者的电弧蠕虫。电弧蠕虫的头部已经“机智地”进化出一种形似于附近植被的增生物，然后把自己埋在地下，依靠振动来寻找猎物。 Cleverly, the arcworm has evolved a growth on its head that looks very similar to nearby flora. It then buries itself underground and relies on vibrations to find prey.
+电弧花实际上是一种利用地面来躲避捕食者的电弧蠕虫。电弧蠕虫的头部已经“机智地”进化出一种形似于附近植被的增生物，然后把自己埋在地下，依靠振动来寻找猎物。
 当它感觉到它自己成为了目标时，它会立即停止运动，直到感觉安全后再移动。
 
-When not staying still, it will sneak up on prey and attempt to eat them feet-first. Unfortunately it doesn't seem capable of determining whether a target is small enough to actually be eaten before attempting to do so.
+当它没有保持静止时，会悄悄靠近猎物，试图先从它们的脚下口。不幸的是，它在这样做之前似乎无法确定它的目标是否足够小到被它吃下去。
 
 如果电弧蠕虫被反击，它会立即钻出地面并开始攻击。

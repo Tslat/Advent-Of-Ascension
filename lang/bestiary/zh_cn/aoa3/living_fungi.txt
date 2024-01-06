@@ -1,8 +1,8 @@
 在大多数针叶林环境中，你都能发现这些形似蘑菇的生物，它们喜欢这样阴凉潮湿的气候。
-Living Fungi spend most of their time in a form of hibernation. They do this to preserve energy and to draw nutrition from the ground below them. When in hibernation, they sink their feet slightly into the ground and compress their body into their blue head-covering.
+真菌人大部分时间处于休眠状态。这样是为了保存能量，并从地下汲取营养。休眠时，它们的脚会略微陷入地面，并把身体压进蓝色的菌伞里。
 
-Their body is extremely toxic, with a very thin spore covering layered over their body. 它们的身体有极强的毒性，身体上覆盖着一层薄薄的孢子。这些孢子有剧毒，如果产生皮肤接触，受害者会因此中毒。
-Their limbs are also non-critical to their survival, and regenerate quickly. Because of this, projectiles may not be very effective against them.
+它们的身体有极强的毒性，身体上覆盖着一层薄薄的孢子。这些孢子有剧毒，如果产生皮肤接触，受害者会因此中毒。
+它们的四肢对于它们的生存并非至关重要，而且还可以快速再生。正因如此，用弹射物一般对付不了它们。
 
 它们被吵醒时，通常会因为休眠被打破而恼怒不已，会愤怒地追逐附近的任何东西。
 

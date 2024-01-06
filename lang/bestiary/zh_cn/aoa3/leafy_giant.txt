@@ -1,6 +1,6 @@
-Relative of the Wood Giant; Leafy Giants are enormous woodland monstrosities that roam leafy forests and take control of the local food chain.
-They appear to be the same species of creature as Wood Giants, with a random mutation at birth causing them to grow natural foliage on their bodies. It is not known why this occurs.
+作为木之巨人的亲戚，叶之巨人是一个在森林里游荡的巨大的林地怪物，支配着当地的食物链。
+它们似乎是与木之巨人相似的生物，但突然的变异使得它们身上长满了自然的树叶。但这为什么会发生还尚不得知。
 
-They are not aggressive by default, except when hunting, but they will aggressively defend themselves if provoked.
-Provoking them is... not a good idea. They seem to form a magical bond with Bush Babies, which causes them to eject themselves from the giant's foliage and attack anything they feel like.
-If enraged enough, they will active some form of magical ability that keeps them near-invulnerable once the Bush Babies have left their nest, forcing them to be faced first so that the magical bond can be broken and the protection removed
+它们不会自发进行攻击，但受到挑衅时它们也会进行自我防卫。不过，额，挑衅它们不是件好事。
+叶之巨人似乎与灌木婴之间构筑起了魔法联系，这使得灌木婴可以从它身上脱落下来并随它们攻击自己想攻击的关系。
+当叶之巨人足够愤怒时，它们会施展某种魔法能力让它在身上的灌木婴离开之后使自己无敌，让来犯者先面对成群的灌木婴来解除魔法的保护。

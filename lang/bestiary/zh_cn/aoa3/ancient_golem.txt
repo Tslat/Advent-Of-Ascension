@@ -2,6 +2,5 @@
 
 尽管它们相对于现代科技而言是一个古老的变种，但就性能而言，它们与现代最新的同类型事物相差无几，甚至在某些方面超过了它们。
 它们的合金比铁傀儡明显更具有适应性，而它们的驱动零件也增强了它们本就强大的攻击力。不过相对的，它们的移动速度相当慢，大大降低了它们的威胁程度。
-Contrastly however; their movement speed is quite a bit slower and almost entirely negates their threat.
 
 据信，它们最初是用来作为劳动力而非为了战斗而使用的，这也解释了它们为何有增强过的力量与耐久。
