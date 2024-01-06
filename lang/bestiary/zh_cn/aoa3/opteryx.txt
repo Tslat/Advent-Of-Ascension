@@ -1,5 +1,5 @@
 弹跳鸟是一种大型鸟类，兼具鸟类和爬行动物的特征。
-弹跳鸟引以为傲的是巨大的脚爪，但似乎主要只用它来抓握高处的结构，因为它们是一种特别胆小的动物。
+It sports large primary claws and talons, but they seem to be used mostly for gripping tall structures as they're a particularly timid animal.
 
 尽管很胆小，它们却以肉食为主，几乎完全依靠猎物的肉生存。
 
