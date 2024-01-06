@@ -1,3 +1,7 @@
-Сделанные неизвестными создателями, Древние големы иногда можно найти бродящими по миру. Из-за их возраста до сих пор неизвестно, как работает их логическая операция, но либо из-за неудачи, либо из-за злого умысла, они агрессивны по отношению к людям и не заинтересованы ни в чем другом. 
+Presumably created by an older civilisation, these constructs appear to be a primitive version of the more modernised Iron Golems.
 
-Они не обладают оружием, поэтому при нападении они просто проталкивают свое ржавое железное тело в свою цель.
+Despite being an older variant of a more modern technology, they are equally as capable as their newer counterparts, and in some ways still even surpass them.
+Their alloy is significantly more resilient than an Iron Golem's, and their actuated appendages enhance their already hefty attack strength.
+Contrastly however; their movement speed is quite a bit slower and almost entirely negates their threat.
+
+It's believed they were originally used as workhorses more than combat drones, which would explain their enhanced strength and durability.
