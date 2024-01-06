@@ -1,4 +1,4 @@
-掺金傀儡作为不朽之地的精神造物之一，与其说它是一种生物，不如说是一种图腾。
+One of the spiritual creations of the Immortallis dungeons, Goldus are passive constructs that exist less as a creature, and more as a totem of sorts.
 
 像所有不朽之地的其他造物一样，它在死亡时不会留下肉体形态，而是简单地消失，将其能量返回到地牢中。
 然而，与其他大多数不朽之地造物不同的是，掺金傀儡在被杀死后会留下一块未经提炼的黄金，直到地牢的要求得到满足。
