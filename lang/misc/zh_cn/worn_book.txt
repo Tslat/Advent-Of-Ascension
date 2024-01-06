@@ -1,5 +1,5 @@
 那些东西无处不在！<br>这…这些面孔，为什么会有如此之多的眼睛？<br><br>四个雕符石：<br>一曰现实。<br>一曰穿越。<br>一曰空间。<br>一曰方位。<br><br>用漆黑的石头筑成六个方块高的框架。
-框架中包含着雕符石。<br>在框架底部的中心处，嵌入一颗能量雕符石。此乃重中之重，此乃关键所在。<br>十三个漆黑的石头，再加上五颗雕符石。<br><br>我所开启之物，将无法关闭。
+Include the carved runes.<br>At the center in the base of the frame, insert a carved rune of power. This is the focus. This takes the keys.<br>13 of the blackened stone, 5 carved runes.<br><br>What I have opened cannot be closed.
 我已将前四颗符石散布在各处的地牢与神庙中，防止有人重新释放那里面的恐怖之物。<br><br>然后我会把剩下这一颗打碎，这样它就再也不能用了。
-这第五颗关键的符石需要亲手合成——将未充能符文与一颗末影之眼结合，并将其注入到中间的漆黑之石中。就像这样：<br>        符  眼  符<br>        符  石  符<br>        符  符  符<br><br>
+这第五颗关键的符石需要亲手合成——将未充能符文与一颗末影之眼结合，并将其注入到中间的漆黑之石中。就像这样：<br>        符  眼  符<br>        符  石  符<br>        符  符  符<br><br> Something like this:<br>     U E U<br>     U S U<br>     U U U<br><br>
 愿卡尔颂保佑你，因为你的灵魂将再也不复以往。
