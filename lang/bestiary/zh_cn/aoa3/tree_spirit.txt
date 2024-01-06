@@ -5,4 +5,4 @@
 尽管它有知觉，但除了和平的生活之外，它似乎对什么都不感兴趣。
 如果受到攻击，它们就会防御性地释出魔法精灵，反击攻击者，然后重新回到自己的休眠状态。
 
-值得注意的是，由于它们具有植物特征，所以它们特别容易受到火焰的伤害。
+Notably, they are particularly vulnerable to fire-based damage as would be expected of their heritage.
