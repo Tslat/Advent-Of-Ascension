@@ -1,0 +1,6 @@
+Relative of the Wood Giant; Leafy Giants are enormous woodland monstrosities that roam leafy forests and take control of the local food chain.
+They appear to be the same species of creature as Wood Giants, with a random mutation at birth causing them to grow natural foliage on their bodies. It is not known why this occurs.
+
+They are not aggressive by default, except when hunting, but they will aggressively defend themselves if provoked.
+Provoking them is... not a good idea. They seem to form a magical bond with Bush Babies, which causes them to eject themselves from the giant's foliage and attack anything they feel like.
+If enraged enough, they will active some form of magical ability that keeps them near-invulnerable once the Bush Babies have left their nest, forcing them to be faced first so that the magical bond can be broken and the protection removed
