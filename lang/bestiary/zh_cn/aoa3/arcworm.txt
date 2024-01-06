@@ -1,4 +1,4 @@
-这种可爱的小动物是一种胆小的毛虫类动物，喜欢在地下生活。虽然它有正常的眼睛，但它依然会利用振动来探测附近的实体和威胁。
-在没有受到威胁的情况下，它会把自己埋在地下正好能把身体覆盖住的深度。它还会与地面保持足够的距离，以便根据需要呼吸。因为埋于浅层，它的头部附属物仍然会露出地表，看起来像一朵当地的花。
+这种可爱的小动物是一种胆小的毛虫类动物，喜欢在地下生活。虽然它有正常的眼睛，但它依然会利用振动来探测附近的实体和威胁。 While it does have functioning eyes, it additionally uses vibrations to detect nearby entities and threats.
+在没有受到威胁的情况下，它会把自己埋在地下正好能把身体覆盖住的深度。它还会与地面保持足够的距离，以便根据需要呼吸。因为埋于浅层，它的头部附属物仍然会露出地表，看起来像一朵当地的花。 Because of this shallow depth, its head-appendage remains above the surface, appearing like a native flower.
 
-它一旦被发现，就会钻出地面，冲向目标并咬向敌人。它柔软的身体无法提供太多的进攻力量，但它的韧性弥补了这一弱点。
+Once spotted, it will pop to the surface and charge at the target and bite. Its soft body doesn't offer much offensive strength, but it makes up for that with its tenacity.
