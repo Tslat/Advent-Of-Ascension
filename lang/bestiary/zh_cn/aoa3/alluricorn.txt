@@ -1,3 +1,2 @@
-魅角兽是通过向召唤板注入召唤力而创造的一种酷似独角兽的生物。它们利用其天生的高机动和强壮的头部来攻击任何威胁其主人的一切事物。
-
-注入的召唤力也很容易与动能符文产生反应。用符文接触它时，会给予主人短暂的速度提升。
+A unicorn-like creature created by infusion creation power into a blank minion slab, the Alluricorn uses its natural speed and strong head to attack anything that threatens its owner.
+Its imbued creation energy also reacts handily with kinetic runes, giving the owner a brief speed boost when in contact with them.
