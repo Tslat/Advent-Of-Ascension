@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:primed_ghoulasm"
+    },
+    "B": {
+      "item": "aoa3:reinforced_cloth"
+    },
+    "C": {
+      "item": "aoa3:ghoulasm"
+    }
+  },
+  "pattern": [
+    "AB ",
+    " C ",
+    " BA"
+  ],
+  "result": {
+    "item": "aoa3:haunted_idol"
+  }
+}

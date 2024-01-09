@@ -1,75 +1,60 @@
 package net.tslat.aoa3.advancement.trigger;
 
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.*;
-import net.minecraft.resources.ResourceLocation;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.GsonHelper;
+import net.minecraft.util.ExtraCodecs;
+import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.AoASkill;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 
 public class AoAXpGainTrigger extends SimpleCriterionTrigger<AoAXpGainTrigger.Instance> {
-	private static final ResourceLocation triggerId = new ResourceLocation("aoa3", "gain_xp");
-
 	@Override
-	public ResourceLocation getId() {
-		return triggerId;
-	}
-
-	@Override
-	public Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext conditions) {
-		AoASkill skill = null;
-
-		if (json.has("skill")) {
-			ResourceLocation skillId = new ResourceLocation(GsonHelper.getAsString(json, "skill"));
-			skill = AoARegistries.AOA_SKILLS.getEntry(skillId);
-
-			if (skill == null)
-				throw new IllegalArgumentException("Invalid AoASkill ID: '" + skillId + "'");
-		}
-
-		float xp = json.has("xp") ? GsonHelper.getAsFloat(json, "xp") : 0f;
-
-		return new Instance(skill, xp);
+	public Codec<AoAXpGainTrigger.Instance> codec() {
+		return AoAXpGainTrigger.Instance.CODEC;
 	}
 
 	public void trigger(ServerPlayer player, AoASkill skill, float xp) {
 		trigger(player, instance -> instance.test(skill, xp));
 	}
 
-	public static class Instance extends AbstractCriterionTriggerInstance {
-		@Nullable
-		private final AoASkill skill;
-		private final float xp;
+	public static Criterion<AoAXpGainTrigger.Instance> onSkillXpGain(@Nullable ContextAwarePredicate conditions, @Nullable AoASkill skill, Optional<Float> xpThreshold) {
+		return AoAAdvancementTriggers.XP_GAIN.get().createCriterion(new AoAXpGainTrigger.Instance(Optional.ofNullable(conditions), skill != null ? Optional.of(skill) : Optional.empty(), xpThreshold));
+	}
 
-		public Instance(@Nullable AoASkill skill, float xp, ContextAwarePredicate playerPredicate) {
-			super(triggerId, playerPredicate);
+	public static Criterion<AoAXpGainTrigger.Instance> onSkillXpGain(@Nullable AoASkill skill, Optional<Float> xpThreshold) {
+		return onSkillXpGain(null, skill, xpThreshold);
+	}
 
-			this.skill = skill;
-			this.xp = xp;
-		}
+	public static Criterion<AoAXpGainTrigger.Instance> onSkillXpGain(@Nullable AoASkill skill) {
+		return onSkillXpGain(skill, Optional.empty());
+	}
 
-		public Instance(@Nullable AoASkill skill, float xp) {
-			this(skill, xp, ContextAwarePredicate.ANY);
-		}
+	public static Criterion<AoAXpGainTrigger.Instance> onSkillXpGain(Optional<Float> xpThreshold) {
+		return onSkillXpGain(null, xpThreshold);
+	}
+
+	public record Instance(Optional<ContextAwarePredicate> player, Optional<AoASkill> skill, Optional<Float> xpThreshold) implements SimpleCriterionTrigger.SimpleInstance {
+		private static final Codec<AoAXpGainTrigger.Instance> CODEC = RecordCodecBuilder.create(codec -> codec.group(
+				ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(AoAXpGainTrigger.Instance::player),
+				ExtraCodecs.strictOptionalField(AoARegistries.AOA_SKILLS.lookupCodec(), "skill").forGetter(AoAXpGainTrigger.Instance::skill),
+				ExtraCodecs.strictOptionalField(Codec.FLOAT, "xp").forGetter(AoAXpGainTrigger.Instance::xpThreshold)
+		).apply(codec, AoAXpGainTrigger.Instance::new));
 
 		public boolean test(AoASkill skill, float xp) {
-			return (this.skill == null || this.skill == skill) && (this.xp == 0 || this.xp <= xp);
+			return (skill().isEmpty() || skill().get() == skill) && (xpThreshold().isEmpty() || xpThreshold().get() <= xp);
 		}
 
 		@Override
-		public JsonObject serializeToJson(SerializationContext conditions) {
-			JsonObject obj = super.serializeToJson(conditions);
-
-			if (skill != null)
-				obj.addProperty("skill", AoARegistries.AOA_SKILLS.getId(skill).toString());
-
-			if (xp > 0)
-				obj.addProperty("xp", xp);
-
-			return obj;
+		public Optional<ContextAwarePredicate> player() {
+			return Optional.empty();
 		}
 	}
 }

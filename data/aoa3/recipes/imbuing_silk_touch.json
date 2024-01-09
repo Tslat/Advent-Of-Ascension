@@ -1,8 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "minecraft:silk_touch"
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:silk_touch",
+  "enchantment_level": 1,
   "infusion_level": 44,
   "ingredients": [
     {

@@ -20,10 +20,10 @@
       "tag": "forge:mints"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:mint_magnum"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

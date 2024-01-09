@@ -1,8 +1,11 @@
 package net.tslat.aoa3.common.registration;
 
+import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.commands.synchronization.ArgumentTypeInfo;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -36,15 +39,14 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.placement.StructurePlacementType;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureProcessorType;
 import net.minecraft.world.level.material.Fluid;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryType;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.util.Lazy;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.*;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.attachment.AttachmentType;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.*;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -54,6 +56,8 @@ import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.common.registration.entity.*;
 import net.tslat.aoa3.common.registration.item.*;
+import net.tslat.aoa3.common.registration.loot.AoALootConditions;
+import net.tslat.aoa3.common.registration.loot.AoALootFunctions;
 import net.tslat.aoa3.common.registration.worldgen.*;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
@@ -66,192 +70,111 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public final class AoARegistries {
-	private static final List<Runnable> REGISTRY_INIT_TASKS = new ObjectArrayList<>();
-
 	public static final ResourceKey<Registry<AoASkill>> SKILLS_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("skills"));
 	public static final ResourceKey<Registry<AoAResource>> RESOURCES_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("resources"));
 	public static final ResourceKey<Registry<AoAAbility>> ABILITIES_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("abilities"));
 
-	public static final VanillaRegistryHelper<CreativeModeTab> CREATIVE_MODE_TABS = new VanillaRegistryHelper<>(Registries.CREATIVE_MODE_TAB, AoACreativeModeTabs::init);
-	public static final ForgeRegistryHelper<Block> BLOCKS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.BLOCKS, AoABlocks::init);
-	public static final ForgeRegistryHelper<Item> ITEMS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ITEMS, AoAItems::init, AoAWeapons::init, AoATools::init, AoAArmour::init);
-	public static final ForgeRegistryHelper<Fluid> FLUIDS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FLUIDS);
-	public static final ForgeRegistryHelper<EntityType<?>> ENTITIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ENTITY_TYPES, AoAMobs::init, AoAAnimals::init, AoANpcs::init, AoAMiscEntities::init, AoAProjectiles::init);
-	public static final ForgeRegistryHelper<BlockEntityType<?>> BLOCK_ENTITIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.BLOCK_ENTITY_TYPES, AoABlockEntities::init);
-	public static final ForgeRegistryHelper<SoundEvent> SOUNDS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.SOUND_EVENTS, AoASounds::init);
-	public static final ForgeRegistryHelper<Enchantment> ENCHANTMENTS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ENCHANTMENTS, AoAEnchantments::init);
-	public static final ForgeRegistryHelper<ParticleType<?>> PARTICLES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.PARTICLE_TYPES, AoAParticleTypes::init);
-	public static final ForgeRegistryHelper<MenuType<?>> MENUS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MENU_TYPES, AoAContainers::init);
-	public static final ForgeRegistryHelper<RecipeSerializer<?>> RECIPE_SERIALIZERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.RECIPE_SERIALIZERS, AoARecipes::init);
-	public static final ForgeRegistryHelper<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, AoALootModifiers::init);
-	public static final ForgeRegistryHelper<Attribute> ENTITY_ATTRIBUTES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ATTRIBUTES, AoAAttributes::init);
-	public static final ForgeRegistryHelper<PoiType> POI_TYPES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.POI_TYPES, AoAPoiTypes::init);
-	public static final ForgeRegistryHelper<VillagerProfession> VILLAGER_PROFESSIONS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.VILLAGER_PROFESSIONS, AoAProfessions::init);
-	public static final ForgeRegistryHelper<Activity> BRAIN_ACTIVITIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.ACTIVITIES, AoABrainActivities::init);
-	public static final ForgeRegistryHelper<SensorType<?>> BRAIN_SENSORS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.SENSOR_TYPES, AoABrainSensors::init);
-	public static final ForgeRegistryHelper<MemoryModuleType<?>> BRAIN_MEMORIES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MEMORY_MODULE_TYPES, AoABrainMemories::init);
-	public static final ForgeRegistryHelper<BannerPattern> BANNER_PATTERNS = new ForgeRegistryHelper<>(Registries.BANNER_PATTERN, AoABannerPatterns::init);
-	public static final ForgeRegistryHelper<FluidType> FLUID_TYPES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FLUID_TYPES, AoAFluidTypes::init);
-	public static final ForgeRegistryHelper<MobEffect> MOB_EFFECTS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.MOB_EFFECTS, AoAMobEffects::init);
+	public static final RegistryHelper<CreativeModeTab> CREATIVE_MODE_TABS = new RegistryHelper<>(Registries.CREATIVE_MODE_TAB, AoACreativeModeTabs::init);
+	public static final RegistryHelper<Block> BLOCKS = new RegistryHelper<>(Registries.BLOCK, AoABlocks::init);
+	public static final RegistryHelper<Item> ITEMS = new RegistryHelper<>(Registries.ITEM, AoAItems::init, AoAWeapons::init, AoATools::init, AoAArmour::init);
+	public static final RegistryHelper<Fluid> FLUIDS = new RegistryHelper<>(Registries.FLUID);
+	public static final RegistryHelper<EntityType<?>> ENTITIES = new RegistryHelper<>(Registries.ENTITY_TYPE, AoAMobs::init, AoAAnimals::init, AoANpcs::init, AoAMiscEntities::init, AoAProjectiles::init);
+	public static final RegistryHelper<BlockEntityType<?>> BLOCK_ENTITIES = new RegistryHelper<>(Registries.BLOCK_ENTITY_TYPE, AoABlockEntities::init);
+	public static final RegistryHelper<SoundEvent> SOUNDS = new RegistryHelper<>(Registries.SOUND_EVENT, AoASounds::init);
+	public static final RegistryHelper<Enchantment> ENCHANTMENTS = new RegistryHelper<>(Registries.ENCHANTMENT, AoAEnchantments::init);
+	public static final RegistryHelper<ParticleType<?>> PARTICLES = new RegistryHelper<>(Registries.PARTICLE_TYPE, AoAParticleTypes::init);
+	public static final RegistryHelper<MenuType<?>> MENUS = new RegistryHelper<>(Registries.MENU, AoAContainers::init);
+	public static final RegistryHelper<RecipeSerializer<?>> RECIPE_SERIALIZERS = new RegistryHelper<>(Registries.RECIPE_SERIALIZER, AoARecipes::init);
+	public static final RegistryHelper<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = new RegistryHelper<>(NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, AoALootModifiers::init);
+	public static final RegistryHelper<Attribute> ENTITY_ATTRIBUTES = new RegistryHelper<>(Registries.ATTRIBUTE, AoAAttributes::init);
+	public static final RegistryHelper<PoiType> POI_TYPES = new RegistryHelper<>(Registries.POINT_OF_INTEREST_TYPE, AoAPoiTypes::init);
+	public static final RegistryHelper<VillagerProfession> VILLAGER_PROFESSIONS = new RegistryHelper<>(Registries.VILLAGER_PROFESSION, AoAProfessions::init);
+	public static final RegistryHelper<Activity> BRAIN_ACTIVITIES = new RegistryHelper<>(Registries.ACTIVITY, AoABrainActivities::init);
+	public static final RegistryHelper<SensorType<?>> BRAIN_SENSORS = new RegistryHelper<>(Registries.SENSOR_TYPE, AoABrainSensors::init);
+	public static final RegistryHelper<MemoryModuleType<?>> BRAIN_MEMORIES = new RegistryHelper<>(Registries.MEMORY_MODULE_TYPE, AoABrainMemories::init);
+	public static final RegistryHelper<BannerPattern> BANNER_PATTERNS = new RegistryHelper<>(Registries.BANNER_PATTERN, AoABannerPatterns::init);
+	public static final RegistryHelper<FluidType> FLUID_TYPES = new RegistryHelper<>(NeoForgeRegistries.Keys.FLUID_TYPES, AoAFluidTypes::init);
+	public static final RegistryHelper<MobEffect> MOB_EFFECTS = new RegistryHelper<>(Registries.MOB_EFFECT, AoAMobEffects::init);
 
-	public static final VanillaRegistryHelper<LootItemFunctionType> LOOT_FUNCTIONS = new VanillaRegistryHelper<>(Registries.LOOT_FUNCTION_TYPE, AoALootOperations.LootFunctions::init);
-	public static final VanillaRegistryHelper<LootItemConditionType> LOOT_CONDITIONS = new VanillaRegistryHelper<>(Registries.LOOT_CONDITION_TYPE, AoALootOperations.LootConditions::init);
-	public static final VanillaRegistryHelper<LootPoolEntryType> LOOT_ENTRY_TYPES = new VanillaRegistryHelper<>(Registries.LOOT_POOL_ENTRY_TYPE, AoALootOperations.LootEntryTypes::init);
-	public static final VanillaRegistryHelper<RecipeType<?>> RECIPE_TYPES = new VanillaRegistryHelper<>(Registries.RECIPE_TYPE, AoARecipes::init);
-	public static final VanillaRegistryHelper<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPES = new VanillaRegistryHelper<>(Registries.COMMAND_ARGUMENT_TYPE, AoACommands::init);
+	public static final RegistryHelper<LootItemFunctionType> LOOT_FUNCTIONS = new RegistryHelper<>(Registries.LOOT_FUNCTION_TYPE, AoALootFunctions::init);
+	public static final RegistryHelper<LootItemConditionType> LOOT_CONDITIONS = new RegistryHelper<>(Registries.LOOT_CONDITION_TYPE, AoALootConditions::init);
+	public static final RegistryHelper<RecipeType<?>> RECIPE_TYPES = new RegistryHelper<>(Registries.RECIPE_TYPE, AoARecipes::init);
+	public static final RegistryHelper<ArgumentTypeInfo<?, ?>> ARGUMENT_TYPES = new RegistryHelper<>(Registries.COMMAND_ARGUMENT_TYPE, AoACommands::init);
+	public static final RegistryHelper<CriterionTrigger<?>> ADVANCEMENT_CRITERIA = new RegistryHelper<>(Registries.TRIGGER_TYPE, AoAAdvancementTriggers::init);
 
-	public static final ForgeRegistryHelper<Feature<?>> FEATURES = new ForgeRegistryHelper<>(ForgeRegistries.Keys.FEATURES, () -> {});
-	public static final VanillaRegistryHelper<StructureType<?>> STRUCTURE_TYPES = new VanillaRegistryHelper<>(Registries.STRUCTURE_TYPE, AoAStructureTypes::init);
-	public static final VanillaRegistryHelper<PlacementModifierType<?>> PLACEMENT_MODIFIERS = new VanillaRegistryHelper<>(Registries.PLACEMENT_MODIFIER_TYPE, AoAPlacementModifiers::init);
-	public static final ForgeRegistryHelper<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = new ForgeRegistryHelper<>(ForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, AoABiomeModifiers::init);
-	public static final VanillaRegistryHelper<StructurePlacementType<?>> STRUCTURE_PLACEMENTS = new VanillaRegistryHelper<>(Registries.STRUCTURE_PLACEMENT, AoAStructurePlacements::init);
-	public static final VanillaRegistryHelper<StructureProcessorType<?>> STRUCTURE_PROCESSORS = new VanillaRegistryHelper<>(Registries.STRUCTURE_PROCESSOR, AoAStructureProcessors::init);
-	public static final VanillaRegistryHelper<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = new VanillaRegistryHelper<>(Registries.CHUNK_GENERATOR, AoAChunkGenerators::init);
-	public static final VanillaRegistryHelper<TrunkPlacerType<?>> TRUNK_PLACERS = new VanillaRegistryHelper<>(Registries.TRUNK_PLACER_TYPE, AoATrees::init);
-	public static final VanillaRegistryHelper<FoliagePlacerType<?>> FOLIAGE_PLACERS = new VanillaRegistryHelper<>(Registries.FOLIAGE_PLACER_TYPE, AoATrees::init);
+	public static final RegistryHelper<Feature<?>> FEATURES = new RegistryHelper<>(Registries.FEATURE, AoAFeatures::init);
+	public static final RegistryHelper<StructureType<?>> STRUCTURE_TYPES = new RegistryHelper<>(Registries.STRUCTURE_TYPE, AoAStructureTypes::init);
+	public static final RegistryHelper<PlacementModifierType<?>> PLACEMENT_MODIFIERS = new RegistryHelper<>(Registries.PLACEMENT_MODIFIER_TYPE, AoAPlacementModifiers::init);
+	public static final RegistryHelper<Codec<? extends BiomeModifier>> BIOME_MODIFIERS = new RegistryHelper<>(NeoForgeRegistries.Keys.BIOME_MODIFIER_SERIALIZERS, AoABiomeModifiers::init);
+	public static final RegistryHelper<StructurePlacementType<?>> STRUCTURE_PLACEMENTS = new RegistryHelper<>(Registries.STRUCTURE_PLACEMENT, AoAStructurePlacements::init);
+	public static final RegistryHelper<StructureProcessorType<?>> STRUCTURE_PROCESSORS = new RegistryHelper<>(Registries.STRUCTURE_PROCESSOR, AoAStructureProcessors::init);
+	public static final RegistryHelper<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = new RegistryHelper<>(Registries.CHUNK_GENERATOR, AoAChunkGenerators::init);
+	public static final RegistryHelper<TrunkPlacerType<?>> TRUNK_PLACERS = new RegistryHelper<>(Registries.TRUNK_PLACER_TYPE, AoATrees::init);
+	public static final RegistryHelper<FoliagePlacerType<?>> FOLIAGE_PLACERS = new RegistryHelper<>(Registries.FOLIAGE_PLACER_TYPE, AoATrees::init);
 
-	public static final ForgeRegistryHelper<AoASkill> AOA_SKILLS = new ForgeRegistryHelper<AoASkill>(SKILLS_REGISTRY_KEY, AoASkills::init);
-	public static final ForgeRegistryHelper<AoAResource> AOA_RESOURCES = new ForgeRegistryHelper<AoAResource>(RESOURCES_REGISTRY_KEY, AoAResources::init);
-	public static final ForgeRegistryHelper<AoAAbility> AOA_ABILITIES = new ForgeRegistryHelper<AoAAbility>(ABILITIES_REGISTRY_KEY, AoAAbilities::init);
+	public static final RegistryHelper<AttachmentType<?>> DATA_ATTACHMENTS = new RegistryHelper<>(NeoForgeRegistries.Keys.ATTACHMENT_TYPES, AoADataAttachments::init);
+
+	public static final RegistryHelper<AoASkill> AOA_SKILLS = new RegistryHelper<AoASkill>(SKILLS_REGISTRY_KEY, AoASkills::init);
+	public static final RegistryHelper<AoAResource> AOA_RESOURCES = new RegistryHelper<AoAResource>(RESOURCES_REGISTRY_KEY, AoAResources::init);
+	public static final RegistryHelper<AoAAbility> AOA_ABILITIES = new RegistryHelper<AoAAbility>(ABILITIES_REGISTRY_KEY, AoAAbilities::init);
 
 	public static void init() {
-		for (Runnable initTask : REGISTRY_INIT_TASKS) {
-			initTask.run();
-		}
+		RegistryHelper.REGISTRY_INIT_TASKS.forEach(Runnable::run);
+		RegistryHelper.REGISTRY_INIT_TASKS.clear();
 
-		REGISTRY_INIT_TASKS.clear();
-
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, NewRegistryEvent.class, AoARegistries::createCustomRegistries);
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, DataPackRegistryEvent.NewRegistry.class, AoARegistries::createCustomDatapackRegistries);
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, NewRegistryEvent.class, AoARegistries::createCustomRegistries);
 	}
 
 	private static void createCustomRegistries(final NewRegistryEvent ev) {
-		ev.create(new RegistryBuilder<AoAAbility>()
-				.setName(AdventOfAscension.id("abilities"))
-				.setMaxID(Integer.MAX_VALUE - 1)
-				.disableSaving());
-		ev.create(new RegistryBuilder<AoAResource>()
-				.setName(AdventOfAscension.id("resources"))
-				.setMaxID(Integer.MAX_VALUE - 1)
-				.disableSaving());
-		ev.create(new RegistryBuilder<AoASkill>()
-				.setName(AdventOfAscension.id("skills"))
-				.setMaxID(Integer.MAX_VALUE - 1)
-				.disableSaving());
+		ev.create(new RegistryBuilder<>(ABILITIES_REGISTRY_KEY).maxId(Integer.MAX_VALUE - 1));
+		ev.create(new RegistryBuilder<>(RESOURCES_REGISTRY_KEY).maxId(Integer.MAX_VALUE - 1));
+		ev.create(new RegistryBuilder<>(SKILLS_REGISTRY_KEY).maxId(Integer.MAX_VALUE - 1));
 	}
 
-	private static void createCustomDatapackRegistries(final DataPackRegistryEvent.NewRegistry ev) {
-		
-	}
+	public record RegistryHelper<T>(Supplier<Registry<T>> registry, DeferredRegister<T> deferredRegister, Runnable registrationTasks) {
+		private static final List<Runnable> REGISTRY_INIT_TASKS = new ObjectArrayList<>();
 
-	public interface RegistryHelper<T> {
-		DeferredRegister<T> deferredRegister();
-		<I extends T> RegistryObject<I> register(String id, Supplier<? extends I> object);
-		Set<ResourceLocation> getAllIds();
-		Collection<T> getAllRegisteredObjects();
-		List<RegistryObject<T>> getAllAoARegisteredObjects();
-		T getEntry(ResourceLocation id);
-		void doRegistrations();
-		ResourceLocation getId(T object);
-	}
+		private RegistryHelper(ResourceKey<Registry<T>> registryKey, Runnable... registrations) {
+			this(Suppliers.memoize(() -> (Registry<T>)BuiltInRegistries.REGISTRY.get(registryKey.location())), DeferredRegister.<T>create(registryKey, AdventOfAscension.MOD_ID), () -> Arrays.asList(registrations).forEach(Runnable::run));
 
-	public record ForgeRegistryHelper<T>(Lazy<ForgeRegistry<T>> forgeRegistry, DeferredRegister<T> deferredRegister, Runnable registrationTasks) implements RegistryHelper<T> {
-		private ForgeRegistryHelper(ResourceKey<Registry<T>> registryKey, Runnable... registrations) {
-			this(Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(registryKey)), DeferredRegister.<T>create(registryKey, AdventOfAscension.MOD_ID), () -> Arrays.asList(registrations).forEach(Runnable::run));
-
-			deferredRegister().register(AdventOfAscension.modEventBus);
+			deferredRegister().register(AdventOfAscension.getModEventBus());
 			REGISTRY_INIT_TASKS.add(this.registrationTasks);
 		}
 
-		private ForgeRegistryHelper(ResourceKey<Registry<T>> registryKey, Supplier<List<Class<?>>> staticInitClasses) {
-			this(Lazy.of(() -> RegistryManager.ACTIVE.getRegistry(registryKey)), DeferredRegister.<T>create(registryKey, AdventOfAscension.MOD_ID), staticInitClasses::get);
-
-			deferredRegister().register(AdventOfAscension.modEventBus);
-			REGISTRY_INIT_TASKS.add(this.registrationTasks);
-		}
-
-		@Override
-		public void doRegistrations() {
-			registrationTasks().run();
-		}
-
-		public <I extends T> RegistryObject<I> register(String id, Supplier<? extends I> object) {
+		public <I extends T> DeferredHolder<T, I> register(String id, Supplier<? extends I> object) {
 			return deferredRegister().register(id, object);
 		}
 
-		@Override
-		public Set<ResourceLocation> getAllIds() {
-			return forgeRegistry().get().getKeys();
-		}
-
-		@Override
-		public Collection<T> getAllRegisteredObjects() {
-			return forgeRegistry().get().getValues();
-		}
-
-		@Override
-		public List<RegistryObject<T>> getAllAoARegisteredObjects() {
-			return deferredRegister().getEntries().stream().filter(entry -> entry.getId().getNamespace().equals(AdventOfAscension.MOD_ID)).toList();
-		}
-
-		@Override
-		public T getEntry(ResourceLocation id) {
-			return forgeRegistry().get().getValue(id);
-		}
-
-		@Override
-		public ResourceLocation getId(T object) {
-			return forgeRegistry().get().getKey(object);
-		}
-	}
-
-	public record VanillaRegistryHelper<T>(Lazy<Registry<T>> registry, DeferredRegister<T> deferredRegister, Runnable registrationTasks) implements RegistryHelper<T> {
-		private VanillaRegistryHelper(ResourceKey<Registry<T>> registryKey, Runnable... registrations) {
-			this(Lazy.of(() -> (Registry<T>)BuiltInRegistries.REGISTRY.get(registryKey.location())), DeferredRegister.<T>create(registryKey, AdventOfAscension.MOD_ID), () -> Arrays.asList(registrations).forEach(Runnable::run));
-
-			deferredRegister().register(AdventOfAscension.modEventBus);
-			REGISTRY_INIT_TASKS.add(this.registrationTasks);
-		}
-
-		private VanillaRegistryHelper(ResourceKey<Registry<T>> registryKey, Supplier<List<Class<?>>> staticInitClasses) {
-			this(Lazy.of(() -> (Registry<T>)BuiltInRegistries.REGISTRY.get(registryKey.location())), DeferredRegister.<T>create(registryKey, AdventOfAscension.MOD_ID), staticInitClasses::get);
-
-			deferredRegister().register(AdventOfAscension.modEventBus);
-			REGISTRY_INIT_TASKS.add(this.registrationTasks);
-		}
-
-		@Override
-		public void doRegistrations() {
-			registrationTasks().run();
-		}
-
-		public <I extends T> RegistryObject<I> register(String id, Supplier<? extends I> object) {
-			return deferredRegister().register(id, object);
-		}
-
-		@Override
 		public Set<ResourceLocation> getAllIds() {
 			return registry().get().keySet();
 		}
 
-		@Override
 		public Collection<T> getAllRegisteredObjects() {
 			return registry().get().stream().toList();
 		}
 
-		@Override
-		public List<RegistryObject<T>> getAllAoARegisteredObjects() {
+		public List<DeferredHolder<T, ? extends T>> getAllAoARegisteredObjects() {
 			return deferredRegister().getEntries().stream().filter(entry -> entry.getId().getNamespace().equals(AdventOfAscension.MOD_ID)).toList();
 		}
 
-		@Override
+		public boolean hasRegisteredId(ResourceLocation id) {
+			return registry().get().containsKey(id);
+		}
+
 		public T getEntry(ResourceLocation id) {
 			return registry().get().get(id);
 		}
 
-		@Override
 		public ResourceLocation getId(T object) {
 			return registry().get().getKey(object);
+		}
+
+		public Holder<T> wrapAsHolder(T object) {
+			return registry().get().wrapAsHolder(object);
+		}
+
+		public Codec<T> lookupCodec() {
+			return registry().get().byNameCodec();
 		}
 	}
 }

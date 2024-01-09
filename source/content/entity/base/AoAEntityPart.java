@@ -14,8 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeSpawnEggItem;
-import net.minecraftforge.entity.PartEntity;
+import net.neoforged.neoforge.common.DeferredSpawnEggItem;
+import net.neoforged.neoforge.entity.PartEntity;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.MultipartTogglePacket;
 import org.jetbrains.annotations.Nullable;
 
 public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
@@ -44,6 +46,9 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 		this.isEnabled = enabled;
 
 		setBoundingBox(this.isEnabled ? makeBoundingBox() : AABB.ofSize(position(), 0 ,0 ,0));
+
+		if (!level().isClientSide)
+			AoANetworking.sendToAllPlayersTrackingEntity(new MultipartTogglePacket(getId(), enabled), this);
 	}
 
 	public boolean isEnabled() {
@@ -67,7 +72,7 @@ public class AoAEntityPart<T extends LivingEntity> extends PartEntity<T> {
 	@Nullable
 	@Override
 	public ItemStack getPickResult() {
-		final SpawnEggItem egg = ForgeSpawnEggItem.fromEntityType(getParent().getType());
+		final SpawnEggItem egg = DeferredSpawnEggItem.deferredOnlyById(getParent().getType());
 
 		return egg == null ? null : egg.getDefaultInstance();
 	}

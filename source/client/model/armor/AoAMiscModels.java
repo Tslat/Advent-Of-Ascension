@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.tslat.aoa3.client.model.misc.PlayerHaloModel;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.library.object.CachedFunction;

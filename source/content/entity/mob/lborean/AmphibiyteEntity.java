@@ -27,11 +27,6 @@ public class AmphibiyteEntity extends AoAWaterMeleeMobOld {
 		return 0.98f;
 	}
 
-	@Override
-	public boolean canBreatheUnderwater() {
-		return true;
-	}
-
 	@Nullable
 	@Override
 	protected SoundEvent getAmbientSound() {

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/gemenyte"
+    },
+    "B": {
+      "tag": "forge:gems/jewelyte"
+    },
+    "C": {
+      "item": "aoa3:unstable_gunpowder"
+    },
+    "D": {
+      "tag": "forge:rods/metal"
+    }
+  },
+  "pattern": [
+    " A ",
+    " B ",
+    "CDC"
+  ],
+  "result": {
+    "item": "aoa3:creepoid_greatblade"
+  }
+}

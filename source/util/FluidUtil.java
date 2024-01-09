@@ -11,10 +11,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluid;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
@@ -34,15 +34,15 @@ public final class FluidUtil {
 		private final String id;
 		private final Supplier<FluidType> fluidType;
 
-		private final MutableSupplier<ForgeFlowingFluid.Source> sourceFluid = new MutableSupplier<ForgeFlowingFluid.Source>(null);
-		private final MutableSupplier<ForgeFlowingFluid.Flowing> flowingFluid = new MutableSupplier<ForgeFlowingFluid.Flowing>(null);
+		private final MutableSupplier<BaseFlowingFluid.Source> sourceFluid = new MutableSupplier<BaseFlowingFluid.Source>(null);
+		private final MutableSupplier<BaseFlowingFluid.Flowing> flowingFluid = new MutableSupplier<BaseFlowingFluid.Flowing>(null);
 
-		private BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, Block.Properties, Supplier<LiquidBlock>> blockCreationFunction = (flowingFluid, blockProperties) -> () -> new LiquidBlock(flowingFluid, blockProperties);
-		private BiFunction<MutableSupplier<ForgeFlowingFluid.Source>, Item.Properties, Supplier<BucketItem>> bucketCreationFunction = (sourceFluid, itemProperties) -> () -> new BucketItem(sourceFluid, itemProperties);
-		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Source>> sourceFluidFunction = properties -> () ->  new ForgeFlowingFluid.Source(properties);
-		private Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Flowing>> flowingFluidFunction = properties -> () ->  new ForgeFlowingFluid.Flowing(properties);
+		private BiFunction<MutableSupplier<BaseFlowingFluid.Flowing>, Block.Properties, Supplier<LiquidBlock>> blockCreationFunction = (flowingFluid, blockProperties) -> () -> new LiquidBlock(flowingFluid, blockProperties);
+		private BiFunction<MutableSupplier<BaseFlowingFluid.Source>, Item.Properties, Supplier<BucketItem>> bucketCreationFunction = (sourceFluid, itemProperties) -> () -> new BucketItem(sourceFluid, itemProperties);
+		private Function<BaseFlowingFluid.Properties, Supplier<BaseFlowingFluid.Source>> sourceFluidFunction = properties -> () ->  new BaseFlowingFluid.Source(properties);
+		private Function<BaseFlowingFluid.Properties, Supplier<BaseFlowingFluid.Flowing>> flowingFluidFunction = properties -> () ->  new BaseFlowingFluid.Flowing(properties);
 
-		private ForgeFlowingFluid.Properties fluidProperties;
+		private BaseFlowingFluid.Properties fluidProperties;
 
 		private int tickRate = 5;
 		private ToIntFunction<BlockState> lightFunction = state -> 0;
@@ -89,25 +89,25 @@ public final class FluidUtil {
 			return this;
 		}
 
-		public Builder customBlock(BiFunction<MutableSupplier<ForgeFlowingFluid.Flowing>, Block.Properties, Supplier<LiquidBlock>> blockCreationFunction) {
+		public Builder customBlock(BiFunction<MutableSupplier<BaseFlowingFluid.Flowing>, Block.Properties, Supplier<LiquidBlock>> blockCreationFunction) {
 			this.blockCreationFunction = blockCreationFunction;
 
 			return this;
 		}
 
-		public Builder customBucket(BiFunction<MutableSupplier<ForgeFlowingFluid.Source>, Item.Properties, Supplier<BucketItem>> bucketCreationFunction) {
+		public Builder customBucket(BiFunction<MutableSupplier<BaseFlowingFluid.Source>, Item.Properties, Supplier<BucketItem>> bucketCreationFunction) {
 			this.bucketCreationFunction = bucketCreationFunction;
 
 			return this;
 		}
 
-		public Builder customSourceFluid(Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Source>> sourceFluidCreationFunction) {
+		public Builder customSourceFluid(Function<BaseFlowingFluid.Properties, Supplier<BaseFlowingFluid.Source>> sourceFluidCreationFunction) {
 			this.sourceFluidFunction = sourceFluidCreationFunction;
 
 			return this;
 		}
 
-		public Builder customFlowingFluid(Function<ForgeFlowingFluid.Properties, Supplier<ForgeFlowingFluid.Flowing>> flowingFluidCreationFunction) {
+		public Builder customFlowingFluid(Function<BaseFlowingFluid.Properties, Supplier<BaseFlowingFluid.Flowing>> flowingFluidCreationFunction) {
 			this.flowingFluidFunction = flowingFluidCreationFunction;
 
 			return this;
@@ -118,21 +118,21 @@ public final class FluidUtil {
 		}
 
 		public RegisteredFluidHolder registerAll(DeferredRegister<Item> itemRegistry, DeferredRegister<Block> blockRegistry, DeferredRegister<Fluid> fluidRegistry) {
-			final RegistryObject<BucketItem> bucket = registerBucket(itemRegistry);
-			final RegistryObject<ForgeFlowingFluid.Source> fluid = registerFluid(fluidRegistry);
-			final RegistryObject<LiquidBlock> fluidBlock = registerBlock(blockRegistry);
+			final DeferredHolder<Item, BucketItem> bucket = registerBucket(itemRegistry);
+			final DeferredHolder<Fluid, BaseFlowingFluid.Source> fluid = registerFluid(fluidRegistry);
+			final DeferredHolder<Block, LiquidBlock> fluidBlock = registerBlock(blockRegistry);
 
 			return new RegisteredFluidHolder(bucket, fluidBlock, fluid);
 		}
 
 		@Nullable
-		public RegistryObject<LiquidBlock> registerBlock(DeferredRegister<Block> blockRegistry) {
+		public DeferredHolder<Block, LiquidBlock> registerBlock(DeferredRegister<Block> blockRegistry) {
 			if (this.blockCreationFunction == null)
 				return null;
 
 			makeFluidProperties();
 
-			RegistryObject<LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY).lightLevel(lightFunction)));
+			DeferredHolder<Block, LiquidBlock> block = blockRegistry.register(id, blockCreationFunction.apply(flowingFluid, BlockBehaviour.Properties.of().mapColor(MapColor.WATER).replaceable().noCollission().strength(100).pushReaction(PushReaction.DESTROY).noLootTable().liquid().sound(SoundType.EMPTY).lightLevel(lightFunction)));
 
 			this.fluidProperties.block(block);
 			AoABlocks.registeredLiquid(block);
@@ -141,13 +141,13 @@ public final class FluidUtil {
 		}
 
 		@Nullable
-		public RegistryObject<BucketItem> registerBucket(DeferredRegister<Item> itemRegistry) {
+		public DeferredHolder<Item, BucketItem> registerBucket(DeferredRegister<Item> itemRegistry) {
 			if (this.bucketCreationFunction == null)
 				return null;
 
 			makeFluidProperties();
 
-			RegistryObject<BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().stacksTo(16).craftRemainder(Items.BUCKET)));
+			DeferredHolder<Item, BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().stacksTo(16).craftRemainder(Items.BUCKET)));
 
 			AoAStartupCache.setItemCreativeTabs(bucket, List.of(AoACreativeModeTabs.MISC_ITEMS.getKey()));
 			this.fluidProperties.bucket(bucket);
@@ -155,10 +155,10 @@ public final class FluidUtil {
 			return bucket;
 		}
 
-		public RegistryObject<ForgeFlowingFluid.Source> registerFluid(DeferredRegister<Fluid> fluidRegistry) {
+		public DeferredHolder<Fluid, BaseFlowingFluid.Source> registerFluid(DeferredRegister<Fluid> fluidRegistry) {
 			makeFluidProperties();
 
-			RegistryObject<ForgeFlowingFluid.Source> fluid;
+			DeferredHolder<Fluid, BaseFlowingFluid.Source> fluid;
 			fluid = fluidRegistry.register(this.id, this.sourceFluidFunction.apply(this.fluidProperties));
 
 			sourceFluid.update(fluid);
@@ -169,12 +169,12 @@ public final class FluidUtil {
 
 		private void makeFluidProperties() {
 			if (this.fluidProperties == null)
-				this.fluidProperties = new ForgeFlowingFluid.Properties(fluidType, sourceFluid, flowingFluid)
+				this.fluidProperties = new BaseFlowingFluid.Properties(fluidType, sourceFluid, flowingFluid)
 						.tickRate(tickRate);
 		}
 	}
 
-	public record RegisteredFluidHolder(RegistryObject<BucketItem> bucket, RegistryObject<LiquidBlock> fluidBlock, RegistryObject<ForgeFlowingFluid.Source> fluid) {
+	public record RegisteredFluidHolder(DeferredHolder<Item, BucketItem> bucket, DeferredHolder<Block, LiquidBlock> fluidBlock, DeferredHolder<Fluid, BaseFlowingFluid.Source> fluid) {
 		public BucketItem getBucket() {
 			return this.bucket.get();
 		}
@@ -183,7 +183,7 @@ public final class FluidUtil {
 			return this.fluidBlock.get();
 		}
 
-		public ForgeFlowingFluid.Source getFluid() {
+		public BaseFlowingFluid.Source getFluid() {
 			return this.fluid.get();
 		}
 	}

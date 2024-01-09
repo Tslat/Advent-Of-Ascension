@@ -1,9 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "aoa3:control",
-    "level": 2
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "aoa3:control",
+  "enchantment_level": 2,
   "infusion_level": 34,
   "ingredients": [
     {

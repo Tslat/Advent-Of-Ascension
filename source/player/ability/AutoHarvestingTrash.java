@@ -14,17 +14,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.ClientHooks;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.container.SelectInventoryItemScreen;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.SyncAoAAbilityDataPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.adventplayer.SyncAoAAbilityDataPacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.RegistryUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -43,7 +43,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		super(AoAAbilities.AUTO_HARVESTING_TRASH.get(), skill, data);
 
 		String itemId = data.getString("item");
-		this.consumingItem = itemId.isEmpty() ? null : ForgeRegistries.ITEMS.getValue(new ResourceLocation(itemId));
+		this.consumingItem = itemId.isEmpty() ? null : AoARegistries.ITEMS.getEntry(new ResourceLocation(itemId));
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		super.loadFromNbt(data);
 
 		if (data.contains("item")) {
-			this.consumingItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("item")));
+			this.consumingItem = AoARegistries.ITEMS.getEntry(new ResourceLocation(data.getString("item")));
 
 			updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
 			markForClientSync();
@@ -84,7 +84,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 		CompoundTag data = super.saveToNbt();
 
 		if (this.consumingItem != null)
-			data.putString("item", ForgeRegistries.ITEMS.getKey(this.consumingItem).toString());
+			data.putString("item", RegistryUtil.getId(this.consumingItem).toString());
 
 		return data;
 	}
@@ -93,7 +93,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 	public CompoundTag getSyncData(boolean forClientSetup) {
 		CompoundTag data = super.getSyncData(forClientSetup);
 
-		data.putString("item", this.consumingItem != null ? ForgeRegistries.ITEMS.getKey(this.consumingItem).toString() : "");
+		data.putString("item", this.consumingItem != null ? RegistryUtil.getId(this.consumingItem).toString() : "");
 
 		return data;
 	}
@@ -106,7 +106,7 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 			this.consumingItem = null;
 		}
 		else {
-			this.consumingItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("item")));
+			this.consumingItem = AoARegistries.ITEMS.getEntry(new ResourceLocation(data.getString("item")));
 		}
 
 		updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
@@ -114,11 +114,11 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 
 	@Override
 	public void receiveInteractionDataFromClient(String data) {
-		if (data.equals(ForgeRegistries.ITEMS.getKey(Items.AIR).toString())) {
+		if (data.equals(RegistryUtil.getId(Items.AIR).toString())) {
 			consumingItem = null;
 		}
 		else {
-			consumingItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data));
+			consumingItem = AoARegistries.ITEMS.getEntry(new ResourceLocation(data));
 		}
 
 		markForClientSync();
@@ -129,8 +129,8 @@ public class AutoHarvestingTrash extends AoAAbility.Instance {
 	public boolean onGuiClick(final int mouseX, final int mouseY) {
 		Minecraft mc = Minecraft.getInstance();
 
-		if (ClientOperations.isPressingCrouchKey()) {
-			ForgeHooksClient.pushGuiLayer(mc, new SelectInventoryItemScreen(mc, consumingItem, item -> AoANetworking.sendToServer(new SyncAoAAbilityDataPacket(this, ForgeRegistries.ITEMS.getKey(item).toString()))));
+		if (ClientOperations.isPressingCrouchKey()) { // Todo look at making persistent
+			ClientHooks.pushGuiLayer(mc, new SelectInventoryItemScreen(mc, consumingItem, item -> AoANetworking.sendToServer(new SyncAoAAbilityDataPacket(this, RegistryUtil.getId(item).toString()))));
 
 			return false;
 		}

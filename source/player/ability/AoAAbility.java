@@ -1,5 +1,6 @@
 package net.tslat.aoa3.player.ability;
 
+import com.google.common.base.Suppliers;
 import com.google.gson.JsonObject;
 import net.minecraft.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -8,23 +9,23 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.util.Lazy;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
 import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 public class AoAAbility {
-	private final Lazy<MutableComponent> name;
+	private final Supplier<MutableComponent> name;
 	private final BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory;
 	private final BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory;
 
 	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory) {
-		this.name = Lazy.of(() -> Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(this))));
+		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(this))));
 		this.jsonFactory = jsonFactory;
 		this.nbtFactory = nbtFactory;
 	}

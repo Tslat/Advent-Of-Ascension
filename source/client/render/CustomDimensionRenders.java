@@ -10,8 +10,8 @@ import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
 import net.tslat.aoa3.util.RenderUtil;
@@ -30,7 +30,7 @@ public final class CustomDimensionRenders {
 	 */
 
 	public static void init() {
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterDimensionSpecialEffectsEvent.class, ev -> {
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, RegisterDimensionSpecialEffectsEvent.class, ev -> {
 			DimensionSpecialEffects voidSkyRenderer = new VoidSky();
 			DimensionSpecialEffects lunalusRenderer = new Lunalus();
 

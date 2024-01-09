@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
@@ -16,6 +17,11 @@ public class UpsideDownGenericPlant extends BushBlock {
 
 	public UpsideDownGenericPlant(BlockBehaviour.Properties properties) {
 		super(properties);
+	}
+
+	@Override
+	protected MapCodec<? extends BushBlock> codec() {
+		return null;
 	}
 
 	@Override

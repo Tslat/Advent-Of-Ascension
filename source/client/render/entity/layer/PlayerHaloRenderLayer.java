@@ -17,7 +17,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.model.misc.PlayerHaloModel;
 import net.tslat.aoa3.common.registration.AoAConfigs;
-import net.tslat.aoa3.util.AoAHaloUtil;
+import net.tslat.aoa3.player.halo.HaloTypes;
+import net.tslat.aoa3.player.halo.PlayerHaloManager;
 
 public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation("aoa3", "textures/entity/player/halo_texture.png");
@@ -32,48 +33,43 @@ public class PlayerHaloRenderLayer extends RenderLayer<AbstractClientPlayer, Pla
 	}
 
 	@Override
-	public void render(PoseStack matrixStack, MultiBufferSource buffer, int pPackedLight, AbstractClientPlayer player, float pLimbSwing, float pLimbSwingAmount, float pPartialTicks, float pAgeInTicks, float pNetHeadYaw, float pHeadPitch) {
-		if (player.isCapeLoaded() && !player.isInvisible() && AoAConfigs.CLIENT.showPlayerHalos.get()) {
-			AoAHaloUtil.Type chosenHalo = AoAHaloUtil.getHalo(player.getUUID());
-			float red = 0;
-			float green = 0;
-			float blue = 0;
+	public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float netHeadPitch) {
+		if (!player.isInvisible() && AoAConfigs.CLIENT.showPlayerHalos.get()) {
+			PlayerHaloManager.getHaloForRender(player.getUUID()).ifPresent(halo -> {
+				if (halo == HaloTypes.TSLAT) {
+					VertexConsumer vertexConsumer = bufferSource.getBuffer(TSLAT_HALO_RENDER_TYPE);
 
-			if (chosenHalo == null)
-				return;
+					this.model.root.copyFrom(getParentModel().getHead());
+					this.model.renderToBuffer(poseStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0, 0, 0, 0.1f);
 
-			if (chosenHalo == AoAHaloUtil.Type.Tslat) {
-				VertexConsumer vertexConsumer = buffer.getBuffer(TSLAT_HALO_RENDER_TYPE);
-
-				model.root.copyFrom(getParentModel().getHead());
-				model.renderToBuffer(matrixStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, 0, 0, 0, 0.1f);
-
-				return;
-			}
-
-			switch (chosenHalo) {
-				case Donator -> {
-					red = 1;
-					green = 1;
+					return;
 				}
-				case Super_Donator, Crazy_Donator -> red = 1;
-				case Staff -> {
-					red = 0.6f;
-					green = 1;
-					blue = 1;
+
+				float red = 0;
+				float green = 0;
+				float blue = 0;
+
+				switch (halo) {
+					case DONATOR -> {
+						red = 1;
+						green = 1;
+					}
+					case SUPER_DONATOR -> red = 1;
+					case STAFF -> {
+						red = 0.6f;
+						green = 1;
+						blue = 1;
+					}
+					case WIKI_EDITOR -> blue = 1;
 				}
-				case Wiki_Editor -> blue = 1;
-			}
 
-			VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityTranslucent(getTextureLocation(player)));
-
-			model.root.copyFrom(getParentModel().getHead());
-
-			RenderSystem.enableBlend();
-			RenderSystem.disableDepthTest();
-			model.renderToBuffer(matrixStack, vertexConsumer, LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, red, green, blue, 0.1f);
-			RenderSystem.enableDepthTest();
-			RenderSystem.disableBlend();
+				RenderSystem.enableBlend();
+				RenderSystem.disableDepthTest();
+				this.model.root.copyFrom(getParentModel().getHead());
+				this.model.renderToBuffer(poseStack, bufferSource.getBuffer(RenderType.entityTranslucent(getTextureLocation(player))), LightTexture.FULL_BRIGHT, OverlayTexture.NO_OVERLAY, red, green, blue, 0.1f);
+				RenderSystem.enableDepthTest();
+				RenderSystem.disableBlend();
+			});
 		}
 	}
 

@@ -380,7 +380,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:\"356665203\",CustomPotionEffects:[{Ambient:0b,Amplifier:0b,CurativeItems:[{Count:1b,id:\"minecraft:milk_bucket\"}],Duration:72000,Id:12,ShowIcon:1b,ShowParticles:1b,\"forge:id\":\"minecraft:fire_resistance\"}],display:{Name:'{\"translate\":\"item.aoa3.potion.unignitable\"}'}}"
+              "tag": "{CustomPotionColor:\"356665203\",custom_potion_effects:[{ambient:0b,amplifier:0b,duration:72000,id:\"minecraft:fire_resistance\",\"neoforge:cures\":[\"protected_by_totem\",\"milk\"],\"neoforge:id\":\"minecraft:fire_resistance\",show_icon:1b,show_particles:1b}],display:{Name:'{\"translate\":\"item.aoa3.potion.unignitable\"}'}}"
             },
             {
               "count": {
@@ -415,7 +415,7 @@
           "weight": 3
         },
         {
-          "type": "aoa3:collection",
+          "type": "minecraft:group",
           "children": [
             {
               "type": "minecraft:item",

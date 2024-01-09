@@ -15,7 +15,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.completionist.cowboy_bebop.description"
@@ -25,7 +24,6 @@
     "icon": {
       "item": "aoa3:music_disc_outlaw"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.cowboy_bebop.title"

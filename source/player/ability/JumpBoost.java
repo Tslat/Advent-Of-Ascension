@@ -8,9 +8,9 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.living.LivingEvent;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.UpdateClientMovementPacket;
+import net.neoforged.neoforge.event.entity.living.LivingEvent;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.UpdateClientMovementPacket;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -62,15 +62,15 @@ public class JumpBoost extends ScalableModAbility {
 		Vec3 oldMotion = entity.getDeltaMovement();
 		Vec3 newMotion;
 
-		if (!sprintJumpBoost) {
-			newMotion = oldMotion.multiply(1, launchMultiplier / 1.02040814340536d, 1);
+		if (!this.sprintJumpBoost) {
+			newMotion = oldMotion.multiply(1, this.launchMultiplier / 1.02040814340536d, 1);
 
-			AoANetworking.sendToPlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET).y((float)(oldMotion.y() * launchMultiplier / 1.02040814340536d)));
+			AoANetworking.sendToPlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.SET, oldMotion.y() * this.launchMultiplier / 1.02040814340536d));
 		}
 		else {
-			newMotion = oldMotion.multiply(baseBoostMultiplier, 1, baseBoostMultiplier);
+			newMotion = oldMotion.multiply(this.baseBoostMultiplier, 1, this.baseBoostMultiplier);
 
-			AoANetworking.sendToPlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.MULTIPLY).x((float)baseBoostMultiplier).z((float)baseBoostMultiplier));
+			AoANetworking.sendToPlayer(getPlayer(), new UpdateClientMovementPacket(UpdateClientMovementPacket.Operation.MULTIPLY, this.baseBoostMultiplier, this.baseBoostMultiplier));
 		}
 
 		entity.setDeltaMovement(newMotion);

@@ -26,10 +26,10 @@
       "tag": "forge:gems/bloodstone"
     }
   ],
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "result": {
     "item": "aoa3:wither_leggings"
+  },
+  "tool": {
+    "item": "aoa3:leggings_frame"
   }
 }

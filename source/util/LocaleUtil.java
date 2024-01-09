@@ -6,7 +6,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
 import org.jetbrains.annotations.Nullable;
@@ -15,7 +14,7 @@ import java.util.List;
 
 public final class LocaleUtil {
 	public static Component getFormattedItemDescriptionText(Item item, ItemDescriptionType type, int descNumber, Component... args) {
-		return getFormattedItemDescriptionText("item." + ForgeRegistries.ITEMS.getKey(item).getNamespace() + "." + ForgeRegistries.ITEMS.getKey(item).getPath() + ".desc." + descNumber, type, args);
+		return getFormattedItemDescriptionText("item." + RegistryUtil.getId(item).getNamespace() + "." + RegistryUtil.getId(item).getPath() + ".desc." + descNumber, type, args);
 	}
 
 	public static MutableComponent getFormattedItemDescriptionText(String langKey, ItemDescriptionType type, Component... args) {

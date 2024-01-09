@@ -11,12 +11,9 @@
       "color": "white",
       "translate": "advancements.aoa3.nowhere.tier_4_acrobat.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:feather"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.nowhere.tier_4_acrobat.title"

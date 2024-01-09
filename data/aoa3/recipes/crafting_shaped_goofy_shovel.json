@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:balloon"
+    },
+    "B": {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    "C": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "result": {
+    "item": "aoa3:goofy_shovel"
+  }
+}

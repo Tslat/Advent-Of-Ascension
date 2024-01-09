@@ -24,12 +24,9 @@
       "color": "white",
       "translate": "advancements.aoa3.overworld.nostalgia_trip.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:ancient_rock"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.nostalgia_trip.title"
@@ -40,5 +37,5 @@
       "enter_structure_precasian_lotto_hovel"
     ]
   ],
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

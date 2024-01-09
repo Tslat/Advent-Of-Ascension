@@ -19,7 +19,7 @@ public class DenseStone extends Block {
 	}
 
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		super.playerWillDestroy(world, pos, state, player);
 
 		if (!world.isClientSide && RandomUtil.oneInNChance(50) && !ItemUtil.hasEnchantment(Enchantments.SILK_TOUCH, player.getItemInHand(InteractionHand.MAIN_HAND))) {
@@ -28,5 +28,7 @@ public class DenseStone extends Block {
 			shik.teleportTo(pos.getX() + 0.5f, pos.getY() + 0.1f, pos.getZ() + 0.5f);
 			world.addFreshEntity(shik);
 		}
+
+		return state;
 	}
 }

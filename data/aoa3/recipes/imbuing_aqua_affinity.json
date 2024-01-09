@@ -1,8 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "minecraft:aqua_affinity"
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:aqua_affinity",
+  "enchantment_level": 1,
   "infusion_level": 39,
   "ingredients": [
     {

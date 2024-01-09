@@ -17,10 +17,10 @@
       "tag": "forge:ingots/iron"
     }
   ],
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "result": {
     "item": "aoa3:boom_cannon"
+  },
+  "tool": {
+    "item": "aoa3:cannon_frame"
   }
 }

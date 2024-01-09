@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/shyrestone"
+    },
+    "B": {
+      "tag": "forge:gems/shyregem"
+    },
+    "C": {
+      "tag": "forge:rods/metal"
+    },
+    "D": {
+      "item": "minecraft:glowstone"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BDB",
+    "ACA"
+  ],
+  "result": {
+    "item": "aoa3:shyre_sword"
+  }
+}

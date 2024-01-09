@@ -208,7 +208,7 @@ public class AoAJigsawAssembler {
 				}
 
 				Holder<StructureTemplatePool> fallback = pool.get().getFallback();
-				StructureTemplatePool fallbackPool = fallback.get();
+				StructureTemplatePool fallbackPool = fallback.value();
 
 				if (fallbackPool.size() == 0 && !fallback.is(Pools.EMPTY)) {
 					Logging.logMessage(Level.WARN, "Empty or non-existent fallback pool: " + fallback.unwrapKey().get().location());

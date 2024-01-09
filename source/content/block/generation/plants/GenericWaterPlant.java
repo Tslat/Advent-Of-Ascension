@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -21,6 +22,11 @@ public class GenericWaterPlant extends BushBlock implements SimpleWaterloggedBlo
 		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
+	}
+
+	@Override
+	protected MapCodec<? extends BushBlock> codec() {
+		return null;
 	}
 
 	@Nullable

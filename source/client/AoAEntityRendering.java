@@ -16,14 +16,15 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.TippableArrowRenderer;
+import net.minecraft.client.resources.PlayerSkin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.model.armor.AoAMiscModels;
 import net.tslat.aoa3.client.model.entity.animal.CorateeModel;
@@ -611,9 +612,9 @@ public final class AoAEntityRendering {
 	// End super jank test
 
 	public static void init() {
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, EntityRenderersEvent.RegisterRenderers.class, AoAEntityRendering::registerEntityRenderers);
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, EntityRenderersEvent.RegisterLayerDefinitions.class, AoAEntityRendering::registerLayerDefinitions);
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, EntityRenderersEvent.AddLayers.class, AoAEntityRendering::onRenderLayerRegistration);
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, EntityRenderersEvent.RegisterRenderers.class, AoAEntityRendering::registerEntityRenderers);
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, EntityRenderersEvent.RegisterLayerDefinitions.class, AoAEntityRendering::registerLayerDefinitions);
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, EntityRenderersEvent.AddLayers.class, AoAEntityRendering::onRenderLayerRegistration);
 	}
 
 	private static void registerEntityRenderers(final EntityRenderersEvent.RegisterRenderers ev) {
@@ -641,7 +642,7 @@ public final class AoAEntityRendering {
 	}
 
 	private static void onRenderLayerRegistration(final EntityRenderersEvent.AddLayers ev) {
-		for (String skin : ev.getSkins()) {
+		for (PlayerSkin.Model skin : ev.getSkins()) {
 			LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer = ev.getSkin(skin);
 
 			renderer.addLayer(new PlayerHaloRenderLayer(renderer, ev.getEntityModels()));
@@ -655,7 +656,7 @@ public final class AoAEntityRendering {
 		private Type type = Type.LIVING;
 		private EntityRendererProvider<T> provider;
 
-		private GeckoLibRendererPackage(RegistryObject<EntityType<T>> entityType) {
+		private GeckoLibRendererPackage(DeferredHolder<EntityType<?>, EntityType<T>> entityType) {
 			super(entityType);
 		}
 
@@ -781,13 +782,13 @@ public final class AoAEntityRendering {
 	}
 
 	public static class EntityRendererPackage<T extends Entity> {
-		protected final RegistryObject<EntityType<T>> entityType;
+		protected final DeferredHolder<EntityType<?>, EntityType<T>> entityType;
 		protected final HashMap<String, Pair<ModelLayerLocation, Supplier<LayerDefinition>>> layerDefinitions = new HashMap<>();
 
 		protected EntityRendererProvider<T> rendererProvider = null;
 		protected float shadowSize = -1;
 
-		private EntityRendererPackage(RegistryObject<EntityType<T>> entityType) {
+		private EntityRendererPackage(DeferredHolder<EntityType<?>, EntityType<T>> entityType) {
 			this.entityType = entityType;
 
 			RENDERER_PACKAGES.add(this);

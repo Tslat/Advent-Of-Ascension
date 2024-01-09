@@ -20,12 +20,9 @@
       "color": "white",
       "translate": "advancements.aoa3.overworld.key_to_the_darkness.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:dustopia_realmstone"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.key_to_the_darkness.title"

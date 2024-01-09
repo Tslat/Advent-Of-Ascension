@@ -17,10 +17,10 @@
       "item": "aoa3:armour_plating"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:poison_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

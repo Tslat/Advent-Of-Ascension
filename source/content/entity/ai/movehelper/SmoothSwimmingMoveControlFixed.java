@@ -4,7 +4,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 
 // Because Forge doesn't know how to patch things properly
 public class SmoothSwimmingMoveControlFixed extends MoveControl {
@@ -38,7 +38,7 @@ public class SmoothSwimmingMoveControlFixed extends MoveControl {
             }
 
             final float attemptedRot = (float)(Mth.atan2(distance.z, distance.x) * (double)Mth.RAD_TO_DEG) - 90;
-            final float speed = (float)(this.speedModifier * this.mob.getAttributeValue(ForgeMod.SWIM_SPEED.get()));
+            final float speed = (float)(this.speedModifier * this.mob.getAttributeValue(NeoForgeMod.SWIM_SPEED.value()));
 
             this.mob.setYRot(rotlerp(this.mob.getYRot(), attemptedRot, (float)this.maxTurnY));
             this.mob.yBodyRot = this.mob.getYRot();

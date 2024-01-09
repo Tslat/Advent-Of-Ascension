@@ -8,20 +8,18 @@ import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.gui.overlay.ScreenEffectRenderer;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.HaloChangePacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.HaloSelectPacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -32,6 +30,7 @@ import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
@@ -39,7 +38,7 @@ import java.util.Map;
 
 public final class ClientEventHandler {
 	public static void init() {
-		final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+		final IEventBus forgeBus = NeoForge.EVENT_BUS;
 
 		forgeBus.addListener(EventPriority.NORMAL, false, TickEvent.ClientTickEvent.class, ClientEventHandler::onClientTick);
 		forgeBus.addListener(EventPriority.NORMAL, false, ClientPlayerNetworkEvent.LoggingIn.class, ClientEventHandler::onPlayerJoin);
@@ -70,7 +69,7 @@ public final class ClientEventHandler {
 			ev.getPlayer().sendSystemMessage(Component.literal("AoA IS IN A TRANSITION PERIOD. ALL DIMENSIONS AND MOST MOBS ARE MISSING. PLAY 1.16.5 FOR SURVIVAL AoA. JOIN THE DISCORD FOR MORE INFO").withStyle(ChatFormatting.DARK_RED));
 		}
 
-		AoANetworking.INSTANCE.sendTo(new HaloChangePacket(AoAConfigs.CLIENT.personalHaloPreference.get()), ev.getConnection(), NetworkDirection.PLAY_TO_SERVER);
+		AoANetworking.sendToServer(new HaloSelectPacket(AoAConfigs.CLIENT.personalHaloPreference.get()));
 		ClientPlayerDataManager.get().updatePlayerInstance(ev.getPlayer());
 	}
 
@@ -101,7 +100,7 @@ public final class ClientEventHandler {
 	}
 
 	private static void onTooltip(final ItemTooltipEvent ev) {
-		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(ForgeRegistries.ITEMS.getKey(ev.getItemStack().getItem()));
+		Map<String, List<Pair<ResourceLocation, Integer>>> restrictions = AoASkillReqReloadListener.getParsedReqDataFor(RegistryUtil.getId(ev.getItemStack().getItem()));
 
 		if (!restrictions.isEmpty()) {
 			List<Component> lines = ev.getToolTip();

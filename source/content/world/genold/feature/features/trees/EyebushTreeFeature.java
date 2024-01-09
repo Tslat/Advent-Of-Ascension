@@ -12,7 +12,7 @@ import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePl
 import java.util.function.Supplier;
 
 public class EyebushTreeFeature extends AoATreeFeature {
-	public EyebushTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
+	public EyebushTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 

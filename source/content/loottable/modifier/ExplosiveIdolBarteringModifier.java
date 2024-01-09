@@ -9,11 +9,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 
 public class ExplosiveIdolBarteringModifier extends LootModifier {
 	public static final Codec<ExplosiveIdolBarteringModifier> CODEC = RecordCodecBuilder.create(builder -> codecStart(builder).apply(builder, ExplosiveIdolBarteringModifier::new));
@@ -27,7 +27,7 @@ public class ExplosiveIdolBarteringModifier extends LootModifier {
 		return CODEC;
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		Entity entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);

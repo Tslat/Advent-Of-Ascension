@@ -14,10 +14,10 @@
       "tag": "forge:ingots/iron"
     }
   ],
-  "input": {
-    "item": "aoa3:shotgun_frame"
-  },
   "result": {
     "item": "aoa3:vivo"
+  },
+  "tool": {
+    "item": "aoa3:shotgun_frame"
   }
 }

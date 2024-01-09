@@ -17,7 +17,7 @@ public class InfusionTableScreen extends AbstractContainerScreen<InfusionTableCo
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(guiGraphics);
+		renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		renderTooltip(guiGraphics, mouseX, mouseY);
 	}

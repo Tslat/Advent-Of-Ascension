@@ -13,7 +13,7 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.library.builder.EntityPredicate;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
@@ -102,7 +102,7 @@ public class CustomisableLightningBolt extends LightningBolt {
 				List<Entity> entities = EntityRetrievalUtil.getEntities(this.level(), new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 9, getZ() + 3), new EntityPredicate<>(this).isAlive());
 
 				for(Entity entity : entities) {
-					if (!ForgeEventFactory.onEntityStruckByLightning(entity, this)) {
+					if (!EventHooks.onEntityStruckByLightning(entity, this)) {
 						entity.thunderHit((ServerLevel)this.level(), this);
 
 						if (this.onEntityStrike != null)

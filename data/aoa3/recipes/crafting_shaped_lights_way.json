@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/shyrestone"
+    },
+    "B": {
+      "tag": "forge:rods/wooden"
+    },
+    "C": {
+      "tag": "forge:gems/shyregem"
+    }
+  },
+  "pattern": [
+    "A ",
+    "A ",
+    "BC"
+  ],
+  "result": {
+    "item": "aoa3:lights_way"
+  }
+}

@@ -17,10 +17,10 @@
       "tag": "forge:gunpowder"
     }
   ],
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "result": {
     "item": "aoa3:shyre_blaster"
+  },
+  "tool": {
+    "item": "aoa3:cannon_frame"
   }
 }

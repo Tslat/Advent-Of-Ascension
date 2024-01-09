@@ -1,9 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "minecraft:blast_protection",
-    "level": 3
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:blast_protection",
+  "enchantment_level": 3,
   "infusion_level": 17,
   "ingredients": [
     {

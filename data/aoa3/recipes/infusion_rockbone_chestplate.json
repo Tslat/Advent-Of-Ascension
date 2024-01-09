@@ -20,10 +20,10 @@
       "tag": "forge:bones"
     }
   ],
-  "input": {
-    "item": "aoa3:chestplate_frame"
-  },
   "result": {
     "item": "aoa3:rockbone_chestplate"
+  },
+  "tool": {
+    "item": "aoa3:chestplate_frame"
   }
 }

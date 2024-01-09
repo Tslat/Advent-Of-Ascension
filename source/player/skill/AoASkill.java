@@ -1,5 +1,6 @@
 package net.tslat.aoa3.player.skill;
 
+import com.google.common.base.Suppliers;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.Util;
@@ -11,9 +12,8 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.XpGainPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.XpGainPacket;
 import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.AoARegistries;
@@ -33,14 +33,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class AoASkill {
-	private final Lazy<MutableComponent> name;
+	private final Supplier<MutableComponent> name;
 	private final BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory;
 	private final Function<CompoundTag, Instance> clientFactory;
 
 	public AoASkill(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundTag, Instance> clientFactory) {
-		this.name = () -> Component.translatable(Util.makeDescriptionId("skill", AoARegistries.AOA_SKILLS.getId(this)));
+		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("skill", AoARegistries.AOA_SKILLS.getId(this))));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
 	}
@@ -227,7 +228,7 @@ public final class AoASkill {
 				playerDataManager.applyLegitimacyPenalties();
 			}
 			else {
-				AoAAdvancementTriggers.xpGainTrigger.trigger(playerDataManager.player(), skill, xp);
+				AoAAdvancementTriggers.XP_GAIN.get().trigger(this.playerDataManager.player(), this.skill, xp);
 			}
 
 			this.xp += remaining;
@@ -280,7 +281,7 @@ public final class AoASkill {
 			this.xp = 0f;
 
 			AoAEvents.playerLevelChange(this.playerDataManager, this, oldLevel, isNaturalLevel);
-			AoAAdvancementTriggers.levelUpTrigger.trigger(player, skill, newLevel);
+			AoAAdvancementTriggers.LEVEL_UP.get().trigger(player, this.skill, newLevel);
 		}
 
 		public boolean addCycle() {
@@ -293,7 +294,7 @@ public final class AoASkill {
 				this.needsSync = true;
 
 				AoAEvents.playerLevelChange(this.playerDataManager, this, oldLevel, true);
-				AoAAdvancementTriggers.cycleTrigger.trigger(playerDataManager.player(), skill, cycle);
+				AoAAdvancementTriggers.CYCLE_SKILL.get().trigger(this.playerDataManager.player(), this.skill, this.cycle);
 
 				return true;
 			}

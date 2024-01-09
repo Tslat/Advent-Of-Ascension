@@ -10,11 +10,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import org.jetbrains.annotations.Nullable;
 
@@ -165,7 +167,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 	protected void defineSynchedData() {}
 
 	@Override
-	public boolean ignoreExplosion() {
+	public boolean ignoreExplosion(Explosion explosion) {
 		return true;
 	}
 
@@ -177,7 +179,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 		Vec3 motion = getDeltaMovement();
 		Vec3 position = new Vec3(getX() - motion.x() * 0.5f, getY() - motion.y() * 0.5f, getZ() - motion.z() * 0.5f);
 		Vec3 velocityAdjustedPosition = new Vec3(getX() + motion.x(), getY() + motion.y(), getZ() + motion.z());
-		HitResult collisionTrace = level().clip(new ClipContext(position, velocityAdjustedPosition, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, null));
+		HitResult collisionTrace = level().clip(new ClipContext(position, velocityAdjustedPosition, ClipContext.Block.OUTLINE, ClipContext.Fluid.ANY, CollisionContext.empty()));
 
 		if (collisionTrace.getType() != HitResult.Type.MISS) {
 			velocityAdjustedPosition = new Vec3(collisionTrace.getLocation().x, collisionTrace.getLocation().y, collisionTrace.getLocation().z);
@@ -192,7 +194,7 @@ public abstract class BaseEnergyShot extends ThrowableProjectile {
 		if (entityTrace != null)
 			collisionTrace = entityTrace;
 
-		if (collisionTrace.getType() != HitResult.Type.MISS && !ForgeEventFactory.onProjectileImpact(this, collisionTrace))
+		if (collisionTrace.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, collisionTrace))
 			onHit(collisionTrace);
 
 		xOld = getX();

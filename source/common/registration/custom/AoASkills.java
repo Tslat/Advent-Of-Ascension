@@ -2,7 +2,7 @@ package net.tslat.aoa3.common.registration.custom;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.skill.*;
 import org.jetbrains.annotations.Nullable;
@@ -11,16 +11,16 @@ import org.jetbrains.annotations.Nullable;
 public class AoASkills {
 	public static void init() {}
 
-	public static final RegistryObject<AoASkill> ALCHEMY = AoARegistries.AOA_SKILLS.register("alchemy", () -> new AoASkill(AlchemySkill::new, AlchemySkill::new));
-	public static final RegistryObject<AoASkill> ARTIFICE = AoARegistries.AOA_SKILLS.register("artifice", () -> new AoASkill(ArtificeSkill::new, ArtificeSkill::new));
-	public static final RegistryObject<AoASkill> CREATION = AoARegistries.AOA_SKILLS.register("creation", () -> new AoASkill(CreationSkill::new, CreationSkill::new));
-	public static final RegistryObject<AoASkill> DEXTERITY = AoARegistries.AOA_SKILLS.register("dexterity", () -> new AoASkill(DexteritySkill::new, DexteritySkill::new));
-	public static final RegistryObject<AoASkill> EXTRACTION = AoARegistries.AOA_SKILLS.register("extraction", () -> new AoASkill(ExtractionSkill::new, ExtractionSkill::new));
-	public static final RegistryObject<AoASkill> FARMING = AoARegistries.AOA_SKILLS.register("farming", () -> new AoASkill(FarmingSkill::new, FarmingSkill::new));
-	public static final RegistryObject<AoASkill> FAUNAMANCY = AoARegistries.AOA_SKILLS.register("faunamancy", () -> new AoASkill(FaunamancySkill::new, FaunamancySkill::new));
-	public static final RegistryObject<AoASkill> HAULING = AoARegistries.AOA_SKILLS.register("hauling", () -> new AoASkill(HaulingSkill::new, HaulingSkill::new));
-	public static final RegistryObject<AoASkill> IMBUING = AoARegistries.AOA_SKILLS.register("imbuing", () -> new AoASkill(ImbuingSkill::new, ImbuingSkill::new));
-	public static final RegistryObject<AoASkill> INNERVATION = AoARegistries.AOA_SKILLS.register("innervation", () -> new AoASkill(InnervationSkill::new, InnervationSkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> ALCHEMY = AoARegistries.AOA_SKILLS.register("alchemy", () -> new AoASkill(AlchemySkill::new, AlchemySkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> ARTIFICE = AoARegistries.AOA_SKILLS.register("artifice", () -> new AoASkill(ArtificeSkill::new, ArtificeSkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> CREATION = AoARegistries.AOA_SKILLS.register("creation", () -> new AoASkill(CreationSkill::new, CreationSkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> DEXTERITY = AoARegistries.AOA_SKILLS.register("dexterity", () -> new AoASkill(DexteritySkill::new, DexteritySkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> EXTRACTION = AoARegistries.AOA_SKILLS.register("extraction", () -> new AoASkill(ExtractionSkill::new, ExtractionSkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> FARMING = AoARegistries.AOA_SKILLS.register("farming", () -> new AoASkill(FarmingSkill::new, FarmingSkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> FAUNAMANCY = AoARegistries.AOA_SKILLS.register("faunamancy", () -> new AoASkill(FaunamancySkill::new, FaunamancySkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> HAULING = AoARegistries.AOA_SKILLS.register("hauling", () -> new AoASkill(HaulingSkill::new, HaulingSkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> IMBUING = AoARegistries.AOA_SKILLS.register("imbuing", () -> new AoASkill(ImbuingSkill::new, ImbuingSkill::new));
+	public static final DeferredHolder<AoASkill, AoASkill> INNERVATION = AoARegistries.AOA_SKILLS.register("innervation", () -> new AoASkill(InnervationSkill::new, InnervationSkill::new));
 
 	public static final AoASkill.Instance DEFAULT = new AoASkill.Instance(null, null, null) {
 		@Override

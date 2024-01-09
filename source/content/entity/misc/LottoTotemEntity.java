@@ -70,7 +70,7 @@ public class LottoTotemEntity extends Entity {
 						ItemEntity drop = spawnAtLocation(stack, 0);
 
 						if (drop != null)
-							drop.setThrower(serverPlayer.getUUID());
+							drop.setThrower(serverPlayer);
 
 						AdvancementUtil.completeAdvancement(serverPlayer, new ResourceLocation(AdventOfAscension.MOD_ID, "overworld/winner_winner"), "lotto_win");
 					}
@@ -78,7 +78,7 @@ public class LottoTotemEntity extends Entity {
 					ItemEntity drop = spawnAtLocation(new ItemStack(AoABlocks.LOTTO_BANNER.base()), 0);
 
 					if (drop != null)
-						drop.setThrower(serverPlayer.getUUID());
+						drop.setThrower(serverPlayer);
 
 					level().playSound(null, blockPosition(), AoASounds.LOTTO_WIN.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
 				}

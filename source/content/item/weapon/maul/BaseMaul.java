@@ -1,11 +1,11 @@
 package net.tslat.aoa3.content.item.weapon.maul;
 
+import com.google.common.base.Supplier;
+import com.google.common.base.Suppliers;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -22,19 +22,16 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.UUID;
 
 public class BaseMaul extends Item {
-	private final Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> attributeModifiers;
+	private final Supplier<ImmutableSetMultimap<Attribute, AttributeModifier>> attributeModifiers;
 	protected static final UUID KNOCKBACK_MODIFIER_UUID = UUID.fromString("f21dd55d-0e43-4e19-a683-1df45d51c60f");
 
 	protected final float baseDamage;
@@ -68,12 +65,12 @@ public class BaseMaul extends Item {
 		return UseAnim.BLOCK;
 	}
 
-	protected Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> buildDefaultAttributes() {
-		return Lazy.of(() -> ImmutableSetMultimap.of(
+	protected Supplier<ImmutableSetMultimap<Attribute, AttributeModifier>> buildDefaultAttributes() {
+		return Suppliers.memoize(() -> ImmutableSetMultimap.of(
 				Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getAttackDamage(), AttributeModifier.Operation.ADDITION),
 				Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION),
 				Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(1),
-				ForgeMod.ENTITY_REACH.get(), new AttributeModifier(UUID.fromString("93bb7485-ce86-4e78-ab50-26f53d78ad9d"), "AoAGreatbladeReach", 0.5f, AttributeModifier.Operation.ADDITION)));
+				NeoForgeMod.ENTITY_REACH.value(), new AttributeModifier(UUID.fromString("93bb7485-ce86-4e78-ab50-26f53d78ad9d"), "AoAGreatbladeReach", 0.5f, AttributeModifier.Operation.ADDITION)));
 	}
 
 	private AttributeModifier getKnockbackModifier(float attackStrengthMod) {
@@ -102,7 +99,7 @@ public class BaseMaul extends Item {
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
 		float attackStr = player.getAttackStrengthScale(0.0f);
 
-		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(attackStr);
+		stack.setData(AoADataAttachments.MELEE_SWING_STRENGTH, attackStr);
 		EntityUtil.reapplyAttributeModifier(player, Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(attackStr), false);
 
 		return false;
@@ -110,9 +107,7 @@ public class BaseMaul extends Item {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		float cooldown = VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).getValue();
-
-		doMeleeEffect(stack, target, attacker, cooldown);
+		doMeleeEffect(stack, target, attacker, stack.getData(AoADataAttachments.MELEE_SWING_STRENGTH));
 		ItemUtil.damageItem(stack, attacker, InteractionHand.MAIN_HAND);
 		EntityUtil.reapplyAttributeModifier(attacker, Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(1), false);
 
@@ -129,12 +124,6 @@ public class BaseMaul extends Item {
 	@Override
 	public int getEnchantmentValue() {
 		return 8;
-	}
-
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		return new VolatileStackCapabilityProvider();
 	}
 
 	@Override

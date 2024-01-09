@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.tool.misc;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -12,9 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
-import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
+import net.tslat.aoa3.content.item.ChargeableItem;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -22,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ExpFlask extends Item {
+public class ExpFlask extends Item implements ChargeableItem {
 	public ExpFlask() {
 		super(new Item.Properties().stacksTo(1));
 	}
@@ -47,9 +44,7 @@ public class ExpFlask extends Item {
 		ItemStack stack = player.getItemInHand(hand);
 
 		if (!world.isClientSide) {
-			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
-
-			if (cap.getValue() <= 0)
+			if (!hasEnoughCharge(stack))
 				return InteractionResultHolder.fail(stack);
 
 			player.startUsingItem(hand);
@@ -61,72 +56,23 @@ public class ExpFlask extends Item {
 	@Override
 	public void onUseTick(Level level, LivingEntity entity, ItemStack stack, int count) {
 		if (entity instanceof ServerPlayer player) {
-			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
+			float charge = getCharge(stack);
 
-			if (cap.getValue() > 0) {
-				int xpChange = (int)Math.min(1 + ((int)(player.experienceLevel / 15f)), cap.getValue());
+			if (charge > 0) {
+				int xpChange = (int)Math.min(1 + ((int)(player.experienceLevel / 15f)), charge);
 
 				player.giveExperiencePoints(xpChange);
-				cap.setValue(cap.getValue() - xpChange);
+				subtractCharge(stack, xpChange, true);
 
-				if (cap.getValue() == 0)
+				if (!hasEnoughCharge(stack))
 					player.stopUsingItem();
 			}
 		}
 	}
 
-	@Nullable
-	@Override
-	public CompoundTag getShareTag(ItemStack stack) {
-		CompoundTag tag = super.getShareTag(stack);
-
-		if (tag == null)
-			tag = new CompoundTag();
-
-		tag.putFloat("AdventMiscStackCapability", PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue());
-
-		return tag;
-	}
-
-	@Override
-	public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
-		if (nbt != null && nbt.contains("AdventMiscStackCapability"))
-			PersistentStackCapabilityProvider.getOrDefault(stack, null).setValue(nbt.getFloat("AdventMiscStackCapability"));
-
-		super.readShareTag(stack, nbt);
-	}
-
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		return new PersistentStackCapabilityProvider(null);
-	}
-
-	public static void addExp(ItemStack stack, int xp) {
-		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
-
-		cap.setValue(cap.getValue() + xp);
-	}
-
-	public static void setExp(ItemStack stack, int xp) {
-		PersistentStackCapabilityProvider.getOrDefault(stack, null).setValue(xp);
-	}
-
-	public static boolean consumeExp(ItemStack stack, int xp) {
-		PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
-
-		if (cap.getValue() >= xp) {
-			cap.setValue(cap.getValue() - xp);
-
-			return true;
-		}
-
-		return false;
-	}
-
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
-		int storedValue = (int)PersistentStackCapabilityProvider.getOrDefault(stack, null).getValue();
+		int storedValue = (int)getCharge(stack);
 
 		if (storedValue > 0)
 			tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.SPECIAL, 1, Component.literal(NumberUtil.floorAndAppendSuffix(storedValue, true) + (storedValue >= 7 ? " (" + PlayerUtil.getPlayerLevelFromExp(storedValue) + ")" : ""))));

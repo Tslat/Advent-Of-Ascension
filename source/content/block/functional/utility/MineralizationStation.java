@@ -11,10 +11,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.Tags;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class MineralizationStation extends Block {
@@ -29,7 +29,7 @@ public class MineralizationStation extends Block {
 			Item tokensItem = null;
 			int baseAmount = 5;
 
-			switch (ForgeRegistries.ITEMS.getKey(stack.getItem()).getPath()) {
+			switch (RegistryUtil.getId(stack.getItem()).getPath()) {
 				case "blue_crystal", "green_crystal", "purple_crystal", "red_crystal", "white_crystal", "yellow_crystal" -> {
 					baseAmount = 4;
 					tokensItem = AoAItems.COPPER_COIN.get();

@@ -126,7 +126,7 @@ public class DryadSpriteRenderer extends GeoEntityRenderer<DryadSpriteEntity> {
 		stack.popPose();
 
 		RenderNameplateEvent renderNameplateEvent = new RenderNameplateEvent(entity, entity.getDisplayName(), this, stack, bufferIn, packedLightIn, partialTicks);
-		MinecraftForge.EVENT_BUS.post(renderNameplateEvent);
+		NeoForge.EVENT_BUS.post(renderNameplateEvent);
 
 		if (renderNameplateEvent.getResult() != Event.Result.DENY && (renderNameplateEvent.getResult() == Event.Result.ALLOW || this.shouldShowName(entity)))
 			renderNameTag(entity, renderNameplateEvent.getContent(), stack, bufferIn, packedLightIn);

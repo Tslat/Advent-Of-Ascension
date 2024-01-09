@@ -8,7 +8,7 @@
       "item": "aoa3:jungle_thorns"
     },
     {
-      "item": "minecraft:grass"
+      "item": "minecraft:short_grass"
     },
     {
       "tag": "forge:ingots/iron"
@@ -17,10 +17,10 @@
       "tag": "minecraft:leaves"
     }
   ],
-  "input": {
-    "item": "aoa3:sniper_frame"
-  },
   "result": {
     "item": "aoa3:camo_rifle"
+  },
+  "tool": {
+    "item": "aoa3:sniper_frame"
   }
 }

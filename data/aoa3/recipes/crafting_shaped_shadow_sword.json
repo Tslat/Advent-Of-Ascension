@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:obsidian"
+    },
+    "B": {
+      "tag": "forge:rods/wooden"
+    },
+    "C": {
+      "item": "aoa3:darkly_powder"
+    },
+    "D": {
+      "item": "aoa3:urka_hide"
+    }
+  },
+  "pattern": [
+    " A ",
+    " A ",
+    "CBD"
+  ],
+  "result": {
+    "item": "aoa3:shadow_sword"
+  }
+}

@@ -7,11 +7,12 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.ItemCraftingEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.RegistryUtil;
 
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 		int i = 0;
 
 		for (Map.Entry<String, JsonElement> entry : enchantMap.entrySet()) {
-			enchantments[i] = new EnchantmentInstance(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(entry.getKey())), entry.getValue().getAsInt());
+			enchantments[i] = new EnchantmentInstance(AoARegistries.ENCHANTMENTS.getEntry(new ResourceLocation(entry.getKey())), entry.getValue().getAsInt());
 			i++;
 		}
 
@@ -44,7 +45,7 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 		int i = 0;
 
 		for (String enchantId : enchantMap.getAllKeys()) {
-			enchantments[i] = new EnchantmentInstance(ForgeRegistries.ENCHANTMENTS.getValue(new ResourceLocation(enchantId)), enchantMap.getInt(enchantId));
+			enchantments[i] = new EnchantmentInstance(AoARegistries.ENCHANTMENTS.getEntry(new ResourceLocation(enchantId)), enchantMap.getInt(enchantId));
 			i++;
 		}
 	}
@@ -95,7 +96,7 @@ public class AutoEnchantCrafting extends ScalableModAbility {
 			CompoundTag enchantMap = new CompoundTag();
 
 			for (EnchantmentInstance enchantData : enchantments) {
-				enchantMap.putInt(ForgeRegistries.ENCHANTMENTS.getKey(enchantData.enchantment).toString(), enchantData.level);
+				enchantMap.putInt(RegistryUtil.getId(enchantData.enchantment).toString(), enchantData.level);
 			}
 
 			data.put("enchantments", enchantMap);

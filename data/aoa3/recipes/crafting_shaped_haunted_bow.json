@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/ghoulish"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "item": "aoa3:ghoulasm"
+    }
+  },
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "result": {
+    "item": "aoa3:haunted_bow"
+  }
+}

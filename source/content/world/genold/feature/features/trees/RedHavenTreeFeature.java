@@ -9,7 +9,7 @@ import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePl
 import java.util.function.Supplier;
 
 public class RedHavenTreeFeature extends HavenTreeFeature {
-	public RedHavenTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
+	public RedHavenTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 

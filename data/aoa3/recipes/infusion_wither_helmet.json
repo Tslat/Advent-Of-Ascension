@@ -20,10 +20,10 @@
       "tag": "forge:gems/bloodstone"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:wither_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

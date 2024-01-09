@@ -3,12 +3,11 @@ package net.tslat.aoa3.event.custom.events;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 
-@Cancelable
-public class HaulingRodPullEntityEvent extends PlayerEvent {
+public class HaulingRodPullEntityEvent extends PlayerEvent implements ICancellableEvent {
 	private final ItemStack haulingRod;
 	private final HaulingFishingBobberEntity bobber;
 	private final Entity hookedEntity;

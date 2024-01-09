@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -42,6 +43,11 @@ public class TeaSink extends HorizontalDirectionalBlock {
 		super(properties);
 
 		registerDefaultState(defaultBlockState().setValue(FILLED, false).setValue(FACING, Direction.NORTH));
+	}
+
+	@Override
+	protected MapCodec<? extends TeaSink> codec() {
+		return simpleCodec(TeaSink::new);
 	}
 
 	@Override

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:sour_gummy"
+    },
+    "B": {
+      "item": "aoa3:pink_cotton_candy"
+    },
+    "C": {
+      "tag": "forge:rods/wooden"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "pattern": [
+    " D ",
+    "BAB",
+    " C "
+  ],
+  "result": {
+    "item": "aoa3:sweet_sword"
+  }
+}

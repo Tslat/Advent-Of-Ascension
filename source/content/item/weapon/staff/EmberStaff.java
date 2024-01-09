@@ -14,6 +14,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -52,7 +53,7 @@ public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<LivingEntity
 			entities.add(caster);
 
 		entities.addAll(EntityRetrievalUtil.getEntities(caster, 5, entity -> !(entity instanceof Enemy)));
-		blocks.addAll(WorldUtil.getBlocksWithinAABB(caster.level(), new AABB(caster.blockPosition().offset(-5, -5, -5), caster.blockPosition().offset(5, 5, 5)), (state, pos) -> WorldUtil.canModifyBlock(caster.level(), pos, caster, staff) && state.is(BlockTags.FIRE)));
+		blocks.addAll(WorldUtil.getBlocksWithinAABB(caster.level(), new AABB(Vec3.atLowerCornerOf(caster.blockPosition().offset(-5, -5, -5)), Vec3.atBottomCenterOf(caster.blockPosition().offset(5, 5, 5))), (state, pos) -> WorldUtil.canModifyBlock(caster.level(), pos, caster, staff) && state.is(BlockTags.FIRE)));
 
 		return entities.isEmpty() && blocks.isEmpty() ? null : Pair.of(blocks, entities);
 	}

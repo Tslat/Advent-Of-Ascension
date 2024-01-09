@@ -11,21 +11,21 @@ import net.minecraft.world.entity.monster.piglin.PiglinAi;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.object.explosion.StandardExplosion;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
@@ -105,7 +105,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 							getNavigation().stop();
 							IMMOBILE.set(entity, true);
 
-							ServerParticlePacket packet = new ServerParticlePacket();
+							TELParticlePacket packet = new TELParticlePacket();
 							double targetX = getX(0.5f);
 							double targetY = getY(1.25f);
 							double targetZ = getZ(0.5f);
@@ -115,10 +115,10 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 								double y = getRandomY();
 								double z = getRandomZ(0.5f);
 
-								packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.25f, 25f, 0x7C0000), x, y, z).velocity((x - targetX) * 2, (y - targetY) * 2, (z - targetZ) * 2));
+								packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 0.25f, 25f, 0x7C0000), x, y, z).velocity((x - targetX) * 2, (y - targetY) * 2, (z - targetZ) * 2));
 							}
 
-							AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level(), position(), 64);
+							packet.sendToAllNearbyPlayers((ServerLevel)level(), position(), 64);
 							AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ENTITY_LITTLE_BAM_CHARGE.get()).followEntity(this)), this);
 						})
 		);
@@ -126,7 +126,7 @@ public class LittleBamEntity extends AoAMeleeMob<LittleBamEntity> {
 
 	@Override
 	public boolean canSwimInFluidType(FluidType type) {
-		return type == ForgeMod.LAVA_TYPE.get() || super.canSwimInFluidType(type);
+		return type == NeoForgeMod.LAVA_TYPE.value() || super.canSwimInFluidType(type);
 	}
 
 	@Override

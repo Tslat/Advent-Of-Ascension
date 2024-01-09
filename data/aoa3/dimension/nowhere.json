@@ -1,10 +1,10 @@
 {
   "type": "aoa3:nowhere",
   "generator": {
-    "type": "aoa3:single_block",
-    "biome": "aoa3:nowhere",
-    "block": {
-      "Name": "minecraft:air"
+    "type": "aoa3:empty",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "aoa3:nowhere"
     }
   }
 }

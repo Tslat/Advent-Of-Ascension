@@ -7,8 +7,8 @@ import net.minecraft.core.HolderSet;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
-import net.minecraftforge.common.world.BiomeModifier;
-import net.minecraftforge.common.world.ModifiableBiomeInfo;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.common.world.ModifiableBiomeInfo;
 import net.tslat.aoa3.content.world.gen.BiomeMatcher;
 
 public record NewFeatureBiomeModifier(BiomeMatcher biomeMatcher, GenerationStep.Decoration step, HolderSet<PlacedFeature> features) implements BiomeModifier {

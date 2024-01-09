@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:mystic_shrooms"
+    },
+    "B": {
+      "item": "aoa3:mushroom_spores"
+    },
+    "C": {
+      "item": "aoa3:fungal_rock"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ABA",
+    "CCC"
+  ],
+  "result": {
+    "item": "aoa3:shroom_stone"
+  }
+}

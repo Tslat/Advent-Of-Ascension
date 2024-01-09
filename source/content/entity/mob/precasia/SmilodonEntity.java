@@ -136,15 +136,12 @@ public class SmilodonEntity extends AoAMeleeMob<SmilodonEntity> {
 
 	@Override
 	protected float getAttackVectorPositionOffset() {
-		return 1.25f;
+		return 1.5625f;
 	}
 
 	@Override
-	public double getMeleeAttackRangeSqr(LivingEntity target) {
-		final double attackReach = isSprinting() ? this.attackReach * 1.1f : this.attackReach;
-		final double targetBBOffset = target.getBbWidth() * 0.5d;
-
-		return attackReach * attackReach + targetBBOffset * targetBBOffset;
+	protected double getAttackReach() {
+		return isSprinting() ? super.getAttackReach() * 1.1f : super.getAttackReach();
 	}
 
 	@Override

@@ -14,12 +14,9 @@
       "color": "white",
       "translate": "advancements.aoa3.precasia.root.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:jungle_thorns"
     },
-    "show_toast": true,
     "title": {
       "color": "green",
       "translate": "advancements.aoa3.precasia.root.title"

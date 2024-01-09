@@ -16,7 +16,6 @@
     "icon": {
       "item": "aoa3:hellfire"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.heckfire.title"

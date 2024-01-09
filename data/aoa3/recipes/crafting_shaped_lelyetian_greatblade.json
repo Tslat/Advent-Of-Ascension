@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/gold"
+    },
+    "B": {
+      "item": "aoa3:orange_spores"
+    },
+    "C": {
+      "tag": "forge:rods/metal"
+    }
+  },
+  "pattern": [
+    " A ",
+    "BAB",
+    " C "
+  ],
+  "result": {
+    "item": "aoa3:lelyetian_greatblade"
+  }
+}

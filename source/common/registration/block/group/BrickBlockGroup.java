@@ -4,16 +4,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.block.BlockRegistrar;
 
 import java.util.function.Consumer;
 
 public final class BrickBlockGroup {
-	public final RegistryObject<Block> stone;
-	public final RegistryObject<SlabBlock> slab;
-	public final RegistryObject<StairBlock> stairs;
-	public final RegistryObject<WallBlock> wall;
+	public final DeferredHolder<Block, Block> stone;
+	public final DeferredHolder<Block, SlabBlock> slab;
+	public final DeferredHolder<Block, StairBlock> stairs;
+	public final DeferredHolder<Block, WallBlock> wall;
 
 	public BrickBlockGroup(String baseId, BlockRegistrarFactory registry, Consumer<BlockRegistrar<Block>> baseBlockRegistrar) {
 		this.stone = registry.register(baseId + "s", baseBlockRegistrar);

@@ -16,7 +16,6 @@
     "icon": {
       "item": "aoa3:chilli"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.nether.overheat.title"
@@ -27,5 +26,5 @@
       "lava_chilli_consume"
     ]
   ],
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

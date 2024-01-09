@@ -1,9 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "minecraft:projectile_protection",
-    "level": 2
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:projectile_protection",
+  "enchantment_level": 2,
   "infusion_level": 22,
   "ingredients": [
     {

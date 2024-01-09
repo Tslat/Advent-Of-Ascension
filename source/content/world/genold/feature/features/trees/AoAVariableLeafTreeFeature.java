@@ -11,7 +11,7 @@ import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePl
 import java.util.function.Supplier;
 
 public abstract class AoAVariableLeafTreeFeature extends AoATreeFeature {
-	public AoAVariableLeafTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> sapling) {
+	public AoAVariableLeafTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> sapling) {
 		super(codec, sapling);
 	}
 

@@ -20,10 +20,10 @@
       "item": "aoa3:unstable_gunpowder"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:dustometer"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class StaticMushroomBlock extends MushroomBlock {
 	public StaticMushroomBlock(Properties properties) {
-		super(properties, null);
+		super(null, properties);
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class StaticMushroomBlock extends MushroomBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClientSide) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
 		return false;
 	}
 }

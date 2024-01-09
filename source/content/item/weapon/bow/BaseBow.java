@@ -15,7 +15,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -42,7 +42,7 @@ public class BaseBow extends BowItem {
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 		boolean hasAmmo = !findAmmo(player, heldStack, player.isCreative()).isEmpty();
-		InteractionResultHolder<ItemStack> arrowNockEventResult = ForgeEventFactory.onArrowNock(heldStack, world, player, hand, hasAmmo);
+		InteractionResultHolder<ItemStack> arrowNockEventResult = EventHooks.onArrowNock(heldStack, world, player, hand, hasAmmo);
 
 		if (arrowNockEventResult != null)
 			return arrowNockEventResult;
@@ -64,7 +64,7 @@ public class BaseBow extends BowItem {
 		boolean infiniteAmmo = pl.isCreative() || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
 		ItemStack ammoStack = findAmmo(pl, stack, infiniteAmmo);
 		int charge = (int)((getUseDuration(stack) - timeLeft) * getDrawSpeedMultiplier());
-		charge = ForgeEventFactory.onArrowLoose(stack, world, pl, charge, !ammoStack.isEmpty() || infiniteAmmo);
+		charge = EventHooks.onArrowLoose(stack, world, pl, charge, !ammoStack.isEmpty() || infiniteAmmo);
 
 		if (charge < 0)
 			return;

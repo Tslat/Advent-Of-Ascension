@@ -11,12 +11,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.PlayLevelSoundEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.event.PlayLevelSoundEvent;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.AoASoundBuilderPacket;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
@@ -276,12 +276,12 @@ public final class SoundBuilder {
 
 	private void play() {
 		if (inWorld) {
-			PlayLevelSoundEvent event = followingEntity != null ? ForgeEventFactory.onPlaySoundAtEntity(followingEntity, Holder.direct(sound), category, radius / 16f, pitch) : ForgeEventFactory.onPlaySoundAtPosition(level, location.x, location.y, location.z, Holder.direct(sound), category, radius / 16f, pitch);
+			PlayLevelSoundEvent event = followingEntity != null ? EventHooks.onPlaySoundAtEntity(followingEntity, Holder.direct(sound), category, radius / 16f, pitch) : EventHooks.onPlaySoundAtPosition(level, location.x, location.y, location.z, Holder.direct(sound), category, radius / 16f, pitch);
 
 			if (event.isCanceled() || event.getSound() == null)
 				return;
 
-			this.sound = event.getSound().get();
+			this.sound = event.getSound().value();
 		}
 
 		if (level == null || level.isClientSide()) {
@@ -347,7 +347,7 @@ public final class SoundBuilder {
 	}
 
 	public static SoundBuilder fromNetwork(FriendlyByteBuf buffer) {
-		SoundEvent sound = ForgeRegistries.SOUND_EVENTS.getValue(buffer.readResourceLocation());
+		SoundEvent sound = AoARegistries.SOUNDS.getEntry(buffer.readResourceLocation());
 		SoundBuilder builder = new SoundBuilder(sound);
 		builder.stopSound = buffer.readBoolean();
 

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:dusts/redstone"
+    },
+    "B": {
+      "item": "aoa3:dense_rock"
+    },
+    "C": {
+      "tag": "forge:gems/diamond"
+    },
+    "D": {
+      "item": "minecraft:spider_eye"
+    },
+    "E": {
+      "tag": "forge:rods/metal"
+    }
+  },
+  "pattern": [
+    "AB ",
+    "CB ",
+    "DED"
+  ],
+  "result": {
+    "item": "aoa3:underworld_greatblade"
+  }
+}

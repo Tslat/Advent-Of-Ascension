@@ -32,13 +32,12 @@ import net.minecraft.world.entity.animal.WaterAnimal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.item.trading.Merchant;
-import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.entity.base.*;
 import net.tslat.aoa3.data.client.BestiaryReloadListener;
 import net.tslat.aoa3.library.object.RenderContext;
@@ -94,7 +93,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		stats = getMinecraft().player.getStats();
 
 		if (statsMap == null)
-			statsMap = ObfuscationReflectionHelper.getPrivateValue(StatsCounter.class, stats, "f_13013_");
+			statsMap = stats.stats;
 
 		if (scrollMenu == null)
 			scrollMenu = new BestiaryMenu(minecraft, AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 764, AdventMainGui.SCALE);
@@ -116,9 +115,12 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
+	public void renderTransparentBackground(GuiGraphics pGuiGraphics) {}
+
+	@Override
+	public boolean mouseScrolled(double mouseX, double mouseY, double lateralScroll, double verticalScroll) {
 		if (scrollMenu != null)
-			return scrollMenu.handleMouseScroll(-1, -1, scrollAmount);
+			return scrollMenu.handleMouseScroll(-1, -1, verticalScroll);
 
 		return false;
 	}
@@ -152,7 +154,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		for (Stat<?> stat : this.statsMap.keySet()) {
 			ResourceLocation registryName;
 
-			if (stat.getValue() instanceof EntityType && (registryName = ForgeRegistries.ENTITY_TYPES.getKey(((EntityType<?>)stat.getValue()))) != null) {
+			if (stat.getValue() instanceof EntityType<?> entityType && (registryName = AoARegistries.ENTITIES.getId(entityType)) != null) {
 				if (AoAConfigs.CLIENT.thirdPartyBestiary.get() || registryName.getNamespace().equals(AdventOfAscension.MOD_ID)) {
 					String registryNameString = registryName.toString();
 
@@ -190,7 +192,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 			return instancesMap.get(registryName);
 
 		try {
-			Entity entity = ForgeRegistries.ENTITY_TYPES.getValue(stat.registryName).create(minecraft.player.clientLevel);
+			Entity entity = AoARegistries.ENTITIES.getEntry(stat.registryName).create(minecraft.player.clientLevel);
 
 			instancesMap.put(registryName, entity);
 
@@ -449,7 +451,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		private Stat<EntityType<?>> deathStat = null;
 
 		private EntityStats(Stat<EntityType<?>> stat, boolean killStat) {
-			this.registryName = ForgeRegistries.ENTITY_TYPES.getKey(stat.getValue());
+			this.registryName = AoARegistries.ENTITIES.getId(stat.getValue());
 
 			if (killStat) {
 				this.killStat = stat;

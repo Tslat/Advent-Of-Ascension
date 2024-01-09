@@ -8,7 +8,6 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.Minecraft;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -16,10 +15,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.WikiSearchPacket;
+import net.tslat.aoa3.client.ClientOperations;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.WikiSearchPacket;
 import net.tslat.aoa3.util.StringUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,7 +41,6 @@ public class WikiCommand implements Command<CommandSourceStack> {
 		return builder;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public static void handleSearchRequest(String search) {
 		String targetUrl = "?";
 		String pageTitle = StringUtil.toTitleCase(search);
@@ -67,14 +64,14 @@ public class WikiCommand implements Command<CommandSourceStack> {
 			e.printStackTrace();
 		}
 		catch (IOException ex) {
-			Minecraft.getInstance().player.sendSystemMessage(AoACommand.getCmdPrefix("Wiki").append(Component.translatable("command.aoa.wiki.connectionFail").setStyle(Style.EMPTY.applyFormat(AoACommand.CommandFeedbackType.ERROR.getColour()))));
+			ClientOperations.getPlayer().sendSystemMessage(AoACommand.getCmdPrefix("Wiki").append(Component.translatable("command.aoa.wiki.connectionFail").setStyle(Style.EMPTY.applyFormat(AoACommand.CommandFeedbackType.ERROR.getColour()))));
 		}
 
 		if (search.equals("Special:Random"))
 			pageTitle = "???";
 
 		MutableComponent responseComponent = getComponentFromKeys("command.aoa.wiki.response", targetUrl, pageTitle);
-		Minecraft.getInstance().player.sendSystemMessage(AoACommand.getCmdPrefix("Wiki").append(responseComponent != null ? responseComponent.setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)) : Component.translatable("command.aoawiki.response", targetUrl)));
+		ClientOperations.getPlayer().sendSystemMessage(AoACommand.getCmdPrefix("Wiki").append(responseComponent != null ? responseComponent.setStyle(Style.EMPTY.applyFormat(ChatFormatting.GRAY)) : Component.translatable("command.aoawiki.response", targetUrl)));
 	}
 
 	@Nullable

@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.Renderable;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.achievement.StatsUpdateListener;
@@ -71,7 +72,7 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(guiGraphics);
+		renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 
 		RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 		RenderSystem.setShaderTexture(0, theme.backgroundTexture());
@@ -86,7 +87,10 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 		RenderSystem.setShaderTexture(0, TITLE);
 		RenderUtil.renderCustomSizedTexture(poseStack, scaledRootX - ((GUI_WIDTH - BACKGROUND_TEXTURE_WIDTH) / 2) + 68, scaledRootY - ((GUI_HEIGHT - BACKGROUND_TEXTURE_HEIGHT) / 2) + 21, 0, 0, 892, 112, 892, 112);
 
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		for(Renderable renderable : this.renderables) {
+			renderable.render(guiGraphics, mouseX, mouseY, partialTicks);
+		}
+
 		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 		if (theme.overlayTexture() != null) {
@@ -219,11 +223,11 @@ public class AdventMainGui extends Screen implements StatsUpdateListener {
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double lateralScroll, double verticalScroll) {
 		if (tabScreen != null)
-			return tabScreen.mouseScrolled(mouseX, mouseY, scrollAmount);
+			return tabScreen.mouseScrolled(mouseX, mouseY, lateralScroll, verticalScroll);
 
-		return super.mouseScrolled(mouseX, mouseY, scrollAmount);
+		return super.mouseScrolled(mouseX, mouseY, lateralScroll, verticalScroll);
 	}
 
 	@Override

@@ -26,10 +26,10 @@
       "tag": "forge:gems/diamond"
     }
   ],
-  "input": {
-    "item": "aoa3:chestplate_frame"
-  },
   "result": {
     "item": "aoa3:alacrity_chestplate"
+  },
+  "tool": {
+    "item": "aoa3:chestplate_frame"
   }
 }

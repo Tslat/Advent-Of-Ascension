@@ -11,9 +11,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.item.AoATiers;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityHandles;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
@@ -29,22 +28,21 @@ public class PrimalSword extends BaseSword {
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
 		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity livingEntity) {
-			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
+			float damageScaling = stack.getData(AoADataAttachments.DAMAGE_SCALING);
 
 			try {
 				if (isSelected) {
-					float currentDamageMod = cap.getValue();
 					float currentCalcBuff = getCurrentDamageBuff(entity);
 
-					if (currentDamageMod != currentCalcBuff) {
+					if (damageScaling != currentCalcBuff) {
 						livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
-						cap.setValue(currentCalcBuff);
+						stack.setData(AoADataAttachments.DAMAGE_SCALING, currentCalcBuff);
 						livingEntity.getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					}
 				}
-				else if (cap.getValue() != 0 && livingEntity.getMainHandItem().isEmpty()) {
+				else if (damageScaling != 0 && livingEntity.getMainHandItem().isEmpty()) {
 					livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
-					cap.setValue(0);
+					stack.setData(AoADataAttachments.DAMAGE_SCALING, 0f);
 				}
 			}
 			catch (ConcurrentModificationException ex) {
@@ -73,9 +71,9 @@ public class PrimalSword extends BaseSword {
 		Multimap<Attribute, AttributeModifier> modifierMap =  super.getAttributeModifiers(slot, stack);
 
 		if (slot == EquipmentSlot.MAINHAND) {
-			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
+			float damageScaling = stack.getData(AoADataAttachments.DAMAGE_SCALING);
 
-			ItemUtil.setAttribute(modifierMap, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_UUID, getDamage() * (cap.getValue() == 0 ? 1 : cap.getValue()));
+			ItemUtil.setAttribute(modifierMap, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_UUID, getDamage() * (damageScaling == 0 ? 1 : damageScaling));
 		}
 
 		return modifierMap;

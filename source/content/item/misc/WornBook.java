@@ -11,8 +11,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.WrittenBookItem;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -49,7 +49,7 @@ public class WornBook extends WrittenBookItem {
 		}
 		else {
 			if (IntegrationManager.isPatchouliActive()) {
-				PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
+				//PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
 			}
 			else {
 				ClientOperations.displayWornBookGui();

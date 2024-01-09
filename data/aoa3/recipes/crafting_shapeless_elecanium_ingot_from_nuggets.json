@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "aoa3:elecanium_nugget"
+    }
+  ],
+  "result": {
+    "item": "aoa3:elecanium_ingot"
+  }
+}

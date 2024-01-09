@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.entity.brain.task.custom;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,10 +12,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.ConditionlessAttack;
 import net.tslat.smartbrainlib.object.SquareRadius;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
@@ -64,7 +64,7 @@ public class GroundSlamAttack<E extends LivingEntity> extends ConditionlessAttac
 
 	protected void doSlam(E entity) {
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-		ServerParticlePacket packet = new ServerParticlePacket();
+		TELParticlePacket packet = new TELParticlePacket();
 		Level level = entity.level();
 		RandomSource rand = entity.getRandom();
 		Entity originEntity = this.atTarget ? this.target : entity;
@@ -77,12 +77,12 @@ public class GroundSlamAttack<E extends LivingEntity> extends ConditionlessAttac
 					BlockState groundState;
 
 					if ((groundState = level.getBlockState(pos.set(spawnPos.x, spawnPos.y - 1, spawnPos.z))).blocksMotion())
-						packet.particle(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, groundState), () -> new Vec3(spawnPos.x + rand.nextGaussian(), spawnPos.y + 1.1, spawnPos.z + rand.nextGaussian())).spawnNTimes(3));
+						packet.particle(ParticleBuilder.forPositions(new BlockParticleOption(ParticleTypes.BLOCK, groundState), new Vec3(spawnPos.x + rand.nextGaussian(), spawnPos.y + 1.1, spawnPos.z + rand.nextGaussian())).spawnNTimes(3));
 				});
 			}
 		}
 
-		AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
+		packet.sendToAllPlayersTrackingEntity((ServerLevel)level, entity);
 
 		for (LivingEntity target : EntityRetrievalUtil.<LivingEntity>getEntities(entity.level(), new AABB(originEntity.position(), originEntity.position()).inflate(radius.xzRadius(), radius.yRadius(), radius.xzRadius()), target -> target.isAlive() && target.onGround() && target != entity && target instanceof LivingEntity && (!(target instanceof Player pl) || !pl.getAbilities().invulnerable))) {
 			entity.doHurtTarget(target);

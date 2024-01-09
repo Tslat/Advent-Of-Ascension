@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/iron"
+    },
+    "B": {
+      "item": "minecraft:clay_ball"
+    },
+    "C": {
+      "tag": "forge:ingots/emberstone"
+    }
+  },
+  "pattern": [
+    "A A",
+    "BCB"
+  ],
+  "result": {
+    "item": "aoa3:metal_tub"
+  }
+}

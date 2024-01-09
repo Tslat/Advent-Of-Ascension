@@ -134,10 +134,10 @@
         },
         {
           "condition": "aoa3:holding_item",
-          "hand": "main_hand",
           "predicate": {
             "tag": "forge:shears"
           },
+          "slot": "mainhand",
           "target": "killer_player"
         }
       ],

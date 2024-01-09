@@ -3,9 +3,9 @@
   "display": {
     "firstperson_lefthand": {
       "rotation": [
-        0,
-        90,
-        -25
+        -45,
+        -90,
+        0
       ],
       "scale": [
         0.68,
@@ -20,9 +20,9 @@
     },
     "firstperson_righthand": {
       "rotation": [
-        0,
-        -90,
-        25
+        -45,
+        90,
+        0
       ],
       "scale": [
         0.68,
@@ -36,6 +36,11 @@
       ]
     },
     "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        -90,
+        0
+      ],
       "scale": [
         0.55,
         0.55,
@@ -50,7 +55,7 @@
     "thirdperson_righthand": {
       "rotation": [
         0,
-        180,
+        90,
         0
       ],
       "scale": [

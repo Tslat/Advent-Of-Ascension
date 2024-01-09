@@ -4,7 +4,9 @@ import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -22,7 +24,7 @@ import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.NumberUtil;
@@ -79,10 +81,10 @@ public class ExtendedExplosion extends Explosion {
 	}
 
 	public ExtendedExplosion(ExplosionInfo explosionInfo, ServerLevel level, @Nullable Entity exploder, @Nullable Entity indirectExploder, @Nullable DamageSource damageSource, double x, double y, double z) {
-		super(level, exploder, damageSource, null, x, y, z, 0, false, BlockInteraction.KEEP);
+		super(level, exploder, damageSource, null, x, y, z, 0, false, BlockInteraction.KEEP, ParticleTypes.EXPLOSION, ParticleTypes.EXPLOSION_EMITTER, SoundEvents.GENERIC_EXPLODE);
 
 		this.info = explosionInfo;
-		this.origin = getPosition();
+		this.origin = center();
 		this.indirectExploder = indirectExploder;
 	}
 
@@ -135,7 +137,7 @@ public class ExtendedExplosion extends Explosion {
 		this.affectedEntities = getAffectedEntities();
 
 		filterAffectedBlocksAndEntities();
-		ForgeEventFactory.onExplosionDetonate(this.level, this, this.affectedEntities, (this.info.getBaseDamage() + this.info.getEffectiveRadius()) / 2f);
+		EventHooks.onExplosionDetonate(this.level, this, this.affectedEntities, (this.info.getBaseDamage() + this.info.getEffectiveRadius()) / 2f);
 		this.level.playSound(null, this.origin.x, this.origin.y, this.origin.z, this.info.getExplosionSound(), SoundSource.BLOCKS, 4.0F, (1.0F + (this.level.random.nextFloat() - this.level.random.nextFloat()) * 0.2F) * 0.7F);
 
 		if (this.info.isSingleTickExplosion()) {
@@ -188,7 +190,7 @@ public class ExtendedExplosion extends Explosion {
 			if (this.indirectExploder instanceof Player)
 				return AoAGameRules.checkDestructiveWeaponPhysics(this.level);
 
-			return ForgeEventFactory.getMobGriefingEvent(this.level, this.indirectExploder);
+			return EventHooks.getMobGriefingEvent(this.level, this.indirectExploder);
 		}
 		else if (this.source != null) {
 			if (this.source instanceof Player)
@@ -197,7 +199,7 @@ public class ExtendedExplosion extends Explosion {
 			if (this.source instanceof OwnableEntity ownable && ownable.getOwner() instanceof Player)
 				return AoAGameRules.checkDestructiveWeaponPhysics(this.level);
 
-			return ForgeEventFactory.getMobGriefingEvent(this.level, this.source);
+			return EventHooks.getMobGriefingEvent(this.level, this.source);
 		}
 
 		return true;
@@ -216,7 +218,7 @@ public class ExtendedExplosion extends Explosion {
 	 * @return The list of entities that are to be impacted by this explosion
 	 */
 	protected List<Entity> getAffectedEntities() {
-		Predicate<Entity> predicate = this.info.getAffectsOwner() ? entity -> !entity.ignoreExplosion() && this.info.shouldAffectEntity(this, entity) : entity -> entity != this.source && entity != this.indirectExploder && !entity.ignoreExplosion() && this.info.shouldAffectEntity(this, entity);
+		Predicate<Entity> predicate = this.info.getAffectsOwner() ? entity -> !entity.ignoreExplosion(this) && this.info.shouldAffectEntity(this, entity) : entity -> entity != this.source && entity != this.indirectExploder && !entity.ignoreExplosion(this) && this.info.shouldAffectEntity(this, entity);
 
 		return this.info.getRadius().map(
 				radius -> EntityRetrievalUtil.getEntities(this.level, AABB.ofSize(this.origin, radius * 2, radius * 2, radius * 2), predicate),
@@ -286,7 +288,7 @@ public class ExtendedExplosion extends Explosion {
 					.withOptionalParameter(LootContextParams.THIS_ENTITY, this.source);
 
 			state.spawnAfterBreak(serverLevel, pos, ItemStack.EMPTY, this.source instanceof Player || this.indirectExploder instanceof Player);
-			state.getDrops(params).forEach(stack -> addBlockDrops(loot, stack, pos));
+			state.getDrops(params).forEach(stack -> addOrAppendStack(loot, stack, pos));
 		}
 	}
 

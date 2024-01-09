@@ -1,5 +1,5 @@
 {
-  "parent": "minecraft:story/mine_stone",
+  "parent": "aoa3:overworld/nostalgia_trip",
   "criteria": {
     "obtain_worn_book": {
       "conditions": {
@@ -20,12 +20,9 @@
       "color": "white",
       "translate": "advancements.aoa3.overworld.the_journey_begins.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:worn_book"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.the_journey_begins.title"
@@ -36,5 +33,5 @@
       "obtain_worn_book"
     ]
   ],
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

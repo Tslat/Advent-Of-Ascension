@@ -4,7 +4,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.enchantment.*;
 import net.tslat.aoa3.content.item.weapon.blaster.BaseBlaster;
@@ -33,17 +33,17 @@ public final class AoAEnchantments {
 	public static final EnchantmentCategory UNSTACKABLE = EnchantmentCategory.create("UNSTACKABLE", item -> item != null && item.getMaxStackSize(new ItemStack(item)) == 0);
 	public static final EnchantmentCategory LIGHT_GUN = EnchantmentCategory.create("DUAL_WIELDABLE_GUN", item -> item instanceof BaseGun && !(item instanceof BaseSniper) && !(item instanceof BaseCannon));
 
-	public static final RegistryObject<Enchantment> ARCHMAGE = registerEnchantment("archmage", ArchmageEnchantment::new);
-	public static final RegistryObject<Enchantment> BRACE = registerEnchantment("brace", BraceEnchantment::new);
-	public static final RegistryObject<Enchantment> CONTROL = registerEnchantment("control", ControlEnchantment::new);
-	public static final RegistryObject<Enchantment> FORM = registerEnchantment("form", FormEnchantment::new);
-	public static final RegistryObject<Enchantment> GREED = registerEnchantment("greed", GreedEnchantment::new);
-	public static final RegistryObject<Enchantment> INTERVENTION = registerEnchantment("intervention", InterventionEnchantment::new);
-	public static final RegistryObject<Enchantment> RECHARGE = registerEnchantment("recharge", RechargeEnchantment::new);
-	public static final RegistryObject<Enchantment> SEVER = registerEnchantment("sever", SeverEnchantment::new);
-	public static final RegistryObject<Enchantment> SHELL = registerEnchantment("shell", ShellEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> ARCHMAGE = registerEnchantment("archmage", ArchmageEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> BRACE = registerEnchantment("brace", BraceEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> CONTROL = registerEnchantment("control", ControlEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> FORM = registerEnchantment("form", FormEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> GREED = registerEnchantment("greed", GreedEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> INTERVENTION = registerEnchantment("intervention", InterventionEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> RECHARGE = registerEnchantment("recharge", RechargeEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> SEVER = registerEnchantment("sever", SeverEnchantment::new);
+	public static final DeferredHolder<Enchantment, Enchantment> SHELL = registerEnchantment("shell", ShellEnchantment::new);
 
-	private static RegistryObject<Enchantment> registerEnchantment(String id, Supplier<Enchantment> enchantment) {
+	private static DeferredHolder<Enchantment, Enchantment> registerEnchantment(String id, Supplier<Enchantment> enchantment) {
 		return AoARegistries.ENCHANTMENTS.register(id, enchantment);
 	}
 }

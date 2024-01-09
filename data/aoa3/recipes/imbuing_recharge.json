@@ -1,8 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "aoa3:recharge"
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "aoa3:recharge",
+  "enchantment_level": 1,
   "infusion_level": 9,
   "ingredients": [
     {

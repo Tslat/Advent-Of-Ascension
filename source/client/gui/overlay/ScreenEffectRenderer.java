@@ -7,9 +7,9 @@ import net.minecraft.client.CameraType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
+import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.library.constant.ScreenImageEffect;
 import net.tslat.aoa3.util.RenderUtil;
@@ -21,7 +21,7 @@ public final class ScreenEffectRenderer {
 	private static final CopyOnWriteArrayList<ScreenImageEffect> effects = new CopyOnWriteArrayList<>();
 
 	public static void init() {
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAboveAll("aoa_screen_effects", ScreenEffectRenderer::onEffectRender));
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAboveAll(AdventOfAscension.id("screen_effects"), ScreenEffectRenderer::onEffectRender));
 	}
 
 	public static void addScreenEffect(ScreenImageEffect effect) {
@@ -38,7 +38,7 @@ public final class ScreenEffectRenderer {
 		effects.clear();
 	}
 
-	private static void onEffectRender(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
+	private static void onEffectRender(ExtendedGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON || effects.isEmpty() || Minecraft.getInstance().level == null)
 			return;
 

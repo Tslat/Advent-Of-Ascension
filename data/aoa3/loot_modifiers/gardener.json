@@ -7,7 +7,6 @@
     },
     {
       "condition": "aoa3:has_block_tag",
-      "require_all": false,
       "tags": [
         "minecraft:crops"
       ]

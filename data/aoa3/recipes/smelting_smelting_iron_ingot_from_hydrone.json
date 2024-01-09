@@ -6,5 +6,8 @@
   "ingredient": {
     "item": "aoa3:hydrone"
   },
-  "result": "minecraft:iron_ingot"
+  "result": {
+    "count": 2,
+    "item": "minecraft:iron_ingot"
+  }
 }

@@ -17,17 +17,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.nether.defused.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "aoa3:trophy"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.nether.defused.title"

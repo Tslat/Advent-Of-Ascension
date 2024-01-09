@@ -1,8 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "aoa3:intervention"
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "aoa3:intervention",
+  "enchantment_level": 1,
   "infusion_level": 97,
   "ingredients": [
     {

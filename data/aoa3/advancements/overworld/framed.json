@@ -128,12 +128,9 @@
       "color": "white",
       "translate": "advancements.aoa3.overworld.framed.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:chestplate_frame"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.framed.title"

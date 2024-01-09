@@ -2,24 +2,18 @@
   "parent": "aoa3:completionist/centenarian",
   "criteria": {
     "cycle_0": {
-      "conditions": {
-        "cycle": 1
-      },
-      "trigger": "aoa3:cycle"
+      "trigger": "aoa3:cycle_skill"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.completionist.the_cycle_begins.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "minecraft:totem_of_undying"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.the_cycle_begins.title"

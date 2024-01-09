@@ -20,8 +20,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -31,8 +29,9 @@ import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.misc.SandGiantPitTrapEntity;
 import net.tslat.aoa3.content.entity.misc.SandGiantSpikeTrapEntity;
 import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -218,16 +217,16 @@ public class SandGiantEntity extends AoAMeleeMob<SandGiantEntity> {
 			if (hasChargedUp()) {
 				LivingEntity target = entity.getTarget();
 
-				ServerParticlePacket packet = new ServerParticlePacket();
+				TELParticlePacket packet = new TELParticlePacket();
 				double centerX = entity.position().x();
 				double centerZ = entity.position().z();
 
 				for (double angle = 0; angle < 2 * Math.PI; angle += 2 / 180d * (2 * Math.PI)) {
-					packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.SANDSTORM.get(), 0.5f, 4f, 0, 0, 0, 0, entity.getId()),
+					packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.SANDSTORM.get(), 0.5f, 4f, 0, 0, 0, 0, entity.getId()),
 							centerX + 4 * Math.cos(angle), entity.position().y(), centerZ + 4 * Math.sin(angle)).velocity(0, 0.25f, 0));
 				}
 
-				AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)entity.level(), entity.position(), 20);
+				packet.sendToAllNearbyPlayers((ServerLevel)entity.level(), entity.position(), 20);
 
 				if (entity.tickCount % 20 == 0 && (taskExpiresAt == Integer.MAX_VALUE || runningTime + 20 < taskExpiresAt))
 					entity.playSound(AoASounds.SAND_WIND.get(), 1, 0.5f);

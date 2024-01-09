@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/elecanium"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "item": "aoa3:runic_energy"
+    },
+    "D": {
+      "item": "aoa3:ghostly_powder"
+    }
+  },
+  "pattern": [
+    "DAB",
+    "C B",
+    "DAB"
+  ],
+  "result": {
+    "item": "aoa3:soulfire_bow"
+  }
+}

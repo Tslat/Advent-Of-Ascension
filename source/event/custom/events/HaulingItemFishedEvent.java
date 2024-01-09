@@ -2,14 +2,13 @@ package net.tslat.aoa3.event.custom.events;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.event.entity.player.ItemFishedEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import net.tslat.aoa3.content.entity.misc.HaulingFishingBobberEntity;
 
 import java.util.List;
 
-@Cancelable
-public class HaulingItemFishedEvent extends ItemFishedEvent {
+public class HaulingItemFishedEvent extends ItemFishedEvent implements ICancellableEvent {
 	private final Entity reeledInEntity;
 	private final ItemStack haulingRod;
 	private int xp;

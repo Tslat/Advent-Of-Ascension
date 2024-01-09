@@ -2,20 +2,20 @@ package net.tslat.aoa3.content.item.misc;
 
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
 public class Realmstone extends Item {
-	private final RegistryObject<Block> portalBlock;
+	private final DeferredHolder<Block, Block> portalBlock;
 	private final String dimensionMsgSuffix;
 
-	public Realmstone(RegistryObject<Block> portalBlock, String dimension) {
+	public Realmstone(DeferredHolder<Block, Block> portalBlock, String dimension) {
 		super(new Item.Properties().stacksTo(1));
 
 		this.portalBlock = portalBlock;
 		this.dimensionMsgSuffix = dimension;
 	}
 
-	public RegistryObject<Block> getPortalBlock() {
+	public DeferredHolder<Block, Block> getPortalBlock() {
 		return portalBlock;
 	}
 

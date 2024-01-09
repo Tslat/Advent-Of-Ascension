@@ -8,7 +8,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -58,7 +58,7 @@ public final class EntitySpawningUtil {
 		if (entity instanceof Mob mob) {
 			mob.yHeadRot = mob.getYRot();
 			mob.yBodyRot = mob.getYRot();
-			ForgeEventFactory.onFinalizeSpawn(mob, level, level.getCurrentDifficultyAt(entity.blockPosition()), spawnReason, null, null);
+			EventHooks.onFinalizeSpawn(mob, level, level.getCurrentDifficultyAt(entity.blockPosition()), spawnReason, null, null);
 			mob.playAmbientSound();
 		}
 

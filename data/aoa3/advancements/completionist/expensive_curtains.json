@@ -291,17 +291,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.completionist.expensive_curtains.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "aoa3:bejewelled_lotto_banner"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.expensive_curtains.title"

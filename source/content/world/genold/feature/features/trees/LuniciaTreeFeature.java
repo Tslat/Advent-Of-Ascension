@@ -13,7 +13,7 @@ import net.tslat.aoa3.content.world.genold.feature.placement.config.BlockStatePl
 import java.util.function.Supplier;
 
 public class LuniciaTreeFeature extends AoATreeFeature {
-	public LuniciaTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
+	public LuniciaTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 

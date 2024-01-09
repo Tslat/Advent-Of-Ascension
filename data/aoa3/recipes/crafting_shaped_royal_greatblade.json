@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/baronyte"
+    },
+    "B": {
+      "tag": "forge:ingots/gold"
+    },
+    "C": {
+      "tag": "forge:rods/metal"
+    },
+    "D": {
+      "tag": "forge:nuggets/gold"
+    }
+  },
+  "pattern": [
+    " A ",
+    "DAD",
+    "BCB"
+  ],
+  "result": {
+    "item": "aoa3:royal_greatblade"
+  }
+}

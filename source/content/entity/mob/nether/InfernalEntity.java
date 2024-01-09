@@ -4,6 +4,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,12 +21,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
@@ -63,10 +63,11 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
 
                     BlockPos finalPos = pos;
 
-                    ServerParticlePacket packet = new ServerParticlePacket(ParticleBuilder.forPos(new BlockParticleOption(ParticleTypes.BLOCK, state), () -> new Vec3(finalPos.getX() + RandomUtil.randomValueUpTo(1), finalPos.getY() + 1.1f, finalPos.getZ() + RandomUtil.randomValueUpTo(1))).velocity(0, 0.5f, 0).spawnNTimes(3));
+                    net.tslat.effectslib.api.particle.ParticleBuilder.forPositions(new BlockParticleOption(ParticleTypes.BLOCK, state), () -> new Vec3(finalPos.getX() + RandomUtil.randomValueUpTo(1), finalPos.getY() + 1.1f, finalPos.getZ() + RandomUtil.randomValueUpTo(1)), 3)
+                            .velocity(0, 0.5f, 0)
+                            .sendToAllPlayersTrackingBlock((ServerLevel)entity.level(), finalPos);
 
                     entity.playSound(AoASounds.ROCK_SMASH.get(), 1, 0.2f);
-                    AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
                     doSlam(finalPos, 0.75f);
                 }));
     }
@@ -111,8 +112,7 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
     }
 
     private void doSlam(BlockPos fromPos, float chance) {
-        ServerParticlePacket packet = new ServerParticlePacket();
-        boolean sendPacket = false;
+        TELParticlePacket packet = new TELParticlePacket();
 
         for (Direction dir : Direction.values()) {
             if (RandomUtil.percentChance(chance)) {
@@ -120,9 +120,8 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
 
                 if (level().getBlockState(pos).getBlock() == Blocks.NETHERRACK) {
                     int tickTime = Math.max(1, 1 - pos.distManhattan(fromPos));
-                    sendPacket = true;
 
-                    packet.particle(ParticleBuilder.forPos(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.randomValueUpTo(1)));
+                    packet.particle(ParticleBuilder.forPosition(ParticleTypes.FLAME, pos.getX() + RandomUtil.randomValueUpTo(1), pos.getY() + 1.1, pos.getZ() + RandomUtil.randomValueUpTo(1)));
                     level().setBlock(pos, Blocks.MAGMA_BLOCK.defaultBlockState(), Block.UPDATE_ALL);
                     AoAScheduler.scheduleSyncronisedTask(() -> doSlam(pos, chance * 0.8f), tickTime);
                     AoAScheduler.scheduleSyncronisedTask(() -> {
@@ -133,8 +132,8 @@ public class InfernalEntity extends AoAMeleeMob<InfernalEntity> {
             }
         }
 
-        if (sendPacket)
-            AoANetworking.sendToAllPlayersTrackingEntity(packet, this);
+        if (!packet.isEmpty())
+            packet.sendToAllPlayersTrackingEntity((ServerLevel)level(), this);
     }
 
     @Override

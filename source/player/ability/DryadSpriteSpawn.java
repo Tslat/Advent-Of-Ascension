@@ -8,15 +8,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.level.BlockEvent;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.npc.ambient.DryadSpriteEntity;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.EntitySpawningUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public class DryadSpriteSpawn extends ScalableModAbility {
@@ -45,14 +44,14 @@ public class DryadSpriteSpawn extends ScalableModAbility {
 
 			if (serverLevel.getBlockState(pos.above()).isAir()) {
 				DryadSpriteEntity dryad = EntitySpawningUtil.spawnEntity(serverLevel, AoANpcs.DRYAD_SPRITE.get(), new Vec3(pos.getX() + 0.5f, pos.getY() + 0.1d, pos.getZ() + 0.5f), MobSpawnType.TRIGGERED);
-				ServerParticlePacket packet = new ServerParticlePacket();
+				TELParticlePacket packet = new TELParticlePacket();
 
 				for(int i = 0; i < 20; ++i) {
 					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.HAPPY_VILLAGER, dryad)
 							.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d)));
 				}
 
-				AoANetworking.sendToAllPlayersTrackingEntity(packet, ev.getPlayer());
+				packet.sendToAllPlayersTrackingEntity(serverLevel, ev.getPlayer());
 			}
 		}
 	}

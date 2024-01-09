@@ -22,9 +22,9 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.lib.ScrollablePane;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.AddSkillCyclePacket;
-import net.tslat.aoa3.common.packet.packets.ToggleAoAAbilityPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.AddSkillCyclePacket;
+import net.tslat.aoa3.common.networking.packets.adventplayer.ToggleAoAAbilityPacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
@@ -194,6 +194,9 @@ public class AdventGuiTabPlayer extends Screen {
 		poseStack.popPose();
 	}
 
+	@Override
+	public void renderTransparentBackground(GuiGraphics pGuiGraphics) {}
+
 	private void drawTotalLevel(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
 		Minecraft mc = Minecraft.getInstance();
 		int totalLevel = ClientPlayerDataManager.get().getTotalLevel();
@@ -322,7 +325,8 @@ public class AdventGuiTabPlayer extends Screen {
 					return true;
 				}
 
-				AoANetworking.sendToServer(new AddSkillCyclePacket(abilityPane.skill.type()));
+				if (abilityPane.skill.type() != null)
+					AoANetworking.sendToServer(new AddSkillCyclePacket(abilityPane.skill.type()));
 
 				return true;
 			}
@@ -345,13 +349,13 @@ public class AdventGuiTabPlayer extends Screen {
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double lateralScroll, double verticalScroll) {
 		if (abilityPane != null && abilityPane.skill != null) {
-			if (abilityPane.handleMouseScroll(adjustedMouseX, adjustedMouseY, delta))
+			if (abilityPane.handleMouseScroll(adjustedMouseX, adjustedMouseY, verticalScroll))
 				return true;
 		}
 
-		return super.mouseScrolled(mouseX, mouseY, delta);
+		return super.mouseScrolled(mouseX, mouseY, lateralScroll, verticalScroll);
 	}
 
 	private static class AbilityPane extends ScrollablePane {
@@ -397,7 +401,7 @@ public class AdventGuiTabPlayer extends Screen {
 			if (wasDragging && clickStartScroll == distanceScrolled && hoveredAbility != -1) {
 				AoAAbility.Instance instance = sortedAbilities.get(hoveredAbility);
 
-				if (instance.onGuiClick(this.mouseX - left, this.mouseY - top - (hoveredAbility * 50) + (int)distanceScrolled * 2))
+				if (instance.onGuiClick(this.mouseX - left, this.mouseY - top - (hoveredAbility * 50) + (int)distanceScrolled * 2) && this.skill.type() != null)
 					AoANetworking.sendToServer(new ToggleAoAAbilityPacket(skill.type(), instance));
 			}
 

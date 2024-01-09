@@ -16,7 +16,6 @@
     "icon": {
       "item": "aoa3:grenade"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.darwin_award.title"

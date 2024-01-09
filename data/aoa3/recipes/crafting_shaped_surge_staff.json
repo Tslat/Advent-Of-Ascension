@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:power_rune"
+    },
+    "B": {
+      "tag": "forge:rods/metal"
+    },
+    "C": {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    }
+  },
+  "pattern": [
+    "ADA",
+    " C ",
+    " B "
+  ],
+  "result": {
+    "item": "aoa3:surge_staff"
+  }
+}

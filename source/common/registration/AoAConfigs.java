@@ -1,9 +1,9 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.loading.FMLPaths;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLPaths;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.config.ClientConfig;
@@ -31,22 +31,22 @@ public final class AoAConfigs {
 	}
 
 	public static final ClientConfig CLIENT;
-	public static final ForgeConfigSpec CLIENT_CONFIG_SPEC;
+	public static final ModConfigSpec CLIENT_CONFIG_SPEC;
 
 	public static final CommonConfig COMMON;
-	public static final ForgeConfigSpec COMMON_CONFIG_SPEC;
+	public static final ModConfigSpec COMMON_CONFIG_SPEC;
 
 	public static final ServerConfig SERVER;
-	public static final ForgeConfigSpec SERVER_CONFIG_SPEC;
+	public static final ModConfigSpec SERVER_CONFIG_SPEC;
 
 	public static final IntegrationsConfig INTEGRATIONS;
-	public static final ForgeConfigSpec INTEGRATIONS_CONFIG_SPEC;
+	public static final ModConfigSpec INTEGRATIONS_CONFIG_SPEC;
 
 	static {
-		final Pair<ClientConfig, ForgeConfigSpec> clientSpecPair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
-		final Pair<CommonConfig, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(CommonConfig::new);
-		final Pair<ServerConfig, ForgeConfigSpec> serverSpecPair = new ForgeConfigSpec.Builder().configure(ServerConfig::new);
-		final Pair<IntegrationsConfig, ForgeConfigSpec> integrationSpecPair = new ForgeConfigSpec.Builder().configure(IntegrationsConfig::new);
+		final Pair<ClientConfig, ModConfigSpec> clientSpecPair = new ModConfigSpec.Builder().configure(ClientConfig::new);
+		final Pair<CommonConfig, ModConfigSpec> commonSpecPair = new ModConfigSpec.Builder().configure(CommonConfig::new);
+		final Pair<ServerConfig, ModConfigSpec> serverSpecPair = new ModConfigSpec.Builder().configure(ServerConfig::new);
+		final Pair<IntegrationsConfig, ModConfigSpec> integrationSpecPair = new ModConfigSpec.Builder().configure(IntegrationsConfig::new);
 
 		CLIENT_CONFIG_SPEC = clientSpecPair.getRight();
 		CLIENT = clientSpecPair.getLeft();

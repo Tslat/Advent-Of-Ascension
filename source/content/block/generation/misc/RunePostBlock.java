@@ -46,7 +46,7 @@ public class RunePostBlock extends Block {
 			}
 
 			if (!level.isClientSide()) {
-				AoAScheduler.scheduleSyncronisedTask(new RuneCreationTask((ServerLevel)level, pos, getRune(), heldItem.getCount() * ((RuneSource)heldItem.getItem()).getRuneGenFactor(), player.getUUID()), 1);
+				AoAScheduler.scheduleSyncronisedTask(new RuneCreationTask((ServerLevel)level, pos, getRune(), heldItem.getCount() * ((RuneSource)heldItem.getItem()).getRuneGenFactor(), player), 1);
 
 				if (!player.isCreative())
 					heldItem.shrink(heldItem.getCount());

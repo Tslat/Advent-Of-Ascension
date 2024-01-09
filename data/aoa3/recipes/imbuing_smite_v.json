@@ -1,9 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "minecraft:smite",
-    "level": 5
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:smite",
+  "enchantment_level": 5,
   "infusion_level": 37,
   "ingredients": [
     {

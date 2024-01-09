@@ -22,7 +22,7 @@ public class AoAScheduler {
 	}
 
 	public static void scheduleAsyncTask(Runnable run, int time, TimeUnit unit) {
-		if (scheduler == null && running)
+		if (scheduler == null || !running)
 			serverStartupTasks();
 
 		scheduler.schedule(run, time, unit);

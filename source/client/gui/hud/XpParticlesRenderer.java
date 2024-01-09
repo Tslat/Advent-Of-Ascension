@@ -7,10 +7,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
+import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
+import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
@@ -38,7 +38,7 @@ public final class XpParticlesRenderer {
 	private static AoASkill lastParticleSkill = null;
 
 	public static void init() {
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAbove(VanillaGuiOverlay.POTION_ICONS.id(), "aoa_xp_particles", XpParticlesRenderer::renderParticles));
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAbove(VanillaGuiOverlay.POTION_ICONS.id(), AdventOfAscension.id("aoa_xp_particles"), XpParticlesRenderer::renderParticles));
 	}
 
 	public static void addXpParticle(AoASkill skill, float xp, boolean isLevelUp) {
@@ -95,7 +95,7 @@ public final class XpParticlesRenderer {
 		}
 	}
 
-	private static void renderParticles(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
+	private static void renderParticles(ExtendedGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		if (particlesMap.isEmpty())
 			return;
 

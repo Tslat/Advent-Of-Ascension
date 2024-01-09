@@ -68,6 +68,9 @@ public class AdventGuiTabLeaderboard extends Screen {
 	}
 
 	@Override
+	public void renderTransparentBackground(GuiGraphics pGuiGraphics) {}
+
+	@Override
 	protected void init() {
 		if (this.categoryMenu == null)
 			this.categoryMenu = new CategoryMenu(getMinecraft(), AdventMainGui.scaledTabRootY, AdventMainGui.scaledTabRootX, 340, 125, AdventMainGui.SCALE);
@@ -82,9 +85,9 @@ public class AdventGuiTabLeaderboard extends Screen {
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double lateralScroll, double verticalScroll) {
 		if (this.categoryMenu != null)
-			return this.categoryMenu.handleMouseScroll(-1, -1, scrollAmount);
+			return this.categoryMenu.handleMouseScroll(-1, -1, verticalScroll);
 
 		return false;
 	}

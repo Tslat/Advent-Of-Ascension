@@ -17,8 +17,7 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
@@ -27,6 +26,7 @@ import net.tslat.aoa3.content.item.weapon.blaster.ExperimentW801;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import org.jetbrains.annotations.Nullable;
 
@@ -156,21 +156,21 @@ public class ReservedItem extends Item {
 		if (pl.getHealth() > 0 && !pl.level().getLevelData().isHardcore())
 			return;
 
-		if (!ForgeRegistries.ITEMS.getKey(pl.getMainHandItem().getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))
+		if (!RegistryUtil.getId(pl.getMainHandItem().getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("a"))
 			return;
 
 		NonNullList<ItemStack> armour = pl.getInventory().armor;
 
-		if (!ForgeRegistries.ITEMS.getKey(armour.get(3).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("l"))
+		if (!RegistryUtil.getId(armour.get(3).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("l"))
 			return;
 
-		if (!ForgeRegistries.ITEMS.getKey(armour.get(2).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("i"))
+		if (!RegistryUtil.getId(armour.get(2).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("i"))
 			return;
 
-		if (!ForgeRegistries.ITEMS.getKey(armour.get(1).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("e"))
+		if (!RegistryUtil.getId(armour.get(1).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("e"))
 			return;
 
-		if (!ForgeRegistries.ITEMS.getKey(armour.get(0).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("n"))
+		if (!RegistryUtil.getId(armour.get(0).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("n"))
 			return;
 
 		if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1))

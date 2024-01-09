@@ -23,10 +23,10 @@
       "tag": "forge:gems/shyregem"
     }
   ],
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "result": {
     "item": "aoa3:knight_boots"
+  },
+  "tool": {
+    "item": "aoa3:boots_frame"
   }
 }

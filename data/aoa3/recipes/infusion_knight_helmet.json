@@ -23,10 +23,10 @@
       "tag": "forge:gems/shyregem"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:knight_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

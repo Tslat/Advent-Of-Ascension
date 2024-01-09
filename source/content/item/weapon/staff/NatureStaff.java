@@ -33,7 +33,7 @@ public class NatureStaff extends BaseStaff<List<BlockPos>> {
 			if (!(state.getBlock() instanceof BonemealableBlock))
 				return false;
 
-			if (!((BonemealableBlock)state.getBlock()).isValidBonemealTarget(caster.level(), pos.immutable(), state, false))
+			if (!((BonemealableBlock)state.getBlock()).isValidBonemealTarget(caster.level(), pos.immutable(), state))
 				return false;
 
 			return WorldUtil.canModifyBlock(caster.level(), pos, caster, staff);

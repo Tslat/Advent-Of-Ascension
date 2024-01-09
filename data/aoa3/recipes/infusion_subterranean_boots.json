@@ -11,10 +11,10 @@
       "tag": "forge:dusts/redstone"
     }
   ],
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "result": {
     "item": "aoa3:subterranean_boots"
+  },
+  "tool": {
+    "item": "aoa3:boots_frame"
   }
 }

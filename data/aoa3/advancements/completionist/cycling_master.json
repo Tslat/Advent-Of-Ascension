@@ -5,21 +5,18 @@
       "conditions": {
         "cycle": 10
       },
-      "trigger": "aoa3:cycle"
+      "trigger": "aoa3:cycle_skill"
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.completionist.cycling_master.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "minecraft:dragon_egg"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.cycling_master.title"

@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public abstract class AoATreeFeature extends Feature<BlockStatePlacementConfig> {
-	protected final Supplier<AoASaplingBlock> sapling;
+	protected final Supplier<? extends AoASaplingBlock> sapling;
 
-	public AoATreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> sapling) {
+	public AoATreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> sapling) {
 		super(codec);
 
 		this.sapling = sapling;

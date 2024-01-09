@@ -70,11 +70,6 @@ public abstract class AoAWaterMonster<T extends AoAWaterMonster<T>> extends AoAM
     }
 
     @Override
-    public boolean canBreatheUnderwater() {
-        return true;
-    }
-
-    @Override
     public MobType getMobType() {
         return MobType.WATER;
     }

@@ -19,8 +19,8 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.IPlantable;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.IPlantable;
 
 import java.util.function.Supplier;
 
@@ -130,7 +130,7 @@ public abstract class MultiBlockCrop extends AoACropBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClientSide) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
 		if (isMaxAge(state))
 			return false;
 
@@ -200,9 +200,9 @@ public abstract class MultiBlockCrop extends AoACropBlock {
 			if (age <= stagesPerBlock() * (1 + height) - 1) {
 				float growthSpeed = getGrowthSpeed(this, world, pos);
 
-				if (ForgeHooks.onCropsGrowPre(world, pos, state, rand.nextInt((int)(25f / growthSpeed) + 1) == 0)) {
+				if (CommonHooks.onCropsGrowPre(world, pos, state, rand.nextInt((int)(25f / growthSpeed) + 1) == 0)) {
 					growDown(world, pos, state);
-					ForgeHooks.onCropsGrowPost(world, pos, state);
+					CommonHooks.onCropsGrowPost(world, pos, state);
 				}
 			}
 		}

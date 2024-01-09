@@ -9,7 +9,6 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -49,7 +48,7 @@ public final class ObjectUtil {
 	public static JsonObject stackToJson(ItemStack stack) {
 		JsonObject json = new JsonObject();
 
-		json.add("item", new JsonPrimitive(ForgeRegistries.ITEMS.getKey(stack.getItem()).toString()));
+		json.add("item", new JsonPrimitive(RegistryUtil.getId(stack.getItem()).toString()));
 
 		if (stack.getCount() == 1 && !stack.hasTag())
 			return json;

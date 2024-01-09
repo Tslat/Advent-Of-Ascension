@@ -1,5 +1,6 @@
 package net.tslat.aoa3.client.gui.realmstone;
 
+import com.google.common.base.Suppliers;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -15,7 +16,6 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
-import net.minecraftforge.common.util.Lazy;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.data.client.RealmstoneInsertsReloadListener;
 import net.tslat.aoa3.library.object.RenderContext;
@@ -27,6 +27,7 @@ import net.tslat.aoa3.util.RenderUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.function.Supplier;
 
 public class BlankRealmstoneScreen extends Screen {
 	private static final ResourceLocation background = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/background.png");
@@ -83,7 +84,7 @@ public class BlankRealmstoneScreen extends Screen {
 			panMouseY = 0;
 		}
 
-		renderBackground(guiGraphics);
+		renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 		poseStack.pushPose();
 		poseStack.scale(scale, scale, scale);
 		RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -120,7 +121,7 @@ public class BlankRealmstoneScreen extends Screen {
 		private final int posY;
 		private final String[] parentNodes;
 
-		private final Lazy<ArrayList<FormattedCharSequence>> hoverTexts;
+		private final Supplier<ArrayList<FormattedCharSequence>> hoverTexts;
 
 		public RealmstoneWorldInsert(String id, int posX, int posY, String... parentNodes) {
 			this.id = id;
@@ -129,7 +130,7 @@ public class BlankRealmstoneScreen extends Screen {
 			this.parentNodes = parentNodes;
 			this.texture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/realmstonegui/worlds/" + id + ".png");
 
-			hoverTexts = Lazy.of(() -> {
+			hoverTexts = Suppliers.memoize(() -> {
 				ArrayList<FormattedCharSequence> texts = new ArrayList<>(2);
 
 				texts.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("dimension", id), ChatFormatting.BLUE).getVisualOrderText());
@@ -376,8 +377,8 @@ public class BlankRealmstoneScreen extends Screen {
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
-		scale += scrollAmount / 100f;
+	public boolean mouseScrolled(double mouseX, double mouseY, double lateralScroll, double verticalScroll) {
+		scale += verticalScroll / 100f;
 		scale = (float)Mth.clamp(scale, 0.14, 1.3);
 
 		offsetX = Math.min(offsetX, backgroundWidth - (int)(viewSpaceWidth / scale));

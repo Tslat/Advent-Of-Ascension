@@ -18,7 +18,7 @@ public class CreepTreeFeature extends AoATreeFeature {
 	private static final BlockState leaves = AoABlocks.CREEP_LEAVES.get().defaultBlockState();
 	private static final BlockState vines = AoABlocks.CREEP_VINES.get().defaultBlockState();
 
-	public CreepTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
+	public CreepTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 

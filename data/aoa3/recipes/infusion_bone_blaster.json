@@ -20,10 +20,10 @@
       "tag": "aoa3:precasian_bone"
     }
   ],
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "result": {
     "item": "aoa3:bone_blaster"
+  },
+  "tool": {
+    "item": "aoa3:blaster_frame"
   }
 }

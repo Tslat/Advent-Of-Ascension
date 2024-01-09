@@ -11,7 +11,7 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.client.ForgeHooksClient;
+import net.neoforged.neoforge.client.ClientHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
@@ -39,7 +39,7 @@ public class SelectInventoryItemScreen extends ContainerScreen {
 	@Override
 	public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
 		if (pKeyCode == 256)
-			ForgeHooksClient.popGuiLayer(minecraft);
+			ClientHooks.popGuiLayer(minecraft);
 
 		return true;
 	}
@@ -51,7 +51,7 @@ public class SelectInventoryItemScreen extends ContainerScreen {
 
 			if ((currentItem == null && item != Items.AIR) || (currentItem != null && currentItem != item)) {
 				this.selectionConsumer.accept(item);
-				ForgeHooksClient.popGuiLayer(minecraft);
+				ClientHooks.popGuiLayer(minecraft);
 			}
 		}
 	}

@@ -6,11 +6,9 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
-import net.tslat.aoa3.util.MathUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -38,29 +36,26 @@ public class LaserBlaster extends BaseBlaster {
 
 	@Override
 	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, ItemStack stack, ShotInfo shotInfo) {
-		ServerParticlePacket packet = new ServerParticlePacket();
+		TELParticlePacket packet = new TELParticlePacket();
 		Vec3 originPos = shotInfo.shotOrBarrelPosForVfx();
 		Vec3 hitPos = shotInfo.getHitPos().orElse(originPos);
 
-		for (Vec3 linePos : MathUtil.inLine(originPos, hitPos, originPos.distanceTo(hitPos) * 6)) {
-			packet.particle(ParticleBuilder.forPos(ParticleTypes.SONIC_BOOM, linePos)
-					.lifespan(1)
-					.ignoreDistanceAndLimits()
-					.scaleMod(0.05f)
-					.colourOverride(1, 0, 0, 1f));
-			packet.particle(ParticleBuilder.forPos(ParticleTypes.END_ROD, linePos)
-					.lifespan(1)
-					.ignoreDistanceAndLimits()
-					.scaleMod(0.4f)
-					.colourOverride(1, 0, 0, 1f));
-		}
-
-		packet.particle(ParticleBuilder.forPos(ParticleTypes.WARPED_SPORE, hitPos)
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.SONIC_BOOM, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+				.lifespan(1)
+				.ignoreDistanceAndLimits()
+				.scaleMod(0.05f)
+				.colourOverride(1, 0, 0, 1f));
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.END_ROD, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+				.lifespan(1)
+				.ignoreDistanceAndLimits()
+				.scaleMod(0.4f)
+				.colourOverride(1, 0, 0, 1f));
+		packet.particle(ParticleBuilder.forPositions(ParticleTypes.WARPED_SPORE, hitPos)
 				.lifespan(5)
 				.ignoreDistanceAndLimits()
 				.colourOverride(1, 0, 0, 1f)
 				.spawnNTimes(2));
 
-		AoANetworking.sendToAllPlayersTrackingEntity(packet, shooter);
+		packet.sendToAllPlayersTrackingEntity(level, shooter);
 	}
 }

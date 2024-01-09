@@ -8,11 +8,10 @@ import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
-import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityHandles;
-import net.tslat.aoa3.content.capability.persistentstack.PersistentStackCapabilityProvider;
 import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
 import net.tslat.aoa3.content.item.weapon.crossbow.BaseCrossbow;
 
@@ -105,11 +104,7 @@ public final class ModelProperties {
 	}
 
 	private static void registerExpFlask() {
-		registerItemProperty(AoATools.EXP_FLASK.get(), "filled", (stack, world, entity, seed) -> {
-			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
-
-			return cap.getValue() <= 0 ? 0 : 1;
-		});
+		registerItemProperty(AoATools.EXP_FLASK.get(), "filled", (stack, world, entity, seed) -> stack.getData(AoADataAttachments.CHARGE) <= 0 ? 0 : 1);
 	}
 
 	private static void registerParalyzer() {
@@ -127,11 +122,7 @@ public final class ModelProperties {
 	}
 
 	private static void registerGuardiansSword() {
-		registerItemProperty(AoAWeapons.GUARDIANS_SWORD.get(), "charged", (stack, world, entity, seed) -> {
-			PersistentStackCapabilityHandles cap = PersistentStackCapabilityProvider.getOrDefault(stack, null);
-
-			return cap.getValue() <= 0 ? 0 : 1;
-		});
+		registerItemProperty(AoAWeapons.GUARDIANS_SWORD.get(), "charged", (stack, world, entity, seed) -> stack.getData(AoADataAttachments.CHARGE) <= 0 ? 0 : 1);
 	}
 
 	private static void registerRods() {

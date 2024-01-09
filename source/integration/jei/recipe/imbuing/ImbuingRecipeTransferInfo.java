@@ -6,13 +6,13 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.Slot;
 import net.tslat.aoa3.common.container.InfusionTableContainer;
 import net.tslat.aoa3.common.registration.AoAContainers;
-import net.tslat.aoa3.content.recipe.InfusionRecipe;
+import net.tslat.aoa3.content.recipe.ImbuingRecipe;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTableContainer, InfusionRecipe> {
+public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTableContainer, ImbuingRecipe> {
 	@Override
 	public Class<InfusionTableContainer> getContainerClass() {
 		return InfusionTableContainer.class;
@@ -24,17 +24,17 @@ public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTa
 	}
 
 	@Override
-	public RecipeType<InfusionRecipe> getRecipeType() {
+	public RecipeType<ImbuingRecipe> getRecipeType() {
 		return ImbuingRecipeCategory.RECIPE_TYPE;
 	}
 
 	@Override
-	public boolean canHandle(InfusionTableContainer container, InfusionRecipe recipe) {
-		return recipe.isEnchanting();
+	public boolean canHandle(InfusionTableContainer container, ImbuingRecipe recipe) {
+		return true;
 	}
 
 	@Override
-	public List<Slot> getRecipeSlots(InfusionTableContainer container, InfusionRecipe recipe) {
+	public List<Slot> getRecipeSlots(InfusionTableContainer container, ImbuingRecipe recipe) {
 		List<Slot> slots = new ArrayList<>(10);
 
 		for (int i = 1; i <= 11; i++) {
@@ -45,7 +45,7 @@ public class ImbuingRecipeTransferInfo implements IRecipeTransferInfo<InfusionTa
 	}
 
 	@Override
-	public List<Slot> getInventorySlots(InfusionTableContainer container, InfusionRecipe recipe) {
+	public List<Slot> getInventorySlots(InfusionTableContainer container, ImbuingRecipe recipe) {
 		List<Slot> inventorySlots = new ArrayList<Slot>(container.slots.size() - 11);
 
 		for (int i = 12; i < container.slots.size(); i++) {

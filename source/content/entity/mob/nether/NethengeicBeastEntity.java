@@ -25,12 +25,10 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -41,10 +39,11 @@ import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.FireballEntity;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
@@ -147,7 +146,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                 if (getRunningTime() <= 5)
                     return true;
 
-                ServerParticlePacket packet = new ServerParticlePacket();
+                TELParticlePacket packet = new TELParticlePacket();
 
                 for (int i = -180; i <= 180; i += 8) {
                     double angle = Math.toRadians(i * entity.tickCount);
@@ -157,12 +156,12 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     double velocityX = x - entity.getX();
                     double velocityZ = z - entity.getZ();
 
-                    packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.35f, 3, 0, 0, 0, 0, entity.getId()), x, y, z).velocity(velocityX, -0.6f, velocityZ));
-                    packet.particle(ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME, x, y, z).velocity(velocityX, -0.6f, velocityZ));
-                    packet.particle(ParticleBuilder.forPos(ParticleTypes.SMOKE, x, y, z));
+                    packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.35f, 3, 0, 0, 0, 0, entity.getId()), x, y, z).velocity(velocityX, -0.6f, velocityZ));
+                    packet.particle(ParticleBuilder.forPosition(ParticleTypes.SMALL_FLAME, x, y, z).velocity(velocityX, -0.6f, velocityZ));
+                    packet.particle(ParticleBuilder.forPosition(ParticleTypes.SMOKE, x, y, z));
                 }
 
-                AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+                packet.sendToAllNearbyPlayers((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -199,16 +198,16 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                 double baseX = position.x;
                 double baseY = entity.getEyeY() - 1;
                 double baseZ = position.z;
-                ServerParticlePacket packet = new ServerParticlePacket(ParticleBuilder.forPos(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ));
+                TELParticlePacket packet = new TELParticlePacket(ParticleBuilder.forPosition(ParticleTypes.LARGE_SMOKE, baseX, baseY, baseZ));
 
                 for (int i = 0; i < 5; i++) {
                     Vec3 velocity = this.target.getEyePosition().subtract(baseX + RandomUtil.randomScaledGaussianValue(0.5f), baseY + RandomUtil.randomScaledGaussianValue(0.5f), baseZ + RandomUtil.randomScaledGaussianValue(0.5f)).normalize().scale(0.75f);
 
-                    packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.35f, 5, 0, 0, 0, 0, entity.getId()), baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
-                    packet.particle(ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
+                    packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.35f, 5, 0, 0, 0, 0, entity.getId()), baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
+                    packet.particle(ParticleBuilder.forPosition(ParticleTypes.SMALL_FLAME, baseX, baseY, baseZ).velocity(velocity.x, velocity.y, velocity.z));
                 }
 
-                AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
+                packet.sendToAllNearbyPlayers((ServerLevel)entity.level(), EntityUtil.getEntityCenter(entity), 64);
 
                 if (getRunningTime() % 9 == 0 || getRunningTime() % 19 == 0)
                     entity.playSound(AoASounds.FLAMETHROWER.get(), 2, 1);
@@ -314,7 +313,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
     @Override
     public boolean canSwimInFluidType(FluidType type) {
-        return type != ForgeMod.EMPTY_TYPE.get();
+        return type != NeoForgeMod.EMPTY_TYPE.value();
     }
 
     @Override
@@ -335,18 +334,18 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
                     double startZ = sin * getBbWidth() + getZ();
                     double startY = getRandomY();
 
-                    ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FIRE_AURA.get(), 0.25f, 5, 1, 1, 1, 0.75f, getId()), startX, startY, startZ)
-                            .velocity(RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1).spawnParticles();
+                    ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.FIRE_AURA.get(), 0.25f, 5, 1, 1, 1, 0.75f, getId()), startX, startY, startZ)
+                            .velocity(RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1, RandomUtil.fiftyFifty() ? -1 : 1).spawnParticles(level());
                 }
             }
 
-            ParticleBuilder.forPos(ParticleTypes.FLAME, getX() + RandomUtil.randomValueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.randomValueBetween(-0.2f, 0.2f), getZ() + RandomUtil.randomValueBetween(-0.2f, 0.2f)).spawnParticles();
+            ParticleBuilder.forPosition(ParticleTypes.FLAME, getX() + RandomUtil.randomValueBetween(-0.2f, 0.2f), getEyeY() - 1 + RandomUtil.randomValueBetween(-0.2f, 0.2f), getZ() + RandomUtil.randomValueBetween(-0.2f, 0.2f)).spawnParticles(level());
 
             if (getRandom().nextInt(10) == 0) {
-                ParticleBuilder.forPos(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ()).spawnParticles();
+                ParticleBuilder.forPosition(ParticleTypes.SMOKE, getX(), getEyeY() - 1, getZ()).spawnParticles(level());
 
                 if (getDeltaMovement().horizontalDistanceSqr() == 0)
-                    ParticleBuilder.forPos(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ()).spawnParticles();
+                    ParticleBuilder.forPosition(ParticleTypes.DRIPPING_LAVA, getX(), getEyeY() - 1, getZ()).spawnParticles(level());
             }
         }
         else if (hasAura() && BrainUtils.getTargetOfEntity(this) == null) {
@@ -373,7 +372,7 @@ public class NethengeicBeastEntity extends AoARangedMob<NethengeicBeastEntity> {
 
     @Override
     public void doRangedAttackBlock(@org.jetbrains.annotations.Nullable BaseMobProjectile projectile, BlockState blockHit, BlockPos pos, Direction sideHit) {
-        if (ForgeEventFactory.getMobGriefingEvent(level(), projectile.getOwner()) && projectile instanceof FireballEntity) {
+        if (EventHooks.getMobGriefingEvent(level(), projectile.getOwner()) && projectile instanceof FireballEntity) {
             BlockPos firePos = pos.offset(sideHit.getNormal());
 
             if (!this.level().getBlockState(firePos).canBeReplaced()) { // Because vanilla collision detection is stupid

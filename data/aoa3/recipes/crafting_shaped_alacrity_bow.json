@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/diamond"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "tag": "forge:gems/jade"
+    }
+  },
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "result": {
+    "item": "aoa3:alacrity_bow"
+  }
+}

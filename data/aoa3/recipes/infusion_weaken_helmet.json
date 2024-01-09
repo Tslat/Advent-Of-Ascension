@@ -14,10 +14,10 @@
       "tag": "forge:gems/diamond"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:weaken_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

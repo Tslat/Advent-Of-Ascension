@@ -17,10 +17,10 @@
       "tag": "forge:ingots/lyon"
     }
   ],
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "result": {
     "item": "aoa3:lyonic_boots"
+  },
+  "tool": {
+    "item": "aoa3:boots_frame"
   }
 }

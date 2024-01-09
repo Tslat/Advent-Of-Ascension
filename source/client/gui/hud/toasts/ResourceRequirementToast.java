@@ -7,6 +7,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.toasts.Toast;
 import net.minecraft.client.gui.components.toasts.ToastComponent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
@@ -14,6 +15,8 @@ import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.*;
 
 public class ResourceRequirementToast implements Toast {
+	private static final ResourceLocation BACKGROUND_SPRITE = new ResourceLocation("toast/advancement");
+
 	private final AoAResource resource;
 	private final float resourceAmount;
 	private final Component title;
@@ -44,7 +47,7 @@ public class ResourceRequirementToast implements Toast {
 		RenderContext renderContext = RenderContext.of(guiGraphics);
 
 		RenderUtil.resetShaderColour();
-		guiGraphics.blit(TEXTURE, 0, 0, 0, 0, 160, 32);
+		guiGraphics.blitSprite(BACKGROUND_SPRITE, 0, 0, width(), height());
 		poseStack.pushPose();
 		poseStack.scale(0.9f, 0.9f, 1f);
 		poseStack.translate(5.5f, 5, 0);

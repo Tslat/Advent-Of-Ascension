@@ -29,10 +29,10 @@
       "tag": "forge:gems/jade"
     }
   ],
-  "input": {
-    "item": "aoa3:chestplate_frame"
-  },
   "result": {
     "item": "aoa3:rosidian_chestplate"
+  },
+  "tool": {
+    "item": "aoa3:chestplate_frame"
   }
 }

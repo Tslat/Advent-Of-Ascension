@@ -19,9 +19,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.library.object.GenericEntryPool;
 import net.tslat.aoa3.util.PlayerUtil;
@@ -147,7 +147,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 				Function<Level, Entity> factory;
 
 				if (obj.has("item")) {
-					Item item = ForgeRegistries.ITEMS.getValue(new ResourceLocation(obj.get("item").getAsString()));
+					Item item = AoARegistries.ITEMS.getEntry(new ResourceLocation(obj.get("item").getAsString()));
 
 					if (item == null)
 						continue;
@@ -167,7 +167,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 					};
 				}
 				else {
-					EntityType<?> entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(obj.get("entity").getAsString()));
+					EntityType<?> entityType = AoARegistries.ENTITIES.getEntry(new ResourceLocation(obj.get("entity").getAsString()));
 
 					if (entityType == null)
 						continue;
@@ -207,7 +207,7 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getLavaEntry(Biome biome, Level level) {
-			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, ForgeRegistries.BIOMES.getKey(biome));
+			ResourceKey<Biome> resourceKey = level.registryAccess().registry(Registries.BIOME).get().getResourceKey(biome).orElseThrow();
 			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = LAVA_MAP.get(resourceKey);
 
 			if (entry != null)

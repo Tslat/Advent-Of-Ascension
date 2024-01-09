@@ -1,9 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "aoa3:sever",
-    "level": 6
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "aoa3:sever",
+  "enchantment_level": 6,
   "infusion_level": 80,
   "ingredients": [
     {

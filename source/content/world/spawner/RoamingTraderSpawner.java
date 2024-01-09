@@ -22,7 +22,7 @@ import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.List;
@@ -116,7 +116,7 @@ public class RoamingTraderSpawner implements AoACustomSpawner {
 					if (this.spawnRules.isEmpty() && !mob.checkSpawnRules(level, MobSpawnType.NATURAL) || !mob.checkSpawnObstruction(level))
 						continue;
 
-					ForgeEventFactory.onFinalizeSpawn(mob, level, level.getCurrentDifficultyAt(pos), MobSpawnType.NATURAL, null, null);
+					EventHooks.onFinalizeSpawn(mob, level, level.getCurrentDifficultyAt(pos), MobSpawnType.NATURAL, null, null);
 				}
 
 				level.addFreshEntityWithPassengers(entity);

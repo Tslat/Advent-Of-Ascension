@@ -20,10 +20,10 @@
       "tag": "forge:gunpowder"
     }
   ],
-  "input": {
-    "item": "aoa3:sniper_frame"
-  },
   "result": {
     "item": "aoa3:viper_1"
+  },
+  "tool": {
+    "item": "aoa3:sniper_frame"
   }
 }

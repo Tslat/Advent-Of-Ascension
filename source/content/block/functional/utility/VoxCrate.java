@@ -21,7 +21,7 @@ public class VoxCrate extends Block {
 	}
 
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		super.playerWillDestroy(world, pos, state, player);
 
 		if (!world.isClientSide && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getItemInHand(InteractionHand.MAIN_HAND)) == 0) {
@@ -32,5 +32,7 @@ public class VoxCrate extends Block {
 			world.addFreshEntity(lottoman);
 			player.sendSystemMessage(LocaleUtil.getLocaleMessage(AoANpcs.LOTTOMAN.get().getDescriptionId() + ".spawn"));
 		}
+
+		return state;
 	}
 }

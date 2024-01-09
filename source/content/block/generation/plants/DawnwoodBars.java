@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BushBlock;
@@ -15,6 +16,11 @@ public class DawnwoodBars extends BushBlock/*BidirectionalStackablePlant*/ {
 
 	public DawnwoodBars(BlockBehaviour.Properties properties) {
 		super(properties);
+	}
+
+	@Override
+	protected MapCodec<? extends DawnwoodBars> codec() {
+		return simpleCodec(DawnwoodBars::new);
 	}
 
 	@Override

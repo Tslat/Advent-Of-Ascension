@@ -1,8 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "minecraft:punch"
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:punch",
+  "enchantment_level": 1,
   "infusion_level": 19,
   "ingredients": [
     {

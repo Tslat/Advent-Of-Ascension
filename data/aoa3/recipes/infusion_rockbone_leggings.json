@@ -17,10 +17,10 @@
       "tag": "forge:bones"
     }
   ],
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "result": {
     "item": "aoa3:rockbone_leggings"
+  },
+  "tool": {
+    "item": "aoa3:leggings_frame"
   }
 }

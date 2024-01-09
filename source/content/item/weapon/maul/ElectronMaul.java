@@ -14,9 +14,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityHandles;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.util.ItemUtil;
@@ -36,22 +35,21 @@ public class ElectronMaul extends BaseMaul {
 	@Override
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int itemSlot, boolean isSelected) {
 		if (world.getGameTime() % 10 == 0 && entity instanceof LivingEntity livingEntity) {
-			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
+			float damageScaling = stack.getData(AoADataAttachments.DAMAGE_SCALING);
 
 			try {
 				if (isSelected) {
-					float currentKnockbackMod = cap.getValue();
 					float currentCalcBuff = getKnockbackMultiplier(entity);
 
-					if (currentKnockbackMod != currentCalcBuff) {
+					if (damageScaling != currentCalcBuff) {
 						livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
-						cap.setValue(currentCalcBuff);
+						stack.setData(AoADataAttachments.DAMAGE_SCALING, currentCalcBuff);
 						livingEntity.getAttributes().addTransientAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
 					}
 				}
-				else if (cap.getValue() != 0 && livingEntity.getMainHandItem().isEmpty()) {
+				else if (damageScaling != 0 && livingEntity.getMainHandItem().isEmpty()) {
 					livingEntity.getAttributes().removeAttributeModifiers(getAttributeModifiers(EquipmentSlot.MAINHAND, stack));
-					cap.setValue(0);
+					stack.setData(AoADataAttachments.DAMAGE_SCALING, 0f);
 				}
 			}
 			catch (ConcurrentModificationException ex) {
@@ -62,9 +60,7 @@ public class ElectronMaul extends BaseMaul {
 
 	@Override
 	protected void doMeleeEffect(ItemStack stack, Entity target, LivingEntity attacker, float attackCooldown) {
-		VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
-
-		if (cap.getValue() > 0.75f)
+		if (stack.getData(AoADataAttachments.DAMAGE_SCALING) > 0.75f)
 			WorldUtil.spawnLightning((ServerLevel)attacker.level(), (ServerPlayer)attacker, target.getX(), target.getY(), target.getZ(), false, false);
 
 		if (attacker instanceof ServerPlayer player) {
@@ -89,9 +85,9 @@ public class ElectronMaul extends BaseMaul {
 		Multimap<Attribute, AttributeModifier> modifierMap =  super.getAttributeModifiers(slot, stack);
 
 		if (slot == EquipmentSlot.MAINHAND) {
-			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(stack, null);
+			float damageScaling = stack.getData(AoADataAttachments.DAMAGE_SCALING);
 
-			ItemUtil.setAttribute(modifierMap, Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER_UUID, getBaseKnockback() * (cap.getValue() == 0 ? 1 : cap.getValue()));
+			ItemUtil.setAttribute(modifierMap, Attributes.ATTACK_KNOCKBACK, KNOCKBACK_MODIFIER_UUID, getBaseKnockback() * (damageScaling == 0 ? 1 : damageScaling));
 		}
 
 		return modifierMap;

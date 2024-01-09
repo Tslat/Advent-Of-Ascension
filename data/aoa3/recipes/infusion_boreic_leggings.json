@@ -26,10 +26,10 @@
       "item": "aoa3:reinforced_cloth"
     }
   ],
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "result": {
     "item": "aoa3:boreic_leggings"
+  },
+  "tool": {
+    "item": "aoa3:leggings_frame"
   }
 }

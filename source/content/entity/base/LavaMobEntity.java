@@ -8,6 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
 
 public abstract class LavaMobEntity extends PathfinderMob {
 	protected LavaMobEntity(EntityType<? extends LavaMobEntity> entityType, Level world) {
@@ -15,10 +17,6 @@ public abstract class LavaMobEntity extends PathfinderMob {
 
 		this.setPathfindingMalus(BlockPathTypes.LAVA, 0);
 		this.setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0);
-	}
-
-	public boolean canBreatheUnderwater() {
-		return true;
 	}
 
 	public boolean checkSpawnObstruction(LevelReader pLevel) {
@@ -45,6 +43,14 @@ public abstract class LavaMobEntity extends PathfinderMob {
 		else {
 			this.setAirSupply(300);
 		}
+	}
+
+	@Override
+	public boolean canDrownInFluidType(FluidType type) {
+		if (type == NeoForgeMod.LAVA_TYPE.value())
+			return false;
+
+		return super.canDrownInFluidType(type);
 	}
 
 	@Override

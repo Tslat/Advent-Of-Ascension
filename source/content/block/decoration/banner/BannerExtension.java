@@ -30,7 +30,7 @@ public class BannerExtension extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		BlockPos bannerPos = state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED ? pos.above() : pos.below();
 		BlockState banner = world.getBlockState(bannerPos);
 
@@ -41,6 +41,8 @@ public class BannerExtension extends Block implements SimpleWaterloggedBlock {
 			dropResources(state, world, pos, null, player, player.getMainHandItem());
 			dropResources(banner, world, bannerPos, null, player, player.getMainHandItem());
 		}
+
+		return state;
 	}
 
 	@Override
@@ -117,7 +119,7 @@ public class BannerExtension extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
 		if (state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED) {
 			BlockPos bannerPos = pos.below();
 			BlockState banner = world.getBlockState(bannerPos);

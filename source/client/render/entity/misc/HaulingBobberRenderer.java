@@ -17,9 +17,9 @@ import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.item.FishingRodItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.event.RenderNameTagEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.Event;
+import net.neoforged.bus.api.Event;
+import net.neoforged.neoforge.client.event.RenderNameTagEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -114,7 +114,7 @@ public class HaulingBobberRenderer extends FishingHookRenderer {
 
 		RenderNameTagEvent renderNameplateEvent = new RenderNameTagEvent(bobber, bobber.getDisplayName(), this, matrix, buffer, packedLight, partialTicks);
 
-		MinecraftForge.EVENT_BUS.post(renderNameplateEvent);
+		NeoForge.EVENT_BUS.post(renderNameplateEvent);
 
 		if (renderNameplateEvent.getResult() != Event.Result.DENY && (renderNameplateEvent.getResult() == Event.Result.ALLOW || this.shouldShowName(bobber)))
 			this.renderNameTag(bobber, renderNameplateEvent.getContent(), matrix, buffer, packedLight);

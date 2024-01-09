@@ -479,12 +479,9 @@
               "replace": false
             },
             {
-              "enchantments": [
-                {
-                  "id": "minecraft:efficiency",
-                  "level": 10
-                }
-              ],
+              "enchantments": {
+                "minecraft:efficiency": 10
+              },
               "function": "aoa3:enchant_specific"
             }
           ],
@@ -494,12 +491,9 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "enchantments": [
-                {
-                  "id": "minecraft:unbreaking",
-                  "level": 4
-                }
-              ],
+              "enchantments": {
+                "minecraft:unbreaking": 4
+              },
               "function": "aoa3:enchant_specific"
             }
           ],

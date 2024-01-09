@@ -11,9 +11,8 @@ import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
@@ -59,10 +58,10 @@ public class LevelRestriction extends AoAAbility.Instance {
 		Component targetName;
 
 		if (isForBlock(restrictions)) {
-			targetName = ForgeRegistries.BLOCKS.getValue(restrictedId).getName();
+			targetName = AoARegistries.BLOCKS.getEntry(restrictedId).getName();
 		}
 		else {
-			Item item = ForgeRegistries.ITEMS.getValue(restrictedId);
+			Item item = AoARegistries.ITEMS.getEntry(restrictedId);
 			targetName = item.getName(item.getDefaultInstance());
 		}
 

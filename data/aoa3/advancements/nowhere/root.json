@@ -22,12 +22,9 @@
       "color": "white",
       "translate": "advancements.aoa3.nowhere.root.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:nowhere_portal"
     },
-    "show_toast": true,
     "title": {
       "color": "gray",
       "translate": "advancements.aoa3.nowhere.root.title"

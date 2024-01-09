@@ -1,13 +1,13 @@
 package net.tslat.aoa3.common.registration;
 
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.AddReloadListenerEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.tslat.aoa3.data.server.*;
 
 public final class AoADatapackLoaders {
 	public static void init(){
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, AddReloadListenerEvent.class, AoADatapackLoaders::registerLoaders);
+		NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, AddReloadListenerEvent.class, AoADatapackLoaders::registerLoaders);
 	}
 
 	private static void registerLoaders(final AddReloadListenerEvent ev) {

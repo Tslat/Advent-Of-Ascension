@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.function.Supplier;
 
 public abstract class HavenTreeFeature extends AoAVariableLeafTreeFeature {
-	public HavenTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
+	public HavenTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 

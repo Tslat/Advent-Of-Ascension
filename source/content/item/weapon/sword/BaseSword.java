@@ -1,10 +1,9 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
+import com.google.common.base.Suppliers;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,16 +15,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.common.util.Lazy;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.library.constant.AttackSpeed;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class BaseSword extends SwordItem {
-	private final Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> attributeModifiers;
+	private final Supplier<ImmutableSetMultimap<Attribute, AttributeModifier>> attributeModifiers;
 
 	protected final float dmg;
 	protected final double speed;
@@ -59,8 +56,8 @@ public class BaseSword extends SwordItem {
 		return speed;
 	}
 
-	protected Lazy<ImmutableSetMultimap<Attribute, AttributeModifier>> buildDefaultAttributes() {
-		return Lazy.of(() -> ImmutableSetMultimap.of(
+	protected Supplier<ImmutableSetMultimap<Attribute, AttributeModifier>> buildDefaultAttributes() {
+		return Suppliers.memoize(() -> ImmutableSetMultimap.of(
 				Attributes.ATTACK_DAMAGE, new AttributeModifier(BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", getDamage(), AttributeModifier.Operation.ADDITION),
 				Attributes.ATTACK_SPEED, new AttributeModifier(BASE_ATTACK_SPEED_UUID, "Weapon modifier", getAttackSpeed(), AttributeModifier.Operation.ADDITION)));
 	}
@@ -71,7 +68,7 @@ public class BaseSword extends SwordItem {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getAttackStrengthScale(0));
+		stack.setData(AoADataAttachments.MELEE_SWING_STRENGTH, player.getAttackStrengthScale(0));
 
 		return false;
 	}
@@ -85,14 +82,8 @@ public class BaseSword extends SwordItem {
 
 	protected void doMeleeEffect(ItemStack stack, LivingEntity target, LivingEntity attacker, float attackCooldown) {}
 
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		return new VolatileStackCapabilityProvider();
-	}
-
 	protected static float getSwingEffectiveness(ItemStack stack) {
-		return VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).getValue();
+		return stack.getData(AoADataAttachments.MELEE_SWING_STRENGTH);
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +34,7 @@ public class CreatureEssence extends Item {
 
 		ResourceLocation entityId = new ResourceLocation(tag.getString("essence_entity"));
 
-		return ForgeRegistries.ENTITY_TYPES.containsKey(entityId) ? ForgeRegistries.ENTITY_TYPES.getValue(entityId) : null;
+		return AoARegistries.ENTITIES.hasRegisteredId(entityId) ? AoARegistries.ENTITIES.getEntry(entityId) : null;
 	}
 
 	@Nonnull

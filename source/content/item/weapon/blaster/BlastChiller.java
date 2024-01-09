@@ -13,18 +13,16 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.MathUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -68,30 +66,28 @@ public class BlastChiller extends BaseBlaster {
 	@Override
 	protected void doFiringEffects(ServerLevel level, LivingEntity shooter, ItemStack stack, ShotInfo shotInfo) {
 		final RandomSource rand = RandomUtil.RANDOM;
-		ServerParticlePacket packet = new ServerParticlePacket();
+		TELParticlePacket packet = new TELParticlePacket();
 		Vec3 originPos = shotInfo.shotOrBarrelPosForVfx();
 		Vec3 hitPos = shotInfo.getHitPos().orElse(originPos);
 
-		for (Vec3 linePos : MathUtil.inLine(originPos, hitPos, originPos.distanceTo(hitPos) * 6)) {
-			packet.particle(ParticleBuilder.forPos(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, linePos)
-					.lifespan(10)
-					.ignoreDistanceAndLimits()
-					.scaleMod(0.25f)
-					.colourOverride(0, 168, 162, 120));
-			packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), ColourUtil.WHITE), linePos)
-					.lifespan(rand.nextInt(20, 50))
-					.ignoreDistanceAndLimits()
-					.velocity(rand.nextGaussian() * 0.05f, rand.nextGaussian() * 0.05f, rand.nextGaussian() * 0.05f)
-					.gravityOverride(0.001f)
-					.scaleMod(0.4f));
-			packet.particle(ParticleBuilder.forPos(ParticleTypes.WARPED_SPORE, linePos)
-					.lifespan(rand.nextInt(12, 25))
-					.ignoreDistanceAndLimits()
-					.colourOverride(0, 168, 162, 255)
-					.spawnNTimes(2));
-		}
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+				.lifespan(10)
+				.ignoreDistanceAndLimits()
+				.scaleMod(0.25f)
+				.colourOverride(0, 168, 162, 120));
+		packet.particle(ParticleBuilder.forPositionsInLine(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), ColourUtil.WHITE), originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+				.lifespan(rand.nextInt(20, 50))
+				.ignoreDistanceAndLimits()
+				.velocity(rand.nextGaussian() * 0.05f, rand.nextGaussian() * 0.05f, rand.nextGaussian() * 0.05f)
+				.gravityOverride(0.001f)
+				.scaleMod(0.4f));
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.WARPED_SPORE, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+				.lifespan(rand.nextInt(12, 25))
+				.ignoreDistanceAndLimits()
+				.colourOverride(0, 168, 162, 255)
+				.spawnNTimes(2));
 
-		AoANetworking.sendToAllPlayersTrackingEntity(packet, shooter);
+		packet.sendToAllPlayersTrackingEntity(level, shooter);
 	}
 
 	@Override

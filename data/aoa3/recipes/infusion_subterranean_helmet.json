@@ -14,10 +14,10 @@
       "tag": "forge:dusts/redstone"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:subterranean_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

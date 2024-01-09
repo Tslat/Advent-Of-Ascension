@@ -21,7 +21,7 @@ public class VoxStoreCrate extends Block {
 	}
 
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (!world.isClientSide && EnchantmentHelper.getItemEnchantmentLevel(Enchantments.SILK_TOUCH, player.getItemInHand(InteractionHand.MAIN_HAND)) == 0) {
 			StoreKeeperEntity storeKeeper = new StoreKeeperEntity(AoANpcs.STORE_KEEPER.get(), world);
 
@@ -30,5 +30,7 @@ public class VoxStoreCrate extends Block {
 			world.addFreshEntity(storeKeeper);
 			player.sendSystemMessage(LocaleUtil.getLocaleMessage(AoANpcs.STORE_KEEPER.get().getDescriptionId() + ".spawn"));
 		}
+
+		return state;
 	}
 }

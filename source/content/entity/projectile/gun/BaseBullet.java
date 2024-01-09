@@ -11,10 +11,12 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.content.entity.projectile.HardProjectile;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -270,7 +272,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 		if (entityTrace != null)
 			intersectedBlocksTrace = entityTrace;
 
-		if (intersectedBlocksTrace.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, intersectedBlocksTrace))
+		if (intersectedBlocksTrace.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, intersectedBlocksTrace))
 			onHit(intersectedBlocksTrace);
 
 		if (!isAlive())
@@ -298,7 +300,7 @@ public class BaseBullet extends ThrowableProjectile implements HardProjectile {
 	}
 
 	@Override
-	public boolean ignoreExplosion() {
+	public boolean ignoreExplosion(Explosion explosion) {
 		return true;
 	}
 

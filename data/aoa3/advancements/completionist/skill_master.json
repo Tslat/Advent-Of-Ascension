@@ -6,7 +6,7 @@
         "cycle": 10,
         "skill": "aoa3:dexterity"
       },
-      "trigger": "aoa3:cycle"
+      "trigger": "aoa3:cycle_skill"
     },
     "aoa3:dexterity_level_1000": {
       "conditions": {
@@ -20,7 +20,7 @@
         "cycle": 10,
         "skill": "aoa3:extraction"
       },
-      "trigger": "aoa3:cycle"
+      "trigger": "aoa3:cycle_skill"
     },
     "aoa3:extraction_level_1000": {
       "conditions": {
@@ -34,7 +34,7 @@
         "cycle": 10,
         "skill": "aoa3:farming"
       },
-      "trigger": "aoa3:cycle"
+      "trigger": "aoa3:cycle_skill"
     },
     "aoa3:farming_level_1000": {
       "conditions": {
@@ -48,7 +48,7 @@
         "cycle": 10,
         "skill": "aoa3:hauling"
       },
-      "trigger": "aoa3:cycle"
+      "trigger": "aoa3:cycle_skill"
     },
     "aoa3:hauling_level_1000": {
       "conditions": {
@@ -62,7 +62,7 @@
         "cycle": 10,
         "skill": "aoa3:innervation"
       },
-      "trigger": "aoa3:cycle"
+      "trigger": "aoa3:cycle_skill"
     },
     "aoa3:innervation_level_1000": {
       "conditions": {
@@ -73,17 +73,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.completionist.skill_master.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "minecraft:dragon_head"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.skill_master.title"

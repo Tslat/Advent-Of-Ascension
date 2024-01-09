@@ -14,10 +14,10 @@
       "tag": "forge:bones"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:rockbone_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

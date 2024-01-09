@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/bloodstone"
+    },
+    "B": {
+      "item": "aoa3:nightmare_flakes"
+    },
+    "C": {
+      "tag": "forge:rods/metal"
+    }
+  },
+  "pattern": [
+    "A",
+    "B",
+    "C"
+  ],
+  "result": {
+    "item": "aoa3:underworld_staff"
+  }
+}

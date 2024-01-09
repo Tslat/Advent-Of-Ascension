@@ -1,7 +1,7 @@
 package net.tslat.aoa3.event.custom.events;
 
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -9,12 +9,11 @@ import net.tslat.aoa3.player.skill.AoASkill;
  * PlayerChangeXpEvent is fired when a player gains or loses skill xp from any method.<br>
  * XP changes also apply to xp applied from commands or third-party methods.<br>
  * <br>
- * This event is fired via on the {@link net.minecraftforge.common.MinecraftForge#EVENT_BUS} event bus.<br>
+ * This event is fired via on the {@link net.neoforged.neoforge.common.NeoForge#EVENT_BUS EVENT_BUS} event bus.<br>
  * <br>
- * This event is {@link Cancelable}
+ * This event is {@link net.neoforged.bus.api.ICancellableEvent}
  */
-@Cancelable
-public class PlayerChangeXpEvent extends PlayerEvent {
+public class PlayerChangeXpEvent extends PlayerEvent implements ICancellableEvent {
 	private final float rawXpGain;
 	private final float xpGain;
 	private float newXpGain;

@@ -13,13 +13,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.recipe.UpgradeKitRecipe;
+import net.tslat.aoa3.library.object.MutableSupplier;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -122,27 +123,27 @@ public class DivineStationContainer extends AbstractContainerMenu { // TODO Look
 	}
 
 	protected void slotChangedCraftingGrid(Level world, Player player, DivineStationInventory inv, ResultContainer craftResult) {
-		if (!world.isClientSide) {
-			ItemStack resultStack = ItemStack.EMPTY;
-			Optional<UpgradeKitRecipe> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.UPGRADE_KIT.type().get(), inv, world);
+		if (player instanceof ServerPlayer pl) {
+			MutableSupplier<ItemStack> resultStack = new MutableSupplier<>(() -> ItemStack.EMPTY);
+			Optional<RecipeHolder<UpgradeKitRecipe>> recipeMatch = world.getServer().getRecipeManager().getRecipeFor(AoARecipes.UPGRADE_KIT.type().get(), inv, world);
 
-			if (recipeMatch.isPresent()) {
-				UpgradeKitRecipe recipe = recipeMatch.get();
+			recipeMatch.ifPresent(holder -> {
+				UpgradeKitRecipe recipe = holder.value();
 
-				if (recipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || ((ServerPlayer)player).getRecipeBook().contains(recipe)) {
-					craftResult.setRecipeUsed(recipe);
+				if (recipe.isSpecial() || !world.getGameRules().getBoolean(GameRules.RULE_LIMITED_CRAFTING) || pl.getRecipeBook().contains(holder)) {
+					craftResult.setRecipeUsed(holder);
 
-					resultStack = recipe.assemble(inv, world.registryAccess());
+					resultStack.update(() -> recipe.assemble(inv, world.registryAccess()));
 				}
-			}
+			});
 
-			craftResult.setItem(0, resultStack);
-			((ServerPlayer)player).connection.send(new ClientboundContainerSetSlotPacket(this.containerId, incrementStateId(), 0, resultStack));
+			craftResult.setItem(0, resultStack.get());
+			pl.connection.send(new ClientboundContainerSetSlotPacket(this.containerId, incrementStateId(), 0, resultStack.get()));
 		}
 	}
 
 	public static void openContainer(ServerPlayer player, BlockPos pos) {
-		NetworkHooks.openScreen(player, new MenuProvider() {
+		player.openMenu(new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return Component.translatable("container.aoa3.divine_station");

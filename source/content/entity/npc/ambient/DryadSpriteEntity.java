@@ -17,16 +17,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.neoforged.neoforge.common.ToolActions;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoANpcs;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.EntityDataHolder;
-import net.tslat.aoa3.util.ItemUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -78,7 +77,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 		if (heldItem.isEmpty())
 			return getType().getDescriptionId() + ".interact.empty";
 
-		if (!ItemUtil.isHoe(heldItem.getItem()))
+		if (!heldItem.getItem().canPerformAction(heldItem, ToolActions.HOE_TILL))
 			return getType().getDescriptionId() + ".interact.incorrect";
 
 		return null;
@@ -94,13 +93,13 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
-		if (isAlive() && /*isOwner(player) && */SUCCESS_TIMER.is(this, -1)) {
+		if (isAlive() && isOwner(player) && SUCCESS_TIMER.is(this, -1)) {
 			ItemStack heldStack = player.getItemInHand(hand);
 
 			if (OWNER.get(this).isEmpty())
 				OWNER.set(this, Optional.of(player.getUUID()));
 
-			if (ItemUtil.isHoe(heldStack.getItem())) {
+			if (heldStack.canPerformAction(ToolActions.HOE_TILL)) {
 				if (heldStack.getItem() == getVariant().getTool()) {
 					if (!level().isClientSide()) {
 						SUCCESS_TIMER.set(this, 44);
@@ -115,9 +114,9 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 					level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_UNHAPPY.get(), SoundSource.PLAYERS, 1, 1);
 
 					for(int i = 0; i < 20; ++i) {
-						AoANetworking.sendToAllPlayersTrackingEntity(new ServerParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.ANGRY_VILLAGER, this)
-										.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d))),
-								this);
+						ParticleBuilder.forRandomPosInEntity(ParticleTypes.ANGRY_VILLAGER, this)
+								.velocity(RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d), RandomUtil.randomScaledGaussianValue(0.02d))
+								.sendToAllPlayersTrackingEntity((ServerLevel)level(), this);
 					}
 				}
 
@@ -146,14 +145,14 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 			SUCCESS_TIMER.set(this, successTimer - 1);
 		}
 		else if (successTimer == 0) {
-			ServerParticlePacket packet = new ServerParticlePacket();
+			TELParticlePacket packet = new TELParticlePacket();
 
 			for (int i = 0; i < 20; ++i) {
 				packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.HAPPY_VILLAGER, this)
 						.velocity(rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d), rand().randomScaledGaussianValue(0.02d)));
 			}
 
-			AoANetworking.sendToAllPlayersTrackingEntity(packet, this);
+			packet.sendToAllPlayersTrackingEntity((ServerLevel)level(), this);
 			level().playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_DRYAD_SPRITE_HAPPY.get(), SoundSource.NEUTRAL, 1, 1);
 
 			if (level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))

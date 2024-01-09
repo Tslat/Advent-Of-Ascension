@@ -10,6 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.common.EffectCures;
 import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -33,7 +34,7 @@ public class HalyconMilk extends Item {
 	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
 		if (!world.isClientSide) {
 			EntityUtil.healEntity(entity, 2);
-			entity.curePotionEffects(new ItemStack(Items.MILK_BUCKET));
+			entity.removeEffectsCuredBy(EffectCures.MILK);
 
 
 			if (entity instanceof ServerPlayer player) {

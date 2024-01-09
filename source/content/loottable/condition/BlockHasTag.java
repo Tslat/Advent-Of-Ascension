@@ -1,94 +1,66 @@
 package net.tslat.aoa3.content.loottable.condition;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonSerializationContext;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
-import net.tslat.aoa3.common.registration.AoALootOperations;
+import net.tslat.aoa3.common.registration.loot.AoALootConditions;
 
-public class BlockHasTag implements LootItemCondition {
-	private final TagKey<Block>[] tags;
-	private final boolean requireAll;
+import java.util.List;
+import java.util.Set;
 
-	public BlockHasTag(TagKey<Block>... tags) {
-		this(false, tags);
+public record BlockHasTag(List<TagKey<Block>> tags, boolean requireAll) implements LootItemCondition {
+	public static final Codec<BlockHasTag> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+			TagKey.codec(Registries.BLOCK).listOf().fieldOf("tags").forGetter(BlockHasTag::tags),
+			Codec.BOOL.optionalFieldOf("require_all", false).forGetter(BlockHasTag::requireAll))
+			.apply(builder, BlockHasTag::new));
+
+	@Override
+	public LootItemConditionType getType() {
+		return AoALootConditions.HAS_BLOCK_TAG.get();
 	}
 
-	public BlockHasTag(boolean requireAll, TagKey<Block>... tags) {
-		this.tags = tags;
-		this.requireAll = requireAll;
+	public static LootItemCondition.Builder forAny(TagKey<Block>... tags) {
+		return () -> new BlockHasTag(List.of(tags), false);
+	}
+
+	public static LootItemCondition.Builder forAll(TagKey<Block>... tags) {
+		return () -> new BlockHasTag(List.of(tags), true);
+	}
+
+	@Override
+	public Set<LootContextParam<?>> getReferencedContextParams() {
+		return Set.of(LootContextParams.BLOCK_STATE);
 	}
 
 	@Override
 	public boolean test(LootContext lootContext) {
-		BlockState state = lootContext.getParamOrNull(LootContextParams.BLOCK_STATE);
+		final BlockState state = lootContext.getParamOrNull(LootContextParams.BLOCK_STATE);
 
-		if (state != null) {
-			if (requireAll) {
-				for (TagKey<Block> tag : tags) {
-					if (!state.is(tag))
-						return false;
-				}
+		if (state == null)
+			return false;
 
+		if (this.requireAll) {
+			for (TagKey<Block> tag : this.tags) {
+				if (!state.is(tag))
+					return false;
+			}
+
+			return true;
+		}
+
+		for (TagKey<Block> tag : this.tags) {
+			if (state.is(tag))
 				return true;
-			}
-			else {
-				for (TagKey<Block> tag : tags) {
-					if (state.is(tag))
-						return true;
-				}
-			}
 		}
 
 		return false;
-	}
-
-	@Override
-	public LootItemConditionType getType() {
-		return AoALootOperations.LootConditions.HAS_BLOCK_TAG.get();
-	}
-
-	public TagKey<Block>[] getTags() {
-		return this.tags;
-	}
-
-	public boolean requiresAllTags() {
-		return this.requireAll;
-	}
-
-	public static class Serializer implements net.minecraft.world.level.storage.loot.Serializer<BlockHasTag> {
-		@Override
-		public void serialize(JsonObject json, BlockHasTag instance, JsonSerializationContext jsonSerializationContext) {
-			JsonArray tagsArray = new JsonArray();
-
-			for (TagKey<Block> tag : instance.tags) {
-				tagsArray.add(tag.location().toString());
-			}
-
-			json.addProperty("require_all", instance.requireAll);
-			json.add("tags", tagsArray);
-		}
-
-		@Override
-		public BlockHasTag deserialize(JsonObject json, JsonDeserializationContext jsonDeserializationContext) {
-			JsonArray tagsArray = GsonHelper.getAsJsonArray(json, "tags");
-			TagKey<Block>[] tags = new TagKey[tagsArray.size()];
-
-			for (int i = 0; i < tagsArray.size(); i++) {
-				tags[i] = BlockTags.create(new ResourceLocation(tagsArray.get(i).getAsString()));
-			}
-
-			return new BlockHasTag(GsonHelper.getAsBoolean(json, "require_all", false), tags);
-		}
 	}
 }

@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/shyrestone"
+    },
+    "B": {
+      "tag": "forge:gems/shyregem"
+    },
+    "C": {
+      "tag": "forge:rods/metal"
+    }
+  },
+  "pattern": [
+    "ABA",
+    " C ",
+    " B "
+  ],
+  "result": {
+    "item": "aoa3:pickmax"
+  }
+}

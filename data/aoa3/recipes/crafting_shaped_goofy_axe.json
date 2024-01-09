@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/iron"
+    },
+    "B": {
+      "item": "aoa3:balloon"
+    },
+    "C": {
+      "item": "aoa3:hardened_confetti_ball"
+    },
+    "D": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "pattern": [
+    "AB",
+    "AC",
+    " D"
+  ],
+  "result": {
+    "item": "aoa3:goofy_axe"
+  }
+}

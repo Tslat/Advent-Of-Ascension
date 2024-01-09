@@ -1,5 +1,6 @@
 package net.tslat.aoa3.common.registration.item;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -7,9 +8,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.TierSortingRegistry;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoATags;
 import org.jetbrains.annotations.Nullable;
@@ -148,8 +148,8 @@ public final class AoATiers {
 			return this;
 		}
 
-		public CompactTier repairsWith(RegistryObject<Item> item) {
-			return repairsWith(() -> Ingredient.of(item.get()));
+		public CompactTier repairsWith(Holder<Item> item) {
+			return repairsWith(() -> Ingredient.of(item.value()));
 		}
 
 		public CompactTier repairsWith(Item item) {

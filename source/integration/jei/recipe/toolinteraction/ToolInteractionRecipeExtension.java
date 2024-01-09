@@ -1,58 +1,37 @@
 package net.tslat.aoa3.integration.jei.recipe.toolinteraction;
 
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper;
 import mezz.jei.api.recipe.IFocusGroup;
-import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension;
 import mezz.jei.library.util.RecipeUtil;
-import net.minecraft.core.NonNullList;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingRecipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.tslat.aoa3.content.recipe.ToolInteractionRecipe;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 
-public class ToolInteractionRecipeExtension implements ICraftingCategoryExtension {
-	private final ToolInteractionRecipe recipe;
+public class ToolInteractionRecipeExtension implements ICraftingCategoryExtension<ToolInteractionRecipe> {
+	@Override
+	public void setRecipe(RecipeHolder<ToolInteractionRecipe> recipeHolder, IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
+		final CraftingRecipe recipe = recipeHolder.value();
+		final List<List<ItemStack>> inputs = recipe.getIngredients().stream()
+				.map(ingredient -> List.of(ingredient.getItems()))
+				.toList();
 
-	public ToolInteractionRecipeExtension(ToolInteractionRecipe recipe) {
-		this.recipe = recipe;
+		craftingGridHelper.createAndSetOutputs(builder, List.of(RecipeUtil.getResultItem(recipe)));
+		craftingGridHelper.createAndSetInputs(builder, inputs, getWidth(recipeHolder), getHeight(recipeHolder));
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, ICraftingGridHelper craftingGridHelper, IFocusGroup focuses) {
-		NonNullList<Ingredient> ingredients = recipe.getIngredients();
-
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 3; x++) {
-				IRecipeSlotBuilder slotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, x * 18 + 1, y * 18 + 1);
-
-				if (x + y * 3 < ingredients.size())
-					slotBuilder.addIngredients(ingredients.get(x + y * 3));
-			}
-		}
-
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 95, 19)
-				.addItemStack(RecipeUtil.getResultItem(recipe));
-
-		builder.setShapeless();
-	}
-
-	@Nullable
-	@Override
-	public ResourceLocation getRegistryName() {
-		return recipe.getId();
-	}
-
-	@Override
-	public int getWidth() {
+	public int getWidth(RecipeHolder<ToolInteractionRecipe> recipeHolder) {
 		return 0;
 	}
 
 	@Override
-	public int getHeight() {
+	public int getHeight(RecipeHolder<ToolInteractionRecipe> recipeHolder) {
 		return 0;
 	}
 }

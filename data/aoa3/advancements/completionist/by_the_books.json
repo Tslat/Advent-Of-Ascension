@@ -12,7 +12,6 @@
       "translate": "advancements.aoa3.completionist.by_the_books.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "minecraft:command_block"
     },

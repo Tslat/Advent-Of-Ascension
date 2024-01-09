@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/emerald"
+    },
+    "B": {
+      "tag": "forge:leather"
+    },
+    "C": {
+      "item": "aoa3:torn_cloth"
+    },
+    "D": {
+      "tag": "forge:gems/diamond"
+    },
+    "E": {
+      "tag": "forge:bones"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "CDC",
+    "EBE"
+  ],
+  "result": {
+    "item": "aoa3:troll_idol",
+    "nbt": "{Damage:19}"
+  }
+}

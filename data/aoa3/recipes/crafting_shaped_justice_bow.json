@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/crystallite"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "item": "aoa3:reinforced_cloth"
+    },
+    "D": {
+      "item": "aoa3:sharp_claw"
+    }
+  },
+  "pattern": [
+    "DAB",
+    "C B",
+    "DAB"
+  ],
+  "result": {
+    "item": "aoa3:justice_bow"
+  }
+}

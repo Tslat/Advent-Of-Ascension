@@ -20,12 +20,9 @@
       "color": "white",
       "translate": "advancements.aoa3.overworld.key_to_the_circus.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:celeve_realmstone"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.key_to_the_circus.title"

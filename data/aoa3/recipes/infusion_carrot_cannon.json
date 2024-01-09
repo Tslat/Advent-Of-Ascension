@@ -20,10 +20,10 @@
       "tag": "forge:crops/carrot"
     }
   ],
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "result": {
     "item": "aoa3:carrot_cannon"
+  },
+  "tool": {
+    "item": "aoa3:cannon_frame"
   }
 }

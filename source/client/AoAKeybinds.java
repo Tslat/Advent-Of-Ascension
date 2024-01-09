@@ -3,11 +3,11 @@ package net.tslat.aoa3.client;
 import com.mojang.blaze3d.platform.InputConstants;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.event.InputEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.settings.KeyConflictContext;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
+import net.neoforged.neoforge.client.settings.KeyConflictContext;
+import net.neoforged.neoforge.common.NeoForge;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.gui.adventgui.AdventMainGui;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
@@ -27,9 +27,9 @@ public class AoAKeybinds {
 	public static boolean statusSkillGuiMessage = true;
 
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, InputEvent.Key.class, AoAKeybinds::onKeyDown);
+		NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, InputEvent.Key.class, AoAKeybinds::onKeyDown);
 
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterKeyMappingsEvent.class, ev -> {
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, RegisterKeyMappingsEvent.class, ev -> {
 			ev.register(RESOURCE_GUI = new KeyMapping(keyName("resources"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_O), CATEGORY));
 			ev.register(SKILL_GUI = new KeyMapping(keyName("skills"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_UNKNOWN), CATEGORY));
 			ev.register(ADVENT_GUI = new KeyMapping(keyName("adventGui"), KeyConflictContext.IN_GAME, getKey(GLFW.GLFW_KEY_DELETE), CATEGORY));

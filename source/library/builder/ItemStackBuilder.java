@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.util.RegistryUtil;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -26,7 +26,7 @@ public final class ItemStackBuilder {
 	}
 
 	public ItemStackBuilder(ResourceLocation itemId) {
-		this.item = ForgeRegistries.ITEMS.getValue(itemId);
+		this.item = AoARegistries.ITEMS.getEntry(itemId);
 	}
 
 	public ItemStackBuilder count(int count) {

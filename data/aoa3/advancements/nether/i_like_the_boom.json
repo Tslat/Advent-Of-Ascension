@@ -20,12 +20,9 @@
       "color": "white",
       "translate": "advancements.aoa3.nether.i_like_the_boom.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:explosive_idol"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.nether.i_like_the_boom.title"
@@ -36,5 +33,5 @@
       "obtain_explosive_idol"
     ]
   ],
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

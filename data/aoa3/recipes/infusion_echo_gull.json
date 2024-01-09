@@ -17,10 +17,10 @@
       "tag": "forge:gunpowder"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:echo_gull"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

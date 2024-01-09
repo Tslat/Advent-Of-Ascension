@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.entity.mob.nether;
 
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -9,11 +10,9 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -22,10 +21,11 @@ import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.common.registration.entity.AoAMobEffects;
 import net.tslat.aoa3.content.entity.base.AoARangedMob;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableRangedAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.StayWithinDistanceOfAttackTarget;
@@ -86,7 +86,7 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
 
     @Override
     public boolean canSwimInFluidType(FluidType type) {
-        return type == ForgeMod.LAVA_TYPE.get();
+        return type == NeoForgeMod.LAVA_TYPE.value();
     }
 
     protected int getAttackSwingDuration() {
@@ -150,13 +150,12 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             super.start(entity);
 
             this.targetingPosition = this.target.position().add(this.target.getBbWidth() * 0.5f, 0, this.target.getBbWidth() * 0.5f);
-            ServerParticlePacket packet = new ServerParticlePacket(
-                    ParticleBuilder.forPos(ParticleTypes.SMALL_FLAME,
-                            () -> new Vec3(targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().randomValueBetween(-1, 1)))
-                            .spawnNTimes(10));
+
+            ParticleBuilder.forPositions(ParticleTypes.SMALL_FLAME,
+                    () -> new Vec3(targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y + 0.1f, targetingPosition.z + entity.rand().randomValueBetween(-1, 1)), 10)
+                    .sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
 
             entity.level().playSound(null, this.targetingPosition.x, this.targetingPosition.y, this.targetingPosition.z, AoASounds.ENTITY_FLAMEWALKER_FLARE.get(), SoundSource.HOSTILE, 1, 1);
-            AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
         }
 
         @Override
@@ -167,15 +166,15 @@ public class FlamewalkerEntity extends AoARangedMob<FlamewalkerEntity> {
             if (!BrainUtils.canSee(entity, this.target) || entity.distanceToSqr(this.target) > this.attackRadius)
                 return;
 
-            ServerParticlePacket packet = new ServerParticlePacket(15);
+            TELParticlePacket packet = new TELParticlePacket(15);
 
             for (int i = 0; i < 15; i++) {
-                packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.5f, 2, 1, 1, 1, 1, entity.getId()),
+                packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.BURNING_FLAME.get(), 0.5f, 2, 1, 1, 1, 1, entity.getId()),
                         targetingPosition.x + entity.rand().randomValueBetween(-1, 1f), targetingPosition.y, targetingPosition.z + entity.rand().randomValueBetween(-1, 1))
                         .velocity(entity.rand().randomValueBetween(-0.05f, 0.05f), 0.5, entity.rand().randomValueBetween(-0.05f, 0.05f)));
             }
 
-            AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
+            packet.sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
             BrainUtils.setForgettableMemory(entity, MemoryModuleType.ATTACK_COOLING_DOWN, true, this.attackIntervalSupplier.apply(entity));
         }
 

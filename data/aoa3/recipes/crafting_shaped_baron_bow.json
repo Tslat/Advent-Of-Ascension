@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/baronyte"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "item": "aoa3:reinforced_cloth"
+    },
+    "D": {
+      "tag": "forge:ingots/blazium"
+    }
+  },
+  "pattern": [
+    " AB",
+    "C B",
+    " DB"
+  ],
+  "result": {
+    "item": "aoa3:baron_bow"
+  }
+}

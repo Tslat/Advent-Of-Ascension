@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.entity.npc.banker;
 
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -56,8 +57,8 @@ public abstract class AoABanker extends PathfinderMob {
 		}
 
 		if (isAlive() && !player.isShiftKeyDown()) {
-			if (!level().isClientSide)
-				openScreen(player);
+			if (player instanceof ServerPlayer pl)
+				openScreen(pl);
 
 			return InteractionResult.sidedSuccess(level().isClientSide);
 		}
@@ -65,5 +66,5 @@ public abstract class AoABanker extends PathfinderMob {
 		return super.mobInteract(player, hand);
 	}
 
-	protected abstract void openScreen(Player player);
+	protected abstract void openScreen(ServerPlayer player);
 }

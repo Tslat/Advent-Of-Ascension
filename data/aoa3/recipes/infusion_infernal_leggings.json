@@ -20,10 +20,10 @@
       "tag": "forge:ingots/emberstone"
     }
   ],
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "result": {
     "item": "aoa3:infernal_leggings"
+  },
+  "tool": {
+    "item": "aoa3:leggings_frame"
   }
 }

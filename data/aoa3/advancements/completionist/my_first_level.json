@@ -15,11 +15,9 @@
       "translate": "advancements.aoa3.completionist.my_first_level.description"
     },
     "frame": "goal",
-    "hidden": false,
     "icon": {
       "item": "aoa3:small_skill_crystal"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.completionist.my_first_level.title"

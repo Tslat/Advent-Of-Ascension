@@ -9,7 +9,7 @@ import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.boss.king_bambambam.KingBamBamBamEntity;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import org.joml.Vector3d;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
@@ -29,10 +29,10 @@ public class KingBamBamBamRenderer extends AnimatedMobRenderer<KingBamBamBamEnti
 				if (bone.getScaleX() == 1) {
 					Vector3d worldPos = bone.getWorldPosition();
 
-					ParticleBuilder.forPos(ParticleTypes.FLAME, worldPos.x + animatable.getRandom().nextGaussian() * 0.1f, worldPos.y + animatable.getRandom().nextGaussian() * 0.1f, worldPos.z + animatable.getRandom().nextGaussian() * 0.1f)
+					ParticleBuilder.forPosition(ParticleTypes.FLAME, worldPos.x + animatable.getRandom().nextGaussian() * 0.1f, worldPos.y + animatable.getRandom().nextGaussian() * 0.1f, worldPos.z + animatable.getRandom().nextGaussian() * 0.1f)
 							.ignoreDistanceAndLimits()
 							.velocity(0, 0.05, 0)
-							.spawnParticles();
+							.spawnParticles(animatable.level());
 				}
 			});
 		}

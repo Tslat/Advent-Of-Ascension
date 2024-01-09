@@ -2,7 +2,6 @@ package net.tslat.aoa3.content.recipe;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -14,6 +13,9 @@ import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 
+/**
+ * Just a dummy recipe for JEI
+ */
 public class FrameBenchRecipe implements Recipe<Inventory> {
 	private final RecipeType<FrameBenchRecipe> RECIPE_TYPE = new RecipeType<FrameBenchRecipe>() {
 		@Override
@@ -22,18 +24,16 @@ public class FrameBenchRecipe implements Recipe<Inventory> {
 		}
 	};
 
-	private final ResourceLocation id;
 	private final String group;
 
 	private final ItemStack input;
 	private final ItemStack output;
 
-	public FrameBenchRecipe(ResourceLocation id, ItemLike output) {
-		this(id, "", output);
+	public FrameBenchRecipe(ItemLike output) {
+		this("", output);
 	}
 
-	public FrameBenchRecipe(ResourceLocation id, String group, ItemLike output) {
-		this.id = id;
+	public FrameBenchRecipe(String group, ItemLike output) {
 		this.group = group;
 		this.input = new ItemStack(AoAItems.SCRAP_METAL.get());
 		this.output = new ItemStack(output);
@@ -62,11 +62,6 @@ public class FrameBenchRecipe implements Recipe<Inventory> {
 	@Override
 	public ItemStack getResultItem(RegistryAccess registryAccess) {
 		return output.copy();
-	}
-
-	@Override
-	public ResourceLocation getId() {
-		return id;
 	}
 
 	@Override

@@ -17,10 +17,10 @@
       "tag": "forge:ingots/baronyte"
     }
   ],
-  "input": {
-    "item": "aoa3:cannon_frame"
-  },
   "result": {
     "item": "aoa3:hive_howitzer"
+  },
+  "tool": {
+    "item": "aoa3:cannon_frame"
   }
 }

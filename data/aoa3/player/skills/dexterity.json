@@ -35,13 +35,13 @@
       "unique_id": "-1239512341"
     },
     {
-      "attribute": "forge:swim_speed",
+      "attribute": "neoforge:swim_speed",
       "base_value": 0.0,
       "id": "aoa3:attribute_modification",
       "level_req": 50,
       "operation": 1.0,
       "per_level_mod": 0.003,
-      "unique_id": "-1977693736"
+      "unique_id": "1363873904"
     },
     {
       "base_value": 0.0,

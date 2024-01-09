@@ -20,10 +20,10 @@
       "tag": "forge:gems/shyregem"
     }
   ],
-  "input": {
-    "item": "aoa3:shotgun_frame"
-  },
   "result": {
     "item": "aoa3:amplifier"
+  },
+  "tool": {
+    "item": "aoa3:shotgun_frame"
   }
 }

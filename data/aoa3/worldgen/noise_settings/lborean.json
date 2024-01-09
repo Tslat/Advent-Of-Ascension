@@ -15,7 +15,7 @@
     "height": 384,
     "min_y": -64,
     "size_horizontal": 1,
-    "size_vertical": 3
+    "size_vertical": 4
   },
   "noise_router": {
     "barrier": {
@@ -409,7 +409,10 @@
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "minecraft:barrier"
+            "Name": "minecraft:barrier",
+            "Properties": {
+              "waterlogged": "false"
+            }
           }
         }
       },

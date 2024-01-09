@@ -13,10 +13,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,11 +35,11 @@ public class BlockConversion extends AoAAbility.Instance {
 		super(AoAAbilities.BLOCK_CONVERSION.get(), skill, data);
 
 		this.radius = GsonHelper.getAsInt(data, "radius", 1);
-		this.targetBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(GsonHelper.getAsString(data, "target_block")));
-		this.replacementBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(GsonHelper.getAsString(data, "replacement_block")));
+		this.targetBlock = AoARegistries.BLOCKS.getEntry(new ResourceLocation(GsonHelper.getAsString(data, "target_block")));
+		this.replacementBlock = AoARegistries.BLOCKS.getEntry(new ResourceLocation(GsonHelper.getAsString(data, "replacement_block")));
 
 		if (data.has("interaction_item")) {
-			this.interactionItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(data, "interaction_item")));
+			this.interactionItem = AoARegistries.ITEMS.getEntry(new ResourceLocation(GsonHelper.getAsString(data, "interaction_item")));
 		}
 		else {
 			this.interactionItem = null;
@@ -52,11 +53,11 @@ public class BlockConversion extends AoAAbility.Instance {
 		super(AoAAbilities.BLOCK_CONVERSION.get(), skill, data);
 
 		this.radius = data.getInt("radius");
-		this.targetBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(data.getString("target_block")));
-		this.replacementBlock = ForgeRegistries.BLOCKS.getValue(new ResourceLocation(data.getString("replacement_block")));
+		this.targetBlock = AoARegistries.BLOCKS.getEntry(new ResourceLocation(data.getString("target_block")));
+		this.replacementBlock = AoARegistries.BLOCKS.getEntry(new ResourceLocation(data.getString("replacement_block")));
 
 		if (data.contains("interaction_item")) {
-			this.interactionItem = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("interaction_item")));
+			this.interactionItem = AoARegistries.ITEMS.getEntry(new ResourceLocation(data.getString("interaction_item")));
 		}
 		else {
 			this.interactionItem = null;
@@ -152,11 +153,11 @@ public class BlockConversion extends AoAAbility.Instance {
 
 		if (forClientSetup) {
 			data.putInt("radius", this.radius);
-			data.putString("target_block", ForgeRegistries.BLOCKS.getKey(this.targetBlock).toString());
-			data.putString("replacement_block", ForgeRegistries.BLOCKS.getKey(this.replacementBlock).toString());
+			data.putString("target_block", RegistryUtil.getId(this.targetBlock).toString());
+			data.putString("replacement_block", RegistryUtil.getId(this.replacementBlock).toString());
 
 			if (this.interactionItem != null)
-				data.putString("interaction_item", ForgeRegistries.ITEMS.getKey(this.interactionItem).toString());
+				data.putString("interaction_item", RegistryUtil.getId(this.interactionItem).toString());
 		}
 
 		return data;

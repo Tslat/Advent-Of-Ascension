@@ -1,9 +1,8 @@
 package net.tslat.aoa3.integration;
 
-import net.minecraftforge.fml.ModList;
+import net.neoforged.fml.ModList;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.AoAConfigs;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.integration.tes.TESIntegration;
 
 public class IntegrationManager {
@@ -59,7 +58,7 @@ public class IntegrationManager {
 		Logging.logStatusMessage("Found Patchouli, Integrating");
 
 		patchouliActive = true;
-		PatchouliIntegration.preInit();
+		//PatchouliIntegration.preInit();
 	}
 
 	public static boolean isModPresent(String modId) {

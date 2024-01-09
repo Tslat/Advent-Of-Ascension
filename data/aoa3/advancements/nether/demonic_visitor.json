@@ -24,12 +24,9 @@
       "color": "white",
       "translate": "advancements.aoa3.nether.demonic_visitor.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "minecraft:blaze_powder"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.nether.demonic_visitor.title"
@@ -40,5 +37,5 @@
       "enter_structure_nethengeic_pit"
     ]
   ],
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

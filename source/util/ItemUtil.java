@@ -17,6 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.common.ToolActions;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -180,7 +181,7 @@ public final class ItemUtil {
 		if (mod.isPresent()) {
 			final AttributeModifier existingMod = mod.get();
 			modifiers.remove(existingMod);
-			modifiers.add(new AttributeModifier(existingMod.getId(), existingMod.getName(), value, existingMod.getOperation()));
+			modifiers.add(new AttributeModifier(existingMod.getId(), existingMod.name, value, existingMod.getOperation()));
 		}
 	}
 
@@ -680,21 +681,5 @@ public final class ItemUtil {
 		}
 
 		return newStacks;
-	}
-
-	public static boolean isHoe(Item item) {
-		return item instanceof DiggerItem digger && (digger.blocks == BlockTags.MINEABLE_WITH_HOE || digger instanceof HoeItem);
-	}
-
-	public static boolean isPickaxe(Item item) {
-		return item instanceof DiggerItem digger && (digger.blocks == BlockTags.MINEABLE_WITH_PICKAXE || digger instanceof PickaxeItem);
-	}
-
-	public static boolean isAxe(Item item) {
-		return item instanceof DiggerItem digger && (digger.blocks == BlockTags.MINEABLE_WITH_AXE || digger instanceof AxeItem);
-	}
-
-	public static boolean isShovel(Item item) {
-		return item instanceof DiggerItem digger && (digger.blocks == BlockTags.MINEABLE_WITH_SHOVEL || digger instanceof ShovelItem);
 	}
 }

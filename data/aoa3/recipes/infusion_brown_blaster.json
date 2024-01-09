@@ -14,10 +14,10 @@
       "tag": "forge:gunpowder"
     }
   ],
-  "input": {
-    "item": "aoa3:shotgun_frame"
-  },
   "result": {
     "item": "aoa3:brown_blaster"
+  },
+  "tool": {
+    "item": "aoa3:shotgun_frame"
   }
 }

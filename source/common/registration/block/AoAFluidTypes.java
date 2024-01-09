@@ -6,10 +6,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
-import net.minecraftforge.common.SoundActions;
-import net.minecraftforge.fluids.FluidType;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.common.SoundActions;
+import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.fluid.Tar;
 import net.tslat.aoa3.content.fluid.ToxicWaste;
@@ -26,9 +26,9 @@ public final class AoAFluidTypes {
 	private static final ResourceLocation WATER_OVERLAY_TEXTURE = new ResourceLocation("block/water_overlay");
 	private static final ResourceLocation UNDERWATER_TEXTURE = new ResourceLocation("textures/misc/underwater.png");
 
-	public static final RegistryObject<FluidType> TOXIC_WASTE = register("toxic_waste", ToxicWaste::new);
-	public static final RegistryObject<FluidType> TAR = register("tar", Tar::new);
-	public static final RegistryObject<FluidType> CANDIED_WATER = register("candied_water", () -> new DefaultWaterFluidType(FluidType.Properties.create()
+	public static final DeferredHolder<FluidType, FluidType> TOXIC_WASTE = register("toxic_waste", ToxicWaste::new);
+	public static final DeferredHolder<FluidType, FluidType> TAR = register("tar", Tar::new);
+	public static final DeferredHolder<FluidType, FluidType> CANDIED_WATER = register("candied_water", () -> new DefaultWaterFluidType(FluidType.Properties.create()
 			.canSwim(true)
 			.canDrown(true)
 			.supportsBoating(true)
@@ -42,7 +42,7 @@ public final class AoAFluidTypes {
 			.density(1200))
 			.colour(ColourUtil.RGBA(255, 105, 180, 200)));
 
-	private static <T extends FluidType> RegistryObject<T> register(String id, Supplier<T> fluidType) {
+	private static <T extends FluidType> DeferredHolder<FluidType, T> register(String id, Supplier<T> fluidType) {
 		return AoARegistries.FLUID_TYPES.register(id, fluidType);
 	}
 

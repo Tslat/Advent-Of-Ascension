@@ -14,10 +14,10 @@
       "tag": "forge:ingots/limonite"
     }
   ],
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "result": {
     "item": "aoa3:lyndamyte_boots"
+  },
+  "tool": {
+    "item": "aoa3:boots_frame"
   }
 }

@@ -20,10 +20,10 @@
       "tag": "minecraft:planks"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:bayonette_rifle"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

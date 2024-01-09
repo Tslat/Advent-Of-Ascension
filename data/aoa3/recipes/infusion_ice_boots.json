@@ -14,10 +14,10 @@
       "tag": "forge:ingots/iron"
     }
   ],
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "result": {
     "item": "aoa3:ice_boots"
+  },
+  "tool": {
+    "item": "aoa3:boots_frame"
   }
 }

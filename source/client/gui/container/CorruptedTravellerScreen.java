@@ -20,8 +20,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedTravellerContainer> {
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("aoa3", "textures/gui/containers/corrupted_traveller.png");
-	private static final ArrayList<Item> validFoods = new ArrayList<Item>();
+	private static final ArrayList<Item> validFoods = new ArrayList<>();
 
 	private long nextFoodTick = 0;
 	private Item currentGhostlyFood = Items.APPLE;
@@ -46,7 +46,7 @@ public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedT
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		renderBackground(guiGraphics);
+		renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 		renderTooltip(guiGraphics, mouseX, mouseY);
 	}
@@ -122,7 +122,7 @@ public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedT
 	}
 
 	private void compileFoodList() {
-		for (Item item : ForgeRegistries.ITEMS.getValues()) {
+		for (Item item : AoARegistries.ITEMS.getAllRegisteredObjects()) {
 			if (item.isEdible())
 				validFoods.add(item);
 		}

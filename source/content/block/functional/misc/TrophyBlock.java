@@ -19,6 +19,7 @@ import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -31,13 +32,14 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.WaterloggableBlock;
 import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -105,7 +107,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 			SpawnEggItem egg = (SpawnEggItem)heldStack.getItem();
 
 			if (tile instanceof TrophyTileEntity) {
-				((TrophyTileEntity)tile).setEntity(ForgeRegistries.ENTITY_TYPES.getKey(egg.getType(heldStack.getTag())).toString(), true);
+				((TrophyTileEntity)tile).setEntity(RegistryUtil.getId(egg.getType(heldStack.getTag())).toString(), true);
 
 				if (!world.isClientSide() && !player.isCreative())
 					heldStack.shrink(1);
@@ -118,7 +120,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter world, BlockPos pos, Player player) {
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
 		ItemStack stack = new ItemStack(asItem());
 		BlockEntity tile = world.getBlockEntity(pos);
 		TrophyTileEntity trophyTile;
@@ -147,7 +149,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 		CompoundTag nbt = new CompoundTag();
 		CompoundTag dataTag = new CompoundTag();
 
-		dataTag.putString("EntityID", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
+		dataTag.putString("EntityID", RegistryUtil.getId(entity).toString());
 		dataTag.putBoolean("OriginalTrophy", true);
 		nbt.put("BlockEntityTag", dataTag);
 
@@ -216,17 +218,17 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 		if (!(stack.getItem() instanceof BlockItem block) || !(block.getBlock() instanceof TrophyBlock))
 			return false;
 
+		if (!stack.hasTag())
+			return false;
+
 		CompoundTag tag = stack.getTag();
 
-		if (tag == null)
+		if (!tag.contains("BlockEntityTag", Tag.TAG_COMPOUND))
 			return false;
 
 		CompoundTag subTag = tag.getCompound("BlockEntityTag");
 
-		if (!subTag.contains("OriginalTrophy", Tag.TAG_BYTE))
-			return false;
-
-		return subTag.getBoolean("OriginalTrophy");
+		return subTag.contains("OriginalTrophy", Tag.TAG_BYTE) && subTag.getBoolean("OriginalTrophy");
 	}
 
 	@Nullable
@@ -241,6 +243,6 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 
 		String entityId = tag.getCompound("BlockEntityTag").getString("EntityID");
 
-		return entityId.isEmpty() ? null : ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(entityId));
+		return entityId.isEmpty() ? null : AoARegistries.ENTITIES.getEntry(new ResourceLocation(entityId));
 	}
 }

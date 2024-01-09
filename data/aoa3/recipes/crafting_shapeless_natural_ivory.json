@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "aoa3:ivory"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "aoa3:natural_ivory"
+  }
+}

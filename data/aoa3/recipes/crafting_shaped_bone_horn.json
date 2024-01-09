@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:ivory"
+    },
+    "B": {
+      "item": "aoa3:footbone_fragment"
+    },
+    "C": {
+      "item": "aoa3:legbone_fragment"
+    },
+    "D": {
+      "item": "aoa3:chestbone_fragment"
+    },
+    "E": {
+      "item": "aoa3:skullbone_fragment"
+    }
+  },
+  "pattern": [
+    "  E",
+    "  D",
+    "ABC"
+  ],
+  "result": {
+    "item": "aoa3:bone_horn",
+    "nbt": "{Damage:1}"
+  }
+}

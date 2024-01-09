@@ -24,14 +24,13 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.TagUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
@@ -94,8 +93,14 @@ public class ReefStaff extends BaseStaff<Boolean> {
 			caster.setDeltaMovement(lookAngle.scale(3));
 			caster.hurtMarked = true;
 
-			for (int i = 0; i < 10; i++) {
-				AoAScheduler.scheduleSyncronisedTask(() -> AoANetworking.sendToAllPlayersTrackingEntity(new ServerParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.BUBBLE_COLUMN_UP, caster).spawnNTimes(3)), caster), i + 1);
+			if (level instanceof ServerLevel serverLevel) {
+				for (int i = 0; i < 10; i++) {
+					AoAScheduler.scheduleSyncronisedTask(() ->
+							new TELParticlePacket(ParticleBuilder.forRandomPosInEntity(ParticleTypes.BUBBLE_COLUMN_UP, caster)
+									.spawnNTimes(3))
+									.sendToAllPlayersTrackingEntity(serverLevel, caster),
+							i + 1);
+				}
 			}
 		}
 
@@ -105,7 +110,7 @@ public class ReefStaff extends BaseStaff<Boolean> {
 
 	private static void doPlantGrowth(ServerLevel level, LivingEntity caster) {
 		final Map<Block, Block> coralMap = CORALS.get();
-		final ServerParticlePacket packet = new ServerParticlePacket();
+		final TELParticlePacket packet = new TELParticlePacket();
 
 		for (int i = 0; i < 50; i++) {
 			BlockPos pos = BlockPos.containing(caster.position().add(caster.getRandom().nextGaussian() * 3, caster.getRandom().nextGaussian() * 3, caster.getRandom().nextGaussian() * 3));
@@ -115,7 +120,7 @@ public class ReefStaff extends BaseStaff<Boolean> {
 				level.setBlockAndUpdate(pos, coralMap.get(state.getBlock()).defaultBlockState());
 			}
 			else if (state.is(Blocks.KELP) || state.is(Blocks.SEAGRASS) || state.is(Blocks.KELP_PLANT)) {
-				((BonemealableBlock)state.getBlock()).performBonemeal((ServerLevel)level, level.random, pos, state);
+				((BonemealableBlock)state.getBlock()).performBonemeal(level, level.random, pos, state);
 			}
 			else if (state.getBlock() == Blocks.WATER && level.getFluidState(pos).getAmount() == FluidState.AMOUNT_FULL) {
 				if (level.random.nextInt(10) == 0) {
@@ -175,7 +180,7 @@ public class ReefStaff extends BaseStaff<Boolean> {
 		}
 
 		if (!packet.isEmpty())
-			AoANetworking.sendToAllPlayersTrackingEntity(packet, caster);
+			packet.sendToAllPlayersTrackingEntity(level, caster);
 	}
 
 	@Override

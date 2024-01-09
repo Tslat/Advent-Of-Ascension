@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -14,6 +15,11 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 public class MysticBush extends BushBlock {
 	public MysticBush(BlockBehaviour.Properties properties) {
 		super(properties);
+	}
+
+	@Override
+	protected MapCodec<? extends BushBlock> codec() {
+		return null;
 	}
 
 	@Override

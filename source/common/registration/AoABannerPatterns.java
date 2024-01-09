@@ -3,7 +3,7 @@ package net.tslat.aoa3.common.registration;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.entity.BannerPattern;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 public final class AoABannerPatterns {
@@ -28,5 +28,5 @@ public final class AoABannerPatterns {
 		return new BannerPatternHolder(AoARegistries.BANNER_PATTERNS.register(id, () -> new BannerPattern(pattern)), TagKey.create(Registries.BANNER_PATTERN, AdventOfAscension.id("pattern_item/" + id)));
 	}
 
-	public record BannerPatternHolder(RegistryObject<BannerPattern> pattern, TagKey<BannerPattern> tag) {}
+	public record BannerPatternHolder(DeferredHolder<BannerPattern, BannerPattern> pattern, TagKey<BannerPattern> tag) {}
 }

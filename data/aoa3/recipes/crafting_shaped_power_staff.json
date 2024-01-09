@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/iron"
+    },
+    "B": {
+      "tag": "forge:rods/metal"
+    },
+    "C": {
+      "item": "aoa3:dense_rock"
+    },
+    "D": {
+      "item": "aoa3:deep_crystal"
+    }
+  },
+  "pattern": [
+    "DCD",
+    " A ",
+    " B "
+  ],
+  "result": {
+    "item": "aoa3:power_staff"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/shyregem"
+    },
+    "B": {
+      "tag": "forge:ingots/shyrestone"
+    },
+    "C": {
+      "tag": "forge:rods/metal"
+    },
+    "D": {
+      "item": "aoa3:armour_plating"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ABD",
+    "BCB"
+  ],
+  "result": {
+    "item": "aoa3:knights_guard"
+  }
+}

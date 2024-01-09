@@ -1,9 +1,9 @@
 package net.tslat.aoa3.content.entity.base;
 
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.entity.PartEntity;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.MultipartTogglePacket;
+import net.neoforged.neoforge.entity.PartEntity;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.MultipartTogglePacket;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.IntConsumer;

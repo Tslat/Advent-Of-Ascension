@@ -12,10 +12,10 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.worldgen.AoABiomes;
 import net.tslat.aoa3.content.entity.mob.nether.NethengeicBeastEntity;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import org.apache.logging.log4j.Level;
 
@@ -75,7 +75,7 @@ public final class AoAEntitySpawnPlacements {
     }
 
     private static void setMiscSpawnPlacements() {
-        setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>(GlowSquid::checkGlowSquideSpawnRules).spawnChance(1 / 1000f));
+        setSpawnPlacement(AoAAnimals.SHINY_SQUID.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>(GlowSquid::checkGlowSquidSpawnRules).spawnChance(1 / 1000f));
         setSpawnPlacement(EntityType.SNIFFER, ON_GROUND, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_ANIMAL);
         setSpawnPlacement(AoANpcs.LOTTOMAN.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().ifValidSpawnBlock());
         setSpawnPlacement(AoANpcs.UNDEAD_HERALD.get(), ON_GROUND, MOTION_BLOCKING_NO_LEAVES, new SpawnBuilder<>().ifValidSpawnBlock());
@@ -114,7 +114,7 @@ public final class AoAEntitySpawnPlacements {
                 SpawnPlacements.register(entityType, placementType, heightmap, (SpawnPlacements.SpawnPredicate<T>)spawnPredicate);
         }
         catch (IllegalStateException ex) {
-            Logging.logMessage(Level.WARN, "Caught duplicate spawn placement registration from: " + ForgeRegistries.ENTITY_TYPES.getKey(entityType).toString());
+            Logging.logMessage(Level.WARN, "Caught duplicate spawn placement registration from: " + RegistryUtil.getId(entityType).toString());
         }
     }
 

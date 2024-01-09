@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:stone"
+    },
+    {
+      "item": "aoa3:runium_chunk"
+    }
+  ],
+  "result": {
+    "item": "aoa3:blank_slab"
+  }
+}

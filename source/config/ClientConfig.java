@@ -1,28 +1,36 @@
 package net.tslat.aoa3.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.hud.HealthStatusRenderer;
 import net.tslat.aoa3.client.render.custom.AoAResourceRenderer;
 import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
-import net.tslat.aoa3.util.AoAHaloUtil;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.HaloSelectPacket;
+import net.tslat.aoa3.common.registration.AoAConfigs;
+import net.tslat.aoa3.player.halo.HaloTypes;
 
 public final class ClientConfig {
-	public final ForgeConfigSpec.BooleanValue showXpParticles;
-	public final ForgeConfigSpec.BooleanValue showWelcomeMessage;
-	public final ForgeConfigSpec.BooleanValue showPlayerHalos;
-	public final ForgeConfigSpec.EnumValue<AoAHaloUtil.Type.Choosable> personalHaloPreference;
-	public final ForgeConfigSpec.ConfigValue<String> adventGuiTheme;
-	public final ForgeConfigSpec.BooleanValue thirdPartyBestiary;
-	public final ForgeConfigSpec.EnumValue<AoASkillRenderer.ProgressRenderType> hudSkillProgressRenderType;
-	public final ForgeConfigSpec.EnumValue<AoAResourceRenderer.HudResourcesPosition> hudResourcesPosition;
-	public final ForgeConfigSpec.BooleanValue hudResourcesHorizontal;
-	public final ForgeConfigSpec.BooleanValue disableHudPotionOffset;
-	public final ForgeConfigSpec.BooleanValue useToasts;
-	public final ForgeConfigSpec.BooleanValue rotatingTrophies;
-	public final ForgeConfigSpec.BooleanValue partyDeaths;
-	public final ForgeConfigSpec.EnumValue<HealthStatusRenderer.HealthRenderType> healthRenderType;
+	public final ModConfigSpec.BooleanValue showXpParticles;
+	public final ModConfigSpec.BooleanValue showWelcomeMessage;
+	public final ModConfigSpec.BooleanValue showPlayerHalos;
+	public final ModConfigSpec.EnumValue<HaloTypes.Selectable> personalHaloPreference;
+	public final ModConfigSpec.ConfigValue<String> adventGuiTheme;
+	public final ModConfigSpec.BooleanValue thirdPartyBestiary;
+	public final ModConfigSpec.EnumValue<AoASkillRenderer.ProgressRenderType> hudSkillProgressRenderType;
+	public final ModConfigSpec.EnumValue<AoAResourceRenderer.HudResourcesPosition> hudResourcesPosition;
+	public final ModConfigSpec.BooleanValue hudResourcesHorizontal;
+	public final ModConfigSpec.BooleanValue disableHudPotionOffset;
+	public final ModConfigSpec.BooleanValue useToasts;
+	public final ModConfigSpec.BooleanValue rotatingTrophies;
+	public final ModConfigSpec.BooleanValue partyDeaths;
+	public final ModConfigSpec.EnumValue<HealthStatusRenderer.HealthRenderType> healthRenderType;
 
-	public ClientConfig(ForgeConfigSpec.Builder specBuilder) {
+	public ClientConfig(ModConfigSpec.Builder specBuilder) {
+		AdventOfAscension.getModEventBus().addListener(ClientConfig::onConfigUpdate);
+
 		specBuilder.comment("AoA client-side configuration options").push("General Settings");
 
 		showXpParticles = specBuilder
@@ -43,7 +51,7 @@ public final class ClientConfig {
 		personalHaloPreference = specBuilder
 				.comment("If multiple halos are available, which one would you prefer to have on?")
 				.translation("config.aoa3.client.personalHaloPreference")
-				.defineEnum("personalHaloPreference", AoAHaloUtil.Type.Choosable.Donator);
+				.defineEnum("personalHaloPreference", HaloTypes.Selectable.DONATOR);
 
 		adventGuiTheme = specBuilder
 				.comment("The current theme for the main Advent of Ascension window.")
@@ -104,5 +112,10 @@ public final class ClientConfig {
 	public void changeAdventGuiTheme(String themeKey) {
 		adventGuiTheme.set(themeKey);
 		adventGuiTheme.save();
+	}
+
+	private static void onConfigUpdate(final ModConfigEvent.Reloading ev) {
+		if (ClientOperations.getPlayer() != null)
+			AoANetworking.sendToServer(new HaloSelectPacket(AoAConfigs.CLIENT.personalHaloPreference.get()));
 	}
 }

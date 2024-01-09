@@ -58,6 +58,9 @@ public class AdventGuiTabHelp extends Screen {
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 	}
 
+	@Override
+	public void renderTransparentBackground(GuiGraphics pGuiGraphics) {}
+
 	private static void openURL(URI url) {
 		Util.getPlatform().openUri(url);
 	}

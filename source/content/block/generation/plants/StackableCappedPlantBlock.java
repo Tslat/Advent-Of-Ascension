@@ -79,7 +79,7 @@ public class StackableCappedPlantBlock extends Block implements BonemealableBloc
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         BlockState checkState;
 
         while ((checkState = level.getBlockState(pos = pos.relative(this.growthDirection))).is(this)) {

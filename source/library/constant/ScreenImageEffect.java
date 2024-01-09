@@ -4,8 +4,8 @@ import com.mojang.blaze3d.platform.Window;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ScreenEffectPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.ScreenEffectPacket;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 

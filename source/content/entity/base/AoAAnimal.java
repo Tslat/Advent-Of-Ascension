@@ -25,7 +25,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -229,7 +229,7 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 	@Override
 	protected void actuallyHurt(DamageSource source, float amount) {
 		if (!isInvulnerableTo(source)) {
-			amount = ForgeHooks.onLivingHurt(this, source, amount);
+			amount = CommonHooks.onLivingHurt(this, source, amount);
 
 			if (amount <= 0)
 				return;
@@ -244,7 +244,7 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 			if (absorbedAmount > 0 && absorbedAmount < 3.4028235E37F && source.getEntity() instanceof ServerPlayer pl)
 				pl.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(absorbedAmount * 10f));
 
-			adjustedDamage = ForgeHooks.onLivingDamage(this, source, adjustedDamage);
+			adjustedDamage = CommonHooks.onLivingDamage(this, source, adjustedDamage);
 
 			if (adjustedDamage != 0) {
 				getCombatTracker().recordDamage(source, adjustedDamage);
@@ -262,7 +262,7 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 
 	@Override
 	public void die(DamageSource source) {
-		if (ForgeHooks.onLivingDeath(this, source))
+		if (CommonHooks.onLivingDeath(this, source))
 			return;
 
 		if (!isRemoved() && !this.dead) {

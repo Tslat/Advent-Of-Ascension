@@ -17,10 +17,10 @@
       "tag": "forge:string"
     }
   ],
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "result": {
     "item": "aoa3:hazmat_leggings"
+  },
+  "tool": {
+    "item": "aoa3:leggings_frame"
   }
 }

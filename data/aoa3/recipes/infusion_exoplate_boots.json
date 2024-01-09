@@ -14,10 +14,10 @@
       "tag": "forge:gems/diamond"
     }
   ],
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "result": {
     "item": "aoa3:exoplate_boots"
+  },
+  "tool": {
+    "item": "aoa3:boots_frame"
   }
 }

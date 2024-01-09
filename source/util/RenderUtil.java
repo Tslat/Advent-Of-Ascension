@@ -22,7 +22,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.extensions.common.IClientMobEffectExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientMobEffectExtensions;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import org.joml.Matrix4f;
 
@@ -212,6 +212,10 @@ public final class RenderUtil {
 		}
 
 		return effectRenderYOffset;
+	}
+
+	public static void prepSpriteRender(ResourceLocation sprite) {
+		prepRenderTexture(Minecraft.getInstance().getGuiSprites().getSprite(sprite).atlasLocation());
 	}
 
 	public static void prepRenderTexture(ResourceLocation texture) {

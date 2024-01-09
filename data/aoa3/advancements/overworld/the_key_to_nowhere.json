@@ -20,12 +20,9 @@
       "color": "white",
       "translate": "advancements.aoa3.overworld.the_key_to_nowhere.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:nowhere_realmstone"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.the_key_to_nowhere.title"

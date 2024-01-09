@@ -17,10 +17,10 @@
       "tag": "forge:ingots/iron"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:night_vision_goggles"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

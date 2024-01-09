@@ -1,9 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "minecraft:knockback",
-    "level": 3
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:knockback",
+  "enchantment_level": 3,
   "infusion_level": 65,
   "ingredients": [
     {

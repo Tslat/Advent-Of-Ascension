@@ -48,7 +48,7 @@ public class DunkleosteusEntity extends AoAWaterMeleeMob<DunkleosteusEntity> {
 
 	@Override
 	protected float getAttackVectorPositionOffset() {
-		return 1.25f;
+		return 2.75f;
 	}
 
 	@Override

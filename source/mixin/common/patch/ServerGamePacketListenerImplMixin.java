@@ -3,7 +3,7 @@ package net.tslat.aoa3.mixin.common.patch;
 import net.minecraft.network.protocol.game.ServerboundMovePlayerPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.tslat.aoa3.util.EntityUtil;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -27,6 +27,6 @@ public class ServerGamePacketListenerImplMixin {
 		if (packet.getY(player.getY()) - this.lastGoodY <= 0 || packet.isOnGround())
 			return false;
 
-		return player.onGround() || (player.getDeltaMovement().y() < -player.getAttributeValue(ForgeMod.ENTITY_GRAVITY.get()) && packet.getY(player.getY()) == player.getY() + EntityUtil.getEntityJumpVelocity(player));
+		return player.onGround() || (player.getDeltaMovement().y() < -player.getAttributeValue(NeoForgeMod.ENTITY_GRAVITY.value()) && packet.getY(player.getY()) == player.getY() + EntityUtil.getEntityJumpVelocity(player));
 	}
 }

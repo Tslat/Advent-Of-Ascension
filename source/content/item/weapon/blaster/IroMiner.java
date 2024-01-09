@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.weapon.blaster;
 
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
@@ -9,11 +8,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.entity.PartEntity;
+import net.neoforged.neoforge.entity.PartEntity;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityHandles;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.content.entity.projectile.blaster.IroMinerShotEntity;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.util.DamageUtil;
@@ -45,26 +42,21 @@ public class IroMiner extends BaseBlaster {
 		float damageMod = 1;
 
 		if (heldStack.getItem() == this) {
-			VolatileStackCapabilityHandles cap = VolatileStackCapabilityProvider.getOrDefault(heldStack, null);
+			float damageScaling = heldStack.getData(AoADataAttachments.DAMAGE_SCALING);
+			UUID lastTarget = heldStack.getData(AoADataAttachments.LAST_TARGET);
 			UUID targetUUID = target instanceof PartEntity<?> partEntity ? partEntity.getParent().getUUID() : target.getUUID();
 
-			if (cap.getObject() != null && targetUUID.equals(cap.getObject())) {
-				damageMod = cap.getValue() + 0.02f;
-				cap.setValue(damageMod);
+			if (targetUUID.equals(lastTarget)) {
+				damageMod = damageScaling + 0.02f;
+				heldStack.setData(AoADataAttachments.DAMAGE_SCALING, damageMod);
 			}
 			else {
-				cap.setObject(targetUUID);
-				cap.setValue(1.0f);
+				heldStack.setData(AoADataAttachments.LAST_TARGET, targetUUID);
+				heldStack.setData(AoADataAttachments.DAMAGE_SCALING, 1f);
 			}
 		}
 
 		return DamageUtil.doEnergyProjectileAttack(shooter, shot, target, (float)getDamage() * damageMod);
-	}
-
-	@Nullable
-	@Override
-	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable CompoundTag nbt) {
-		return new VolatileStackCapabilityProvider();
 	}
 
 	@Override

@@ -11,14 +11,13 @@ import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.library.util.RecipeUtil;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -69,21 +68,9 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		NonNullList<Ingredient> ingredients = recipe.getIngredients();
 
 		builder.addSlot(RecipeIngredientRole.OUTPUT, 128, 25)
-				.addItemStack(RecipeUtil.getResultItem(recipe))
-				.addTooltipCallback((recipeSlotView, tooltip) -> {
-					ResourceLocation recipeId = recipe.getId();
-
-					if (recipeId == null)
-						return;
-
-					if (!recipeId.getNamespace().equals(AdventOfAscension.MOD_ID))
-						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.by", ChatFormatting.GRAY, Component.literal(recipeId.getNamespace())));
-
-					if (Minecraft.getInstance().options.advancedItemTooltips || Screen.hasShiftDown())
-						tooltip.add(LocaleUtil.getLocaleMessage("jei.tooltip.recipe.id", ChatFormatting.DARK_GRAY, Component.literal(recipeId.toString())));
-				});
+				.addItemStack(RecipeUtil.getResultItem(recipe));
 		builder.addSlot(RecipeIngredientRole.INPUT, 7, 25)
-				.addIngredients(recipe.getRecipeInput());
+				.addIngredients(recipe.getInput());
 
 		for (int y = 0; y < 3; y++) {
 			for (int x = 0; x < 3; x++) {
@@ -110,10 +97,11 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		int posX;
 		int posY;
 		RenderContext renderContext = RenderContext.of(guiGraphics);
-
-		if (recipe.getInfusionReq() > 1) {
-			message = AoASkills.IMBUING.get().getName().append(": " + recipe.getInfusionReq());
-			textColour = (ClientPlayerDataManager.get().getSkill(AoASkills.IMBUING.get()).getLevel(true) < recipe.getInfusionReq()) ? 0xFFFF6060 : 0xFF80FF20;
+		int infusionLevelReq = recipe.getInfusionLevelReq();
+		
+		if (infusionLevelReq > 1) {
+			message = AoASkills.IMBUING.get().getName().append(": " + infusionLevelReq);
+			textColour = (ClientPlayerDataManager.get().getSkill(AoASkills.IMBUING.get()).getLevel(true) < infusionLevelReq) ? 0xFFFF6060 : 0xFF80FF20;
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
 			width = renderContext.textWidth(message);
 			posX = 150 - width;
@@ -122,8 +110,10 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 			renderContext.renderText(message, posX, posY, textColour, shadowColour, RenderUtil.TextRenderType.DROP_SHADOW, LightTexture.FULL_BRIGHT);
 		}
 
-		if (recipe.getMaxXp() > 0) {
-			message = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "misc.xpAmount"), Component.literal(String.valueOf((recipe.getMinXp() == recipe.getMaxXp() ? recipe.getMaxXp() : recipe.getMinXp() + "-" + recipe.getMaxXp()))));
+		FloatProvider recipeXp = recipe.getXpProvider();
+
+		if (recipeXp.getMaxValue() > 0) {
+			message = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "misc.xpAmount"), Component.literal(String.valueOf((recipeXp.getMinValue() == recipeXp.getMaxValue() ? recipeXp.getMaxValue() : recipeXp.getMinValue() + "-" + recipeXp.getMaxValue()))));
 			textColour = 0xFF8F8F8F;
 			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
 			width = mc.font.width(message);

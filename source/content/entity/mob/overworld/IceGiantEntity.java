@@ -19,8 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.client.render.AoAAnimations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
@@ -32,8 +30,9 @@ import net.tslat.aoa3.content.entity.ai.mob.TelegraphedRangedAttackGoal;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.util.DamageUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -118,14 +117,14 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 			double depth = boundingBox.maxZ - boundingBox.minZ;
 			double height = boundingBox.maxY - boundingBox.minY;
 			int particleCount = (int)Math.ceil(3 + (10 * width * depth * height));
-			ServerParticlePacket packet = new ServerParticlePacket();
+			TELParticlePacket packet = new TELParticlePacket();
 
 			for (int i = 0; i < particleCount; i++) {
 				packet.particle(ParticleBuilder.forRandomPosInEntity(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.3f, 3, 0), this)
 						.velocity(RandomUtil.randomScaledGaussianValue(0.05d), 0, RandomUtil.randomScaledGaussianValue(0.05d)));
 			}
 
-			AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level(), position(), 10);
+			packet.sendToAllNearbyPlayers((ServerLevel)level(), position(), 10);
 			remove(RemovalReason.KILLED);
 		}
 
@@ -177,7 +176,7 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 		double baseX = getX();
 		double baseY = getEyeY();
 		double baseZ = getZ();
-		ServerParticlePacket packet = new ServerParticlePacket(5);
+		TELParticlePacket packet = new TELParticlePacket(5);
 
 		for (int i = 0; i < 5; i++) {
 			double x = baseX + RandomUtil.randomScaledGaussianValue(0.5f);
@@ -187,13 +186,13 @@ public class IceGiantEntity extends AoAMeleeMob<IceGiantEntity> implements AoARa
 			double targetY = target.getEyeY() + RandomUtil.randomScaledGaussianValue(0.5f);
 			double targetZ = target.getZ() + RandomUtil.randomScaledGaussianValue(0.5f);
 
-			packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.4f, 12, 0, 0, 0, 0, getId()), baseX, baseY, baseZ).velocity((targetX - x) * 0.1, (targetY - y) * 0.1, (targetZ - z) * 0.1));
+			packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), 0.4f, 12, 0, 0, 0, 0, getId()), baseX, baseY, baseZ).velocity((targetX - x) * 0.1, (targetY - y) * 0.1, (targetZ - z) * 0.1));
 		}
 
 		if (tickCount % 5 == 0)
 			playSound(AoASounds.ICE_WIND.get(), 1.5f, 1f);
 
-		AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)level(), getEyePosition(), 200);
+		packet.sendToAllNearbyPlayers((ServerLevel)level(), getEyePosition(), 200);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.util.RegistryUtil;
 import org.jetbrains.annotations.Nullable;
@@ -52,7 +52,7 @@ public class BossAltarTileEntity extends BlockEntity {
 				entityType = null;
 			}
 			else {
-				entityType = ForgeRegistries.ENTITY_TYPES.getValue(new ResourceLocation(entityTypeString));
+				entityType = AoARegistries.ENTITIES.getEntry(new ResourceLocation(entityTypeString));
 			}
 
 			if (cachedEntity != null)

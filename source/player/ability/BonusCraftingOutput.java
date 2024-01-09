@@ -10,10 +10,11 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.ItemCraftingEvent;
 import net.tslat.aoa3.player.skill.AoASkill;
+import net.tslat.aoa3.util.RegistryUtil;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -30,7 +31,7 @@ public class BonusCraftingOutput extends ScalableModAbility {
 
 		if (data.has("item")) {
 			outputTargetTag = null;
-			outputTarget = ForgeRegistries.ITEMS.getValue(new ResourceLocation(GsonHelper.getAsString(data, "item")));
+			outputTarget = AoARegistries.ITEMS.getEntry(new ResourceLocation(GsonHelper.getAsString(data, "item")));
 		}
 		else {
 			outputTarget = null;
@@ -43,7 +44,7 @@ public class BonusCraftingOutput extends ScalableModAbility {
 
 		if (data.contains("item")) {
 			outputTargetTag = null;
-			outputTarget = ForgeRegistries.ITEMS.getValue(new ResourceLocation(data.getString("item")));
+			outputTarget = AoARegistries.ITEMS.getEntry(new ResourceLocation(data.getString("item")));
 		}
 		else {
 			outputTarget = null;
@@ -88,7 +89,7 @@ public class BonusCraftingOutput extends ScalableModAbility {
 
 		if (forClientSetup) {
 			if (outputTarget != null) {
-				data.putString("item", ForgeRegistries.ITEMS.getKey(outputTarget).toString());
+				data.putString("item", RegistryUtil.getId(outputTarget).toString());
 			}
 			else {
 				data.putString("tag", outputTargetTag.location().toString());

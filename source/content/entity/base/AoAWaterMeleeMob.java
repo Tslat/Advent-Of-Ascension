@@ -5,6 +5,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.tslat.aoa3.util.MathUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
@@ -36,10 +38,43 @@ public abstract class AoAWaterMeleeMob<T extends AoAWaterMeleeMob<T>> extends Ao
         return 0;
     }
 
-    @Override
-    public double getMeleeAttackRangeSqr(LivingEntity target) {
-        double targetBBOffset = target.getBbWidth() * 0.5d;
+    protected double getAttackReach() {
+        return this.attackReach;
+    }
 
-        return this.attackReach * this.attackReach + targetBBOffset * targetBBOffset;
+    @Override
+    public boolean isWithinMeleeAttackRange(LivingEntity target) {
+        final AABB hitBounds = getAttackBoundingBox();
+
+        if (!hitBounds.intersects(target.getHitbox()))
+            return false;
+
+        double reach = Math.max(hitBounds.getXsize(), hitBounds.getZsize()) / 2f;
+
+        return hitBounds.getCenter().distanceToSqr(target.position()) <= reach * reach;
+    }
+
+    @Override
+    protected AABB getAttackBoundingBox() {
+        AABB boundingBox = getBoundingBox();
+        double attackPositionOffset = getAttackVectorPositionOffset() - boundingBox.getXsize();
+        double reach = getAttackReach();
+
+        if (getVehicle() != null) {
+            AABB vehicleBounds = getVehicle().getBoundingBox();
+            boundingBox = new AABB(
+                    Math.min(boundingBox.minX, vehicleBounds.minX),
+                    boundingBox.minY,
+                    Math.min(boundingBox.minZ, vehicleBounds.minZ),
+                    Math.max(boundingBox.maxX, vehicleBounds.maxX),
+                    boundingBox.maxY,
+                    Math.max(boundingBox.maxZ, vehicleBounds.maxZ)
+            );
+        }
+
+        if (attackPositionOffset > 0)
+            boundingBox.move(MathUtil.getBodyForward(this).scale(attackPositionOffset));
+
+        return boundingBox.inflate(reach, 0, reach);
     }
 }

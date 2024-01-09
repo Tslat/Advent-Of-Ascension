@@ -17,7 +17,6 @@
       "item": "aoa3:old_boot",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.la_chancla.title"

@@ -17,7 +17,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -78,8 +77,8 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 		}
 
 		if (isAlive() && !player.isShiftKeyDown()) {
-			if (!level().isClientSide)
-				openScreen(player);
+			if (player instanceof ServerPlayer pl)
+				openScreen(pl);
 
 			return InteractionResult.sidedSuccess(level().isClientSide);
 		}
@@ -87,8 +86,8 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 		return super.mobInteract(player, hand);
 	}
 
-	protected void openScreen(Player player) {
-		NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
+	protected void openScreen(ServerPlayer player) {
+		player.openMenu(new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return CorruptedTravellerEntity.this.getDisplayName();

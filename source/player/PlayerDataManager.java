@@ -2,6 +2,7 @@ package net.tslat.aoa3.player;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 
@@ -9,7 +10,7 @@ import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 
-public interface PlayerDataManager {
+public interface PlayerDataManager extends INBTSerializable<CompoundTag> {
 	Player player();
 
 	void updatePlayerInstance(Player player);

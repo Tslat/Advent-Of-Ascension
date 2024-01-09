@@ -321,12 +321,10 @@
       "translate": "advancements.aoa3.completionist.ocean_genocide.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "aoa3:hauling_rod",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.ocean_genocide.title"

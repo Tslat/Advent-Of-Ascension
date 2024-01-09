@@ -11,17 +11,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
+import net.tslat.aoa3.common.registration.AoARegistries;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class ReplaceItemsLootModifier extends LootModifier {
 	public static final Codec<ReplaceItemsLootModifier> CODEC = RecordCodecBuilder.create(builder -> codecStart(builder).and(
 			Codec.pair(
-					ForgeRegistries.ITEMS.getCodec().fieldOf("item").codec(),
+					AoARegistries.ITEMS.lookupCodec().fieldOf("item").codec(),
 					ItemStack.CODEC.fieldOf("replace_with").codec()
 			).listOf().fieldOf("replacements").forGetter(instance -> instance.replacements)
 	).apply(builder, ReplaceItemsLootModifier::new));
@@ -39,7 +39,7 @@ public class ReplaceItemsLootModifier extends LootModifier {
 		return CODEC;
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		ObjectArrayList<ItemStack> loot = new ObjectArrayList<>();

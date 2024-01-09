@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:wither_vulcane_augment"
+    },
+    "B": {
+      "item": "aoa3:vulcane"
+    }
+  },
+  "pattern": [
+    "A",
+    "B"
+  ],
+  "result": {
+    "item": "aoa3:wither_vulcane"
+  }
+}

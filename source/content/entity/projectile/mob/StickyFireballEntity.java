@@ -11,8 +11,8 @@ import net.minecraft.world.phys.HitResult;
 import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.entity.AoAProjectiles;
 import net.tslat.aoa3.content.entity.base.AoARangedAttacker;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.explosion.StandardExplosion;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 
 public class StickyFireballEntity extends FireballEntity {
 	public StickyFireballEntity(EntityType<? extends StickyFireballEntity> entityType, Level level) {
@@ -40,11 +40,11 @@ public class StickyFireballEntity extends FireballEntity {
 			return;
 		}
 
-		if (this.onGround())
+		if (onGround())
 			setDeltaMovement(0, 0, 0);
 
-		if (this.level().isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0))
-			ParticleBuilder.forRandomPosInEntity(ParticleTypes.CAMPFIRE_COSY_SMOKE, this).lifespan(40).scaleMod(0.5f).spawnParticles();
+		if (level().isClientSide() && (getDeltaMovement().lengthSqr() != 0 || this.tickCount % 4 == 0))
+			ParticleBuilder.forRandomPosInEntity(ParticleTypes.CAMPFIRE_COSY_SMOKE, this).lifespan(40).scaleMod(0.5f).spawnParticles(level());
 	}
 
 	@Override

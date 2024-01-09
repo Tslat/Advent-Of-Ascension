@@ -19,9 +19,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.common.util.FakePlayer;
-import net.minecraftforge.entity.PartEntity;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import net.neoforged.neoforge.entity.PartEntity;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.NotNull;
@@ -141,7 +141,7 @@ public final class EntityUtil {
 			AttributeModifier modifier = instance.getModifier(modifierId);
 
 			if (modifier != null) {
-				instance.removeModifier(modifier);
+				instance.removeModifier(modifier.getId());
 
 				if (attribute == Attributes.MAX_HEALTH && entity.getHealth() > entity.getMaxHealth())
 					entity.setHealth(entity.getMaxHealth());

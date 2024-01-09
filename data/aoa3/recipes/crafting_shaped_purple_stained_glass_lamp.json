@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "Q": {
+      "tag": "forge:gems/quartz"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "X": {
+      "tag": "forge:dyes/purple"
+    }
+  },
+  "pattern": [
+    " Q ",
+    "RXR",
+    " R "
+  ],
+  "result": {
+    "item": "aoa3:purple_stained_glass_lamp"
+  }
+}

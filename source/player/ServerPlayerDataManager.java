@@ -3,7 +3,7 @@ package net.tslat.aoa3.player;
 import com.google.common.collect.ArrayListMultimap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
@@ -21,16 +21,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.common.util.INBTSerializable;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.PlayerDataSyncPacket;
-import net.tslat.aoa3.common.packet.packets.PlayerDataUpdatePacket;
-import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.ToastPopupPacket;
+import net.tslat.aoa3.common.networking.packets.adventplayer.PlayerDataSyncPacket;
+import net.tslat.aoa3.common.networking.packets.adventplayer.PlayerDataUpdatePacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -62,7 +63,7 @@ import java.util.function.Consumer;
 
 import static net.tslat.aoa3.player.AoAPlayerEventListener.ListenerState.*;
 
-public final class ServerPlayerDataManager implements AoAPlayerEventListener, PlayerDataManager {
+public final class ServerPlayerDataManager implements AoAPlayerEventListener, PlayerDataManager, INBTSerializable<CompoundTag> {
 	private ServerPlayer player;
 
 	private PlayerEquipment equipment;
@@ -400,8 +401,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		}
 
 		if (skillData != null) {
-			if (syncData == null)
-				syncData = new CompoundTag();
+			syncData = new CompoundTag();
 
 			syncData.put("skills", skillData);
 		}
@@ -580,7 +580,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		if (SkillsLeaderboard.isEnabled())
 			LeaderboardActions.updatePlayer(this, ev.getSkill());
 
-		if (!abilitiesRegionLocked)
+		if (!areAbilitiesRegionLocked())
 			recheckSkills();
 	}
 
@@ -592,7 +592,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (!listener.meetsRequirements())
 					listener.disable(DEACTIVATED, false);
 			}
-			else if (state == DEACTIVATED || (state == REGION_LOCKED && !abilitiesRegionLocked)) {
+			else if (state == DEACTIVATED || (state == REGION_LOCKED && !areAbilitiesRegionLocked())) {
 				if (listener.meetsRequirements()) {
 					listener.reenable(false);
 
@@ -618,7 +618,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	public void leaveAbilityLockRegion() {
-		if (!abilitiesRegionLocked)
+		if (!areAbilitiesRegionLocked())
 			return;
 
 		abilitiesRegionLocked = false;
@@ -632,7 +632,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	public void checkAndUpdateLegitimacy() {
 		if (player != null) {
-			Advancement adv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books"));
+			AdvancementHolder adv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books"));
 
 			if (adv == null)
 				return;
@@ -682,7 +682,6 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	@Override
 	public void handlePlayerDataClone(final PlayerEvent.Clone ev) {
-		ev.getOriginal().reviveCaps();
 		ServerPlayerDataManager sourceData = PlayerUtil.getAdventPlayer((ServerPlayer)ev.getOriginal());
 
 		for (Map.Entry<AoASkill, AoASkill.Instance> entry : sourceData.skills.entrySet()) {
@@ -707,7 +706,6 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		this.isLegitimate = sourceData.isLegitimate;
 
 		AoAScheduler.scheduleSyncronisedTask(sourceData::selfDestruct, 1);
-		ev.getOriginal().invalidateCaps();
 	}
 
 	public CompoundTag savetoNbt(boolean forClientSync) {
@@ -751,7 +749,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 				for (int i = 0; i < this.itemStorage.length; i++) {
 					if (this.itemStorage[i] != null)
-						itemStorage.put(String.valueOf(i), this.itemStorage[i].serializeNBT());
+						itemStorage.put(String.valueOf(i), this.itemStorage[i].save(new CompoundTag()));
 				}
 
 				baseTag.put("ItemStorage", itemStorage);
@@ -794,11 +792,21 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		return baseTag;
 	}
 
+	@Override
+	public CompoundTag serializeNBT() {
+		return savetoNbt(false);
+	}
+
+	@Override
+	public void deserializeNBT(CompoundTag nbt) {
+		loadFromNbt(nbt);
+	}
+
 	public final class PlayerEquipment implements AoAPlayerEventListener {
 		private final ServerPlayerDataManager playerDataManager;
 
 		private HashMap<String, Integer> cooldowns = new HashMap<>(1);
-		private HashMap<AdventArmour.Type, ArmourEffectWrapper> armourMap = new HashMap<>(4);
+		private final HashMap<AdventArmour.Type, ArmourEffectWrapper> armourMap = new HashMap<>(4);
 
 		private boolean checkEquipment = true;
 
@@ -1085,7 +1093,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			}
 		}
 
-		private class ArmourEffectWrapper {
+		private static class ArmourEffectWrapper {
 			private final AdventArmour armour;
 			private final HashSet<EquipmentSlot> currentSlots = new HashSet<>(4);
 

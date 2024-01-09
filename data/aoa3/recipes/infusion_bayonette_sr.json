@@ -20,10 +20,10 @@
       "tag": "forge:gunpowder"
     }
   ],
-  "input": {
-    "item": "aoa3:sniper_frame"
-  },
   "result": {
     "item": "aoa3:bayonette_sr"
+  },
+  "tool": {
+    "item": "aoa3:sniper_frame"
   }
 }

@@ -15,7 +15,6 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.completionist.monster_blaster.description"
@@ -26,7 +25,6 @@
       "item": "aoa3:experiment_w_801",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.monster_blaster.title"

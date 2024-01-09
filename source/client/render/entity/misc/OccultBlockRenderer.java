@@ -17,10 +17,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.TierSortingRegistry;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.TierSortingRegistry;
 import net.tslat.aoa3.event.GlobalEvents;
 import net.tslat.aoa3.util.ColourUtil;
 import org.lwjgl.opengl.GL11;
@@ -43,7 +43,7 @@ public final class OccultBlockRenderer {
 	private static final CopyOnWriteArrayList<IntObjectPair<List<OccultBlock>>> OCCULT_BLOCKS = new CopyOnWriteArrayList<>();
 
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderLevelStageEvent.class, OccultBlockRenderer::onWorldRender);
+		NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, RenderLevelStageEvent.class, OccultBlockRenderer::onWorldRender);
 	}
 
 	public static void addOccultBlocks(int renderUntil, List<OccultBlock> blocks) {

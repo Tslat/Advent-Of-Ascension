@@ -11,12 +11,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.functional.portal.PortalBlock;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 
 import java.util.ArrayList;
 
@@ -173,7 +172,7 @@ public class AoAPortalFrame {
     }
 
     public static void lightPortalFrame(ServerLevel level, BlockPos basePos, PortalDirection direction, PortalBlock portalBlock) {
-        final ServerParticlePacket packet = new ServerParticlePacket();
+        final TELParticlePacket packet = new TELParticlePacket();
         final int colour = portalBlock.getParticleColour();
 
         switch (direction) {
@@ -217,7 +216,7 @@ public class AoAPortalFrame {
                 break;
         }
 
-        AoANetworking.sendToAllNearbyPlayers(packet, level, Vec3.atBottomCenterOf(basePos), 32);
+        packet.sendToAllNearbyPlayers(level, Vec3.atBottomCenterOf(basePos), 32);
     }
 
     public enum PortalDirection {

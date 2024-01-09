@@ -11,6 +11,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
 import net.tslat.smartbrainlib.registry.SBLMemoryTypes;
@@ -35,6 +36,7 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 
 	private boolean targetWhenCharging = false;
 	private Vec3 chargeVelocity;
+	private long additionalTimeout = -1;
 
 	public ChargeAttack(int delayTicks) {
 		super(delayTicks);
@@ -87,10 +89,15 @@ public class ChargeAttack<E extends PathfinderMob> extends DelayedBehaviour<E> {
 		double moveSpeed = Math.max(entity.getSpeed(), entity.getAttributeValue(Attributes.MOVEMENT_SPEED)) * 2;
 		Vec3 targetPos = new Vec3(target.getX(0.5f), 0, target.getZ(0.5f));
 		Vec3 entityPos = new Vec3(entity.getX(0.5f), 0, entity.getZ(0.5f));
-		this.chargeVelocity = targetPos.subtract(entityPos).normalize().multiply(moveSpeed, 0, moveSpeed).subtract(0, entity.getAttributeValue(net.minecraftforge.common.ForgeMod.ENTITY_GRAVITY.get()), 0);
-		this.endTimestamp = this.delayFinishedAt + 1 + (Math.max(20, (int)(entityPos.distanceTo(targetPos) / (moveSpeed * 0.25))));
+		this.chargeVelocity = targetPos.subtract(entityPos).normalize().multiply(moveSpeed, 0, moveSpeed).subtract(0, entity.getAttributeValue(NeoForgeMod.ENTITY_GRAVITY), 0);
+		this.additionalTimeout = this.delayFinishedAt + 1 + (Math.max(20, (int)(entityPos.distanceTo(targetPos) / (moveSpeed * 0.25))));
 
 		entity.lookAt(EntityAnchorArgument.Anchor.FEET, targetPos);
+	}
+
+	@Override
+	protected boolean timedOut(long gameTime) {
+		return gameTime > this.additionalTimeout && super.timedOut(gameTime);
 	}
 
 	@Override

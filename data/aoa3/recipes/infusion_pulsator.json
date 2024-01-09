@@ -20,10 +20,10 @@
       "tag": "forge:ingots/lunar"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:pulsator"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

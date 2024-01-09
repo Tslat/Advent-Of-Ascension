@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "tag": "forge:ivory"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "X": {
+      "tag": "forge:gems/lapis"
+    }
+  },
+  "pattern": [
+    " I ",
+    "RXR",
+    " R "
+  ],
+  "result": {
+    "item": "aoa3:ivory_lapis_lamp"
+  }
+}

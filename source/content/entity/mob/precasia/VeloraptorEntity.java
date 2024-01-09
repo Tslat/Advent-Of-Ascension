@@ -21,7 +21,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.IExtensibleEnum;
+import net.neoforged.neoforge.common.IExtensibleEnum;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -82,7 +82,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 
 	@Override
 	protected float getAttackVectorPositionOffset() {
-		return 0.875f;
+		return 1.0625f;
 	}
 
 	@Nullable

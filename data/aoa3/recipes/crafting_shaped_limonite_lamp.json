@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "X": {
+      "tag": "forge:ingots/limonite"
+    }
+  },
+  "pattern": [
+    " R ",
+    "RXR",
+    " R "
+  ],
+  "result": {
+    "item": "aoa3:limonite_lamp"
+  }
+}

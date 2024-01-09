@@ -20,10 +20,10 @@
       "tag": "forge:gunpowder"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:wart_gun"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

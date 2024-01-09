@@ -1,8 +1,10 @@
 package net.tslat.aoa3.common.registration.block;
 
+import com.mojang.serialization.MapCodec;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
@@ -19,7 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.misc.NativePatching;
 import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
@@ -38,7 +40,7 @@ import java.util.function.*;
 
 public final class BlockRegistrar<T extends Block> {
 	private final List<Consumer<T>> callbacks = new ObjectArrayList<>();
-	private RegistryObject<T> registryObject = null;
+	private DeferredHolder<Block, T> registryObject = null;
 
 	private BlockBehaviour.Properties properties = BlockBehaviour.Properties.of();
 	private Function<BlockBehaviour.Properties, Block> factory = Block::new;
@@ -47,12 +49,12 @@ public final class BlockRegistrar<T extends Block> {
 	Item.Properties itemProperties = new Item.Properties();
 	BiFunction<T, Item.Properties, ? extends Item> itemFactory = BlockItem::new;
 
-	public BlockRegistrar<T> basedOn(RegistryObject<? extends Block> block) {
+	public BlockRegistrar<T> basedOn(DeferredHolder<Block, ? extends Block> block) {
 		return basedOn(block.get());
 	}
 
 	public BlockRegistrar<T> basedOn(Block block) {
-		this.properties = BlockBehaviour.Properties.copy(block);
+		this.properties = BlockBehaviour.Properties.ofFullCopy(block);
 
 		return this;
 	}
@@ -174,7 +176,12 @@ public final class BlockRegistrar<T extends Block> {
 		instabreak();
 		replaceable();
 		compostable(0.3f);
-		factory(BushBlock::new);
+		factory(properties -> new BushBlock(properties) {
+			@Override
+			protected MapCodec<? extends BushBlock> codec() {
+				return null;
+			}
+		});
 		generationBlocksTab();
 
 		return this;
@@ -224,9 +231,9 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> basePottedPlant(RegistryObject<? extends Block> plant) {
+	public BlockRegistrar<T> basePottedPlant(Holder<? extends Block> plant) {
 		basedOn(Blocks.FLOWER_POT);
-		factory(properties -> new FlowerPotBlock(null, plant, properties));
+		factory(properties -> new FlowerPotBlock(null, plant::value, properties));
 		noItem();
 
 		return this;
@@ -256,8 +263,23 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseButton(RegistryObject<? extends Block> base) {
-		basedOn((RegistryObject<Block>)base);
+	public BlockRegistrar<T> baseGlass() {
+		factory(TransparentBlock::new);
+		stats(0.3f);
+		sounds(SoundType.GLASS);
+		instrument(NoteBlockInstrument.HAT);
+		noOcclusion();
+		breathable();
+		noRedstone();
+		noScreenCover();
+		noSpawns();
+		decorationBlocksTab();
+
+		return this;
+	}
+
+	public BlockRegistrar<T> baseButton(DeferredHolder<Block, ? extends Block> base) {
+		basedOn(base);
 		noClip();
 		stats(0.5f);
 		pistonBreaks();
@@ -266,8 +288,8 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> basePressurePlate(RegistryObject<? extends Block> base) {
-		basedOn((RegistryObject<Block>)base);
+	public BlockRegistrar<T> basePressurePlate(DeferredHolder<Block, ? extends Block> base) {
+		basedOn(base);
 		alwaysSolid();
 		instrument(NoteBlockInstrument.BASS);
 		noClip();
@@ -281,7 +303,7 @@ public final class BlockRegistrar<T extends Block> {
 
 	public BlockRegistrar<T> baseDoor(BlockSetType blockSet) {
 		basedOn(Blocks.OAK_DOOR);
-		factory(properties -> new DoorBlock(properties, blockSet));
+		factory(properties -> new DoorBlock(blockSet, properties));
 		utilityBlocksTab();
 
 		return this;
@@ -289,7 +311,7 @@ public final class BlockRegistrar<T extends Block> {
 
 	public BlockRegistrar<T> baseTrapdoor(BlockSetType blockSet) {
 		basedOn(Blocks.OAK_TRAPDOOR);
-		factory(properties -> new TrapDoorBlock(properties, blockSet));
+		factory(properties -> new TrapDoorBlock(blockSet, properties));
 		utilityBlocksTab();
 
 		return this;
@@ -334,7 +356,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseFence(RegistryObject<? extends Block> block) {
+	public BlockRegistrar<T> baseFence(DeferredHolder<Block, ? extends Block> block) {
 		Block base = block.get();
 
 		instrument(base.defaultBlockState().instrument());
@@ -352,7 +374,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseWall(RegistryObject<? extends Block> block) {
+	public BlockRegistrar<T> baseWall(DeferredHolder<Block, ? extends Block> block) {
 		basedOn(block);
 		alwaysSolid();
 		factory(WallBlock::new);
@@ -361,7 +383,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseStairs(RegistryObject<? extends Block> block) {
+	public BlockRegistrar<T> baseStairs(DeferredHolder<Block, ? extends Block> block) {
 		basedOn(block);
 		factory(properties -> new StairBlock(() -> block.get().defaultBlockState(), properties));
 		decorationBlocksTab();
@@ -369,7 +391,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseSlab(RegistryObject<? extends Block> block) {
+	public BlockRegistrar<T> baseSlab(DeferredHolder<Block, ? extends Block> block) {
 		basedOn(block);
 		factory(SlabBlock::new);
 		decorationBlocksTab();
@@ -377,7 +399,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseSign(RegistryObject<? extends Block> block, boolean hanging) {
+	public BlockRegistrar<T> baseSign(DeferredHolder<Block, ? extends Block> block, boolean hanging) {
 		basedOn(block);
 		alwaysSolid();
 		instrument(NoteBlockInstrument.BASS);
@@ -435,8 +457,8 @@ public final class BlockRegistrar<T extends Block> {
 		return inTabs(AoACreativeModeTabs.FUNCTIONAL_BLOCKS);
 	}
 
-	public BlockRegistrar<T> inTabs(RegistryObject<CreativeModeTab>... tabs) {
-		return inTabs(Arrays.stream(tabs).map(RegistryObject::getKey).toArray(ResourceKey[]::new));
+	public BlockRegistrar<T> inTabs(DeferredHolder<CreativeModeTab, CreativeModeTab>... tabs) {
+		return inTabs(Arrays.stream(tabs).map(DeferredHolder::getKey).toArray(ResourceKey[]::new));
 	}
 
 	public BlockRegistrar<T> inTabs(ResourceKey<CreativeModeTab>... tabs) {
@@ -452,7 +474,7 @@ public final class BlockRegistrar<T extends Block> {
 	}
 
 	public BlockRegistrar<T> noParticles() {
-		this.properties.noParticlesOnBreak();
+		this.properties.noTerrainParticles();
 
 		return this;
 	}
@@ -725,7 +747,7 @@ public final class BlockRegistrar<T extends Block> {
 		return (T)this.factory.apply(this.properties);
 	}
 
-	void setRegistryObject(RegistryObject<T> registryObject) {
+	void setRegistryObject(DeferredHolder<Block, T> registryObject) {
 		this.registryObject = registryObject;
 	}
 

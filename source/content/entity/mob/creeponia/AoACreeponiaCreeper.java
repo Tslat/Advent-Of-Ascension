@@ -22,8 +22,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -148,7 +147,7 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 			}
 		}
 
-		if (!net.minecraftforge.common.ForgeHooks.onLivingTick(this)) {
+		if (!CommonHooks.onLivingTick(this)) {
 			if (!level().isClientSide)
 				setSharedFlag(6, isCurrentlyGlowing());
 
@@ -333,12 +332,10 @@ public abstract class AoACreeponiaCreeper extends AoAMeleeMob<AoACreeponiaCreepe
 		return success;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public float getCreeperFlashIntensity(float partialTicks) {
 		return Mth.lerp(partialTicks, (float)lastActiveTime, (float)timeSinceIgnited) / (float)(fuseTime - 2);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public float getSwimAmount(float partialTicks) {
 		return Mth.lerp(partialTicks, this.lastSwimAnimation, this.swimAnimation);

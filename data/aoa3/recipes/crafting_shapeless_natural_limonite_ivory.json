@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "aoa3:ivory"
+    },
+    {
+      "tag": "forge:ingots/limonite"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "item": "aoa3:natural_limonite_ivory"
+  }
+}

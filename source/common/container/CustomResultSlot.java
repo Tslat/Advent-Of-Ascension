@@ -4,13 +4,13 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.RecipeHolder;
+import net.minecraft.world.inventory.RecipeCraftingHolder;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.ForgeEventFactory;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.event.EventHooks;
 
 import java.util.List;
 import java.util.Objects;
@@ -58,10 +58,10 @@ public class CustomResultSlot<C extends Container, T extends Recipe<C>> extends 
 	protected void checkTakeAchievements(ItemStack stack) {
 		if (this.removeCount > 0) {
 			stack.onCraftedBy(this.player.level(), this.player, this.removeCount);
-			ForgeEventFactory.firePlayerCraftingEvent(this.player, stack, this.craftSlots);
+			EventHooks.firePlayerCraftingEvent(this.player, stack, this.craftSlots);
 		}
 
-		if (this.container instanceof RecipeHolder recipeHolder) {
+		if (this.container instanceof RecipeCraftingHolder recipeHolder) {
 			List<ItemStack> items = new ObjectArrayList<>(this.craftSlots.getContainerSize());
 
 			for (int i = 0; i < this.craftSlots.getContainerSize(); i++) {
@@ -79,11 +79,11 @@ public class CustomResultSlot<C extends Container, T extends Recipe<C>> extends 
 	@Override
 	public void onTake(Player player, ItemStack stack) {
 		checkTakeAchievements(stack);
-		ForgeHooks.setCraftingPlayer(player);
+		CommonHooks.setCraftingPlayer(player);
 
 		NonNullList<ItemStack> remainingItems = player.level().getRecipeManager().getRemainingItemsFor(recipeType, this.craftSlots, player.level());
 
-		ForgeHooks.setCraftingPlayer(null);
+		CommonHooks.setCraftingPlayer(null);
 
 		for(int i = 0; i < remainingItems.size(); ++i) {
 			ItemStack slotStack = this.craftSlots.getItem(i);

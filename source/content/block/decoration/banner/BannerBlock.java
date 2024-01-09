@@ -63,7 +63,7 @@ public class BannerBlock extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		if (state.getValue(TYPE) == BannerType.MOUNTED) {
 			world.setBlockAndUpdate(pos.below(), Blocks.AIR.defaultBlockState());
 		}
@@ -71,7 +71,7 @@ public class BannerBlock extends Block implements SimpleWaterloggedBlock {
 			world.setBlockAndUpdate(pos.above(), Blocks.AIR.defaultBlockState());
 		}
 
-		super.playerWillDestroy(world, pos, state, player);
+		return super.playerWillDestroy(world, pos, state, player);
 	}
 
 	@Override

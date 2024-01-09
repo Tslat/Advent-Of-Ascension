@@ -23,10 +23,10 @@
       "tag": "forge:gems/jade"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:rosidian_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

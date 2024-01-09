@@ -13,11 +13,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.NumberUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.StringUtil;
 
 import java.util.HashSet;
@@ -131,7 +131,7 @@ public class PotionDurationReducer extends AoAAbility.Instance {
 		if (matchType != null)
 			return effect.getEffect().getCategory() == matchType;
 
-		return matchEffects.contains(ForgeRegistries.MOB_EFFECTS.getKey(effect.getEffect()));
+		return matchEffects.contains(RegistryUtil.getId(effect.getEffect()));
 	}
 
 	private void reduceEffectDuration(MobEffectInstance effect, Consumer<MobEffectInstance> modifier) {

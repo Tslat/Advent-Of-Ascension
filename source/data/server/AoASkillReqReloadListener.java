@@ -2,6 +2,7 @@ package net.tslat.aoa3.data.server;
 
 import com.google.gson.*;
 import com.mojang.datafixers.util.Pair;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.packs.resources.ResourceManager;
@@ -10,13 +11,11 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.util.profiling.ProfilerFiller;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.SkillRequirementDataPacket;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.Nonnull;
@@ -39,7 +38,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canEquip(PlayerDataManager plData, Item item, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(ForgeRegistries.ITEMS.getKey(item));
+		SkillReqHandler handler = getRequirements(RegistryUtil.getId(item));
 
 		if (handler != null && !handler.canEquip(plData)) {
 			if (notifyPlayer && !plData.player().level().isClientSide())
@@ -52,7 +51,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canPlaceBlock(PlayerDataManager plData, Block block, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
+		SkillReqHandler handler = getRequirements(RegistryUtil.getId(block));
 
 		if (handler != null && !handler.canPlaceBlock(plData)) {
 			if (notifyPlayer && !plData.player().level().isClientSide())
@@ -65,7 +64,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canBreakBlock(PlayerDataManager plData, Block block, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
+		SkillReqHandler handler = getRequirements(RegistryUtil.getId(block));
 
 		if (handler != null && !handler.canBreakBlock(plData)) {
 			if (notifyPlayer && !plData.player().level().isClientSide())
@@ -78,7 +77,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static boolean canInteractWith(PlayerDataManager plData, Block block, boolean notifyPlayer) {
-		SkillReqHandler handler = getRequirements(ForgeRegistries.BLOCKS.getKey(block));
+		SkillReqHandler handler = getRequirements(RegistryUtil.getId(block));
 
 		if (handler != null && !handler.canInteractWith(plData)) {
 			if (notifyPlayer && !plData.player().level().isClientSide())
@@ -103,7 +102,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 	}
 
 	public static void parseAll(Map<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> restrictions) {
-		requirementsData = new HashMap<>(restrictions);
+		requirementsData = new Object2ObjectOpenHashMap<>(restrictions);
 
 		for (Map.Entry<ResourceLocation, Map<String, List<Pair<ResourceLocation, Integer>>>> entry : requirementsData.entrySet()) {
 			SkillReqHandler handler = parse(entry.getValue());
@@ -264,10 +263,6 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 			return new HashMap<>(0);
 
 		return requirementsData.get(itemId);
-	}
-
-	public static void syncNewPlayer(ServerPlayer player) {
-		AoANetworking.sendToPlayer(player, new SkillRequirementDataPacket(requirementsData));
 	}
 
 	public static class SkillReqHandler {

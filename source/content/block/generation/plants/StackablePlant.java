@@ -14,9 +14,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
-import net.minecraftforge.common.IForgeShearable;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.common.PlantType;
+import net.neoforged.neoforge.common.IPlantable;
+import net.neoforged.neoforge.common.IShearable;
+import net.neoforged.neoforge.common.PlantType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class StackablePlant extends Block implements IForgeShearable, IPlantable {
+public class StackablePlant extends Block implements IShearable, IPlantable {
 	protected Supplier<? extends StackablePlant> hatBlock;
 	protected Supplier<? extends StackablePlant> stemBlock;
 // TODO fix this to use blockstates =/
@@ -36,7 +36,7 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 	}
 
 	@Override
-	public void playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
+	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		BlockPos newPos;
 		BlockState blockState = world.getBlockState(newPos = pos.above());
 		Block block = blockState.getBlock();
@@ -54,7 +54,7 @@ public class StackablePlant extends Block implements IForgeShearable, IPlantable
 			block = blockState.getBlock();
 		}
 
-		super.playerWillDestroy(world, pos, state, player);
+		return super.playerWillDestroy(world, pos, state, player);
 	}
 
 	@Override

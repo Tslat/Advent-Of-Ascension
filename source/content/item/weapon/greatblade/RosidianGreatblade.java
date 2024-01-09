@@ -14,7 +14,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.IForgeShearable;
+import net.neoforged.neoforge.common.IShearable;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -35,8 +35,8 @@ public class RosidianGreatblade extends BaseGreatblade {
 
 		Block block = player.level().getBlockState(pos).getBlock();
 
-		if (block instanceof IForgeShearable) {
-			if (((IForgeShearable)block).isShearable(stack, player.level(), pos)) {
+		if (block instanceof IShearable shearable) {
+			if (shearable.isShearable(stack, player.level(), pos)) {
 				List<ItemStack> drops;
 
 				for (int x = pos.getX() - 1; x <= pos.getX() + 1; x++) {
@@ -45,10 +45,10 @@ public class RosidianGreatblade extends BaseGreatblade {
 							BlockPos newPos = new BlockPos(x, y, z);
 							Block newBlock = player.level().getBlockState(newPos).getBlock();
 
-							if (!(newBlock instanceof IForgeShearable) || !((IForgeShearable)newBlock).isShearable(stack, player.level(), newPos))
+							if (!(newBlock instanceof IShearable newShearable) || !newShearable.isShearable(stack, player.level(), newPos))
 								continue;
 
-							drops = ((IForgeShearable)block).onSheared(player, stack, player.level(), newPos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
+							drops = shearable.onSheared(player, stack, player.level(), newPos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
 
 							for (ItemStack drop : drops) {
 								double xMod = RandomUtil.randomValueBetween(0.15f, 0.85f);
@@ -76,7 +76,7 @@ public class RosidianGreatblade extends BaseGreatblade {
 
 	@Override
 	public boolean canAttackBlock(BlockState state, Level world, BlockPos pos, Player player) {
-		return super.canAttackBlock(state, world, pos, player) || world.getBlockState(pos) instanceof IForgeShearable;
+		return super.canAttackBlock(state, world, pos, player) || world.getBlockState(pos) instanceof IShearable;
 	}
 
 	@Override

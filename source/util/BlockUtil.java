@@ -1,6 +1,7 @@
 package net.tslat.aoa3.util;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -13,8 +14,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -90,9 +89,9 @@ public final class BlockUtil {
 			return this;
 		}
 
-		public SpawnerBuilder withSpawns(RegistryObject<EntityType<?>>... entities) {
-			for (RegistryObject<EntityType<?>> registryEntry : entities) {
-				withSpawn(1, registryEntry.get());
+		public SpawnerBuilder withSpawns(Holder<EntityType<?>>... entities) {
+			for (Holder<EntityType<?>> registryEntry : entities) {
+				withSpawn(1, registryEntry.value());
 			}
 
 			return this;
@@ -105,7 +104,7 @@ public final class BlockUtil {
 		public SpawnerBuilder withSpawn(int weight, EntityType<?> entity, SpawnData.CustomSpawnRules spawnRules) {
 			CompoundTag tag = new CompoundTag();
 
-			tag.putString("id", ForgeRegistries.ENTITY_TYPES.getKey(entity).toString());
+			tag.putString("id", RegistryUtil.getId(entity).toString());
 
 			return withSpawn(weight, tag, spawnRules);
 		}

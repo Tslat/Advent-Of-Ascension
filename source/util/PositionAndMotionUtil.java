@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -128,7 +129,7 @@ public final class PositionAndMotionUtil {
 	}
 
 	public static HitResult rayTrace(Level level, Vec3 start, Vec3 end, ClipContext.Block blockhitType, boolean includeFluids, boolean doEntities, @Nullable Predicate<Entity> entityFilter) {
-		BlockHitResult blockHitResult = level.clip(new ClipContext(start, end, blockhitType, includeFluids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, null));
+		BlockHitResult blockHitResult = level.clip(new ClipContext(start, end, blockhitType, includeFluids ? ClipContext.Fluid.ANY : ClipContext.Fluid.NONE, CollisionContext.empty()));
 
 		if (!doEntities)
 			return blockHitResult;

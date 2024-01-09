@@ -3,6 +3,7 @@ package net.tslat.aoa3.util;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -23,9 +24,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.pattern.BlockInWorld;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.server.ServerLifecycleHooks;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.event.EventHooks;
+import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -48,7 +49,7 @@ public final class WorldUtil {
 	}
 
 	public static Explosion createExplosion(@Nonnull Entity exploder, Level world, float strength) {
-		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, ForgeEventFactory.getMobGriefingEvent(world, exploder) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false);
+		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, EventHooks.getMobGriefingEvent(world, exploder) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false);
 	}
 
 	public static Explosion createExplosion(@Nullable Entity exploder, Level world, @Nonnull Entity explodingEntity, float strength) {
@@ -62,7 +63,7 @@ public final class WorldUtil {
 				exploder = explodingEntity;
 
 			if (exploder instanceof LivingEntity || explodingEntity instanceof LivingEntity) {
-				doGriefing = ForgeEventFactory.getMobGriefingEvent(world, exploder);
+				doGriefing = EventHooks.getMobGriefingEvent(world, exploder);
 			}
 			else {
 				doGriefing = AoAGameRules.checkDestructiveWeaponPhysics(world);
@@ -125,7 +126,7 @@ public final class WorldUtil {
 		if (!world.isClientSide()) {
 			ServerPlayer player = (ServerPlayer)pl;
 			GameType gameMode = player.gameMode.getGameModeForPlayer();
-			int blockXp = net.minecraftforge.common.ForgeHooks.onBlockBreakEvent(world, gameMode, player, breakPos);
+			int blockXp = CommonHooks.onBlockBreakEvent(world, gameMode, player, breakPos);
 
 			if (blockXp == -1)
 				return false;
@@ -161,7 +162,7 @@ public final class WorldUtil {
 				boolean canHarvest = blockState.canHarvestBlock(world, breakPos, pl);
 
 				if (toolStack.isEmpty() && !toolStackCopy.isEmpty())
-					net.minecraftforge.event.ForgeEventFactory.onPlayerDestroyItem(pl, toolStackCopy, InteractionHand.MAIN_HAND);
+					EventHooks.onPlayerDestroyItem(pl, toolStackCopy, InteractionHand.MAIN_HAND);
 
 				boolean removedBlock = blockState.onDestroyedByPlayer(world, breakPos, player, false, world.getFluidState(breakPos));
 
@@ -264,7 +265,7 @@ public final class WorldUtil {
 				if (stack.isEmpty())
 					return false;
 
-				return stack.hasAdventureModePlaceTagForBlock(RegistryUtil.getVanillaRegistry(activeWorld, ForgeRegistries.BLOCKS), new BlockInWorld(activeWorld, pos, false));
+				return stack.hasAdventureModePlaceTagForBlock(RegistryUtil.getRegistry(Registries.BLOCK), new BlockInWorld(activeWorld, pos, false));
 			}
 		}
 
@@ -293,7 +294,7 @@ public final class WorldUtil {
 				if (stack.isEmpty())
 					return false;
 
-				return stack.hasAdventureModeBreakTagForBlock(RegistryUtil.getVanillaRegistry(activeWorld, ForgeRegistries.BLOCKS), new BlockInWorld(activeWorld, pos, false));
+				return stack.hasAdventureModeBreakTagForBlock(RegistryUtil.getRegistry(Registries.BLOCK), new BlockInWorld(activeWorld, pos, false));
 			}
 		}
 

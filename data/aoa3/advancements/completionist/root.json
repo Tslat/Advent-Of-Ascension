@@ -11,12 +11,9 @@
       "color": "white",
       "translate": "advancements.aoa3.completionist.root.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:alien_orb"
     },
-    "show_toast": true,
     "title": {
       "color": "gold",
       "translate": "advancements.aoa3.completionist.root.title"

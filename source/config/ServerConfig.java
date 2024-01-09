@@ -1,25 +1,25 @@
 package net.tslat.aoa3.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.tslat.aoa3.library.constant.BossDropsScheme;
 
 public final class ServerConfig {
-	public final ForgeConfigSpec.BooleanValue allowUnsafeInfusion;
-	public final ForgeConfigSpec.IntValue portalSearchRadius;
-	public final ForgeConfigSpec.BooleanValue easyCorruptedTravellers;
-	public final ForgeConfigSpec.BooleanValue allowNonPlayerPortalTravel;
-	public final ForgeConfigSpec.DoubleValue globalXpModifier;
-	public final ForgeConfigSpec.BooleanValue saveLootFromExplosions;
-	public final ForgeConfigSpec.BooleanValue disableSkills;
-	public final ForgeConfigSpec.EnumValue<BossDropsScheme> bossDropsScheme;
+	public final ModConfigSpec.BooleanValue allowUnsafeInfusion;
+	public final ModConfigSpec.IntValue portalSearchRadius;
+	public final ModConfigSpec.BooleanValue easyCorruptedTravellers;
+	public final ModConfigSpec.BooleanValue allowNonPlayerPortalTravel;
+	public final ModConfigSpec.DoubleValue globalXpModifier;
+	public final ModConfigSpec.BooleanValue saveLootFromExplosions;
+	public final ModConfigSpec.BooleanValue disableSkills;
+	public final ModConfigSpec.EnumValue<BossDropsScheme> bossDropsScheme;
 
-	public final ForgeConfigSpec.BooleanValue skillsLeaderboardEnabled;
-	public final ForgeConfigSpec.IntValue maxLeaderboardThreads;
-	public final ForgeConfigSpec.BooleanValue dontCacheDatabase;
-	public final ForgeConfigSpec.ConfigValue<String> databaseUsername;
-	public final ForgeConfigSpec.ConfigValue<String> databasePassword;
+	public final ModConfigSpec.BooleanValue skillsLeaderboardEnabled;
+	public final ModConfigSpec.IntValue maxLeaderboardThreads;
+	public final ModConfigSpec.BooleanValue dontCacheDatabase;
+	public final ModConfigSpec.ConfigValue<String> databaseUsername;
+	public final ModConfigSpec.ConfigValue<String> databasePassword;
 
-	public ServerConfig(ForgeConfigSpec.Builder configBuilder) {
+	public ServerConfig(ModConfigSpec.Builder configBuilder) {
 		configBuilder.comment("AoA server-side configuration options").push("General Settings");
 
 		allowUnsafeInfusion = configBuilder

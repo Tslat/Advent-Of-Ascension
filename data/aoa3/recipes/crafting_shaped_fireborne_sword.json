@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/emberstone"
+    },
+    "B": {
+      "tag": "forge:rods/wooden"
+    },
+    "C": {
+      "item": "aoa3:flammable_dust"
+    }
+  },
+  "pattern": [
+    " A ",
+    " A ",
+    "CBC"
+  ],
+  "result": {
+    "item": "aoa3:fireborne_sword"
+  }
+}

@@ -2,17 +2,17 @@ package net.tslat.aoa3.common.registration.block.group;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.block.BlockRegistrar;
 import net.tslat.aoa3.content.block.generation.log.LogBlock;
 
 import java.util.function.Supplier;
 
 public final class LogBlockGroup {
-	public final RegistryObject<LogBlock> log;
-	public final RegistryObject<LogBlock> bark;
-	public final RegistryObject<LogBlock> strippedLog;
-	public final RegistryObject<LogBlock> strippedBark;
+	public final DeferredHolder<Block, LogBlock> log;
+	public final DeferredHolder<Block, LogBlock> bark;
+	public final DeferredHolder<Block, LogBlock> strippedLog;
+	public final DeferredHolder<Block, LogBlock> strippedBark;
 
 	public LogBlockGroup(String baseId, BlockRegistrarFactory registry, MapColor endColour, MapColor sideColour, LogBuilder logBuilder) {
 		this.log = registry.register(baseId + "_log", registrar -> logBuilder.build(registrar, this::strippedLog, endColour, sideColour));

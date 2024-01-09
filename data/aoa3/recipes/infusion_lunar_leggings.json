@@ -26,10 +26,10 @@
       "tag": "forge:ingots/lunar"
     }
   ],
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "result": {
     "item": "aoa3:lunar_leggings"
+  },
+  "tool": {
+    "item": "aoa3:leggings_frame"
   }
 }

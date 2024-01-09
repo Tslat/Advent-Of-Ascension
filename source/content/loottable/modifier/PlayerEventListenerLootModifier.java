@@ -11,13 +11,13 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraftforge.common.loot.IGlobalLootModifier;
-import net.minecraftforge.common.loot.LootModifier;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.common.loot.LootModifier;
 import net.tslat.aoa3.event.AoAPlayerEvents;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 
 public class PlayerEventListenerLootModifier extends LootModifier {
 	public static final Codec<PlayerEventListenerLootModifier> CODEC = RecordCodecBuilder.create(builder -> codecStart(builder).apply(builder, PlayerEventListenerLootModifier::new));
@@ -32,7 +32,7 @@ public class PlayerEventListenerLootModifier extends LootModifier {
 		return CODEC;
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
 	protected ObjectArrayList<ItemStack> doApply(ObjectArrayList<ItemStack> generatedLoot, LootContext context) {
 		for (LootContextParam<?> param : ENTITY_SOURCE_PARAMS) {

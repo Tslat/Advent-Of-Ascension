@@ -11,7 +11,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
@@ -34,8 +33,8 @@ public class PrimordialBankerEntity extends AoABanker {
 	}
 
 	@Override
-	protected void openScreen(Player player) {
-		NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
+	protected void openScreen(ServerPlayer player) {
+		player.openMenu(new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return PrimordialBankerEntity.this.getDisplayName();

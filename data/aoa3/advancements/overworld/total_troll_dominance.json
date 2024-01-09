@@ -29,17 +29,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.overworld.total_troll_dominance.description"
     },
     "frame": "challenge",
-    "hidden": false,
     "icon": {
       "item": "aoa3:ornate_trophy"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.total_troll_dominance.title"

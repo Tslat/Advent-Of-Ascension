@@ -2,19 +2,17 @@ package net.tslat.aoa3.event.custom.events;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
-import net.minecraftforge.eventbus.api.Cancelable;
+import net.neoforged.bus.api.ICancellableEvent;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import org.jetbrains.annotations.Nullable;
-
 
 /**
  * Fired when an entity is being teleported for any reason other than commands, ender pearls, or chorus fruit. <br>
  * Entities teleporting of their own power and volition are covered under {@link EntityTeleportEvent.EnderEntity}. <br>
- * This event is {@link Cancelable}. <br>
+ * This event is {@link ICancellableEvent Cancellable}. <br>
  * If canceled, the entity will not teleport.
  */
-@Cancelable
-public class MagicTeleportEvent extends EntityTeleportEvent {
+public class MagicTeleportEvent extends EntityTeleportEvent implements ICancellableEvent {
 	@Nullable
 	protected Entity teleportSource;
 	@Nullable

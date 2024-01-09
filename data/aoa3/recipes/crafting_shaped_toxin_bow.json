@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:toxic_lump"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "tag": "forge:gems/jade"
+    }
+  },
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "result": {
+    "item": "aoa3:toxin_bow"
+  }
+}

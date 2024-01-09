@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "aoa3:natural_jade_ivory"
+    }
+  },
+  "pattern": [
+    "X  ",
+    " X ",
+    "  X"
+  ],
+  "result": {
+    "count": 3,
+    "item": "aoa3:patterned_jade_ivory"
+  }
+}

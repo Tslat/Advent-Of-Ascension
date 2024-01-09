@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/shyrestone"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "tag": "forge:gems/shyregem"
+    }
+  },
+  "pattern": [
+    " AB",
+    "C B",
+    " AB"
+  ],
+  "result": {
+    "item": "aoa3:shyregem_bow"
+  }
+}

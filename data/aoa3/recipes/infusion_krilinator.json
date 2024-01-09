@@ -17,10 +17,10 @@
       "tag": "forge:ingots/iron"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:krilinator"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

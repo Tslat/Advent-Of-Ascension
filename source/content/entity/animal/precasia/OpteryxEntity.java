@@ -35,7 +35,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -276,7 +276,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 					}
 				}
 
-				setDeltaMovement(getDeltaMovement().multiply(0.25f, 1, 0.25f).subtract(0, getAttributeValue(ForgeMod.ENTITY_GRAVITY.get()), 0));
+				setDeltaMovement(getDeltaMovement().multiply(0.25f, 1, 0.25f).subtract(0, getAttributeValue(NeoForgeMod.ENTITY_GRAVITY.value()), 0));
 				move(MoverType.SELF, getDeltaMovement());
 
 				if (!EntityUtil.hasAttributeModifier(this, Attributes.MAX_HEALTH, EGG_HEALTH_MOD))
@@ -287,7 +287,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 			}
 
 			if (isVehicle() && this.isFlying) {
-				setDeltaMovement(getDeltaMovement().subtract(0, getAttributeValue(ForgeMod.ENTITY_GRAVITY.get()) * 0.5f, 0));
+				setDeltaMovement(getDeltaMovement().subtract(0, getAttributeValue(NeoForgeMod.ENTITY_GRAVITY.value()) * 0.5f, 0));
 			}
 		}
 	}

@@ -1,13 +1,13 @@
 package net.tslat.aoa3.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public final class IntegrationsConfig {
-	public final ForgeConfigSpec.BooleanValue jeiIntegrationEnabled;
-	public final ForgeConfigSpec.BooleanValue patchouliEnabled;
-	public final ForgeConfigSpec.BooleanValue tesEnabled;
+	public final ModConfigSpec.BooleanValue jeiIntegrationEnabled;
+	public final ModConfigSpec.BooleanValue patchouliEnabled;
+	public final ModConfigSpec.BooleanValue tesEnabled;
 
-	public IntegrationsConfig(ForgeConfigSpec.Builder specBuilder) {
+	public IntegrationsConfig(ModConfigSpec.Builder specBuilder) {
 		specBuilder.comment("Integration options for JEI (Just Enough Items)").push("JEI Settings");
 
 		jeiIntegrationEnabled = specBuilder

@@ -27,7 +27,8 @@ import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.EventHooks;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.content.item.tool.misc.HaulingRod;
 import net.tslat.aoa3.data.server.AoAHaulingFishReloadListener;
@@ -451,7 +452,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	protected void checkIfCollided() {
 		HitResult rayTrace = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
 
-		if (rayTrace.getType() != HitResult.Type.MISS && !net.minecraftforge.event.ForgeEventFactory.onProjectileImpact(this, rayTrace))
+		if (rayTrace.getType() != HitResult.Type.MISS && !EventHooks.onProjectileImpact(this, rayTrace))
 			this.onHit(rayTrace);
 	}
 

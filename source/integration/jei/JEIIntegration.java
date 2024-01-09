@@ -3,13 +3,16 @@ package net.tslat.aoa3.integration.jei;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.VanillaTypes;
+import mezz.jei.api.helpers.IGuiHelper;
+import mezz.jei.api.helpers.IModIdHelper;
 import mezz.jei.api.registration.*;
-import mezz.jei.api.runtime.IJeiRuntime;
+import mezz.jei.api.runtime.IIngredientManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoARecipes;
@@ -47,8 +50,8 @@ public class JEIIntegration implements IModPlugin {
 
 	@Override
 	public void registerVanillaCategoryExtensions(IVanillaCategoryExtensionRegistration registration) {
-		registration.getCraftingCategory().addCategoryExtension(ToolInteractionRecipe.class, ToolInteractionRecipeExtension::new);
-		registration.getCraftingCategory().addCategoryExtension(AshfernCookingRecipe.class, AshfernCookingRecipeExtension::new);
+		registration.getCraftingCategory().addExtension(ToolInteractionRecipe.class, new ToolInteractionRecipeExtension());
+		registration.getCraftingCategory().addExtension(AshfernCookingRecipe.class, new AshfernCookingRecipeExtension());
 	}
 
 	@Override
@@ -95,12 +98,16 @@ public class JEIIntegration implements IModPlugin {
 		if (!IntegrationManager.isJEIActive())
 			return;
 
+		final IGuiHelper guiHelper = registration.getJeiHelpers().getGuiHelper();
+		final IModIdHelper idHelper = registration.getJeiHelpers().getModIdHelper();
+		final IIngredientManager ingredientHelper = registration.getJeiHelpers().getIngredientManager();
+
 		registration.addRecipeCategories(
-				new UpgradeKitRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-				new ImbuingRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-				new InfusionRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-				new FrameBenchRecipeCategory(registration.getJeiHelpers().getGuiHelper()),
-				new WhitewashingRecipeCategory(registration.getJeiHelpers().getGuiHelper())
+				new UpgradeKitRecipeCategory(guiHelper),
+				new ImbuingRecipeCategory(guiHelper, idHelper, ingredientHelper),
+				new InfusionRecipeCategory(guiHelper),
+				new FrameBenchRecipeCategory(guiHelper),
+				new WhitewashingRecipeCategory(guiHelper)
 		);
 	}
 
@@ -115,78 +122,36 @@ public class JEIIntegration implements IModPlugin {
 	}
 
 	private List<UpgradeKitRecipe> compileUpgradeKitRecipes(RecipeManager recipeManager) {
-		return recipeManager.getAllRecipesFor(AoARecipes.UPGRADE_KIT.type().get());
+		return recipeManager.getAllRecipesFor(AoARecipes.UPGRADE_KIT.type().get()).stream().map(RecipeHolder::value).toList();
 	}
 
 	private List<WhitewashingRecipe> compileWhitewashingRecipes(RecipeManager recipeManager) {
-		return recipeManager.getAllRecipesFor(AoARecipes.WHITEWASHING.type().get());
+		return recipeManager.getAllRecipesFor(AoARecipes.WHITEWASHING.type().get()).stream().map(RecipeHolder::value).toList();
 	}
 
 	private ArrayList<FrameBenchRecipe> compileFrameBenchRecipes(RecipeManager recipeManager) {
 		ArrayList<FrameBenchRecipe> frameRecipes = new ArrayList<>(10);
 
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_crossbow"), AoAItems.CROSSBOW_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_blaster"), AoAItems.BLASTER_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_cannon"), AoAItems.CANNON_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_helmet"), AoAItems.HELMET_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_chestplate"), AoAItems.CHESTPLATE_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_leggings"), AoAItems.LEGGINGS_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_boots"), AoAItems.BOOTS_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_gun"), AoAItems.GUN_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_shotgun"), AoAItems.SHOTGUN_FRAME.get()));
-		frameRecipes.add(new FrameBenchRecipe(new ResourceLocation(AdventOfAscension.MOD_ID, "frame_bench_sniper"), AoAItems.SNIPER_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.CROSSBOW_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.BLASTER_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.CANNON_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.HELMET_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.CHESTPLATE_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.LEGGINGS_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.BOOTS_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.GUN_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.SHOTGUN_FRAME.get()));
+		frameRecipes.add(new FrameBenchRecipe(AoAItems.SNIPER_FRAME.get()));
 
 		return frameRecipes;
 	}
 
-	private ArrayList<InfusionRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
-		ArrayList<InfusionRecipe> imbuingRecipes = new ArrayList<>();
-
-		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.type().get())) {
-			if (recipe.isEnchanting())
-				imbuingRecipes.add(recipe);
-		}
-
-		return imbuingRecipes;
+	private List<ImbuingRecipe> compileImbuingRecipes(RecipeManager recipeManager) {
+		return recipeManager.getAllRecipesFor(AoARecipes.IMBUING.type().get()).stream().map(RecipeHolder::value).toList();
 	}
 
-	private ArrayList<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
-		ArrayList<InfusionRecipe> infusionRecipes = new ArrayList<>();
-
-		for (InfusionRecipe recipe : recipeManager.getAllRecipesFor(AoARecipes.INFUSION.type().get())) {
-			if (!recipe.isEnchanting())
-				infusionRecipes.add(recipe);
-		}
-
-		return infusionRecipes;
-	}
-
-	@Override
-	public void onRuntimeAvailable(IJeiRuntime jeiRuntime) {
-		if (!IntegrationManager.isJEIActive())
-			return;
-
-		/*if (!IntegrationManager.isTinkersConstructActive()) {
-			Function<FluidUtil.RegisteredFluidHolder, FluidStack> fluidStackGen = holder -> new FluidStack(holder.fluid().get(), FluidAttributes.BUCKET_VOLUME);
-
-			jeiRuntime.getIngredientManager().removeIngredientsAtRuntime(VanillaTypes.FLUID, Arrays.asList(
-					fluidStackGen.apply(TinkersFluids.MOLTEN_BARONYTE),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_BLAZIUM),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_ELECANIUM),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_EMBERSTONE),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_GHASTLY),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_GHOULISH),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_LIMONITE),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_LUNAR),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_LYON),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_MYSTITE),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_ROSITE),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_SHYRESTONE),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_SKELETAL),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_VARSIUM),
-					fluidStackGen.apply(TinkersFluids.MOLTEN_CHARGER)));
-		}*/
-
+	private List<InfusionRecipe> compileInfusionRecipes(RecipeManager recipeManager) {
+		return recipeManager.getAllRecipesFor(AoARecipes.INFUSION.type().get()).stream().map(RecipeHolder::value).toList();
 	}
 
 	private static void addInfoRecipes(IRecipeRegistration registration) {

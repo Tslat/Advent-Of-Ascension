@@ -8,21 +8,21 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.block.BlockRegistrar;
 
 import java.util.function.Consumer;
 
 public final class PlanksBlockGroup {
-	public final RegistryObject<Block> planks;
-	public final RegistryObject<SlabBlock> slab;
-	public final RegistryObject<StairBlock> stairs;
-	public final RegistryObject<FenceBlock> fence;
-	public final RegistryObject<FenceGateBlock> fenceGate;
-	public final RegistryObject<PressurePlateBlock> pressurePlate;
-	public final RegistryObject<ButtonBlock> button;
-	public final RegistryObject<DoorBlock> door;
-	public final RegistryObject<TrapDoorBlock> trapdoor;
+	public final DeferredHolder<Block, Block> planks;
+	public final DeferredHolder<Block, SlabBlock> slab;
+	public final DeferredHolder<Block, StairBlock> stairs;
+	public final DeferredHolder<Block, FenceBlock> fence;
+	public final DeferredHolder<Block, FenceGateBlock> fenceGate;
+	public final DeferredHolder<Block, PressurePlateBlock> pressurePlate;
+	public final DeferredHolder<Block, ButtonBlock> button;
+	public final DeferredHolder<Block, DoorBlock> door;
+	public final DeferredHolder<Block, TrapDoorBlock> trapdoor;
 
 	public PlanksBlockGroup(String baseId, boolean hasAdditionalBlocks, BlockRegistrarFactory registry, Consumer<BlockRegistrar<Block>> baseBlockRegistrar, WoodType woodType, BlockSetType blockSetType) {
 		this.planks = registry.register(baseId + "_planks", baseBlockRegistrar);
@@ -59,7 +59,7 @@ public final class PlanksBlockGroup {
 				return 20;
 			}
 		}));
-		this.fenceGate = registry.register(baseId + "_fence_gate", registrar -> registrar.basedOn(this.planks).alwaysSolid().factory(properties -> new FenceGateBlock(properties, woodType) {
+		this.fenceGate = registry.register(baseId + "_fence_gate", registrar -> registrar.basedOn(this.planks).alwaysSolid().factory(properties -> new FenceGateBlock(woodType, properties) {
 			@Override
 			public int getFireSpreadSpeed(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
 				return 5;
@@ -70,8 +70,8 @@ public final class PlanksBlockGroup {
 				return 20;
 			}
 		}));
-		this.pressurePlate = registry.register(baseId + "_pressure_plate", registrar -> registrar.basePressurePlate(this.planks).factory(properties -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, properties, blockSetType)));
-		this.button = registry.register(baseId + "_button", registrar -> registrar.baseButton(this.planks).factory(properties -> new ButtonBlock(properties, blockSetType, 30, true)));
+		this.pressurePlate = registry.register(baseId + "_pressure_plate", registrar -> registrar.basePressurePlate(this.planks).factory(properties -> new PressurePlateBlock(blockSetType, properties)));
+		this.button = registry.register(baseId + "_button", registrar -> registrar.baseButton(this.planks).factory(properties -> new ButtonBlock(blockSetType, 30, properties)));
 
 		if (hasAdditionalBlocks) {
 			this.door = registry.register(baseId + "_door", registrar -> registrar.baseDoor(blockSetType).itemFactory(DoubleHighBlockItem::new));

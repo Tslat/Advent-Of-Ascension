@@ -6,15 +6,15 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.client.event.ComputeFovModifierEvent;
-import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
-import net.minecraftforge.client.event.RenderHandEvent;
-import net.minecraftforge.client.gui.overlay.ForgeGui;
-import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.client.event.ComputeFovModifierEvent;
+import net.neoforged.neoforge.client.event.RegisterGuiOverlaysEvent;
+import net.neoforged.neoforge.client.event.RenderGuiOverlayEvent;
+import net.neoforged.neoforge.client.event.RenderHandEvent;
+import net.neoforged.neoforge.client.gui.overlay.ExtendedGui;
+import net.neoforged.neoforge.client.gui.overlay.VanillaGuiOverlay;
+import net.neoforged.neoforge.common.NeoForge;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.content.item.weapon.sniper.BaseSniper;
 import net.tslat.aoa3.util.RenderUtil;
@@ -23,13 +23,13 @@ public final class ScopeOverlayRenderer {
 	public static boolean isScoped = false;
 
 	public static void init() {
-		final IEventBus bus = MinecraftForge.EVENT_BUS;
+		final IEventBus bus = NeoForge.EVENT_BUS;
 
 		bus.addListener(EventPriority.NORMAL, false, ComputeFovModifierEvent.class, ScopeOverlayRenderer::onFOVUpdate);
 		bus.addListener(EventPriority.NORMAL, false, RenderHandEvent.class, ScopeOverlayRenderer::onHandRender);
 		bus.addListener(EventPriority.NORMAL, false, RenderGuiOverlayEvent.Pre.class, ScopeOverlayRenderer::beforeOverlayRender);
 
-		AdventOfAscension.modEventBus.addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAboveAll("aoa_sniper_scopes", ScopeOverlayRenderer::afterOverlayRender));
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, RegisterGuiOverlaysEvent.class, ev -> ev.registerAboveAll(AdventOfAscension.id("aoa_sniper_scopes"), ScopeOverlayRenderer::afterOverlayRender));
 	}
 
 	private static void onFOVUpdate(final ComputeFovModifierEvent event) {
@@ -47,7 +47,7 @@ public final class ScopeOverlayRenderer {
 			event.setCanceled(true);
 	}
 
-	private static void afterOverlayRender(ForgeGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
+	private static void afterOverlayRender(ExtendedGui gui, GuiGraphics guiGraphics, float partialTick, int width, int height) {
 		if (Minecraft.getInstance().options.getCameraType() != CameraType.FIRST_PERSON)
 			return;
 

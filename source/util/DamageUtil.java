@@ -1,5 +1,6 @@
 package net.tslat.aoa3.util;
 
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
@@ -17,9 +18,9 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.entity.PartEntity;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.entity.PartEntity;
+import net.neoforged.neoforge.event.entity.living.LivingKnockBackEvent;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.entity.AoADamageTypes;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
@@ -28,23 +29,23 @@ import org.jetbrains.annotations.Nullable;
 
 public final class DamageUtil {
 	public static DamageSource miscDamage(ResourceKey<DamageType> damageType, Level level) {
-		return new DamageSource(level.damageSources().damageTypes.getHolderOrThrow(damageType));
+		return new DamageSource(RegistryUtil.getDataDrivenRegistry(Registries.DAMAGE_TYPE).getHolderOrThrow(damageType));
 	}
 
 	public static DamageSource miscPositionedDamage(ResourceKey<DamageType> damageType, Level level, Vec3 position) {
-		return new DamageSource(level.damageSources().damageTypes.getHolderOrThrow(damageType), position);
+		return new DamageSource(RegistryUtil.getDataDrivenRegistry(Registries.DAMAGE_TYPE).getHolderOrThrow(damageType), position);
 	}
 
 	public static DamageSource entityDamage(ResourceKey<DamageType> damageType, Entity attacker) {
-		return new DamageSource(attacker.level().damageSources().damageTypes.getHolderOrThrow(damageType), attacker);
+		return new DamageSource(RegistryUtil.getDataDrivenRegistry(Registries.DAMAGE_TYPE).getHolderOrThrow(damageType), attacker);
 	}
 
 	public static DamageSource positionedEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, Vec3 position) {
-		return new DamageSource(attacker.level().damageSources().damageTypes.getHolderOrThrow(damageType), attacker, null, position);
+		return new DamageSource(RegistryUtil.getDataDrivenRegistry(Registries.DAMAGE_TYPE).getHolderOrThrow(damageType), attacker, null, position);
 	}
 
 	public static DamageSource indirectEntityDamage(ResourceKey<DamageType> damageType, Entity attacker, Entity projectile) {
-		return new DamageSource(projectile.level().damageSources().damageTypes.getHolderOrThrow(damageType), projectile, attacker);
+		return new DamageSource(RegistryUtil.getDataDrivenRegistry(Registries.DAMAGE_TYPE).getHolderOrThrow(damageType), projectile, attacker);
 	}
 
 	public static boolean doMobMeleeAttack(Entity attacker, Entity target, float dmg) {
@@ -91,7 +92,7 @@ public final class DamageUtil {
 		if (target instanceof Player && !PlayerUtil.shouldPlayerBeAffected((Player)target))
 			return;
 
-		LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, strength, xRatio, zRatio);
+		LivingKnockBackEvent event = CommonHooks.onLivingKnockBack(target, strength, xRatio, zRatio);
 
 		if(event.isCanceled())
 			return;
@@ -132,7 +133,7 @@ public final class DamageUtil {
 		double xVelocity = attackerVelocity.x() * xModifier;
 		double yVelocity = attackerVelocity.y() * yModifier;
 		double zVelocity = attackerVelocity.z() * zModifier;
-		LivingKnockBackEvent event = ForgeHooks.onLivingKnockBack(target, (float)NumberUtil.average(xVelocity, yVelocity, zVelocity), xVelocity, zVelocity);
+		LivingKnockBackEvent event = CommonHooks.onLivingKnockBack(target, (float)NumberUtil.average(xVelocity, yVelocity, zVelocity), xVelocity, zVelocity);
 
 		if(event.isCanceled())
 			return;

@@ -17,10 +17,10 @@
       "tag": "forge:gems/bloodstone"
     }
   ],
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "result": {
     "item": "aoa3:blood_drainer"
+  },
+  "tool": {
+    "item": "aoa3:blaster_frame"
   }
 }

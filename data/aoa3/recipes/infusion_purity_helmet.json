@@ -23,10 +23,10 @@
       "item": "aoa3:padded_cloth"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:purity_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

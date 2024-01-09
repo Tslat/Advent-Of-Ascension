@@ -8,6 +8,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
@@ -15,14 +16,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.AABB;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.registration.item.AoATiers;
 import net.tslat.aoa3.content.item.LootModifyingItem;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -47,22 +45,21 @@ public class EmberstoneAxe extends BaseAxe implements LootModifyingItem {
 
 		for (int i = 0; i < existingLoot.size(); i++) {
 			ItemStack stack = existingLoot.get(i);
-			Optional<SmeltingRecipe> smeltRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level);
+			Optional<SmeltingRecipe> smeltRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level).map(RecipeHolder::value);
+			final int index = i;
 
-			if (smeltRecipe.isPresent()) {
+			smeltRecipe.ifPresent(recipe -> {
 				ItemStack smeltedStack = smeltRecipe.get().getResultItem(level.registryAccess()).copy();
 
 				smeltedStack.setCount(smeltedStack.getCount() * stack.getCount());
-				existingLoot.set(i, smeltedStack);
+				existingLoot.set(index, smeltedStack);
 				block.popExperience(level, pos, (int)smeltRecipe.get().getExperience());
-			}
+			});
 		}
 
-		ServerParticlePacket particlePacket = new ServerParticlePacket(
-				ParticleBuilder.forRandomPosInBounds(ParticleTypes.FLAME, new AABB(pos))
-						.spawnNTimes(5));
-
-		AoANetworking.sendToAllPlayersTrackingBlock(level, pos, particlePacket);
+		ParticleBuilder.forRandomPosInBlock(ParticleTypes.FLAME, pos)
+				.spawnNTimes(5)
+				.sendToAllPlayersTrackingBlock(level, pos);
 
 		block.popExperience(level, pos, RandomUtil.randomNumberBetween(1, 3));
 	}/*

@@ -14,13 +14,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliBookOpenPacket;
-import net.tslat.aoa3.common.packet.packets.patchouli.PatchouliGiveBookPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.patchouli.AccountPatchouliBookPacket;
+import net.tslat.aoa3.common.networking.packets.patchouli.GivePatchouliBookPacket;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.integration.IntegrationManager;
-import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -47,8 +46,8 @@ public class AdventGuiTabLore extends Screen {
 		int accumWidth = 0;
 		int height = AdventMainGui.scaledTabRootY + 20;
 
-		if (loreBooks.isEmpty())
-			loreBooks.put(AdventOfAscension.id("aoa_essentia"), PatchouliIntegration.getBook(AdventOfAscension.id("aoa_essentia")));
+		//if (loreBooks.isEmpty())
+		//	loreBooks.put(AdventOfAscension.id("aoa_essentia"), PatchouliIntegration.getBook(AdventOfAscension.id("aoa_essentia")));
 
 		for (Map.Entry<ResourceLocation, ItemStack> bookEntry : loreBooks.entrySet()) {
 			int width = (int)(font.width(bookEntry.getValue().getHoverName()) * 1.5f);
@@ -79,6 +78,9 @@ public class AdventGuiTabLore extends Screen {
 	}
 
 	@Override
+	public void renderTransparentBackground(GuiGraphics pGuiGraphics) {}
+
+	@Override
 	public boolean mouseReleased(double mouseX, double mouseY, int button) {
 		setDragging(false);
 
@@ -96,7 +98,7 @@ public class AdventGuiTabLore extends Screen {
 		if (!IntegrationManager.isPatchouliActive())
 			return;
 
-		Item guideBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
+		/*Item guideBook = AoARegistries.ITEMS.getEntry(new ResourceLocation("patchouli", "guide_book"));
 
 		for (ResourceLocation id : bookIds) {
 			if (!PatchouliIntegration.isBookLoaded(id))
@@ -107,12 +109,12 @@ public class AdventGuiTabLore extends Screen {
 
 			tag.putString("patchouli:book", id.toString());
 			loreBooks.put(id, book);
-		}
+		}*/
 	}
 
 	public static void bookOpened(ResourceLocation id) {
 		if (!loreBooks.containsKey(id))
-			AoANetworking.sendToServer(new PatchouliBookOpenPacket(id));
+			AoANetworking.sendToServer(new AccountPatchouliBookPacket(id));
 	}
 
 	private static class PatchouliBook extends AbstractWidget {
@@ -139,7 +141,7 @@ public class AdventGuiTabLore extends Screen {
 			if (isValidClickButton(button)) {
 				if (!mouseHolding) {
 					if (isHovered) {
-						PatchouliIntegration.openBook(id);
+						//PatchouliIntegration.openBook(id);
 
 						return true;
 					}
@@ -152,7 +154,7 @@ public class AdventGuiTabLore extends Screen {
 							mouseX / AdventMainGui.SCALE > AdventMainGui.scaledRootX + AdventMainGui.BACKGROUND_TEXTURE_WIDTH ||
 							mouseY / AdventMainGui.SCALE > AdventMainGui.scaledRootY + AdventMainGui.BACKGROUND_TEXTURE_HEIGHT) {
 						Player pl = Minecraft.getInstance().player;
-						Item patchouliBook = ForgeRegistries.ITEMS.getValue(new ResourceLocation("patchouli", "guide_book"));
+						Item patchouliBook = AoARegistries.ITEMS.getEntry(new ResourceLocation("patchouli", "guide_book"));
 
 						if (patchouliBook == null || patchouliBook == Items.AIR)
 							return true;
@@ -166,7 +168,7 @@ public class AdventGuiTabLore extends Screen {
 							}
 						}
 
-						AoANetworking.sendToServer(new PatchouliGiveBookPacket(id));
+						AoANetworking.sendToServer(new GivePatchouliBookPacket(id));
 
 						return true;
 					}

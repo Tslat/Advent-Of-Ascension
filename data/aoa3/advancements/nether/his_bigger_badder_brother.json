@@ -20,13 +20,10 @@
       "color": "white",
       "translate": "advancements.aoa3.nether.his_bigger_badder_brother.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:nethengeic_callstone",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.nether.his_bigger_badder_brother.title"
@@ -37,5 +34,5 @@
       "obtain_nethengeic_callstone"
     ]
   ],
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

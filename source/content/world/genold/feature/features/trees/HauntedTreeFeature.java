@@ -18,7 +18,7 @@ public class HauntedTreeFeature extends AoATreeFeature {
 	private final int hauntedLogChance = 25;
 	private final int purplingLogChance = 20;
 
-	public HauntedTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<AoASaplingBlock> saplingBlock) {
+	public HauntedTreeFeature(Codec<BlockStatePlacementConfig> codec, Supplier<? extends AoASaplingBlock> saplingBlock) {
 		super(codec, saplingBlock);
 	}
 

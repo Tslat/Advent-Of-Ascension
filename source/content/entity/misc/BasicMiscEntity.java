@@ -6,8 +6,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.fluids.FluidType;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -48,7 +48,7 @@ public abstract class BasicMiscEntity extends Entity implements GeoEntity {
 			double gravity = -0.08d;
 			FluidType submergedFluid = getEyeInFluidType();
 
-			if (submergedFluid != ForgeMod.EMPTY_TYPE.get())
+			if (submergedFluid != NeoForgeMod.EMPTY_TYPE.value())
 				gravity *= getFluidMotionScale(submergedFluid);
 
 			setDeltaMovement(getDeltaMovement().add(0, gravity, 0));

@@ -20,12 +20,9 @@
       "color": "white",
       "translate": "advancements.aoa3.overworld.ready_to_imbue.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:infusion_table"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.overworld.ready_to_imbue.title"

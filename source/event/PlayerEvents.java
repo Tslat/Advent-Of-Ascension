@@ -1,7 +1,7 @@
 package net.tslat.aoa3.event;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
@@ -25,18 +25,18 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.LevelEvent;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
-import net.minecraftforge.event.entity.living.*;
-import net.minecraftforge.event.entity.player.ItemFishedEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.event.entity.player.PlayerXpEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.event.TickEvent;
+import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
+import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -47,7 +47,6 @@ import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.item.misc.ReservedItem;
 import net.tslat.aoa3.content.item.tool.misc.ExpFlask;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
-import net.tslat.aoa3.data.server.AoASkillReqReloadListener;
 import net.tslat.aoa3.event.dimension.LelyetiaEvents;
 import net.tslat.aoa3.event.dimension.LunalusEvents;
 import net.tslat.aoa3.event.dimension.NowhereEvents;
@@ -63,7 +62,7 @@ import java.util.UUID;
 
 public class PlayerEvents {
 	public static void preInit() {
-		final IEventBus forgeBus = MinecraftForge.EVENT_BUS;
+		final IEventBus forgeBus = NeoForge.EVENT_BUS;
 
 		forgeBus.addListener(EventPriority.NORMAL, false, TickEvent.PlayerTickEvent.class, PlayerEvents::onPlayerTick);
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingEvent.LivingJumpEvent.class, PlayerEvents::onPlayerJump);
@@ -217,19 +216,14 @@ public class PlayerEvents {
 
 				((ServerLevel)player.level()).sendParticles(ParticleTypes.LARGE_SMOKE, player.getX(), player.getY() + 0.2d, player.getZ(), 16, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, RandomUtil.randomValueUpTo(0.1f) - 0.05d, 1);
 			}
-			else if (AoAHaloUtil.isCrazyDonator(uuid)) {
-				msg = ChatFormatting.LIGHT_PURPLE + "They approach. Tremble before them.";
-			}
 
 			if (msg != null)
 				player.getServer().getPlayerList().broadcastSystemMessage(Component.literal(msg), false);
 
-			AoAHaloUtil.syncWithNewClient(player);
 			ServerPlayerDataManager.syncNewPlayer(player);
-			AoASkillReqReloadListener.syncNewPlayer(player);
 
 			PlayerAdvancements plAdvancements = player.getAdvancements();
-			Advancement rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/root"));
+			AdvancementHolder rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/root"));
 
 			if (rootAdv == null) {
 				Logging.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things.");
@@ -247,7 +241,7 @@ public class PlayerEvents {
 			Item item = entityItem.getItem().getItem();
 
 			if (item == AoAItems.BLANK_REALMSTONE.get() && entityItem.getOwner() == player) {
-				if (player.isEyeInFluidType(ForgeMod.LAVA_TYPE.get())) {
+				if (player.isEyeInFluidType(NeoForgeMod.LAVA_TYPE.value())) {
 					ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.NETHER_REALMSTONE.get()));
 					ev.getEntity().discard();
 				}
@@ -262,8 +256,8 @@ public class PlayerEvents {
 		if (!ev.getEntity().level().isClientSide && ev.getOrb().value > 0) {
 			ItemStack stack = ItemUtil.getStackFromInventory(ev.getEntity(), AoATools.EXP_FLASK.get());
 
-			if (stack != null) {
-				ExpFlask.addExp(stack, ev.getOrb().value);
+			if (stack != null && stack.getItem() instanceof ExpFlask flask) {
+				flask.addCharge(stack, ev.getOrb().value);
 				ev.setCanceled(true);
 				ev.getOrb().value = 0;
 				ev.getOrb().discard();

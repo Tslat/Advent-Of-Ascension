@@ -19,7 +19,7 @@ import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.lighting.LightEngine;
-import net.minecraftforge.common.ToolAction;
+import net.neoforged.neoforge.common.ToolAction;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -51,8 +51,8 @@ public class AoAGrassBlock extends GrassBlock {
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean clientSide) {
-		return getBonemealGrowthFeature(level, state, pos) != null && super.isValidBonemealTarget(level, pos, state, clientSide);
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+		return getBonemealGrowthFeature(level, state, pos) != null && super.isValidBonemealTarget(level, pos, state);
 	}
 
 	@Override

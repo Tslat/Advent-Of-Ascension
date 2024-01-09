@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/baronyte"
+    },
+    "B": {
+      "tag": "forge:rods/metal"
+    },
+    "C": {
+      "item": "aoa3:power_rune"
+    },
+    "D": {
+      "item": "aoa3:hive_chunk"
+    }
+  },
+  "pattern": [
+    "CDC",
+    " A ",
+    " B "
+  ],
+  "result": {
+    "item": "aoa3:baron_staff"
+  }
+}

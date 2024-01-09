@@ -3,6 +3,7 @@ package net.tslat.aoa3.content.entity.base;
 import com.mojang.serialization.Dynamic;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -29,8 +30,7 @@ import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.tslat.aoa3.common.registration.entity.AoAProfessions;
 import net.tslat.aoa3.content.entity.ai.trader.TraderFaceCustomerGoal;
 import net.tslat.aoa3.content.entity.ai.trader.TraderPlayerTradeGoal;
@@ -166,7 +166,7 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 		this.villagerXp += offer.getXp();
 		this.lastTradedPlayer = this.getTradingPlayer();
 
-		if (this.shouldIncreaseLevel()) {
+		if (shouldIncreaseLevel()) {
 			this.updateMerchantTimer = 40;
 			this.increaseProfessionLevelOnUpdate = true;
 			xp += 5;
@@ -217,9 +217,9 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 	@Override
 	public void die(DamageSource cause) {
 		if (cause.getEntity() != null)
-			this.tellWitnessesThatIWasMurdered(cause.getEntity());
+			tellWitnessesThatIWasMurdered(cause.getEntity());
 
-		if (!ForgeHooks.onLivingDeath(this, cause)) {
+		if (!CommonHooks.onLivingDeath(this, cause)) {
 			if (!isRemoved() && !dead) {
 				Entity entity = cause.getEntity();
 				LivingEntity killer = getKillCredit();
@@ -277,12 +277,12 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 			this.item = item;
 		}
 
-		public static BuildableTrade trade(RegistryObject<? extends ItemLike> item) {
+		public static BuildableTrade trade(Holder<? extends ItemLike> item) {
 			return trade(item, 1);
 		}
 
-		public static BuildableTrade trade(RegistryObject<? extends ItemLike> item, int amount) {
-			return trade(item.get(), amount);
+		public static BuildableTrade trade(Holder<? extends ItemLike> item, int amount) {
+			return trade(item.value(), amount);
 		}
 
 		public static BuildableTrade trade(ItemLike item) {
@@ -304,12 +304,12 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 			return this;
 		}
 
-		public BuildableTrade cost(RegistryObject<? extends ItemLike> item) {
+		public BuildableTrade cost(Holder<? extends ItemLike> item) {
 			return cost(item, 1);
 		}
 
-		public BuildableTrade cost(RegistryObject<? extends ItemLike> item, int amount) {
-			return cost(item.get(), amount);
+		public BuildableTrade cost(Holder<? extends ItemLike> item, int amount) {
+			return cost(item.value(), amount);
 		}
 
 		public BuildableTrade cost(ItemLike item) {

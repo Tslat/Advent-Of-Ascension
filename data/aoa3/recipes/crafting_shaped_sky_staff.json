@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:floating_stone"
+    },
+    "B": {
+      "tag": "forge:rods/metal"
+    },
+    "C": {
+      "tag": "forge:gems/crystallite"
+    }
+  },
+  "pattern": [
+    " A ",
+    "ACA",
+    " B "
+  ],
+  "result": {
+    "item": "aoa3:sky_staff"
+  }
+}

@@ -4,7 +4,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.common.capabilities.CapabilityProvider;
+import net.neoforged.neoforge.attachment.AttachmentHolder;
 
 import javax.annotation.Nonnull;
 import java.util.function.BiConsumer;
@@ -80,7 +80,7 @@ public class EntityDataHolder<T> {
 			id = SynchedEntityData.ENTITY_ID_POOL.getInt(clazz) + 1;
 		}
 		else {
-			for (Class<?> parentClass = clazz.getSuperclass(); parentClass != CapabilityProvider.class; parentClass = parentClass.getSuperclass()) {
+			for (Class<?> parentClass = clazz.getSuperclass(); parentClass != AttachmentHolder.class; parentClass = parentClass.getSuperclass()) {
 				if (SynchedEntityData.ENTITY_ID_POOL.containsKey(parentClass)) {
 					id = SynchedEntityData.ENTITY_ID_POOL.getInt(parentClass) + 1;
 

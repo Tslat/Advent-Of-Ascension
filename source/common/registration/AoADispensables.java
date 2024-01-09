@@ -1,10 +1,10 @@
 package net.tslat.aoa3.common.registration;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
+import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +14,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
@@ -90,15 +89,15 @@ public final class AoADispensables {
 
 	private static void registerMiscDispensables() {
 		DispenseItemBehavior realmstoneBehaviour = (source, stack) -> {
-			Direction direction = source.getBlockState().getValue(DispenserBlock.FACING);
-			BlockPos pos = source.getPos().offset(direction.getStepX(), direction.getStepY(), direction.getStepZ());
+			Direction direction = source.state().getValue(DispenserBlock.FACING);
+			BlockPos pos = source.pos().offset(direction.getStepX(), direction.getStepY(), direction.getStepZ());
 
-			if (source.getLevel().getBlockState(pos).getBlock() instanceof CarvedRuneOfPower) {
+			if (source.level().getBlockState(pos).getBlock() instanceof CarvedRuneOfPower) {
 				if (stack.getItem() instanceof Realmstone) {
-					CarvedRuneOfPower.fillPortal(source.getLevel(), pos, direction, stack, null);
+					CarvedRuneOfPower.fillPortal(source.level(), pos, direction, stack, null);
 				}
 				else if (stack.getItem() instanceof BlankRealmstone) {
-					CarvedRuneOfPower.clearPortal(source.getLevel(), pos, direction, stack, null);
+					CarvedRuneOfPower.clearPortal(source.level(), pos, direction, stack, null);
 				}
 
 				return stack;
@@ -107,9 +106,9 @@ public final class AoADispensables {
 			Position position = DispenserBlock.getDispensePosition(source);
 			ItemStack itemstack = stack.split(1);
 
-			DefaultDispenseItemBehavior.spawnItem(source.getLevel(), itemstack, 6, direction, position);
-			source.getLevel().levelEvent(1000, source.getPos(), 0);
-			source.getLevel().levelEvent(2000, source.getPos(), direction.get3DDataValue());
+			DefaultDispenseItemBehavior.spawnItem(source.level(), itemstack, 6, direction, position);
+			source.level().levelEvent(1000, source.pos(), 0);
+			source.level().levelEvent(2000, source.pos(), direction.get3DDataValue());
 
 			return stack;
 		};
@@ -125,8 +124,8 @@ public final class AoADispensables {
 			@Override
 			protected ItemStack execute(BlockSource source, ItemStack stack) {
 				BucketItem bucket = (BucketItem)stack.getItem();
-				BlockPos pos = source.getPos().relative(source.getBlockState().getValue(DispenserBlock.FACING));
-				Level world = source.getLevel();
+				BlockPos pos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
+				Level world = source.level();
 
 				if (bucket.emptyContents(null, world, pos, null)) {
 					bucket.checkExtraContent(null, world, stack, pos);
@@ -139,8 +138,8 @@ public final class AoADispensables {
 			}
 		};
 
-		DispenserBlock.registerBehavior(ForgeRegistries.ITEMS.getValue(new ResourceLocation(AdventOfAscension.MOD_ID, "candied_water_bucket")), fluidDispenser);
-		DispenserBlock.registerBehavior(ForgeRegistries.ITEMS.getValue(new ResourceLocation(AdventOfAscension.MOD_ID, "toxic_waste_bucket")), fluidDispenser);
-		DispenserBlock.registerBehavior(ForgeRegistries.ITEMS.getValue(new ResourceLocation(AdventOfAscension.MOD_ID, "clear_water_bucket")), fluidDispenser);
+		DispenserBlock.registerBehavior(AoARegistries.ITEMS.getEntry(new ResourceLocation(AdventOfAscension.MOD_ID, "candied_water_bucket")), fluidDispenser);
+		DispenserBlock.registerBehavior(AoARegistries.ITEMS.getEntry(new ResourceLocation(AdventOfAscension.MOD_ID, "toxic_waste_bucket")), fluidDispenser);
+		DispenserBlock.registerBehavior(AoARegistries.ITEMS.getEntry(new ResourceLocation(AdventOfAscension.MOD_ID, "clear_water_bucket")), fluidDispenser);
 	}
 }

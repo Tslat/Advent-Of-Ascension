@@ -24,11 +24,11 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.IForgeShearable;
+import net.neoforged.neoforge.common.IShearable;
 import org.jetbrains.annotations.Nullable;
 
 // Same as vanilla leaves but extends decay dist cus vanilla limit why?
-public class AoALeavesBlock extends Block implements SimpleWaterloggedBlock, IForgeShearable {
+public class AoALeavesBlock extends Block implements SimpleWaterloggedBlock, IShearable {
 	public static final int DECAYS_AT_DIST = 15;
 	public static final IntegerProperty DISTANCE = IntegerProperty.create("distance", 1, 15);
 	public static final BooleanProperty PERSISTENT = BlockStateProperties.PERSISTENT;

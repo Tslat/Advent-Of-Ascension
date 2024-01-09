@@ -8,10 +8,10 @@
       "item": "aoa3:divine_enhancer"
     }
   ],
-  "input": {
-    "tag": "forge:rods/metal"
-  },
   "result": {
     "item": "aoa3:vulcane"
+  },
+  "tool": {
+    "tag": "forge:rods/metal"
   }
 }

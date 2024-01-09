@@ -9,7 +9,7 @@ import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.Component;
-import net.minecraftforge.versions.forge.ForgeVersion;
+import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 public class VersionCommand implements Command<CommandSourceStack> {
@@ -21,7 +21,7 @@ public class VersionCommand implements Command<CommandSourceStack> {
 
 	@Override
 	public int run(CommandContext<CommandSourceStack> context) {
-		AoACommand.feedback(context.getSource(), "Version", "command.aoa.version.desc", AoACommand.CommandFeedbackType.INFO, Component.literal(AdventOfAscension.VERSION).withStyle(ChatFormatting.GREEN), Component.literal(ForgeVersion.getVersion()).withStyle(ChatFormatting.GREEN));
+		AoACommand.feedback(context.getSource(), "Version", "command.aoa.version.desc", AoACommand.CommandFeedbackType.INFO, Component.literal(AdventOfAscension.VERSION).withStyle(ChatFormatting.GREEN), Component.literal(NeoForgeVersion.getVersion()).withStyle(ChatFormatting.GREEN));
 
 		return 1;
 	}

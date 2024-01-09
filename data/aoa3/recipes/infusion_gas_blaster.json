@@ -17,10 +17,10 @@
       "tag": "forge:ingots/iron"
     }
   ],
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "result": {
     "item": "aoa3:gas_blaster"
+  },
+  "tool": {
+    "item": "aoa3:blaster_frame"
   }
 }

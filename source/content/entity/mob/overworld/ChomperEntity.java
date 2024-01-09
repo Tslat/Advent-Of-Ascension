@@ -13,8 +13,6 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -122,16 +120,6 @@ public class ChomperEntity extends AoAMeleeMob<ChomperEntity> {
 	@Override
 	protected float getWaterSlowDown() {
 		return 1;
-	}
-
-	@Override
-	public boolean canBreatheUnderwater() {
-		return true;
-	}
-
-	@Override
-	public boolean canDrownInFluidType(FluidType type) {
-		return type != ForgeMod.WATER_TYPE.get();
 	}
 
 	@Nullable

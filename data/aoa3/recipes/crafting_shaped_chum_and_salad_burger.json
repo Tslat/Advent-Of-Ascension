@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:crops/carrot"
+    },
+    "B": {
+      "item": "minecraft:bread"
+    },
+    "C": {
+      "item": "aoa3:chum"
+    },
+    "P": {
+      "tag": "forge:crops/potato"
+    }
+  },
+  "pattern": [
+    " B ",
+    "ACP",
+    " B "
+  ],
+  "result": {
+    "item": "aoa3:chum_and_salad_burger"
+  }
+}

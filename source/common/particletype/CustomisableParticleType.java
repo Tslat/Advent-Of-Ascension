@@ -8,13 +8,14 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.util.RegistryUtil;
 
 import java.util.Locale;
 
 public class CustomisableParticleType extends ParticleType<CustomisableParticleType.Data> {
 	public static final Codec<Data> CODEC = RecordCodecBuilder.create(instance -> instance.group(
-			Codec.STRING.fieldOf("particle_type").forGetter(data -> ForgeRegistries.PARTICLE_TYPES.getKey(data.particleType).toString()),
+			Codec.STRING.fieldOf("particle_type").forGetter(data -> RegistryUtil.getId(data.particleType).toString()),
 			Codec.FLOAT.fieldOf("scale").forGetter(data -> data.scale),
 			Codec.FLOAT.fieldOf("age_modifier").forGetter(data -> data.ageModifier),
 			Codec.FLOAT.fieldOf("red").forGetter(data -> data.red),
@@ -22,7 +23,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 			Codec.FLOAT.fieldOf("blue").forGetter(data -> data.blue),
 			Codec.FLOAT.fieldOf("alpha").forGetter(data -> data.alpha),
 			Codec.INT.fieldOf("entity_id").forGetter(data -> data.entitySourceId)
-	).apply(instance, (type, scale, ageMod, red, green, blue, alpha, entityId) -> new Data((ParticleType<Data>)ForgeRegistries.PARTICLE_TYPES.getValue(new ResourceLocation(type)), scale, ageMod, red, green, blue, alpha, entityId)));
+	).apply(instance, (type, scale, ageMod, red, green, blue, alpha, entityId) -> new Data((ParticleType<Data>) AoARegistries.PARTICLES.getEntry(new ResourceLocation(type)), scale, ageMod, red, green, blue, alpha, entityId)));
 
 	public CustomisableParticleType(boolean alwaysShow) {
 		super(alwaysShow, Data.DESERIALIZER);
@@ -81,7 +82,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f %s", ForgeRegistries.PARTICLE_TYPES.getKey(getType()), scale, ageModifier, red, green, blue, alpha, entitySourceId);
+			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f %s", AoARegistries.PARTICLES.getId(getType()), scale, ageModifier, red, green, blue, alpha, entitySourceId);
 		}
 
 		public static final ParticleOptions.Deserializer<Data> DESERIALIZER = new ParticleOptions.Deserializer<Data>() {

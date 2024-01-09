@@ -1,68 +1,53 @@
 package net.tslat.aoa3.content.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.util.RecipeUtil;
 import org.jetbrains.annotations.Nullable;
 
 
 public class WhitewashingRecipe implements Recipe<Inventory> {
-	private final ResourceLocation id;
-	private final String group;
+	public static final Codec<WhitewashingRecipe> CODEC = RecordCodecBuilder.create(builder ->
+					RecipeUtil.RecipeBookDetails.codec(builder, instance -> instance.recipeBookDetails).and(builder.group(
+					Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(instance -> instance.input),
+					Ingredient.CODEC_NONEMPTY.fieldOf("washing_material").forGetter(instance -> instance.washingMaterial),
+					ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(instance -> instance.output)))
+			.apply(builder, WhitewashingRecipe::new));
 
-	private final ItemStack input;
-	private final ItemStack washingMaterial;
+	private final RecipeUtil.RecipeBookDetails recipeBookDetails;
+
+	private final Ingredient input;
+	private final Ingredient washingMaterial;
 	private final ItemStack output;
 
-	public WhitewashingRecipe(ResourceLocation id, String group, ItemStack input, ItemStack washingMaterial, ItemStack output) {
-		this.id = id;
-		this.group = group;
+	public WhitewashingRecipe(String group, @Nullable CraftingBookCategory category, boolean showObtainNotification, Ingredient input, Ingredient washingMaterial, ItemStack output) {
+		this(new RecipeUtil.RecipeBookDetails(group, category, showObtainNotification), input, washingMaterial, output);
+	}
+
+	public WhitewashingRecipe(RecipeUtil.RecipeBookDetails recipeBookDetails, Ingredient input, Ingredient washingMaterial, ItemStack output) {
+		this.recipeBookDetails = recipeBookDetails;
 		this.input = input;
 		this.washingMaterial = washingMaterial;
 		this.output = output;
 	}
 
 	@Override
-	public ItemStack getToastSymbol() {
-		return new ItemStack(AoABlocks.WHITEWASHING_TABLE.get());
+	public String getGroup() {
+		return this.recipeBookDetails.group();
 	}
 
 	@Override
-	public boolean matches(Inventory inv, Level world) {
-		return ItemStack.isSameItem(input, inv.getItem(0)) && ItemStack.isSameItem(washingMaterial, inv.getItem(1));
-	}
-
-	@Override
-	public ItemStack assemble(Inventory inventory, RegistryAccess registryAccess) {
-		return output.copy();
-	}
-
-	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width >= 3;
-	}
-
-	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
-		return output.copy();
-	}
-
-	@Override
-	public ResourceLocation getId() {
-		return id;
+	public boolean showNotification() {
+		return this.recipeBookDetails.showUnlockNotification();
 	}
 
 	@Override
@@ -76,47 +61,51 @@ public class WhitewashingRecipe implements Recipe<Inventory> {
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		NonNullList<Ingredient> ingredients = NonNullList.create();
-
-		ingredients.add(Ingredient.of(input));
-		ingredients.add(Ingredient.of(washingMaterial));
-
-		return ingredients;
+	public ItemStack getToastSymbol() {
+		return new ItemStack(AoABlocks.WHITEWASHING_TABLE.get());
 	}
 
 	@Override
-	public String getGroup() {
-		return group;
+	public boolean canCraftInDimensions(int width, int height) {
+		return width >= 3;
+	}
+
+	@Override
+	public NonNullList<Ingredient> getIngredients() {
+		return NonNullList.of(null, this.input, this.washingMaterial);
+	}
+
+	@Override
+	public boolean matches(Inventory inv, Level world) {
+		return this.input.test(inv.getItem(0)) && this.washingMaterial.test(inv.getItem(1));
+	}
+
+	@Override
+	public ItemStack assemble(Inventory inventory, RegistryAccess registryAccess) {
+		return getResultItem(registryAccess);
+	}
+
+	@Override
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
+		return this.output.copy();
 	}
 
 	public static class Factory implements RecipeSerializer<WhitewashingRecipe> {
 		@Override
-		public WhitewashingRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			String group = GsonHelper.getAsString(json, "group", "");
-			ItemStack inputItem = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input"), false);
-			ItemStack washingMaterial = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "washing_material"), false);
-			ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-
-			return new WhitewashingRecipe(recipeId, group, inputItem, washingMaterial, output);
+		public Codec<WhitewashingRecipe> codec() {
+			return WhitewashingRecipe.CODEC;
 		}
 
-		@Nullable
 		@Override
-		public WhitewashingRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-			String group = buffer.readUtf(32767);
-			ItemStack inputItem = buffer.readItem();
-			ItemStack washingMaterial = buffer.readItem();
-			ItemStack output = buffer.readItem();
-
-			return new WhitewashingRecipe(recipeId, group, inputItem, washingMaterial, output);
+		public WhitewashingRecipe fromNetwork(FriendlyByteBuf buffer) {
+			return new WhitewashingRecipe(RecipeUtil.RecipeBookDetails.fromNetwork(buffer), Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), buffer.readItem());
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, WhitewashingRecipe recipe) {
-			buffer.writeUtf(recipe.getGroup(), 32767);
-			buffer.writeItem(recipe.input);
-			buffer.writeItem(recipe.washingMaterial);
+			recipe.recipeBookDetails.toNetwork(buffer);
+			recipe.input.toNetwork(buffer);
+			recipe.washingMaterial.toNetwork(buffer);
 			buffer.writeItem(recipe.output);
 		}
 	}

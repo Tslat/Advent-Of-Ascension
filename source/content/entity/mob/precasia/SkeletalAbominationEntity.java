@@ -10,7 +10,7 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.FluidType;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -185,6 +185,6 @@ public class SkeletalAbominationEntity extends AoAMeleeMob<SkeletalAbominationEn
 
     @Override
     protected float getAttackVectorPositionOffset() {
-        return 1.625f;
+        return 1.5625f;
     }
 }

@@ -17,7 +17,6 @@
       "item": "minecraft:diamond_axe",
       "nbt": "{Damage:0}"
     },
-    "show_toast": true,
     "title": {
       "color": "light_purple",
       "translate": "advancements.aoa3.completionist.i_axed_you_a_question.title"

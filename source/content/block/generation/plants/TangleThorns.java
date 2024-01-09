@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.block.generation.plants;
 
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +12,11 @@ import net.minecraft.world.phys.Vec3;
 public class TangleThorns extends BushBlock {
 	public TangleThorns(Properties properties) {
 		super(properties);
+	}
+
+	@Override
+	protected MapCodec<? extends TangleThorns> codec() {
+		return simpleCodec(TangleThorns::new);
 	}
 
 	@Override

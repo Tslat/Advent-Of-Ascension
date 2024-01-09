@@ -14,10 +14,10 @@
       "tag": "forge:gems/gemenyte"
     }
   ],
-  "input": {
-    "item": "aoa3:boots_frame"
-  },
   "result": {
     "item": "aoa3:mercurial_boots"
+  },
+  "tool": {
+    "item": "aoa3:boots_frame"
   }
 }

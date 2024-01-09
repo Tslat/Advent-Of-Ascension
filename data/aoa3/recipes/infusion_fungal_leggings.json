@@ -23,10 +23,10 @@
       "tag": "forge:mushrooms"
     }
   ],
-  "input": {
-    "item": "aoa3:leggings_frame"
-  },
   "result": {
     "item": "aoa3:fungal_leggings"
+  },
+  "tool": {
+    "item": "aoa3:leggings_frame"
   }
 }

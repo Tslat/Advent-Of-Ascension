@@ -23,10 +23,10 @@
       "tag": "forge:ingots/elecanium"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:elecanyte_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

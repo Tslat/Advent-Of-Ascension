@@ -20,10 +20,10 @@
       "tag": "forge:ingots/ghastly"
     }
   ],
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "result": {
     "item": "aoa3:soul_storm"
+  },
+  "tool": {
+    "item": "aoa3:blaster_frame"
   }
 }

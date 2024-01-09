@@ -1,27 +1,56 @@
 package net.tslat.aoa3.content.recipe;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.CraftingBookCategory;
-import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.util.RecipeUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
+import java.util.Optional;
+
 public class AshfernCookingRecipe extends CustomRecipe {
-	public AshfernCookingRecipe(ResourceLocation id, CraftingBookCategory category) {
-		super(id, category);
+	public static final Codec<AshfernCookingRecipe> CODEC = RecordCodecBuilder.create(builder ->
+			RecipeUtil.RecipeBookDetails.codec(builder, instance -> instance.recipeBookDetails)
+					.apply(builder, AshfernCookingRecipe::new));
+
+	private final RecipeUtil.RecipeBookDetails recipeBookDetails;
+
+	public AshfernCookingRecipe(String group, CraftingBookCategory category, boolean showObtainNotification) {
+		this(new RecipeUtil.RecipeBookDetails(group, category, showObtainNotification));
+	}
+
+	public AshfernCookingRecipe(RecipeUtil.RecipeBookDetails recipeBookDetails) {
+		super(recipeBookDetails.category());
+
+		this.recipeBookDetails = recipeBookDetails;
 	}
 
 	@Override
 	public String getGroup() {
-		return "food";
+		return this.recipeBookDetails.group();
+	}
+
+	@Override
+	public boolean showNotification() {
+		return this.recipeBookDetails.showUnlockNotification();
+	}
+
+	@Override
+	public RecipeSerializer<?> getSerializer() {
+		return AoARecipes.ASHFERN_COOKING.serializer().get();
+	}
+
+	@Override
+	public boolean canCraftInDimensions(int width, int height) {
+		return width * height >= 2;
 	}
 
 	@Override
@@ -29,9 +58,7 @@ public class AshfernCookingRecipe extends CustomRecipe {
 		boolean hasFern = false;
 		boolean hasFood = false;
 
-		for (int i = 0; i < container.getContainerSize(); i++) {
-			final ItemStack stack = container.getItem(i);
-
+		for (ItemStack stack : container.getItems()) {
 			if (stack.isEmpty())
 				continue;
 
@@ -47,7 +74,9 @@ public class AshfernCookingRecipe extends CustomRecipe {
 			if (hasFood || !stack.isEdible())
 				return false;
 
-			if (level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level).map(recipe -> !recipe.getResultItem(level.registryAccess()).isEmpty()).orElse(false)) {
+			Optional<RecipeHolder<SmeltingRecipe>> smeltingRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level);
+
+			if (smeltingRecipe.isPresent() && !smeltingRecipe.get().value().getResultItem(level.registryAccess()).isEmpty()) {
 				hasFood = true;
 			}
 			else {
@@ -83,7 +112,10 @@ public class AshfernCookingRecipe extends CustomRecipe {
 				continue;
 			}
 
-			output = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level).map(recipe -> recipe.getResultItem(registryAccess)).orElse(ItemStack.EMPTY);
+			Optional<RecipeHolder<SmeltingRecipe>> smeltingRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level);
+
+			if (smeltingRecipe.isPresent())
+				output = smeltingRecipe.get().value().getResultItem(level.registryAccess());
 
 			if (foundFern)
 				break;
@@ -97,18 +129,20 @@ public class AshfernCookingRecipe extends CustomRecipe {
 		return output;
 	}
 
-	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width >= 2 || height >= 2;
-	}
+	public static class Factory implements RecipeSerializer<AshfernCookingRecipe> {
+		@Override
+		public Codec<AshfernCookingRecipe> codec() {
+			return AshfernCookingRecipe.CODEC;
+		}
 
-	@Override
-	public RecipeSerializer<?> getSerializer() {
-		return AoARecipes.ASHFERN_COOKING.serializer().get();
-	}
+		@Override
+		public AshfernCookingRecipe fromNetwork(FriendlyByteBuf buffer) {
+			return new AshfernCookingRecipe(RecipeUtil.RecipeBookDetails.fromNetwork(buffer));
+		}
 
-	@Override
-	public CraftingBookCategory category() {
-		return CraftingBookCategory.MISC;
+		@Override
+		public void toNetwork(FriendlyByteBuf buffer, AshfernCookingRecipe recipe) {
+			recipe.recipeBookDetails.toNetwork(buffer);
+		}
 	}
 }

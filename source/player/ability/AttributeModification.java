@@ -11,16 +11,12 @@ import net.minecraft.util.GsonHelper;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.event.custom.events.PlayerLevelChangeEvent;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.EntityUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
-import net.tslat.aoa3.util.StringUtil;
+import net.tslat.aoa3.util.*;
 
 import java.util.UUID;
 
@@ -39,7 +35,7 @@ public class AttributeModification extends ScalableModAbility {
 	public AttributeModification(AoASkill.Instance skill, JsonObject data) {
 		super(AoAAbilities.ATTRIBUTE_MODIFICATION.get(), skill, data);
 
-		this.attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(GsonHelper.getAsString(data, "attribute")));
+		this.attribute = AoARegistries.ENTITY_ATTRIBUTES.getEntry(new ResourceLocation(GsonHelper.getAsString(data, "attribute")));
 		this.modifier = new AttributeModifier(UUID.randomUUID(), getUniqueIdentifier(), 0, AttributeModifier.Operation.fromValue(GsonHelper.getAsInt(data, "operation"))) {
 			@Override
 			public double getAmount() {
@@ -51,7 +47,7 @@ public class AttributeModification extends ScalableModAbility {
 	public AttributeModification(AoASkill.Instance skill, CompoundTag data) {
 		super(AoAAbilities.ATTRIBUTE_MODIFICATION.get(), skill, data);
 
-		this.attribute = ForgeRegistries.ATTRIBUTES.getValue(new ResourceLocation(data.getString("attribute")));
+		this.attribute = AoARegistries.ENTITY_ATTRIBUTES.getEntry(new ResourceLocation(data.getString("attribute")));
 		this.modifier = new AttributeModifier(data.getUUID("uuid"), getUniqueIdentifier(), 0, AttributeModifier.Operation.fromValue(data.getInt("operation"))) {
 			@Override
 			public double getAmount() {
@@ -129,7 +125,7 @@ public class AttributeModification extends ScalableModAbility {
 		CompoundTag data = super.getSyncData(forClientSetup);
 
 		if (forClientSetup) {
-			data.putString("attribute", ForgeRegistries.ATTRIBUTES.getKey(attribute).toString());
+			data.putString("attribute", RegistryUtil.getId(attribute).toString());
 			data.putInt("operation", this.modifier.getOperation().toValue());
 			data.putUUID("uuid", this.modifier.getId());
 		}

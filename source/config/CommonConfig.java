@@ -1,7 +1,7 @@
 package net.tslat.aoa3.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 public final class CommonConfig {
-	public CommonConfig(ForgeConfigSpec.Builder specBuilder) {}
+	public CommonConfig(ModConfigSpec.Builder specBuilder) {}
 }

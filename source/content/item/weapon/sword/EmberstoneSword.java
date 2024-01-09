@@ -7,6 +7,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraft.world.level.Level;
@@ -40,15 +41,16 @@ public class EmberstoneSword extends BaseSword implements LootModifyingItem {
 		for (int i = 0; i < existingLoot.size(); i++) {
 			ItemStack lootStack = existingLoot.get(i);
 
-			Optional<SmeltingRecipe> smeltRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(lootStack), level);
+			Optional<RecipeHolder<SmeltingRecipe>> smeltRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(lootStack), level);
+			final int stackIndex = i;
 
-			if (smeltRecipe.isPresent()) {
-				existingLoot.set(i, smeltRecipe.get().getResultItem(lootContext.getLevel().registryAccess()));
+			smeltRecipe.ifPresent(holder -> {
+				existingLoot.set(stackIndex, smeltRecipe.get().value().getResultItem(lootContext.getLevel().registryAccess()));
 
 				for (int x = 0; x < 5; x++) {
 					level.sendParticles(ParticleTypes.FLAME, posX + RandomUtil.randomValueUpTo(1), posY + RandomUtil.randomValueUpTo(1), posZ + RandomUtil.randomValueUpTo(1), 1, 0, 0, 0, 0);
 				}
-			}
+			});
 		}
 	}
 

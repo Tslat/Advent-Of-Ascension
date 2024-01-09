@@ -11,7 +11,6 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -119,7 +118,7 @@ public class MendingTableContainer extends UtilityBlockContainer {
 	}
 
 	public static void openContainer(ServerPlayer player, BlockPos pos) {
-		NetworkHooks.openScreen(player, new MenuProvider() {
+		player.openMenu(new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return Component.translatable("container.aoa3.mending_table");

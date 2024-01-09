@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:ingots/gold"
+    },
+    "B": {
+      "tag": "forge:string"
+    },
+    "C": {
+      "item": "aoa3:reinforced_cloth"
+    },
+    "D": {
+      "item": "aoa3:yellow_spores"
+    }
+  },
+  "pattern": [
+    "DAB",
+    "C B",
+    "DAB"
+  ],
+  "result": {
+    "item": "aoa3:weaken_bow"
+  }
+}

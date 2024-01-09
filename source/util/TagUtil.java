@@ -7,8 +7,6 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.registries.RegistryManager;
-import net.minecraftforge.registries.tags.IReverseTag;
 
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -28,11 +26,9 @@ public final class TagUtil {
 	}
 
 	public static <T> Stream<TagKey<T>> getAllTagsFor(ResourceKey<? extends Registry<T>> registryKey, T object, Level level) {
-		Optional<Registry<T>> vanillaRegistry = level.registryAccess().registry(registryKey);
+		Registry<T> registry = level.registryAccess().registry(registryKey).orElseGet(() -> BuiltInRegistries.REGISTRY.getOrThrow((ResourceKey)registryKey));
 
-		return vanillaRegistry
-				.map(registry -> registry.getResourceKey(object).map(key -> registry.getHolderOrThrow(key).tags()).orElse(Stream.empty()))
-				.orElseGet(() -> RegistryManager.ACTIVE.getRegistry(registryKey).tags().getReverseTag(object).map(IReverseTag::getTagKeys).orElseGet(Stream::empty));
+		return registry.getResourceKey(object).map(key -> registry.getHolderOrThrow(key).tags()).orElseGet(Stream::empty);
 	}
 
 	public static <T> Optional<HolderSet.Named<T>> getTagContents(TagKey<T> tag, Level level) {

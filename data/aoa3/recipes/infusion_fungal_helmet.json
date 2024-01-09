@@ -20,10 +20,10 @@
       "tag": "forge:mushrooms"
     }
   ],
-  "input": {
-    "item": "aoa3:helmet_frame"
-  },
   "result": {
     "item": "aoa3:fungal_helmet"
+  },
+  "tool": {
+    "item": "aoa3:helmet_frame"
   }
 }

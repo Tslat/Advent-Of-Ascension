@@ -21,7 +21,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -32,6 +31,7 @@ import net.tslat.aoa3.content.entity.projectile.mob.MagicBallEntity;
 import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
 import org.jetbrains.annotations.Nullable;
 
@@ -241,7 +241,7 @@ public class WebReaperEntity extends AoARangedMob<WebReaperEntity> {
 			return getCustomName();
 		}
 		else {
-			String baseName = ForgeRegistries.ENTITY_TYPES.getKey(getType()).getPath();
+			String baseName = RegistryUtil.getId(getType()).getPath();
 			String stagePrefix = (stage >= 15 ? "nightmare" : stage >= 5 ? "empowered" : null);
 
 			if (stagePrefix != null)

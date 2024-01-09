@@ -5,13 +5,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.object.AllDirections;
 import net.tslat.aoa3.library.object.explosion.ExplosionInfo;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 
 public final class AoAExplosions {
 	public static final ExplosionInfo BOMB_CARRIER_DYNAMITE = new ExplosionInfo()
@@ -35,15 +34,15 @@ public final class AoAExplosions {
 					explosion.level.setBlock(pos, Blocks.FIRE.defaultBlockState(), Block.UPDATE_ALL);
 			})
 			.particles((explosion, tick) -> {
-				Vec3 pos = explosion.getPosition();
-				ServerParticlePacket packet = new ServerParticlePacket(ParticleBuilder.forPos(ParticleTypes.EXPLOSION_EMITTER, pos.x, pos.y, pos.z));
+				Vec3 pos = explosion.center();
+				TELParticlePacket packet = new TELParticlePacket(ParticleBuilder.forPosition(ParticleTypes.EXPLOSION_EMITTER, pos.x, pos.y, pos.z));
 
 				for (AllDirections direction : AllDirections.values()) {
 					Vec3 angle = direction.angle();
-					packet.particle(ParticleBuilder.forPos(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 5, 0x7C0000), pos.x, pos.y, pos.z).velocity(angle.x * 10, angle.y * 10, angle.z * 10));
+					packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 5, 0x7C0000), pos.x, pos.y, pos.z).velocity(angle.x * 10, angle.y * 10, angle.z * 10));
 				}
 
-				AoANetworking.sendToAllNearbyPlayers(packet, (ServerLevel)explosion.level, pos, 64);
+				packet.sendToAllNearbyPlayers((ServerLevel)explosion.level, pos, 64);
 			});
 	public static final ExplosionInfo RPG = new ExplosionInfo()
 			.radius(4)

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/bloodstone"
+    },
+    "B": {
+      "tag": "forge:rods/metal"
+    },
+    "C": {
+      "item": "aoa3:flammable_dust"
+    },
+    "D": {
+      "item": "aoa3:nightmare_flakes"
+    }
+  },
+  "pattern": [
+    "DCD",
+    " A ",
+    " B "
+  ],
+  "result": {
+    "item": "aoa3:firestorm_staff"
+  }
+}

@@ -6,8 +6,8 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.SoundManager;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.tslat.aoa3.advent.Logging;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import org.apache.logging.log4j.Level;
 
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public final class MusicPlayer {
 			}
 		}
 
-		SoundEvent soundEvent = ForgeRegistries.SOUND_EVENTS.getValue(id);
+		SoundEvent soundEvent = AoARegistries.SOUNDS.getEntry(id);
 
 		if (soundEvent == null) {
 			Logging.logMessage(Level.DEBUG, "Unable to find sound event with ID: " + id.toString());

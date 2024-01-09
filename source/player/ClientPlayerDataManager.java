@@ -1,8 +1,6 @@
 package net.tslat.aoa3.player;
 
 import com.google.common.collect.ArrayListMultimap;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -10,8 +8,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Player;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.PlayerAbilityKeybindPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.adventplayer.PlayerAbilityKeybindTriggerPacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -28,7 +26,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public final class ClientPlayerDataManager implements PlayerDataManager {
-	private LocalPlayer player;
+	public static final ClientPlayerDataManager INSTANCE = new ClientPlayerDataManager();
+
+	private Player player;
 
 	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_SKILLS::getId));
 	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_RESOURCES::getId));
@@ -40,12 +40,12 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	private int totalLevel = 0;
 
 	public static ClientPlayerDataManager get() {
-		return ClientOperations.CLIENT_PLAYER_DATA;
+		return INSTANCE;
 	}
 
 	@Override
 	public void updatePlayerInstance(Player pl) {
-		player = (LocalPlayer)pl;
+		player = pl;
 	}
 
 	public void reset() {
@@ -59,7 +59,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	@Override
-	public LocalPlayer player() {
+	public Player player() {
 		return player;
 	}
 
@@ -96,7 +96,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	public void handleKeyInput(int keycode) {
-		if (Minecraft.getInstance().player == null || keyListeners.isEmpty() || !keyListeners.containsKey(keycode))
+		if (ClientOperations.getPlayer() == null || keyListeners.isEmpty() || !keyListeners.containsKey(keycode))
 			return;
 
 		ArrayList<AoAPlayerEventListener> listeners = keyListeners.get(keycode);
@@ -108,7 +108,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 		}
 
 		if (!abilities.isEmpty())
-			AoANetworking.sendToServer(new PlayerAbilityKeybindPacket(abilities));
+			AoANetworking.sendToServer(new PlayerAbilityKeybindTriggerPacket(abilities));
 	}
 
 	private void updateTotalLevel() {
@@ -222,6 +222,9 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	private void checkForListeners(AoAPlayerEventListener listener) {
+		if (this.player != ClientOperations.getPlayer())
+			return;
+
 		for (AoAPlayerEventListener.ListenerType type : listener.getListenerTypes()) {
 			if (type == AoAPlayerEventListener.ListenerType.KEY_INPUT) {
 				int keyCode = listener.getKeybind().getKey().getValue();
@@ -238,4 +241,12 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 			}
 		}
 	}
+
+	@Override
+	public CompoundTag serializeNBT() {
+		return new CompoundTag();
+	}
+
+	@Override
+	public void deserializeNBT(CompoundTag nbt) {}
 }

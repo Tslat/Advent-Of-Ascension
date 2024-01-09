@@ -21,12 +21,9 @@
       "color": "white",
       "translate": "advancements.aoa3.nether.blast_resistant.description"
     },
-    "frame": "task",
-    "hidden": false,
     "icon": {
       "item": "aoa3:gold_trophy"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.nether.blast_resistant.title"

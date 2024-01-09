@@ -32,9 +32,8 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.AoASoundBuilderPacket;
-import net.tslat.aoa3.common.packet.packets.ServerParticlePacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.common.registration.AoAExplosions;
 import net.tslat.aoa3.common.registration.AoASounds;
@@ -47,7 +46,6 @@ import net.tslat.aoa3.content.entity.mob.nether.EmbrakeEntity;
 import net.tslat.aoa3.content.entity.mob.nether.LittleBamEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.StickyFireballEntity;
-import net.tslat.aoa3.library.builder.ParticleBuilder;
 import net.tslat.aoa3.library.builder.SoundBuilder;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.library.object.TriFunction;
@@ -56,7 +54,9 @@ import net.tslat.aoa3.util.DamageUtil;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.PositionAndMotionUtil;
+import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.DelayedBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
@@ -65,6 +65,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.look.LookAtTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.CustomDelayedBehaviour;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FloatToSurfaceOfFluid;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
@@ -192,7 +193,8 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 	public BrainActivityGroup<AoABoss> getCoreTasks() {
 		return BrainActivityGroup.coreTasks(
 				new LookAtTarget<>(),
-				new WalkOrRunToWalkTarget<>());
+				new WalkOrRunToWalkTarget<>(),
+				new FloatToSurfaceOfFluid<>());
 	}
 
 	@Override
@@ -258,7 +260,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 							new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles(),
 							new EffectBuilder(MobEffects.DAMAGE_BOOST).level(4));
 
-					ServerParticlePacket packet = new ServerParticlePacket();
+					TELParticlePacket packet = new TELParticlePacket();
 
 					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SOUL_FIRE_FLAME, minion)
 							.spawnNTimes(50)
@@ -267,7 +269,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 							.ignoreDistanceAndLimits()
 							.lifespan(40));
 
-					AoANetworking.sendToAllPlayersTrackingEntity(packet, this);
+					packet.sendToAllPlayersTrackingEntity((ServerLevel)level(), this);
 					AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).atPos(level(), minion.position()).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), this);
 				}
 			});
@@ -519,14 +521,14 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 							new EffectBuilder(MobEffects.DAMAGE_BOOST).level(3).hideParticles(),
 							new EffectBuilder(MobEffects.MOVEMENT_SPEED).hideParticles());
 
-					ServerParticlePacket packet = new ServerParticlePacket();
+					TELParticlePacket packet = new TELParticlePacket();
 
 					packet.particle(ParticleBuilder.forRandomPosInEntity(ParticleTypes.SMALL_FLAME, minion)
 							.spawnNTimes(50)
 							.lifespan(40)
 							.ignoreDistanceAndLimits());
 
-					AoANetworking.sendToAllPlayersTrackingEntity(packet, entity);
+					packet.sendToAllPlayersTrackingEntity((ServerLevel)entity.level(), entity);
 					AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(SoundEvents.BLAZE_SHOOT).followEntity(entity).category(SoundSource.HOSTILE).pitch(0.5f).varyPitch(0.1f)), entity);
 				}
 			});
@@ -815,13 +817,13 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 						Vec3 travelVector = this.magnetisedTo.getEyePosition().subtract(0, 0.2f, 0).subtract(startPos);
 						Vec3 angle = travelVector.normalize();
 						double dist = travelVector.length();
-						ServerParticlePacket particlePacket = new ServerParticlePacket();
+						TELParticlePacket particlePacket = new TELParticlePacket();
 
 						setNoGravity(true);
 						setDeltaMovement(angle.scale(0.08f));
 
 						for (float i = 0.25f; i < dist; i += 0.5f) {
-							particlePacket.particle(ParticleBuilder.forPos(ParticleTypes.ELECTRIC_SPARK, startPos.add(angle.multiply(i, i, i))).colourOverride(1, 1, 1, 0.15f));
+							particlePacket.particle(ParticleBuilder.forPositions(ParticleTypes.ELECTRIC_SPARK, startPos.add(angle.multiply(i, i, i))).colourOverride(1, 1, 1, 0.15f));
 						}
 
 						if (this.magnetisedTo.distanceToSqr(this) < 3.1f) {
@@ -834,7 +836,7 @@ public class EliteKingBamBamBamEntity extends AoABoss implements AoARangedAttack
 							discard();
 						}
 
-						AoANetworking.sendToAllPlayersTrackingEntity(particlePacket, this.magnetisedTo);
+						particlePacket.sendToAllPlayersTrackingEntity((ServerLevel)level(), this.magnetisedTo);
 					}
 				}
 

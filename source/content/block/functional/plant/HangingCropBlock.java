@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.IPlantable;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.IPlantable;
 
 import java.util.function.Supplier;
 
@@ -42,9 +42,9 @@ public abstract class HangingCropBlock extends AoACropBlock {
 			if (age < this.getMaxAge()) {
 				float growthMod = getGrowthMod(this, world, pos);
 
-				if (ForgeHooks.onCropsGrowPre(world, pos, state, random.nextInt((int)(25.0F / growthMod) + 1) == 0)) {
+				if (CommonHooks.onCropsGrowPre(world, pos, state, random.nextInt((int)(25.0F / growthMod) + 1) == 0)) {
 					world.setBlock(pos, this.getStateForAge(age + 1), 2);
-					ForgeHooks.onCropsGrowPost(world, pos, state);
+					CommonHooks.onCropsGrowPost(world, pos, state);
 				}
 			}
 		}

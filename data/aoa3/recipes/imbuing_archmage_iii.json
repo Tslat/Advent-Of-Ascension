@@ -1,9 +1,7 @@
 {
-  "type": "aoa3:infusion",
-  "infusion": {
-    "enchantment": "aoa3:archmage",
-    "level": 3
-  },
+  "type": "aoa3:imbuing",
+  "enchantment": "aoa3:archmage",
+  "enchantment_level": 3,
   "infusion_level": 89,
   "ingredients": [
     {

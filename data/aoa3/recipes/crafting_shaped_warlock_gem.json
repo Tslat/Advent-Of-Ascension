@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:runium_chunk"
+    },
+    "B": {
+      "tag": "forge:ingots/baronyte"
+    },
+    "C": {
+      "tag": "forge:gems/quartz"
+    }
+  },
+  "pattern": [
+    "ABA",
+    " C ",
+    "A A"
+  ],
+  "result": {
+    "item": "aoa3:warlock_gem"
+  }
+}

@@ -16,17 +16,14 @@
     }
   },
   "display": {
-    "announce_to_chat": true,
     "description": {
       "color": "white",
       "translate": "advancements.aoa3.nether.nethengeic_deliverance.description"
     },
-    "frame": "task",
     "hidden": true,
     "icon": {
       "item": "aoa3:ornate_trophy"
     },
-    "show_toast": true,
     "title": {
       "color": "dark_green",
       "translate": "advancements.aoa3.nether.nethengeic_deliverance.title"

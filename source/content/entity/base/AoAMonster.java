@@ -3,6 +3,8 @@ package net.tslat.aoa3.content.entity.base;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntArrayTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
@@ -30,7 +32,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.common.ForgeHooks;
+import net.neoforged.neoforge.common.CommonHooks;
 import net.tslat.aoa3.common.registration.AoAAttributes;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
@@ -274,7 +276,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 	@Override
 	protected void actuallyHurt(DamageSource source, float amount) {
 		if (!isInvulnerableTo(source)) {
-			amount = ForgeHooks.onLivingHurt(this, source, amount);
+			amount = CommonHooks.onLivingHurt(this, source, amount);
 
 			if (amount <= 0)
 				return;
@@ -289,7 +291,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 			if (absorbedAmount > 0 && absorbedAmount < 3.4028235E37F && source.getEntity() instanceof ServerPlayer pl)
 				pl.awardStat(Stats.DAMAGE_DEALT_ABSORBED, Math.round(absorbedAmount * 10f));
 
-			adjustedDamage = ForgeHooks.onLivingDamage(this, source, adjustedDamage);
+			adjustedDamage = CommonHooks.onLivingDamage(this, source, adjustedDamage);
 
 			if (adjustedDamage != 0) {
 				getCombatTracker().recordDamage(source, adjustedDamage);
@@ -307,7 +309,7 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 	@Override
 	public void die(DamageSource source) {
-		if (ForgeHooks.onLivingDeath(this, source))
+		if (CommonHooks.onLivingDeath(this, source))
 			return;
 
 		if (!isRemoved() && !this.dead) {
@@ -360,6 +362,18 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		super.addAdditionalSaveData(compound);
 
 		compound.putBoolean("DropsLoot", this.hasDrops);
+
+		if (getParts().length > 0) {
+			List<Integer> disabledParts = new ObjectArrayList<>();
+
+			for (int i = 0; i < getParts().length; i++) {
+				if (!getParts()[i].isEnabled())
+					disabledParts.add(i);
+			}
+
+			if (!disabledParts.isEmpty())
+				compound.put("DisabledMultiparts", new IntArrayTag(disabledParts));
+		}
 	}
 
 	@Override
@@ -367,6 +381,14 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		super.readAdditionalSaveData(compound);
 
 		this.hasDrops = compound.getBoolean("DropsLoot");
+
+		if (compound.contains("DisabledMultiparts", Tag.TAG_INT_ARRAY)) {
+			final AoAEntityPart<?>[] parts = getParts();
+
+			for (int i : compound.getIntArray("DisabledMultiparts")) {
+				parts[i].setEnabled(false);
+			}
+		}
 
 		INVULNERABLE.set(this, isInvulnerable());
 	}

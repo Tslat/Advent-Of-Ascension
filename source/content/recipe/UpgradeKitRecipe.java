@@ -1,68 +1,53 @@
 package net.tslat.aoa3.content.recipe;
 
-import com.google.gson.JsonObject;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.tslat.aoa3.common.container.DivineStationContainer;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.util.RecipeUtil;
 import org.jetbrains.annotations.Nullable;
 
 
 public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineStationInventory> {
-	private final ResourceLocation id;
-	private final String group;
+	public static final Codec<UpgradeKitRecipe> CODEC = RecordCodecBuilder.create(builder ->
+					RecipeUtil.RecipeBookDetails.codec(builder, instance -> instance.recipeBookDetails).and(builder.group(
+					Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(instance -> instance.input),
+					Ingredient.CODEC_NONEMPTY.fieldOf("upgrade_kit").forGetter(instance -> instance.upgradeKit),
+					ItemStack.ITEM_WITH_COUNT_CODEC.fieldOf("result").forGetter(instance -> instance.output)))
+			.apply(builder, UpgradeKitRecipe::new));
 
-	private final ItemStack input;
-	private final ItemStack upgradeKit;
+	private final RecipeUtil.RecipeBookDetails recipeBookDetails;
+
+	private final Ingredient input;
+	private final Ingredient upgradeKit;
 	private final ItemStack output;
 
-	public UpgradeKitRecipe(ResourceLocation id, String group, ItemStack input, ItemStack upgradeKit, ItemStack output) {
-		this.id = id;
-		this.group = group;
+	public UpgradeKitRecipe(String group, @Nullable CraftingBookCategory category, boolean showObtainNotification, Ingredient input, Ingredient upgradeKit, ItemStack output) {
+		this(new RecipeUtil.RecipeBookDetails(group, category, showObtainNotification), input, upgradeKit, output);
+	}
+
+	public UpgradeKitRecipe(RecipeUtil.RecipeBookDetails recipeBookDetails, Ingredient input, Ingredient upgradeKit, ItemStack output) {
+		this.recipeBookDetails = recipeBookDetails;
 		this.input = input;
 		this.upgradeKit = upgradeKit;
 		this.output = output;
 	}
 
 	@Override
-	public ItemStack getToastSymbol() {
-		return new ItemStack(AoABlocks.DIVINE_STATION.get());
+	public String getGroup() {
+		return this.recipeBookDetails.group();
 	}
 
 	@Override
-	public boolean matches(DivineStationContainer.DivineStationInventory inv, Level world) {
-		return ItemStack.isSameItem(input, inv.getItem(0)) && ItemStack.isSameItem(upgradeKit, inv.getItem(1));
-	}
-
-	@Override
-	public ItemStack assemble(DivineStationContainer.DivineStationInventory inv, RegistryAccess registryAccess) {
-		return output.copy();
-	}
-
-	@Override
-	public boolean canCraftInDimensions(int width, int height) {
-		return width >= 3;
-	}
-
-	@Override
-	public ItemStack getResultItem(RegistryAccess registryAccess) {
-		return output.copy();
-	}
-
-	@Override
-	public ResourceLocation getId() {
-		return id;
+	public boolean showNotification() {
+		return this.recipeBookDetails.showUnlockNotification();
 	}
 
 	@Override
@@ -76,47 +61,51 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 	}
 
 	@Override
-	public NonNullList<Ingredient> getIngredients() {
-		NonNullList<Ingredient> ingredients = NonNullList.<Ingredient>create();
-
-		ingredients.add(Ingredient.of(input));
-		ingredients.add(Ingredient.of(upgradeKit));
-
-		return ingredients;
+	public ItemStack getToastSymbol() {
+		return new ItemStack(AoABlocks.DIVINE_STATION.get());
 	}
 
 	@Override
-	public String getGroup() {
-		return group;
+	public boolean canCraftInDimensions(int width, int height) {
+		return width >= 3;
+	}
+
+	@Override
+	public NonNullList<Ingredient> getIngredients() {
+		return NonNullList.of(null, this.input, this.upgradeKit);
+	}
+
+	@Override
+	public boolean matches(DivineStationContainer.DivineStationInventory inv, Level world) {
+		return this.input.test(inv.getItem(0)) && this.upgradeKit.test(inv.getItem(1));
+	}
+
+	@Override
+	public ItemStack assemble(DivineStationContainer.DivineStationInventory inv, RegistryAccess registryAccess) {
+		return getResultItem(registryAccess);
+	}
+
+	@Override
+	public ItemStack getResultItem(RegistryAccess registryAccess) {
+		return this.output.copy();
 	}
 
 	public static class Factory implements RecipeSerializer<UpgradeKitRecipe> {
 		@Override
-		public UpgradeKitRecipe fromJson(ResourceLocation recipeId, JsonObject json) {
-			String group = GsonHelper.getAsString(json, "group", "");
-			ItemStack inputItem = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "input"), false);
-			ItemStack upgradeKit = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "upgrade_kit"), false);
-			ItemStack output = CraftingHelper.getItemStack(GsonHelper.getAsJsonObject(json, "result"), true);
-
-			return new UpgradeKitRecipe(recipeId, group, inputItem, upgradeKit, output);
+		public Codec<UpgradeKitRecipe> codec() {
+			return UpgradeKitRecipe.CODEC;
 		}
 
-		@Nullable
 		@Override
-		public UpgradeKitRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
-			String group = buffer.readUtf(32767);
-			ItemStack inputItem = buffer.readItem();
-			ItemStack upgradeKit = buffer.readItem();
-			ItemStack output = buffer.readItem();
-
-			return new UpgradeKitRecipe(recipeId, group, inputItem, upgradeKit, output);
+		public UpgradeKitRecipe fromNetwork(FriendlyByteBuf buffer) {
+			return new UpgradeKitRecipe(RecipeUtil.RecipeBookDetails.fromNetwork(buffer), Ingredient.fromNetwork(buffer), Ingredient.fromNetwork(buffer), buffer.readItem());
 		}
 
 		@Override
 		public void toNetwork(FriendlyByteBuf buffer, UpgradeKitRecipe recipe) {
-			buffer.writeUtf(recipe.getGroup(), 32767);
-			buffer.writeItem(recipe.input);
-			buffer.writeItem(recipe.upgradeKit);
+			recipe.recipeBookDetails.toNetwork(buffer);
+			recipe.input.toNetwork(buffer);
+			recipe.upgradeKit.toNetwork(buffer);
 			buffer.writeItem(recipe.output);
 		}
 	}

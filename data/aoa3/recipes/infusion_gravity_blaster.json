@@ -14,10 +14,10 @@
       "item": "aoa3:floating_stone"
     }
   ],
-  "input": {
-    "item": "aoa3:blaster_frame"
-  },
   "result": {
     "item": "aoa3:gravity_blaster"
+  },
+  "tool": {
+    "item": "aoa3:blaster_frame"
   }
 }

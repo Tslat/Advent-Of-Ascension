@@ -4,23 +4,22 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.smartbrainlib.util.RandomUtil;
-
-import java.util.UUID;
 
 public class RuneCreationTask implements Runnable {
 	private final ServerLevel level;
 	private final BlockPos pos;
 	private final Item rune;
 	private final int count;
-	private final UUID owner;
+	private final Player owner;
 
 	private int ticker;
 
-	public RuneCreationTask(ServerLevel level, BlockPos pos, Item rune, int count, UUID owner) {
+	public RuneCreationTask(ServerLevel level, BlockPos pos, Item rune, int count, Player owner) {
 		this.level = level;
 		this.pos = pos;
 		this.rune = rune;

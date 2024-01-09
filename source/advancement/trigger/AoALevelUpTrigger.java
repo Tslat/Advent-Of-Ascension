@@ -1,77 +1,61 @@
 package net.tslat.aoa3.advancement.trigger;
 
-import com.google.gson.JsonObject;
-import net.minecraft.advancements.critereon.*;
-import net.minecraft.resources.ResourceLocation;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.advancements.Criterion;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.GsonHelper;
-import net.minecraft.util.Mth;
+import net.minecraft.util.ExtraCodecs;
+import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.skill.AoASkill;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 
-public class AoALevelUpTrigger extends SimpleCriterionTrigger<AoALevelUpTrigger.Instance> {
-	private static final ResourceLocation triggerId = new ResourceLocation("aoa3", "level_up");
 
+public final class AoALevelUpTrigger extends SimpleCriterionTrigger<AoALevelUpTrigger.Instance> {
 	@Override
-	public ResourceLocation getId() {
-		return triggerId;
-	}
-
-	@Override
-	public Instance createInstance(JsonObject json, ContextAwarePredicate predicate, DeserializationContext conditions) {
-		AoASkill skill = null;
-
-		if (json.has("skill")) {
-			ResourceLocation skillId = new ResourceLocation(GsonHelper.getAsString(json, "skill"));
-			skill = AoASkills.getSkill(skillId);
-
-			if (skill == null)
-				throw new IllegalArgumentException("Invalid AoASkill ID: '" + skillId + "'");
-		}
-
-		int lvl = json.has("level") ? Mth.clamp(GsonHelper.getAsInt(json, "level"), 1, 1000) : 0;
-
-		return new Instance(skill, lvl);
+	public Codec<Instance> codec() {
+		return Instance.CODEC;
 	}
 
 	public void trigger(ServerPlayer player, AoASkill skill, int newLevel) {
 		trigger(player, instance -> instance.test(skill, newLevel));
 	}
 
-	public static class Instance extends AbstractCriterionTriggerInstance {
-		@Nullable
-		private final AoASkill skill;
-		private final int level;
+	public static Criterion<Instance> onLevelUp(@Nullable ContextAwarePredicate conditions, @Nullable AoASkill skill, Optional<Integer> level) {
+		return AoAAdvancementTriggers.LEVEL_UP.get().createCriterion(new Instance(Optional.ofNullable(conditions), skill != null ? Optional.of(skill) : Optional.empty(), level));
+	}
 
-		public Instance(@Nullable AoASkill skill, int lvl, ContextAwarePredicate playerPredicate) {
-			super(triggerId, playerPredicate);
+	public static Criterion<Instance> onLevelUp(@Nullable AoASkill skill, Optional<Integer> level) {
+		return onLevelUp(null, skill, level);
+	}
 
-			this.skill = skill;
-			this.level = Mth.clamp(lvl, 1, 1000);
-		}
+	public static Criterion<Instance> onLevelUp(@Nullable AoASkill skill) {
+		return onLevelUp(skill, Optional.empty());
+	}
 
-		public Instance(@Nullable AoASkill skill, int lvl) {
-			this(skill, lvl, ContextAwarePredicate.ANY);
+	public static Criterion<Instance> onLevelUp(Optional<Integer> level) {
+		return onLevelUp(null, level);
+	}
+
+	public record Instance(Optional<ContextAwarePredicate> player, Optional<AoASkill> skill, Optional<Integer> levelReq) implements SimpleCriterionTrigger.SimpleInstance {
+		private static final Codec<Instance> CODEC = RecordCodecBuilder.create(codec -> codec.group(
+				ExtraCodecs.strictOptionalField(EntityPredicate.ADVANCEMENT_CODEC, "player").forGetter(Instance::player),
+				ExtraCodecs.strictOptionalField(AoARegistries.AOA_SKILLS.lookupCodec(), "skill").forGetter(Instance::skill),
+				ExtraCodecs.strictOptionalField(Codec.intRange(1, 1000), "level").forGetter(Instance::levelReq)
+		).apply(codec, Instance::new));
+
+		public boolean test(AoASkill skill, int level) {
+			return (skill().isEmpty() || skill().get() == skill) && (levelReq().isEmpty() || level >= levelReq().get());
 		}
 
 		@Override
-		public JsonObject serializeToJson(SerializationContext conditions) {
-			JsonObject obj = super.serializeToJson(conditions);
-
-			if (skill != null)
-				obj.addProperty("skill", AoARegistries.AOA_SKILLS.getId(skill).toString());
-
-			if (level > 0)
-				obj.addProperty("level", level);
-
-			return obj;
-		}
-
-		public boolean test(AoASkill skill, int level) {
-			return (this.skill == null || this.skill == skill) && (this.level == 0 || level >= this.level);
+		public Optional<ContextAwarePredicate> player() {
+			return Optional.empty();
 		}
 	}
 }

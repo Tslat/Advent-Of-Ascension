@@ -2,7 +2,7 @@ package net.tslat.aoa3.client.render;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraftforge.common.ForgeMod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -37,7 +37,7 @@ public final class AoAAnimations {
 	public static <T extends LivingEntity & GeoEntity> AnimationController<T> genericWalkRunSwimIdleController(T entity) {
 		return new AnimationController<T>(entity, "movement", 0, event -> {
 			if (event.isMoving()) {
-				if (false && entity.isInWater() && entity.getFluidTypeHeight(ForgeMod.WATER_TYPE.get()) > entity.getFluidJumpThreshold()) { // Disable until Geckolib fixes fluid movement
+				if (false && entity.isInWater() && entity.getFluidTypeHeight(NeoForgeMod.WATER_TYPE.value()) > entity.getFluidJumpThreshold()) { // Disable until Geckolib fixes fluid movement
 					// TODO Fix Geckolib fluid movement?
 					// Unsure, entity might be floating too high.
 					// Think I already fixed it in Geckolib though

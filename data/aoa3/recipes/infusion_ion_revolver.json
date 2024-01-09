@@ -20,10 +20,10 @@
       "tag": "forge:dusts/redstone"
     }
   ],
-  "input": {
-    "item": "aoa3:gun_frame"
-  },
   "result": {
     "item": "aoa3:ion_revolver"
+  },
+  "tool": {
+    "item": "aoa3:gun_frame"
   }
 }

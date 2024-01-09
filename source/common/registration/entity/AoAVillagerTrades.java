@@ -4,9 +4,9 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.village.VillagerTradesEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.village.VillagerTradesEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public final class AoAVillagerTrades {
 	public static void init() {
-		MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, VillagerTradesEvent.class, AoAVillagerTrades::onTraderGenTrades);
+		NeoForge.EVENT_BUS.addListener(EventPriority.NORMAL, false, VillagerTradesEvent.class, AoAVillagerTrades::onTraderGenTrades);
 	}
 
 	private static void onTraderGenTrades(final VillagerTradesEvent ev) {

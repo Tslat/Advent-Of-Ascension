@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "aoa3:void_scales"
+    },
+    "B": {
+      "tag": "forge:gems/bloodstone"
+    },
+    "C": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "A A",
+    "BCB",
+    "ABA"
+  ],
+  "result": {
+    "item": "aoa3:distorting_artifact"
+  }
+}

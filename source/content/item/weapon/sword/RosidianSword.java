@@ -1,6 +1,5 @@
 package net.tslat.aoa3.content.item.weapon.sword;
 
-import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
@@ -9,10 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.item.AoATiers;
-import net.tslat.aoa3.content.capability.volatilestack.VolatileStackCapabilityProvider;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
@@ -27,7 +24,7 @@ public class RosidianSword extends BaseSword {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity target) {
-		VolatileStackCapabilityProvider.getOrDefault(stack, Direction.NORTH).setValue(player.getAttackStrengthScale(0.0f));
+		stack.setData(AoADataAttachments.MELEE_SWING_STRENGTH, player.getAttackStrengthScale(0));
 
 		if (player.getHealth() < player.getMaxHealth()) {
 			float motionX = (float)(player.getX() - target.getX()) * 0.1f;
@@ -64,7 +61,6 @@ public class RosidianSword extends BaseSword {
 		}
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level worldIn, List<Component> tooltip, TooltipFlag flagIn) {
 		tooltip.add(LocaleUtil.getFormattedItemDescriptionText(this, LocaleUtil.ItemDescriptionType.BENEFICIAL, 1));

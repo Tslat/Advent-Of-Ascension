@@ -185,7 +185,7 @@ public class SpinoledonEntity extends AoAMeleeMob<SpinoledonEntity> {
 
 	@Override
 	protected float getAttackVectorPositionOffset() {
-		return 2.7f;
+		return 3f;
 	}
 
 	@Override

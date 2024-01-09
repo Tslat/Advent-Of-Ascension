@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityTeleportEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.EntityTeleportEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.item.AoAFood;
 import net.tslat.aoa3.util.AdvancementUtil;
@@ -40,7 +40,7 @@ public class Rosidons extends Item {
 				return super.finishUsingItem(stack, world, entity);
 			}
 
-			if (MinecraftForge.EVENT_BUS.post(new EntityTeleportEvent(entity, entity.getX(), calculatedY, entity.getZ())))
+			if (NeoForge.EVENT_BUS.post(new EntityTeleportEvent(entity, entity.getX(), calculatedY, entity.getZ())).isCanceled())
 				return stack;
 
 			if (calculatedY - entity.getY() >= 350 && entity instanceof ServerPlayer pl)

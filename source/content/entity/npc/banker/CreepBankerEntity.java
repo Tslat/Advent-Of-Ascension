@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.network.NetworkHooks;
 import net.tslat.aoa3.common.container.BankerContainer;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
@@ -41,8 +40,8 @@ public class CreepBankerEntity extends AoABanker {
 	}
 
 	@Override
-	protected void openScreen(Player player) {
-		NetworkHooks.openScreen((ServerPlayer)player, new MenuProvider() {
+	protected void openScreen(ServerPlayer player) {
+		player.openMenu(new MenuProvider() {
 			@Override
 			public Component getDisplayName() {
 				return CreepBankerEntity.this.getDisplayName();

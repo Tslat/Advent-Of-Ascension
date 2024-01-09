@@ -23,15 +23,15 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.packet.AoANetworking;
-import net.tslat.aoa3.common.packet.packets.ToastPopupPacket;
+import net.tslat.aoa3.common.networking.AoANetworking;
+import net.tslat.aoa3.common.networking.packets.ToastPopupPacket;
+import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.content.capability.adventplayer.AdventPlayerCapability;
-import net.tslat.aoa3.content.capability.adventplayer.AdventPlayerCapabilityHandles;
-import net.tslat.aoa3.content.capability.adventplayer.AdventPlayerCapabilityProvider;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
+import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
@@ -59,20 +59,22 @@ public final class PlayerUtil {
 
     @Nonnull
     public static ServerPlayerDataManager getAdventPlayer(@Nonnull ServerPlayer player) {
-        AdventPlayerCapabilityHandles cap = player.getCapability(AdventPlayerCapabilityProvider.CAPABILITY, null).orElseGet(() -> new AdventPlayerCapability(player));
-
-        return cap.getPlayerData();
+        return (ServerPlayerDataManager)getAdventPlayer((Player)player);
     }
 
     @Nonnull
     public static PlayerDataManager getAdventPlayer(@Nonnull Player player) {
         PlayerDataManager plData;
 
-        if (!player.level().isClientSide()) {
-            plData = getAdventPlayer((ServerPlayer)player);
+        if (player instanceof ServerPlayer pl) {
+            plData = new ServerPlayerDataManager(pl);
+            plData = pl.getData(AoADataAttachments.ADVENT_PLAYER.get());
         }
         else {
-            plData = ClientOperations.CLIENT_PLAYER_DATA;
+            if (player != ClientOperations.getPlayer())
+                throw new IllegalStateException("Attempting to retrieve Advent Player data for remote client player");
+
+            plData = ClientPlayerDataManager.get();
         }
 
         if (plData.player() == null)
@@ -262,7 +264,7 @@ public final class PlayerUtil {
         float angleX = sinYaw * cosPitch;
         float angleZ = cosYaw * cosPitch;
         Vec3 endVec = startVec.add((double)angleX * distance, (double)sinPitch * distance, (double)angleZ * distance);
-        BlockHitResult ray = pl.level().clip(new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, null));
+        BlockHitResult ray = pl.level().clip(new ClipContext(startVec, endVec, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, CollisionContext.empty()));
 
         if (ray.getType() != HitResult.Type.BLOCK)
             return null;

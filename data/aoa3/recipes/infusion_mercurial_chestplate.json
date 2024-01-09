@@ -26,10 +26,10 @@
       "tag": "forge:gems/jewelyte"
     }
   ],
-  "input": {
-    "item": "aoa3:chestplate_frame"
-  },
   "result": {
     "item": "aoa3:mercurial_chestplate"
+  },
+  "tool": {
+    "item": "aoa3:chestplate_frame"
   }
 }
