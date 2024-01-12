@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:ingots/ghoulish"
+      "tag": "neoforge:ingots/ghoulish"
     }
   ],
   "result": {

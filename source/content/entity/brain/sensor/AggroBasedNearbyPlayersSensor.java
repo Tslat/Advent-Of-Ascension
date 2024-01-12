@@ -10,14 +10,15 @@ import net.tslat.smartbrainlib.api.core.sensor.vanilla.NearbyPlayersSensor;
 import net.tslat.smartbrainlib.object.SquareRadius;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.smartbrainlib.util.SensoryUtils;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiPredicate;
 
 public class AggroBasedNearbyPlayersSensor<E extends LivingEntity> extends NearbyPlayersSensor<E> {
-	private BiPredicate<E, Player> targetablePredicate = AggroBasedNearbyPlayersSensor::isEntityTargetable;
-	private BiPredicate<E, Player> attackablePredicate = AggroBasedNearbyPlayersSensor::isEntityAttackable;
+	private BiPredicate<E, Player> targetablePredicate = SensoryUtils::isEntityTargetable;
+	private BiPredicate<E, Player> attackablePredicate = SensoryUtils::isEntityAttackable;
 
 	public AggroBasedNearbyPlayersSensor<E> onlyTargeting(BiPredicate<E, Player> predicate) {
 		this.targetablePredicate = predicate;

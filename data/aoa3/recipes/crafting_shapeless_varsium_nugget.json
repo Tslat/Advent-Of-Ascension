@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:ingots/varsium"
+      "tag": "neoforge:ingots/varsium"
     }
   ],
   "result": {

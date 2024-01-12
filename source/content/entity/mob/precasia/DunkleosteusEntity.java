@@ -54,7 +54,7 @@ public class DunkleosteusEntity extends AoAWaterMeleeMob<DunkleosteusEntity> {
 	@Override
 	public List<ExtendedSensor<? extends DunkleosteusEntity>> getSensors() {
 		return ObjectArrayList.of(
-				new AggroBasedNearbyPlayersSensor<DunkleosteusEntity>().setPredicate((player, entity) -> player.isInWater()),
+				new AggroBasedNearbyPlayersSensor<DunkleosteusEntity>().setPredicate((player, entity) ->  player.isInWater()),
 				new AggroBasedNearbyLivingEntitySensor<DunkleosteusEntity>()
 						.setPredicate((target, entity) -> target.isInWater() && ((target instanceof OwnableEntity tamedEntity && tamedEntity.getOwnerUUID() != null) || target instanceof Animal))
 						.setScanRate(entity -> 40),

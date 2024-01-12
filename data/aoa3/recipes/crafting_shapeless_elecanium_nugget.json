@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:ingots/elecanium"
+      "tag": "neoforge:ingots/elecanium"
     }
   ],
   "result": {

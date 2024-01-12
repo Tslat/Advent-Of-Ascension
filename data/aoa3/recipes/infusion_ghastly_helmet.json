@@ -17,10 +17,10 @@
       "item": "aoa3:padded_cloth"
     },
     {
-      "tag": "forge:gems/jade"
+      "tag": "neoforge:gems/jade"
     },
     {
-      "tag": "forge:ingots/ghastly"
+      "tag": "neoforge:ingots/ghastly"
     }
   ],
   "result": {

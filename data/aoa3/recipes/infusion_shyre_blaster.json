@@ -2,16 +2,16 @@
   "type": "aoa3:infusion",
   "ingredients": [
     {
-      "tag": "forge:ingots/shyrestone"
+      "tag": "neoforge:ingots/shyrestone"
     },
     {
-      "tag": "forge:ingots/shyrestone"
+      "tag": "neoforge:ingots/shyrestone"
     },
     {
-      "tag": "forge:gems/shyregem"
+      "tag": "neoforge:gems/shyregem"
     },
     {
-      "tag": "forge:gems/shyregem"
+      "tag": "neoforge:gems/shyregem"
     },
     {
       "tag": "forge:gunpowder"

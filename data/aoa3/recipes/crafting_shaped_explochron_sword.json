@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/lyon"
+      "tag": "neoforge:ingots/lyon"
     },
     "B": {
       "tag": "forge:rods/wooden"
@@ -12,7 +12,7 @@
       "item": "aoa3:enchanted_gunpowder"
     },
     "D": {
-      "tag": "forge:ingots/blazium"
+      "tag": "neoforge:ingots/blazium"
     },
     "E": {
       "tag": "forge:gunpowder"

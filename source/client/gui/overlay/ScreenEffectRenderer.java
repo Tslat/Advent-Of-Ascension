@@ -79,6 +79,7 @@ public final class ScreenEffectRenderer {
 				buffer.vertex(0, 0, -90).uv(0, 0).endVertex();
 			}
 			else {
+				poseStack.translate(-256, -256, 0);
 				poseStack.scale(scale, scale, scale);
 				poseStack.translate(effect.x(), effect.y(), 0);
 

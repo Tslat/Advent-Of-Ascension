@@ -1,0 +1,28 @@
+{
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:piercing",
+  "enchantment_level": 5,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:shining_power_stone"
+    },
+    {
+      "tag": "forge:string"
+    }
+  ]
+}

@@ -8,13 +8,13 @@
       "item": "aoa3:padded_cloth"
     },
     {
-      "tag": "forge:ingots/skeletal"
+      "tag": "neoforge:ingots/skeletal"
     },
     {
-      "tag": "forge:ingots/skeletal"
+      "tag": "neoforge:ingots/skeletal"
     },
     {
-      "tag": "forge:food"
+      "tag": "neoforge:food"
     }
   ],
   "result": {

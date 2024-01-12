@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "X": {
-      "tag": "forge:raw_materials/limonite"
+      "tag": "neoforge:raw_materials/limonite"
     }
   },
   "pattern": [

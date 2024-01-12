@@ -232,7 +232,7 @@ public class HealthStatusRenderer {
 		matrix.popPose();
 	}
 
-	private static void renderHeart(PoseStack matrix, Minecraft mc, float currentHealth, float maxHealth, boolean flashing, boolean poisoned, boolean withered, boolean frozen, float absorb) {
+	private static void renderHeart(PoseStack poseStack, Minecraft mc, float currentHealth, float maxHealth, boolean flashing, boolean poisoned, boolean withered, boolean frozen, float absorb) {
 		final boolean hardcore = mc.level.getLevelData().isHardcore();
 		int y = -1;
 
@@ -242,10 +242,8 @@ public class HealthStatusRenderer {
 		if (mc.gui.tickCount % 25 == 0 && mc.player.hasEffect(MobEffects.REGENERATION))
 			y -= 2;
 
-		RenderUtil.prepSpriteRender(Gui.HeartType.CONTAINER.getSprite(hardcore, false, flashing));
-		RenderUtil.renderCustomSizedTexture(matrix, 0, y, 0, 0, 9, 9, 9, 9);
-		RenderUtil.prepSpriteRender(Gui.HeartType.forPlayer(mc.player).getSprite(hardcore, currentHealth < maxHealth, flashing));
-		RenderUtil.renderCustomSizedTexture(matrix, 0, y, 0, 0, 9, 9, 9, 9);
+		RenderUtil.renderSprite(poseStack, Gui.HeartType.CONTAINER.getSprite(hardcore, false, flashing), 0, y);
+		RenderUtil.renderSprite(poseStack, Gui.HeartType.forPlayer(mc.player).getSprite(hardcore, currentHealth < maxHealth, flashing), 0, y);
 	}
 
 	private static boolean handleHealthState(LocalPlayer player, ExtendedGui gui, float currentHealth) {

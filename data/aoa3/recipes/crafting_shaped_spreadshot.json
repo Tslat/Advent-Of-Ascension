@@ -9,7 +9,7 @@
       "tag": "forge:gunpowder"
     },
     "C": {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     }
   },
   "pattern": [

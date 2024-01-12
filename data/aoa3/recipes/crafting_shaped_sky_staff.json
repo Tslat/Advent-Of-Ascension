@@ -6,10 +6,10 @@
       "item": "aoa3:floating_stone"
     },
     "B": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     },
     "C": {
-      "tag": "forge:gems/crystallite"
+      "tag": "neoforge:gems/crystallite"
     }
   },
   "pattern": [

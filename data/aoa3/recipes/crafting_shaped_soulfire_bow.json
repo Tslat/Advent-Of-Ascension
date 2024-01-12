@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/elecanium"
+      "tag": "neoforge:ingots/elecanium"
     },
     "B": {
       "tag": "forge:string"

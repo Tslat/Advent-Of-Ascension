@@ -14,16 +14,16 @@
       "tag": "forge:gems/diamond"
     },
     {
-      "tag": "forge:gems/gemenyte"
+      "tag": "neoforge:gems/gemenyte"
     },
     {
-      "tag": "forge:gems/gemenyte"
+      "tag": "neoforge:gems/gemenyte"
     },
     {
-      "tag": "forge:gems/jewelyte"
+      "tag": "neoforge:gems/jewelyte"
     },
     {
-      "tag": "forge:gems/jewelyte"
+      "tag": "neoforge:gems/jewelyte"
     }
   ],
   "result": {

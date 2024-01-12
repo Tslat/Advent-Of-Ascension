@@ -15,7 +15,7 @@
           },
           "target": {
             "predicate_type": "minecraft:tag_match",
-            "tag": "forge:base_stone_precasia"
+            "tag": "neoforge:base_stone_precasia"
           }
         }
       ]

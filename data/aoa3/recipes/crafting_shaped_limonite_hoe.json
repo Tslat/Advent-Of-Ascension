@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "L": {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     },
     "S": {
       "tag": "forge:rods/wooden"

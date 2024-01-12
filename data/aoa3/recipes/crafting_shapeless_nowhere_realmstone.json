@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:shulker_boxes"
+      "tag": "neoforge:shulker_boxes"
     },
     {
       "item": "minecraft:nether_star"

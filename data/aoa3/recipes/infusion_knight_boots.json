@@ -17,10 +17,10 @@
       "item": "aoa3:padded_cloth"
     },
     {
-      "tag": "forge:ingots/shyrestone"
+      "tag": "neoforge:ingots/shyrestone"
     },
     {
-      "tag": "forge:gems/shyregem"
+      "tag": "neoforge:gems/shyregem"
     }
   ],
   "result": {

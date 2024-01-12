@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:soul_speed",
+  "enchantment_level": 1,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:glaring_power_stone"
+    },
+    {
+      "tag": "minecraft:soul_fire_base_blocks"
+    }
+  ]
+}

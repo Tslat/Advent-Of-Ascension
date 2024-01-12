@@ -1,9 +1,9 @@
 {
   "variants": {
-    "suspended=false": {
+    "webbed=false": {
       "model": "aoa3:block/cocoon"
     },
-    "suspended=true": {
+    "webbed=true": {
       "model": "aoa3:block/cocoon_suspended"
     }
   }

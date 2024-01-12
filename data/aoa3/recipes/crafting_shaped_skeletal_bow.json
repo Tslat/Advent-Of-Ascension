@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/skeletal"
+      "tag": "neoforge:ingots/skeletal"
     },
     "B": {
       "tag": "forge:string"

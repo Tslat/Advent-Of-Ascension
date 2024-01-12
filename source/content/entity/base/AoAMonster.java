@@ -422,7 +422,10 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 
 	@Override
 	public void setParts(AoAEntityPart<?>... parts) {
-		this.parts = defineParts(ENTITY_COUNTER, this::setId, parts);
+		if (getParts().length > 0)
+			throw new IllegalStateException("Cannot add more parts after having already done so!");
+
+		defineParts(ENTITY_COUNTER, this::setId, this.parts = parts);
 	}
 
 	@Override

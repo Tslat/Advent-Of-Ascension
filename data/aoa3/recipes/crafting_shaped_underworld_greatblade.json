@@ -15,7 +15,7 @@
       "item": "minecraft:spider_eye"
     },
     "E": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     }
   },
   "pattern": [

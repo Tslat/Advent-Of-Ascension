@@ -9,7 +9,7 @@
       "item": "minecraft:clay_ball"
     },
     "C": {
-      "tag": "forge:ingots/emberstone"
+      "tag": "neoforge:ingots/emberstone"
     }
   },
   "pattern": [

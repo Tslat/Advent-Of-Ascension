@@ -31,4 +31,6 @@ public final class AoABiomes {
 	public static final ResourceKey<Biome> LBOREAN_DEEP = ResourceKey.create(Registries.BIOME, AdventOfAscension.id("lborean_deep"));
 
 	public static final ResourceKey<Biome> THE_DEPTHS = ResourceKey.create(Registries.BIOME, AdventOfAscension.id("the_depths"));
+
+	public static final ResourceKey<Biome> THE_SILENT_FOREST = ResourceKey.create(Registries.BIOME, AdventOfAscension.id("the_silent_forest"));
 }

@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:gems/bloodstone"
+      "tag": "neoforge:gems/bloodstone"
     },
     "B": {
       "tag": "forge:ingots/iron"
     },
     "C": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     },
     "D": {
       "item": "minecraft:spider_eye"

@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:gems/shyregem"
+      "tag": "neoforge:gems/shyregem"
     },
     "B": {
-      "tag": "forge:ingots/shyrestone"
+      "tag": "neoforge:ingots/shyrestone"
     },
     "C": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     },
     "D": {
       "item": "aoa3:armour_plating"

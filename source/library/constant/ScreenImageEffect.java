@@ -124,8 +124,8 @@ public class ScreenImageEffect {
 		}
 
 		if (!this.fullscreen) {
-			this.posX = random.nextFloat(window.getGuiScaledWidth() - 127) / this.scale;
-			this.posY = random.nextFloat(window.getGuiScaledHeight() - 127) / this.scale;
+			this.posX = random.nextFloat(window.getGuiScaledWidth() + 256) / this.scale;
+			this.posY = random.nextFloat(window.getGuiScaledHeight() + 256) / this.scale;
 		}
 	}
 

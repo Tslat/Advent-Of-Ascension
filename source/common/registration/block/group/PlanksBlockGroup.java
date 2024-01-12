@@ -8,21 +8,21 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.tslat.aoa3.common.registration.block.BlockRegistrar;
 
 import java.util.function.Consumer;
 
 public final class PlanksBlockGroup {
-	public final DeferredHolder<Block, Block> planks;
-	public final DeferredHolder<Block, SlabBlock> slab;
-	public final DeferredHolder<Block, StairBlock> stairs;
-	public final DeferredHolder<Block, FenceBlock> fence;
-	public final DeferredHolder<Block, FenceGateBlock> fenceGate;
-	public final DeferredHolder<Block, PressurePlateBlock> pressurePlate;
-	public final DeferredHolder<Block, ButtonBlock> button;
-	public final DeferredHolder<Block, DoorBlock> door;
-	public final DeferredHolder<Block, TrapDoorBlock> trapdoor;
+	public final DeferredBlock<Block> planks;
+	public final DeferredBlock<SlabBlock> slab;
+	public final DeferredBlock<StairBlock> stairs;
+	public final DeferredBlock<FenceBlock> fence;
+	public final DeferredBlock<FenceGateBlock> fenceGate;
+	public final DeferredBlock<PressurePlateBlock> pressurePlate;
+	public final DeferredBlock<ButtonBlock> button;
+	public final DeferredBlock<DoorBlock> door;
+	public final DeferredBlock<TrapDoorBlock> trapdoor;
 
 	public PlanksBlockGroup(String baseId, boolean hasAdditionalBlocks, BlockRegistrarFactory registry, Consumer<BlockRegistrar<Block>> baseBlockRegistrar, WoodType woodType, BlockSetType blockSetType) {
 		this.planks = registry.register(baseId + "_planks", baseBlockRegistrar);

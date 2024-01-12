@@ -40,12 +40,12 @@ public class LaserBlaster extends BaseBlaster {
 		Vec3 originPos = shotInfo.shotOrBarrelPosForVfx();
 		Vec3 hitPos = shotInfo.getHitPos().orElse(originPos);
 
-		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.SONIC_BOOM, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.SONIC_BOOM, originPos, hitPos, 6)
 				.lifespan(1)
 				.ignoreDistanceAndLimits()
 				.scaleMod(0.05f)
 				.colourOverride(1, 0, 0, 1f));
-		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.END_ROD, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.END_ROD, originPos, hitPos, 6)
 				.lifespan(1)
 				.ignoreDistanceAndLimits()
 				.scaleMod(0.4f)

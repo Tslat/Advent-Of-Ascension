@@ -34,7 +34,7 @@ public class LelyetiaTeleporter extends AoATeleporter {
 	}
 
 	@Override
-	public BlockPos findSuitablePortalLocation(Level world, Entity entity) {
-		return super.findSuitablePortalLocation(world, entity);
+	public BlockPos findSuitablePortalLocation(Level level, Entity entity) {
+		return super.findSuitablePortalLocation(level, entity);
 	}
 }

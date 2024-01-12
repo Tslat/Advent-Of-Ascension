@@ -1,5 +1,6 @@
 package net.tslat.aoa3.common.registration;
 
+import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
@@ -38,8 +39,8 @@ public final class AoAExplosions {
 				TELParticlePacket packet = new TELParticlePacket(ParticleBuilder.forPosition(ParticleTypes.EXPLOSION_EMITTER, pos.x, pos.y, pos.z));
 
 				for (AllDirections direction : AllDirections.values()) {
-					Vec3 angle = direction.angle();
-					packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 5, 0x7C0000), pos.x, pos.y, pos.z).velocity(angle.x * 10, angle.y * 10, angle.z * 10));
+					Vec3i angle = direction.angle();
+					packet.particle(ParticleBuilder.forPosition(new CustomisableParticleType.Data(AoAParticleTypes.FLICKERING_SPARKLER.get(), 1, 5, 0x7C0000), pos.x, pos.y, pos.z).velocity(angle.getX() * 10, angle.getY() * 10, angle.getZ() * 10));
 				}
 
 				packet.sendToAllNearbyPlayers((ServerLevel)explosion.level, pos, 64);

@@ -1,40 +1,41 @@
 package net.tslat.aoa3.library.object;
 
+import net.minecraft.core.Vec3i;
 import net.minecraft.world.phys.Vec3;
 
 public enum AllDirections {
-	DOWN_NORTH_WEST(0, new Vec3(-1, -1, -1)),
-	DOWN_NORTH(1, new Vec3(-1, -1, 0)),
-	DOWN_NORTH_EAST(2, new Vec3(-1, -1, 1)),
-	DOWN_WEST(3, new Vec3(0, -1, -1)),
-	DOWN(4, new Vec3(0, -1, 0)),
-	DOWN_EAST(5, new Vec3(0, -1, 1)),
-	DOWN_SOUTH_WEST(6, new Vec3(1, -1, -1)),
-	DOWN_SOUTH(7, new Vec3(1, -1, 0)),
-	DOWN_SOUTH_EAST(8, new Vec3(1, -1, 1)),
-	NORTH_WEST(9, new Vec3(-1, 0, -1)),
-	NORTH(10, new Vec3(-1, 0, 0)),
-	NORTH_EAST(11, new Vec3(-1, 0, 1)),
-	WEST(12, new Vec3(0, 0, -1)),
-	CENTER(13, new Vec3(0, 0, 0)),
-	EAST(14, new Vec3(0, 0, 1)),
-	SOUTH_WEST(15, new Vec3(1, 0, -1)),
-	SOUTH(16, new Vec3(1, 0, 0)),
-	SOUTH_EAST(17, new Vec3(1, 0, 1)),
-	UP_NORTH_WEST(18, new Vec3(-1, 1, -1)),
-	UP_NORTH(19, new Vec3(-1, 1, 0)),
-	UP_NORTH_EAST(20, new Vec3(-1, 1, 1)),
-	UP_WEST(21, new Vec3(0, 1, -1)),
-	UP(22, new Vec3(0, 1, 0)),
-	UP_EAST(23, new Vec3(0, 1, 1)),
-	UP_SOUTH_WEST(24, new Vec3(1, 1, -1)),
-	UP_SOUTH(25, new Vec3(1, 1, 0)),
-	UP_SOUTH_EAST(26, new Vec3(1, 1, 1));
+	DOWN_NORTH_WEST(0, new Vec3i(-1, -1, -1)),
+	DOWN_NORTH(1, new Vec3i(-1, -1, 0)),
+	DOWN_NORTH_EAST(2, new Vec3i(-1, -1, 1)),
+	DOWN_WEST(3, new Vec3i(0, -1, -1)),
+	DOWN(4, new Vec3i(0, -1, 0)),
+	DOWN_EAST(5, new Vec3i(0, -1, 1)),
+	DOWN_SOUTH_WEST(6, new Vec3i(1, -1, -1)),
+	DOWN_SOUTH(7, new Vec3i(1, -1, 0)),
+	DOWN_SOUTH_EAST(8, new Vec3i(1, -1, 1)),
+	NORTH_WEST(9, new Vec3i(-1, 0, -1)),
+	NORTH(10, new Vec3i(-1, 0, 0)),
+	NORTH_EAST(11, new Vec3i(-1, 0, 1)),
+	WEST(12, new Vec3i(0, 0, -1)),
+	CENTER(13, new Vec3i(0, 0, 0)),
+	EAST(14, new Vec3i(0, 0, 1)),
+	SOUTH_WEST(15, new Vec3i(1, 0, -1)),
+	SOUTH(16, new Vec3i(1, 0, 0)),
+	SOUTH_EAST(17, new Vec3i(1, 0, 1)),
+	UP_NORTH_WEST(18, new Vec3i(-1, 1, -1)),
+	UP_NORTH(19, new Vec3i(-1, 1, 0)),
+	UP_NORTH_EAST(20, new Vec3i(-1, 1, 1)),
+	UP_WEST(21, new Vec3i(0, 1, -1)),
+	UP(22, new Vec3i(0, 1, 0)),
+	UP_EAST(23, new Vec3i(0, 1, 1)),
+	UP_SOUTH_WEST(24, new Vec3i(1, 1, -1)),
+	UP_SOUTH(25, new Vec3i(1, 1, 0)),
+	UP_SOUTH_EAST(26, new Vec3i(1, 1, 1));
 
 	private final int index;
-	private final Vec3 normalisedAngle;
+	private final Vec3i normalisedAngle;
 
-	AllDirections(int index, Vec3 angle) {
+	AllDirections(int index, Vec3i angle) {
 		this.index = index;
 		this.normalisedAngle = angle;
 	}
@@ -43,7 +44,7 @@ public enum AllDirections {
 		return this.index;
 	}
 
-	public Vec3 angle() {
+	public Vec3i angle() {
 		return this.normalisedAngle;
 	}
 

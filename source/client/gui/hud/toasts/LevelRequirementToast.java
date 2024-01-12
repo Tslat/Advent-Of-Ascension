@@ -29,8 +29,8 @@ public class LevelRequirementToast implements Toast {
 	public LevelRequirementToast(AoASkill relevantSkill, int levelRequirement) {
 		this.skill = relevantSkill;
 		this.levelRequired = levelRequirement;
-		this.title = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.title"), ChatFormatting.DARK_RED);
-		this.subtitle = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.subtitle"), relevantSkill.getName(), Component.literal(String.valueOf(levelRequirement)));
+		this.title = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.levelReq.title"), ChatFormatting.DARK_RED);
+		this.subtitle = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.levelReq.subtitle"), relevantSkill.getName(), Component.literal(String.valueOf(levelRequirement)));
 	}
 
 	public AoASkill getSkill() {

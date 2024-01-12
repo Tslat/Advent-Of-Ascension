@@ -13,6 +13,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.material.Fluid;
+import net.neoforged.neoforge.internal.versions.neoforge.NeoForgeVersion;
 import net.tslat.aoa3.advent.AdventOfAscension;
 
 public final class AoATags {
@@ -85,7 +86,7 @@ public final class AoATags {
 		}
 
 		private static TagKey<Block> tag(String id) {
-			return BlockTags.create(new ResourceLocation("forge", id));
+			return BlockTags.create(new ResourceLocation(NeoForgeVersion.MOD_ID, id));
 		}
 	}
 
@@ -219,7 +220,7 @@ public final class AoATags {
 		}
 
 		private static TagKey<Item> tag(String id) {
-			return ItemTags.create(new ResourceLocation("forge", id));
+			return ItemTags.create(new ResourceLocation(NeoForgeVersion.MOD_ID, id));
 		}
 	}
 
@@ -233,7 +234,7 @@ public final class AoATags {
 		}
 
 		private static TagKey<Fluid> tag(String id) {
-			return FluidTags.create(new ResourceLocation("forge", id));
+			return FluidTags.create(new ResourceLocation(NeoForgeVersion.MOD_ID, id));
 		}
 	}
 
@@ -248,7 +249,7 @@ public final class AoATags {
 		}
 
 		private static TagKey<EntityType<?>> tag(String id) {
-			return create(new ResourceLocation("forge", id));
+			return create(new ResourceLocation(NeoForgeVersion.MOD_ID, id));
 		}
 
 		public static TagKey<EntityType<?>> create(ResourceLocation id) {
@@ -259,6 +260,11 @@ public final class AoATags {
 	public static class Biomes {
 		public static final TagKey<Biome> NO_MOB_SPAWNS = tag("no_mob_spawns");
 		public static final TagKey<Biome> IS_PRECASIA = aoaTag("is_precasia");
+		public static final TagKey<Biome> IS_DUSTOPIA = aoaTag("is_precasia");
+		public static final TagKey<Biome> IS_LBOREAN = aoaTag("is_lborean");
+		public static final TagKey<Biome> IS_BARATHOS = aoaTag("is_barathos");
+		public static final TagKey<Biome> IS_LELYETIA = aoaTag("is_lelyetia");
+		public static final TagKey<Biome> IS_DEEPLANDS = aoaTag("is_deeplands");
 		public static final TagKey<Biome> HAS_RUINED_TELEPORTER = aoaTag("has_structure/ruined_teleporter");
 		public static final TagKey<Biome> HAS_PRECASIAN_LOTTO_HOVEL = aoaTag("has_structure/precasian_lotto_hovel");
 		public static final TagKey<Biome> HAS_ATTERCOPUS_NEST = aoaTag("has_structure/attercopus_nest");
@@ -268,7 +274,7 @@ public final class AoATags {
 		}
 
 		private static TagKey<Biome> tag(String id) {
-			return create(new ResourceLocation("forge", id));
+			return create(new ResourceLocation(NeoForgeVersion.MOD_ID, id));
 		}
 
 		public static TagKey<Biome> create(ResourceLocation id) {
@@ -284,7 +290,7 @@ public final class AoATags {
 		}
 
 		private static TagKey<Structure> tag(String id) {
-			return create(new ResourceLocation("forge", id));
+			return create(new ResourceLocation(NeoForgeVersion.MOD_ID, id));
 		}
 
 		public static TagKey<Structure> create(ResourceLocation id) {
@@ -306,7 +312,7 @@ public final class AoATags {
 		}
 
 		private static TagKey<DamageType> tag(String id) {
-			return create(new ResourceLocation("forge", id));
+			return create(new ResourceLocation(NeoForgeVersion.MOD_ID, id));
 		}
 
 		public static TagKey<DamageType> create(ResourceLocation id) {

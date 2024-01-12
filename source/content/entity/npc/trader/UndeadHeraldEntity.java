@@ -66,6 +66,20 @@ public class UndeadHeraldEntity extends AoATrader {
 	}
 
 	@Override
+	public SoundEvent getNotifyTradeSound() {
+		return SoundEvents.SKELETON_AMBIENT;
+	}
+
+	@Override
+	public void notifyTradeUpdated(ItemStack stack) {
+		if (!level().isClientSide && this.ambientSoundTime > -getAmbientSoundInterval() + 20)
+			this.ambientSoundTime = -getAmbientSoundInterval();
+	}
+
+	@Override
+	public void playCelebrateSound() {}
+
+	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return tickCount > 72000;
 	}

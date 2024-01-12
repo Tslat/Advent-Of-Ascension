@@ -6,7 +6,7 @@
       "tag": "forge:ingots/iron"
     },
     "B": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     },
     "C": {
       "item": "aoa3:dense_rock"

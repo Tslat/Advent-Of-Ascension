@@ -124,7 +124,7 @@ public class AttercopusEntity extends AoAMeleeMob<AttercopusEntity> {
 
 	@Override
 	protected int calculateFallDamage(float pFallDistance, float pDamageMultiplier) {
-		return super.calculateFallDamage(pFallDistance, pDamageMultiplier) / 2;
+		return Math.max(0, super.calculateFallDamage(pFallDistance, pDamageMultiplier) - 10) / 2;
 	}
 
 	@Override

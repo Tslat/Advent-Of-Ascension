@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.neoforge.common.CommonHooks;
+import net.tslat.aoa3.content.entity.brain.task.temp.FixedFollowParent;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.smartbrainlib.api.SmartBrainOwner;
@@ -38,7 +39,6 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Panic;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FloatToSurfaceOfFluid;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowParent;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.WalkOrRunToWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
@@ -166,7 +166,7 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 		return BrainActivityGroup.idleTasks(
 				new BreedWithPartner<>().startCondition(entity -> canBreed()),
 				new FirstApplicableBehaviour<>(
-						new FollowParent<>(),
+						new FixedFollowParent<>(),
 						new FollowTemptation<>().startCondition(entity -> getTemptItem() != null),
 						new OneRandomBehaviour<>(
 								new SetRandomWalkTarget<>().speedModifier(0.9f),
@@ -362,7 +362,10 @@ public abstract class AoAAnimal<T extends AoAAnimal<T>> extends Animal implement
 
 	@Override
 	public void setParts(AoAEntityPart<?>... parts) {
-		this.parts = defineParts(ENTITY_COUNTER, this::setId, parts);
+		if (getParts().length > 0)
+			throw new IllegalStateException("Cannot add more parts after having already done so!");
+
+		defineParts(ENTITY_COUNTER, this::setId, this.parts = parts);
 	}
 
 	@Override

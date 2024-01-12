@@ -6,7 +6,7 @@
       "tag": "forge:dusts/redstone"
     },
     "X": {
-      "tag": "forge:ingots/emberstone"
+      "tag": "neoforge:ingots/emberstone"
     }
   },
   "pattern": [

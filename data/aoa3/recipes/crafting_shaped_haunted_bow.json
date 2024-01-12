@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/ghoulish"
+      "tag": "neoforge:ingots/ghoulish"
     },
     "B": {
       "tag": "forge:string"

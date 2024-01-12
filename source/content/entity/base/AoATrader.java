@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.entity.base;
 import com.mojang.serialization.Dynamic;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -277,14 +276,6 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 			this.item = item;
 		}
 
-		public static BuildableTrade trade(Holder<? extends ItemLike> item) {
-			return trade(item, 1);
-		}
-
-		public static BuildableTrade trade(Holder<? extends ItemLike> item, int amount) {
-			return trade(item.value(), amount);
-		}
-
 		public static BuildableTrade trade(ItemLike item) {
 			return trade(item, 1);
 		}
@@ -302,14 +293,6 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 			this.maxUses = 0;
 
 			return this;
-		}
-
-		public BuildableTrade cost(Holder<? extends ItemLike> item) {
-			return cost(item, 1);
-		}
-
-		public BuildableTrade cost(Holder<? extends ItemLike> item, int amount) {
-			return cost(item.value(), amount);
 		}
 
 		public BuildableTrade cost(ItemLike item) {

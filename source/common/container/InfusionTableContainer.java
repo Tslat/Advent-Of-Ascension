@@ -6,11 +6,9 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
-import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -206,67 +204,8 @@ public class InfusionTableContainer extends AbstractContainerMenu {
 	}
 
 	public static class InfusionInventory extends TransientCraftingContainer {
-		private final NonNullList<ItemStack> stackList;
-		private final AbstractContainerMenu eventListener;
-
 		public InfusionInventory(AbstractContainerMenu eventHandler) {
-			super(eventHandler, 0, 0);
-
-			stackList = NonNullList.<ItemStack>withSize(10, ItemStack.EMPTY);
-			eventListener = eventHandler;
-		}
-
-		@Override
-		public int getContainerSize() {
-			return 10;
-		}
-
-		@Override
-		public boolean isEmpty() {
-			for (ItemStack stack : stackList) {
-				if (!stack.isEmpty())
-					return false;
-			}
-
-			return true;
-		}
-
-		@Override
-		public ItemStack getItem(int index) {
-			return index >= getContainerSize() || index < 0 ? ItemStack.EMPTY : stackList.get(index);
-		}
-
-		@Override
-		public ItemStack removeItemNoUpdate(int index) {
-			return ContainerHelper.takeItem(stackList, index);
-		}
-
-		@Override
-		public ItemStack removeItem(int index, int count) {
-			ItemStack stack = ContainerHelper.removeItem(stackList, index, count);
-
-			if (!stack.isEmpty())
-				eventListener.slotsChanged(this);
-
-			return stack;
-		}
-
-		@Override
-		public void setItem(int index, ItemStack stack) {
-			stackList.set(index, stack);
-			eventListener.slotsChanged(this);
-		}
-
-		@Override
-		public void clearContent() {
-			stackList.clear();
-		}
-
-		@Override
-		public void fillStackedContents(StackedContents recipeItemHelper) {
-			for (ItemStack stack : stackList) {
-				recipeItemHelper.accountStack(stack);
-			}
+			super(eventHandler, 0, 0, NonNullList.withSize(10, ItemStack.EMPTY));
 		}
 	}
 

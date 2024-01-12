@@ -14,13 +14,13 @@
       "item": "minecraft:dandelion"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     },
     {
-      "tag": "forge:gems/jade"
+      "tag": "neoforge:gems/jade"
     }
   ],
   "result": {

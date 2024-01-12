@@ -162,7 +162,7 @@ public class NowhereActivityPortal extends PortalBlock {
 		}
 
 		private static boolean doReturnPortalTeleport(ServerPlayer pl, double x, double y, double z, float rot) {
-			if (NowhereEvents.isInParkourRegion(pl.blockPosition())) {
+			if (pl.getY() >= pl.level().getMinBuildHeight() && NowhereEvents.isInParkourRegion(pl.blockPosition())) {
 				AoANowhereParkourCourseListener.NowhereParkourCourse course = AoANowhereParkourCourseListener.getCourseForPosition(pl.serverLevel(), pl.position());
 
 				if (course != null) {

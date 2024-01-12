@@ -18,6 +18,7 @@ import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
+import net.tslat.aoa3.content.entity.brain.task.temp.FixedFollowParent;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.effectslib.api.particle.ParticleBuilder;
@@ -26,7 +27,6 @@ import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowParent;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import org.jetbrains.annotations.Nullable;
@@ -93,7 +93,7 @@ public class HorndronEntity extends AoAAnimal<HorndronEntity> {
 		return BrainActivityGroup.idleTasks(
 				new FirstApplicableBehaviour<>(
 						new BreedWithPartner<>().startCondition(entity -> canBreed()),
-						new FollowParent<>(),
+						new FixedFollowParent<>(),
 						new FollowTemptation<>().startCondition(entity -> getTemptItem() != null),
 						new OneRandomBehaviour<>(
 								new SetRandomWalkTarget<>().speedModifier(0.9f),

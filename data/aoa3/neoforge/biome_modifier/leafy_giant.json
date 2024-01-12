@@ -1,0 +1,23 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#neoforge:no_mob_spawns",
+      "#forge:is_snowy"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "#minecraft:is_jungle"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:leafy_giant",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 5
+    }
+  ]
+}

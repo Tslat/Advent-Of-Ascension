@@ -83,7 +83,7 @@ public abstract class ScalableModAbility extends AoAAbility.Instance {
 		if (perLevelMod == 0)
 			return baseValue;
 
-		return baseValue + skill.getLevel(false) * perLevelMod;
+		return this.baseValue + Math.round(this.skill.getLevel(false) - 1f) * this.perLevelMod;
 	}
 
 	@Override

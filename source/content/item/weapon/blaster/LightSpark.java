@@ -130,13 +130,13 @@ public class LightSpark extends BaseBlaster {
 						.colourOverride(80 + colourMod * 175, 230 + colourMod * 25, 0 + colourMod * 255, 255)
 						.ignoreDistanceAndLimits()
 						.addTransition(ScaleParticleTransition.create(0.1f, 10))
-						.spawnParticles(serverLevel);
+						.sendToAllPlayersTrackingEntity(serverLevel, shooter);
 				ParticleBuilder.forPositionsInSphere(ParticleTypes.END_ROD, center, Math.max(entity.getBbHeight(), entity.getBbWidth()) * 1.25f, 32)
 						.spawnNTimes(4096)
 						.lifespan(20)
 						.ignoreDistanceAndLimits()
 						.addTransition(PositionParticleTransition.create(center, 10))
-						.spawnParticles(serverLevel);
+						.sendToAllPlayersTrackingEntity(serverLevel, shooter);
 
 				AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(AoASounds.ITEM_SOUL_SPARK_FIRE).atEntity(rayTrace.getEntity())), shooter);
 				rayTrace.getEntity().discard();

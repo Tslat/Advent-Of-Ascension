@@ -1,0 +1,16 @@
+{
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:impaling",
+  "enchantment_level": 1,
+  "ingredients": [
+    {
+      "item": "aoa3:damage_enhancer"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    },
+    {
+      "item": "minecraft:prismarine_shard"
+    }
+  ]
+}

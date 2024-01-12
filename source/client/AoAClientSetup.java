@@ -16,7 +16,7 @@ import net.tslat.aoa3.client.gui.overlay.ScreenEffectRenderer;
 import net.tslat.aoa3.client.model.ModelProperties;
 import net.tslat.aoa3.client.particle.*;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
-import net.tslat.aoa3.client.render.CustomDimensionRenders;
+import net.tslat.aoa3.client.render.dimension.CustomDimensionRenders;
 import net.tslat.aoa3.client.render.entity.misc.OccultBlockRenderer;
 import net.tslat.aoa3.common.registration.AoAContainers;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;

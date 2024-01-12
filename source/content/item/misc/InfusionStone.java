@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.item.misc;
 
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 public class InfusionStone extends Item {
-	private final DeferredHolder<Item, Item> powerStone;
+	private final DeferredItem<Item> powerStone;
 	private final int lvl;
 	private final float xp;
 
-	public InfusionStone(int lvl, float xp, DeferredHolder<Item, Item> powerStone) {
+	public InfusionStone(int lvl, float xp, DeferredItem<Item> powerStone) {
 		super(new Item.Properties());
 		this.lvl = lvl;
 		this.xp = xp;

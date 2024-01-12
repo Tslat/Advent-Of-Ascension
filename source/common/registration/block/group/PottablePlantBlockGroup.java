@@ -2,14 +2,14 @@ package net.tslat.aoa3.common.registration.block.group;
 
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FlowerPotBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.tslat.aoa3.common.registration.block.BlockRegistrar;
 
 import java.util.function.Consumer;
 
 public final class PottablePlantBlockGroup {
-	public final DeferredHolder<Block, Block> plant;
-	public final DeferredHolder<Block, FlowerPotBlock> pottedPlant;
+	public final DeferredBlock<Block> plant;
+	public final DeferredBlock<FlowerPotBlock> pottedPlant;
 
 	public PottablePlantBlockGroup(String baseId, BlockRegistrarFactory registry, Consumer<BlockRegistrar<Block>> baseBlockRegistrar) {
 		this.plant = registry.register(baseId, baseBlockRegistrar);

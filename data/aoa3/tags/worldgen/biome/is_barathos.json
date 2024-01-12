@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "aoa3:barathos_flats",
+      "required": false
+    },
+    {
+      "id": "aoa3:the_burning_pits",
+      "required": false
+    }
+  ]
+}

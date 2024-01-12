@@ -4,6 +4,7 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -284,11 +285,9 @@ public final class SoundBuilder {
 			this.sound = event.getSound().value();
 		}
 
-		if (level == null || level.isClientSide()) {
-			ClientOperations.playSoundFromBuilder(this);
-		}
-		else {
-			AoASoundBuilderPacket packet = new AoASoundBuilderPacket(this);
+		if (this.level instanceof ServerLevel serverLevel) {
+			final AoASoundBuilderPacket packet = new AoASoundBuilderPacket(this);
+			this.level = null;
 
 			if (playTo != null) {
 				for (Player pl : playTo) {
@@ -297,11 +296,14 @@ public final class SoundBuilder {
 				}
 			}
 			else {
-				for (ServerPlayer pl : level.getServer().getPlayerList().getPlayers()) {
-					if (pl.level() == level && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
+				for (ServerPlayer pl : serverLevel.getServer().getPlayerList().getPlayers()) {
+					if (pl.level() == serverLevel && pl.distanceToSqr(location) <= radius * radius && (exclude == null || !exclude.contains(pl)))
 						AoANetworking.sendToPlayer(pl, packet);
 				}
 			}
+		}
+		else {
+			ClientOperations.playSoundFromBuilder(this);
 		}
 	}
 

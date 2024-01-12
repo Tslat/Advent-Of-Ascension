@@ -12,13 +12,8 @@ public interface AoAMultipartEntity {
     void setParts(AoAEntityPart<?>... parts);
     AoAEntityPart<?>[] getParts();
 
-    default AoAEntityPart<?>[] defineParts(AtomicInteger idCounter, IntConsumer idSetter, AoAEntityPart<?>... parts) {
-        if (getParts().length > 0)
-            throw new IllegalStateException("Cannot add more parts after having already done so!");
-
+    default void defineParts(AtomicInteger idCounter, IntConsumer idSetter, AoAEntityPart<?>... parts) {
         idSetter.accept(idCounter.getAndAdd(parts.length + 1) + 1);
-
-        return parts;
     }
 
     default void setMultipartIds(int baseId) {

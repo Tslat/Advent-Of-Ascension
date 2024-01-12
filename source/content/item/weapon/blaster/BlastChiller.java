@@ -70,18 +70,18 @@ public class BlastChiller extends BaseBlaster {
 		Vec3 originPos = shotInfo.shotOrBarrelPosForVfx();
 		Vec3 hitPos = shotInfo.getHitPos().orElse(originPos);
 
-		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, originPos, hitPos, 6)
 				.lifespan(10)
 				.ignoreDistanceAndLimits()
 				.scaleMod(0.25f)
 				.colourOverride(0, 168, 162, 120));
-		packet.particle(ParticleBuilder.forPositionsInLine(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), ColourUtil.WHITE), originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+		packet.particle(ParticleBuilder.forPositionsInLine(new CustomisableParticleType.Data(AoAParticleTypes.FREEZING_SNOWFLAKE.get(), ColourUtil.WHITE), originPos, hitPos, 6)
 				.lifespan(rand.nextInt(20, 50))
 				.ignoreDistanceAndLimits()
 				.velocity(rand.nextGaussian() * 0.05f, rand.nextGaussian() * 0.05f, rand.nextGaussian() * 0.05f)
 				.gravityOverride(0.001f)
 				.scaleMod(0.4f));
-		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.WARPED_SPORE, originPos, hitPos, (int)originPos.distanceTo(hitPos) * 6)
+		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.WARPED_SPORE, originPos, hitPos, 6)
 				.lifespan(rand.nextInt(12, 25))
 				.ignoreDistanceAndLimits()
 				.colourOverride(0, 168, 162, 255)

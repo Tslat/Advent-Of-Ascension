@@ -41,6 +41,7 @@ import net.tslat.aoa3.common.registration.entity.AoAAnimals;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.base.AoAAnimal;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
+import net.tslat.aoa3.content.entity.brain.task.temp.FixedFollowParent;
 import net.tslat.aoa3.content.entity.brain.task.temp.SetRandomFlyingTarget;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
@@ -49,7 +50,6 @@ import net.tslat.smartbrainlib.api.core.behaviour.FirstApplicableBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.OneRandomBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowParent;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.util.BrainUtils;
@@ -131,7 +131,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 		return BrainActivityGroup.idleTasks(
 				new BreedWithPartner<>().startCondition(entity -> canBreed() && !isVehicle()),
 				new FirstApplicableBehaviour<>(
-						new FollowParent<>(),
+						new FixedFollowParent<>(),
 						new FollowTemptation<>().startCondition(entity -> getTemptItem() != null),
 						new OneRandomBehaviour<>(
 								new FirstApplicableBehaviour<>(

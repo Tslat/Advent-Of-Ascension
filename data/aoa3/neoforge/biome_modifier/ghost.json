@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#neoforge:no_mob_spawns"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:ghost",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 25
+    }
+  ]
+}

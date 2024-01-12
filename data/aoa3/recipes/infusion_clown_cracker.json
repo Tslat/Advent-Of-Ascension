@@ -17,10 +17,10 @@
       "tag": "forge:ingots/iron"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     }
   ],
   "result": {

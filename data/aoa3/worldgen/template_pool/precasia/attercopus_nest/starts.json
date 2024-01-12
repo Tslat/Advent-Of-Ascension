@@ -7,7 +7,7 @@
         "processors": {
           "processors": [
             {
-              "integrity": 0.15,
+              "integrity": 0.25,
               "processor_type": "minecraft:block_rot",
               "rottable_blocks": "aoa3:cocoon"
             }
@@ -24,7 +24,7 @@
         "processors": {
           "processors": [
             {
-              "integrity": 0.15,
+              "integrity": 0.25,
               "processor_type": "minecraft:block_rot",
               "rottable_blocks": "aoa3:cocoon"
             }
@@ -41,7 +41,7 @@
         "processors": {
           "processors": [
             {
-              "integrity": 0.15,
+              "integrity": 0.25,
               "processor_type": "minecraft:block_rot",
               "rottable_blocks": "aoa3:cocoon"
             }

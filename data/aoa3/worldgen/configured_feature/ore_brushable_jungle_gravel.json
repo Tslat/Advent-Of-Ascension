@@ -27,7 +27,7 @@
           },
           "target": {
             "predicate_type": "minecraft:tag_match",
-            "tag": "forge:grass"
+            "tag": "neoforge:grass"
           }
         }
       ]

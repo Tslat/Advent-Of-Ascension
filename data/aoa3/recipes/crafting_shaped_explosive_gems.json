@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:gems/gemenyte"
+      "tag": "neoforge:gems/gemenyte"
     },
     "B": {
       "item": "aoa3:ornamyte"
     },
     "C": {
-      "tag": "forge:gems/jewelyte"
+      "tag": "neoforge:gems/jewelyte"
     },
     "D": {
       "item": "aoa3:unstable_gunpowder"

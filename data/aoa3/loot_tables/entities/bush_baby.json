@@ -65,7 +65,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:\"8889187\",custom_potion_effects:[{ambient:0b,amplifier:0b,duration:30,id:\"minecraft:poison\",\"neoforge:cures\":[\"protected_by_totem\",\"milk\",\"honey\"],\"neoforge:id\":\"minecraft:poison\",show_icon:1b,show_particles:1b}],display:{}}"
+              "tag": "{CustomPotionColor:\"8889187\",custom_potion_effects:[{ambient:0b,amplifier:0b,duration:30,id:\"minecraft:poison\",\"neoforge:cures\":[\"milk\",\"protected_by_totem\",\"honey\"],\"neoforge:id\":\"minecraft:poison\",show_icon:1b,show_particles:1b}],display:{}}"
             }
           ],
           "name": "minecraft:splash_potion",

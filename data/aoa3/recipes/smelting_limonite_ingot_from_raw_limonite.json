@@ -4,7 +4,7 @@
   "cookingtime": 200,
   "experience": 0.7,
   "ingredient": {
-    "tag": "forge:raw_materials/limonite"
+    "tag": "neoforge:raw_materials/limonite"
   },
   "result": "aoa3:limonite_ingot"
 }

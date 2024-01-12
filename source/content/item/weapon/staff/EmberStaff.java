@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
@@ -25,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 
-public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<LivingEntity>>> {
+public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<Entity>>> {
 	public EmberStaff(int durability) {
 		super(durability);
 	}
@@ -43,24 +44,24 @@ public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<LivingEntity
 		runes.put(AoAItems.FIRE_RUNE.get(), 1);
 	}
 
-	@org.jetbrains.annotations.Nullable
+	@Nullable
 	@Override
-	public Pair<List<BlockPos>, List<LivingEntity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+	public Pair<List<BlockPos>, List<Entity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
 		List<BlockPos> blocks = new ObjectArrayList<>();
-		List<LivingEntity> entities = new ObjectArrayList<>();
+		List<Entity> entities = new ObjectArrayList<>();
 
 		if (caster.isOnFire())
 			entities.add(caster);
 
-		entities.addAll(EntityRetrievalUtil.getEntities(caster, 5, entity -> !(entity instanceof Enemy)));
+		entities.addAll(EntityRetrievalUtil.getEntities(caster, 5, entity -> entity.getRemainingFireTicks() > 0 && !(entity instanceof Enemy)));
 		blocks.addAll(WorldUtil.getBlocksWithinAABB(caster.level(), new AABB(Vec3.atLowerCornerOf(caster.blockPosition().offset(-5, -5, -5)), Vec3.atBottomCenterOf(caster.blockPosition().offset(5, 5, 5))), (state, pos) -> WorldUtil.canModifyBlock(caster.level(), pos, caster, staff) && state.is(BlockTags.FIRE)));
 
 		return entities.isEmpty() && blocks.isEmpty() ? null : Pair.of(blocks, entities);
 	}
 
 	@Override
-	public void cast(Level world, ItemStack staff, LivingEntity caster, Pair<List<BlockPos>, List<LivingEntity>> args) {
-		for (LivingEntity entity : args.getSecond()) {
+	public void cast(Level world, ItemStack staff, LivingEntity caster, Pair<List<BlockPos>, List<Entity>> args) {
+		for (Entity entity : args.getSecond()) {
 			entity.clearFire();
 		}
 

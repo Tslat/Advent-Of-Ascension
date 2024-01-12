@@ -9,17 +9,12 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.util.RegistryUtil;
 
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Supplier;
 
 public final class ItemStackBuilder {
 	private final Item item;
 	private int count = 1;
 	private int damage = 0;
 	private CompoundTag nbt = null;
-
-	public ItemStackBuilder(Supplier<? extends ItemLike> item) {
-		this(item.get());
-	}
 
 	public ItemStackBuilder(ItemLike item) {
 		this.item = item.asItem();

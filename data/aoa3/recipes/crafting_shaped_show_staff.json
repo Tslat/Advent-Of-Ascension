@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/baronyte"
+      "tag": "neoforge:ingots/baronyte"
     },
     "B": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     },
     "C": {
       "item": "aoa3:green_druse"

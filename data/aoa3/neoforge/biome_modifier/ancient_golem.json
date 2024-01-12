@@ -1,0 +1,27 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#neoforge:no_mob_spawns"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "#minecraft:has_structure/village_desert",
+      "#minecraft:has_structure/village_plains",
+      "#minecraft:has_structure/village_savanna",
+      "#minecraft:has_structure/village_snowy",
+      "#minecraft:has_structure/village_taiga",
+      "#minecraft:has_structure/woodland_mansion"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:ancient_golem",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 15
+    }
+  ]
+}

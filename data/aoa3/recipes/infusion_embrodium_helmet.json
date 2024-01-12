@@ -5,16 +5,16 @@
       "item": "aoa3:padded_cloth"
     },
     {
-      "tag": "forge:ingots/varsium"
+      "tag": "neoforge:ingots/varsium"
     },
     {
-      "tag": "forge:ingots/varsium"
+      "tag": "neoforge:ingots/varsium"
     },
     {
-      "tag": "forge:ingots/blazium"
+      "tag": "neoforge:ingots/blazium"
     },
     {
-      "tag": "forge:ingots/blazium"
+      "tag": "neoforge:ingots/blazium"
     }
   ],
   "result": {

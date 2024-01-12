@@ -9,7 +9,7 @@
       "item": "minecraft:vine"
     },
     "C": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     }
   },
   "pattern": [

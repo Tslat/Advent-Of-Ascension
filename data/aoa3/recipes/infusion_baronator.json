@@ -8,10 +8,10 @@
       "tag": "forge:ingots/iron"
     },
     {
-      "tag": "forge:ingots/baronyte"
+      "tag": "neoforge:ingots/baronyte"
     },
     {
-      "tag": "forge:ingots/varsium"
+      "tag": "neoforge:ingots/varsium"
     }
   ],
   "result": {

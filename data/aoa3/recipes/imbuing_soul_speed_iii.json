@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:soul_speed",
+  "enchantment_level": 3,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:blooming_power_stone"
+    }
+  ]
+}

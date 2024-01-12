@@ -2,16 +2,16 @@
   "type": "aoa3:tool_interaction",
   "ingredients": [
     {
-      "tag": "forge:rawfish"
+      "tag": "neoforge:rawfish"
     },
     {
-      "tag": "forge:swords"
+      "tag": "neoforge:swords"
     }
   ],
   "result": {
     "item": "aoa3:chum"
   },
   "tool": {
-    "tag": "forge:swords"
+    "tag": "neoforge:swords"
   }
 }

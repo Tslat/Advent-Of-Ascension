@@ -3,13 +3,13 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/shyrestone"
+      "tag": "neoforge:ingots/shyrestone"
     },
     "B": {
-      "tag": "forge:gems/shyregem"
+      "tag": "neoforge:gems/shyregem"
     },
     "C": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     },
     "D": {
       "item": "minecraft:glowstone"

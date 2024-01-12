@@ -6,7 +6,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.tslat.aoa3.util.MathUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
@@ -57,7 +56,7 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 	@Override
 	protected AABB getAttackBoundingBox() {
 		AABB boundingBox = getBoundingBox();
-		double attackPositionOffset = getAttackVectorPositionOffset() - boundingBox.getXsize();
+		double attackPositionOffset = getAttackVectorPositionOffset() - boundingBox.getXsize() / 2f;
 		double reach = getAttackReach();
 
 		if (getVehicle() != null) {
@@ -73,7 +72,7 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 		}
 
 		if (attackPositionOffset > 0)
-			boundingBox.move(MathUtil.getBodyForward(this).scale(attackPositionOffset));
+			reach += attackPositionOffset;
 
 		return boundingBox.inflate(reach, 0, reach);
 	}

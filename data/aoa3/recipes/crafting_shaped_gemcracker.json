@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:gems/crystallite"
+      "tag": "neoforge:gems/crystallite"
     },
     "B": {
       "tag": "forge:gems/diamond"

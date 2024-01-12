@@ -67,6 +67,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 public final class AoARegistries {
@@ -75,8 +76,8 @@ public final class AoARegistries {
 	public static final ResourceKey<Registry<AoAAbility>> ABILITIES_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("abilities"));
 
 	public static final RegistryHelper<CreativeModeTab> CREATIVE_MODE_TABS = new RegistryHelper<>(Registries.CREATIVE_MODE_TAB, AoACreativeModeTabs::init);
-	public static final RegistryHelper<Block> BLOCKS = new RegistryHelper<>(Registries.BLOCK, AoABlocks::init);
-	public static final RegistryHelper<Item> ITEMS = new RegistryHelper<>(Registries.ITEM, AoAItems::init, AoAWeapons::init, AoATools::init, AoAArmour::init);
+	public static final RegistryHelper<Block> BLOCKS = new RegistryHelper<>(Registries.BLOCK, (registryKey, modId) -> DeferredRegister.createBlocks(modId), AoABlocks::init);
+	public static final RegistryHelper<Item> ITEMS = new RegistryHelper<>(Registries.ITEM, (registryKey, modId) -> DeferredRegister.createItems(modId), AoAItems::init, AoAWeapons::init, AoATools::init, AoAArmour::init);
 	public static final RegistryHelper<Fluid> FLUIDS = new RegistryHelper<>(Registries.FLUID);
 	public static final RegistryHelper<EntityType<?>> ENTITIES = new RegistryHelper<>(Registries.ENTITY_TYPE, AoAMobs::init, AoAAnimals::init, AoANpcs::init, AoAMiscEntities::init, AoAProjectiles::init);
 	public static final RegistryHelper<BlockEntityType<?>> BLOCK_ENTITIES = new RegistryHelper<>(Registries.BLOCK_ENTITY_TYPE, AoABlockEntities::init);
@@ -135,14 +136,18 @@ public final class AoARegistries {
 		private static final List<Runnable> REGISTRY_INIT_TASKS = new ObjectArrayList<>();
 
 		private RegistryHelper(ResourceKey<Registry<T>> registryKey, Runnable... registrations) {
-			this(Suppliers.memoize(() -> (Registry<T>)BuiltInRegistries.REGISTRY.get(registryKey.location())), DeferredRegister.<T>create(registryKey, AdventOfAscension.MOD_ID), () -> Arrays.asList(registrations).forEach(Runnable::run));
+			this(registryKey, DeferredRegister::create, registrations);
+		}
+
+		private RegistryHelper(ResourceKey<Registry<T>> registryKey, BiFunction<ResourceKey<Registry<T>>, String, DeferredRegister<T>> defRegFactory, Runnable... registrations) {
+			this(Suppliers.memoize(() -> (Registry<T>)BuiltInRegistries.REGISTRY.get(registryKey.location())), defRegFactory.apply(registryKey, AdventOfAscension.MOD_ID), () -> Arrays.asList(registrations).forEach(Runnable::run));
 
 			deferredRegister().register(AdventOfAscension.getModEventBus());
 			REGISTRY_INIT_TASKS.add(this.registrationTasks);
 		}
 
-		public <I extends T> DeferredHolder<T, I> register(String id, Supplier<? extends I> object) {
-			return deferredRegister().register(id, object);
+		public <I extends T, H extends DeferredHolder<T, I>> H register(String id, Supplier<? extends I> object) {
+			return (H)deferredRegister().register(id, object);
 		}
 
 		public Set<ResourceLocation> getAllIds() {

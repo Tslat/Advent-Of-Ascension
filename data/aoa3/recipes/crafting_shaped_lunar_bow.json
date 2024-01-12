@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/lunar"
+      "tag": "neoforge:ingots/lunar"
     },
     "B": {
       "tag": "forge:string"

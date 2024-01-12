@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:new_mob_spawn",
+  "biomes": {
+    "excluding": [
+      "#neoforge:no_mob_spawns"
+    ],
+    "if_all": [
+      "#minecraft:is_overworld"
+    ],
+    "if_any": [
+      "#forge:is_sandy"
+    ]
+  },
+  "spawn": [
+    {
+      "type": "aoa3:sand_giant",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 5
+    }
+  ]
+}

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "X": {
-      "tag": "forge:raw_materials/emberstone"
+      "tag": "neoforge:raw_materials/emberstone"
     }
   },
   "pattern": [

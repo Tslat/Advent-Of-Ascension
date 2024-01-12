@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:ingots/blazium"
+      "tag": "neoforge:ingots/blazium"
     }
   ],
   "result": {

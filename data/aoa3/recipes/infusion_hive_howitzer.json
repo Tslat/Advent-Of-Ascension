@@ -11,10 +11,10 @@
       "item": "aoa3:hive_chunk"
     },
     {
-      "tag": "forge:ingots/varsium"
+      "tag": "neoforge:ingots/varsium"
     },
     {
-      "tag": "forge:ingots/baronyte"
+      "tag": "neoforge:ingots/baronyte"
     }
   ],
   "result": {

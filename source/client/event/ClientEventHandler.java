@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundSource;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.TickEvent;
@@ -18,6 +19,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.tslat.aoa3.client.AoAKeybinds;
 import net.tslat.aoa3.client.gui.overlay.ScreenEffectRenderer;
+import net.tslat.aoa3.client.render.shader.AoAPostProcessing;
 import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.HaloSelectPacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
@@ -46,6 +48,7 @@ public final class ClientEventHandler {
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingDeathEvent.class, ClientEventHandler::onPlayerDeath);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlaySoundEvent.class, ClientEventHandler::onSoundPlay);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemTooltipEvent.class, ClientEventHandler::onTooltip);
+		forgeBus.addListener(EventPriority.NORMAL, false, RenderLevelStageEvent.class, AoAPostProcessing::handlePostProcessing);
 	}
 
 	private static void onClientTick(final TickEvent.ClientTickEvent ev) {

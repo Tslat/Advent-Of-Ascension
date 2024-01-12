@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:gems/jade"
+      "tag": "neoforge:gems/jade"
     },
     "B": {
       "tag": "forge:rods/wooden"

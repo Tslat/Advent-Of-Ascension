@@ -45,7 +45,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 public class PortalBlock extends Block {
-	private static final Supplier<Set<Block>> USEABLE_PORTALS = Suppliers.memoize(() -> Set.of(AoABlocks.NETHER_PORTAL.get(), AoABlocks.NOWHERE_PORTAL.get(), AoABlocks.PRECASIA_PORTAL.get(), AoABlocks.BARATHOS_PORTAL.get(), AoABlocks.LELYETIA_PORTAL.get(), AoABlocks.DEEPLANDS_PORTAL.get(), AoABlocks.LBOREAN_PORTAL.get()));
+	private static final Supplier<Set<Block>> USEABLE_PORTALS = Suppliers.memoize(() -> Set.of(AoABlocks.NETHER_PORTAL.get(), AoABlocks.NOWHERE_PORTAL.get(), AoABlocks.PRECASIA_PORTAL.get(), AoABlocks.BARATHOS_PORTAL.get(), AoABlocks.LELYETIA_PORTAL.get(), AoABlocks.DEEPLANDS_PORTAL.get(), AoABlocks.LBOREAN_PORTAL.get(), AoABlocks.DUSTOPIA_PORTAL.get()));
 
 	private static final VoxelShape X_SHAPE = Shapes.create(new AABB(0.375, 0, 0, 0.625, 1, 1));
 	private static final VoxelShape Z_SHAPE = Shapes.create(new AABB(0, 0, 0.375, 1, 1, 0.625));

@@ -9,7 +9,7 @@
       "tag": "forge:string"
     },
     "C": {
-      "tag": "forge:gems/jade"
+      "tag": "neoforge:gems/jade"
     }
   },
   "pattern": [

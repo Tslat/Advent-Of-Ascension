@@ -12,10 +12,10 @@
       "item": "aoa3:wither_rune"
     },
     "D": {
-      "tag": "forge:ingots/lyon"
+      "tag": "neoforge:ingots/lyon"
     },
     "E": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     }
   },
   "pattern": [

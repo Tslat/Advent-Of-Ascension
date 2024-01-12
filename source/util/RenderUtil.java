@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -33,8 +34,26 @@ public final class RenderUtil {
 		renderCustomSizedTexture(matrix, x, y, u, v, width, height, width, height);
 	}
 
+	public static void renderSprite(PoseStack poseStack, ResourceLocation sprite, int x, int y) {
+		final TextureAtlasSprite atlasSprite = getSprite(sprite);
+		final float uWidth = atlasSprite.getU1() - atlasSprite.getU0();
+		final float vHeight = atlasSprite.getV1() - atlasSprite.getV0();
+
+		prepRenderTexture(atlasSprite.atlasLocation());
+		renderScaledCustomSizedTexture(poseStack, x, y, atlasSprite.getU0(), atlasSprite.getV0(), uWidth, vHeight, atlasSprite.contents().width(), atlasSprite.contents().height(), 1f, 1f);
+	}
+
 	public static void renderCustomSizedTexture(PoseStack matrix, int x, int y, float u, float v, float uWidth, float vHeight, float textureWidth, float textureHeight) {
 		renderScaledCustomSizedTexture(matrix, x, y, u, v, uWidth, vHeight, uWidth, vHeight, textureWidth, textureHeight);
+	}
+
+	public static void renderCustomSizedSprite(PoseStack poseStack, ResourceLocation sprite, int x, int y, float renderWidth, float renderHeight) {
+		final TextureAtlasSprite atlasSprite = getSprite(sprite);
+		final float uWidth = atlasSprite.getU1() - atlasSprite.getU0();
+		final float vHeight = atlasSprite.getV1() - atlasSprite.getV0();
+
+		prepRenderTexture(atlasSprite.atlasLocation());
+		renderScaledCustomSizedTexture(poseStack, x, y, atlasSprite.getU0(), atlasSprite.getV0(), uWidth, vHeight, renderWidth, renderHeight, 1, 1);
 	}
 
 	public static void renderScaledCustomSizedTexture(PoseStack matrixStack, float x, float y, float u, float v, float uWidth, float vHeight, float renderWidth, float renderHeight, float textureWidth, float textureHeight) {
@@ -215,7 +234,11 @@ public final class RenderUtil {
 	}
 
 	public static void prepSpriteRender(ResourceLocation sprite) {
-		prepRenderTexture(Minecraft.getInstance().getGuiSprites().getSprite(sprite).atlasLocation());
+		prepRenderTexture(getSprite(sprite).atlasLocation());
+	}
+
+	public static TextureAtlasSprite getSprite(ResourceLocation path) {
+		return Minecraft.getInstance().getGuiSprites().getSprite(path);
 	}
 
 	public static void prepRenderTexture(ResourceLocation texture) {

@@ -9,7 +9,7 @@
       "tag": "forge:gems/diamond"
     },
     "C": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     }
   },
   "pattern": [

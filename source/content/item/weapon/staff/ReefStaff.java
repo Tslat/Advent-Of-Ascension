@@ -29,6 +29,7 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.TagUtil;
+import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import org.jetbrains.annotations.Nullable;
@@ -82,7 +83,7 @@ public class ReefStaff extends BaseStaff<Boolean> {
 	@Nullable
 	@Override
 	public Boolean checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return caster.isInWater() ? true : null;
+		return WorldUtil.canPlaceBlock(caster.level(), caster.blockPosition(), caster, staff) && caster.isInWater() ? true : null;
 	}
 
 	@Override

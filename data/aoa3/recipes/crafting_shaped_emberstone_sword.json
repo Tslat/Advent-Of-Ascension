@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/emberstone"
+      "tag": "neoforge:ingots/emberstone"
     },
     "B": {
       "tag": "forge:rods/wooden"

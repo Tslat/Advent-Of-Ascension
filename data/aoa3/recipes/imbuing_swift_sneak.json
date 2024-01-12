@@ -1,0 +1,22 @@
+{
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:swift_sneak",
+  "enchantment_level": 1,
+  "ingredients": [
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:divine_enhancer"
+    },
+    {
+      "item": "aoa3:radiant_power_stone"
+    },
+    {
+      "item": "minecraft:echo_shard"
+    }
+  ]
+}

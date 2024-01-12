@@ -1,17 +1,16 @@
 package net.tslat.aoa3.common.registration.block.group;
 
-import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.tslat.aoa3.common.registration.block.BlockRegistrar;
 import net.tslat.aoa3.content.block.decoration.banner.BannerBlock;
 
 import java.util.function.Consumer;
 
 public final class BannerBlockGroup {
-	public final DeferredHolder<Block, BannerBlock> base;
-	public final DeferredHolder<Block, BannerBlock> gilded;
-	public final DeferredHolder<Block, BannerBlock> encrusted;
-	public final DeferredHolder<Block, BannerBlock> bejewelled;
+	public final DeferredBlock<BannerBlock> base;
+	public final DeferredBlock<BannerBlock> gilded;
+	public final DeferredBlock<BannerBlock> encrusted;
+	public final DeferredBlock<BannerBlock> bejewelled;
 
 	public BannerBlockGroup(String baseId, BlockRegistrarFactory registry, Consumer<BlockRegistrar<BannerBlock>> baseBlockRegistrar) {
 		this.base = registry.register(baseId, baseBlockRegistrar);

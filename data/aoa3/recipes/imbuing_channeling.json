@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:channeling",
+  "enchantment_level": 1,
+  "ingredients": [
+    {
+      "item": "aoa3:magic_enhancer"
+    },
+    {
+      "item": "aoa3:weight_enhancer"
+    },
+    {
+      "item": "aoa3:glowing_power_stone"
+    },
+    {
+      "item": "minecraft:lightning_rod"
+    }
+  ]
+}

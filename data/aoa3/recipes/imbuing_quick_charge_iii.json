@@ -1,0 +1,19 @@
+{
+  "type": "aoa3:imbuing",
+  "enchantment": "minecraft:quick_charge",
+  "enchantment_level": 3,
+  "ingredients": [
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:speed_enhancer"
+    },
+    {
+      "item": "aoa3:glistening_power_stone"
+    }
+  ]
+}

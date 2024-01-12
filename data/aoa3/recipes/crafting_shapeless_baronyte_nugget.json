@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:ingots/baronyte"
+      "tag": "neoforge:ingots/baronyte"
     }
   ],
   "result": {

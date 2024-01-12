@@ -2,28 +2,28 @@
   "type": "aoa3:infusion",
   "ingredients": [
     {
-      "tag": "forge:ingots/emberstone"
+      "tag": "neoforge:ingots/emberstone"
     },
     {
-      "tag": "forge:ingots/emberstone"
+      "tag": "neoforge:ingots/emberstone"
     },
     {
-      "tag": "forge:ingots/emberstone"
+      "tag": "neoforge:ingots/emberstone"
     },
     {
-      "tag": "forge:ingots/emberstone"
+      "tag": "neoforge:ingots/emberstone"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     },
     {
-      "tag": "forge:ingots/limonite"
+      "tag": "neoforge:ingots/limonite"
     }
   ],
   "result": {

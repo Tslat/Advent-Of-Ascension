@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "E": {
-      "tag": "forge:nuggets/emberstone"
+      "tag": "neoforge:nuggets/emberstone"
     },
     "N": {
       "item": "minecraft:netherite_scrap"

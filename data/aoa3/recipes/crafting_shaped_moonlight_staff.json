@@ -3,10 +3,10 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "forge:ingots/ghoulish"
+      "tag": "neoforge:ingots/ghoulish"
     },
     "B": {
-      "tag": "forge:rods/metal"
+      "tag": "neoforge:rods/metal"
     },
     "C": {
       "tag": "forge:gems/diamond"

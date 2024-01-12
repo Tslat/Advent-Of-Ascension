@@ -25,8 +25,8 @@ public class ResourceRequirementToast implements Toast {
 	public ResourceRequirementToast(AoAResource relevantResource, float resourceRequirement) {
 		this.resource = relevantResource;
 		this.resourceAmount = resourceRequirement;
-		this.title = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.title"), ChatFormatting.DARK_RED);
-		this.subtitle = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.abilityUnlock.subtitle"), relevantResource.getName(), Component.literal(NumberUtil.roundToNthDecimalPlace(resourceRequirement, 2)));
+		this.title = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.resourceReq.title"), ChatFormatting.DARK_RED);
+		this.subtitle = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "toast.resourceReq.subtitle"), relevantResource.getName(), Component.literal(NumberUtil.roundToNthDecimalPlace(resourceRequirement, 2)));
 	}
 
 	public AoAResource getResource() {

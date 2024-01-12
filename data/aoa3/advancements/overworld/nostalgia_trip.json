@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:story/mine_stone",
   "criteria": {
-    "enter_structure_precasian_lotto_hovel": {
+    "enter_structure_ruined_teleporter_frame": {
       "conditions": {
         "player": [
           {
@@ -9,7 +9,7 @@
             "entity": "this",
             "predicate": {
               "location": {
-                "structure": "aoa3:precasian_lotto_hovel"
+                "structure": "aoa3:ruined_teleporter_frame"
               }
             }
           }
@@ -34,7 +34,7 @@
   },
   "requirements": [
     [
-      "enter_structure_precasian_lotto_hovel"
+      "enter_structure_ruined_teleporter_frame"
     ]
   ],
   "sends_telemetry_event": true

@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.misc.NativePatching;
@@ -40,7 +41,7 @@ import java.util.function.*;
 
 public final class BlockRegistrar<T extends Block> {
 	private final List<Consumer<T>> callbacks = new ObjectArrayList<>();
-	private DeferredHolder<Block, T> registryObject = null;
+	private DeferredBlock<T> registryObject = null;
 
 	private BlockBehaviour.Properties properties = BlockBehaviour.Properties.of();
 	private Function<BlockBehaviour.Properties, Block> factory = Block::new;
@@ -49,7 +50,7 @@ public final class BlockRegistrar<T extends Block> {
 	Item.Properties itemProperties = new Item.Properties();
 	BiFunction<T, Item.Properties, ? extends Item> itemFactory = BlockItem::new;
 
-	public BlockRegistrar<T> basedOn(DeferredHolder<Block, ? extends Block> block) {
+	public BlockRegistrar<T> basedOn(DeferredBlock<? extends Block> block) {
 		return basedOn(block.get());
 	}
 
@@ -278,7 +279,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseButton(DeferredHolder<Block, ? extends Block> base) {
+	public BlockRegistrar<T> baseButton(DeferredBlock<? extends Block> base) {
 		basedOn(base);
 		noClip();
 		stats(0.5f);
@@ -288,7 +289,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> basePressurePlate(DeferredHolder<Block, ? extends Block> base) {
+	public BlockRegistrar<T> basePressurePlate(DeferredBlock<? extends Block> base) {
 		basedOn(base);
 		alwaysSolid();
 		instrument(NoteBlockInstrument.BASS);
@@ -356,7 +357,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseFence(DeferredHolder<Block, ? extends Block> block) {
+	public BlockRegistrar<T> baseFence(DeferredBlock<? extends Block> block) {
 		Block base = block.get();
 
 		instrument(base.defaultBlockState().instrument());
@@ -374,7 +375,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseWall(DeferredHolder<Block, ? extends Block> block) {
+	public BlockRegistrar<T> baseWall(DeferredBlock<? extends Block> block) {
 		basedOn(block);
 		alwaysSolid();
 		factory(WallBlock::new);
@@ -383,7 +384,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseStairs(DeferredHolder<Block, ? extends Block> block) {
+	public BlockRegistrar<T> baseStairs(DeferredBlock<? extends Block> block) {
 		basedOn(block);
 		factory(properties -> new StairBlock(() -> block.get().defaultBlockState(), properties));
 		decorationBlocksTab();
@@ -391,7 +392,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseSlab(DeferredHolder<Block, ? extends Block> block) {
+	public BlockRegistrar<T> baseSlab(DeferredBlock<? extends Block> block) {
 		basedOn(block);
 		factory(SlabBlock::new);
 		decorationBlocksTab();
@@ -399,7 +400,7 @@ public final class BlockRegistrar<T extends Block> {
 		return this;
 	}
 
-	public BlockRegistrar<T> baseSign(DeferredHolder<Block, ? extends Block> block, boolean hanging) {
+	public BlockRegistrar<T> baseSign(DeferredBlock<? extends Block> block, boolean hanging) {
 		basedOn(block);
 		alwaysSolid();
 		instrument(NoteBlockInstrument.BASS);
@@ -747,7 +748,7 @@ public final class BlockRegistrar<T extends Block> {
 		return (T)this.factory.apply(this.properties);
 	}
 
-	void setRegistryObject(DeferredHolder<Block, T> registryObject) {
+	void setRegistryObject(DeferredBlock<T> registryObject) {
 		this.registryObject = registryObject;
 	}
 

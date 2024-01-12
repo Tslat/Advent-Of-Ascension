@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.util.ITeleporter;
 import net.tslat.aoa3.common.registration.AoAConfigs;
@@ -368,14 +369,15 @@ public abstract class AoATeleporter implements ITeleporter {
 		return null;
 	}
 	
-	public BlockPos findSuitablePortalLocation(Level world, Entity entity) {
+	public BlockPos findSuitablePortalLocation(Level level, Entity entity) {
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 		int posX = (int)Math.floor(entity.getX());
 		int posY = (int)Math.floor(entity.getY());
 		int posZ = (int)Math.floor(entity.getZ());
 		BlockPos planBPos = null;
 		int searchRadius = AoAConfigs.SERVER.portalSearchRadius.get();
-		int worldHeight = world.dimensionType().logicalHeight();
+		DimensionType dimType = level.dimensionType();
+		int worldHeight = Math.min(dimType.logicalHeight(), dimType.minY() + dimType.height());
 
 		if (posY >= worldHeight)
 			posY = 65;
@@ -385,14 +387,14 @@ public abstract class AoATeleporter implements ITeleporter {
 		for (int x = posX - 2; x <= posX + 2 && cleanSpawn; x++) {
 			for (int z = posZ - 2; z <= posZ + 2 && cleanSpawn; z++) {
 				for (int y = posY + 1; y <= posY + 6 && cleanSpawn; y++) {
-					if (y >= worldHeight || !world.isEmptyBlock(checkPos.set(x, y, z)))
+					if (y >= worldHeight || !level.isEmptyBlock(checkPos.set(x, y, z)))
 						cleanSpawn = false;
 				}
 			}
 		}
 
 		if (cleanSpawn) {
-			if (!world.isEmptyBlock(checkPos.set(posX, posY, posZ))) {
+			if (!level.isEmptyBlock(checkPos.set(posX, posY, posZ))) {
 				return checkPos.set(posX, posY + 2, posZ).immutable();
 			}
 			else {
@@ -426,13 +428,13 @@ public abstract class AoATeleporter implements ITeleporter {
 
 						zNeg *= -1;
 
-						if (!world.isEmptyBlock(checkPos.set(x2, y2, z2))) {
+						if (!level.isEmptyBlock(checkPos.set(x2, y2, z2))) {
 							cleanSpawn = true;
 
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
+										if (!level.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
@@ -447,7 +449,7 @@ public abstract class AoATeleporter implements ITeleporter {
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
+										if (!level.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
@@ -485,13 +487,13 @@ public abstract class AoATeleporter implements ITeleporter {
 					for (int x = -i; x <= i; x += i * 2) {
 						int x2 = posX + x;
 
-						if (!world.isEmptyBlock(checkPos.set(x2, y2, z2))) {
+						if (!level.isEmptyBlock(checkPos.set(x2, y2, z2))) {
 							cleanSpawn = true;
 
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
+										if (!level.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
@@ -506,7 +508,7 @@ public abstract class AoATeleporter implements ITeleporter {
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
+										if (!level.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
@@ -531,13 +533,13 @@ public abstract class AoATeleporter implements ITeleporter {
 					for (int z = -i; z <= i; z += i * 2) {
 						int z2 = posZ + z;
 
-						if (!world.isEmptyBlock(checkPos.set(x2, y2, z2))) {
+						if (!level.isEmptyBlock(checkPos.set(x2, y2, z2))) {
 							cleanSpawn = true;
 
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
+										if (!level.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
@@ -552,7 +554,7 @@ public abstract class AoATeleporter implements ITeleporter {
 							for (int x3 = x2 - 2; x3 <= x2 + 2 && cleanSpawn; x3++) {
 								for (int z3 = z2 - 2; z3 <= z2 + 2 && cleanSpawn; z3++) {
 									for (int y3 = y2 + 1; y3 <= y2 + 6 && cleanSpawn; y3++) {
-										if (!world.isEmptyBlock(checkPos.set(x3, y3, z3)))
+										if (!level.isEmptyBlock(checkPos.set(x3, y3, z3)))
 											cleanSpawn = false;
 									}
 								}
@@ -570,7 +572,7 @@ public abstract class AoATeleporter implements ITeleporter {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
 				checkPos.set(x, posY - searchRadius, z);
 
-				while (world.isEmptyBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= 0) {
+				while (level.isEmptyBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= 0) {
 					;
 				}
 
@@ -580,7 +582,7 @@ public abstract class AoATeleporter implements ITeleporter {
 				for (int x2 = x - 2; x2 <= x + 2 && cleanSpawn; x2++) {
 					for (int z2 = z - 2; z2 <= z + 2 && cleanSpawn; z2++) {
 						for (int y2 = y + 1; y2 <= y + 6 && cleanSpawn; y2++) {
-							if (!world.isEmptyBlock(checkPos.set(x2, y2, z2)) || y2 >= worldHeight - 6)
+							if (!level.isEmptyBlock(checkPos.set(x2, y2, z2)) || y2 >= worldHeight - 6)
 								cleanSpawn = false;
 						}
 					}
@@ -595,7 +597,7 @@ public abstract class AoATeleporter implements ITeleporter {
 			for (int z = posZ - searchRadius; z <= posZ + searchRadius; z++) {
 				checkPos.set(x, worldHeight - 7, z);
 
-				while (world.isEmptyBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= posY + searchRadius) {
+				while (level.isEmptyBlock(checkPos.move(Direction.DOWN)) && checkPos.getY() >= posY + searchRadius) {
 					;
 				}
 
@@ -605,7 +607,7 @@ public abstract class AoATeleporter implements ITeleporter {
 				for (int x2 = x - 2; x2 <= x + 2 && cleanSpawn; x2++) {
 					for (int z2 = z - 2; z2 <= z + 2 && cleanSpawn; z2++) {
 						for (int y2 = y + 1; y2 <= y + 6 && cleanSpawn; y2++) {
-							if (!world.isEmptyBlock(checkPos.set(x2, y2, z2)))
+							if (!level.isEmptyBlock(checkPos.set(x2, y2, z2)))
 								cleanSpawn = false;
 						}
 					}

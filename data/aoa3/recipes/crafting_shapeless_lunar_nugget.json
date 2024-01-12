@@ -3,7 +3,7 @@
   "category": "misc",
   "ingredients": [
     {
-      "tag": "forge:ingots/lunar"
+      "tag": "neoforge:ingots/lunar"
     }
   ],
   "result": {

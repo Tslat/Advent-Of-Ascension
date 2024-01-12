@@ -8,10 +8,10 @@
       "tag": "forge:gems/diamond"
     },
     {
-      "tag": "forge:gems/jewelyte"
+      "tag": "neoforge:gems/jewelyte"
     },
     {
-      "tag": "forge:gems/gemenyte"
+      "tag": "neoforge:gems/gemenyte"
     }
   ],
   "result": {
