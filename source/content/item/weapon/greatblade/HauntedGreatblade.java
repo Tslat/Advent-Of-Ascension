@@ -29,10 +29,10 @@ public class HauntedGreatblade extends BaseGreatblade {
 	public void inventoryTick(ItemStack stack, Level world, Entity entity, int slot, boolean isSelected) {
 		if (!world.isClientSide && isSelected && entity instanceof Player pl && RandomUtil.oneInNChance(12000)) {
 			int i = 0;
-			Optional<Holder.Reference<MobEffect>> effect = AoARegistries.MOB_EFFECTS.registry().get().getRandom(pl.getRandom());
+			Optional<Holder.Reference<MobEffect>> effect = AoARegistries.MOB_EFFECTS.getRandomElement(pl.getRandom());
 
 			while (effect.isEmpty() & i++ < 10) {
-				effect = AoARegistries.MOB_EFFECTS.registry().get().getRandom(pl.getRandom());
+				effect = AoARegistries.MOB_EFFECTS.getRandomElement(pl.getRandom());
 			}
 
 			effect.ifPresent(effect2 -> pl.addEffect(new MobEffectInstance(effect2.value(), 600, 0, false, true)));

@@ -1,0 +1,21 @@
+{
+  "category": "aoa3:extraction",
+  "icon": "aoa3:small_skill_crystal",
+  "name": "Training Methods",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Extraction$() is a very straightforward skill to train, to the point where you'll easily passively train it through your normal play time.$(br)The following actions are the primary methods of training $(thing)Extraction$():$(br)1. Harvest naturally-occurring blocks$(br)2. Smelt ores down in a furnace",
+      "title": "Training Methods"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Naturally-occurring blocks include sand, gravel, stone, logs, grass, dirt, netherrack, obsidian, and more.$(br)The XP gained from mining any given block can vary, so it may not be the best idea to simply mine a bunch of easily-accessible blocks like stone"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Gaining XP through smelting down items in a furnace is another good way of training $(thing)Extraction$(). Items give different amounts of XP, so it may pay to experiment with available options.$(br2)Furnace alternatives like the blast furnace should also count for XP"
+    }
+  ],
+  "sortnum": 0
+}

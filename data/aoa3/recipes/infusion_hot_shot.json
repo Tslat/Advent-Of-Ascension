@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:gun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:flammable_dust"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:hot_shot"
-  },
-  "tool": {
-    "item": "aoa3:gun_frame"
   }
 }

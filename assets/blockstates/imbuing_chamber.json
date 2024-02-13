@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "aoa3:block/imbuing_chamber",
+      "y": 180
+    },
+    "facing=north": {
+      "model": "aoa3:block/imbuing_chamber",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "aoa3:block/imbuing_chamber",
+      "y": 270
+    },
+    "facing=west": {
+      "model": "aoa3:block/imbuing_chamber"
+    }
+  }
+}

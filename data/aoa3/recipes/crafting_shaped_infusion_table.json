@@ -3,22 +3,22 @@
   "category": "misc",
   "key": {
     "A": {
-      "tag": "minecraft:wool"
-    },
-    "B": {
-      "item": "aoa3:ancient_rock"
+      "tag": "forge:gems/amethyst"
     },
     "C": {
-      "tag": "aoa3:infusion_stone"
+      "item": "minecraft:crafting_table"
     },
-    "D": {
-      "item": "minecraft:obsidian"
+    "E": {
+      "item": "minecraft:enchanting_table"
+    },
+    "R": {
+      "item": "aoa3:ancient_rock"
     }
   },
   "pattern": [
-    "AAA",
-    "BCB",
-    "DDD"
+    "ARA",
+    " E ",
+    "ACA"
   ],
   "result": {
     "item": "aoa3:infusion_table"

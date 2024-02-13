@@ -28,7 +28,7 @@ public class Chilli extends Item {
 		if (!world.isClientSide()) {
 			entity.setSecondsOnFire(3);
 
-			if (entity instanceof ServerPlayer && WorldUtil.isWorld(world, AoADimensions.NETHER.key) && entity.isInLava())
+			if (entity instanceof ServerPlayer && WorldUtil.isWorld(world, AoADimensions.NETHER) && entity.isInLava())
 				AdvancementUtil.completeAdvancement((ServerPlayer)entity, new ResourceLocation(AdventOfAscension.MOD_ID, "nether/overheat"), "lava_chilli_consume");
 		}
 

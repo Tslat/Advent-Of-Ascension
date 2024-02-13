@@ -1,0 +1,13 @@
+{
+  "category": "aoa3:farming",
+  "icon": "aoa3:helm_of_the_dryad",
+  "name": "Helm of the Dryad",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Reaching level 100 $(thing)Farming$() grants you the ability to wear the $(thing)Helm of the Dryad$().$(br)The helmet is unbreakable, gives diamond-tier stats, and grants a 50% bonus to all $(thing)Farming$() xp gained while worn.$(br2)At level 1000, it gains a fancy improved look.",
+      "title": "Helm of the Dryad"
+    }
+  ],
+  "sortnum": 2
+}

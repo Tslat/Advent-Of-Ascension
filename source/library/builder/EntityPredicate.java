@@ -4,8 +4,8 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Predicate;
@@ -35,9 +35,9 @@ public final class EntityPredicate<T extends Entity> implements Predicate<T> {
 		return this.predicate.test(t);
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
-	public EntityPredicate<T> and(@Nonnull Predicate<? super T> other) {
+	public EntityPredicate<T> and(@NotNull Predicate<? super T> other) {
 		Predicate<T> predicate = this.predicate;
 
 		this.predicate = entity -> predicate.test(entity) && other.test(entity);
@@ -45,9 +45,9 @@ public final class EntityPredicate<T extends Entity> implements Predicate<T> {
 		return this;
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
-	public EntityPredicate<T> or(@Nonnull Predicate<? super T> other) {
+	public EntityPredicate<T> or(@NotNull Predicate<? super T> other) {
 		Predicate<T> predicate = this.predicate;
 
 		this.predicate = entity -> predicate.test(entity) || other.test(entity);
@@ -135,15 +135,15 @@ public final class EntityPredicate<T extends Entity> implements Predicate<T> {
 			return this.predicate.test(entity);
 		}
 
-		@Nonnull
+		@NotNull
 		@Override
-		public EntityPredicate<T> and(@Nonnull Predicate<? super T> other) {
+		public EntityPredicate<T> and(@NotNull Predicate<? super T> other) {
 			return new EntityPredicate<T>(this.predicate).and(other);
 		}
 
-		@Nonnull
+		@NotNull
 		@Override
-		public EntityPredicate<T> or(@Nonnull Predicate<? super T> other) {
+		public EntityPredicate<T> or(@NotNull Predicate<? super T> other) {
 			return new EntityPredicate<T>(this.predicate).or(other);
 		}
 	}

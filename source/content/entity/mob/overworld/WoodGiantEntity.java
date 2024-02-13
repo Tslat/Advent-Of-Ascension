@@ -140,7 +140,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 
 	@Override
 	protected void onHurt(DamageSource source, float amount) {
-		if (!level().isClientSide() && DamageUtil.isMeleeDamage(source)) {
+		if (level() instanceof ServerLevel level && DamageUtil.isMeleeDamage(source)) {
 			lastMeleeHit = tickCount;
 
 			if (source.getEntity() instanceof LivingEntity attacker) {
@@ -153,7 +153,7 @@ public class WoodGiantEntity extends AoAMeleeMob<WoodGiantEntity> {
 					particlePacket.particle(ParticleBuilder.forRandomPosInEntity(new BlockParticleOption(ParticleTypes.BLOCK, Blocks.OAK_LOG.defaultBlockState()), this).spawnNTimes(10));
 
 					if (getHealth() <= 0 && attacker instanceof ServerPlayer pl)
-						pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("i_axed_you_a_question")), "tool_kill");
+						pl.getAdvancements().award(AdvancementUtil.getAdvancement(level, AdventOfAscension.id("i_axed_you_a_question")), "tool_kill");
 
 				}
 

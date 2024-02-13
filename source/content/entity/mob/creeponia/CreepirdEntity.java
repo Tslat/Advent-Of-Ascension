@@ -57,7 +57,7 @@ public class CreepirdEntity extends AoAFlyingMeleeMob {
 		if (this.dead && !level().isClientSide()) {
 			Player player = PlayerUtil.getPlayerOrOwnerIfApplicable(cause.getEntity());
 
-			if (player != null && player.hasEffect(MobEffects.POISON) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (player != null && player.hasEffect(MobEffects.POISON) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.MYSTERIUM_REALMSTONE.get()));
 		}
 	}

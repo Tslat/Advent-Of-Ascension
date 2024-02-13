@@ -1,12 +1,14 @@
 package net.tslat.aoa3.util;
 
-import javax.annotation.Nonnull;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.regex.Pattern;
 
 public final class StringUtil {
 	private static final Pattern FORMATTING_CODE_PATTERN = Pattern.compile("(?i)\\u00A7[0-9A-FK-OR]");
 
-	public static String toTitleCase(@Nonnull String str) {
+	public static String toTitleCase(@NotNull String str) {
 		str = str.toLowerCase();
 		int size = str.length();
 		StringBuilder buffer = new StringBuilder(size);

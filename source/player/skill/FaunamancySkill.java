@@ -2,14 +2,13 @@ package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class FaunamancySkill extends AoASkill.Instance {
@@ -30,19 +29,17 @@ public class FaunamancySkill extends AoASkill.Instance {
 
 	@Override
 	public void handlePostOutgoingAttack(LivingDamageEvent ev) {
-		if (canGainXp(true) && isValidSacrifice(ev.getEntity(), getPlayer()))
-			adjustXp(PlayerUtil.getTimeBasedXpForLevel(getLevel(true), (int)(ev.getEntity().getMaxHealth() / 30f * 20)), false, false);
+		if (canGainXp(true) && isValidSacrifice(ev.getEntity(), getPlayer(), ev.getAmount()))
+			PlayerUtil.giveTimeBasedXpToPlayer((ServerPlayer)getPlayer(), type(), (int)(ev.getEntity().getMaxHealth() / 30f * 20),  false);
 	}
 
-	public static boolean isValidSacrifice(LivingEntity target, Player attacker) {
-		if (target.getHealth() > 0)
+	public static boolean isValidSacrifice(LivingEntity target, Player attacker, float damage) {
+		if (target.getHealth() - damage > 0)
 			return false;
 
 		if (!attacker.getMainHandItem().is(AoATags.Items.FAUNAMANCER_TOOL))
 			return false;
 
-		Vec3 targetVelocity = target.getDeltaMovement();
-
-		return targetVelocity.x() == 0 && targetVelocity.z() == 0 && !NumberUtil.numberIsBetween(targetVelocity.y(), -0.08, -0.07);
+		return target.getDeltaMovement().lengthSqr() < 0.01;
 	}
 }

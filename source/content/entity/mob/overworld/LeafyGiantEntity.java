@@ -29,11 +29,11 @@ import net.tslat.effectslib.api.util.EffectBuilder;
 import net.tslat.smartbrainlib.util.BrainUtils;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
@@ -141,7 +141,7 @@ public class LeafyGiantEntity extends AoAMeleeMob<LeafyGiantEntity> {
 		}
 	}
 
-	protected void spawnBushBaby(@Nonnull LivingEntity target) {
+	protected void spawnBushBaby(@NotNull LivingEntity target) {
 		if (level().isClientSide())
 			return;
 

@@ -16,9 +16,9 @@ import org.jetbrains.annotations.Nullable;
 public class ZalHerbalistEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.LUNACRIKE_SEEDS, 5).cost(AoAItems.SILVER_COIN, 5).xp(25),
-					BuildableTrade.trade(AoAItems.LUNA_GLOBE_SEEDS, 5).cost(AoAItems.SILVER_COIN, 5).xp(25),
-					BuildableTrade.trade(AoAItems.LUNALON_SEEDS, 5).cost(AoAItems.SILVER_COIN, 5).xp(25)).build();
+					BuildableTrade.forItem(AoAItems.LUNACRIKE_SEEDS, 5).itemCost(AoAItems.SILVER_COIN, 5).xp(25),
+					BuildableTrade.forItem(AoAItems.LUNA_GLOBE_SEEDS, 5).itemCost(AoAItems.SILVER_COIN, 5).xp(25),
+					BuildableTrade.forItem(AoAItems.LUNALON_SEEDS, 5).itemCost(AoAItems.SILVER_COIN, 5).xp(25)).build();
 
 	public ZalHerbalistEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -31,7 +31,7 @@ public class ZalHerbalistEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS);
 	}
 
 	@Nullable

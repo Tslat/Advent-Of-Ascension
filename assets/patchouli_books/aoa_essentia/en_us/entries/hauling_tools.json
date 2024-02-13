@@ -1,0 +1,62 @@
+{
+  "category": "aoa3:hauling",
+  "icon": "aoa3:hauling_rod",
+  "name": "Hauling Tools",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "There are several main tools used throughout hauling. Let's go over them briefly, one by one.",
+      "title": "Hauling Tools"
+    },
+    {
+      "type": "patchouli:empty"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "minecraft:fishing_rod",
+      "text": "The standard fishing rod. This works exactly how it always has."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Cast your line out over some water, wait for the bubbles to reach your lure, then pull the line in when you see it dip.$(br)This will gain you some $(thing)Hauling$() xp, but only a little bit. You'll want to graduate onto a proper rod soon."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:hauling_rod",
+      "text": "The standard Hauling rod. This is your first step into the alternative method of fishing AoA introduces."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Using a $(thing)Hauling rod$() isn't too different from the standard rod. The key difference is that instead of the fish being a stream of bubbles, and instantly reeling it in; the fish itself actually bites onto the lure, and attempts to swim away in panic.$(br)You'll need to continuously pull the entity towards you with fast clicking to successfully land it"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:thermally_insulated_rod",
+      "text": "The next evolution of Hauling rod!"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "An upgrade of the standard Hauling rod, this enhanced version uses a heavier lure and thermally-resistant materials to allow you to finally pull in some creatures from the depths of lava.$(br)Fishing in lava offers alternative creatures and loot"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:light_rod",
+      "text": "A more flexible rod, offering stronger hauling power in exchange for some durability"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:golden_rod",
+      "text": "A rare golden variant of the standard Hauling rod, this tool seems to increase luck while fishing"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:fishing_cage",
+      "text": "A passive fishing device, for when you don't have the time to hold the rod yourself"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The $(thing)Fishing Cage$() is a tool for passively fishing. It won't find any of the more valuable rewards, but since you can just throw it into the water and leave it to catch its own fish, it's a time-efficient tool$(br)It works even better in flowing water!"
+    }
+  ],
+  "sortnum": 1
+}

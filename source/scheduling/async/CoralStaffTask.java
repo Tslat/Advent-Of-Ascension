@@ -6,16 +6,16 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class CoralStaffTask implements Runnable {
     private final Level world;
-    private final ArrayList<BlockPos> coralPositions;
+    private final List<BlockPos> coralPositions;
 
     private static final Block coralBlock = Blocks.BRAIN_CORAL_BLOCK;
     private static final Block deadCoralBlock = Blocks.DEAD_BRAIN_CORAL_BLOCK;
 
-    public CoralStaffTask(Level world, ArrayList<BlockPos> coralPositions) {
+    public CoralStaffTask(Level world, List<BlockPos> coralPositions) {
         this.world = world;
         this.coralPositions = coralPositions;
     }

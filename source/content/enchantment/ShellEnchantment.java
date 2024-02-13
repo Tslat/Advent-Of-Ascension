@@ -1,35 +1,31 @@
 package net.tslat.aoa3.content.enchantment;
 
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
-import net.tslat.aoa3.content.item.weapon.cannon.BaseCannon;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.util.ItemUtil;
 
 public class ShellEnchantment extends Enchantment {
 	public ShellEnchantment() {
-		super(Enchantment.Rarity.UNCOMMON, AoAEnchantments.BULLET_FIRING, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+		super(Enchantment.Rarity.UNCOMMON, AoAEnchantments.BULLET_FIRING, ItemUtil.HAND_SLOTS);
 	}
 
-	public boolean canEnchant(ItemStack stack) {
-		Item item = stack.getItem();
-
-		return item instanceof BaseGun && !(item instanceof BaseCannon);
-	}
-
+	@Override
 	public int getMaxLevel() {
 		return 3;
 	}
 
 	@Override
 	public int getMinCost(int enchantmentLevel) {
-		return 8 + 8 * (enchantmentLevel - 1);
+		return 5 + 10 * (enchantmentLevel - 1);
 	}
 
 	@Override
 	public int getMaxCost(int enchantmentLevel) {
 		return getMinCost(enchantmentLevel) + 20;
+	}
+
+	public static float applyDamageBonus(ItemStack stack, float baseDamage) {
+		return baseDamage * (1 + (stack.getEnchantmentLevel(AoAEnchantments.SHELL.get()) * 0.1f));
 	}
 }

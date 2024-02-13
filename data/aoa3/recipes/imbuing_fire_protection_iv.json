@@ -1,26 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:elemental",
+    "aoa3:durability"
+  ],
   "enchantment": "minecraft:fire_protection",
   "enchantment_level": 4,
-  "infusion_level": 26,
-  "ingredients": [
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "minecraft:lava_bucket"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "imbuing_level": 49,
+  "power_source": {
+    "item": "aoa3:gleaming_power_stone"
+  }
 }

@@ -19,14 +19,14 @@ import org.jetbrains.annotations.Nullable;
 public class ProfessorEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.SCRAP_METAL).cost(AoAItems.COPPER_COIN, 15).xp(11))
+					BuildableTrade.forItem(AoAItems.SCRAP_METAL).itemCost(AoAItems.COPPER_COIN, 15).xp(11))
 			.trades(2,
-					BuildableTrade.trade(AoAItems.DISCHARGE_CAPSULE, 8).cost(AoAItems.SILVER_COIN).cost(Items.IRON_NUGGET, 5).xp(20))
+					BuildableTrade.forItem(AoAItems.DISCHARGE_CAPSULE, 8).itemCost(AoAItems.SILVER_COIN).itemCost(Items.IRON_NUGGET, 5).xp(20))
 			.trades(3,
-					BuildableTrade.trade(AoAItems.MECHA_GEAR).cost(AoAItems.GOLD_COIN).cost(AoAItems.LYON_INGOT, 5).xp(30),
-					BuildableTrade.trade(AoAItems.GOLD_SPRING).cost(AoABlocks.IRO_CRATE).xp(30),
-					BuildableTrade.trade(AoAWeapons.SUPER_CANNON).cost(AoAWeapons.MINI_CANNON).cost(AoAItems.SILVER_COIN, 5).xp(40).stock(9999),
-					BuildableTrade.trade(AoAWeapons.DEMOLISHER).cost(AoAItems.LYON_INGOT, 7).cost(AoAItems.SILVER_COIN, 17).xp(25).stock(5)).build();
+					BuildableTrade.forItem(AoAItems.MECHA_GEAR).itemCost(AoAItems.GOLD_COIN).itemCost(AoAItems.LYON_INGOT, 5).xp(30),
+					BuildableTrade.forItem(AoAItems.GOLD_SPRING).itemCost(AoABlocks.IRO_CRATE).xp(30),
+					BuildableTrade.forItem(AoAWeapons.SUPER_CANNON).itemCost(AoAWeapons.MINI_CANNON).itemCost(AoAItems.SILVER_COIN, 5).xp(40).stock(9999),
+					BuildableTrade.forItem(AoAWeapons.DEMOLISHER).itemCost(AoAItems.LYON_INGOT, 7).itemCost(AoAItems.SILVER_COIN, 17).xp(25).stock(5)).build();
 
 	public ProfessorEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -39,7 +39,7 @@ public class ProfessorEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.IROMINE.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.IROMINE);
 	}
 
 	@Nullable

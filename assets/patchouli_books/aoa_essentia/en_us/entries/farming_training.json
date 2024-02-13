@@ -1,0 +1,21 @@
+{
+  "category": "aoa3:farming",
+  "icon": "aoa3:small_skill_crystal",
+  "name": "Training Methods",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Farming$() is fairly simple to train; there's just two main training methods:$(br)1. Harvest fully-grown crops$(br)2. Breed animals$(br2)Crops will only give xp if harvested at full-growth, so attempting to grab them early won't work",
+      "title": "Training Methods"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Once you reach a high-enough level, you may also start seeing $(thing)Dryad Sprites$() showing up while you're harvesting.$(br)Take note of their colour, and use the right type of hoe on them to make them happy and they'll bless you with some $(thing)Farming$() xp"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Utilising your various $(thing)Farming$() abilities will also grant you some xp.$(br2)As you continue to improve your $(thing)Farming$() skill, you'll start to notice your crops auto-replanting for you, and regrowing quicker for faster harvests. This should make both your training and your harvesting more effective!"
+    }
+  ],
+  "sortnum": 0
+}

@@ -1,6 +1,7 @@
 package net.tslat.aoa3.content.block.functional.portal;
 
 import com.google.common.base.Suppliers;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceKey;
@@ -26,10 +27,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.util.ITeleporter;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.particletype.PortalFloaterParticleType;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
@@ -41,11 +39,35 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.IdentityHashMap;
 import java.util.Set;
 import java.util.function.Supplier;
 
 public class PortalBlock extends Block {
 	private static final Supplier<Set<Block>> USEABLE_PORTALS = Suppliers.memoize(() -> Set.of(AoABlocks.NETHER_PORTAL.get(), AoABlocks.NOWHERE_PORTAL.get(), AoABlocks.PRECASIA_PORTAL.get(), AoABlocks.BARATHOS_PORTAL.get(), AoABlocks.LELYETIA_PORTAL.get(), AoABlocks.DEEPLANDS_PORTAL.get(), AoABlocks.LBOREAN_PORTAL.get(), AoABlocks.DUSTOPIA_PORTAL.get()));
+	private static final IdentityHashMap<ResourceKey<Level>, ITeleporter> TELEPORTERS = Util.make(new IdentityHashMap<>(21), map -> {
+		map.put(AoADimensions.ABYSS, new AbyssTeleporter());
+		map.put(AoADimensions.BARATHOS, new BarathosTeleporter());
+		map.put(AoADimensions.CANDYLAND, new CandylandTeleporter());
+		map.put(AoADimensions.CELEVE, new CeleveTeleporter());
+		map.put(AoADimensions.CREEPONIA, new CreeponiaTeleporter());
+		map.put(AoADimensions.CRYSTEVIA, new CrysteviaTeleporter());
+		map.put(AoADimensions.DEEPLANDS, new DeeplandsTeleporter());
+		map.put(AoADimensions.DUSTOPIA, new DustopiaTeleporter());
+		map.put(AoADimensions.GARDENCIA, new GardenciaTeleporter());
+		map.put(AoADimensions.GRECKON, new GreckonTeleporter());
+		map.put(AoADimensions.HAVEN, new HavenTeleporter());
+		map.put(AoADimensions.IROMINE, new IromineTeleporter());
+		map.put(AoADimensions.LBOREAN, new LBoreanTeleporter());
+		map.put(AoADimensions.LELYETIA, new LelyetiaTeleporter());
+		map.put(AoADimensions.LUNALUS, new LunalusTeleporter());
+		map.put(AoADimensions.MYSTERIUM, new MysteriumTeleporter());
+		map.put(AoADimensions.NOWHERE, new NowhereTeleporter());
+		map.put(AoADimensions.PRECASIA, new PrecasiaTeleporter());
+		map.put(AoADimensions.RUNANDOR, new RunandorTeleporter());
+		map.put(AoADimensions.SHYRELANDS, new ShyrelandsTeleporter());
+		map.put(AoADimensions.VOX_PONDS, new VoxPondsTeleporter());
+	});
 
 	private static final VoxelShape X_SHAPE = Shapes.create(new AABB(0.375, 0, 0, 0.625, 1, 1));
 	private static final VoxelShape Z_SHAPE = Shapes.create(new AABB(0, 0, 0.375, 1, 1, 0.625));
@@ -66,6 +88,14 @@ public class PortalBlock extends Block {
 		this.particleColour = particleColour;
 		this.world = world;
 		this.ambientSound = ambientSound;
+	}
+
+	public static void addTeleporter(ResourceKey<Level> dimKey, ITeleporter teleporter) {
+		TELEPORTERS.put(dimKey, teleporter);
+	}
+
+	public static ITeleporter getTeleporterForLevel(ServerLevel level) {
+		return TELEPORTERS.getOrDefault(level.dimension(), level.getPortalForcer());
 	}
 
 	public int getParticleColour() {
@@ -92,7 +122,6 @@ public class PortalBlock extends Block {
 		return block.getBlock() == this || !block.isAir();
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public boolean skipRendering(BlockState state, BlockState adjacent, Direction side) {
 		if (adjacent.getBlock() == this) {
@@ -117,7 +146,6 @@ public class PortalBlock extends Block {
 		return false;
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	@Override
 	public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
 		if (this.ambientSound != null && random.nextInt(100) == 0 && level.dimension() != this.world)
@@ -168,7 +196,7 @@ public class PortalBlock extends Block {
 			if (targetLevel == null)
 				return;
 
-			ITeleporter teleporter = this.world == Level.NETHER ? new NetherTeleporter() : getTeleporterForWorld(targetLevel);
+			ITeleporter teleporter = this.world == Level.NETHER ? new NetherTeleporter() : getTeleporterForLevel(targetLevel);
 			PortalCoordinatesContainer portalLoc = null;
 
 			if (entity instanceof Player) {
@@ -255,41 +283,6 @@ public class PortalBlock extends Block {
 					world.setBlockAndUpdate(pos, Blocks.AIR.defaultBlockState());
 				break;
 		}
-	}
-
-	public static ITeleporter getTeleporterForWorld(ServerLevel world) {
-		if (!world.dimension().location().getNamespace().equals(AdventOfAscension.MOD_ID))
-			return world.getPortalForcer();
-
-		AoADimensions.AoADimension aoaDim = AoADimensions.getDim(world.dimension());
-
-		if (aoaDim == null)
-			return world.getPortalForcer();
-
-		return switch (aoaDim) {
-			case ABYSS -> new AbyssTeleporter();
-			case BARATHOS -> new BarathosTeleporter();
-			case CANDYLAND -> new CandylandTeleporter();
-			case CELEVE -> new CeleveTeleporter();
-			case CREEPONIA -> new CreeponiaTeleporter();
-			case CRYSTEVIA -> new CrysteviaTeleporter();
-			case DEEPLANDS -> new DeeplandsTeleporter();
-			case DUSTOPIA -> new DustopiaTeleporter();
-			case GARDENCIA -> new GardenciaTeleporter();
-			case GRECKON -> new GreckonTeleporter();
-			case HAVEN -> new HavenTeleporter();
-			case IROMINE -> new IromineTeleporter();
-			case LBOREAN -> new LBoreanTeleporter();
-			case LELYETIA -> new LelyetiaTeleporter();
-			case LUNALUS -> new LunalusTeleporter();
-			case MYSTERIUM -> new MysteriumTeleporter();
-			case NOWHERE -> new NowhereTeleporter();
-			case PRECASIA -> new PrecasiaTeleporter();
-			case RUNANDOR -> new RunandorTeleporter();
-			case SHYRELANDS -> new ShyrelandsTeleporter();
-			case VOX_PONDS -> new VoxPondsTeleporter();
-			default -> world.getPortalForcer();
-		};
 	}
 
 	@Nullable

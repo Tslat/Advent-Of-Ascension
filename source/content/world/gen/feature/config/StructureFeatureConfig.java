@@ -6,11 +6,11 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.*;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 import java.util.Arrays;
@@ -79,10 +79,10 @@ public record StructureFeatureConfig(List<ResourceLocation> templatePaths, boole
 		}
 	}
 
-	public StructureTemplate getTemplate(RandomSource rand) {
+	public StructureTemplate getTemplate(WorldGenLevel level, RandomSource rand) {
 		ResourceLocation templatePath = templatePaths.get(rand.nextInt(templatePaths.size()));
 
-		return ServerLifecycleHooks.getCurrentServer().getStructureManager().get(templatePath).get();
+		return level.getLevel().getStructureManager().get(templatePath).get();
 	}
 
 	public StructurePlaceSettings getPlacementSettings(RandomSource rand) {

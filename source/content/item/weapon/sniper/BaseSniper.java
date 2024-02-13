@@ -16,8 +16,8 @@ import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.GunRecoilPacket;
-import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.enchantment.ControlEnchantment;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.SniperSlugEntity;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
@@ -65,8 +65,7 @@ public abstract class BaseSniper extends BaseGun {
 
 	@Override
 	public void doRecoil(ServerPlayer player, ItemStack stack, InteractionHand hand) {
-		int control = stack.getEnchantmentLevel(AoAEnchantments.CONTROL.get());
-		float recoilAmount = getRecoilForShot(stack, player) * 0.25f * (1 - control * 0.15f);
+		float recoilAmount = ControlEnchantment.modifyRecoil(stack, getRecoilForShot(stack, player) * 0.25f);
 
 		if (!player.isShiftKeyDown() || !player.onGround())
 			recoilAmount *= 3.5f;

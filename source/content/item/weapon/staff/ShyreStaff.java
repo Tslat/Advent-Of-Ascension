@@ -77,7 +77,7 @@ public class ShyreStaff extends BaseStaff<Object> {
 
 		shooter.teleportTo(testVec.x(), testVec.y(), testVec.z());
 
-		if (shooter instanceof ServerPlayer && WorldUtil.isWorld(shooter.level(), AoADimensions.LUNALUS.key))
+		if (shooter instanceof ServerPlayer && WorldUtil.isWorld(shooter.level(), AoADimensions.LUNALUS))
 			AdvancementUtil.completeAdvancement((ServerPlayer)shooter, new ResourceLocation(AdventOfAscension.MOD_ID, "lunalus/200_iq"), "lunalus_shyre_staff_travel");
 	}
 

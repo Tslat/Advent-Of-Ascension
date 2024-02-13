@@ -48,7 +48,7 @@ public class RosidianGreatblade extends BaseGreatblade {
 							if (!(newBlock instanceof IShearable newShearable) || !newShearable.isShearable(stack, player.level(), newPos))
 								continue;
 
-							drops = shearable.onSheared(player, stack, player.level(), newPos, EnchantmentHelper.getItemEnchantmentLevel(Enchantments.BLOCK_FORTUNE, stack));
+							drops = shearable.onSheared(player, stack, player.level(), newPos, stack.getEnchantmentLevel(Enchantments.BLOCK_FORTUNE));
 
 							for (ItemStack drop : drops) {
 								double xMod = RandomUtil.randomValueBetween(0.15f, 0.85f);

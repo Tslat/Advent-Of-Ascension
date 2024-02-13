@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "X": {
+      "item": "aoa3:ice_crystal"
+    }
+  },
+  "pattern": [
+    "CGC",
+    "GXG",
+    "CGC"
+  ],
+  "result": {
+    "item": "aoa3:elemental_focus"
+  }
+}

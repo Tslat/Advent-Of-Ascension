@@ -7,8 +7,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.registration.AoARegistries;
@@ -25,7 +25,7 @@ public class AoAAbility {
 	private final BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory;
 
 	public AoAAbility(BiFunction<AoASkill.Instance, JsonObject, Instance> jsonFactory, BiFunction<AoASkill.Instance, CompoundTag, Instance> nbtFactory) {
-		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(this))));
+		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getKey(this))));
 		this.jsonFactory = jsonFactory;
 		this.nbtFactory = nbtFactory;
 	}
@@ -86,7 +86,7 @@ public class AoAAbility {
 
 		public MutableComponent getDescription() {
 			if (this.description == null)
-				updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getId(type())) + ".description"));
+				updateDescription(Component.translatable(Util.makeDescriptionId("ability", AoARegistries.AOA_ABILITIES.getKey(type())) + ".description"));
 
 			return this.description;
 		}
@@ -145,8 +145,8 @@ public class AoAAbility {
 			return state;
 		}
 
-		protected ServerPlayer getPlayer() {
-			return this.skill.getPlayerDataManager().player();
+		protected Player getPlayer() {
+			return this.skill.getPlayer();
 		}
 
 		protected boolean consumeResource(AoAResource resource, float amount, boolean consumeIfInsufficient) {
@@ -198,7 +198,7 @@ public class AoAAbility {
 			 data.putString("state", this.state.getId());
 
 			 if (forClientSetup) {
-				 data.putString("id", AoARegistries.AOA_ABILITIES.getId(this.type()).toString());
+				 data.putString("id", AoARegistries.AOA_ABILITIES.getKey(this.type()).toString());
 				 data.putString("unique_identifier", this.uniqueIdentifier);
 				 data.putInt("level_req", this.levelReq);
 

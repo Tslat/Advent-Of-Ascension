@@ -22,6 +22,7 @@ import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.content.item.weapon.blaster.BaseBlaster;
 import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
 import net.tslat.aoa3.library.builder.SoundBuilder;
+import net.tslat.aoa3.util.InteractionResults;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
@@ -29,6 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapon {
 	protected final HashMap<Item, Integer> runes = new HashMap<Item, Integer>(2);
@@ -49,21 +51,17 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 		}
 
 		if (player instanceof ServerPlayer) {
-			T preconditionResult = checkPreconditions(player, stack);
+			return checkPreconditions(player, stack).filter(data -> findAndConsumeRunes(getRunes(), (ServerPlayer)player, true, stack)).map(data -> {
+				if (getCastingSound() != null)
+					AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(getCastingSound()).isPlayer().followEntity(player)), player);
 
-			if (preconditionResult == null)
-				return InteractionResultHolder.fail(stack);
+				player.getCooldowns().addCooldown(this, 24);
+				player.awardStat(Stats.ITEM_USED.get(this));
+				ItemUtil.damageItem(stack, player, hand);
+				cast(world, stack, player, data);
 
-			if (!findAndConsumeRunes(getRunes(), (ServerPlayer)player, true, stack))
-				return InteractionResultHolder.fail(stack);
-
-			if (getCastingSound() != null)
-				AoANetworking.sendToAllPlayersTrackingEntity(new AoASoundBuilderPacket(new SoundBuilder(getCastingSound()).isPlayer().followEntity(player)), player);
-
-			player.getCooldowns().addCooldown(this, 24);
-			player.awardStat(Stats.ITEM_USED.get(this));
-			ItemUtil.damageItem(stack, player, hand);
-			cast(world, stack, player, preconditionResult);
+				return InteractionResults.ItemUse.succeedAndSwingArmOneSide(stack);
+			}).orElseGet(() -> InteractionResults.ItemUse.denyUsage(stack));
 		}
 
 		return InteractionResultHolder.success(stack);
@@ -73,9 +71,8 @@ public abstract class BaseStaff<T> extends Item implements EnergyProjectileWeapo
 		return ItemUtil.findAndConsumeRunes(runes, player, allowBuffs, staff);
 	}
 
-	@Nullable
-	public T checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return (T)new Object();
+	public Optional<T> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		return Optional.of((T)new Object());
 	}
 
 	public HashMap<Item, Integer> getRunes() {

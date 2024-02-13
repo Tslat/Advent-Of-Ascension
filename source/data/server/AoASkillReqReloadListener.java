@@ -16,9 +16,9 @@ import net.tslat.aoa3.player.PlayerDataManager;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.aoa3.util.RegistryUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -257,7 +257,7 @@ public class AoASkillReqReloadListener extends SimpleJsonResourceReloadListener 
 		return requirementsData;
 	}
 
-	@Nonnull
+	@NotNull
 	public static Map<String, List<Pair<ResourceLocation, Integer>>> getParsedReqDataFor(ResourceLocation itemId) {
 		if (!requirementsData.containsKey(itemId))
 			return new HashMap<>(0);

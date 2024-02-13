@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:boots_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:whitewashing_solution"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:knight_boots"
-  },
-  "tool": {
-    "item": "aoa3:boots_frame"
   }
 }

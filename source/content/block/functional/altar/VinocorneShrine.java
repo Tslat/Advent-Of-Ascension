@@ -24,7 +24,7 @@ public class VinocorneShrine extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level(), AoADimensions.GARDENCIA.key) && player.level().getBlockState(pos.above()).canBeReplaced();
+		return WorldUtil.isWorld(player.level(), AoADimensions.GARDENCIA) && player.level().getBlockState(pos.above()).canBeReplaced();
 	}
 
 	@Override

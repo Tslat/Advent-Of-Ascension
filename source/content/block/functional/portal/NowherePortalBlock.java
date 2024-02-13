@@ -13,7 +13,7 @@ import net.tslat.aoa3.util.ColourUtil;
 
 public class NowherePortalBlock extends PortalBlock {
 	public NowherePortalBlock(BlockBehaviour.Properties properties) {
-		super(properties, AoADimensions.NOWHERE.key, ColourUtil.RGB(255, 227, 117), AoASounds.BLOCK_NOWHERE_PORTAL_AMBIENT);
+		super(properties, AoADimensions.NOWHERE, ColourUtil.RGB(255, 227, 117), AoASounds.BLOCK_NOWHERE_PORTAL_AMBIENT);
 	}
 
 	@Override

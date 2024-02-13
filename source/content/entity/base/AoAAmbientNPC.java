@@ -126,7 +126,7 @@ public abstract class AoAAmbientNPC extends PathfinderMob implements Npc, GeoEnt
 	}
 
 	protected boolean isValidLightLevel(MobSpawnType reason) {
-		if (!WorldUtil.isWorld(level(), AoADimensions.OVERWORLD.key))
+		if (!WorldUtil.isWorld(level(), AoADimensions.OVERWORLD))
 			return true;
 
 		BlockPos blockpos = BlockPos.containing(getX(), getBoundingBox().minY, getZ());

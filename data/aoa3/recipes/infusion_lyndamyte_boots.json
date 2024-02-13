@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:boots_frame"
+  },
   "ingredients": [
     {
       "tag": "neoforge:ingots/emberstone"
@@ -16,8 +19,5 @@
   ],
   "result": {
     "item": "aoa3:lyndamyte_boots"
-  },
-  "tool": {
-    "item": "aoa3:boots_frame"
   }
 }

@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:vulcane",
+  "name": "Vulcanes",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "vulcanes",
+      "text": "$(thing)Vulcanes$() are a unique type of weapon, that isn't used in the way a traditional weapon might be.$(br)Instead of using a $(thing)vulcane$() to outright attack an enemy, it feeds off the $(thing)anger$() that builds up as you take damage.$(br2)Once enough has been built up, use your $(thing)vulcane$() to deal pure, raw, $(l)retribution$().",
+      "title": "Vulcanes"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "At their core, $(thing)vulcanes$() will sit mostly inactive in your inventory. Once you have built up enough $(thing)rage$(), the next thing that attacks you will be marked as a potential target for a short time.$(br)With a sufficient amount of $(l:aoa3:rage#rage)rage$(/l) and a target marked, use the $(thing)vulcane$() and the target will be immediately struck with pure damage, striking straight through any armour they may have."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:battle_vulcane",
+      "text": "Revenge is a dish best served brutally, in the face.",
+      "title": "A Vulcane"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)vulcanes$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Vulcanes"
+    }
+  ],
+  "sortnum": 11
+}

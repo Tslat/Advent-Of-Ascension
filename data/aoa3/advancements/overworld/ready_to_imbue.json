@@ -1,12 +1,12 @@
 {
-  "parent": "aoa3:overworld/framed",
+  "parent": "aoa3:overworld/ready_to_infuse",
   "criteria": {
-    "obtain_infusion_table": {
+    "obtain_imbuing_chamber": {
       "conditions": {
         "items": [
           {
             "items": [
-              "aoa3:infusion_table"
+              "aoa3:imbuing_chamber"
             ]
           }
         ]
@@ -21,7 +21,7 @@
       "translate": "advancements.aoa3.overworld.ready_to_imbue.description"
     },
     "icon": {
-      "item": "aoa3:infusion_table"
+      "item": "aoa3:imbuing_chamber"
     },
     "title": {
       "color": "dark_green",
@@ -30,7 +30,7 @@
   },
   "requirements": [
     [
-      "obtain_infusion_table"
+      "obtain_imbuing_chamber"
     ]
   ],
   "sends_telemetry_event": true

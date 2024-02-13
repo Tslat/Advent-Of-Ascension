@@ -1,20 +1,15 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:resource",
+    "aoa3:precision",
+    "aoa3:magic",
+    "aoa3:control"
+  ],
   "enchantment": "aoa3:archmage",
   "enchantment_level": 2,
-  "infusion_level": 80,
-  "ingredients": [
-    {
-      "item": "aoa3:durability_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:blooming_power_stone"
-    }
-  ]
+  "imbuing_level": 39,
+  "power_source": {
+    "item": "aoa3:shining_power_stone"
+  }
 }

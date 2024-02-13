@@ -18,13 +18,13 @@ import org.jetbrains.annotations.Nullable;
 public class PrimordialWizardEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 15).cost(AoAItems.PRIMORDIAL_SKULL).xp(12))
+					BuildableTrade.forItem(AoAItems.COPPER_COIN, 15).itemCost(AoAItems.PRIMORDIAL_SKULL).xp(12))
 			.trades(2,
-					BuildableTrade.trade(AoAWeapons.HELLFIRE, 2).cost(AoAItems.COPPER_COIN, 4),
-					BuildableTrade.trade(AoAWeapons.VULKRAM, 2).cost(AoAItems.COPPER_COIN, 3))
+					BuildableTrade.forItem(AoAWeapons.HELLFIRE, 2).itemCost(AoAItems.COPPER_COIN, 4),
+					BuildableTrade.forItem(AoAWeapons.VULKRAM, 2).itemCost(AoAItems.COPPER_COIN, 3))
 			.trades(3,
-					BuildableTrade.trade(AoAWeapons.PRIMORDIAL_STAFF).cost(AoAItems.GOLD_COIN, 2).xp(50).stock(5),
-					BuildableTrade.trade(Items.DRAGON_BREATH).cost(AoAItems.LUNAVER_COIN).xp(100).stock(3)).build();
+					BuildableTrade.forItem(AoAWeapons.PRIMORDIAL_STAFF).itemCost(AoAItems.GOLD_COIN, 2).xp(50).stock(5),
+					BuildableTrade.forItem(Items.DRAGON_BREATH).itemCost(AoAItems.LUNAVER_COIN).xp(100).stock(3)).build();
 
 	public PrimordialWizardEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -37,7 +37,7 @@ public class PrimordialWizardEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.DUSTOPIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.DUSTOPIA);
 	}
 
 	@Nullable

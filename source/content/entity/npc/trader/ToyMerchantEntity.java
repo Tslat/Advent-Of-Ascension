@@ -16,14 +16,14 @@ import org.jetbrains.annotations.Nullable;
 public class ToyMerchantEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.BALLOON, 10).cost(AoAItems.CIRCUS_COIN, 2).xp(5).stock(32))
+					BuildableTrade.forItem(AoAItems.BALLOON, 10).itemCost(AoAItems.CIRCUS_COIN, 2).xp(5).stock(32))
 			.trades(3,
-					BuildableTrade.trade(AoATools.GRAVITATOR).cost(AoAItems.CIRCUS_COIN, 30).xp(40).stock(5),
-					BuildableTrade.trade(AoAItems.TOY_GYROCOPTER).cost(AoAItems.CIRCUS_COIN, 10).xp(25))
+					BuildableTrade.forItem(AoATools.GRAVITATOR).itemCost(AoAItems.CIRCUS_COIN, 30).xp(40).stock(5),
+					BuildableTrade.forItem(AoAItems.TOY_GYROCOPTER).itemCost(AoAItems.CIRCUS_COIN, 10).xp(25))
 			.trades(4,
-					BuildableTrade.trade(AoAWeapons.CONFETTI_CLUSTER).cost(AoAItems.CIRCUS_COIN, 12).xp(40).stock(5),
-					BuildableTrade.trade(AoAWeapons.BALLOON_BOMBER).cost(AoAItems.CIRCUS_COIN, 18).xp(40).stock(5),
-					BuildableTrade.trade(AoAItems.SMILEY_UPGRADE_KIT).cost(AoAItems.CIRCUS_COIN, 64).xp(100).stock(1)).build();
+					BuildableTrade.forItem(AoAWeapons.CONFETTI_CLUSTER).itemCost(AoAItems.CIRCUS_COIN, 12).xp(40).stock(5),
+					BuildableTrade.forItem(AoAWeapons.BALLOON_BOMBER).itemCost(AoAItems.CIRCUS_COIN, 18).xp(40).stock(5),
+					BuildableTrade.forItem(AoAItems.SMILEY_UPGRADE_KIT).itemCost(AoAItems.CIRCUS_COIN, 64).xp(100).stock(1)).build();
 
 	public ToyMerchantEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -31,7 +31,7 @@ public class ToyMerchantEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.CELEVE.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.CELEVE);
 	}
 
 	@Nullable

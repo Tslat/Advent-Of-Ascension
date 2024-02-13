@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class SkyStaff extends BaseStaff<Boolean> {
 	public SkyStaff(int durability) {
@@ -36,8 +37,8 @@ public class SkyStaff extends BaseStaff<Boolean> {
 	}
 
 	@Override
-	public Boolean checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return caster.onGround() ? true : null;
+	public Optional<Boolean> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		return Optional.ofNullable(caster.onGround() ? true : null);
 	}
 
 	@Override

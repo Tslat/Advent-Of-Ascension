@@ -17,7 +17,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
+import net.tslat.aoa3.common.menu.CorruptedTravellerMenu;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
@@ -49,7 +49,7 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.OVERWORLD.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.OVERWORLD);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class CorruptedTravellerEntity extends PathfinderMob implements GeoEntity
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int screenId, Inventory inv, Player player) {
-				return new CorruptedTravellerContainer(screenId, player.getInventory(), CorruptedTravellerEntity.this);
+				return new CorruptedTravellerMenu(screenId, player.getInventory(), CorruptedTravellerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
 	}

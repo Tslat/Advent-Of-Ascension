@@ -1,17 +1,12 @@
 package net.tslat.aoa3.content.enchantment;
 
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 
 public class InterventionEnchantment extends Enchantment {
 	public InterventionEnchantment() {
 		super(Enchantment.Rarity.VERY_RARE, AoAEnchantments.UNSTACKABLE, new EquipmentSlot[] {});
-	}
-
-	public boolean canEnchant(ItemStack stack) {
-		return stack.getMaxStackSize() == 1;
 	}
 
 	@Override

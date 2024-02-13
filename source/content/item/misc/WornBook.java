@@ -11,8 +11,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.WrittenBookItem;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.item.AoAItems;
@@ -30,18 +28,12 @@ public class WornBook extends WrittenBookItem {
 		super(new Item.Properties().stacksTo(1));
 	}
 
-	@OnlyIn(Dist.CLIENT)
-	public static ItemStack getBook(ItemStack stack) {
-		stack.setTag(getBookContents());
-		return stack;
-	}
-
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack bookStack = player.getItemInHand(hand);
 
 		if (!world.isClientSide) {
-			if (!ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), false, 1)) {
+			if (!ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), false, 1, false)) {
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()));
 				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("wornBook.droppedRealmstone")));
 				PlayerUtil.getAdventPlayer((ServerPlayer)player).addPatchouliBook(AdventOfAscension.id("worn_book"));
@@ -49,7 +41,7 @@ public class WornBook extends WrittenBookItem {
 		}
 		else {
 			if (IntegrationManager.isPatchouliActive()) {
-				//PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
+				PatchouliIntegration.openBook(AdventOfAscension.id("worn_book"));
 			}
 			else {
 				ClientOperations.displayWornBookGui();
@@ -59,7 +51,12 @@ public class WornBook extends WrittenBookItem {
 		return InteractionResultHolder.success(bookStack);
 	}
 
-	@OnlyIn(Dist.CLIENT)
+	public static ItemStack getBook(ItemStack stack) {
+		stack.setTag(getBookContents());
+
+		return stack;
+	}
+
 	public static CompoundTag getBookContents() {
 		contents.putString("author", LocaleUtil.getLocaleString("entity.aoa3.corrupted_traveller"));
 		contents.putString("title", LocaleUtil.getLocaleString("item.aoa3.worn_book"));

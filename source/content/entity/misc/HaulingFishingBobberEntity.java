@@ -120,7 +120,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 	}
 
 	protected int minLureTime() {
-		return 100;
+		return 40;
 	}
 
 	protected int maxLureTime() {
@@ -167,9 +167,7 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 		this.fishingBonusMod *= 1 + (nearbyFluidBlocks * 0.0025f);
 		this.fishingBonusMod += 0.25f * lure;
-
-		if (!EntityRetrievalUtil.getPlayers(level(), getBoundingBox().inflate(5)).isEmpty())
-			this.fishingBonusMod *= 0.2f;
+		this.fishingBonusMod *= (1 - Math.min(5, EntityRetrievalUtil.getPlayers(level(), getBoundingBox().inflate(5)).size()) * 0.1f);
 	}
 
 	protected float fishingBonusModForBiome(Holder<Biome> biome) {
@@ -397,6 +395,12 @@ public class HaulingFishingBobberEntity extends FishingHook {
 		else {
 			maxTime /= fishingBonusMod;
 		}
+
+		if (minTime < 1)
+			minTime = 1;
+
+		if (maxTime < 1)
+			maxTime = 1;
 
 		timeUntilFishSpawn = RandomUtil.randomNumberBetween(minTime, Math.max(minTime + 50, maxTime));
 	}

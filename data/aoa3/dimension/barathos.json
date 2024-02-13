@@ -1,0 +1,72 @@
+{
+  "type": "aoa3:barathos",
+  "generator": {
+    "biome_source": {
+      "biomes": [
+        {
+          "parameters": {
+            "weirdness": [
+              -1,
+              1
+            ],
+            "continentalness": [
+              -1.2,
+              1
+            ],
+            "erosion": [
+              -1,
+              1
+            ],
+            "temperature": [
+              -1,
+              1
+            ],
+            "humidity": [
+              -1,
+              1
+            ],
+            "depth": [
+              0,
+              0
+            ],
+            "offset": 0
+          },
+          "biome": "aoa3:barathos_flats"
+        },
+        {
+          "parameters": {
+            "weirdness": [
+              -1,
+              1
+            ],
+            "continentalness": [
+              -1.2,
+              1
+            ],
+            "erosion": [
+              -1,
+              1
+            ],
+            "temperature": [
+              -1,
+              1
+            ],
+            "humidity": [
+              -1,
+              1
+            ],
+            "depth": [
+              0.3,
+              1.1
+            ],
+            "offset": 0
+          },
+          "biome": "aoa3:the_burning_pits"
+        }
+      ],
+      "type": "minecraft:multi_noise"
+    },
+    "settings": "aoa3:barathos",
+    "type": "minecraft:noise"
+  }
+}

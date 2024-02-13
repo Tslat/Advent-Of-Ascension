@@ -8,11 +8,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoASounds;
-import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.content.enchantment.FormEnchantment;
+import net.tslat.aoa3.content.enchantment.ShellEnchantment;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.LimoniteBulletEntity;
 import net.tslat.aoa3.content.entity.projectile.gun.MetalSlugEntity;
@@ -77,7 +77,7 @@ public class BaseShotgun extends BaseGun {
 	}
 
 	protected float getSpreadFactor(LivingEntity shooter, ItemStack stack, int pellets) {
-		return 0.1f * pellets * (1 - 0.15f * stack.getEnchantmentLevel(AoAEnchantments.FORM.get()));
+		return FormEnchantment.modifySpread(stack, 0.1f * pellets);
 	}
 
 	@Override
@@ -89,6 +89,6 @@ public class BaseShotgun extends BaseGun {
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
 		super.appendHoverText(stack, world, tooltip, flag);
 
-		tooltip.set(1, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SHOTGUN_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(NumberUtil.roundToNthDecimalPlace((float)getDamage() * (1 + (0.1f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack))), 2)), LocaleUtil.numToComponent(pelletCount)));
+		tooltip.set(1, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.SHOTGUN_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(NumberUtil.roundToNthDecimalPlace(ShellEnchantment.applyDamageBonus(stack, getDamage()), 2)), LocaleUtil.numToComponent(pelletCount)));
 	}
 }

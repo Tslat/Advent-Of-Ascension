@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class NatureStaff extends BaseStaff<List<BlockPos>> {
 	public NatureStaff(int durability) {
@@ -28,18 +29,18 @@ public class NatureStaff extends BaseStaff<List<BlockPos>> {
 	}
 
 	@Override
-	public List<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
+	public Optional<List<BlockPos>> checkPreconditions(LivingEntity caster, ItemStack staff) {
 		List<BlockPos> blocks = WorldUtil.getBlocksWithinAABB(caster.level(), caster.getBoundingBox().inflate(10), (state, pos) -> {
-			if (!(state.getBlock() instanceof BonemealableBlock))
+			if (!(state.getBlock() instanceof BonemealableBlock bonemealable))
 				return false;
 
-			if (!((BonemealableBlock)state.getBlock()).isValidBonemealTarget(caster.level(), pos.immutable(), state))
+			if (!bonemealable.isValidBonemealTarget(caster.level(), pos.immutable(), state))
 				return false;
 
 			return WorldUtil.canModifyBlock(caster.level(), pos, caster, staff);
 		});
 
-		return blocks.isEmpty() ? null : blocks;
+		return Optional.ofNullable(blocks.isEmpty() ? null : blocks);
 	}
 
 	@Override

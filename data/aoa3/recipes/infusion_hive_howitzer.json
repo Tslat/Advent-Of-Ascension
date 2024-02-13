@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:cannon_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:hive_chunk"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:hive_howitzer"
-  },
-  "tool": {
-    "item": "aoa3:cannon_frame"
   }
 }

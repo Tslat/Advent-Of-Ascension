@@ -1,0 +1,13 @@
+{
+  "category": "aoa3:dexterity",
+  "icon": "aoa3:helm_of_the_dextrous",
+  "name": "Helm of the Dextrous",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Reaching level 100 $(thing)Dexterity$() grants you the ability to wear the $(thing)Helm of the Dextrous$().$(br)The helmet is unbreakable, gives diamond-tier stats, and grants a 50% bonus to all $(thing)Dexterity$() xp gained while worn.$(br2)At level 1000, it gains a fancy improved look.",
+      "title": "Helm of the Dextrous"
+    }
+  ],
+  "sortnum": 2
+}

@@ -82,23 +82,23 @@ public class PlayerEvents {
 
 	private static void onPlayerTick(final TickEvent.PlayerTickEvent ev) {
 		if (ev.phase == TickEvent.Phase.END) {
-			if (WorldUtil.isWorld(ev.player.level(), AoADimensions.LELYETIA.key)) {
+			if (WorldUtil.isWorld(ev.player.level(), AoADimensions.LELYETIA)) {
 				LelyetiaEvents.doPlayerTick(ev.player);
 			}
-			else if (WorldUtil.isWorld(ev.player.level(), AoADimensions.VOX_PONDS.key)) {
+			else if (WorldUtil.isWorld(ev.player.level(), AoADimensions.VOX_PONDS)) {
 				VoxPondsEvents.doPlayerTick(ev.player);
 			}
-			else if (WorldUtil.isWorld(ev.player.level(), AoADimensions.LUNALUS.key)) {
+			else if (WorldUtil.isWorld(ev.player.level(), AoADimensions.LUNALUS)) {
 				LunalusEvents.doPlayerTick(ev.player);
 			}
 		}
 
-		if (WorldUtil.isWorld(ev.player.level(), AoADimensions.NOWHERE.key))
+		if (WorldUtil.isWorld(ev.player.level(), AoADimensions.NOWHERE))
 			NowhereEvents.doPlayerTick(ev);
 	}
 
 	private static void onPlayerJump(final LivingEvent.LivingJumpEvent ev) {
-		if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.LUNALUS.key) && ev.getEntity() instanceof Player)
+		if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.LUNALUS) && ev.getEntity() instanceof Player)
 			LunalusEvents.doPlayerJump((Player)ev.getEntity());
 	}
 
@@ -119,7 +119,7 @@ public class PlayerEvents {
 
 		if (ev.getEntity() instanceof ServerPlayer pl) {
 			if (pl.getHealth() > 0 && ev.getSource().is(DamageTypeTags.IS_EXPLOSION) && ev.getSource().getDirectEntity() instanceof Creeper) {
-				if ((!pl.level().getEntitiesOfClass(PrimedTnt.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level().getEntitiesOfClass(PrimedTnt.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+				if ((!pl.level().getEntitiesOfClass(PrimedTnt.class, ev.getSource().getDirectEntity().getBoundingBox().inflate(3)).isEmpty() || !pl.level().getEntitiesOfClass(PrimedTnt.class, pl.getBoundingBox().inflate(3)).isEmpty()) && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.CREEPONIA_REALMSTONE.get()));
 			}
 		}
@@ -153,7 +153,7 @@ public class PlayerEvents {
 					}
 				}
 
-				if (ev.getEntity().level().dimension() == AoADimensions.NOWHERE.key)
+				if (ev.getEntity().level().dimension() == AoADimensions.NOWHERE)
 					NowhereEvents.doDeathPrevention(ev, plData);
 			}
 		}
@@ -161,10 +161,10 @@ public class PlayerEvents {
 
 	private static void onPlayerFall(final LivingFallEvent ev) {
 		if (ev.getEntity() instanceof ServerPlayer player) {
-			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (ev.getDistance() > 25 && ev.getDamageMultiplier() > 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.LELYETIA_REALMSTONE.get()));
 
-			if (WorldUtil.isWorld(player.level(), AoADimensions.LUNALUS.key))
+			if (WorldUtil.isWorld(player.level(), AoADimensions.LUNALUS))
 				LunalusEvents.doPlayerLanding(player, ev);
 		}
 	}
@@ -175,7 +175,7 @@ public class PlayerEvents {
 				ReservedItem.handlePlayerDeath((ServerPlayer)ev.getEntity());
 			}
 			else if (ev.getSource().getEntity() instanceof ServerPlayer) {
-				if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.DEEPLANDS.key)) {
+				if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.DEEPLANDS)) {
 					if (ev.getEntity() instanceof FlyingMob)
 						ev.getEntity().spawnAtLocation(new ItemStack(AoAItems.MUSIC_DISC_CAVERNS.get()), 0.5f);
 				}
@@ -189,7 +189,7 @@ public class PlayerEvents {
 		if (pl instanceof ServerPlayer) {
 			BlockPos pos = ev.getPos();
 
-			if (!pl.isCreative() && ev.getState().is(Tags.Blocks.ORES) && pos.getY() <= pl.level().getMinBuildHeight() + 5 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (!pl.isCreative() && ev.getState().is(Tags.Blocks.ORES) && pos.getY() <= pl.level().getMinBuildHeight() + 5 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 				ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.DEEPLANDS_REALMSTONE.get()));
 		}
 	}
@@ -223,13 +223,13 @@ public class PlayerEvents {
 			ServerPlayerDataManager.syncNewPlayer(player);
 
 			PlayerAdvancements plAdvancements = player.getAdvancements();
-			AdvancementHolder rootAdv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/root"));
+			AdvancementHolder rootAdv = AdvancementUtil.getAdvancement(player.serverLevel(), new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/root"));
 
 			if (rootAdv == null) {
 				Logging.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things.");
 			}
 			else if (!plAdvancements.getOrStartProgress(rootAdv).isDone()) {
-				plAdvancements.award(AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books")), "legitimate");
+				plAdvancements.award(AdvancementUtil.getAdvancement(player.serverLevel(), new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books")), "legitimate");
 				plAdvancements.award(rootAdv, "playerjoin");
 			}
 		}
@@ -266,7 +266,7 @@ public class PlayerEvents {
 	}
 
 	private static void onPlayerFishing(final ItemFishedEvent ev) {
-		if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.LBOREAN.key) && RandomUtil.oneInNChance(10)) {
+		if (WorldUtil.isWorld(ev.getEntity().level(), AoADimensions.LBOREAN) && RandomUtil.oneInNChance(10)) {
 			FishingHook hook = ev.getHookEntity();
 			LivingEntity fisher = ev.getEntity();
 
@@ -282,7 +282,7 @@ public class PlayerEvents {
 	}
 
 	private static void onDimensionChange(final PlayerEvent.PlayerChangedDimensionEvent ev) {
-		if (ev.getFrom() == AoADimensions.NOWHERE.key)
+		if (ev.getFrom() == AoADimensions.NOWHERE)
 			NowhereEvents.doDimensionChange(ev);
 
 		if (ev.getEntity() instanceof ServerPlayer pl)

@@ -17,7 +17,7 @@ public interface AoAResourceRenderer {
 	AoAResourceRenderer DEFAULT = new AoAResourceRenderer() {};
 
 	default void renderInHud(PoseStack matrix, AoAResource.Instance resource, float partialTicks, @Nullable String valueOverride) {
-		ResourceLocation resourceId = AoARegistries.AOA_RESOURCES.getId(resource.type());
+		ResourceLocation resourceId = AoARegistries.AOA_RESOURCES.getKey(resource.type());
 
 		matrix.pushPose();
 		matrix.scale(0.5f, 0.5f, 0);

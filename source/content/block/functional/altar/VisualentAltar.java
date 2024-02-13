@@ -29,7 +29,7 @@ public class VisualentAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level, AoADimensions.LUNALUS.key);
+		return WorldUtil.isWorld(player.level, AoADimensions.LUNALUS);
 	}
 
 	@Override

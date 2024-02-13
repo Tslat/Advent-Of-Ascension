@@ -36,7 +36,6 @@ public class AoANetworking {
 		registrar.play(XpGainPacket.ID, XpGainPacket::decode, XpGainPacket::receiveMessage);
 		registrar.play(HaloSelectPacket.ID, HaloSelectPacket::decode, HaloSelectPacket::receiveMessage);
 		registrar.play(SyncHaloDataPacket.ID, SyncHaloDataPacket::decode, SyncHaloDataPacket::receiveMessage);
-		registrar.play(GuiDataPacket.ID, GuiDataPacket::decode, GuiDataPacket::receiveMessage);
 		registrar.play(WikiSearchPacket.ID, WikiSearchPacket::decode, WikiSearchPacket::receiveMessage);
 		registrar.play(ChangeMusicPacket.ID, ChangeMusicPacket::decode, ChangeMusicPacket::receiveMessage);
 		registrar.play(PatchouliBookSyncPacket.ID, PatchouliBookSyncPacket::decode, PatchouliBookSyncPacket::receiveMessage);

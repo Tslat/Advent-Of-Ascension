@@ -121,11 +121,11 @@ public final class XpParticlesRenderer {
 
 		for (Map.Entry<AoASkill, CopyOnWriteArrayList<XPParticle>> entry : particlesMap.entrySet()) {
 			AoASkill.Instance skill = ClientPlayerDataManager.get().getSkill(entry.getKey());
+			CopyOnWriteArrayList<XPParticle> particles = entry.getValue();
 
-			if (skill == AoASkills.DEFAULT)
+			if (skill == AoASkills.DEFAULT || particles.isEmpty())
 				continue;
 
-			CopyOnWriteArrayList<XPParticle> particles = entry.getValue();
 			AoASkillRenderer skillRenderer = AoAGuiElementRenderers.getSkillRenderer(skill.type());
 			int renderWidth = skillRenderer.hudRenderWidth(skill);
 			int renderHeight = skillRenderer.hudRenderHeight(skill);

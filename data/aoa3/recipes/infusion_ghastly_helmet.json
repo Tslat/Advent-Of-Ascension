@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:helmet_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:ghoulasm"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:ghastly_helmet"
-  },
-  "tool": {
-    "item": "aoa3:helmet_frame"
   }
 }

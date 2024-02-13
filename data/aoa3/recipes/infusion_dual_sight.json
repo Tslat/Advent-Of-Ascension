@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:sniper_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:blue_druse"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:dual_sight"
-  },
-  "tool": {
-    "item": "aoa3:sniper_frame"
   }
 }

@@ -52,8 +52,8 @@ public class AdventGuiTabPlayer extends Screen {
 
 	private AbilityPane abilityPane = null;
 
-	private int adjustedMouseX;
-	private int adjustedMouseY;
+	private float adjustedMouseX;
+	private float adjustedMouseY;
 
 	private boolean hoveringSkillClose = false;
 	private boolean hoveringAddCycle = false;
@@ -110,8 +110,8 @@ public class AdventGuiTabPlayer extends Screen {
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 		final RenderContext renderContext = RenderContext.of(guiGraphics);
 		PoseStack poseStack = guiGraphics.pose();
-		adjustedMouseX = (int)(mouseX * (1 / AdventMainGui.SCALE));
-		adjustedMouseY = (int)(mouseY * (1 / AdventMainGui.SCALE));
+		adjustedMouseX = (mouseX * (1 / AdventMainGui.SCALE));
+		adjustedMouseY = (mouseY * (1 / AdventMainGui.SCALE));
 
 		poseStack.pushPose();
 		poseStack.translate(AdventMainGui.scaledTabRootX, AdventMainGui.scaledTabRootY, 0);
@@ -124,7 +124,7 @@ public class AdventGuiTabPlayer extends Screen {
 
 			poseStack.pushPose();
 			poseStack.scale(skillRenderScale, skillRenderScale, 1);
-			super.render(guiGraphics, adjustedMouseX, adjustedMouseY, partialTicks);
+			super.render(guiGraphics, (int)adjustedMouseX, (int)adjustedMouseY, partialTicks);
 
 			poseStack.popPose();
 
@@ -150,7 +150,7 @@ public class AdventGuiTabPlayer extends Screen {
 			poseStack.translate(-skillRenderWidth, 0, 0);
 			poseStack.scale(3f, 3f, 1);
 
-			skillRenderer.renderInGui(renderContext, abilityPane.skill, partialTicks, adjustedMouseX, adjustedMouseY, AoASkillRenderer.ProgressRenderType.None, false);
+			skillRenderer.renderInGui(renderContext, abilityPane.skill, partialTicks, (int)adjustedMouseX, (int)adjustedMouseY, AoASkillRenderer.ProgressRenderType.None, false);
 
 			poseStack.popPose();
 
@@ -197,7 +197,7 @@ public class AdventGuiTabPlayer extends Screen {
 	@Override
 	public void renderTransparentBackground(GuiGraphics pGuiGraphics) {}
 
-	private void drawTotalLevel(PoseStack matrix, int mouseX, int mouseY, float partialTicks) {
+	private void drawTotalLevel(PoseStack matrix, float mouseX, float mouseY, float partialTicks) {
 		Minecraft mc = Minecraft.getInstance();
 		int totalLevel = ClientPlayerDataManager.get().getTotalLevel();
 
@@ -214,7 +214,7 @@ public class AdventGuiTabPlayer extends Screen {
 		RenderUtil.renderCenteredScaledText(matrix, Component.literal(String.valueOf(ClientPlayerDataManager.get().getTotalLevel())), 40, 40, 1, ColourUtil.WHITE, RenderUtil.TextRenderType.OUTLINED);
 	}
 
-	private void drawPlayerBox(PoseStack poseStack, int mouseX, int mouseY, int scale, float partialTicks) {
+	private void drawPlayerBox(PoseStack poseStack, float mouseX, float mouseY, int scale, float partialTicks) {
 		poseStack.pushPose();
 
 		if (entityToRender == null)
@@ -401,7 +401,7 @@ public class AdventGuiTabPlayer extends Screen {
 			if (wasDragging && clickStartScroll == distanceScrolled && hoveredAbility != -1) {
 				AoAAbility.Instance instance = sortedAbilities.get(hoveredAbility);
 
-				if (instance.onGuiClick(this.mouseX - left, this.mouseY - top - (hoveredAbility * 50) + (int)distanceScrolled * 2) && this.skill.type() != null)
+				if (instance.onGuiClick((int)this.mouseX - left, (int)this.mouseY - top - (hoveredAbility * 50) + (int)distanceScrolled * 2) && this.skill.type() != null)
 					AoANetworking.sendToServer(new ToggleAoAAbilityPacket(skill.type(), instance));
 			}
 
@@ -428,7 +428,7 @@ public class AdventGuiTabPlayer extends Screen {
 			for (int i = 0; i < sortedAbilities.size(); i++) {
 				AoAAbility.Instance ability = sortedAbilities.get(i);
 				int colour = ColourUtil.RGB(100, 100, 100);
-				boolean abilityHoverEffects = hoveredAbility == i && sortedAbilities.get(hoveredAbility).onGuiHover(mouseX - left, mouseY - top - ((i * 50) - (int)scrollDistance));
+				boolean abilityHoverEffects = hoveredAbility == i && sortedAbilities.get(hoveredAbility).onGuiHover((int)this.mouseX - left, (int)this.mouseY - top - ((i * 50) - (int)scrollDistance));
 
 				if (ability.getListenerState() == AoAPlayerEventListener.ListenerState.ACTIVE) {
 					colour = abilityHoverEffects ? ColourUtil.RGB(255, 255, 180) : ColourUtil.WHITE;

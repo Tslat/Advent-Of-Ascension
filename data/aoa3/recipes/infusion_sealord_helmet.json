@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:helmet_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:coral_stone"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:sealord_helmet"
-  },
-  "tool": {
-    "item": "aoa3:helmet_frame"
   }
 }

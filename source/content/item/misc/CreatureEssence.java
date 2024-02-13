@@ -12,9 +12,9 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.util.LocaleUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CreatureEssence extends Item {
@@ -37,7 +37,7 @@ public class CreatureEssence extends Item {
 		return AoARegistries.ENTITIES.hasRegisteredId(entityId) ? AoARegistries.ENTITIES.getEntry(entityId) : null;
 	}
 
-	@Nonnull
+	@NotNull
 	public String getStoredEntityName(ItemStack stack) {
 		String entityName = "?";
 

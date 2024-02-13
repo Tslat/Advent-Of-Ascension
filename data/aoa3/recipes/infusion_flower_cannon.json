@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:cannon_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:small_green_petal"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:flower_cannon"
-  },
-  "tool": {
-    "item": "aoa3:cannon_frame"
   }
 }

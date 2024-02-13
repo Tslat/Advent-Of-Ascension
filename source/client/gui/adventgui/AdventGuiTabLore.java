@@ -20,6 +20,7 @@ import net.tslat.aoa3.common.networking.packets.patchouli.AccountPatchouliBookPa
 import net.tslat.aoa3.common.networking.packets.patchouli.GivePatchouliBookPacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.integration.IntegrationManager;
+import net.tslat.aoa3.integration.patchouli.PatchouliIntegration;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
@@ -46,8 +47,8 @@ public class AdventGuiTabLore extends Screen {
 		int accumWidth = 0;
 		int height = AdventMainGui.scaledTabRootY + 20;
 
-		//if (loreBooks.isEmpty())
-		//	loreBooks.put(AdventOfAscension.id("aoa_essentia"), PatchouliIntegration.getBook(AdventOfAscension.id("aoa_essentia")));
+		if (loreBooks.isEmpty())
+			loreBooks.put(AdventOfAscension.id("aoa_essentia"), PatchouliIntegration.getBook(AdventOfAscension.id("aoa_essentia")));
 
 		for (Map.Entry<ResourceLocation, ItemStack> bookEntry : loreBooks.entrySet()) {
 			int width = (int)(font.width(bookEntry.getValue().getHoverName()) * 1.5f);
@@ -98,7 +99,7 @@ public class AdventGuiTabLore extends Screen {
 		if (!IntegrationManager.isPatchouliActive())
 			return;
 
-		/*Item guideBook = AoARegistries.ITEMS.getEntry(new ResourceLocation("patchouli", "guide_book"));
+		Item guideBook = AoARegistries.ITEMS.getEntry(new ResourceLocation("patchouli", "guide_book"));
 
 		for (ResourceLocation id : bookIds) {
 			if (!PatchouliIntegration.isBookLoaded(id))
@@ -109,7 +110,7 @@ public class AdventGuiTabLore extends Screen {
 
 			tag.putString("patchouli:book", id.toString());
 			loreBooks.put(id, book);
-		}*/
+		}
 	}
 
 	public static void bookOpened(ResourceLocation id) {
@@ -141,7 +142,7 @@ public class AdventGuiTabLore extends Screen {
 			if (isValidClickButton(button)) {
 				if (!mouseHolding) {
 					if (isHovered) {
-						//PatchouliIntegration.openBook(id);
+						PatchouliIntegration.openBook(id);
 
 						return true;
 					}

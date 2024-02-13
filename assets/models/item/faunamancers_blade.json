@@ -1,5 +1,75 @@
 {
   "parent": "minecraft:item/handheld",
+  "display": {
+    "firstperson_lefthand": {
+      "rotation": [
+        95,
+        -90,
+        90
+      ],
+      "scale": [
+        0.68,
+        0.68,
+        0.68
+      ],
+      "translation": [
+        0.25,
+        2.5,
+        1.13
+      ]
+    },
+    "firstperson_righthand": {
+      "rotation": [
+        95,
+        90,
+        -90
+      ],
+      "scale": [
+        0.68,
+        0.68,
+        0.68
+      ],
+      "translation": [
+        -0.25,
+        2.5,
+        1.13
+      ]
+    },
+    "thirdperson_lefthand": {
+      "rotation": [
+        0,
+        -90,
+        -34
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ],
+      "translation": [
+        0,
+        2,
+        0.5
+      ]
+    },
+    "thirdperson_righthand": {
+      "rotation": [
+        0,
+        90,
+        34
+      ],
+      "scale": [
+        0.65,
+        0.65,
+        0.65
+      ],
+      "translation": [
+        0,
+        2,
+        0.5
+      ]
+    }
+  },
   "textures": {
     "layer0": "aoa3:item/faunamancers_blade"
   }

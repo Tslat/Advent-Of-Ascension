@@ -1,20 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:power",
+    "aoa3:precision",
+    "aoa3:control"
+  ],
   "enchantment": "aoa3:control",
   "enchantment_level": 3,
-  "infusion_level": 51,
-  "ingredients": [
-    {
-      "item": "aoa3:weight_enhancer"
-    },
-    {
-      "item": "aoa3:weight_enhancer"
-    },
-    {
-      "item": "aoa3:weight_enhancer"
-    },
-    {
-      "item": "aoa3:glowing_power_stone"
-    }
-  ]
+  "imbuing_level": 49,
+  "power_source": {
+    "item": "aoa3:gleaming_power_stone"
+  }
 }

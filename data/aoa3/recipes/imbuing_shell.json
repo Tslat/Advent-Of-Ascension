@@ -1,17 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:damage",
+    "aoa3:durability",
+    "aoa3:power"
+  ],
   "enchantment": "aoa3:shell",
   "enchantment_level": 1,
-  "infusion_level": 20,
-  "ingredients": [
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:glistening_power_stone"
-    },
-    {
-      "tag": "forge:gunpowder"
-    }
-  ]
+  "imbuing_level": 16,
+  "power_source": {
+    "item": "aoa3:glistening_power_stone"
+  }
 }

@@ -15,6 +15,7 @@ import net.minecraft.util.profiling.ProfilerFiller;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.content.world.spawner.AoACustomSpawner;
+import net.tslat.aoa3.content.world.spawner.PixonSpawner;
 import net.tslat.aoa3.content.world.spawner.RoamingTraderSpawner;
 
 import java.util.List;
@@ -23,8 +24,10 @@ import java.util.Map;
 public class AoACustomSpawnersListener extends SimpleJsonResourceReloadListener {
 	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 	private static final String FOLDER = "custom_spawners";
-	private static final Map<ResourceLocation, Codec<? extends AoACustomSpawner>> REGISTERED_SPAWNERS = Util.make(new Object2ObjectOpenHashMap<>(), map ->
-			map.put(AdventOfAscension.id("roaming_traders"), RoamingTraderSpawner.CODEC));
+	private static final Map<ResourceLocation, Codec<? extends AoACustomSpawner>> REGISTERED_SPAWNERS = Util.make(new Object2ObjectOpenHashMap<>(), map -> {
+		map.put(AdventOfAscension.id("roaming_traders"), RoamingTraderSpawner.CODEC);
+		map.put(AdventOfAscension.id("pixons"), PixonSpawner.CODEC);
+	});
 
 	public static final List<AoACustomSpawner> SPAWNERS = new ObjectArrayList<>();
 

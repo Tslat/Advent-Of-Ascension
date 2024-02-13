@@ -35,7 +35,7 @@ public class ReturnCrystal extends Item {
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
-		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key))
+		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE))
 			return ItemUtils.startUsingInstantly(world, player, hand);
 
 		return InteractionResultHolder.pass(player.getItemInHand(hand));
@@ -44,7 +44,7 @@ public class ReturnCrystal extends Item {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level world, LivingEntity entity) {
 		if (entity instanceof ServerPlayer pl) {
-			if (!WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
+			if (!WorldUtil.isWorld(world, AoADimensions.NOWHERE)) {
 				PlayerUtil.notifyPlayer(pl, LocaleUtil.getLocaleMessage("message.feedback.item.returnCrystal.wrongDim"));
 
 				return stack;
@@ -54,7 +54,7 @@ public class ReturnCrystal extends Item {
 				stack.shrink(1);
 
 			if (!NowhereEvents.isInLobbyRegion(pl.blockPosition())) {
-				if (NowhereEvents.isInBossRegion(pl.blockPosition()) && !pl.getAdvancements().getOrStartProgress(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/root"))).isDone()) {
+				if (NowhereEvents.isInBossRegion(pl.blockPosition()) && !pl.getAdvancements().getOrStartProgress(AdvancementUtil.getAdvancement(pl.serverLevel(), AdventOfAscension.id("nowhere/root"))).isDone()) {
 					AoAScheduler.scheduleSyncronisedTask(() -> {
 						PlayerUtil.resetToDefaultStatus(pl);
 						pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());

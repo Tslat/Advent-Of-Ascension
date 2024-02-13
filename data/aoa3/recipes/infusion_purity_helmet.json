@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:helmet_frame"
+  },
   "ingredients": [
     {
       "item": "minecraft:milk_bucket"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:purity_helmet"
-  },
-  "tool": {
-    "item": "aoa3:helmet_frame"
   }
 }

@@ -1,20 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:durability",
+    "aoa3:power"
+  ],
   "enchantment": "minecraft:unbreaking",
   "enchantment_level": 2,
-  "infusion_level": 32,
-  "ingredients": [
-    {
-      "item": "aoa3:durability_enhancer"
-    },
-    {
-      "item": "aoa3:durability_enhancer"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    },
-    {
-      "tag": "forge:gems/diamond"
-    }
-  ]
+  "imbuing_level": 41,
+  "power_source": {
+    "item": "aoa3:shining_power_stone"
+  }
 }

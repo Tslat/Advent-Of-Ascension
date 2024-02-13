@@ -1,0 +1,607 @@
+{
+  "values": {
+    "aoa3:achony_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:achony_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:ancient_vines": {
+      "chance": 0.5
+    },
+    "aoa3:arcbulb": {
+      "chance": 0.65
+    },
+    "aoa3:arcflower": {
+      "chance": 0.65
+    },
+    "aoa3:baobab_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:baobab_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:black_mushroom_block": {
+      "chance": 0.85
+    },
+    "aoa3:black_mushroom_stem": {
+      "chance": 0.85
+    },
+    "aoa3:blood_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:blood_pine": {
+      "chance": 0.5
+    },
+    "aoa3:blood_pine_stem": {
+      "chance": 0.5
+    },
+    "aoa3:blood_spikes": {
+      "chance": 0.5
+    },
+    "aoa3:blood_strands": {
+      "chance": 0.5
+    },
+    "aoa3:bloodtwister_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:blue_candy_grass": {
+      "chance": 0.3
+    },
+    "aoa3:blue_celevians": {
+      "chance": 0.3
+    },
+    "aoa3:blue_celevus_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:blue_celevus_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:blue_crystal_plant": {
+      "chance": 0.3
+    },
+    "aoa3:blue_daylooms": {
+      "chance": 0.65
+    },
+    "aoa3:blue_glowshroom": {
+      "chance": 0.65
+    },
+    "aoa3:blue_haven_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:blue_haven_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:blue_havendales": {
+      "chance": 0.5
+    },
+    "aoa3:blue_havendales_stem": {
+      "chance": 0.5
+    },
+    "aoa3:blue_lollypop": {
+      "chance": 0.5
+    },
+    "aoa3:blue_mushroom_block": {
+      "chance": 0.85
+    },
+    "aoa3:blue_mushroom_stem": {
+      "chance": 0.85
+    },
+    "aoa3:bright_shyre_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:bright_shyre_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:bubble_berries": {
+      "chance": 0.65
+    },
+    "aoa3:bubble_berry_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:bulb_stock": {
+      "chance": 0.5
+    },
+    "aoa3:bulb_stock_cap": {
+      "chance": 0.5
+    },
+    "aoa3:bureal_stocks": {
+      "chance": 0.3
+    },
+    "aoa3:calab_grass": {
+      "chance": 0.3
+    },
+    "aoa3:calab_long_grass": {
+      "chance": 0.3
+    },
+    "aoa3:candy_tube": {
+      "chance": 0.5
+    },
+    "aoa3:candycane": {
+      "chance": 0.65
+    },
+    "aoa3:celebulbs_stem": {
+      "chance": 0.5
+    },
+    "aoa3:chilli": {
+      "chance": 0.65
+    },
+    "aoa3:chilli_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:churry_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:churry_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:coral_cage": {
+      "chance": 0.5
+    },
+    "aoa3:creep_bush": {
+      "chance": 0.3
+    },
+    "aoa3:creep_flowers": {
+      "chance": 0.3
+    },
+    "aoa3:creep_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:creep_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:creep_vines": {
+      "chance": 0.5
+    },
+    "aoa3:daileers": {
+      "chance": 0.3
+    },
+    "aoa3:dawn_bush": {
+      "chance": 0.3
+    },
+    "aoa3:dawn_flower": {
+      "chance": 0.65
+    },
+    "aoa3:dawn_grass": {
+      "chance": 0.3
+    },
+    "aoa3:dawn_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:dawnwood_bars": {
+      "chance": 0.5
+    },
+    "aoa3:dawnwood_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:dead_grass": {
+      "chance": 0.3
+    },
+    "aoa3:deep_blooms": {
+      "chance": 0.3
+    },
+    "aoa3:deep_grass": {
+      "chance": 0.3
+    },
+    "aoa3:eye_hanger_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:eye_shrub": {
+      "chance": 0.5
+    },
+    "aoa3:eye_shrub_stem": {
+      "chance": 0.5
+    },
+    "aoa3:eyebush_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:floracle_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:garden_grass": {
+      "chance": 0.5
+    },
+    "aoa3:giant_plant_stem": {
+      "chance": 0.85
+    },
+    "aoa3:goldicap_petals": {
+      "chance": 0.65
+    },
+    "aoa3:goldicap_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:green_celebulbs": {
+      "chance": 0.5
+    },
+    "aoa3:green_celevus_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:green_celevus_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:green_crystal_plant": {
+      "chance": 0.3
+    },
+    "aoa3:green_glowshroom": {
+      "chance": 0.65
+    },
+    "aoa3:green_manure_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:green_mushroom_block": {
+      "chance": 0.85
+    },
+    "aoa3:green_mushroom_stem": {
+      "chance": 0.85
+    },
+    "aoa3:green_peppermint": {
+      "chance": 0.5
+    },
+    "aoa3:green_waterweeds": {
+      "chance": 0.3
+    },
+    "aoa3:haunted_eyes_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:haunted_flower": {
+      "chance": 0.65
+    },
+    "aoa3:haunted_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:haunted_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:haven_grass_plant": {
+      "chance": 0.3
+    },
+    "aoa3:heart_fruit": {
+      "chance": 0.65
+    },
+    "aoa3:heart_fruit_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:horizon_daisies": {
+      "chance": 0.3
+    },
+    "aoa3:iro_grass": {
+      "chance": 0.3
+    },
+    "aoa3:irodust_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:irodust_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:irogold_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:irogold_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:irotops": {
+      "chance": 0.3
+    },
+    "aoa3:lelyetian_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:lelyetian_stem": {
+      "chance": 0.5
+    },
+    "aoa3:lelyetian_stem_cap": {
+      "chance": 0.5
+    },
+    "aoa3:lelyetian_stem_cap_down": {
+      "chance": 0.5
+    },
+    "aoa3:lelyetian_weeds": {
+      "chance": 0.3
+    },
+    "aoa3:lelyetian_weeds_down": {
+      "chance": 0.3
+    },
+    "aoa3:lelyetian_wiggler": {
+      "chance": 0.5
+    },
+    "aoa3:lelyetian_wiggler_bottom": {
+      "chance": 0.5
+    },
+    "aoa3:lelyetian_wiggler_top": {
+      "chance": 0.5
+    },
+    "aoa3:lucalus_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:lucalus_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:luna_globe": {
+      "chance": 0.65
+    },
+    "aoa3:luna_globe_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:lunacrike": {
+      "chance": 0.65
+    },
+    "aoa3:lunacrike_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:lunalip": {
+      "chance": 0.65
+    },
+    "aoa3:lunalon_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:lunalons": {
+      "chance": 0.65
+    },
+    "aoa3:lunicia_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:lunicia_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:lunosso_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:lunosso_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:luntar": {
+      "chance": 0.3
+    },
+    "aoa3:lurchians": {
+      "chance": 0.3
+    },
+    "aoa3:lylips": {
+      "chance": 0.3
+    },
+    "aoa3:magias": {
+      "chance": 0.3
+    },
+    "aoa3:magic_marang": {
+      "chance": 0.65
+    },
+    "aoa3:mystic_bush": {
+      "chance": 0.3
+    },
+    "aoa3:mystic_ferns": {
+      "chance": 0.3
+    },
+    "aoa3:mystic_shrooms": {
+      "chance": 0.65
+    },
+    "aoa3:orange_glowshroom": {
+      "chance": 0.65
+    },
+    "aoa3:orange_mushroom_block": {
+      "chance": 0.85
+    },
+    "aoa3:orange_mushroom_stem": {
+      "chance": 0.85
+    },
+    "aoa3:pink_candy_grass": {
+      "chance": 0.3
+    },
+    "aoa3:pink_daylooms": {
+      "chance": 0.3
+    },
+    "aoa3:pink_haven_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:pink_haven_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:pink_havendales": {
+      "chance": 0.5
+    },
+    "aoa3:pink_havendales_stem": {
+      "chance": 0.5
+    },
+    "aoa3:plastic_stick": {
+      "chance": 0.5
+    },
+    "aoa3:purple_celevians": {
+      "chance": 0.3
+    },
+    "aoa3:purple_celevus_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:purple_celevus_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:purple_crystal_plant": {
+      "chance": 0.3
+    },
+    "aoa3:purple_glowshroom": {
+      "chance": 0.65
+    },
+    "aoa3:purple_haven_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:purple_haven_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:purple_mushroom_block": {
+      "chance": 0.85
+    },
+    "aoa3:purple_mushroom_stem": {
+      "chance": 0.85
+    },
+    "aoa3:rainbow_grass": {
+      "chance": 0.3
+    },
+    "aoa3:red_celevians": {
+      "chance": 0.3
+    },
+    "aoa3:red_celevus_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:red_celevus_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:red_crystal_plant": {
+      "chance": 0.3
+    },
+    "aoa3:red_haven_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:red_haven_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:red_lollypop": {
+      "chance": 0.5
+    },
+    "aoa3:red_peppermint": {
+      "chance": 0.5
+    },
+    "aoa3:red_waterweeds": {
+      "chance": 0.3
+    },
+    "aoa3:rosidon_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:rosidons": {
+      "chance": 0.65
+    },
+    "aoa3:rune_bulbs": {
+      "chance": 0.3
+    },
+    "aoa3:runic_bush": {
+      "chance": 0.3
+    },
+    "aoa3:runic_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:runic_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:shadow_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:shadow_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:shadowblood_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:shyre_cap": {
+      "chance": 0.5
+    },
+    "aoa3:shyre_cap_down": {
+      "chance": 0.5
+    },
+    "aoa3:shyre_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:shyre_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:shyre_stock": {
+      "chance": 0.5
+    },
+    "aoa3:shyre_weed": {
+      "chance": 0.3
+    },
+    "aoa3:stranglewood_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:stranglewood_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:tangle_thorns": {
+      "chance": 0.3
+    },
+    "aoa3:tea_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:thorny_plant_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:trilliad_bloom": {
+      "chance": 0.3
+    },
+    "aoa3:trilliad_leaves": {
+      "chance": 0.65
+    },
+    "aoa3:trilliad_seeds": {
+      "chance": 0.3
+    },
+    "aoa3:tubeicles": {
+      "chance": 0.3
+    },
+    "aoa3:turquoise_haven_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:turquoise_haven_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:vein_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:vox_fungi": {
+      "chance": 0.5
+    },
+    "aoa3:vox_fungi_stem": {
+      "chance": 0.5
+    },
+    "aoa3:vox_tentacles": {
+      "chance": 0.5
+    },
+    "aoa3:vox_tentacles_stem": {
+      "chance": 0.5
+    },
+    "aoa3:white_celevians": {
+      "chance": 0.3
+    },
+    "aoa3:white_celevus_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:white_crystal_plant": {
+      "chance": 0.3
+    },
+    "aoa3:white_waterweeds": {
+      "chance": 0.3
+    },
+    "aoa3:yellow_celebulbs": {
+      "chance": 0.5
+    },
+    "aoa3:yellow_celevus_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:yellow_celevus_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:yellow_crystal_plant": {
+      "chance": 0.3
+    },
+    "aoa3:yellow_daylooms": {
+      "chance": 0.65
+    },
+    "aoa3:yellow_glowshroom": {
+      "chance": 0.65
+    },
+    "aoa3:yellow_haven_leaves": {
+      "chance": 0.3
+    },
+    "aoa3:yellow_haven_sapling": {
+      "chance": 0.3
+    },
+    "aoa3:yellow_havendales": {
+      "chance": 0.5
+    },
+    "aoa3:yellow_havendales_stem": {
+      "chance": 0.5
+    },
+    "aoa3:yellow_lollypop": {
+      "chance": 0.5
+    },
+    "aoa3:yellow_mushroom_block": {
+      "chance": 0.85
+    },
+    "aoa3:yellow_mushroom_stem": {
+      "chance": 0.85
+    }
+  }
+}

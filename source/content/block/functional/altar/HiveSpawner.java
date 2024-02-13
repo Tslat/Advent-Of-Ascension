@@ -24,7 +24,7 @@ public class HiveSpawner extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return false;//return WorldUtil.isWorld(player.level, AoADimensions.BARATHOS.key) && player.level.getEntitiesOfClass(HiveKingEntity.class, new AABB(pos).inflate(20)).isEmpty();
+		return false;//return WorldUtil.isWorld(player.level, AoADimensions.BARATHOS) && player.level.getEntitiesOfClass(HiveKingEntity.class, new AABB(pos).inflate(20)).isEmpty();
 	}
 
 	@Override

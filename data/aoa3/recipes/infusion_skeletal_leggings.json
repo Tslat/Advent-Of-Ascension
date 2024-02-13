@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:leggings_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:legbone_fragment"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:skeletal_leggings"
-  },
-  "tool": {
-    "item": "aoa3:leggings_frame"
   }
 }

@@ -21,7 +21,7 @@ public final class AoAPostProcessing {
 
         final PostChain postProcessEffect = mc.gameRenderer.currentEffect();
 
-        if (mc.level.dimension() != AoADimensions.DUSTOPIA.key) {
+        if (mc.level.dimension() != AoADimensions.DUSTOPIA) {
             if (postProcessEffect != null && postProcessEffect.getName().contains("dustopia"))
                 mc.gameRenderer.shutdownEffect();
         }

@@ -1,0 +1,17 @@
+{
+  "category": "aoa3:skills",
+  "icon": "minecraft:potion",
+  "name": "Abilities",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "All $(aoa) $(thing)skills$() come with a list of unlockable $(thing)abilities$() that give various bonuses and effects as you level up.$(br)Each $(thing)skill$() has different available $(thing)abilities$() at different levels.",
+      "title": "Skill Abilities"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Every individual $(thing)ability$() can be disabled and re-enabled in the $(l:aoa3:advent_gui_base#advent_gui)Advent GUI$(/l), so if you don't like a particular ability or just don't want to use it for a while, you can toggle it off."
+    }
+  ],
+  "sortnum": 1
+}

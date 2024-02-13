@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:leggings_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:unstable_gunpowder"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:mercurial_leggings"
-  },
-  "tool": {
-    "item": "aoa3:leggings_frame"
   }
 }

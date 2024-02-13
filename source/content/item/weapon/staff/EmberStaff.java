@@ -25,6 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<Entity>>> {
 	public EmberStaff(int durability) {
@@ -44,9 +45,8 @@ public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<Entity>>> {
 		runes.put(AoAItems.FIRE_RUNE.get(), 1);
 	}
 
-	@Nullable
 	@Override
-	public Pair<List<BlockPos>, List<Entity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+	public Optional<Pair<List<BlockPos>, List<Entity>>> checkPreconditions(LivingEntity caster, ItemStack staff) {
 		List<BlockPos> blocks = new ObjectArrayList<>();
 		List<Entity> entities = new ObjectArrayList<>();
 
@@ -56,7 +56,7 @@ public class EmberStaff extends BaseStaff<Pair<List<BlockPos>, List<Entity>>> {
 		entities.addAll(EntityRetrievalUtil.getEntities(caster, 5, entity -> entity.getRemainingFireTicks() > 0 && !(entity instanceof Enemy)));
 		blocks.addAll(WorldUtil.getBlocksWithinAABB(caster.level(), new AABB(Vec3.atLowerCornerOf(caster.blockPosition().offset(-5, -5, -5)), Vec3.atBottomCenterOf(caster.blockPosition().offset(5, 5, 5))), (state, pos) -> WorldUtil.canModifyBlock(caster.level(), pos, caster, staff) && state.is(BlockTags.FIRE)));
 
-		return entities.isEmpty() && blocks.isEmpty() ? null : Pair.of(blocks, entities);
+		return Optional.ofNullable(entities.isEmpty() && blocks.isEmpty() ? null : Pair.of(blocks, entities));
 	}
 
 	@Override

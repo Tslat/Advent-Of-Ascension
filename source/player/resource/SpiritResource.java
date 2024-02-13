@@ -10,8 +10,8 @@ import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 
 public class SpiritResource extends AoAResource.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.PLAYER_TICK, ListenerType.OUTGOING_ATTACK_AFTER};
@@ -84,7 +84,7 @@ public class SpiritResource extends AoAResource.Instance {
 		return (1 + (1 - player.getHealth() / player.getMaxHealth()) * (this.healthModMax - 1)) * regenAmount;
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
 	public CompoundTag saveToNbt() {
 		return new CompoundTag();

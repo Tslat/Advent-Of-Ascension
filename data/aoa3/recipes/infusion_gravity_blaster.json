@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:blaster_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:floating_stone"
@@ -16,8 +19,5 @@
   ],
   "result": {
     "item": "aoa3:gravity_blaster"
-  },
-  "tool": {
-    "item": "aoa3:blaster_frame"
   }
 }

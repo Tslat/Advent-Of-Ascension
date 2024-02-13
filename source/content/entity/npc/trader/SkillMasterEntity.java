@@ -28,15 +28,16 @@ public class SkillMasterEntity extends AoATrader {
 
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.SMALL_SKILL_CRYSTAL).cost(AoAItems.ARCHAIC_TOKEN, 11).xp(20).stock(32),
-					BuildableTrade.trade(AoAItems.MEDIUM_SKILL_CRYSTAL).cost(AoAItems.ARCHAIC_TOKEN, 13).xp(50).stock(24),
-					BuildableTrade.trade(AoAItems.LARGE_SKILL_CRYSTAL).cost(AoAItems.ARCHAIC_TOKEN, 18).xp(75).stock(16),
-					BuildableTrade.trade(AoAItems.GIANT_SKILL_CRYSTAL).cost(AoAItems.ARCHAIC_TOKEN, 32).xp(125).stock(12),
-					BuildableTrade.trade(AoAArmour.HELM_OF_THE_DEXTROUS).cost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
-					BuildableTrade.trade(AoAArmour.HELM_OF_THE_DRYAD).cost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
-					BuildableTrade.trade(AoAArmour.HELM_OF_THE_TRAWLER).cost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
-					BuildableTrade.trade(AoAArmour.HELM_OF_THE_TREASURER).cost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
-					BuildableTrade.trade(AoAArmour.HELM_OF_THE_WARRIOR).cost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE)).build();
+					BuildableTrade.forItem(AoAItems.SMALL_SKILL_CRYSTAL).itemCost(AoAItems.ARCHAIC_TOKEN, 11).xp(20).stock(32),
+					BuildableTrade.forItem(AoAItems.MEDIUM_SKILL_CRYSTAL).itemCost(AoAItems.ARCHAIC_TOKEN, 13).xp(50).stock(24),
+					BuildableTrade.forItem(AoAItems.LARGE_SKILL_CRYSTAL).itemCost(AoAItems.ARCHAIC_TOKEN, 18).xp(75).stock(16),
+					BuildableTrade.forItem(AoAItems.GIANT_SKILL_CRYSTAL).itemCost(AoAItems.ARCHAIC_TOKEN, 32).xp(125).stock(12),
+					BuildableTrade.forItem(AoAArmour.HELM_OF_THE_DEXTROUS).itemCost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.forItem(AoAArmour.HELM_OF_THE_DRYAD).itemCost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.forItem(AoAArmour.HELM_OF_THE_RITUALIST).itemCost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.forItem(AoAArmour.HELM_OF_THE_TRAWLER).itemCost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.forItem(AoAArmour.HELM_OF_THE_TREASURER).itemCost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE),
+					BuildableTrade.forItem(AoAArmour.HELM_OF_THE_WARRIOR).itemCost(AoAItems.ARCHAIC_TOKEN, 64).xp(200).stock(Integer.MAX_VALUE)).build();
 
 	public SkillMasterEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -62,12 +63,12 @@ public class SkillMasterEntity extends AoATrader {
 
 	@Override
 	public boolean requiresCustomPersistence() {
-		return super.requiresCustomPersistence() || WorldUtil.isWorld(level(), AoADimensions.NOWHERE.key);
+		return super.requiresCustomPersistence() || WorldUtil.isWorld(level(), AoADimensions.NOWHERE);
 	}
 
 	@Override
 	public boolean isInvulnerableTo(DamageSource source) {
-		return super.isInvulnerableTo(source) || (WorldUtil.isWorld(level(), AoADimensions.NOWHERE.key) && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY));
+		return super.isInvulnerableTo(source) || (WorldUtil.isWorld(level(), AoADimensions.NOWHERE) && !source.is(DamageTypeTags.BYPASSES_INVULNERABILITY));
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class SkillMasterEntity extends AoATrader {
 
 	@Override
 	public boolean isPushable() {
-		return !WorldUtil.isWorld(level(), AoADimensions.NOWHERE.key) && super.isPushable();
+		return !WorldUtil.isWorld(level(), AoADimensions.NOWHERE) && super.isPushable();
 	}
 
 	@Override

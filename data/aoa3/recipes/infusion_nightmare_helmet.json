@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:helmet_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:charged_runium_chunk"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:nightmare_helmet"
-  },
-  "tool": {
-    "item": "aoa3:helmet_frame"
   }
 }

@@ -69,7 +69,7 @@ public class BoneHorn extends BossSpawningItem<TyrosaurEntity> {
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
 		if (stack.isDamaged()) {
-			if (level.dimension() == AoADimensions.PRECASIA.key && level instanceof ServerLevel serverLevel) {
+			if (level.dimension() == AoADimensions.PRECASIA && level instanceof ServerLevel serverLevel) {
 				BlockPos spawnPos = RandomUtil.getRandomPositionWithinRange(entity.blockPosition(), 30, 10, 30, 10, 0, 10, true, level, 10, (state, pos) ->
 						level.getBlockState(pos.below()).isValidSpawn(level, pos.below(), AoAMobs.TYROSAUR.get()) && level.noCollision(AoAMobs.TYROSAUR.get().getAABB(pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d)));
 

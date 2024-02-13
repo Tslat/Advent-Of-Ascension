@@ -1,16 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:magic",
+    "aoa3:control",
+    "aoa3:life"
+  ],
   "enchantment": "minecraft:loyalty",
   "enchantment_level": 1,
-  "ingredients": [
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "imbuing_level": 23,
+  "power_source": {
+    "item": "aoa3:blooming_power_stone"
+  }
 }

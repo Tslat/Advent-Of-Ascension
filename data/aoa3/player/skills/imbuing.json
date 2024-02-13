@@ -1,4 +1,839 @@
 {
-  "abilities": [],
+  "abilities": [
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 33,
+      "recipe_id": "aoa3:imbuing_aqua_affinity",
+      "unique_id": "1455984626"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 29,
+      "recipe_id": "aoa3:imbuing_archmage",
+      "unique_id": "44457645"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 39,
+      "recipe_id": "aoa3:imbuing_archmage_ii",
+      "unique_id": "1436353020"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 57,
+      "recipe_id": "aoa3:imbuing_archmage_iii",
+      "unique_id": "-1583953089"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 1,
+      "recipe_id": "aoa3:imbuing_bane_of_arthropods",
+      "unique_id": "466186290"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 12,
+      "recipe_id": "aoa3:imbuing_bane_of_arthropods_ii",
+      "unique_id": "-749130520"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 25,
+      "recipe_id": "aoa3:imbuing_bane_of_arthropods_iii",
+      "unique_id": "1906638464"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 34,
+      "recipe_id": "aoa3:imbuing_bane_of_arthropods_iv",
+      "unique_id": "-749132287"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 40,
+      "recipe_id": "aoa3:imbuing_bane_of_arthropods_v",
+      "unique_id": "-861966846"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 3,
+      "recipe_id": "aoa3:imbuing_blast_protection",
+      "unique_id": "1840195043"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 14,
+      "recipe_id": "aoa3:imbuing_blast_protection_ii",
+      "unique_id": "1429062939"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 26,
+      "recipe_id": "aoa3:imbuing_blast_protection_iii",
+      "unique_id": "-1519752296"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 35,
+      "recipe_id": "aoa3:imbuing_blast_protection_iv",
+      "unique_id": "1429061203"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 68,
+      "recipe_id": "aoa3:imbuing_brace",
+      "unique_id": "1708945589"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 31,
+      "recipe_id": "aoa3:imbuing_channeling",
+      "unique_id": "-1624587224"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 22,
+      "recipe_id": "aoa3:imbuing_control",
+      "unique_id": "1875381517"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 36,
+      "recipe_id": "aoa3:imbuing_control_ii",
+      "unique_id": "1673157954"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 49,
+      "recipe_id": "aoa3:imbuing_control_iii",
+      "unique_id": "1621857790"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 15,
+      "recipe_id": "aoa3:imbuing_depth_strider",
+      "unique_id": "2060777302"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 27,
+      "recipe_id": "aoa3:imbuing_depth_strider_ii",
+      "unique_id": "-944270895"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 37,
+      "recipe_id": "aoa3:imbuing_depth_strider_iii",
+      "unique_id": "1881853930"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 5,
+      "recipe_id": "aoa3:imbuing_efficiency",
+      "unique_id": "1067591684"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 19,
+      "recipe_id": "aoa3:imbuing_efficiency_ii",
+      "unique_id": "1552059505"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 28,
+      "recipe_id": "aoa3:imbuing_efficiency_iii",
+      "unique_id": "-1685228423"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 40,
+      "recipe_id": "aoa3:imbuing_efficiency_iv",
+      "unique_id": "1552059009"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 55,
+      "recipe_id": "aoa3:imbuing_efficiency_v",
+      "unique_id": "-1190489841"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 18,
+      "recipe_id": "aoa3:imbuing_feather_falling",
+      "unique_id": "-1660006205"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 27,
+      "recipe_id": "aoa3:imbuing_feather_falling_ii",
+      "unique_id": "-714237377"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 35,
+      "recipe_id": "aoa3:imbuing_feather_falling_iii",
+      "unique_id": "-1782401478"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 47,
+      "recipe_id": "aoa3:imbuing_feather_falling_iv",
+      "unique_id": "-714239082"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 17,
+      "recipe_id": "aoa3:imbuing_fire_aspect",
+      "unique_id": "2099505204"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 26,
+      "recipe_id": "aoa3:imbuing_fire_aspect_ii",
+      "unique_id": "-709457588"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 15,
+      "recipe_id": "aoa3:imbuing_fire_protection",
+      "unique_id": "31934369"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 24,
+      "recipe_id": "aoa3:imbuing_fire_protection_ii",
+      "unique_id": "269642947"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 33,
+      "recipe_id": "aoa3:imbuing_fire_protection_iii",
+      "unique_id": "758375761"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 49,
+      "recipe_id": "aoa3:imbuing_fire_protection_iv",
+      "unique_id": "269642079"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 25,
+      "recipe_id": "aoa3:imbuing_flame",
+      "unique_id": "-1656372286"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 12,
+      "recipe_id": "aoa3:imbuing_form",
+      "unique_id": "1074865752"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 21,
+      "recipe_id": "aoa3:imbuing_form_ii",
+      "unique_id": "2070233614"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 38,
+      "recipe_id": "aoa3:imbuing_form_iii",
+      "unique_id": "-1347215344"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 13,
+      "recipe_id": "aoa3:imbuing_fortune",
+      "unique_id": "2063141496"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 29,
+      "recipe_id": "aoa3:imbuing_fortune_ii",
+      "unique_id": "-177245657"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 43,
+      "recipe_id": "aoa3:imbuing_fortune_iii",
+      "unique_id": "291896620"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 39,
+      "recipe_id": "aoa3:imbuing_frost_walker",
+      "unique_id": "919430926"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 56,
+      "recipe_id": "aoa3:imbuing_frost_walker_ii",
+      "unique_id": "-671499842"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 10,
+      "recipe_id": "aoa3:imbuing_impaling",
+      "unique_id": "1407430471"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 24,
+      "recipe_id": "aoa3:imbuing_impaling_ii",
+      "unique_id": "-1520141664"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 35,
+      "recipe_id": "aoa3:imbuing_impaling_iii",
+      "unique_id": "-571722826"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 52,
+      "recipe_id": "aoa3:imbuing_impaling_iv",
+      "unique_id": "-1520142129"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 66,
+      "recipe_id": "aoa3:imbuing_impaling_v",
+      "unique_id": "-370563800"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 62,
+      "recipe_id": "aoa3:imbuing_infinity",
+      "unique_id": "1731871246"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 59,
+      "recipe_id": "aoa3:imbuing_intervention",
+      "unique_id": "-357701340"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 7,
+      "recipe_id": "aoa3:imbuing_knockback",
+      "unique_id": "161033376"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 16,
+      "recipe_id": "aoa3:imbuing_knockback_ii",
+      "unique_id": "-1227449292"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 18,
+      "recipe_id": "aoa3:imbuing_looting",
+      "unique_id": "-688842988"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 30,
+      "recipe_id": "aoa3:imbuing_looting_ii",
+      "unique_id": "734513193"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 44,
+      "recipe_id": "aoa3:imbuing_looting_iii",
+      "unique_id": "-2022582884"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 23,
+      "recipe_id": "aoa3:imbuing_loyalty",
+      "unique_id": "-958507555"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 31,
+      "recipe_id": "aoa3:imbuing_loyalty_ii",
+      "unique_id": "-1498663650"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 43,
+      "recipe_id": "aoa3:imbuing_loyalty_iii",
+      "unique_id": "-1281154705"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 1,
+      "recipe_id": "aoa3:imbuing_luck_of_the_sea",
+      "unique_id": "1318501358"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 10,
+      "recipe_id": "aoa3:imbuing_luck_of_the_sea_ii",
+      "unique_id": "-1551221006"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 24,
+      "recipe_id": "aoa3:imbuing_luck_of_the_sea_iii",
+      "unique_id": "-1352562597"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 2,
+      "recipe_id": "aoa3:imbuing_lure",
+      "unique_id": "1068390782"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 15,
+      "recipe_id": "aoa3:imbuing_lure_ii",
+      "unique_id": "-109181184"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 25,
+      "recipe_id": "aoa3:imbuing_lure_iii",
+      "unique_id": "1550171443"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 97,
+      "recipe_id": "aoa3:imbuing_mending",
+      "unique_id": "2057100665"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 45,
+      "recipe_id": "aoa3:imbuing_multishot",
+      "unique_id": "772979438"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 26,
+      "recipe_id": "aoa3:imbuing_piercing",
+      "unique_id": "-2094543379"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 34,
+      "recipe_id": "aoa3:imbuing_piercing_ii",
+      "unique_id": "412282020"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 51,
+      "recipe_id": "aoa3:imbuing_piercing_iii",
+      "unique_id": "-1870352316"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 69,
+      "recipe_id": "aoa3:imbuing_piercing_iv",
+      "unique_id": "412281834"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 25,
+      "recipe_id": "aoa3:imbuing_power",
+      "unique_id": "-1945549648"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 37,
+      "recipe_id": "aoa3:imbuing_power_ii",
+      "unique_id": "-1156012005"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 54,
+      "recipe_id": "aoa3:imbuing_power_iii",
+      "unique_id": "693618851"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 70,
+      "recipe_id": "aoa3:imbuing_power_iv",
+      "unique_id": "-1156012377"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 82,
+      "recipe_id": "aoa3:imbuing_power_v",
+      "unique_id": "-1567533550"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 13,
+      "recipe_id": "aoa3:imbuing_projectile_protection",
+      "unique_id": "-478272630"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 27,
+      "recipe_id": "aoa3:imbuing_projectile_protection_ii",
+      "unique_id": "-1190419045"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 38,
+      "recipe_id": "aoa3:imbuing_projectile_protection_iii",
+      "unique_id": "-388677671"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 51,
+      "recipe_id": "aoa3:imbuing_projectile_protection_iv",
+      "unique_id": "-1190421618"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 8,
+      "recipe_id": "aoa3:imbuing_protection",
+      "unique_id": "-1830112721"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 17,
+      "recipe_id": "aoa3:imbuing_protection_ii",
+      "unique_id": "-1171154145"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 31,
+      "recipe_id": "aoa3:imbuing_protection_iii",
+      "unique_id": "851553644"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 40,
+      "recipe_id": "aoa3:imbuing_protection_iv",
+      "unique_id": "-1171156687"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 25,
+      "recipe_id": "aoa3:imbuing_punch",
+      "unique_id": "-1950559713"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 36,
+      "recipe_id": "aoa3:imbuing_punch_ii",
+      "unique_id": "933435947"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 21,
+      "recipe_id": "aoa3:imbuing_quick_charge",
+      "unique_id": "760069111"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 33,
+      "recipe_id": "aoa3:imbuing_quick_charge_ii",
+      "unique_id": "55109052"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 48,
+      "recipe_id": "aoa3:imbuing_quick_charge_iii",
+      "unique_id": "-619665280"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 24,
+      "recipe_id": "aoa3:imbuing_recharge",
+      "unique_id": "-2061713135"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 39,
+      "recipe_id": "aoa3:imbuing_recharge_ii",
+      "unique_id": "62967259"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 56,
+      "recipe_id": "aoa3:imbuing_recharge_iii",
+      "unique_id": "-998733705"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 73,
+      "recipe_id": "aoa3:imbuing_recharge_iv",
+      "unique_id": "62967104"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 85,
+      "recipe_id": "aoa3:imbuing_recharge_v",
+      "unique_id": "-1687123857"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 14,
+      "recipe_id": "aoa3:imbuing_respiration",
+      "unique_id": "699050550"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 22,
+      "recipe_id": "aoa3:imbuing_respiration_ii",
+      "unique_id": "-881053869"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 35,
+      "recipe_id": "aoa3:imbuing_respiration_iii",
+      "unique_id": "-638564495"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 10,
+      "recipe_id": "aoa3:imbuing_riptide",
+      "unique_id": "1565687247"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 20,
+      "recipe_id": "aoa3:imbuing_riptide_ii",
+      "unique_id": "516437660"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 37,
+      "recipe_id": "aoa3:imbuing_riptide_iii",
+      "unique_id": "1219885784"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 19,
+      "recipe_id": "aoa3:imbuing_sever",
+      "unique_id": "-1891411930"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 27,
+      "recipe_id": "aoa3:imbuing_sever_ii",
+      "unique_id": "-4913667"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 46,
+      "recipe_id": "aoa3:imbuing_sever_iii",
+      "unique_id": "-985803977"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 62,
+      "recipe_id": "aoa3:imbuing_sever_iv",
+      "unique_id": "-4915837"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 70,
+      "recipe_id": "aoa3:imbuing_sever_v",
+      "unique_id": "-104029430"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 9,
+      "recipe_id": "aoa3:imbuing_sharpness",
+      "unique_id": "-1700841092"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 18,
+      "recipe_id": "aoa3:imbuing_sharpness_ii",
+      "unique_id": "236785940"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 25,
+      "recipe_id": "aoa3:imbuing_sharpness_iii",
+      "unique_id": "1711370938"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 45,
+      "recipe_id": "aoa3:imbuing_sharpness_iv",
+      "unique_id": "236785506"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 57,
+      "recipe_id": "aoa3:imbuing_sharpness_v",
+      "unique_id": "-578134075"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 16,
+      "recipe_id": "aoa3:imbuing_shell",
+      "unique_id": "-1893079420"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 26,
+      "recipe_id": "aoa3:imbuing_shell_ii",
+      "unique_id": "-1274393925"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:imbuing_shell_iii",
+      "unique_id": "106003004"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 60,
+      "recipe_id": "aoa3:imbuing_silk_touch",
+      "unique_id": "1157218103"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 14,
+      "recipe_id": "aoa3:imbuing_smite",
+      "unique_id": "-1898624390"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 21,
+      "recipe_id": "aoa3:imbuing_smite_ii",
+      "unique_id": "-875628114"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 37,
+      "recipe_id": "aoa3:imbuing_smite_iii",
+      "unique_id": "1446147215"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 44,
+      "recipe_id": "aoa3:imbuing_smite_iv",
+      "unique_id": "-875628672"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 62,
+      "recipe_id": "aoa3:imbuing_smite_v",
+      "unique_id": "-1375147005"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 20,
+      "recipe_id": "aoa3:imbuing_soul_speed",
+      "unique_id": "485122825"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 30,
+      "recipe_id": "aoa3:imbuing_soul_speed_ii",
+      "unique_id": "559267534"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 40,
+      "recipe_id": "aoa3:imbuing_soul_speed_iii",
+      "unique_id": "245593819"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 10,
+      "recipe_id": "aoa3:imbuing_sweeping_edge",
+      "unique_id": "-1267191384"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 22,
+      "recipe_id": "aoa3:imbuing_sweeping_edge_ii",
+      "unique_id": "1229830181"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 32,
+      "recipe_id": "aoa3:imbuing_sweeping_edge_iii",
+      "unique_id": "1739431412"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 35,
+      "recipe_id": "aoa3:imbuing_swift_sneak",
+      "unique_id": "556747631"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:imbuing_swift_sneak_ii",
+      "unique_id": "-545126701"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:swift_sneak_iii",
+      "unique_id": "1452520456"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:thorns",
+      "unique_id": "959720354"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:thorns_ii",
+      "unique_id": "-211227849"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:thorns_iii",
+      "unique_id": "1199544720"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:unbreaking",
+      "unique_id": "876553058"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:unbreaking_ii",
+      "unique_id": "1709505399"
+    },
+    {
+      "id": "aoa3:imbuing_level_restriction",
+      "level_req": 42,
+      "recipe_id": "aoa3:unbreaking_iii",
+      "unique_id": "297832528"
+    },
+    {
+      "id": "aoa3:grindstone_curses_removal",
+      "level_req": 26,
+      "unique_id": "-1677288371"
+    },
+    {
+      "id": "aoa3:enchant_entity_equipment",
+      "level_req": 74,
+      "unique_id": "143817153"
+    },
+    {
+      "id": "aoa3:enchant_container_contents",
+      "level_req": 92,
+      "unique_id": "581431109"
+    },
+    {
+      "id": "aoa3:level_restriction",
+      "level_req": 100,
+      "restricted_id": "aoa3:helm_of_the_ritualist",
+      "restrictions": [
+        "equip"
+      ],
+      "unique_id": "1461853211"
+    }
+  ],
   "xp_modifier": 1.0
 }

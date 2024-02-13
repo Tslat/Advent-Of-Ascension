@@ -29,7 +29,7 @@ public class GuardianAltar extends Block {
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
-		if (!WorldUtil.isWorld(world, AoADimensions.HAVEN.key))
+		if (!WorldUtil.isWorld(world, AoADimensions.HAVEN))
 			return InteractionResult.FAIL;
 
 		if (heldStack.getItem() == AoAItems.VOLIANT_HEART.get()) {

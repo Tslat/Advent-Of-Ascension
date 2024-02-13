@@ -130,7 +130,7 @@ public class AdventGuiTabLeaderboard extends Screen {
 			for (SkillSelectButton button : this.buttons) {
 				button.x = left + 10;
 				button.y = top + y;
-				button.render(guiGraphics, this.mouseX, this.mouseY, partialTicks);
+				button.render(guiGraphics, (int)this.mouseX, (int)this.mouseY, partialTicks);
 
 				y += 45;
 			}

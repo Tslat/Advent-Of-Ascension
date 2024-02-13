@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:chestplate_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:dense_rock"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:subterranean_chestplate"
-  },
-  "tool": {
-    "item": "aoa3:chestplate_frame"
   }
 }

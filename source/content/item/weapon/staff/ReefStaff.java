@@ -34,10 +34,7 @@ import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class ReefStaff extends BaseStaff<Boolean> {
@@ -80,10 +77,9 @@ public class ReefStaff extends BaseStaff<Boolean> {
 		runes.put(AoAItems.WATER_RUNE.get(), 1);
 	}
 
-	@Nullable
 	@Override
-	public Boolean checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return WorldUtil.canPlaceBlock(caster.level(), caster.blockPosition(), caster, staff) && caster.isInWater() ? true : null;
+	public Optional<Boolean> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		return Optional.ofNullable(WorldUtil.canPlaceBlock(caster.level(), caster.blockPosition(), caster, staff) && caster.isInWater() ? true : null);
 	}
 
 	@Override

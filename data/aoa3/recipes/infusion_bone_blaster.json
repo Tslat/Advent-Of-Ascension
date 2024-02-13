@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:blaster_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:jungle_thorns"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:bone_blaster"
-  },
-  "tool": {
-    "item": "aoa3:blaster_frame"
   }
 }

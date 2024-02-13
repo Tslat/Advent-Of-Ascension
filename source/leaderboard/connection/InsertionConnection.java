@@ -28,8 +28,10 @@ public class InsertionConnection extends LeaderboardConnection {
                     "WHEN MATCHED THEN UPDATE SET Totals.Total=I.TOTAL, Totals.LastUpdate = I.CURDATE " +
                     "WHEN NOT MATCHED THEN INSERT (Uuid, Username, Total, LastUpdate) VALUES (I.UUID, I.USER, I.TOTAL, I.CURDATE)");
 
-        for (AoASkill skill : AoARegistries.AOA_SKILLS.getAllRegisteredObjects()) {
-            String tableName = LeaderboardTask.idToTableName(AoARegistries.AOA_SKILLS.getId(skill));
+
+
+        for (AoASkill skill : AoARegistries.AOA_SKILLS) {
+            String tableName = LeaderboardTask.idToTableName(AoARegistries.AOA_SKILLS.getKey(skill));
 
             INSERT_OR_UPDATE_PLAYER_SKILL.put(skill, connection.prepareStatement(
                     "MERGE INTO " + tableName + " " +

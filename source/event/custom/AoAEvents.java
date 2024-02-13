@@ -3,7 +3,6 @@ package net.tslat.aoa3.event.custom;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -46,8 +45,15 @@ public final class AoAEvents {
 	/**
 	 * Returns true if cancelled
 	 */
-	public static boolean firePlayerCraftingEvent(Player player, ItemStack crafting, CraftingContainer craftingInventory, ResultContainer outputInventory) {
+	public static boolean firePlayerCraftingEvent(Player player, ItemStack crafting, Container craftingInventory, ResultContainer outputInventory) {
 		return NeoForge.EVENT_BUS.post(new ItemCraftingEvent(player, crafting, craftingInventory, outputInventory)).isCanceled();
+	}
+
+	/**
+	 * Returns true if cancelled
+	 */
+	public static boolean firePlayerGrindstoneEvent(Player player, ItemStack result, Container inputSlots) {
+		return NeoForge.EVENT_BUS.post(new GrindstoneResultEvent(player, result, inputSlots)).isCanceled();
 	}
 
 	public static void firePlayerSmeltingEvent(Player player, ItemStack smelting, Container outputInventory) {

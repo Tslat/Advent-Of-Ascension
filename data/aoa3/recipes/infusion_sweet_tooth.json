@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:sniper_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:candy_corn"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:sweet_tooth"
-  },
-  "tool": {
-    "item": "aoa3:sniper_frame"
   }
 }

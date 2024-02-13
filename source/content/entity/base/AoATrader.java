@@ -42,6 +42,7 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.HashMap;
+import java.util.function.Supplier;
 
 public abstract class AoATrader extends Villager implements GeoEntity {
 	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
@@ -261,10 +262,10 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 	}
 
 	public static class BuildableTrade implements VillagerTrades.ItemListing {
-		private final ItemStack item;
-		private ItemStack cost1 = null;
+		private final Supplier<ItemStack> item;
+		private Supplier<ItemStack> cost1 = null;
 		@Nullable
-		private ItemStack cost2 = null;
+		private Supplier<ItemStack> cost2 = null;
 
 		private int xpValue = 2;
 		private float priceMultiplier = 0.05f;
@@ -272,19 +273,19 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 
 		private boolean isLocked = false;
 
-		private BuildableTrade(ItemStack item) {
+		private BuildableTrade(Supplier<ItemStack> item) {
 			this.item = item;
 		}
 
-		public static BuildableTrade trade(ItemLike item) {
-			return trade(item, 1);
+		public static BuildableTrade forItem(ItemLike item) {
+			return new BuildableTrade(() -> item.asItem().getDefaultInstance());
 		}
 
-		public static BuildableTrade trade(ItemLike item, int amount) {
-			return trade(new ItemStack(item, amount));
+		public static BuildableTrade forItem(ItemLike item, int amount) {
+			return new BuildableTrade(() -> new ItemStack(item, amount));
 		}
 
-		public static BuildableTrade trade(ItemStack stack) {
+		public static BuildableTrade forStack(Supplier<ItemStack> stack) {
 			return new BuildableTrade(stack);
 		}
 
@@ -295,15 +296,19 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 			return this;
 		}
 
-		public BuildableTrade cost(ItemLike item) {
-			return cost(item, 1);
+		public BuildableTrade itemCost(ItemLike item) {
+			return itemCost(item, 1);
 		}
 
-		public BuildableTrade cost(ItemLike item, int amount) {
-			return cost(new ItemStack(item, amount));
+		public BuildableTrade itemCost(ItemLike item, int amount) {
+			return stackCost(() -> new ItemStack(item, amount));
 		}
 
-		public BuildableTrade cost(ItemStack cost) {
+		public BuildableTrade itemCost(Supplier<ItemLike> item) {
+			return stackCost(() -> item.get().asItem().getDefaultInstance());
+		}
+
+		public BuildableTrade stackCost(Supplier<ItemStack> cost) {
 			if (this.cost1 == null) {
 				this.cost1 = cost;
 			}
@@ -338,10 +343,10 @@ public abstract class AoATrader extends Villager implements GeoEntity {
 			MerchantOffer offer;
 
 			if (cost2 != null) {
-				offer = new MerchantOffer(cost1.copy(), cost2.copy(), item.copy(), maxUses, xpValue, priceMultiplier);
+				offer = new MerchantOffer(cost1.get(), cost2.get(), item.get(), maxUses, xpValue, priceMultiplier);
 			}
 			else if (cost1 != null) {
-				offer = new MerchantOffer(cost1.copy(), item.copy(), maxUses, xpValue, priceMultiplier);
+				offer = new MerchantOffer(cost1.get(), item.get(), maxUses, xpValue, priceMultiplier);
 			}
 			else {
 				return null;

@@ -1,0 +1,18 @@
+{
+  "type": "aoa3:structure_piece",
+  "config": {
+    "processors": {
+      "processors": []
+    },
+    "random_mirroring": false,
+    "random_rotation": false,
+    "require_ground": false,
+    "templates": [
+      "aoa3:precasia/feature/opteryx_nest_1",
+      "aoa3:precasia/feature/opteryx_nest_2",
+      "aoa3:precasia/feature/opteryx_nest_3",
+      "aoa3:precasia/feature/opteryx_nest_4",
+      "aoa3:precasia/feature/opteryx_nest_5"
+    ]
+  }
+}

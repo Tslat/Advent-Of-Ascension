@@ -9,7 +9,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.neoforged.neoforge.common.Tags;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
@@ -48,7 +47,7 @@ public class DartGun extends BaseGun {
 	@Nullable
 	@Override
 	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findItemByTag((Player)shooter, Tags.Items.SEEDS, !shooter.level().isClientSide(), 1 + EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), gunStack)))
+		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findItemByTag((Player)shooter, Tags.Items.SEEDS, !shooter.level().isClientSide(), 1 + gunStack.getEnchantmentLevel(AoAEnchantments.GREED.get())))
 			return createProjectileEntity(shooter, gunStack, hand);
 
 		return null;

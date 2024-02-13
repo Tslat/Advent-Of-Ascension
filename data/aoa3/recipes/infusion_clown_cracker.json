@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:sniper_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:confetti_pile"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:clown_cracker"
-  },
-  "tool": {
-    "item": "aoa3:sniper_frame"
   }
 }

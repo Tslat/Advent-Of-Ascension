@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:gun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:small_red_petal"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:chilli_chugger"
-  },
-  "tool": {
-    "item": "aoa3:gun_frame"
   }
 }

@@ -16,16 +16,16 @@ import net.tslat.aoa3.content.item.misc.ReservedItem;
 public class AssassinEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAWeapons.GOO_BALL, 3).cost(AoAItems.COPPER_COIN, 2),
-					BuildableTrade.trade(AoAWeapons.SLICE_STAR, 2).cost(AoAItems.COPPER_COIN, 2))
+					BuildableTrade.forItem(AoAWeapons.GOO_BALL, 3).itemCost(AoAItems.COPPER_COIN, 2),
+					BuildableTrade.forItem(AoAWeapons.SLICE_STAR, 2).itemCost(AoAItems.COPPER_COIN, 2))
 			.trades(2,
-					BuildableTrade.trade(AoAWeapons.CHAKRAM, 2).cost(AoAItems.COPPER_COIN, 3).xp(3),
-					BuildableTrade.trade(AoAWeapons.VULKRAM, 2).cost(AoAItems.COPPER_COIN, 3).xp(3))
+					BuildableTrade.forItem(AoAWeapons.CHAKRAM, 2).itemCost(AoAItems.COPPER_COIN, 3).xp(3),
+					BuildableTrade.forItem(AoAWeapons.VULKRAM, 2).itemCost(AoAItems.COPPER_COIN, 3).xp(3))
 			.trades(3,
-					BuildableTrade.trade(AoAItems.METAL_SLUG, 2).cost(AoAItems.COPPER_COIN, 2),
-					BuildableTrade.trade(AoAItems.LIMONITE_BULLET, 5).cost(AoAItems.COPPER_COIN, 2))
+					BuildableTrade.forItem(AoAItems.METAL_SLUG, 2).itemCost(AoAItems.COPPER_COIN, 2),
+					BuildableTrade.forItem(AoAItems.LIMONITE_BULLET, 5).itemCost(AoAItems.COPPER_COIN, 2))
 			.trades(4,
-					BuildableTrade.trade(AoAWeapons.HELLFIRE).cost(AoAItems.COPPER_COIN, 2)).build();
+					BuildableTrade.forItem(AoAWeapons.HELLFIRE).itemCost(AoAItems.COPPER_COIN, 2)).build();
 
 	public AssassinEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);

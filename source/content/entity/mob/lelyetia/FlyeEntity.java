@@ -143,8 +143,8 @@ public class FlyeEntity extends AoAFlyingMeleeMob {
 		super.die(cause);
 
 		if (!level().isClientSide) {
-			if (WorldUtil.isWorld(level(), AoADimensions.LELYETIA.key) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof Player pl) {
-				if (pl.getY() >= 120 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (WorldUtil.isWorld(level(), AoADimensions.LELYETIA) && DamageUtil.isMeleeDamage(cause) && cause.getEntity() instanceof Player pl) {
+				if (pl.getY() >= 120 && ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 					ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.HAVEN_REALMSTONE.get()));
 			}
 

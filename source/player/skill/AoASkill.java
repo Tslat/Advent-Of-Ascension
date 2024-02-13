@@ -12,6 +12,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
+import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.XpGainPacket;
 import net.tslat.aoa3.common.registration.AoAAdvancementTriggers;
@@ -41,7 +42,7 @@ public final class AoASkill {
 	private final Function<CompoundTag, Instance> clientFactory;
 
 	public AoASkill(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundTag, Instance> clientFactory) {
-		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("skill", AoARegistries.AOA_SKILLS.getId(this))));
+		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("skill", AoARegistries.AOA_SKILLS.getKey(this))));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
 	}
@@ -93,7 +94,7 @@ public final class AoASkill {
 
 		protected Instance(AoASkill skill, CompoundTag instanceData) {
 			this.skill = skill;
-			this.xpModifier = instanceData.getFloat("xp_modifier");
+			this.xpModifier = instanceData.contains("xp_modifier") ? instanceData.getFloat("xp_modifier") : 1;
 
 			if (instanceData.contains("abilities")) {
 				CompoundTag abilityData = instanceData.getCompound("abilities");
@@ -116,7 +117,7 @@ public final class AoASkill {
 		}
 
 		public MutableComponent getName() {
-			return type().getName();
+			return type().getName().copy();
 		}
 
 		public HashMap<String, AoAAbility.Instance> getAbilityMap() {
@@ -124,7 +125,7 @@ public final class AoASkill {
 		}
 
 		public Player getPlayer() {
-			return this.playerDataManager.player();
+			return this.playerDataManager == null ? ClientOperations.getPlayer() : this.playerDataManager.player();
 		}
 
 		public ServerPlayerDataManager getPlayerDataManager() {
@@ -170,7 +171,7 @@ public final class AoASkill {
 		private float applyXpBuffs(float xp) {
 			xp *= AoAConfigs.SERVER.globalXpModifier.get();
 
-			if (WorldUtil.isWorld(getPlayer().level(), AoADimensions.NOWHERE.key))
+			if (WorldUtil.isWorld(getPlayer().level(), AoADimensions.NOWHERE))
 				xp *= 0.5f;
 
 			xp *= xpModifier;
@@ -235,7 +236,7 @@ public final class AoASkill {
 			this.needsSync = true;
 
 			playerDataManager.checkAndUpdateLegitimacy();
-			AoANetworking.sendToPlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
+			AoANetworking.sendToPlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getKey(skill), xp, newLevels > 0));
 		}
 
 		private void subtractXp(float xp, boolean isUnnaturalSource) {
@@ -266,7 +267,7 @@ public final class AoASkill {
 			if (!isUnnaturalSource)
 				playerDataManager.applyLegitimacyPenalties();
 
-			AoANetworking.sendToPlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getId(skill), xp, newLevels > 0));
+			AoANetworking.sendToPlayer(playerDataManager.player(), new XpGainPacket(AoARegistries.AOA_SKILLS.getKey(skill), xp, newLevels > 0));
 		}
 
 		private void levelUp(int oldLevel, int newLevel, boolean isNaturalLevel) {

@@ -1,17 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:damage",
+    "aoa3:power",
+    "aoa3:precision"
+  ],
   "enchantment": "aoa3:sever",
   "enchantment_level": 1,
-  "infusion_level": 12,
-  "ingredients": [
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:glistening_power_stone"
-    },
-    {
-      "tag": "neoforge:rods/metal"
-    }
-  ]
+  "imbuing_level": 19,
+  "power_source": {
+    "item": "aoa3:glistening_power_stone"
+  }
 }

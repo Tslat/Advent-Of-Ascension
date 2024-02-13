@@ -62,7 +62,7 @@ public class NecroArmour extends AdventArmour {
 				for (int i = 0; i < compartment.size(); i++) {
 					ItemStack stack = compartment.get(i);
 
-					if (!stack.isEmpty() && stack.getEnchantmentLevel(AoAEnchantments.INTERVENTION.get()) == 0 && stack.getEnchantmentLevel(Enchantments.VANISHING_CURSE) == 0) {
+					if (!stack.isEmpty() && !ItemUtil.hasEnchantment(stack, AoAEnchantments.INTERVENTION.get()) && !ItemUtil.hasEnchantment(stack, Enchantments.VANISHING_CURSE)) {
 						plData.storeItem(slotIndex + i, stack);
 						compartment.set(i, ItemStack.EMPTY);
 						count--;

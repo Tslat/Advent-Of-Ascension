@@ -50,8 +50,7 @@ public final class ModelProperties {
 				(BaseBow)AoAWeapons.TOXIN_BOW.get(),
 				(BaseBow)AoAWeapons.VOID_BOW.get(),
 				(BaseBow)AoAWeapons.WEAKEN_BOW.get(),
-				(BaseBow)AoAWeapons.WITHER_BOW.get()
-		);
+				(BaseBow)AoAWeapons.WITHER_BOW.get());
 
 		registerCrossbows(
 				(BaseCrossbow)AoAWeapons.CORAL_CROSSBOW.get(),

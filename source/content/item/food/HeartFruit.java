@@ -28,7 +28,7 @@ public class HeartFruit extends Item {
 		if (!world.isClientSide) {
 			DamageUtil.doRecoilAttack(entity, 7);
 
-			if (entity.getHealth() > 0 && WorldUtil.isWorld(world, AoADimensions.PRECASIA.key) && entity instanceof ServerPlayer && ItemUtil.findInventoryItem((ServerPlayer)entity, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (entity.getHealth() > 0 && WorldUtil.isWorld(world, AoADimensions.PRECASIA) && entity instanceof ServerPlayer && ItemUtil.findInventoryItem((ServerPlayer)entity, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 				ItemUtil.givePlayerItemOrDrop((ServerPlayer)entity, new ItemStack(AoAItems.CANDYLAND_REALMSTONE.get()));
 		}
 

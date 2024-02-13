@@ -5,14 +5,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.tslat.aoa3.advent.AoAStartupCache;
 import net.tslat.aoa3.common.registration.AoABannerPatterns;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
+import net.tslat.aoa3.common.registration.custom.AoAAspectFocus;
+import net.tslat.aoa3.common.registration.entity.variant.PixonVariant;
 import net.tslat.aoa3.content.item.food.*;
 import net.tslat.aoa3.content.item.lootbox.*;
 import net.tslat.aoa3.content.item.misc.*;
@@ -92,7 +92,7 @@ public final class AoAItems {
 	public static final DeferredItem<Item> WIND_RUNE = registerItem("wind_rune", miscItem());
 	public static final DeferredItem<Item> WITHER_RUNE = registerItem("wither_rune", miscItem());
 
-	public static final DeferredItem<Item> ASHFERN = registerItem("ashfern", miscFuelItem(800));
+	public static final DeferredItem<Item> ASHFERN = registerItem("ashfern", miscItem());
 	public static final DeferredItem<Item> ACTIVE_RUNE_STONE = registerItem("active_rune_stone", miscItem());
 	public static final DeferredItem<Item> ALIEN_ORB = registerItem("alien_orb", () -> new ReservedItem("alien_orb"));
 	public static final DeferredItem<Item> ARMOUR_PLATING = registerItem("armour_plating", miscItem());
@@ -103,7 +103,7 @@ public final class AoAItems {
 	public static final DeferredItem<Item> SILVER_COIN = registerItem("silver_coin", miscItem());
 	public static final DeferredItem<Item> GOLD_COIN = registerItem("gold_coin", miscItem());
 	public static final DeferredItem<Item> LUNAVER_COIN = registerItem("lunaver_coin", miscItem());
-	public static final DeferredItem<Item> CONFETTI_PILE = registerItem("confetti_pile", miscFuelItem(10));
+	public static final DeferredItem<Item> CONFETTI_PILE = registerItem("confetti_pile", miscItem());
 	public static final DeferredItem<Item> CORAL_STONE = registerItem("coral_stone", miscItem());
 	public static final DeferredItem<Item> COSMIC_DUST = registerItem("cosmic_dust", miscItem());
 	public static final DeferredItem<Item> CUP = registerItem("cup", miscItem());
@@ -119,7 +119,7 @@ public final class AoAItems {
 	public static final DeferredItem<Item> YELLOW_DRUSE = registerItem("yellow_druse", miscItem());
 	public static final DeferredItem<Item> ENCHANTED_GUNPOWDER = registerItem("enchanted_gunpowder", miscItem());
 	public static final DeferredItem<Item> EYE_BULB = registerItem("eye_bulb", () -> new ItemNameBlockItem(AoABlocks.EYE_BULB_CROP.get(), new Item.Properties().food(new FoodProperties.Builder().nutrition(2).saturationMod(0.4f).build())));
-	public static final DeferredItem<Item> FLAMMABLE_DUST = registerItem("flammable_dust", miscFuelItem(100));
+	public static final DeferredItem<Item> FLAMMABLE_DUST = registerItem("flammable_dust", miscItem());
 	public static final DeferredItem<Item> FLESHY_BONES = registerItem("fleshy_bones", () -> new ReservedItem("alien_orb"), (ResourceKey<CreativeModeTab>[])null);
 	public static final DeferredItem<Item> FLOATING_STONE = registerItem("floating_stone", FloatingStone::new);
 	public static final DeferredItem<Item> BLUE_GEMSTONES = registerItem("blue_gemstones", miscItem());
@@ -130,7 +130,7 @@ public final class AoAItems {
 	public static final DeferredItem<Item> YELLOW_GEMSTONES = registerItem("yellow_gemstones", miscItem());
 	public static final DeferredItem<Item> GHOSTLY_POWDER = registerItem("ghostly_powder", miscItem());
 	public static final DeferredItem<Item> GHOULASM = registerItem("ghoulasm", miscItem());
-	public static final DeferredItem<Item> HARDENED_CONFETTI_BALL = registerItem("hardened_confetti_ball", miscFuelItem(120));
+	public static final DeferredItem<Item> HARDENED_CONFETTI_BALL = registerItem("hardened_confetti_ball", miscItem());
 	public static final DeferredItem<Item> HIVE_CHUNK = registerItem("hive_chunk", HiveChunk::new);
 	public static final DeferredItem<Item> ICE_CRYSTAL = registerItem("ice_crystal", miscItem());
 	public static final DeferredItem<Item> IVORY = registerItem("ivory", miscItem());
@@ -156,12 +156,12 @@ public final class AoAItems {
 	public static final DeferredItem<Item> OLD_BOOT = registerItem("old_boot", OldBoot::new);
 	public static final DeferredItem<Item> ORANGE_SPORES = registerItem("orange_spores", miscItem());
 	public static final DeferredItem<Item> ORBULON = registerItem("orbulon", miscItem());
-	public static final DeferredItem<Item> PADDED_CLOTH = registerItem("padded_cloth", miscFuelItem(110));
+	public static final DeferredItem<Item> PADDED_CLOTH = registerItem("padded_cloth", miscItem());
 	public static final DeferredItem<Item> PHANTASM = registerItem("phantasm", miscItem());
 	public static final DeferredItem<Item> POWER_CORE = registerItem("power_core", miscItem());
 	public static final DeferredItem<Item> PRIMED_GHOULASM = registerItem("primed_ghoulasm", miscItem());
 	public static final DeferredItem<Item> PRIMORDIAL_SKULL = registerItem("primordial_skull", miscItem());
-	public static final DeferredItem<Item> REINFORCED_CLOTH = registerItem("reinforced_cloth", miscFuelItem(90));
+	public static final DeferredItem<Item> REINFORCED_CLOTH = registerItem("reinforced_cloth", miscItem());
 	public static final DeferredItem<Item> RETURN_CRYSTAL = registerItem("return_crystal", ReturnCrystal::new);
 	public static final DeferredItem<Item> ROCK_BONES = registerItem("rock_bones", () -> new ReservedItem("alien_orb"));
 	public static final DeferredItem<Item> ROSID_ROOT = registerItem("rosid_root", miscItem());
@@ -303,24 +303,37 @@ public final class AoAItems {
 	public static final DeferredItem<Item> SHYRELANDS_REALMSTONE = registerItem("shyrelands_realmstone", () -> new Realmstone(null/*AoABlocks.SHYRELANDS_PORTAL*/, "shyrelands"));
 	public static final DeferredItem<Item> VOX_PONDS_REALMSTONE = registerItem("vox_ponds_realmstone", () -> new Realmstone(null/*AoABlocks.VOX_PONDS_PORTAL*/, "vox_ponds"));
 
-	public static final DeferredItem<Item> AMBIENT_POWER_STONE = registerItem("ambient_power_stone", miscItem());
-	public static final DeferredItem<Item> BLOOMING_POWER_STONE = registerItem("blooming_power_stone", miscItem());
-	public static final DeferredItem<Item> GLARING_POWER_STONE = registerItem("glaring_power_stone", miscItem());
-	public static final DeferredItem<Item> GLEAMING_POWER_STONE = registerItem("gleaming_power_stone", miscItem());
-	public static final DeferredItem<Item> GLISTENING_POWER_STONE = registerItem("glistening_power_stone", miscItem());
-	public static final DeferredItem<Item> GLOWING_POWER_STONE = registerItem("glowing_power_stone", miscItem());
-	public static final DeferredItem<Item> RADIANT_POWER_STONE = registerItem("radiant_power_stone", miscItem());
-	public static final DeferredItem<Item> SHINING_POWER_STONE = registerItem("shining_power_stone", miscItem());
-	
-	public static final DeferredItem<Item> AMBIENT_INFUSION_STONE = registerItem("ambient_infusion_stone", () -> new InfusionStone(20, 20.0f, AMBIENT_POWER_STONE));
-	public static final DeferredItem<Item> BLOOMING_INFUSION_STONE = registerItem("blooming_infusion_stone", () -> new InfusionStone(80, 300.0f, BLOOMING_POWER_STONE));
-	public static final DeferredItem<Item> GLARING_INFUSION_STONE = registerItem("glaring_infusion_stone", () -> new InfusionStone(30, 40.0f, GLARING_POWER_STONE));
-	public static final DeferredItem<Item> GLEAMING_INFUSION_STONE = registerItem("gleaming_infusion_stone", () -> new InfusionStone(15, 16.0f, GLEAMING_POWER_STONE));
-	public static final DeferredItem<Item> GLISTENING_INFUSION_STONE = registerItem("glistening_infusion_stone", () -> new InfusionStone(5, 8.0f, GLISTENING_POWER_STONE));
-	public static final DeferredItem<Item> GLOWING_INFUSION_STONE = registerItem("glowing_infusion_stone", () -> new InfusionStone(45, 85.0f, GLOWING_POWER_STONE));
-	public static final DeferredItem<Item> RADIANT_INFUSION_STONE = registerItem("radiant_infusion_stone", () -> new InfusionStone(70, 220.0f, RADIANT_POWER_STONE));
-	public static final DeferredItem<Item> SHINING_INFUSION_STONE = registerItem("shining_infusion_stone", () -> new InfusionStone(60, 150.0f, SHINING_POWER_STONE));
-	
+	public static final DeferredItem<Item> AMBIENT_POWER_STONE = registerItem("ambient_power_stone", () -> new PowerStone(10, 27500, PixonVariant.AMBIENT));
+	public static final DeferredItem<Item> GLISTENING_POWER_STONE = registerItem("glistening_power_stone", () -> new PowerStone(12, 30000, PixonVariant.GLISTENING));
+	public static final DeferredItem<Item> BLOOMING_POWER_STONE = registerItem("blooming_power_stone", () -> new PowerStone(15, 32500, PixonVariant.BLOOMING));
+	public static final DeferredItem<Item> SHINING_POWER_STONE = registerItem("shining_power_stone", () -> new PowerStone(18, 35000, PixonVariant.SHINING));
+	public static final DeferredItem<Item> GLEAMING_POWER_STONE = registerItem("gleaming_power_stone", () -> new PowerStone(21, 37500, PixonVariant.GLEAMING));
+	public static final DeferredItem<Item> GLOWING_POWER_STONE = registerItem("glowing_power_stone", () -> new PowerStone(24, 40000, PixonVariant.GLOWING));
+	public static final DeferredItem<Item> GLARING_POWER_STONE = registerItem("glaring_power_stone", () -> new PowerStone(27, 42500, PixonVariant.GLARING));
+	public static final DeferredItem<Item> RADIANT_POWER_STONE = registerItem("radiant_power_stone", () -> new PowerStone(30, 45000, PixonVariant.RADIANT));
+
+	public static final DeferredItem<Item> AMBIENT_ENERGY_STONE = registerItem("ambient_energy_stone", () -> new EnergyStone(1 / 200f, AMBIENT_POWER_STONE));
+	public static final DeferredItem<Item> GLISTENING_ENERGY_STONE = registerItem("glistening_energy_stone", () -> new EnergyStone(1 / 175f, GLISTENING_POWER_STONE));
+	public static final DeferredItem<Item> BLOOMING_ENERGY_STONE = registerItem("blooming_energy_stone", () -> new EnergyStone(1 / 150f, BLOOMING_POWER_STONE));
+	public static final DeferredItem<Item> SHINING_ENERGY_STONE = registerItem("shining_energy_stone", () -> new EnergyStone(1 / 125f, SHINING_POWER_STONE));
+	public static final DeferredItem<Item> GLEAMING_ENERGY_STONE = registerItem("gleaming_energy_stone", () -> new EnergyStone(1 / 100f, GLEAMING_POWER_STONE));
+	public static final DeferredItem<Item> GLOWING_ENERGY_STONE = registerItem("glowing_energy_stone", () -> new EnergyStone(1 / 90f, GLOWING_POWER_STONE));
+	public static final DeferredItem<Item> GLARING_ENERGY_STONE = registerItem("glaring_energy_stone", () -> new EnergyStone(1 / 80f, GLARING_POWER_STONE));
+	public static final DeferredItem<Item> RADIANT_ENERGY_STONE = registerItem("radiant_energy_stone", () -> new EnergyStone(1 / 70f, RADIANT_POWER_STONE));
+
+	public static final DeferredItem<AspectFocusItem> CHANGE_FOCUS = registerItem("change_focus", () -> new AspectFocusItem(AoAAspectFocus.CHANGE, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> CONTROL_FOCUS = registerItem("control_focus", () -> new AspectFocusItem(AoAAspectFocus.CONTROL, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> DAMAGE_FOCUS = registerItem("damage_focus", () -> new AspectFocusItem(AoAAspectFocus.DAMAGE, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> DURABILITY_FOCUS = registerItem("durability_focus", () -> new AspectFocusItem(AoAAspectFocus.DURABILITY, new Item.Properties().durability(20)));
+	public static final DeferredItem<AspectFocusItem> ELEMENTAL_FOCUS = registerItem("elemental_focus", () -> new AspectFocusItem(AoAAspectFocus.ELEMENTAL, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> LIFE_FOCUS = registerItem("life_focus", () -> new AspectFocusItem(AoAAspectFocus.LIFE, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> LUCK_FOCUS = registerItem("luck_focus", () -> new AspectFocusItem(AoAAspectFocus.LUCK, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> MAGIC_FOCUS = registerItem("magic_focus", () -> new AspectFocusItem(AoAAspectFocus.MAGIC, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> POWER_FOCUS = registerItem("power_focus", () -> new AspectFocusItem(AoAAspectFocus.POWER, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> PRECISION_FOCUS = registerItem("precision_focus", () -> new AspectFocusItem(AoAAspectFocus.PRECISION, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> RESOURCE_FOCUS = registerItem("resource_focus", () -> new AspectFocusItem(AoAAspectFocus.RESOURCE, new Item.Properties().durability(10)));
+	public static final DeferredItem<AspectFocusItem> SPEED_FOCUS = registerItem("speed_focus", () -> new AspectFocusItem(AoAAspectFocus.SPEED, new Item.Properties().durability(10)));
+
 	public static final DeferredItem<Item> GIANT_SKILL_CRYSTAL = registerItem("giant_skill_crystal", () -> new SkillCrystal(4, Rarity.EPIC));
 	public static final DeferredItem<Item> LARGE_SKILL_CRYSTAL = registerItem("large_skill_crystal", () -> new SkillCrystal(8, Rarity.RARE));
 	public static final DeferredItem<Item> MEDIUM_SKILL_CRYSTAL = registerItem("medium_skill_crystal", () -> new SkillCrystal(12, Rarity.UNCOMMON));
@@ -454,14 +467,5 @@ public final class AoAItems {
 
 	private static Supplier<Item> miscItem() {
 		return () -> new Item(new Item.Properties());
-	}
-
-	private static Supplier<Item> miscFuelItem(int burnTime) {
-		return () -> new Item(new Item.Properties()) {
-			@Override
-			public int getBurnTime(ItemStack itemStack, @Nullable RecipeType<?> recipeType) {
-				return burnTime;
-			}
-		};
 	}
 }

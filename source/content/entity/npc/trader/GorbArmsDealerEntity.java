@@ -18,13 +18,13 @@ import org.jetbrains.annotations.Nullable;
 public class GorbArmsDealerEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 2).cost(Items.ARROW))
+					BuildableTrade.forItem(AoAItems.COPPER_COIN, 2).itemCost(Items.ARROW))
 			.trades(2,
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 7).cost(AoAWeapons.RUNIC_BOMB).xp(5),
-					BuildableTrade.trade(AoAWeapons.GRENADE, 5).cost(AoAItems.SILVER_COIN).xp(15))
+					BuildableTrade.forItem(AoAItems.COPPER_COIN, 7).itemCost(AoAWeapons.RUNIC_BOMB).xp(5),
+					BuildableTrade.forItem(AoAWeapons.GRENADE, 5).itemCost(AoAItems.SILVER_COIN).xp(15))
 			.trades(3,
-					BuildableTrade.trade(AoAWeapons.LASER_BLASTER).cost(AoAItems.GOLD_COIN, 3).xp(50).stock(5),
-					BuildableTrade.trade(AoAItems.WEAPON_PARTS).cost(AoAItems.GOLD_COIN, 10).xp(100).stock(1)).build();
+					BuildableTrade.forItem(AoAWeapons.LASER_BLASTER).itemCost(AoAItems.GOLD_COIN, 3).xp(50).stock(5),
+					BuildableTrade.forItem(AoAItems.WEAPON_PARTS).itemCost(AoAItems.GOLD_COIN, 10).xp(100).stock(1)).build();
 
 	public GorbArmsDealerEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -37,7 +37,7 @@ public class GorbArmsDealerEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.MYSTERIUM.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.MYSTERIUM);
 	}
 
 	@Nullable

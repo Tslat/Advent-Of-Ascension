@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:leggings_frame"
+  },
   "ingredients": [
     {
       "tag": "neoforge:ingots/varsium"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:embrodium_leggings"
-  },
-  "tool": {
-    "item": "aoa3:leggings_frame"
   }
 }

@@ -1,20 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:luck",
+    "aoa3:resource"
+  ],
   "enchantment": "minecraft:fortune",
   "enchantment_level": 2,
-  "infusion_level": 30,
-  "ingredients": [
-    {
-      "item": "aoa3:luck_enhancer"
-    },
-    {
-      "item": "aoa3:luck_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "imbuing_level": 29,
+  "power_source": {
+    "item": "aoa3:blooming_power_stone"
+  }
 }

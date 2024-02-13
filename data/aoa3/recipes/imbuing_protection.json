@@ -1,13 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:durability",
+    "aoa3:life"
+  ],
   "enchantment": "minecraft:protection",
   "enchantment_level": 1,
-  "ingredients": [
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:ambient_power_stone"
-    }
-  ]
+  "imbuing_level": 8,
+  "power_source": {
+    "item": "aoa3:ambient_power_stone"
+  }
 }

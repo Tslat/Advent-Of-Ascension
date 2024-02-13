@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:fire_staff",
+  "name": "Staves",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "staves",
+      "text": "The classic $(thing)staff$(), a weapon for the aspiring mage. $(thing)Staves$() are a multi-purpose weapon type that serve as both a utility tool and a functional weapon.$(br2)$(thing)Staves$() deal magic damage, with any projectiles being energy-based, similar to $(l:aoa3:blasters#blasters)blasters$(/l).",
+      "title": "Staves"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Each $(thing)staff$() will have its own unique abilities and powers, and each one will need to be considered on its own, rather than being compared to any other in its class.$(br)The $(thing)staves$() that do deal damage will do so $(o)magically$(), penetrating armour and hitting hard.$(br2)$(thing)Staves$() consume $(thing)runes$() to charge their casts, meaning there is a somewhat-noticeable cost to using them."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:underworld_staff",
+      "text": "Stand tall at the entry to your home and shout \"You shall not pass!\" at your enemies.",
+      "title": "A Staff"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)staves$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Staves"
+    }
+  ],
+  "sortnum": 12
+}

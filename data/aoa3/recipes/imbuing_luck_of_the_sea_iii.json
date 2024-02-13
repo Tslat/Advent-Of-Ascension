@@ -1,20 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:luck",
+    "aoa3:resource",
+    "aoa3:elemental"
+  ],
   "enchantment": "minecraft:luck_of_the_sea",
   "enchantment_level": 3,
-  "infusion_level": 40,
-  "ingredients": [
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "imbuing_level": 24,
+  "power_source": {
+    "item": "aoa3:blooming_power_stone"
+  }
 }

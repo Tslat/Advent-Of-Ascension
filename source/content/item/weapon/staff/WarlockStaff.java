@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.weapon.staff;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -15,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class WarlockStaff extends BaseStaff<Boolean> {
 	public WarlockStaff(int durability) {
@@ -33,10 +33,9 @@ public class WarlockStaff extends BaseStaff<Boolean> {
 		runes.put(AoAItems.KINETIC_RUNE.get(), 2);
 	}
 
-	@Nullable
 	@Override
-	public Boolean checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return caster instanceof Player ? true : null;
+	public Optional<Boolean> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		return Optional.of(true);
 	}
 
 	@Override

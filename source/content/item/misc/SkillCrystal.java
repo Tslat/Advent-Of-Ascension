@@ -10,8 +10,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import org.jetbrains.annotations.Nullable;
@@ -36,19 +34,13 @@ public class SkillCrystal extends Item {
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
-		if (player instanceof ServerPlayer) {
-			ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer((ServerPlayer)player);
-			AoASkill skill = PlayerUtil.getLowestSkillWithLimit(plData, lowerLimit);
+		if (player instanceof ServerPlayer pl) {
+			PlayerUtil.getLowestSkillWithLimit(player, this.lowerLimit).ifPresentOrElse(skill -> {
+				PlayerUtil.givePartialLevelToPlayer(pl, skill.type(), 1 / this.denominator, true);
 
-			if (skill != null) {
-				plData.getSkill(skill).adjustXp(PlayerUtil.getXpForFractionOfLevel(plData.getSkill(skill).getLevel(true), 1 / denominator), false, true);
-
-				if (!player.isCreative())
+				if (!player.getAbilities().instabuild)
 					heldStack.shrink(1);
-			}
-			else {
-				PlayerUtil.notifyPlayer(plData.player(), Component.translatable(LocaleUtil.createFeedbackLocaleKey("item.skillCrystal.levelFail"), Integer.toString(lowerLimit)));
-			}
+			}, () -> PlayerUtil.notifyPlayer(player, LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("item.skillCrystal.levelFail"), LocaleUtil.numToComponent(this.lowerLimit))));
 		}
 
 		return InteractionResultHolder.pass(heldStack);

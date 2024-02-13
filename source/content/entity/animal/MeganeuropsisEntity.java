@@ -50,7 +50,7 @@ public class MeganeuropsisEntity extends AoAMeleeMob<MeganeuropsisEntity> {
 				new SetRandomFlyingTarget<>()
 						.verticalWeight(entity -> -(entity.getRandom().nextInt(10) == 0 ? 1 : 0))
 						.setRadius(4, 4)
-						.startCondition(entity -> !BrainUtils.hasMemory(entity, MemoryModuleType.IS_PANICKING)));
+						.startCondition(entity -> !BrainUtils.memoryOrDefault(entity, MemoryModuleType.IS_PANICKING, () -> false)));
 	}
 
 	@Override

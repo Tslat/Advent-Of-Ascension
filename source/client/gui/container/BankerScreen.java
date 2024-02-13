@@ -8,15 +8,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.tslat.aoa3.common.container.BankerContainer;
+import net.tslat.aoa3.common.menu.BankerMenu;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
-public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
+public class BankerScreen extends AbstractContainerScreen<BankerMenu> {
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("aoa3", "textures/gui/containers/banker.png");
 	private final Minecraft mc;
-	public BankerScreen(BankerContainer container, Inventory inv, Component guiTitle) {
+	public BankerScreen(BankerMenu container, Inventory inv, Component guiTitle) {
 		super(container, inv, guiTitle);
 
 		this.imageHeight = 187;
@@ -68,7 +68,7 @@ public class BankerScreen extends AbstractContainerScreen<BankerContainer> {
 			ItemStack stack = slot.getItem();
 
 			if (stack.isEmpty()) {
-				ItemStack coinStack = new ItemStack(BankerContainer.getCoinForSlot(i), (i < 3 || i > 8) ? 20 : 1);
+				ItemStack coinStack = new ItemStack(BankerMenu.getCoinForSlot(i), (i < 3 || i > 8) ? 20 : 1);
 
 				renderContext.renderDummyItemAndDetails(coinStack, slot.x + centerX, slot.y + centerY);
 

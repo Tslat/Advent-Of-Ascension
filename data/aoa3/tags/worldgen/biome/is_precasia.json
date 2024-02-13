@@ -51,10 +51,6 @@
     {
       "id": "aoa3:precasian_caves",
       "required": false
-    },
-    {
-      "id": "aoa3:the_silent_forest",
-      "required": false
     }
   ]
 }

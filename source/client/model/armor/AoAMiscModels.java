@@ -10,8 +10,8 @@ import net.tslat.aoa3.client.model.misc.PlayerHaloModel;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.library.object.CachedFunction;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 public final class AoAMiscModels {
@@ -56,7 +56,7 @@ public final class AoAMiscModels {
 		skillHelmetModels.put(AoASkills.INNERVATION.get(), Pair.of(CachedFunction.of(HelmOfTheWarriorModel.modelFactory()), CachedFunction.of(HelmOfTheWarriorTrimModel.modelFactory())));
 	}
 
-	@Nonnull
+	@NotNull
 	public static Model getSkillHelmetModel(AoASkill skill, boolean trim, HumanoidModel<?> base) {
 		if (!skillHelmetModels.containsKey(skill))
 			return base;

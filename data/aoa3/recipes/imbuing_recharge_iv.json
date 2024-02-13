@@ -1,26 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:resource",
+    "aoa3:speed",
+    "aoa3:magic"
+  ],
   "enchantment": "aoa3:recharge",
   "enchantment_level": 4,
-  "infusion_level": 51,
-  "ingredients": [
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:glowing_power_stone"
-    }
-  ]
+  "imbuing_level": 73,
+  "power_source": {
+    "item": "aoa3:glowing_power_stone"
+  }
 }

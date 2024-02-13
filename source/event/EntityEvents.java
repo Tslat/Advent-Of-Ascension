@@ -82,10 +82,10 @@ public final class EntityEvents {
 	}
 
 	private static void onEntityJoinWorld(EntityJoinLevelEvent ev) {
-		if (!ev.getLevel().isClientSide && WorldUtil.isWorld(ev.getLevel(), AoADimensions.NETHER.key)) {
+		if (!ev.getLevel().isClientSide && WorldUtil.isWorld(ev.getLevel(), AoADimensions.NETHER)) {
 			if (ev.getEntity() instanceof WitherBoss && ((WitherBoss)ev.getEntity()).getInvulnerableTicks() == 220) {
 				for (Player pl : ev.getLevel().getEntitiesOfClass(Player.class, ev.getEntity().getBoundingBox().inflate(50))) {
-					if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+					if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 						ItemUtil.givePlayerItemOrDrop(pl, new ItemStack(AoAItems.ABYSS_REALMSTONE.get()));
 				}
 			}

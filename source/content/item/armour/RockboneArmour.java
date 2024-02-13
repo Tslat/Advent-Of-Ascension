@@ -42,7 +42,7 @@ public class RockboneArmour extends AdventArmour {
 					return;
 			}
 
-			plData.player().getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/reverse_stormtrooper")), "max_dodge");
+			plData.player().getAdvancements().award(AdvancementUtil.getAdvancement(plData.player().serverLevel(), AdventOfAscension.id("completionist/reverse_stormtrooper")), "max_dodge");
 		}
 	}
 

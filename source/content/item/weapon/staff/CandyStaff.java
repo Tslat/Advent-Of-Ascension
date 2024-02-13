@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.weapon.staff;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class CandyStaff extends BaseStaff<List<LivingEntity>> {
 	public CandyStaff(int durability) {
@@ -36,13 +36,10 @@ public class CandyStaff extends BaseStaff<List<LivingEntity>> {
 	}
 
 	@Override
-	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = EntityRetrievalUtil.getEntities(caster, 10, entity -> entity instanceof LivingEntity livingEntity && entity instanceof Enemy);
+	public Optional<List<LivingEntity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> targets = EntityRetrievalUtil.getEntities(caster, 10, entity -> entity instanceof LivingEntity livingEntity && EntityUtil.Predicates.HOSTILE_MOB.test(livingEntity));
 
-		if (!list.isEmpty())
-			return list;
-
-		return null;
+		return Optional.ofNullable(targets.isEmpty() ? null : targets);
 	}
 
 	@Override

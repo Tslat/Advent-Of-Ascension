@@ -4,7 +4,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.item.misc.DistortingArtifact;
 import net.tslat.aoa3.content.item.misc.Gravitator;
 import net.tslat.aoa3.content.item.tool.axe.*;
@@ -64,8 +63,7 @@ public final class AoATools {
 	public static final DeferredItem<Item> GOLDEN_ROD = registerTool("golden_rod", () -> new GoldenRod(new Item.Properties().durability(280).rarity(Rarity.EPIC)));
 	public static final DeferredItem<Item> FISHING_CAGE = registerTool("fishing_cage", () -> new FishingCage(new Item.Properties().durability(10)));
 
-	public static final DeferredItem<Item> STONE_BOWL = registerTool("stone_bowl", () -> new InfusionBowl(100, 1, 0));
-	public static final DeferredItem<Item> DIAMOND_BOWL = registerTool("diamond_bowl", () -> new InfusionBowl(750, 5, 10));
+	public static final DeferredItem<Item> ATTUNING_BOWL = registerTool("attuning_bowl", AttuningBowl::new); // TODO Retexture
 	public static final DeferredItem<Item> EXP_FLASK = registerTool("exp_flask", ExpFlask::new);
 	public static final DeferredItem<Item> GRAVITATOR = registerTool("gravitator", Gravitator::new);
 	public static final DeferredItem<Item> DISTORTING_ARTIFACT = registerTool("distorting_artifact", DistortingArtifact::new);

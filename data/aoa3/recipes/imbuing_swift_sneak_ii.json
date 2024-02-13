@@ -1,25 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:speed",
+    "aoa3:precision",
+    "aoa3:control"
+  ],
   "enchantment": "minecraft:swift_sneak",
   "enchantment_level": 2,
-  "ingredients": [
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:divine_enhancer"
-    },
-    {
-      "item": "aoa3:radiant_power_stone"
-    },
-    {
-      "item": "minecraft:echo_shard"
-    }
-  ]
+  "imbuing_level": 42,
+  "power_source": {
+    "item": "aoa3:gleaming_power_stone"
+  }
 }

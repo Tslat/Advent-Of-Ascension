@@ -122,6 +122,14 @@ public final class LocaleUtil {
 		return createGenericLocaleKey("message", "feedback." + subPath);
 	}
 
+	public static String createContainerLocaleKey(String subPath) {
+		return createGenericLocaleKey("container", subPath);
+	}
+
+	public static String createGuiLocaleKey(String subPath) {
+		return createGenericLocaleKey("gui", subPath);
+	}
+
 	public enum ItemDescriptionType {
 		BENEFICIAL(ChatFormatting.DARK_GREEN),
 		HARMFUL(ChatFormatting.RED),
@@ -199,7 +207,7 @@ public final class LocaleUtil {
 		public static final String FULLY_AUTOMATIC_GUN = LocaleUtil.createItemDescriptionLocaleKey("gun.fullyAutomatic");
 		public static final String HEALING_FOOD_AMOUNT = LocaleUtil.createItemDescriptionLocaleKey("healingFood.desc.2");
 		public static final String HEALING_FOOD_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("healingFood.desc.1");
-		public static final String INFUSION_BOWL_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("infusionBowl.desc");
+		public static final String ATTUNING_BOWL_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("attuningBowl.desc");
 		public static final String RANDOM_DAMAGE = LocaleUtil.createItemDescriptionLocaleKey("damage.random");
 		public static final String SEMI_AUTOMATIC_GUN = LocaleUtil.createItemDescriptionLocaleKey("gun.semiAutomatic");
 		public static final String SKILL_CRYSTAL_DESCRIPTION = LocaleUtil.createItemDescriptionLocaleKey("skillCrystal.desc.1");

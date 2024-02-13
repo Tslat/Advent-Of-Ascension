@@ -14,9 +14,10 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.HeavyRunicGuardianShotEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.LightRunicGuardianShotEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.RunicGuardianShotEntity;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
+
 
 public class RunicGuardianEntity extends AoARangedMob<RunicGuardianEntity> {
 	public RunicGuardianEntity(EntityType<? extends RunicGuardianEntity> entityType, Level world) {
@@ -32,7 +33,7 @@ public class RunicGuardianEntity extends AoARangedMob<RunicGuardianEntity> {
 	protected void playStepSound(BlockPos pos, BlockState block) {}
 
 	@Override
-	public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
+	public void performRangedAttack(@NotNull LivingEntity target, float bowDamageFactor) {
 		BaseMobProjectile projectile1 = new LightRunicGuardianShotEntity(this, BaseMobProjectile.Type.MAGIC);
 		BaseMobProjectile projectile2 = new RunicGuardianShotEntity(this, BaseMobProjectile.Type.MAGIC);
 		BaseMobProjectile projectile3 = new HeavyRunicGuardianShotEntity(this, BaseMobProjectile.Type.MAGIC);

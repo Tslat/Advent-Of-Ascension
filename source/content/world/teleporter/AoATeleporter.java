@@ -78,7 +78,7 @@ public abstract class AoATeleporter implements ITeleporter {
 		BlockPos pos = null;
 
 		if (failedPortalReturn) {
-			if (WorldUtil.isWorld((Level)destWorld, AoADimensions.NOWHERE.key) && !(this instanceof NowhereTeleporter))
+			if (WorldUtil.isWorld((Level)destWorld, AoADimensions.NOWHERE) && !(this instanceof NowhereTeleporter))
 				pos = new BlockPos(16, 1003, 16);
 		}
 
@@ -630,7 +630,7 @@ public abstract class AoATeleporter implements ITeleporter {
 	}
 	
 	public BlockPos makePortal(Level world, Entity entity, BlockPos pos) {
-		if (WorldUtil.isWorld(world, AoADimensions.OVERWORLD.key))
+		if (WorldUtil.isWorld(world, AoADimensions.OVERWORLD))
 			return pos;
 
 		BlockPos returnPos = pos;

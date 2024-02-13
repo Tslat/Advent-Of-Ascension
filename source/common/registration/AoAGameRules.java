@@ -11,7 +11,7 @@ public final class AoAGameRules {
 	public static void lateInit() {}
 
 	public static boolean checkDestructiveWeaponPhysics(Level world) {
-		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key))
+		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE))
 			return false;
 
 		return world.getGameRules().getBoolean(DESTRUCTIVE_WEAPON_PHYSICS);

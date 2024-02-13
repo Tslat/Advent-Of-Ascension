@@ -38,6 +38,7 @@ import net.tslat.aoa3.client.model.entity.projectile.CobblestoneProjectileModel;
 import net.tslat.aoa3.client.model.entity.projectile.thrown.*;
 import net.tslat.aoa3.client.model.misc.FishingCageModel;
 import net.tslat.aoa3.client.model.misc.LottoTotemModel;
+import net.tslat.aoa3.client.render.blockentity.*;
 import net.tslat.aoa3.client.render.entity.AnimatedMobRenderer;
 import net.tslat.aoa3.client.render.entity.AnimatedProjectileRenderer;
 import net.tslat.aoa3.client.render.entity.AoAMobRenderer;
@@ -48,6 +49,7 @@ import net.tslat.aoa3.client.render.entity.layer.PlayerHaloRenderLayer;
 import net.tslat.aoa3.client.render.entity.misc.FishingCageRenderer;
 import net.tslat.aoa3.client.render.entity.misc.HaulingBobberRenderer;
 import net.tslat.aoa3.client.render.entity.misc.LottoTotemRenderer;
+import net.tslat.aoa3.client.render.entity.misc.PixonRenderer;
 import net.tslat.aoa3.client.render.entity.mob.AttercopusRenderer;
 import net.tslat.aoa3.client.render.entity.mob.DunkleosteusRenderer;
 import net.tslat.aoa3.client.render.entity.mob.GhostRenderer;
@@ -59,9 +61,6 @@ import net.tslat.aoa3.client.render.entity.projectile.cannonshots.*;
 import net.tslat.aoa3.client.render.entity.projectile.misc.*;
 import net.tslat.aoa3.client.render.entity.projectile.mob.*;
 import net.tslat.aoa3.client.render.entity.projectile.staff.*;
-import net.tslat.aoa3.client.render.tileentity.BossAltarTileEntityRenderer;
-import net.tslat.aoa3.client.render.tileentity.LunarCreationTableRenderer;
-import net.tslat.aoa3.client.render.tileentity.TrophyRenderer;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.entity.*;
 import net.tslat.aoa3.content.entity.animal.fish.BasicFishEntity;
@@ -223,6 +222,8 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> SAND_GIANT_SPIKE_TRAP = new GeckoLibRendererPackage<>(AoAMiscEntities.SAND_GIANT_SPIKE_TRAP).path("misc/sand_giant_spike_trap").nonLiving();
 
 	public static final EntityRendererPackage<?> LIGHTNING = new EntityRendererPackage<>(AoAMiscEntities.CUSTOMISABLE_LIGHTNING_BOLT).provider(LightningBoltRenderer::new);
+
+	public static final EntityRendererPackage<?> PIXON = new EntityRendererPackage<>(AoAMiscEntities.PIXON).provider(PixonRenderer::new);
 
 	public static final EntityRendererPackage<?> ANEMIA_BOMB = new EntityRendererPackage<>(AoAProjectiles.ANEMIA_BOMB).provider(AnemiaBombRenderer::new);
 	public static final EntityRendererPackage<?> AQUABALL = new EntityRendererPackage<>(AoAProjectiles.AQUABALL).provider(AquaballRenderer::new);
@@ -601,14 +602,6 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> VOLIANT = new EntityRendererPackage<>(AoAAnimals.VOLIANT).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> SHIK = new EntityRendererPackage<>(AoAAnimals.SHIK).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 
-	public static final EntityRendererPackage<?> AMBIENT_PIXON = new EntityRendererPackage<>(AoAAnimals.AMBIENT_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> BLOOMING_PIXON = new EntityRendererPackage<>(AoAAnimals.BLOOMING_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> GLARING_PIXON = new EntityRendererPackage<>(AoAAnimals.GLARING_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> GLEAMING_PIXON = new EntityRendererPackage<>(AoAAnimals.GLEAMING_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> GLISTENING_PIXON = new EntityRendererPackage<>(AoAAnimals.GLISTENING_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> GLOWING_PIXON = new EntityRendererPackage<>(AoAAnimals.GLOWING_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> RADIANT_PIXON = new EntityRendererPackage<>(AoAAnimals.RADIANT_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> SHINING_PIXON = new EntityRendererPackage<>(AoAAnimals.SHINING_PIXON).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	// End super jank test
 
 	public static void init() {
@@ -626,7 +619,9 @@ public final class AoAEntityRendering {
 
 		ev.registerBlockEntityRenderer(AoABlockEntities.TROPHY.get(), TrophyRenderer::new);
 		ev.registerBlockEntityRenderer(AoABlockEntities.LUNAR_CREATION_TABLE.get(), LunarCreationTableRenderer::new);
-		ev.registerBlockEntityRenderer(AoABlockEntities.BOSS_ALTAR.get(), BossAltarTileEntityRenderer::new);
+		ev.registerBlockEntityRenderer(AoABlockEntities.INFUSION_TABLE.get(), InfusionTableRenderer::new);
+		ev.registerBlockEntityRenderer(AoABlockEntities.IMBUING_CHAMBER.get(), ImbuingChamberRenderer::new);
+		ev.registerBlockEntityRenderer(AoABlockEntities.BOSS_ALTAR.get(), BossAltarRenderer::new);
 	}
 
 	private static void registerLayerDefinitions(final EntityRenderersEvent.RegisterLayerDefinitions ev) {

@@ -246,10 +246,10 @@ public abstract class AoAMonster<T extends AoAMonster<T>> extends Monster implem
 		}
 
 		if (target.hurt(getAttackDamageSource(target), damage)) {
-			final int firstAspect = EnchantmentHelper.getFireAspect(this);
+			final int fireAspect = EnchantmentHelper.getFireAspect(this);
 
-			if (firstAspect > 0)
-				target.setSecondsOnFire(firstAspect * 4);
+			if (fireAspect > 0)
+				target.setSecondsOnFire(fireAspect * 4);
 
 			if (knockback > 0 && target instanceof LivingEntity livingTarget) {
 				livingTarget.knockback(knockback * 0.5f,  Mth.sin(getYRot() * Mth.DEG_TO_RAD), -Mth.cos(getYRot() * Mth.DEG_TO_RAD));

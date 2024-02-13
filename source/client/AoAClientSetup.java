@@ -1,8 +1,8 @@
 package net.tslat.aoa3.client;
 
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.inventory.MerchantScreen;
 import net.neoforged.bus.api.EventPriority;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.event.ClientEventHandler;
@@ -18,7 +18,9 @@ import net.tslat.aoa3.client.particle.*;
 import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
 import net.tslat.aoa3.client.render.dimension.CustomDimensionRenders;
 import net.tslat.aoa3.client.render.entity.misc.OccultBlockRenderer;
-import net.tslat.aoa3.common.registration.AoAContainers;
+import net.tslat.aoa3.common.menu.MendingTableMenu;
+import net.tslat.aoa3.common.menu.WhitewashingTableMenu;
+import net.tslat.aoa3.common.registration.AoAMenus;
 import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.data.client.AoAResourceReloadListeners;
@@ -44,27 +46,28 @@ public final class AoAClientSetup {
         OccultBlockRenderer.init();
 
         AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, RegisterParticleProvidersEvent.class, AoAClientSetup::registerParticleFactories);
+        AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, RegisterMenuScreensEvent.class, AoAClientSetup::registerMenuScreens);
     }
 
     public static void postInit(Consumer<Runnable> workQueue) {
         workQueue.accept(() -> {
             AoABlocks.getRegisteredLiquidsForRenderTypes().forEach(ClientOperations::applyFluidRenderType);
-            registerContainerScreens();
             ModelProperties.init();
             AoAGuiElementRenderers.lateInit();
             IntegrationManager.clientInit();
         });
     }
 
-    public static void registerContainerScreens() {
-        MenuScreens.register(AoAContainers.DIVINE_STATION.get(), DivineStationScreen::new);
-        MenuScreens.register(AoAContainers.MENDING_TABLE.get(), UtilityBlockScreen::new);
-        MenuScreens.register(AoAContainers.WHITEWASHING_TABLE.get(), UtilityBlockScreen::new);
-        MenuScreens.register(AoAContainers.FRAME_BENCH.get(), FrameBenchScreen::new);
-        MenuScreens.register(AoAContainers.INFUSION_TABLE.get(), InfusionTableScreen::new);
-        MenuScreens.register(AoAContainers.TRADER.get(), MerchantScreen::new);
-        MenuScreens.register(AoAContainers.BANKER.get(), BankerScreen::new);
-        MenuScreens.register(AoAContainers.CORRUPTED_TRAVELLER.get(), CorruptedTravellerScreen::new);
+    private static void registerMenuScreens(RegisterMenuScreensEvent ev) {
+        ev.register(AoAMenus.DIVINE_STATION.get(), DivineStationScreen::new);
+        ev.register(AoAMenus.MENDING_TABLE.get(), Generic2SlotContainerScreen<MendingTableMenu>::new);
+        ev.register(AoAMenus.WHITEWASHING_TABLE.get(), Generic2SlotContainerScreen<WhitewashingTableMenu>::new);
+        ev.register(AoAMenus.FRAME_BENCH.get(), FrameBenchScreen::new);
+        ev.register(AoAMenus.INFUSION_TABLE.get(), InfusionTableScreen::new);
+        ev.register(AoAMenus.IMBUING_CHAMBER.get(), ImbuingChamberScreen::new);
+        ev.register(AoAMenus.TRADER.get(), MerchantScreen::new);
+        ev.register(AoAMenus.BANKER.get(), BankerScreen::new);
+        ev.register(AoAMenus.CORRUPTED_TRAVELLER.get(), CorruptedTravellerScreen::new);
     }
 
     private static void registerParticleFactories(RegisterParticleProvidersEvent ev) {

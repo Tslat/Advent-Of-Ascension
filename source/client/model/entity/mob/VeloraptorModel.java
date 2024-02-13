@@ -16,9 +16,12 @@ public class VeloraptorModel extends MultiStageHeadModel<VeloraptorEntity> {
 	}
 
 	@Override
-	public ResourceLocation getTextureResource(VeloraptorEntity animatable) {
-		final ResourceLocation texture = super.getTextureResource(animatable);
+	public ResourceLocation getModelResource(VeloraptorEntity veloraptor) {
+		return AdventOfAscension.id("geo/entity/mob/precasia/veloraptor/" + veloraptor.getVariant().name() + "_veloraptor.geo.json");
+	}
 
-		return new ResourceLocation(texture.getNamespace(), texture.getPath().substring(0, texture.getPath().indexOf(".")) + "_" + animatable.getVariant().name + ".png");
+	@Override
+	public ResourceLocation getTextureResource(VeloraptorEntity veloraptor) {
+		return AdventOfAscension.id("textures/entity/mob/precasia/veloraptor/" + veloraptor.getVariant().name() + "_veloraptor.png");
 	}
 }

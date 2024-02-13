@@ -5,8 +5,8 @@ import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.neoforged.neoforge.attachment.AttachmentHolder;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 
@@ -58,7 +58,7 @@ public class EntityDataHolder<T> {
 		return this.defaultValue;
 	}
 
-	public boolean is(Entity entity, @Nonnull T value) {
+	public boolean is(Entity entity, @NotNull T value) {
 		return value.equals(get(entity));
 	}
 

@@ -12,11 +12,10 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.tslat.aoa3.common.registration.item.AoAEnchantments;
+import net.tslat.aoa3.content.enchantment.SeverEnchantment;
 import net.tslat.aoa3.content.item.weapon.sword.BaseSword;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 
@@ -43,7 +42,7 @@ public class BaseGreatblade extends BaseSword {
 	@Override
 	public float getDamageForAttack(LivingEntity target, LivingEntity attacker, ItemStack swordStack, float baseDamage) {
 		if (attacker.fallDistance > 0 && !attacker.onGround() && !attacker.onClimbable() && !attacker.isInWater() && !attacker.isPassenger() && !attacker.hasEffect(MobEffects.BLINDNESS) && getSwingEffectiveness(swordStack) >= 1)
-			baseDamage += 1.15f * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SEVER.get(), swordStack);
+			baseDamage = SeverEnchantment.applyDamageBonus(swordStack, baseDamage);
 
 		return baseDamage;
 	}

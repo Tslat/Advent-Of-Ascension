@@ -2,7 +2,11 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -10,10 +14,10 @@
             {
               "function": "aoa3:grant_skill_xp",
               "skill": "aoa3:imbuing",
-              "xp": 700.0
+              "xp": 75.0
             }
           ],
-          "name": "aoa3:radiant_infusion_stone",
+          "name": "aoa3:radiant_energy_stone",
           "weight": 30
         },
         {
@@ -22,7 +26,7 @@
             {
               "function": "aoa3:grant_skill_xp",
               "skill": "aoa3:imbuing",
-              "xp": 950.0
+              "xp": 150.0
             }
           ],
           "name": "aoa3:radiant_power_stone"

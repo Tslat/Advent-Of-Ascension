@@ -80,7 +80,7 @@ public class Slingshot extends BaseBow {
 	@Override
 	protected CustomArrowEntity makeArrow(LivingEntity shooter, ItemStack bowStack, ItemStack ammoStack, float velocity, boolean consumeAmmo) {
 		PopShotEntity popShot = new PopShotEntity(shooter.level(), this, shooter, dmg, ammoStack.getItem() instanceof ArrowItem);
-		int powerEnchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bowStack);
+		int powerEnchant = bowStack.getEnchantmentLevel(Enchantments.POWER_ARROWS);
 
 		popShot.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0, velocity * 2, 1);
 

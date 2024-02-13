@@ -1,23 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:durability",
+    "aoa3:precision"
+  ],
   "enchantment": "minecraft:projectile_protection",
   "enchantment_level": 3,
-  "infusion_level": 30,
-  "ingredients": [
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "minecraft:arrow"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "imbuing_level": 38,
+  "power_source": {
+    "item": "aoa3:shining_power_stone"
+  }
 }

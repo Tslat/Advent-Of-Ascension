@@ -43,10 +43,10 @@ import net.tslat.aoa3.data.client.BestiaryReloadListener;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.*;
 import org.apache.logging.log4j.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -154,7 +154,7 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 		for (Stat<?> stat : this.statsMap.keySet()) {
 			ResourceLocation registryName;
 
-			if (stat.getValue() instanceof EntityType<?> entityType && (registryName = AoARegistries.ENTITIES.getId(entityType)) != null) {
+			if (stat.getValue() instanceof EntityType<?> entityType && (registryName = AoARegistries.ENTITIES.getKey(entityType)) != null) {
 				if (AoAConfigs.CLIENT.thirdPartyBestiary.get() || registryName.getNamespace().equals(AdventOfAscension.MOD_ID)) {
 					String registryNameString = registryName.toString();
 
@@ -445,13 +445,13 @@ public class AdventGuiTabBestiary extends Screen implements StatsUpdateListener 
 	}
 
 	private static class EntityStats {
-		@Nonnull
+		@NotNull
 		private final ResourceLocation registryName;
 		private Stat<EntityType<?>> killStat = null;
 		private Stat<EntityType<?>> deathStat = null;
 
 		private EntityStats(Stat<EntityType<?>> stat, boolean killStat) {
-			this.registryName = AoARegistries.ENTITIES.getId(stat.getValue());
+			this.registryName = AoARegistries.ENTITIES.getKey(stat.getValue());
 
 			if (killStat) {
 				this.killStat = stat;

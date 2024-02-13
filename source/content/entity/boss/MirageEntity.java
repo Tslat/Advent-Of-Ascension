@@ -80,7 +80,7 @@ public class MirageEntity extends AoARangedMob<MirageEntity> {
 			if (random.nextInt(80) == 0) {
 				level.playSound(null, getX(), getY(), getZ(), AoASounds.ENTITY_MIRAGE_TELEPORT.get(), SoundSource.HOSTILE, 1.0f, 1.0f);
 
-				if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key)) {
+				if (WorldUtil.isWorld(level, AoADimensions.NOWHERE)) {
 					switch (random.nextInt(4)) {
 						case 0:
 							moveTo(167, 24, 8, random.nextFloat() * 360, 0);

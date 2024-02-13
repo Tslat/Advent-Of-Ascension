@@ -5,8 +5,8 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.List;
 
@@ -21,12 +21,12 @@ public interface PlayerDataManager extends INBTSerializable<CompoundTag> {
 
 	Collection<AoASkill.Instance> getSkills();
 
-	@Nonnull
+	@NotNull
 	AoASkill.Instance getSkill(AoASkill skill);
 
 	Collection<AoAResource.Instance> getResources();
 
-	@Nonnull
+	@NotNull
 	AoAResource.Instance getResource(AoAResource resource);
 
 	void loadFromNbt(CompoundTag nbt);

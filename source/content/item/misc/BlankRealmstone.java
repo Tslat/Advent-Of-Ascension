@@ -38,7 +38,7 @@ public class BlankRealmstone extends Item {
 
 	@Override
 	public InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity target, InteractionHand hand) {
-		if (WorldUtil.isWorld(player.level(), AoADimensions.CREEPONIA.key) && (target instanceof AoATrader || target instanceof AoABanker)) {
+		if (WorldUtil.isWorld(player.level(), AoADimensions.CREEPONIA) && (target instanceof AoATrader || target instanceof AoABanker)) {
 			if (player instanceof ServerPlayer && DamageUtil.isPlayerEnvironmentallyProtected((ServerPlayer)player) && player.getItemInHand(hand).getItem() == AoAItems.BLANK_REALMSTONE.get()) {
 				player.setItemInHand(hand, ItemStack.EMPTY);
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.VOX_PONDS_REALMSTONE.get()));

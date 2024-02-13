@@ -1,0 +1,18 @@
+{
+  "category": "aoa3:advent_gui",
+  "icon": "minecraft:structure_block",
+  "name": "Help Tab",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "help_tab",
+      "text": "The $(thing)help tab$() of the $(thing)Advent GUI$() is the last tab on the list, accessed by the button at the bottom of the left-panel menu.",
+      "title": "Help Tab"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "The tab contains a brief text section giving some helpful information on the mod, a handful of important links to sites related to the mod, a theme selector, and a randomly selected tip that changes each time the tab is opened.$(br2)Changing the theme via the theme selector changes the entire GUI's theme and will save through game restarts."
+    }
+  ],
+  "sortnum": 5
+}

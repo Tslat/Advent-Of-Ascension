@@ -35,7 +35,7 @@ public class GuardiansSword extends BaseSword implements ChargeableItem {
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
 		ItemStack heldStack = player.getItemInHand(hand);
 
-		if (getCharge(heldStack) <= 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CRYSTALLITE.get()), true, 1)) {
+		if (getCharge(heldStack) <= 0 && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.CRYSTALLITE.get()), true, 1, false)) {
 			setCharge(heldStack, level.getGameTime());
 
 			if (level instanceof ServerLevel serverLevel) {

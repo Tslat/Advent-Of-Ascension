@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.entity.base;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -39,18 +38,6 @@ public abstract class AoAMeleeMob<T extends AoAMeleeMob<T>> extends AoAMonster<T
 
 	protected double getAttackReach() {
 		return this.attackReach;
-	}
-
-	@Override
-	public boolean isWithinMeleeAttackRange(LivingEntity target) {
-		final AABB hitBounds = getAttackBoundingBox();
-
-		if (!hitBounds.intersects(target.getHitbox()))
-			return false;
-
-		double reach = Math.max(hitBounds.getXsize(), hitBounds.getZsize()) / 2f;
-
-		return hitBounds.getCenter().distanceToSqr(target.position()) <= reach * reach;
 	}
 
 	@Override

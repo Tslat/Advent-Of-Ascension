@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:blaster_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:hive_chunk"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:swarmotron"
-  },
-  "tool": {
-    "item": "aoa3:blaster_frame"
   }
 }

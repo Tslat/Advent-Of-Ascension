@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:slice_star",
+  "name": "Throwables",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "throwables",
+      "text": "Sometimes you don't want to use any fancy weapons and really just want to toss things at your enemy.$(br)This is the dilemma that $(thing)throwable weapons$() aims to solve.$(br2)$(thing)Throwable weapons$() are the simplest type of ranged weapon. Simply hold one in your hand, then right-click to toss it at speed at your intended target.",
+      "title": "Throwables"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Each $(thing)thrown weapon$() has its own unique characteristics, offering situational advantages that other weapons may not provide.$(br2)If nothing else, they offer an extremely quick and convenient source of damage, and are often fairly inexpensive to obtain.$(br)Need something done quick and dirty? $(thing)Throwable weapons$() are the way to go."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:grenade",
+      "text": "Pocket sand! Hyaa!",
+      "title": "A Thrown Weapon"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find info on all of the $(thing)thrown weapons$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Thrown_Weapons"
+    }
+  ],
+  "sortnum": 10
+}

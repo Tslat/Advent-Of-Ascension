@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:helmet_frame"
+  },
   "ingredients": [
     {
       "tag": "neoforge:ingots/emberstone"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:lyndamyte_helmet"
-  },
-  "tool": {
-    "item": "aoa3:helmet_frame"
   }
 }

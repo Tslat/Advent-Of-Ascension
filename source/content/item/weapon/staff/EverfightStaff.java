@@ -17,6 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class EverfightStaff extends BaseStaff<Float> {
 	public EverfightStaff(int durability) {
@@ -35,10 +36,10 @@ public class EverfightStaff extends BaseStaff<Float> {
 		runes.put(AoAItems.POWER_RUNE.get(), 4);
 	}
 
-	public Float checkPreconditions(LivingEntity caster, ItemStack staff) {
+	public Optional<Float> checkPreconditions(LivingEntity caster, ItemStack staff) {
 		float healthPercent = EntityUtil.getCurrentHealthPercent(caster);
 
-		return healthPercent < 1 && healthPercent > 0 ? healthPercent : null;
+		return Optional.ofNullable(healthPercent < 1 && healthPercent > 0 ? healthPercent : null);
 	}
 
 	@Override

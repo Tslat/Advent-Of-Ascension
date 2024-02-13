@@ -1,17 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:durability",
+    "aoa3:control"
+  ],
   "enchantment": "minecraft:feather_falling",
   "enchantment_level": 1,
-  "infusion_level": 6,
-  "ingredients": [
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:ambient_power_stone"
-    },
-    {
-      "tag": "forge:feathers"
-    }
-  ]
+  "imbuing_level": 18,
+  "power_source": {
+    "item": "aoa3:glistening_power_stone"
+  }
 }

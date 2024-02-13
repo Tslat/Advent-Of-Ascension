@@ -31,7 +31,7 @@ public class ZalChildEntity extends AoAAmbientNPC {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS);
 	}
 
 	@Nullable

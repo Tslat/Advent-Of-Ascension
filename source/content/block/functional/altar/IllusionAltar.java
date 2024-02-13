@@ -35,7 +35,7 @@ public class IllusionAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level(), AoADimensions.ABYSS.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.ABYSS);
 	}
 
 	@Override

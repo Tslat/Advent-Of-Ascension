@@ -1,13 +1,10 @@
 package net.tslat.aoa3.content.entity.mob.overworld;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
+import com.google.common.base.Suppliers;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -15,17 +12,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.biome.Biome;
-import net.neoforged.neoforge.common.IExtensibleEnum;
-import net.neoforged.neoforge.common.Tags;
-import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.client.render.AoAAnimations;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
+import net.tslat.aoa3.common.registration.entity.AoAEntityDataSerializers;
+import net.tslat.aoa3.common.registration.entity.variant.ChargerVariant;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
-import net.tslat.aoa3.content.world.gen.BiomeMatcher;
-import net.tslat.aoa3.library.object.CachedFunction;
 import net.tslat.aoa3.library.object.EntityDataHolder;
-import net.tslat.aoa3.util.HolidayUtil;
 import net.tslat.smartbrainlib.api.core.BrainActivityGroup;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.attack.AnimatableMeleeAttack;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
@@ -34,13 +27,10 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 
-import java.util.Random;
-import java.util.function.Function;
-
 public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
-	private static final EntityDataHolder<String> TYPE = EntityDataHolder.register(ChargerEntity.class, EntityDataSerializers.STRING, Type.DEFAULT.name, entity -> entity.type.name, (entity, value) -> entity.type = Type.fromString(value));
+	private static final EntityDataHolder<ChargerVariant> VARIANT = EntityDataHolder.register(ChargerEntity.class, AoAEntityDataSerializers.CHARGER_VARIANT.get(), ChargerVariant.PLAINS.get(), entity -> entity.variant, (entity, value) -> entity.variant = value);
 
-	private Type type = Type.DEFAULT;
+	private ChargerVariant variant = ChargerVariant.PLAINS.get();
 
 	public ChargerEntity(EntityType<? extends AoAMeleeMob> entityType, Level world) {
 		super(entityType, world);
@@ -50,7 +40,7 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 
-		registerDataParams(TYPE);
+		registerDataParams(VARIANT);
 	}
 
 	@Override
@@ -61,25 +51,12 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 				new AnimatableMeleeAttack<>(getPreAttackTime()).attackInterval(entity -> getAttackSwingDuration()));
 	}
 
-	@org.jetbrains.annotations.Nullable
+	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @org.jetbrains.annotations.Nullable SpawnGroupData spawnData, @org.jetbrains.annotations.Nullable CompoundTag dataTag) {
 		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 
-		if (world.getLightEngine().getRawBrightness(blockPosition(), 0) == 0) {
-			TYPE.set(this, Type.VOID.name);
-		}
-		else {
-			Holder<Biome> biome = world.getBiome(blockPosition());
-
-			for (Type type : Type.values()) {
-				if (type != Type.DEFAULT && type.canSpawnType(world.getLevel(), blockPosition(), biome)) {
-					TYPE.set(this, type.name);
-
-					break;
-				}
-			}
-		}
+		VARIANT.set(this, ChargerVariant.getVariantForSpawn(world.getLevel(), difficulty, reason, this, Suppliers.memoize(() -> level().getBiome(blockPosition())), spawnData, dataTag));
 
 		return spawnData;
 	}
@@ -116,8 +93,8 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 		return 7;
 	}
 
-	public Type getVariant() {
-		return this.type;
+	public ChargerVariant getVariant() {
+		return this.variant;
 	}
 
 	@Override
@@ -130,79 +107,19 @@ public class ChargerEntity extends AoAMeleeMob<ChargerEntity> {
 	public void addAdditionalSaveData(CompoundTag tag) {
 		super.addAdditionalSaveData(tag);
 
-		tag.putString("ChargerType", TYPE.get(this));
+		tag.putString("Variant", AoARegistries.CHARGER_VARIANTS.getKey(VARIANT.get(this)).toString());
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
-		if (compound.contains("ChargerType"))
-			TYPE.set(this, compound.getString("ChargerType"));
+		if (compound.contains("Variant", Tag.TAG_STRING))
+			VARIANT.set(this, AoARegistries.CHARGER_VARIANTS.getEntry(ResourceLocation.tryParse(compound.getString("Variant"))));
 	}
 
 	@Override
 	protected ResourceLocation getDefaultLootTable() {
-		return getVariant() == Type.VOID ? AdventOfAscension.id("entities/void_charger") : super.getDefaultLootTable();
-	}
-
-	public enum Type implements IExtensibleEnum {
-		DEFAULT("", null),
-		RAVEN("raven", null) {
-			@Override
-			public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
-				return HolidayUtil.isHalloween() && new Random(level.getGameTime() ^ position.asLong()).nextInt(3) == 0;
-			}
-		},
-		ZOMBIE("zombie", null) {
-			@Override
-			public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
-				return HolidayUtil.isHalloween() && new Random(level.getGameTime() ^ position.asLong()).nextInt(3) == 1;
-			}
-		},
-		SKELETON("skeleton", null) {
-			@Override
-			public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
-				return HolidayUtil.isHalloween() && new Random(level.getGameTime() ^ position.asLong()).nextInt(3) == 2;
-			}
-		},
-		DESERT("desert", level -> new BiomeMatcher.Builder(level).mustBe(Tags.Biomes.IS_HOT).atLeastOneOf(Tags.Biomes.IS_SANDY).build()),
-		HILL("hill", level -> new BiomeMatcher.Builder(level).mustBe(Tags.Biomes.IS_MOUNTAIN).cannotBe(Tags.Biomes.IS_SNOWY).build()),
-		SEA("sea", level -> new BiomeMatcher.Builder(level).atLeastOneOf(BiomeTags.IS_OCEAN, BiomeTags.IS_RIVER, BiomeTags.IS_BEACH).cannotBe(Tags.Biomes.IS_SNOWY).build()),
-		SNOW("snow", level -> new BiomeMatcher.Builder(level).mustBe(Tags.Biomes.IS_SNOWY).build()),
-		SWAMP("swamp", level -> new BiomeMatcher.Builder(level).mustBe(Tags.Biomes.IS_SWAMP).cannotBe(Tags.Biomes.IS_SNOWY).build()),
-		VOID("void", null) {
-			@Override
-			public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
-				return level.getRawBrightness(position, 0) == 0;
-			}
-		};
-
-		public final String name;
-		@Nullable
-		private final CachedFunction<ServerLevel, BiomeMatcher> spawnBiomeMatcher;
-
-		Type(String prefix, @Nullable Function<ServerLevel, BiomeMatcher> spawnBiomeMatcher) {
-			this.name = prefix;
-			this.spawnBiomeMatcher = spawnBiomeMatcher == null ? null : CachedFunction.of(spawnBiomeMatcher);
-		}
-
-		public boolean canSpawnType(ServerLevel level, BlockPos position, Holder<Biome> biome) {
-			return spawnBiomeMatcher == null || spawnBiomeMatcher.apply(level).test(biome);
-		}
-
-		public static Type fromString(String typeName) {
-			for (Type type : values()) {
-				if (type.name.equals(typeName))
-					return type;
-			}
-
-			return DEFAULT;
-		}
-
-		// Use this to create additional variants of Chargers if you're an addon creator
-		public static Type create(String name, String prefix, @Nullable Function<ServerLevel, BiomeMatcher> spawnBiomeMatcher) {
-			throw new IllegalStateException("Enum not extended");
-		}
+		return getVariant().lootTable().orElseGet(super::getDefaultLootTable);
 	}
 }

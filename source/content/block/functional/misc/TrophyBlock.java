@@ -37,7 +37,7 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlockEntities;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.content.block.WaterloggableBlock;
-import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
+import net.tslat.aoa3.content.block.blockentity.TrophyBlockEntity;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.RegistryUtil;
 import net.tslat.aoa3.util.WorldUtil;
@@ -62,7 +62,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new TrophyTileEntity(pos, state);
+		return new TrophyBlockEntity(pos, state);
 	}
 
 	@Nullable
@@ -74,7 +74,7 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 		if (!level.isClientSide())
 			return null;
 
-		return (entityLevel, entityPos, entityState, blockEntity) -> TrophyTileEntity.doClientTick(entityLevel, entityPos, entityState, (TrophyTileEntity)blockEntity);
+		return (entityLevel, entityPos, entityState, blockEntity) -> TrophyBlockEntity.doClientTick(entityLevel, entityPos, entityState, (TrophyBlockEntity)blockEntity);
 	}
 
 	@Override
@@ -88,8 +88,8 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 				if (dataTag.contains("EntityID", Tag.TAG_STRING)) {
 					BlockEntity tile = world.getBlockEntity(pos);
 
-					if (tile instanceof TrophyTileEntity)
-						((TrophyTileEntity)tile).setEntity(dataTag.getString("EntityID"), dataTag.contains("OriginalTrophy") && !dataTag.getBoolean("OriginalTrophy"));
+					if (tile instanceof TrophyBlockEntity)
+						((TrophyBlockEntity)tile).setEntity(dataTag.getString("EntityID"), dataTag.contains("OriginalTrophy") && !dataTag.getBoolean("OriginalTrophy"));
 				}
 			}
 		}
@@ -106,8 +106,8 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 			BlockEntity tile = world.getBlockEntity(pos);
 			SpawnEggItem egg = (SpawnEggItem)heldStack.getItem();
 
-			if (tile instanceof TrophyTileEntity) {
-				((TrophyTileEntity)tile).setEntity(RegistryUtil.getId(egg.getType(heldStack.getTag())).toString(), true);
+			if (tile instanceof TrophyBlockEntity) {
+				((TrophyBlockEntity)tile).setEntity(RegistryUtil.getId(egg.getType(heldStack.getTag())).toString(), true);
 
 				if (!world.isClientSide() && !player.isCreative())
 					heldStack.shrink(1);
@@ -123,20 +123,20 @@ public class TrophyBlock extends WaterloggableBlock implements EntityBlock {
 	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
 		ItemStack stack = new ItemStack(asItem());
 		BlockEntity tile = world.getBlockEntity(pos);
-		TrophyTileEntity trophyTile;
+		TrophyBlockEntity trophyTile;
 
-		if (tile instanceof TrophyTileEntity && ((trophyTile = (TrophyTileEntity)tile).getEntityId() != null)) {
+		if (tile instanceof TrophyBlockEntity && ((trophyTile = (TrophyBlockEntity)tile).getEntityId() != null)) {
 			CompoundTag nbt = new CompoundTag();
 			CompoundTag dataTag = new CompoundTag();
 
-			dataTag.putString("EntityID", ((TrophyTileEntity)tile).getEntityId());
-			dataTag.putBoolean("OriginalTrophy", ((TrophyTileEntity)tile).isOriginal());
+			dataTag.putString("EntityID", ((TrophyBlockEntity)tile).getEntityId());
+			dataTag.putBoolean("OriginalTrophy", ((TrophyBlockEntity)tile).isOriginal());
 			nbt.put("BlockEntityTag", dataTag);
 
 			stack.setTag(nbt);
 
 			if (trophyTile.getCachedEntity() != null) {
-				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
+				Entity cachedEntity = ((TrophyBlockEntity)tile).getCachedEntity();
 				Component entityName = cachedEntity == null ? Component.literal("") : cachedEntity.getName();
 				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.trophy.desc", entityName));
 			}

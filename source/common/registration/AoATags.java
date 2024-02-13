@@ -186,10 +186,11 @@ public final class AoATags {
 		public static final TagKey<Item> PRECASIAN_BONE = aoaTag("precasian_bone");
 		public static final TagKey<Item> ADVENT_RUNE = aoaTag("rune");
 		public static final TagKey<Item> FRAME_BENCH_FRAME = aoaTag("frame_bench_frame");
-		public static final TagKey<Item> INFUSION_STONE = aoaTag("infusion_stone");
+		public static final TagKey<Item> ENERGY_STONE = aoaTag("energy_stone");
 		public static final TagKey<Item> SKILL_CRYSTAL = aoaTag("skill_crystal");
 		public static final TagKey<Item> HAULING_FISH = aoaTag("hauling_fish");
 		public static final TagKey<Item> FAUNAMANCER_TOOL = aoaTag("faunamancer_tool");
+		public static final TagKey<Item> POWER_STONE = aoaTag("power_stones");
 
 		public static final TagKey<Item> SWORDS = tag("swords");
 		public static final TagKey<Item> CURRENCY = tag("currency");
@@ -239,11 +240,6 @@ public final class AoATags {
 	}
 
 	public static class Entities {
-		public static final TagKey<EntityType<?>> WEAK_TO_MELEE = tag("weak_to_melee");
-		public static final TagKey<EntityType<?>> WEAK_TO_MAGIC = tag("weak_to_magic");
-		public static final TagKey<EntityType<?>> WEAK_TO_RANGED = tag("weak_to_ranged");
-		public static final TagKey<EntityType<?>> WEAK_TO_EXPLOSIONS = tag("weak_to_explosions");
-
 		private static TagKey<EntityType<?>> aoaTag(String id) {
 			return create(AdventOfAscension.id(id));
 		}
@@ -260,7 +256,7 @@ public final class AoATags {
 	public static class Biomes {
 		public static final TagKey<Biome> NO_MOB_SPAWNS = tag("no_mob_spawns");
 		public static final TagKey<Biome> IS_PRECASIA = aoaTag("is_precasia");
-		public static final TagKey<Biome> IS_DUSTOPIA = aoaTag("is_precasia");
+		public static final TagKey<Biome> IS_DUSTOPIA = aoaTag("is_dustopia");
 		public static final TagKey<Biome> IS_LBOREAN = aoaTag("is_lborean");
 		public static final TagKey<Biome> IS_BARATHOS = aoaTag("is_barathos");
 		public static final TagKey<Biome> IS_LELYETIA = aoaTag("is_lelyetia");

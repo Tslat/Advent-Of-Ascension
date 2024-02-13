@@ -29,13 +29,13 @@ import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.Logging;
 import net.tslat.aoa3.common.networking.AoANetworking;
-import net.tslat.aoa3.common.networking.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.networking.packets.adventplayer.PlayerDataSyncPacket;
 import net.tslat.aoa3.common.networking.packets.adventplayer.PlayerDataUpdatePacket;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
+import net.tslat.aoa3.common.toast.AbilityUnlockToastData;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.content.world.teleporter.PortalCoordinatesContainer;
 import net.tslat.aoa3.data.server.AoAResourcesReloadListener;
@@ -54,9 +54,9 @@ import net.tslat.aoa3.util.AdvancementUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.function.Consumer;
@@ -109,7 +109,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	@Override
-	@Nonnull
+	@NotNull
 	public AoASkill.Instance getSkill(AoASkill skill) {
 		return this.skills.getOrDefault(skill, AoASkills.DEFAULT);
 	}
@@ -130,7 +130,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 	}
 
 	@Override
-	@Nonnull
+	@NotNull
 	public AoAResource.Instance getResource(AoAResource resource) {
 		return this.resources.getOrDefault(resource, AoAResources.DEFAULT);
 	}
@@ -154,7 +154,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag skillsNbt = baseTag.getCompound("skills");
 
 			for (AoASkill.Instance skill : skills.values()) {
-				String id = AoARegistries.AOA_SKILLS.getId(skill.type()).toString();
+				String id = AoARegistries.AOA_SKILLS.getKey(skill.type()).toString();
 
 				if (skillsNbt.contains(id))
 					skill.loadFromNbt(skillsNbt.getCompound(id));
@@ -165,7 +165,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag resourcesNbt = baseTag.getCompound("resources");
 
 			for (AoAResource.Instance resource : resources.values()) {
-				String id = AoARegistries.AOA_RESOURCES.getId(resource.type()).toString();
+				String id = AoARegistries.AOA_RESOURCES.getKey(resource.type()).toString();
 
 				if (resourcesNbt.contains(id))
 					resource.loadFromNbt(resourcesNbt.getCompound(id));
@@ -387,7 +387,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (skillData == null)
 					skillData = new CompoundTag();
 
-				skillData.put(AoARegistries.AOA_SKILLS.getId(skill.type()).toString(), skill.getSyncData(false));
+				skillData.put(AoARegistries.AOA_SKILLS.getKey(skill.type()).toString(), skill.getSyncData(false));
 			}
 		}
 
@@ -396,7 +396,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				if (resourceData == null)
 					resourceData = new CompoundTag();
 
-				resourceData.put(AoARegistries.AOA_RESOURCES.getId(resource.type()).toString(), resource.getSyncData(false));
+				resourceData.put(AoARegistries.AOA_RESOURCES.getKey(resource.type()).toString(), resource.getSyncData(false));
 			}
 		}
 
@@ -440,7 +440,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 		for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
 			ItemStack stack = player.getInventory().getItem(i);
 
-			if (stack.getEnchantmentLevel(AoAEnchantments.INTERVENTION.get()) > 0) {
+			if (ItemUtil.hasEnchantment(stack, AoAEnchantments.INTERVENTION.get())) {
 				if (RandomUtil.oneInNChance(5))
 					stack = ItemUtil.removeEnchantment(stack, AoAEnchantments.INTERVENTION.get());
 
@@ -597,7 +597,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 					listener.reenable(false);
 
 					if (state == DEACTIVATED && listener instanceof AoAAbility.Instance ability)
-						AoANetworking.sendToPlayer(player, new ToastPopupPacket(ability.getSkill().type(), ability.type()));
+						AbilityUnlockToastData.sendToastPopupTo(this.player, ability);
 				}
 			}
 		});
@@ -632,7 +632,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 
 	public void checkAndUpdateLegitimacy() {
 		if (player != null) {
-			AdvancementHolder adv = AdvancementUtil.getAdvancement(new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books"));
+			AdvancementHolder adv = AdvancementUtil.getAdvancement(player.serverLevel(), new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books"));
 
 			if (adv == null)
 				return;
@@ -715,7 +715,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag skillsNbt = new CompoundTag();
 
 			for (AoASkill.Instance skill : skills.values()) {
-				skillsNbt.put(AoARegistries.AOA_SKILLS.getId(skill.type()).toString(), forClientSync ? skill.getSyncData(true) : skill.saveToNbt());
+				skillsNbt.put(AoARegistries.AOA_SKILLS.getKey(skill.type()).toString(), forClientSync ? skill.getSyncData(true) : skill.saveToNbt());
 			}
 
 			if (!skillsNbt.isEmpty())
@@ -726,7 +726,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			CompoundTag resourcesNbt = new CompoundTag();
 
 			for (AoAResource.Instance resource : resources.values()) {
-				resourcesNbt.put(AoARegistries.AOA_RESOURCES.getId(resource.type()).toString(), forClientSync ? resource.getSyncData(true) : resource.saveToNbt());
+				resourcesNbt.put(AoARegistries.AOA_RESOURCES.getKey(resource.type()).toString(), forClientSync ? resource.getSyncData(true) : resource.saveToNbt());
 			}
 
 			if (!resourcesNbt.isEmpty())
@@ -949,7 +949,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			checkEquipment = false;
 		}
 
-		private boolean checkAndHandleArmourSwap(@Nullable AdventArmour currentPiece, @Nonnull Item newPiece, @Nonnull EquipmentSlot slot) {
+		private boolean checkAndHandleArmourSwap(@Nullable AdventArmour currentPiece, @NotNull Item newPiece, @NotNull EquipmentSlot slot) {
 			boolean changed = false;
 
 			if (newPiece != currentPiece) {
@@ -990,20 +990,24 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			if (!player.isAlive() || player.isSpectator())
 				return;
 
-			boolean doArmourTick = true;
+			boolean armourChanged = false;
 
 			if (PlayerUtil.shouldPlayerBeAffected(player)) {
+				boolean handsChanged = false;
+
 				for (InteractionHand hand : InteractionHand.values()) {
 					ItemStack heldStack = player.getItemInHand(hand);
 
 					if (!AoASkillReqReloadListener.canEquip(playerDataManager, heldStack.getItem(), true)) {
+						handsChanged = true;
+
 						ItemHandlerHelper.giveItemToPlayer(player, heldStack);
 						player.setItemInHand(hand, ItemStack.EMPTY);
 					}
 				}
 
 				if (boots != null && !AoASkillReqReloadListener.canEquip(playerDataManager, boots, true)) {
-					doArmourTick = false;
+					armourChanged = true;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(0));
 					player.getInventory().armor.set(0, ItemStack.EMPTY);
@@ -1011,7 +1015,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				}
 
 				if (legs != null && !AoASkillReqReloadListener.canEquip(playerDataManager, legs, true)) {
-					doArmourTick = false;
+					armourChanged = true;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(1));
 					player.getInventory().armor.set(1, ItemStack.EMPTY);
@@ -1019,7 +1023,7 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				}
 
 				if (body != null && !AoASkillReqReloadListener.canEquip(playerDataManager, body, true)) {
-					doArmourTick = false;
+					armourChanged = true;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(2));
 					player.getInventory().armor.set(2, ItemStack.EMPTY);
@@ -1027,15 +1031,18 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 				}
 
 				if (helmet != null && !AoASkillReqReloadListener.canEquip(playerDataManager, helmet, true)) {
-					doArmourTick = false;
+					armourChanged = true;
 
 					ItemHandlerHelper.giveItemToPlayer(player, player.getInventory().armor.get(3));
 					player.getInventory().armor.set(3, ItemStack.EMPTY);
 					unequipAdventArmour(playerDataManager, helmet, EquipmentSlot.HEAD);
 				}
+
+				if (handsChanged || armourChanged)
+					player.inventoryMenu.broadcastChanges();
 			}
 
-			if (doArmourTick) {
+			if (!armourChanged) {
 				if (currentFullSet != null)
 					currentFullSet.onEffectTick(playerDataManager, null);
 
@@ -1045,7 +1052,6 @@ public final class ServerPlayerDataManager implements AoAPlayerEventListener, Pl
 			}
 
 			handleCooldowns();
-			player.inventoryMenu.broadcastChanges();
 		}
 
 		private void equipAdventArmour(ServerPlayerDataManager plData, AdventArmour item, @Nullable EquipmentSlot slot) {

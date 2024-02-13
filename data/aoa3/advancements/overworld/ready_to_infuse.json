@@ -1,0 +1,37 @@
+{
+  "parent": "aoa3:overworld/framed",
+  "criteria": {
+    "obtain_infusion_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:infusion_table"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "description": {
+      "color": "white",
+      "translate": "advancements.aoa3.overworld.ready_to_infuse.description"
+    },
+    "icon": {
+      "item": "aoa3:infusion_table"
+    },
+    "title": {
+      "color": "dark_green",
+      "translate": "advancements.aoa3.overworld.ready_to_infuse.title"
+    }
+  },
+  "requirements": [
+    [
+      "obtain_infusion_table"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

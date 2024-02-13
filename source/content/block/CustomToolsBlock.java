@@ -1,14 +1,14 @@
 package net.tslat.aoa3.content.block;
 
 import net.minecraft.world.level.block.Block;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 
 public class CustomToolsBlock extends Block {
-	//@Nonnull
+	//@NotNull
 	//private final ToolType[] validToolTypes;
 
-	public CustomToolsBlock(Block.Properties properties, @Nonnull String primaryType, String... secondaryTypes) {
+	public CustomToolsBlock(Block.Properties properties, @NotNull String primaryType, String... secondaryTypes) {
 		super(properties);
 
 		// This doesn't appear to be possible anymore? I think Forge outright broke this functionality as of 1.17

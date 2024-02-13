@@ -18,14 +18,14 @@ import org.jetbrains.annotations.Nullable;
 public class GorbEngineerEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.SILVER_COIN).cost(AoAItems.POWER_CORE).xp(15).stock(12),
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 8).cost(AoAItems.SCRAP_METAL).xp(5))
+					BuildableTrade.forItem(AoAItems.SILVER_COIN).itemCost(AoAItems.POWER_CORE).xp(15).stock(12),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN, 8).itemCost(AoAItems.SCRAP_METAL).xp(5))
 			.trades(4,
-					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.helmet).cost(AoAItems.PHANTASM, 10).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
-					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.chestplate).cost(AoAItems.PHANTASM, 15).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
-					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.leggings).cost(AoAItems.PHANTASM, 12).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
-					BuildableTrade.trade(AoAArmour.PHANTASM_ARMOUR.boots).cost(AoAItems.PHANTASM, 8).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
-					BuildableTrade.trade(AoAWeapons.ULTRAFLAME).cost(AoAItems.GOLD_COIN, 3).xp(75).stock(5)).build();
+					BuildableTrade.forItem(AoAArmour.PHANTASM_ARMOUR.helmet).itemCost(AoAItems.PHANTASM, 10).itemCost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.forItem(AoAArmour.PHANTASM_ARMOUR.chestplate).itemCost(AoAItems.PHANTASM, 15).itemCost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.forItem(AoAArmour.PHANTASM_ARMOUR.leggings).itemCost(AoAItems.PHANTASM, 12).itemCost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.forItem(AoAArmour.PHANTASM_ARMOUR.boots).itemCost(AoAItems.PHANTASM, 8).itemCost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.forItem(AoAWeapons.ULTRAFLAME).itemCost(AoAItems.GOLD_COIN, 3).xp(75).stock(5)).build();
 
 	public GorbEngineerEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -38,7 +38,7 @@ public class GorbEngineerEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.MYSTERIUM.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.MYSTERIUM);
 	}
 
 	@Nullable

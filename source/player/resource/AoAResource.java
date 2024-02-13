@@ -10,8 +10,8 @@ import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.AoAPlayerEventListener;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.util.PlayerUtil;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -22,7 +22,7 @@ public final class AoAResource {
 	private final Function<CompoundTag, Instance> clientFactory;
 
 	public AoAResource(BiFunction<ServerPlayerDataManager, JsonObject, Instance> jsonFactory, Function<CompoundTag, Instance> clientFactory) {
-		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("resource", AoARegistries.AOA_RESOURCES.getId(this))));
+		this.name = Suppliers.memoize(() -> Component.translatable(Util.makeDescriptionId("resource", AoARegistries.AOA_RESOURCES.getKey(this))));
 		this.jsonFactory = jsonFactory;
 		this.clientFactory = clientFactory;
 	}
@@ -101,7 +101,7 @@ public final class AoAResource {
 			return !consumeIfInsufficient || current >= amount;
 		}
 
-		@Nonnull
+		@NotNull
 		public CompoundTag saveToNbt() {
 			return new CompoundTag();
 		}

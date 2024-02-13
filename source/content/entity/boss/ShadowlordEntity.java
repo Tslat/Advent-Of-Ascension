@@ -25,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.tslat.aoa3.common.packet.AoAPackets;
 import net.tslat.aoa3.common.packet.packets.MusicPacket;
 
@@ -328,12 +327,10 @@ public class ShadowlordEntity extends Monster implements RangedAttackMob, AoARan
 		return source.getEntity() instanceof ShadowlordEntity || DamageUtil.isMagicDamage(source, this, 1) || source.isExplosion() || source.is(DamageTypeTags.IS_FIRE) || super.isInvulnerableTo(source);
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public float getHeadYRotation(int head) {
 		return this.yRotationHeads[head];
 	}
 
-	@OnlyIn(Dist.CLIENT)
 	public float getHeadXRotation(int head) {
 		return this.xRotationHeads[head];
 	}

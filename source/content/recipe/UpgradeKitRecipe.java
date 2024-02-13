@@ -5,17 +5,17 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.inventory.TransientCraftingContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.container.DivineStationContainer;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.util.RecipeUtil;
 import org.jetbrains.annotations.Nullable;
 
 
-public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineStationInventory> {
+public class UpgradeKitRecipe implements Recipe<TransientCraftingContainer> {
 	public static final Codec<UpgradeKitRecipe> CODEC = RecordCodecBuilder.create(builder ->
 					RecipeUtil.RecipeBookDetails.codec(builder, instance -> instance.recipeBookDetails).and(builder.group(
 					Ingredient.CODEC_NONEMPTY.fieldOf("input").forGetter(instance -> instance.input),
@@ -76,12 +76,12 @@ public class UpgradeKitRecipe implements Recipe<DivineStationContainer.DivineSta
 	}
 
 	@Override
-	public boolean matches(DivineStationContainer.DivineStationInventory inv, Level world) {
+	public boolean matches(TransientCraftingContainer inv, Level world) {
 		return this.input.test(inv.getItem(0)) && this.upgradeKit.test(inv.getItem(1));
 	}
 
 	@Override
-	public ItemStack assemble(DivineStationContainer.DivineStationInventory inv, RegistryAccess registryAccess) {
+	public ItemStack assemble(TransientCraftingContainer inv, RegistryAccess registryAccess) {
 		return getResultItem(registryAccess);
 	}
 

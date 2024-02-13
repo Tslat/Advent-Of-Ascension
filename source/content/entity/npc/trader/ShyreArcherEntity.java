@@ -16,13 +16,13 @@ import org.jetbrains.annotations.Nullable;
 public class ShyreArcherEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(Items.ARROW).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
-					BuildableTrade.trade(Items.SPECTRAL_ARROW).cost(AoAItems.COPPER_COIN, 6).xp(5))
+					BuildableTrade.forItem(Items.ARROW).itemCost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.forItem(Items.SPECTRAL_ARROW).itemCost(AoAItems.COPPER_COIN, 6).xp(5))
 			.trades(3,
-					BuildableTrade.trade(AoAItems.ANCIENT_RING).cost(AoAItems.SHYREGEM, 2).cost(AoAItems.SHYRESTONE_INGOT, 2).xp(25))
+					BuildableTrade.forItem(AoAItems.ANCIENT_RING).itemCost(AoAItems.SHYREGEM, 2).itemCost(AoAItems.SHYRESTONE_INGOT, 2).xp(25))
 			.trades(4,
-					BuildableTrade.trade(AoAWeapons.SUNSHINE_BOW).cost(AoAItems.SHYREGEM, 7).cost(AoAItems.SHYRESTONE_INGOT, 12).xp(40).stock(5),
-					BuildableTrade.trade(AoAWeapons.GIGA_CANNON).cost(AoAWeapons.ULTRA_CANNON).cost(AoAItems.SILVER_COIN, 9).xp(30).stock(9999)).build();
+					BuildableTrade.forItem(AoAWeapons.SUNSHINE_BOW).itemCost(AoAItems.SHYREGEM, 7).itemCost(AoAItems.SHYRESTONE_INGOT, 12).xp(40).stock(5),
+					BuildableTrade.forItem(AoAWeapons.GIGA_CANNON).itemCost(AoAWeapons.ULTRA_CANNON).itemCost(AoAItems.SILVER_COIN, 9).xp(30).stock(9999)).build();
 
 	public ShyreArcherEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -30,7 +30,7 @@ public class ShyreArcherEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.SHYRELANDS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.SHYRELANDS);
 	}
 
 	@Nullable

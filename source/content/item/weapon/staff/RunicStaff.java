@@ -18,6 +18,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class RunicStaff extends BaseStaff<PlayerEnderChestContainer> {
 	public RunicStaff(int durability) {
@@ -36,8 +37,8 @@ public class RunicStaff extends BaseStaff<PlayerEnderChestContainer> {
 	}
 
 	@Override
-	public PlayerEnderChestContainer checkPreconditions(LivingEntity caster, ItemStack staff) {
-		return caster instanceof Player ? ((Player)caster).getEnderChestInventory() : null;
+	public Optional<PlayerEnderChestContainer> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		return Optional.ofNullable(caster instanceof Player pl ? pl.getEnderChestInventory() : null);
 	}
 
 	@Override

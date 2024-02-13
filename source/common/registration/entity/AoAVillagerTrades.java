@@ -45,29 +45,29 @@ public final class AoAVillagerTrades {
 	}
 
 	private static void doClericTraces(Int2ObjectMap<List<VillagerTrades.ItemListing>> tradesMap) {
-		tradesMap.get(1).add(AoATrader.BuildableTrade.trade(AoABlocks.ANCIENT_ROCK, 3).cost(AoAItems.COPPER_COIN).xp(1).stock(16));
-		tradesMap.get(2).add(AoATrader.BuildableTrade.trade(AoAItems.RUNIUM_CHUNK).cost(AoAItems.COPPER_COIN, 5).xp(9).stock(8));
+		tradesMap.get(1).add(AoATrader.BuildableTrade.forItem(AoABlocks.ANCIENT_ROCK, 3).itemCost(AoAItems.COPPER_COIN).xp(1).stock(16));
+		tradesMap.get(2).add(AoATrader.BuildableTrade.forItem(AoAItems.RUNIUM_CHUNK).itemCost(AoAItems.COPPER_COIN, 5).xp(9).stock(8));
 		tradesMap.get(3).addAll(List.of(
-				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_TRAVEL).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
-				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_SPACE).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
-				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_REALITY).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
-				AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_DIRECTION).cost(AoAItems.COPPER_COIN, 20).xp(20).stock(4)));
-		tradesMap.get(5).add(AoATrader.BuildableTrade.trade(AoABlocks.CARVED_RUNE_OF_POWER).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(1));
+				AoATrader.BuildableTrade.forItem(AoABlocks.CARVED_RUNE_OF_TRAVEL).itemCost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
+				AoATrader.BuildableTrade.forItem(AoABlocks.CARVED_RUNE_OF_SPACE).itemCost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
+				AoATrader.BuildableTrade.forItem(AoABlocks.CARVED_RUNE_OF_REALITY).itemCost(AoAItems.COPPER_COIN, 20).xp(20).stock(4),
+				AoATrader.BuildableTrade.forItem(AoABlocks.CARVED_RUNE_OF_DIRECTION).itemCost(AoAItems.COPPER_COIN, 20).xp(20).stock(4)));
+		tradesMap.get(5).add(AoATrader.BuildableTrade.forItem(AoABlocks.CARVED_RUNE_OF_POWER).itemCost(AoAItems.SILVER_COIN, 2).xp(50).stock(1));
 	}
 
 	private static void doAssassinTrades(Int2ObjectMap<List<VillagerTrades.ItemListing>> tradesMap) {
 		tradesMap.get(1).addAll(List.of(
-				AoATrader.BuildableTrade.trade(AoAWeapons.GOO_BALL, 3).cost(AoAItems.COPPER_COIN, 2),
-				AoATrader.BuildableTrade.trade(AoAWeapons.SLICE_STAR, 2).cost(AoAItems.COPPER_COIN, 2)
+				AoATrader.BuildableTrade.forItem(AoAWeapons.GOO_BALL, 3).itemCost(AoAItems.COPPER_COIN, 2),
+				AoATrader.BuildableTrade.forItem(AoAWeapons.SLICE_STAR, 2).itemCost(AoAItems.COPPER_COIN, 2)
 		));
 		tradesMap.get(2).addAll(List.of(
-				AoATrader.BuildableTrade.trade(AoAWeapons.CHAKRAM, 2).cost(AoAItems.COPPER_COIN, 3).xp(3),
-				AoATrader.BuildableTrade.trade(AoAWeapons.VULKRAM, 2).cost(AoAItems.COPPER_COIN, 3).xp(3)
+				AoATrader.BuildableTrade.forItem(AoAWeapons.CHAKRAM, 2).itemCost(AoAItems.COPPER_COIN, 3).xp(3),
+				AoATrader.BuildableTrade.forItem(AoAWeapons.VULKRAM, 2).itemCost(AoAItems.COPPER_COIN, 3).xp(3)
 		));
 		tradesMap.get(3).addAll(List.of(
-				AoATrader.BuildableTrade.trade(AoAItems.METAL_SLUG, 2).cost(AoAItems.COPPER_COIN, 2),
-				AoATrader.BuildableTrade.trade(AoAItems.LIMONITE_BULLET, 5).cost(AoAItems.COPPER_COIN, 2)
+				AoATrader.BuildableTrade.forItem(AoAItems.METAL_SLUG, 2).itemCost(AoAItems.COPPER_COIN, 2),
+				AoATrader.BuildableTrade.forItem(AoAItems.LIMONITE_BULLET, 5).itemCost(AoAItems.COPPER_COIN, 2)
 		));
-		tradesMap.get(4).add(AoATrader.BuildableTrade.trade(AoAWeapons.HELLFIRE).cost(AoAItems.COPPER_COIN, 2));
+		tradesMap.get(4).add(AoATrader.BuildableTrade.forItem(AoAWeapons.HELLFIRE).itemCost(AoAItems.COPPER_COIN, 2));
 	}
 }

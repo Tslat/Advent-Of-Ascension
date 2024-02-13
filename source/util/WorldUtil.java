@@ -31,9 +31,9 @@ import net.tslat.aoa3.client.ClientOperations;
 import net.tslat.aoa3.common.registration.AoAGameRules;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.content.entity.misc.CustomisableLightningBolt;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
@@ -48,11 +48,11 @@ public final class WorldUtil {
 		return createExplosion(exploder, world, pos.getX(), pos.getY(), pos.getZ(), strength, AoAGameRules.checkDestructiveWeaponPhysics(world) ? Level.ExplosionInteraction.BLOCK : Level.ExplosionInteraction.NONE, false);
 	}
 
-	public static Explosion createExplosion(@Nonnull Entity exploder, Level world, float strength) {
+	public static Explosion createExplosion(@NotNull Entity exploder, Level world, float strength) {
 		return createExplosion(exploder, world, exploder.getX(), exploder.getY(), exploder.getZ(), strength, EventHooks.getMobGriefingEvent(world, exploder) ? Level.ExplosionInteraction.MOB : Level.ExplosionInteraction.NONE, false);
 	}
 
-	public static Explosion createExplosion(@Nullable Entity exploder, Level world, @Nonnull Entity explodingEntity, float strength) {
+	public static Explosion createExplosion(@Nullable Entity exploder, Level world, @NotNull Entity explodingEntity, float strength) {
 		boolean doGriefing;
 
 		if (exploder instanceof Player) {
@@ -131,7 +131,7 @@ public final class WorldUtil {
 			if (blockXp == -1)
 				return false;
 
-			BlockEntity tileEntity = world.getBlockEntity(breakPos);
+			BlockEntity blockEntity = world.getBlockEntity(breakPos);
 
 			if (!pl.canUseGameMasterBlocks() && (block instanceof CommandBlock || block instanceof StructureBlock || block instanceof JigsawBlock)) {
 				world.sendBlockUpdated(breakPos, blockState, blockState, Block.UPDATE_ALL);
@@ -150,7 +150,7 @@ public final class WorldUtil {
 					blockState.getBlock().destroy(world, breakPos, blockState);
 
 					if (canHarvest)
-						block.playerDestroy(world, pl, breakPos, blockState, tileEntity, pl.getMainHandItem().copy());
+						block.playerDestroy(world, pl, breakPos, blockState, blockEntity, pl.getMainHandItem().copy());
 
 					if (forceDropsInCreative && blockXp > 0)
 						blockState.getBlock().popExperience((ServerLevel)world, breakPos, blockXp);
@@ -170,7 +170,7 @@ public final class WorldUtil {
 					blockState.getBlock().destroy(world, breakPos, blockState);
 
 					if (canHarvest)
-						block.playerDestroy(world, pl, breakPos, blockState, tileEntity, toolStackCopy);
+						block.playerDestroy(world, pl, breakPos, blockState, blockEntity, toolStackCopy);
 
 					if (blockXp > 0)
 						blockState.getBlock().popExperience((ServerLevel)world, breakPos, blockXp);
@@ -249,7 +249,7 @@ public final class WorldUtil {
 
 		Player relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
 
-		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE.key))
+		if (WorldUtil.isWorld(activeWorld, AoADimensions.NOWHERE))
 			return relevantPlayer != null && relevantPlayer.isCreative();
 
 		if (relevantPlayer != null) {
@@ -278,7 +278,7 @@ public final class WorldUtil {
 
 		Player relevantPlayer = PlayerUtil.getPlayerOrOwnerIfApplicable(entity);
 
-		if (isWorld(activeWorld, AoADimensions.NOWHERE.key))
+		if (isWorld(activeWorld, AoADimensions.NOWHERE))
 			return relevantPlayer != null && relevantPlayer.isCreative();
 
 		if (relevantPlayer != null) {

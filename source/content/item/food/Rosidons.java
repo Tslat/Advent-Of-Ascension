@@ -44,7 +44,7 @@ public class Rosidons extends Item {
 				return stack;
 
 			if (calculatedY - entity.getY() >= 350 && entity instanceof ServerPlayer pl)
-				pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/super_escape_rope")), "350_blocks");
+				pl.getAdvancements().award(AdvancementUtil.getAdvancement(pl.serverLevel(), AdventOfAscension.id("completionist/super_escape_rope")), "350_blocks");
 
 			world.gameEvent(GameEvent.TELEPORT, entity.position(), GameEvent.Context.of(entity));
 			world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.CHORUS_FRUIT_TELEPORT, SoundSource.PLAYERS, 1, 1);

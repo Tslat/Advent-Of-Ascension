@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:sniper_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:dense_rock"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:viper_1"
-  },
-  "tool": {
-    "item": "aoa3:sniper_frame"
   }
 }

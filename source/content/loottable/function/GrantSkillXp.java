@@ -47,8 +47,8 @@ public class GrantSkillXp extends LootItemConditionalFunction {
 		if (!(entity instanceof Player))
 			entity = context.getParamOrNull(LootContextParams.THIS_ENTITY);
 
-		if (entity instanceof ServerPlayer)
-			PlayerUtil.getAdventPlayer((ServerPlayer)entity).getSkill(skill).adjustXp(xp, false, false);
+		if (entity instanceof ServerPlayer pl)
+			PlayerUtil.giveXpToPlayer(pl, this.skill, xp, false);
 
 		return stack;
 	}

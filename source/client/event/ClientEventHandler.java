@@ -68,8 +68,6 @@ public final class ClientEventHandler {
 			else {
 				ev.getPlayer().sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("message", "login.welcome"), ChatFormatting.GRAY, AoAKeybinds.ADVENT_GUI.getTranslatedKeyMessage()));
 			}
-
-			ev.getPlayer().sendSystemMessage(Component.literal("AoA IS IN A TRANSITION PERIOD. ALL DIMENSIONS AND MOST MOBS ARE MISSING. PLAY 1.16.5 FOR SURVIVAL AoA. JOIN THE DISCORD FOR MORE INFO").withStyle(ChatFormatting.DARK_RED));
 		}
 
 		AoANetworking.sendToServer(new HaloSelectPacket(AoAConfigs.CLIENT.personalHaloPreference.get()));

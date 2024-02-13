@@ -44,16 +44,16 @@ public class LaserBlaster extends BaseBlaster {
 				.lifespan(1)
 				.ignoreDistanceAndLimits()
 				.scaleMod(0.05f)
-				.colourOverride(1, 0, 0, 1f));
+				.colourOverride(255, 0, 0, 255));
 		packet.particle(ParticleBuilder.forPositionsInLine(ParticleTypes.END_ROD, originPos, hitPos, 6)
 				.lifespan(1)
 				.ignoreDistanceAndLimits()
 				.scaleMod(0.4f)
-				.colourOverride(1, 0, 0, 1f));
+				.colourOverride(255, 0, 0, 255));
 		packet.particle(ParticleBuilder.forPositions(ParticleTypes.WARPED_SPORE, hitPos)
 				.lifespan(5)
 				.ignoreDistanceAndLimits()
-				.colourOverride(1, 0, 0, 1f)
+				.colourOverride(255, 0, 0, 255)
 				.spawnNTimes(2));
 
 		packet.sendToAllPlayersTrackingEntity(level, shooter);

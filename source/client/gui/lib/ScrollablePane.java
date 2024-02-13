@@ -23,8 +23,8 @@ public abstract class ScrollablePane {
 	protected int scrollBarHeight;
 	private float currentRenderScale;
 
-	protected int mouseX;
-	protected int mouseY;
+	protected float mouseX;
+	protected float mouseY;
 	private boolean mouseFocussed;
 	protected boolean isDragging = false;
 
@@ -43,7 +43,7 @@ public abstract class ScrollablePane {
 		this.currentRenderScale = renderingScale;
 	}
 
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+	public void render(GuiGraphics guiGraphics, float mouseX, float mouseY, float partialTicks) {
 		this.mouseX = mouseX;
 		this.mouseY = mouseY;
 		int scrollBarWidth = 6;
@@ -73,7 +73,7 @@ public abstract class ScrollablePane {
 				}
 			}
 			else if (mouseYPosState >= 0) {
-				distanceScrolled = distanceScrolled - ((float)mouseY - mouseYPosState) * scrollFactor;
+				distanceScrolled = distanceScrolled - (mouseY - mouseYPosState) * scrollFactor;
 				mouseYPosState = mouseY;
 			}
 		}
@@ -154,7 +154,7 @@ public abstract class ScrollablePane {
 			return false;
 
 		if (scrollAmount != 0)
-			distanceScrolled += -20 * scrollAmount;
+			distanceScrolled += (float)(-20 * scrollAmount);
 
 		return isMouseHovering();
 	}

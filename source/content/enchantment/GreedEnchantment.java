@@ -1,17 +1,12 @@
 package net.tslat.aoa3.content.enchantment;
 
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
-import net.tslat.aoa3.content.item.weapon.blaster.BaseBlaster;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
-import net.tslat.aoa3.content.item.weapon.staff.BaseStaff;
+import net.tslat.aoa3.util.ItemUtil;
 
 public class GreedEnchantment extends Enchantment {
 	public GreedEnchantment() {
-		super(Enchantment.Rarity.VERY_RARE, AoAEnchantments.AMMO_CONSUMING, new EquipmentSlot[] {EquipmentSlot.MAINHAND});
+		super(Enchantment.Rarity.VERY_RARE, AoAEnchantments.AMMO_CONSUMING, ItemUtil.HAND_SLOTS);
 	}
 
 	@Override
@@ -22,12 +17,6 @@ public class GreedEnchantment extends Enchantment {
 	@Override
 	public boolean isTreasureOnly() {
 		return true;
-	}
-
-	public boolean canEnchant(ItemStack stack) {
-		Item item = stack.getItem();
-
-		return item instanceof BaseGun || item instanceof BaseBlaster || item instanceof BaseStaff;
 	}
 
 	@Override

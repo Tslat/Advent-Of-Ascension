@@ -8,8 +8,8 @@ import net.neoforged.neoforge.event.TickEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.player.ServerPlayerDataManager;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 
 public class EnergyResource extends AoAResource.Instance {
 	private static final ListenerType[] LISTENERS = new ListenerType[] {ListenerType.PLAYER_TICK, ListenerType.INCOMING_ATTACK_AFTER};
@@ -103,7 +103,7 @@ public class EnergyResource extends AoAResource.Instance {
 		}
 	}
 
-	@Nonnull
+	@NotNull
 	@Override
 	public CompoundTag saveToNbt() {
 		return new CompoundTag();

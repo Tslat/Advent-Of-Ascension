@@ -21,16 +21,16 @@ import org.jetbrains.annotations.Nullable;
 public class ZalSpellbinderEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.LUNAR_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
-					BuildableTrade.trade(AoAItems.DISTORTION_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
-					BuildableTrade.trade(AoAItems.LIFE_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64),
-					BuildableTrade.trade(AoAItems.KINETIC_RUNE).cost(AoAItems.COPPER_COIN).xp(1).stock(64))
+					BuildableTrade.forItem(AoAItems.LUNAR_RUNE).itemCost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.forItem(AoAItems.DISTORTION_RUNE).itemCost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.forItem(AoAItems.LIFE_RUNE).itemCost(AoAItems.COPPER_COIN).xp(1).stock(64),
+					BuildableTrade.forItem(AoAItems.KINETIC_RUNE).itemCost(AoAItems.COPPER_COIN).xp(1).stock(64))
 			.trades(2,
-					BuildableTrade.trade(AoATools.SOULSTONE_AXE).cost(AoAItems.GOLD_COIN, 10).xp(100).stock(3),
-					BuildableTrade.trade(AoATools.SOULSTONE_SHOVEL).cost(AoAItems.GOLD_COIN, 11).xp(100).stock(3),
-					BuildableTrade.trade(AoATools.SOULSTONE_PICKAXE).cost(AoAItems.GOLD_COIN, 12).xp(100).stock(3),
-					BuildableTrade.trade(AoAWeapons.ULTRA_CANNON).cost(AoAWeapons.SUPER_CANNON).cost(AoAItems.SILVER_COIN, 7),
-					BuildableTrade.trade(EnchantedBookItem.createForEnchantment(new EnchantmentInstance(Enchantments.MENDING, 1))).cost(AoAItems.LUNAVER_COIN, 2).xp(150).stock(5)).build();
+					BuildableTrade.forItem(AoATools.SOULSTONE_AXE).itemCost(AoAItems.GOLD_COIN, 10).xp(100).stock(3),
+					BuildableTrade.forItem(AoATools.SOULSTONE_SHOVEL).itemCost(AoAItems.GOLD_COIN, 11).xp(100).stock(3),
+					BuildableTrade.forItem(AoATools.SOULSTONE_PICKAXE).itemCost(AoAItems.GOLD_COIN, 12).xp(100).stock(3),
+					BuildableTrade.forItem(AoAWeapons.ULTRA_CANNON).itemCost(AoAWeapons.SUPER_CANNON).itemCost(AoAItems.SILVER_COIN, 7),
+					BuildableTrade.forStack(() -> EnchantedBookItem.createForEnchantment(new EnchantmentInstance(Enchantments.MENDING, 1))).itemCost(AoAItems.LUNAVER_COIN, 2).xp(150).stock(5)).build();
 
 	public ZalSpellbinderEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -43,7 +43,7 @@ public class ZalSpellbinderEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS);
 	}
 
 	@Nullable

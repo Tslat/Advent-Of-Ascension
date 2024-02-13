@@ -206,7 +206,7 @@
           "functions": [
             {
               "function": "minecraft:set_nbt",
-              "tag": "{CustomPotionColor:\"302351977\",custom_potion_effects:[{ambient:0b,amplifier:0b,duration:18000,id:\"minecraft:strength\",\"neoforge:cures\":[\"milk\",\"protected_by_totem\"],\"neoforge:id\":\"minecraft:strength\",show_icon:1b,show_particles:1b}],display:{Name:'{\"translate\":\"item.aoa3.potion.everlastingStrength\"}'}}"
+              "tag": "{CustomPotionColor:\"302351977\",custom_potion_effects:[{ambient:0b,amplifier:0b,duration:18000,id:\"minecraft:strength\",\"neoforge:cures\":[\"protected_by_totem\",\"milk\"],\"neoforge:id\":\"minecraft:strength\",show_icon:1b,show_particles:1b}],display:{Name:'{\"translate\":\"item.aoa3.potion.everlastingStrength\"}'}}"
             },
             {
               "count": {

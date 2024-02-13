@@ -405,7 +405,7 @@
         "type": "minecraft:condition",
         "if_true": {
           "type": "minecraft:y_above",
-          "add_stone_depth": true,
+          "add_stone_depth": false,
           "anchor": {
             "below_top": 70
           },

@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:gun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:grenade"
@@ -16,8 +19,5 @@
   ],
   "result": {
     "item": "aoa3:baronator"
-  },
-  "tool": {
-    "item": "aoa3:gun_frame"
   }
 }

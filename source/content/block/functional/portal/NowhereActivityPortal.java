@@ -33,14 +33,14 @@ public class NowhereActivityPortal extends PortalBlock {
 	private static final EnumProperty<Activity> ACTIVITY = EnumProperty.create("activity", Activity.class);
 
 	public NowhereActivityPortal(BlockBehaviour.Properties properties) {
-		super(properties, AoADimensions.NOWHERE.key, 0);
+		super(properties, AoADimensions.NOWHERE, 0);
 
 		registerDefaultState(getStateDefinition().any().setValue(ACTIVITY, Activity.UTILITY));
 	}
 
 	@Override
 	public void entityInside(BlockState state, Level world, BlockPos pos, Entity entity) {
-		if (entity.getVehicle() == null && !entity.isVehicle() && entity instanceof ServerPlayer pl && WorldUtil.isWorld(pl.level(), AoADimensions.NOWHERE.key)) {
+		if (entity.getVehicle() == null && !entity.isVehicle() && entity instanceof ServerPlayer pl && WorldUtil.isWorld(pl.level(), AoADimensions.NOWHERE)) {
 			if (pl.portalTime > 0) {
 				pl.portalTime = 30;
 

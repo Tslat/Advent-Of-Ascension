@@ -1,11 +1,13 @@
 package net.tslat.aoa3.content.entity.mob.precasia;
 
+import com.google.common.base.Suppliers;
 import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.DamageTypeTags;
@@ -21,17 +23,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
-import net.neoforged.neoforge.common.IExtensibleEnum;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoAAttributes;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.block.AoAFluidTypes;
+import net.tslat.aoa3.common.registration.entity.AoAEntityDataSerializers;
 import net.tslat.aoa3.common.registration.entity.AoAMobs;
+import net.tslat.aoa3.common.registration.entity.variant.VeloraptorVariant;
 import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
 import net.tslat.aoa3.content.entity.base.AoAEntityPart;
 import net.tslat.aoa3.content.entity.base.AoAMeleeMob;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyLivingEntitySensor;
 import net.tslat.aoa3.content.entity.brain.sensor.AggroBasedNearbyPlayersSensor;
+import net.tslat.aoa3.content.entity.brain.task.temp.FixedTargetOrRetaliate;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.EntitySpawningUtil;
@@ -45,11 +50,9 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToAttackTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.target.InvalidateAttackTarget;
-import net.tslat.smartbrainlib.api.core.behaviour.custom.target.TargetOrRetaliate;
 import net.tslat.smartbrainlib.api.core.sensor.ExtendedSensor;
 import net.tslat.smartbrainlib.api.core.sensor.vanilla.HurtBySensor;
 import net.tslat.smartbrainlib.util.BrainUtils;
-import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -60,12 +63,12 @@ import java.util.List;
 import java.util.UUID;
 
 public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
-	private static final EntityDataHolder<String> TYPE = EntityDataHolder.register(VeloraptorEntity.class, EntityDataSerializers.STRING, Type.BROWN.name, entity -> entity.type.name, (entity, value) -> entity.type = Type.fromString(value));
+	private static final EntityDataHolder<VeloraptorVariant> VARIANT = EntityDataHolder.register(VeloraptorEntity.class, AoAEntityDataSerializers.VELORAPTOR_VARIANT.get(), VeloraptorVariant.GREEN.get(), entity -> entity.variant, (entity, value) -> entity.variant = value);
 	private static final AttributeModifier LUNGE_DAMAGE_MODIFIER = new AttributeModifier(UUID.fromString("a779f2f0-ea09-4357-96f9-d6bdb4e85d97"), "LungeDamageModifier", 3, AttributeModifier.Operation.ADDITION);
 
 	private static final int ATTACK_BITE = 0;
 	private static final int ATTACK_POUNCE = 1;
-	private Type type = Type.BROWN;
+	private VeloraptorVariant variant = VeloraptorVariant.GREEN.get();
 
 	public VeloraptorEntity(EntityType<? extends VeloraptorEntity> entityType, Level level) {
 		super(entityType, level);
@@ -77,7 +80,7 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	protected void defineSynchedData() {
 		super.defineSynchedData();
 
-		registerDataParams(TYPE);
+		registerDataParams(VARIANT);
 	}
 
 	@Override
@@ -130,8 +133,8 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	@Override
 	public BrainActivityGroup<? extends VeloraptorEntity> getIdleTasks() {
 		return BrainActivityGroup.idleTasks(
-				new TargetOrRetaliate<>()
-						.alertAlliesWhen((entity, target) -> entity.getLastHurtByMob() != null || target instanceof Animal)
+				new FixedTargetOrRetaliate<>()
+						.alertAlliesWhen((entity, target) -> target instanceof Player || target instanceof Animal)
 						.useMemory(MemoryModuleType.NEAREST_VISIBLE_ATTACKABLE_PLAYER)
 						.attackablePredicate(target -> target.isAlive() && (!(target instanceof Player player) || !player.getAbilities().invulnerable) && !isAlliedTo(target)),
 				new OneRandomBehaviour<>(
@@ -143,15 +146,15 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 
-		compound.putString("Variant", this.type.name);
+		compound.putString("Variant", AoARegistries.VELORAPTOR_VARIANTS.getKey(VARIANT.get(this)).toString());
 	}
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 
-		if (compound.contains("Variant"))
-			TYPE.set(this, compound.getString("Variant"));
+		if (compound.contains("Variant", Tag.TAG_STRING))
+			VARIANT.set(this, AoARegistries.VELORAPTOR_VARIANTS.getEntry(ResourceLocation.tryParse(compound.getString("Variant"))));
 	}
 
 	@Override
@@ -191,13 +194,15 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	@Nullable
 	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
-		TYPE.set(this, (RandomUtil.fiftyFifty() ? Type.BROWN : Type.GREEN).name);
+		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 
-		return super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
+		VARIANT.set(this, VeloraptorVariant.getVariantForSpawn(world.getLevel(), difficulty, reason, this, Suppliers.memoize(() -> level().getBiome(blockPosition())), spawnData, dataTag));
+
+		return spawnData;
 	}
 
-	public Type getVariant() {
-		return this.type;
+	public VeloraptorVariant getVariant() {
+		return this.variant;
 	}
 
 	@Override
@@ -213,6 +218,11 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 	@Override
 	protected int getPreAttackTime() {
 		return ATTACK_STATE.is(this, ATTACK_BITE) ? 4 : 21;
+	}
+
+	@Override
+	protected ResourceLocation getDefaultLootTable() {
+		return getVariant().lootTable().orElseGet(super::getDefaultLootTable);
 	}
 
 	@Override
@@ -236,30 +246,6 @@ public class VeloraptorEntity extends AoAMeleeMob<VeloraptorEntity> {
 
 			return PlayState.STOP;
 		}));
-	}
-
-	public enum Type implements IExtensibleEnum {
-		BROWN("brown"),
-		GREEN("green");
-
-		public final String name;
-
-		Type(final String variant) {
-			this.name = variant;
-		}
-
-		public static Type fromString(String name) {
-			return switch(name) {
-				case "brown" -> BROWN;
-				case "green" -> GREEN;
-				default -> BROWN;
-			};
-		}
-
-		// Use this to create additional variants of Veloraptors if you're an addon creator
-		public static Type create(String name, String variant) {
-			throw new IllegalStateException("Enum not extended");
-		}
 	}
 
 	public static class LungeMeleeAttack extends AnimatableMeleeAttack<VeloraptorEntity> {

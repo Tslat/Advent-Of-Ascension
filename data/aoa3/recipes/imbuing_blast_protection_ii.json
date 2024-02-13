@@ -1,20 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:durability",
+    "aoa3:power"
+  ],
   "enchantment": "minecraft:blast_protection",
   "enchantment_level": 2,
-  "infusion_level": 9,
-  "ingredients": [
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    },
-    {
-      "tag": "forge:gunpowder"
-    }
-  ]
+  "imbuing_level": 14,
+  "power_source": {
+    "item": "aoa3:glistening_power_stone"
+  }
 }

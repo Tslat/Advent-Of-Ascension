@@ -93,8 +93,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 				new AoAEntityPart<>(this, 0.375f, 0.4375f, 0, 0.76f, getBbWidth() - 0.0625f),
 				new AoAEntityPart<>(this, 0.25f, 0.25f, 0, 0.97f, getBbWidth() + 0.25f),
 				new AoAEntityPart<>(this, 0.25f, 0.25f, 0, 0.97f, getBbWidth() + 0.5f),
-				new AoAEntityPart<>(this, 0.375f, 0.4375f, 0, 0.76f, -getBbWidth() + 0.0625f)
-		);
+				new AoAEntityPart<>(this, 0.375f, 0.4375f, 0, 0.76f, -getBbWidth() + 0.0625f));
 	}
 
 	@Override

@@ -1,16 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:damage",
+    "aoa3:speed",
+    "aoa3:precision"
+  ],
   "enchantment": "minecraft:piercing",
   "enchantment_level": 1,
-  "ingredients": [
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:glistening_power_stone"
-    },
-    {
-      "tag": "forge:string"
-    }
-  ]
+  "imbuing_level": 26,
+  "power_source": {
+    "item": "aoa3:blooming_power_stone"
+  }
 }

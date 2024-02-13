@@ -15,22 +15,22 @@ import org.jetbrains.annotations.Nullable;
 public class CrystalTraderEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.BLUE_CRYSTAL).stock(9999),
-					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.GREEN_CRYSTAL).stock(9999),
-					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.PURPLE_CRYSTAL).stock(9999),
-					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.RED_CRYSTAL).stock(9999),
-					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.WHITE_CRYSTAL).stock(9999),
-					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.YELLOW_CRYSTAL).stock(9999))
+					BuildableTrade.forItem(AoAItems.COPPER_COIN).itemCost(AoAItems.BLUE_CRYSTAL).stock(9999),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN).itemCost(AoAItems.GREEN_CRYSTAL).stock(9999),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN).itemCost(AoAItems.PURPLE_CRYSTAL).stock(9999),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN).itemCost(AoAItems.RED_CRYSTAL).stock(9999),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN).itemCost(AoAItems.WHITE_CRYSTAL).stock(9999),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN).itemCost(AoAItems.YELLOW_CRYSTAL).stock(9999))
 			.trades(2,
-					BuildableTrade.trade(AoAItems.BLUE_DRUSE).cost(AoAItems.BLUE_CRYSTAL, 16).xp(15).stock(9999),
-					BuildableTrade.trade(AoAItems.GREEN_DRUSE).cost(AoAItems.GREEN_CRYSTAL, 16).xp(15).stock(9999),
-					BuildableTrade.trade(AoAItems.PURPLE_DRUSE).cost(AoAItems.PURPLE_CRYSTAL, 16).xp(15).stock(9999),
-					BuildableTrade.trade(AoAItems.RED_DRUSE).cost(AoAItems.RED_CRYSTAL, 16).xp(15).stock(9999),
-					BuildableTrade.trade(AoAItems.WHITE_DRUSE).cost(AoAItems.WHITE_CRYSTAL, 16).xp(15).stock(9999),
-					BuildableTrade.trade(AoAItems.YELLOW_DRUSE).cost(AoAItems.YELLOW_CRYSTAL, 16).xp(15).stock(9999))
+					BuildableTrade.forItem(AoAItems.BLUE_DRUSE).itemCost(AoAItems.BLUE_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.forItem(AoAItems.GREEN_DRUSE).itemCost(AoAItems.GREEN_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.forItem(AoAItems.PURPLE_DRUSE).itemCost(AoAItems.PURPLE_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.forItem(AoAItems.RED_DRUSE).itemCost(AoAItems.RED_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.forItem(AoAItems.WHITE_DRUSE).itemCost(AoAItems.WHITE_CRYSTAL, 16).xp(15).stock(9999),
+					BuildableTrade.forItem(AoAItems.YELLOW_DRUSE).itemCost(AoAItems.YELLOW_CRYSTAL, 16).xp(15).stock(9999))
 			.trades(3,
-					BuildableTrade.trade(AoAWeapons.CRYSTAL_MAUL).cost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5),
-					BuildableTrade.trade(AoAWeapons.CRYSTAL_GREATBLADE).cost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5)).build();
+					BuildableTrade.forItem(AoAWeapons.CRYSTAL_MAUL).itemCost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5),
+					BuildableTrade.forItem(AoAWeapons.CRYSTAL_GREATBLADE).itemCost(AoAItems.RAINBOW_DRUSE, 12).xp(50).stock(5)).build();
 
 	public CrystalTraderEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -38,7 +38,7 @@ public class CrystalTraderEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.CRYSTEVIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.CRYSTEVIA);
 	}
 
 	@Override

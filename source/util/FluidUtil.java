@@ -17,7 +17,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.advent.AoAStartupCache;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
+import net.tslat.aoa3.common.registration.item.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.library.object.MutableSupplier;

@@ -82,7 +82,7 @@ public class CustomisableParticleType extends ParticleType<CustomisableParticleT
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f %s", AoARegistries.PARTICLES.getId(getType()), scale, ageModifier, red, green, blue, alpha, entitySourceId);
+			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f %.2f %.2f %s", AoARegistries.PARTICLES.getKey(getType()), scale, ageModifier, red, green, blue, alpha, entitySourceId);
 		}
 
 		public static final ParticleOptions.Deserializer<Data> DESERIALIZER = new ParticleOptions.Deserializer<Data>() {

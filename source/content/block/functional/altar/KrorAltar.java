@@ -51,7 +51,7 @@ public class KrorAltar extends BossAltarBlock {
 			return false;
 		}
 
-		return WorldUtil.isWorld(player.level(), AoADimensions.DEEPLANDS.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.DEEPLANDS);
 	}
 
 	@Override

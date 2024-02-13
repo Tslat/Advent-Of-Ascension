@@ -18,8 +18,8 @@ public class InitializeLeaderboardTask extends InsertionTask {
 		try {
 			leaderboardConnection.runStatement(connection, "CREATE TABLE IF NOT EXISTS Totals (Uuid CHAR(36) NOT NULL, Username NVARCHAR(20) NOT NULL, Total INT NOT NULL, LastUpdate DATE, PRIMARY KEY (Uuid))");
 
-			for (AoASkill skill : AoARegistries.AOA_SKILLS.getAllRegisteredObjects()) {
-				String tableName = idToTableName(AoARegistries.AOA_SKILLS.getId(skill));
+			for (AoASkill skill : AoARegistries.AOA_SKILLS) {
+				String tableName = idToTableName(AoARegistries.AOA_SKILLS.getKey(skill));
 
 				leaderboardConnection.runStatement(connection, "CREATE TABLE IF NOT EXISTS " + tableName + " (Uuid CHAR(36) NOT NULL, Username NVARCHAR(20) NOT NULL, Level SMALLINT NOT NULL, LastUpdate DATE, PRIMARY KEY (Uuid))");
 			}

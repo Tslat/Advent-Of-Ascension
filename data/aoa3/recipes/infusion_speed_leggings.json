@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:leggings_frame"
+  },
   "ingredients": [
     {
       "item": "minecraft:prismarine_shard"
@@ -28,8 +31,5 @@
   ],
   "result": {
     "item": "aoa3:speed_leggings"
-  },
-  "tool": {
-    "item": "aoa3:leggings_frame"
   }
 }

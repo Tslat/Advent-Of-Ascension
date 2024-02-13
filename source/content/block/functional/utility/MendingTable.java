@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.tslat.aoa3.common.container.MendingTableContainer;
+import net.tslat.aoa3.common.menu.MendingTableMenu;
 
 public class MendingTable extends Block {
 	public MendingTable(BlockBehaviour.Properties properties) {
@@ -20,7 +20,7 @@ public class MendingTable extends Block {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (player instanceof ServerPlayer)
-			MendingTableContainer.openContainer((ServerPlayer)player, pos);
+			MendingTableMenu.openContainer((ServerPlayer)player, pos);
 
 		return InteractionResult.SUCCESS;
 	}

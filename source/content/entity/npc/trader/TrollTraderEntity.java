@@ -18,10 +18,10 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 public class TrollTraderEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(Blocks.SAND, 64).cost(AoAItems.COPPER_COIN, 10).xp(5).stock(64),
-					BuildableTrade.trade(Items.INK_SAC).cost(AoAItems.COPPER_COIN, 3).stock(32),
-					BuildableTrade.trade(Items.PRISMARINE_SHARD, 4).cost(AoAItems.SILVER_COIN).xp(15),
-					BuildableTrade.trade(Items.PRISMARINE_CRYSTALS, 2).cost(AoAItems.SILVER_COIN).xp(15)).build();
+					BuildableTrade.forItem(Blocks.SAND, 64).itemCost(AoAItems.COPPER_COIN, 10).xp(5).stock(64),
+					BuildableTrade.forItem(Items.INK_SAC).itemCost(AoAItems.COPPER_COIN, 3).stock(32),
+					BuildableTrade.forItem(Items.PRISMARINE_SHARD, 4).itemCost(AoAItems.SILVER_COIN).xp(15),
+					BuildableTrade.forItem(Items.PRISMARINE_CRYSTALS, 2).itemCost(AoAItems.SILVER_COIN).xp(15)).build();
 
 	public TrollTraderEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);

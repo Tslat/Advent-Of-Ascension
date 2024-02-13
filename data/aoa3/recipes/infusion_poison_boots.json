@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:boots_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:toxic_lump"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:poison_boots"
-  },
-  "tool": {
-    "item": "aoa3:boots_frame"
   }
 }

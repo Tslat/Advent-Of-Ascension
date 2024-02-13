@@ -1,23 +1,16 @@
 package net.tslat.aoa3.content.enchantment;
 
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
-import net.tslat.aoa3.content.item.weapon.gun.BaseGun;
+import net.tslat.aoa3.util.ItemUtil;
 
 public class ControlEnchantment extends Enchantment {
 	public ControlEnchantment() {
-		super(Enchantment.Rarity.RARE, AoAEnchantments.GUN, new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND});
+		super(Rarity.COMMON, AoAEnchantments.GUN, ItemUtil.HAND_SLOTS);
 	}
 
-	public boolean canEnchant(ItemStack stack) {
-		Item item = stack.getItem();
-
-		return item instanceof BaseGun;
-	}
-
+	@Override
 	public int getMaxLevel() {
 		return 3;
 	}
@@ -29,6 +22,10 @@ public class ControlEnchantment extends Enchantment {
 
 	@Override
 	public int getMaxCost(int enchantmentLevel) {
-		return getMinCost(enchantmentLevel) + 20;
+		return getMinCost(enchantmentLevel) + 30;
+	}
+
+	public static float modifyRecoil(ItemStack stack, float baseRecoil) {
+		return baseRecoil * (1 - 0.15f * stack.getEnchantmentLevel(AoAEnchantments.CONTROL.get()));
 	}
 }

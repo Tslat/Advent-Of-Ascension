@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -21,6 +20,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class LightningStaff extends BaseStaff<BlockPos> {
 	public LightningStaff(int durability) {
@@ -41,13 +41,8 @@ public class LightningStaff extends BaseStaff<BlockPos> {
 	}
 
 	@Override
-	public BlockPos checkPreconditions(LivingEntity caster, ItemStack staff) {
-		BlockPos trace = null;
-
-		if (caster instanceof Player)
-			trace = PlayerUtil.getBlockAimingAt((Player)caster, 70);
-
-		return trace;
+	public Optional<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		return Optional.ofNullable(PlayerUtil.getBlockAimingAt(caster, 70));
 	}
 
 	@Override

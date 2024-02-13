@@ -17,9 +17,10 @@ import net.tslat.aoa3.content.entity.base.AoAFlyingRangedMob;
 import net.tslat.aoa3.content.entity.projectile.arrow.CustomArrowEntity;
 import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.item.weapon.bow.BaseBow;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
+
 
 public class LunarcherEntity extends AoAFlyingRangedMob {
 	public LunarcherEntity(EntityType<? extends FlyingMob> entityType, Level world) {
@@ -72,7 +73,7 @@ public class LunarcherEntity extends AoAFlyingRangedMob {
 	}
 
 	@Override
-	public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
+	public void performRangedAttack(@NotNull LivingEntity target, float bowDamageFactor) {
 		CustomArrowEntity projectile = new CustomArrowEntity(level(), (BaseBow)AoAWeapons.LUNAR_BOW.get(), this, getAttributeValue(AoAAttributes.RANGED_ATTACK_DAMAGE.get()));
 
 		double distanceFactorX = target.getX() - projectile.getX();

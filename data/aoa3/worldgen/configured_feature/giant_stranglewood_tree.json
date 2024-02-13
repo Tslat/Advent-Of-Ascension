@@ -1,7 +1,13 @@
 {
   "type": "minecraft:tree",
   "config": {
-    "decorators": [],
+    "decorators": [
+      {
+        "type": "aoa3:opteryx_nest",
+        "nest_feature": "aoa3:opteryx_nest",
+        "probability": 0.01
+      }
+    ],
     "dirt_provider": {
       "type": "minecraft:simple_state_provider",
       "state": {

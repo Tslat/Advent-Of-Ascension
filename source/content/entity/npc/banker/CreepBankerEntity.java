@@ -12,7 +12,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.container.BankerContainer;
+import net.tslat.aoa3.common.menu.BankerMenu;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
@@ -26,7 +26,7 @@ public class CreepBankerEntity extends AoABanker {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.CREEPONIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.CREEPONIA);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class CreepBankerEntity extends AoABanker {
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int screenId, Inventory inv, Player player) {
-				return new BankerContainer(screenId, player.getInventory(), CreepBankerEntity.this);
+				return new BankerMenu(screenId, player.getInventory(), CreepBankerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
 	}

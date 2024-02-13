@@ -1,20 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:speed",
+    "aoa3:precision",
+    "aoa3:control"
+  ],
   "enchantment": "minecraft:efficiency",
   "enchantment_level": 3,
-  "infusion_level": 34,
-  "ingredients": [
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:glistening_power_stone"
-    }
-  ]
+  "imbuing_level": 28,
+  "power_source": {
+    "item": "aoa3:blooming_power_stone"
+  }
 }

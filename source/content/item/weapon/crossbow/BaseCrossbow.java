@@ -83,7 +83,7 @@ public class BaseCrossbow extends CrossbowItem {
 	@Override
 	public void onUseTick(Level world, LivingEntity shooter, ItemStack stack, int count) {
 		if (!world.isClientSide) {
-			int quickCharge = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.QUICK_CHARGE, stack);
+			int quickCharge = stack.getEnchantmentLevel(Enchantments.QUICK_CHARGE);
 			SoundEvent chargeSound = getChargeSound(quickCharge);
 			SoundEvent middleChargeSound = quickCharge == 0 ? SoundEvents.CROSSBOW_LOADING_MIDDLE : null;
 			float chargePercent = (stack.getUseDuration() - count) / (float)getChargeDuration(stack);
@@ -123,7 +123,7 @@ public class BaseCrossbow extends CrossbowItem {
 	}
 
 	protected boolean hasAmmo(LivingEntity user, ItemStack crossbowStack) {
-		int multishot = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.MULTISHOT, crossbowStack);
+		int multishot = crossbowStack.getEnchantmentLevel(Enchantments.MULTISHOT);
 		boolean infiniteAmmo = user instanceof Player && ((Player)user).isCreative();
 		ItemStack ammoStack = findAmmo(crossbowStack, user, infiniteAmmo);
 		ItemStack ammoStackCopy = ammoStack.copy();
@@ -260,7 +260,7 @@ public class BaseCrossbow extends CrossbowItem {
 
 		arrow.setSoundEvent(SoundEvents.CROSSBOW_HIT);
 		arrow.setShotFromCrossbow(true);
-		int piercing = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PIERCING, crossbowStack);
+		int piercing = crossbowStack.getEnchantmentLevel(Enchantments.PIERCING);
 
 		if (piercing > 0)
 			arrow.setPierceLevel((byte)piercing);

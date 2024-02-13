@@ -2,6 +2,7 @@ package net.tslat.aoa3.player.skill;
 
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
@@ -42,7 +43,7 @@ public class FarmingSkill extends AoASkill.Instance {
 			}
 
 			if (xpTime > 0)
-				adjustXp(PlayerUtil.getTimeBasedXpForLevel(getLevel(true), xpTime), false, false);
+				PlayerUtil.giveTimeBasedXpToPlayer((ServerPlayer)ev.getPlayer(), type(), xpTime,  false);
 		}
 	}
 
@@ -51,6 +52,6 @@ public class FarmingSkill extends AoASkill.Instance {
 		if (!canGainXp(true))
 			return;
 
-		adjustXp(PlayerUtil.getTimeBasedXpForLevel(getLevel(true), 600), false, false);
+		PlayerUtil.giveTimeBasedXpToPlayer((ServerPlayer)getPlayer(), type(), 600, false);
 	}
 }

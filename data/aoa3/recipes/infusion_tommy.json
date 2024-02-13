@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:gun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:scrap_metal"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:tommy"
-  },
-  "tool": {
-    "item": "aoa3:gun_frame"
   }
 }

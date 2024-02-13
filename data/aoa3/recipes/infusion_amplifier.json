@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:shotgun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:enchanted_gunpowder"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:amplifier"
-  },
-  "tool": {
-    "item": "aoa3:shotgun_frame"
   }
 }

@@ -36,9 +36,9 @@ import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.UUID;
 
@@ -156,7 +156,7 @@ public class FishingCageEntity extends Entity {
 		}
 	}
 
-	@Nonnull
+	@NotNull
 	public ItemStack[] getLoot() {
 		return this.loot;
 	}

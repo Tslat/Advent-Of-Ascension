@@ -1,17 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:power",
+    "aoa3:speed"
+  ],
   "enchantment": "minecraft:knockback",
   "enchantment_level": 2,
-  "infusion_level": 39,
-  "ingredients": [
-    {
-      "item": "aoa3:weight_enhancer"
-    },
-    {
-      "item": "aoa3:weight_enhancer"
-    },
-    {
-      "item": "aoa3:glaring_power_stone"
-    }
-  ]
+  "imbuing_level": 16,
+  "power_source": {
+    "item": "aoa3:glistening_power_stone"
+  }
 }

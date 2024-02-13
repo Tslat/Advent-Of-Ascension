@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.block.generation.stone;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
@@ -22,7 +21,7 @@ public class DenseStone extends Block {
 	public BlockState playerWillDestroy(Level world, BlockPos pos, BlockState state, Player player) {
 		super.playerWillDestroy(world, pos, state, player);
 
-		if (!world.isClientSide && RandomUtil.oneInNChance(50) && !ItemUtil.hasEnchantment(Enchantments.SILK_TOUCH, player.getItemInHand(InteractionHand.MAIN_HAND))) {
+		if (!world.isClientSide && RandomUtil.oneInNChance(50) && !ItemUtil.hasEnchantment(player.getMainHandItem(), Enchantments.SILK_TOUCH)) {
 			ShikEntity shik = new ShikEntity(AoAAnimals.SHIK.get(), world);
 
 			shik.teleportTo(pos.getX() + 0.5f, pos.getY() + 0.1f, pos.getZ() + 0.5f);

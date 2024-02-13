@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:sniper_frame"
+  },
   "ingredients": [
     {
       "tag": "forge:ingots/iron"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:bolt_rifle"
-  },
-  "tool": {
-    "item": "aoa3:sniper_frame"
   }
 }

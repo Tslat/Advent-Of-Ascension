@@ -1,17 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:change",
+    "aoa3:elemental"
+  ],
   "enchantment": "minecraft:frost_walker",
   "enchantment_level": 1,
-  "infusion_level": 55,
-  "ingredients": [
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:divine_enhancer"
-    },
-    {
-      "item": "aoa3:glowing_power_stone"
-    }
-  ]
+  "imbuing_level": 39,
+  "power_source": {
+    "item": "aoa3:shining_power_stone"
+  }
 }

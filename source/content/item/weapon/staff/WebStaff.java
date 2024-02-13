@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
@@ -14,11 +15,11 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
-public class WebStaff extends BaseStaff<ArrayList<MobEffect>> {
+public class WebStaff extends BaseStaff<List<MobEffect>> {
 	public WebStaff(int durability) {
 		super(durability);
 	}
@@ -36,19 +37,19 @@ public class WebStaff extends BaseStaff<ArrayList<MobEffect>> {
 	}
 
 	@Override
-	public ArrayList<MobEffect> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		ArrayList<MobEffect> effects = new ArrayList<MobEffect>(caster.getActiveEffects().size());
+	public Optional<List<MobEffect>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<MobEffect> effects = new ObjectArrayList<>(caster.getActiveEffects().size());
 
 		for (MobEffectInstance effect : caster.getActiveEffects()) {
 			if (!effect.getEffect().isBeneficial())
 				effects.add(effect.getEffect());
 		}
 
-		return effects.size() > 0 ? effects : null;
+		return Optional.ofNullable(effects.isEmpty() ? null : effects);
 	}
 
 	@Override
-	public void cast(Level world, ItemStack staff, LivingEntity caster, ArrayList<MobEffect> args) {
+	public void cast(Level world, ItemStack staff, LivingEntity caster, List<MobEffect> args) {
 		args.forEach(caster::removeEffect);
 	}
 

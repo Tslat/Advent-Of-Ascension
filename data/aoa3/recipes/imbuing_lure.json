@@ -1,17 +1,15 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:luck",
+    "aoa3:elemental",
+    "aoa3:speed",
+    "aoa3:life"
+  ],
   "enchantment": "minecraft:lure",
   "enchantment_level": 1,
-  "infusion_level": 4,
-  "ingredients": [
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:speed_enhancer"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "imbuing_level": 2,
+  "power_source": {
+    "item": "aoa3:ambient_power_stone"
+  }
 }

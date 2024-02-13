@@ -26,14 +26,14 @@ public class ShadowAltar extends BossAltarBlock {
 		if (!player.level().isClientSide) {
 			new ShadowlordSpawnTask(player, blockPos).schedule(1, TimeUnit.SECONDS);
 
-			if (player.hasEffect(MobEffects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+			if (player.hasEffect(MobEffects.NIGHT_VISION) && ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
 				ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.DUSTOPIA_REALMSTONE.get()));
 		}
 	}
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level(), AoADimensions.ABYSS.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.ABYSS);
 	}
 
 	@Override

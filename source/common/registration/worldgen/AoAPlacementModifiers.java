@@ -5,8 +5,8 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.content.world.genold2.placementmodifier.ChunkHighPoint;
-import net.tslat.aoa3.content.world.genold2.placementmodifier.PercentChance;
+import net.tslat.aoa3.content.world.gen.placementmodifier.ChunkHighPoint;
+import net.tslat.aoa3.content.world.gen.placementmodifier.PercentChance;
 
 public final class AoAPlacementModifiers {
 	public static void init() {}

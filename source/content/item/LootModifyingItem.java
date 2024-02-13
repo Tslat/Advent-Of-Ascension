@@ -7,8 +7,8 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public interface LootModifyingItem {
@@ -41,7 +41,7 @@ public interface LootModifyingItem {
 		return true;
 	}
 
-	@Nonnull
+	@NotNull
 	default BlockState getHarvestedBlock(LootContext lootContext) {
 		if (!isBlockHarvestLoot(lootContext))
 			return Blocks.AIR.defaultBlockState();

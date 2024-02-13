@@ -65,7 +65,7 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 
 	@Override
 	public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key))
+		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE))
 			return InteractionResultHolder.pass(player.getItemInHand(hand));
 
 		return ItemUtils.startUsingInstantly(level, player, hand);
@@ -82,10 +82,10 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 
 	@Override
 	public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity entity) {
-		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE.key) || !(level instanceof ServerLevel serverLevel) || !(entity instanceof ServerPlayer pl))
+		if (WorldUtil.isWorld(level, AoADimensions.NOWHERE) || !(level instanceof ServerLevel serverLevel) || !(entity instanceof ServerPlayer pl))
 			return stack;
 
-		ServerLevel nowhere = serverLevel.getServer().getLevel(AoADimensions.NOWHERE.key);
+		ServerLevel nowhere = serverLevel.getServer().getLevel(AoADimensions.NOWHERE);
 
 		if (nowhere == null)
 			return stack;
@@ -95,7 +95,7 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(pl);
 				PortalCoordinatesContainer returnLoc = plData.getPortalReturnLocation(nowhere.dimension());
 
-				pl.changeDimension(nowhere, PortalBlock.getTeleporterForWorld(nowhere));
+				pl.changeDimension(nowhere, PortalBlock.getTeleporterForLevel(nowhere));
 				pl.connection.teleport(17.5d, 502.5d, 3.5d, 0, pl.getXRot());
 
 				if (returnLoc != null)
@@ -103,7 +103,7 @@ public abstract class BossSpawningItem<T extends Entity> extends TooltipItem imp
 			}
 			else {
 				PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(nowhere.dimension(), new PortalCoordinatesContainer(level.dimension(), pl.getX(), pl.getY(), pl.getZ()));
-				pl.changeDimension(nowhere, PortalBlock.getTeleporterForWorld(nowhere));
+				pl.changeDimension(nowhere, PortalBlock.getTeleporterForLevel(nowhere));
 				pl.connection.teleport(17.5d, 452.5d, 3.5d, 0, pl.getXRot());
 			}
 		}, 1);

@@ -40,13 +40,44 @@ public final class ColourUtil {
 		return alpha << 24 | colour;
 	}
 
+	public static int getAlpha(int rgb) {
+		return (rgb >> 24) & 0xFF;
+	}
+
+	public static int getRed(int rgb) {
+		return (rgb >> 16) & 0xFF;
+	}
+
+	public static int getGreen(int rgb) {
+		return (rgb >> 8) & 0xFF;
+	}
+
+	public static int getBlue(int rgb) {
+		return rgb & 0xFF;
+	}
+
+	public static int lerpColour(int fromColour, int toColour, float delta) {
+		Colour from = new Colour(fromColour);
+		Colour to = new Colour(toColour);
+
+		return RGBA(lerpColourSegment(from.red, to.red, delta), lerpColourSegment(from.green, to.green, delta), lerpColourSegment(from.blue, to.blue, delta), lerpAlpha(from.alpha, to.alpha, delta));
+	}
+
+	public static float lerpColourSegment(float from, float to, float delta) {
+		return (float)Math.sqrt((1 - delta) * (from * from) + delta * to * to);
+	}
+
+	public static float lerpAlpha(float from, float to, float delta) {
+		return (1 - delta) * from + delta * to;
+	}
+
 	public record Colour(float red, float green, float blue, float alpha) {
 		public Colour(int red, int green, int blue) {
 			this(red / 255f, green / 255f, blue / 255f, 1f);
 		}
 
 		public Colour(int rgb) {
-			this(((rgb >> 16) & 0xFF) / 255f, ((rgb >> 8) & 0xFF) / 255f, (rgb & 0xFF) / 255f, ((rgb >> 24) & 0xFF) / 255f);
+			this(getRed(rgb) / 255f, getGreen(rgb) / 255f, getBlue(rgb) / 255f, getAlpha(rgb) / 255f);
 		}
 
 		public String hex() {

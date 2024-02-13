@@ -1,58 +1,55 @@
 package net.tslat.aoa3.integration.jei.recipe.imbuing;
 
-import mezz.jei.api.constants.VanillaTypes;
+import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
+import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.helpers.IModIdHelper;
-import mezz.jei.api.ingredients.ITypedIngredient;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.runtime.IIngredientManager;
+import mezz.jei.library.gui.ingredients.RecipeSlot;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.client.renderer.Rect2i;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.FloatProvider;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
+import net.minecraft.world.level.ItemLike;
 import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.client.render.AoAGuiElementRenderers;
+import net.tslat.aoa3.client.render.custom.AoASkillRenderer;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.recipe.ImbuingRecipe;
+import net.tslat.aoa3.integration.jei.ingredient.type.imbuing.ImbuingIngredientType;
+import net.tslat.aoa3.integration.jei.recipe.ContainerRecipeCategory;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
+import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.LocaleUtil;
+import net.tslat.aoa3.util.NumberUtil;
 import net.tslat.aoa3.util.RenderUtil;
 
-public class ImbuingRecipeCategory implements IRecipeCategory<ImbuingRecipe> {
+import java.util.List;
+
+public class ImbuingRecipeCategory extends ContainerRecipeCategory<ImbuingRecipe> {
 	public static final RecipeType<ImbuingRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "imbuing", ImbuingRecipe.class);
-	public static final ResourceLocation ID = new ResourceLocation(AdventOfAscension.MOD_ID, "imbuing");
-
-	private final IModIdHelper idHelper;
-	private final IIngredientManager ingredientHelper;
-
-	private final Component title = LocaleUtil.getLocaleMessage("recipe.aoa3.imbuing");
-	private final IDrawable background;
-	private final IDrawable icon;
 
 	public ImbuingRecipeCategory(IGuiHelper guiHelper, IModIdHelper idHelper, IIngredientManager ingredientHelper) {
-		this.idHelper = idHelper;
-		this.ingredientHelper = ingredientHelper;
-		ResourceLocation texture = new ResourceLocation(AdventOfAscension.MOD_ID, "textures/gui/containers/infusion_table.png");
-		this.background = guiHelper.createDrawable(texture, 10, 10, 156, 66);
-		this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(AoABlocks.INFUSION_TABLE.get()));
-	}
+        super(RECIPE_TYPE, guiHelper, idHelper, ingredientHelper);
+    }
 
 	@Override
 	public RecipeType<ImbuingRecipe> getRecipeType() {
@@ -60,101 +57,109 @@ public class ImbuingRecipeCategory implements IRecipeCategory<ImbuingRecipe> {
 	}
 
 	@Override
-	public Component getTitle() {
-		return title;
+	protected ItemLike getRecipeCatalyst() {
+		return AoABlocks.IMBUING_CHAMBER;
 	}
 
 	@Override
-	public IDrawable getBackground() {
-		return background;
+	protected int backgroundTextureU() {
+		return 11;
 	}
 
 	@Override
-	public IDrawable getIcon() {
-		return icon;
+	protected int backgroundTextureV() {
+		return 11;
 	}
 
 	@Override
-	public void setRecipe(IRecipeLayoutBuilder builder, ImbuingRecipe recipe, IFocusGroup focuses) {
-		NonNullList<Ingredient> ingredients = recipe.getIngredients();
+	protected ResourceLocation getBackgroundTexture() {
+		return AdventOfAscension.id("textures/gui/containers/imbuing_chamber.png");
+	}
 
-		builder.addSlot(RecipeIngredientRole.OUTPUT, 128, 25)
-				.addItemStack(recipe.getEnchantmentAsBook())
-				.addTooltipCallback((recipeSlotView, tooltip) -> {
-					recipeSlotView.getDisplayedIngredient().ifPresent(output -> {
-						ResourceLocation recipeId = getRegistryName(recipe);
+	@Override
+	protected IDrawable createBackgroundDrawRegion(IGuiHelper guiHelper, ResourceLocation backgroundTexture) {
+		return guiHelper.createDrawable(backgroundTexture, backgroundTextureU(), backgroundTextureV(), 154, 64);
+	}
 
-						tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.jei.imbuing"), ChatFormatting.DARK_RED));
+	@Override
+	protected void createRecipeLayout(IRecipeLayoutBuilder builder, ImbuingRecipe recipe, IFocusGroup focuses) {
+		final NonNullList<Ingredient> ingredients = recipe.getIngredients();
 
-						if (recipeId == null)
-							return;
+		builder.addInvisibleIngredients(RecipeIngredientRole.OUTPUT)
+				.addIngredient(ImbuingIngredientType.INSTANCE, new EnchantmentInstance(recipe.getEnchant().left(), recipe.getEnchant().rightInt()));
+		builder.addSlot(RecipeIngredientRole.CATALYST, 139, 35)
+				.addItemStacks(AoARegistries.ITEMS.getAllRegisteredObjects().map(Item::getDefaultInstance).filter(recipe::canEnchantInput).toList());
 
-						if (this.idHelper.isDisplayingModNameEnabled()) {
-							String recipeModId = recipeId.getNamespace();
+		for (int slotIndex = 0; slotIndex < 6; slotIndex++) {
+			IRecipeSlotBuilder slotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, slotIndex == 0 ? 17 : 19 + 19 * slotIndex, 35);
 
-							if (!recipeModId.equals(this.ingredientHelper.getIngredientHelper(output).getResourceLocation((ITypedIngredient)output.getIngredient()).getNamespace())) {
-								String modName = this.idHelper.getFormattedModNameForModId(recipeModId);
-								MutableComponent recipeBy = Component.translatable("jei.tooltip.recipe.by", modName);
-								tooltip.add(recipeBy.withStyle(ChatFormatting.GRAY));
-							}
-						}
+			if (slotIndex < ingredients.size())
+				slotBuilder.addIngredients(ingredients.get(slotIndex));
+		}
+	}
 
-						if (Minecraft.getInstance().options.advancedItemTooltips || Screen.hasShiftDown())
-							tooltip.add(Component.translatable("jei.tooltip.recipe.id", recipeId.toString()).withStyle(ChatFormatting.DARK_GRAY));
-					});
-				});
-		builder.addSlot(RecipeIngredientRole.INPUT, 7, 25)
-				.addItemStack(new ItemStack(Items.BOOK))
-				.addTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "tooltip.jei.imbuing"), ChatFormatting.DARK_RED)));
+	@Override
+	public List<Component> getTooltipStrings(ImbuingRecipe recipe, IRecipeSlotsView recipeSlotsView, double mouseX, double mouseY) {
+		if (mouseX < 140 || mouseY > 14)
+			return super.getTooltipStrings(recipe, recipeSlotsView, mouseX, mouseY);
 
-		for (int y = 0; y < 3; y++) {
-			for (int x = 0; x < 3; x++) {
-				IRecipeSlotBuilder slotBuilder = builder.addSlot(RecipeIngredientRole.INPUT, 35 + x * 18, 7 + y * 18);
+		final List<Component> tooltip = new ObjectArrayList<>();
+		AoASkill.Instance skill = ClientPlayerDataManager.get().getSkill(AoASkills.IMBUING.get());
+		boolean hasLevel = skill.hasLevel(recipe.getImbuingLevelReq());
 
-				if (x + y * 3 < ingredients.size())
-					slotBuilder.addIngredients(ingredients.get(x + y * 3));
-			}
+		tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGuiLocaleKey("tooltip.skillReq"), ChatFormatting.LIGHT_PURPLE));
+		tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.Keys.SKILL_REQUIREMENT, Component.literal(String.valueOf(recipe.getImbuingLevelReq())), skill.getName()).withStyle(style -> style.withColor(hasLevel ? 0xFF80FF20: 0xFFFF6060)));
+
+		if (recipe.getXpOverrideProvider().isPresent()) {
+			FloatProvider xpProvider = recipe.getXpOverrideProvider().get();
+			String minXp = NumberUtil.floorAndAppendSuffix(xpProvider.getMinValue(), true);
+			String maxXp = NumberUtil.floorAndAppendSuffix(xpProvider.getMaxValue(), true);
+
+			tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGuiLocaleKey("misc.xpAmount"), ChatFormatting.YELLOW, Component.literal(minXp + "-" + maxXp), skill.getName()));
+		}
+		else {
+			tooltip.add(LocaleUtil.getLocaleMessage(LocaleUtil.createGuiLocaleKey("misc.xpAmount"), ChatFormatting.YELLOW, Component.literal(NumberUtil.roundToNthDecimalPlace(recipe.getXp(Minecraft.getInstance().player), 2)), skill.getName()));
 		}
 
-		builder.setShapeless();
+		return tooltip;
 	}
 
 	@Override
 	public void draw(ImbuingRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
+		final int xOffset = -backgroundTextureU();
+		final int yOffset = -backgroundTextureU();
+		final PoseStack poseStack = guiGraphics.pose();
+
+		RenderUtil.prepRenderTexture(getBackgroundTexture());
+		RenderUtil.resetShaderColour();
+
+		for (IRecipeSlotView slotView : recipeSlotsView.getSlotViews(RecipeIngredientRole.INPUT)) {
+			Rect2i slotRegion = ((RecipeSlot)slotView).getRect();
+
+			RenderUtil.renderCustomSizedTexture(guiGraphics.pose(), slotRegion.getX() - 1, slotRegion.getY() - 1, 26, 166, 18, 18, 256, 256);
+		}
+
+		Rect2i outputSlotRegion = ((RecipeSlot)recipeSlotsView.getSlotViews(RecipeIngredientRole.CATALYST).get(0)).getRect();
+
+		RenderUtil.renderCustomSizedTexture(guiGraphics.pose(), outputSlotRegion.getX() - 5, outputSlotRegion.getY() - 5, 0, 166, 26, 26, 256, 256);
+
 		if (recipe == null)
 			return;
 
-		Minecraft mc = Minecraft.getInstance();
-		Component message;
-		int textColour;
-		int shadowColour;
-		int width;
-		int posX;
-		int posY;
-		RenderContext renderContext = RenderContext.of(guiGraphics);
-		int infusionLevelReq = recipe.getInfusionLevelReq();
-		FloatProvider xpProvider = recipe.getXpProvider();
+		final Component enchant = recipe.getEnchant().left().getFullname(recipe.getEnchant().rightInt());
 
-		if (infusionLevelReq > 1) {
-			message = AoASkills.IMBUING.get().getName().append(": " + infusionLevelReq);
-			textColour = (ClientPlayerDataManager.get().getSkill(AoASkills.IMBUING.get()).getLevel(true) < infusionLevelReq) ? 0xFFFF6060 : 0xFF80FF20;
-			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
-			width = renderContext.textWidth(message);
-			posX = 150 - width;
-			posY = 10;
+		RenderUtil.drawRectangle(guiGraphics.pose(), 16 + xOffset, 59 + yOffset, Minecraft.getInstance().font.width(enchant) + 1, 10, 0xCC000000);
+		RenderUtil.renderText(guiGraphics.pose(), enchant, 17 + xOffset, 60 + yOffset, 0xB2B2B2, RenderUtil.TextRenderType.NORMAL);
 
-			renderContext.renderText(message, posX, posY, textColour, shadowColour, RenderUtil.TextRenderType.DROP_SHADOW, LightTexture.FULL_BRIGHT);
-		}
+		AoASkillRenderer skillRenderer = AoAGuiElementRenderers.getSkillRenderer(AoASkills.IMBUING.get());
+		AoASkill.Instance skill = ClientPlayerDataManager.get().getSkill(AoASkills.IMBUING.get());
 
-		if (xpProvider.getMaxValue() > 0) {
-			message = LocaleUtil.getLocaleMessage(LocaleUtil.createGenericLocaleKey("gui", "misc.xpAmount"), Component.literal(String.valueOf((xpProvider.getMinValue() == xpProvider.getMaxValue() ? xpProvider.getMaxValue() : xpProvider.getMinValue() + "-" + xpProvider.getMaxValue()))));
-			textColour = 0xFF8F8F8F;
-			shadowColour = 0xFF000000 | (textColour & 0xFCFCFC) >> 2;
-			width = mc.font.width(message);
-			posX = 150 - width;
-			posY = 50;
+		poseStack.pushPose();
+		poseStack.translate(153 - skillRenderer.guiRenderWidth(skill) * 0.5f, 1, 0);
+		poseStack.scale(0.5f, 0.5f, 1);
 
-			renderContext.renderText(message, posX, posY, textColour, shadowColour, RenderUtil.TextRenderType.DROP_SHADOW, LightTexture.FULL_BRIGHT);
-		}
+		skillRenderer.renderInHud(RenderContext.of(guiGraphics), skill, Minecraft.getInstance().getDeltaFrameTime(), AoASkillRenderer.ProgressRenderType.None, false);
+
+		poseStack.popPose();
 	}
 }

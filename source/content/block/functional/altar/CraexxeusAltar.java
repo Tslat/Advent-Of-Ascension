@@ -29,7 +29,7 @@ public class CraexxeusAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level(), AoADimensions.SHYRELANDS.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.SHYRELANDS);
 	}
 
 	@Override

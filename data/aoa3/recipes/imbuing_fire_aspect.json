@@ -1,16 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:durability",
+    "aoa3:control",
+    "aoa3:magic"
+  ],
   "enchantment": "minecraft:fire_aspect",
   "enchantment_level": 1,
-  "ingredients": [
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "minecraft:lava_bucket"
-    },
-    {
-      "item": "aoa3:glistening_power_stone"
-    }
-  ]
+  "imbuing_level": 17,
+  "power_source": {
+    "item": "aoa3:glistening_power_stone"
+  }
 }

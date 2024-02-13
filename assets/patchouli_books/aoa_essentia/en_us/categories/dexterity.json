@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Dexterity$() is a skill about the player's natural ability to move around the world.$(br2)As your level increases, you'll find your ability to traverse the world improves, and your ability to outpace your enemies increases.",
+  "icon": "aoa3:textures/gui/aoaskill/dexterity.png",
+  "name": "Dexterity"
+}

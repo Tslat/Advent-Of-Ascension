@@ -16,12 +16,12 @@ import org.jetbrains.annotations.Nullable;
 public class LelyetianTraderEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 4).cost(AoAItems.ZHINX_DUST).xp(3),
-					BuildableTrade.trade(AoABlocks.LELYETIAN_GLASS, 14).cost(AoAItems.COPPER_COIN, 10).xp(7),
-					BuildableTrade.trade(AoABlocks.LELYETIAN_GLASS, 64).cost(AoAItems.SILVER_COIN, 2).xp(35))
+					BuildableTrade.forItem(AoAItems.COPPER_COIN, 4).itemCost(AoAItems.ZHINX_DUST).xp(3),
+					BuildableTrade.forItem(AoABlocks.LELYETIAN_GLASS, 14).itemCost(AoAItems.COPPER_COIN, 10).xp(7),
+					BuildableTrade.forItem(AoABlocks.LELYETIAN_GLASS, 64).itemCost(AoAItems.SILVER_COIN, 2).xp(35))
 			.trades(4,
-					BuildableTrade.trade(AoAWeapons.GAUGE_RIFLE).cost(AoAItems.SILVER_COIN, 10).cost(AoAItems.YELLOW_SPORES, 5).xp(40).stock(5),
-					BuildableTrade.trade(AoAWeapons.GAUGE_RIFLE).cost(AoAItems.SILVER_COIN, 10).cost(AoAItems.ORANGE_SPORES, 5).xp(40).stock(5)).build();
+					BuildableTrade.forItem(AoAWeapons.GAUGE_RIFLE).itemCost(AoAItems.SILVER_COIN, 10).itemCost(AoAItems.YELLOW_SPORES, 5).xp(40).stock(5),
+					BuildableTrade.forItem(AoAWeapons.GAUGE_RIFLE).itemCost(AoAItems.SILVER_COIN, 10).itemCost(AoAItems.ORANGE_SPORES, 5).xp(40).stock(5)).build();
 
 	public LelyetianTraderEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -29,7 +29,7 @@ public class LelyetianTraderEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.LELYETIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LELYETIA);
 	}
 
 	@Nullable

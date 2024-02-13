@@ -24,7 +24,7 @@ public class EnchantSpecific extends LootItemConditionalFunction {
 			Codec.simpleMap(
 					AoARegistries.ENCHANTMENTS.lookupCodec(),
 					Codec.INT,
-					AoARegistries.ENCHANTMENTS.registry().get()).fieldOf("enchantments").forGetter(EnchantSpecific::getEnchantments))
+					AoARegistries.ENCHANTMENTS).fieldOf("enchantments").forGetter(EnchantSpecific::getEnchantments))
 			.apply(builder, EnchantSpecific::new));
 
 	private final Map<Enchantment, Integer> enchants;

@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:gun_frame"
+  },
   "ingredients": [
     {
       "tag": "forge:crops/nether_wart"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:wart_gun"
-  },
-  "tool": {
-    "item": "aoa3:gun_frame"
   }
 }

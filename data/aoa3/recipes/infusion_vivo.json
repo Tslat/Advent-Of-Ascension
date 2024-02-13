@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:shotgun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:magnet_shard"
@@ -16,8 +19,5 @@
   ],
   "result": {
     "item": "aoa3:vivo"
-  },
-  "tool": {
-    "item": "aoa3:shotgun_frame"
   }
 }

@@ -10,7 +10,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.tslat.aoa3.common.container.FrameBenchContainer;
+import net.tslat.aoa3.common.menu.FrameBenchMenu;
+import net.tslat.aoa3.util.InteractionResults;
 
 public class FrameBench extends Block {
 	public FrameBench(BlockBehaviour.Properties properties) {
@@ -18,10 +19,10 @@ public class FrameBench extends Block {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
-		if (player instanceof ServerPlayer)
-			FrameBenchContainer.openContainer((ServerPlayer)player, pos);
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (player instanceof ServerPlayer pl)
+			FrameBenchMenu.openContainer(pl, pos);
 
-		return InteractionResult.SUCCESS;
+		return InteractionResults.BlockUse.succeedAndSwingArmBothSides(level.isClientSide);
 	}
 }

@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.common.registration.AoARegistries;
-import net.tslat.aoa3.content.block.tileentity.TrophyTileEntity;
+import net.tslat.aoa3.content.block.blockentity.TrophyBlockEntity;
 import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.LocaleUtil;
@@ -34,20 +34,20 @@ public class GoldTrophyBlock extends TrophyBlock implements BossTokenItem {
 	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
 		ItemStack stack = new ItemStack(asItem());
 		BlockEntity tile = world.getBlockEntity(pos);
-		TrophyTileEntity trophyTile;
+		TrophyBlockEntity trophyTile;
 
-		if (tile instanceof TrophyTileEntity && ((trophyTile = (TrophyTileEntity)tile).getEntityId() != null)) {
+		if (tile instanceof TrophyBlockEntity && ((trophyTile = (TrophyBlockEntity)tile).getEntityId() != null)) {
 			CompoundTag nbt = new CompoundTag();
 			CompoundTag dataTag = new CompoundTag();
 
-			dataTag.putString("EntityID", ((TrophyTileEntity)tile).getEntityId());
-			dataTag.putBoolean("OriginalTrophy", ((TrophyTileEntity)tile).isOriginal());
+			dataTag.putString("EntityID", ((TrophyBlockEntity)tile).getEntityId());
+			dataTag.putBoolean("OriginalTrophy", ((TrophyBlockEntity)tile).isOriginal());
 			nbt.put("BlockEntityTag", dataTag);
 
 			stack.setTag(nbt);
 
 			if (trophyTile.getCachedEntity() != null) {
-				Entity cachedEntity = ((TrophyTileEntity)tile).getCachedEntity();
+				Entity cachedEntity = ((TrophyBlockEntity)tile).getCachedEntity();
 				Component entityName = cachedEntity == null ? Component.literal("") : cachedEntity.getType().getDescription();
 				stack.setHoverName(LocaleUtil.getLocaleMessage("block.aoa3.gold_trophy.desc", ChatFormatting.GOLD, entityName));
 			}

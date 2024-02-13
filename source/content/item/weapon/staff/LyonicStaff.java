@@ -7,7 +7,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -20,11 +19,13 @@ import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 	public LyonicStaff(int durability) {
@@ -45,12 +46,11 @@ public class LyonicStaff extends BaseStaff<List<LivingEntity>> {
 		runes.put(AoAItems.STRIKE_RUNE.get(), 1);
 	}
 
-	@Nullable
 	@Override
-	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> targets = caster.level().getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(10, 1, 10), entity -> entity instanceof Enemy && entity.isAlive());
+	public Optional<List<LivingEntity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> targets = EntityRetrievalUtil.getEntities(caster, 10, 1, 10, entity -> entity instanceof LivingEntity livingEntity && livingEntity.isAlive() && EntityUtil.Predicates.HOSTILE_MOB.test(livingEntity));
 
-		return targets.isEmpty() ? null : targets;
+		return Optional.ofNullable(targets.isEmpty() ? null : targets);
 	}
 
 	@Override

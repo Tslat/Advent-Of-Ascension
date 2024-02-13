@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:leggings_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:dense_rock"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:exoplate_leggings"
-  },
-  "tool": {
-    "item": "aoa3:leggings_frame"
   }
 }

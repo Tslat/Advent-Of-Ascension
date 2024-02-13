@@ -12,10 +12,12 @@ import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class CrystalStaff extends BaseStaff<List<Player>> {
 	public CrystalStaff(int durability) {
@@ -29,18 +31,10 @@ public class CrystalStaff extends BaseStaff<List<Player>> {
 	}
 
 	@Override
-	public List<Player> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<Player> playerList = caster.level().getEntitiesOfClass(Player.class, caster.getBoundingBox().inflate(20), PlayerUtil::shouldPlayerBeAffected);
+	public Optional<List<Player>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<Player> players = EntityRetrievalUtil.getPlayers(caster, 20, entity -> entity.getHealth() < entity.getMaxHealth() && PlayerUtil.shouldPlayerBeAffected(entity));
 
-		if (playerList.isEmpty())
-			return null;
-
-		for (Player pl : playerList) {
-			if (pl.getHealth() != pl.getMaxHealth())
-				return playerList;
-		}
-
-		return null;
+		return Optional.ofNullable(players.isEmpty() ? null : players);
 	}
 
 	@Override

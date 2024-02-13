@@ -69,6 +69,7 @@ public final class AoAWorldgenKeys {
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_CEILING_MOSS = key("precasian_cave_ceiling_moss");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_CAVE_CEILING_VINES = key("precasian_cave_ceiling_vines");
 			public static final ResourceKey<ConfiguredFeature<?, ?>> PRECASIAN_SUSPICIOUS_CAVE_GRAVEL = key("precasian_suspicious_cave_gravel");
+			public static final ResourceKey<ConfiguredFeature<?, ?>> OPTERYX_NEST = key("opteryx_nest");
 
 			private static ResourceKey<ConfiguredFeature<?, ?>> key(String id) {
 				return ResourceKey.create(Registries.CONFIGURED_FEATURE, AdventOfAscension.id(id));

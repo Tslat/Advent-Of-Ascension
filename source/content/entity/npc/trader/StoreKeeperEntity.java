@@ -25,11 +25,11 @@ import software.bernie.geckolib.core.animation.AnimationController;
 public class StoreKeeperEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoABlocks.VOX_GLASS, 32).cost(AoAItems.GOLD_COIN).xp(25),
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 16).cost(Items.POISONOUS_POTATO).xp(10),
-					BuildableTrade.trade(AoAItems.COPPER_COIN, 8).cost(AoAItems.TOXIC_LUMP).xp(5))
+					BuildableTrade.forItem(AoABlocks.VOX_GLASS, 32).itemCost(AoAItems.GOLD_COIN).xp(25),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN, 16).itemCost(Items.POISONOUS_POTATO).xp(10),
+					BuildableTrade.forItem(AoAItems.COPPER_COIN, 8).itemCost(AoAItems.TOXIC_LUMP).xp(5))
 			.trades(3,
-					BuildableTrade.trade(poisonPotionStack()).cost(AoAItems.SILVER_COIN, 4).xp(20)).build();
+					BuildableTrade.forStack(StoreKeeperEntity::poisonPotionStack).itemCost(AoAItems.SILVER_COIN, 4).xp(20)).build();
 
 	public StoreKeeperEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -42,7 +42,7 @@ public class StoreKeeperEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.VOX_PONDS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.VOX_PONDS);
 	}
 
 	@Nullable

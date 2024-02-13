@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:cannon_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:unstable_gunpowder"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:boom_boom"
-  },
-  "tool": {
-    "item": "aoa3:cannon_frame"
   }
 }

@@ -29,9 +29,9 @@ public class NowhereTeleporter extends AoATeleporter {
 	@Nullable
 	@Override
 	protected BlockPos findReturnPos(ServerPlayer player, ServerLevel currentWorld, ServerLevel destWorld) {
-		if (WorldUtil.isWorld((ServerLevelAccessor)currentWorld, AoADimensions.NOWHERE.key)) {
+		if (WorldUtil.isWorld((ServerLevelAccessor)currentWorld, AoADimensions.NOWHERE)) {
 			if (player.distanceToSqr(17, 453, 1) < 100) {
-				PortalCoordinatesContainer returnLoc = PlayerUtil.getAdventPlayer(player).getPortalReturnLocation(AoADimensions.NOWHERE.key);
+				PortalCoordinatesContainer returnLoc = PlayerUtil.getAdventPlayer(player).getPortalReturnLocation(AoADimensions.NOWHERE);
 
 				if (returnLoc != null)
 					return returnLoc.asBlockPos();
@@ -43,7 +43,7 @@ public class NowhereTeleporter extends AoATeleporter {
 
 	@Override
 	public BlockPos findExistingPortal(Level world, Entity entity) {
-		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE.key)) {
+		if (WorldUtil.isWorld(world, AoADimensions.NOWHERE)) {
 			if (entity instanceof ServerPlayer pl)
 				PlayerUtil.getAdventPlayer(pl).setPortalReturnLocation(world.dimension(), new PortalCoordinatesContainer(entity.level().dimension(), entity.getX(), entity.getY(), entity.getZ()));
 

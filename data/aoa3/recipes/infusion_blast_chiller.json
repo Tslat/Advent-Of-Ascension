@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:blaster_frame"
+  },
   "ingredients": [
     {
       "item": "minecraft:water_bucket"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:blast_chiller"
-  },
-  "tool": {
-    "item": "aoa3:blaster_frame"
   }
 }

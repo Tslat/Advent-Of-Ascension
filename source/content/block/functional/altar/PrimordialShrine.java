@@ -41,7 +41,7 @@ public class PrimordialShrine extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		if (!WorldUtil.isWorld(player.level(), AoADimensions.DUSTOPIA.key))
+		if (!WorldUtil.isWorld(player.level(), AoADimensions.DUSTOPIA))
 			return false;
 
 		return checkLamps(player.level(),

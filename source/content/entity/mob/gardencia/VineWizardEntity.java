@@ -22,9 +22,9 @@ import net.tslat.aoa3.content.entity.projectile.mob.BaseMobProjectile;
 import net.tslat.aoa3.content.entity.projectile.mob.VineWizardShotEntity;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.ItemUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class VineWizardEntity extends AoARangedMob<VineWizardEntity> {
@@ -50,7 +50,7 @@ public class VineWizardEntity extends AoARangedMob<VineWizardEntity> {
     }
 
     @Override
-    public void performRangedAttack(@Nonnull LivingEntity target, float bowDamageFactor) {
+    public void performRangedAttack(@NotNull LivingEntity target, float bowDamageFactor) {
         level().addFreshEntity(new VineWizardShotEntity(this, target, BaseMobProjectile.Type.MAGIC));
     }
 
@@ -104,7 +104,7 @@ public class VineWizardEntity extends AoARangedMob<VineWizardEntity> {
     public void die(DamageSource source) {
         super.die(source);
 
-        if (!level().isClientSide && candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1))
+        if (!level().isClientSide && candiedWater && source.getEntity() instanceof Player && ItemUtil.findInventoryItem((Player)source.getEntity(), new ItemStack(AoAItems.BLANK_REALMSTONE.get()), true, 1, false))
             ItemUtil.givePlayerItemOrDrop((Player)source.getEntity(), new ItemStack(AoAItems.LBOREAN_REALMSTONE.get()));
     }
 }

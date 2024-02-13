@@ -21,7 +21,7 @@ public class StructurePieceFeature extends Feature<StructureFeatureConfig> {
 		WorldGenLevel reader = context.level();
 
 		if (!config.requireGround() || !reader.getBlockState(pos.below()).canBeReplaced())
-			config.getTemplate(rand).placeInWorld(reader, pos, pos, config.getPlacementSettings(rand), rand, 2);
+			config.getTemplate(context.level(), rand).placeInWorld(reader, pos, pos, config.getPlacementSettings(rand), rand, 2);
 
 		return true;
 	}

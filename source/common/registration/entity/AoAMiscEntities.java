@@ -26,6 +26,8 @@ public final class AoAMiscEntities {
 	public static final DeferredHolder<EntityType<?>, EntityType<GoldFishingBobberEntity>> GOLD_BOBBER = registerMiscEntity("gold_bobber", EntityType.Builder.<GoldFishingBobberEntity>of(GoldFishingBobberEntity::new, MobCategory.MISC).noSave().noSummon().sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(5));
 	public static final DeferredHolder<EntityType<?>, EntityType<FishingCageEntity>> FISHING_CAGE = registerMiscEntity("fishing_cage", FishingCageEntity::new, 0.65f, 0.63f, builder -> builder.noSummon().updateInterval(5));
 
+	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> PIXON = registerMiscEntity("pixon", PixonEntity::new, 0.25f, 0.25f, builder -> builder.updateInterval(Integer.MAX_VALUE).clientTrackingRange(64).fireImmune().canSpawnFarFromPlayer());
+
 	public static final DeferredHolder<EntityType<?>, EntityType<CustomisableLightningBolt>> CUSTOMISABLE_LIGHTNING_BOLT = registerMiscEntity("customisable_lightning_bolt", CustomisableLightningBolt::new, 0, 0, builder -> builder.noSave().clientTrackingRange(16).updateInterval(Integer.MAX_VALUE));
 
 	private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> registerMiscEntity(String registryName, EntityType.EntityFactory<T> factory, float width, float height) {

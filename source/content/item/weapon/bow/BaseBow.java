@@ -11,7 +11,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -61,7 +60,7 @@ public class BaseBow extends BowItem {
 			return;
 
 		Player pl = (Player)shooter;
-		boolean infiniteAmmo = pl.isCreative() || EnchantmentHelper.getItemEnchantmentLevel(Enchantments.INFINITY_ARROWS, stack) > 0;
+		boolean infiniteAmmo = pl.isCreative() || stack.getEnchantmentLevel(Enchantments.INFINITY_ARROWS) > 0;
 		ItemStack ammoStack = findAmmo(pl, stack, infiniteAmmo);
 		int charge = (int)((getUseDuration(stack) - timeLeft) * getDrawSpeedMultiplier());
 		charge = EventHooks.onArrowLoose(stack, world, pl, charge, !ammoStack.isEmpty() || infiniteAmmo);
@@ -110,8 +109,8 @@ public class BaseBow extends BowItem {
 		if (velocity == 1.0F)
 			arrow.setCritArrow(true);
 
-		int powerEnchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.POWER_ARROWS, bowStack);
-		int punchEnchant = EnchantmentHelper.getItemEnchantmentLevel(Enchantments.PUNCH_ARROWS, bowStack);
+		int powerEnchant = bowStack.getEnchantmentLevel(Enchantments.POWER_ARROWS);
+		int punchEnchant = bowStack.getEnchantmentLevel(Enchantments.PUNCH_ARROWS);
 
 		if (powerEnchant > 0)
 			arrow.setBaseDamage(arrow.getBaseDamage() + powerEnchant * 1.5D + 1D);
@@ -119,7 +118,7 @@ public class BaseBow extends BowItem {
 		if (punchEnchant > 0)
 			arrow.setKnockback(punchEnchant);
 
-		if (EnchantmentHelper.getItemEnchantmentLevel(Enchantments.FLAMING_ARROWS, bowStack) > 0)
+		if (bowStack.getEnchantmentLevel(Enchantments.FLAMING_ARROWS) > 0)
 			arrow.setSecondsOnFire(100);
 
 		bowStack.hurtAndBreak(1, shooter, (firingEntity) -> firingEntity.broadcastBreakEvent(shooter.getUsedItemHand()));

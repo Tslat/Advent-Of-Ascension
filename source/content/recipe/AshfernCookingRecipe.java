@@ -11,6 +11,7 @@ import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.AoARecipes;
 import net.tslat.aoa3.common.registration.item.AoAItems;
+import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.RecipeUtil;
 import net.tslat.aoa3.util.WorldUtil;
 
@@ -89,7 +90,7 @@ public class AshfernCookingRecipe extends CustomRecipe {
 
 	@Override
 	public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
-		final Level level = WorldUtil.getServer().overworld();
+		final Level level = WorldUtil.getServer().getLevel(AoADimensions.OVERWORLD);
 
 		if (level == null)
 			return ItemStack.EMPTY;
@@ -115,7 +116,7 @@ public class AshfernCookingRecipe extends CustomRecipe {
 			Optional<RecipeHolder<SmeltingRecipe>> smeltingRecipe = level.getRecipeManager().getRecipeFor(RecipeType.SMELTING, new SimpleContainer(stack), level);
 
 			if (smeltingRecipe.isPresent())
-				output = smeltingRecipe.get().value().getResultItem(level.registryAccess());
+				output = smeltingRecipe.get().value().getResultItem(registryAccess);
 
 			if (foundFern)
 				break;

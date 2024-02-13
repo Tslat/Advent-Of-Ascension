@@ -12,10 +12,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.food.FoodData;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
@@ -25,11 +27,12 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.tslat.aoa3.client.ClientOperations;
-import net.tslat.aoa3.common.networking.AoANetworking;
-import net.tslat.aoa3.common.networking.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
+import net.tslat.aoa3.common.toast.ItemRequirementToastData;
+import net.tslat.aoa3.common.toast.ResourceRequirementToastData;
+import net.tslat.aoa3.common.toast.SkillRequirementToastData;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
 import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.player.PlayerDataManager;
@@ -37,9 +40,11 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
+import java.util.Optional;
+
 
 public final class PlayerUtil {
     private static final Int2FloatOpenHashMap XP_MAP = new Int2FloatOpenHashMap(1000);
@@ -57,17 +62,16 @@ public final class PlayerUtil {
         }
     }
 
-    @Nonnull
-    public static ServerPlayerDataManager getAdventPlayer(@Nonnull ServerPlayer player) {
+    @NotNull
+    public static ServerPlayerDataManager getAdventPlayer(@NotNull ServerPlayer player) {
         return (ServerPlayerDataManager)getAdventPlayer((Player)player);
     }
 
-    @Nonnull
-    public static PlayerDataManager getAdventPlayer(@Nonnull Player player) {
+    @NotNull
+    public static PlayerDataManager getAdventPlayer(@NotNull Player player) {
         PlayerDataManager plData;
 
         if (player instanceof ServerPlayer pl) {
-            plData = new ServerPlayerDataManager(pl);
             plData = pl.getData(AoADataAttachments.ADVENT_PLAYER.get());
         }
         else {
@@ -83,7 +87,7 @@ public final class PlayerUtil {
         return plData;
     }
 
-    @Nonnull
+    @NotNull
     public static AoASkill.Instance getSkill(Player player, AoASkill skill) {
         return getAdventPlayer(player).getSkill(skill);
     }
@@ -105,7 +109,21 @@ public final class PlayerUtil {
             instance.adjustXp(xp, false, ignoreXpBuffs);
     }
 
-    @Nonnull
+    public static void givePartialLevelToPlayer(ServerPlayer player, AoASkill skill, float percent, boolean ignoreXpBuffs) {
+        AoASkill.Instance instance = getSkill(player, skill);
+
+        if (instance != AoASkills.DEFAULT)
+            instance.adjustXp(PlayerUtil.getXpForFractionOfLevel(instance.getLevel(true), percent), false, ignoreXpBuffs);
+    }
+
+    public static void giveTimeBasedXpToPlayer(ServerPlayer player, AoASkill skill, int ticks, boolean ignoreXpBuffs) {
+        AoASkill.Instance instance = getSkill(player, skill);
+
+        if (instance != AoASkills.DEFAULT)
+            instance.adjustXp(PlayerUtil.getTimeBasedXpForLevel(instance.getLevel(true), ticks), false, ignoreXpBuffs);
+    }
+
+    @NotNull
     public static AoAResource.Instance getResource(Player player, AoAResource resource) {
         return getAdventPlayer(player).getResource(resource);
     }
@@ -182,12 +200,11 @@ public final class PlayerUtil {
         return getXpRequiredForNextLevel(currentLevel) * fraction;
     }
 
-    @Nullable
-    public static AoASkill getLowestSkillWithLimit(PlayerDataManager plData, final int limit) {
+    public static Optional<AoASkill.Instance> getLowestSkillWithLimit(Player player, final int limit) {
         AoASkill.Instance lowestSkill = null;
         int lowestVal = 1001;
 
-        for (AoASkill.Instance skill : plData.getSkills()) {
+        for (AoASkill.Instance skill : PlayerUtil.getAdventPlayer(player).getSkills()) {
             int temp = skill.getLevel(true);
 
             if (temp >= limit && temp < lowestVal) {
@@ -196,12 +213,7 @@ public final class PlayerUtil {
             }
         }
 
-        if (lowestVal >= 1000) {
-            return null;
-        }
-        else {
-            return lowestSkill.type();
-        }
+        return Optional.ofNullable(lowestVal >= 1000 ? null : lowestSkill);
     }
 
     @Nullable
@@ -226,11 +238,15 @@ public final class PlayerUtil {
     }
 
     public static void notifyPlayerOfInsufficientLevel(ServerPlayer player, AoASkill skill, int level) {
-        AoANetworking.sendToPlayer(player, new ToastPopupPacket(skill, level));
+        SkillRequirementToastData.sendToastPopupTo(player, skill, level);
     }
 
     public static void notifyPlayerOfInsufficientResources(ServerPlayer player, AoAResource resource, float amount) {
-        AoANetworking.sendToPlayer(player, new ToastPopupPacket(resource, amount));
+        ResourceRequirementToastData.sendToastPopupTo(player, resource, amount);
+    }
+
+    public static void notifyPlayerOfMissingItem(ServerPlayer player, ItemStack stack) {
+        ItemRequirementToastData.sendToastPopupTo(player, stack);
     }
 
     public static void messageAllPlayersInRange(Component msg, Level world, BlockPos center, int radius) {
@@ -255,7 +271,8 @@ public final class PlayerUtil {
         }
     }
 
-    public static BlockPos getBlockAimingAt(Player pl, double distance) {
+    @Nullable
+    public static BlockPos getBlockAimingAt(LivingEntity pl, double distance) {
         Vec3 startVec = new Vec3(pl.getX(), pl.getY() + (double)pl.getEyeHeight(), pl.getZ());
         float cosYaw = Mth.cos((float)(-pl.getYRot() * Math.toRadians(1) - Math.PI));
         float sinYaw = Mth.sin((float)(-pl.getYRot() * Math.toRadians(1) - Math.PI));

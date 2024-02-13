@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:chestplate_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:runic_energy"
@@ -31,8 +34,5 @@
   ],
   "result": {
     "item": "aoa3:speed_chestplate"
-  },
-  "tool": {
-    "item": "aoa3:chestplate_frame"
   }
 }

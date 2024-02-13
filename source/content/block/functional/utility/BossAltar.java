@@ -23,7 +23,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.content.block.tileentity.BossAltarTileEntity;
+import net.tslat.aoa3.content.block.blockentity.BossAltarBlockEntity;
 import net.tslat.aoa3.content.item.misc.summoning.BossTokenItem;
 import net.tslat.aoa3.data.server.AoANowhereBossArenaListener;
 import net.tslat.aoa3.scheduling.AoAScheduler;
@@ -46,7 +46,7 @@ public class BossAltar extends Block implements EntityBlock {
 	@Nullable
 	@Override
 	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new BossAltarTileEntity(pos, state);
+		return new BossAltarBlockEntity(pos, state);
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class BossAltar extends Block implements EntityBlock {
 
 	@Override
 	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!WorldUtil.isWorld(level, AoADimensions.NOWHERE.key))
+		if (!WorldUtil.isWorld(level, AoADimensions.NOWHERE))
 			return InteractionResults.BlockUse.noActionTaken();
 
 		if (level.getDifficulty() == Difficulty.PEACEFUL) {
@@ -95,7 +95,7 @@ public class BossAltar extends Block implements EntityBlock {
 			else {
 				BlockEntity blockEntity = level.getBlockEntity(pos);
 
-				if (blockEntity instanceof BossAltarTileEntity bossAltar) {
+				if (blockEntity instanceof BossAltarBlockEntity bossAltar) {
 					if (bossAltar.getCurrentEntity() != null) {
 						player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.inUse"), ChatFormatting.RED));
 

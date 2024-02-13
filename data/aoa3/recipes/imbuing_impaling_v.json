@@ -1,28 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:damage",
+    "aoa3:elemental",
+    "aoa3:precision"
+  ],
   "enchantment": "minecraft:impaling",
   "enchantment_level": 5,
-  "ingredients": [
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:glistening_power_stone"
-    },
-    {
-      "item": "minecraft:prismarine_shard"
-    }
-  ]
+  "imbuing_level": 66,
+  "power_source": {
+    "item": "aoa3:glowing_power_stone"
+  }
 }

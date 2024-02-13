@@ -12,6 +12,7 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.neoforged.neoforge.common.IPlantable;
@@ -42,8 +43,8 @@ public class StackablePlant extends Block implements IShearable, IPlantable {
 		Block block = blockState.getBlock();
 
 		while (block == this.stemBlock.get() || block == this.hatBlock.get()) {
-			world.setBlock(newPos, Blocks.AIR.defaultBlockState(), 35);
-			world.levelEvent(player, 2001, newPos, Block.getId(blockState));
+			world.setBlock(newPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_ALL);
+			world.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, newPos, Block.getId(blockState));
 
 			if (!world.isClientSide() && !player.isCreative()) {
 				dropResources(state, world, pos, null, player, player.getMainHandItem());

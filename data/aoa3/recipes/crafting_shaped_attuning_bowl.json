@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "forge:gems/amethyst"
+    },
+    "G": {
+      "tag": "forge:ingots/gold"
+    }
+  },
+  "pattern": [
+    "A A",
+    "AGA",
+    "AAA"
+  ],
+  "result": {
+    "item": "aoa3:attuning_bowl"
+  }
+}

@@ -28,6 +28,8 @@ import net.tslat.aoa3.common.networking.packets.GunRecoilPacket;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.enchantment.BraceEnchantment;
+import net.tslat.aoa3.content.enchantment.ControlEnchantment;
+import net.tslat.aoa3.content.enchantment.ShellEnchantment;
 import net.tslat.aoa3.content.entity.projectile.gun.BaseBullet;
 import net.tslat.aoa3.content.entity.projectile.gun.LimoniteBulletEntity;
 import net.tslat.aoa3.content.item.weapon.sniper.BaseSniper;
@@ -115,7 +117,7 @@ public abstract class BaseGun extends Item {
 	}
 
 	public InteractionHand getGunHand(ItemStack stack) {
-		return stack.getEnchantmentLevel(AoAEnchantments.BRACE.get()) > 0 ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
+		return ItemUtil.hasEnchantment(stack, AoAEnchantments.BRACE.get()) ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
 	}
 
 	@Override
@@ -171,7 +173,7 @@ public abstract class BaseGun extends Item {
 				if (fireGun(serverLevel, shooter, stack, hand)) {
 					ItemStack offhand;
 
-					if (hand == InteractionHand.MAIN_HAND && (offhand = shooter.getItemInHand(InteractionHand.OFF_HAND)).getEnchantmentLevel(AoAEnchantments.BRACE.get()) > 0)
+					if (hand == InteractionHand.MAIN_HAND && ItemUtil.hasEnchantment((offhand = shooter.getOffhandItem()), AoAEnchantments.BRACE.get()))
 						offhand.onUseTick(serverLevel, shooter, count);
 
 					ItemUtil.damageItem(stack, shooter, 1, hand == InteractionHand.OFF_HAND ? EquipmentSlot.OFFHAND : EquipmentSlot.MAINHAND);
@@ -205,8 +207,7 @@ public abstract class BaseGun extends Item {
 	}
 
 	public void doRecoil(ServerPlayer player, ItemStack stack, InteractionHand hand) {
-		int control = stack.getEnchantmentLevel(AoAEnchantments.CONTROL.get());
-		float recoilAmount = getRecoilForShot(stack, player) * 2 * (1 - control * 0.15f);
+		float recoilAmount = ControlEnchantment.modifyRecoil(stack, getRecoilForShot(stack, player) * 2);
 
 		AoANetworking.sendToPlayer(player, new GunRecoilPacket(hand == InteractionHand.OFF_HAND ? recoilAmount * 1.25f : recoilAmount, getFiringDelay()));
 	}
@@ -227,18 +228,16 @@ public abstract class BaseGun extends Item {
 
 	public void doImpactDamage(Entity target, LivingEntity shooter, BaseBullet bullet, Vec3 impactPosition, float bulletDmgMultiplier) {
 		if (target != null) {
-			float shellMod = 1;
-
 			if (bullet.getHand() != null)
-				shellMod += 0.1f * shooter.getItemInHand(bullet.getHand()).getEnchantmentLevel(AoAEnchantments.SHELL.get());
+				bulletDmgMultiplier = ShellEnchantment.applyDamageBonus(shooter.getItemInHand(bullet.getHand()), bulletDmgMultiplier);
 
 			if (RandomUtil.percentChance(this.firingDelay / 10f)) {
-				if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier * shellMod))
-					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier * shellMod);
+				if (DamageUtil.doHeavyGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier))
+					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}
 			else {
-				if (DamageUtil.doGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier * shellMod))
-					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier * shellMod);
+				if (DamageUtil.doGunAttack(shooter, bullet, target, getDamage() * bulletDmgMultiplier))
+					doImpactEffect(target, shooter, bullet, impactPosition, bulletDmgMultiplier);
 			}
 		}
 	}
@@ -252,7 +251,7 @@ public abstract class BaseGun extends Item {
 
 	@Nullable
 	public BaseBullet findAndConsumeAmmo(LivingEntity shooter, ItemStack gunStack, InteractionHand hand) {
-		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level().isClientSide(), 1 + gunStack.getEnchantmentLevel(AoAEnchantments.GREED.get())))
+		if (shooter.getType() != EntityType.PLAYER || ItemUtil.findInventoryItem((Player)shooter, new ItemStack(getAmmoItem()), !shooter.level().isClientSide(), 1 + gunStack.getEnchantmentLevel(AoAEnchantments.GREED.get()), false))
 			return createProjectileEntity(shooter, gunStack, hand);
 
 		return null;
@@ -285,7 +284,7 @@ public abstract class BaseGun extends Item {
 
 	@Override
 	public void appendHoverText(ItemStack stack, @Nullable Level world, List<Component> tooltip, TooltipFlag flag) {
-		float damage = getDamage() * (1 + (0.1f * stack.getEnchantmentLevel(AoAEnchantments.SHELL.get())));
+		float damage = ShellEnchantment.applyDamageBonus(stack, getDamage());
 
 		if (damage > 0)
 			tooltip.add(1, LocaleUtil.getFormattedItemDescriptionText(LocaleUtil.Keys.GUN_DAMAGE, LocaleUtil.ItemDescriptionType.ITEM_DAMAGE, Component.literal(NumberUtil.roundToNthDecimalPlace(damage, 2))));

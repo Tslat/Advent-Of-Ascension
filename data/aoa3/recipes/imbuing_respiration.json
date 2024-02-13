@@ -1,17 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:elemental",
+    "aoa3:durability",
+    "aoa3:life"
+  ],
   "enchantment": "minecraft:respiration",
   "enchantment_level": 1,
-  "infusion_level": 15,
-  "ingredients": [
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:bubble_berries"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "imbuing_level": 14,
+  "power_source": {
+    "item": "aoa3:glistening_power_stone"
+  }
 }

@@ -1,20 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:damage",
+    "aoa3:power",
+    "aoa3:precision"
+  ],
   "enchantment": "minecraft:power",
   "enchantment_level": 2,
-  "infusion_level": 15,
-  "ingredients": [
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:glistening_power_stone"
-    },
-    {
-      "tag": "forge:string"
-    }
-  ]
+  "imbuing_level": 37,
+  "power_source": {
+    "item": "aoa3:shining_power_stone"
+  }
 }

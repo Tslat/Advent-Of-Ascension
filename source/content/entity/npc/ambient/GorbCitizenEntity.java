@@ -25,7 +25,7 @@ public class GorbCitizenEntity extends AoAAmbientNPC {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.MYSTERIUM.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.MYSTERIUM);
 	}
 
 	@Nullable

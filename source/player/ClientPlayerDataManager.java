@@ -16,8 +16,8 @@ import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
@@ -30,8 +30,8 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 
 	private Player player;
 
-	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_SKILLS::getId));
-	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_RESOURCES::getId));
+	private final ConcurrentSkipListMap<AoASkill, AoASkill.Instance> skills = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_SKILLS::getKey));
+	private final ConcurrentSkipListMap<AoAResource, AoAResource.Instance> resources = new ConcurrentSkipListMap<>(Comparator.comparing(AoARegistries.AOA_RESOURCES::getKey));
 	private final ArrayListMultimap<AoAPlayerEventListener.ListenerType, AoAPlayerEventListener> eventListeners = ArrayListMultimap.create();
 
 	private final ConcurrentHashMap<Integer, ArrayList<AoAPlayerEventListener>> keyListeners = new ConcurrentHashMap<>(1);
@@ -79,7 +79,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	@Override
-	@Nonnull
+	@NotNull
 	public AoASkill.Instance getSkill(AoASkill skill) {
 		return skills.getOrDefault(skill, AoASkills.DEFAULT);
 	}
@@ -90,7 +90,7 @@ public final class ClientPlayerDataManager implements PlayerDataManager {
 	}
 
 	@Override
-	@Nonnull
+	@NotNull
 	public AoAResource.Instance getResource(AoAResource resource) {
 		return resources.getOrDefault(resource, AoAResources.DEFAULT);
 	}

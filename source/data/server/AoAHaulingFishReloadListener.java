@@ -208,30 +208,36 @@ public class AoAHaulingFishReloadListener extends SimpleJsonResourceReloadListen
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getLavaEntry(Biome biome, Level level) {
 			ResourceKey<Biome> resourceKey = level.registryAccess().registry(Registries.BIOME).get().getResourceKey(biome).orElseThrow();
-			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = LAVA_MAP.get(resourceKey);
 
-			if (entry != null)
-				return entry;
+			if (LAVA_MAP != null) {
+				GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = LAVA_MAP.get(resourceKey);
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(LAVA_MAP::containsKey).findFirst().orElse(null);
+				if (entry != null)
+					return entry;
 
-			if (matchedTag != null)
-				return LAVA_MAP.get(matchedTag);
+				TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(LAVA_MAP::containsKey).findFirst().orElse(null);
+
+				if (matchedTag != null)
+					return LAVA_MAP.get(matchedTag);
+			}
 
 			return LAVA_FALLBACK;
 		}
 
 		private GenericEntryPool<Function<Level, Entity>, ServerPlayer> getWaterEntry(Biome biome, Level level) {
 			ResourceKey<Biome> resourceKey = ResourceKey.create(Registries.BIOME, RegistryUtil.getId(level, biome));
-			GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = WATER_MAP.get(resourceKey);
 
-			if (entry != null)
-				return entry;
+			if (WATER_MAP != null) {
+				GenericEntryPool<Function<Level, Entity>, ServerPlayer> entry = WATER_MAP.get(resourceKey);
 
-			TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(WATER_MAP::containsKey).findFirst().orElse(null);
+				if (entry != null)
+					return entry;
 
-			if (matchedTag != null)
-				return WATER_MAP.get(matchedTag);
+				TagKey<Biome> matchedTag = TagUtil.getAllTagsFor(Registries.BIOME, biome, level).filter(WATER_MAP::containsKey).findFirst().orElse(null);
+
+				if (matchedTag != null)
+					return WATER_MAP.get(matchedTag);
+			}
 
 			return WATER_FALLBACK;
 		}

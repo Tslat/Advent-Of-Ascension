@@ -8,9 +8,9 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -32,7 +32,7 @@ public final class RegistryUtil {
 	}
 
 	public static ResourceLocation getId(Item item) {
-		return AoARegistries.ITEMS.getId(item);
+		return AoARegistries.ITEMS.getKey(item);
 	}
 
 	public static ResourceLocation getId(BlockState blockState) {
@@ -40,7 +40,7 @@ public final class RegistryUtil {
 	}
 
 	public static ResourceLocation getId(Block block) {
-		return AoARegistries.BLOCKS.getId(block);
+		return AoARegistries.BLOCKS.getKey(block);
 	}
 
 	public static ResourceLocation getId(Level level, Biome biome) {
@@ -48,7 +48,7 @@ public final class RegistryUtil {
 	}
 
 	public static ResourceLocation getId(SoundEvent sound) {
-		return AoARegistries.SOUNDS.getId(sound);
+		return AoARegistries.SOUNDS.getKey(sound);
 	}
 
 	public static ResourceLocation getId(Entity entity) {
@@ -56,27 +56,27 @@ public final class RegistryUtil {
 	}
 
 	public static ResourceLocation getId(EntityType<?> entity) {
-		return AoARegistries.ENTITIES.getId(entity);
+		return AoARegistries.ENTITIES.getKey(entity);
 	}
 
 	public static ResourceLocation getId(AoAAbility ability) {
-		return AoARegistries.AOA_ABILITIES.getId(ability);
+		return AoARegistries.AOA_ABILITIES.getKey(ability);
 	}
 
 	public static ResourceLocation getId(AoASkill skill) {
-		return AoARegistries.AOA_SKILLS.getId(skill);
+		return AoARegistries.AOA_SKILLS.getKey(skill);
 	}
 
 	public static ResourceLocation getId(AoAResource resource) {
-		return AoARegistries.AOA_RESOURCES.getId(resource);
+		return AoARegistries.AOA_RESOURCES.getKey(resource);
 	}
 
 	public static ResourceLocation getId(ParticleType<?> particleType) {
-		return AoARegistries.PARTICLES.getId(particleType);
+		return AoARegistries.PARTICLES.getKey(particleType);
 	}
 
 	public static ResourceLocation getId(RecipeType<?> recipeType) {
-		return AoARegistries.RECIPE_TYPES.getId(recipeType);
+		return AoARegistries.RECIPE_TYPES.getKey(recipeType);
 	}
 
 	public static ResourceLocation getId(StructurePlacementType<?> structurePlacementType) {
@@ -104,6 +104,6 @@ public final class RegistryUtil {
 	}
 
 	public static <T> Registry<T> getDataDrivenRegistry(ResourceKey<? extends Registry<T>> key) {
-		return WorldUtil.getServer().overworld().registryAccess().registry(key).get();
+		return WorldUtil.getServer().registryAccess().registry(key).get();
 	}
 }

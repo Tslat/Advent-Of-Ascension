@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:gun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:rainbow_druse"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:crystal_carver"
-  },
-  "tool": {
-    "item": "aoa3:gun_frame"
   }
 }

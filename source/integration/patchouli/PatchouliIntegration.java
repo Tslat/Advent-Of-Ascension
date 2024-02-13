@@ -1,7 +1,14 @@
 package net.tslat.aoa3.integration.patchouli;
 
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.loading.FMLEnvironment;
+import vazkii.patchouli.api.PatchouliAPI;
+import vazkii.patchouli.common.book.BookRegistry;
+
 public class PatchouliIntegration {
-	/*public static void preInit() {
+	public static void preInit() {
 		if (FMLEnvironment.dist == Dist.CLIENT)
 			PatchouliClientIntegration.init();
 	}
@@ -16,5 +23,5 @@ public class PatchouliIntegration {
 
 	public static void openBook(ResourceLocation id) {
 		PatchouliAPI.get().openBookGUI(id);
-	}*/
+	}
 }

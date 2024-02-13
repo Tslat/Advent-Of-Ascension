@@ -64,7 +64,7 @@ public class GrenadeEntity extends BaseBullet implements HardProjectile {
 			explode(position());
 
 			if (getOwner() instanceof ServerPlayer pl)
-				pl.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("completionist/darwin_award")), "fire_grenade");
+				pl.getAdvancements().award(AdvancementUtil.getAdvancement(pl.serverLevel(), AdventOfAscension.id("completionist/darwin_award")), "fire_grenade");
 
 			discard();
 

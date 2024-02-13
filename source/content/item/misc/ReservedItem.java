@@ -173,7 +173,7 @@ public class ReservedItem extends Item {
 		if (!RegistryUtil.getId(armour.get(0).getItem()).getPath().toLowerCase(Locale.ENGLISH).startsWith("n"))
 			return;
 
-		if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1))
+		if (ItemUtil.findInventoryItem(pl, new ItemStack(AoAItems.ALIEN_ORB.get()), false, 1, false))
 			return;
 
 		pl.spawnAtLocation(((ReservedItem)AoAItems.ALIEN_ORB.get()).newValidStack(), 0);

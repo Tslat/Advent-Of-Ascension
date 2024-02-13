@@ -24,8 +24,7 @@ import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.advent.AoAStartupCache;
-import net.tslat.aoa3.common.misc.NativePatching;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
+import net.tslat.aoa3.common.registration.item.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.block.decoration.banner.BannerBlock;
 import net.tslat.aoa3.content.block.generation.log.LogBlock;
@@ -93,7 +92,6 @@ public final class BlockRegistrar<T extends Block> {
 		flammable();
 		pistonBreaks();
 		noRedstone();
-		compostable(0.3f);
 		generationBlocksTab();
 
 		return this;
@@ -129,7 +127,6 @@ public final class BlockRegistrar<T extends Block> {
 
 	public BlockRegistrar<T> baseSapling() {
 		basedOn(Blocks.OAK_SAPLING);
-		compostable(0.3f);
 		utilityBlocksTab();
 
 		return this;
@@ -142,7 +139,6 @@ public final class BlockRegistrar<T extends Block> {
 		neverSolid();
 		pistonBreaks();
 		instabreak();
-		compostable(0.65f);
 		factory(StaticMushroomBlock::new);
 		needsPostPlacementCheck();
 		generationBlocksTab();
@@ -158,7 +154,6 @@ public final class BlockRegistrar<T extends Block> {
 		pistonBreaks();
 		modelOffset(BlockBehaviour.OffsetType.XZ);
 		instabreak();
-		compostable(0.3f);
 		replaceable();
 		factory(GenericWaterPlant::new);
 		generationBlocksTab();
@@ -176,7 +171,6 @@ public final class BlockRegistrar<T extends Block> {
 		modelOffset(BlockBehaviour.OffsetType.XZ);
 		instabreak();
 		replaceable();
-		compostable(0.3f);
 		factory(properties -> new BushBlock(properties) {
 			@Override
 			protected MapCodec<? extends BushBlock> codec() {
@@ -191,7 +185,6 @@ public final class BlockRegistrar<T extends Block> {
 	public BlockRegistrar<T> baseStackablePlant(Function<BlockBehaviour.Properties, Block> factory) {
 		basePlant();
 		factory(factory);
-		compostable(0.5f);
 
 		return this;
 	}
@@ -203,7 +196,6 @@ public final class BlockRegistrar<T extends Block> {
 		instabreak();
 		modelOffset(BlockBehaviour.OffsetType.XZ);
 		pistonBreaks();
-		compostable(0.65f);
 		factory(properties -> new FlowerBlock((Supplier)potionEffect, duration, properties));
 		generationBlocksTab();
 
@@ -236,12 +228,6 @@ public final class BlockRegistrar<T extends Block> {
 		basedOn(Blocks.FLOWER_POT);
 		factory(properties -> new FlowerPotBlock(null, plant::value, properties));
 		noItem();
-
-		return this;
-	}
-
-	public BlockRegistrar<T> compostable(float chance) {
-		this.callbacks.add(block -> NativePatching.addCompostableBlock(() -> block, chance));
 
 		return this;
 	}

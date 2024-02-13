@@ -1,109 +1,38 @@
 package net.tslat.aoa3.common.registration.worldgen;
 
-import com.google.common.collect.HashBiMap;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.server.ServerLifecycleHooks;
 import net.tslat.aoa3.advent.AdventOfAscension;
-import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.Nonnull;
 
 public final class AoADimensions {
-	private static final HashBiMap<ResourceKey<Level>, AoADimension> dimTypeMap = HashBiMap.create(25);
+	public static final ResourceKey<Level> ABYSS = create("abyss");
+	public static final ResourceKey<Level> BARATHOS = create("barathos");
+	public static final ResourceKey<Level> CANDYLAND = create("candyland");
+	public static final ResourceKey<Level> CELEVE = create("celeve");
+	public static final ResourceKey<Level> CREEPONIA = create("creeponia");
+	public static final ResourceKey<Level> CRYSTEVIA = create("crystevia");
+	public static final ResourceKey<Level> DEEPLANDS = create("deeplands");
+	public static final ResourceKey<Level> DUSTOPIA = create("dustopia");
+	public static final ResourceKey<Level> GARDENCIA = create("gardencia");
+	public static final ResourceKey<Level> GRECKON = create("greckon");
+	public static final ResourceKey<Level> HAVEN = create("haven");
+	public static final ResourceKey<Level> IROMINE = create("iromine");
+	public static final ResourceKey<Level> LBOREAN = create("lborean");
+	public static final ResourceKey<Level> LELYETIA = create("lelyetia");
+	public static final ResourceKey<Level> LUNALUS = create("lunalus");
+	public static final ResourceKey<Level> MYSTERIUM = create("mysterium");
+	public static final ResourceKey<Level> NOWHERE = create("nowhere");
+	public static final ResourceKey<Level> PRECASIA = create("precasia");
+	public static final ResourceKey<Level> RUNANDOR = create("runandor");
+	public static final ResourceKey<Level> SHYRELANDS = create("shyrelands");
+	public static final ResourceKey<Level> VOX_PONDS = create("vox_ponds");
 
-	public static final DimensionContainer ABYSS = new DimensionContainer("abyss", AoADimension.ABYSS);
-	public static final DimensionContainer BARATHOS = new DimensionContainer("barathos", AoADimension.BARATHOS);
-	public static final DimensionContainer CANDYLAND = new DimensionContainer("candyland", AoADimension.CANDYLAND);
-	public static final DimensionContainer CELEVE = new DimensionContainer("celeve", AoADimension.CELEVE);
-	public static final DimensionContainer CREEPONIA = new DimensionContainer("creeponia", AoADimension.CREEPONIA);
-	public static final DimensionContainer CRYSTEVIA = new DimensionContainer("crystevia", AoADimension.CRYSTEVIA);
-	public static final DimensionContainer DEEPLANDS = new DimensionContainer("deeplands", AoADimension.DEEPLANDS);
-	public static final DimensionContainer DUSTOPIA = new DimensionContainer("dustopia", AoADimension.DUSTOPIA);
-	public static final DimensionContainer THE_END = new DimensionContainer(Level.END, AoADimension.THE_END);
-	public static final DimensionContainer GARDENCIA = new DimensionContainer("gardencia", AoADimension.GARDENCIA);
-	public static final DimensionContainer GRECKON = new DimensionContainer("greckon", AoADimension.GRECKON);
-	public static final DimensionContainer HAVEN = new DimensionContainer("haven", AoADimension.HAVEN);
-	public static final DimensionContainer IROMINE = new DimensionContainer("iromine", AoADimension.IROMINE);
-	public static final DimensionContainer LBOREAN = new DimensionContainer("lborean", AoADimension.LBOREAN);
-	public static final DimensionContainer LELYETIA = new DimensionContainer("lelyetia", AoADimension.LELYETIA);
-	public static final DimensionContainer LUNALUS = new DimensionContainer("lunalus", AoADimension.LUNALUS);
-	public static final DimensionContainer MYSTERIUM = new DimensionContainer("mysterium", AoADimension.MYSTERIUM);
-	public static final DimensionContainer NETHER = new DimensionContainer(Level.NETHER, AoADimension.NETHER);
-	public static final DimensionContainer NOWHERE = new DimensionContainer("nowhere", AoADimension.NOWHERE);
-	public static final DimensionContainer OVERWORLD = new DimensionContainer(Level.OVERWORLD, AoADimension.OVERWORLD);
-	public static final DimensionContainer PRECASIA = new DimensionContainer("precasia", AoADimension.PRECASIA);
-	public static final DimensionContainer RUNANDOR = new DimensionContainer("runandor", AoADimension.RUNANDOR);
-	public static final DimensionContainer SHYRELANDS = new DimensionContainer("shyrelands", AoADimension.SHYRELANDS);
-	public static final DimensionContainer VOX_PONDS = new DimensionContainer("vox_ponds", AoADimension.VOX_PONDS);
+	public static final ResourceKey<Level> OVERWORLD = Level.OVERWORLD;
+	public static final ResourceKey<Level> NETHER = Level.NETHER;
+	public static final ResourceKey<Level> THE_END = Level.END;
 
-	@Nullable
-	public static AoADimension getDim(@Nonnull ResourceKey<Level> key) {
-		return dimTypeMap.get(key);
-	}
-
-	@Nullable
-	public static ResourceKey<Level> getWorldKey(@Nonnull AoADimension dim) {
-		return dimTypeMap.inverse().get(dim);
-	}
-
-	public static class DimensionContainer {
-		public final ResourceKey<Level> key;
-		public final AoADimension dim;
-		private ServerLevel world = null;
-
-		private DimensionContainer(ResourceKey<Level> key, AoADimension dim) {
-			this.key = key;
-			this.dim = dim;
-
-			dimTypeMap.put(key, dim);
-		}
-
-		private DimensionContainer(String dimId, AoADimension dim) {
-			this(ResourceKey.create(Registries.DIMENSION, new ResourceLocation(AdventOfAscension.MOD_ID, dimId)), dim);
-		}
-
-		@Nullable
-		public ServerLevel getWorld() {
-			if (this.world != null)
-				return this.world;
-
-			if (ServerLifecycleHooks.getCurrentServer() == null)
-				return null;
-
-			this.world = ServerLifecycleHooks.getCurrentServer().getLevel(key);
-
-			return this.world;
-		}
-	}
-
-	public enum AoADimension {
-		ABYSS,
-		BARATHOS,
-		CANDYLAND,
-		CELEVE,
-		CREEPONIA,
-		CRYSTEVIA,
-		DEEPLANDS,
-		THE_END,
-		DUSTOPIA,
-		GARDENCIA,
-		GRECKON,
-		HAVEN,
-		IROMINE,
-		LBOREAN,
-		LELYETIA,
-		LUNALUS,
-		MYSTERIUM,
-		NETHER,
-		NOWHERE,
-		OVERWORLD,
-		PRECASIA,
-		RUNANDOR,
-		SHYRELANDS,
-		VOX_PONDS;
+	private static ResourceKey<Level> create(String id) {
+		return ResourceKey.create(Registries.DIMENSION, AdventOfAscension.id(id));
 	}
 }

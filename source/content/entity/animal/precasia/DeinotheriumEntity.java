@@ -6,12 +6,10 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.EntityDimensions;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.behavior.BlockPosTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.schedule.Activity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -30,6 +28,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.SequentialBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.CustomHeldBehaviour;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
+import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Panic;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetWalkTargetToBlock;
@@ -46,6 +45,7 @@ import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.RawAnimation;
 
 import java.util.List;
+import java.util.Map;
 
 public class DeinotheriumEntity extends AoAAnimal<DeinotheriumEntity> {
 	private static final RawAnimation EAT_ANIM = RawAnimation.begin().thenPlay("misc.eat");
@@ -159,7 +159,24 @@ public class DeinotheriumEntity extends AoAAnimal<DeinotheriumEntity> {
 										new Idle<>().runFor(entity -> 60)),
 								new SetRandomWalkTarget<>().speedModifier(0.9f),
 								new Idle<>().runFor(entity -> entity.getRandom().nextInt(30, 60)))
-				).startCondition(entity -> !BrainUtils.hasMemory(entity, MemoryModuleType.IS_PANICKING)));
+				).startCondition(entity -> !BrainUtils.memoryOrDefault(entity, MemoryModuleType.IS_PANICKING, () -> false)));
+	}
+
+	@Override
+	public Map<Activity, BrainActivityGroup<? extends DeinotheriumEntity>> getAdditionalTasks() {
+		return Map.of(Activity.PANIC, new BrainActivityGroup<DeinotheriumEntity>(Activity.PANIC)
+				.behaviours(new Panic<>()
+						.setRadius(15, 10)
+						.speedMod(entity -> 2f))
+				.requireAndWipeMemoriesOnUse(MemoryModuleType.HURT_BY_ENTITY));
+	}
+
+	@Override
+	public void push(Entity entity) {
+		super.push(entity);
+
+		if (BrainUtils.memoryOrDefault(this, MemoryModuleType.IS_PANICKING, () -> false) && entity instanceof LivingEntity && entity.getBoundingBox().getSize() < getBoundingBox().getSize())
+			entity.hurt(level().damageSources().cramming(), 10);
 	}
 
 	@Nullable

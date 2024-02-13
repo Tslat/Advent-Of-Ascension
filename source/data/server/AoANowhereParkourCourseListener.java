@@ -188,7 +188,7 @@ public class AoANowhereParkourCourseListener extends SimpleJsonResourceReloadLis
 				ItemUtil.givePlayerMultipleItems(player, LootUtil.generateLoot(tableId, LootUtil.getGiftParameters(level, player.position(), player.getLuck(), player)));
 			});
 
-			player.getAdvancements().award(AdvancementUtil.getAdvancement(AdventOfAscension.id("nowhere/tier_" + this.tier + "_acrobat")), "complete_course");
+			player.getAdvancements().award(AdvancementUtil.getAdvancement(player.serverLevel(), AdventOfAscension.id("nowhere/tier_" + this.tier + "_acrobat")), "complete_course");
 		}
 
 		public void teleportPlayerToCourse(ServerPlayer player) {

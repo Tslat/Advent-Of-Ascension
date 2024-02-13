@@ -8,6 +8,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,6 +30,7 @@ import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.BreedWithPartner;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.misc.Idle;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.move.FollowTemptation;
 import net.tslat.smartbrainlib.api.core.behaviour.custom.path.SetRandomWalkTarget;
+import net.tslat.smartbrainlib.util.BrainUtils;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -124,6 +126,14 @@ public class HorndronEntity extends AoAAnimal<HorndronEntity> {
 				}, 19 - this.deathTime);
 			}
 		}
+	}
+
+	@Override
+	public void push(Entity entity) {
+		super.push(entity);
+
+		if (BrainUtils.memoryOrDefault(this, MemoryModuleType.IS_PANICKING, () -> false) && entity instanceof LivingEntity && entity.getBoundingBox().getSize() < getBoundingBox().getSize())
+			entity.hurt(level().damageSources().cramming(), 6);
 	}
 
 	@Override

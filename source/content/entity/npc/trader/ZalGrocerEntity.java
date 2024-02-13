@@ -17,14 +17,14 @@ import org.jetbrains.annotations.Nullable;
 public class ZalGrocerEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(Items.CARROT, 3).cost(AoAItems.COPPER_COIN).xp(1).stock(32),
-					BuildableTrade.trade(Items.POTATO, 2).cost(AoAItems.COPPER_COIN).xp(1).stock(32),
-					BuildableTrade.trade(Items.MELON_SLICE, 4).cost(AoAItems.COPPER_COIN).xp(1).stock(32),
-					BuildableTrade.trade(Items.BEETROOT, 2).cost(AoAItems.COPPER_COIN).xp(1).stock(32))
+					BuildableTrade.forItem(Items.CARROT, 3).itemCost(AoAItems.COPPER_COIN).xp(1).stock(32),
+					BuildableTrade.forItem(Items.POTATO, 2).itemCost(AoAItems.COPPER_COIN).xp(1).stock(32),
+					BuildableTrade.forItem(Items.MELON_SLICE, 4).itemCost(AoAItems.COPPER_COIN).xp(1).stock(32),
+					BuildableTrade.forItem(Items.BEETROOT, 2).itemCost(AoAItems.COPPER_COIN).xp(1).stock(32))
 			.trades(2,
-					BuildableTrade.trade(Items.COD).cost(AoAItems.COPPER_COIN, 3).stock(32),
-					BuildableTrade.trade(Items.SALMON).cost(AoAItems.COPPER_COIN, 3).stock(32),
-					BuildableTrade.trade(Items.COOKIE, 3).cost(AoAItems.COPPER_COIN).stock(32)).build();
+					BuildableTrade.forItem(Items.COD).itemCost(AoAItems.COPPER_COIN, 3).stock(32),
+					BuildableTrade.forItem(Items.SALMON).itemCost(AoAItems.COPPER_COIN, 3).stock(32),
+					BuildableTrade.forItem(Items.COOKIE, 3).itemCost(AoAItems.COPPER_COIN).stock(32)).build();
 
 	public ZalGrocerEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -37,7 +37,7 @@ public class ZalGrocerEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS);
 	}
 
 	@Nullable

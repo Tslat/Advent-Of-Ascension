@@ -1,127 +1,141 @@
 package net.tslat.aoa3.content.world.spawner;
 
-import com.mojang.datafixers.util.Pair;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.Direction;
+import net.minecraft.core.HolderSet;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.random.WeightedRandom;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnPlacements;
-import net.minecraft.world.level.CustomSpawner;
 import net.minecraft.world.level.GameRules;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.NaturalSpawner;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.phys.AABB;
-import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
-import net.tslat.aoa3.library.builder.EntityPredicate;
-import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
+import net.tslat.aoa3.content.entity.misc.PixonEntity;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
-public class PixonSpawner implements CustomSpawner {
-	private static final HashMap<ResourceKey<Biome>, List<MobSpawnSettings.SpawnerData>> SPAWNS = new HashMap<ResourceKey<Biome>, List<MobSpawnSettings.SpawnerData>>();
-	private int spawnCooldown = 1200;
+public class PixonSpawner implements AoACustomSpawner {
+	public static final Codec<PixonSpawner> CODEC = RecordCodecBuilder.create(builder -> builder.group(
+			IntProvider.CODEC.fieldOf("spawn_interval").forGetter(spawner -> spawner.spawnInterval),
+			IntProvider.CODEC.fieldOf("extra_delay_per_spawn").forGetter(spawner -> spawner.extraDelayPerSpawn),
+			Codec.FLOAT.fieldOf("chance_per_player").forGetter(spawner -> spawner.chancePerPlayer),
+			IntProvider.CODEC.fieldOf("spawns_per_player").forGetter(spawner -> spawner.spawnsPerPlayer),
+			Biome.LIST_CODEC.optionalFieldOf("biome_blacklist").forGetter(spawner -> spawner.biomeBlacklist),
+			ResourceLocation.CODEC.listOf().xmap(Set::copyOf, List::copyOf).fieldOf("dimension_blacklist").forGetter(spawner -> spawner.dimensionBlacklist),
+			SpawnData.CustomSpawnRules.CODEC.optionalFieldOf("spawn_rules").forGetter(spawner -> spawner.spawnRules),
+			Codec.BOOL.fieldOf("spawn_in_flat_world").forGetter(spawner -> spawner.spawnInFlatWorld)
+	).apply(builder, PixonSpawner::new));
 
-	@Override
-	public int tick(ServerLevel world, boolean spawnHostiles, boolean spawnPassives) {
-		if (this.spawnCooldown-- > 1200 || !spawnPassives || !world.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
-			return 0;
+	private final IntProvider spawnInterval;
+	private final IntProvider extraDelayPerSpawn;
+	private final float chancePerPlayer;
+	private final IntProvider spawnsPerPlayer;
+	private final Optional<HolderSet<Biome>> biomeBlacklist;
+	private final Set<ResourceLocation> dimensionBlacklist;
+	private final Optional<SpawnData.CustomSpawnRules> spawnRules;
+	private final boolean spawnInFlatWorld;
 
-		if (RandomUtil.oneInNChance(Math.max(1, spawnCooldown))) {
-			spawnCooldown = RandomUtil.randomNumberBetween(6000, 12000);
+	private long nextSpawnTick = -1;
 
-			return doSpawning(world);
-		}
-
-		return 0;
+	public PixonSpawner(IntProvider spawnInterval, IntProvider extraDelayPerSpawn, float chancePerPlayer, IntProvider spawnsPerPlayer, Optional<HolderSet<Biome>> biomeBlacklist, Set<ResourceLocation> dimensionBlacklist, Optional<SpawnData.CustomSpawnRules> spawnRules, boolean spawnInFlatWorld) {
+		this.spawnInterval = spawnInterval;
+		this.extraDelayPerSpawn = extraDelayPerSpawn;
+		this.chancePerPlayer = chancePerPlayer;
+		this.spawnsPerPlayer = spawnsPerPlayer;
+		this.biomeBlacklist = biomeBlacklist;
+		this.dimensionBlacklist = dimensionBlacklist;
+		this.spawnRules = spawnRules;
+		this.spawnInFlatWorld = spawnInFlatWorld;
 	}
 
-	private int doSpawning(ServerLevel world) {
+	@Override
+	public boolean shouldAddToDimension(ServerLevel level) {
+		return (!level.isFlat() || this.spawnInFlatWorld) && !this.dimensionBlacklist.contains(level.dimension().location());
+	}
+
+	@Override
+	public AoACustomSpawner copy() {
+		return new PixonSpawner(this.spawnInterval, this.extraDelayPerSpawn, this.chancePerPlayer, this.spawnsPerPlayer, this.biomeBlacklist, this.dimensionBlacklist, this.spawnRules, this.spawnInFlatWorld);
+	}
+
+	@Override
+	public int tick(ServerLevel level, boolean spawnHostiles, boolean spawnPassives) {
+		if (this.nextSpawnTick > level.getGameTime() || !spawnPassives || !level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING))
+			return 0;
+
+		RandomSource random = level.getRandom();
+		this.nextSpawnTick = level.getGameTime() + this.spawnInterval.sample(random);
+
+		return doSpawning(level, random);
+	}
+
+	private int doSpawning(ServerLevel level, RandomSource random) {
 		int count = 0;
 
-		for (ServerPlayer pl : world.getPlayers(pl -> !pl.isSpectator() && pl.isAlive())) {
-			for (Pair<EntityType<? extends Mob>, BlockPos> spawn : findNearbySpawnPositions(world, pl.blockPosition(), 64, 10)) {
-				BlockPos pos = spawn.getSecond();
-				Mob entity = spawn.getFirst().create(world, null, null, pos, MobSpawnType.NATURAL, false, false);
+		for (ServerPlayer pl : level.getPlayers(pl -> !pl.isSpectator() && pl.isAlive())) {
+			if (level.getRandom().nextFloat() >= this.chancePerPlayer)
+				continue;
 
-				if (entity == null)
+			for (BlockPos spawnPos : findNearbySpawnPositions(level, random, pl.blockPosition(), 40, 128, this.spawnsPerPlayer.sample(random))) {
+				if (this.spawnRules.isPresent()) {
+					SpawnData.CustomSpawnRules spawnRules = this.spawnRules.get();
+
+					if (!spawnRules.blockLightLimit().isValueInRange(level.getBrightness(LightLayer.BLOCK, spawnPos)) || !spawnRules.skyLightLimit().isValueInRange(level.getBrightness(LightLayer.SKY, spawnPos)))
+						continue;
+				}
+
+				PixonEntity pixon = AoAMiscEntities.PIXON.get().create(level, null, null, spawnPos, MobSpawnType.NATURAL, false, false);
+
+				if (pixon == null)
 					continue;
 
-				int eventResult = 0;//ForgeHooks.canEntitySpawn(entity, world, pos.getX(), pos.getY(), pos.getZ(), null, MobSpawnType.NATURAL); TODO when forge catches up?
+ 				pixon.finalizeSpawn(level, level.getCurrentDifficultyAt(pixon.blockPosition()));
+				level.addFreshEntityWithPassengers(pixon);
 
-				if (eventResult != -1 && (eventResult == 1 || (entity.checkSpawnRules(world, MobSpawnType.NATURAL) && entity.checkSpawnObstruction(world)))) {
-					world.addFreshEntity(entity);
-
-					spawnCooldown += 1000;
-					count++;
-				}
+				this.nextSpawnTick += this.extraDelayPerSpawn.sample(random);
+				count++;
 			}
 		}
 
 		return count;
 	}
 
-	private List<Pair<EntityType<? extends Mob>, BlockPos>> findNearbySpawnPositions(ServerLevel world, BlockPos centerPos, int radius, int maxTries) {
-		ArrayList<Pair<EntityType<? extends Mob>, BlockPos>> positions = new ArrayList<>();
+	private List<BlockPos> findNearbySpawnPositions(ServerLevel level, RandomSource random, BlockPos centerPos, int minRadius, int maxRadius, int maxTries) {
+		EntityType<PixonEntity> entityType = AoAMiscEntities.PIXON.get();
+		List<BlockPos> positions = new ObjectArrayList<>();
+		RandomUtil.EasyRandom rand = new RandomUtil.EasyRandom(random);
+		BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
+		float radius = Math.max(maxRadius - minRadius, 0);
 
 		for (int i = 0; i < maxTries; i++) {
-			int x = centerPos.getX() + RandomUtil.randomNumberBetween(-radius, radius);
-			int z = centerPos.getZ() + RandomUtil.randomNumberBetween(-radius, radius);
-			BlockPos pos = new BlockPos(x, centerPos.getY(), z);
-			Biome biome = world.getBiome(pos).value();
-			Optional<ResourceKey<Biome>> key = world.getServer().registryAccess().registry(Registries.BIOME).get().getResourceKey(biome);
+			double xAdjust = rand.randomValueBetween(-radius, radius);
+			double zAdjust = rand.randomValueBetween(-radius, radius);
+			int newX = (int)Math.floor(centerPos.getX() + xAdjust + radius * Math.signum(xAdjust));
+			int newZ = (int)Math.floor(centerPos.getZ() + zAdjust + radius * Math.signum(zAdjust));
 
-			if (!key.isPresent() || !SPAWNS.containsKey(key.get()))
-				continue;
+			mutablePos.set(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, mutablePos.set(newX, 0, newZ)));
 
-			EntityType<? extends Mob> pixon = (EntityType<? extends Mob>)WeightedRandom.getRandomItem(RandomUtil.RANDOM.getSource(), SPAWNS.get(key.get())).get().type;
-			SpawnPlacements.Type placementType = SpawnPlacements.getPlacementType(pixon);
-			Heightmap.Types heightmap = SpawnPlacements.getHeightmapType(pixon);
-			pos = new BlockPos(x, world.getRandom().nextInt(world.getHeight(heightmap, x, z) + 1), z);
+			if (level.dimensionType().hasCeiling()) {
+				while (!level.getBlockState(mutablePos.move(Direction.DOWN)).isAir()) {}
+				while (level.getBlockState(mutablePos.move(Direction.DOWN)).isAir() && mutablePos.getY() > level.getMinBuildHeight()) {}
+			}
 
-			if (EntityRetrievalUtil.getEntities(world, new AABB(x - 5, pos.getY() - 5, z - 5, x + 5, pos.getY() + 5, z + 5), new EntityPredicate<>().is(pixon).isAlive()).size() > 3)
-				continue;
-
-			if (!NaturalSpawner.isSpawnPositionOk(placementType, world, pos, pixon))
-				continue;
-
-			if (world.noCollision(pixon.getAABB(pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d)))
-				positions.add(Pair.of(pixon, pos));
+			if (level.noCollision(entityType.getAABB(mutablePos.getX() + 0.5d, mutablePos.getY(), mutablePos.getZ() + 0.5d)))
+				positions.add(mutablePos.immutable());
 		}
 
 		return positions;
-	}
-
-	public static void addSpawn(ResourceKey<Biome> biome, MobSpawnSettings.SpawnerData spawnData) {
-		if (SPAWNS.containsKey(biome)) {
-			SPAWNS.get(biome).add(spawnData);
-		}
-		else {
-			ArrayList<MobSpawnSettings.SpawnerData> spawnList = new ArrayList<>();
-
-			spawnList.add(spawnData);
-
-			SPAWNS.put(biome, spawnList);
-		}
-	}
-
-	public static boolean isValidSpawnWorld(ServerLevel world) {
-		ResourceKey<Level> key = world.dimension();
-
-		return key == Level.OVERWORLD
-				|| key == AoADimensions.HAVEN.key || key == AoADimensions.RUNANDOR.key || key == AoADimensions.CANDYLAND.key
-				|| key == AoADimensions.SHYRELANDS.key || key == AoADimensions.ABYSS.key || key == AoADimensions.DUSTOPIA.key
-				|| key == AoADimensions.LBOREAN.key || key == AoADimensions.LELYETIA.key || key == AoADimensions.MYSTERIUM.key;
 	}
 }

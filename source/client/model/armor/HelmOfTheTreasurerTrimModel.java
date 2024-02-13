@@ -22,8 +22,8 @@ public class HelmOfTheTreasurerTrimModel extends SkillHelmetModel {
 	}
 
 	public static LayerDefinition createLayerDefinition() {
-		MeshDefinition meshDefinition = new MeshDefinition();
-		PartDefinition partDefinition = meshDefinition.getRoot();
+		final MeshDefinition meshDefinition = new MeshDefinition();
+		final PartDefinition partDefinition = meshDefinition.getRoot();
 
 		PartDefinition root = partDefinition.addOrReplaceChild("root", CubeListBuilder.create().texOffs(16, 3).addBox(-1.5F, -8.75F, -5.5F, 3.0F, 3.0F, 2.0F, new CubeDeformation(0.0F))
 				.texOffs(0, 10).addBox(1.5F, -8.25F, -4.5F, 2.0F, 2.0F, 1.0F, new CubeDeformation(-0.01F))

@@ -70,7 +70,7 @@ public class PortalFloaterParticleType extends ParticleType<PortalFloaterParticl
 
 		@Override
 		public String writeToString() {
-			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", AoARegistries.PARTICLES.getId(getType()), red, green, blue, alpha);
+			return String.format(Locale.ROOT, "%s %.2f %.2f %.2f %.2f", AoARegistries.PARTICLES.getKey(getType()), red, green, blue, alpha);
 		}
 
 		public static final Deserializer<Data> DESERIALIZER = new Deserializer<Data>() {

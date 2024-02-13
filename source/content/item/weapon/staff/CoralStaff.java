@@ -1,5 +1,6 @@
 package net.tslat.aoa3.content.item.weapon.staff;
 
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
@@ -19,11 +20,11 @@ import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.WorldUtil;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
-public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
+public class CoralStaff extends BaseStaff<List<BlockPos>> {
 	public CoralStaff(int durability) {
 		super(durability);
 	}
@@ -41,9 +42,8 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 	}
 
 	@Override
-	@Nullable
-	public ArrayList<BlockPos> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		ArrayList<BlockPos> coralPositions = new ArrayList<BlockPos>();
+    public Optional<List<BlockPos>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		final List<BlockPos> coralPositions = new ObjectArrayList<>();
 		final BlockPos pos = caster.blockPosition();
 		BlockPos.MutableBlockPos checkPos = new BlockPos.MutableBlockPos();
 
@@ -81,11 +81,11 @@ public class CoralStaff extends BaseStaff<ArrayList<BlockPos>> {
 			}
 		}
 
-		return coralPositions.isEmpty() ? null : coralPositions;
+		return Optional.ofNullable(coralPositions.isEmpty() ? null : coralPositions);
 	}
 
 	@Override
-	public void cast(Level world, ItemStack staff, LivingEntity caster, ArrayList<BlockPos> args) {
+	public void cast(Level world, ItemStack staff, LivingEntity caster, List<BlockPos> args) {
 		if (!world.isClientSide && caster instanceof Player) {
 			for (BlockPos pos : args) {
 				world.setBlock(pos, Blocks.BRAIN_CORAL_BLOCK.defaultBlockState(), 2);

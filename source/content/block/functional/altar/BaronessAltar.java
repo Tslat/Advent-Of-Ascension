@@ -32,7 +32,7 @@ public class BaronessAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level(), AoADimensions.BARATHOS.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.BARATHOS);
 	}
 
 	@Override

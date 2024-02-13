@@ -1,0 +1,29 @@
+{
+  "biome_blacklist": [],
+  "chance_per_player": 1.0,
+  "dimension_blacklist": [
+    "aoa3:nowhere"
+  ],
+  "extra_delay_per_spawn": {
+    "type": "minecraft:uniform",
+    "value": {
+      "max_inclusive": 6000,
+      "min_inclusive": 3000
+    }
+  },
+  "spawn_in_flat_world": false,
+  "spawn_interval": {
+    "type": "minecraft:uniform",
+    "value": {
+      "max_inclusive": 36000,
+      "min_inclusive": 12000
+    }
+  },
+  "spawns_per_player": {
+    "type": "minecraft:biased_to_bottom",
+    "value": {
+      "max_inclusive": 3,
+      "min_inclusive": 1
+    }
+  }
+}

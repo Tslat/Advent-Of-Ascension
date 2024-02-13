@@ -1,29 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:damage",
+    "aoa3:magic",
+    "aoa3:life"
+  ],
   "enchantment": "minecraft:smite",
   "enchantment_level": 5,
-  "infusion_level": 37,
-  "ingredients": [
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:luck_enhancer"
-    },
-    {
-      "item": "aoa3:glaring_power_stone"
-    }
-  ]
+  "imbuing_level": 62,
+  "power_source": {
+    "item": "aoa3:glowing_power_stone"
+  }
 }

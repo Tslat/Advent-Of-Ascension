@@ -1,7 +1,6 @@
 package net.tslat.aoa3.content.block.functional.utility;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,14 +15,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.tslat.aoa3.advent.AdventOfAscension;
-import net.tslat.aoa3.content.block.tileentity.LunarCreationTableBlockEntity;
+import net.tslat.aoa3.content.block.blockentity.LunarCreationTableBlockEntity;
+import net.tslat.aoa3.util.InteractionResults;
 import org.jetbrains.annotations.Nullable;
 
-
 public class LunarCreationTable extends Block implements EntityBlock {
-	private static final Component CONTAINER_TITLE = Component.translatable("container." + AdventOfAscension.MOD_ID + ".lunar_creation_table");
-
 	public LunarCreationTable(BlockBehaviour.Properties properties) {
 		super(properties);
 	}
@@ -35,33 +31,31 @@ public class LunarCreationTable extends Block implements EntityBlock {
 	}
 
 	@Override
-	public void setPlacedBy(Level pLevel, BlockPos pPos, BlockState pState, @org.jetbrains.annotations.Nullable LivingEntity pPlacer, ItemStack pStack) {
-		if (pStack.hasCustomHoverName()) {
-			if (pLevel.getBlockEntity(pPos) instanceof LunarCreationTableBlockEntity lunarTable)
-				lunarTable.setCustomName(pStack.getHoverName());
+	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
+		if (stack.hasCustomHoverName()) {
+			if (level.getBlockEntity(pos) instanceof LunarCreationTableBlockEntity lunarTable)
+				lunarTable.setCustomName(stack.getHoverName());
 		}
 	}
 
 	@Override
-	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
 		if (!state.is(newState.getBlock())) {
-			if (world.getBlockEntity(pos) instanceof LunarCreationTableBlockEntity creationTable)
-				creationTable.dropContents(world, pos);
+			if (level.getBlockEntity(pos) instanceof LunarCreationTableBlockEntity creationTable)
+				creationTable.dropContents(level, pos);
 
-			super.onRemove(state, world, pos, newState, isMoving);
+			super.onRemove(state, level, pos, newState, isMoving);
 		}
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (!world.isClientSide()) {
-			player.openMenu(state.getMenuProvider(world, pos));
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!level.isClientSide()) {
+			player.openMenu(state.getMenuProvider(level, pos));
 			player.awardStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
-
-			return InteractionResult.CONSUME;
 		}
 
-		return InteractionResult.SUCCESS;
+		return InteractionResults.BlockUse.succeedAndSwingArmBothSides(level.isClientSide);
 	}
 
 	@Nullable

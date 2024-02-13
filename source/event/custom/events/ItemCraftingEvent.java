@@ -1,7 +1,7 @@
 package net.tslat.aoa3.event.custom.events;
 
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.ICancellableEvent;
@@ -11,14 +11,14 @@ import org.jetbrains.annotations.NotNull;
 public class ItemCraftingEvent extends PlayerEvent implements ICancellableEvent {
 	@NotNull
 	private final ItemStack outputStack;
-	private final CraftingContainer craftMatrix;
+	private final Container craftingInputs;
 	private final ResultContainer outputInventory;
 
-	public ItemCraftingEvent(Player player, @NotNull ItemStack crafting, CraftingContainer craftingInventory, ResultContainer outputInventory) {
+	public ItemCraftingEvent(Player player, @NotNull ItemStack crafting, Container craftingInventory, ResultContainer outputInventory) {
 		super(player);
 
 		this.outputStack = crafting;
-		this.craftMatrix = craftingInventory;
+		this.craftingInputs = craftingInventory;
 		this.outputInventory = outputInventory;
 	}
 
@@ -27,8 +27,8 @@ public class ItemCraftingEvent extends PlayerEvent implements ICancellableEvent 
 		return this.outputStack;
 	}
 
-	public CraftingContainer getCraftMatrix() {
-		return this.craftMatrix;
+	public Container getCraftingInputs() {
+		return this.craftingInputs;
 	}
 
 	public ResultContainer getOutputInventory() {

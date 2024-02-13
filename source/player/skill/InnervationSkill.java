@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.LivingEntity;
@@ -58,7 +59,7 @@ public class InnervationSkill extends AoASkill.Instance {
 			attackTracker.remove(ev.getEntity().getId());
 
 		if (canGainXp(true))
-			adjustXp(getKillXpForEntity(target, damageDealt), false, false);
+			PlayerUtil.giveXpToPlayer((ServerPlayer)getPlayer(), type(), getKillXpForEntity(target, damageDealt), false);
 
 		if (attackTracker.size() > 10)
 			purgeTracker(target.level().getGameTime());

@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
-import net.tslat.aoa3.common.container.WhitewashingTableContainer;
+import net.tslat.aoa3.common.menu.WhitewashingTableMenu;
 
 public class WhitewashingTable extends Block {
 	public WhitewashingTable(BlockBehaviour.Properties properties) {
@@ -20,7 +20,7 @@ public class WhitewashingTable extends Block {
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
 		if (player instanceof ServerPlayer)
-			WhitewashingTableContainer.openContainer((ServerPlayer)player, pos);
+			WhitewashingTableMenu.openContainer((ServerPlayer)player, pos);
 
 		return InteractionResult.SUCCESS;
 	}

@@ -4,7 +4,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.content.item.weapon.blaster.*;
 import net.tslat.aoa3.content.item.weapon.bow.*;
 import net.tslat.aoa3.content.item.weapon.cannon.*;

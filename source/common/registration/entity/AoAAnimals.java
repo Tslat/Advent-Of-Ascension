@@ -17,7 +17,6 @@ import net.tslat.aoa3.content.entity.animal.fish.BasicLavaFishEntity;
 import net.tslat.aoa3.content.entity.animal.precasia.DeinotheriumEntity;
 import net.tslat.aoa3.content.entity.animal.precasia.HorndronEntity;
 import net.tslat.aoa3.content.entity.animal.precasia.OpteryxEntity;
-import net.tslat.aoa3.content.entity.misc.pixon.*;
 import net.tslat.aoa3.content.entity.mob.haven.AngelicaEntity;
 import net.tslat.aoa3.content.entity.mob.haven.DawnlightEntity;
 import net.tslat.aoa3.content.entity.mob.haven.RainicornEntity;
@@ -74,15 +73,6 @@ public final class AoAAnimals {
 	public static final DeferredHolder<EntityType<?>, EntityType<Animal>> URKA = registerAnimal("urka", UrkaEntity::new, 1.2f, 1.5f, 0x545454, 0x191515);
 	public static final DeferredHolder<EntityType<?>, EntityType<Animal>> VOLIANT = registerAnimal("voliant", VoliantEntity::new, 3.5f, 4.75f, 0x195E7A, 0x1A6A84);
 	public static final DeferredHolder<EntityType<?>, EntityType<ShikEntity>> SHIK = registerAnimal("shik", ShikEntity::new, 0.375f, 0.4375f, 0x444444, 0x606060);
-
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> AMBIENT_PIXON = registerAnimal("ambient_pixon", AmbientPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 12235956, 12039354);
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> BLOOMING_PIXON = registerAnimal("blooming_pixon", BloomingPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 10292975, 13540842);
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> GLARING_PIXON = registerAnimal("glaring_pixon", GlaringPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 2628099, 2827805);
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> GLEAMING_PIXON = registerAnimal("gleaming_pixon", GleamingPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 1549800, 2830387);
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> GLISTENING_PIXON = registerAnimal("glistening_pixon", GlisteningPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 977425, 2370852);
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> GLOWING_PIXON = registerAnimal("glowing_pixon", GlowingPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 16190476, 2170141);
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> RADIANT_PIXON = registerAnimal("radiant_pixon", RadiantPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 2689714, 1641556);
-	public static final DeferredHolder<EntityType<?>, EntityType<PixonEntity>> SHINING_PIXON = registerAnimal("shining_pixon", ShiningPixonEntity::new, MobCategory.AMBIENT, 0.9f, 1.3f, 13868556, 9341827);
 
 	private static <T extends Mob> DeferredHolder<EntityType<?>, EntityType<T>> registerAnimal(String registryName, EntityType.EntityFactory<T> factory, float width, float height, int primaryEggColour, int secondaryEggColour) {
 		return registerAnimal(registryName, factory, MobCategory.CREATURE, width, height, primaryEggColour, secondaryEggColour, builder -> {});

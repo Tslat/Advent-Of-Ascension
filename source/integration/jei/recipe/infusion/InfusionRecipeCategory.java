@@ -4,30 +4,21 @@ import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
-import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.library.util.RecipeUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.valueproviders.FloatProvider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.block.AoABlocks;
-import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.recipe.InfusionRecipe;
-import net.tslat.aoa3.library.object.RenderContext;
-import net.tslat.aoa3.player.ClientPlayerDataManager;
 import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.RenderUtil;
 
 public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 	public static final RecipeType<InfusionRecipe> RECIPE_TYPE = RecipeType.create(AdventOfAscension.MOD_ID, "infusion", InfusionRecipe.class);
@@ -84,7 +75,7 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 		builder.setShapeless();
 	}
 
-	@Override
+	/*@Override
 	public void draw(InfusionRecipe recipe, IRecipeSlotsView recipeSlotsView, GuiGraphics guiGraphics, double mouseX, double mouseY) {
 		if (recipe == null)
 			return;
@@ -122,5 +113,5 @@ public class InfusionRecipeCategory implements IRecipeCategory<InfusionRecipe> {
 
 			renderContext.renderText(message, posX, posY, textColour, shadowColour, RenderUtil.TextRenderType.DROP_SHADOW, LightTexture.FULL_BRIGHT);
 		}
-	}
+	}*/
 }

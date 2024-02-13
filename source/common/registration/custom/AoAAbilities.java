@@ -4,6 +4,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.player.ability.*;
+import net.tslat.aoa3.player.ability.dexterity.DoubleJump;
+import net.tslat.aoa3.player.ability.dexterity.FallDamageReduction;
+import net.tslat.aoa3.player.ability.dexterity.JumpBoost;
+import net.tslat.aoa3.player.ability.extraction.*;
+import net.tslat.aoa3.player.ability.farming.*;
+import net.tslat.aoa3.player.ability.generic.*;
+import net.tslat.aoa3.player.ability.hauling.*;
+import net.tslat.aoa3.player.ability.imbuing.EnchantContainerContents;
+import net.tslat.aoa3.player.ability.imbuing.EnchantEntityEquipment;
+import net.tslat.aoa3.player.ability.imbuing.GrindstoneCursesRemoval;
+import net.tslat.aoa3.player.ability.imbuing.ImbuingLevelRestriction;
+import net.tslat.aoa3.player.ability.innervation.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
@@ -46,11 +58,10 @@ public class AoAAbilities {
 	public static final DeferredHolder<AoAAbility, AoAAbility> AUTO_ENCHANT_CRAFTING = register("auto_enchant_crafting", () -> new AoAAbility(AutoEnchantCrafting::new, AutoEnchantCrafting::new));
 	public static final DeferredHolder<AoAAbility, AoAAbility> RARE_TABLE_HARVESTING_CHANCE = register("rare_table_harvesting_chance", () -> new AoAAbility(RareTableHarvestingChance::new, RareTableHarvestingChance::new));
 	public static final DeferredHolder<AoAAbility, AoAAbility> BONUS_CRAFTING_OUTPUT = register("bonus_crafting_output", () -> new AoAAbility(BonusCraftingOutput::new, BonusCraftingOutput::new));
-	public static final DeferredHolder<AoAAbility, AoAAbility> ENTITY_TAG_DAMAGE_BONUS = register("entity_tag_damage_bonus", () -> new AoAAbility(EntityTagDamageBonus::new, EntityTagDamageBonus::new));
-	public static final DeferredHolder<AoAAbility, AoAAbility> ENTITY_TAG_DAMAGE_BONUS_MELEE = register("entity_tag_damage_bonus_melee", () -> new AoAAbility(EntityTagDamageBonusMelee::new, EntityTagDamageBonusMelee::new));
-	public static final DeferredHolder<AoAAbility, AoAAbility> ENTITY_TAG_DAMAGE_BONUS_MAGIC = register("entity_tag_damage_bonus_magic", () -> new AoAAbility(EntityTagDamageBonusMagic::new, EntityTagDamageBonusMagic::new));
-	public static final DeferredHolder<AoAAbility, AoAAbility> ENTITY_TAG_DAMAGE_BONUS_PROJECTILE = register("entity_tag_damage_bonus_projectile", () -> new AoAAbility(EntityTagDamageBonusProjectile::new, EntityTagDamageBonusProjectile::new));
-	public static final DeferredHolder<AoAAbility, AoAAbility> ENTITY_TAG_DAMAGE_BONUS_EXPLOSION = register("entity_tag_damage_bonus_explosion", () -> new AoAAbility(EntityTagDamageBonusExplosion::new, EntityTagDamageBonusExplosion::new));
+	public static final DeferredHolder<AoAAbility, AoAAbility> ENCHANT_ENTITY_EQUIPMENT = register("enchant_entity_equipment", () -> new AoAAbility(EnchantEntityEquipment::new, EnchantEntityEquipment::new));
+	public static final DeferredHolder<AoAAbility, AoAAbility> ENCHANT_CONTAINER_CONTENTS = register("enchant_container_contents", () -> new AoAAbility(EnchantContainerContents::new, EnchantContainerContents::new));
+	public static final DeferredHolder<AoAAbility, AoAAbility> GRINDSTONE_CURSES_REMOVAL = register("grindstone_curses_removal", () -> new AoAAbility(GrindstoneCursesRemoval::new, GrindstoneCursesRemoval::new));
+	public static final DeferredHolder<AoAAbility, AoAAbility> IMBUING_LEVEL_RESTRICTION = register("imbuing_level_restriction", () -> new AoAAbility(ImbuingLevelRestriction::new, ImbuingLevelRestriction::new));
 
 	private static DeferredHolder<AoAAbility, AoAAbility> register(String id, Supplier<AoAAbility> ability) {
 		return AoARegistries.AOA_ABILITIES.register(id, ability);

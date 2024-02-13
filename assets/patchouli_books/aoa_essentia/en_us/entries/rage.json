@@ -1,0 +1,24 @@
+{
+  "category": "aoa3:resources",
+  "icon": "aoa3:patchouli/images/icons/rage_icon.png",
+  "name": "Rage",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "rage",
+      "text": "$(thing)Rage$() is a natural resource governing the body's naturally building agitation.$(br)As you take damage from entities, it will build within your body, growing until it reaches its limit.$(br2)$(thing)Rage$() drains naturally over time, eventually resetting to zero.",
+      "title": "Rage"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(l:aoa3:vulcanes#vulcanes)Vulcanes$(/l) draw from the body's $(thing)rage$() to power themselves."
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "Official Wiki",
+      "text": "Visit the official $(aoa) wiki page for more information.",
+      "title": "AoA Wiki",
+      "url": "https://adventofascension.fandom.com/wiki/Rage"
+    }
+  ]
+}

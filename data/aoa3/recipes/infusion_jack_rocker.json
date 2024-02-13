@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:cannon_frame"
+  },
   "ingredients": [
     {
       "item": "minecraft:cobblestone"
@@ -19,8 +22,5 @@
   ],
   "result": {
     "item": "aoa3:jack_rocker"
-  },
-  "tool": {
-    "item": "aoa3:cannon_frame"
   }
 }

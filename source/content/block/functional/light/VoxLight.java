@@ -26,7 +26,7 @@ public class VoxLight extends Block {
 
 	@Override
 	public InteractionResult use(BlockState state, Level world, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-		if (player.getItemInHand(hand).getItem() == AoAItems.ACTIVE_RUNE_STONE.get() && WorldUtil.isWorld(world, AoADimensions.MYSTERIUM.key)) {
+		if (player.getItemInHand(hand).getItem() == AoAItems.ACTIVE_RUNE_STONE.get() && WorldUtil.isWorld(world, AoADimensions.MYSTERIUM)) {
 			if (!world.isClientSide) {
 				List<ItemEntity> itemsList = world.getEntitiesOfClass(ItemEntity.class, new AABB(pos.getX(), pos.getY() + 1, pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1));
 

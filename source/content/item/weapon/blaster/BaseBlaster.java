@@ -34,6 +34,7 @@ import net.tslat.aoa3.common.networking.AoANetworking;
 import net.tslat.aoa3.common.networking.packets.AoASoundBuilderPacket;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
+import net.tslat.aoa3.content.enchantment.RechargeEnchantment;
 import net.tslat.aoa3.content.entity.projectile.staff.BaseEnergyShot;
 import net.tslat.aoa3.content.item.EnergyProjectileWeapon;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
@@ -264,9 +265,8 @@ public abstract class BaseBlaster extends Item implements EnergyProjectileWeapon
 		if (!(shooter instanceof Player pl) || (pl.getAbilities().instabuild && !forDisplay))
 			return 0;
 
-		final int recharge = stack.getEnchantmentLevel(AoAEnchantments.RECHARGE.get());
 		final int greed = stack.getEnchantmentLevel(AoAEnchantments.GREED.get());
-		float energyCost = (1 + (0.3f * greed)) * this.baseEnergyCost * Math.max(0, (1 - 0.07f * recharge));
+		float energyCost = (1 + (0.3f * greed)) * RechargeEnchantment.modifyCost(stack, this.baseEnergyCost);
 
 		if (PlayerUtil.isWearingFullSet(pl, AdventArmour.Type.GHOULISH))
 			energyCost *= 0.7f;

@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:blaster_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:mushroom_spores"
@@ -22,8 +25,5 @@
   ],
   "result": {
     "item": "aoa3:poison_plunger"
-  },
-  "tool": {
-    "item": "aoa3:blaster_frame"
   }
 }

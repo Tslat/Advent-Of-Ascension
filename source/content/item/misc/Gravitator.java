@@ -45,7 +45,7 @@ public class Gravitator extends Item {
 			}
 
 			if (!level.isClientSide) {
-				if (WorldUtil.isWorld(level, AoADimensions.HAVEN.key) && !entity.onGround() && level.getGameTime() % 5 == 0) {
+				if (WorldUtil.isWorld(level, AoADimensions.HAVEN) && !entity.onGround() && level.getGameTime() % 5 == 0) {
 					if (pl.isCreative())
 						return;
 

@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:blaster_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:runic_energy"
@@ -25,8 +28,5 @@
   ],
   "result": {
     "item": "aoa3:atomizer"
-  },
-  "tool": {
-    "item": "aoa3:blaster_frame"
   }
 }

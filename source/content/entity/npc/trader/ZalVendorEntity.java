@@ -17,11 +17,11 @@ import org.jetbrains.annotations.Nullable;
 public class ZalVendorEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(AoAItems.COPPER_COIN).cost(AoAItems.LUNARADE_MUG).xp(1).stock(64),
-					BuildableTrade.trade(AoAItems.LUNARADE).cost(AoAItems.COPPER_COIN, 5).xp(2).stock(64))
+					BuildableTrade.forItem(AoAItems.COPPER_COIN).itemCost(AoAItems.LUNARADE_MUG).xp(1).stock(64),
+					BuildableTrade.forItem(AoAItems.LUNARADE).itemCost(AoAItems.COPPER_COIN, 5).xp(2).stock(64))
 			.trades(2,
-					BuildableTrade.trade(AoAItems.POP_SHOT, 2).cost(AoAItems.COPPER_COIN, 4).stock(32),
-					BuildableTrade.trade(AoAWeapons.SLINGSHOT).cost(AoAItems.GOLD_COIN).xp(40).stock(5)).build();
+					BuildableTrade.forItem(AoAItems.POP_SHOT, 2).itemCost(AoAItems.COPPER_COIN, 4).stock(32),
+					BuildableTrade.forItem(AoAWeapons.SLINGSHOT).itemCost(AoAItems.GOLD_COIN).xp(40).stock(5)).build();
 
 	public ZalVendorEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -34,7 +34,7 @@ public class ZalVendorEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.LUNALUS);
 	}
 
 	@Nullable

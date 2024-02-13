@@ -1,9 +1,11 @@
 package net.tslat.aoa3.content.entity.npc.ambient;
 
+import com.google.common.base.Suppliers;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -11,9 +13,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -21,7 +21,8 @@ import net.neoforged.neoforge.common.ToolActions;
 import net.tslat.aoa3.client.render.AoAAnimations;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.AoATags;
-import net.tslat.aoa3.common.registration.entity.AoANpcs;
+import net.tslat.aoa3.common.registration.entity.AoAEntityDataSerializers;
+import net.tslat.aoa3.common.registration.entity.variant.DryadSpriteVariant;
 import net.tslat.aoa3.content.entity.base.AoAAmbientNPC;
 import net.tslat.aoa3.library.object.EntityDataHolder;
 import net.tslat.effectslib.api.particle.ParticleBuilder;
@@ -34,26 +35,18 @@ import software.bernie.geckolib.core.animation.AnimationController;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Supplier;
 
 public class DryadSpriteEntity extends AoAAmbientNPC {
-	private static final EntityDataHolder<Integer> VARIANT = EntityDataHolder.register(DryadSpriteEntity.class, EntityDataSerializers.INT, 0, entity -> entity.variant, (entity, value) -> entity.variant = value);
+	private static final EntityDataHolder<DryadSpriteVariant> VARIANT = EntityDataHolder.register(DryadSpriteEntity.class, AoAEntityDataSerializers.DRYAD_SPRITE_VARIANT.get(), DryadSpriteVariant.WOOD.get(), entity -> entity.variant, (entity, value) -> entity.variant = value);
 	private static final EntityDataHolder<Optional<UUID>> OWNER = EntityDataHolder.register(DryadSpriteEntity.class, EntityDataSerializers.OPTIONAL_UUID, Optional.empty(), entity -> entity.owner, (entity, uuid) -> entity.owner = uuid);
 	private static final EntityDataHolder<Integer> SUCCESS_TIMER = EntityDataHolder.register(DryadSpriteEntity.class, EntityDataSerializers.INT, -1, entity -> entity.successTimer, (entity, value) -> entity.successTimer = value);
 
-	private int variant = 0;
+	private DryadSpriteVariant variant = DryadSpriteVariant.WOOD.get();
 	private Optional<UUID> owner = Optional.empty();
 	private int successTimer = -1;
 
 	public DryadSpriteEntity(EntityType<? extends DryadSpriteEntity> entityType, Level world) {
 		super(entityType, world);
-	}
-
-	public DryadSpriteEntity(Player owner) {
-		super(AoANpcs.DRYAD_SPRITE.get(), owner.level());
-
-		OWNER.set(this, Optional.of(owner.getUUID()));
-		VARIANT.set(this, rand().randomNumberUpTo(6));
 	}
 
 	@Override
@@ -65,10 +58,12 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 	@Nullable
 	@Override
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag nbt) {
-		VARIANT.set(this, rand().randomNumberUpTo(6));
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+		spawnData = super.finalizeSpawn(world, difficulty, reason, spawnData, dataTag);
 
-		return super.finalizeSpawn(world, difficulty, reason, spawnData, nbt);
+		VARIANT.set(this, DryadSpriteVariant.getVariantForSpawn(world.getLevel(), difficulty, reason, this, Suppliers.memoize(() -> level().getBiome(blockPosition())), spawnData, dataTag));
+
+		return spawnData;
 	}
 
 	@Nullable
@@ -91,6 +86,10 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 		return super.hurt(source, amount);
 	}
 
+	public void setOwner(ServerPlayer owner) {
+		OWNER.set(this, Optional.of(owner.getUUID()));
+	}
+
 	@Override
 	protected InteractionResult mobInteract(Player player, InteractionHand hand) {
 		if (isAlive() && isOwner(player) && SUCCESS_TIMER.is(this, -1)) {
@@ -100,7 +99,7 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 				OWNER.set(this, Optional.of(player.getUUID()));
 
 			if (heldStack.canPerformAction(ToolActions.HOE_TILL)) {
-				if (heldStack.getItem() == getVariant().getTool()) {
+				if (getVariant().isCorrectOffering(heldStack)) {
 					if (!level().isClientSide()) {
 						SUCCESS_TIMER.set(this, 44);
 						player.awardKillScore(this, 1, this.level().damageSources().playerAttack(player));
@@ -127,8 +126,8 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 		return super.mobInteract(player, hand);
 	}
 
-	public Variant getVariant() {
-		return Variant.byNumber(VARIANT.get(this));
+	public DryadSpriteVariant getVariant() {
+		return this.variant;
 	}
 
 	@Override
@@ -185,41 +184,5 @@ public class DryadSpriteEntity extends AoAAmbientNPC {
 
 	public boolean isOwner(Entity entity) {
 		return OWNER.get(this).map(value -> value.equals(entity.getUUID())).orElse(false);
-	}
-
-	public enum Variant {
-		WOOD(0, () -> Items.WOODEN_HOE),
-		STONE(1, () -> Items.STONE_HOE),
-		IRON(2, () -> Items.IRON_HOE),
-		GOLD(3, () -> Items.GOLDEN_HOE),
-		DIAMOND(4, () -> Items.DIAMOND_HOE),
-		NETHERITE(5, () -> Items.NETHERITE_HOE);
-
-		private final int number;
-		private final Supplier<Item> tool;
-
-		Variant(int number, Supplier<Item> tool) {
-			this.number = number;
-			this.tool = tool;
-		}
-
-		public int getNumber() {
-			return number;
-		}
-
-		public Item getTool() {
-			return tool.get();
-		}
-
-		public static Variant byNumber(int number) {
-			return switch (number) {
-				case 1 -> STONE;
-				case 2 -> IRON;
-				case 3 -> GOLD;
-				case 4 -> DIAMOND;
-				case 5 -> NETHERITE;
-				default -> WOOD;
-			};
-		}
 	}
 }

@@ -67,19 +67,19 @@ public class TeaSink extends HorizontalDirectionalBlock {
 				if (!world.isClientSide()) {
 					boolean success = false;
 
-					if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.MYSTIC_SHROOMS.get()), true, 1)) {
-						ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1);
+					if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.MYSTIC_SHROOMS.get()), true, 1, false)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1, false);
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.FUNGAL_TEA.get()));
 
 						success = true;
 					}
-					else if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.NATURE_MELON_SLICE.get()), true, 1)) {
-						ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1);
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.NATURE_MELON_SLICE.get()), true, 1, false)) {
+						ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1, false);
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.NATURAL_TEA.get()));
 
 						success = true;
 					}
-					else if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1)) {
+					else if (ItemUtil.findInventoryItem(player, new ItemStack(AoAItems.TEA_SHREDDINGS.get()), true, 1, false)) {
 						ItemUtil.givePlayerItemOrDrop(player, new ItemStack(AoAItems.TEA.get()));
 
 						success = true;

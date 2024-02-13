@@ -18,7 +18,7 @@ public class ArmyBlock extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		/*if (!player.level.isClientSide && WorldUtil.isWorld(player.level, AoADimensions.PRECASIA.key) && player.level.getEntitiesOfClass(Monster.class, new AABB(pos).inflate(100), entity -> entity instanceof SkeleElderEntity || entity instanceof SkeletronEntity).size() == 0) {
+		/*if (!player.level.isClientSide && WorldUtil.isWorld(player.level, AoADimensions.PRECASIA) && player.level.getEntitiesOfClass(Monster.class, new AABB(pos).inflate(100), entity -> entity instanceof SkeleElderEntity || entity instanceof SkeletronEntity).size() == 0) {
 			SkeleElderEntity skeleElder = new SkeleElderEntity(player.level, pos, 0);
 
 			skeleElder.setPos(pos.getX(), pos.getY() + 1, pos.getZ());
@@ -31,7 +31,7 @@ public class ArmyBlock extends BossAltarBlock {
 /*
 	@Override
 	public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource rand) {
-		if (!world.isClientSide && WorldUtil.isWorld((ServerLevelAccessor)world, AoADimensions.PRECASIA.key) && rand.nextBoolean() && world.getEntitiesOfClass(SkeleElderEntity.class, new AABB(pos).inflate(100)).isEmpty())
+		if (!world.isClientSide && WorldUtil.isWorld((ServerLevelAccessor)world, AoADimensions.PRECASIA) && rand.nextBoolean() && world.getEntitiesOfClass(SkeleElderEntity.class, new AABB(pos).inflate(100)).isEmpty())
 			world.addFreshEntity(new SkeleElderEntity(world, pos, 0));
 	}*/
 

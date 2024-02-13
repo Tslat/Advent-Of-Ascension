@@ -3,7 +3,6 @@ package net.tslat.aoa3.common.registration.item;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
-import net.tslat.aoa3.common.registration.AoACreativeModeTabs;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.content.item.armour.*;
 
@@ -73,7 +72,7 @@ public final class AoAArmour {
 	public static final DeferredItem<SkillHelmet> HELM_OF_THE_DEXTROUS = registerArmour("helm_of_the_dextrous", () -> new SkillHelmet(AoASkills.DEXTERITY));
 	public static final DeferredItem<SkillHelmet> HELM_OF_THE_DRYAD = registerArmour("helm_of_the_dryad", () -> new SkillHelmet(AoASkills.FARMING));
 	//public static final DeferredItem<SkillHelmet> HELM_OF_THE_OCCULTIST = registerArmour("helm_of_the_occultist", () -> new SkillHelmet(AoASkills.FAUNAMANCY));
-	//public static final DeferredItem<SkillHelmet> HELM_OF_THE_RITUALIST = registerArmour("helm_of_the_ritualist", () -> new SkillHelmet(AoASkills.IMBUING));
+	public static final DeferredItem<SkillHelmet> HELM_OF_THE_RITUALIST = registerArmour("helm_of_the_ritualist", () -> new SkillHelmet(AoASkills.IMBUING));
 	//public static final DeferredItem<SkillHelmet> HELM_OF_THE_TINKERER = registerArmour("helm_of_the_tinkerer", () -> new SkillHelmet(AoASkills.ENGINEERING));
 	public static final DeferredItem<SkillHelmet> HELM_OF_THE_TRAWLER = registerArmour("helm_of_the_trawler", () -> new SkillHelmet(AoASkills.HAULING));
 	public static final DeferredItem<SkillHelmet> HELM_OF_THE_TREASURER = registerArmour("helm_of_the_treasurer", () -> new SkillHelmet(AoASkills.EXTRACTION));

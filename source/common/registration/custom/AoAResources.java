@@ -8,9 +8,10 @@ import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.resource.EnergyResource;
 import net.tslat.aoa3.player.resource.RageResource;
 import net.tslat.aoa3.player.resource.SpiritResource;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
+
 
 public class AoAResources {
 	public static void init() {}
@@ -38,7 +39,7 @@ public class AoAResources {
 			return 0;
 		}
 
-		@Nonnull
+		@NotNull
 		@Override
 		public CompoundTag saveToNbt() {
 			return new CompoundTag();

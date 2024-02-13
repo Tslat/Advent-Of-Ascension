@@ -98,9 +98,9 @@ class LBoreanRenderingEffects extends DimensionSpecialEffects {
                 poseStack.mulPose(Axis.YP.rotationDegrees(-90));
                 poseStack.mulPose(Axis.XP.rotationDegrees(dayAngle));
                 Matrix4f pose = poseStack.last().pose();
+                RenderSystem.setShader(GameRenderer::getPositionTexShader);
 
                 if (dayAngle > 286 || dayAngle < 82) {
-                    RenderSystem.setShader(GameRenderer::getPositionTexShader);
                     RenderSystem.setShaderTexture(0, SUN_TEXTURE);
                     bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
                     bufferBuilder.vertex(pose, -celestialQuadRadius, 100, -celestialQuadRadius).uv(0, 0).endVertex();

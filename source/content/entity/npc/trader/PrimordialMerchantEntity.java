@@ -20,15 +20,15 @@ import org.jetbrains.annotations.Nullable;
 public class PrimordialMerchantEntity extends AoATrader {
 	private static final Int2ObjectMap<VillagerTrades.ItemListing[]> TRADES = new TradeListBuilder()
 			.trades(1,
-					BuildableTrade.trade(Items.COOKED_BEEF).cost(AoAItems.COPPER_COIN, 8).xp(5).stock(32),
-					BuildableTrade.trade(Blocks.TORCH, 2).cost(AoAItems.COPPER_COIN).xp(1),
-					BuildableTrade.trade(AoAItems.LIMONITE_BULLET, 30).cost(AoAItems.COPPER_COIN, 14).xp(9))
+					BuildableTrade.forItem(Items.COOKED_BEEF).itemCost(AoAItems.COPPER_COIN, 8).xp(5).stock(32),
+					BuildableTrade.forItem(Blocks.TORCH, 2).itemCost(AoAItems.COPPER_COIN).xp(1),
+					BuildableTrade.forItem(AoAItems.LIMONITE_BULLET, 30).itemCost(AoAItems.COPPER_COIN, 14).xp(9))
 			.trades(4,
-					BuildableTrade.trade(AoAWeapons.DAYBREAKER_BOW).cost(AoAItems.DARKLY_POWDER, 7).xp(40).stock(5),
-					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.helmet).cost(AoAItems.DARKLY_POWDER, 2).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
-					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.chestplate).cost(AoAItems.DARKLY_POWDER, 3).cost(AoAItems.SILVER_COIN, 3).xp(50).stock(5),
-					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.leggings).cost(AoAItems.DARKLY_POWDER, 2).cost(AoAItems.SILVER_COIN, 3).xp(50).stock(5),
-					BuildableTrade.trade(AoAArmour.PRIMORDIAL_ARMOUR.boots).cost(AoAItems.DARKLY_POWDER, 2).cost(AoAItems.SILVER_COIN, 2).xp(50).stock(5)).build();
+					BuildableTrade.forItem(AoAWeapons.DAYBREAKER_BOW).itemCost(AoAItems.DARKLY_POWDER, 7).xp(40).stock(5),
+					BuildableTrade.forItem(AoAArmour.PRIMORDIAL_ARMOUR.helmet).itemCost(AoAItems.DARKLY_POWDER, 2).itemCost(AoAItems.SILVER_COIN, 2).xp(50).stock(5),
+					BuildableTrade.forItem(AoAArmour.PRIMORDIAL_ARMOUR.chestplate).itemCost(AoAItems.DARKLY_POWDER, 3).itemCost(AoAItems.SILVER_COIN, 3).xp(50).stock(5),
+					BuildableTrade.forItem(AoAArmour.PRIMORDIAL_ARMOUR.leggings).itemCost(AoAItems.DARKLY_POWDER, 2).itemCost(AoAItems.SILVER_COIN, 3).xp(50).stock(5),
+					BuildableTrade.forItem(AoAArmour.PRIMORDIAL_ARMOUR.boots).itemCost(AoAItems.DARKLY_POWDER, 2).itemCost(AoAItems.SILVER_COIN, 2).xp(50).stock(5)).build();
 
 	public PrimordialMerchantEntity(EntityType<? extends AoATrader> entityType, Level world) {
 		super(entityType, world);
@@ -41,7 +41,7 @@ public class PrimordialMerchantEntity extends AoATrader {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.DUSTOPIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.DUSTOPIA);
 	}
 
 	@Nullable

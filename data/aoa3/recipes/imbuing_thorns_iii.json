@@ -1,23 +1,14 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:change",
+    "aoa3:power",
+    "aoa3:magic"
+  ],
   "enchantment": "minecraft:thorns",
   "enchantment_level": 3,
-  "infusion_level": 65,
-  "ingredients": [
-    {
-      "item": "aoa3:resistance_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:damage_enhancer"
-    },
-    {
-      "item": "aoa3:shining_power_stone"
-    }
-  ]
+  "imbuing_level": 58,
+  "power_source": {
+    "item": "aoa3:glowing_power_stone"
+  }
 }

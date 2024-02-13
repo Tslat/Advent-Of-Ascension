@@ -1,14 +1,13 @@
 {
   "type": "aoa3:imbuing",
+  "aspect_foci": [
+    "aoa3:luck",
+    "aoa3:resource",
+    "aoa3:elemental"
+  ],
   "enchantment": "minecraft:luck_of_the_sea",
   "enchantment_level": 1,
-  "infusion_level": 13,
-  "ingredients": [
-    {
-      "item": "aoa3:magic_enhancer"
-    },
-    {
-      "item": "aoa3:gleaming_power_stone"
-    }
-  ]
+  "power_source": {
+    "item": "aoa3:ambient_power_stone"
+  }
 }

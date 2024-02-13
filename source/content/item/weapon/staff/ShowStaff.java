@@ -17,10 +17,12 @@ import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.util.EntityUtil;
 import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.effectslib.api.util.EffectBuilder;
+import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public class ShowStaff extends BaseStaff<List<LivingEntity>> {
 	public ShowStaff(int durability) {
@@ -40,13 +42,10 @@ public class ShowStaff extends BaseStaff<List<LivingEntity>> {
 	}
 
 	@Override
-	public List<LivingEntity> checkPreconditions(LivingEntity caster, ItemStack staff) {
-		List<LivingEntity> list = caster.level().getEntitiesOfClass(LivingEntity.class, caster.getBoundingBox().inflate(30), EntityUtil.Predicates.HOSTILE_MOB);
+	public Optional<List<LivingEntity>> checkPreconditions(LivingEntity caster, ItemStack staff) {
+		List<LivingEntity> targets = EntityRetrievalUtil.getEntities(caster, 30, entity -> entity instanceof LivingEntity livingEntity && EntityUtil.Predicates.HOSTILE_MOB.test(livingEntity));
 
-		if (!list.isEmpty())
-			return list;
-
-		return null;
+		return Optional.ofNullable(targets.isEmpty() ? null : targets);
 	}
 
 	@Override

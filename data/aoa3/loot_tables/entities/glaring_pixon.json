@@ -2,7 +2,11 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "bonus_rolls": 0.0,
+      "bonus_rolls": {
+        "type": "minecraft:uniform",
+        "max": 0.0,
+        "min": 0.0
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -10,10 +14,10 @@
             {
               "function": "aoa3:grant_skill_xp",
               "skill": "aoa3:imbuing",
-              "xp": 70.0
+              "xp": 65.0
             }
           ],
-          "name": "aoa3:glaring_infusion_stone",
+          "name": "aoa3:glaring_energy_stone",
           "weight": 30
         },
         {
@@ -22,7 +26,7 @@
             {
               "function": "aoa3:grant_skill_xp",
               "skill": "aoa3:imbuing",
-              "xp": 105.0
+              "xp": 130.0
             }
           ],
           "name": "aoa3:glaring_power_stone"

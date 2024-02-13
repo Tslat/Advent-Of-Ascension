@@ -1,10 +1,12 @@
 package net.tslat.aoa3.library.object;
 
-import javax.annotation.Nonnull;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Function;
 
 public interface CachedFunction<T, R> extends Function<T, R> {
-	static <T, R> CachedFunction<T, R> of(@Nonnull Function<T, R> function) {
+	static <T, R> CachedFunction<T, R> of(@NotNull Function<T, R> function) {
 		return new Impl<>(function);
 	}
 

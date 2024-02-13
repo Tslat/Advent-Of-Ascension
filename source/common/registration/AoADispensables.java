@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
+import net.minecraft.world.level.block.LevelEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.common.registration.item.AoAWeapons;
@@ -107,8 +108,8 @@ public final class AoADispensables {
 			ItemStack itemstack = stack.split(1);
 
 			DefaultDispenseItemBehavior.spawnItem(source.level(), itemstack, 6, direction, position);
-			source.level().levelEvent(1000, source.pos(), 0);
-			source.level().levelEvent(2000, source.pos(), direction.get3DDataValue());
+			source.level().levelEvent(LevelEvent.SOUND_DISPENSER_DISPENSE, source.pos(), 0);
+			source.level().levelEvent(LevelEvent.PARTICLES_SHOOT_SMOKE, source.pos(), direction.get3DDataValue());
 
 			return stack;
 		};

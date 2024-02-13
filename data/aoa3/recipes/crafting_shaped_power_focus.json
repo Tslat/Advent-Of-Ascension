@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "X": {
+      "tag": "aoa3:power_stones"
+    }
+  },
+  "pattern": [
+    "CGC",
+    "GXG",
+    "CGC"
+  ],
+  "result": {
+    "item": "aoa3:power_focus"
+  }
+}

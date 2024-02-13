@@ -1,5 +1,8 @@
 {
   "type": "aoa3:infusion",
+  "base": {
+    "item": "aoa3:gun_frame"
+  },
   "ingredients": [
     {
       "item": "aoa3:old_boot"
@@ -7,8 +10,5 @@
   ],
   "result": {
     "item": "aoa3:shoe_flinger"
-  },
-  "tool": {
-    "item": "aoa3:gun_frame"
   }
 }

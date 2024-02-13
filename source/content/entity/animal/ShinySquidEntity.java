@@ -7,8 +7,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Squid;
 import net.minecraft.world.level.Level;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
-import net.tslat.aoa3.player.ServerPlayerDataManager;
-import net.tslat.aoa3.player.skill.AoASkill;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class ShinySquidEntity extends Squid {
@@ -23,12 +21,8 @@ public class ShinySquidEntity extends Squid {
 		if (!isRemoved() && dead) {
 			Entity killer = source.getEntity();
 
-			if (killer instanceof ServerPlayer player && player.fishing != null && player.fishing.getHookedIn() == this) {
-				ServerPlayerDataManager plData = PlayerUtil.getAdventPlayer(player);
-				AoASkill.Instance hauling = plData.getSkill(AoASkills.HAULING.get());
-
-				hauling.adjustXp(PlayerUtil.getXpForFractionOfLevel(hauling.getLevel(true), 0.1f), false, false);
-			}
+			if (killer instanceof ServerPlayer player && player.fishing != null && player.fishing.getHookedIn() == this)
+				PlayerUtil.givePartialLevelToPlayer(player, AoASkills.HAULING.get(), 0.1f, false);
 		}
 	}
 }

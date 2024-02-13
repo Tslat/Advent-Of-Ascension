@@ -1,7 +1,6 @@
 package net.tslat.aoa3.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.inventory.BookViewScreen;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -12,7 +11,6 @@ import net.minecraft.client.resources.sounds.SoundInstance;
 import net.minecraft.client.sounds.MusicManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.Music;
 import net.minecraft.sounds.SoundSource;
@@ -25,26 +23,13 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.Vec3;
 import net.tslat.aoa3.client.gui.adventgui.AdventGuiTabLore;
 import net.tslat.aoa3.client.gui.hud.RecoilRenderer;
-import net.tslat.aoa3.client.gui.hud.toasts.AbilityUnlockToast;
-import net.tslat.aoa3.client.gui.hud.toasts.LevelRequirementToast;
-import net.tslat.aoa3.client.gui.hud.toasts.ResourceRequirementToast;
 import net.tslat.aoa3.client.gui.realmstone.BlankRealmstoneScreen;
 import net.tslat.aoa3.client.render.entity.misc.OccultBlockRenderer;
-import net.tslat.aoa3.common.networking.packets.ToastPopupPacket;
 import net.tslat.aoa3.common.networking.packets.UpdateClientMovementPacket;
-import net.tslat.aoa3.common.registration.AoAConfigs;
-import net.tslat.aoa3.common.registration.custom.AoAAbilities;
-import net.tslat.aoa3.common.registration.custom.AoAResources;
-import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.entity.mob.greckon.SilencerEntity;
 import net.tslat.aoa3.content.item.misc.WornBook;
 import net.tslat.aoa3.library.builder.SoundBuilder;
-import net.tslat.aoa3.player.ability.AoAAbility;
-import net.tslat.aoa3.player.resource.AoAResource;
-import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.NumberUtil;
 
 import java.util.List;
 import java.util.OptionalDouble;
@@ -75,42 +60,6 @@ public final class ClientOperations {
 
 	public static void addOccultBlocks(int renderUntil, List<OccultBlockRenderer.OccultBlock> blocks) {
 		OccultBlockRenderer.addOccultBlocks(renderUntil, blocks);
-	}
-
-	public static void addToast(ToastPopupPacket.ToastPopupType type, Object subject, Object value) {
-		switch (type) {
-			case SKILL_REQUIREMENT -> {
-				AoASkill skill = AoASkills.getSkill((ResourceLocation)subject);
-
-				if (AoAConfigs.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToasts().addToast(new LevelRequirementToast(skill, (Integer)value));
-				}
-				else {
-					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("insufficientLevels"), ChatFormatting.RED, skill.getName(), LocaleUtil.numToComponent((Integer)value)));
-				}
-			}
-			case RESOURCE_REQUIREMENT -> {
-				AoAResource resource = AoAResources.getResource((ResourceLocation)subject);
-
-				if (AoAConfigs.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToasts().addToast(new ResourceRequirementToast(resource, (Float)value));
-				}
-				else {
-					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("insufficientResource"), ChatFormatting.RED, resource.getName(), Component.literal(NumberUtil.roundToNthDecimalPlace((Float)value, 2))));
-				}
-			}
-			case ABILITY_UNLOCK -> {
-				AoASkill skill2 = AoASkills.getSkill((ResourceLocation)subject);
-				AoAAbility ability = AoAAbilities.getAbility((ResourceLocation)value);
-
-				if (AoAConfigs.CLIENT.useToasts.get()) {
-					Minecraft.getInstance().getToasts().addToast(new AbilityUnlockToast(skill2, ability));
-				}
-				else {
-					Minecraft.getInstance().player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("abilityUnlocked"), ChatFormatting.GREEN, skill2.getName(), ability.getName()));
-				}
-			}
-		}
 	}
 
 	public static void doSilencerSilence(SilencerEntity silencer) {

@@ -1,0 +1,28 @@
+{
+  "category": "aoa3:skills",
+  "icon": "aoa3:large_skill_crystal",
+  "name": "Overview",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Skills$() are a feature of $(aoa) that are based around training your abilities and gaining $(thing)xp$() and $(thing)levels$() to gain more abilities or empower your gameplay.$(br)$(aoa) comes with 10 skills built in by default.",
+      "title": "Skills Overview"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "All players have access to the same $(thing)skills$() on any given world, with each player starting all of them at level 1.$(br)Each $(thing)skill$() has a different $(l:aoa3:abilities)abilities$(/l), benefits, and methods of training - so for further info, consult the individual $(thing)skill$() categories."
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Every $(thing)skill$() maxes out its bonuses at level 100, but you may continue increasing your levels all the way up to level 1000, just to show your friends who's the best.$(br2)Beware however, levelling all the way up can take a lot of time and effort, and you'll likely need to $(l:aoa3:cycles)cycle$(/l) your $(thing)skill$() a number of times before you reach the top"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "AoA Wiki",
+      "text": "Find more info on all of the $(thing)skills$() in $(aoa) on the $(thing)official wiki$().",
+      "title": "Read More",
+      "url": "https://adventofascension.fandom.com/wiki/Skills"
+    }
+  ],
+  "sortnum": 0
+}

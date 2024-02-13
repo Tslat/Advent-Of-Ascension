@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:copper_ingot"
+    },
+    "G": {
+      "tag": "forge:glass_panes"
+    },
+    "X": {
+      "item": "minecraft:netherite_upgrade_smithing_template"
+    }
+  },
+  "pattern": [
+    "CGC",
+    "GXG",
+    "CGC"
+  ],
+  "result": {
+    "item": "aoa3:durability_focus"
+  }
+}

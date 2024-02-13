@@ -20,25 +20,25 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.tslat.aoa3.common.container.CorruptedTravellerContainer;
+import net.tslat.aoa3.common.menu.CorruptedTravellerMenu;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.library.object.RenderContext;
 import net.tslat.aoa3.util.ColourUtil;
 import net.tslat.aoa3.util.RenderUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 
-public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedTravellerContainer> {
+public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedTravellerMenu> {
 	private static final ResourceLocation GUI_TEXTURE = new ResourceLocation("aoa3", "textures/gui/containers/corrupted_traveller.png");
-	private static final ArrayList<Item> validFoods = new ArrayList<>();
+	private static final ArrayList<Item> APPLICABLE_FOOD = new ArrayList<>();
 
 	private long nextFoodTick = 0;
 	private Item currentGhostlyFood = Items.APPLE;
 	private final Minecraft mc;
 
-	public CorruptedTravellerScreen(CorruptedTravellerContainer container, Inventory inv, Component guiTitle) {
+	public CorruptedTravellerScreen(CorruptedTravellerMenu container, Inventory inv, Component guiTitle) {
 		super(container, inv, guiTitle);
 
 		this.mc = Minecraft.getInstance();
@@ -122,21 +122,18 @@ public class CorruptedTravellerScreen extends AbstractContainerScreen<CorruptedT
 	}
 
 	private void compileFoodList() {
-		for (Item item : AoARegistries.ITEMS.getAllRegisteredObjects()) {
-			if (item.isEdible())
-				validFoods.add(item);
-		}
+		AoARegistries.ITEMS.getAllRegisteredObjects().filter(Item::isEdible).forEach(APPLICABLE_FOOD::add);
 	}
 
-	@Nonnull
+	@NotNull
 	private Item getGhostlyFood() {
-		if (validFoods.isEmpty())
+		if (APPLICABLE_FOOD.isEmpty())
 			compileFoodList();
 
 		long worldTick = mc.level.getGameTime();
 
 		if (worldTick >= nextFoodTick) {
-			currentGhostlyFood = validFoods.get(RandomUtil.randomNumberUpTo(validFoods.size()));
+			currentGhostlyFood = APPLICABLE_FOOD.get(RandomUtil.randomNumberUpTo(APPLICABLE_FOOD.size()));
 			nextFoodTick = worldTick + 20;
 		}
 

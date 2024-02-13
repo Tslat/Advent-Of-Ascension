@@ -50,7 +50,7 @@ public class GrawAltar extends BossAltarBlock {
 
 	@Override
 	protected boolean checkActivationConditions(Player player, InteractionHand hand, BlockState state, BlockPos pos) {
-		return WorldUtil.isWorld(player.level(), AoADimensions.LELYETIA.key);
+		return WorldUtil.isWorld(player.level(), AoADimensions.LELYETIA);
 	}
 
 	@Override

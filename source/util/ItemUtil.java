@@ -1,10 +1,12 @@
 package net.tslat.aoa3.util;
 
 import com.google.common.collect.Multimap;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -17,18 +19,20 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.ToolActions;
 import net.tslat.aoa3.common.registration.AoATags;
 import net.tslat.aoa3.common.registration.item.AoAEnchantments;
 import net.tslat.aoa3.common.registration.item.AoAItems;
 import net.tslat.aoa3.content.item.armour.AdventArmour;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Supplier;
 
 public final class ItemUtil {
+	public static final EquipmentSlot[] HAND_SLOTS = new EquipmentSlot[] {EquipmentSlot.MAINHAND, EquipmentSlot.OFFHAND};
+	public static final EquipmentSlot[] MAINHAND_SLOTS = new EquipmentSlot[] {EquipmentSlot.MAINHAND};
+
 	public static Tier customItemTier(int durability, float efficiency, float attackDamage, int harvestLevel, int enchantability, final @Nullable Supplier<Item> repairMaterial, @Nullable TagKey<Block> toolTypeTag) {
 		return new Tier() {
 			@Override
@@ -118,8 +122,8 @@ public final class ItemUtil {
 		};
 	}
 
-	public static boolean hasEnchantment(Enchantment enchant, ItemStack stack) {
-		return EnchantmentHelper.getItemEnchantmentLevel(enchant, stack) > 0;
+	public static boolean hasEnchantment(ItemStack stack, Enchantment enchant) {
+		return stack.getEnchantmentLevel(enchant) > 0;
 	}
 
 	public static void damageItem(ItemStack stack, LivingEntity entity, InteractionHand hand) {
@@ -333,11 +337,11 @@ public final class ItemUtil {
 		}
 	}
 
-	public static boolean findInventoryItem(Player player, ItemStack stack, boolean consumeItem, int amount) {
+	public static boolean findInventoryItem(Player player, ItemStack stack, boolean consumeItem, int amount, boolean ignoreCreative) {
 		if (stack.isEmpty())
 			return false;
 
-		if (amount <= 0 || player.isCreative())
+		if (amount <= 0 || (!ignoreCreative && player.getAbilities().instabuild))
 			return true;
 
 		if (amount == 1) {
@@ -433,15 +437,15 @@ public final class ItemUtil {
 		}
 	}
 
-	public static boolean findAndConsumeRunes(HashMap<Item, Integer> runeMap, ServerPlayer player, boolean allowBuffs, @Nonnull ItemStack heldItem) {
+	public static boolean findAndConsumeRunes(Map<Item, Integer> runeMap, ServerPlayer player, boolean allowBuffs, @NotNull ItemStack heldItem) {
 		if (player.isCreative())
 			return true;
 
 		AdventArmour.Type armour = PlayerUtil.getAdventPlayer(player).equipment().getCurrentFullArmourSet();
-		int archmage = allowBuffs ? EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.ARCHMAGE.get(), heldItem) : 0;
+		int archmage = allowBuffs ? heldItem.getEnchantmentLevel(AoAEnchantments.ARCHMAGE.get()) : 0;
 		boolean nightmareArmour = allowBuffs && armour == AdventArmour.Type.NIGHTMARE;
-		boolean greed = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.GREED.get(), heldItem) > 0;
-		HashMap<Item, Integer> requiredRunes = new HashMap<>();
+		boolean greed = ItemUtil.hasEnchantment(heldItem, AoAEnchantments.GREED.get());
+		Reference2IntOpenHashMap<Item> requiredRunes = new Reference2IntOpenHashMap<>();
 
 		for (Map.Entry<Item, Integer> runeEntry : runeMap.entrySet()) {
 			if (!allowBuffs || (archmage == 0  && !nightmareArmour && !greed)) {
@@ -473,8 +477,8 @@ public final class ItemUtil {
 		if (requiredRunes.isEmpty())
 			return true;
 
-		HashSet<Integer> runeSlots = new HashSet<>();
-		HashMap<Item, Integer> runeCounter = new HashMap<>(requiredRunes);
+		IntSet runeSlots = new IntOpenHashSet();
+		Reference2IntOpenHashMap<Item> runeCounter = new Reference2IntOpenHashMap<>(requiredRunes);
 
 		ItemStack mainHandStack = player.getItemInHand(InteractionHand.MAIN_HAND);
 		ItemStack offHandStack = player.getItemInHand(InteractionHand.OFF_HAND);
@@ -483,7 +487,7 @@ public final class ItemUtil {
 			Item type = mainHandStack.getItem();
 
 			if (runeCounter.containsKey(type)) {
-				int amount = runeCounter.get(type);
+				int amount = runeCounter.getInt(type);
 
 				runeSlots.add(-1);
 				amount -= mainHandStack.getCount();
@@ -492,7 +496,7 @@ public final class ItemUtil {
 					runeCounter.put(type, amount);
 				}
 				else {
-					runeCounter.remove(type);
+					runeCounter.removeInt(type);
 				}
 			}
 		}
@@ -501,7 +505,7 @@ public final class ItemUtil {
 			Item type = offHandStack.getItem();
 
 			if (runeCounter.containsKey(type)) {
-				int amount = runeCounter.get(type);
+				int amount = runeCounter.getInt(type);
 
 				runeSlots.add(-2);
 				amount -= offHandStack.getCount();
@@ -510,7 +514,7 @@ public final class ItemUtil {
 					runeCounter.put(type, amount);
 				}
 				else {
-					runeCounter.remove(type);
+					runeCounter.removeInt(type);
 				}
 			}
 		}
@@ -523,7 +527,7 @@ public final class ItemUtil {
 					Item type = stack.getItem();
 
 					if (runeCounter.containsKey(type)) {
-						int amount = runeCounter.get(type);
+						int amount = runeCounter.getInt(type);
 
 						runeSlots.add(i);
 						amount -= stack.getCount();
@@ -532,7 +536,7 @@ public final class ItemUtil {
 							runeCounter.put(type, amount);
 						}
 						else {
-							runeCounter.remove(type);
+							runeCounter.removeInt(type);
 						}
 
 						if (runeCounter.isEmpty())
@@ -546,13 +550,13 @@ public final class ItemUtil {
 			if (runeSlots.contains(-1)) {
 				ItemStack rune = player.getItemInHand(InteractionHand.MAIN_HAND);
 				Item type = rune.getItem();
-				int amount = requiredRunes.get(type);
+				int amount = requiredRunes.getInt(type);
 				int remaining = amount - rune.getCount();
 
 				rune.shrink(amount);
 
 				if (remaining <= 0) {
-					requiredRunes.remove(type);
+					requiredRunes.removeInt(type);
 				}
 				else {
 					requiredRunes.put(type, remaining);
@@ -564,13 +568,13 @@ public final class ItemUtil {
 			if (runeSlots.contains(-2)) {
 				ItemStack rune = player.getItemInHand(InteractionHand.OFF_HAND);
 				Item type = rune.getItem();
-				int amount = requiredRunes.get(type);
+				int amount = requiredRunes.getInt(type);
 				int remaining = amount - rune.getCount();
 
 				rune.shrink(amount);
 
 				if (remaining <= 0) {
-					requiredRunes.remove(type);
+					requiredRunes.removeInt(type);
 				}
 				else {
 					requiredRunes.put(type, remaining);
@@ -582,13 +586,13 @@ public final class ItemUtil {
 			for (int slotId : runeSlots) {
 				ItemStack rune = player.getInventory().getItem(slotId);
 				Item type = rune.getItem();
-				int amount = requiredRunes.get(type);
+				int amount = requiredRunes.getInt(type);
 				int remaining = amount - rune.getCount();
 
 				rune.shrink(amount);
 
 				if (remaining <= 0) {
-					requiredRunes.remove(type);
+					requiredRunes.removeInt(type);
 				}
 				else {
 					requiredRunes.put(type, remaining);

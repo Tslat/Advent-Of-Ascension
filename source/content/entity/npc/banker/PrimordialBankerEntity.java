@@ -11,7 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.level.Level;
-import net.tslat.aoa3.common.container.BankerContainer;
+import net.tslat.aoa3.common.menu.BankerMenu;
 import net.tslat.aoa3.common.registration.worldgen.AoADimensions;
 import net.tslat.aoa3.util.WorldUtil;
 import org.jetbrains.annotations.Nullable;
@@ -29,7 +29,7 @@ public class PrimordialBankerEntity extends AoABanker {
 
 	@Override
 	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
-		return !WorldUtil.isWorld(level(), AoADimensions.DUSTOPIA.key);
+		return !WorldUtil.isWorld(level(), AoADimensions.DUSTOPIA);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class PrimordialBankerEntity extends AoABanker {
 			@Nullable
 			@Override
 			public AbstractContainerMenu createMenu(int screenId, Inventory inv, Player player) {
-				return new BankerContainer(screenId, player.getInventory(), PrimordialBankerEntity.this);
+				return new BankerMenu(screenId, player.getInventory(), PrimordialBankerEntity.this);
 			}
 		}, buffer -> buffer.writeInt(getId()));
 	}

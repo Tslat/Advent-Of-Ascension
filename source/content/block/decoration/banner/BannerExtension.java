@@ -34,8 +34,8 @@ public class BannerExtension extends Block implements SimpleWaterloggedBlock {
 		BlockPos bannerPos = state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED ? pos.above() : pos.below();
 		BlockState banner = world.getBlockState(bannerPos);
 
-		world.setBlock(bannerPos, Blocks.AIR.defaultBlockState(), 35);
-		world.levelEvent(player, 2001, bannerPos, Block.getId(banner));
+		world.setBlock(bannerPos, Blocks.AIR.defaultBlockState(), Block.UPDATE_SUPPRESS_DROPS | Block.UPDATE_ALL);
+		world.levelEvent(player, LevelEvent.PARTICLES_DESTROY_BLOCK, bannerPos, Block.getId(banner));
 
 		if (!world.isClientSide() && !player.isCreative()) {
 			dropResources(state, world, pos, null, player, player.getMainHandItem());
@@ -119,18 +119,10 @@ public class BannerExtension extends Block implements SimpleWaterloggedBlock {
 	}
 
 	@Override
-	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader world, BlockPos pos, Player player) {
-		if (state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED) {
-			BlockPos bannerPos = pos.below();
-			BlockState banner = world.getBlockState(bannerPos);
+	public ItemStack getCloneItemStack(BlockState state, HitResult target, LevelReader level, BlockPos pos, Player player) {
+		BlockPos bannerPos = state.getValue(BannerBlock.TYPE) == BannerBlock.BannerType.MOUNTED ? pos.above() : pos.below();
+		BlockState bannerBlock = level.getBlockState(bannerPos);
 
-			return banner.getBlock().getCloneItemStack(world, bannerPos, banner);
-		}
-		else {
-			BlockPos bannerPos = pos.above();
-			BlockState banner = world.getBlockState(bannerPos);
-
-			return banner.getBlock().getCloneItemStack(world, bannerPos, banner);
-		}
+		return bannerBlock.getBlock().getCloneItemStack(level, bannerPos, bannerBlock);
 	}
 }
