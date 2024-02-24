@@ -101,9 +101,6 @@ public class AttributeModification extends ScalableModAbility {
 	public void applyAttributeModifiers(ServerPlayerDataManager plData) {
 		EntityUtil.reapplyAttributeModifier(plData.player(), attribute, modifier, false);
 
-		if (plData.player().tickCount == 0)
-			loginHealth = plData.player().getMaxHealth();
-
 		if (loginHealth > 0) {
 			plData.player().setHealth(loginHealth);
 			loginHealth = -1;
@@ -141,7 +138,7 @@ public class AttributeModification extends ScalableModAbility {
 			double health = getPlayer().getHealth();
 
 			if (health > 0)
-				data.putDouble("current_health", getPlayer().getHealth());
+				data.putDouble("current_health", health);
 		}
 
 		return data;

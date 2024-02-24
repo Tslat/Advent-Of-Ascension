@@ -17,12 +17,6 @@ public final class AoADataAttachments {
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> DAMAGE_SCALING = register("damage_scaling", () -> AttachmentType.builder(() -> 0f).build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<UUID>> LAST_TARGET = register("last_target", () -> AttachmentType.builder(() -> (UUID)null).build());
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> CHARGE = register("charge", () -> AttachmentType.builder(() -> 0f).serialize(Codec.FLOAT).build());
-    /*public static final DeferredHolder<AttachmentType<?>, AttachmentType<ServerPlayerDataManager>> ADVENT_PLAYER = register("advent_player", () -> AttachmentType.serializable(entity -> {
-        if (entity instanceof ServerPlayer pl)
-            return new ServerPlayerDataManager(pl);
-
-        throw new IllegalArgumentException("Attempting to retrieve ADVENT_PLAYER data for non-server player!");
-    }).build());*/
 
     private static <T> DeferredHolder<AttachmentType<?>, AttachmentType<T>> register(String id, Supplier<AttachmentType<T>> attachment) {
         return AoARegistries.DATA_ATTACHMENTS.register(id, attachment);

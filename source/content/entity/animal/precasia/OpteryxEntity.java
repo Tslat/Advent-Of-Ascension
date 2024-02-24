@@ -419,7 +419,7 @@ public class OpteryxEntity extends AoAAnimal<OpteryxEntity> implements FlyingAni
 			}
 		}
 
-		final InteractionResult result = super.mobInteract(player, hand);
+		final InteractionResult result = isEgg() ? InteractionResult.FAIL : super.mobInteract(player, hand);
 
 		if (result != InteractionResult.PASS)
 			return result;

@@ -164,7 +164,7 @@ public class ImbuingRecipe implements Recipe<ImbuingChamberMenu.ImbuingInventory
 
 		final Enchantment enchant = getEnchant().left();
 
-		if (!inputStack.isEnchantable() || !enchant.canEnchant(inputStack) || inputStack.getEnchantmentLevel(enchant) >= getEnchant().rightInt())
+		if (!enchant.canEnchant(inputStack) || inputStack.getEnchantmentLevel(enchant) >= getEnchant().rightInt())
 			return false;
 
 		for (Enchantment existingEnchant : EnchantmentHelper.getEnchantments(inputStack).keySet()) {

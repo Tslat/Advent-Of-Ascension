@@ -53,7 +53,7 @@ public class EnergyStone extends Item {
 				}
 			}
 
-			PlayerUtil.givePartialLevelToPlayer(pl, AoASkills.IMBUING.get(), cumulativeXp, false);
+			PlayerUtil.giveXpToPlayer(pl, AoASkills.IMBUING.get(), cumulativeXp, false);
 
 			if (!player.getAbilities().instabuild)
 				stack.shrink(stack.getCount());

@@ -741,20 +741,20 @@
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 10,
-      "recipe_id": "aoa3:imbuing_sweeping_edge",
-      "unique_id": "-1267191384"
+      "recipe_id": "aoa3:imbuing_sweeping",
+      "unique_id": "-12518476"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 22,
-      "recipe_id": "aoa3:imbuing_sweeping_edge_ii",
-      "unique_id": "1229830181"
+      "recipe_id": "aoa3:imbuing_sweeping_ii",
+      "unique_id": "369714585"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 32,
-      "recipe_id": "aoa3:imbuing_sweeping_edge_iii",
-      "unique_id": "1739431412"
+      "recipe_id": "aoa3:imbuing_sweeping_iii",
+      "unique_id": "-71662624"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
@@ -771,44 +771,44 @@
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 42,
-      "recipe_id": "aoa3:swift_sneak_iii",
-      "unique_id": "1452520456"
+      "recipe_id": "aoa3:imbuing_swift_sneak_iii",
+      "unique_id": "1890786676"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 42,
-      "recipe_id": "aoa3:thorns",
-      "unique_id": "959720354"
+      "recipe_id": "aoa3:imbuing_thorns",
+      "unique_id": "2137374198"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 42,
-      "recipe_id": "aoa3:thorns_ii",
-      "unique_id": "-211227849"
+      "recipe_id": "aoa3:imbuing_thorns_ii",
+      "unique_id": "186053987"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 42,
-      "recipe_id": "aoa3:thorns_iii",
-      "unique_id": "1199544720"
+      "recipe_id": "aoa3:imbuing_thorns_iii",
+      "unique_id": "863703204"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 42,
-      "recipe_id": "aoa3:unbreaking",
-      "unique_id": "876553058"
+      "recipe_id": "aoa3:imbuing_unbreaking",
+      "unique_id": "1857721014"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 42,
-      "recipe_id": "aoa3:unbreaking_ii",
-      "unique_id": "1709505399"
+      "recipe_id": "aoa3:imbuing_unbreaking_ii",
+      "unique_id": "-939869533"
     },
     {
       "id": "aoa3:imbuing_level_restriction",
       "level_req": 42,
-      "recipe_id": "aoa3:unbreaking_iii",
-      "unique_id": "297832528"
+      "recipe_id": "aoa3:imbuing_unbreaking_iii",
+      "unique_id": "80872292"
     },
     {
       "id": "aoa3:grindstone_curses_removal",

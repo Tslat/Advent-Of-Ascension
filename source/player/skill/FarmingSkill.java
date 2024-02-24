@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.NetherWartBlock;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
@@ -37,6 +38,9 @@ public class FarmingSkill extends AoASkill.Instance {
 
 			if (block instanceof CropBlock crop) {
 				xpTime = crop.isMaxAge(ev.getState()) ? 7 * crop.getMaxAge() : 0;
+			}
+			else if (block instanceof NetherWartBlock netherWart) {
+				xpTime = ev.getState().getValue(NetherWartBlock.AGE) == 3 ? 21 : 0;
 			}
 			else if (ev.getState().is(BlockTags.CROPS)) {
 				xpTime = 12;

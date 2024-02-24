@@ -1,5 +1,6 @@
 package net.tslat.aoa3.event;
 
+import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.MobSpawnType;
@@ -17,6 +18,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingEvent;
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent;
+import net.neoforged.neoforge.event.entity.living.MobSplitEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.ExplosionEvent;
 import net.tslat.aoa3.common.particletype.CustomisableParticleType;
@@ -30,12 +32,15 @@ import net.tslat.aoa3.util.WorldUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
 public final class EntityEvents {
+	public static final String SPAWNED_BY_SPAWNER_TAG = "spawned_by_spawner";
+
 	public static void preInit() {
 		final IEventBus forgeBus = NeoForge.EVENT_BUS;
 
 		forgeBus.addListener(EventPriority.NORMAL, false, LivingEvent.LivingTickEvent.class, EntityEvents::onEntityUpdate);
 		forgeBus.addListener(EventPriority.NORMAL, false, EntityJoinLevelEvent.class, EntityEvents::onEntityJoinWorld);
 		forgeBus.addListener(EventPriority.LOWEST, false, MobSpawnEvent.FinalizeSpawn.class, EntityEvents::onEntitySpawn);
+		forgeBus.addListener(EventPriority.LOWEST, false, MobSplitEvent.class, EntityEvents::onEntitySplit);
 		forgeBus.addListener(EventPriority.NORMAL, false, ExplosionEvent.Detonate.class, EntityEvents::onEntityExploded);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerInteractEvent.EntityInteractSpecific.class, EntityEvents::onEntityInteract);
 	}
@@ -94,7 +99,12 @@ public final class EntityEvents {
 
 	private static void onEntitySpawn(final MobSpawnEvent.FinalizeSpawn ev) {
 		if (ev.getSpawnType() == MobSpawnType.SPAWNER)
-			ev.getEntity().getPersistentData().putBoolean("spawned_by_spawner", true);
+			ev.getEntity().getPersistentData().putBoolean(SPAWNED_BY_SPAWNER_TAG, true);
+	}
+
+	private static void onEntitySplit(final MobSplitEvent ev) {
+		if (ev.getParent().getPersistentData().contains(SPAWNED_BY_SPAWNER_TAG, Tag.TAG_BYTE))
+			ev.getChildren().forEach(mob -> mob.getPersistentData().putBoolean(SPAWNED_BY_SPAWNER_TAG, true));
 	}
 
 	private static void onEntityExploded(final ExplosionEvent.Detonate ev) {

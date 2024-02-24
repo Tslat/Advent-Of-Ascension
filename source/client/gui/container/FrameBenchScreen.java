@@ -77,7 +77,6 @@ public class FrameBenchScreen extends AbstractContainerScreen<FrameBenchMenu> {
 
 		@Override
 		public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-			Minecraft mc = Minecraft.getInstance();
 			PoseStack poseStack = guiGraphics.pose();
 
 			poseStack.pushPose();

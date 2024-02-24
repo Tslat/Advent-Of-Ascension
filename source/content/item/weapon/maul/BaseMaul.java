@@ -73,7 +73,7 @@ public class BaseMaul extends Item {
 				NeoForgeMod.ENTITY_REACH.value(), new AttributeModifier(UUID.fromString("93bb7485-ce86-4e78-ab50-26f53d78ad9d"), "AoAGreatbladeReach", 0.5f, AttributeModifier.Operation.ADDITION)));
 	}
 
-	private AttributeModifier getKnockbackModifier(float attackStrengthMod) {
+	protected AttributeModifier getKnockbackModifier(float attackStrengthMod) {
 		return new AttributeModifier(KNOCKBACK_MODIFIER_UUID, "AoAMaulKnockback", getBaseKnockback() * attackStrengthMod, AttributeModifier.Operation.ADDITION);
 	}
 

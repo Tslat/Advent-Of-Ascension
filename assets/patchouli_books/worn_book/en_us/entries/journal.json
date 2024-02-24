@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "They're everywhere!$(br)T-The faces, why so many eyes?$(br2)Four $(thing)carved runes$():$(br)One of $(thing)Reality.$()$(br)One of $(thing)Travel.$()$(br)One of $(thing)Space.$()$(br)Build a frame from the $(thing)blackened stone$(), six blocks high.",
+      "text": "They're everywhere!$(br)T-The faces, why so many eyes?$(br2)Four $(thing)carved runes$():$(br)One of $(thing)Reality.$()$(br)One of $(thing)Travel.$()$(br)One of $(thing)Space.$()$(br)One of $(thing)Direction.$()$(br)Build a frame from the $(thing)blackened stone$(), six blocks high.",
       "title": "Journal Entry"
     },
     {

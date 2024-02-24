@@ -59,7 +59,7 @@ public class InfusionTableMenu extends ExtensibleContainerMenu<TransientCrafting
 	protected void handleContainerUpdate() {
 		final OutputSlot outputSlot = (OutputSlot)getOutputSlot();
 
-		updateRecipeOutput(AoARecipes.UPGRADE_KIT.type().get(), outputSlot.getPlayer(), (ResultContainer)outputSlot.container, recipe -> true);
+		updateRecipeOutput(AoARecipes.INFUSION.type().get(), outputSlot.getPlayer(), (ResultContainer)outputSlot.container, recipe -> true);
 	}
 
 	public static void openContainer(ServerPlayer player, BlockPos pos) {

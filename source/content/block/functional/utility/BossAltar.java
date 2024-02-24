@@ -82,7 +82,7 @@ public class BossAltar extends Block implements EntityBlock {
 			List<Player> players = EntityRetrievalUtil.getPlayers(level, teleportBounds, LivingEntity::isAlive);
 
 			if (players.isEmpty()) {
-				player.sendSystemMessage(LocaleUtil.getLocaleMessage("message.feedback.nowhere.boss.tooFar", ChatFormatting.RED));
+				player.sendSystemMessage(LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("nowhere.boss.tooFar"), ChatFormatting.RED));
 
 				return InteractionResults.BlockUse.noActionTaken();
 			}

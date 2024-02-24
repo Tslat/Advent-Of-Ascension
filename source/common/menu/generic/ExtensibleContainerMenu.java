@@ -165,7 +165,7 @@ public abstract class ExtensibleContainerMenu<I extends Container> extends Abstr
 	}
 
 	protected int gridXFromIndex(int index) {
-		return (index % 3) + gridYFromIndex(index);
+		return (index % 3);
 	}
 
 	protected int gridYFromIndex(int index) {

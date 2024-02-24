@@ -12,6 +12,8 @@ import net.tslat.aoa3.common.networking.packets.HaloSelectPacket;
 import net.tslat.aoa3.common.registration.AoAConfigs;
 import net.tslat.aoa3.player.halo.HaloTypes;
 
+import java.io.File;
+
 public final class ClientConfig {
 	public final ModConfigSpec.BooleanValue showXpParticles;
 	public final ModConfigSpec.BooleanValue showWelcomeMessage;
@@ -115,7 +117,7 @@ public final class ClientConfig {
 	}
 
 	private static void onConfigUpdate(final ModConfigEvent.Reloading ev) {
-		if (ClientOperations.getPlayer() != null)
+		if (ev.getConfig().getFileName().equals(AdventOfAscension.MOD_ID + File.separator + "client_config.toml") && ClientOperations.getPlayer() != null)
 			AoANetworking.sendToServer(new HaloSelectPacket(AoAConfigs.CLIENT.personalHaloPreference.get()));
 	}
 }

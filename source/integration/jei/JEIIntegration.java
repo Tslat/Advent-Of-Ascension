@@ -195,7 +195,14 @@ public class JEIIntegration implements IModPlugin {
 		infoRecipes.accept(AoAItems.MAGIC_MENDING_COMPOUND, new Component[] {Component.translatable(jeiInfoLocaleKey("magic_mending_compound"))});
 		infoRecipes.accept(AoABlocks.BOSS_ALTAR.get()::asItem, new Component[] {Component.translatable(jeiInfoLocaleKey("boss_altar"))});
 		infoRecipes.accept(AoATools.ATTUNING_BOWL, new Component[] {Component.translatable(jeiInfoLocaleKey("attuning_bowl"))});
-		infoRecipes.accept(AoAItems.AMBIENT_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("infusion_stone"))});
+		infoRecipes.accept(AoAItems.AMBIENT_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
+		infoRecipes.accept(AoAItems.GLISTENING_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
+		infoRecipes.accept(AoAItems.BLOOMING_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
+		infoRecipes.accept(AoAItems.SHINING_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
+		infoRecipes.accept(AoAItems.GLEAMING_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
+		infoRecipes.accept(AoAItems.GLOWING_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
+		infoRecipes.accept(AoAItems.GLARING_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
+		infoRecipes.accept(AoAItems.RADIANT_ENERGY_STONE, new Component[] {Component.translatable(jeiInfoLocaleKey("energy_stone"))});
 	}
 
 	private static void addItemDescription(IRecipeRegistration registration, Supplier<Item> item, Component... description) {

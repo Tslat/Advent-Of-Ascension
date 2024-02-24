@@ -4,6 +4,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,10 +19,7 @@ import net.tslat.aoa3.common.registration.AoADataAttachments;
 import net.tslat.aoa3.common.registration.custom.AoAResources;
 import net.tslat.aoa3.library.constant.AttackSpeed;
 import net.tslat.aoa3.player.resource.AoAResource;
-import net.tslat.aoa3.util.ItemUtil;
-import net.tslat.aoa3.util.LocaleUtil;
-import net.tslat.aoa3.util.PlayerUtil;
-import net.tslat.aoa3.util.WorldUtil;
+import net.tslat.aoa3.util.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ConcurrentModificationException;
@@ -59,6 +57,25 @@ public class ElectronMaul extends BaseMaul {
 	}
 
 	@Override
+	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+		float attackStr = player.getAttackStrengthScale(0.0f);
+
+		stack.setData(AoADataAttachments.MELEE_SWING_STRENGTH, attackStr);
+		EntityUtil.reapplyAttributeModifier(player, Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(attackStr * getKnockbackMultiplier(player)), false);
+
+		return false;
+	}
+
+	@Override
+	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+		doMeleeEffect(stack, target, attacker, stack.getData(AoADataAttachments.MELEE_SWING_STRENGTH));
+		ItemUtil.damageItem(stack, attacker, InteractionHand.MAIN_HAND);
+		EntityUtil.reapplyAttributeModifier(attacker, Attributes.ATTACK_KNOCKBACK, getKnockbackModifier(1 * getKnockbackMultiplier(attacker)), false);
+
+		return true;
+	}
+
+	@Override
 	protected void doMeleeEffect(ItemStack stack, Entity target, LivingEntity attacker, float attackCooldown) {
 		if (stack.getData(AoADataAttachments.DAMAGE_SCALING) > 0.75f)
 			WorldUtil.spawnLightning((ServerLevel)attacker.level(), (ServerPlayer)attacker, target.getX(), target.getY(), target.getZ(), false, false);
@@ -82,7 +99,7 @@ public class ElectronMaul extends BaseMaul {
 
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
-		Multimap<Attribute, AttributeModifier> modifierMap =  super.getAttributeModifiers(slot, stack);
+		Multimap<Attribute, AttributeModifier> modifierMap = super.getAttributeModifiers(slot, stack);
 
 		if (slot == EquipmentSlot.MAINHAND) {
 			float damageScaling = stack.getData(AoADataAttachments.DAMAGE_SCALING);

@@ -2,6 +2,7 @@ package net.tslat.aoa3.content.entity.misc;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -310,6 +311,14 @@ public class HaulingFishingBobberEntity extends FishingHook {
 
 			setDeltaMovement(vector3d.x * 0.9D, vector3d.y - fluidAdjustedHeight * (double)this.random.nextFloat() * 0.2D, vector3d.z * 0.9D);
 		}
+	}
+
+	@Override
+	public boolean save(CompoundTag tag) {
+		if (this.spawnedFish != null && this.spawnedFish.isAlive())
+			this.spawnedFish.remove(RemovalReason.DISCARDED);
+
+		return super.save(tag);
 	}
 
 	protected void updateState() {

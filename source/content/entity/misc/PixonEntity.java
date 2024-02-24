@@ -17,7 +17,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.storage.loot.LootParams;
@@ -78,6 +77,23 @@ public class PixonEntity extends Entity {
     }
 
     @Override
+    public CompoundTag saveWithoutId(CompoundTag data) {
+        data = super.saveWithoutId(data);
+
+        data.putInt("Age", this.tickCount);
+
+        return data;
+    }
+
+    @Override
+    public void load(CompoundTag data) {
+        super.load(data);
+
+        if (data.contains("Age", Tag.TAG_INT))
+            this.tickCount = data.getInt("Age");
+    }
+
+    @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         super.onSyncedDataUpdated(key);
 
@@ -127,36 +143,30 @@ public class PixonEntity extends Entity {
 
                 float scaling = Math.min(25, this.magnitude);
 
-                if (this.random.nextFloat() < scaling / 250) {
-                    boolean extracted = false;
-
-                    for (ItemStack lootStack : LootUtil.generateLoot(this.variant.lootTable(), new LootParams.Builder(level)
+                if (this.random.nextFloat() < scaling / 250f) {
+                    ItemUtil.givePlayerMultipleItems(pl, LootUtil.generateLoot(this.variant.lootTable(), new LootParams.Builder(level)
                             .withParameter(LootContextParams.THIS_ENTITY, this)
                             .withParameter(LootContextParams.ORIGIN, position())
                             .withParameter(LootContextParams.DAMAGE_SOURCE, level.damageSources().playerAttack(pl))
                             .withParameter(LootContextParams.KILLER_ENTITY, pl)
                             .withParameter(LootContextParams.DIRECT_KILLER_ENTITY, pl)
                             .withParameter(LootContextParams.LAST_DAMAGE_PLAYER, pl)
-                            .create(LootContextParamSets.ENTITY))) {
-                        extracted |= pl.addItem(lootStack);
+                            .create(LootContextParamSets.ENTITY)));
+
+                    if (this.magnitude > 1)
+                        getEntityData().set(MAGNITUDE, Math.max(1, this.magnitude -= 0.5f));
+
+                    this.tickCount += 500;
+
+                    TELParticlePacket packet = new TELParticlePacket();
+
+                    for (int i = 0; i < 50; i++) {
+                        packet.particle(ParticleBuilder.forRandomPosInSphere(ParticleTypes.FIREWORK, position().add(0, 0.35f, 0), 0.65f)
+                                .colourOverride(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
+                                .ignoreDistanceAndLimits());
                     }
 
-                    if (extracted) {
-                        if (this.magnitude > 1)
-                            getEntityData().set(MAGNITUDE, Math.max(1, this.magnitude -= 0.5f));
-
-                        this.tickCount += 500;
-
-                        TELParticlePacket packet = new TELParticlePacket();
-
-                        for (int i = 0; i < 50; i++) {
-                            packet.particle(ParticleBuilder.forRandomPosInSphere(ParticleTypes.FIREWORK, position().add(0, 0.35f, 0), 0.65f)
-                                    .colourOverride(this.random.nextFloat() < 0.25f ? this.variant.secondaryColour() : this.variant.primaryColour())
-                                    .ignoreDistanceAndLimits());
-                        }
-
-                        packet.sendToAllPlayersTrackingEntity(level, this);
-                    }
+                    packet.sendToAllPlayersTrackingEntity(level, this);
                 }
             }
         }

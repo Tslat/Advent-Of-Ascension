@@ -76,6 +76,7 @@ public class FrameBenchMenu extends ExtensibleContainerMenu<TransientCraftingCon
 			return false;
 
 		this.currentSelection = data;
+		handleContainerUpdate();
 
 		return true;
 	}

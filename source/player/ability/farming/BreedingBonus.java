@@ -8,12 +8,12 @@ import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.animal.Animal;
 import net.neoforged.neoforge.event.entity.living.BabyEntitySpawnEvent;
 import net.tslat.aoa3.common.registration.custom.AoAAbilities;
 import net.tslat.aoa3.common.registration.custom.AoASkills;
 import net.tslat.aoa3.player.ability.generic.ScalableModAbility;
 import net.tslat.aoa3.player.skill.AoASkill;
-import net.tslat.aoa3.util.EntitySpawningUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 
 public class BreedingBonus extends ScalableModAbility {
@@ -36,9 +36,28 @@ public class BreedingBonus extends ScalableModAbility {
 	public void handleAnimalBreed(BabyEntitySpawnEvent ev) {
 		if (testAsChance()) {
 			Mob parentA = ev.getParentA();
-			EntitySpawningUtil.spawnEntity((ServerLevel)parentA.level(), (EntityType<AgeableMob>)ev.getChild().getType(), parentA.position(), MobSpawnType.BREEDING, child -> child.setBaby(true));
+			Mob parentB = ev.getParentB();
+			ServerLevel level = (ServerLevel)parentA.level();
+			AgeableMob newChild;
 
-			PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getCausedByPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getCausedByPlayer(), AoASkills.FARMING.get()), 3), false);
+			if (parentA instanceof AgeableMob ageableParentA && parentB instanceof AgeableMob ageableParentB) {
+				newChild = ageableParentA.getBreedOffspring(level, ageableParentB);
+			}
+			else {
+				newChild = ((EntityType<AgeableMob>)ev.getChild().getType()).create(level, null, null, parentA.blockPosition(), MobSpawnType.BREEDING, false, false);
+			}
+
+			if (newChild != null) {
+				newChild.setBaby(true);
+				newChild.moveTo(parentA.getX(), parentA.getY(), parentA.getZ(), 0, 0);
+
+				if (parentA instanceof Animal parentAnimalA && parentB instanceof Animal parentAnimalB)
+					parentAnimalA.finalizeSpawnChildFromBreeding(level, parentAnimalB, newChild);
+
+				level.addFreshEntityWithPassengers(newChild);
+
+				PlayerUtil.giveXpToPlayer((ServerPlayer)ev.getCausedByPlayer(), AoASkills.FARMING.get(), PlayerUtil.getTimeBasedXpForLevel(PlayerUtil.getLevel(ev.getCausedByPlayer(), AoASkills.FARMING.get()), 3), false);
+			}
 		}
 	}
 }

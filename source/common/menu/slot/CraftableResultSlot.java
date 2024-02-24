@@ -78,12 +78,6 @@ public class CraftableResultSlot<C extends Container, R extends Recipe<C>> exten
     }
 
     @Override
-    public void onTake(Player player, ItemStack stack) {
-        if (getCurrentRecipe().isPresent())
-            super.onTake(player, stack);
-    }
-
-    @Override
     public void onItemRemoved(Player player, ItemStack stack) {
         CommonHooks.setCraftingPlayer(player);
 

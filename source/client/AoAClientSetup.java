@@ -35,6 +35,7 @@ public final class AoAClientSetup {
         AoAGuiElementRenderers.init();
         AoAKeybinds.init();
         AoAResourceReloadListeners.init();
+        AoAArmPoses.init();
         ScopeOverlayRenderer.init();
         XpParticlesRenderer.init();
         ScreenEffectRenderer.init();
