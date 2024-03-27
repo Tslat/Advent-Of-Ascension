@@ -52,7 +52,7 @@ public class SkillMasterEntity extends AoATrader {
 
 	@Override
 	public int getMaxTradesToUnlock(int newProfessionLevel) {
-		return 9;
+		return 50;
 	}
 
 	@Nullable

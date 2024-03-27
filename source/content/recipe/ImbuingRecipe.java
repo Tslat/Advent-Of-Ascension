@@ -71,12 +71,17 @@ public class ImbuingRecipe implements Recipe<ImbuingChamberMenu.ImbuingInventory
 
 	public ImbuingRecipe(int imbuingLevelReq, Optional<FloatProvider> xpOverride, Enchantment enchant, int enchantLevel, NonNullList<Ingredient> foci, Ingredient powerSource, boolean showUnlockNotification) {
 		this.enchant = ObjectIntPair.of(enchant, enchantLevel);
-		this.ingredients = foci;
-		this.ingredients.add(0, powerSource);
+		this.ingredients = NonNullList.withSize(foci.size() + 1, Ingredient.EMPTY);
 		this.showUnlockNotification = showUnlockNotification;
 		this.imbuingLevelReq = imbuingLevelReq;
 		this.xpOverride = xpOverride;
 		this.isSimpleIngredients = powerSource.isSimple();
+
+		this.ingredients.set(0, powerSource);
+
+		for (int i = 0; i < foci.size(); i++) {
+			this.ingredients.set(i + 1, foci.get(i));
+		}
 	}
 
 	@Override
@@ -168,7 +173,7 @@ public class ImbuingRecipe implements Recipe<ImbuingChamberMenu.ImbuingInventory
 			return false;
 
 		for (Enchantment existingEnchant : EnchantmentHelper.getEnchantments(inputStack).keySet()) {
-			if (!existingEnchant.isCompatibleWith(enchant) || !enchant.isCompatibleWith(existingEnchant))
+			if (existingEnchant != enchant && (!existingEnchant.isCompatibleWith(enchant) || !enchant.isCompatibleWith(existingEnchant)))
 				return false;
 		}
 
@@ -275,7 +280,7 @@ public class ImbuingRecipe implements Recipe<ImbuingChamberMenu.ImbuingInventory
 
 			ingredients.replaceAll(list -> Ingredient.fromNetwork(buffer));
 			Ingredient powerSource = ingredients.get(0);
-			ingredients.remove(0);
+			ingredients.set(0, Ingredient.EMPTY);
 
 			return new ImbuingRecipe(infusionLevelReq, xpProvider, enchant, enchantLevel, ingredients, powerSource, showNotification);
 		}

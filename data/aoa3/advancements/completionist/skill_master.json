@@ -57,6 +57,20 @@
       },
       "trigger": "aoa3:level_up"
     },
+    "aoa3:imbuing_cycle10": {
+      "conditions": {
+        "cycle": 10,
+        "skill": "aoa3:imbuing"
+      },
+      "trigger": "aoa3:cycle_skill"
+    },
+    "aoa3:imbuing_level_1000": {
+      "conditions": {
+        "level": 1000,
+        "skill": "aoa3:imbuing"
+      },
+      "trigger": "aoa3:level_up"
+    },
     "aoa3:innervation_cycle10": {
       "conditions": {
         "cycle": 10,
@@ -103,7 +117,13 @@
       "aoa3:hauling_cycle10"
     ],
     [
+      "aoa3:imbuing_cycle10"
+    ],
+    [
       "aoa3:innervation_level_1000"
+    ],
+    [
+      "aoa3:imbuing_level_1000"
     ],
     [
       "aoa3:extraction_level_1000"

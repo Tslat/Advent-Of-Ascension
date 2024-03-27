@@ -78,7 +78,7 @@ public class HoeAreaHarvest extends AoAAbility.Instance {
 
 						if (state.getBlock() instanceof CropBlock crop) {
 							if (crop.isMaxAge(state) && WorldUtil.canModifyBlock(world, pos, player, heldStack)) {
-								WorldUtil.harvestAdditionalBlock(world, ev.getEntity(), pos, true);
+								WorldUtil.harvestAdditionalBlock(world, ev.getEntity(), pos.immutable(), true);
 
 								if (this.perBlockHoeDamage > 0) {
 									ItemUtil.damageItem(heldStack, player, ev.getHand(), this.perBlockHoeDamage);

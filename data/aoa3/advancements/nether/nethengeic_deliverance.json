@@ -1,6 +1,19 @@
 {
   "parent": "aoa3:nether/nethengeic_gold",
   "criteria": {
+    "obtain_ornate_elite_nethengeic_wither_trophy": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "aoa3:ornate_trophy"
+            ],
+            "nbt": "{BlockEntityTag:{EntityID:\"aoa3:elite_nethengeic_wither\",OriginalTrophy:1b},display:{Name:'{\"translate\":\"block.aoa3.ornate_trophy.desc\",\"with\":[{\"translate\":\"entity.aoa3.elite_nethengeic_wither\"}]}'}}"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
     "obtain_ornate_nethengeic_wither_trophy": {
       "conditions": {
         "items": [
@@ -31,7 +44,8 @@
   },
   "requirements": [
     [
-      "obtain_ornate_nethengeic_wither_trophy"
+      "obtain_ornate_nethengeic_wither_trophy",
+      "obtain_ornate_elite_nethengeic_wither_trophy"
     ]
   ],
   "sends_telemetry_event": true

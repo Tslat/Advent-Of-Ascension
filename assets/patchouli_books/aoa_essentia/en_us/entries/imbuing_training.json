@@ -1,0 +1,21 @@
+{
+  "category": "aoa3:imbuing",
+  "icon": "aoa3:small_skill_crystal",
+  "name": "Training Methods",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Imbuing$() is a multi-faceted skill that is primarily oriented around two main functions:$(br)1. Harvesting Pixons$(br)2. Imbuing Items$(br2)In the early stages of Imbuing, you'll likely find that the best approach to levelling Imbuing is to keep an eye out for Pixons and harvest them.",
+      "title": "Training Methods"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "As you increase your $(thing)Imbuing$() expertise however, you'll find that you need to start putting the concentrated energy to use.$(br)Normally this would be done through imbuing items in the $(l:aoa3:imbuing_chamber)Imbuing Chamber$(/l), with higher power requirements usually giving more experience"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Additionally, utilising any Imbuing-specific abilities will often give decent amounts of Imbuing experience, depending on the power requirement of that ability"
+    }
+  ],
+  "sortnum": 0
+}

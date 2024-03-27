@@ -28,6 +28,7 @@ import net.tslat.aoa3.common.registration.AoAParticleTypes;
 import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.common.registration.AoASounds;
 import net.tslat.aoa3.common.registration.entity.AoAEntityDataSerializers;
+import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
 import net.tslat.aoa3.common.registration.entity.variant.PixonVariant;
 import net.tslat.aoa3.common.registration.item.AoATools;
 import net.tslat.aoa3.common.toast.ItemRequirementToastData;
@@ -38,6 +39,7 @@ import net.tslat.aoa3.util.MathUtil;
 import net.tslat.effectslib.api.particle.ParticleBuilder;
 import net.tslat.effectslib.networking.packet.TELParticlePacket;
 import net.tslat.smartbrainlib.util.EntityRetrievalUtil;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.UUID;
@@ -52,6 +54,12 @@ public class PixonEntity extends Entity {
 
     public PixonEntity(EntityType<? extends PixonEntity> pEntityType, Level level) {
         super(pEntityType, level);
+    }
+
+    public PixonEntity(Level level, PixonVariant variant) {
+        this(AoAMiscEntities.PIXON.get(), level);
+
+        setVariant(variant);
     }
 
     public void setMagnitude(float magnitude) {
@@ -104,9 +112,9 @@ public class PixonEntity extends Entity {
             this.variant = getEntityData().get(VARIANT);
     }
 
-    public void finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty) {
-        getEntityData().set(VARIANT, PixonVariant.getVariantForSpawn(world.getLevel(), difficulty, this, Suppliers.memoize(() -> level().getBiome(blockPosition()))));
-        getEntityData().set(MAGNITUDE, random.nextFloat() * random.nextFloat() * 25);
+    public void finalizeSpawn(ServerLevelAccessor world, DifficultyInstance difficulty, @Nullable PixonVariant variant) {
+        getEntityData().set(VARIANT, variant != null ? variant : PixonVariant.getVariantForSpawn(world.getLevel(), difficulty, this, Suppliers.memoize(() -> level().getBiome(blockPosition()))));
+        getEntityData().set(MAGNITUDE, Math.max(1, random.nextFloat() * random.nextFloat() * 25));
     }
 
     public static boolean canSurviveAt(Level level, Vec3 position) {

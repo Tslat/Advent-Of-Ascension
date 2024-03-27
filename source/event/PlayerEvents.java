@@ -23,8 +23,13 @@ import net.minecraft.world.item.BoneMealItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
+import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.LevelEvent;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.NeoForge;
@@ -35,6 +40,7 @@ import net.neoforged.neoforge.event.entity.item.ItemTossEvent;
 import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.entity.player.ItemFishedEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerXpEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.tslat.aoa3.advent.AdventOfAscension;
@@ -56,7 +62,6 @@ import net.tslat.aoa3.player.ServerPlayerDataManager;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.util.*;
 import net.tslat.smartbrainlib.util.RandomUtil;
-import org.apache.logging.log4j.Level;
 
 import java.util.UUID;
 
@@ -73,6 +78,7 @@ public class PlayerEvents {
 		forgeBus.addListener(EventPriority.LOWEST, false, LivingDeathEvent.class, PlayerEvents::onEntityDeath);
 		forgeBus.addListener(EventPriority.NORMAL, false, BlockEvent.BreakEvent.class, PlayerEvents::onBlockBreak);
 		forgeBus.addListener(EventPriority.NORMAL, false, BlockEvent.EntityPlaceEvent.class, PlayerEvents::onBlockPlace);
+		forgeBus.addListener(EventPriority.NORMAL, false, PlayerInteractEvent.RightClickBlock.class, PlayerEvents::onBlockInteract);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerEvent.PlayerLoggedInEvent.class, PlayerEvents::onPlayerLogin);
 		forgeBus.addListener(EventPriority.NORMAL, false, ItemTossEvent.class, PlayerEvents::onItemToss);
 		forgeBus.addListener(EventPriority.NORMAL, false, PlayerXpEvent.PickupXp.class, PlayerEvents::onPlayerPickupXp);
@@ -206,6 +212,22 @@ public class PlayerEvents {
 		}
 	}
 
+	private static void onBlockInteract(final PlayerInteractEvent.RightClickBlock ev) {
+		Level level = ev.getLevel();
+
+		if (!level.isClientSide) {
+			BlockState state = level.getBlockState(ev.getPos());
+
+			if (state.getBlock() == Blocks.COMPOSTER && state.getValue(ComposterBlock.LEVEL) == ComposterBlock.READY && RandomUtil.oneInNChance(10)) {
+				Vec3 dropPos = Vec3.atLowerCornerWithOffset(ev.getPos(), 0.5, 1.01, 0.5).offsetRandom(level.random, 0.7F);
+				ItemEntity greenManureSeeds = new ItemEntity(level, dropPos.x(), dropPos.y(), dropPos.z(), AoAItems.GREEN_MANURE_SEEDS.toStack());
+
+				greenManureSeeds.setDefaultPickUpDelay();
+				level.addFreshEntity(greenManureSeeds);
+			}
+		}
+	}
+
 	private static void onPlayerLogin(final PlayerEvent.PlayerLoggedInEvent ev) {
 		if (ev.getEntity() instanceof ServerPlayer player) {
 			UUID uuid = player.getGameProfile().getId();
@@ -226,7 +248,7 @@ public class PlayerEvents {
 			AdvancementHolder rootAdv = AdvancementUtil.getAdvancement(player.serverLevel(), new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/root"));
 
 			if (rootAdv == null) {
-				Logging.logMessage(Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things.");
+				Logging.logMessage(org.apache.logging.log4j.Level.WARN, "Unable to find inbuilt advancements, another mod is breaking things.");
 			}
 			else if (!plAdvancements.getOrStartProgress(rootAdv).isDone()) {
 				plAdvancements.award(AdvancementUtil.getAdvancement(player.serverLevel(), new ResourceLocation(AdventOfAscension.MOD_ID, "completionist/by_the_books")), "legitimate");

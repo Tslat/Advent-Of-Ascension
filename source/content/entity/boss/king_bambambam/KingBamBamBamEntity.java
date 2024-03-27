@@ -515,7 +515,7 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 			return entity.level().addFreshEntity(littleBam) ? littleBam : null;
 		}
 
-		@javax.annotation.Nullable
+		@Nullable
 		private static LivingEntity summonPiglinBrute(AoABoss entity, Vec3 pos, @Nullable LivingEntity target) {
 			PiglinBrute piglin = new PiglinBrute(EntityType.PIGLIN_BRUTE, entity.level()) {
 				private final AoABoss kingBamBamBam = entity;
@@ -561,7 +561,7 @@ public class KingBamBamBamEntity extends AoABoss implements AoARangedAttacker {
 			return entity.level().addFreshEntity(piglin) ? piglin : null;
 		}
 
-		@javax.annotation.Nullable
+		@Nullable
 		private static LivingEntity summonEmbrake(AoABoss entity, Vec3 pos, @Nullable LivingEntity target) {
 			EmbrakeEntity embrake = new EmbrakeEntity(AoAMobs.EMBRAKE.get(), entity.level()) {
 				private final AoABoss kingBamBamBam = entity;

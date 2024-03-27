@@ -43,13 +43,15 @@ public class ImbuingChamberRenderer implements BlockEntityRenderer<ImbuingChambe
 			Vec3 pos = new Vec3(imbuingChamber.getBlockPos().getX() + 0.5f, imbuingChamber.getBlockPos().getY() + 0.7f, imbuingChamber.getBlockPos().getZ() + 0.5f)
 					.add(direction.getStepX() * 0.375f, 0, direction.getStepZ() * 0.375f);
 
-			ParticleBuilder.forPositions(ParticleTypes.WARPED_SPORE, pos)
-					.colourOverride(ColourUtil.getRed(colour), ColourUtil.getGreen(colour), ColourUtil.getBlue(colour), 255)
-					.cutoffDistance(16)
-					.scaleMod(0.25f)
-					.isAmbient()
-					.lifespan(3)
-					.spawnParticles(Minecraft.getInstance().level);
+			if (!Minecraft.getInstance().isPaused()) {
+				ParticleBuilder.forPositions(ParticleTypes.WARPED_SPORE, pos)
+						.colourOverride(ColourUtil.getRed(colour), ColourUtil.getGreen(colour), ColourUtil.getBlue(colour), 255)
+						.cutoffDistance(16)
+						.scaleMod(0.25f)
+						.isAmbient()
+						.lifespan(3)
+						.spawnParticles(Minecraft.getInstance().level);
+			}
 		}
 
 		poseStack.popPose();

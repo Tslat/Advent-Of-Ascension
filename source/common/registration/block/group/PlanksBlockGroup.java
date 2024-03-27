@@ -59,7 +59,7 @@ public final class PlanksBlockGroup {
 				return 20;
 			}
 		}));
-		this.fenceGate = registry.register(baseId + "_fence_gate", registrar -> registrar.basedOn(this.planks).alwaysSolid().factory(properties -> new FenceGateBlock(woodType, properties) {
+		this.fenceGate = registry.register(baseId + "_fence_gate", registrar -> registrar.basedOn(this.planks).alwaysSolid().decorationBlocksTab().factory(properties -> new FenceGateBlock(woodType, properties) {
 			@Override
 			public int getFireSpreadSpeed(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
 				return 5;

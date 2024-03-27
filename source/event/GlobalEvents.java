@@ -12,8 +12,8 @@ import net.neoforged.neoforge.event.level.LevelEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.server.ServerStoppingEvent;
+import net.tslat.aoa3.common.registration.AoARegistries;
 import net.tslat.aoa3.content.world.spawner.AoACustomSpawner;
-import net.tslat.aoa3.data.server.AoACustomSpawnersListener;
 import net.tslat.aoa3.leaderboard.SkillsLeaderboard;
 import net.tslat.aoa3.scheduling.AoAScheduler;
 import net.tslat.aoa3.scheduling.async.UpdateHalosMapTask;
@@ -43,15 +43,17 @@ public final class GlobalEvents {
 	}
 
 	private static void worldLoad(final LevelEvent.Load ev) {
+		List<AoACustomSpawner> aoaSpawners = null;
+
 		if (ev.getLevel() instanceof ServerLevel level) {
-			List<CustomSpawner> spawners = new ObjectArrayList<>(level.customSpawners);
+			List<CustomSpawner> spawnersToAdd = new ObjectArrayList<>(level.customSpawners);
 
-			for (AoACustomSpawner aoaSpawner : AoACustomSpawnersListener.SPAWNERS) {
-				if (aoaSpawner.shouldAddToDimension(level))
-					spawners.add(aoaSpawner.copy());
-			}
+			level.getServer().registryAccess().registry(AoARegistries.CUSTOM_SPAWNERS_REGISTRY_KEY).get().stream()
+					.filter(spawner -> spawner.shouldAddToDimension(level))
+					.map(AoACustomSpawner::copy)
+					.forEach(spawnersToAdd::add);
 
-			level.customSpawners = ImmutableList.copyOf(spawners);
+			level.customSpawners = ImmutableList.copyOf(spawnersToAdd);
 		}
 	}
 

@@ -1,0 +1,47 @@
+{
+  "category": "aoa3:imbuing",
+  "icon": "aoa3:attuning_bowl",
+  "name": "Useful Items",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "There are some useful items that come along with Imbuing that are worth knowing about. You may not be able to utilise them at the start of your $(thing)Imbuing$() journey, but in time they will become quite useful",
+      "title": "Useful Items"
+    },
+    {
+      "type": "patchouli:text",
+      "text": ""
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:glistening_power_stone",
+      "text": "Power Stones come in a number of varieties, differing in rarity and power level",
+      "title": "Power Stones"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Power Stones$() are the base of most Imbuing actions. These are crystallised stones of highly concentrated natural energies, which can then be extracted for use.$(br2)$(thing)Power Stones$() are usually obtained from harvesting $(thing)Pixons$(), but can occasionally be obtained from other places"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:glistening_energy_stone",
+      "text": "$(thing)Energy Stones$() are similar to $(thing)Power Stones$(), except they don't contain much raw power. They're not useful for anything that requires the raw power of $(thing)Power Stones$(), but can still be consumed to learn more about the energy",
+      "title": "Energy Stones"
+    },
+    {
+      "type": "patchouli:text",
+      "text": ""
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:attuning_bowl",
+      "text": "The go-to tool for harvesting $(thing)Pixons$()",
+      "title": "Attuning Bowl"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "Given the extensive need for $(thing)Power Stones$() for $(thing)Imbuing$(), you'll need to be able to harvest $(thing)Pixons$() somehow.$(br)The $(thing)Attuning Bowl$() is the only way of doing this currently.$(br)Stand under the fountaining energies of a $(thing)Pixon$() while holding use on the bowl to gather and attune its energies into stones"
+    }
+  ],
+  "sortnum": 3
+}

@@ -1,0 +1,54 @@
+{
+  "base_settings": {
+    "chance_per_player": 1.0,
+    "dimensions": [
+      "aoa3:mysterium",
+      "aoa3:creeponia",
+      "aoa3:celeve",
+      "aoa3:deeplands",
+      "aoa3:iromine",
+      "aoa3:greckon",
+      "aoa3:lunalus",
+      "aoa3:crystevia",
+      "aoa3:gardencia",
+      "aoa3:haven",
+      "aoa3:lelyetia",
+      "aoa3:nowhere",
+      "aoa3:dustopia",
+      "aoa3:shyrelands",
+      "aoa3:runandor",
+      "aoa3:lborean",
+      "aoa3:precasia",
+      "aoa3:vox_ponds",
+      "aoa3:barathos",
+      "aoa3:abyss",
+      "aoa3:candyland"
+    ],
+    "extra_delay_per_spawn": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 12000,
+        "min_inclusive": 8000
+      }
+    },
+    "spawn_attempts_per_player": 1,
+    "spawn_in_flat_world": false,
+    "spawn_interval": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 36000,
+        "min_inclusive": 12000
+      }
+    },
+    "whitelist_mode": false
+  },
+  "spawner": "aoa3:roaming_trader",
+  "spawns": [
+    {
+      "type": "aoa3:lottoman",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 1
+    }
+  ]
+}

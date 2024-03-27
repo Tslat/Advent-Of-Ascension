@@ -1,0 +1,59 @@
+{
+  "base_settings": {
+    "biomes": [],
+    "chance_per_player": 1.0,
+    "dimensions": [
+      "aoa3:shyrelands"
+    ],
+    "extra_delay_per_spawn": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 6000,
+        "min_inclusive": 3000
+      }
+    },
+    "spawn_attempts_per_player": {
+      "type": "minecraft:biased_to_bottom",
+      "value": {
+        "max_inclusive": 3,
+        "min_inclusive": 1
+      }
+    },
+    "spawn_in_flat_world": false,
+    "spawn_interval": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 36000,
+        "min_inclusive": 12000
+      }
+    },
+    "whitelist_mode": true
+  },
+  "spawner": "aoa3:pixons",
+  "variants": [
+    {
+      "data": "aoa3:blooming",
+      "weight": 10
+    },
+    {
+      "data": "aoa3:shining",
+      "weight": 40
+    },
+    {
+      "data": "aoa3:gleaming",
+      "weight": 35
+    },
+    {
+      "data": "aoa3:glowing",
+      "weight": 30
+    },
+    {
+      "data": "aoa3:glaring",
+      "weight": 25
+    },
+    {
+      "data": "aoa3:radiant",
+      "weight": 20
+    }
+  ]
+}

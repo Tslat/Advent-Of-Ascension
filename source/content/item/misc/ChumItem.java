@@ -53,9 +53,6 @@ public class ChumItem extends Item {
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity user, int timeLeft) {
 		if (level instanceof ServerLevel serverLevel && getUseDuration(stack) - timeLeft < 5) {
-			if (!(user instanceof Player) || !((Player)user).isCreative())
-				stack.shrink(1);
-
 			Vec3 velocityVector = EntityUtil.getVelocityVectorForFacing(user).multiply(1, 1.5, 1);
 			List<BlockPos> positions = WorldUtil.getBlocksWithinAABB(serverLevel, user.getBoundingBox().move(velocityVector.x() * 3, velocityVector.y() * 3, velocityVector.z() * 3), (blockState, mutable) -> blockState.getFluidState().is(FluidTags.WATER) && blockState.getFluidState().getHeight(level, mutable) > 0.85f);
 
@@ -75,6 +72,9 @@ public class ChumItem extends Item {
 			}
 
 			packet.sendToAllNearbyPlayers(serverLevel, user.position(), 32);
+
+			if (!(user instanceof Player player) || !player.getAbilities().instabuild)
+				stack.shrink(1);
 		}
 	}
 

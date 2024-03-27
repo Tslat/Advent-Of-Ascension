@@ -1,0 +1,71 @@
+{
+  "base_settings": {
+    "biomes": [],
+    "chance_per_player": 1.0,
+    "dimensions": [
+      "minecraft:the_nether",
+      "aoa3:precasia",
+      "aoa3:creeponia",
+      "aoa3:barathos",
+      "aoa3:lelyetia"
+    ],
+    "extra_delay_per_spawn": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 6000,
+        "min_inclusive": 3000
+      }
+    },
+    "spawn_attempts_per_player": {
+      "type": "minecraft:biased_to_bottom",
+      "value": {
+        "max_inclusive": 3,
+        "min_inclusive": 1
+      }
+    },
+    "spawn_in_flat_world": false,
+    "spawn_interval": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 36000,
+        "min_inclusive": 12000
+      }
+    },
+    "whitelist_mode": true
+  },
+  "spawner": "aoa3:pixons",
+  "variants": [
+    {
+      "data": "aoa3:ambient",
+      "weight": 10
+    },
+    {
+      "data": "aoa3:glistening",
+      "weight": 40
+    },
+    {
+      "data": "aoa3:blooming",
+      "weight": 35
+    },
+    {
+      "data": "aoa3:shining",
+      "weight": 30
+    },
+    {
+      "data": "aoa3:gleaming",
+      "weight": 25
+    },
+    {
+      "data": "aoa3:glowing",
+      "weight": 20
+    },
+    {
+      "data": "aoa3:glaring",
+      "weight": 15
+    },
+    {
+      "data": "aoa3:radiant",
+      "weight": 10
+    }
+  ]
+}

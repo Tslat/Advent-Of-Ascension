@@ -82,6 +82,7 @@ public final class AoAEntitySpawnPlacements {
         register(ev, EntityType.SNIFFER, SpawnBuilder.DEFAULT_ANIMAL);
         register(ev, AoANpcs.LOTTOMAN.get(), new SpawnBuilder<>().ifValidSpawnBlock());
         register(ev, AoANpcs.UNDEAD_HERALD.get(), new SpawnBuilder<>().ifValidSpawnBlock());
+        register(ev, AoAMiscEntities.PIXON.get(), new SpawnBuilder<>());
 
         register(ev, AoAAnimals.BLUE_GEMTRAP.get(), IN_WATER, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_FISH);
         register(ev, AoAAnimals.CANDLEFISH.get(), IN_LAVA, MOTION_BLOCKING_NO_LEAVES, SpawnBuilder.DEFAULT_LAVA_FISH);

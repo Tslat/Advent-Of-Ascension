@@ -78,11 +78,23 @@ public class HellfireEntity extends BaseBullet implements HardProjectile, ItemSu
 
 	protected void explode(Vec3 position) {
 		int count = 0;
+		Player attacker = getOwner() instanceof Player pl ? pl : null;
 
-		for (LivingEntity e : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
-			if (DamageUtil.doMiscMagicAttack(getOwner(), e, 3.5f, position())) {
-				level().addFreshEntity(new HellfireProjectileEntity(this, e.getX(), e.getY(), e.getZ()));
-				e.setSecondsOnFire(10);
+		for (LivingEntity target : level().getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(7.0D), EntityUtil.Predicates.HOSTILE_MOB)) {
+			if (DamageUtil.doMiscMagicAttack(getOwner(), target, 3.5f, position())) {
+				HellfireProjectileEntity tail = new HellfireProjectileEntity(this, target.getX(), target.getY(), target.getZ());
+
+				tail.setOwner(getOwner());
+
+				level().addFreshEntity(tail);
+				target.setSecondsOnFire(10);
+				target.hurt(level().damageSources().indirectMagic(attacker, this), 0.1f);
+
+				if (attacker != null) {
+					target.setLastHurtByMob(attacker);
+					target.setLastHurtByPlayer(attacker);
+				}
+
 				count++;
 			}
 		}

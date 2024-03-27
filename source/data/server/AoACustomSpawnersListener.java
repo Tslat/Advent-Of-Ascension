@@ -43,6 +43,8 @@ public class AoACustomSpawnersListener extends SimpleJsonResourceReloadListener 
 	@Override
 	protected void apply(Map<ResourceLocation, JsonElement> dataMap, ResourceManager resourceManager, ProfilerFiller profiler) {
 		 for (Map.Entry<ResourceLocation, JsonElement> entry : dataMap.entrySet()) {
+
+
 			 Codec<? extends AoACustomSpawner> codec = REGISTERED_SPAWNERS.get(entry.getKey());
 
 			 if (codec == null) {

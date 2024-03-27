@@ -147,7 +147,7 @@ public final class FluidUtil {
 
 			makeFluidProperties();
 
-			DeferredHolder<Item, BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().stacksTo(16).craftRemainder(Items.BUCKET)));
+			DeferredHolder<Item, BucketItem> bucket = itemRegistry.register(id + "_bucket", this.bucketCreationFunction.apply(sourceFluid, new Item.Properties().craftRemainder(Items.BUCKET)));
 
 			AoAStartupCache.setItemCreativeTabs(bucket, List.of(AoACreativeModeTabs.MISC_ITEMS.getKey()));
 			this.fluidProperties.bucket(bucket);

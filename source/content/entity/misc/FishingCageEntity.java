@@ -124,24 +124,29 @@ public class FishingCageEntity extends Entity {
 
 	@Override
 	protected void addAdditionalSaveData(CompoundTag compound) {
-		if (compound.hasUUID("OwnerUUID"))
-			ownerUUID = compound.getUUID("OwnerUUID");
+		if (this.ownerUUID != null)
+			compound.putUUID("OwnerUUID", this.ownerUUID);
 
-		if (loot[0] != ItemStack.EMPTY) {
-			ListTag lootList = new ListTag();
+		compound.putInt("Damage", this.damage);
 
-			for (ItemStack stack : loot) {
-				lootList.add(stack.save(new CompoundTag()));
-			}
+		ListTag lootList = new ListTag();
 
-			compound.put("loot", lootList);
+		for (int i = 0; i < 3; i++) {
+			if (!this.loot[i].isEmpty())
+				lootList.add(this.loot[i].save(new CompoundTag()));
 		}
+
+		if (!lootList.isEmpty())
+			compound.put("loot", lootList);
 	}
 
 	@Override
 	protected void readAdditionalSaveData(CompoundTag compound) {
-		if (ownerUUID != null)
-			compound.putUUID("OwnerUUID", ownerUUID);
+		if (compound.hasUUID("OwnerUUID"))
+			this.ownerUUID = compound.getUUID("OwnerUUID");
+
+		if (compound.contains("Damage", Tag.TAG_INT))
+			this.damage = compound.getInt("Damage");
 
 		if (compound.contains("loot")) {
 			ListTag lootList = compound.getList("loot", Tag.TAG_COMPOUND);
@@ -213,7 +218,7 @@ public class FishingCageEntity extends Entity {
 				return;
 			}
 
-			Player owner = level().getPlayerByUUID(ownerUUID);
+			Player owner = level().getPlayerByUUID(this.ownerUUID);
 
 			if (owner != null) {
 				LootParams.Builder lootContext = new LootParams.Builder((ServerLevel)this.level())

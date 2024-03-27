@@ -68,6 +68,7 @@ import net.tslat.aoa3.common.registration.loot.AoALootFunctions;
 import net.tslat.aoa3.common.registration.loot.AoALootModifiers;
 import net.tslat.aoa3.common.registration.worldgen.*;
 import net.tslat.aoa3.common.toast.CustomToastData;
+import net.tslat.aoa3.content.world.spawner.AoACustomSpawner;
 import net.tslat.aoa3.player.ability.AoAAbility;
 import net.tslat.aoa3.player.resource.AoAResource;
 import net.tslat.aoa3.player.skill.AoASkill;
@@ -85,6 +86,8 @@ public final class AoARegistries {
 	public static final ResourceKey<Registry<AoAAbility>> ABILITIES_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("abilities"));
 	public static final ResourceKey<Registry<AoAAspectFocus>> ASPECT_FOCI_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("aspect_focus"));
 	public static final ResourceKey<Registry<CustomToastData.Type<?>>> CUSTOM_TOAST_DATA_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("custom_toasts"));
+	public static final ResourceKey<Registry<AoACustomSpawner.Type>> CUSTOM_SPAWNER_TYPE_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("custom_spawner_type"));
+	public static final ResourceKey<Registry<AoACustomSpawner>> CUSTOM_SPAWNERS_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("custom_spawners"));
 
 	public static final ResourceKey<Registry<ChargerVariant>> CHARGER_VARIANTS_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("charger_variant"));
 	public static final ResourceKey<Registry<VeloraptorVariant>> VELORAPTOR_VARIANTS_REGISTRY_KEY = ResourceKey.createRegistryKey(AdventOfAscension.id("veloraptor_variant"));
@@ -147,12 +150,14 @@ public final class AoARegistries {
 	public static final RegistryHelper<AoAAspectFocus> AOA_ASPECT_FOCI = new RegistryHelper<AoAAspectFocus>(ASPECT_FOCI_REGISTRY_KEY, AoAAspectFocus::init);
 
 	public static final RegistryHelper<CustomToastData.Type<?>> CUSTOM_TOAST_TYPES = new RegistryHelper<>(CUSTOM_TOAST_DATA_REGISTRY_KEY, AoAToastTypes::init);
+	public static final RegistryHelper<AoACustomSpawner.Type> CUSTOM_SPAWNER_TYPES = new RegistryHelper<>(CUSTOM_SPAWNER_TYPE_REGISTRY_KEY, AoACustomSpawners::init);
 
 	public static void init() {
 		RegistryHelper.REGISTRY_INIT_TASKS.forEach(Runnable::run);
 		RegistryHelper.REGISTRY_INIT_TASKS.clear();
 
 		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, NewRegistryEvent.class, AoARegistries::createCustomRegistries);
+		AdventOfAscension.getModEventBus().addListener(EventPriority.NORMAL, false, DataPackRegistryEvent.NewRegistry.class, AoARegistries::createCustomDatapackRegistries);
 	}
 
 	private static void createCustomRegistries(final NewRegistryEvent ev) {
@@ -166,6 +171,11 @@ public final class AoARegistries {
 		ev.create(new RegistryBuilder<>(PIXON_VARIANTS_REGISTRY_KEY).maxId(Integer.MAX_VALUE - 1));
 		ev.create(new RegistryBuilder<>(DRYAD_SPRITE_VARIANTS_REGISTRY_KEY).maxId(Integer.MAX_VALUE - 1));
 		ev.create(new RegistryBuilder<>(UNDEAD_HERALD_TRADES_REGISTRY_KEY).sync(false).maxId(Integer.MAX_VALUE - 1));
+		ev.create(new RegistryBuilder<>(CUSTOM_SPAWNER_TYPE_REGISTRY_KEY).sync(false).maxId(Integer.MAX_VALUE - 1));
+	}
+
+	private static void createCustomDatapackRegistries(final DataPackRegistryEvent.NewRegistry ev) {
+		ev.dataPackRegistry(CUSTOM_SPAWNERS_REGISTRY_KEY, AoACustomSpawners.CODEC);
 	}
 
 	public record RegistryHelper<T>(Supplier<Registry<T>> registry, DeferredRegister<T> deferredRegister, Runnable registrationTasks) implements IdMap<T>, Keyable {
@@ -195,7 +205,7 @@ public final class AoARegistries {
 		}
 
 		public List<DeferredHolder<T, ? extends T>> getAllAoARegisteredObjects() {
-			return deferredRegister().getEntries().stream().filter(entry -> entry.getId().getNamespace().equals(AdventOfAscension.MOD_ID)).toList();
+			return deferredRegister().getEntries().stream().toList();
 		}
 
 		public boolean hasRegisteredId(ResourceLocation id) {
@@ -247,6 +257,10 @@ public final class AoARegistries {
 
 		public Optional<Holder.Reference<T>> getRandomElement(RandomSource random) {
 			return registry().get().getRandom(random);
+		}
+
+		public ResourceKey<? extends Registry<T>> key() {
+			return deferredRegister().getRegistryKey();
 		}
 	}
 }

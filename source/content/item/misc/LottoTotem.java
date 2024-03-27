@@ -3,7 +3,6 @@ package net.tslat.aoa3.content.item.misc;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -13,6 +12,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.tslat.aoa3.content.entity.misc.LottoTotemEntity;
+import net.tslat.aoa3.util.LocaleUtil;
 import net.tslat.aoa3.util.PlayerUtil;
 import net.tslat.smartbrainlib.util.RandomUtil;
 
@@ -40,7 +40,7 @@ public class LottoTotem extends Item {
 
 		if (!world.isClientSide) {
 			if (!world.getEntitiesOfClass(LottoTotemEntity.class, new AABB(pos).inflate(4)).isEmpty()) {
-				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.lottoTotem.nearby").withStyle(ChatFormatting.RED));
+				PlayerUtil.notifyPlayer(player, LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("lottoTotem.nearby"), ChatFormatting.RED));
 
 				return InteractionResult.FAIL;
 			}
@@ -65,10 +65,10 @@ public class LottoTotem extends Item {
 					selectedWinner--;
 				}
 
-				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.lottoTotem.spawn").withStyle(ChatFormatting.GOLD));
+				PlayerUtil.notifyPlayer(player, LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("lottoTotem.spawn"), ChatFormatting.GOLD));
 			}
 			else {
-				PlayerUtil.notifyPlayer(player, Component.translatable("message.feedback.lottoTotem.noSpace").withStyle(ChatFormatting.RED));
+				PlayerUtil.notifyPlayer(player, LocaleUtil.getLocaleMessage(LocaleUtil.createFeedbackLocaleKey("lottoTotem.noSpace"), ChatFormatting.RED));
 
 				return InteractionResult.FAIL;
 			}

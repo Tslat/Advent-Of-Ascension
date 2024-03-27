@@ -1,0 +1,17 @@
+{
+  "category": "aoa3:imbuing",
+  "icon": "aoa3:glistening_energy_stone",
+  "name": "Pixons",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Pixons are the physical manifestation of the natural energy of the world, occurring when the energy breaches the surface.",
+      "title": "Pixons"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "They can then be 'harvested' by gathering the fountaining energies with an $(thing)Attuning Bowl$(), which will crystallise into either $(thing)Energy Stones$() or $(thing)Power Stones$()$(br2)The more powerful the natural energies of the world, the more likely you are to see higher power $(thing)Pixons$()"
+    }
+  ],
+  "sortnum": 1
+}

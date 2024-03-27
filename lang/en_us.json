@@ -1919,7 +1919,7 @@
   "enchantment.aoa3.intervention": "Intervention",
   "enchantment.aoa3.intervention.desc": "Prevents the user from losing the item from their inventory when dying. Chance to lose the enchantment each activation.",
   "enchantment.aoa3.recharge": "Recharge",
-  "enchantment.aoa3.recharge.desc": "Reduces energy consumption of blasters.",
+  "enchantment.aoa3.recharge.desc": "Reduces spirit consumption of blasters.",
   "enchantment.aoa3.sever": "Sever",
   "enchantment.aoa3.sever.desc": "Increases damage dealt when critically striking with greatblades.",
   "enchantment.aoa3.shell": "Shell",

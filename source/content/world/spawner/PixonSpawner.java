@@ -2,72 +2,72 @@ package net.tslat.aoa3.content.world.spawner;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.HolderSet;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.random.WeightedEntry;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.SpawnData;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.block.state.BlockState;
+import net.tslat.aoa3.advent.AdventOfAscension;
+import net.tslat.aoa3.common.registration.AoARegistries;
+import net.tslat.aoa3.common.registration.entity.AoACustomSpawners;
 import net.tslat.aoa3.common.registration.entity.AoAMiscEntities;
+import net.tslat.aoa3.common.registration.entity.variant.PixonVariant;
 import net.tslat.aoa3.content.entity.misc.PixonEntity;
-import net.tslat.smartbrainlib.util.RandomUtil;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
-public class PixonSpawner implements AoACustomSpawner {
+public class PixonSpawner implements AoACustomSpawner<PixonEntity> {
 	public static final Codec<PixonSpawner> CODEC = RecordCodecBuilder.create(builder -> builder.group(
-			IntProvider.CODEC.fieldOf("spawn_interval").forGetter(spawner -> spawner.spawnInterval),
-			IntProvider.CODEC.fieldOf("extra_delay_per_spawn").forGetter(spawner -> spawner.extraDelayPerSpawn),
-			Codec.FLOAT.fieldOf("chance_per_player").forGetter(spawner -> spawner.chancePerPlayer),
-			IntProvider.CODEC.fieldOf("spawns_per_player").forGetter(spawner -> spawner.spawnsPerPlayer),
-			Biome.LIST_CODEC.optionalFieldOf("biome_blacklist").forGetter(spawner -> spawner.biomeBlacklist),
-			ResourceLocation.CODEC.listOf().xmap(Set::copyOf, List::copyOf).fieldOf("dimension_blacklist").forGetter(spawner -> spawner.dimensionBlacklist),
-			SpawnData.CustomSpawnRules.CODEC.optionalFieldOf("spawn_rules").forGetter(spawner -> spawner.spawnRules),
-			Codec.BOOL.fieldOf("spawn_in_flat_world").forGetter(spawner -> spawner.spawnInFlatWorld)
+			AoACustomSpawner.GENERIC_SETTINGS_CODEC.fieldOf("base_settings").forGetter(spawner -> spawner.baseSettings),
+			ExtraCodecs.lazyInitializedCodec(() -> SimpleWeightedRandomList.wrappedCodec(AoARegistries.PIXON_VARIANTS.lookupCodec())).fieldOf("variants").forGetter(spawner -> spawner.variants)
 	).apply(builder, PixonSpawner::new));
 
-	private final IntProvider spawnInterval;
-	private final IntProvider extraDelayPerSpawn;
-	private final float chancePerPlayer;
-	private final IntProvider spawnsPerPlayer;
-	private final Optional<HolderSet<Biome>> biomeBlacklist;
-	private final Set<ResourceLocation> dimensionBlacklist;
-	private final Optional<SpawnData.CustomSpawnRules> spawnRules;
-	private final boolean spawnInFlatWorld;
+	private final GenericSettings baseSettings;
+	private final SimpleWeightedRandomList<PixonVariant> variants;
 
 	private long nextSpawnTick = -1;
 
-	public PixonSpawner(IntProvider spawnInterval, IntProvider extraDelayPerSpawn, float chancePerPlayer, IntProvider spawnsPerPlayer, Optional<HolderSet<Biome>> biomeBlacklist, Set<ResourceLocation> dimensionBlacklist, Optional<SpawnData.CustomSpawnRules> spawnRules, boolean spawnInFlatWorld) {
-		this.spawnInterval = spawnInterval;
-		this.extraDelayPerSpawn = extraDelayPerSpawn;
-		this.chancePerPlayer = chancePerPlayer;
-		this.spawnsPerPlayer = spawnsPerPlayer;
-		this.biomeBlacklist = biomeBlacklist;
-		this.dimensionBlacklist = dimensionBlacklist;
-		this.spawnRules = spawnRules;
-		this.spawnInFlatWorld = spawnInFlatWorld;
+	public PixonSpawner(GenericSettings baseSettings, SimpleWeightedRandomList<PixonVariant> variants) {
+		this.baseSettings = baseSettings;
+		this.variants = variants;
 	}
 
 	@Override
 	public boolean shouldAddToDimension(ServerLevel level) {
-		return (!level.isFlat() || this.spawnInFlatWorld) && !this.dimensionBlacklist.contains(level.dimension().location());
+		if (level.isFlat() && !this.baseSettings.spawnInSuperflat())
+			return false;
+
+		final ResourceKey<Level> dimension = level.dimension();
+
+		if (!dimension.location().getNamespace().equals("minecraft") && !dimension.location().getNamespace().equals(AdventOfAscension.MOD_ID))
+			return false;
+
+		return this.baseSettings.whitelistMode() == this.baseSettings.dimensions().contains(dimension);
 	}
 
 	@Override
-	public AoACustomSpawner copy() {
-		return new PixonSpawner(this.spawnInterval, this.extraDelayPerSpawn, this.chancePerPlayer, this.spawnsPerPlayer, this.biomeBlacklist, this.dimensionBlacklist, this.spawnRules, this.spawnInFlatWorld);
+	public AoACustomSpawner<PixonEntity> copy() {
+		return new PixonSpawner(this.baseSettings, this.variants);
+	}
+
+	@Override
+	public Type getType() {
+		return AoACustomSpawners.PIXONS.get();
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class PixonSpawner implements AoACustomSpawner {
 			return 0;
 
 		RandomSource random = level.getRandom();
-		this.nextSpawnTick = level.getGameTime() + this.spawnInterval.sample(random);
+		this.nextSpawnTick = level.getGameTime() + this.baseSettings.spawnInterval().sample(random);
 
 		return doSpawning(level, random);
 	}
@@ -85,26 +85,26 @@ public class PixonSpawner implements AoACustomSpawner {
 		int count = 0;
 
 		for (ServerPlayer pl : level.getPlayers(pl -> !pl.isSpectator() && pl.isAlive())) {
-			if (level.getRandom().nextFloat() >= this.chancePerPlayer)
+			if (level.getRandom().nextFloat() >= this.baseSettings.chancePerPlayer())
 				continue;
 
-			for (BlockPos spawnPos : findNearbySpawnPositions(level, random, pl.blockPosition(), 40, 128, this.spawnsPerPlayer.sample(random))) {
-				if (this.spawnRules.isPresent()) {
-					SpawnData.CustomSpawnRules spawnRules = this.spawnRules.get();
+			for (Pair<EntityType<PixonEntity>, BlockPos> spawn : findNearbySpawnPositions(level, random, pl.blockPosition(), 40, 128, this.baseSettings.spawnAttemptsPerPlayer().sample(random), () -> Optional.of(AoAMiscEntities.PIXON.get()))) {
+				if (this.baseSettings.spawnRules().isPresent()) {
+					SpawnData.CustomSpawnRules spawnRules = this.baseSettings.spawnRules().get();
 
-					if (!spawnRules.blockLightLimit().isValueInRange(level.getBrightness(LightLayer.BLOCK, spawnPos)) || !spawnRules.skyLightLimit().isValueInRange(level.getBrightness(LightLayer.SKY, spawnPos)))
+					if (!spawnRules.blockLightLimit().isValueInRange(level.getBrightness(LightLayer.BLOCK, spawn.right())) || !spawnRules.skyLightLimit().isValueInRange(level.getBrightness(LightLayer.SKY, spawn.right())))
 						continue;
 				}
 
-				PixonEntity pixon = AoAMiscEntities.PIXON.get().create(level, null, null, spawnPos, MobSpawnType.NATURAL, false, false);
+				PixonEntity pixon = spawn.left().create(level, null, null, spawn.right(), MobSpawnType.NATURAL, false, false);
 
 				if (pixon == null)
 					continue;
 
- 				pixon.finalizeSpawn(level, level.getCurrentDifficultyAt(pixon.blockPosition()));
+ 				pixon.finalizeSpawn(level, level.getCurrentDifficultyAt(pixon.blockPosition()), this.variants.getRandom(random).map(WeightedEntry.Wrapper::getData).orElse(null));
 				level.addFreshEntityWithPassengers(pixon);
 
-				this.nextSpawnTick += this.extraDelayPerSpawn.sample(random);
+				this.nextSpawnTick += this.baseSettings.extraDelayPerSpawn().sample(random);
 				count++;
 			}
 		}
@@ -112,30 +112,34 @@ public class PixonSpawner implements AoACustomSpawner {
 		return count;
 	}
 
-	private List<BlockPos> findNearbySpawnPositions(ServerLevel level, RandomSource random, BlockPos centerPos, int minRadius, int maxRadius, int maxTries) {
-		EntityType<PixonEntity> entityType = AoAMiscEntities.PIXON.get();
-		List<BlockPos> positions = new ObjectArrayList<>();
-		RandomUtil.EasyRandom rand = new RandomUtil.EasyRandom(random);
-		BlockPos.MutableBlockPos mutablePos = new BlockPos.MutableBlockPos();
-		float radius = Math.max(maxRadius - minRadius, 0);
+	@Override
+	public boolean canSpawnAt(EntityType entityType, ServerLevel level, RandomSource random, BlockPos pos, SpawnPlacements.Type spawnPlacement) {
+		return canSpawnInBiome(level, pos) && canSpawnOn(level, level.getBlockState(pos.below()), pos.below()) && canSpawnInside(level, level.getBlockState(pos), pos) && level.noCollision(entityType.getAABB(pos.getX() + 0.5d, pos.getY(), pos.getZ() + 0.5d));
+	}
 
-		for (int i = 0; i < maxTries; i++) {
-			double xAdjust = rand.randomValueBetween(-radius, radius);
-			double zAdjust = rand.randomValueBetween(-radius, radius);
-			int newX = (int)Math.floor(centerPos.getX() + xAdjust + radius * Math.signum(xAdjust));
-			int newZ = (int)Math.floor(centerPos.getZ() + zAdjust + radius * Math.signum(zAdjust));
+	private boolean canSpawnInBiome(ServerLevel level, BlockPos pos) {
+		if (this.baseSettings.biomeList().isEmpty() || this.baseSettings.biomeList().get().size() == 0)
+			return true;
 
-			mutablePos.set(level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, mutablePos.set(newX, 0, newZ)));
+		Holder<Biome> biome = level.getBiome(pos);
 
-			if (level.dimensionType().hasCeiling()) {
-				while (!level.getBlockState(mutablePos.move(Direction.DOWN)).isAir()) {}
-				while (level.getBlockState(mutablePos.move(Direction.DOWN)).isAir() && mutablePos.getY() > level.getMinBuildHeight()) {}
-			}
+		return this.baseSettings.whitelistMode() == this.baseSettings.biomeList().get().contains(biome);
+	}
 
-			if (level.noCollision(entityType.getAABB(mutablePos.getX() + 0.5d, mutablePos.getY(), mutablePos.getZ() + 0.5d)))
-				positions.add(mutablePos.immutable());
-		}
+	private static boolean canSpawnOn(ServerLevel level, BlockState state, BlockPos pos) {
+		return state.isValidSpawn(level, pos, AoAMiscEntities.PIXON.get());
+	}
 
-		return positions;
+	private static boolean canSpawnInside(ServerLevel level, BlockState state, BlockPos pos) {
+		if (state.isCollisionShapeFullBlock(level, pos))
+			return false;
+
+		if (state.isSignalSource() || !level.getFluidState(pos).isEmpty())
+			return false;
+
+		if (state.is(BlockTags.PREVENT_MOB_SPAWNING_INSIDE))
+			return false;
+
+		return true;
 	}
 }

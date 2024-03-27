@@ -1,6 +1,6 @@
 {
   "parent": "aoa3:skills",
-  "description": "$(thing)Imbuing$() is the skill of controlling imbued power within items.$(br2)As you increase your $(thing)Imbuing$() level, you'll find more powerful enchantments and abilities.",
+  "description": "$(thing)Imbuing$() is the skill of controlling and creating imbued power within items.$(br2)As you increase your $(thing)Imbuing$() level, you'll find more powerful enchantments and abilities, and be able to utilise that power in more creative ways.$(br2)$(l)NOTE:$() this guide is based on the mod defaults. Modpack/datapack changes may affect the accuracy of the following information",
   "icon": "aoa3:textures/gui/aoaskill/imbuing.png",
   "name": "Imbuing"
 }

@@ -574,11 +574,11 @@ public final class AoAEntityRendering {
 	public static final EntityRendererPackage<?> LELYETIAN_TRADER = new EntityRendererPackage<>(AoANpcs.LELYETIAN_TRADER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> PRIMORDIAL_BANKER = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> PRIMORDIAL_GUIDE = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_GUIDE).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> PRIMORDIAL_MERCHANT = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> PRIMORDIAL_SPELLBINDER = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> PRIMORDIAL_WIZARD = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> PROFESSOR = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
-	public static final EntityRendererPackage<?> TOY_MERCHANT = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> PRIMORDIAL_MERCHANT = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_MERCHANT).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> PRIMORDIAL_SPELLBINDER = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_SPELLBINDER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> PRIMORDIAL_WIZARD = new EntityRendererPackage<>(AoANpcs.PRIMORDIAL_WIZARD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> PROFESSOR = new EntityRendererPackage<>(AoANpcs.PROFESSOR).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
+	public static final EntityRendererPackage<?> TOY_MERCHANT = new EntityRendererPackage<>(AoANpcs.TOY_MERCHANT).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZAL_BANKER = new EntityRendererPackage<>(AoANpcs.ZAL_BANKER).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZAL_CHILD = new EntityRendererPackage<>(AoANpcs.ZAL_CHILD).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);
 	public static final EntityRendererPackage<?> ZAL_CITIZEN = new EntityRendererPackage<>(AoANpcs.ZAL_CITIZEN).provider(JankyJankTempRendererToPreventCrashesWhileInDev::new);

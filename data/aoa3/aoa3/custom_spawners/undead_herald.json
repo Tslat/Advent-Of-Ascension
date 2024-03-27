@@ -1,0 +1,34 @@
+{
+  "base_settings": {
+    "chance_per_player": 1.0,
+    "dimensions": [
+      "aoa3:nowhere"
+    ],
+    "extra_delay_per_spawn": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 12000,
+        "min_inclusive": 8000
+      }
+    },
+    "spawn_attempts_per_player": 1,
+    "spawn_in_flat_world": false,
+    "spawn_interval": {
+      "type": "minecraft:uniform",
+      "value": {
+        "max_inclusive": 36000,
+        "min_inclusive": 12000
+      }
+    },
+    "whitelist_mode": false
+  },
+  "spawner": "aoa3:roaming_trader",
+  "spawns": [
+    {
+      "type": "aoa3:undead_herald",
+      "maxCount": 1,
+      "minCount": 1,
+      "weight": 1
+    }
+  ]
+}

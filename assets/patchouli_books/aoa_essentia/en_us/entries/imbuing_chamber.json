@@ -1,0 +1,26 @@
+{
+  "category": "aoa3:imbuing",
+  "icon": "aoa3:imbuing_chamber",
+  "name": "Imbuing Chamber",
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:imbuing_chamber",
+      "text": "Used as the base for all Imbuing. Focus the power of a $(thing)Power Stone$() through various $(thing)Aspect Foci$() to Imbue items with effects",
+      "title": "Imbuing Chamber"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aoa3:crafting_shaped_imbuing_chamber",
+      "text": "",
+      "title": "Crafting Recipe"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:damage_focus",
+      "text": "These constructed frames contain a lens that allow you to focus the energy of $(thing)Power Stones$() through them, imbuing certain traits into the stream.$(br)Stacking different combinations of foci results in different imbuing applications onto the target item in the chamber",
+      "title": "Aspect Foci"
+    }
+  ],
+  "sortnum": 2
+}
