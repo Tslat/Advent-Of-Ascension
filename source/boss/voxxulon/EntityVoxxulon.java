@@ -65,11 +65,13 @@ public class EntityVoxxulon extends EntityMob implements EntityNoRange, EntityBo
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 130;
 			playSound("nevermine:MusicVoxxulon", 2.8f, 1.0f);
 		}
+			}
 		motionX = 0.0;
 		motionY = 0.0;
 		motionZ = 0.0;
