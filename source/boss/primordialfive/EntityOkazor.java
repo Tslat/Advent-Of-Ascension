@@ -125,7 +125,7 @@ public class EntityOkazor extends EntityMob implements EntityBoss {
 			musicTick = 290;
 			playSound("nevermine:MusicPrimordialFive", 2.8f, 1.0f);
 		}
-				{
+			}
 
 		if (healCounter > 0) {
 			--healCounter;
