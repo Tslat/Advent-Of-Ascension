@@ -86,11 +86,13 @@ public class EntityKror extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 310;
 			playSound("nevermine:MusicKror", 2.8f, 1.0f);
 		}
+			}
 		if (rand.nextInt(200) == 22) {
 			for (final EntityPlayer e : (List<EntityPlayer>)worldObj.getEntitiesWithinAABB(EntityPlayer.class, boundingBox.expand(20.0, 20.0, 20.0))) {
 				if (!e.capabilities.isCreativeMode)
