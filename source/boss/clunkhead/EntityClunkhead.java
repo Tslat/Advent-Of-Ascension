@@ -113,11 +113,13 @@ public class EntityClunkhead extends EntityMob implements IRangedAttackMob, Enti
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 330;
 			playSound("nevermine:MusicClunkhead", 2.8f, 1.0f);
 		}
+			}
 		if (getHealth() < 1100.0f) {
 			--statisCountdown;
 		}
