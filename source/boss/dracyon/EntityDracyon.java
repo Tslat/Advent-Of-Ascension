@@ -158,11 +158,13 @@ public class EntityDracyon extends EntityAIFlying implements EntityBoss {
 			playSound("nevermine:DracyonLiving", 1.0f, 1.0f / (getRNG().nextFloat() * 0.4f + 0.8f));
 			worldObj.spawnEntityInWorld(var2);
 		}
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 290;
 			playSound("nevermine:MusicDracyon", 2.8f, 1.0f);
 		}
+			}
 	}
 
 	public void onUpdate() {
