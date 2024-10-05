@@ -73,8 +73,8 @@ public class EntityBane extends EntityMob implements EntityBoss {
 	}
 
 	public void onLivingUpdate() {
-	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		super.onLivingUpdate();
+	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
