@@ -74,13 +74,15 @@ public class EntityBane extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 175;
 			playSound("nevermine:MusicBane", 2.8f, 1.0f);
 		}
-
+	}
+		
 		if (rand.nextInt(400) == 43) {
 			final EntityPlayer var1 = worldObj.getClosestVulnerablePlayerToEntity(this, 60.0);
 
