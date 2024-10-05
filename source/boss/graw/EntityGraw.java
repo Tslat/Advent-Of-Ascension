@@ -107,14 +107,14 @@ public class EntityGraw extends EntityFlying implements IMob, EntityNoRange, Ent
 		if (worldObj.difficultySetting == EnumDifficulty.PEACEFUL) {
 			despawnEntity();
 		}
-
+	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 195;
 			playSound("nevermine:MusicGraw", 3.0f, 1.0f);
 		}
-
+	}
 		if (ticksExisted % 17 == 0) {
 			for (int i = (int)posX - 7; i < (int)(posX + 7.0); ++i) {
 				for (int j = (int)posY - 2; j < (int)(posY + 5.0); ++j) {
