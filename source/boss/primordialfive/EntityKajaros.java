@@ -57,12 +57,14 @@ public class EntityKajaros extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 290;
 			playSound("nevermine:MusicPrimordialFive", 2.8f, 1.0f);
 		}
+			}
 
 		if (rand.nextInt(75) == 33 && getLastAttacker() != null) {
 			setPosition(getLastAttacker().posX, getLastAttacker().posY, getLastAttacker().posZ);
