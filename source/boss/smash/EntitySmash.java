@@ -240,6 +240,7 @@ public class EntitySmash extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicSmash", 3.0f, 1.0f);
 			musictick = 380;
@@ -247,6 +248,7 @@ public class EntitySmash extends EntityMob implements EntityBoss {
 		else {
 			--musictick;
 		}
+			}
 	}
 
 	public void onDeath(final DamageSource d) {
