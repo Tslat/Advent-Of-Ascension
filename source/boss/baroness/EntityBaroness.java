@@ -100,12 +100,13 @@ public class EntityBaroness extends EntityMob implements EntityBoss, IRangedAtta
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-
+	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		musicTick--;
 		if (musicTick == 0) {
 			musicTick = 290;
 			playSound("nevermine:MusicBaroness", 2.80F, 1.0F);
 		}
+	}
 
 		if (rand.nextInt(15) == 7) {
 			if (entityToAttack != null) {
