@@ -115,6 +115,7 @@ public class EntityRockRider extends EntityMob implements EntityNoRange, EntityB
 				setPosition(var1.posX, var1.posY, var1.posZ);
 			}
 		}
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicRockRider", 3.0f, 1.0f);
 			musictick = 380;
@@ -122,6 +123,7 @@ public class EntityRockRider extends EntityMob implements EntityNoRange, EntityB
 		else {
 			--musictick;
 		}
+			}
 		if (protTimer == 0) {
 			if (EntityRockRider.protType == 1) {
 				EntityRockRider.protType = 2;
