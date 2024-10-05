@@ -112,14 +112,14 @@ public class EntityKingShroomus extends EntityMob implements IRangedAttackMob, E
 				isHeal = false;
 			}
 		}
-
+	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 250;
 			playSound("nevermine:MusicKingShroomus", 2.8f, 1.0f);
 		}
-
+	}
 		super.onLivingUpdate();
 	}
 

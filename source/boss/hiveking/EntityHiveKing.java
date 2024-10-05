@@ -98,12 +98,14 @@ public class EntityHiveKing extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 310;
 			playSound("nevermine:MusicHiveKing", 2.8f, 1.0f);
 		}
+			}
 
 		if (rand.nextInt(80) == 34 && !worldObj.isRemote) {
 			final EntityHiveWorker var2 = new EntityHiveWorker(worldObj);

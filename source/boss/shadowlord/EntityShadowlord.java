@@ -139,6 +139,7 @@ public class EntityShadowlord extends EntityMob implements IRangedAttackMob, Ent
 	}
 
 	public void onLivingUpdate() {
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicShadowlord", 3.0f, 1.0f);
 			musictick = 280;
@@ -146,6 +147,7 @@ public class EntityShadowlord extends EntityMob implements IRangedAttackMob, Ent
 		else {
 			--musictick;
 		}
+			}
 		motionY *= 0.2000000238418579;
 		if (!worldObj.isRemote && getWatchedTargetId(0) > 0) {
 			final Entity entity = worldObj.getEntityByID(getWatchedTargetId(0));

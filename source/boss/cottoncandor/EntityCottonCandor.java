@@ -93,14 +93,16 @@ public class EntityCottonCandor extends EntityAIFlying implements EntityBoss, En
 		if (worldObj.difficultySetting == EnumDifficulty.PEACEFUL) {
 			despawnEntity();
 		}
-
+		
+	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 287;
 			playSound("nevermine:MusicCottonCandor", 3.0f, 1.0f);
 		}
-
+	}
+		
 		--stateSwitch;
 
 		if (stateSwitch == 0) {

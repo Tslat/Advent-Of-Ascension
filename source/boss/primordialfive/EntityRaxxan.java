@@ -83,14 +83,14 @@ public class EntityRaxxan extends EntityMob implements EntityBoss {
 			var1.addPotionEffect(new PotionEffect(Potion.confusion.id, 100, 4));
 			playSound("nevermine:VoxxulonLiving", 1.65f, 1.0f);
 		}
-
+	if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 290;
 			playSound("nevermine:MusicPrimordialFive", 2.8f, 1.0f);
 		}
-
+	}
 		if (rand.nextInt(100) == 47) {
 			addPotionEffect(new PotionEffect(Potion.invisibility.id, 25, 5));
 		}

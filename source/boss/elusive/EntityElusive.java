@@ -115,6 +115,7 @@ public class EntityElusive extends EntityMob implements EntityBoss {
 	}
 
 	public void onLivingUpdate() {
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicElusive", 3.0f, 1.0f);
 			musictick = 540;
@@ -122,6 +123,7 @@ public class EntityElusive extends EntityMob implements EntityBoss {
 		else {
 			--musictick;
 		}
+			}
 		if (spawnTick == 0 && !worldObj.isRemote) {
 			final EntityElusiveClone var2 = new EntityElusiveClone(worldObj);
 			var2.setLocationAndAngles(posX, posY, posZ, rand.nextFloat() * 360.0f, 0.0f);

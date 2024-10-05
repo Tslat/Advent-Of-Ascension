@@ -88,6 +88,7 @@ public class EntityTyrosaur extends EntityMob implements EntityBoss, EntityNoRan
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicTyrosaur", 3.0f, 1.0f);
 			musictick = 283;
@@ -95,6 +96,7 @@ public class EntityTyrosaur extends EntityMob implements EntityBoss, EntityNoRan
 		else {
 			--musictick;
 		}
+			}
 		if (rand.nextInt(150) == 35 && stomp > 70) {
 			EntityPlayer var1 = worldObj.getClosestVulnerablePlayerToEntity(this, 40.0);
 			if (var1 == null || var1.getDistanceToEntity(this) > 40.0f) {

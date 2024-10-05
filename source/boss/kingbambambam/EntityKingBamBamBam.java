@@ -113,6 +113,7 @@ public class EntityKingBamBamBam extends EntityMob implements IRangedAttackMob, 
 	}
 
 	public void onLivingUpdate() {
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicKingBamBamBam", 3.0f, 1.0f);
 			musictick = 300;
@@ -120,6 +121,7 @@ public class EntityKingBamBamBam extends EntityMob implements IRangedAttackMob, 
 		else {
 			--musictick;
 		}
+			}
 
 		if (ticktimer > 2) {
 			--ticktimer;

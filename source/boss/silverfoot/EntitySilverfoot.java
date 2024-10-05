@@ -111,12 +111,14 @@ public class EntitySilverfoot extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 370;
 			playSound("nevermine:MusicSilverfoot", 2.8f, 1.0f);
 		}
+			}
 	}
 
 	public void applyEntityAttributes() {

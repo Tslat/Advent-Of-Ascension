@@ -96,11 +96,13 @@ public class EntityCreep extends EntityMob implements EntityBoss, IRangedAttackM
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 220;
 			playSound("nevermine:MusicCreep", 2.8f, 1.0f);
 		}
+			}
 		if (rand.nextInt(10) == 4) {
 			final EntityCreepBomb var2 = new EntityCreepBomb(worldObj, this, 13.5f, 1.0f);
 			var2.setThrowableHeading((double)(1 / (rand.nextInt(15) + 1) * (1 - rand.nextInt(3))), 4.300000190734863, (double)(1 / (rand.nextInt(15) + 1) * (1 - rand.nextInt(3))), 1.6f, 12.0f);

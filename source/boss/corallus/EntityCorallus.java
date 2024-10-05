@@ -115,6 +115,7 @@ public class EntityCorallus extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicCorallus", 3.0f, 1.0f);
 			musictick = 320;
@@ -122,6 +123,7 @@ public class EntityCorallus extends EntityMob implements EntityBoss {
 		else {
 			--musictick;
 		}
+			}
 		if (jumpdelay == 1) {
 			curheight = posY;
 			motionY = 1.600000023841858;

@@ -73,6 +73,7 @@ public class EntityMechBot extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicMechBot", 3.0f, 1.0f);
 			musictick = 340;
@@ -80,6 +81,7 @@ public class EntityMechBot extends EntityMob implements EntityBoss {
 		else {
 			--musictick;
 		}
+			}
 		if (jumpreset == 1) {
 			jumpreset = 200;
 			jumpseq = true;

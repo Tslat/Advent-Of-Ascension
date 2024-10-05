@@ -113,6 +113,7 @@ public class ConfigurationHelper {
 	public static int haulingX;
 	public static int haulingY;
 	public static int limitation;
+	public static int bossMusic;
 
 	public static int precasiaTall, precasiaDesert, precasiaField;
 	public static int abyssEye, abyssShadow;
@@ -282,6 +283,7 @@ public class ConfigurationHelper {
 		haulingY = cfg.get("Skill", "HaulingY", 65).getInt();
 		haulingX = cfg.get("Skill", "HaulingX", 210).getInt();
 		limitation = cfg.get("Limitation", "DMG Limit", 1).getInt();
+		bossMusic = cfg.get("Music", "Boss Music", 1).getInt();
 	}
 
 	public static int getConfig(final String name) {

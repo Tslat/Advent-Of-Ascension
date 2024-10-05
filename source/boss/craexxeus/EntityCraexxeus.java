@@ -176,12 +176,14 @@ public class EntityCraexxeus extends EntityAIFlying implements EntityBoss {
 			worldObj.spawnEntityInWorld(var2);
 		}
 
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		musicTick -= 1;
 		if (musicTick == 0) {
 			musicTick = 480;
 			playSound("nevermine:MusicCrae", 5.8F, 1.0F);
 		}
-
+			}
+		
 		chargeCD -= 1;
 		if (chargeCD == 0) {
 			chargeCD = 300;

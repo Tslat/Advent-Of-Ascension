@@ -115,11 +115,13 @@ public class EntityGyro extends EntityAIFlying implements IRangedAttackMob, Enti
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 255;
 			playSound("nevermine:MusicGyro", 4.0f, 1.0f);
 		}
+			}
 		final EntityPlayer var1 = worldObj.getClosestVulnerablePlayerToEntity(this, 45.0);
 		if (var1 == null || var1.getDistanceToEntity(this) > 45.0f) {
 			return;
