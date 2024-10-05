@@ -158,6 +158,7 @@ public class EntityNethengeicWither extends EntityMob implements IRangedAttackMo
 	}
 
 	public void onLivingUpdate() {
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		if (musictick == 4) {
 			playSound("nevermine:MusicNethengeicWither", 3.0f, 1.0f);
 			musictick = 380;
@@ -165,6 +166,7 @@ public class EntityNethengeicWither extends EntityMob implements IRangedAttackMo
 		else {
 			--musictick;
 		}
+			}
 		final int curform = getform();
 		if (curform == 2 || curform == 3) {
 			final float currenthp = getHealth();
