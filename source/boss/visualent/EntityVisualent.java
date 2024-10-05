@@ -108,11 +108,13 @@ public class EntityVisualent extends EntityAIFlying implements EntityBoss {
 				setPosition(var1.posX, var1.posY, var1.posZ);
 			}
 		}
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 190;
 			playSound("nevermine:MusicVisualent", 2.8f, 1.0f);
 		}
+			}
 	}
 
 	protected void applyEntityAttributes() {
