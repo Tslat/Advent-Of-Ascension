@@ -75,12 +75,14 @@ public class EntityVinocorne extends EntityMob implements EntityBoss {
 
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 
 		if (musicTick == 0) {
 			musicTick = 270;
 			playSound("nevermine:MusicVinocorne", 2.8f, 1.0f);
 		}
+			}
 
 		++counter;
 
