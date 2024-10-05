@@ -77,11 +77,13 @@ public class EntityCrystocore extends EntityAIFlying implements EntityBoss, Enti
 		if (worldObj.difficultySetting == EnumDifficulty.PEACEFUL) {
 			despawnEntity();
 		}
+			if (ConfigurationHelper.config.get("Music", "Boss Music", 1).getInt()) {
 		--musicTick;
 		if (musicTick == 0) {
 			musicTick = 233;
 			playSound("nevermine:MusicCrystocore", 3.0f, 1.0f);
 		}
+			}
 		--stateSwitch;
 		if (stateSwitch == 0) {
 			if (!worldObj.isRemote) {
