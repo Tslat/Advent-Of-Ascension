@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)灵巧$()是关于玩家在世界中移动——天生所具备的能力——的技能。$(br2)当你的等级提高时，你会发现你在世界中穿行的能力提升了，也可以跑得比你的敌人更加快了。",
+  "icon": "aoa3:textures/gui/aoaskill/dexterity.png",
+  "name": "灵巧"
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)支配$()是关于生命恢复——天生所具备的能力——的技能。$(br2)当你的等级提高时，你会发现你自身的力量、抗性、战斗技术都提升了。",
+  "icon": "aoa3:textures/gui/aoaskill/innervation.png",
+  "name": "支配"
+}

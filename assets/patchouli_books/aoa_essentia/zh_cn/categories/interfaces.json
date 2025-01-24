@@ -1,0 +1,5 @@
+{
+  "description": "$(aoa)有一些很重要的$(thing)界面$()，这些$(thing)界面$()显示了重要的游戏内信息，或为你提供别处无法找到的帮助信息，请善用。",
+  "icon": "minecraft:map",
+  "name": "界面"
+}

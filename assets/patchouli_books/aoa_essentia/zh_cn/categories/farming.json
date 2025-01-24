@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)农业$()是关于种植作物和繁衍动物的技能。$(br2)更高的$(thing)农业$()等级会带来额外的能力，在收割作物时得到额外掉落，也会允许你种植一些新的作物。$(br2)$(l)注意：$()该指引基于本模组的默认情况，整合包/数据包的修改可能影响以下信息的准确度：",
+  "icon": "aoa3:textures/gui/aoaskill/farming.png",
+  "name": "农业"
+}

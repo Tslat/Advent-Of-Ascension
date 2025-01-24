@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)垂钓$()是关于从深海中捕获生物和战利品的技能。$(br2)更高的$(thing)垂钓$()等级会带来更多的钓鱼机会，和更丰厚的回报。$(br2)$(l)注意：$()该指引基于本模组的默认情况，整合包/数据包的修改可能影响以下信息的准确度：",
+  "icon": "aoa3:textures/gui/aoaskill/hauling.png",
+  "name": "垂钓"
+}
