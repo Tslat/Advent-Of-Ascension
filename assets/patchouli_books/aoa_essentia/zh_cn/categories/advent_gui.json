@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:interfaces",
+  "description": "$(thing)虚无世界GUI$()是$(aoa)的主要GUI，类似于本模组的中枢。",
+  "icon": "minecraft:filled_map",
+  "name": "虚无世界GUI"
+}

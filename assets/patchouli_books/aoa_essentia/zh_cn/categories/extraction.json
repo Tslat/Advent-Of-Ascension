@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)精炼$()是关于提取和利用材料的技能。$(br2)升级灵巧，你将获得额外的战利品、更快的挖掘速度，同时具备一些其他实用的能力。$(br2)$(l)注意：$()该指引基于本模组的默认情况，整合包/数据包的修改可能影响以下信息的准确度：",
+  "icon": "aoa3:textures/gui/aoaskill/extraction.png",
+  "name": "精炼"
+}

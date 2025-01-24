@@ -1,0 +1,5 @@
+{
+  "description": "$(aoa)中有10种独特的技能，你可以训练它们以升级。",
+  "icon": "aoa3:giant_skill_crystal",
+  "name": "技能"
+}

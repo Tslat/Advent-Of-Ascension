@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)注魔$()是关于控制和创造物品内在力量的技能。$(br2)当$(thing)注魔$()等级提升时，你会发现更强大的魔咒和能力，还能将那种内在力量以更有创造性的方式发挥出来。$(br2)$(l)注意：$()该指引基于本模组的默认情况，整合包/数据包的修改可能影响以下信息的准确度：",
+  "icon": "aoa3:textures/gui/aoaskill/imbuing.png",
+  "name": "注魔"
+}

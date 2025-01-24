@@ -1,0 +1,30 @@
+{
+  "category": "aoa3:journal",
+  "icon": "aoa3:worn_book",
+  "name": "日记",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "那些东西无处不在！$(br)这…这些面孔，为什么会有如此之多的眼睛？$(br2)四块$(thing)雕符石$()：$(br)一曰$(thing)现实$()。$(br)一曰$(thing)穿越$()。$(br)一曰$(thing)空间$()。$(br)一曰$(thing)方位$()。$(br)用$(thing)漆黑的石头$()筑成六个方块高的框架。",
+      "title": "日记条目"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "框架中包含着$(thing)雕符石$()。$(br)在框架底部的中心处，嵌入一块$(thing)能量雕符石$()。此乃重中之重。此乃关键所在。$(br)十三块$(thing)漆黑的石头$()，再加上五块$(thing)雕符石$()。$(br2)我所开启之物，将无法关闭。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "我已将前四块雕符石散布在各处的地牢与神庙中，防止有人重新释放那里面的恐怖之物。$(br2)然后我会把剩下这一块打碎，这样它就再也不能用了。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aoa3:crafting_shaped_carved_rune_of_power",
+      "text": "这第五块关键的雕符石需要亲手合成——将$(thing)未充能符文$()与一颗$(thing)末影之眼$()结合，并将其注入到中间的漆黑之石中。就像这样："
+    },
+    {
+      "type": "patchouli:text",
+      "text": "愿$(thing)卡尔颂$()保佑你，因为你的灵魂将再也不复以往。"
+    }
+  ],
+  "sortnum": 0
+}
