@@ -24,7 +24,7 @@ If you are looking to contribute to the localisation/translation of AoA, you can
 # Advent of Ascension
 Это официальная страница Advent of Ascension на GitHub.
 
-Это ветка последней версии мода, адаптированной под 1.21
+Это ветка последней версии мода, адаптированной под 1.21.1
 
 ## ДИСКЛЕЙМЕР
 Исходный код, представленный здесь, предназначен только для ознакомления.
@@ -48,7 +48,7 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 
 这是虚无世界的官方Github页面。
 
-这个分支是为Mod的1.21版本而用。
+这个分支是为Mod的1.21.1版本而用。
 
 ## 免责声明
 本GitHub代码仓库所提供代码仅供查看用途。在协议允许下，您仅能够将对代码的更改应用于个人用途。
@@ -71,7 +71,7 @@ Deutsch:
 # Advent of Ascension
 Dies ist das offizielle Github für Advent of Ascension.
 
-Diese Unterkategorie ist für die neueste 1.21 Version der Mod.
+Diese Unterkategorie ist für die neueste 1.21.1 Version der Mod.
 
 ## HAFTUNGSAUSSCHLUSS
 Der in diesem Github zur Verfügung gestellte Quelltext ist lediglich zum Betrachten da. Unter der Lizenz ist es dir erlaubt, den Code AUSSCHLIEßLICH FÜR PRIVATE ZWECKE anzupassen.
@@ -94,7 +94,7 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 # Advent of Ascension
 これはAdvent of Ascensionの公式Githubです。
 
-このブランチは最新の1.21向けのmodのものです。
+このブランチは最新の1.21.1向けのmodのものです。
 
 ## 免責事項
 このgithubで提供されているソースは閲覧のみを目的としています。ライセンスの元、「個人利用に限り」コードを変更することが許可されています。
@@ -116,7 +116,7 @@ https://github.com/Tslat/Advent-Of-Ascension/issues
 # Advento de Ĉieliro
 Jen estas la official Github por Advento de Ĉieliro.
 
-Ĉi tio branĉo estas por la plej nova 1.21 versio de la modifo.
+Ĉi tio branĉo estas por la plej nova 1.21.1 versio de la modifo.
 
 ## MALGARANTIO 
 La fontkodo provizita en ĉi tiu github estas nur por vidi celojn. Vi rajtas modifi la kodo por PRIVATA UZO NUR.
@@ -138,7 +138,7 @@ Português Brasileiro:
 # Advent of Ascension
 Este é o Github oficial do Advent of Ascension.
 
-Este branch é o da versão 1.21 mais recente do mod.
+Este branch é o da versão 1.21.1 mais recente do mod.
 
 ## Aviso
 O código fonte presente neste github é apenas para fins de visualização. Sob a licença, você só tem permissão de alterar esse código para USO PRIVADO.
