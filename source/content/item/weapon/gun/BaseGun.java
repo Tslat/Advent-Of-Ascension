@@ -55,6 +55,7 @@ public abstract class BaseGun extends Item {
 	protected final int firingDelay;
 	protected final float recoilMod;
 	protected double holsterMod;
+	protected int shellLevel = 0;
 
 	public BaseGun(Item.Properties properties, final double dmg, final int fireDelayTicks, final float recoilMod) {
 		super(properties);
@@ -135,6 +136,7 @@ public abstract class BaseGun extends Item {
 	@Override
 	public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
 		ItemStack stack = player.getItemInHand(hand);
+		this.shellLevel = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack);
 
 		if (hand != getGunHand(stack))
 			return ActionResult.fail(stack);
@@ -161,6 +163,7 @@ public abstract class BaseGun extends Item {
 	public void onUsingTick(ItemStack stack, LivingEntity shooter, int count) {
 		if (!isFullAutomatic() && count < getUseDuration(stack))
 			return;
+		this.shellLevel = EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), stack);
 
 		ServerPlayerEntity player = shooter instanceof ServerPlayerEntity ? (ServerPlayerEntity)shooter : null;
 		int nextFireDelay = getFiringDelay();
@@ -229,7 +232,7 @@ public abstract class BaseGun extends Item {
 			float shellMod = 1;
 
 			if (bullet.getHand() != null)
-				shellMod += 0.1 * EnchantmentHelper.getItemEnchantmentLevel(AoAEnchantments.SHELL.get(), shooter.getItemInHand(bullet.getHand()));
+				shellMod += 0.1f * shellLevel;
 
 			if (DamageUtil.dealGunDamage(target, shooter, bullet, (float)getDamage() * bulletDmgMultiplier * shellMod)) {
 				doImpactEffect(target, shooter, bullet, bulletDmgMultiplier);
