@@ -23,7 +23,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "aoa3:green_manure_seeds",
-      "text": "Le summum de la fertilisation !"
+      "text": "Le summum de la fertilisation"
     },
     {
       "type": "patchouli:text",
@@ -37,7 +37,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Les fermiers les mieux entraînés peuvent utiliser les $(thing)houes$() pour récolter de grandes zones en un coup. Cette capacité rend la récolte bien plus rapide, et sera d'une aide précieuse une fois débloquée."
+      "text": "Les agriculteurs entraînés pourrant utiliser les $(thing)houes$() pour récolter de grandes zones en un coup. Cela rend la récolte bien plus rapide, et sera d'une aide précieuse une fois débloquée."
     }
   ],
   "sortnum": 1
