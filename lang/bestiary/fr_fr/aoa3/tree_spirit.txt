@@ -1,8 +1,8 @@
-Les esprits sylvestres sont une créature unique, n'étant ni plante ni monstre mais plutôt un amalgame des deux.
-Ces esprits sont créés lorsqu'une vague d'énergie Kronique est rêlachée sous un facteur d'encombrement assez petit pour entièrement pénétrer un arbre sain.
-Lorsque cela se produit, l'arbre prend vie, et gagne une forme de sentience.
+L'esprit sylvestre est une créature unique, n'étant ni plante ni monstre mais plutôt un amalgame des deux.
+Ces esprits sont créés lorsqu'une vague d'énergie kronique est rêlachée sous un facteur d'encombrement assez petit pour entièrement pénétrer un arbre sain.
+Lorsque cela se produit, l'arbre prend vie, et gagne une sorte de sentience.
 
-Malgré sa sentience, il ne semble pas s'intéresser à grand-chose à part exister de manière paisible.
-Si on les attaque, ils relâchent des esprits pseudo-magiques qui pourchassent l'agresseur afin de défendre l'arbre, avant de retourner en hibernation.
+Malgré sa sentience, il ne semble pas s'intéresser à grand chose à part à exister de manière paisible.
+Si on l'attaque, il relâche des esprits pseudo-magiques qui pourchassent l'agresseur afin de défendre l'arbre, avant de retourner en hibernation.
 
-Comme on pourrait s'y attendre, ils sont particulièrement vulnérables aux dégâts de feu.
+Comme on pourrait s'y attendre, il est particulièrement vulnérable aux dégâts du feu.
