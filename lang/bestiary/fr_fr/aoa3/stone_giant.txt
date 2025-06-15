@@ -1,8 +1,8 @@
-Une créature élémentaire de pierre taille XXL qui règne sur les montagnes de la Surface. Il est rare de rencontrer une de ces créatures majestueuses, à cause de leur nature solitaire.
+Des monstres élémentaires de pierre taille XXL qui règnent sur les montagnes de l'Overworld. Il est rare de rencontrer une de ces créatures majestueuses, à cause de leur nature solitaire.
 Bien plus grands et imposants que n'importe quel humain, ils utilisent leur grand corps solide pour intimider les agresseurs potentiels, ce qui est assez efficace.
 
-Ils ne sont pas agressifs, mais s'ils sont attaqués, ils se défendront violemment, et n'auront aucune pitié pour l'agresseur même si celui-ci tente de prendre la fuite.
+Ils ne sont pas agressifs, mais s'ils sont attaqués, ils se défendent violemment, et n'ont aucune pitié pour l'agresseur même si celui-ci tente de prendre la fuite.
 
 Ils utilisent leur corps incroyablement solide à la fois pour se protéger eux-mêmes et pour protéger leurs amis de petite taille.
-En effet, les géants de pierre semblent permettre aux poissons d'argent de se cacher dans les crevasses de leur corps, supposément afin de les protéger. Si le géant est attaqué, les poissons d'argent jaillissent du corps du géant afin d'aider leur protecteur à éliminer la menace.
-Ils peuvent également revenir au géant afin de l'aider à réparer son corps de pierre, ce qui rend ce dernier particulièrement dangereux.
+En effet, les géants de pierre semblent permettre aux poissons d'argent de se cacher dans les crevasses de leur corps, supposément afin de les protéger. Si le géant est attaqué, les poissons d'argent jaillissent du corps du géant afin d'aider leur protecteur à éliminer son adversaire.
+Ils peuvent également revenir au géant afin de l'aider à réparer son corps de pierre, ce qui rend ce dernier particulièrement durable.
