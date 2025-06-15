@@ -6,12 +6,12 @@
     {
       "type": "patchouli:text",
       "anchor": "advent_gui",
-      "text": "Étant le menu principal d'$(aoa), le $(thing)menu d'Advent$() est l'endroit où la plupart des informations disponibles sur le mod sont rassemblées.",
+      "text": "Étant le menu principal d'$(aoa), le $(thing)menu d'Advent$() est là où la plupart des informations disponibles sur le mod sont rassemblées.",
       "title": "Fenêtre principale"
     },
     {
       "type": "patchouli:text",
-      "text": "En haut de la fenêtre, la version actuelle du mod est affichée sous le coin gauche du logo. Si le mod détecte une mise à jour disponible, une notification clignotante apparaîtra également à cet endroit.$(br2)Sur la gauche de l'écran sont les onglets disponibles - il suffit de cliquer dessus pour accéder à la zone correspondante."
+      "text": "En haut de la fenêtre, la version actuelle du mod est affichée sous le coin gauche du logo. Si le mod détecte une mise à jour disponible, une notification clignotante apparaît également à cet endroit.$(br2)Sur la gauche de l'écran sont les onglets disponibles - il suffit de cliquer dessus pour accéder à la zone correspondante."
     }
   ],
   "sortnum": 0
