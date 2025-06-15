@@ -1,6 +1,6 @@
 {
   "parent": "aoa3:skills",
-  "description": "La $(thing)Création$() est une compétence axée sur l'invocation et le domptage de différentes créatures afin d'en faire des alliées.",
+  "description": "La $(thing)Création$() est une compétence axée sur l'invocation et le domptage de différentes créatures afin d'en faire des alliés.",
   "icon": "aoa3:textures/gui/aoaskill/creation.png",
   "name": "Création"
 }
