@@ -5,15 +5,15 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "lieux les plus primitifs que j'ai jamais vu. Heureusement que le portail pour venir ici n'a pas consommé beaucoup d'énergie, parce qu'il n'y a pas grand-chose dans le coin qui pourrait me servir de ressource.$(br)Les habitants du coin sont des animaux affamés, et aucun d'entre eux ne semble pouvoir communiquer."
+      "text": "lieux les plus primitifs que j'ai jamais vu. Heureusement que le portail pour venir ici n'a pas consommé beaucoup d'énergie, parce qu'il n'y a pas grand chose dans le coin qui pourrait me servir de ressource.$(br)Les habitants du coin sont des animaux affamés, et aucun d'entre eux ne semble pouvoir communiquer."
     },
     {
       "type": "patchouli:text",
-      "text": "Je pense que je ne resterai pas ici très longtemps, peut-être juste assez pour m'assurer qu'il n'y a pas de matériaux utiles dans le coin.$(br2)En tout cas, je suis étonné que la séquence de portail fonctionne encore. Le portail ne semble ni déterioré, ni abîmé, et la clé reste stable même après avoir imprégné le portail de sa signature."
+      "text": "Je pense que je ne resterai pas ici très longtemps, peut-être juste assez pour m'assurer qu'il n'y a pas de matériaux utiles dans le coin.$(br2)En tout cas, je suis étonné que la séquence de portail fonctionne toujours. Le portail ne semble ni déterioré, ni abîmé, et la clé reste stable même après avoir imprégné le portail de sa signature."
     },
     {
       "type": "patchouli:text",
-      "text": "Avant de partir, je devrais enquêter sur cette espèce de corne en os que j'ai pu fabriquer à partir de fragments d'os que j'ai trouvé enterrés dans le coin. Si je souffle dedans, elle fait le même bruit qu'un cri d'animal que j'ai déjà entendu par ici.$(br)Mais je n'ai pas encore réussi à trouver de quelle créature il s'agît."
+      "text": "Avant de partir, je devrais enquêter sur cette espèce de corne en os que j'ai pu fabriquer à partir de fragments d'os que j'ai trouvé enterrés dans le coin. Si je souffle dedans, elle fait le même bruit qu'un cri d'animal que j'ai déjà entendu par ici.$(br)Mais je n'ai pas encore réussi à trouver de quelle créature il s'agit."
     }
   ],
   "sortnum": 0
