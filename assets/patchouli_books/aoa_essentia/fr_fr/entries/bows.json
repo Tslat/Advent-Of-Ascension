@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "anchor": "bows",
-      "text": "Dans $(thing)Minecraft$(), les $(thing)arcs$() représentent le moyen le plus simple d'augmenter sa flexibilité en combat.$(br)Avec un temps de chargement court à moyen, ils tirent des $(thing)flèches$() qui fendent les cieux à haute vitesse pour atteindre les ennemis à distance.$(br2)Attention aux temps de chargement différents de certains arcs.",
+      "text": "Dans $(thing)Minecraft$(), les $(thing)arcs$() sont le moyen le plus simple d'augmenter sa flexibilité en combat.$(br)Avec un temps de chargement assez court, ils tirent des $(thing)flèches$() qui fendent les cieux à haute vitesse pour atteindre les ennemis à distance.$(br2)Attention aux temps de chargement différents de certains arcs.",
       "title": "Arcs"
     },
     {
