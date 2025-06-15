@@ -10,7 +10,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "On peut ensuite 'récolter leur énergie' en utilisant un $(thing)bol d'harmonisation$(), qui permet de la cristalliser soit en $(thing)pierres d'énergie$(), soit en $(thing)pierres de puissance$().$(br2)Plus les énergies naturelles du monde sont puissantes, plus tu risques de croiser des $(thing)pixons$() puissants."
+      "text": "On peut ensuite \"récolter leur énergie\" en utilisant un $(thing)bol d'harmonisation$(), qui permet de la cristalliser soit en $(thing)pierres d'énergie$(), soit en $(thing)pierres de puissance$().$(br2)Plus les énergies naturelles du monde sont puissantes, plus tu risques de croiser des $(thing)pixons$() puissants."
     }
   ],
   "sortnum": 1
