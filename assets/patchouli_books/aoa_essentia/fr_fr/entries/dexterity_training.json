@@ -10,7 +10,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Tu pourrais aussi gagner de l'expérience supplémentaire en utilisant les capacités débloquées par la $(thing)Dextérité$(), alors reste en forme et n'arrête jamais de bouger!"
+      "text": "Tu pourrais aussi gagner de l'expérience supplémentaire en utilisant les capacités débloquées par la $(thing)Dextérité$(), alors reste en forme et n'arrête jamais de bouger !"
     }
   ],
   "sortnum": 0
