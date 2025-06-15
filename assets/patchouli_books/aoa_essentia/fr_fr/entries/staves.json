@@ -6,12 +6,12 @@
     {
       "type": "patchouli:text",
       "anchor": "staves",
-      "text": "Le $(thing)bâton$() magique, grand classique du magicien en herbe. Les $(thing)bâtons$() sont une classe d'arme multi-fonctionnelle qui peuvent servir à la fois d'outil et d'arme.$(br2)Les $(thing)bâtons$() infligent des dégâts magiques, avec des projectiles énergétiques similaires à ceux des $(l:aoa3:blasters#blasters)blasters$(/l).",
+      "text": "Le $(thing)bâton$() magique, grand classique du magicien en herbe. Les $(thing)bâtons$() sont une classe d'arme multi-fonctionnelle qui peut servir à la fois d'outil et d'arme.$(br2)Les $(thing)bâtons$() infligent des dégâts magiques, avec des projectiles énergétiques similaires à ceux des $(l:aoa3:blasters#blasters)blasters$(/l).",
       "title": "Bâtons"
     },
     {
       "type": "patchouli:text",
-      "text": "Chaque $(thing)bâton$() dispose de ses propres pouvoirs et capacités, et chacun peut servir dans certaines situations, il est donc difficile de les comparer.$(br)Les $(thing)bâtons$() qui infligent des dégâts le font de manière $(o)magique$(), transperçant l'armure pour faire de gros dégâts.$(br2)Les $(thing)bâtons$() consomment des $(thing)runes$() pour charger leurs sorts, donc ils sont un peu coûteux à utiliser."
+      "text": "Chaque $(thing)bâton$() dispose de ses propres pouvoirs et capacités, et chacune peut servir dans certaines situations, il est donc difficile de les comparer.$(br)Les $(thing)bâtons$() qui infligent des dégâts le font de manière $(o)magique$(), transperçant l'armure pour faire de gros dégâts.$(br2)Les $(thing)bâtons$() consomment des $(thing)runes$() pour charger leurs sorts, donc elles sont un peu coûteuses à utiliser."
     },
     {
       "type": "patchouli:spotlight",
