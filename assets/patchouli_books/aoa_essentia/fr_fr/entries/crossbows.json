@@ -6,12 +6,12 @@
     {
       "type": "patchouli:text",
       "anchor": "crossbows",
-      "text": "Tout comme les $(l:aoa3:bows#bows)arcs$(/l), les arbalètes décochent des $(thing)flèches$() pour faire des dégâts à distance. Les $(thing)arbalètes$() sont opérées en pré-chargeant la flèche, nécessitant un petit temps de chargement après quoi la $(thing)flèche$() reste prête à être envoyée.$(br2)Une fois que tu es prêt à tirer, l'$(thing)arbalète$() enverra voler la $(thing)flèche$() immédiatement, tirant de manière similaire à un $(l:aoa3:bows#bows)arc$(/l) standard.",
+      "text": "Tout comme les $(l:aoa3:bows#bows)arcs$(/l), les arbalètes tirent des $(thing)flèches$() pour faire des dégâts à distance. Les $(thing)arbalètes$() s'opèrent en pré-chargeant la flèche, nécessitant un temps de chargement après quoi la $(thing)flèche$() reste logée dans l'arme.$(br2)Une fois que tu tires, l'$(thing)arbalète$() envoie voler la $(thing)flèche$() immédiatement, tirant de manière similaire à un $(l:aoa3:bows#bows)arc$(/l) standard.",
       "title": "Arbalètes"
     },
     {
       "type": "patchouli:text",
-      "text": "Il n'y a pas grand-chose à dire sur les $(thing)arbalètes$(). Elles infligent le même type de dégâts que les $(l:aoa3:bows#bows)arcs$(/l), utilisent les mêmes munitions, et s'opèrent de manière semblable.$(br2)La différence principale, c'est que les arbalètes permettent de charger le tir à l'avance, afin de pouvoir tirer de manière instantanée plus tard si nécessaire."
+      "text": "Il n'y a pas grand-chose à dire sur les $(thing)arbalètes$(). Elles infligent le même type de dégâts que les $(l:aoa3:bows#bows)arcs$(/l), utilisent les mêmes munitions, et s'opèrent de manière semblable.$(br2)La grosse différence, c'est que les arbalètes permettent de charger le tir à l'avance, afin de pouvoir tirer de manière instantanée plus tard si nécessaire."
     },
     {
       "type": "patchouli:spotlight",
