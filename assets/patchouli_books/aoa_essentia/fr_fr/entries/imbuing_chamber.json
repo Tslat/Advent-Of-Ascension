@@ -6,7 +6,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "aoa3:imbuing_chamber",
-      "text": "Utilisée comme base à l'Imprégnation. Canalise le pouvoir d'une $(thing)pierre de puissance$() grâce à différents $(thing)canaliseurs$() pour imprégner des effets dans des outils.",
+      "text": "Utilisée comme base à l'Imprégnation. Canalise le pouvoir d'une $(thing)pierre de puissance$() grâce à différent $(thing)canaliseurs$() pour imprégner des effets dans des outils.",
       "title": "Chambre d'imprégnation"
     },
     {
@@ -18,9 +18,10 @@
     {
       "type": "patchouli:spotlight",
       "item": "aoa3:damage_focus",
-      "text": "Ces cadres spéciaux contiennent une lentille qui permet de canaliser l'énergie des $(thing)pierres de puissance$(), tout en imprégnant leurs caractéristiques dans l'énergie.$(br)Essayer des combinaisons de canaliseurs différentes permet d'imprégner des effets différents aux outils dans la chambre.",
+      "text": "Ces cadres spéciaux contiennent une lentille qui permet de canaliser l'énergie des $(thing)pierres de puissance$(), tout en imprégnant leurs caractéristiques dans l'énergie.$(br)Essayer différentes combinaisons de canaliseurs permet d'imprégner des effets différents aux outils dans la chambre.",
       "title": "Canaliseur"
     }
   ],
   "sortnum": 2
 }
+

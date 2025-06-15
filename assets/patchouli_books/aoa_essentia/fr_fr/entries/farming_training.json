@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "L'$(thing)Agriculture$() est plutôt simple à entraîner; il suffit de suivre l'une de ces deux méthodes:$(br)1. Récolter des plantations ayant atteint la maturité$(br)2. Faire se reproduire des animaux$(br2)Attention, car les plantations ne donneront de l'expérience que si elles sont récoltées après avoir poussé au maximum !",
+      "text": "L'$(thing)Agriculture$() est plutôt simple à entraîner ; il suffit de suivre l'une de ces deux méthodes :$(br)1. Récolter des plantations ayant atteint la maturité$(br)2. Faire se reproduire des animaux$(br2)Attention, car les plantations ne donnent de l'expérience que si elles sont récoltées après avoir poussé au maximum !",
       "title": "Méthodes d'entraînement"
     },
     {

@@ -10,7 +10,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Tous les joueurs ont accès aux mêmes $(thing)compétences$() pour un monde donné, et chaque joueur commence au niveau 1.$(br)Chaque $(thing)compétence$() est liée à des $(l:aoa3:abilities)capacités$(/l), des bénéfices, et des méthodes d'entraînement différentes - alors pour plus d'informations, consulte les sections portant sur chaque $(thing)compétence$() individuellement."
+      "text": "Tous les joueurs ont accès aux mêmes $(thing)compétences$() pour un monde donné, et chaque joueur commence au niveau 1.$(br)Chaque $(thing)compétence$() est liée à des $(l:aoa3:abilities)capacités$(/l), des bénéfices, et des méthodes d'entraînement différentes - alors pour plus d'informations, consulte les sections portant sur chaque $(thing)compétences$() individuellement."
     },
     {
       "type": "patchouli:text",

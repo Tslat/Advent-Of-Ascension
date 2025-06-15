@@ -1,5 +1,5 @@
-Les ptiboums sont des Piglins modifiés par une magie infernale, soumis à une sorte de transformation magique qui les a laissés dans leur état actuel.
-Vu l'environnement du Nether dans lequel ils vivent, on ne sait pas trop ce qui a causé cette transformation, mais cela semble être naturel.
+Les ptiboums sont des piglins modifiés par une magie infernale, victimes d'une sorte de transformation magique qui les a laissés dans cet état.
+Vu qu'ils vivent dans le Nether, on ne sait pas trop ce qui a causé cette transformation, mais elle semble être naturelle.
 
 Leur taille réduite leur permet de se déplacer plus vite, et leur composition modifiée les rend remarquablement instables, ce qui semble les torturer éternellement jusqu'à leur mort.
 Une fois que leur vie touche à sa fin, ils préfèrent se libérer de cette torture en beauté, et génèrent une explosion de taille à la suite d'une accumulation d'énergie interne.

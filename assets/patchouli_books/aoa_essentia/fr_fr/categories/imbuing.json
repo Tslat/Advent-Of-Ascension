@@ -1,6 +1,6 @@
 {
   "parent": "aoa3:skills",
-  "description": "L'$(thing)Imprégnation$() est la compétence permettant de créer et de contrôler les magies innées des objets.$(br2)Entraîner l'$(thing)Imprégnation$() permet d'obtenir des capacités et des enchantements plus puissants, et de pouvoir utiliser de manière plus créative ce pouvoir.$(br2)$(l)NOTE:$() ce guide est basé sur les options par défaut du mod. L'exactitude des informations suivantes pourrait être compromise par les changements d'un modpack ou d'un datapack.",
+  "description": "L'$(thing)Imprégnation$() est la compétence permettant de créer et de contrôler les magies innées des objets.$(br2)Entraîner l'$(thing)Imprégnation$() permet d'obtenir des capacités et des enchantements plus puissants, et de pouvoir utiliser de manière plus créative ce pouvoir.$(br2)$(l)NOTE :$() ce guide est basé sur les options par défaut du mod. L'exactitude des informations suivantes pourrait être compromise par les changements d'un modpack ou d'un datapack.",
   "icon": "aoa3:textures/gui/aoaskill/imbuing.png",
   "name": "Imprégnation"
 }

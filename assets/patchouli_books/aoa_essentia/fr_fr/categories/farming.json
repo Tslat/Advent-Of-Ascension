@@ -1,6 +1,6 @@
 {
   "parent": "aoa3:skills",
-  "description": "L'$(thing)Agriculture$() est une compétence en lien avec la plantation et l'élevage d'animaux.$(br2)Entraîner l'$(thing)Agriculture$() permet de rendre celle-ci plus lucrative, et permet de faire pousser des plantes rares.$(br2)$(l)NOTE:$() ce guide est basé sur les options par défaut du mod. L'exactitude des informations suivantes pourrait être compromise par les changements d'un modpack ou d'un datapack.",
+  "description": "L'$(thing)Agriculture$() est une compétence en lien avec la plantation et l'élevage d'animaux.$(br2)Entrainer l'$(thing)Agriculture$() permet de rendre celle-ci plus lucrative, et permet de faire pousser des plantes rares.$(br2)$(l)NOTE :$() ce guide est basé sur les options par défaut du mod. L'exactitude des informations suivantes pourrait être compromise par les changements d'un modpack ou d'un datapack.",
   "icon": "aoa3:textures/gui/aoaskill/farming.png",
   "name": "Agriculture"
 }

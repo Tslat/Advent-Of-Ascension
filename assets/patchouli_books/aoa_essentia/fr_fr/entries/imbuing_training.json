@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "L'$(thing)Imprégnation$() est une compétence assez large qui est en lien avec deux fonctionnalités :$(br)1. Récolter l'énergie des pixons$(br)2. Imprégner des objets$(br2)Pour débuter, la meilleure méthode d'entraîner son Imprégnation est de repérer des pixons et de récolter leur énergie.",
+      "text": "L'$(thing)Imprégnation$() est une compétence assez large qui est en lien avec deux fonctionnalités :$(br)1. Récolter l'énergie dex pixons$(br)2. Imprégner des objets$(br2)Pour débuter, la meilleure méthode d'entraîner son Imprégnation est de repérer des pixons et de récolter leur énergie.",
       "title": "Méthodes d'entraînement"
     },
     {
@@ -14,7 +14,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "De plus, utiliser les capacités liées à l'Imprégnation donne généralement une bonne quantité d'exoérience en la compétence, selon le niveau de maîtrise de la capacité."
+      "text": "De plus, utiliser les capacités liées à l'Imprégnation donne généralement une bonne quantité d'expérience en la compétence, selon le niveau de maîtrise de la capacité."
     }
   ],
   "sortnum": 0

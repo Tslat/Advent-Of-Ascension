@@ -1,6 +1,6 @@
 {
   "parent": "aoa3:skills",
-  "description": "La $(thing)Faunamancie$() est une compétence permettant de ressusciter les créatures. Piège des créatures et absorbe leur force vitale à des fins totalement innocentes.$(br2)Entraîner la $(thing)Faunamancie$() permet d'accéder à de nouvelles créatures, de nouvelles compétences et de nouvelles capacités d'extraction d'essence de monstre.",
+  "description": "La $(thing)Faunamancie$() est une compétence permettant de rescussiter les créatures. Piège des créatures et absorbe leur force vitale à des fins parfaitement innocentes.$(br2)Entraîner la $(thing)Faunamancie$() permet d'accéder à de nouvelles créatures, de nouvelles compétences et de nouvelles capacités d'extraction d'essence de monstre.",
   "icon": "aoa3:textures/gui/aoaskill/faunamancy.png",
   "name": "Faunamancie"
 }

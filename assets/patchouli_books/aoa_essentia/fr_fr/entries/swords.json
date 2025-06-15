@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "anchor": "swords",
-      "text": "Les $(thing)épées$() sont la classe d'arme la plus basique, mais aussi la plus flexible.$(br)Par conséquent, elles seront probablement la première classe d'arme dont tu te serviras. Leur défaut principal, c'est que les $(thing)épées$() n'offrent pas grand moyen de se protéger.",
+      "text": "Les $(thing)épées$() sont la classe d'arme la plus basique, mais aussi la plus flexible.$(br)Par conséquent, elles seront probablement la première classe d'arme dont tu te serviras. Leur défaut principal, c'est que les $(thing)épées$() n'offrent pas vraiment un moyen de se protéger.",
       "title": "Épées"
     },
     {

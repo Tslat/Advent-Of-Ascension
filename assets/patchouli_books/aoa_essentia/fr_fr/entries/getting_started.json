@@ -5,16 +5,16 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Bienvenue dans $(aoa)!$(br2)Ce mod est plutôt grand, et couvre de nombreuses zones de Minecraft - alors on s'y perd facilement. Mais ne t'inquiète pas ! Voilà les choses que tu devrais faire en premier !",
-      "title": "Getting Started"
+      "text": "Bienvenue dans $(aoa) !$(br2)Ce mod est plutôt grand, et couvre de nombreuses zones de Minecraft - alors on s'y perd facilement. Mais ne t'inquiète pas ! Voilà les choses que tu devrais faire en premier !",
+      "title": "Pour commencer"
     },
     {
       "type": "patchouli:text",
-      "text": "D'abord, il va falloir trouver un abri. La Surface, ou Overworld, peut être dangereuse, donc il est très important d'avoir un lieu pour te reposer et te soigner.$(br)Le plus simple serait de te procurer rapidement une pioche et de te creuser un trou, au flanc d'une montagne ou dans le sol. N'oublie pas de marquer l'entrée à l'extérieur pour la retrouver facilement plus tard."
+      "text": "D'abord, il va falloir trouver un abri. L'Overworld peut-être dangereux, alors il est très important d'avoir un lieu où te reposer et te soigner.$(br)Le plus simple serait de te procurer rapidement une pioche et de te creuser un trou, au flanc d'une montagne ou dans le sol. N'oublie pas de marquer l'entrée à l'extérieur pour la retrouver facilement plus tard."
     },
     {
       "type": "patchouli:text",
-      "text": "Ensuite, prend ton temps, accumule des ressources afin de ne pas mourir de faim, et fabrique toi une arme et une armure simples. N'oublie jamais d'être prudent !$(br2)Quand tu te sentiras prêt, il va te falloir te rendre dans les grottes pour trouver un $(l:aoa3:getting_started#ruined_teleporter_frame)cadre de téléporteur en ruines$(/l), protégé par un $(l:aoa3:getting_started#corrupted_traveller)voyageur corrompu$(/l)."
+      "text": "Ensuite, prend ton temps, accumule des ressources afin de ne pas mourir de faim, et fabrique-toi une arme et une armure simples. N'oublie jamais d'être prudent !$(br2)Quand tu te sentiras prêt, il va te falloir te rendre dans les grottes pour trouver un $(l:aoa3:getting_started#ruined_teleporter_frame)cadre de téléporteur en ruines$(/l), protégé par un $(l:aoa3:getting_started#corrupted_traveller)voyageur corrompu$(/l)."
     },
     {
       "type": "patchouli:text",
@@ -33,8 +33,9 @@
       "type": "patchouli:entity",
       "anchor": "corrupted_traveller",
       "entity": "aoa3:corrupted_traveller",
-      "text": "Les voyageurs corrompus peuvent être croisés près à leur $(l:aoa3:getting_started#ruined_teleporter_frame)cadre de téléporteur en ruines$(/l), incapables de s'en séparer."
+      "text": "Les voyageurs corrompus peuvent être croisés près de leur $(l:aoa3:getting_started#ruined_teleporter_frame)cadre de téléporteur en ruines$(/l), incapables de s'en séparer."
     }
   ],
   "sortnum": 1
 }
+

@@ -6,16 +6,16 @@
     {
       "type": "patchouli:text",
       "anchor": "resources_hud",
-      "text": "L'$(thing)affichage des ressources$() est l'interface qui permet de voir la valeur actuelle de tes ressources.$(br2)Lorsque tu lances le jeu, cette interface est cachée et peut être activée ou désactivée avec la touche $(k:aoa3.resources).",
+      "text": "L'$(thing)affichage des ressources$() est l'interface qui permet de voir la valeur actuelle de tes ressources.$(br2)Lorsque tu lances le jeu, cette interface est cachée et peut activée ou désactivée avec la touche $(k:aoa3.resources).",
       "title": "Affichage des ressources"
     },
     {
       "type": "patchouli:text",
-      "text": "Par défaut, cette $(thing)interface$() apparaît dans le coin supérieur droit de l'écran, disposée de manière horizontale.$(br)Il est possible de les afficher à la verticale avec l'option de configuration $(thing)hudResourcesHorizontal$(), ou de la déplacer à un autre coin de l'écran avec l'option de configuration $(thing)hudResourcesPosition$()."
+      "text": "Par défaut, cette $(thing)interface$() apparaît dans le coin supérieur droit de l'écran, disposé de manière horizontale.$(br)Il est possible de les afficher à la verticale avec l'option de configuration $(thing)hudResourcesHorizontal$(), ou de la déplacer à un autre coin de l'écran avec l'option de configuration $(thing)hudResourcesPosition$()."
     },
     {
       "type": "patchouli:text",
-      "text": "Si l'$(thing)interface$() reste en haut à droite de l'écran, et que l'option de configuration $(thing)disableHudPotionOffset$() est sur $(thing)true$(), l'interface se décalera automatiquement vers le bas lorsque tu es affecté par un effet de potion afin de laisser la place à celui-ci."
+      "text": "Si l'$(thing)interface$() reste en haut à droite de l'écran, et que l'option de configuration $(thing)disableHudPotionOffset$() est sur $(thing)true$(), l'interface se décale automatiquement vers le bas lorsque tu es affecté par un effet de potion afin de laisser la place à celui-ci."
     }
   ]
 }

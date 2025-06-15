@@ -10,7 +10,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Une fois le niveau 100 atteint dans une $(thing)compétence$(), la possibilité de '$(thing)réinitialiser$()' cette compétence est déverrouillée.$(br)Cela aura pour effet de ramener l'exp à 0 et le niveau à 1, mais ajoute un $(thing)cycle$() au compteur de cycles. Chaque cycle offre un boost d'expérience important en la compétence, qui continue d'augmenter au fil des $(thing)cycles$()."
+      "text": "Une fois le niveau 100 atteint dans une $(thing)compétence$(), la possibilité de \"$(thing)réinitialiser$()\" cette compétence est déverrouillée.$(br)Cela a pour effet de ramener l'exp à 0 et le niveau à 1, mais ajoute un $(thing)cycle$() au compteur de cycles. Chaque cycle offre un boost d'expérience important pour cette compétence, boost qui continue d'augmenter au fil des $(thing)cycles$()."
     }
   ],
   "sortnum": 2

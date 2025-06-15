@@ -6,12 +6,12 @@
     {
       "type": "patchouli:text",
       "anchor": "vulcanes",
-      "text": "Les $(thing)sceptres de furie$() sont une classe d'arme unique, qui est un peu différente des armes traditionnelles.$(br)Au lieu de servir à attaquer les ennemis, les $(thing)sceptres de furie$() se nourrissent de la $(thing)colère$() qui s'accumule quand tu prends des dégâts.$(br2)Une fois que tu en as accumulé assez, utilise ton $(thing)sceptre de furie$() pour infliger des dégâts bruts de $(l)revanche$().",
+      "text": "Les $(thing)sceptres de furie$() sont une classe d'arme unique, un peu différente des armes traditionnelles.$(br)Au lieu de servir à attaquer les ennemis, les $(thing)sceptres de furie$() se nourrissent de la $(thing)colère$() qui s'accumule quand tu prends des dégâts.$(br2)Une fois que tu en as accumulé assez, utilise ton $(thing)sceptre de furie$() pour infliger des dégâts de $(l)vengeance$() à l'état pur.",
       "title": "Sceptres de furie"
     },
     {
       "type": "patchouli:text",
-      "text": "En général, les $(thing)sceptres de furie$() resteront inactifs dans ton inventaire. Une fois que tu as accumulé assez de $(thing)rage$(), la prochaine entité qui t'attaque sera marquée comme cible.$(br)Avec une quantité suffisante de $(l:aoa3:rage#rage)rage$(/l) et une cible marquée, tu peux utiliser un $(thing)sceptre de furie$() et la cible sera immédiatement frappée par un éclair de dégâts purs, qui ignorent toute armure qu'elle pourrait porter."
+      "text": "En général, les $(thing)sceptres de furie$() restent inactifs dans ton inventaire. Une fois que tu as accumulé assez de $(thing)rage$(), la prochaine entité qui t'attaque sera marquée comme cible.$(br)Avec une quantité suffisante de $(l:aoa3:rage#rage)rage$(/l) et une cible marquée, tu peux utiliser le $(thing)sceptres de furie$() et la cible sera immédiatement frappée par un éclair de dégâts pur, qui ignorent toute armure qu'elle pourrait porter."
     },
     {
       "type": "patchouli:spotlight",

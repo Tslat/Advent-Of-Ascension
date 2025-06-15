@@ -6,12 +6,12 @@
     {
       "type": "patchouli:text",
       "anchor": "energy",
-      "text": "L'$(thing)énergie$() est la ressource naturelle de ton corps qui contrôle tes faits et gestes.$(br)Tu devra utiliser de l'$(thing)énergie$() à chaque fois que tu utilises une capacité spéciale, et ce même si tu n'en as pas assez.$(br2)Ton $(thing)énergie$() se régénère naturellement, à une vitesse plutôt rapide.",
+      "text": "L'$(thing)énergie$() est la ressource naturelle de ton corps qui contrôle tes faits et gestes.$(br)Tu devras utiliser de l'$(thing)énergie$() à chaque fois que tu utilise une capacité spéciale, et ce même si tu n'en as pas assez.$(br2)Ton $(thing)énergie$() se régénère naturellement, à une vitesse plutôt rapide.",
       "title": "Énergie"
     },
     {
       "type": "patchouli:text",
-      "text": "Si tu te vides entièrement d'$(thing)énergie$() ou si tu prends des dégâts, ta régénération d'$(thing)énergie$() sera temporairement bloquée, alors attention quand tu t'en sers sur le terrain.$(br)En particulier, vider la jauge complètement l'empêche de se régénérer pendant une période assez longue, alors essaie de conserver des forces."
+      "text": "Si tu te vides entièrement d'$(thing)énergie$() ou si tu prends des dégâts, ta régénération d'$(thing)énergie$() est temporairement bloquée, alors fais attention quand tu t'en sers sur le terrain.$(br)En particulier, vider la jauge complètement l'empêche de se régénérer pendant une période assez longue, alors essaie de conserver des forces."
     },
     {
       "type": "patchouli:link",

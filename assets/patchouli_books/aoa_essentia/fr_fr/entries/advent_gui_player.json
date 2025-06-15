@@ -15,7 +15,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Cliquer sur une capacité dans le volet des capacités permet de la désactiver si elle est active, ou de la ré-activer si elle a été précédemment désactivée.$(br)Désactiver une capacité retire tous les bonus liés à celle-ci, ou l'empêche d'avoir un effet sur le jeu.$(br2)Si tu as atteint le niveau 100, un bouton pour $(l:aoa3:cycles)réinitialiser$(/l) la compétence sera disponible."
+      "text": "Cliquer sur une capacité dans le volet des capacités permet de la désactiver si elle est active, ou de la ré-activer si elle a précédemment été désactivée.$(br)Désactiver une capacité retire tous les bonus liés à celle-ci, ou l'empêche d'avoir un effet sur le jeu.$(br2)Si tu as atteint le niveau 100, un bouton pour $(l:aoa3:cycles)réinitialiser$(/l) la compétence est disponible."
     }
   ],
   "sortnum": 1

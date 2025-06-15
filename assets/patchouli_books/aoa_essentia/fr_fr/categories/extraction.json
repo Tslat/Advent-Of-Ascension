@@ -1,6 +1,6 @@
 {
   "parent": "aoa3:skills",
-  "description": "L'$(thing)Extraction$() est une compétence basée sur l'extraction et l'utilisation de matériaux.$(br2)Entraîner cette compétence permet de débloquer des capacités utiles, permettant entre autres de trouver du meilleur butin et de miner plus rapidement.$(br2)$(l)NOTE:$() ce guide est basé sur les options par défaut du mod. L'exactitude des informations suivantes pourrait être compromise par les changements d'un modpack ou d'un datapack.",
+  "description": "L'$(thing)Extraction$() est une compétence axée sur l'extraction et l'utilisation de matériaux.$(br2)Entraîner cette compétence permet de débloquer des capacités utiles, permettant entre autre de trouver du meilleur butin et de miner plus rapidement.$(br2)$(l)NOTE :$() ce guide est basé sur les options par défaut du mod. L'exactitude des informations suivantes pourrait être compromise par les changements d'un modpack ou d'un datapack.",
   "icon": "aoa3:textures/gui/aoaskill/extraction.png",
   "name": "Extraction"
 }

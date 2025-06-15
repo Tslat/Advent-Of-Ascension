@@ -11,7 +11,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Par défaut, l'onglet devrait au moins contenir le livre $(thing)AoA Essentia$(), et d'autres livres se débloquent une fois trouvés dans le mod.$(br2)Cliquer sur n'importe quel livre permet de l'ouvrir, peu importe s'il est dans l'inventaire. Tu peux aussi le faire glisser hors du menu pour obtenir une copie neuve si tu as perdue la tienne!"
+      "text": "Par défaut, l'onglet devrait au moins contenir le livre $(thing)AoA Essentia$(), et d'autres livres se débloquent une fois trouvés dans le mod.$(br2)Cliquer sur n'importe quel livre permet de l'ouvrir, peu importe si il est dans l'inventaire. Tu peux aussi le faire glisser hors du menu pour obtenir une copie neuve si tu as perdu la tienne !"
     }
   ],
   "sortnum": 3

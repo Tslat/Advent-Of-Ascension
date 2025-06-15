@@ -6,18 +6,18 @@
     {
       "type": "patchouli:text",
       "anchor": "blasters",
-      "text": "Tu veux jouer une arme à feu, mais tu n'as pas envie de t'encombrer de munitions? Les $(thing)blasters$() sont tes amis! Les $(br)$(thing)blasters$() utilisent ton $(thing)esprit$() naturel pour charger leurs tirs, permettant d'infliger des dégâts rapides à longue portée, avec en contrepartie l'impossibilité de tirer pendant une période de temps prolongée.",
+      "text": "Tu veux jouer une arme à feu, mais tu n'as pas envie de t'encombrer de munitions ? Les $(thing)blasters$() sont tes amis ! Les $(br)$(thing)blasters$() utilisent ton $(thing)esprit$() naturel pour charger leurs tirs, permettant d'infliger des dégâts rapides à longue portée, avec en contrepartie le fait de ne pouvoir tirer que pendant un certain temps.",
       "title": "Blasters"
     },
     {
       "type": "patchouli:text",
-      "text": "Pour tirer avec un $(thing)blaster$(), mets-le dans ta main et maintiens clic droit. Après un court chargement, le blaster commencera à tirer, infligeant aux cibles des dégâts énergétiques.$(br2)Attention, car les projectiles énergétiques ne peuvent pas traverser la végétation comme le peuvent les $(thing)flèches$() ou les $(thing)balles$(), et se dissipent rapidement dans l'eau.$(br2)Le $(thing)blaster$() pourra tirer en continu tant qu'il te reste de l'$(l:aoa3:spirit#spirit)esprit$(/l)."
+      "text": "Pour tirer avec un $(thing)blaster$(), mets-le dans ta main et maintiens clic droit. Après un court chargement, le blaster commencera à tirer, infligeant aux cibles des dégâts énergétiques.$(br2)Attention, car les projectiles énergétiques ne peuvent pas traverser la végétation comme le peuvent les $(thing)flèches$() ou les $(thing)balles$(), et se dissipent rapidement dans l'eau.$(br2)Le $(thing)blaster$() tire en continu tant qu'il te reste de l'$(l:aoa3:spirit#spirit)esprit$(/l)."
     },
     {
       "type": "patchouli:spotlight",
       "item": "aoa3:beamer",
-      "text": "Des $(l:aoa3:guns#guns)fusils$(/l) sans munitions? Voilà les $(thing)blasters$()!",
-      "title": "A Blaster"
+      "text": "Des $(l:aoa3:guns#guns)fusils$(/l) sans munitions ? Voilà les $(thing)blasters$() !",
+      "title": "Un blaster"
     },
     {
       "type": "patchouli:link",
