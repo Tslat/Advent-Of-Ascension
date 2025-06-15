@@ -5,7 +5,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Pour entraîner la $(thing)Létalité$(), il n'existe plus ou moins qu'une méthode: tuer.$(br)À chaque fois que tu tues un monstre ou une créature, tu gagneras de l'expérience grâce au combat. Bien entendu, les créatures plus dangereuses confèrent plus d'expérience.",
+      "text": "Pour entraîner la $(thing)Létalité$(), il n'existe plus ou moins qu'une méthode : tuer.$(br)À chaque fois que tu tues un monstre ou une créature, tu gagnes de l'expérience grâce au combat. Bien entendu, les créatures plus dangereuses confèrent plus d'expérience.",
       "title": "Méthodes d'entraînement"
     },
     {
