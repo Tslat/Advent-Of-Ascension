@@ -6,12 +6,12 @@
     {
       "type": "patchouli:text",
       "anchor": "bestiary_tab",
-      "text": "L'$(thing)onglet Bestiaire$() est le lieu favori des chasseurs de monstres! À chaque fois que tu tues une créature, elle sera ajoutée au bestiaire, avec en prime ses statistiques et d'autres informations la concernant. Recense-les toutes!",
+      "text": "L'$(thing)onglet Bestiaire$() est l'endroit préféré des chasseurs de monstres ! À chaque fois que tu tues une créature, elle est ajoutée au bestiaire, avec en prime ses statistiques et d'autres informations la concernant. Recense-les toutes !",
       "title": "Onglet Bestiaire"
     },
     {
       "type": "patchouli:text",
-      "text": "L'onglet montre une liste de toutes les créatures que tu as déjà tué au moins une fois, ainsi qu'un compteur du nombre de spécimens vaincus, et un compteur du nombre de fois qu'ils t'ont tués.$(br2)Cliquer sur une créature permet d'afficher des détails supplémentaires, comme ses attributs, ses statistiques, et d'autres infos importantes. Certaines créatures ont même du lore en bas de leur page!"
+      "text": "L'onglet montre une liste de toutes les créatures que tu as déjà tué au moins une fois, ainsi qu'un compteur du nombre de spécimens vaincus, et un compteur du nombre de fois qu'ils t'ont tués.$(br2)Cliquer sur une créature permet d'afficher des détails supplémentaires, comme ses attributs, ses statistiques, et d'autres infos importantes. Certaines créatures ont même du lore en bas de leur page !"
     },
     {
       "type": "patchouli:text",
