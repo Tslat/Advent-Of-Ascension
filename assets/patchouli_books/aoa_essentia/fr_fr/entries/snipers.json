@@ -11,7 +11,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Malgré leurs similarités, les $(thing)snipers$() ont une différence assez importante avec les $(l:aoa3:guns#guns)fusils$(/l).$(br)Pour tirer correctement avec un $(thing)sniper$(), tu dois t'accroupir, ce qui permet de regarder dans la lunette de visée pour voir plus facilement les cibles lointaines. La précision des tirs sera très médiocre si tu ne t'accroupis pas, alors il vaut mieux penser à s'accroupir à chaque tir.$(br2)Les tirs de $(thing)sniper$() sont très rapides, et toucheront leur cible plus vite que n'importe quelle autre arme de combat à distance."
+      "text": "Malgré leurs similarités, les $(thing)snipers$() ont une différence assez importante avec les $(l:aoa3:guns#guns)fusils$(/l).$(br)Pour tirer correctement avec un $(thing)sniper$(), tu dois t'accroupir, ce qui te permets de regarder dans la lunette de visée pour voir plus facilement les cibles lointaines. La précision des tirs est très mauvaise si tu ne t'accroupis pas, alors il vaut mieux penser à s'accroupir à chaque tir.$(br2)Les tirs de $(thing)sniper$() sont très rapides, et touchent leur cible plus vite que n'importe quelle autre arme de combat à distance."
     },
     {
       "type": "patchouli:spotlight",
