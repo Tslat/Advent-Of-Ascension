@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "text": "Il existe de nombreux outils importants pour la pêche. Voilà une liste de ces outils.",
-      "title": "Hauling Tools"
+      "title": "Outils de pêche"
     },
     {
       "type": "patchouli:empty"
@@ -14,7 +14,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "minecraft:fishing_rod",
-      "text": "La canne à pêche standard. Plus besoin de la présenter."
+      "text": "La canne à pêche standard. Elle fonctionne de la même manière qu'elle a toujours fonctionné."
     },
     {
       "type": "patchouli:text",
@@ -27,7 +27,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Se servir d'une $(thing)canne à pêche avancée$(), ce n'est pas si différent que de se servir d'une canne à pêche standard. La différence principale c'est qu'au lieu d'avoir des bulles, qui sont remontées automatiquement, le poisson lui-même apparaîtra physiquement et essayera de s'enfuir.$(br)Pour remonter une prise, il faudra cliquer rapidement plusieurs fois sans que le poisson ne s'échappe."
+      "text": "Se servir d'une $(thing)canne à pêche avancée$(), ce n'est pas si différent que de se servir d'une canne à pêche standard. La différence principale c'est qu'au lieu d'avoir des bulles, qui sont remontées automatiquement, le poisson lui-même apparaît physiquement et essaie de s'enfuir.$(br)Pour remonter une prise, il faut cliquer rapidement plusieurs fois sans que le poisson ne s'échappe."
     },
     {
       "type": "patchouli:spotlight",
@@ -55,8 +55,9 @@
     },
     {
       "type": "patchouli:text",
-      "text": "La $(thing)cage de pêcheur$() est un outil pour pêcher de manière passive. Elle ne peut pas attraper les objets les plus rares, mais puisqu'il suffit de la jeter dans l'eau et de revenir plus tard, c'est un outil bien pratique.$(br)Elle fonctionne encore mieux dans l'eau qui coule !"
+      "text": "La $(thing)cage de pêcheur$() est un outil pour pêcher de manière passive. Elle ne peut pas attraper les objets les plus rares, mais puisqu'il suffit de la jeter dans l'eau et de revenir plus tard, c'est un outil bien pratique.$(br)Elle fonctionne encore mieux dans l'eau en mouvement !"
     }
   ],
   "sortnum": 1
 }
+
