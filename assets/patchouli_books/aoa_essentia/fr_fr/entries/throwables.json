@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "anchor": "throwables",
-      "text": "Parfois tu n'as pas envie d'utiliser des armes stylées, tu veux juste balancer des trucs sur tes adversaires.$(br)C'est ce dilemne que les $(thing)armes jetables$() visent à résoudre.$(br2)Les $(thing)armes jetables$() sont le type le plus simple d'arme à distance. Il suffit de la tenir, et de faire un clic droit pour la lancer sur ta cible de choix.",
+      "text": "Parfois tu n'as pas envie d'utiliser des armes stylées, tu veux juste balancer des trucs sur tes adversaires.$(br)C'est ce dilemme que les $(thing)armes jetables$() visent à résoudre.$(br2)Les $(thing)armes jetables$() sont le type le plus simple d'arme à distance. Il suffit de les tenir, et de faire clic droit pour les lancer sur la cible de ton choix.",
       "title": "Armes jetables"
     },
     {
@@ -16,7 +16,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "aoa3:grenade",
-      "text": "Sable de poche ! Hyaa !",
+      "text": "Sable de poche! Hyaa!",
       "title": "Une arme jetable"
     },
     {
@@ -29,3 +29,4 @@
   ],
   "sortnum": 10
 }
+
