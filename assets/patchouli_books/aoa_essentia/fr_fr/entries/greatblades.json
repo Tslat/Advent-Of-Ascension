@@ -6,7 +6,7 @@
     {
       "type": "patchouli:text",
       "anchor": "greatblades",
-      "text": "Le grand frère de $(l:aoa3:swords#swords)épée$(/l), l'$(thing)espadon$() est une classe d'arme similaire mais légèrement différente.$(br)Ils attaquent de la même manière que les épées, mais les $(thing)espadons$() sont plus lents, plus puissants, et disposent d'une meilleure portée.",
+      "text": "Les grand frère de $(l:aoa3:swords#swords)épée$(/l), les $(thing)espadons$() sont une classe d'arme similaire mais un peu différente.$(br)Ils attaquent de la même manière que les épées, mais les $(thing)espadons$() sont plus lents, plus puissants, et disposent d'une meilleure portée.",
       "title": "Espadon"
     },
     {
@@ -16,7 +16,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "aoa3:bloodlurker",
-      "text": "Les $(thing)espadons$() sont les grands frères des $(l:aoa3:swords#swords)épées$(/l), et sont tout aussi tranchants !",
+      "text": "Les $(thing)espadons$() sont les grands frères des $(l:aoa3:swords#swords)épées$(/l), et ils sont tout aussi tranchants !",
       "title": "Un espadon"
     },
     {
