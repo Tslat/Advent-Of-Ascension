@@ -11,7 +11,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Pour tirer avec un $(thing)fusil$(), assure-toi que tu as les munitions nécessaires (indiquées dans l'info-bulle de l'arme), puis clique droit en tenant le fusil dans ta main.$(br2)Chaque $(thing)fusil$() a une cadence, un recul et d'autres caractéristiques différentes, alors ça vaut peut-être le coup de faire un ou deux tests avant de s'en servir en situation réelle."
+      "text": "Pour tirer avec un $(thing)fusil$(), assure-toi que tu as les munitions nécessaires (indiquées dans l'info-bulle de l'arme), puis clic droit en tenant le fusil dans ta main.$(br2)Chaque $(thing)fusil$() a une cadence, un recul et d'autres caractéristiques différentes, alors cela vaut peut-être le coup de faire un ou deux tests avant de s'en servir en situation réelle."
     },
     {
       "type": "patchouli:spotlight",
@@ -29,3 +29,4 @@
   ],
   "sortnum": 5
 }
+
