@@ -8,12 +8,12 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "Pour accéder aux autres dimensions d'$(aoa), tu vas devoir construire ton propre portail.$(br2)Les portails d'$(aoa) sont faits de $(thing)roche antique$() et de $(thing)runes gravées$(), et doivent être construits dans une forme particulière.$(br2)Pour faire un cadre de portail, fabrique un rectangle vertical creux en $(thing)roche antique$(), puis remplace le bloc au milieu en bas par une $(l:aoa3:the_portal#carved_rune_of_power)rune gravée de puissance$(/l).",
+      "text": "Pour accéder aux autres dimensions d'$(aoa), tu vas devoir construire ton propre portail.$(br2)Les portails d'$(aoa) sont faits de $(thing)roche antique$() et de $(thing)runes gravées$(), et doivent être construits dans une forme particulière.$(br2)Pour faire un cadre portail, fabrique un rectangle vertical creux en $(thing)roche antique$(), puis remplace le bloc au milieu en bas par une $(l:aoa3:the_portal#carved_rune_of_power)rune gravée de puissance$(/l).",
       "title": "Le portail"
     },
     {
       "type": "patchouli:text",
-      "text": "Ensuite, il faut insérer $(l)une$() de chacune de ces quatres $(thing)runes gravées$() n'importe où dans le cadre:$(br2)$(thing)Rune gravée de réalité$()$(br2)$(thing)Rune gravée de déplacement$()$(br2)$(thing)Rune gravée d'espace$()$(br2)$(thing)Rune gravée de direction$()"
+      "text": "Ensuite, il faut insérer $(l)une$() de chacune de ces quatres $(thing)runes gravées$() n'importe où dans le cadre :$(br2)$(thing)Rune gravée de réalité$()$(br2)$(thing)Rune gravée de déplacement$()$(br2)$(thing)Rune gravée d'espace$()$(br2)$(thing)Rune gravée de direction$()"
     },
     {
       "type": "patchouli:multiblock",
@@ -77,7 +77,7 @@
     },
     {
       "type": "patchouli:text",
-      "text": "Quatre des runes gravées peuvent être trouvées à la Surface (ou Overworld), cachées dans des coffres, lâchées par diverses créatures, ou obtenues grâce à diverses actions.$(br2)La cinquième, la $(l:aoa3:the_portal#carved_rune_of_power)rune gravée de puissance$(/l), doit être fabriquée."
+      "text": "Quatre des runes gravées peuvent être trouvées dans l'Overworld, cachées dans des coffres, lâchées par diverses créatures, ou obtenues grâce à diverses actions.$(br2) La cinquième, la $(l:aoa3:the_portal#carved_rune_of_power)rune gravée de puissance$(/l), doit être fabriquée."
     },
     {
       "type": "patchouli:crafting",
