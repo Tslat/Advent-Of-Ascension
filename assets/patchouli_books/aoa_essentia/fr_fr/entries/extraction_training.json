@@ -5,12 +5,12 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "L'$(thing)Extraction$() est une compétence simple à entraîner, à tel point que jouer de manière normale suffit pour l'entraîner au moins un peu.$(br)Voilà les moyens principaux d'entraîner l'$(thing)Extraction$():$(br)1. Récupérer des blocs naturels$(br)2. Faire fondre des minerais dans un four",
+      "text": "L'$(thing)Extraction$() est une compétence simple à entraîner, à tel point que jouer de manière normale suffit pour l'entraîner au moins un peu.$(br)Voilà les moyens principaux d'entraîner l'$(thing)Extraction$() :$(br)1. Récupérer des blocs naturels$(br)2. Faire fondre des minerais dans un four",
       "title": "Méthodes d'entraînement"
     },
     {
       "type": "patchouli:text",
-      "text": "Les blocs naturels comprennent le sable, le gravier, la roche, les bûches, l'herbe, la terre, le netherrack, l'obsidienne, et plus encore.$(br)L'expérience gagnée varie selon le bloc, alors il vaut mieux ne pas se concentrer sur les blocs communs tels que la roche."
+      "text": "Les blocs naturels sont le sable, le gravier, la roche, les bûches, l'herbe, la terre, le netherrack, l'obsidienne, et plus encore.$(br)L'expérience gagnée varie selon le bloc, alors il vaut mieux ne pas se concentrer sur les blocs communs tels que la roche."
     },
     {
       "type": "patchouli:text",
