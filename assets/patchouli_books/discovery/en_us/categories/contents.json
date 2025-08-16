@@ -1,4 +1,5 @@
 {
-  "description": "昏爛之紙所書",
-  "name": "目次"
+  "description": "Contents of the torn pages",
+  "icon": "aoa3:torn_pages",
+  "name": "Contents"
 }
