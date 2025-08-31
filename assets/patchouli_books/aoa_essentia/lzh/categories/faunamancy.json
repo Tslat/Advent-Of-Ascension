@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Faunamancy$() is the skill of creature resurrection. Trap creatures and extract their essence, using them for totally innocent things.$(br2)Increasing your $(thing)Faunamancy$() level gives access to more creatures and abilities, and improves your ability to extract creature essence.",
+  "icon": "aoa3:textures/gui/aoaskill/faunamancy.png",
+  "name": "Faunamancy"
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Creation$() is a skill based around summoning and taming creatures to keep you company and assist with various tasks.",
+  "icon": "aoa3:textures/gui/aoaskill/creation.png",
+  "name": "Creation"
+}

@@ -1,0 +1,20 @@
+{
+  "category": "aoa3:journal",
+  "icon": "aoa3:corrupted_traveller_spawn_egg",
+  "name": "迷秋羈客",
+  "pages": [
+    {
+      "type": "patchouli:link",
+      "link_text": "漫路求索大典",
+      "text": "訪漫路求索大典，以博聞於$(thing)迷秋羈客$()",
+      "title": "大典之鏈",
+      "url": ""
+    },
+    {
+      "type": "patchouli:entity",
+      "entity": "aoa3:corrupted_traveller",
+      "text": ""
+    }
+  ],
+  "sortnum": 1
+}

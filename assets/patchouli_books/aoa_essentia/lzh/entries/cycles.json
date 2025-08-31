@@ -1,0 +1,17 @@
+{
+  "category": "aoa3:skills",
+  "icon": "minecraft:totem_of_undying",
+  "name": "Cycles",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "$(thing)Skill cycling$() is a function in $(aoa) that allows you to 'reset' your $(thing)skill$()'s progress to level 1, in exchange for a sizeable xp boost for future gains.",
+      "title": "Skill Cycling"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "When you reach level 100 in a $(thing)skill$(), you unlock the ability to '$(thing)cycle$()' that skill.$(br)Doing so reverts your current xp to 0, and your level to 1, but adds a counter to your total $(thing)cycles$(). Each counter gives you a significant boost to xp gain for the skill, with more $(thing)cycles$() completed giving you more boosts."
+    }
+  ],
+  "sortnum": 2
+}

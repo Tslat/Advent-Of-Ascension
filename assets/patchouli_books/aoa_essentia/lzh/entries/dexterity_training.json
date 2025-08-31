@@ -1,0 +1,17 @@
+{
+  "category": "aoa3:dexterity",
+  "icon": "aoa3:small_skill_crystal",
+  "name": "Training Methods",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Being a measure of your physical ability, $(thing)Dexterity$() is trained in fairly obvious way: Moving!$(br)Being active and running around and jumping will gradually increase the skill, meaning you don't have to pay too much attention to training it.$(br)Utilising critical hits in combat also gives some $(thing)Dexterity$() xp.",
+      "title": "Training Methods"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "You may also get some additional xp from utilising the various abilities $(thing)Dexterity$() gives you, so continue to be active and moving!"
+    }
+  ],
+  "sortnum": 0
+}

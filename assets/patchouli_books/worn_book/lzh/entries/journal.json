@@ -1,0 +1,30 @@
+{
+  "category": "aoa3:journal",
+  "icon": "aoa3:worn_book",
+  "name": "誌",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "如何此物，無所不有！$(br)曾彼面目，何目至多？$(br2)$(thing)雕符$()有四：$(thing)今$()、$(thing)古$()、$(thing)宇$()、$(thing)位$()筑$(thing)墨石$()以爲架，其高六方。",
+      "title": "Journal Entry"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "措$(thing)符$()中架，$(thing)能量$()爲承。$(br)計$(thing)雕符$()五，$(thing)墨石$()一十有三。$(br2)我之啟也，莫之能塞。"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "是以不敢自佚，盡散四符，藏诸寢廟，置于地牢，以止後世賢者。$(br2)更壞能量之符，以終置之。"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "aoa3:crafting_shaped_carved_rune_of_power",
+      "text": "其能量者爲至要，必親製之——合$(thing)未充能符$()与一$(thing)終眇眼$()，注諸墨石中。如是："
+    },
+    {
+      "type": "patchouli:text",
+      "text": "某也不敏，敢告神祖$(thing)卡尔颂$()，綏尔眉寿，受命溥将。子庶啟之，魂魄其除。"
+    }
+  ],
+  "sortnum": 0
+}

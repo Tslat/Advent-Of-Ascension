@@ -1,0 +1,31 @@
+{
+  "category": "aoa3:weapons",
+  "icon": "aoa3:horizon_maul",
+  "name": "槌",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "anchor": "mauls",
+      "text": "Ever wanted to hit something with a $(l:aoa3:swords#swords)sword$(/l), but also want the enemy to fly away into the sunset?$(br)Well now you can! $(thing)Mauls$() offer the extended reach of $(l:aoa3:greatblades#greatblades)greatblades$(/l) while offering a heavy-duty knockback on hit, in exchange for lower damage output.",
+      "title": "槌"
+    },
+    {
+      "type": "patchouli:text",
+      "text": "In general, $(thing)mauls$() are intended to be used a way to keep dangerous enemies at a distance, or quickly clearing away an enemy that has come too close.$(br2)While not offering the higher $(t:Damage Per Second)DPS$(/t) of swords, Mauls do offer a significant knockback factor, which is best used for larger individual mobs with strong attacks."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "aoa3:electron_maul",
+      "text": "$(thing)Mauls$() offer the reach distance of $(l:aoa3:greatblades#greatblades)greatblades$(/l) with some added power for great golf games.",
+      "title": "一槌"
+    },
+    {
+      "type": "patchouli:link",
+      "link_text": "漫路求索大典",
+      "text": "尋$(aoa)諸$(thing)槌$()之詳情於$(thing)官之大典$()。",
+      "title": "博聞",
+      "url": "https://adventofascension.fandom.com/wiki/Mauls"
+    }
+  ],
+  "sortnum": 2
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "aoa3:skills",
+  "description": "$(thing)Alchemy$() is a skill based around alchemical concoctions and ingredients.$(br2)Levelling up the skill gives access to more advanced and powerful concoctions, and more ways to utilise them.",
+  "icon": "aoa3:textures/gui/aoaskill/alchemy.png",
+  "name": "Alchemy"
+}
